@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 30
+ * @version     PHPBoost 5.3 - last update: 2020 03 10
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -16,10 +16,10 @@ class News
 {
 	private $id;
 	private $id_cat;
-	private $name;
-	private $rewrited_name;
+	private $title;
+	private $rewrited_title;
 	private $contents;
-	private $short_contents;
+	private $summary;
 
 	private $approbation_type;
 	private $start_date;
@@ -30,11 +30,11 @@ class News
 	private $creation_date;
 	private $updated_date;
 	private $author_user;
-	private $number_view;
+	private $views_number;
 	private $author_custom_name;
 	private $author_custom_name_enabled;
 
-	private $picture_url;
+	private $thumbnail_url;
 	private $sources;
 	private $keywords;
 
@@ -67,29 +67,29 @@ class News
 		return CategoriesService::get_categories_manager()->get_categories_cache()->get_category($this->id_cat);
 	}
 
-	public function set_name($name)
+	public function set_title($title)
 	{
-		$this->name = $name;
+		$this->title = $title;
 	}
 
-	public function get_name()
+	public function get_title()
 	{
-		return $this->name;
+		return $this->title;
 	}
 
-	public function set_rewrited_name($rewrited_name)
+	public function set_rewrited_title($rewrited_title)
 	{
-		$this->rewrited_name = $rewrited_name;
+		$this->rewrited_title = $rewrited_title;
 	}
 
-	public function get_rewrited_name()
+	public function get_rewrited_title()
 	{
-		return $this->rewrited_name;
+		return $this->rewrited_title;
 	}
 
-	public function rewrited_name_is_personalized()
+	public function rewrited_title_is_personalized()
 	{
-		return $this->rewrited_name != Url::encode_rewrite($this->name);
+		return $this->rewrited_title != Url::encode_rewrite($this->title);
 	}
 
 	public function set_contents($contents)
@@ -102,28 +102,28 @@ class News
 		return $this->contents;
 	}
 
-	public function set_short_contents($short_contents)
+	public function set_summary($summary)
 	{
-		$this->short_contents = $short_contents;
+		$this->summary = $summary;
 	}
 
-	public function get_short_contents()
+	public function get_summary()
 	{
-		return $this->short_contents;
+		return $this->summary;
 	}
 
-	public function get_real_short_contents()
+	public function get_real_summary()
 	{
-		if ($this->get_short_contents_enabled())
+		if ($this->get_summary_enabled())
 		{
-			return FormatingHelper::second_parse($this->short_contents);
+			return FormatingHelper::second_parse($this->summary);
 		}
-		return TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>'), (int)NewsConfig::load()->get_number_character_to_cut());
+		return TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>'), (int)NewsConfig::load()->get_characters_number_to_cut());
 	}
 
-	public function get_short_contents_enabled()
+	public function get_summary_enabled()
 	{
-		return !empty($this->short_contents);
+		return !empty($this->summary);
 	}
 
 	public function set_approbation_type($approbation_type)
@@ -243,33 +243,33 @@ class News
 		return $this->author_custom_name_enabled;
 	}
 
-	public function set_number_view($number_view)
+	public function set_views_number($views_number)
 	{
-		$this->number_view = $number_view;
+		$this->views_number = $views_number;
 	}
 
-	public function get_number_view()
+	public function get_views_number()
 	{
-		return $this->number_view;
+		return $this->views_number;
 	}
 
-	public function set_picture(Url $picture)
+	public function set_thumbnail(Url $thumbnail)
 	{
-		$this->picture_url = $picture;
+		$this->thumbnail_url = $thumbnail;
 	}
 
-	public function get_picture()
+	public function get_thumbnail()
 	{
-		if (!$this->picture_url instanceof Url)
+		if (!$this->thumbnail_url instanceof Url)
 			return $this->get_default_thumbnail();
 
-		return $this->picture_url;
+		return $this->thumbnail_url;
 	}
 
-	public function has_picture()
+	public function has_thumbnail()
 	{
-		$picture = $this->picture_url->rel();
-		return !empty($picture);
+		$thumbnail = $this->thumbnail_url->rel();
+		return !empty($thumbnail);
 	}
 
 	public function get_default_thumbnail()
@@ -330,10 +330,10 @@ class News
 		return array(
 			'id' => $this->get_id(),
 			'id_category' => $this->get_id_cat(),
-			'name' => $this->get_name(),
-			'rewrited_name' => $this->get_rewrited_name(),
+			'name' => $this->get_title(),
+			'rewrited_name' => $this->get_rewrited_title(),
 			'contents' => $this->get_contents(),
-			'short_contents' => $this->get_short_contents(),
+			'short_contents' => $this->get_summary(),
 			'approbation_type' => $this->get_approbation_type(),
 			'start_date' => $this->get_start_date() !== null ? $this->get_start_date()->get_timestamp() : 0,
 			'end_date' => $this->get_end_date() !== null ? $this->get_end_date()->get_timestamp() : 0,
@@ -342,8 +342,8 @@ class News
 			'updated_date' => $this->get_updated_date() !== null ? $this->get_updated_date()->get_timestamp() : 0,
 			'author_custom_name' => $this->get_author_custom_name(),
 			'author_user_id' => $this->get_author_user()->get_id(),
-			'number_view' => $this->get_number_view(),
-			'picture_url' => $this->get_picture()->relative(),
+			'number_view' => $this->get_views_number(),
+			'picture_url' => $this->get_thumbnail()->relative(),
 			'sources' => TextHelper::serialize($this->get_sources())
 		);
 	}
@@ -352,11 +352,11 @@ class News
 	{
 		$this->id = $properties['id'];
 		$this->id_cat = $properties['id_category'];
-		$this->name = $properties['name'];
-		$this->rewrited_name = $properties['rewrited_name'];
+		$this->title = $properties['name'];
+		$this->rewrited_title = $properties['rewrited_name'];
 		$this->contents = $properties['contents'];
-		$this->short_contents = $properties['short_contents'];
-		$this->number_view = $properties['number_view'];
+		$this->summary = $properties['short_contents'];
+		$this->views_number = $properties['number_view'];
 		$this->approbation_type = $properties['approbation_type'];
 		$this->start_date = !empty($properties['start_date']) ? new Date($properties['start_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->end_date = !empty($properties['end_date']) ? new Date($properties['end_date'], Timezone::SERVER_TIMEZONE) : null;
@@ -364,7 +364,7 @@ class News
 		$this->top_list_enabled = (bool)$properties['top_list_enabled'];
 		$this->creation_date = new Date($properties['creation_date'], Timezone::SERVER_TIMEZONE);
 		$this->updated_date = !empty($properties['updated_date']) ? new Date($properties['updated_date'], Timezone::SERVER_TIMEZONE) : null;
-		$this->picture_url = new Url($properties['picture_url']);
+		$this->thumbnail_url = new Url($properties['picture_url']);
 		$this->sources = !empty($properties['sources']) ? TextHelper::unserialize($properties['sources']) : array();
 
 		$user = new User();
@@ -389,9 +389,9 @@ class News
 		$this->end_date = new Date();
 		$this->creation_date = new Date();
 		$this->sources = array();
-		$this->picture_url = self::get_default_thumbnail();
+		$this->thumbnail_url = self::get_default_thumbnail();
 		$this->end_date_enabled = false;
-		$this->number_view = 0;
+		$this->views_number = 0;
 		$this->author_custom_name = $this->author_user->get_display_name();
 		$this->author_custom_name_enabled = false;
 	}
@@ -414,7 +414,7 @@ class News
 		$news_config = NewsConfig::load();
 		$category = $this->get_category();
 		$contents = FormatingHelper::second_parse($this->contents);
-		$description = $this->get_real_short_contents();
+		$description = $this->get_real_summary();
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		$comments_number = CommentsService::get_comments_number('news', $this->id);
@@ -429,12 +429,12 @@ class News
 			'C_CONTROLS'		   => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
 			'C_EDIT'               => $this->is_authorized_to_edit(),
 			'C_DELETE'             => $this->is_authorized_to_delete(),
-			'C_PICTURE'            => $this->has_picture(),
+			'C_PICTURE'            => $this->has_thumbnail(),
 			'C_USER_GROUP_COLOR'   => !empty($user_group_color),
 			'C_AUTHOR_DISPLAYED'   => $news_config->get_author_displayed(),
 			'C_AUTHOR_CUSTOM_NAME' => $this->is_author_custom_name_enabled(),
-			'C_NB_VIEW_ENABLED'    => $news_config->get_nb_view_enabled(),
-			'C_READ_MORE'          => !$this->get_short_contents_enabled() && TextHelper::strlen($contents) > $news_config->get_number_character_to_cut() && $description != @strip_tags($contents, '<br><br/>'),
+			'C_VIEWS_NUMBER'    => $news_config->get_views_number(),
+			'C_READ_MORE'          => !$this->get_summary_enabled() && TextHelper::strlen($contents) > $news_config->get_characters_number_to_cut() && $description != @strip_tags($contents, '<br><br/>'),
 			'C_SOURCES'            => $nbr_sources > 0,
 			'C_DIFFERED'           => $this->approbation_type == self::APPROVAL_DATE,
 			'C_TOP_LIST'           => $this->top_list_enabled(),
@@ -443,7 +443,7 @@ class News
 
 			//News
 			'ID' => $this->id,
-			'NAME' => $this->name,
+			'TITLE' => $this->title,
 			'CONTENTS' => $contents,
 			'DESCRIPTION' => $description,
 			'STATUS' => $this->get_status(),
@@ -457,7 +457,7 @@ class News
 			'C_COMMENTS' => !empty($comments_number),
 			'L_COMMENTS' => CommentsService::get_lang_comments('news', $this->id),
 			'COMMENTS_NUMBER' => $comments_number,
-			'NUMBER_VIEW' => $this->get_number_view(),
+			'VIEWS_NUMBER' => $this->get_views_number(),
 			//Category
 			'C_ROOT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY,
 			'CATEGORY_ID' => $category->get_id(),
@@ -468,12 +468,12 @@ class News
 
 			'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $this->id_cat)->rel(),
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
-			'U_LINK' => NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->rel(),
+			'U_ITEM' => NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_title)->rel(),
 			'U_CATEGORY' => NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
 			'U_EDIT' => NewsUrlBuilder::edit_news($this->id)->rel(),
 			'U_DELETE' => NewsUrlBuilder::delete_news($this->id)->rel(),
-			'U_PICTURE' => $this->get_picture()->rel(),
-			'U_COMMENTS' => NewsUrlBuilder::display_comments_news($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->rel()
+			'U_THUMBNAIL' => $this->get_thumbnail()->rel(),
+			'U_COMMENTS' => NewsUrlBuilder::display_comments_news($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_title)->rel()
 		));
 	}
 

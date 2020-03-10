@@ -3,11 +3,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 18
+ * @version     PHPBoost 5.3 - last update: 2020 03 10
  * @since       PHPBoost 4.0 - 2013 02 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class NewsDeleteController extends ModuleController
@@ -25,10 +26,10 @@ class NewsDeleteController extends ModuleController
 		}
 
 		NewsService::delete($news->get_id());
-		
+
 		NewsService::clear_cache();
 
-		AppContext::get_response()->redirect(($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), NewsUrlBuilder::display_news($news->get_category()->get_id(), $news->get_category()->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name())->rel()) ? $request->get_url_referrer() : NewsUrlBuilder::home()), StringVars::replace_vars(LangLoader::get_message('news.message.success.delete', 'common', 'news'), array('name' => $news->get_name())));
+		AppContext::get_response()->redirect(($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), NewsUrlBuilder::display_news($news->get_category()->get_id(), $news->get_category()->get_rewrited_name(), $news->get_id(), $news->get_rewrited_title())->rel()) ? $request->get_url_referrer() : NewsUrlBuilder::home()), StringVars::replace_vars(LangLoader::get_message('news.message.success.delete', 'common', 'news'), array('title' => $news->get_title())));
 	}
 
 	private function get_news(HTTPRequestCustom $request)

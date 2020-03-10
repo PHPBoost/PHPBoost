@@ -1,15 +1,15 @@
 <section id="module-news">
 	<header>
 		<div class="align-right controls">
-			<a href="${relative_url(SyndicationUrlBuilder::rss('news', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-fw fa-rss warning" aria-hidden="true"></i></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('news', ID_CATEGORY))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-fw fa-rss warning" aria-hidden="true"></i></a>
 			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF ## ENDIF #
 		</div>
 		<h1>
 			# IF C_PENDING_NEWS #{@news.pending}# ELSE #{@news}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF #
 		</h1>
 	</header>
-	<div class="# IF C_DISPLAY_GRID_VIEW #cell-flex cell-columns-{COLUMNS_NUMBER}# ELSE #cell-row# ENDIF #">
-		# IF C_NEWS_NO_AVAILABLE #
+	<div class="# IF C_GRID_VIEW #cell-flex cell-columns-{ITEMS_PER_ROW}# ELSE #cell-row# ENDIF #">
+		# IF C_NO_ITEM #
 			<div class="message-helper bgc notice cell-4-4">
 				${LangLoader::get_message('no_item_now', 'common')}
 			</div>
@@ -22,7 +22,7 @@
 					itemtype="http://schema.org/CreativeWork">
 
 					<header class="cell-header">
-						<h2 class="cell-name"><a href="{news.U_LINK}"><span itemprop="name">{news.NAME}</span></a></h2>
+						<h2 class="cell-name"><a href="{news.U_ITEM}"><span itemprop="name">{news.TITLE}</span></a></h2>
 					</header>
 
 					<div class="cell-body">
@@ -54,8 +54,8 @@
 										<i class="far fa-comments" aria-hidden="true"></i> # IF news.C_COMMENTS #{news.COMMENTS_NUMBER} # ENDIF # {news.L_COMMENTS}
 									</span>
 								# ENDIF #
-								# IF news.C_NB_VIEW_ENABLED #
-									<span class="pinned" role="contentinfo" aria-label="{news.NUMBER_VIEW} {@news.view}"><i class="far fa-eye" aria-hidden="true"></i> {news.NUMBER_VIEW}</span>
+								# IF news.C_VIEWS_NUMBER #
+									<span class="pinned" role="contentinfo" aria-label="{news.VIEWS_NUMBER} {@news.view}"><i class="far fa-eye" aria-hidden="true"></i> {news.VIEWS_NUMBER}</span>
 								# ENDIF #
 							</div>
 							# IF news.C_CONTROLS #
@@ -69,19 +69,24 @@
 								</div>
 							# ENDIF #
 						</div>
-						# IF news.C_PICTURE #
-							<div class="cell-thumbnail cell-landscape">
-								<img itemprop="thumbnailUrl" src="{news.U_PICTURE}" alt="{news.NAME}" />
-								<a class="cell-thumbnail-caption" href="{news.U_LINK}">
-									# IF news.C_READ_MORE #[${LangLoader::get_message('read-more', 'common')}]# ELSE #<i class="fa fa-eye"></i># ENDIF #
-								</a>
-							</div>
+						# IF NOT C_FULL_ITEM_DISPLAY #
+							# IF news.C_PICTURE #
+								<div class="cell-thumbnail cell-landscape">
+									<img itemprop="thumbnailUrl" src="{news.U_THUMBNAIL}" alt="{news.TITLE}" />
+									<a class="cell-thumbnail-caption" href="{news.U_ITEM}">
+										# IF news.C_READ_MORE #[${LangLoader::get_message('read-more', 'common')}]# ELSE #<i class="fa fa-eye"></i># ENDIF #
+									</a>
+								</div>
+							# ENDIF #
 						# ENDIF #
 						<div class="cell-content" itemprop="text">
-							# IF C_DISPLAY_CONDENSED_CONTENT #
-								{news.DESCRIPTION}# IF news.C_READ_MORE #... <a href="{news.U_LINK}">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
-							# ELSE #
+							# IF C_FULL_ITEM_DISPLAY #
+								# IF news.C_PICTURE #
+									<img class="item-thumbnail" itemprop="thumbnailUrl" src="{news.U_THUMBNAIL}" alt="{news.TITLE}" />
+								# ENDIF #
 								{news.CONTENTS}
+							# ELSE #
+								{news.DESCRIPTION}# IF news.C_READ_MORE #... <a href="{news.U_ITEM}">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
 							# ENDIF #
 						</div>
 					</div>
@@ -95,7 +100,7 @@
 								# END news.sources #
 							</div>
 						# ENDIF #
-						<meta itemprop="url" content="{news.U_LINK}">
+						<meta itemprop="url" content="{news.U_ITEM}">
 						<meta itemprop="description" content="${escape(news.DESCRIPTION)}"/>
 						# IF C_COMMENTS_ENABLED #
 							<meta itemprop="discussionUrl" content="{news.U_COMMENTS}">

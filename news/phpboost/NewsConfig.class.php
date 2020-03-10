@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 11 01
+ * @version     PHPBoost 5.3 - last update: 2020 03 09
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -12,80 +12,80 @@
 
 class NewsConfig extends AbstractConfigData
 {
-	const NUMBER_NEWS_PER_PAGE = 'number_news_per_page';
-	const COLUMNS_NUMBER_DISPLAY_NEWS = 'number_columns_display_news';
+	const ITEMS_PER_PAGE = 'items_per_page';
+	const ITEMS_PER_ROW = 'items_per_row';
 
-	const DISPLAY_CONDENSED_ENABLED = 'display_condensed_enabled';
-	const DESCRIPTIONS_DISPLAYED_TO_GUESTS = 'descriptions_displayed_to_guests';
-	const NUMBER_CHARACTER_TO_CUT = 'number_character_to_cut';
+	const FULL_ITEM_DISPLAY = 'full_item_display';
+	const DISPLAY_SUMMARY_TO_GUESTS = 'display_summary_to_guests';
+	const CHARACTERS_NUMBER_TO_CUT = 'characters_number_to_cut';
 
 	const NEWS_SUGGESTIONS_ENABLED = 'news_suggestions_enabled';
 	const AUTHOR_DISPLAYED = 'author_displayed';
-	const NB_VIEW_ENABLED = 'nb_view_enabled';
+	const VIEWS_NUMBER = 'views_number';
 
 	const DEFAULT_CONTENTS = 'default_contents';
 
 	const DISPLAY_TYPE = 'display_type';
-	const DISPLAY_GRID_VIEW = 'grid';
-	const DISPLAY_LIST_VIEW = 'list';
+	const GRID_VIEW = 'grid_view';
+	const LIST_VIEW = 'list_view';
 
 	const DEFERRED_OPERATIONS = 'deferred_operations';
 
 	const AUTHORIZATIONS = 'authorizations';
 
-	public function get_number_news_per_page()
+	public function get_items_per_page()
 	{
-		return $this->get_property(self::NUMBER_NEWS_PER_PAGE);
+		return $this->get_property(self::ITEMS_PER_PAGE);
 	}
 
-	public function set_number_news_per_page($number_news_per_page)
+	public function set_items_per_page($items_per_page)
 	{
-		$this->set_property(self::NUMBER_NEWS_PER_PAGE, $number_news_per_page);
+		$this->set_property(self::ITEMS_PER_PAGE, $items_per_page);
 	}
 
-	public function get_number_columns_display_news()
+	public function get_items_per_row()
 	{
-		return $this->get_property(self::COLUMNS_NUMBER_DISPLAY_NEWS);
+		return $this->get_property(self::ITEMS_PER_ROW);
 	}
 
-	public function set_number_columns_display_news($number_columns_display_news)
+	public function set_items_per_row($items_per_row)
 	{
-		$this->set_property(self::COLUMNS_NUMBER_DISPLAY_NEWS, $number_columns_display_news);
+		$this->set_property(self::ITEMS_PER_ROW, $items_per_row);
 	}
 
-	public function get_display_condensed_enabled()
+	public function get_full_item_display()
 	{
-		return $this->get_property(self::DISPLAY_CONDENSED_ENABLED);
+		return $this->get_property(self::FULL_ITEM_DISPLAY);
 	}
 
-	public function set_display_condensed_enabled($display_condensed_enabled)
+	public function set_full_item_display($full_item_display)
 	{
-		$this->set_property(self::DISPLAY_CONDENSED_ENABLED, $display_condensed_enabled);
+		$this->set_property(self::FULL_ITEM_DISPLAY, $full_item_display);
 	}
 
-	public function display_descriptions_to_guests()
+	public function display_summary_to_guests()
 	{
-		$this->set_property(self::DESCRIPTIONS_DISPLAYED_TO_GUESTS, true);
+		$this->set_property(self::DISPLAY_SUMMARY_TO_GUESTS, true);
 	}
 
-	public function hide_descriptions_to_guests()
+	public function hide_summary_to_guests()
 	{
-		$this->set_property(self::DESCRIPTIONS_DISPLAYED_TO_GUESTS, false);
+		$this->set_property(self::DISPLAY_SUMMARY_TO_GUESTS, false);
 	}
 
-	public function are_descriptions_displayed_to_guests()
+	public function is_summary_displayed_to_guests()
 	{
-		return $this->get_property(self::DESCRIPTIONS_DISPLAYED_TO_GUESTS);
+		return $this->get_property(self::DISPLAY_SUMMARY_TO_GUESTS);
 	}
 
-	public function get_number_character_to_cut()
+	public function get_characters_number_to_cut()
 	{
-		return $this->get_property(self::NUMBER_CHARACTER_TO_CUT);
+		return $this->get_property(self::CHARACTERS_NUMBER_TO_CUT);
 	}
 
-	public function set_number_character_to_cut($number)
+	public function set_characters_number_to_cut($number)
 	{
-		$this->set_property(self::NUMBER_CHARACTER_TO_CUT, $number);
+		$this->set_property(self::CHARACTERS_NUMBER_TO_CUT, $number);
 	}
 
 	public function get_news_suggestions_enabled()
@@ -108,14 +108,14 @@ class NewsConfig extends AbstractConfigData
 		$this->set_property(self::AUTHOR_DISPLAYED, $author_displayed);
 	}
 
-	public function get_nb_view_enabled()
+	public function get_views_number()
 	{
-		return $this->get_property(self::NB_VIEW_ENABLED);
+		return $this->get_property(self::VIEWS_NUMBER);
 	}
 
-	public function set_nb_view_enabled($nb_view_enabled)
+	public function set_views_number($views_number)
 	{
-		$this->set_property(self::NB_VIEW_ENABLED, $nb_view_enabled);
+		$this->set_property(self::VIEWS_NUMBER, $views_number);
 	}
 
 	public function get_display_type()
@@ -164,16 +164,16 @@ class NewsConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::NUMBER_NEWS_PER_PAGE => 10,
-			self::COLUMNS_NUMBER_DISPLAY_NEWS => 1,
-			self::DISPLAY_CONDENSED_ENABLED => false,
-			self::DESCRIPTIONS_DISPLAYED_TO_GUESTS => false,
-			self::NUMBER_CHARACTER_TO_CUT => 150,
+			self::ITEMS_PER_PAGE => 10,
+			self::ITEMS_PER_ROW => 1,
+			self::DISPLAY_SUMMARY_TO_GUESTS => false,
+			self::CHARACTERS_NUMBER_TO_CUT => 150,
 			self::NEWS_SUGGESTIONS_ENABLED => true,
 			self::AUTHOR_DISPLAYED => true,
-			self::NB_VIEW_ENABLED => false,
+			self::VIEWS_NUMBER => true,
 			self::DEFAULT_CONTENTS => '',
-			self::DISPLAY_TYPE => self::DISPLAY_LIST_VIEW,
+			self::DISPLAY_TYPE => self::LIST_VIEW,
+			self::FULL_ITEM_DISPLAY => true,
 			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13),
 			self::DEFERRED_OPERATIONS => array()
 		);

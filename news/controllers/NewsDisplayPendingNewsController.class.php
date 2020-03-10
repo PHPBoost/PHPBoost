@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 20
+ * @version     PHPBoost 5.3 - last update: 2020 03 09
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -37,7 +37,7 @@ class NewsDisplayPendingNewsController extends ModuleController
 		$now = new Date();
 		$news_config = NewsConfig::load();
 		$comments_config = CommentsConfig::load();
-		$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $news_config->are_descriptions_displayed_to_guests());
+		$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $news_config->is_summary_displayed_to_guests());
 
 		$condition = 'WHERE id_category IN :authorized_categories
 		' . (!CategoriesAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
@@ -62,17 +62,17 @@ class NewsDisplayPendingNewsController extends ModuleController
 		)));
 
 		$this->tpl->put_all(array(
-			'C_DISPLAY_GRID_VIEW' => $news_config->get_display_type() == NewsConfig::DISPLAY_GRID_VIEW,
-			'C_DISPLAY_LIST_VIEW' => $news_config->get_display_type() == NewsConfig::DISPLAY_LIST_VIEW,
-			'C_DISPLAY_CONDENSED_CONTENT' => $news_config->get_display_condensed_enabled(),
+			'C_PENDING_NEWS' => true,
+			'C_GRID_VIEW' => $news_config->get_display_type() == NewsConfig::GRID_VIEW,
+			'C_LIST_VIEW' => $news_config->get_display_type() == NewsConfig::LIST_VIEW,
+			'C_FULL_ITEM_DISPLAY' => $news_config->get_full_item_display(),
 			'C_COMMENTS_ENABLED' => $comments_config->module_comments_is_enabled('news'),
 
-			'C_NEWS_NO_AVAILABLE' => $result->get_rows_count() == 0,
-			'C_PENDING_NEWS' => true,
+			'C_NO_ITEM' => $result->get_rows_count() == 0,
 			'C_PAGINATION' => $pagination->has_several_pages(),
-
 			'PAGINATION' => $pagination->display(),
-			'COLUMNS_NUMBER' => $news_config->get_number_columns_display_news()
+
+			'ITEMS_PER_ROW' => $news_config->get_items_per_row()
 		));
 
 		while ($row = $result->fetch())
@@ -94,7 +94,7 @@ class NewsDisplayPendingNewsController extends ModuleController
 	{
 		$number_news = NewsService::count($condition, $parameters);
 
-		$pagination = new ModulePagination($page, $number_news, (int)NewsConfig::load()->get_number_news_per_page());
+		$pagination = new ModulePagination($page, $number_news, (int)NewsConfig::load()->get_items_per_page());
 		$pagination->set_url(NewsUrlBuilder::display_pending_news('%d'));
 
 		if ($pagination->current_page_is_empty() && $page > 1)

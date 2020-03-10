@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 16
+ * @version     PHPBoost 5.3 - last update: 2020 03 10
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -43,8 +43,9 @@ class AdminNewsConfigController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->form->get_field_by_id('display_descriptions_to_guests')->set_hidden(!$this->config->get_display_condensed_enabled());
-			$this->form->get_field_by_id('number_character_to_cut')->set_hidden(!$this->config->get_display_condensed_enabled());
+			$this->form->get_field_by_id('characters_number_to_cut')->set_hidden($this->config->get_full_item_display() && $this->config->get_display_type() !== NewsConfig::GRID_VIEW);
+			$this->form->get_field_by_id('items_per_row')->set_hidden($this->config->get_display_type() !== NewsConfig::GRID_VIEW);
+			$this->form->get_field_by_id('full_item_display')->set_hidden($this->config->get_display_type() !== NewsConfig::LIST_VIEW);
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 
@@ -64,64 +65,82 @@ class AdminNewsConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('configuration', StringVars::replace_vars(LangLoader::get_message('configuration.module.title', 'admin-common'), array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$fieldset = new FormFieldsetHTMLHeading('configuration', StringVars::replace_vars(LangLoader::get_message('configuration.module.title', 'admin-common'), array('module_name' => self::get_module()->get_configuration()->get_title())));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldNumberEditor('number_news_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_number_news_per_page(),
-			array('min' => 1, 'max' => 50, 'required' => true, 'class' => 'third-field'),
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_items_per_page(),
+			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('number_columns_display_news', $this->admin_common_lang['config.columns_number_per_line'], $this->config->get_number_columns_display_news(),
-			array('min' => 1, 'max' => 4, 'required' => true, 'class' => 'third-field'),
-			array(new FormFieldConstraintIntegerRange(1, 4))
+		$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->admin_common_lang['config.author.displayed'], $this->config->get_author_displayed(),
+			array('class' => 'custom-checkbox')
+		));
+
+		$fieldset->add_field(new FormFieldCheckbox('views_number', $this->admin_common_lang['config.views.number.enabled'], $this->config->get_views_number(),
+			array('class' => 'custom-checkbox')
+		));
+
+		$fieldset->add_field(new FormFieldCheckbox('news_suggestions_enabled', $this->lang['config.news.suggestions.enabled'], $this->config->get_news_suggestions_enabled(),
+			array('class' => 'custom-checkbox')
+		));
+
+		$fieldset->add_field(new FormFieldCheckbox('summary_display_to_guests', $this->admin_common_lang['config.display.summary.to.guests'], $this->config->is_summary_displayed_to_guests(),
+			array('class' => 'custom-checkbox')
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->admin_common_lang['config.display.type'], $this->config->get_display_type(),
 			array(
-				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.grid'], NewsConfig::DISPLAY_GRID_VIEW),
-				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.list'], NewsConfig::DISPLAY_LIST_VIEW),
+				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.grid'], NewsConfig::GRID_VIEW, array('data_option_icon' => 'fa fa-th-large')),
+				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.list'], NewsConfig::LIST_VIEW, array('data_option_icon' => 'fa fa-list')),
 			),
-			array('class' => 'third-field')
-		));
-
-		$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->admin_common_lang['config.author_displayed'], $this->config->get_author_displayed(),
-			array('class' => 'third-field custom-checkbox')
-		));
-
-		$fieldset->add_field(new FormFieldCheckbox('nb_view_enabled', $this->lang['admin.config.news_number_view_enabled'], $this->config->get_nb_view_enabled(),
-			array('class' => 'third-field custom-checkbox')
-		));
-
-		$fieldset->add_field(new FormFieldCheckbox('news_suggestions_enabled', $this->lang['admin.config.news_suggestions_enabled'], $this->config->get_news_suggestions_enabled(),
-			array('class' => 'third-field custom-checkbox')
-		));
-
-		$fieldset->add_field(new FormFieldCheckbox('display_condensed', $this->lang['admin.config.display_condensed'], $this->config->get_display_condensed_enabled(),
 			array(
-				'class' => 'third-field custom-checkbox',
-				'events' => array('click' => '
-					if (HTMLForms.getField("display_condensed").getValue()) {
-						HTMLForms.getField("display_descriptions_to_guests").enable();
-						HTMLForms.getField("number_character_to_cut").enable();
+				'select_to_list' => true,
+				'events' => array('change' => '
+					if (HTMLForms.getField("display_type").getValue() == \'' . NewsConfig::GRID_VIEW . '\') {
+						HTMLForms.getField("items_per_row").enable();
+						HTMLForms.getField("full_item_display").disable();
 					} else {
-						HTMLForms.getField("display_descriptions_to_guests").disable();
-						HTMLForms.getField("number_character_to_cut").disable();
+						HTMLForms.getField("items_per_row").disable();
+						HTMLForms.getField("full_item_display").enable();
 					}'
 				)
 			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('display_descriptions_to_guests', $this->lang['admin.config.display_descriptions_to_guests'], $this->config->are_descriptions_displayed_to_guests(),
-			array('hidden' => !$this->config->get_display_condensed_enabled(), 'class' => 'third-field custom-checkbox')
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->admin_common_lang['config.items.per.row'], $this->config->get_items_per_row(),
+			array(
+				'min' => 1, 'max' => 4, 'required' => true,
+				'hidden' => $this->config->get_display_type() !== NewsConfig::GRID_VIEW
+			),
+			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('number_character_to_cut', $this->lang['admin.config.number_character_to_cut'], $this->config->get_number_character_to_cut(),
-			array('min' => 20, 'max' => 1000, 'required' => true, 'hidden' => !$this->config->get_display_condensed_enabled(), 'class' => 'third-field'),
+		$fieldset->add_field(new FormFieldCheckbox('full_item_display', $this->admin_common_lang['config.full.item.display'], $this->config->get_full_item_display(),
+			array(
+				'class' => 'custom-checkbox',
+				'hidden' => $this->config->get_display_type() !== NewsConfig::LIST_VIEW,
+				'events' => array('click' => '
+					if (HTMLForms.getField("full_item_display").getValue()) {
+						HTMLForms.getField("characters_number_to_cut").disable();
+					} else {
+						HTMLForms.getField("characters_number_to_cut").enable();
+					}'
+				)
+			)
+		));
+
+		// $fieldset->add_field(new FormFieldSpacer('full_item', ''));
+
+		$fieldset->add_field(new FormFieldNumberEditor('characters_number_to_cut', $this->admin_common_lang['config.characters.number.to.cut'], $this->config->get_characters_number_to_cut(),
+			array(
+				'min' => 20, 'max' => 1000, 'required' => true,
+				'hidden' => $this->config->get_display_type() == NewsConfig::LIST_VIEW && $this->config->get_full_item_display()
+			),
 			array(new FormFieldConstraintIntegerRange(20, 1000)
 		)));
 
-                $fieldset->add_field(new FormFieldRichTextEditor('default_contents', $this->lang['news.default.contents'], $this->config->get_default_contents(),
+                $fieldset->add_field(new FormFieldRichTextEditor('default_contents', $this->admin_common_lang['config.item.default.content'], $this->config->get_default_contents(),
 			array('rows' => 8, 'cols' => 47)
 		));
 
@@ -143,28 +162,31 @@ class AdminNewsConfigController extends AdminModuleController
 
 	private function save()
 	{
-		$this->config->set_number_news_per_page($this->form->get_value('number_news_per_page'));
-		$this->config->set_number_columns_display_news($this->form->get_value('number_columns_display_news'));
-		$this->config->set_display_condensed_enabled($this->form->get_value('display_condensed'));
+		$this->config->set_items_per_page($this->form->get_value('items_per_page'));
 
-		if ($this->config->get_display_condensed_enabled())
+		if($this->config->get_display_type() == NewsConfig::GRID_VIEW)
+			$this->config->set_items_per_row($this->form->get_value('items_per_row'));
+
+		$this->config->set_full_item_display($this->form->get_value('full_item_display'));
+
+		if ($this->config->get_full_item_display())
 		{
-			if ($this->form->get_value('display_descriptions_to_guests'))
+			if ($this->form->get_value('summary_display_to_guests'))
 			{
-				$this->config->display_descriptions_to_guests();
+				$this->config->display_summary_to_guests();
 			}
 			else
 			{
-				$this->config->hide_descriptions_to_guests();
+				$this->config->hide_summary_to_guests();
 			}
 		}
 
-		$this->config->set_number_character_to_cut($this->form->get_value('number_character_to_cut', $this->config->get_number_character_to_cut()));
+		$this->config->set_characters_number_to_cut($this->form->get_value('characters_number_to_cut', $this->config->get_characters_number_to_cut()));
 		$this->config->set_news_suggestions_enabled($this->form->get_value('news_suggestions_enabled'));
 		$this->config->set_author_displayed($this->form->get_value('author_displayed'));
-		$this->config->set_nb_view_enabled($this->form->get_value('nb_view_enabled'));
+		$this->config->set_views_number($this->form->get_value('views_number'));
 		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
-                $this->config->set_default_contents($this->form->get_value('default_contents'));
+        $this->config->set_default_contents($this->form->get_value('default_contents'));
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		NewsConfig::save();
 		CategoriesService::get_categories_manager()->regenerate_cache();

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 10
+ * @version     PHPBoost 5.3 - last update: 2020 03 09
  * @since       PHPBoost 4.0 - 2013 02 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -39,7 +39,7 @@ class NewsDisplayCategoryController extends ModuleController
 	private function build_view()
 	{
 		$now = new Date();
-		$authorized_categories = CategoriesService::get_authorized_categories($this->get_category()->get_id(), $this->config->are_descriptions_displayed_to_guests());
+		$authorized_categories = CategoriesService::get_authorized_categories($this->get_category()->get_id(), $this->config->is_summary_displayed_to_guests());
 
 		$comments_config = CommentsConfig::load();
 
@@ -65,20 +65,20 @@ class NewsDisplayCategoryController extends ModuleController
 
 		$this->tpl->put_all(array(
 			'C_CATEGORY' => true,
-			'C_DISPLAY_GRID_VIEW' => $this->config->get_display_type() == NewsConfig::DISPLAY_GRID_VIEW,
-			'C_DISPLAY_LIST_VIEW' => $this->config->get_display_type() == NewsConfig::DISPLAY_LIST_VIEW,
-			'C_DISPLAY_CONDENSED_CONTENT' => $this->config->get_display_condensed_enabled(),
+			'C_GRID_VIEW' => $this->config->get_display_type() == NewsConfig::GRID_VIEW,
+			'C_LIST_VIEW' => $this->config->get_display_type() == NewsConfig::LIST_VIEW,
+			'C_FULL_ITEM_DISPLAY' => $this->config->get_full_item_display(),
 			'C_COMMENTS_ENABLED' => $comments_config->module_comments_is_enabled('news'),
 			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
-			'ID_CAT' => $this->get_category()->get_id(),
+			'ID_CATEGORY' => $this->get_category()->get_id(),
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
 			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? NewsUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id())->rel(),
 
-			'C_NEWS_NO_AVAILABLE' => $result->get_rows_count() == 0,
+			'C_NO_ITEM' => $result->get_rows_count() == 0,
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
 
-			'COLUMNS_NUMBER' => $this->config->get_number_columns_display_news()
+			'ITEMS_PER_ROW' => $this->config->get_items_per_row()
 		));
 
 		while ($row = $result->fetch())
@@ -100,7 +100,7 @@ class NewsDisplayCategoryController extends ModuleController
 	{
 		$number_news = NewsService::count($condition, $parameters);
 
-		$pagination = new ModulePagination($page, $number_news, (int)NewsConfig::load()->get_number_news_per_page());
+		$pagination = new ModulePagination($page, $number_news, (int)NewsConfig::load()->get_items_per_page());
 		$pagination->set_url(NewsUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), '%d'));
 
 		if ($pagination->current_page_is_empty() && $page > 1)
@@ -138,7 +138,7 @@ class NewsDisplayCategoryController extends ModuleController
 	{
 		if (AppContext::get_current_user()->is_guest())
 		{
-			if ($this->config->get_display_condensed_enabled() && ($this->config->are_descriptions_displayed_to_guests() && !Authorizations::check_auth(RANK_TYPE, User::MEMBER_LEVEL, $this->get_category()->get_authorizations(), Category::READ_AUTHORIZATIONS) || (!$this->config->are_descriptions_displayed_to_guests() && !CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id())->read())))
+			if ($this->config->get_full_item_display() && ($this->config->is_summary_displayed_to_guests() && !Authorizations::check_auth(RANK_TYPE, User::MEMBER_LEVEL, $this->get_category()->get_authorizations(), Category::READ_AUTHORIZATIONS) || (!$this->config->is_summary_displayed_to_guests() && !CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id())->read())))
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);

@@ -4,7 +4,7 @@
 			<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a> {@news}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
 			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
-		<h1 itemprop="name">{NAME}</h1>
+		<h1 itemprop="name">{TITLE}</h1>
 	</header>
 	# IF NOT C_VISIBLE #
 		<article class="content">
@@ -32,7 +32,7 @@
 					<a itemprop="about" href="{U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {CATEGORY_NAME}</a>
 				</span>
 				# IF C_COMMENTS_ENABLED #<span class="pinned"><a href="#comments-list"><i class="fa fa-comments" aria-hidden="true"></i> # IF C_COMMENTS #{COMMENTS_NUMBER}# ENDIF # {L_COMMENTS}</a></span># ENDIF #
-				# IF C_NB_VIEW_ENABLED #<span class="pinned" role="contentinfo" aria-label="{NUMBER_VIEW} {@news.view}"><i class="fa fa-eye" aria-hidden="true"></i> {NUMBER_VIEW}</span># ENDIF #
+				# IF C_VIEWS_NUMBER #<span class="pinned" role="contentinfo" aria-label="{VIEWS_NUMBER} {@news.view}"><i class="fa fa-eye" aria-hidden="true"></i> {VIEWS_NUMBER}</span># ENDIF #
 			</div>
 			# IF C_CONTROLS #
 				<div class="controls align-right">
@@ -47,7 +47,7 @@
 		</div>
 
 		<div class="content">
-			# IF C_PICTURE #<img src="{U_PICTURE}" alt="{NAME}" class="item-thumbnail" itemprop="thumbnailUrl" /># ENDIF #
+			# IF C_PICTURE #<img src="{U_THUMBNAIL}" alt="{TITLE}" class="item-thumbnail" itemprop="thumbnailUrl" /># ENDIF #
 
 			<div itemprop="text">{CONTENTS}</div>
 		</div>
@@ -137,9 +137,9 @@
 	</article>
 
 	<footer>
-		<meta itemprop="url" content="{U_LINK}">
+		<meta itemprop="url" content="{U_ITEM}">
 		<meta itemprop="description" content="${escape(DESCRIPTION)}" />
-		# IF C_PICTURE #<meta itemprop="thumbnailUrl" content="{U_PICTURE}"># ENDIF #
+		# IF C_PICTURE #<meta itemprop="thumbnailUrl" content="{U_THUMBNAIL}"># ENDIF #
 		# IF C_COMMENTS_ENABLED #
 			<meta itemprop="discussionUrl" content="{U_COMMENTS}">
 			<meta itemprop="interactionCount" content="{COMMENTS_NUMBER} UserComments">

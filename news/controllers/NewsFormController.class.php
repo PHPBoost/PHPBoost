@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 20
+ * @version     PHPBoost 5.3 - last update: 2020 03 10
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -63,22 +63,22 @@ class NewsFormController extends ModuleController
 		$fieldset = new FormFieldsetHTMLHeading('news', $this->lang['news']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('name', $this->common_lang['form.name'], $this->get_news()->get_name(), array('required' => true)));
+		$fieldset->add_field(new FormFieldTextEditor('title', $this->common_lang['form.name'], $this->get_news()->get_title(), array('required' => true)));
 
 		if (CategoriesAuthorizationsService::check_authorizations($this->get_news()->get_id_cat())->moderation())
 		{
-			$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_name', $this->common_lang['form.rewrited_name.personalize'], $this->get_news()->rewrited_name_is_personalized(), array(
+			$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_title', $this->common_lang['form.rewrited_title.personalize'], $this->get_news()->rewrited_title_is_personalized(), array(
 			'events' => array('click' => '
-			if (HTMLForms.getField("personalize_rewrited_name").getValue()) {
-				HTMLForms.getField("rewrited_name").enable();
+			if (HTMLForms.getField("personalize_rewrited_title").getValue()) {
+				HTMLForms.getField("rewrited_title").enable();
 			} else {
-				HTMLForms.getField("rewrited_name").disable();
+				HTMLForms.getField("rewrited_title").disable();
 			}'
 			))));
 
-			$fieldset->add_field(new FormFieldTextEditor('rewrited_name', $this->common_lang['form.rewrited_name'], $this->get_news()->get_rewrited_name(), array(
+			$fieldset->add_field(new FormFieldTextEditor('rewrited_title', $this->common_lang['form.rewrited_name'], $this->get_news()->get_rewrited_title(), array(
 				'description' => $this->common_lang['form.rewrited_name.description'],
-				'hidden' => !$this->get_news()->rewrited_name_is_personalized()
+				'hidden' => !$this->get_news()->rewrited_title_is_personalized()
 			), array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu'))));
 		}
 
@@ -92,18 +92,18 @@ class NewsFormController extends ModuleController
 
 		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->common_lang['form.contents'], $this->get_news()->get_contents(), array('rows' => 15, 'required' => true)));
 
-		$fieldset->add_field(new FormFieldCheckbox('enable_short_contents', $this->lang['news.form.short_contents.enabled'], $this->get_news()->get_short_contents_enabled(),
-			array('description' => StringVars::replace_vars($this->lang['news.form.short_contents.enabled.description'], array('number' => NewsConfig::load()->get_number_character_to_cut())), 'events' => array('click' => '
-			if (HTMLForms.getField("enable_short_contents").getValue()) {
-				HTMLForms.getField("short_contents").enable();
+		$fieldset->add_field(new FormFieldCheckbox('enable_summary', $this->lang['news.form.summary.enabled'], $this->get_news()->get_summary_enabled(),
+			array('description' => StringVars::replace_vars($this->lang['news.form.summary.enabled.description'], array('number' => NewsConfig::load()->get_characters_number_to_cut())), 'events' => array('click' => '
+			if (HTMLForms.getField("enable_summary").getValue()) {
+				HTMLForms.getField("summary").enable();
 			} else {
-				HTMLForms.getField("short_contents").disable();
+				HTMLForms.getField("summary").disable();
 			}'))
 		));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('short_contents', $this->lang['news.form.short_contents'], $this->get_news()->get_short_contents(), array(
-			'hidden' => !$this->get_news()->get_short_contents_enabled(),
-			'description' => !NewsConfig::load()->get_display_condensed_enabled() ? '<span class="error">' . $this->lang['news.form.short_contents.description'] . '</span>' : ''
+		$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->lang['news.form.summary'], $this->get_news()->get_summary(), array(
+			'hidden' => !$this->get_news()->get_summary_enabled(),
+			'description' => !NewsConfig::load()->get_full_item_display() ? '<span class="error">' . $this->lang['news.form.summary.description'] . '</span>' : ''
 		)));
 
 		if ($this->config->get_author_displayed() == true)
@@ -125,7 +125,7 @@ class NewsFormController extends ModuleController
 		$other_fieldset = new FormFieldsetHTML('other', $this->common_lang['form.other']);
 		$form->add_fieldset($other_fieldset);
 
-		$other_fieldset->add_field(new FormFieldUploadFile('picture', $this->common_lang['form.picture'], $this->get_news()->get_picture()->relative()));
+		$other_fieldset->add_field(new FormFieldUploadFile('thumbnail', $this->common_lang['form.picture'], $this->get_news()->get_thumbnail()->relative()));
 
 		$other_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_news()->get_id(), 'keywords', $this->common_lang['form.keywords'], array('description' => $this->common_lang['form.keywords.description'])));
 
@@ -262,14 +262,14 @@ class NewsFormController extends ModuleController
 	{
 		$news = $this->get_news();
 
-		$news->set_name($this->form->get_value('name'));
+		$news->set_title($this->form->get_value('title'));
 
 		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
 			$news->set_id_cat($this->form->get_value('id_cat')->get_raw_value());
 
 		$news->set_contents($this->form->get_value('contents'));
-		$news->set_short_contents(($this->form->get_value('enable_short_contents') ? $this->form->get_value('short_contents') : ''));
-		$news->set_picture(new Url($this->form->get_value('picture')));
+		$news->set_summary(($this->form->get_value('enable_summary') ? $this->form->get_value('summary') : ''));
+		$news->set_thumbnail(new Url($this->form->get_value('thumbnail')));
 
 		if ($this->config->get_author_displayed() == true)
 			$news->set_author_custom_name(($this->form->get_value('author_custom_name') && $this->form->get_value('author_custom_name') !== $news->get_author_user()->get_display_name() ? $this->form->get_value('author_custom_name') : ''));
@@ -281,7 +281,7 @@ class NewsFormController extends ModuleController
 			if ($news->get_id() === null)
 				$news->set_creation_date(new Date());
 
-			$news->set_rewrited_name(Url::encode_rewrite($news->get_name()));
+			$news->set_rewrited_title(Url::encode_rewrite($news->get_title()));
 			$news->clean_start_and_end_date();
 
 			if (CategoriesAuthorizationsService::check_authorizations($news->get_id_cat())->contribution() && !CategoriesAuthorizationsService::check_authorizations($news->get_id_cat())->write())
@@ -298,9 +298,9 @@ class NewsFormController extends ModuleController
 				$news->set_creation_date($this->form->get_value('creation_date'));
 			}
 
-			$rewrited_name = $this->form->get_value('rewrited_name', '');
-			$rewrited_name = $this->form->get_value('personalize_rewrited_name') && !empty($rewrited_name) ? $rewrited_name : Url::encode_rewrite($news->get_name());
-			$news->set_rewrited_name($rewrited_name);
+			$rewrited_title = $this->form->get_value('rewrited_title', '');
+			$rewrited_title = $this->form->get_value('personalize_rewrited_title') && !empty($rewrited_title) ? $rewrited_title : Url::encode_rewrite($news->get_title());
+			$news->set_rewrited_title($rewrited_title);
 			$news->set_top_list_enabled($this->form->get_value('top_list'));
 			$news->set_approbation_type($this->form->get_value('approbation_type')->get_raw_value());
 			if ($news->get_approbation_type() == News::APPROVAL_DATE)
@@ -377,7 +377,7 @@ class NewsFormController extends ModuleController
 				$contribution = new Contribution();
 				$contribution->set_id_in_module($id_news);
 				$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
-				$contribution->set_entitled($news->get_name());
+				$contribution->set_entitled($news->get_title());
 				$contribution->set_fixing_url(NewsUrlBuilder::edit_news($id_news)->relative());
 				$contribution->set_poster_id(AppContext::get_current_user()->get_id());
 				$contribution->set_module('news');
@@ -417,16 +417,16 @@ class NewsFormController extends ModuleController
 		elseif ($news->is_visible())
 		{
 			if ($this->is_new_news)
-				AppContext::get_response()->redirect(NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name()), StringVars::replace_vars($this->lang['news.message.success.add'], array('name' => $news->get_name())));
+				AppContext::get_response()->redirect(NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_title()), StringVars::replace_vars($this->lang['news.message.success.add'], array('title' => $news->get_title())));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name())), StringVars::replace_vars($this->lang['news.message.success.edit'], array('name' => $news->get_name())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_title())), StringVars::replace_vars($this->lang['news.message.success.edit'], array('title' => $news->get_title())));
 		}
 		else
 		{
 			if ($this->is_new_news)
-				AppContext::get_response()->redirect(NewsUrlBuilder::display_pending_news(), StringVars::replace_vars($this->lang['news.message.success.add'], array('name' => $news->get_name())));
+				AppContext::get_response()->redirect(NewsUrlBuilder::display_pending_news(), StringVars::replace_vars($this->lang['news.message.success.add'], array('title' => $news->get_title())));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : NewsUrlBuilder::display_pending_news()), StringVars::replace_vars($this->lang['news.message.success.edit'], array('name' => $news->get_name())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : NewsUrlBuilder::display_pending_news()), StringVars::replace_vars($this->lang['news.message.success.edit'], array('title' => $news->get_title())));
 		}
 	}
 
@@ -465,7 +465,7 @@ class NewsFormController extends ModuleController
 					$breadcrumb->add($category->get_name(), NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
 			}
 			$category = $news->get_category();
-			$breadcrumb->add($news->get_name(), NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name()));
+			$breadcrumb->add($news->get_title(), NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_title()));
 			$breadcrumb->add($this->lang['news.edit'], NewsUrlBuilder::edit_news($news->get_id()));
 		}
 
