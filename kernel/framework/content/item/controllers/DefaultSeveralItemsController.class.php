@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 28
+ * @version     PHPBoost 5.3 - last update: 2020 03 12
  * @since       PHPBoost 5.3 - 2020 01 22
 */
 
@@ -288,7 +288,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 
 	protected function check_authorizations()
 	{
-		$authorizations = self::get_module()->get_configuration()->has_categories() ? CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, self::$module_id) : ItemsAuthorizationsService::check_authorizations(self::$module_id);
+		$authorizations = self::get_module()->get_configuration()->has_categories() ? CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id(), self::$module_id) : ItemsAuthorizationsService::check_authorizations(self::$module_id);
 		
 		if ($this->category !== null)
 			return ((AppContext::get_current_user()->is_guest() && $this->config->get_summary_displayed_to_guests() && Authorizations::check_auth(RANK_TYPE, User::MEMBER_LEVEL, $this->get_category()->get_authorizations(), Category::READ_AUTHORIZATIONS)) || $authorizations->read()) ? true : $this->display_user_not_authorized_page();
