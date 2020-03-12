@@ -95,7 +95,7 @@
 					<span class="close-all-accordions" aria-label="{@faq.hide.answers}"><i class="fa fa-fw fa-chevron-up"></i></span>
 				</div>
 			# ENDIF #
-			<nav>
+			<nav class="accordion-nav">
 				<ul class="accordion-bordered">
 					# START questions #
 						<li id="question-title-{questions.ID}" class="category-{questions.CATEGORY_ID}">

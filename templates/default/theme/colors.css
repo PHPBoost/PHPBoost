@@ -627,10 +627,11 @@ a[class*='lightcase-icon-']:hover {
 #lightcase-overlay { background-color: var(--administrator-dark); }
 
 /* --- plugins --- */
-.accordion-container > nav > ul > li > a {
+.accordion-container > .accordion-nav > ul > li > a {
     border-color: var(--main-dark);
     background-color: rgba(var(--main-rgb-d), 0.2);
 }
+
 .accordion .content-panel { border-color: var(--bdr-main); }
 
 .close-modal { color: var(--txt-light); }
@@ -638,7 +639,7 @@ a[class*='lightcase-icon-']:hover {
 .modal { background-color: rgba(var(--darken), 0.5); }
 .modal .content-panel { background-color: var(--bgc-main); }
 
-.tabs-container > nav > ul > li a.active-tab { background-color: rgba(var(--main-rgb-d), 0.2); }
+.tabs-container > .tabs-nav > ul > li a.active-tab { background-color: rgba(var(--main-rgb-d), 0.2); }
 
 .tooltip {
 	border-color: var(--bdr-main);

@@ -359,7 +359,7 @@ class SandboxBuilderController extends ModuleController
 		$link_list = new FormFieldsetHTML('links_list', $this->lang['builder.links.menu']);
 			$form->add_fieldset($link_list);
 
-			// List actionLinks
+			// List actionsLinks
 			$link_list->add_field(new FormFieldSubTitle('simple_list', $this->lang['builder.links.list'], ''));
 
 			$link_list->add_field(new FormFieldActionLinkList('actionlink_list',
@@ -375,6 +375,7 @@ class SandboxBuilderController extends ModuleController
 			// Tabs menu
 			$tabs_menu = new FormFieldMenuFieldset('tabs_menu', '');
 			$form->add_fieldset($tabs_menu);
+			$tabs_menu->set_css_class('tabs-nav');
 
 			$tabs_menu->add_field(new FormFieldSubTitle('tabs', $this->lang['builder.tabs.menu'], ''));
 

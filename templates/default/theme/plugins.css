@@ -27,13 +27,13 @@
     padding: 0.618em;
 }
 
-.accordion-container > nav > ul {
+.accordion-container > .accordion-nav > ul {
     margin: 0;
     padding: 0;
     list-style-type: none;
 }
 
-.accordion-container > nav > ul > li > a {
+.accordion-container > .accordion-nav > ul > li > a {
     position: relative;
     display: block;
     border-width: 1px 1px 0;
@@ -43,13 +43,13 @@
     transition: border-width 0.3s ease 0.3s;
 }
 
-.accordion-container > nav > ul > li:last-child > a,
-.accordion-container > nav > ul > li > a.active-tab {
+.accordion-container > .accordion-nav > ul > li:last-child > a,
+.accordion-container > .accordion-nav > ul > li > a.active-tab {
     border-width: 1px;
     transition: border-width 0s linear;
 }
 
-.accordion-container > nav > ul > li > a:after {
+.accordion-container > .accordion-nav > ul > li > a:after {
     position: absolute;
     font-family: 'Font Awesome 5 free';
     font-weight: 900;
@@ -59,7 +59,7 @@
     content: '\f078'
 }
 
-.accordion-container > nav > ul > li > a.active-tab:after {
+.accordion-container > .accordion-nav > ul > li > a.active-tab:after {
     content: '\f077';
 }
 
@@ -185,20 +185,20 @@ li:last-child .accordion .content-panel {
 }
 
 /* --- Multitabs Tabs ------------------------------------------------------- */
-.tabs-container > nav {
+.tabs-container > .tabs-nav {
     margin-bottom: 1.618em;
 }
 
-.tabs-container > nav > ul {
+.tabs-container > .tabs-nav > ul {
     margin: 0;
     padding: 0;
 }
 
-.tabs-container > nav > ul > li {
+.tabs-container > .tabs-nav > ul > li {
     display: inline-block;
 }
 
-.tabs-container > nav > ul > li a {
+.tabs-container > .tabs-nav > ul > li a {
     display: block;
     padding: .618em;
     outline: 0;

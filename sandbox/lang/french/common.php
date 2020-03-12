@@ -47,7 +47,7 @@ $lang['welcome.see'] = 'Voir';
 $lang['welcome.admin'] = 'En admin';
 
 $lang['welcome.builder'] = 'Le rendu des différentes fonctionnailtés utilisables avec le constructeur php: champs de formulaire, maps, menus de liens, etc.';
-$lang['welcome.fwkboost'] = 'Le rendu des différentes éléments du fwkboost HTML/CSS/JS de phpboost.';
+$lang['welcome.fwkboost'] = 'Le rendu des différents éléments du framework HTML/CSS/JS FWKBoost de PHPBoost.';
 $lang['welcome.bbcode'] = 'Le rendu des éléments spécifiques déclarés en bbcode qui apportent un design différent du FWKBoost.';
 $lang['welcome.menu'] = 'Le rendu des menus de navigations selon les emplacements potentiels.';
 $lang['welcome.icons'] = 'Un aperçu de ce qu\'il est possible de faire dans phpboost au niveau des icônes-font.';
