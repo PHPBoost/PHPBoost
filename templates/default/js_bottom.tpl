@@ -87,6 +87,9 @@
 	jQuery(window).ready(function() {
   		jQuery('.body-wrapper').animate({opacity: 1}, 300);
 	});
+
+// Autoresize Textareas
+	$(document).autoboxOn('textarea');
 </script>
 
 # IF C_COOKIEBAR_ENABLED #

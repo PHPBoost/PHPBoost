@@ -33,6 +33,7 @@
 <script src="{PATH_TO_ROOT}/templates/default/plugins/@global.js"></script>
 
 <script src="{PATH_TO_ROOT}/templates/default/plugins/autocomplete.js"></script>
+<script src="{PATH_TO_ROOT}/templates/default/plugins/autobox.js"></script>
 <script src="{PATH_TO_ROOT}/templates/default/plugins/basictable.js"></script>
 <script src="{PATH_TO_ROOT}/templates/default/plugins/dndfiles.js"></script>
 <script src="{PATH_TO_ROOT}/templates/default/plugins/tooltip.js"></script>
