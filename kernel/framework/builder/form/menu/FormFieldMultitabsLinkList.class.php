@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 09 15
+ * @version     PHPBoost 5.3 - last update: 2020 03 13
  * @since       PHPBoost 5.2 - 2019 09 15
 */
 
@@ -41,6 +41,7 @@ class FormFieldMultitabsLinkList extends AbstractFormField
 				'C_PICTURE' => $action->has_css_class() || $action->has_img(),
 				'C_IMG' => $action->has_img(),
 				'TITLE' => $action->get_title(),
+				'CLASS' => $action->get_class(),
 				'CSS_CLASS' => $action->get_css_class(),
 				'TRIGGER' => $action->get_trigger(),
 				'TARGET' => $action->get_target(),

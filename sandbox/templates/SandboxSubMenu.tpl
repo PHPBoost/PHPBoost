@@ -19,11 +19,11 @@
                     <li class="has-sub">
                         <a href="${relative_url(SandboxUrlBuilder::builder())}#Sandbox_Builder_links_list" class="cssmenu-title"><span>{@hashtag.links}</span></a>
                         <ul>
-                            <li><a href="${relative_url(SandboxUrlBuilder::builder())}#Sandbox_Builder_links_list" class="cssmenu-title"><span>{@hashtag.classics}</span></a></li>
-                            <li><a href="${relative_url(SandboxUrlBuilder::builder())}#Sandbox_Builder_accordion_list" class="cssmenu-title"><span>{@hashtag.accordion}</span></a></li>
-                            <li><a href="${relative_url(SandboxUrlBuilder::builder())}#Sandbox_Builder_modal_list" class="cssmenu-title"><span>{@hashtag.modal}</span></a></li>
+                            <li><a href="${relative_url(SandboxUrlBuilder::builder())}#Sandbox_Builder_links_field" class="cssmenu-title"><span>{@hashtag.classics}</span></a></li>
+                            <li><a href="${relative_url(SandboxUrlBuilder::builder())}#Sandbox_Builder_accordion_field" class="cssmenu-title"><span>{@hashtag.accordion}</span></a></li>
+                            <li><a href="${relative_url(SandboxUrlBuilder::builder())}#Sandbox_Builder_modal_field" class="cssmenu-title"><span>{@hashtag.modal}</span></a></li>
                             <li><a href="${relative_url(SandboxUrlBuilder::builder())}#Sandbox_Builder_tabs_field" class="cssmenu-title"><span>{@hashtag.tabs}</span></a></li>
-                            <li><a href="${relative_url(SandboxUrlBuilder::builder())}#Sandbox_Builder_wizard_list" class="cssmenu-title"><span>{@hashtag.wizard}</span></a></li>
+                            <li><a href="${relative_url(SandboxUrlBuilder::builder())}#Sandbox_Builder_wizard_field" class="cssmenu-title"><span>{@hashtag.wizard}</span></a></li>
                         </ul>
                     </li>
                     # IF C_GMAP #<li><a href="${relative_url(SandboxUrlBuilder::builder())}#Sandbox_Builder_fieldset_maps" class="cssmenu-title"><span>{@hashtag.gmap}</span></a></li># ENDIF #

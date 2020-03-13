@@ -124,6 +124,7 @@ $lang['builder.links.list'] = 'Liste de liens';
 $lang['builder.link.icon'] = 'Item avec icône';
 $lang['builder.link.img'] = 'Item avec image';
 $lang['builder.link'] = 'Item de Liste';
+$lang['builder.modal.menu'] = 'Menu modal';
 $lang['builder.tabs.menu'] = 'Menus tabulaire';
 $lang['builder.panel'] = 'Panneau';
 

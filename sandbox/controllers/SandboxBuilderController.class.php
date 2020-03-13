@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 09
+ * @version     PHPBoost 5.3 - last update: 2020 03 13
  * @since       PHPBoost 3.0 - 2009 12 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -111,7 +111,7 @@ class SandboxBuilderController extends ModuleController
 	{
 		$security_config = SecurityConfig::load();
 		$form = new HTMLForm('Sandbox_Builder');
-		$form->set_css_class('accordion-container modal-container tabs-container wizard-container fieldset-content');
+		$form->set_css_class('accordion-container siblings modal-container tabs-container wizard-container fieldset-content');
 
 		// TEXT FIELDS
 		$text_fields = new FormFieldsetHTML('text_field', $this->lang['builder.title.inputs']);
@@ -169,14 +169,14 @@ class SandboxBuilderController extends ModuleController
 			));
 
 			// Password
-			$text_fields->add_field($password = new FormFieldPasswordEditor('password', $this->lang['builder.input.password'], $this->lang['builder.input.password.placeholder'],
-				array('description' => $security_config->get_internal_password_min_length() . $this->lang['builder.input.password.desc'], 'class' => 'css-class'),
-				array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
-			));
-			$text_fields->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['builder.input.password.confirm'], $this->lang['builder.input.password.placeholder'],
-				array('description' => $security_config->get_internal_password_min_length() . $this->lang['builder.input.password.desc'], 'class' => 'css-class'),
-				array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
-			));
+			// $text_fields->add_field($password = new FormFieldPasswordEditor('password', $this->lang['builder.input.password'], $this->lang['builder.input.password.placeholder'],
+			// 	array('description' => $security_config->get_internal_password_min_length() . $this->lang['builder.input.password.desc'], 'class' => 'css-class'),
+			// 	array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
+			// ));
+			// $text_fields->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['builder.input.password.confirm'], $this->lang['builder.input.password.placeholder'],
+			// 	array('description' => $security_config->get_internal_password_min_length() . $this->lang['builder.input.password.desc'], 'class' => 'css-class'),
+			// 	array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
+			// ));
 
 		// TEXTAREA
 		$textarea = new FormFieldsetHTML('textarea', $this->lang['builder.title.textarea']);
@@ -372,49 +372,121 @@ class SandboxBuilderController extends ModuleController
 				array('class' => 'css-class')
 			));
 
-			// Tabs menu
-			$tabs_menu = new FormFieldMenuFieldset('tabs_menu', '');
-			$form->add_fieldset($tabs_menu);
-			$tabs_menu->set_css_class('tabs-nav');
+			// Accordion menu
+			$fieldset_accordion_controls = new FormFieldsetAccordionControls('accordion_controls', '');
+			$accordion_form->add_fieldset($fieldset_accordion_controls);
 
-			$tabs_menu->add_field(new FormFieldSubTitle('tabs', $this->lang['builder.tabs.menu'], ''));
+			$fieldset_tab_menu = new FormFieldMenuFieldset('tabmenulistID', '');
+			$accordion_form->add_fieldset($fieldset_tab_menu);
 
-			$tabs_menu->add_field(new FormFieldMultitabsLinkList('tabs_menu_list',
-				array(
-					new FormFieldMultitabsLinkElement($this->lang['builder.link.icon'], 'tabs', 'Sandbox_Builder_tabs_01', 'fa-cog'),
-					new FormFieldMultitabsLinkElement($this->lang['builder.link.img'], 'tabs', 'Sandbox_Builder_tabs_02', '', '/sandbox/sandbox_mini.png'),
-					new FormFieldMultitabsLinkElement($this->lang['builder.link'].' 3', 'tabs', 'Sandbox_Builder_tabs_03'),
-					new FormFieldMultitabsLinkElement($this->lang['builder.link'].' 4', 'tabs', 'Sandbox_Builder_tabs_04')
-				)
+			$fieldset_tab_menu->add_field(new FormFieldMultitabsLinkList('tabitemlistID',
+			    array(
+			        //new FormFieldMultitabsLinkElement(ItemTitle, 'accordion', 'HTMLFormID_targetID', 'fa-icon', 'picture_url', 'active_module'),
+			        new FormFieldMultitabsLinkElement($this->lang['Pannel 01 tabitem'], 'accordion', 'HTMLFormID_targetID-01'),
+			        new FormFieldMultitabsLinkElement($this->lang['multitabs.accordion.title.link'], 'accordion', 'HTMLFormID_targetID-02'),
+			        new FormFieldMultitabsLinkElement($this->lang['multitabs.accordion.title.link'] . ' 03', 'accordion', 'HTMLFormID_targetID-03'),
+			    )
 			));
 
-			$tabs_01 = new FormFieldsetMultitabsHTML('tabs_01', $this->lang['builder.panel'].' 1',
-				array('css_class' => 'tabs tabs-animation first-tab')
-			);
-			$form->add_fieldset($tabs_01);
+			$fieldset_tab_one = new FormFieldsetMultitabsHTML('targetID-01', $this->lang['multitabs.panel.title'] . ' 01', array('css_class' => 'accordion accordion-animation'));
+			$accordion_form->add_fieldset($fieldset_tab_one);
 
-			$tabs_01->set_description($this->common_lang['lorem.short.content']);
+			$fieldset_tab_one->add_field(new FormFieldSubTitle('subtitleID', $this->lang['multitabs.form.subtitle'],''));
 
-			$tabs_02 = new FormFieldsetMultitabsHTML('tabs_02', $this->lang['builder.panel'].' 2',
-				array('css_class' => 'tabs tabs-animation')
-			);
-			$form->add_fieldset($tabs_02);
+			$fieldset_tab_two = new FormFieldsetMultitabsHTML('targetID-02', $this->lang['multitabs.panel.title'] . ' 02', array('css_class' => 'accordion accordion-animation'));
+			$accordion_form->add_fieldset($fieldset_tab_two);
 
-			$tabs_02->set_description($this->common_lang['lorem.medium.content']);
+			$fieldset_tab_three = new FormFieldsetMultitabsHTML('targetID-03', $this->lang['multitabs.panel.title'] . ' 03', array('css_class' => 'accordion accordion-animation'));
+			$accordion_form->add_fieldset($fieldset_tab_three);
 
-			$tabs_03 = new FormFieldsetMultitabsHTML('tabs_03', $this->lang['builder.panel'].' 3',
-				array('css_class' => 'tabs tabs-animation')
-			);
-			$form->add_fieldset($tabs_03);
 
-			$tabs_03->set_description($this->common_lang['lorem.large.content']);
+			// Modal menu
+			$modal_menu = new FormFieldMenuFieldset('modal_menu', '');
+				$form->add_fieldset($modal_menu);
+				$modal_menu->set_css_class('modal-nav');
 
-			$tabs_04 = new FormFieldsetMultitabsHTML('tabs_04', $this->lang['builder.panel'].' 4',
-				array('css_class' => 'tabs tabs-animation')
-			);
-			$form->add_fieldset($tabs_04);
+				$modal_menu->add_field(new FormFieldSubTitle('modal', $this->lang['builder.modal.menu'], ''));
 
-			$tabs_04->set_description($this->common_lang['lorem.short.content']);
+				$modal_menu->add_field(new FormFieldMultitabsLinkList('modal_menu_list',
+					array(
+						new FormFieldMultitabsLinkElement($this->lang['builder.link.icon'], 'modal', 'Sandbox_Builder_modal_01', 'fa-cog'),
+						new FormFieldMultitabsLinkElement($this->lang['builder.link.img'], 'modal', 'Sandbox_Builder_modal_02', '', '/sandbox/sandbox_mini.png'),
+						new FormFieldMultitabsLinkElement($this->lang['builder.link'].' 3', 'modal', 'Sandbox_Builder_modal_03'),
+						new FormFieldMultitabsLinkElement($this->lang['builder.link'].' 4', 'modal', 'Sandbox_Builder_modal_04', '', '', '','button d-inline-block')
+					)
+				));
+
+				$modal_01 = new FormFieldsetMultitabsHTML('modal_01', $this->lang['builder.panel'].' 1',
+					array('css_class' => 'modal modal-animation first-tab', 'modal' => true)
+				);
+				$form->add_fieldset($modal_01);
+
+				$modal_01->set_description($this->common_lang['lorem.short.content']);
+
+				$modal_02 = new FormFieldsetMultitabsHTML('modal_02', $this->lang['builder.panel'].' 2',
+					array('css_class' => 'modal modal-animation', 'modal' => true)
+				);
+				$form->add_fieldset($modal_02);
+
+				$modal_02->set_description($this->common_lang['lorem.medium.content']);
+
+				$modal_03 = new FormFieldsetMultitabsHTML('modal_03', $this->lang['builder.panel'].' 3',
+					array('css_class' => 'modal modal-animation', 'modal' => true)
+				);
+				$form->add_fieldset($modal_03);
+
+				$modal_03->set_description($this->common_lang['lorem.large.content']);
+
+				$modal_04 = new FormFieldsetMultitabsHTML('modal_04', $this->lang['builder.panel'].' 4',
+					array('css_class' => 'modal modal-animation', 'modal' => true)
+				);
+				$form->add_fieldset($modal_04);
+
+				$modal_04->set_description($this->common_lang['lorem.short.content']);
+
+			// Tabs menu
+			$tabs_menu = new FormFieldMenuFieldset('tabs_menu', '');
+				$form->add_fieldset($tabs_menu);
+				$tabs_menu->set_css_class('tabs-nav');
+
+				$tabs_menu->add_field(new FormFieldSubTitle('tabs', $this->lang['builder.tabs.menu'], ''));
+
+				$tabs_menu->add_field(new FormFieldMultitabsLinkList('tabs_menu_list',
+					array(
+						new FormFieldMultitabsLinkElement($this->lang['builder.link.icon'], 'tabs', 'Sandbox_Builder_tabs_01', 'fa-cog'),
+						new FormFieldMultitabsLinkElement($this->lang['builder.link.img'], 'tabs', 'Sandbox_Builder_tabs_02', '', '/sandbox/sandbox_mini.png'),
+						new FormFieldMultitabsLinkElement($this->lang['builder.link'].' 3', 'tabs', 'Sandbox_Builder_tabs_03'),
+						new FormFieldMultitabsLinkElement($this->lang['builder.link'].' 4', 'tabs', 'Sandbox_Builder_tabs_04', '', '', '', 'button d-inline-block')
+					)
+				));
+
+				$tabs_01 = new FormFieldsetMultitabsHTML('tabs_01', $this->lang['builder.panel'].' 1',
+					array('css_class' => 'tabs tabs-animation first-tab')
+				);
+				$form->add_fieldset($tabs_01);
+
+				$tabs_01->set_description($this->common_lang['lorem.short.content']);
+
+				$tabs_02 = new FormFieldsetMultitabsHTML('tabs_02', $this->lang['builder.panel'].' 2',
+					array('css_class' => 'tabs tabs-animation')
+				);
+				$form->add_fieldset($tabs_02);
+
+				$tabs_02->set_description($this->common_lang['lorem.medium.content']);
+
+				$tabs_03 = new FormFieldsetMultitabsHTML('tabs_03', $this->lang['builder.panel'].' 3',
+					array('css_class' => 'tabs tabs-animation')
+				);
+				$form->add_fieldset($tabs_03);
+
+				$tabs_03->set_description($this->common_lang['lorem.large.content']);
+
+				$tabs_04 = new FormFieldsetMultitabsHTML('tabs_04', $this->lang['builder.panel'].' 4',
+					array('css_class' => 'tabs tabs-animation')
+				);
+				$form->add_fieldset($tabs_04);
+
+				$tabs_04->set_description($this->common_lang['lorem.short.content']);
 
 		// GOOGLE MAPS
 		if (ModulesManager::is_module_installed('GoogleMaps') && ModulesManager::is_module_activated('GoogleMaps') && GoogleMapsConfig::load()->get_api_key())
@@ -482,7 +554,7 @@ class SandboxBuilderController extends ModuleController
 			$form->add_fieldset($buttons_fieldset);
 
 		// FORM CONSTRAINTS
-		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
+		// $form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
 
 		return $form;
 	}
