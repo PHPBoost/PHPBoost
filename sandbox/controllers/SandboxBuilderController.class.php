@@ -373,31 +373,31 @@ class SandboxBuilderController extends ModuleController
 			));
 
 			// Accordion menu
-			$fieldset_accordion_controls = new FormFieldsetAccordionControls('accordion_controls', '');
-			$accordion_form->add_fieldset($fieldset_accordion_controls);
-
-			$fieldset_tab_menu = new FormFieldMenuFieldset('tabmenulistID', '');
-			$accordion_form->add_fieldset($fieldset_tab_menu);
-
-			$fieldset_tab_menu->add_field(new FormFieldMultitabsLinkList('tabitemlistID',
-			    array(
-			        //new FormFieldMultitabsLinkElement(ItemTitle, 'accordion', 'HTMLFormID_targetID', 'fa-icon', 'picture_url', 'active_module'),
-			        new FormFieldMultitabsLinkElement($this->lang['Pannel 01 tabitem'], 'accordion', 'HTMLFormID_targetID-01'),
-			        new FormFieldMultitabsLinkElement($this->lang['multitabs.accordion.title.link'], 'accordion', 'HTMLFormID_targetID-02'),
-			        new FormFieldMultitabsLinkElement($this->lang['multitabs.accordion.title.link'] . ' 03', 'accordion', 'HTMLFormID_targetID-03'),
-			    )
-			));
-
-			$fieldset_tab_one = new FormFieldsetMultitabsHTML('targetID-01', $this->lang['multitabs.panel.title'] . ' 01', array('css_class' => 'accordion accordion-animation'));
-			$accordion_form->add_fieldset($fieldset_tab_one);
-
-			$fieldset_tab_one->add_field(new FormFieldSubTitle('subtitleID', $this->lang['multitabs.form.subtitle'],''));
-
-			$fieldset_tab_two = new FormFieldsetMultitabsHTML('targetID-02', $this->lang['multitabs.panel.title'] . ' 02', array('css_class' => 'accordion accordion-animation'));
-			$accordion_form->add_fieldset($fieldset_tab_two);
-
-			$fieldset_tab_three = new FormFieldsetMultitabsHTML('targetID-03', $this->lang['multitabs.panel.title'] . ' 03', array('css_class' => 'accordion accordion-animation'));
-			$accordion_form->add_fieldset($fieldset_tab_three);
+			// $fieldset_accordion_controls = new FormFieldsetAccordionControls('accordion_controls', '');
+			// $accordion_form->add_fieldset($fieldset_accordion_controls);
+			//
+			// $fieldset_tab_menu = new FormFieldMenuFieldset('tabmenulistID', '');
+			// $accordion_form->add_fieldset($fieldset_tab_menu);
+			//
+			// $fieldset_tab_menu->add_field(new FormFieldMultitabsLinkList('tabitemlistID',
+			//     array(
+			//         //new FormFieldMultitabsLinkElement(ItemTitle, 'accordion', 'HTMLFormID_targetID', 'fa-icon', 'picture_url', 'active_module'),
+			//         new FormFieldMultitabsLinkElement($this->lang['Pannel 01 tabitem'], 'accordion', 'HTMLFormID_targetID-01'),
+			//         new FormFieldMultitabsLinkElement($this->lang['multitabs.accordion.title.link'], 'accordion', 'HTMLFormID_targetID-02'),
+			//         new FormFieldMultitabsLinkElement($this->lang['multitabs.accordion.title.link'] . ' 03', 'accordion', 'HTMLFormID_targetID-03'),
+			//     )
+			// ));
+			//
+			// $fieldset_tab_one = new FormFieldsetMultitabsHTML('targetID-01', $this->lang['multitabs.panel.title'] . ' 01', array('css_class' => 'accordion accordion-animation'));
+			// $accordion_form->add_fieldset($fieldset_tab_one);
+			//
+			// $fieldset_tab_one->add_field(new FormFieldSubTitle('subtitleID', $this->lang['multitabs.form.subtitle'],''));
+			//
+			// $fieldset_tab_two = new FormFieldsetMultitabsHTML('targetID-02', $this->lang['multitabs.panel.title'] . ' 02', array('css_class' => 'accordion accordion-animation'));
+			// $accordion_form->add_fieldset($fieldset_tab_two);
+			//
+			// $fieldset_tab_three = new FormFieldsetMultitabsHTML('targetID-03', $this->lang['multitabs.panel.title'] . ' 03', array('css_class' => 'accordion accordion-animation'));
+			// $accordion_form->add_fieldset($fieldset_tab_three);
 
 
 			// Modal menu
