@@ -85,23 +85,23 @@
 						<label for="height">{L_HEIGHT}</label>
 						<div class="form-field"><input type="number" min="10" max="5000" id="height" name="height" value="{HEIGHT}" /></div>
 					</div>
-					<div class="form-element">
+					<div class="form-element form-element-upload-file">
 						<label for="u_media">* {L_U_MEDIA}</label>
-						<div class="form-field">
-							<input type="text" id="u_media" name="u_media" value="{U_MEDIA}" />
+						<div class="form-field# IF C_AUTH_UPLOAD #  grouped-inputs form-field-upload-file# ENDIF #">
+							<input class="grouped-element upload-input" type="text" id="u_media" name="u_media" value="{U_MEDIA}" />
 							# IF C_AUTH_UPLOAD #
-								<a aria-label="${LangLoader::get_message('files_management', 'main')}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=u_media&amp;parse=true&amp;no_path=true', '', 'height=500,width=769,resizable=yes,scrollbars=yes');return false;">
+								<a class="grouped-element" aria-label="${LangLoader::get_message('files_management', 'main')}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=u_media&amp;parse=true&amp;no_path=true', '', 'height=500,width=769,resizable=yes,scrollbars=yes');return false;">
 									<i class="fa fa-cloud-upload-alt fa-2x" aria-hidden="true"></i>
 								</a>
 							# ENDIF #
 						</div>
 					</div>
-					<div class="form-element">
+					<div class="form-element form-element-upload-file">
 						<label for="poster">{L_POSTER}</label>
-						<div class="form-field# IF C_AUTH_UPLOAD # form-field-upload-file# ENDIF #">
-							<input type="text" id="poster" name="poster" value="{POSTER}" />
+						<div class="form-field# IF C_AUTH_UPLOAD # grouped-inputs form-field-upload-file# ENDIF #">
+							<input class="grouped-element upload-input" type="text" id="poster" name="poster" value="{POSTER}" />
 							# IF C_AUTH_UPLOAD #
-								<a aria-label="${LangLoader::get_message('files_management', 'main')}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=poster&amp;parse=true&amp;no_path=true', '', 'height=500,width=769,resizable=yes,scrollbars=yes');return false;">
+								<a class="grouped-element" aria-label="${LangLoader::get_message('files_management', 'main')}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=poster&amp;parse=true&amp;no_path=true', '', 'height=500,width=769,resizable=yes,scrollbars=yes');return false;">
 									<i class="fa fa-cloud-upload-alt fa-2x" aria-hidden="true"></i>
 								</a>
 							# ENDIF #
