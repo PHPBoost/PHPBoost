@@ -38,7 +38,8 @@ class SandboxMenuController extends ModuleController
 	{
 		$this->view->put_all(array(
 			'L_ELEM' => $this->lang['cssmenu.element'],
-			'SANDBOX_SUBMENU' => self::get_submenu()
+			'SANDBOX_SUBMENU' => self::get_submenu(),
+			'MARKUP' => self::get_markup()
 		));
 	}
 
@@ -48,6 +49,14 @@ class SandboxMenuController extends ModuleController
 		$submenu_tpl = new FileTemplate('sandbox/SandboxSubMenu.tpl');
 		$submenu_tpl->add_lang($submenu_lang);
 		return $submenu_tpl;
+	}
+
+	private function get_markup()
+	{
+		$markup_tpl = new FileTemplate('sandbox/pagecontent/menus/markup.tpl');
+		$markup_tpl->add_lang($this->lang);
+		$markup_tpl->add_lang($this->common_lang);
+		return $markup_tpl;
 	}
 
 	private function check_authorizations()

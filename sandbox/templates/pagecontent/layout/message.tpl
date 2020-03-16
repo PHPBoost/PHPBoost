@@ -56,7 +56,8 @@
     <!-- Source code -->
     <div class="formatter-container formatter-hide no-js tpl">
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
-        <div class="formatter-content">
+        <div class="formatter-content formatter-code">
+            <div class="formatter-content">
 <pre class="language-html line-numbers"><code class="language-html">&lt;article id="Id" class="message-container (message-small/message-offset)" itemscope="itemscope" itemtype="http://schema.org/Comment">
     &lt;header class="message-header-container (#IF CURRENT#current-user-message)">
         &lt;img class="message-user-avatar" src="Url" alt="Text">
@@ -98,6 +99,7 @@
     &lt;/footer>
 
 &lt;/article></code></pre>
-        </div>
+            </div>
+        </div>        
     </div>
 </div>

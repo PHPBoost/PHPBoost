@@ -27,7 +27,8 @@
         <!-- Source code -->
         <div class="formatter-container formatter-hide no-js">
             <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
-            <div class="formatter-content">
+            <div class="formatter-content formatter-code">
+                <div class="formatter-content">
 <pre class="language-html line-numbers"><code class="language-html">&lt;span class="smallest">{@fwkboost.item.smallest}&lt;/span>
 &lt;span class="smaller">{@fwkboost.item.smaller}&lt;/span>
 &lt;span class="small">{@fwkboost.item.small}&lt;/span>
@@ -35,6 +36,7 @@
 &lt;span class="big">{@fwkboost.item.big}&lt;/span>
 &lt;span class="bigger">{@fwkboost.item.bigger}&lt;/span>
 &lt;span class="biggest">{@fwkboost.item.biggest}&lt;/span></code></pre>
+                </div>
             </div>
         </div>
     </article>
@@ -61,7 +63,8 @@
         <!-- Source code -->
         <div class="formatter-container formatter-hide no-js">
             <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
-            <div class="formatter-content">
+            <div class="formatter-content formatter-code">
+                <div class="formatter-content">
 <pre class="language-html line-numbers"><code class="language-html">&lt;p class="text-strong">{@fwkboost.item.bold}&lt;/p>
 &lt;p class="text-italic">{@fwkboost.item.italic}&lt;/p>
 &lt;p class="text-underline">{@fwkboost.item.underline}&lt;/p>
@@ -76,7 +79,8 @@
 &lt;p class="flex-between">&lt;span>{@fwkboost.items}&lt;/span>&lt;span>{@fwkboost.item.stretch.center}&lt;/span>&lt;span>{@fwkboost.item.stretch.right}&lt;/span>&lt;/p>
 &lt;p class="stacked">&lt;span>{@fwkboost.item}&lt;/span>&lt;span class="stack-event stack-right stack-sup stack-circle bgc member">{@fwkboost.item.stack.index}&lt;/span>&lt;/p>
 &lt;p class="pinned bgc moderator">{@fwkboost.item.pinned}&lt;/p></code></pre>
-            </div>
+                </div>
+            </div>            
         </div>
     </article>
 </div>

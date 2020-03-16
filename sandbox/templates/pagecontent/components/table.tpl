@@ -79,13 +79,15 @@
 
     <div class="formatter-container formatter-hide no-js tpl">
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
-        <div class="formatter-content">
+        <div class="formatter-content formatter-code">
+            <div class="formatter-content">
 <pre class="language-html line-numbers"><code class="language-html">// {@fwkboost.table.responsive.header}
 &lt;table class="table">...&lt;/table>
 <br />
 // {@fwkboost.table.responsive.no.header}
 &lt;table class="table-no-header">...&lt;/table>
 </code></pre>
-        </div>
+            </div>
+        </div>        
     </div>
 </article>

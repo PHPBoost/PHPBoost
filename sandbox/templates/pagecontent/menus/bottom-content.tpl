@@ -1,16 +1,16 @@
 <nav id="cssmenu-bottom-content" class="cssmenu cssmenu-group">
     <ul class="level-0">
         <li>
-            <a class="cssmenu-title" href="#">Element</a>
+            <a class="cssmenu-title" href="#"><span>Element</span></a>
         </li>
         <li class="current">
-            <a class="cssmenu-title" href="#">Element</a>
+            <a class="cssmenu-title" href="#"><span>Element</span></a>
         </li>
         <li>
-            <a class="cssmenu-title" href="#">Element</a>
+            <a class="cssmenu-title" href="#"><span>Element</span></a>
         </li>
         <li>
-            <a class="cssmenu-title" href="#">Element</a>
+            <a class="cssmenu-title" href="#"><span>Element</span></a>
         </li>
     </ul>
 </nav>

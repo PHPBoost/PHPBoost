@@ -27,11 +27,13 @@
     </div>
     <div class="formatter-container formatter-hide no-js tpl">
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
-        <div class="formatter-content">
+        <div class="formatter-content formatter-code">
+            <div class="formatter-content">
 <pre class="language-html line-numbers"><code class="language-html">&lt;div class="progressbar-container" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
     &lt;div class="progressbar-infos">25%&lt;/div>
     &lt;div class="progressbar" style="width:25%;">&lt;/div>
 &lt;/div></code></pre>
-        </div>
+            </div>
+        </div>        
     </div>
 </article>

@@ -15,6 +15,7 @@
 					{@H|cssmenu.warning}
 				</div>
 				<p>{@lorem.large.content}</p>
+				# INCLUDE MARKUP #
 			</div>
 			<footer></footer>
 		</article>

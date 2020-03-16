@@ -29,16 +29,17 @@
     <!-- Source code -->
     <div class="formatter-container formatter-hide no-js tpl">
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
-        <div class="formatter-content"><pre class="language-html line-numbers"><code class="language-html">&lt;div class="notation">
+        <div class="formatter-content formatter-code">
+            <div class="formatter-content"><pre class="language-html line-numbers"><code class="language-html">&lt;div class="notation">
     &lt;span class="stars">
         &lt;a href="#" onclick="return false;" class="far star fa-star">&lt;span class="star-width star-width-100">&lt;/span>&lt;/a>
         &lt;a href="#" onclick="return false;" class="far star fa-star">&lt;span class="star-width star-width-100">&lt;/span>&lt;/a>
         &lt;a href="#" onclick="return false;" class="far star fa-star">&lt;span class="star-width star-width-25">&lt;/span>&lt;/a>
         &lt;a href="#" onclick="return false;" class="far star fa-star">&lt;span class="star-width star-width-0">&lt;/span>&lt;/a>
         &lt;a href="#" onclick="return false;" class="far star fa-star">&lt;span class="star-width star-width-0">&lt;/span>&lt;/a>
-
     &lt;/span>
 &lt;/div></code></pre>
+            </div>
         </div>
     </div>
 </article>

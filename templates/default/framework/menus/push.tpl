@@ -25,7 +25,7 @@
 		# ENDIF #
 
 <script>
-    $('#pushmenu-{ID}').pushmenu({
+    jQuery('#pushmenu-{ID}').pushmenu({
 		maxWidth: false,
 		customToggle: jQuery('.toggle-{ID}'), // null
 		navTitle: '{TITLE}', // null
