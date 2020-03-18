@@ -179,7 +179,7 @@ class CalendarEvent
 			'C_CONTROLS' => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
 			'C_EDIT' => $this->is_authorized_to_edit(),
 			'C_DELETE' => $this->is_authorized_to_delete(),
-			'C_HAS_PICTURE' => $this->content->has_picture(),
+			'C_HAS_THUMBNAIL' => $this->content->has_picture(),
 			'C_LOCATION' => !empty($location),
 			'C_LOCATION_MAP' => $has_location_map,
 			'C_BELONGS_TO_A_SERIE' => $this->belongs_to_a_serie(),
@@ -226,7 +226,7 @@ class CalendarEvent
 			'U_ITEM' => CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $this->id, $this->content->get_rewrited_title())->rel(),
 			'U_EDIT' => CalendarUrlBuilder::edit_event(!$this->parent_id ? $this->id : $this->parent_id)->rel(),
 			'U_DELETE' => CalendarUrlBuilder::delete_event($this->id)->rel(),
-			'U_PICTURE' => $this->content->get_picture()->rel(),
+			'U_THUMBNAIL' => $this->content->get_picture()->rel(),
 			'U_SUSCRIBE' => CalendarUrlBuilder::suscribe_event($this->id)->rel(),
 			'U_UNSUSCRIBE' => CalendarUrlBuilder::unsuscribe_event($this->id)->rel(),
 			'U_COMMENTS' => CalendarUrlBuilder::display_event_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->content->get_rewrited_title())->rel()

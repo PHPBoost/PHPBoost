@@ -40,9 +40,9 @@
 						# ENDIF #
 					</div>
 					<div class="cell-body# IF event.C_CANCELLED # error# ENDIF #">
-						# IF event.C_HAS_PICTURE #
+						# IF event.C_HAS_THUMBNAIL #
 							<div class="cell-thumbnail">
-								<img src="{event.U_PICTURE}" alt="{event.TITLE}" />
+								<img src="{event.U_THUMBNAIL}" alt="{event.TITLE}" />
 								<a class="cell-thumbnail-caption" href="{event.U_ITEM}" itemprop="thumbnailUrl" aria-label="{event.TITLE}"><i class="far fa-eye" aria-hidden="true"></i></a>
 							</div>
 						# ENDIF #
@@ -97,7 +97,7 @@
 					</div>
 					<footer>
 						<meta itemprop="about" content="{event.CATEGORY_NAME}">
-						# IF event.C_HAS_PICTURE #<meta itemprop="thumbnailUrl" content="{event.U_PICTURE}"># ENDIF #
+						# IF event.C_HAS_THUMBNAIL #<meta itemprop="thumbnailUrl" content="{event.U_THUMBNAIL}"># ENDIF #
 						# IF C_COMMENTS_ENABLED #
 							<meta itemprop="discussionUrl" content="{event.U_COMMENTS}">
 							<meta itemprop="interactionCount" content="{event.COMMENTS_NUMBER} UserComments">
