@@ -88,7 +88,7 @@ class CalendarService
 			DispatchManager::redirect($controller);
 		}
 		
-		self::$db_querier->delete(CalendarSetup::$calendar_events_table, 'WHERE id=:id', array('id' => $id));
+		self::$db_querier->delete(CalendarSetup::$calendar_events_table, 'WHERE id_event=:id', array('id' => $id));
 
 		if (!$has_parent)
 			PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'calendar', 'id' => $id));
