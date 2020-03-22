@@ -28,6 +28,15 @@ td[class*="calendar-"]:last-child {
     display: block;
 }
 
-#calendar .calendar-event[style] a {
-	mix-blend-mode: difference;
+#calendar .calendar-event a {
+	position: relative;
+}
+
+#calendar .calendar-event a .event-spot {
+	position: absolute;
+	width: 8px;
+	height: 8px;
+	box-shadow: 0 0 1px 1px rgba(var(--darken), 0.2);
+	right: 25%;
+	border-radius: 50%;
 }

@@ -61,8 +61,8 @@
 		<tbody>
 			<tr>
 				# START day #
-				<td class="{day.CLASS}"# IF day.C_COLOR # style="background-color:{day.COLOR}"# ENDIF #>
-					# IF day.C_MONTH_DAY #<a href="{day.U_DAY_EVENTS}">{day.DAY}</a># ENDIF #
+				<td class="{day.CLASS}">
+					# IF day.C_MONTH_DAY #<a href="{day.U_DAY_EVENTS}">{day.DAY}# IF day.C_COLOR # <span class="event-spot" style="background-color: {day.COLOR}"></span># ENDIF #</a># ENDIF #
 					# IF day.C_WEEK_LABEL #{day.DAY}# ENDIF #
 				</td>
 				# IF day.CHANGE_LINE #
