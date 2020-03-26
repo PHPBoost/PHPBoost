@@ -660,3 +660,20 @@ setInterval(function() {
 		jQuery(this).css('border-color', color);
 		jQuery(this).prepend('<span style="background-color: '+color+';" class="data-color"></span>')
 	});
+
+// Scroll to anchor on .sticky-menu
+jQuery('.sticky-menu').each(function(){
+	jQuery('.sticky-menu .cssmenu-title').click(function(){
+		var targetId = jQuery(this).attr("href"),
+			hash = targetId.substring(targetId.indexOf('#'));
+
+		if(hash != null || hash != targetId) {
+			if (parseInt($(window).width()) < 769)
+				menuOffset = jQuery('.sticky-menu > .cssmenu > ul > li > .cssmenu-title').innerHeight();
+			else
+				menuOffset = jQuery('.sticky-menu > .cssmenu').innerHeight();
+			history.pushState('', '', hash);
+			jQuery('html, body').animate({scrollTop:jQuery(hash).offset().top - menuOffset}, 'slow');
+		}
+	});
+})

@@ -232,6 +232,17 @@ a.pinned { cursor: pointer; }
 	text-align: center;
 }
 
+/* Sticky */
+
+.sticky-menu {
+	position: sticky;
+	top: 0;
+	left: 0;
+	z-index: 9;
+	margin-bottom: 2.618em;
+	background-color: var(--bgc-alt);
+}
+
 /* --- Announces & messaging icons ------------------------------------------ */
 .fa-announce:before,
 .fa-announce-new:before 		{ content: "\f075"; } /* copy comment */

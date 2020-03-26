@@ -1,4 +1,4 @@
-<div class="cssmenu-sticky">
+<div class="sticky-menu">
     <nav id="fwkboost-submenu" class="cssmenu cssmenu-horizontal summary-menu">
         <ul>
             <li><a class="cssmenu-title" href="${relative_url(SandboxUrlBuilder::home())}" aria-label="{@sandbox.title}"><span></span>&nbsp;<i class="fa fa-fw fa-hard-hat" aria-hidden="true"></i>&nbsp;</a></li>
@@ -98,18 +98,3 @@
     </nav>
 </div>
 <script>jQuery("#fwkboost-submenu").menumaker({ title: "FWKBoost", format: "multitoggle", breakpoint: 768 }); </script>
-<script>
-    jQuery('#fwkboost-submenu .cssmenu-title').on('click',function(){
-        var targetId = jQuery(this).attr("href"),
-            hash = targetId.substring(targetId.indexOf('#'));
-
-        if(hash != null || hash != targetId) {
-            if (parseInt($(window).width()) < 769)
-                menuOffset = jQuery('#fwkboost-submenu > ul > li > .cssmenu-title').innerHeight();
-            else
-                menuOffset = jQuery('#fwkboost-submenu').innerHeight();
-            history.pushState('', '', hash);
-            jQuery('html, body').animate({scrollTop:jQuery(hash).offset().top - menuOffset}, 'slow');
-        }
-    });
-</script>
