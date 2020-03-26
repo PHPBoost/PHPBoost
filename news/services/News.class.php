@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 10
+ * @version     PHPBoost 5.3 - last update: 2020 03 26
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -445,7 +445,7 @@ class News
 			'ID'                 => $this->id,
 			'TITLE'              => $this->title,
 			'CONTENTS'           => $contents,
-			'DESCRIPTION'        => $description,
+			'SUMMARY'       	 => $description,
 			'STATUS'             => $this->get_status(),
 			'AUTHOR_CUSTOM_NAME' => $this->author_custom_name,
 			'C_AUTHOR_EXIST'     => $user->get_id() !== User::VISITOR_LEVEL,

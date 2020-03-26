@@ -86,7 +86,7 @@
 								# ENDIF #
 								{news.CONTENTS}
 							# ELSE #
-								{news.DESCRIPTION}# IF news.C_READ_MORE #... <a href="{news.U_ITEM}">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
+								{news.SUMMARY}# IF news.C_READ_MORE #... <a href="{news.U_ITEM}">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
 							# ENDIF #
 						</div>
 					</div>
