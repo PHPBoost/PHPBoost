@@ -41,7 +41,7 @@
 					# IF C_HAS_THUMBNAIL #
 						<div class="cell-body">
 							<div class="cell-thumbnail">
-								<img itemprop="thumbnailUrl" src="{calendarICTURE}" alt="{TITLE}" />
+								<img itemprop="thumbnailUrl" src="{U_THUMBNAIL}" alt="{TITLE}" />
 							</div>
 						</div>
 					# ENDIF #
