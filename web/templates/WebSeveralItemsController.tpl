@@ -178,7 +178,7 @@
 									# ENDIF #
 									<div itemprop="text">{weblinks.CONTENTS}</div>
 								# ELSE #
-									{weblinks.SHORT_CONTENTS}# IF weblinks.C_READ_MORE #... <a href="{weblinks.U_ITEM}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
+									{weblinks.SUMMARY}# IF weblinks.C_READ_MORE #... <a href="{weblinks.U_ITEM}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
 								# ENDIF #
 							</div>
 						</div>

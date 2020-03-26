@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 07
+ * @version     PHPBoost 5.3 - last update: 2020 03 26
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -467,7 +467,7 @@ class WebLink
 				'TITLE'            => $this->title,
 				'URL'              => $this->url->absolute(),
 				'CONTENTS'         => $contents,
-				'SHORT_CONTENTS'   => $real_summary,
+				'SUMMARY'   	   => $real_summary,
 				'STATUS'           => $this->get_status(),
 				'C_AUTHOR_EXIST'   => $user->get_id() !== User::VISITOR_LEVEL,
 				'PSEUDO'           => $user->get_display_name(),
