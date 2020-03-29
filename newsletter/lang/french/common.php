@@ -60,6 +60,7 @@ $lang['subscribe.newsletter_choice'] = 'Choisissez les newsletters auxquelles vo
 $lang['subscribers.list'] = 'Liste des inscrits';
 $lang['subscribers.pseudo'] = 'Pseudo';
 $lang['subscribers.mail'] = 'Mail';
+$lang['subscription.date'] = 'Date de l\'inscription';
 $lang['subscribers.delete'] = 'Voulez-vous vraiment supprimer cette personne des inscrits ?';
 $lang['subscribers.no_users'] = 'Aucun inscrit';
 
