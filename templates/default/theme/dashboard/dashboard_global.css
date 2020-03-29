@@ -1,0 +1,176 @@
+/*
+ * Global classes
+ * 		- links
+ * 		- calendar
+ * 		- BBCode classes
+ * 		- progressbars
+ * 		- internal menus
+ *      - Message helper
+*/
+
+
+/* --- Text formatting ---------------------------------------------------------- */
+
+/* --- Links --- */
+a {
+	text-decoration: none;
+	outline: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+.member,
+.modo,
+.admin {
+	font-weight: 700;
+}
+
+/* --- Font sizes --- */
+.smaller { font-size : 0.869em; }
+.small   { font-size : 0.923em; }
+.big     { font-size : 1.231em; }
+.bigger  { font-size : 1.385em; }
+.biggest { font-size : 1.538em; }
+
+h1 { font-size: 1.615em; }
+h2 { font-size: 1.462em; }
+h3 { font-size: 1.385em; }
+h4 { font-size: 1.308em; }
+h5 { font-size: 1.231em; }
+h6 { font-size: 1.154em; }
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 400;
+}
+
+/* -- Content formatting ---------------------------------------------------- */
+
+/* --- Preview --- */
+.xmlhttprequest-preview {
+	margin-top: 0.618em;
+	border-width: 2px;
+	border-style: dashed;
+	border-color: transparent;
+}
+
+/* --- Le selecteur de couleurs --- */
+.color-picker td {
+	padding: 0;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+}
+
+.color-picker td a {
+	display: block;
+	width: 14px;
+	height: 14px;
+}
+
+/* --- les blocs de quote, de code ou caches --- */
+.formatter-blockquote, .formatter-code, .formatter-hide {
+	display: block;
+	width: 93%;
+	margin: auto;
+	padding: 2px 0;
+	font-weight: bold;
+}
+
+.blockquote, .code, .hide {
+	overflow: auto;
+	margin: 0 1.482em;
+	padding: 0.618em;
+	max-height: 500px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+	border-radius: 3px;
+}
+
+/* --- Progressbar ---------------------------------------------------------- */
+.progressbar-container {
+	position: relative;
+	margin: 4px 0 0.618em;
+	padding: 2px;
+	border-radius: 3px;
+}
+
+.progressbar-container .progressbar-infos {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 100%;
+	line-height: 13px;
+	font-size: .95em;
+	text-align: center;
+}
+
+.progressbar {
+	border-radius: 3px 0 0 3px;
+}
+
+.progressbar[style*="width: 100"] {
+	border-radius: 3px 3px 3px 3px;
+}
+
+.progressbar-container .progressbar {
+	height: 14px;
+	transition: width .6s ease;
+}
+
+/* --- Internal menus ------------------------------------------------------- */
+/* --- rss menus --- */
+.feed-list {
+	margin: 0.309em 0;
+	list-style-type: none;
+	text-align: left;
+}
+
+@media (max-width: 769px) {
+	.feed-list li a {
+		margin: 1px 0;
+		padding: 4px 0;
+	}
+}
+
+.feed-option-title {
+	padding: 1px;
+	font-weight: bold;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+.list {
+	margin-top: 0.618em
+}
+
+/* --- rss menus with picture --- */
+.feed-img {
+	float: left;
+	width: 73px;
+	text-align: center;
+}
+
+.feed-desc {
+	float: left;
+	width: 250px;
+	padding-left: 6px;
+}
+
+/* --- content menus --- */
+.block-contents div {
+	text-align: justify;
+	padding-top: 0.309em;
+}
+
+.alert-priority {
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+}
+
+td.alert-priority {
+	border-width: 0 0 1px 1px;
+}
