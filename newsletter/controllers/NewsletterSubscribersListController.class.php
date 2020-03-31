@@ -71,7 +71,7 @@ class NewsletterSubscribersListController extends ModuleController
 			'C_SUBSCRIPTION' => NewsletterUrlBuilder::subscribe()->rel(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'SORT_NAME_TOP' => NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name(), 'name', 'top', $current_page)->rel(),
-			'SORT_NAME_BOTTOM' => NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name(), 'nae', 'bottom', $current_page)->rel(),
+			'SORT_NAME_BOTTOM' => NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name(), 'name', 'bottom', $current_page)->rel(),
 			'SORT_MAIL_TOP' => NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name(), 'mail', 'top', $current_page)->rel(),
 			'SORT_MAIL_BOTTOM' => NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name(), 'mail', 'bottom', $current_page)->rel(),
 			'PAGINATION' => $pagination->display()
