@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 10 31
+ * @version     PHPBoost 5.3 - last update: 2020 03 31
  * @since       PHPBoost 3.0 - 2011 03 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Mipel <mipel@phpboost.com>
 */
 
 ####################################################
@@ -60,6 +61,7 @@ $lang['subscribe.newsletter_choice'] = 'Choisissez les newsletters auxquelles vo
 $lang['subscribers.list'] = 'Liste des inscrits';
 $lang['subscribers.pseudo'] = 'Pseudo';
 $lang['subscribers.mail'] = 'Mail';
+$lang['subscription.date'] = 'Date d\'inscription';
 $lang['subscribers.delete'] = 'Voulez-vous vraiment supprimer cette personne des inscrits ?';
 $lang['subscribers.no_users'] = 'Aucun inscrit';
 

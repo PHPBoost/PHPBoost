@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2015 09 12
+ * @version     PHPBoost 5.3 - last update: 2020 03 31
  * @since       PHPBoost 3.0 - 2011 02 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Mipel <mipel@phpboost.com>
 */
 
 class NewsletterDAO
@@ -40,8 +41,10 @@ class NewsletterDAO
 	public static function insert_subscriptions_member_registered($user_id, Array $streams)
 	{
 		//Inject user in subscribers table
+		$now = new Date();
 		$columns = array(
-			'user_id' => $user_id
+			'user_id' => $user_id,
+			'subscription_date' => $now->get_timestamp()
 		);
 		self::$db_querier->insert(NewsletterSetup::$newsletter_table_subscribers, $columns);
 
@@ -87,8 +90,10 @@ class NewsletterDAO
 	public static function insert_subscriptions_visitor($mail, Array $streams)
 	{
 		//Inject user in subscribers table
+		$now = new Date();
 		$columns = array(
-			'mail' => $mail
+			'mail' => $mail,
+			'subscription_date' => $now->get_timestamp()
 		);
 		self::$db_querier->insert(NewsletterSetup::$newsletter_table_subscribers, $columns);
 
