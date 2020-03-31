@@ -49,13 +49,16 @@ class NewsletterHomeController extends ModuleController
 		{
 			if (NewsletterAuthorizationsService::id_stream($row['id'])->read())
 			{
+				$category = new RichCategory();
+				$category->set_properties($row);
+				$category_thumbnail = $category->get_thumbnail()->rel();
 				$this->view->assign_block_vars('streams_list', array(
-					'C_THUMBNAIL' => !empty($row['thumbnail']),
+					'C_THUMBNAIL' => !empty($category_thumbnail),
 					'C_VIEW_ARCHIVES' => NewsletterAuthorizationsService::id_stream($row['id'])->read_archives(),
 					'C_VIEW_SUBSCRIBERS' => NewsletterAuthorizationsService::id_stream($row['id'])->read_subscribers(),
-					'U_THUMBNAIL' => Url::to_rel($row['thumbnail']),
-					'NAME' => $row['name'],
-					'DESCRIPTION' => $row['description'],
+					'U_THUMBNAIL' => $category_thumbnail,
+					'NAME' => $category->get_name(),
+					'DESCRIPTION' => $category->get_description(),
 					'SUBSCRIBERS_NUMBER' => $row['subscribers_number'],
 					'U_VIEW_ARCHIVES' => NewsletterUrlBuilder::archives($row['id'], $row['rewrited_name'])->absolute(),
 					'U_VIEW_SUBSCRIBERS' => NewsletterUrlBuilder::subscribers($row['id'], $row['rewrited_name'])->absolute(),
