@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 12 30
+ * @version     PHPBoost 5.3 - last update: 2020 03 31
  * @since       PHPBoost 3.0 - 2011 03 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -50,6 +50,7 @@ class NewsletterHomeController extends ModuleController
 			if (NewsletterAuthorizationsService::id_stream($row['id'])->read())
 			{
 				$this->view->assign_block_vars('streams_list', array(
+					'C_THUMBNAIL' => !empty($row['thumbnail']),
 					'C_VIEW_ARCHIVES' => NewsletterAuthorizationsService::id_stream($row['id'])->read_archives(),
 					'C_VIEW_SUBSCRIBERS' => NewsletterAuthorizationsService::id_stream($row['id'])->read_subscribers(),
 					'U_THUMBNAIL' => Url::to_rel($row['thumbnail']),

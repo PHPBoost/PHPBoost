@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 17
+ * @version     PHPBoost 5.3 - last update: 2020 03 31
  * @since       PHPBoost 3.0 - 2011 03 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -65,7 +65,11 @@ class NewsletterSubscribersListController extends ModuleController
 
 		$table_model = new SQLHTMLTableModel(NewsletterSetup::$newsletter_table_subscribers, 'table', $columns, new HTMLTableSortingRule('name', HTMLTableSortingRule::ASC));
 
-		$table_model->add_permanent_filter('id IN (' . implode(',', array_keys(NewsletterService::list_subscribers_by_stream($this->stream->get_id()))) . ')');
+		$subscribers_ids_list = array_keys(NewsletterService::list_subscribers_by_stream($this->stream->get_id()));
+		if ($subscribers_ids_list)
+			$table_model->add_permanent_filter('id IN (' . implode(',', $subscribers_ids_list) . ')');
+		else
+			$table_model->add_permanent_filter('id = 0');
 
 		$table = new HTMLTable($table_model);
 
