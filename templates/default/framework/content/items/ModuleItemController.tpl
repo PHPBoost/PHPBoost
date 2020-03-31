@@ -7,9 +7,9 @@
 		</div>
 		<h1 itemprop="name">{TITLE}</h1>
 	</header>
-	# IF NOT C_VISIBLE #
+	# IF NOT C_PUBLISHED #
 		<article class="content">
-			# INCLUDE NOT_VISIBLE_MESSAGE #
+			# INCLUDE NOT_PUBLISHED_MESSAGE #
 		</article>
 	# ENDIF #
 	<article id="{MODULE_ID}-item-{ID}" class="{MODULE_ID}-item single-item# IF C_PRIME_ITEM # prime-item# ENDIF ## IF C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
