@@ -86,10 +86,10 @@ class NewsletterSubscribersListController extends ModuleController
 					$user->set_properties($row);
 				else
 					$user->init_visitor_user();
-			
+
 				$this->elements_number++;
 				$this->ids[$this->elements_number] = $row['id'];
-				
+
 				$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 				$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $row['name'];
 
@@ -150,11 +150,14 @@ class NewsletterSubscribersListController extends ModuleController
 	{
 		$body_view = new FileTemplate('newsletter/NewsletterBody.tpl');
 		$body_view->add_lang($this->lang);
-		$body_view->put('TEMPLATE', $this->view);
+		$body_view->put_all(array(
+			'C_SUBSCRIBERS_LIST' => true,
+			'TEMPLATE'           => $this->view
+		));
 		$response = new SiteDisplayResponse($body_view);
-		
+
 		$graphical_environment = $response->get_graphical_environment();
-		
+
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home());
 		$page_name = $this->lang['newsletter.subscribers'] . ' : ' . $this->stream->get_name();

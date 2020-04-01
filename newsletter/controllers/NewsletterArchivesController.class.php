@@ -87,10 +87,10 @@ class NewsletterArchivesController extends ModuleController
 
 			$this->elements_number++;
 			$this->ids[$this->elements_number] = $row['id'];
-			
+
 			$stream_link = new LinkHTMLElement(NewsletterUrlBuilder::archives($stream->get_id(), $stream->get_rewrited_name()), $stream->get_name());
 			$archive_link = new LinkHTMLElement(NewsletterUrlBuilder::archive($row['id']), $row['subject']);
-			
+
 			$table_row = array(
 				new HTMLTableRowCell($stream_link->display()),
 				new HTMLTableRowCell($archive_link->display()),
@@ -141,11 +141,14 @@ class NewsletterArchivesController extends ModuleController
 	{
 		$body_view = new FileTemplate('newsletter/NewsletterBody.tpl');
 		$body_view->add_lang($this->lang);
-		$body_view->put('TEMPLATE', $this->view);
+		$body_view->put_all(array(
+			'C_ARCHIVES' => true,
+			'TEMPLATE'   => $this->view
+		));
 		$response = new SiteDisplayResponse($body_view);
-		
+
 		$graphical_environment = $response->get_graphical_environment();
-		
+
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->rel());
 		$breadcrumb->add($this->lang['archives.list'], NewsletterUrlBuilder::archives()->rel());
