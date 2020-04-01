@@ -96,7 +96,7 @@ class NewsletterSubscribersListController extends ModuleController
 				$table_row = array(
 					new HTMLTableRowCell($author),
 					new HTMLTableRowCell($row['user_mail']),
-					new HTMLTableRowCell(Date::to_format($row['subscription_date'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE))
+					new HTMLTableRowCell(Date::to_format($row['subscription_date'], Date::FORMAT_DAY_MONTH_YEAR))
 				);
 
 				if ($moderation_authorization)
