@@ -3,11 +3,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 31
+ * @version     PHPBoost 5.3 - last update: 2020 04 01
  * @since       PHPBoost 3.0 - 2011 03 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ####################################################
@@ -19,11 +20,10 @@ $lang['newsletter.home'] = 'Home';
 $lang['newsletter'] = 'Newsletter';
 $lang['newsletter.archives'] = 'Archive';
 $lang['newsletter.subscribers'] = 'list of subscribers';
-$lang['newsletter.streams'] = 'Feed management';
-$lang['newsletter.streams.manage'] = 'Manage feeds';
+$lang['newsletter.streams.manager'] = 'Feed management';
 
 //Other title
-$lang['subscribe.newsletter'] = 'Subscribe to newsletters';
+$lang['subscribe.newsletters'] = 'Subscribe to newsletters';
 $lang['subscriber.edit'] = 'Post a registrant';
 $lang['archives.list'] = 'Archive List';
 $lang['newsletter-add'] = 'Add newsletter';
@@ -38,7 +38,8 @@ $lang['newsletter.list_newsletters'] = 'List of newsletters';
 //Admin
 $lang['admin.mail-sender'] = 'Mailing address';
 $lang['admin.mail-sender-explain'] = 'Valid email Address';
-$lang['admin.newsletter-name'] = 'Name the newsletter';
+$lang['admin.newsletter-name'] = 'Name of the newsletter';
+$lang['admin.streams.number.per.page'] = 'Feeds number per page';
 $lang['admin.newsletter-name-explain'] = 'Subject of email sent';
 $lang['admin.default-contents'] = 'Default content of a BBCode or HTML newsletter';
 

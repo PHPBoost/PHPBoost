@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 16
+ * @version     PHPBoost 5.3 - last update: 2020 04 01
  * @since       PHPBoost 3.0 - 2011 02 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor xela <xela@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminNewsletterConfigController extends AdminModuleController
@@ -63,6 +64,10 @@ class AdminNewsletterConfigController extends AdminModuleController
 			array('class' => 'third-field', 'maxlength' => 255, 'description' => $this->lang['admin.newsletter-name-explain'], 'required' => true)
 		));
 
+		$fieldset_config->add_field(new FormFieldNumberEditor('streams_number', $this->lang['admin.streams.number.per.page'], $this->config->get_streams_number_per_page(),
+			array('class' => 'third-field', 'min' => 1, 'max' => 50)
+		));
+
 		$fieldset_config->add_field(new FormFieldRichTextEditor('default_contents', $this->lang['admin.default-contents'], $this->config->get_default_contents(),
 			array('rows' => 8, 'cols' => 47, 'description' => $this->lang['newsletter.contents.explain'])
 		));
@@ -96,6 +101,7 @@ class AdminNewsletterConfigController extends AdminModuleController
 	{
 		$this->config->set_mail_sender($this->form->get_value('mail_sender'));
 		$this->config->set_newsletter_name($this->form->get_value('newsletter_name'));
+		$this->config->set_streams_number_per_page($this->form->get_value('streams_number'));
 		$this->config->set_default_contents($this->form->get_value('default_contents'));
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		NewsletterConfig::save();

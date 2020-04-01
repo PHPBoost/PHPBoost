@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 31
+ * @version     PHPBoost 5.3 - last update: 2020 04 01
  * @since       PHPBoost 3.0 - 2011 03 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class NewsletterHomeController extends ModuleController
@@ -14,7 +15,7 @@ class NewsletterHomeController extends ModuleController
 	private $lang;
 	private $full_view;
 	private $view;
-	private $nbr_streams_per_page = 25;
+	private $config;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -88,6 +89,7 @@ class NewsletterHomeController extends ModuleController
 
 	private function init()
 	{
+		$this->config = NewsletterConfig::load();
 		$this->lang = LangLoader::get('common', 'newsletter');
 		$this->full_view = new FileTemplate('newsletter/NewsletterBody.tpl');
 		$this->full_view->add_lang($this->lang);
@@ -100,7 +102,7 @@ class NewsletterHomeController extends ModuleController
 		$nbr_streams = PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_streams);
 
 		$page = AppContext::get_request()->get_getint('page', 1);
-		$pagination = new ModulePagination($page, $nbr_streams, $this->nbr_streams_per_page);
+		$pagination = new ModulePagination($page, $nbr_streams, $this->config->get_streams_number_per_page());
 		$pagination->set_url(NewsletterUrlBuilder::home('%d'));
 
 		if ($pagination->current_page_is_empty() && $page > 1)

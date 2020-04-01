@@ -24,63 +24,59 @@
 	</script>
 # ENDIF #
 
-<table class="table">
-	<thead>
-		<tr>
-			<th>
-				${LangLoader::get_message('form.name', 'common')}
-			</th>
-			<th>
-				${LangLoader::get_message('form.description', 'common')}
-			</th>
-			<th>
-				{@newsletter.archives}
-			</th>
-			<th>
-				{@newsletter.subscribers}
-			</th>
-			<th class="col-small" aria-label="${LangLoader::get_message('form.thumbnail', 'common')}">
-				<i class="far fa-fw fa-image hidden-small-screens" aria-hidden="true"></i>
-				<span class="hidden-large-screens">${LangLoader::get_message('form.thumbnail', 'common')}</span>
-			</th>
-		</tr>
-	</thead>
-	<tbody>
-	# IF C_STREAMS #
-		# START streams_list #
+# IF NOT C_STREAMS #
+	<div class="message-helper bgc notice">{@newsletter.no_newsletters}</div>
+# ELSE #
+	<table class="table">
+		<thead>
 			<tr>
-				<td>
-					{streams_list.NAME}
-				</td>
-				<td>
-					{streams_list.DESCRIPTION}
-				</td>
-				<td>
-					# IF streams_list.C_VIEW_ARCHIVES #<a href="{streams_list.U_VIEW_ARCHIVES}">{@newsletter.view_archives}</a># ELSE #${LangLoader::get_message('error.auth', 'status-messages-common')}# ENDIF #
-				</td>
-				<td>
-					# IF streams_list.C_VIEW_SUBSCRIBERS #<a href="{streams_list.U_VIEW_SUBSCRIBERS}">{@newsletter.view_subscribers}</a> ({streams_list.SUBSCRIBERS_NUMBER})# ELSE #${LangLoader::get_message('error.auth', 'status-messages-common')}# ENDIF #
-				</td>
-				<td>
-					# IF streams_list.C_THUMBNAIL #<img src="{streams_list.U_THUMBNAIL}" alt="{streams_list.NAME}" /># ENDIF #
-				</td>
+				<th>
+					${LangLoader::get_message('form.name', 'common')}
+				</th>
+				<th>
+					${LangLoader::get_message('form.description', 'common')}
+				</th>
+				<th>
+					{@newsletter.archives}
+				</th>
+				<th>
+					{@newsletter.subscribers}
+				</th>
+				<th class="col-small" aria-label="${LangLoader::get_message('form.thumbnail', 'common')}">
+					<i class="far fa-fw fa-image hidden-small-screens" aria-hidden="true"></i>
+					<span class="hidden-large-screens">${LangLoader::get_message('form.thumbnail', 'common')}</span>
+				</th>
 			</tr>
-		# END streams_list #
-	# ELSE #
-		<tr>
-			<td colspan="5">
-				<span class="text-strong">{@newsletter.no_newsletters}</span>
-			</td>
-		</tr>
-	# ENDIF #
-	</tbody>
-	# IF C_PAGINATION #
-		<tfoot>
-			<tr>
-				<td colspan="5">
-					# INCLUDE PAGINATION #
-				</td>
-			</tr>
-		</tfoot>
-	# ENDIF #
-</table>
+		</thead>
+		<tbody>
+			# START streams_list #
+				<tr>
+					<td>
+						{streams_list.NAME}
+					</td>
+					<td>
+						{streams_list.DESCRIPTION}
+					</td>
+					<td>
+						# IF streams_list.C_VIEW_ARCHIVES #<a href="{streams_list.U_VIEW_ARCHIVES}">{@newsletter.view_archives}</a># ELSE #${LangLoader::get_message('error.auth', 'status-messages-common')}# ENDIF #
+					</td>
+					<td>
+						# IF streams_list.C_VIEW_SUBSCRIBERS #<a href="{streams_list.U_VIEW_SUBSCRIBERS}">{@newsletter.view_subscribers}</a> ({streams_list.SUBSCRIBERS_NUMBER})# ELSE #${LangLoader::get_message('error.auth', 'status-messages-common')}# ENDIF #
+					</td>
+					<td>
+						# IF streams_list.C_THUMBNAIL #<img src="{streams_list.U_THUMBNAIL}" alt="{streams_list.NAME}" /># ENDIF #
+					</td>
+				</tr>
+			# END streams_list #
+		</tbody>
+		# IF C_PAGINATION #
+			<tfoot>
+				<tr>
+					<td colspan="5">
+						# INCLUDE PAGINATION #
+					</td>
+				</tr>
+			</tfoot>
+		# ENDIF #
+	</table>
+# ENDIF #

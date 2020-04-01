@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 02
+ * @version     PHPBoost 5.3 - last update: 2020 04 01
  * @since       PHPBoost 3.0 - 2011 02 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class NewslettersubscribeController extends ModuleController
@@ -64,7 +65,7 @@ class NewslettersubscribeController extends ModuleController
 
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('subscribe.newsletter', $this->lang['subscribe.newsletter']);
+		$fieldset = new FormFieldsetHTMLHeading('subscribe_newsletters', $this->lang['subscribe.newsletters']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldMailEditor('mail', $this->lang['subscribe.mail'], $email,
@@ -75,7 +76,7 @@ class NewslettersubscribeController extends ModuleController
 			$newsletter_subscribe = NewsletterService::get_member_id_streams($this->current_user->get_id());
 		else
 			$newsletter_subscribe = array();
-		
+
 		$fieldset->add_field(new FormFieldMultipleCheckbox('newsletter_choice', $this->lang['subscribe.newsletter_choice'], $newsletter_subscribe, $this->get_streams(),
 			array('required' => true)
 		));
@@ -95,10 +96,10 @@ class NewslettersubscribeController extends ModuleController
 		$response = new SiteDisplayResponse($body_view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
 		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->rel());
-		$breadcrumb->add($this->lang['subscribe.newsletter'], NewsletterUrlBuilder::subscribe()->rel());
+		$breadcrumb->add($this->lang['subscribe.newsletters'], NewsletterUrlBuilder::subscribe()->rel());
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['subscribe.newsletter'], $this->lang['newsletter']);
+		$graphical_environment->set_page_title($this->lang['subscribe.newsletters'], $this->lang['newsletter']);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['newsletter.seo.suscribe']);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsletterUrlBuilder::subscribe());
 
