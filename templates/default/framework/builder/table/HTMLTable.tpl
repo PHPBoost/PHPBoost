@@ -4,6 +4,12 @@
 		# INCLUDE filters #
 	</div>
 # ENDIF #
+
+# IF NOT C_HAS_ROWS #
+	<div class="message-helper bgc notice">
+		${LangLoader::get_message('no_item_now', 'common')}
+	</div>
+# ELSE #
 	<form method="post" class="fieldset-content">
 		<table
 			# IF C_ID # id="{ID}"# ENDIF #
@@ -68,13 +74,6 @@
 					# END row.cell #
 				</tr>
 				# END row #
-				# IF NOT C_HAS_ROWS #
-				<tr>
-					<td colspan="{NUMBER_OF_COLUMNS}">
-						${LangLoader::get_message('no_item_now', 'common')}
-					</td>
-				</tr>
-				# ENDIF #
 			</tbody>
 			# IF C_DISPLAY_FOOTER #
 				<tfoot>
@@ -122,6 +121,7 @@
 			# ENDIF #
 		</table>
 	</form>
+# ENDIF #
 # IF C_FILTERS #
 	<script>
 		function {SUBMIT_FUNCTION}() {
