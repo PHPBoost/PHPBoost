@@ -142,8 +142,8 @@ class NewsletterArchivesController extends ModuleController
 		$body_view = new FileTemplate('newsletter/NewsletterBody.tpl');
 		$body_view->add_lang($this->lang);
 		$body_view->put_all(array(
-			'C_TITLE' => true,
-			'TITLE' => $this->lang['newsletter.archives'],
+			'C_SUBTITLE' => true,
+			'L_SUBTITLE' => $this->lang['newsletter.archives'],
 			'TEMPLATE'   => $this->view
 		));
 		$response = new SiteDisplayResponse($body_view);

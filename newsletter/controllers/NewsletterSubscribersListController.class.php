@@ -151,9 +151,9 @@ class NewsletterSubscribersListController extends ModuleController
 		$body_view = new FileTemplate('newsletter/NewsletterBody.tpl');
 		$body_view->add_lang($this->lang);
 		$body_view->put_all(array(
-			'C_TITLE' => true,
-			'TITLE' => $this->lang['subscribers.list'],
-			'TEMPLATE'           => $this->view
+			'C_SUBTITLE' => true,
+			'L_SUBTITLE' => $this->lang['subscribers.list'],
+			'TEMPLATE'   => $this->view
 		));
 		$response = new SiteDisplayResponse($body_view);
 
