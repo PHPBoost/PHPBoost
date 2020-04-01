@@ -384,10 +384,13 @@ thead th a,
 td,
 .bordered-table td { border-color: var(--bdr-main); }
 
-.html-table-header-sortable:hover a,
-.html-table-header-sortable.sort-active a {
+.html-table-header-sortable:hover a {
 	background-color: var(--bgc-main);
 	color: var(--main-dark);
+}
+
+.html-table-header-sortable.sort-active a {
+	border-color: var(--bgc-main);
 }
 
 .calendar-block table.date-picker th { border-color: var(--bdr-main); }
