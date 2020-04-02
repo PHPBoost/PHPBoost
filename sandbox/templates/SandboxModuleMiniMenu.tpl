@@ -273,7 +273,7 @@
 			</ul>
 			<ul class="sandbox-controls bottom-nav">
 				<li>
-					<a href="${relative_url(SandboxUrlBuilder::home())}" aria-label="">
+					<a href="${relative_url(SandboxUrlBuilder::home())}" aria-label="{@mini.home}">
 						<span class="stacked">
 							<i class="fa fa-fw fa-hard-hat" aria-hidden="true"></i>
 							<i class="fa fa-home stack-event stack-sup stack-right notice" aria-hidden="true"></i>
@@ -281,7 +281,7 @@
 					</a>
 				</li>
 				<li class="align-right">
-					<a href="${relative_url(SandboxUrlBuilder::config())}" aria-label="">
+					<a href="${relative_url(SandboxUrlBuilder::config())}" aria-label="{@mini.admin}">
 						<span class="stacked">
 							<i class="fa fa-fw fa-hard-hat" aria-hidden="true"></i>
 							<i class="fa fa-cog stack-event stack-sup stack-left notice" aria-hidden="true"></i>

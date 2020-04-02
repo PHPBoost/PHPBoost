@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 01 14
+ * @version     PHPBoost 5.3 - last update: 2020 04 01
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -14,40 +14,45 @@
 #                    English                       #
 ####################################################
 
-// --- Module Titles
+// Module titles
 $lang['sandbox.module.title'] = 'Sandbox';
 
 $lang['title.config'] = 'Configuration';
-$lang['title.admin.form'] = 'Form in administration';
-$lang['title.builder'] = 'Form builder';
-$lang['title.fwkboost'] = 'CSS';
+$lang['title.admin.fwkboost'] = 'Form in administration';
+$lang['title.builder'] = 'PHP builder';
+$lang['title.fwkboost'] = 'FWKBoost';
+$lang['title.component'] = 'Componants';
+$lang['title.layout'] = 'Layouts';
+$lang['title.multitabs'] = 'Multitabs';
 $lang['title.plugins'] = 'Plugins';
 $lang['title.bbcode'] = 'BBCode';
-$lang['title.menu'] = 'Cssmenu menus ';
-$lang['title.icons'] = 'Font-Awesome icons ';
-$lang['title.table'] = 'Table builder';
-$lang['title.email'] = 'Email sending';
-$lang['title.string.template'] = 'Template generator';
+$lang['title.menu'] = 'Navigation menus ';
+$lang['title.icons'] = 'Icons ';
+$lang['title.miscellaneous'] = 'Miscellaneous';
+$lang['title.table'] = 'Tables';
+$lang['title.email'] = 'Email';
+$lang['title.template'] = 'Template';
+
+$lang['see.render'] = 'See render';
 
 // Home page
-$lang['welcome.message'] = '<p>Welcome to the Sandbox module.</p>
-<br />
-<p>You can try here several part of the PHPBoost fwkboost :</p>
-<ul class="sandbox-home-list">
-<li><i class="fa fa-fw fa-asterisk"></i> Rendering of the different fields of the <a href="' . SandboxUrlBuilder::form()->absolute() . '">form builder</a></li>
-<li><i class="fab fa-fw fa-css3"></i> Rendering of the main <a href="' . SandboxUrlBuilder::css()->absolute() . '">CSS classes</a></li>
-<li><i class="fa fa-fw fa-cube"></i> Rendering of the <a href="' . SandboxUrlBuilder::plugins()->absolute() . '">jQuery plugins</a> integrated in PHPBoost.</li>
-<li><i class="far fa-fw fa-file-code"></i> Rendering of the specific styles from the <a href="' . SandboxUrlBuilder::bbcode()->absolute() . '">BBCode</a></li>
-<li><i class="fab fa-fw fa-font-awesome-flag"></i> A tutorial about using icons from the <a href="' . SandboxUrlBuilder::icons()->absolute() . '">Font Awesome library</a></li>
-<li><i class="fa fa-fw fa-list"></i> Rendering of the <a href="' . SandboxUrlBuilder::menus()->absolute() . '">Cssmenu navigation menus</a>.</li>
-<li><i class="fa fa-fw fa-table"></i> The dynamic <a href="' . SandboxUrlBuilder::table()->absolute() . '">table generation</a></li>
-<li><i class="fa fa-fw fa-at"></i> <a href="' . SandboxUrlBuilder::email()->absolute() . '">Emails sending</a></li>
-<li><i class="fa fa-fw fa-code"></i> <a href="' . SandboxUrlBuilder::template()->absolute() . '">Template generation</a> with or without cache</li>
-</ul>
-<br />
+$lang['welcome.message'] = '
+    <p>Welcome to the Sandbox module.</p>
+    <p class="align-center">In this module, you can test the differents componants of the PHPBoost\'s framework : <span class="pinned visitor big"><i class="fa iboost fa-iboost-phpboost"></i> FWKBoost</span></p>
+    <p>The top menu <i class="fa fa-hard-hat"></i> allows you to quickly switch between different pages.</p>
 ';
 
-// --- FWKBoost lorem
+$lang['welcome.see'] = 'Front view';
+$lang['welcome.admin'] = 'Admin view';
+
+$lang['welcome.builder'] = 'The render of the different features using the PHP builder: form fields, maps, links menu, etc.';
+$lang['welcome.fwkboost'] = 'The render of componants from the HTML/CSS/JS FWKBoost framework.';
+$lang['welcome.bbcode'] = 'The render of the sepcific elements from the bbcode, using a different design from FWKBoost.';
+$lang['welcome.menu'] = 'The render of navigation menusLe rendu des menus de navigations depending on each available location.';
+$lang['welcome.icons'] = 'A preview of what is possible to do with font-icons in PHPBoost.';
+$lang['welcome.misc'] = 'Various PHP test pages.';
+
+// Lorem
 
 $lang['lorem.short.content'] = 'Etiam hendrerit, tortor et faucibus dapibus, eros orci porta eros, in facilisis ipsum ipsum at nisl';
 $lang['lorem.medium.content'] = 'Fusce vitae consequat nisl. Fusce vestibulum porta ipsum ac consectetur. Duis finibus mauris eu feugiat congue.
@@ -62,54 +67,12 @@ sed viverra tortor diam pretium metus. In hac habitasse platea dictumst. Ut veli
 Integer elementum faucibus finibus. Nullam et felis sit amet felis blandit iaculis. Vestibulum massa arcu, finibus id enim ac, commodo aliquam metus.
 Vestibulum feugiat urna nunc, et eleifend velit posuere ac. Vestibulum sagittis tempus nunc, sit amet dignissim ipsum sollicitudin eget.';
 
-//
-$lang['sandbox.summary'] = 'Summary';
+// Common
 $lang['sandbox.source.code'] = 'See the source code';
-
-// --- Wiki
-$lang['wiki.not'] = 'The Wiki is not installed and/or activated';
-$lang['wiki.conditions'] = 'You must set the wiki in your template to get your modifications active.';
-$lang['wiki.module'] = 'Wiki module';
-$lang['wiki.table.of.contents'] = 'Summary';
-$lang['wiki.contents'] = 'Wiki content';
-
-// --- Icônes Font-Awesome
-
-$lang['icons.sample'] = 'Some examples';
-$lang['icons.social'] = 'Social networks';
-$lang['icons.screen'] = 'Screen';
-$lang['icons.icon'] = 'Icon';
-$lang['icons.name'] = 'Name';
-$lang['icons.code'] = 'Code';
-$lang['icons.list'] = 'The complete list of icons and their own code : ';
-
-$lang['icons.howto'] = 'How to ?';
-$lang['icons.howto.explain'] = 'Font-Awesome is an icon-font, a font to simply display icons';
-$lang['icons.howto.update'] = 'It\'s integrated since the 4.1 PHPBoost version. Each update of Font-Awesome is integrated in the next PHPBoost update..';
-$lang['icons.howto.html'] = 'Html way';
-$lang['icons.howto.html.class'] = 'Set the icon name as a class : ';
-$lang['icons.howto.html.class.result.i'] = 'That gives the "edit" icon following by : ';
-$lang['icons.howto.html.class.result.a'] = 'That gives the link with ths "globe" icon first : ';
-$lang['icons.howto.html.class.result.all'] = 'You can play with all html tags.';
-$lang['icons.howto.css'] = 'CSS way';
-$lang['icons.howto.css.class'] = 'Set your class, then the icon code as content of ::before or ::after of the class :';
-$lang['icons.howto.css.css.code'] = 'CSS :';
-$lang['icons.howto.css.html.code'] = 'HTML :';
-$lang['icons.howto.bbcode'] = 'BBCode way';
-$lang['icons.howto.bbcode.some.icons'] = 'The icons mainly used in PHPBoost are already setted un the bbcode menu bar. You can select them by clicking on the flag icon menu:';
-$lang['icons.howto.bbcode.tag'] = 'If the icon you want is not in the list, you can use the [fa] tag like this:';
-$lang['icons.howto.bbcode.icon.name'] = '[fa]Icon name[/fa]';
-$lang['icons.howto.bbcode.icon.test'] = 'E.g., [fa]cubes[/fa] gives:';
-$lang['icons.howto.bbcode.icon.variants'] = 'Variants (see next paragraph) are usable with the BBCode and are explained in the PHPBoost documentation.';
-$lang['icons.howto.variants'] = 'Variants';
-$lang['icons.howto.variants.explain'] = 'Font-Awesome is setted with some variants like sizing the icon, animation, rotation, stacking and somelse.';
-$lang['icons.howto.variants.list'] = 'All variants are explained here : ';
-$lang['icons.howto.variants.spinner'] = 'That gives the "spinner" icon, setted in rotation and twice bigger than its initial size : ';
-
-// --- Cssmenu
+$lang['sandbox.pbt.doc'] = 'PHPBoost documentation';
 
 
-// --- Mail
+// Mail
 
 $lang['mail.title'] = 'Email';
 $lang['mail.sender_mail'] = 'Sender email';

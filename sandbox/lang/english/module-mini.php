@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 07 31
+ * @version     PHPBoost 5.3 - last update: 2020 04 02
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -14,13 +14,14 @@
 #                    English                       #
 ####################################################
 
-$lang['mini.close'] = 'Close the menu';
+$lang['mini.infos'] = 'Site info';
 $lang['mini.version.pbt'] = 'PHPBoost version';
 $lang['mini.version.php'] = 'PHP server version';
 $lang['mini.version.sql'] = 'MySql version';
 $lang['mini.version.date'] = 'Installation date of the site';
 $lang['mini.viewport.v'] = 'Height of viewport';
 $lang['mini.viewport.h'] = 'Width of viewport';
+
 $lang['mini.tools'] = 'Tools';
 $lang['mini.errors'] = 'Archived errors';
 $lang['mini.404'] = '404 errors';
@@ -44,8 +45,15 @@ $lang['mini.user'] = 'Users';
 $lang['mini.theme'] = 'Themes';
 $lang['mini.mod'] = 'Modules';
 
+$lang['mini.fwkboost'] = 'FWKBoost';
+$lang['mini.home'] = 'Sandbox home page';
+$lang['mini.admin'] = 'Mini module administration';
+
 $lang['mini.themes.switcher'] = 'Switch template';
 $lang['mini.default.theme'] = 'Default template';
+
+$lang['mini.themes.switcher'] = 'Switch theme';
+$lang['mini.default.theme'] = 'Default theme';
 
 $lang['mini.config'] = 'Configuration';
 $lang['mini.manage'] = 'Management';

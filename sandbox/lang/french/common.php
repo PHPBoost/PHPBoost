@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 05
+ * @version     PHPBoost 5.3 - last update: 2020 04 01
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -14,12 +14,11 @@
 #                    French                        #
 ####################################################
 
-// --- Module titles
+// Module titles
 $lang['sandbox.module.title'] = 'Bac à sable';
 
 $lang['title.config'] = 'Configuration';
 $lang['title.admin.fwkboost'] = 'Rendus dans l\'admin';
-$lang['title.theme.fwkboost'] = 'Dans le thème';
 $lang['title.builder'] = 'Constructeur PHP';
 $lang['title.fwkboost'] = 'FWKBoost';
 $lang['title.component'] = 'Composants';
@@ -36,17 +35,17 @@ $lang['title.template'] = 'Template';
 
 $lang['see.render'] = 'Voir le rendu';
 
-// --- Page d'accueil
+// Page d'accueil
 $lang['welcome.message'] = '
     <p>Bienvenue dans le module Bac à sable.</p>
-    <p class="align-center">Vous pouvez tester dans ce module les différents composants du fwkboost de PHPBoost : <span class="pinned visitor big"><i class="fa iboost fa-iboost-phpboost"></i> FWKBoost</span></p>
+    <p class="align-center">Vous pouvez tester dans ce module les différents composants du framework de PHPBoost : <span class="pinned visitor big"><i class="fa iboost fa-iboost-phpboost"></i> FWKBoost</span></p>
     <p>Le menu <i class="fa fa-hard-hat"></i> ci-dessus vous permet de naviguer rapidement entre et dans les différentes pages.</p>
 ';
 
 $lang['welcome.see'] = 'Voir';
 $lang['welcome.admin'] = 'En admin';
 
-$lang['welcome.builder'] = 'Le rendu des différentes fonctionnailtés utilisables avec le constructeur php: champs de formulaire, maps, menus de liens, etc.';
+$lang['welcome.builder'] = 'Le rendu des différentes fonctionnailtés utilisables avec le constructeur PHP: champs de formulaire, maps, menus de liens, etc.';
 $lang['welcome.fwkboost'] = 'Le rendu des différents éléments du framework HTML/CSS/JS FWKBoost de PHPBoost.';
 $lang['welcome.bbcode'] = 'Le rendu des éléments spécifiques déclarés en bbcode qui apportent un design différent du FWKBoost.';
 $lang['welcome.menu'] = 'Le rendu des menus de navigations selon les emplacements potentiels.';
@@ -68,7 +67,6 @@ Integer elementum faucibus finibus. Nullam et felis sit amet felis blandit iacul
 Vestibulum feugiat urna nunc, et eleifend velit posuere ac. Vestibulum sagittis tempus nunc, sit amet dignissim ipsum sollicitudin eget.';
 
 // Common
-$lang['sandbox.summary'] = 'Sommaire';
 $lang['sandbox.source.code'] = 'Voir le code source';
 $lang['sandbox.pbt.doc'] = 'la documentation de PHPBoost';
 
