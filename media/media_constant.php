@@ -20,6 +20,7 @@ $mime_type = array(
 		'mp3' => 'audio/mpeg',
 	),
 	'video' => array(
+		'host' => 'video/host',
 		'flv' => 'video/x-flv',
 		'mp4' => 'video/mp4',
 		'ogg' => 'video/ogg',
@@ -34,6 +35,7 @@ $mime_type_tpl = array(
 	'video/mp4' => 'format/media_html5_player.tpl',
 	'video/ogg' => 'format/media_html5_player.tpl',
 	'video/webm' => 'format/media_html5_player.tpl',
+	'video/host' => 'format/host_player.tpl',
 	'application/x-shockwave-flash' => 'format/media_swf.tpl',
 	'audio/mpeg' => 'format/media_mp3.tpl'
 );

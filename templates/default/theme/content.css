@@ -155,33 +155,21 @@ aside:not(#menu-left):not(#menu-right) {
 }
 
 /* --- Media --- */
-@media (max-width: 768px) {
-	.media-content {
-		clear: both;
-		position: relative;
-		padding-bottom: 56.25%;
-		height: 0;
-	}
-
-	.media-content object,
-	.media-content embed,
-	.media-content video,
-	.media-content iframe,
-	.media-content .video-player {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-	}
+.media-content {
+	position: relative;
+	max-width: 100%;
 }
 
-@media (min-width:769px) {
-	.media-content embed,
-	.media-content iframe {
-		width: auto;
-		height: auto;
-	}
+.media-content object,
+.media-content embed,
+.media-content video,
+.media-content iframe,
+.media-content [class$="-player"] {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
 }
 
 /* --- Progress bar --- */

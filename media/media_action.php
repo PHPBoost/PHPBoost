@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 16
+ * @version     PHPBoost 5.3 - last update: 2020 04 04
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -352,10 +352,15 @@ elseif ($submit)
 					DispatchManager::redirect($controller);
 				}
 			}
+			elseif(($pathinfo = pathinfo($url_media)) && ((strpos($pathinfo['dirname'], 'youtu') !== false) || (strpos($pathinfo['dirname'], 'vimeo') !== false) || (strpos($pathinfo['dirname'], 'dailymotion') !== false)))
+			{
+				$media['mime_type'] = 'video/host';
+			}
 			else
 			{
 				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_mime_disable_media']);
 				DispatchManager::redirect($controller);
+
 			}
 		}
 		elseif (($url_parsed = parse_url($media['url']->relative())) && in_array($url_parsed['host'], $host_ok) && in_array('application/x-shockwave-flash', $mime_type))

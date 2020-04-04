@@ -167,9 +167,7 @@
 			</div>
 			<div class="content" itemprop="text">
 				{CONTENTS}
-				<div class="media-content">
-					# INCLUDE media_format #
-				</div>
+				# INCLUDE media_format #
 			</div>
 			<aside>${ContentSharingActionsMenuService::display()}</aside>
 			# IF C_DISPLAY_COMMENTS #

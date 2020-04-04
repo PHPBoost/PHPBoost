@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 20
+ * @version     PHPBoost 5.3 - last update: 2020 04 04
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -144,11 +144,40 @@ elseif ($id_media > 0)
 		));
 	}
 
+	// Videos from free host
+	$pathinfo = pathinfo($media['url']);
+	$video_id = $pathinfo['basename'];
+
+	if(strpos($pathinfo['dirname'], 'youtu') !== false)
+	{
+		$watch = 'watch?v=';
+	    if(strpos($video_id, $watch) !== false)
+	        $video_id = substr_replace($video_id, '', 0, 8);
+
+		$media_tpl->put_all(array(
+			'PLAYER' => 'https://www.youtube.com/embed/'
+		));
+	}
+	elseif(strpos($pathinfo['dirname'], 'vimeo') !== false)
+	{
+		$media_tpl->put_all(array(
+			'C_SHOWCASE' => true,
+			'PLAYER' => 'https://player.vimeo.com/video/'
+		));
+	}
+	elseif(strpos($pathinfo['dirname'], 'dailymotion') !== false)
+	{
+		$media_tpl->put_all(array(
+			'PLAYER' => 'https://www.dailymotion.com/embed/video/'
+		));
+	}
+
 	$media_tpl->put_all(array(
 		'URL' => Url::to_rel($media['url']),
 		'MIME' => $media['mime_type'],
 		'WIDTH' => $media['width'],
-		'HEIGHT' => $media['height']
+		'HEIGHT' => $media['height'],
+		'MEDIA_ID' => $video_id
 	));
 
 	$tpl->put('media_format', $media_tpl);

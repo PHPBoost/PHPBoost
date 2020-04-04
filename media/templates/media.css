@@ -3,7 +3,7 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-a.media-flv {
+a.flv-player {
 	display: block;
 	margin: 0.618em auto;
 }
