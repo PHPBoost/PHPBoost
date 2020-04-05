@@ -213,6 +213,6 @@
 				warningExtension: ${escapejs(LangLoader::get_message('warning.upload.extension', 'upload-common'))},
 				warningFileSize: ${escapejs(LangLoader::get_message('warning.upload.file.size', 'upload-common'))},
 				warningFilesNbr: ${escapejs(LangLoader::get_message('warning.upload.files.number', 'upload-common'))},
-				warningFileDim: ${escapejs(LangLoader::get_message('warning.upload.file.dim', 'main'))},
+				warningFileDim: ${escapejs(LangLoader::get_message('warning.upload.file.dim', 'upload-common'))},
 			});
 		</script>
