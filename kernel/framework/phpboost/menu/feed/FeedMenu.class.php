@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 06
+ * @version     PHPBoost 5.3 - last update: 2020 04 07
  * @since       PHPBoost 2.0 - 2009 01 14
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -45,7 +45,7 @@ class FeedMenu extends Menu
 	 * @return the tpl to parse a feed
      * @static
 	 */
-	public static function get_template($module_id, $id, $name = '', $block_position = Menu::BLOCK_POSITION__LEFT, $hidden_with_small_screens = false)
+	public static function get_template($module_id = '', $id, $name = '', $block_position = Menu::BLOCK_POSITION__LEFT, $hidden_with_small_screens = false)
 	{
 		$theme_id = AppContext::get_current_user()->get_theme();
 		if (file_exists(PATH_TO_ROOT . '/templates/' . $theme_id . '/modules/' . $module_id . '/feed.tpl'))
