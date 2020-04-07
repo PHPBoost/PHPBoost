@@ -45,12 +45,12 @@ class FeedMenu extends Menu
 	 * @return the tpl to parse a feed
      * @static
 	 */
-	public static function get_template($module_id = '', $id, $name = '', $block_position = Menu::BLOCK_POSITION__LEFT, $hidden_with_small_screens = false)
+	public static function get_template($id, $name = '', $block_position = Menu::BLOCK_POSITION__LEFT, $hidden_with_small_screens = false, $module_id = '')
 	{
 		$theme_id = AppContext::get_current_user()->get_theme();
-		if (file_exists(PATH_TO_ROOT . '/templates/' . $theme_id . '/modules/' . $module_id . '/feed.tpl'))
+		if (!empty($module_id) && file_exists(PATH_TO_ROOT . '/templates/' . $theme_id . '/modules/' . $module_id . '/feed.tpl'))
 			$tpl = new FileTemplate('/templates/' . $theme_id . '/modules/' . $module_id . '/feed.tpl');
-		elseif (file_exists(PATH_TO_ROOT . '/' . $module_id . '/templates/feed.tpl'))
+		elseif (!empty($module_id) && file_exists(PATH_TO_ROOT . '/' . $module_id . '/templates/feed.tpl'))
 			$tpl = new FileTemplate('/' . $module_id . '/templates/feed.tpl');
 		else
 			$tpl = new FileTemplate('framework/menus/feed.tpl');
@@ -129,7 +129,7 @@ class FeedMenu extends Menu
 
 		if ($is_displayed)
 		{
-			return Feed::get_parsed($this->module_id, $this->name, $this->category, self::get_template($this->module_id, $this->id, $this->get_title(), $this->get_block(), $this->hidden_with_small_screens), $this->number, $this->begin_at);
+			return Feed::get_parsed($this->module_id, $this->name, $this->category, self::get_template($this->id, $this->get_title(), $this->get_block(), $this->hidden_with_small_screens, $this->module_id), $this->number, $this->begin_at);
 		}
 		return '';
 	}
