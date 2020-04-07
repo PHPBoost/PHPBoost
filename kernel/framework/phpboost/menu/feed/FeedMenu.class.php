@@ -5,11 +5,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 03 26
+ * @version     PHPBoost 5.3 - last update: 2020 04 06
  * @since       PHPBoost 2.0 - 2009 01 14
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FeedMenu extends Menu
@@ -44,9 +45,16 @@ class FeedMenu extends Menu
 	 * @return the tpl to parse a feed
      * @static
 	 */
-	public static function get_template($id, $name = '', $block_position = Menu::BLOCK_POSITION__LEFT, $hidden_with_small_screens = false)
+	public static function get_template($module_id, $id, $name = '', $block_position = Menu::BLOCK_POSITION__LEFT, $hidden_with_small_screens = false)
 	{
-		$tpl = new FileTemplate('framework/menus/feed.tpl');
+		$theme_id = AppContext::get_current_user()->get_theme();
+		if (file_exists(PATH_TO_ROOT . '/templates/' . $theme_id . '/modules/' . $module_id . '/feed.tpl'))
+			$tpl = new FileTemplate('/templates/' . $theme_id . '/modules/' . $module_id . '/feed.tpl');
+		elseif (file_exists(PATH_TO_ROOT . '/' . $module_id . '/templates/feed.tpl'))
+			$tpl = new FileTemplate('/' . $module_id . '/templates/feed.tpl');
+		else
+			$tpl = new FileTemplate('framework/menus/feed.tpl');
+
 		$tpl->put_all(array(
 			'NAME' => $name,
 			'ID' => $id,
@@ -121,7 +129,7 @@ class FeedMenu extends Menu
 
 		if ($is_displayed)
 		{
-			return Feed::get_parsed($this->module_id, $this->name, $this->category, self::get_template($this->id, $this->get_title(), $this->get_block(), $this->hidden_with_small_screens), $this->number, $this->begin_at);
+			return Feed::get_parsed($this->module_id, $this->name, $this->category, self::get_template($this->module_id, $this->id, $this->get_title(), $this->get_block(), $this->hidden_with_small_screens), $this->number, $this->begin_at);
 		}
 		return '';
 	}
