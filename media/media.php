@@ -147,15 +147,25 @@ elseif ($id_media > 0)
 	// Media from websites
 	$pathinfo = pathinfo($media['url']);
 	$media_id = $pathinfo['basename'];
+	$dirname = $pathinfo['dirname'];
 
 	foreach($host_players as $domain => $player)
 	{
-		if(strpos($pathinfo['dirname'], $domain) !== false)
+		if(strpos($dirname, $domain) !== false)
 		{
+			// Youtube
 			$watch = 'watch?v=';
 		    if(strpos($media_id, $watch) !== false)
 		        $media_id = substr_replace($media_id, '', 0, 8);
 
+			// Soudcloud
+			$soundcloud_player = strpos($dirname, 'soundcloud') !== false;
+			if($soundcloud_player) {
+				$explode = explode('/', $dirname);
+				$soundcloud_type = end($explode);
+			}
+
+			// All
 			$media_tpl->put_all(array(
 				'PLAYER' => $player
 			));
@@ -167,6 +177,8 @@ elseif ($id_media > 0)
 		'MIME' => $media['mime_type'],
 		'WIDTH' => $media['width'],
 		'HEIGHT' => $media['height'],
+		'C_SOUNDCLOUD' => $soundcloud_player,
+		'SOUNDCLOUD_TYPE' => $soundcloud_type,
 		'MEDIA_ID' => $media_id
 	));
 

@@ -71,7 +71,7 @@ $host_players = array(
     'vimeo' => 'https://player.vimeo.com/video/',
     'dailymotion' => 'https://www.dailymotion.com/embed/video/',
     'arte' => 'https://www.arte.tv/player/v5/',
-    'soundcloud' => 'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/',
+    'soundcloud' => 'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/',
 )
 
 ?>
