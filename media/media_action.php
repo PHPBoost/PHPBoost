@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 08
+ * @version     PHPBoost 5.3 - last update: 2020 04 10
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -298,23 +298,24 @@ elseif ($submit)
 
 	require_once('../kernel/header.php');
 
+	if ($category->get_content_type() == MediaConfig::CONTENT_TYPE_MUSIC)
+	{
+		$mime_type = $mime_type['audio'];
+		$host_ok = $host_ok['audio'];
+	}
+	elseif ($category->get_content_type() == MediaConfig::CONTENT_TYPE_VIDEO)
+	{
+		$mime_type = $mime_type['video'];
+		$host_ok = $host_ok['video'];
+	}
+	else
+	{
+		$mime_type = array_merge($mime_type['audio'], $mime_type['video']);
+		$host_ok = array_merge($host_ok['audio'], $host_ok['video']);
+	}
+
 	if (!empty($media['url']) && Url::check_url_validity($media['url']))
 	{
-		if ($category->get_content_type() == MediaConfig::CONTENT_TYPE_MUSIC)
-		{
-			$mime_type = $mime_type['audio'];
-			$host_ok = $host_ok['audio'];
-		}
-		elseif ($category->get_content_type() == MediaConfig::CONTENT_TYPE_VIDEO)
-		{
-			$mime_type = $mime_type['video'];
-			$host_ok = $host_ok['video'];
-		}
-		else
-		{
-			$mime_type = array_merge($mime_type['audio'], $mime_type['video']);
-			$host_ok = array_merge($host_ok['audio'], $host_ok['video']);
-		}
 
 		$url_media = preg_replace('`\?.*`u', '', $media['url']->relative());
 
@@ -371,6 +372,11 @@ elseif ($submit)
 			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_mime_unknow_media']);
 			DispatchManager::redirect($controller);
 		}
+	}
+	elseif (!empty($media['url']))
+	{
+		if($pathinfo = pathinfo($media['url']) && (strpos($pathinfo['dirname'], 'soundcloud') !== false) && in_array('audio/host', $mime_type))
+			$media['mime_type'] = 'audio/host';
 	}
 	else
 	{

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 08
+ * @version     PHPBoost 5.3 - last update: 2020 04 10
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -40,6 +40,7 @@ $mime_type_tpl = array(
 	'application/x-shockwave-flash' => 'format/media_swf.tpl',
 	'audio/mpeg' => 'format/media_mp3.tpl',
 	'video/host' => 'format/host_player.tpl',
+	'audio/host' => 'format/host_player.tpl',
 );
 
 // Trusted host
@@ -53,15 +54,14 @@ $host_ok = array(
 		'player.vimeo.com',
 		'www.youtube.com',
 		'www.youtu.be',
+		'www.labsoweb.fr'
 	),
 	'audio' => array(
 		'music.amazon.com',
 		'www.deezer.com',
 		'www.spotify.com',
-		'www.spotify.com',
+		'soundcloud.com',
 		'w.soundcloud.com',
-		'files.freemusicarchive.org',
-		'www.bensound.com'
 	)
 );
 
