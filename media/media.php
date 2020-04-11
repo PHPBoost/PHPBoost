@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 08
+ * @version     PHPBoost 5.3 - last update: 2020 04 11
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -163,6 +163,11 @@ elseif ($id_media > 0)
 			if($soundcloud_player) {
 				$explode = explode('/', $dirname);
 				$soundcloud_type = end($explode);
+
+				$media_tpl->put_all(array(
+					'C_SOUNDCLOUD' => $soundcloud_player,
+					'SOUNDCLOUD_TYPE' => $soundcloud_player ? $soundcloud_type : '',
+				));
 			}
 
 			// All
@@ -177,8 +182,6 @@ elseif ($id_media > 0)
 		'MIME' => $media['mime_type'],
 		'WIDTH' => $media['width'],
 		'HEIGHT' => $media['height'],
-		'C_SOUNDCLOUD' => $soundcloud_player,
-		'SOUNDCLOUD_TYPE' => $soundcloud_type,
 		'MEDIA_ID' => $media_id
 	));
 
