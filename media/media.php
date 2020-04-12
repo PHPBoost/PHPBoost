@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 08
+ * @version   	PHPBoost 5.2 - last update: 2020 04 12
  * @since   	PHPBoost 2.0 - 2008 10 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -141,11 +141,45 @@ elseif ($id_media > 0)
 		));
 	}
 
+	// Media from websites
+	$pathinfo = pathinfo($media['url']);
+	$media_id = $pathinfo['basename'];
+	$dirname = $pathinfo['dirname'];
+
+	foreach($host_players as $domain => $player)
+	{
+		if(strpos($dirname, $domain) !== false)
+		{
+			// Youtube
+			$watch = 'watch?v=';
+		    if(strpos($media_id, $watch) !== false)
+		        $media_id = substr_replace($media_id, '', 0, 8);
+
+			// Soudcloud
+			$soundcloud_player = strpos($dirname, 'soundcloud') !== false;
+			if($soundcloud_player) {
+				$explode = explode('/', $dirname);
+				$soundcloud_type = end($explode);
+
+				$media_tpl->put_all(array(
+					'C_SOUNDCLOUD' => $soundcloud_player,
+					'SOUNDCLOUD_TYPE' => $soundcloud_player ? $soundcloud_type : '',
+				));
+			}
+
+			// All
+			$media_tpl->put_all(array(
+				'PLAYER' => $player
+			));
+		}
+	}
+
 	$media_tpl->put_all(array(
 		'URL' => Url::to_rel($media['url']),
 		'MIME' => $media['mime_type'],
 		'WIDTH' => $media['width'],
-		'HEIGHT' => $media['height']
+		'HEIGHT' => $media['height'],
+		'MEDIA_ID' => $media_id
 	));
 
 	$tpl->put('media_format', $media_tpl);

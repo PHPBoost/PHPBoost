@@ -3,10 +3,11 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 31
+ * @version   	PHPBoost 5.2 - last update: 2020 04 12
  * @since   	PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once('../kernel/begin.php');
@@ -297,74 +298,86 @@ elseif ($submit)
 
 	require_once('../kernel/header.php');
 
+	if ($category->get_content_type() == MediaConfig::CONTENT_TYPE_MUSIC)
+	{
+		$mime_type = $mime_type['audio'];
+		$host_ok = $host_ok['audio'];
+	}
+	elseif ($category->get_content_type() == MediaConfig::CONTENT_TYPE_VIDEO)
+	{
+		$mime_type = $mime_type['video'];
+		$host_ok = $host_ok['video'];
+	}
+	else
+	{
+		$mime_type = array_merge($mime_type['audio'], $mime_type['video']);
+		$host_ok = array_merge($host_ok['audio'], $host_ok['video']);
+	}
+
 	if (!empty($media['url']) && Url::check_url_validity($media['url']))
 	{
-		if ($category->get_content_type() == MediaConfig::CONTENT_TYPE_MUSIC)
-		{
-			$mime_type = $mime_type['audio'];
-			$host_ok = $host_ok['audio'];
-		}
-		elseif ($category->get_content_type() == MediaConfig::CONTENT_TYPE_VIDEO)
-		{
-			$mime_type = $mime_type['video'];
-			$host_ok = $host_ok['video'];
-		}
-		else
-		{
-			$mime_type = array_merge($mime_type['audio'], $mime_type['video']);
-			$host_ok = array_merge($host_ok['audio'], $host_ok['video']);
-		}
-
 		$url_media = preg_replace('`\?.*`u', '', $media['url']->relative());
+		$pathinfo = pathinfo($url_media);
 
-		if (($pathinfo = pathinfo($url_media)) && !empty($pathinfo['extension']))
+		if (($url_parsed = parse_url($media['url']->relative())) && in_array($url_parsed['host'], $host_ok) && (strpos($pathinfo['dirname'], 'soundcloud') !== false) && in_array('audio/host', $mime_type))
 		{
-			if (array_key_exists($pathinfo['extension'], $mime_type))
-			{
-				$media['mime_type'] = $mime_type[$pathinfo['extension']];
-			}
-			else
-			{
-				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_mime_disable_media']);
-				DispatchManager::redirect($controller);
-			}
+			$media['mime_type'] = 'audio/host';
 		}
-		elseif (function_exists('get_headers') && ($headers = get_headers($media['url']->relative(), 1)) && !empty($headers['Content-Type']))
+		elseif(Url::check_url_validity($media['url']))
 		{
-			if (!is_array($headers['Content-Type']) && in_array($headers['Content-Type'], $mime_type))
+			if (!empty($pathinfo['extension']))
 			{
-				$media['mime_type'] = $headers['Content-Type'];
-			}
-			elseif (is_array($headers['Content-Type']))
-			{
-				foreach ($headers['Content-Type'] as $type)
+				if (array_key_exists($pathinfo['extension'], $mime_type))
 				{
-					if (in_array($type, $mime_type))
-					{
-						$media['mime_type'] = $type;
-					}
+					$media['mime_type'] = $mime_type[$pathinfo['extension']];
 				}
-
-				if (empty($media['mime_type']))
+				else
 				{
 					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_mime_disable_media']);
 					DispatchManager::redirect($controller);
 				}
 			}
+			elseif (($url_parsed = parse_url($media['url']->relative())) && in_array($url_parsed['host'], $host_ok) && in_array('video/host', $mime_type))
+			{
+				$media['mime_type'] = 'video/host';
+			}
+			elseif (function_exists('get_headers') && ($headers = get_headers($media['url']->relative(), 1)) && !empty($headers['Content-Type']))
+			{
+				if (!is_array($headers['Content-Type']) && in_array($headers['Content-Type'], $mime_type))
+				{
+					$media['mime_type'] = $headers['Content-Type'];
+				}
+				elseif (is_array($headers['Content-Type']))
+				{
+					foreach ($headers['Content-Type'] as $type)
+					{
+						if (in_array($type, $mime_type))
+						{
+							$media['mime_type'] = $type;
+						}
+					}
+
+					if (empty($media['mime_type']))
+					{
+						$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_mime_disable_media']);
+						DispatchManager::redirect($controller);
+					}
+				}
+				else
+				{
+					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_mime_disable_media']);
+					DispatchManager::redirect($controller);
+				}
+			}
+			elseif (($url_parsed = parse_url($media['url']->relative())) && in_array($url_parsed['host'], $host_ok) && in_array('application/x-shockwave-flash', $mime_type))
+			{
+				$media['mime_type'] = 'application/x-shockwave-flash';
+			}
 			else
 			{
-				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_mime_disable_media']);
+				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_mime_unknow_media']);
 				DispatchManager::redirect($controller);
 			}
-		}
-		elseif (($url_parsed = parse_url($media['url']->relative())) && in_array($url_parsed['host'], $host_ok) && in_array('application/x-shockwave-flash', $mime_type))
-		{
-			$media['mime_type'] = 'application/x-shockwave-flash';
-		}
-		else
-		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_mime_unknow_media']);
-			DispatchManager::redirect($controller);
 		}
 	}
 	else

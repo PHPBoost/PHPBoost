@@ -151,9 +151,7 @@
 				<div class="spacer"></div>
 				${ContentSharingActionsMenuService::display()}
 
-				<div class="media-content">
-					# INCLUDE media_format #
-				</div>
+				# INCLUDE media_format #
 
 				# IF C_DISPLAY_COMMENTS #
 				{COMMENTS}
