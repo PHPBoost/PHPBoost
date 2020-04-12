@@ -314,7 +314,7 @@ elseif ($submit)
 		$host_ok = array_merge($host_ok['audio'], $host_ok['video']);
 	}
 
-	if (!empty($media['url']) && Url::check_url_validity($media['url']))
+	if (!empty($media['url']))
 	{
 		$url_media = preg_replace('`\?.*`u', '', $media['url']->relative());
 		$pathinfo = pathinfo($url_media);
