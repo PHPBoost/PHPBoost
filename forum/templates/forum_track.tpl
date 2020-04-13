@@ -109,7 +109,7 @@
 				<footer>
 					# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span><div class="spacer"></div># ENDIF #
 				</footer>
-			</article
+			</article>
 		</form>
 
 		# INCLUDE forum_bottom #
