@@ -44,7 +44,7 @@
 					if( document.getElementById('add_poll_field_link') )
 						document.getElementById('add_poll_field_link').innerHTML = '';
 				}
-				document.getElementById('add_poll_field' + this.max_field_p).innerHTML += '<label><input type="text" name="a' + this.max_field_p + '" value="" /></label><span class="field-description" id="add_poll_field' + (this.max_field_p + 1) + '"></span>';
+				document.getElementById('add_poll_field' + this.max_field_p).innerHTML += '<label><input type="text" name="a' + this.max_field_p + '" value="" /></label><span id="add_poll_field' + (this.max_field_p + 1) + '"></span>';
 			}
 		}
 		function XMLHttpRequest_change_statut()
@@ -145,7 +145,7 @@
 									<label>{L_ANSWERS}</label>
 									<div class="form-field">
 										# START answers_poll #
-										<label><input type="text" name="a{answers_poll.ID}" value="{answers_poll.ANSWER}" /> <em>{answers_poll.NBR_VOTES} {answers_poll.L_VOTES}</em></label>
+											<label><input type="text" name="a{answers_poll.ID}" value="{answers_poll.ANSWER}" /> <em>{answers_poll.NBR_VOTES} {answers_poll.L_VOTES}</em></label>
 										# END answers_poll #
 										<span id="add_poll_field{NBR_POLL_FIELD}"></span>
 
