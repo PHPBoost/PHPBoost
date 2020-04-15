@@ -44,7 +44,7 @@
 					if( document.getElementById('add_poll_field_link') )
 						document.getElementById('add_poll_field_link').innerHTML = '';
 				}
-				document.getElementById('add_poll_field' + this.max_field_p).innerHTML += '<label><input type="text" name="a' + this.max_field_p + '" value="" /></label><span id="add_poll_field' + (this.max_field_p + 1) + '"></span>';
+				document.getElementById('add_poll_field' + this.max_field_p).insertAdjacentHTML('afterend', '<label><input type="text" name="a' + this.max_field_p + '" value="" /></label><span id="add_poll_field' + (this.max_field_p + 1) + '"></span>');
 			}
 		}
 		function XMLHttpRequest_change_statut()
