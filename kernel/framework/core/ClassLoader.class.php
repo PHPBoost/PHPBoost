@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2016 11 15
+ * @version     PHPBoost 5.3 - last update: 2020 04 25
  * @since       PHPBoost 3.0 - 2009 10 21
  * @contributor mipel <mipel@phpboost.com>
 */
@@ -71,9 +71,9 @@ class ClassLoader
 	/**
 	 * Generates the autoload cache file by exploring phpboost folders
 	 */
-	public static function generate_classlist()
+	public static function generate_classlist($force = false)
 	{
-		if (!self::$already_reloaded)
+		if (!self::$already_reloaded || $force)
 		{
 			self::$already_reloaded = true;
 			self::$autoload = array();
