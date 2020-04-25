@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 01
+ * @version     PHPBoost 5.3 - last update: 2020 04 25
  * @since       PHPBoost 3.0 - 2011 02 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -140,6 +140,8 @@ class NewslettersubscribeController extends ModuleController
 					NewsletterService::update_subscriptions_visitor($streams, $this->form->get_value('mail'));
 					$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 				}
+				else if (NewsletterDAO::mail_existed($this->form->get_value('mail')))
+					$tpl->put('MSG', MessageHelper::display($this->lang['error-subscriber-exists'], MessageHelper::ERROR));
 			}
 			else if ($this->current_user->is_admin())
 			{
@@ -158,10 +160,10 @@ class NewslettersubscribeController extends ModuleController
 						NewsletterService::update_subscriptions_visitor($streams, $this->form->get_value('mail'));
 						$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 					}
+					else if (NewsletterDAO::mail_existed($this->form->get_value('mail')))
+						$tpl->put('MSG', MessageHelper::display($this->lang['error-subscriber-exists'], MessageHelper::ERROR));
 				}
 			}
-			else
-				$tpl->put('MSG', MessageHelper::display($this->lang['error-subscriber-exists'], MessageHelper::ERROR));
 		}
 	}
 }
