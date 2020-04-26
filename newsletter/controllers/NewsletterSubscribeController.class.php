@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 25
+ * @version     PHPBoost 5.3 - last update: 2020 04 26
  * @since       PHPBoost 3.0 - 2011 02 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -126,9 +126,10 @@ class NewslettersubscribeController extends ModuleController
 			$streams[] = $option->get_id();
 		}
 
-		if ($this->current_user->check_level(User::MEMBER_LEVEL) && $this->form->get_value('mail') == $this->current_user->get_email() && $streams != NewsletterService::get_member_id_streams($this->current_user->get_id()))
+		if ($this->current_user->check_level(User::MEMBER_LEVEL) && $this->form->get_value('mail') == $this->current_user->get_email())
 		{
-			NewsletterService::update_subscriptions_member_registered($streams, $this->current_user->get_id());
+			if ($streams != NewsletterService::get_member_id_streams($this->current_user->get_id()))
+				NewsletterService::update_subscriptions_member_registered($streams, $this->current_user->get_id());
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 		}
 		else
