@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 31
+ * @version     PHPBoost 5.3 - last update: 2020 04 26
  * @since       PHPBoost 3.0 - 2011 02 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -144,7 +144,7 @@ class NewsletterDAO
 
 	public static function mail_existed($mail)
 	{
-		return self::$db_querier->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE mail = '" . $mail . "'") > 0;
+		return self::$db_querier->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE mail = '" . $mail . "'") + self::$db_querier->count(DB_TABLE_MEMBER, "WHERE email = '" . $mail . "'") > 0;
 	}
 
 	public static function unsubscriber_all_streams_member($user_id)
