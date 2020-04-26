@@ -1,5 +1,13 @@
 # IF C_VERTICAL #
-	<form action="{PATH_TO_ROOT}/newsletter/?url=/subscribe/" method="post">
+	<script>
+		function set_subscribe_link() {
+			jQuery('#newsletter-mini-subscription-form').attr('action', "{PATH_TO_ROOT}/newsletter/?url=/subscribe/");
+		};
+		function set_unsubscribe_link() {
+			jQuery('#newsletter-mini-subscription-form').attr('action', "{PATH_TO_ROOT}/newsletter/?url=/unsubscribe/");
+		};
+	</script>
+	<form id="newsletter-mini-subscription-form" action="{PATH_TO_ROOT}/newsletter/?url=/subscribe/" method="post">
 		<fieldset>
 			<legend class="sr-only">${LangLoader::get_message('email', 'user-common')}</legend>
 			<label for="newsletter-email" class="sr-only">${LangLoader::get_message('email', 'user-common')}</label>
@@ -10,8 +18,8 @@
 			</div>
 			<div class="cell-list">
 				<ul>
-					<li><label class="radio"><input type="radio" name="subscribe" value="subscribe" checked="checked"> <span>{@newsletter.subscribe_newsletters}</span></label></li>
-					<li><label class="radio"><input type="radio" name="subscribe" value="unsubscribe"> <span>{@newsletter.unsubscribe_newsletters}</span></label></li>
+					<li><label class="radio"><input type="radio" name="subscribe" value="subscribe" onclick="set_subscribe_link();" checked="checked"> <span>{@newsletter.subscribe_newsletters}</span></label></li>
+					<li><label class="radio"><input type="radio" name="subscribe" value="unsubscribe" onclick="set_unsubscribe_link();"> <span>{@newsletter.unsubscribe_newsletters}</span></label></li>
 				</ul>
 			</div>
 			<div class="cell-body">
