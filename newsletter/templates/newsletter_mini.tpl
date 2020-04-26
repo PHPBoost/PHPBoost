@@ -1,11 +1,19 @@
 # IF C_VERTICAL #
-<form action="{PATH_TO_ROOT}/newsletter/?url=/subscribe/" method="post">
+<script>
+	function set_subscribe_link() {
+		jQuery('#newsletter-mini-subscription-form').attr('action', "{PATH_TO_ROOT}/newsletter/?url=/subscribe/");
+	};
+	function set_unsubscribe_link() {
+		jQuery('#newsletter-mini-subscription-form').attr('action', "{PATH_TO_ROOT}/newsletter/?url=/unsubscribe/");
+	};
+</script>
+<form id="newsletter-mini-subscription-form" action="{PATH_TO_ROOT}/newsletter/?url=/subscribe/" method="post">
 	<p>
 		<input type="text" name="mail_newsletter" maxlength="50" value="{USER_MAIL}" placeholder="${LangLoader::get_message('email', 'user-common')}">
 	</p>
 	<p>
-		<label class="infos-options"><input type="radio" name="subscribe" value="subscribe" checked="checked"> {@newsletter.subscribe_newsletters}</label>
-		<label class="infos-options"><input type="radio" name="subscribe" value="unsubscribe"> {@newsletter.unsubscribe_newsletters}</label>
+		<label class="infos-options"><input type="radio" name="subscribe" value="subscribe" onclick="set_subscribe_link();" checked="checked"> {@newsletter.subscribe_newsletters}</label>
+		<label class="infos-options"><input type="radio" name="subscribe" value="unsubscribe" onclick="set_unsubscribe_link();"> {@newsletter.unsubscribe_newsletters}</label>
 	</p>
 	<p>
 		<input type="hidden" name="token" value="{TOKEN}">
