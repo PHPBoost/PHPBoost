@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2016 10 24
+ * @version     PHPBoost 5.3 - last update: 2020 04 27
  * @since       PHPBoost 3.0 - 2013 08 30
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class Notification extends Event
@@ -19,9 +20,9 @@ class Notification extends Event
 	const NOTIFICATION_ALERT_HIGH_PRIORITY = 4;
 
 	/**
-     * @var int Priority of the alert
-     */
-    private $priority = self::ADMIN_ALERT_MEDIUM_PRIORITY;
+	 * @var int Priority of the alert
+	 */
+	private $priority = self::NOTIFICATION_ALERT_MEDIUM_PRIORITY;
 
 	/**
 	 * @var string String containing the identifier of the module corresponding to the notification (ex: forum).
