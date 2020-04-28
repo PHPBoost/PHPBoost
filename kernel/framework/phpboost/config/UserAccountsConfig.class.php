@@ -280,7 +280,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 */
 	public function get_default_avatar()
 	{
-		self::DEFAULT_AVATAR_URL_PROPERTY == FormFieldThumbnail::DEFAULT_VALUE ? Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(self::NO_AVATAR_URL)) : Url::to_rel(self::DEFAULT_AVATAR_URL_PROPERTY);
+		return self::DEFAULT_AVATAR_URL_PROPERTY == FormFieldThumbnail::DEFAULT_VALUE ? Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(self::NO_AVATAR_URL)) : Url::to_rel(self::DEFAULT_AVATAR_URL_PROPERTY);
 	}
 
 	/**
