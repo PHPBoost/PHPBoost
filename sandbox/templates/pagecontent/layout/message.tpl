@@ -7,7 +7,7 @@
         <div class="content">
             <article id="comID" class="message-container" itemscope="itemscope" itemtype="http://schema.org/Comment">
                 <header class="message-header-container">
-                    <img class="message-user-avatar" src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="Text">
+                    <img class="message-user-avatar" src="{NO_AVATAR_URL}" alt="Text">
                     <div class="message-header-infos">
                         <div class="message-user-infos hidden-small-screens">
                             <div></div>

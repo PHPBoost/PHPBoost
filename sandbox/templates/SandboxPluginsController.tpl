@@ -52,7 +52,7 @@
 			{@lorem.large.content}
 		</div>
 		<div class="wizard-step">
-			<div id="tab-03"> <img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="PHPBoost" itemprop="image"> </div>
+			<div id="tab-03"> <img src="{NO_AVATAR_URL}" alt="PHPBoost" itemprop="image"> </div>
 		</div>
 	</article>
 

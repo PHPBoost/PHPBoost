@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 25
+ * @version     PHPBoost 5.3 - last update: 2020 04 28
  * @since       PHPBoost 3.0 - 2010 12 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -66,9 +66,9 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 	{
 		$user_accounts_config = UserAccountsConfig::load();
 		$value = $member_extended_field->get_value();
-		if (empty($value) && $user_accounts_config->is_default_avatar_enabled())
+		if (empty($value) && $user_accounts_config->default_avatar_enabled())
 		{
-			$avatar = '<img src="'. Url::to_rel('/templates/'. AppContext::get_current_user()->get_theme() .'/images/'. $user_accounts_config->get_default_avatar_name()) .'" alt="' . LangLoader::get_message('avatar', 'user-common') . '" />';
+			$avatar = '<img src="' . $user_accounts_config->get_default_avatar() . '" alt="' . LangLoader::get_message('avatar', 'user-common') . '" />';
 		}
 		elseif (!empty($value))
 		{

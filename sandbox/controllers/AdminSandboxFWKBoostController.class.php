@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 05
+ * @version     PHPBoost 5.3 - last update: 2020 04 28
  * @since       PHPBoost 5.3 - 2020 03 03
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class AdminSandboxFWKBoostController extends AdminModuleController
@@ -42,6 +43,7 @@ class AdminSandboxFWKBoostController extends AdminModuleController
 	{
 		// code source
 		$this->view->put_all(array(
+			'NO_AVATAR_URL' => Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(UserAccountsConfig::NO_AVATAR_URL)),
 			// 'PAGE'         => file_get_contents('html/css/page.tpl'),
 			// 'FORM_OPTION'  => file_get_contents('html/css/form-option.tpl'),
 			// 'DIV_OPTION'   => file_get_contents('html/css/div-option.tpl'),

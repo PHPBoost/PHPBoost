@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 10 11
+ * @version     PHPBoost 5.3 - last update: 2020 04 28
  * @since       PHPBoost 5.2 - 2019 07 30
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class SandboxPluginsController extends ModuleController
@@ -34,7 +35,6 @@ class SandboxPluginsController extends ModuleController
 
 		$this->build_view();
 
-
 		return $this->generate_response();
 	}
 
@@ -52,12 +52,12 @@ class SandboxPluginsController extends ModuleController
 		$this->build_wizard_form();
 
 		$this->tpl->put_all(array(
+			'NO_AVATAR_URL'   => Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(UserAccountsConfig::NO_AVATAR_URL)),
 			'PRE_WIZARD_FORM' => file_get_contents('html/plugins/wizard-form.tpl'),
 			'PRE_WIZARD_HTML' => file_get_contents('html/plugins/wizard-html.tpl'),
-			'PRE_TOOTLTIP' => file_get_contents('html/plugins/tooltip.tpl'),
+			'PRE_TOOTLTIP'    => file_get_contents('html/plugins/tooltip.tpl'),
 			'WIZARD_PHP_FORM' => $this->wizard_form->display()
 		));
-
 	}
 
 	private function build_wizard_form()

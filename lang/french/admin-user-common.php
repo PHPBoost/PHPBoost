@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 10 25
+ * @version     PHPBoost 5.3 - last update: 2020 04 28
  * @since       PHPBoost 3.0 - 2010 08 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -37,10 +37,7 @@ $lang['members.config.maximal-height-avatar'] = 'Hauteur maximale de l\'avatar';
 $lang['members.config.maximal-height-avatar-explain'] = 'Par défaut 120';
 $lang['members.config.maximal-weight-avatar'] = 'Poids maximal de l\'avatar en Ko';
 $lang['members.config.maximal-weight-avatar-explain'] = 'Par défaut 20';
-$lang['members.config.default-avatar-activation'] = 'Activer l\'avatar par défaut';
-$lang['members.config.default-avatar-activation-explain'] = 'Met un avatar aux membres qui n\'en ont pas';
-$lang['members.config.default-avatar-link'] = 'Adresse de l\'avatar par défaut';
-$lang['members.default-avatar-link-explain'] = 'Mettre dans le dossier images de votre thème';
+$lang['members.config.default-avatar'] = 'Avatar par défaut';
 $lang['members.config.authorization-read-member-profile'] = 'Vous définissez ici les autorisations de lecture de la liste des groupes et des membres ainsi que certaines informations personnelles des utilisateurs comme leurs emails, messages et profils.';
 $lang['members.config.welcome-message'] = 'Message à tous les membres';
 $lang['members.config.welcome-message-content'] = 'Message de bienvenue affiché dans le profil du membre';

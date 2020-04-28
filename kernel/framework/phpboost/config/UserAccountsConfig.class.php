@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2016 01 13
+ * @version     PHPBoost 5.3 - last update: 2020 04 28
  * @since       PHPBoost 3.0 - 2009 10 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -47,12 +47,6 @@ class UserAccountsConfig extends AbstractConfigData
 	const ENABLE_AVATAR_AUTO_RESIZING = 'enable_avatar_auto_resizing';
 
 	/**
-	 * Name of the property indicating if the default avatar is enable (users who don't have a
-	 * specific avatar will have the default one).
-	 */
-	const DEFAULT_AVATAR_ENABLED_PROPERTY = 'default_avatar_enabled';
-
-	/**
 	 * Name of the property indicating the URL of the default avatar
 	 */
 	const DEFAULT_AVATAR_URL_PROPERTY = 'default_avatar_url';
@@ -91,6 +85,8 @@ class UserAccountsConfig extends AbstractConfigData
 	const MAIL_USER_ACCOUNTS_VALIDATION = '2';
 	const ADMINISTRATOR_USER_ACCOUNTS_VALIDATION = '3';
 
+	const NO_AVATAR_URL = '/templates/default/images/no_avatar.png';
+	
 	/**
 	 * Tells how the member accounts are activated
 	 * @return int 0 if there is no activation, 1 if the member activates its account thanks to the
@@ -252,42 +248,8 @@ class UserAccountsConfig extends AbstractConfigData
 	}
 
 	/**
-	 * Tells whether the default avatar is enabled
-	 * @return bool true if it's enabled, false otherwise
-	 */
-	public function is_default_avatar_enabled()
-	{
-		return $this->get_property(self::DEFAULT_AVATAR_ENABLED_PROPERTY);
-	}
-
-	/**
-	 * Sets the boolean indicating if the default avatar is enabled when a user hasn't its own one.
-	 * @param true $enabled true if enabled, false otherwise
-	 */
-	public function set_default_avatar_name_enabled($enabled)
-	{
-		$this->set_property(self::DEFAULT_AVATAR_ENABLED_PROPERTY, $enabled);
-	}
-
-	/**
-	 * Enables the default avatar for users who don't have their own one
-	 */
-	public function enable_default_avatar()
-	{
-		$this->set_default_avatar_name_enabled(true);
-	}
-
-	/**
-	 * Disables the default avatar for users who don't have their own one
-	 */
-	public function disable_default_avatar()
-	{
-		$this->set_default_avatar_name_enabled(false);
-	}
-
-	/**
 	 * Returns the default avatar URL
-	 * @return string sThe URL
+	 * @return string The URL
 	 */
 	public function get_default_avatar_name()
 	{
@@ -300,11 +262,25 @@ class UserAccountsConfig extends AbstractConfigData
 	 */
 	public function set_default_avatar_name($url)
 	{
-		if (empty($url))
-		{
-			$url = 'no_avatar.png';
-		}
 		$this->set_property(self::DEFAULT_AVATAR_URL_PROPERTY, $url);
+	}
+	
+	/**
+	 * Tells whether the default avatar is set or not
+	 * @return bool true if it is, false otherwise
+	 */
+	public function default_avatar_enabled()
+	{
+		self::DEFAULT_AVATAR_URL_PROPERTY != '';
+	}
+	
+	/**
+	 * Returns the default avatar proper URL adapted to user template if exists
+	 * @return string The URL
+	 */
+	public function get_default_avatar()
+	{
+		self::DEFAULT_AVATAR_URL_PROPERTY == FormFieldThumbnail::DEFAULT_VALUE ? Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(self::NO_AVATAR_URL)) : Url::to_rel(self::DEFAULT_AVATAR_URL_PROPERTY);
 	}
 
 	/**
@@ -444,8 +420,7 @@ class UserAccountsConfig extends AbstractConfigData
 			self::UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY => 20,
 			self::ENABLE_AVATAR_UPLOAD_PROPERTY => FormFieldCheckbox::CHECKED,
 			self::ENABLE_AVATAR_AUTO_RESIZING => $server_configuration->has_gd_library() ? FormFieldCheckbox::CHECKED : FormFieldCheckbox::UNCHECKED,
-			self::DEFAULT_AVATAR_ENABLED_PROPERTY => FormFieldCheckbox::CHECKED,
-			self::DEFAULT_AVATAR_URL_PROPERTY => 'no_avatar.png',
+			self::DEFAULT_AVATAR_URL_PROPERTY => FormFieldThumbnail::DEFAULT_VALUE,
 			self::MAX_AVATAR_WIDTH_PROPERTY => 120,
 			self::MAX_AVATAR_HEIGHT_PROPERTY => 120,
 			self::MAX_AVATAR_WEIGHT_PROPERTY => 20,

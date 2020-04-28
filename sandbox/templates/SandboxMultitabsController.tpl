@@ -59,7 +59,7 @@
 					<div id="target-03" class="accordion accordion-animation">
 						<div class="content-panel">
 							<h6>{@multitabs.panel.title} 03</h6>
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="PHPBoost" itemprop="image">
+							<img src="{NO_AVATAR_URL}" alt="PHPBoost" itemprop="image">
 						</div>
 					</div>
 				</div>
@@ -102,7 +102,7 @@
 					<div id="target-06" class="accordion accordion-animation">
 						<div class="content-panel">
 							<h6>{@multitabs.panel.title} 06</h6>
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="PHPBoost" itemprop="image">
+							<img src="{NO_AVATAR_URL}" alt="PHPBoost" itemprop="image">
 						</div>
 					</div>
 				</div>
@@ -176,7 +176,7 @@
 				<div id="tab-09" class="tabs tabs-animation">
 					<div class="content-panel">
 						<h6>{@multitabs.panel.title} 09</h6>
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="PHPBoost" itemprop="image">
+						<img src="{NO_AVATAR_URL}" alt="PHPBoost" itemprop="image">
 					</div>
 				</div>
 			</div>

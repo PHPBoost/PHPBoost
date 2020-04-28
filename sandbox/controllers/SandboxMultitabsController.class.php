@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 07 31
+ * @version     PHPBoost 5.3 - last update: 2020 04 28
  * @since       PHPBoost 5.2 - 2019 07 30
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class SandboxMultitabsController extends ModuleController
@@ -34,7 +35,6 @@ class SandboxMultitabsController extends ModuleController
 
 		$this->build_view();
 
-
 		return $this->generate_response();
 	}
 
@@ -50,10 +50,11 @@ class SandboxMultitabsController extends ModuleController
 	private function build_view()
 	{
 		$this->tpl->put_all(array(
-			'PRE_ACCORDION_BASIC' => file_get_contents('html/multitabs/accordion-basic.tpl'),
+			'NO_AVATAR_URL'          => Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(UserAccountsConfig::NO_AVATAR_URL)),
+			'PRE_ACCORDION_BASIC'    => file_get_contents('html/multitabs/accordion-basic.tpl'),
 			'PRE_ACCORDION_SIBLINGS' => file_get_contents('html/multitabs/accordion-siblings.tpl'),
-			'PRE_MODAL_HTML' => file_get_contents('html/multitabs/modal-html.tpl'),
-			'PRE_TABS_HTML' => file_get_contents('html/multitabs/tabs-html.tpl')
+			'PRE_MODAL_HTML'         => file_get_contents('html/multitabs/modal-html.tpl'),
+			'PRE_TABS_HTML'          => file_get_contents('html/multitabs/tabs-html.tpl')
 		));
 	}
 

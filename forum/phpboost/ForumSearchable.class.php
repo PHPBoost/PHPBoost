@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 29
+ * @version     PHPBoost 5.3 - last update: 2020 04 28
  * @since       PHPBoost 3.0 - 2012 02 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -226,6 +226,8 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 
 		$result_date = new Date($result_data['date'], Timezone::SERVER_TIMEZONE);
 
+		$user_accounts_config = UserAccountsConfig::load();
+
 		$tpl->put_all(array_merge(
 			Date::get_array_tpl_vars($result_date, 'DATE'), array(
 			'C_USER_ONLINE'    => !empty($result_data['connect']) && $result_data['user_id'] !== -1,
@@ -235,9 +237,9 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			'U_TOPIC'          => PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $result_data['topic_id'], '-' . $result_data['topic_id'] . $rewrited_title . '.php') . '#m' . $result_data['msg_id'],
 			'TITLE'            => stripslashes($result_data['title']),
 			'CONTENTS'         => FormatingHelper::second_parse(stripslashes($result_data['contents'])),
-			'C_USER_AVATAR'    => UserAccountsConfig::load()->is_default_avatar_enabled() && !empty($result_data['avatar']),
+			'C_USER_AVATAR'    => $user_accounts_config->default_avatar_enabled() || !empty($result_data['avatar']),
 			'U_USER_AVATAR'    => Url::to_rel($result_data['avatar']),
-			'U_DEFAULT_AVATAR' => PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  UserAccountsConfig::load()->get_default_avatar_name()
+			'U_DEFAULT_AVATAR' => $user_accounts_config->get_default_avatar()
 		)));
 
 		return $tpl->render();

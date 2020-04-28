@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2016 02 11
+ * @version     PHPBoost 5.3 - last update: 2020 04 28
  * @since       PHPBoost 3.0 - 2012 02 01
 */
 
@@ -46,19 +46,12 @@ class OnlineUser extends User
 
 	public function set_avatar($avatar)
 	{
-		$user_accounts_config = UserAccountsConfig::load();
-
-		if (empty($avatar))
-		{
-			$this->avatar = $user_accounts_config->is_default_avatar_enabled() ? PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  $user_accounts_config->get_default_avatar_name() : '';
-		}
-		else
-			$this->avatar = $avatar;
+		$this->avatar = !empty($avatar) ? Url::to_rel($avatar) : UserAccountsConfig::load()->get_default_avatar();
 	}
 
 	public function get_avatar()
 	{
-		return Url::to_rel($this->avatar);
+		return $this->avatar;
 	}
 
 	public function has_avatar()

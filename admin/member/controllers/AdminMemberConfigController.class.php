@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 27
+ * @version     PHPBoost 5.3 - last update: 2020 04 28
  * @since       PHPBoost 3.0 - 2010 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -176,23 +176,7 @@ class AdminMemberConfigController extends AdminController
 			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'))
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('default_avatar_activation', $this->lang['members.config.default-avatar-activation'], $this->user_accounts_config->is_default_avatar_enabled(),
-			array(
-				'class' => 'top-field custom-checkbox',
-				'description' => $this->lang['members.config.default-avatar-activation-explain']
-			)
-		));
-
-		$default_avatar_link = $this->user_accounts_config->get_default_avatar_name();
-		$fieldset->add_field(new FormFieldTextEditor('default_avatar_link', $this->lang['members.config.default-avatar-link'], $default_avatar_link,
-			array(
-				'class' => 'top-field',
-				'description' => $this->lang['members.default-avatar-link-explain'],
-				'events' => array('change' => 'jQuery("#img_avatar").attr("src", "' . TPL_PATH_TO_ROOT . '/templates/'. AppContext::get_current_user()->get_theme() .'/images/" + HTMLForms.getField("default_avatar_link").getValue())')
-			)
-		));
-
-		$fieldset->add_field(new FormFieldFree('preview', LangLoader::get_message('preview', 'main'), '<img id="img_avatar" src="' . Url::to_rel('/templates/'. AppContext::get_current_user()->get_theme() .'/images/'. $default_avatar_link) .'" alt="' . LangLoader::get_message('preview', 'main') . '" />'));
+		$fieldset->add_field(new FormFieldThumbnail('default_avatar', $this->lang['members.config.default-avatar'], $this->user_accounts_config->get_default_avatar_name(), UserAccountsConfig::NO_AVATAR_URL));
 
 		$fieldset = new FormFieldsetHTML('authorization', $this->lang['members.config.authorization']);
 		$form->add_fieldset($fieldset);
@@ -253,9 +237,8 @@ class AdminMemberConfigController extends AdminController
 		SecurityConfig::save();
 
 		$this->user_accounts_config->set_avatar_upload_enabled($this->form->get_value('upload_avatar_server'));
-		$this->user_accounts_config->set_default_avatar_name_enabled($this->form->get_value('default_avatar_activation'));
 		$this->user_accounts_config->set_avatar_auto_resizing_enabled($this->form->get_value('activation_resize_avatar'));
-		$this->user_accounts_config->set_default_avatar_name($this->form->get_value('default_avatar_link'));
+		$this->user_accounts_config->set_default_avatar_name($this->form->get_value('default_avatar'));
 		$this->user_accounts_config->set_max_avatar_width($this->form->get_value('maximal_width_avatar'));
 		$this->user_accounts_config->set_max_avatar_height($this->form->get_value('maximal_height_avatar'));
 		$this->user_accounts_config->set_max_avatar_weight($this->form->get_value('maximal_weight_avatar'));

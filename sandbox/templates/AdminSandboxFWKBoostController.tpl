@@ -72,7 +72,7 @@
 				</div>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@fwkboost.picture}" class="item-thumbnail" />
+				<img src="{NO_AVATAR_URL}" alt="{@fwkboost.picture}" class="item-thumbnail" />
 				<div>{@lorem.large.content}</div>
 			</div>
 		</article>
@@ -143,7 +143,7 @@
 				<div class="options infos">
 					<div class="align-center">
 						<span>
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="PHPBoost" itemprop="image">
+							<img src="{NO_AVATAR_URL}" alt="PHPBoost" itemprop="image">
 						</span>
 						<div class="spacer"></div>
 						<a href="#" class="button alt-button">
@@ -566,7 +566,7 @@
 			<div class="content">
 				<article id="comID" class="message-container" itemscope="itemscope" itemtype="http://schema.org/Comment">
 			        <header class="message-header-container">
-			            <img class="message-user-avatar" src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="Text">
+			            <img class="message-user-avatar" src="{NO_AVATAR_URL}" alt="Text">
 			            <div class="message-header-infos">
 				            <div class="message-user-infos hidden-small-screens">
 				                <div></div>
@@ -657,7 +657,7 @@
 				<h2>{@fwkboost.block.title}</h2>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@fwkboost.picture}" class="item-thumbnail" />
+				<img src="{NO_AVATAR_URL}" alt="{@fwkboost.picture}" class="item-thumbnail" />
 				{@lorem.medium.content}
 			</div>
 		</article>
@@ -670,7 +670,7 @@
 				<h2>{@fwkboost.block.title}</h2>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@fwkboost.picture}" class="item-thumbnail" />
+				<img src="{NO_AVATAR_URL}" alt="{@fwkboost.picture}" class="item-thumbnail" />
 				{@lorem.short.content}
 			</div>
 		</article>
@@ -679,7 +679,7 @@
 				<h2>{@fwkboost.block.title}</h2>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@fwkboost.picture}" class="item-thumbnail" />
+				<img src="{NO_AVATAR_URL}" alt="{@fwkboost.picture}" class="item-thumbnail" />
 				{@lorem.short.content}
 			</div>
 		</article>
@@ -692,7 +692,7 @@
 				<h2>{@fwkboost.block.title}</h2>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@fwkboost.picture}" class="item-thumbnail" />
+				<img src="{NO_AVATAR_URL}" alt="{@fwkboost.picture}" class="item-thumbnail" />
 				{@lorem.short.content}
 			</div>
 		</article>
@@ -701,7 +701,7 @@
 				<h2>{@fwkboost.block.title}</h2>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@fwkboost.picture}" class="item-thumbnail" />
+				<img src="{NO_AVATAR_URL}" alt="{@fwkboost.picture}" class="item-thumbnail" />
 				{@lorem.short.content}
 			</div>
 		</article>
@@ -710,7 +710,7 @@
 				<h2>{@fwkboost.block.title}</h2>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@fwkboost.picture}" class="item-thumbnail" />
+				<img src="{NO_AVATAR_URL}" alt="{@fwkboost.picture}" class="item-thumbnail" />
 				{@lorem.short.content}
 			</div>
 		</article>

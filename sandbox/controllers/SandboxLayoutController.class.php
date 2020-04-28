@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 04
+ * @version     PHPBoost 5.3 - last update: 2020 04 28
  * @since       PHPBoost 5.3 - 2020 03 04
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class SandboxLayoutController extends ModuleController
@@ -36,8 +37,9 @@ class SandboxLayoutController extends ModuleController
 	private function build_view()
 	{
 		$this->view->put_all(array(
+			'NO_AVATAR_URL'   => Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(UserAccountsConfig::NO_AVATAR_URL)),
 			'SANDBOX_SUBMENU' => self::get_submenu(),
-			'MESSAGE' => self::build_message_view()
+			'MESSAGE'         => self::build_message_view()
 		));
 	}
 
@@ -56,6 +58,7 @@ class SandboxLayoutController extends ModuleController
 		$message_tpl = new FileTemplate('sandbox/pagecontent/layout/message.tpl');
 		$message_tpl->add_lang($this->lang);
 		$message_tpl->add_lang($this->common_lang);
+		$message_tpl->put('NO_AVATAR_URL', Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(UserAccountsConfig::NO_AVATAR_URL)));
 
 		return $message_tpl;
 	}

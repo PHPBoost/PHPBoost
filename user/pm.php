@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 01
+ * @version     PHPBoost 5.3 - last update: 2020 04 28
  * @since       PHPBoost 1.5 - 2006 07 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -744,9 +744,6 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		if ( !$is_guest_in_convers )
 			$is_guest_in_convers = empty($row['display_name']);
 
-		//Avatar
-		$user_avatar = !empty($row['user_avatar']) ? Url::to_rel($row['user_avatar']) : ($user_accounts_config->is_default_avatar_enabled() ? Url::to_rel('/templates/' . $current_user->get_theme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '');
-
 		//Reprise du dernier message de la page précédente.
 		$row['contents'] = ($quote_last_msg == 1 && $i == 0) ? '<span class="text-strong">' . $LANG['quote_last_msg'] . '</span><br /><br />' . $row['contents'] : $row['contents'];
 		$i++;
@@ -761,11 +758,11 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 			'C_CURRENT_USER_MESSAGE' => AppContext::get_current_user()->get_display_name() == $row['display_name'],
 			'C_MODERATION_TOOLS' => ($row['id'] === $convers['last_msg_id']) && !$row['view_status'], //Dernier mp éditable. et si le destinataire ne la pas encore lu
 			'C_VISITOR' => $is_admin,
-			'C_AVATAR' => $row['user_avatar'] || ($user_accounts_config->is_default_avatar_enabled()),
+			'C_AVATAR' => $user['user_avatar'] || $user_accounts_config->default_avatar_enabled(),
 			'C_GROUP_COLOR' => !empty($group_color),
 			'ID' => $row['id'],
 			'CONTENTS' => FormatingHelper::second_parse($row['contents']),
-			'USER_AVATAR' => $user_avatar,
+			'USER_AVATAR' => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : $user_accounts_config->get_default_avatar(),
 			'PSEUDO' => $is_admin ? $LANG['admin'] : (!empty($row['display_name']) ? $row['display_name'] : $LANG['guest']),
 			'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 			'GROUP_COLOR' => $group_color,

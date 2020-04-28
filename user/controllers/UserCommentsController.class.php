@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 16
+ * @version     PHPBoost 5.3 - last update: 2020 04 28
  * @since       PHPBoost 3.0 - 2012 02 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -121,9 +121,6 @@ class UserCommentsController extends AbstractController
 			if ($row['user_id'] == $this->current_user->get_id())
 				$display_delete_button = true;
 			
-			//Avatar
-			$user_avatar = !empty($row['user_avatar']) ? Url::to_rel($row['user_avatar']) : ($user_accounts_config->is_default_avatar_enabled() ? Url::to_rel('/templates/' . $this->current_user->get_theme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '');
-
 			$timestamp = new Date($row['comment_timestamp'], Timezone::SERVER_TIMEZONE);
 
 			$group_color = User::get_group_color($row['groups'], $row['level']);
@@ -133,14 +130,14 @@ class UserCommentsController extends AbstractController
 				'C_VISITOR'              => empty($row['display_name']),
 				'C_VIEW_TOPIC'           => true,
 				'C_GROUP_COLOR'          => !empty($group_color),
-				'C_AVATAR'               => $row['user_avatar'] || ($user_accounts_config->is_default_avatar_enabled()),
+				'C_AVATAR'               => $row['user_avatar'] || $user_accounts_config->default_avatar_enabled(),
 				'C_MODERATOR'            => $comments_authorizations->is_authorized_moderation() || $display_delete_button,
 
 				'U_TOPIC'   => Url::to_rel($path),
 				'U_EDIT'    => CommentsUrlBuilder::edit($path, $id)->rel(),
 				'U_DELETE'  => CommentsUrlBuilder::delete($path, $id, REWRITED_SCRIPT)->rel(),
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
-				'U_AVATAR'  => $user_avatar,
+				'U_AVATAR'  => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : $user_accounts_config->get_default_avatar(),
 
 				'COMMENT_NUMBER' => $this->comments_number,
 				'ID_COMMENT'     => $id,
