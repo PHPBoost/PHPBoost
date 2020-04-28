@@ -271,7 +271,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 */
 	public function default_avatar_enabled()
 	{
-		self::DEFAULT_AVATAR_URL_PROPERTY != '';
+		$this->get_property(self::DEFAULT_AVATAR_URL_PROPERTY) != '';
 	}
 	
 	/**
@@ -280,7 +280,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 */
 	public function get_default_avatar()
 	{
-		return self::DEFAULT_AVATAR_URL_PROPERTY == FormFieldThumbnail::DEFAULT_VALUE ? Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(self::NO_AVATAR_URL)) : Url::to_rel(self::DEFAULT_AVATAR_URL_PROPERTY);
+		return ($this->get_property(self::DEFAULT_AVATAR_URL_PROPERTY) == FormFieldThumbnail::DEFAULT_VALUE) ? Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(self::NO_AVATAR_URL)) : Url::to_rel($this->get_property(self::DEFAULT_AVATAR_URL_PROPERTY));
 	}
 
 	/**
