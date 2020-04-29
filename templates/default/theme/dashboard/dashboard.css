@@ -83,3 +83,14 @@ td.alert-priority { border-width: 0 0 1px 1px; }
 
 /* --- Debugger --- */
 .debugger { margin-left : 240px; }
+
+/* --- Config user default avatar */
+@media (min-width: 769px) {
+    #AdminMemberConfigController_default_avatar_field,
+    #AdminMemberConfigController_default_avatar_preview {
+        margin: 0;
+        display: inline-block;
+        vertical-align: top;
+        width: 49.5%;
+    }
+}

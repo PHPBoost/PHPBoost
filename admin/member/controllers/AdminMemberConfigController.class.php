@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 28
+ * @version     PHPBoost 5.3 - last update: 2020 04 29
  * @since       PHPBoost 3.0 - 2010 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -176,7 +176,9 @@ class AdminMemberConfigController extends AdminController
 			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'))
 		));
 
-		$fieldset->add_field(new FormFieldThumbnail('default_avatar', $this->lang['members.config.default-avatar'], $this->user_accounts_config->get_default_avatar_name(), UserAccountsConfig::NO_AVATAR_URL));
+		$fieldset->add_field(new FormFieldThumbnail('default_avatar', $this->lang['members.config.default-avatar'], $this->user_accounts_config->get_default_avatar_name(), UserAccountsConfig::NO_AVATAR_URL,
+			array('class' => 'half-field')
+		));
 
 		$fieldset = new FormFieldsetHTML('authorization', $this->lang['members.config.authorization']);
 		$form->add_fieldset($fieldset);
