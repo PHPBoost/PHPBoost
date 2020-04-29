@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 10 04
+ * @version     PHPBoost 5.3 - last update: 2020 04 29
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -86,6 +86,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 					'C_UNREAD_ALERT' => (bool)AdministratorAlertService::get_number_unread_alerts(),
 					'C_HAS_PM' => $user->get_unread_pm() > 0,
 					'C_USER_GROUP_COLOR' => !empty($user_group_color),
+					'C_AVATAR_IMG' => $user_avatar || $user_accounts_config->default_avatar_enabled(),
 					'NUMBER_UNREAD_CONTRIBUTIONS' => $contribution_number,
 					'NUMBER_UNREAD_ALERTS' => AdministratorAlertService::get_number_unread_alerts(),
 					'NUMBER_PM' => $user->get_unread_pm(),
@@ -95,7 +96,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 					'USER_GROUP_COLOR' => $user_group_color,
 					'U_USER_PROFILE' => UserUrlBuilder::profile($user->get_id())->rel(),
 					'U_USER_PM' => UserUrlBuilder::personnal_message($user->get_id())->rel(),
-					'U_AVATAR_IMG' => Url::to_rel($user_avatar),
+					'U_AVATAR_IMG' => $user_avatar ? Url::to_rel($user_avatar) : $user_accounts_config->get_default_avatar(),
 					'L_NBR_PM'  => $user->get_unread_pm() > 0 ? ($user->get_unread_pm() . ' ' . ($user->get_unread_pm() > 1 ? $lang['message_s'] : $lang['message'])) : $lang['private_messaging'],
 					'L_MESSAGE' => $user->get_unread_pm() > 1 ? $lang['message_s'] : $lang['message'],
 					'L_PM_PANEL' => $lang['private_messaging'],
