@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 11
+ * @version     PHPBoost 5.3 - last update: 2020 04 30
  * @since       PHPBoost 5.3 - 2019 12 20
 */
 
@@ -553,7 +553,7 @@ class Item
 
 	public function get_template_vars()
 	{
-		$categories_template_vars = $comments_template_vars = $notation_template_vars = $newcontent_template_vars = $sources_template_vars = $idcard_template_vars = array();
+		$categories_template_vars = $comments_template_vars = $notation_template_vars = $newcontent_template_vars = $sources_template_vars = $idcard_template_vars = $configuration_template_vars = array();
 		
 		if (self::$module->get_configuration()->has_categories())
 		{
@@ -603,13 +603,20 @@ class Item
 			);
 		}
 		
-		// if (self::$module->get_configuration()->feature_is_enabled('idcard'))
-		// {
-			// $idcard_template_vars = array(
-				// 'C_ID_CARD' => ContentManagementConfig::load()->module_id_card_is_enabled(self::$module_id) && $this->is_published(),
-				// 'ID_CARD'   => IdcardService::display_idcard($this->get_author_user())
-			// );
-		// }
+		if (self::$module->get_configuration()->feature_is_enabled('idcard'))
+		{
+			$idcard_template_vars = array(
+				'C_ID_CARD' => ContentManagementConfig::load()->module_id_card_is_enabled(self::$module_id) && $this->is_published(),
+				'ID_CARD'   => IdcardService::display_idcard($this->get_author_user())
+			);
+		}
+		
+		if (self::$module->get_configuration()->has_rich_config_parameters())
+		{
+			$configuration_template_vars = array(
+				'C_AUTHOR_DISPLAYED' => self::$module->get_configuration()->get_configuration_parameters()->get_author_displayed()
+			);
+		}
 
 		$content            = FormatingHelper::second_parse($this->content);
 		$author             = $this->get_author_user();
@@ -624,6 +631,7 @@ class Item
 			$newcontent_template_vars,
 			$sources_template_vars,
 			$idcard_template_vars,
+			$configuration_template_vars,
 			array(
 			// Conditions
 			'C_CONTROLS'           => $this->is_authorized_to_manage(),
