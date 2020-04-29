@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 11 16
+ * @version     PHPBoost 5.3 - last update: 2020 04 29
  * @since       PHPBoost 2.0 - 2008 07 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -336,7 +336,7 @@ else
 			}
 
 			$template->assign_block_vars('row.module', array(
-				'U_MODULE_LINK' => PATH_TO_ROOT . '/' . $module->get_id() . '/' . url($contribution_interface),
+				'U_MODULE_LINK' => $contribution_interface,
 				'MODULE_ID' => $module->get_id(),
 				'MODULE_NAME' => $module->get_configuration()->get_name(),
 				'LINK_TITLE' => sprintf($LANG['contribute_in_module_name'], $module->get_configuration()->get_name())
