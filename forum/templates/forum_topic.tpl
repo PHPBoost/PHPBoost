@@ -7,7 +7,7 @@
 		if(document.getElementById('contents').value == "") {
 			alert("{L_REQUIRE_MESSAGE}");
 			return false;
-	    }
+		}
 		return true;
 	}
 	function XMLHttpRequest_del(idmsg)
@@ -199,10 +199,10 @@
 	# START msg #
 		<div id="d{msg.ID}" class="message-container" itemscope="itemscope" itemtype="http://schema.org/Comment">
 			<span id="m{msg.ID}"></span>
-	        <div class="message-header-container">
-				<img class="message-user-avatar" src="# IF msg.C_USER_AVATAR #{msg.U_USER_AVATAR}# ELSE #{msg.U_DEFAULT_AVATAR}# ENDIF #" alt="${LangLoader::get_message('avatar', 'user-common')}">
-	            <div class="message-header-infos">
-		            <div class="message-user-infos hidden-small-screens">
+			<div class="message-header-container">
+				# IF msg.C_USER_AVATAR #<img class="message-user-avatar" src="{msg.U_USER_AVATAR}" alt="${LangLoader::get_message('avatar', 'user-common')}"># ENDIF #
+				<div class="message-header-infos">
+					<div class="message-user-infos hidden-small-screens">
 						<div>
 							<i class="fa # IF msg.C_USER_ONLINE #fa-user-check success# ELSE #fa-user-times error# ENDIF #" aria-hidden="true"></i>
 							# IF msg.C_IS_USER #${LangLoader::get_message('registered_on', 'main')} : {msg.USER_REGISTERED_DATE_FULL}# ENDIF #
@@ -212,7 +212,7 @@
 								| # IF msg.C_IS_USER # <a href="{msg.U_USER_MEMBERMG}">${LangLoader::get_message('message', 'main')}</a> : 0# ELSE #${LangLoader::get_message('message', 'main')} : 0# ENDIF #
 							# ENDIF #
 						</div>
-		                <div class="message-user-links">
+						<div class="message-user-links">
 							# IF msg.C_USER_PM #
 								<a href="{msg.U_USER_PM}" class="button submit smaller user-pm">${LangLoader::get_message('pm', 'main')}</a>
 							# ENDIF #
@@ -224,8 +224,8 @@
 							# END msg.ext_fields #
 						</div>
 					</div>
-	                <div class="message-user">
-	                    <h3 class="message-user-pseudo">
+					<div class="message-user">
+						<h3 class="message-user-pseudo">
 							# IF msg.C_FORUM_USER_LOGIN #
 								<a class="msg-link-pseudo {msg.FORUM_USER_LEVEL}" href="{msg.U_FORUM_USER_PROFILE}"# IF msg.FORUM_USER_GROUP_COLOR # style="color:{msg.FORUM_USER_GROUP_COLOR}"# ENDIF #>
 									{msg.FORUM_USER_LOGIN}
@@ -234,8 +234,8 @@
 							# ELSE #
 								<em>{L_GUEST}</em>
 							# ENDIF #
-	                    </h3>
-	                    <div class="message-actions">
+						</h3>
+						<div class="message-actions">
 							# IF C_AUTH_POST #<a href="topic{msg.U_VARS_QUOTE}#go-bottom" aria-label="{L_QUOTE}"><i class="fa fa-quote-right" aria-hidden="true"></i></a># ENDIF #
 							# IF msg.C_FORUM_MSG_EDIT #<a href="post{msg.U_FORUM_MSG_EDIT}" aria-label="{L_EDIT}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 
@@ -256,15 +256,15 @@
 
 							<a aria-label="${LangLoader::get_message('scroll-to.top', 'user-common')}" href="{U_TITLE_T}#go-top" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-top').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
 							<a aria-label="${LangLoader::get_message('scroll-to.bottom', 'user-common')}" href="{U_TITLE_T}#go-bottom" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-bottom').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
-	                    </div>
-	                </div>
-	                <div class="message-infos">
-	                    <time datetime="{msg.TOPIC_DATE_FULL}" itemprop="datePublished">${LangLoader::get_message('on', 'main')} {msg.TOPIC_DATE_FULL}</time>
-	                    <a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" class="hidden-small-screens" aria-label="${LangLoader::get_message('link.to.anchor', 'comments-common')}">\#{msg.ID}</i></a>
-	                </div>
-	            </div>
-	        </div>
-	        <div class="message-content" >
+						</div>
+					</div>
+					<div class="message-infos">
+						<time datetime="{msg.TOPIC_DATE_FULL}" itemprop="datePublished">${LangLoader::get_message('on', 'main')} {msg.TOPIC_DATE_FULL}</time>
+						<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" class="hidden-small-screens" aria-label="${LangLoader::get_message('link.to.anchor', 'comments-common')}">\#{msg.ID}</i></a>
+					</div>
+				</div>
+			</div>
+			<div class="message-content" >
 				# IF msg.L_FORUM_QUOTE_LAST_MSG # <p class="text-strong">{msg.L_FORUM_QUOTE_LAST_MSG}</p> # ENDIF #
 
 				{msg.FORUM_MSG_CONTENTS}
@@ -280,13 +280,13 @@
 						{L_ON} {msg.TOPIC_EDIT_DATE_FULL}
 					</p>
 				# ENDIF #
-	        </div>
+			</div>
 			<div class="message-user-sign# IF msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
 				# IF msg.C_USER_SIGN #{msg.USER_SIGN}# ENDIF #
 			</div>
-	        <div class="message-footer-container# IF msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
-	            <div class="message-user-assoc">
-	                <div class="message-group-level">
+			<div class="message-footer-container# IF msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
+				<div class="message-user-assoc">
+					<div class="message-group-level">
 						# IF msg.C_USER_GROUPS #
 							# START msg.usergroups #
 								# IF msg.usergroups.C_IMG_USERGROUP #
@@ -301,17 +301,17 @@
 						# IF msg.C_USER_RANK #<span class="pinned {msg.FORUM_USER_LEVEL}">{msg.USER_RANK}</span># ELSE #${LangLoader::get_message('banned', 'user-common')}# ENDIF #
 						# IF msg.C_USER_IMG_ASSOC #<img class="valign-middle" src="{msg.USER_IMG_ASSOC}" alt="${LangLoader::get_message('rank', 'main')}" /># ENDIF #
 					</div>
-	            </div>
-	            <div class="message-user-management">
-		            <div class="message-moderation-level">
+				</div>
+				<div class="message-user-management">
+					<div class="message-moderation-level">
 						# IF msg.C_FORUM_MODERATOR #
 							{msg.USER_WARNING}%
 							<a href="moderation_forum{msg.U_FORUM_WARNING}" aria-label="{L_WARNING_MANAGEMENT}"><i class="fa fa-exclamation-triangle warning" aria-hidden="true"></i></a>
 							<a href="moderation_forum{msg.U_FORUM_PUNISHEMENT}" aria-label="{L_PUNISHMENT_MANAGEMENT}"><i class="fa fa-user-lock" aria-hidden="true"></i></a>
 						# ENDIF #
 					</div>
-	            </div>
-	        </div>
+				</div>
+			</div>
 		</div>
 	# END msg #
 

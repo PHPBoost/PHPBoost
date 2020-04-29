@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 28
+ * @version     PHPBoost 5.3 - last update: 2020 04 29
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -186,7 +186,7 @@ class UserExploreGroupsController extends AbstractController
 			'LEVEL_CLASS'       => UserService::get_level_class($user['level']),
 			'GROUP_COLOR'       => $group_color,
 			'U_PROFILE'         => UserUrlBuilder::profile($user['user_id'])->rel(),
-			'U_AVATAR'          => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : $user_accounts_config->get_default_avatar()
+			'U_AVATAR'          => $user['user_avatar'] ? Url::to_rel($user['user_avatar']) : $user_accounts_config->get_default_avatar()
 		));
 
 		foreach (MemberExtendedFieldsService::display_profile_fields($user['user_id']) as $field)
