@@ -91,6 +91,10 @@ td.alert-priority { border-width: 0 0 1px 1px; }
         margin: 0;
         display: inline-block;
         vertical-align: top;
-        width: 49.5%;
+        width: 48%;
     }
+
+    #AdminMemberConfigController_default_avatar_preview { margin-top: -30px; }
+    
+    #AdminMemberConfigController_default_avatar_preview label { font-weight: bold;}
 }
