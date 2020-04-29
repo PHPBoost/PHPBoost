@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 28
+ * @version     PHPBoost 5.3 - last update: 2020 04 29
  * @since       PHPBoost 3.0 - 2009 10 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -271,7 +271,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 */
 	public function default_avatar_enabled()
 	{
-		$this->get_property(self::DEFAULT_AVATAR_URL_PROPERTY) != '';
+		return !empty($this->get_default_avatar());
 	}
 	
 	/**
@@ -280,7 +280,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 */
 	public function get_default_avatar()
 	{
-		return ($this->get_property(self::DEFAULT_AVATAR_URL_PROPERTY) == FormFieldThumbnail::DEFAULT_VALUE) ? Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(self::NO_AVATAR_URL)) : Url::to_rel($this->get_property(self::DEFAULT_AVATAR_URL_PROPERTY));
+		return ($this->get_default_avatar_name() == FormFieldThumbnail::DEFAULT_VALUE) ? Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(self::NO_AVATAR_URL)) : Url::to_rel($this->get_default_avatar_name());
 	}
 
 	/**
