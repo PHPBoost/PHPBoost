@@ -40,8 +40,10 @@ class IdcardService
 			try {
 				$biography = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER_EXTENDED_FIELDS, 'user_biography', 'WHERE user_id=:user_id', array('user_id' => $user->get_id()));
 			} catch (RowNotFoundException $e) {
-				$biography = $lang['extended-field.field.no-biography'];
+				$biography = '';
 			}
+			
+			$biography = $biography ? $biography : $lang['extended-field.field.no-biography'];
 		}
 		else
 		{
