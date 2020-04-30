@@ -38,7 +38,7 @@ class DefaultDisplayItemController extends AbstractItemController
 			$id = AppContext::get_request()->get_getint('id', 0);
 			try {
 				$this->item = self::get_items_manager()->get_item($id);
-			} catch (CategoryNotFoundException $e) {
+			} catch (RowNotFoundException $e) {
 				$this->RowNotFoundException();
 			}
 		}
