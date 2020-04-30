@@ -192,7 +192,7 @@ class ModuleConfiguration
 		if ($this->configuration_name)
 			return $this->configuration_name::load($this->module_id);
 		else
-			return $this->has_rich_config_parameters ? DefaultRichModuleConfig::load($this->module_id) : DefaultModuleConfig::load($this->module_id);
+			return ($this->has_rich_config_parameters() || $this->has_rich_items()) ? DefaultRichModuleConfig::load($this->module_id) : DefaultModuleConfig::load($this->module_id);
 	}
 
 	private function load_configuration($config_ini_file)
