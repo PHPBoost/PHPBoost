@@ -3,13 +3,13 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 03
+ * @version     PHPBoost 5.3 - last update: 2020 05 01
  * @since       PHPBoost 3.0 - 2013 02 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
 
-class SandboxExtensionPointProvider extends ExtensionPointProvider
+class SandboxExtensionPointProvider extends ModuleExtensionPointProvider
 {
 	public function __construct()
 	{
@@ -28,26 +28,5 @@ class SandboxExtensionPointProvider extends ExtensionPointProvider
 
 		return $module_css_files;
 	}
-
-	public function menus()
-	{
-		return new ModuleMenus(array(new SandboxModuleMiniMenu()));
-	}
-
-	public function comments()
-	{
-		return new CommentsTopics(array(new SandboxCommentsTopic()));
-	}
-
-	public function tree_links()
-	{
-		return new SandboxTreeLinks();
-	}
-
-	public function url_mappings()
-	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/sandbox/index.php')));
-	}
-
 }
 ?>
