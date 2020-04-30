@@ -666,7 +666,6 @@ jQuery('.sticky-menu').each(function(){
 	jQuery('.sticky-menu .cssmenu-title').click(function(){
 		var targetId = jQuery(this).attr("href"),
 			hash = targetId.substring(targetId.indexOf('#'));
-
 		if(hash != null || hash != targetId) {
 			if (parseInt($(window).width()) < 769)
 				menuOffset = jQuery('.sticky-menu > .cssmenu > ul > li > .cssmenu-title').innerHeight();
@@ -676,4 +675,4 @@ jQuery('.sticky-menu').each(function(){
 			jQuery('html, body').animate({scrollTop:jQuery(hash).offset().top - menuOffset}, 'slow');
 		}
 	});
-})
+});

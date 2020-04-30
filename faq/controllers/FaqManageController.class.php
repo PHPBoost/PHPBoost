@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 25
+ * @version     PHPBoost 5.3 - last update: 2020 04 30
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -83,7 +83,7 @@ class FaqManageController extends AdminModuleController
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell($faq_question->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
 				new HTMLTableRowCell($faq_question->is_approved() ? LangLoader::get_message('yes', 'common') : LangLoader::get_message('no', 'common')),
-				new HTMLTableRowCell($edit_link->display() . $delete_link->display())
+				new HTMLTableRowCell($edit_link->display() . $delete_link->display(), 'controls')
 			);
 
 			if (!$display_categories)

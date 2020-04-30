@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 26
+ * @version     PHPBoost 5.3 - last update: 2020 04 30
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -105,7 +105,7 @@ class UserUsersListController extends AbstractController
 				else
 					$delete_link = new DeleteLinkHTMLElement('', '', array('disabled' => true));
 
-				$html_table_row[] = new HTMLTableRowCell($edit_link->display() . $delete_link->display());
+				$html_table_row[] = new HTMLTableRowCell($edit_link->display() . $delete_link->display(), 'controls');
 			}
 
 			$results[] = new HTMLTableRow($html_table_row);

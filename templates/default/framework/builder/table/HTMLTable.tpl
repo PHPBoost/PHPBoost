@@ -50,9 +50,9 @@
 			<tbody>
 				# START row #
 				<tr
-				# IF row.C_ID # id="{row.ID}"# ENDIF #
-				# IF row.C_CSS_CLASSES # class="{row.CSS_CLASSES}"# ENDIF #
-				# IF row.C_CSS_STYLE # style="{row.CSS_STYLE}"# ENDIF #>
+					# IF row.C_ID # id="{row.ID}"# ENDIF #
+					# IF row.C_CSS_CLASSES # class="{row.CSS_CLASSES}"# ENDIF #
+					# IF row.C_CSS_STYLE # style="{row.CSS_STYLE}"# ENDIF #>
 					# IF C_MULTIPLE_DELETE_DISPLAYED #
 						<td class="mini-checkbox">
 							# IF row.C_DISPLAY_DELETE_INPUT #

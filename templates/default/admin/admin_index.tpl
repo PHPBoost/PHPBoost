@@ -53,7 +53,7 @@
 							<div class="message-helper bgc success">{L_NO_UNREAD_ALERT}</div>
 						# ENDIF #
 						# IF C_UNREAD_ALERTS #
-						<p class="smaller align-center">
+						<p class="align-center">
 							<a href="admin_alerts.php">{L_DISPLAY_ALL_ALERTS}</a>
 						</p>
 						# ENDIF #

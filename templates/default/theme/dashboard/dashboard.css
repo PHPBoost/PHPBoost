@@ -33,7 +33,7 @@
 	border-color: transparent;
 }
 
-td.alert-priority { border-width: 0 0 1px 1px; }
+td.alert-priority { border-width: 0 0 1px 0; }
 
 /* --- multitabs --- */
 .close-modal { width: calc(100% - 230px); }
@@ -95,6 +95,6 @@ td.alert-priority { border-width: 0 0 1px 1px; }
     }
 
     #AdminMemberConfigController_default_avatar_preview { margin-top: -30px; }
-    
+
     #AdminMemberConfigController_default_avatar_preview label { font-weight: bold;}
 }

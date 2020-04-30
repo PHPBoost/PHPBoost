@@ -76,12 +76,12 @@
 								</td>
 							# ENDIF #
 							# IF weblinks.C_CONTROLS #
-								<td>
+								<td class="controls">
 									# IF weblinks.C_EDIT #
-									<a href="{weblinks.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+										<a href="{weblinks.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 									# ENDIF #
 									# IF weblinks.C_DELETE #
-									<a href="{weblinks.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+										<a href="{weblinks.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 									# ENDIF #
 								</td>
 							# ENDIF #

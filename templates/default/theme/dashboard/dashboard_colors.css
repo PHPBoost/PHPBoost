@@ -83,6 +83,12 @@ table thead th a { color: var(--txt-light); }
 	color: var(--txt-dark);
 }
 
+.alert-very-low-priority  { color: var(--notice-dark); border-color: var(--notice-dark); background-color: rgba(var(--notice-rgb-d), 0.2); }
+.alert-low-priority       { color: var(--question-dark); border-color: var(--question-dark); background-color: rgba(var(--question-rgb-d), 0.2); }
+.alert-medium-priority    { color: var(--success-dark); border-color: var(--success-dark); background-color: rgba(var(--success-rgb-d), 0.2); }
+.alert-high-priority      { color: var(--warning-dark); border-color: var(--warning-dark); background-color: rgba(var(--warning-rgb-d), 0.2); }
+.alert-very-high-priority { color: var(--error-dark); border-color: var(--error-dark); background-color: rgba(var(--error-rgb-d), 0.2); }
+
 /* --- Form elements --------------------------------------------------------- */
 .button {
 	background-color: var(--bgc-main);
@@ -156,7 +162,7 @@ select:focus {
 /* --- Checkbox --- */
 .mini-checkbox .checkbox [type="checkbox"] + span::before {
 	background-color: var(--bgc-main);
-	box-shadow: 0 0 1px 1px rgba(var(--darken), 0.25);
+	box-shadow: 0 0 1px 2px rgba(var(--darken), 0.25);
 }
 
 .mini-checkbox .checkbox [type="checkbox"]:checked + span::after {
@@ -184,7 +190,7 @@ select:focus {
 .custom-radio .radio [type="radio"]:not(:checked) + span::before,
 .custom-radio .radio [type="radio"]:checked + span::before {
 	background-color: var(--bgc-main);
-	box-shadow: 0 0 1px 1px rgba(var(--darken), 0.25);
+	box-shadow: 0 0 1px 2px rgba(var(--darken), 0.25);
 }
 
 .custom-radio .radio [type="radio"]:not(:checked) + span:after,

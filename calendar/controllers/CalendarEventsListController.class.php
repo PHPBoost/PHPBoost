@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 06
+ * @version     PHPBoost 5.3 - last update: 2020 04 30
  * @since       PHPBoost 4.1 - 2015 04 13
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -37,7 +37,7 @@ class CalendarEventsListController extends ModuleController
 	{
 		if ($request->get_value('display_current_day_events', 0))
 			AppContext::get_response()->redirect(CalendarUrlBuilder::events_list());
-		
+
 		$this->lang = LangLoader::get('common', 'calendar');
 		$this->view = new StringTemplate('# INCLUDE table #');
 	}
@@ -121,7 +121,7 @@ class CalendarEventsListController extends ModuleController
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell(LangLoader::get_message('from_date', 'main') . ' ' . $event->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . $br->display() . LangLoader::get_message('to_date', 'main') . ' ' . $event->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
 				new HTMLTableRowCell($event->belongs_to_a_serie() ? $this->get_repeat_type_label($event) . ' - ' . $event->get_content()->get_repeat_number() . ' ' . $this->lang['calendar.labels.repeat_times'] : LangLoader::get_message('no', 'common')),
-				$moderation_link_number ? new HTMLTableRowCell($edit_link . $delete_link) : null
+				$moderation_link_number ? new HTMLTableRowCell($edit_link . $delete_link, 'controls') : null
 			);
 
 			if (!$display_categories)

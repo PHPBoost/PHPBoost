@@ -54,13 +54,7 @@
 /* --- Item control Icons (edit, delete, etc) --- */
 .controls a {
 	display: inline-block;
-	padding: 0 0.456em;
-}
-
-@media (max-width: 768px) {
-	.controls a {
-		padding: 0 0.809em;
-	}
+	padding: 0.456em;
 }
 
 /* --- Main content --- */

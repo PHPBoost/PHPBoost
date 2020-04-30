@@ -126,7 +126,7 @@
 								</td>
 							# ENDIF #
 							# IF C_MODERATION #
-								<td>
+								<td class="controls">
 									# IF downloadfiles.C_EDIT #
 										<a href="{downloadfiles.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 									# ENDIF #

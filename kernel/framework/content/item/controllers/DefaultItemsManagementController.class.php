@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 25
+ * @version     PHPBoost 5.3 - last update: 2020 04 30
  * @since       PHPBoost 5.3 - 2020 01 16
 */
 
@@ -54,7 +54,7 @@ class DefaultItemsManagementController extends AbstractItemController
 			LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.module_name = \'' . self::get_module()->get_id() . '\' AND note.id_in_module = ' . self::get_module()->get_id() . '.id AND note.user_id = ' . AppContext::get_current_user()->get_id() . '',
 			array('*', self::get_module()->get_id() . '.id')
 		);
-		
+
 		foreach ($result as $row)
 		{
 			$item = self::get_items_manager()->get_item_class();
@@ -97,7 +97,7 @@ class DefaultItemsManagementController extends AbstractItemController
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell($item->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
 				new HTMLTableRowCell($status->display() . $br->display() . ($dates ? $start_and_end_dates->display() : '')),
-				new HTMLTableRowCell($edit_link->display() . $delete_link->display())
+				new HTMLTableRowCell($edit_link->display() . $delete_link->display(), 'controls')
 			);
 
 			if ($display_categories)

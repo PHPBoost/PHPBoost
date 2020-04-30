@@ -131,7 +131,7 @@
 								</td>
 							# ENDIF #
 							# IF items.C_CONTROLS #
-								<td>
+								<td class="controls">
 									<a href="{items.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 									<a href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 								</td>
