@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 14
+ * @version     PHPBoost 5.3 - last update: 2020 04 29
  * @since       PHPBoost 5.3 - 2020 02 07
 */
 
@@ -42,6 +42,12 @@ class ModuleDispatchManager extends DispatchManager
 			$url_controller_mappers[] = new UrlControllerMapper('DefaultItemsManagementController', '`^/manage/?$`');
 			$url_controller_mappers[] = new UrlControllerMapper('DefaultDeleteItemController', '`^/([0-9]+)/delete/?$`', array('id'));
 
+			//Item display
+			if ($module_configuration->has_categories())
+				$url_controller_mappers[] = new UrlControllerMapper('DefaultDisplayItemController', '`^(?:/([0-9]+)-([a-z0-9-_]+)/([0-9]+)-([a-z0-9-_]+))/?$`', array('id_category', 'rewrited_name_category', 'id', 'rewrited_title'));
+			else
+				$url_controller_mappers[] = new UrlControllerMapper('DefaultDisplayItemController', '`^(?:/([0-9]+)-([a-z0-9-_]+))/?$`', array('id', 'rewrited_title'));
+			
 			//Items display
 			$url_controller_mappers[] = new UrlControllerMapper('DefaultSeveralItemsController', '`^/pending/?([0-9]+)?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('page', 'field', 'sort', 'page'));
 			if ($module_configuration->feature_is_enabled('keywords'))
