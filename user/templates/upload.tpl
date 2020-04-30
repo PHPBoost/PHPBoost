@@ -360,7 +360,7 @@
     </header>
     <div class="content">
         <div class="tabs-container">
-            <nav>
+            <nav class="tabs-nav">
                 <ul>
                     <li><a href="#" data-tabs data-target="upload-personal">{L_PERSONAL_TITLE}</a></li>
                     <li><a href="#" data-tabs data-target="upload-public">{L_PUBLIC_TITLE}</a></li>
