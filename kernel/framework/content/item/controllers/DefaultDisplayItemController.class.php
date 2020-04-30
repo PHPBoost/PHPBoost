@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 29
+ * @version     PHPBoost 5.3 - last update: 2020 04 30
  * @since       PHPBoost 5.3 - 2020 03 12
 */
 
@@ -107,7 +107,7 @@ class DefaultDisplayItemController extends AbstractItemController
 
 	protected function check_authorizations()
 	{
-		$authorizations = self::get_module()->get_configuration()->has_categories() ? CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id(), self::$module_id) : ItemsAuthorizationsService::check_authorizations(self::$module_id);
+		$authorizations = self::get_module()->get_configuration()->has_categories() ? CategoriesAuthorizationsService::check_authorizations(this->get_item()->get_category()->get_id(), self::$module_id) : ItemsAuthorizationsService::check_authorizations(self::$module_id);
 		
 		$current_user = AppContext::get_current_user();
 		$not_authorized = !$authorizations->moderation() && !$authorizations->write() && (!$authorizations->contribution() || $this->get_item()->get_author_user()->get_id() != $current_user->get_id());
