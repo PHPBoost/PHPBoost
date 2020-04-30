@@ -30,20 +30,13 @@ class IdcardService
 		if(!$user->is_guest())
 		{
 			try {
-				$avatar = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER_EXTENDED_FIELDS, 'user_avatar', 'WHERE user_id=:user_id', array('user_id' => $user->get_id()));
+				$user_extended_fields = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER_EXTENDED_FIELDS, array('user_avatar', 'user_biography'), 'WHERE user_id=:user_id', array('user_id' => $user->get_id()));
 			} catch (RowNotFoundException $e) {
-				$avatar = '';
+				$user_extended_fields = array();
 			}
 			
-			$avatar = $avatar ? Url::to_rel($avatar) : $user_accounts_config->get_default_avatar();
-
-			try {
-				$biography = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER_EXTENDED_FIELDS, 'user_biography', 'WHERE user_id=:user_id', array('user_id' => $user->get_id()));
-			} catch (RowNotFoundException $e) {
-				$biography = '';
-			}
-			
-			$biography = $biography ? $biography : $lang['extended-field.field.no-biography'];
+			$avatar = !empty($user_extended_fields) && $user_extended_fields['user_avatar'] ? Url::to_rel($user_extended_fields['user_avatar']) : $user_accounts_config->get_default_avatar();
+			$biography = !empty($user_extended_fields) && $user_extended_fields['user_biography'] ? $user_extended_fields['user_biography'] : $lang['extended-field.field.no-biography'];
 		}
 		else
 		{

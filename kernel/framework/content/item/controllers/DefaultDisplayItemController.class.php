@@ -85,6 +85,14 @@ class DefaultDisplayItemController extends AbstractItemController
 			}
 		}
 
+		if (in_array('idcard', $this->enabled_features))
+		{
+			$this->view->put_all(array(
+				'C_ID_CARD' => $this->get_item()->is_published(),
+				'ID_CARD'   => IdcardService::display_idcard($this->get_item()->get_author_user())
+			));
+		}
+
 		if (in_array('notation', $this->enabled_features))
 		{
 			$this->view->put('NOTATION', NotationService::display_active_image($this->get_item()->get_notation()));
