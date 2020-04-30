@@ -107,7 +107,7 @@ class DefaultDisplayItemController extends AbstractItemController
 
 	protected function check_authorizations()
 	{
-		$authorizations = self::get_module()->get_configuration()->has_categories() ? CategoriesAuthorizationsService::check_authorizations(this->get_item()->get_category()->get_id(), self::$module_id) : ItemsAuthorizationsService::check_authorizations(self::$module_id);
+		$authorizations = self::get_module()->get_configuration()->has_categories() ? CategoriesAuthorizationsService::check_authorizations($this->get_item()->get_category()->get_id(), self::$module_id) : ItemsAuthorizationsService::check_authorizations(self::$module_id);
 		
 		$current_user = AppContext::get_current_user();
 		$not_authorized = !$authorizations->moderation() && !$authorizations->write() && (!$authorizations->contribution() || $this->get_item()->get_author_user()->get_id() != $current_user->get_id());
