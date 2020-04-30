@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 23
+ * @version     PHPBoost 5.3 - last update: 2020 05 01
  * @since       PHPBoost 1.2 - 2005 06 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -29,7 +29,7 @@ if (!empty($writingpad))
 $tpl = new FileTemplate('admin/admin_index.tpl');
 
 $result = PersistenceContext::get_querier()->select("
-	SELECT comments.*, topic.*, member.*
+	SELECT comments.*, comments.timestamp AS comment_timestamp, topic.*, member.*
 	FROM " . DB_TABLE_COMMENTS . " comments
 	LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " topic ON comments.id_topic = topic.id_topic
 	LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = comments.user_id
@@ -44,7 +44,9 @@ while ($row = $result->fetch())
 	$ids[$comments_number] = $row['id'];
 	$group_color = User::get_group_color($row['groups'], $row['level']);
 
-	$tpl->assign_block_vars('comments_list', array(
+	$tpl->assign_block_vars('comments_list', array_merge(
+		Date::get_array_tpl_vars(new Date($row['comment_timestamp'], Timezone::SERVER_TIMEZONE), 'date'),
+		array(
 		'C_VISITOR' => $row['level'] == User::VISITOR_LEVEL || empty($row['user_id']),
 		'C_GROUP_COLOR' => !empty($group_color),
 		'COMMENT_NUMBER' => $comments_number,
@@ -54,7 +56,8 @@ while ($row = $result->fetch())
 		'GROUP_COLOR' => $group_color,
 		'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 		'U_DELETE' => CommentsUrlBuilder::delete($row['path'], $row['id'], REWRITED_SCRIPT)->rel(),
-		'U_LINK' => Url::to_rel($row['path']) . '#com' . $row['id'],
+		'U_LINK' => Url::to_rel($row['path']) . '#com' . $row['id']
+		)
 	));
 }
 $result->dispose();
