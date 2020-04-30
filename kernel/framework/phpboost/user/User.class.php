@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 11 09
+ * @version     PHPBoost 5.3 - last update: 2020 04 30
  * @since       PHPBoost 3.0 - 2012 03 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -253,22 +253,27 @@ class User
 
 	public function set_properties(array $properties)
 	{
-		$this->id = $properties['user_id'];
-		$this->level = $properties['level'];
+		if ($properties['user_id'] == null || $properties['level'] == null)
+			$this->init_visitor_user();
+		else
+		{
+			$this->id = $properties['user_id'];
+			$this->level = $properties['level'];
 
-		$this->email = $properties['email'];
-		$this->show_email = $properties['show_email'];
-		$this->locale = $properties['locale'];
-		$this->theme = $properties['theme'];
-		$this->timezone = $properties['timezone'];
-		$this->editor = $properties['editor'];
+			$this->email = $properties['email'];
+			$this->show_email = $properties['show_email'];
+			$this->locale = $properties['locale'];
+			$this->theme = $properties['theme'];
+			$this->timezone = $properties['timezone'];
+			$this->editor = $properties['editor'];
 
-		$this->delay_banned = $properties['delay_banned'];
-		$this->delay_readonly = $properties['delay_readonly'];
-		$this->warning_percentage = $properties['warning_percentage'];
+			$this->delay_banned = $properties['delay_banned'];
+			$this->delay_readonly = $properties['delay_readonly'];
+			$this->warning_percentage = $properties['warning_percentage'];
 
-		$this->display_name = $properties['display_name'];
-		$this->set_groups($properties['groups']);
+			$this->display_name = $properties['display_name'];
+			$this->set_groups($properties['groups']);
+		}
 	}
 
 	public function init_robot_user($robot_name)
