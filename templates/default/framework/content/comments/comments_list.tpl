@@ -15,7 +15,10 @@
 					</h3>
 					<div class="message-actions">
 						# IF comments.C_MODERATOR #
-							<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{comments.COMMENT_NUMBER}" name="delete-checkbox-{comments.COMMENT_NUMBER}" onclick="delete_button_display({comments.TOTAL_COMMENTS_NUMBER});" />
+							<label class="checkbox" for="multiple-checkbox-{comments.COMMENT_NUMBER}">
+								<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{comments.COMMENT_NUMBER}" name="delete-checkbox-{comments.COMMENT_NUMBER}" onclick="delete_button_display({comments.TOTAL_COMMENTS_NUMBER});" />
+								<span>&nbsp</span>
+							</label>
 							<a href="{comments.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 							<a href="{comments.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 						# ENDIF #
