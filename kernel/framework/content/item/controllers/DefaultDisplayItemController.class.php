@@ -20,7 +20,7 @@ class DefaultDisplayItemController extends AbstractItemController
 	{
 		$this->init($request);
 		$this->check_authorizations();
-		$this->update_views_number();
+		$this->update_views_number($request);
 		$this->build_view();
 
 		return $this->generate_response();
@@ -28,7 +28,7 @@ class DefaultDisplayItemController extends AbstractItemController
 
 	protected function init(HTTPRequestCustom $request)
 	{
-		$this->current_url = self::get_module()->get_configuration()->has_categories() ? ItemsUrlBuilder::display($this->get_item()->get_category()->get_id(), $this->get_item()->get_category()->get_rewrited_name(), $this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id)->rel() : ItemsUrlBuilder::display_item($this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id)->rel();
+		$this->current_url = self::get_module()->get_configuration()->has_categories() ? ItemsUrlBuilder::display($this->get_item()->get_category()->get_id(), $this->get_item()->get_category()->get_rewrited_name(), $this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id) : ItemsUrlBuilder::display_item($this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id);
 	}
 
 	protected function get_item()
@@ -53,7 +53,7 @@ class DefaultDisplayItemController extends AbstractItemController
 		}
 		else
 		{
-			if ($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), $this->current_url))
+			if ($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), $this->current_url->rel()))
 			{
 				self::get_items_manager()->update_views_number($this->get_item());
 			}
@@ -62,7 +62,7 @@ class DefaultDisplayItemController extends AbstractItemController
 
 	protected function build_view()
 	{
-		if (self::get_module()->get_configuration()->feature_is_enabled('comments'))
+		if (in_array('comments', $this->enabled_features))
 		{
 			$comments_topic = new DefaultCommentsTopic(self::$module_id, $this->get_item());
 			$comments_topic->set_id_in_module($this->get_item()->get_id());
@@ -85,6 +85,11 @@ class DefaultDisplayItemController extends AbstractItemController
 			}
 		}
 
+		if (in_array('notation', $this->enabled_features))
+		{
+			$this->view->put('NOTATION', NotationService::display_active_image($this->get_item()->get_notation()));
+		}
+
 		if (self::get_module()->get_configuration()->feature_is_enabled('sources'))
 		{
 			foreach ($this->get_item()->get_sources() as $name => $url)
@@ -93,11 +98,7 @@ class DefaultDisplayItemController extends AbstractItemController
 			}
 		}
 
-		$this->build_keywords_view();
-
-		$this->view->put_all(array_merge($this->get_item()->get_template_vars(), array(
-			'KERNEL_NOTATION' => NotationService::display_active_image($this->get_item()->get_notation())
-		)));
+		$this->view->put_all($this->get_item()->get_template_vars());
 	}
 
 	protected function get_template_to_use()
