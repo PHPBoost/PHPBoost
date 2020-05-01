@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 30
+ * @version     PHPBoost 5.3 - last update: 2020 05 01
  * @since       PHPBoost 5.3 - 2020 01 23
 */
 
@@ -105,18 +105,8 @@ class RichItem extends Item
 	{
 		$content = $parsed_content ? $parsed_content : FormatingHelper::second_parse($this->content);
 		$summary = $this->get_real_summary($content);
-		$configuration_template_vars = array();
 		
-		if (self::$module->get_configuration()->has_rich_config_parameters())
-		{
-			$configuration_template_vars = array(
-				'C_AUTHOR_DISPLAYED' => self::$module->get_configuration()->get_configuration_parameters()->get_author_displayed()
-			);
-		}
-		
-		return array_merge(
-			$configuration_template_vars,
-			array(
+		return array(
 			// Conditions
 			'C_HAS_THUMBNAIL'      => $this->has_thumbnail(),
 			'C_AUTHOR_CUSTOM_NAME' => $this->is_author_custom_name_enabled(),
@@ -129,7 +119,6 @@ class RichItem extends Item
 			
 			// Links
 			'U_THUMBNAIL'          => $this->get_thumbnail()->rel()
-			)
 		);
 	}
 }

@@ -16,16 +16,14 @@
 		<div class="flex-between">
 			# IF C_MORE_OPTIONS #
 				<div class="more">
-					# IF C_ENABLED_AUTHOR #
-						# IF C_AUTHOR_DISPLAYED #
-							# IF C_AUTHOR_CUSTOM_NAME #
-								<span class="pinned"><i class="far fa-user" aria-hidden="true"></i> <span class="custom-author">{AUTHOR_CUSTOM_NAME}</span></span>
-							# ELSE #
-								# IF NOT C_ID_CARD #
-									<span class="pinned {AUTHOR_LEVEL_CLASS}"# IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}; border-color:{AUTHOR_GROUP_COLOR}" # ENDIF #>
-										<i class="far fa-user" aria-hidden="true"></i> # IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{AUTHOR_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #<span class="visitor">{PSEUDO}</span># ENDIF #
-									</span>
-								# ENDIF #
+					# IF C_AUTHOR_DISPLAYED #
+						# IF C_AUTHOR_CUSTOM_NAME #
+							<span class="pinned"><i class="far fa-user" aria-hidden="true"></i> <span class="custom-author">{AUTHOR_CUSTOM_NAME}</span></span>
+						# ELSE #
+							# IF NOT C_ID_CARD #
+								<span class="pinned {AUTHOR_LEVEL_CLASS}"# IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}; border-color:{AUTHOR_GROUP_COLOR}" # ENDIF #>
+									<i class="far fa-user" aria-hidden="true"></i> # IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{AUTHOR_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #<span class="visitor">{PSEUDO}</span># ENDIF #
+								</span>
 							# ENDIF #
 						# ENDIF #
 					# ENDIF #
@@ -115,21 +113,19 @@
 									<span>{DOWNLOADS_NUMBER}</span>
 								</li>
 							# ENDIF #
-							# IF C_ENABLED_AUTHOR #
-								# IF C_AUTHOR_DISPLAYED #
-									<li class="li-stretch">
-										<span class="text-strong">${TextHelper::ucfirst(@author)} : </span>
-										# IF C_AUTHOR_CUSTOM_NAME #
-											<span class="pinned"><i class="far fa-user" aria-hidden="true"></i> <span class="custom-author">{AUTHOR_CUSTOM_NAME}</span></span>
-										# ELSE #
-											# IF NOT C_ID_CARD #
-												<span class="pinned {AUTHOR_LEVEL_CLASS}"# IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}; border-color:{AUTHOR_GROUP_COLOR}" # ENDIF #>
-													<i class="far fa-user" aria-hidden="true"></i> # IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{AUTHOR_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #<span class="visitor">{PSEUDO}</span># ENDIF #
-												</span>
-											# ENDIF #
+							# IF C_AUTHOR_DISPLAYED #
+								<li class="li-stretch">
+									<span class="text-strong">${TextHelper::ucfirst(@author)} : </span>
+									# IF C_AUTHOR_CUSTOM_NAME #
+										<span class="pinned"><i class="far fa-user" aria-hidden="true"></i> <span class="custom-author">{AUTHOR_CUSTOM_NAME}</span></span>
+									# ELSE #
+										# IF NOT C_ID_CARD #
+											<span class="pinned {AUTHOR_LEVEL_CLASS}"# IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}; border-color:{AUTHOR_GROUP_COLOR}" # ENDIF #>
+												<i class="far fa-user" aria-hidden="true"></i> # IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{AUTHOR_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #<span class="visitor">{PSEUDO}</span># ENDIF #
+											</span>
 										# ENDIF #
-									</li>
-								# ENDIF #
+									# ENDIF #
+								</li>
 							# ENDIF #
 							# IF C_ENABLED_DATE #
 								<li class="li-stretch">
@@ -162,17 +158,15 @@
 				# IF C_HAS_THUMBNAIL #<img src="{U_THUMBNAIL}" alt="{TITLE}" class="item-thumbnail" itemprop="thumbnailUrl" /># ENDIF #
 			# ENDIF #
 
-			<div itemprop="text">{CONTENTS}</div>
+			<div itemprop="text">{CONTENT}</div>
 		</div>
 
-		# IF C_ENABLED_AUTHOR #
-			# IF C_AUTHOR_DISPLAYED #
-				# IF NOT C_AUTHOR_CUSTOM_NAME #
-					# IF C_ID_CARD #
-						<aside>
-					 		{ID_CARD}
-						</aside>
-					# ENDIF #
+		# IF C_AUTHOR_DISPLAYED #
+			# IF NOT C_AUTHOR_CUSTOM_NAME #
+				# IF C_ID_CARD #
+					<aside>
+						{ID_CARD}
+					</aside>
 				# ENDIF #
 			# ENDIF #
 		# ENDIF #
