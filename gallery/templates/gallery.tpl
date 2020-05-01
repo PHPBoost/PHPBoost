@@ -257,13 +257,13 @@
 	<div class="gallery-tools-container">
 		<nav id="cssmenu-galleryfilter" class="cssmenu cssmenu-right cssmenu-actionslinks cssmenu-tools">
 			<ul class="level-0 hidden">
-				<li><a class="cssmenu-title"><i class="fa fa-fw fa-eye" aria-hidden="true"></i> <span>{L_DISPLAY}</span></a>
+				<li class="has-sub"><a class="cssmenu-title"><i class="fa fa-fw fa-eye" aria-hidden="true"></i> <span>{L_DISPLAY}</span></a>
 					<ul class="level-1">
 						<li><a href="{U_BEST_VIEWS}" class="cssmenu-title"><i class="fa fa-fw fa-eye" aria-hidden="true"></i> <span>{L_BEST_VIEWS}</span></a></li>
 						# IF C_NOTATION_ENABLED #<li><a href="{U_BEST_NOTES}" class="cssmenu-title"><i class="far fa-star" aria-hidden="true"></i> <span>{L_BEST_NOTES}</span></a></li># ENDIF #
 					</ul>
 				</li>
-				<li><a class="cssmenu-title"><i class="fa fa-fw fa-sort" aria-hidden="true"></i> <span>{L_ORDER_BY}</span></a>
+				<li class="has-sub"><a class="cssmenu-title"><i class="fa fa-fw fa-sort" aria-hidden="true"></i> <span>{L_ORDER_BY}</span></a>
 					<ul class="level-1">
 						<li><a href="{U_ORDER_BY_NAME}" class="cssmenu-title"><i class="fa fa-fw fa-tag" aria-hidden="true"></i> <span>{L_NAME}</span></a></li>
 						<li><a href="{U_ORDER_BY_DATE}" class="cssmenu-title"><i class="fa fa-fw fa-clock" aria-hidden="true"></i> <span>{L_DATE}</span></a></li>
@@ -275,7 +275,7 @@
 						<li><a href="{U_ORDER_BY_COM}" class="cssmenu-title"><i class="fa fa-fw fa-comments" aria-hidden="true"></i> <span>{L_COM}</span></a></li># ENDIF #
 					</ul>
 				</li>
-				<li><a class="cssmenu-title"><i class="fa fa-fw fa-sort-alpha-down"></i> <span>{L_DIRECTION}</span></a>
+				<li class="has-sub"><a class="cssmenu-title"><i class="fa fa-fw fa-sort-alpha-down"></i> <span>{L_DIRECTION}</span></a>
 					<ul class="level-1">
 						<li><a href="{U_ASC}" class="cssmenu-title"><i class="fa fa-fw fa-sort-amount-down" aria-hidden="true"></i> <span>{L_ASC}</span></a></li>
 						<li><a href="{U_DESC}" class="cssmenu-title"><i class="fa fa-fw fa-sort-amount-up" aria-hidden="true"></i> <span>{L_DESC}</span></a></li>
