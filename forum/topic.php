@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 29
+ * @version     PHPBoost 5.3 - last update: 2020 05 01
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -388,7 +388,7 @@ while ( $row = $result->fetch() )
 		'USER_RANK'                   => $user_rank,
 		'USER_IMG_ASSOC'              => $rank_img,
 		'C_USER_IMG_ASSOC'            => !empty($rank_img),
-		'C_USER_AVATAR'               => $row['user_avatar'] || $user_accounts_config->default_avatar_enabled(),
+		'C_USER_AVATAR'               => $row['user_avatar'] || $user_accounts_config->is_default_avatar_enabled(),
 		'U_USER_AVATAR'               => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : $user_accounts_config->get_default_avatar(),
 		'C_USER_GROUPS'               => $row['groups'],
 		'C_IS_USER'                   => !$is_guest,

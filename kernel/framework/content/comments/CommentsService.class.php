@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 28
+ * @version     PHPBoost 5.3 - last update: 2020 05 01
  * @since       PHPBoost 3.0 - 2011 03 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -302,7 +302,7 @@ class CommentsService
 					'C_MODERATOR' => self::is_authorized_edit_or_delete_comment($authorizations, $id),
 					'C_VISITOR' => empty($row['display_name']),
 					'C_GROUP_COLOR' => !empty($group_color),
-					'C_AVATAR' => $row['user_avatar'] || $user_accounts_config->default_avatar_enabled(),
+					'C_AVATAR' => $row['user_avatar'] || $user_accounts_config->is_default_avatar_enabled(),
 					'U_EDIT' => CommentsUrlBuilder::edit($path, $id)->rel(),
 					'U_DELETE' => CommentsUrlBuilder::delete($path, $id)->rel(),
 					'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),

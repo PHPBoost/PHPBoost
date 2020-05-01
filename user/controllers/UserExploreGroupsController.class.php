@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 29
+ * @version     PHPBoost 5.3 - last update: 2020 05 01
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -179,7 +179,7 @@ class UserExploreGroupsController extends AbstractController
 
 		$group_color = User::get_group_color($user['groups'], $user['level']);
 		$this->view->assign_block_vars($list_name, array(
-			'C_AVATAR'          => $user['user_avatar'] || $user_accounts_config->default_avatar_enabled(),
+			'C_AVATAR'          => $user['user_avatar'] || $user_accounts_config->is_default_avatar_enabled(),
 			'C_GROUP_COLOR'     => !empty($group_color),
 			'PSEUDO'            => $user['display_name'],
 			'LEVEL'             => ($user['warning_percentage'] < '100' || (time() - $user['delay_banned']) < 0) ? UserService::get_level_lang($user['level']) : $this->lang['banned'],

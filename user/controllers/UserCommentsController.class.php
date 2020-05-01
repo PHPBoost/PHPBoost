@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 28
+ * @version     PHPBoost 5.3 - last update: 2020 05 01
  * @since       PHPBoost 3.0 - 2012 02 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -130,7 +130,7 @@ class UserCommentsController extends AbstractController
 				'C_VISITOR'              => empty($row['display_name']),
 				'C_VIEW_TOPIC'           => true,
 				'C_GROUP_COLOR'          => !empty($group_color),
-				'C_AVATAR'               => $row['user_avatar'] || $user_accounts_config->default_avatar_enabled(),
+				'C_AVATAR'               => $row['user_avatar'] || $user_accounts_config->is_default_avatar_enabled(),
 				'C_MODERATOR'            => $comments_authorizations->is_authorized_moderation() || $display_delete_button,
 
 				'U_TOPIC'   => Url::to_rel($path),

@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 30
+ * @version     PHPBoost 5.3 - last update: 2020 05 01
  * @since       PHPBoost 5.2 - 2019 04 23
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -47,7 +47,7 @@ class IdcardService
 		$tpl->put_all(array(
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			'C_AUTHOR_IS_MEMBER' => !$user->is_guest(),
-			'C_AVATAR'           => $avatar || $user_accounts_config->default_avatar_enabled(),
+			'C_AVATAR'           => $avatar || $user_accounts_config->is_default_avatar_enabled(),
 
 			'AUTHOR_NAME'        => $user->get_display_name(),
 			'BIOGRAPHY'          => $biography,

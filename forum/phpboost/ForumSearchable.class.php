@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 28
+ * @version     PHPBoost 5.3 - last update: 2020 05 01
  * @since       PHPBoost 3.0 - 2012 02 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -237,7 +237,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			'U_TOPIC'          => PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $result_data['topic_id'], '-' . $result_data['topic_id'] . $rewrited_title . '.php') . '#m' . $result_data['msg_id'],
 			'TITLE'            => stripslashes($result_data['title']),
 			'CONTENTS'         => FormatingHelper::second_parse(stripslashes($result_data['contents'])),
-			'C_USER_AVATAR'    => $user_accounts_config->default_avatar_enabled() || !empty($result_data['avatar']),
+			'C_USER_AVATAR'    => $user_accounts_config->is_default_avatar_enabled() || !empty($result_data['avatar']),
 			'U_USER_AVATAR'    => Url::to_rel($result_data['avatar']),
 			'U_DEFAULT_AVATAR' => $user_accounts_config->get_default_avatar()
 		)));

@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 29
+ * @version     PHPBoost 5.3 - last update: 2020 05 01
  * @since       PHPBoost 3.0 - 2009 10 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -258,7 +258,7 @@ class UserAccountsConfig extends AbstractConfigData
 
 	/**
 	 * Sets the default avatar URL
-	 * @param tring $url The URL of the default avatar
+	 * @param string $url The URL of the default avatar
 	 */
 	public function set_default_avatar_name($url)
 	{
@@ -269,7 +269,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 * Tells whether the default avatar is set or not
 	 * @return bool true if it is, false otherwise
 	 */
-	public function default_avatar_enabled()
+	public function is_default_avatar_enabled()
 	{
 		return !empty($this->get_default_avatar());
 	}
