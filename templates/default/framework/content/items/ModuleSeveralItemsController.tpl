@@ -264,7 +264,7 @@
 										{items.CONTENT}
 									# ELSE #
 										{items.SUMMARY}
-										# IF items.C_READ_MORE #... <a href="{items.U_ITEM}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
+										# IF items.C_READ_MORE # <a href="{items.U_ITEM}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
 									# ENDIF #
 								</div>
 							</div>
@@ -273,7 +273,7 @@
 						<footer>
 							<meta itemprop="url" content="{items.U_ITEM}">
 							<meta itemprop="description" content="${escape(items.SUMMARY)}"/>
-							# IF C_COMMENTS_ENABLED #
+							# IF C_ENABLED_COMMENTS #
 								<meta itemprop="discussionUrl" content="{items.U_COMMENTS}">
 								<meta itemprop="interactionCount" content="{items.COMMENTS_NUMBER} UserComments">
 							# ENDIF #
