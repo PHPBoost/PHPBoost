@@ -253,14 +253,14 @@
 
 			<div class="gallery-tools-container">
 				<nav id="cssmenu-galleryfilter" class="cssmenu cssmenu-right cssmenu-actionslinks cssmenu-tools">
-					<ul class="level-0 hidden">
-						<li><a class="cssmenu-title"><i class="fa fa-eye" aria-hidden="true"></i> {L_DISPLAY}</a>
+					<ul class="level-0">
+						<li class="has-sub"><a class="cssmenu-title"><i class="fa fa-eye" aria-hidden="true"></i> {L_DISPLAY}</a>
 							<ul class="level-1">
 								<li><a href="{U_BEST_VIEWS}" class="cssmenu-title"><i class="fa fa-eye" aria-hidden="true"></i> {L_BEST_VIEWS}</a></li>
 								# IF C_NOTATION_ENABLED #<li><a href="{U_BEST_NOTES}" class="cssmenu-title"><i class="fa fa-star-half-empty" aria-hidden="true"></i> {L_BEST_NOTES}</a></li># ENDIF #
 							</ul>
 						</li>
-						<li><a class="cssmenu-title"><i class="fa fa-sort" aria-hidden="true"></i> {L_ORDER_BY}</a>
+						<li class="has-sub"><a class="cssmenu-title"><i class="fa fa-sort" aria-hidden="true"></i> {L_ORDER_BY}</a>
 							<ul class="level-1">
 								<li><a href="{U_ORDER_BY_NAME}" class="cssmenu-title"><i class="fa fa-tag" aria-hidden="true"></i> {L_NAME}</a></li>
 								<li><a href="{U_ORDER_BY_DATE}" class="cssmenu-title"><i class="fa fa-clock-o" aria-hidden="true"></i> {L_DATE}</a></li>
@@ -272,7 +272,7 @@
 								<li><a href="{U_ORDER_BY_COM}" class="cssmenu-title"><i class="fa fa-comments-o" aria-hidden="true"></i> {L_COM}</a></li># ENDIF #
 							</ul>
 						</li>
-						<li><a class="cssmenu-title"><i class="fa fa-sort-alpha-asc"></i> {L_DIRECTION}</a>
+						<li class="has-sub"><a class="cssmenu-title"><i class="fa fa-sort-alpha-asc"></i> {L_DIRECTION}</a>
 							<ul class="level-1">
 								<li><a href="{U_ASC}" class="cssmenu-title"><i class="fa fa-sort-amount-asc" aria-hidden="true"></i> {L_ASC}</a></li>
 								<li><a href="{U_DESC}" class="cssmenu-title"><i class="fa fa-sort-amount-desc" aria-hidden="true"></i> {L_DESC}</a></li>
@@ -284,6 +284,7 @@
 					jQuery("#cssmenu-galleryfilter").menumaker({
 						title: "${LangLoader::get_message('sort_options', 'common')}",
 						format: "multitoggle",
+						actionslinks: true,
 						breakpoint: 768
 					});
 					jQuery(document).ready(function() {
