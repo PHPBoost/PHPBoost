@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 09 14
+ * @version     PHPBoost 5.3 - last update: 2020 05 01
  * @since       PHPBoost 3.0 - 2010 02 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -46,6 +46,7 @@ class DefaultTemplateData implements TemplateData
 			'IS_USER_CONNECTED' => $user->check_level(User::MEMBER_LEVEL),
 			'IS_ADMIN'          => $user->check_level(User::ADMIN_LEVEL),
 			'IS_MODERATOR'      => $user->check_level(User::MODERATOR_LEVEL),
+			'IS_MOBILE_DEVICE'  => AppContext::get_request()->is_mobile_device(),
 			'PATH_TO_ROOT'      => TPL_PATH_TO_ROOT,
 			'PHP_PATH_TO_ROOT'  => PATH_TO_ROOT,
 			'TOKEN'             => !empty($session) ? $session->get_token() : '',
