@@ -236,12 +236,12 @@ class UserCommentsController extends AbstractController
 
 	private function build_select()
 	{
-		$extensions_point = array_keys(CommentsProvidersService::get_extension_point());
 		$modules = array(new FormFieldSelectChoiceOption(LangLoader::get_message('view_all_comments', 'admin'), ''));
+		$comments_config = CommentsConfig::load();
 
-		foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $module)
+		foreach (ModulesManager::get_activated_feature_modules('comments') as $module)
 		{
-			if (in_array($module->get_id(), $extensions_point))
+			if ($comments_config->module_comments_is_enabled($module->get_id()))
 			{
 				$modules[] = new FormFieldSelectChoiceOption($module->get_configuration()->get_name(), $module->get_id());
 			}
