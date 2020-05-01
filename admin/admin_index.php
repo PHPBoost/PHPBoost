@@ -56,6 +56,7 @@ while ($row = $result->fetch())
 		'GROUP_COLOR' => $group_color,
 		'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 		'U_DELETE' => CommentsUrlBuilder::delete($row['path'], $row['id'], REWRITED_SCRIPT)->rel(),
+		'TOPIC' => $row['module_id'],
 		'U_LINK' => Url::to_rel($row['path']) . '#com' . $row['id']
 		)
 	));

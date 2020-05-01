@@ -147,6 +147,11 @@ a.pinned { cursor: pointer; }
 .d-block 	    { display: block; }
 .d-inline-block { display: inline-block; }
 
+.span-mobile { display: block;}
+@media (min-width:769px) {
+	.span-mobile { display: inline;}
+}
+
 /* --- Alignment --- */
 .indent { text-indent: 2.618em; }
 .indent::first-letter {

@@ -101,10 +101,10 @@
 						<ul>
 							<li><a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}">{L_MODULES_MANAGEMENT}</a></li>
 							# IF C_MODULE_ARTICLES_INSTALLED #
-							<li><a href="{U_ADD_ARTICLE}">{L_ADD_ARTICLES}</a></li>
+								<li><a href="{U_ADD_ARTICLE}">{L_ADD_ARTICLES}</a></li>
 							# ENDIF #
 							# IF C_MODULE_NEWS_INSTALLED #
-							<li><a href="{U_ADD_NEWS}">{L_ADD_NEWS}</a></li>
+								<li><a href="{U_ADD_NEWS}">{L_ADD_NEWS}</a></li>
 							# ENDIF #
 						</ul>
 					</div>
@@ -167,11 +167,11 @@
 										<span class="controls">
 											<a href="{comments_list.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 											<a href="{comments_list.U_LINK}" aria-label="${LangLoader::get_message('pm_conversation_link', 'main')}">
-												<i class="far fa-fw fa-hand-point-right" aria-hidden="true"></i>
+												<i class="far fa-fw fa-hand-point-right" aria-hidden="true"></i> {comments_list.TOPIC}
 											</a>
 										</span>
-										<span>{comments_list.DATE} {L_BY} # IF comments_list.C_VISITOR #{comments_list.PSEUDO}# ELSE #<a href="{comments_list.U_PROFILE}" class="{comments_list.LEVEL_CLASS}" # IF comments_list.C_GROUP_COLOR # style="color:{comments_list.GROUP_COLOR}" # ENDIF #>{comments_list.PSEUDO}</a># ENDIF #</span> :
-										{comments_list.CONTENT}
+										<span class="span-mobile">{L_BY} # IF comments_list.C_VISITOR #{comments_list.PSEUDO}# ELSE #<a href="{comments_list.U_PROFILE}" class="{comments_list.LEVEL_CLASS}" # IF comments_list.C_GROUP_COLOR # style="color:{comments_list.GROUP_COLOR}" # ENDIF #>{comments_list.PSEUDO}</a># ENDIF #, {comments_list.DATE_DIFF_NOW} : </span>
+										<span class="span-mobile">{comments_list.CONTENT}</span>
 									</li>
 								# END comments_list #
 								<li>
