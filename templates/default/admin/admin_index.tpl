@@ -167,7 +167,7 @@
 										<span class="controls">
 											<a href="{comments_list.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 											<a href="{comments_list.U_LINK}" aria-label="${LangLoader::get_message('pm_conversation_link', 'main')}">
-												<i class="far fa-fw fa-hand-point-right" aria-hidden="true"></i> {comments_list.TOPIC}
+												<i class="far fa-fw fa-hand-point-right" aria-hidden="true"></i> {comments_list.MODULE_NAME}
 											</a>
 										</span>
 										<span class="span-mobile">{L_BY} # IF comments_list.C_VISITOR #{comments_list.PSEUDO}# ELSE #<a href="{comments_list.U_PROFILE}" class="{comments_list.LEVEL_CLASS}" # IF comments_list.C_GROUP_COLOR # style="color:{comments_list.GROUP_COLOR}" # ENDIF #>{comments_list.PSEUDO}</a># ENDIF #, {comments_list.DATE_DIFF_NOW} : </span>

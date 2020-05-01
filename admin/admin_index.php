@@ -47,17 +47,17 @@ while ($row = $result->fetch())
 	$tpl->assign_block_vars('comments_list', array_merge(
 		Date::get_array_tpl_vars(new Date($row['comment_timestamp'], Timezone::SERVER_TIMEZONE), 'date'),
 		array(
-		'C_VISITOR' => $row['level'] == User::VISITOR_LEVEL || empty($row['user_id']),
-		'C_GROUP_COLOR' => !empty($group_color),
+		'C_VISITOR'      => $row['level'] == User::VISITOR_LEVEL || empty($row['user_id']),
+		'C_GROUP_COLOR'  => !empty($group_color),
 		'COMMENT_NUMBER' => $comments_number,
-		'CONTENT' => FormatingHelper::second_parse($row['message']),
-		'PSEUDO' => ($row['level'] != User::VISITOR_LEVEL) && !empty($row['display_name']) ? $row['display_name'] : (!empty($row['pseudo']) ? $row['pseudo'] : $LANG['guest']),
-		'LEVEL_CLASS' => UserService::get_level_class($row['level']),
-		'GROUP_COLOR' => $group_color,
-		'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
-		'U_DELETE' => CommentsUrlBuilder::delete($row['path'], $row['id'], REWRITED_SCRIPT)->rel(),
-		'TOPIC' => $row['module_id'],
-		'U_LINK' => Url::to_rel($row['path']) . '#com' . $row['id']
+		'CONTENT'        => FormatingHelper::second_parse($row['message']),
+		'PSEUDO'         => ($row['level'] != User::VISITOR_LEVEL) && !empty($row['display_name']) ? $row['display_name'] : (!empty($row['pseudo']) ? $row['pseudo'] : $LANG['guest']),
+		'LEVEL_CLASS'    => UserService::get_level_class($row['level']),
+		'GROUP_COLOR'    => $group_color,
+		'U_PROFILE'      => UserUrlBuilder::profile($row['user_id'])->rel(),
+		'U_DELETE'       => CommentsUrlBuilder::delete($row['path'], $row['id'], REWRITED_SCRIPT)->rel(),
+		'MODULE_NAME'    => ModulesManager::get_module($row['module_id'])->get_configuration()->get_name(),
+		'U_LINK'         => Url::to_rel($row['path']) . '#com' . $row['id']
 		)
 	));
 }
