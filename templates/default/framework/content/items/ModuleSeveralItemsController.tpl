@@ -79,10 +79,10 @@
 									# ELSE #
 										# IF items.C_AUTHOR_EXIST #
 											<a itemprop="author" href="{items.U_AUTHOR}" class="pinned# IF C_AUTHOR_GROUP_COLOR # {items.AUTHOR_GROUP_COLOR}# ELSE # {items.AUTHOR_LEVEL_CLASS}# ENDIF #">
-												{items.PSEUDO}
+												{items.AUTHOR_DISPLAY_NAME}
 											</a>
 										# ELSE #
-											<span class="pinned">{items.PSEUDO}</span>
+											<span class="pinned">{items.AUTHOR_DISPLAY_NAME}</span>
 										# ENDIF #
 									# ENDIF #
 								</td>
@@ -155,10 +155,10 @@
 										# ELSE #
 											# IF items.C_AUTHOR_EXIST #
 												<a itemprop="author" href="{items.U_AUTHOR}" class="pinned# IF C_AUTHOR_GROUP_COLOR # {items.AUTHOR_GROUP_COLOR}# ELSE # {items.AUTHOR_LEVEL_CLASS}# ENDIF #">
-													{items.PSEUDO}
+													{items.AUTHOR_DISPLAY_NAME}
 												</a>
 											# ELSE #
-												<span class="pinned">{items.PSEUDO}</span>
+												<span class="pinned">{items.AUTHOR_DISPLAY_NAME}</span>
 											# ENDIF #
 										# ENDIF #
 									# ENDIF #
@@ -180,7 +180,7 @@
 										</span>
 									# ENDIF #
 									# IF C_ENABLED_VIEWS #
-										<span class="pinned" role="contentinfo" aria-label="{items.VIEWS_NUMBER} {@views.number}"><i class="fa fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span>
+										<span class="pinned" role="contentinfo" aria-label="{items.VIEWS_NUMBER} # IF items.C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #"><i class="fa fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span>
 									# ENDIF #
 									# IF C_ENABLED_VISITS #
 										<span class="pinned">

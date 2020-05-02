@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 27
+ * @version     PHPBoost 5.3 - last update: 2020 05 03
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -57,6 +57,9 @@ $lang['unknown_size'] = 'Taille inconnue';
 $lang['items_number'] = 'Nombre d\'éléments';
 $lang['no_item_now'] = 'Aucun élément n\'est disponible pour le moment';
 $lang['see.details'] = 'Voir les détails';
+
+$lang['views'] = 'vues';
+$lang['view'] = 'vue';
 
 $lang['maximum'] = 'Maximum';
 $lang['minimum'] = 'Minimum';
@@ -119,14 +122,14 @@ $lang['status.approved.date'] = 'Publication différée';
 $lang['form.name'] = 'Nom';
 $lang['form.title'] = 'Titre';
 $lang['form.content'] = 'Contenu';
-$lang['form.contents'] = 'Contenu'; // To be deleted whan all modules will use the new variable
+$lang['form.contents'] = 'Contenu'; // To be deleted when all modules will use the new variable
 $lang['form.description'] = 'Description';
 $lang['form.summary'] = 'Résumé';
 $lang['form.custom.summary.enabled'] = 'Personnaliser le résumé';
 $lang['form.custom.summary.enabled.description'] = 'Si non coché, la description est automatiquement coupée à :number caractères et le formatage du texte supprimé.';
-$lang['form.short_contents'] = 'Condensé de la description'; // To be deleted whan all modules will use the new variable
-$lang['form.short_contents.enabled'] = 'Personnaliser le condensé de la description'; // To be deleted whan all modules will use the new variable
-$lang['form.short_contents.enabled.description'] = 'Si non coché, la description est automatiquement coupée à :number caractères et le formatage du texte supprimé.'; // To be deleted whan all modules will use the new variable
+$lang['form.short_contents'] = 'Condensé de la description'; // To be deleted when all modules will use the new variable
+$lang['form.short_contents.enabled'] = 'Personnaliser le condensé de la description'; // To be deleted when all modules will use the new variable
+$lang['form.short_contents.enabled.description'] = 'Si non coché, la description est automatiquement coupée à :number caractères et le formatage du texte supprimé.'; // To be deleted when all modules will use the new variable
 $lang['form.author_custom_name_enabled'] = 'Personnaliser le nom de l\'auteur';
 $lang['form.author_custom_name'] = 'Nom de l\'auteur';
 $lang['form.category'] = 'Emplacement';

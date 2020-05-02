@@ -41,7 +41,7 @@
 					</span>
 				# ENDIF #
 				# IF C_ENABLED_VIEWS #
-					<span class="pinned" role="contentinfo" aria-label="{VIEWS_NUMBER} {@views}">
+					<span class="pinned" role="contentinfo" aria-label="{VIEWS_NUMBER} # IF C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #">
 						<i class="fa fa-eye" aria-hidden="true"></i> {VIEWS_NUMBER} # IF C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #
 					</span>
 				# ENDIF #

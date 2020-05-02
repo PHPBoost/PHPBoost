@@ -25,7 +25,7 @@ abstract class AbstractItemController extends ModuleController
 		$this->items_lang = ItemsService::get_items_lang(self::get_module()->get_id());
 		$this->view = $this->get_template_to_use();
 		
-		$this->view->add_lang(array_merge($this->lang, $this->items_lang));
+		$this->view->add_lang(array_merge(LangLoader::get('common'), $this->lang, $this->items_lang));
 		
 		if (self::get_module()->get_configuration()->feature_is_enabled('comments') && CommentsConfig::load()->module_comments_is_enabled(self::get_module()->get_id()))
 			$this->enabled_features[] = 'comments';
