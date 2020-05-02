@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 01
+ * @version     PHPBoost 5.3 - last update: 2020 05 02
  * @since       PHPBoost 1.6 - 2007 04 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -76,7 +76,7 @@ if (!empty($view_msg)) // Display all user's messages
 			msg.id, msg.user_id, msg.idtopic, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, msg.contents,
 			m2.display_name AS login_edit,
 			m.groups, m.display_name, m.level, m.email, m.show_email, m.registration_date AS registered, m.posted_msg, m.warning_percentage, m.delay_banned,
-			t.title, t.status, t.id_category,
+			t.title, t.status, t.id_category, t.nbr_msg,
 			c.name,
 			s.user_id AS connect,
 			ext_field.user_avatar, m.posted_msg, ext_field.user_sign,
@@ -151,6 +151,32 @@ if (!empty($view_msg)) // Display all user's messages
 
 			$topic_date           = new Date($row['timestamp'], Timezone::SERVER_TIMEZONE);
 			$user_registered_date = new Date($row['registered'], Timezone::SERVER_TIMEZONE);
+			
+			$topic_page = 1;
+			if ($row['nbr_msg'] > $config->get_number_messages_per_page())
+			{
+				$msg_id_result = PersistenceContext::get_querier()->select("SELECT id
+				FROM " . PREFIX . "forum_msg
+				WHERE idtopic = :idtopic
+				ORDER BY id ASC", array(
+					'idtopic' => $row['idtopic']
+				));
+				
+				$current_msg = 0;
+				while ($msg_id_row = $msg_id_result->fetch())
+				{
+					if ($msg_id_row['id'] <= $row['id'])
+					{
+						$current_message++;
+						if ($current_message == $config->get_number_messages_per_page())
+						{
+							$topic_page++;
+							$current_message = 0;
+						}
+					}
+				}
+				$msg_id_result->dispose();
+			}
 
 			$tpl->assign_block_vars('list', array_merge(
 				Date::get_array_tpl_vars($topic_date,'TOPIC_DATE'),
@@ -183,9 +209,9 @@ if (!empty($view_msg)) // Display all user's messages
 				'LEVEL_CLASS'      => UserService::get_level_class($row['level']),
 				'C_GROUP_COLOR'    => !empty($group_color),
 				'GROUP_COLOR'      => $group_color,
-				'CATEGORY_ID'	   => $row['id_category'],
+				'CATEGORY_ID'      => $row['id_category'],
 				'U_USER_PROFILE'   => UserUrlBuilder::profile($row['user_id'])->rel(),
-				'U_VARS_ANCRE'     => url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php'),
+				'U_VARS_ANCRE'     => url('.php?' . ($topic_page > 1 ? 'pt=' . $topic_page . '&amp;' : '') . 'id=' . $row['idtopic'], '-' . $row['idtopic'] . ($topic_page > 1 ? '-' . $topic_page : '') . $rewrited_title . '.php'),
 				'U_FORUM_CAT'      => PATH_TO_ROOT . '/forum/forum' . url('.php?id=' . $row['id_category'], '-' . $row['id_category'] . $rewrited_cat_title . '.php'),
 				'FORUM_CAT'        => $row['name'],
 				'U_TITLE_T'        => PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php'),
