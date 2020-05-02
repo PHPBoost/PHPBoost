@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 30
+ * @version     PHPBoost 5.3 - last update: 2020 05 02
  * @since       PHPBoost 3.0 - 2012 02 26
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 abstract class ModuleUpdateVersion implements UpdateVersion
@@ -41,6 +42,9 @@ abstract class ModuleUpdateVersion implements UpdateVersion
 
 	public function execute()
 	{
+		$this->delete_old_files();
+		$this->delete_old_folders();
+		
 		if (ModulesManager::is_module_installed($this->module_id))
 		{
 			$this->tables_list = $this->db_utils->list_tables(true);
@@ -55,9 +59,6 @@ abstract class ModuleUpdateVersion implements UpdateVersion
 			
 			$this->update_content();
 		}
-
-		$this->delete_old_files();
-		$this->delete_old_folders();
 	}
 
 	/**
@@ -187,20 +188,8 @@ abstract class ModuleUpdateVersion implements UpdateVersion
 	{
 		foreach ($this->content_tables as $table)
 		{
-			if (is_array($table) && isset($table['name']))
-			{
-				$name = $table['name'];
-				$contents = isset($table['contents']) ? $table['contents'] : 'contents';
-				$id = isset($table['id']) ? $table['id'] : 'id';
-			}
-			else
-			{
-				$name = $table;
-				$contents = 'contents';
-				$id = 'id';
-			}
-			
-			UpdateServices::update_table_content($name, $contents, $id);
+			$columns = $this->db_utils->desc_table($table);
+			UpdateServices::update_table_content($table, (isset($columns['content']) ? 'content' : 'contents'));
 		}
 	}
 
