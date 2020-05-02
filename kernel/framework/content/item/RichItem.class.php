@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 01
+ * @version     PHPBoost 5.3 - last update: 2020 05 03
  * @since       PHPBoost 5.3 - 2020 01 23
 */
 
@@ -111,6 +111,7 @@ class RichItem extends Item
 			'C_HAS_THUMBNAIL'      => $this->has_thumbnail(),
 			'C_AUTHOR_CUSTOM_NAME' => $this->is_author_custom_name_enabled(),
 			'C_READ_MORE'          => !$this->get_additional_property('summary') && TextHelper::strlen($content) > self::$module->get_configuration()->get_configuration_parameters()->get_auto_cut_characters_number() && $summary != @strip_tags($content, '<br><br/>'),
+			'C_SEVERAL_VIEWS'      => $this->get_views_number() > 1,
 			
 			// Item parameters
 			'SUMMARY'              => $summary,
