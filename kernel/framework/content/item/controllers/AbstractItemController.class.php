@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 01
+ * @version     PHPBoost 5.3 - last update: 2020 05 03
  * @since       PHPBoost 5.3 - 2019 12 20
 */
 
@@ -49,6 +49,7 @@ abstract class AbstractItemController extends ModuleController
 				'C_LIST_VIEW'        => $this->config->get_display_type() == DefaultRichModuleConfig::LIST_VIEW,
 				'C_TABLE_VIEW'       => $this->config->get_display_type() == DefaultRichModuleConfig::TABLE_VIEW,
 				'C_AUTHOR_DISPLAYED' => $this->config->get_author_displayed(),
+				'C_ENABLED_VIEWS'    => $this->config->get_views_number_enabled(),
 				'CATEGORIES_PER_ROW' => $this->config->get_categories_per_row()
 			));
 		}

@@ -71,20 +71,18 @@
 							<td>
 								<a href="{items.U_ITEM}" itemprop="name"# IF items.C_NEW_CONTENT # class="new-content"# ENDIF#>{items.TITLE}</a>
 							</td>
-							# IF C_ENABLED_AUTHOR #
+							# IF C_AUTHOR_DISPLAYED #
 								<td>
-									# IF items.C_AUTHOR_DISPLAYED #
-										<i class="far fa-user"></i>
-										# IF items.C_AUTHOR_CUSTOM_NAME #
-											<span class="pinned">{items.AUTHOR_CUSTOM_NAME}</span>
+									<i class="far fa-user"></i>
+									# IF items.C_AUTHOR_CUSTOM_NAME #
+										<span class="pinned">{items.AUTHOR_CUSTOM_NAME}</span>
+									# ELSE #
+										# IF items.C_AUTHOR_EXIST #
+											<a itemprop="author" href="{items.U_AUTHOR}" class="pinned# IF C_AUTHOR_GROUP_COLOR # {items.AUTHOR_GROUP_COLOR}# ELSE # {items.AUTHOR_LEVEL_CLASS}# ENDIF #">
+												{items.PSEUDO}
+											</a>
 										# ELSE #
-											# IF items.C_AUTHOR_EXIST #
-												<a itemprop="author" href="{items.U_AUTHOR}" class="pinned# IF C_AUTHOR_GROUP_COLOR # {items.AUTHOR_GROUP_COLOR}# ELSE # {items.AUTHOR_LEVEL_CLASS}# ENDIF #">
-													{items.PSEUDO}
-												</a>
-											# ELSE #
-												<span class="pinned">{items.PSEUDO}</span>
-											# ENDIF #
+											<span class="pinned">{items.PSEUDO}</span>
 										# ENDIF #
 									# ENDIF #
 								</td>
@@ -150,19 +148,17 @@
 						<div class="cell-body">
 							<div class="cell-infos">
 								<div class="more">
-									# IF C_ENABLED_AUTHOR #
-										# IF items.C_AUTHOR_DISPLAYED #
-											<i class="far fa-user"></i>
-											# IF items.C_AUTHOR_CUSTOM_NAME #
-												<span class="pinned">{items.AUTHOR_CUSTOM_NAME}</span>
+									# IF C_AUTHOR_DISPLAYED #
+										<i class="far fa-user"></i>
+										# IF items.C_AUTHOR_CUSTOM_NAME #
+											<span class="pinned">{items.AUTHOR_CUSTOM_NAME}</span>
+										# ELSE #
+											# IF items.C_AUTHOR_EXIST #
+												<a itemprop="author" href="{items.U_AUTHOR}" class="pinned# IF C_AUTHOR_GROUP_COLOR # {items.AUTHOR_GROUP_COLOR}# ELSE # {items.AUTHOR_LEVEL_CLASS}# ENDIF #">
+													{items.PSEUDO}
+												</a>
 											# ELSE #
-												# IF items.C_AUTHOR_EXIST #
-													<a itemprop="author" href="{items.U_AUTHOR}" class="pinned# IF C_AUTHOR_GROUP_COLOR # {items.AUTHOR_GROUP_COLOR}# ELSE # {items.AUTHOR_LEVEL_CLASS}# ENDIF #">
-														{items.PSEUDO}
-													</a>
-												# ELSE #
-													<span class="pinned">{items.PSEUDO}</span>
-												# ENDIF #
+												<span class="pinned">{items.PSEUDO}</span>
 											# ENDIF #
 										# ENDIF #
 									# ENDIF #
