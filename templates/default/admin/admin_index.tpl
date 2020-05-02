@@ -171,7 +171,7 @@
 											</a>
 										</span>
 										<span # IF IS_MOBILE_DEVICE #class="d-block flex-between"# ENDIF #> <span>{L_BY} # IF comments_list.C_VISITOR #{comments_list.PSEUDO}# ELSE #<a href="{comments_list.U_PROFILE}" class="{comments_list.LEVEL_CLASS}" # IF comments_list.C_GROUP_COLOR # style="color:{comments_list.GROUP_COLOR}" # ENDIF #>{comments_list.PSEUDO}</a># ENDIF #,</span> <span>{comments_list.DATE_DIFF_NOW} :</span> </span>
-										<span # IF IS_MOBILE_DEVICE #class="d-block"# ENDIF #>{comments_list.CONTENT}</span>
+										<p>{comments_list.CONTENT}</p>
 									</li>
 								# END comments_list #
 								<li>
