@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 09 26
+ * @version     PHPBoost 5.3 - last update: 2020 05 02
  * @since       PHPBoost 3.0 - 2010 07 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -109,7 +109,7 @@ class GeneralConfig extends AbstractConfigData
 			self::SITE_DESCRIPTION => '',
 			self::MODULE_HOME_PAGE => '',
 			self::OTHER_HOME_PAGE => '',
-			self::PHPBOOST_VERSION => '5.2',
+			self::PHPBOOST_VERSION => '5.3',
 			self::SITE_INSTALL_DATE => new Date(Date::DATE_NOW, Timezone::SERVER_TIMEZONE),
 			self::SITE_TIMEZONE => 'Europe/Paris',
 		);
