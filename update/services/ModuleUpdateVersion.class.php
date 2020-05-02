@@ -188,8 +188,18 @@ abstract class ModuleUpdateVersion implements UpdateVersion
 	{
 		foreach ($this->content_tables as $table)
 		{
-			$columns = $this->db_utils->desc_table($table);
-			UpdateServices::update_table_content($table, (isset($columns['content']) ? 'content' : 'contents'));
+			if (is_array($table) && isset($table['name']))
+			{
+				$columns = $this->db_utils->desc_table($table['name']);
+				$content_field = isset($table['content_field']) ? $table['content_field'] : (isset($columns['content']) ? 'content' : 'contents');
+				$id_field = isset($table['id_field']) ? $table['id_field'] : 'id';
+				UpdateServices::update_table_content($table['name'], $content_field, $id_field);
+			}
+			else
+			{
+				$columns = $this->db_utils->desc_table($table);
+				UpdateServices::update_table_content($table, (isset($columns['content']) ? 'content' : 'contents'));
+			}
 		}
 	}
 
