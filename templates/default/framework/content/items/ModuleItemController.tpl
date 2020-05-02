@@ -13,49 +13,49 @@
 		</article>
 	# ENDIF #
 	<article id="{MODULE_ID}-item-{ID}" class="{MODULE_ID}-item single-item# IF C_PRIME_ITEM # prime-item# ENDIF ## IF C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+		# IF C_MORE_OPTIONS #
 		<div class="flex-between">
-			# IF C_MORE_OPTIONS #
-				<div class="more">
-					# IF C_AUTHOR_DISPLAYED #
-						# IF C_AUTHOR_CUSTOM_NAME #
-							<span class="pinned"><i class="far fa-user" aria-hidden="true"></i> <span class="custom-author">{AUTHOR_CUSTOM_NAME}</span></span>
-						# ELSE #
-							# IF NOT C_ID_CARD #
-								<span class="pinned {AUTHOR_LEVEL_CLASS}"# IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}; border-color:{AUTHOR_GROUP_COLOR}" # ENDIF #>
-									<i class="far fa-user" aria-hidden="true"></i> # IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{AUTHOR_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #<span class="visitor">{PSEUDO}</span># ENDIF #
-								</span>
-							# ENDIF #
+			<div class="more">
+				# IF C_AUTHOR_DISPLAYED #
+					# IF C_AUTHOR_CUSTOM_NAME #
+						<span class="pinned"><i class="far fa-user" aria-hidden="true"></i> <span class="custom-author">{AUTHOR_CUSTOM_NAME}</span></span>
+					# ELSE #
+						# IF NOT C_ID_CARD #
+							<span class="pinned {AUTHOR_LEVEL_CLASS}"# IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}; border-color:{AUTHOR_GROUP_COLOR}" # ENDIF #>
+								<i class="far fa-user" aria-hidden="true"></i> # IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{AUTHOR_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #<span class="visitor">{PSEUDO}</span># ENDIF #
+							</span>
 						# ENDIF #
 					# ENDIF #
-					# IF C_ENABLED_DATE #
-						<span class="pinned">
-							<i class="far fa-calendar-alt" aria-hidden="true"></i>
-							<time datetime="# IF C_DIFFERED #{DIFFERED_START_DATE_ISO8601}# ELSE #{DATE_ISO8601}# ENDIF #" itemprop="datePublished">
-								# IF C_DIFFERED #{DIFFERED_START_DATE}# ELSE #{DATE}# ENDIF #
-							</time>
-						</span>
-					# ENDIF #
-					# IF C_ENABLED_CATEGORY #
-						<span class="pinned">
-							<a itemprop="about" href="{U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {CATEGORY_NAME}</a>
-						</span>
-					# ENDIF #
-					# IF C_ENABLED_VIEWS #
-						<span class="pinned" role="contentinfo" aria-label="{VIEWS_NUMBER} {@views}">
-							<i class="fa fa-eye" aria-hidden="true"></i> {VIEWS_NUMBER} # IF C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #
-						</span>
-					# ENDIF #
-					# IF C_ENABLED_NOTATION #
-						<li class="align-center">
-							{NOTATION}
-						</li>
-					# ENDIF #
-					# IF C_ENABLED_COMMENTS #
-						<span class="pinned">
-							<a href="#comments-list"><i class="fa fa-comments" aria-hidden="true"></i> {COMMENTS_LABEL}</a>
-						</span>
-					# ENDIF #
-				</div>
+				# ENDIF #
+				# IF C_ENABLED_DATE #
+					<span class="pinned">
+						<i class="far fa-calendar-alt" aria-hidden="true"></i>
+						<time datetime="# IF C_DIFFERED #{DIFFERED_START_DATE_ISO8601}# ELSE #{DATE_ISO8601}# ENDIF #" itemprop="datePublished">
+							# IF C_DIFFERED #{DIFFERED_START_DATE}# ELSE #{DATE}# ENDIF #
+						</time>
+					</span>
+				# ENDIF #
+				# IF C_ENABLED_CATEGORY #
+					<span class="pinned">
+						<a itemprop="about" href="{U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {CATEGORY_NAME}</a>
+					</span>
+				# ENDIF #
+				# IF C_ENABLED_VIEWS #
+					<span class="pinned" role="contentinfo" aria-label="{VIEWS_NUMBER} {@views}">
+						<i class="fa fa-eye" aria-hidden="true"></i> {VIEWS_NUMBER} # IF C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #
+					</span>
+				# ENDIF #
+				# IF C_ENABLED_NOTATION #
+					<li class="align-center">
+						{NOTATION}
+					</li>
+				# ENDIF #
+				# IF C_ENABLED_COMMENTS #
+					<span class="pinned">
+						<a href="#comments-list"><i class="fa fa-comments" aria-hidden="true"></i> {COMMENTS_LABEL}</a>
+					</span>
+				# ENDIF #
+			</div>
 			# ENDIF #
 
 			# IF C_CONTROLS #
