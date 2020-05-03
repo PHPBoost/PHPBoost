@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2020 04 12
+ * @version   	PHPBoost 5.2 - last update: 2020 05 03
  * @since   	PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -231,8 +231,8 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 			'NAME' => '',
 			'C_CATEGORIES' => MediaService::get_categories_manager()->get_categories_cache()->has_categories(),
 			'CATEGORIES' => $categories_list,
-			'WIDTH' => '425',
-			'HEIGHT' => '344',
+			'WIDTH' => '800',
+			'HEIGHT' => '450',
 			'U_MEDIA' => '',
 			'POSTER' => '',
 			'DESCRIPTION' => '',
