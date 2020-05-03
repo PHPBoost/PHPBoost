@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 30
+ * @version     PHPBoost 5.3 - last update: 2020 05 03
  * @since       PHPBoost 3.0 - 2010 01 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MediaSetup extends DefaultModuleSetup
@@ -113,10 +114,10 @@ class MediaSetup extends DefaultModuleSetup
 			'name' => $this->messages['media_name'],
 			'contents' => $this->messages['media_contents'],
 			'url' => $this->messages['media_url'],
-			'mime_type' => 'application/x-shockwave-flash',
+			'mime_type' => 'video/host',
 			'infos' => 2,
-			'width' => 640,
-			'height' => 438,
+			'width' => 800,
+			'height' => 450,
 			'counter' => 0,
 		));
 	}
