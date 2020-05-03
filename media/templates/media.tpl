@@ -95,7 +95,7 @@
 											<span class="pinned"><i class="fa fa-comments" aria-hidden="true"></i> {file.U_COM_LINK}</span>
 									# ENDIF #
 									# IF C_DISPLAY_NOTATION #
-										<span class="pinned">{L_NOTE} {file.NOTE}</span>
+										<div class="pinned">{L_NOTE} {file.NOTE}</div>
 									# ENDIF #
 								</div>
 								# IF C_CONTROLS #
