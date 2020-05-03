@@ -154,7 +154,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 					'idtopic' => $row['idtopic']
 				));
 				
-				$current_msg = 0;
+				$current_message = 0;
 				while ($msg_id_row = $msg_id_result->fetch())
 				{
 					if ($msg_id_row['id'] <= $row['id'])
