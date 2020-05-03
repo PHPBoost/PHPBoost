@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 28
+ * @version     PHPBoost 5.3 - last update: 2020 05 03
  * @since       PHPBoost 5.3 - 2020 02 27
 */
 
@@ -45,7 +45,7 @@ class FormFieldThumbnail extends AbstractFormField
 			'C_NONE_CHECKED'    => $this->get_value() == '',
 			'C_DEFAULT_CHECKED' => $this->get_value() && ($this->get_value() == self::DEFAULT_VALUE || $this->get_value() == $this->default_url),
 			'C_CUSTOM_CHECKED'  => $this->get_value() && $this->get_value() != self::DEFAULT_VALUE && $this->get_value() != $this->default_url,
-			'DEFAULT_URL'       => Url::to_rel($this->default_url),
+			'DEFAULT_URL'       => $this->default_url,
 		));
 
 		$template->assign_block_vars('fieldelements', array(
