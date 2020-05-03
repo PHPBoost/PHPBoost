@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 10
+ * @version     PHPBoost 5.3 - last update: 2020 05 03
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -53,7 +53,7 @@ $host_ok = array(
 		'vimeo.com',
 		'player.vimeo.com',
 		'www.youtube.com',
-		'www.youtu.be',
+		'youtu.be',
 		'www.labsoweb.fr'
 	),
 	'audio' => array(
