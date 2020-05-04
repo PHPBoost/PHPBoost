@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 06 04
+ * @version     PHPBoost 5.3 - last update: 2020 05 04
  * @since       PHPBoost 3.0 - 2011 09 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -36,7 +36,7 @@ class AdminCustomizeEditorCSSFilesController extends AdminModuleController
 		$id_theme = $request->get_value('id_theme', '');
 		$id_module = '';
 		$file_selected = $request->get_value('file_name', '');
-
+		
 		if (preg_match('`/`u', $file_selected))
 		{
 			$split = explode('/', $file_selected);
@@ -46,6 +46,10 @@ class AdminCustomizeEditorCSSFilesController extends AdminModuleController
 		else
 			$file_name = $file_selected;
 
+		$css_file = new File(PATH_TO_ROOT . $this->templates_path . $id_theme . $this->css_files_path . '@' . $file_name);
+		if ($css_file->exists())
+			$file_name = '@' . $file_name;
+		
 		$this->build_form($id_theme, $id_module, $file_name, $file_selected);
 
 		if (!empty($id_theme) && !empty($file_selected))
@@ -108,7 +112,7 @@ class AdminCustomizeEditorCSSFilesController extends AdminModuleController
 				}
 				else
 				{
-					$css_file = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_files_path . $file_selected);
+					$css_file = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_files_path . $file_name);
 				}
 
 				if ($css_file->exists())
@@ -174,7 +178,7 @@ class AdminCustomizeEditorCSSFilesController extends AdminModuleController
 		{
 			foreach ($folder->get_files('`\.css$`') as $file)
 			{
-				$files[] = new FormFieldSelectChoiceOption($file->get_name(), $file->get_name());
+				$files[] = new FormFieldSelectChoiceOption($file->get_name(), str_replace('@', '', $file->get_name()));
 			}
 		}
 		else
@@ -187,7 +191,7 @@ class AdminCustomizeEditorCSSFilesController extends AdminModuleController
 			{
 				foreach ($folder->get_files('`\.css$`') as $file)
 				{
-					$files[] = new FormFieldSelectChoiceOption(LangLoader::get_message('module', 'admin-modules-common') . ' ' . ModulesManager::get_module($module->get_id())->get_configuration()->get_name() . ' : ' . $file->get_name(), $module->get_id() . '/' . $file->get_name());
+					$files[] = new FormFieldSelectChoiceOption(LangLoader::get_message('module', 'admin-modules-common') . ' ' . ModulesManager::get_module($module->get_id())->get_configuration()->get_name() . ' : ' . $file->get_name(), $module->get_id() . '/' . str_replace('@', '', $file->get_name()));
 				}
 			}
 		}
