@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 25
+ * @version     PHPBoost 5.3 - last update: 2020 05 04
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -99,22 +99,25 @@ class AdminWebConfigController extends AdminModuleController
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->admin_common_lang['config.display.type'], $this->config->get_display_type(),
 			array(
-				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.grid'], WebConfig::GRID_VIEW),
-				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.list'], WebConfig::LIST_VIEW),
-				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.table'], WebConfig::TABLE_VIEW)
+				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.grid'], WebConfig::GRID_VIEW, array('data_option_icon' => 'far fa-id-card')),
+				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.list'], WebConfig::LIST_VIEW, array('data_option_icon' => 'fa fa-list')),
+				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.table'], WebConfig::TABLE_VIEW, array('data_option_icon' => 'fa fa-table'))
 			),
-			array('events' => array('change' => '
-				if (HTMLForms.getField("display_type").getValue() == \'' . WebConfig::GRID_VIEW . '\') {
-					HTMLForms.getField("items_per_row").enable();
-					HTMLForms.getField("full_item_display").disable();
-				} else if (HTMLForms.getField("display_type").getValue() == \'' . WebConfig::LIST_VIEW . '\') {
-					HTMLForms.getField("full_item_display").enable();
-					HTMLForms.getField("items_per_row").disable();
-				} else {
-					HTMLForms.getField("items_per_row").disable();
-					HTMLForms.getField("full_item_display").disable();
-				}'
-			))
+			array(
+				'select_to_list' => true,
+				'events' => array('change' => '
+					if (HTMLForms.getField("display_type").getValue() == \'' . WebConfig::GRID_VIEW . '\') {
+						HTMLForms.getField("items_per_row").enable();
+						HTMLForms.getField("full_item_display").disable();
+					} else if (HTMLForms.getField("display_type").getValue() == \'' . WebConfig::LIST_VIEW . '\') {
+						HTMLForms.getField("full_item_display").enable();
+						HTMLForms.getField("items_per_row").disable();
+					} else {
+						HTMLForms.getField("items_per_row").disable();
+						HTMLForms.getField("full_item_display").disable();
+					}'
+				)
+			)
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->admin_common_lang['config.items.per.row'], $this->config->get_items_per_row(),
