@@ -231,12 +231,12 @@
 			{
 				if (status === 0)
 				{
-					$('#status_' + id).removeClass('fas fa-user').addClass('fas fa-user-shield');
+					$('#status_' + id).removeClass('fas fa-user').addClass('fas fa-user');
 					$('#status_function_' + id).attr("onclick", "change_status(" + id + ", 1)");
 				}
 				else
 				{
-					$('#status_' + id).removeClass('fas fa-user-shield').addClass('fas fa-users');
+					$('#status_' + id).removeClass('fas fa-user').addClass('fas fa-users');
 					$('#status_function_' + id).attr("onclick", "change_status(" + id + ", 0)");
 				}
 				location.reload();
@@ -448,7 +448,7 @@
 											</a>
 										# ELSE #
 											<a href="#" id="status_function_{personal_files.ID}" onclick="change_status({personal_files.ID}, 1);return false;" aria-label="{L_CHANGE_PUBLIC}">
-												<i id="status_{personal_files.ID}" class="fas fa-user-shield" aria-hidden="true"></i>
+												<i id="status_{personal_files.ID}" class="fas fa-user" aria-hidden="true"></i>
 											</a>
 										# ENDIF #
 									</li>
@@ -518,7 +518,7 @@
 											</a>
 										# ELSE #
 											<a href="#" id="status_function_{public_files.ID}" onclick="change_status({public_files.ID}, 1);return false;" aria-label="{L_CHANGE_PUBLIC}">
-												<i id="status_{public_files.ID}" class="fas fa-user-shield"></i>
+												<i id="status_{public_files.ID}" class="fas fa-user"></i>
 											</a>
 										# ENDIF #
 									</li>
