@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 01 29
+ * @version     PHPBoost 5.3 - last update: 2020 05 04
  * @since       PHPBoost 4.0 - 2014 07 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -34,7 +34,7 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 			{
 				$this->urls_mappings[] = new UrlMapping('^articles/articles.php$', '/articles/', 'L,R=301');
 
-				$categories = ArticlesService::get_categories_manager()->get_categories_cache()->get_categories();
+				$categories = CategoriesService::get_categories_manager('articles')->get_categories_cache()->get_categories();
 
 				foreach ($categories as $id => $category)
 				{
@@ -61,7 +61,7 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 			{
 				$this->urls_mappings[] = new UrlMapping('^news/news.php$', '/news/', 'L,R=301');
 
-				$categories = NewsService::get_categories_manager()->get_categories_cache()->get_categories();
+				$categories = CategoriesService::get_categories_manager('news')->get_categories_cache()->get_categories();
 
 				foreach ($categories as $id => $category)
 				{
@@ -78,7 +78,7 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 			{
 				$this->urls_mappings[] = new UrlMapping('^download/download\.php$', '/download/', 'L,R=301');
 
-				$categories = DownloadService::get_categories_manager()->get_categories_cache()->get_categories();
+				$categories = CategoriesService::get_categories_manager('download')->get_categories_cache()->get_categories();
 
 				$result = $db_querier->select_rows(PREFIX . 'download', array('id', 'id_category', 'rewrited_name'));
 				while ($row = $result->fetch())
@@ -105,7 +105,7 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 			{
 				$this->urls_mappings[] = new UrlMapping('^faq/faq\.php$', '/faq/', 'L,R=301');
 
-				$categories = FaqService::get_categories_manager()->get_categories_cache()->get_categories();
+				$categories = CategoriesService::get_categories_manager('faq')->get_categories_cache()->get_categories();
 
 				foreach ($categories as $id => $category)
 				{
@@ -124,7 +124,7 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 			{
 				$this->urls_mappings[] = new UrlMapping('^web/web\.php$', '/web/', 'L,R=301');
 
-				$categories = WebService::get_categories_manager()->get_categories_cache()->get_categories();
+				$categories = CategoriesService::get_categories_manager('web')->get_categories_cache()->get_categories();
 
 				$result = $db_querier->select_rows(PREFIX . 'web', array('id', 'id_category', 'rewrited_name'));
 				while ($row = $result->fetch())
