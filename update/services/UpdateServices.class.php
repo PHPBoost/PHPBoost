@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 02
+ * @version     PHPBoost 5.3 - last update: 2020 05 04
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -520,34 +520,39 @@ class UpdateServices
 
 	public static function update_table_content($table, $contents = 'contents', $id = 'id')
 	{
-		$unparser = new OldBBCodeUnparser();
-		$parser = new BBCodeParser();
+		$columns = self::$db_utils->desc_table($table);
 
-		$result = self::$db_querier->select('SELECT ' . $id . ', ' . $contents . '
-			FROM ' . $table . '
-			WHERE (' . $contents . ' LIKE "%class=\"success\"%") OR (' . $contents . ' LIKE "%class=\"question\"%") OR (' . $contents . ' LIKE "%class=\"notice\"%") OR (' . $contents . ' LIKE "%class=\"warning\"%") OR (' . $contents . ' LIKE "%class=\"error\"%")'
-		);
-
-		$selected_rows = $result->get_rows_count();
-		$updated_content = 0;
-
-		while($row = $result->fetch())
+		if (isset($columns[$contents]))
 		{
-			$unparser->set_content($row[$contents]);
-			$unparser->parse();
-			$parser->set_content($unparser->get_content());
-			$parser->parse();
+			$unparser = new OldBBCodeUnparser();
+			$parser = new BBCodeParser();
 
-			if ($parser->get_content() != $row[$contents])
+			$result = self::$db_querier->select('SELECT ' . $id . ', ' . $contents . '
+				FROM ' . $table . '
+				WHERE (' . $contents . ' LIKE "%class=\"success\"%") OR (' . $contents . ' LIKE "%class=\"question\"%") OR (' . $contents . ' LIKE "%class=\"notice\"%") OR (' . $contents . ' LIKE "%class=\"warning\"%") OR (' . $contents . ' LIKE "%class=\"error\"%")'
+			);
+
+			$selected_rows = $result->get_rows_count();
+			$updated_content = 0;
+
+			while($row = $result->fetch())
 			{
-				self::$db_querier->update($table, array($contents => $parser->get_content()), 'WHERE ' . $id . '=:id', array('id' => $row[$id]));
-				$updated_content++;
-			}
-		}
-		$result->dispose();
+				$unparser->set_content($row[$contents]);
+				$unparser->parse();
+				$parser->set_content($unparser->get_content());
+				$parser->parse();
 
-		$object = new self('', false);
-		$object->add_information_to_file('table ' . $table, ': ' . $updated_content . ' contents updated');
+				if ($parser->get_content() != $row[$contents])
+				{
+					self::$db_querier->update($table, array($contents => $parser->get_content()), 'WHERE ' . $id . '=:id', array('id' => $row[$id]));
+					$updated_content++;
+				}
+			}
+			$result->dispose();
+
+			$object = new self('', false);
+			$object->add_information_to_file('table ' . $table, ': ' . $updated_content . ' contents updated');
+		}
 	}
 
 	private function check_installation_date()
