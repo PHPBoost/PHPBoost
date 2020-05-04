@@ -184,7 +184,7 @@ $lang['authorizations.contribution'] = 'Contribution permission';
 $lang['authorizations.moderation'] = 'Moderation permission';
 $lang['authorizations.categories_management'] = 'Categories management permission';
 $lang['authorizations.menu'] = 'Permission to display menu';
-$lang['authorizations.specials'] = 'Specials authorisations';
+$lang['authorizations.specials'] = 'Special authorizations';
 $lang['authorizations.default'] = 'Default authorisations';
 
 //Pagination
