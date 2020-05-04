@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 18
+ * @version     PHPBoost 5.3 - last update: 2020 05 04
  * @since       PHPBoost 4.0 - 2013 02 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -77,13 +77,13 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 					$color = $category->get_color();
 				}
 
-				$description_exists = method_exists($category, 'get_description');
 				$category_view = new FileTemplate('default/framework/content/categories/category.tpl');
 				$category_view->add_lang($this->lang);
 				$category_view->put_all(array(
 					'C_DESCRIPTION'               => !empty($description),
 					'C_COLOR'                     => !empty($color),
 					'C_ALLOWED_TO_HAVE_CHILDS'    => $category->is_allowed_to_have_childs(),
+					'C_SPECIAL_AUTHORIZATIONS'    => $category->has_special_authorizations(),
 					'U_DISPLAY'                   => $this->get_display_category_url($category)->rel(),
 					'U_EDIT'                      => $this->get_edit_category_url($category)->rel(),
 					'U_DELETE'                    => $this->get_delete_category_url($category)->rel(),
