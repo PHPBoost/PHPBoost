@@ -42,7 +42,7 @@ class ArticlesConfigUpdateVersion extends ConfigUpdateVersion
 					$config->set_items_default_sort_field($old_config->get_items_default_sort_field());
 				break;
 			}
-			$config->set_items_default_sort_mode(in_array(TextHelper::strtoupper($old_config->get_items_default_sort_field()), array(Item::ASC, Item::DESC) ? TextHelper::strtolower($old_config->get_items_default_sort_field()) : TextHelper::strtolower(Item::DESC));
+			$config->set_items_default_sort_mode(in_array(TextHelper::strtoupper($old_config->get_items_default_sort_field()), array(Item::ASC, Item::DESC)) ? TextHelper::strtolower($old_config->get_items_default_sort_field()) : TextHelper::strtolower(Item::DESC));
 			ArticlesConfig::save();
 			
 			return true;
