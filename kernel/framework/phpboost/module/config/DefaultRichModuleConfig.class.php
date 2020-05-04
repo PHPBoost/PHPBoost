@@ -42,7 +42,7 @@ class DefaultRichModuleConfig extends DefaultModuleConfig
 			array(
 				self::ITEMS_PER_ROW               => 2,
 				self::ITEMS_DEFAULT_SORT_FIELD    => 'date',
-				self::ITEMS_DEFAULT_SORT_MODE     => Item::DESC,
+				self::ITEMS_DEFAULT_SORT_MODE     => TextHelper::strtolower(Item::DESC),
 				self::DEFAULT_CONTENT             => '',
 				self::SUMMARY_DISPLAYED_TO_GUESTS => false,
 				self::AUTO_CUT_CHARACTERS_NUMBER  => 150,
