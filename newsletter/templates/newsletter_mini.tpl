@@ -2,9 +2,11 @@
 	<script>
 		function set_subscribe_link() {
 			jQuery('#newsletter-mini-subscription-form').attr('action', "{PATH_TO_ROOT}/newsletter/?url=/subscribe/");
+			jQuery('button[name="mail_newsletter_button"]').attr('aria-label', "{@newsletter.subscribe_newsletters}");
 		};
 		function set_unsubscribe_link() {
 			jQuery('#newsletter-mini-subscription-form').attr('action', "{PATH_TO_ROOT}/newsletter/?url=/unsubscribe/");
+			jQuery('button[name="mail_newsletter_button"]').attr('aria-label', "{@newsletter.unsubscribe_newsletters}");
 		};
 	</script>
 	<form id="newsletter-mini-subscription-form" action="{PATH_TO_ROOT}/newsletter/?url=/subscribe/" method="post">
