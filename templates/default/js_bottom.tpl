@@ -90,6 +90,9 @@
 
 // Autoresize Textareas
 	$(document).autoboxOn('textarea:not(.lined textarea)');
+
+// Add a colored square to the element and color its borders if it has
+ 	jQuery('[data-color-surround]').colorSurround();
 </script>
 
 # IF C_COOKIEBAR_ENABLED #

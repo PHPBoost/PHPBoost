@@ -654,12 +654,16 @@ setInterval(function() {
 	});
 }, 1);
 
-// data-color-surround add a colored square to the pinned class and color its borders.
-	jQuery('.pinned[data-color-surround]').each(function(){
-		var color = jQuery(this).data('color-surround');
-		jQuery(this).css('border-color', color);
-		jQuery(this).prepend('<span style="background-color: '+color+';" class="data-color-surround"></span>')
-	});
+// colorSurround add a colored square to the element and color its borders if it has.
+jQuery.fn.extend ({
+	colorSurround: function() {
+		return this.each(function(){
+			var color = jQuery(this).data('color-surround');
+			jQuery(this).css('border-color', color);
+			jQuery(this).prepend('<span style="background-color: ' + color + ';" class="data-color-surround"></span>')
+		})
+	}
+});
 
 // Scroll to anchor on .sticky-menu
 jQuery('.sticky-menu').each(function(){
