@@ -31,12 +31,12 @@
 
 a.pinned { cursor: pointer; }
 
-.pinned[data-color] {
+.pinned[data-color-surround] {
 	padding-left: 1.618em;
 	position: relative;
 }
 
-.data-color {
+.data-color-surround {
 	position: absolute;
 	top: 0;
 	bottom: 0;

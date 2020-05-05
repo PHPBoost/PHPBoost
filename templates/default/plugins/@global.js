@@ -654,11 +654,11 @@ setInterval(function() {
 	});
 }, 1);
 
-// data-color add a colored square to the pinned class and color its borders.
-	jQuery('.pinned[data-color]').each(function(){
-		var color = jQuery(this).data('color');
+// data-color-surround add a colored square to the pinned class and color its borders.
+	jQuery('.pinned[data-color-surround]').each(function(){
+		var color = jQuery(this).data('color-surround');
 		jQuery(this).css('border-color', color);
-		jQuery(this).prepend('<span style="background-color: '+color+';" class="data-color"></span>')
+		jQuery(this).prepend('<span style="background-color: '+color+';" class="data-color-surround"></span>')
 	});
 
 // Scroll to anchor on .sticky-menu
