@@ -89,7 +89,7 @@
 	});
 
 // Autoresize Textareas
-	$(document).autoboxOn('textarea');
+	$(document).autoboxOn('textarea:not(.lined textarea)');
 </script>
 
 # IF C_COOKIEBAR_ENABLED #
