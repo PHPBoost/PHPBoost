@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 10
+ * @version     PHPBoost 5.3 - last update: 2020 05 05
  * @since       PHPBoost 5.3 - 2019 12 23
 */
 
@@ -29,7 +29,7 @@ class DefaultCategoriesCache extends CategoriesCache
 	protected function get_category_elements_number($id_category)
 	{
 		$now = new Date();
-		return $this->get_module_identifier() ? ItemsService::get_items_manager($this->get_module_identifier())->count('WHERE id_category = :id_category AND (published = ' . Item::PUBLISHED . (self::$module->get_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))' : '') . ')',
+		return $this->get_module_identifier() && ModulesManager::get_module($this->get_module_identifier())->get_configuration()->has_items() ? ItemsService::get_items_manager($this->get_module_identifier())->count('WHERE id_category = :id_category AND (published = ' . Item::PUBLISHED . (self::$module->get_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))' : '') . ')',
 			array(
 				'timestamp_now' => $now->get_timestamp(),
 				'id_category'   => $id_category
