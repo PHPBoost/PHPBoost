@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 21
+ * @version     PHPBoost 5.3 - last update: 2020 05 05
  * @since       PHPBoost 3.0 - 2012 11 20
  * @contributor Mipel <mipel@phpboost.com>
 */
@@ -116,11 +116,11 @@ class CalendarService
 	 */
 	public static function delete_all_serie_events($content_id)
 	{
-		self::delete_event('WHERE content_id = :id', array(
+		self::delete_event_content('WHERE id = :id', array(
 			'id' => $content_id
 		));
-
-		self::delete_event_content('WHERE id = :id', array(
+		
+		self::delete_event('WHERE content_id = :id', array(
 			'id' => $content_id
 		));
 	}
