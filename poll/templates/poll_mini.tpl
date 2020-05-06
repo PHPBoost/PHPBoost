@@ -1,7 +1,7 @@
 # START question #
 	<form method="post" action="{PATH_TO_ROOT}/poll/poll{question.ID}" class="form-poll">
 		<fieldset>
-			<legend><span class="sr-only">{question.QUESTION}</span></legend>
+			<legend class="sr-only">{question.QUESTION}</legend>
 			<div class="cell-body">
 				<div class="cell-content align-center"><span class="poll-container-title">{question.QUESTION}</span></div>
 			</div>
