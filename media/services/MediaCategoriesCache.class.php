@@ -3,22 +3,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 28
+ * @version     PHPBoost 5.3 - last update: 2020 05 06
  * @since       PHPBoost 4.0 - 2015 02 04
 */
 
 class MediaCategoriesCache extends DefaultCategoriesCache
 {
-	public function get_category_class()
-	{
-		return 'MediaCategory';
-	}
-
-	public function get_module_identifier()
-	{
-		return 'media';
-	}
-
 	protected function get_category_elements_number($id_category)
 	{
 		require_once(PATH_TO_ROOT . '/media/media_constant.php');
