@@ -37,7 +37,7 @@
 
 .custom-radio .radio [type="radio"] + span {
 	position: relative;
-	padding: 0 0.618em 0 1.309em;
+	padding: 0 0.618em 0 1.618em;
 	cursor: pointer;
 }
 
