@@ -104,6 +104,8 @@
 	cursor: pointer;
 }
 
+.sortable-actions a { text-decoration: none;}
+
 .dragged {
 	position: absolute;
 	opacity: 0.9;
