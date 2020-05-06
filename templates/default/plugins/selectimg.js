@@ -47,7 +47,7 @@
                     if(selectHasSelected && selectedOption == 'selected') // if one of the option is already selected
                     {
                         // Send its values to the fake selector
-                        selectedItem.addClass('cssmenu-title current').attr('data-name', valueOption);
+                        selectedItem.addClass('cssmenu-title current').attr({'data-name' : valueOption, 'data-tooltip-pos': 'top'});
                         selectedText.text(textOption);
                         if(imgOption)
                             selectedImg.attr('src', imgOption).attr('alt', textOption);
