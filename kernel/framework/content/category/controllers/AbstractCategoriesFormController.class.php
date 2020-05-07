@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 28
+ * @version     PHPBoost 5.3 - last update: 2020 05 07
  * @since       PHPBoost 4.0 - 2013 02 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -103,9 +103,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', self::$common_lang['authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 
-		$root_auth = self::$categories_manager->get_categories_cache()->get_category(Category::ROOT_CATEGORY)->get_authorizations();
-
-		$fieldset_authorizations->add_field(new FormFieldCheckbox('special_authorizations', self::$common_lang['authorizations'], !$this->get_category()->auth_is_equals($root_auth),
+		$fieldset_authorizations->add_field(new FormFieldCheckbox('special_authorizations', self::$common_lang['authorizations'], $this->get_category()->has_special_authorizations(),
 		array('description' => self::$lang['category.form.authorizations.description'], 'events' => array('click' => '
 		if (HTMLForms.getField("special_authorizations").getValue()) {
 			jQuery("#' . __CLASS__ . '_authorizations").show();
@@ -115,8 +113,8 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		)));
 
 		$auth_settings = new AuthorizationsSettings(self::get_authorizations_settings());
-		$auth_settings->build_from_auth_array($this->get_category()->get_authorizations());
-		$fieldset_authorizations->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings, array('hidden' => $this->get_category()->auth_is_equals($root_auth))));
+		$auth_settings->build_from_auth_array($this->get_category()->has_special_authorizations() ? $this->get_category()->get_authorizations() : self::$categories_manager->get_categories_cache()->get_category($this->get_category()->get_id_parent())->get_authorizations());
+		$fieldset_authorizations->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings, array('hidden' => !$this->get_category()->has_special_authorizations())));
 
 		$fieldset->add_field(new FormFieldHidden('referrer', $request->get_url_referrer()));
 
@@ -138,18 +136,22 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		else
 			$this->get_category()->set_id_parent(Category::ROOT_CATEGORY);
 
+		$change_authorizations = false;
 		if ($this->form->get_value('special_authorizations'))
 		{
-			$this->get_category()->set_special_authorizations(true);
-			$autorizations = $this->form->get_value('authorizations')->build_auth_array();
+			$this->get_category()->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
+			if (!$this->get_category()->auth_is_equals(self::$categories_manager->get_categories_cache()->get_category($this->get_category()->get_id_parent())->get_authorizations()))
+			{
+				$this->get_category()->set_special_authorizations(true);
+				$change_authorizations = true;
+			}
 		}
-		else
+		
+		if (!$change_authorizations)
 		{
+			$this->get_category()->set_authorizations(array());
 			$this->get_category()->set_special_authorizations(false);
-			$autorizations = array();
 		}
-
-		$this->get_category()->set_authorizations($autorizations);
 		
 		foreach ($this->get_category()->get_additional_attributes_list() as $id => $attribute)
 		{
