@@ -8,12 +8,14 @@
 			# IF C_PENDING_NEWS #{@news.pending}# ELSE #{@news}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF #
 		</h1>
 	</header>
-	<div class="# IF C_GRID_VIEW #cell-flex cell-columns-{ITEMS_PER_ROW}# ELSE #cell-row# ENDIF #">
-		# IF C_NO_ITEM #
-			<div class="message-helper bgc notice cell-4-4">
+	# IF C_NO_ITEM #
+		<div class="content">
+			<div class="message-helper bgc notice align-center">
 				${LangLoader::get_message('no_item_now', 'common')}
 			</div>
-		# ELSE #
+		</div>
+	# ELSE #
+		<div class="# IF C_GRID_VIEW #cell-flex cell-columns-{ITEMS_PER_ROW}# ELSE #cell-row# ENDIF #">
 			# START news #
 				<article
 					id="news-item-{news.ID}"
@@ -109,7 +111,7 @@
 					</footer>
 				</article>
 			# END news #
-		# ENDIF #
-	</div>
+		</div>
+	# ENDIF #
 	<footer># IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #</footer>
 </section>

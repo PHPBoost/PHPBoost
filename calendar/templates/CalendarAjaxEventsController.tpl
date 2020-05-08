@@ -107,8 +107,8 @@
 			# END event #
 		</div>
 	# ELSE #
-		<div class="align-center">
-			<span class="message-helper bgc notice"># IF C_PENDING_PAGE #{@calendar.notice.no.pending.event}# ELSE #{@calendar.notice.no.event}# ENDIF #</span>
+		<div class="content">
+			<div class="message-helper bgc notice align-center"># IF C_PENDING_PAGE #{@calendar.notice.no.pending.event}# ELSE #{@calendar.notice.no.event}# ENDIF #</div>
 		</div>
 	# ENDIF #
 </section>

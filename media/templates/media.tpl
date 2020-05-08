@@ -124,9 +124,9 @@
 		# ENDIF #
 
 		# IF C_DISPLAY_NO_FILE_MSG #
-		<div class="content">
-			<div class="message-helper bgc notice">${LangLoader::get_message('no_item_now', 'common')}</div>
-		</div>
+			<div class="content">
+				<div class="message-helper bgc notice align-center">${LangLoader::get_message('no_item_now', 'common')}</div>
+			</div>
 		# ENDIF #
 
 		<footer># IF C_PAGINATION #<span class="align-center"># INCLUDE PAGINATION #</span># ENDIF #</footer>

@@ -221,11 +221,13 @@
 			</div>
 		# ENDIF #
 	# ELSE #
-		# IF NOT C_HIDE_NO_ITEM_MESSAGE #
-		<div class="align-center">
-			${LangLoader::get_message('no_item_now', 'common')}
+		<div class="content">
+			# IF NOT C_HIDE_NO_ITEM_MESSAGE #
+				<div class="message-helper bgc notice align-center">
+					${LangLoader::get_message('no_item_now', 'common')}
+				</div>
+			# ENDIF #
 		</div>
-		# ENDIF #
 	# ENDIF #
 	<footer>
 		# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #

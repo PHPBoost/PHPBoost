@@ -280,13 +280,13 @@
 		# ENDIF #
 
 	# ELSE #
-		<div class="content">
-			# IF NOT C_HIDE_NO_ITEM_MESSAGE #
-				<div class="align-center">
+		# IF NOT C_HIDE_NO_ITEM_MESSAGE #
+			<div class="content">
+				<div class="message-helper bgc notice align-center">
 					${LangLoader::get_message('no_item_now', 'common')}
 				</div>
-			# ENDIF #
-		</div>
+			</div>
+		# ENDIF #
 	# ENDIF #
 
 	<footer># IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #</footer>

@@ -125,9 +125,11 @@
 		</div>
 	# ENDIF #
 	# IF NOT C_HIDE_NO_ITEM_MESSAGE #
-		<div id="no-item-message" class="message-helper bgc notice align-center"# IF C_QUESTIONS # style="display: none;"# ENDIF #>
-			${LangLoader::get_message('no_item_now', 'common')}
-		</div>
+		<div class="content">
+			<div class="message-helper bgc notice align-center"# IF C_QUESTIONS # style="display: none;"# ENDIF #>
+				${LangLoader::get_message('no_item_now', 'common')}
+			</div>
+		</div>		
 	# ENDIF #
 
 	<footer></footer>
