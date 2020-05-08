@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 30
+ * @version     PHPBoost 5.3 - last update: 2020 05 08
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -85,7 +85,7 @@ class WebManageController extends AdminModuleController
 
 			$row = array(
 				new HTMLTableRowCell(new LinkHTMLElement(WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_title()), $weblink->get_title()), 'left'),
-				new HTMLTableRowCell(new LinkHTMLElement(WebUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), $category->get_name())),
+				new HTMLTableRowCell(new LinkHTMLElement(WebUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), ($category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('none_e', 'common') : $category->get_name()))),
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell($weblink->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
 				new HTMLTableRowCell($weblink->get_status()),

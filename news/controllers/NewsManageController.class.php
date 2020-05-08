@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 30
+ * @version     PHPBoost 5.3 - last update: 2020 05 08
  * @since       PHPBoost 4.0 - 2013 06 24
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -80,7 +80,7 @@ class NewsManageController extends AdminModuleController
 
 			$row = array(
 				new HTMLTableRowCell(new LinkHTMLElement(NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_title()), $news->get_title()), 'left'),
-				new HTMLTableRowCell(new LinkHTMLElement(NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), $category->get_name())),
+				new HTMLTableRowCell(new LinkHTMLElement(NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), ($category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('none_e', 'common') : $category->get_name()))),
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell($news->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
 				new HTMLTableRowCell($news->get_status()),
