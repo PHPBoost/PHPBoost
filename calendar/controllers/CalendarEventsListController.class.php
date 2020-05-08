@@ -45,6 +45,7 @@ class CalendarEventsListController extends ModuleController
 	private function build_table()
 	{
 		$display_categories = CategoriesService::get_categories_manager()->get_categories_cache()->has_categories();
+		$config = CalendarConfig::load();
 
 		$columns = array(
 			new HTMLTableColumn(LangLoader::get_message('form.title', 'common'), 'title'),
