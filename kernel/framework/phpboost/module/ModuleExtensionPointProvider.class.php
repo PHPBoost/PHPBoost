@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 03
+ * @version     PHPBoost 5.3 - last update: 2020 05 08
  * @since       PHPBoost 5.3 - 2020 01 02
 */
 
@@ -105,6 +105,7 @@ class ModuleExtensionPointProvider extends ExtensionPointProvider
 			else
 				return $this->module->get_configuration()->has_categories() ? new DefaultSitemapCategoriesModule($this->get_id()) : new DefaultSitemapModule($this->get_id());
 		}
+		return false;
 	}
 
 	public function tree_links()

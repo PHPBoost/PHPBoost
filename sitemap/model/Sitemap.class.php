@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 07 07
+ * @version     PHPBoost 5.3 - last update: 2020 05 08
  * @since       PHPBoost 3.0 - 2009 02 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -163,15 +163,18 @@ class Sitemap
 			if (array_key_exists($module->get_id(), $providers))
 			{
 				$sitemap_provider = $providers[$module->get_id()]->sitemap();
-				if ($auth_mode == self::AUTH_PUBLIC)
+				if ($sitemap_provider !== false)
 				{
-					$module_map = $sitemap_provider->get_public_sitemap();
+					if ($auth_mode == self::AUTH_PUBLIC)
+					{
+						$module_map = $sitemap_provider->get_public_sitemap();
+					}
+					else
+					{
+						$module_map = $sitemap_provider->get_user_sitemap();
+					}
+					$this->add($module_map);
 				}
-				else
-				{
-					$module_map = $sitemap_provider->get_user_sitemap();
-				}
-				$this->add($module_map);
 			}
 		}
 	}
