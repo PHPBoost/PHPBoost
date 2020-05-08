@@ -69,6 +69,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 @media (min-width: 769px) {
@@ -91,6 +92,10 @@
     padding: 0 0.228em;
 }
 
+.message-actions .checkbox input {
+    margin-top: -0.1618em;
+}
+
 .message-footer-container {
     border-width: 0 1px 1px;
     padding: 0.309em 0.618em;
@@ -109,6 +114,7 @@
 .current-user-message .message-infos {
     flex-direction: row-reverse;
 }
+
 /* --- message offset --- */
 .message-container.message-offset {
 	justify-content: flex-start;
