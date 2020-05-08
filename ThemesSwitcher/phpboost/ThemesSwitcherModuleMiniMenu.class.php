@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 03 21
+ * @version     PHPBoost 5.3 - last update: 2020 05 08
  * @since       PHPBoost 3.0 - 2012 02 22
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -34,7 +34,7 @@ class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
 
 	public function is_displayed()
 	{
-		return true;
+		return count(ThemesManager::get_activated_and_authorized_themes_map_sorted_by_localized_name()) > 1;
 	}
 
 	public function get_menu_content()
