@@ -20,11 +20,6 @@
     width: 100%
 }
 
-.sandbox-mini-form select {
-    margin: 0 0 0 1em;
-    width: calc(100% - 0.456em);
-}
-
 .sandbox-mini-form { margin: -0.618em 0 -0.618em -1.618em;}
 
 .sandbox-mini-form span { display: inline-block; }

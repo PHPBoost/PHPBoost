@@ -64,6 +64,11 @@
 	height: auto;
 }
 
+.active-connect .js-menu-button,
+.js-menu-button:hover {
+	text-decoration: none;
+}
+
 @media (min-width: 769px) {
 	.connect-container {
 		opacity: 1;

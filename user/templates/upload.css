@@ -104,7 +104,8 @@
 }
 
 .upload-address-bar-links a {
-	margin-left: 10px;
+	margin: 0 0 0.618em 0.618em;
+    display: inline-block;
 }
 
 .upload-address-bar {

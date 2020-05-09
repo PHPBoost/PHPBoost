@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 25
+ * @version     PHPBoost 5.3 - last update: 2020 05 09
  * @since       PHPBoost 2.0 - 2008 08 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -72,7 +72,7 @@ class AdminCacheConfigController extends AdminController
 			));
 		}
 
-		$fieldset->add_field(new FormFieldHTML('exp_css_cache', '<hr><br />' . $this->lang['explain_css_cache_config'],
+		$fieldset->add_field(new FormFieldHTML('exp_css_cache', $this->lang['explain_css_cache_config'],
 			array('class'=>'half-field')
 		));
 

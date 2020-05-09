@@ -95,11 +95,12 @@ jQuery(document).ready(function() {
 						<a href="#" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{social_networks_list.ID}" onclick="return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
 						# IF social_networks_list.C_SHARING_CONTENT #
 							<a href="#" onclick="return false;" id="change-display-{social_networks_list.ID}" aria-label="# IF social_networks_list.C_DISPLAY #{@admin.display_share_link}# ELSE #{@admin.hide_share_link}# ENDIF #">
-								<i aria-hidden="true" # IF social_networks_list.C_DISPLAY #class="fa fa-eye"# ELSE #class="fa fa-eye-slash"# ENDIF #></i>
+								<i aria-hidden="true" class="fa # IF social_networks_list.C_DISPLAY #fa-eye# ELSE # fa-eye-slash# ENDIF #"></i>
 							</a>
 						# ELSE #
-							<i class="fa fa-ban" aria-hidden="true" aria-label="{@admin.no_sharing_content_url}"></i>
-							<span class="sr-only">{@admin.no_sharing_content_url}</span>
+							<a href="#" onclick="return false;" aria-label="{@admin.no_sharing_content_url}">
+								<i class="fa fa-ban" aria-hidden="true"></i>
+							</a>
 						# ENDIF #
 					</div>
 					<script>

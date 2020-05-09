@@ -161,9 +161,11 @@ a.social-connect span {
 /* -- Configuration -- */
 /* -------------------------- */
 .social-networks-list-container .sortable-title { padding: 8px 0.309em 12px 10px; }
-.social-networks-list-container .sortable-title > span {
-	font-size: .6em;
+
+.social-networks-list-container .sortable-title > .social-connect {
+	font-size: .618em;
 	font-weight: normal;
+	margin-right: 0.809em;
 }
 
 .social-networks-menu {

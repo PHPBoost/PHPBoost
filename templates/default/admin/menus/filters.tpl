@@ -13,7 +13,7 @@
 						'<option value="{modules.ID}">{modules.ID}</option>' +
 					# END modules #
 					'</select></label><label class="label-sup grouped-element"><span>' + ${escapejs(LangLoader::get_message('page', 'main'))} + '</span><input type="text" name="f' + new_id + '" id="f' + new_id + '" value=""></label>' +
-					'<a class="grouped-element" href="javascript:delete_filter(' + new_id + ');" aria-label="' + ${escapejs(LangLoader::get_message('delete', 'common'))} + '"><i class="far fa-trash-altr" aria-hidden="true"></i></a>' +
+					'<a class="grouped-element" href="javascript:delete_filter(' + new_id + ');" aria-label="' + ${escapejs(LangLoader::get_message('delete', 'common'))} + '"><i class="far fa-trash-alt" aria-hidden="true"></i></a>' +
 					'</div><span id="add_filter' + new_id + '"></span>';
 			}
 			function delete_filter(id) {

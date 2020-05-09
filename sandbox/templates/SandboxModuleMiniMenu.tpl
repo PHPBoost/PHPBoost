@@ -212,13 +212,15 @@
 							</a>
 						</li>
 						<li>
-							<form class="sandbox-mini-form switchtheme" action="{REWRITED_SCRIPT}" method="get">
-								<label for="sandbox-switchtheme">{@mini.themes.switcher}</label>
-								<select id="sandbox-switchtheme" name="sandbox-switchtheme-select" onchange="document.location='?switchtheme='+this.options[this.selectedIndex].value;">
-									# START themes #
-										<option value="{themes.IDNAME}"# IF themes.C_SELECTED# selected="selected"# ENDIF #>{themes.NAME}</option>
-									# END themes #
-								</select>
+							<form class="sandbox-mini-form switchtheme grouped-inputs inputs-with-sup" action="{REWRITED_SCRIPT}" method="get">
+								<label class="label-sup grouped-element" for="sandbox-switchtheme">
+									<span>{@mini.themes.switcher}</span>
+									<select id="sandbox-switchtheme" name="sandbox-switchtheme-select" onchange="document.location='?switchtheme='+this.options[this.selectedIndex].value;">
+										# START themes #
+											<option value="{themes.IDNAME}"# IF themes.C_SELECTED# selected="selected"# ENDIF #>{themes.NAME}</option>
+										# END themes #
+									</select>
+								</label>
 							</form>
 						</li>
 					</ul>

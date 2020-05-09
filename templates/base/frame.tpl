@@ -10,14 +10,22 @@
 
 		# IF C_OPENGRAPH #
 			<meta property="og:site_name" content="{SITE_NAME}" />
+			<meta name="twitter:card" content="{SITE_NAME}">
 			<meta property="og:locale" content="{L_XML_LANGUAGE}" />
 			<meta property="og:title" content="{PAGE_TITLE}" />
+			<meta name="twitter:title" content="{PAGE_TITLE}">
 			<meta property="og:type" content="{PAGE_TYPE}" />
-			# IF C_DESCRIPTION #<meta property="og:description" content="{SITE_DESCRIPTION}" /># ENDIF #
+			# IF C_DESCRIPTION #
+				<meta property="og:description" content="{SITE_DESCRIPTION}" />
+				<meta name="twitter:description" content="{SITE_DESCRIPTION}">
+			# ENDIF #
 			# IF C_CANONICAL_URL #<meta property="og:url" content="{U_CANONICAL}" /># ENDIF #
-			# IF C_PICTURE_URL #<meta property="og:image" content="{U_PICTURE}" /># ENDIF #
+			# IF C_PICTURE_URL #
+				<meta property="og:image" content="{U_PICTURE}" />
+				<meta name="twitter:image" content="{U_PICTURE}">
+			# ENDIF #
 			# START og_additionnal_properties #
-			<meta property="{og_additionnal_properties.ID}" content="{og_additionnal_properties.VALUE}" />
+				<meta property="{og_additionnal_properties.ID}" content="{og_additionnal_properties.VALUE}" />
 			# END og_additionnal_properties #
 		# ENDIF #
 
