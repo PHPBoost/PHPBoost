@@ -8,7 +8,7 @@
 
 				var new_id = this.max_filter_p + 1;
 				document.getElementById('add_filter' + this.max_filter_p).innerHTML +=
-					'<div id="filter' + new_id + '" class="menu-filter grouped-inputs inputs-with-sup large-inputs-group"><span class="grouped-element">{PATH_TO_ROOT}</span><label class="label-sup grouped-element"><span>' + ${escapejs(LangLoader::get_message('module', 'admin-modules-common'))} + '</span><select name="filter_module' + new_id + '" id="filter_module' + new_id + '">' +
+					'<div id="filter' + new_id + '" class="menu-filter grouped-inputs inputs-with-sup large-inputs-group"># IF PATH_TO_ROOT #<span class="grouped-element">{PATH_TO_ROOT}</span># ENDIF #<label class="label-sup grouped-element"><span>' + ${escapejs(LangLoader::get_message('module', 'admin-modules-common'))} + '</span><select name="filter_module' + new_id + '" id="filter_module' + new_id + '">' +
 					# START modules #
 						'<option value="{modules.ID}">{modules.ID}</option>' +
 					# END modules #
@@ -32,7 +32,7 @@
 					<div class="form-field">
 						# START filters #
 							<div id="filter{filters.ID}" class="menu-filter grouped-inputs inputs-with-sup large-inputs-group">
-								<span class="grouped-element">{PATH_TO_ROOT}</span>
+								# IF PATH_TO_ROOT #<span class="grouped-element">{PATH_TO_ROOT}</span># ENDIF #
 								<label for="filter_module{filters.ID}" class="label-sup grouped-element"><span>${LangLoader::get_message('module', 'admin-modules-common')}</span>
 									<select name="filter_module{filters.ID}" id="filter_module{filters.ID}">
 										# START filters.modules #
