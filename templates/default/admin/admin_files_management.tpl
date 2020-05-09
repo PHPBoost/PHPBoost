@@ -423,11 +423,8 @@
 									</div>
 								</div>
 							# ENDIF #
-							<div class="cell-form grouped-inputs">
+							<div class="cell-form">
 								{personal_files.BBCODE}
-								<a class="grouped-element submit" href="#" onclick="copy_to_clipboard('{personal_files.DISPLAYED_CODE}'); return false;" aria-label="${LangLoader::get_message('tag_copytoclipboard', 'editor-common')}">
-									<i class="fa fa-copy" aria-hidden="true"></i>
-								</a>
 							</div>
 
 							<div class="cell-list">
@@ -503,9 +500,8 @@
 									</div>
 								</div>
 							# ENDIF #
-							<div class="cell-form grouped-inputs">
+							<div class="cell-form">
 								{public_files.BBCODE}
-								<a class="grouped-element submit" href="#" onclick="copy_to_clipboard('{public_files.DISPLAYED_CODE}'); return false;" aria-label="${LangLoader::get_message('tag_copytoclipboard', 'editor-common')}"><i class="fa fa-copy" aria-hidden="true"></i></a>
 							</div>
 							<div class="cell-list">
 								<ul>
