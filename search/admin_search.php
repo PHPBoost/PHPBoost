@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 11 23
+ * @version     PHPBoost 5.3 - last update: 2020 05 10
  * @since       PHPBoost 2.0 - 2008 03 22
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -50,7 +50,8 @@ if ($valid)
 		$provider_service = AppContext::get_extension_provider_service();
 		foreach ($provider_service->get_providers(SearchableExtensionPoint::EXTENSION_POINT) as $module_id => $provider)
 		{
-			$search_weightings->add_module_weighting($module_id, retrieve(POST, $module_id, SearchWeightings::DEFAULT_WEIGHTING));
+			if ($provider->search() !== false)
+				$search_weightings->add_module_weighting($module_id, retrieve(POST, $module_id, SearchWeightings::DEFAULT_WEIGHTING));
 		}
 		SearchConfig::load()->set_weightings($search_weightings);
 		SearchConfig::save();
@@ -79,10 +80,11 @@ if (!$weighting)
 {
 	$provider_service = AppContext::get_extension_provider_service();
 	$search_extensions_point_modules = array_keys($provider_service->get_extension_point(SearchableExtensionPoint::EXTENSION_POINT));
-
+	$providers = $provider_service->get_providers(SearchableExtensionPoint::EXTENSION_POINT);
+	
 	foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $id => $module)
 	{
-		if (in_array($module->get_id(), $search_extensions_point_modules))
+		if (isset($providers[$module->get_id()]) && $providers[$module->get_id()]->search() !== false && in_array($module->get_id(), $search_extensions_point_modules))
 		{
 			$module_configuration = $module->get_configuration();
 			if (in_array($module->get_id(), $config->get_unauthorized_providers()))

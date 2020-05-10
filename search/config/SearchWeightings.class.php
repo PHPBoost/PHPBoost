@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2014 12 22
+ * @version     PHPBoost 5.3 - last update: 2020 05 10
  * @since       PHPBoost 3.0 - 2012 02 20
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class SearchWeightings
@@ -19,7 +20,8 @@ class SearchWeightings
 		$provider_service = AppContext::get_extension_provider_service();
 		foreach ($provider_service->get_providers(SearchableExtensionPoint::EXTENSION_POINT) as $module_id => $provider)
 		{
-			$weighting[$module_id] = $this->get_module_weighting($module_id);
+			if ($provider->search() !== false)
+				$weighting[$module_id] = $this->get_module_weighting($module_id);
 		}
 		return $weighting;
 	}

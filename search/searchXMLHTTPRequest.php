@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2016 10 28
+ * @version     PHPBoost 5.3 - last update: 2020 05 10
  * @since       PHPBoost 2.0 - 2008 01 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -38,9 +38,10 @@ if (($id_search >= 0) && ($module_id != ''))
 		// Listes des modules de recherches
 		$search_modules = array();
 		$provider_service = AppContext::get_extension_provider_service();
+		$providers = $provider_service->get_providers(SearchableExtensionPoint::EXTENSION_POINT);
 		foreach ($provider_service->get_extension_point(SearchableExtensionPoint::EXTENSION_POINT) as $id => $extension_point)
 		{
-			if (in_array($id, $selected_modules))
+			if (isset($providers[$id]) && $providers[$id]->search() !== false && in_array($id, $selected_modules))
 				$search_modules[] = $extension_point;
 		}
 
