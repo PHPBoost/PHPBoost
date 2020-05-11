@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 10 23
+ * @version     PHPBoost 5.3 - last update: 2020 05 11
  * @since       PHPBoost 2.0 - 2008 04 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -262,7 +262,7 @@ class Feed
 			$extension_provider_service = AppContext::get_extension_provider_service();
 			$provider = $extension_provider_service->get_provider($module_id);
 
-			if (!$provider->has_extension_point(FeedProvider::EXTENSION_POINT) )
+			if (!$provider->has_extension_point(FeedProvider::EXTENSION_POINT) || $provider->feeds() !== false)
 			{   // If the module is not installed or doesn't have the get_feed_data_struct
 				// functionality we break
 				return '';
