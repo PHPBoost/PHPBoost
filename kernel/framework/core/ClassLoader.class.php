@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 25
+ * @version     PHPBoost 5.3 - last update: 2020 05 12
  * @since       PHPBoost 3.0 - 2009 10 21
  * @contributor mipel <mipel@phpboost.com>
 */
@@ -13,6 +13,7 @@ class ClassLoader
 {
 	private static $cache_file = '/cache/autoload.php';
 	private static $autoload;
+	private static $module_classlist = array();
 	private static $already_reloaded = false;
 	private static $exclude_paths = array(
 		'/cache', '/images', '/lang', '/upload', '/templates',
@@ -69,6 +70,29 @@ class ClassLoader
 	}
 
 	/**
+	 * Get the class list of a module
+	 */
+	public static function get_module_classlist($module_id)
+	{
+		self::add_classes(Path::phpboost_path() . '/' . $module_id, '`\.class\.php$`', true);
+		return self::$module_classlist;
+	}
+
+	/**
+	 * Check if a module has a subclass of a parent class
+	 */
+	public static function has_module_subclasses_of($module_id, $parent_class)
+	{
+		$result = false;
+		foreach (self::get_module_classlist($module_id) as $class_name => $class_path)
+		{
+			if (is_subclass_of($class_name, $parent_class))
+				$result = true;
+		}
+		return $result;
+	}
+
+	/**
 	 * Generates the autoload cache file by exploring phpboost folders
 	 */
 	public static function generate_classlist($force = false)
@@ -108,7 +132,7 @@ class ClassLoader
 		return array_key_exists($classname, self::$autoload);
 	}
 
-	private static function add_classes($directory, $pattern, $recursive = true)
+	private static function add_classes($directory, $pattern, $module_classlist = false, $recursive = true)
 	{
 		$files = array();
 		$folder = new Folder($directory);
@@ -118,7 +142,10 @@ class ClassLoader
 		{
 			$filename = $file->get_name();
 			$classname = $file->get_name_without_extension();
-			self::$autoload[$classname] = $relative_path . '/' . $filename;
+			if ($module_classlist)
+				self::$module_classlist[$classname] = $relative_path . '/' . $filename;
+			else
+				self::$autoload[$classname] = $relative_path . '/' . $filename;
 		}
 
 		if ($recursive)
@@ -129,7 +156,7 @@ class ClassLoader
 				if (!in_array($a_folder->get_path_from_root(), self::$exclude_paths)
 				&& !in_array($a_folder->get_name(), self::$exclude_folders_names))
 				{
-					self::add_classes($a_folder->get_path(), $pattern);
+					self::add_classes($a_folder->get_path(), $pattern, $module_classlist);
 				}
 			}
 		}

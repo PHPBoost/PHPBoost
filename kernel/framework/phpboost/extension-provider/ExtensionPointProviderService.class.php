@@ -8,7 +8,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2016 10 24
+ * @version     PHPBoost 5.3 - last update: 2020 05 12
  * @since       PHPBoost 2.0 - 2008 01 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -95,7 +95,7 @@ class ExtensionPointProviderService
 				$this->try_to_reload_modules_providers($provider_id);
 			}
 			$classname = $this->compute_provider_classname($provider_id);
-			$this->loaded_providers->store($provider_id, new $classname());
+			$this->loaded_providers->store($provider_id, new $classname($provider_id));
 		}
 		return $this->loaded_providers->get($provider_id);
 	}
@@ -169,7 +169,21 @@ class ExtensionPointProviderService
 
 	private function compute_provider_classname($provider_id)
 	{
-		return TextHelper::ucfirst($provider_id) . self::EXTENSION_POINT_PROVIDER_SUFFIX;
+		$module_extension_point_class_name = TextHelper::ucfirst($provider_id) . self::EXTENSION_POINT_PROVIDER_SUFFIX;
+		
+		if (ModulesManager::is_module_activated($provider_id))
+		{
+			if (ClassLoader::is_class_registered_and_valid($module_extension_point_class_name))
+				return $module_extension_point_class_name;
+			else
+			{
+				if (ClassLoader::has_module_subclasses_of($provider_id, 'Item'))
+					return 'ItemsModule' . self::EXTENSION_POINT_PROVIDER_SUFFIX;
+				else
+					return 'Module' . self::EXTENSION_POINT_PROVIDER_SUFFIX;
+			}
+		}
+		return $module_extension_point_class_name;
 	}
 
 	private function try_to_reload_modules_providers($provider_id)

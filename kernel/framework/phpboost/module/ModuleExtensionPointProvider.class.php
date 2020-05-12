@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 08
+ * @version     PHPBoost 5.3 - last update: 2020 05 12
  * @since       PHPBoost 5.3 - 2020 01 02
 */
 
@@ -14,7 +14,7 @@ class ModuleExtensionPointProvider extends ExtensionPointProvider
 	/**
 	 * @var mixed[] parameters of the module
 	 */
-	private $module;
+	protected $module;
 	
 	/**
 	 * {@inheritdoc}
@@ -25,17 +25,9 @@ class ModuleExtensionPointProvider extends ExtensionPointProvider
 		$this->module = ModulesManager::get_module($extension_provider_id);
 	}
 
-	/**
-	 * @return mixed[] Return the parameters of the module
-	 */
-	public function get_module()
-	{
-		return $this->module;
-	}
-
 	public function comments()
 	{
-		if ($this->module->get_configuration()->feature_is_enabled('comments'))
+		if ($this->module && $this->module->get_configuration()->feature_is_enabled('comments'))
 		{
 			$class = $this->get_class('CommentsTopic');
 			return ($class !== false) ? new CommentsTopics(array($class)) : $class;
@@ -61,19 +53,6 @@ class ModuleExtensionPointProvider extends ExtensionPointProvider
 		return false;
 	}
 
-	public function feeds()
-	{
-		if ($class = $this->get_class('FeedProvider'))
-			return $class;
-		else
-			return $this->module->get_configuration()->has_categories() ? new DefaultCategoriesFeedProvider($this->get_id()) : false;
-	}
-
-	public function home_page()
-	{
-		return false;
-	}
-
 	public function menus()
 	{
 		if ($class = $this->get_class('ModuleMiniMenu'))
@@ -88,26 +67,6 @@ class ModuleExtensionPointProvider extends ExtensionPointProvider
 			return new DefaultScheduledJobsModule($this->get_id());
 	}
 
-	public function search()
-	{
-		if ($this->module->get_configuration()->feature_is_enabled('search'))
-			return $this->get_class('Searchable', 'SearchableExtensionPoint');
-		else
-			return false;
-	}
-
-	public function sitemap()
-	{
-		if ($this->home_page())
-		{
-			if ($class = $this->get_class('Sitemap', 'SitemapExtensionPoint'))
-				return $class;
-			else
-				return $this->module->get_configuration()->has_categories() ? new DefaultSitemapCategoriesModule($this->get_id()) : new DefaultSitemapModule($this->get_id());
-		}
-		return false;
-	}
-
 	public function tree_links()
 	{
 		return $this->get_class('TreeLinks', 'ModuleTreeLinksExtensionPoint');
@@ -116,20 +75,6 @@ class ModuleExtensionPointProvider extends ExtensionPointProvider
 	public function url_mappings()
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/' . $this->get_id() . '/index.php')));
-	}
-
-	private function get_class($extension_point_label, $extension_point_full_name = '')
-	{
-		$extension_point_full_name = !empty($extension_point_full_name) ? $extension_point_full_name : $extension_point_label;
-		$class = TextHelper::ucfirst($this->get_id()) . $extension_point_label;
-		$default_class = 'Default' . $extension_point_label;
-		
-		if (class_exists($class) && (in_array($extension_point_full_name, class_implements($class)) || is_subclass_of($class, $extension_point_full_name)))
-			return new $class($this->get_id());
-		else if (class_exists($default_class) && (in_array($extension_point_full_name, class_implements($default_class)) || is_subclass_of($default_class, $extension_point_full_name)))
-			return new $default_class($this->get_id());
-		else
-			return false;
 	}
 }
 ?>

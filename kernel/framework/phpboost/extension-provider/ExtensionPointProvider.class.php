@@ -9,7 +9,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 06
+ * @version     PHPBoost 5.3 - last update: 2020 05 12
  * @since       PHPBoost 2.0 - 2008 01 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -93,6 +93,20 @@ abstract class ExtensionPointProvider
 		$module_methods = get_class_methods($provider);
 		$generics_methods = get_class_methods('ExtensionPointProvider');
 		return array_values(array_diff($module_methods, $generics_methods));
+	}
+
+	protected function get_class($extension_point_label, $extension_point_full_name = '')
+	{
+		$extension_point_full_name = !empty($extension_point_full_name) ? $extension_point_full_name : $extension_point_label;
+		$class = TextHelper::ucfirst($this->get_id()) . $extension_point_label;
+		$default_class = 'Default' . $extension_point_label;
+		
+		if (class_exists($class) && (in_array($extension_point_full_name, class_implements($class)) || is_subclass_of($class, $extension_point_full_name)))
+			return new $class($this->get_id());
+		else if (class_exists($default_class) && (in_array($extension_point_full_name, class_implements($default_class)) || is_subclass_of($default_class, $extension_point_full_name)))
+			return new $default_class($this->get_id());
+		else
+			return false;
 	}
 }
 ?>
