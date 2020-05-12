@@ -99,10 +99,6 @@ body {
 .message-footer-container,
 .message-user-sign { border-color: var(--bdr-main); }
 
-.current-user-message.message-content,
-.current-user-message.message-footer-container,
-.current-user-message.message-user-sign { background-color: var(--bgc-alt); }
-
 .message-announce     { color: var(--question-dark); }
 .message-announce-new { color: var(--success-dark); }
 
