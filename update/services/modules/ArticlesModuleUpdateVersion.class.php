@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 27
+ * @version     PHPBoost 5.3 - last update: 2020 05 12
  * @since       PHPBoost 4.0 - 2014 02 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -26,6 +26,7 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 			'/lang/french/config.php',
 			'/phpboost/ArticlesComments.class.php',
 			'/phpboost/ArticlesCommentsTopic.class.php',
+			'/phpboost/ArticlesExtensionPointProvider.class.php',
 			'/phpboost/ArticlesFeedProvider.class.php',
 			'/phpboost/ArticlesHomePageExtensionPoint.class.php',
 			'/phpboost/ArticlesNewContent.class.php',
