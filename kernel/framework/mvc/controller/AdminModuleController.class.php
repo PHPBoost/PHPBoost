@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 23
+ * @version     PHPBoost 5.3 - last update: 2020 05 12
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -31,7 +31,7 @@ abstract class AdminModuleController extends AbstractController
 		{
 			return new UserLoginController(UserLoginController::ADMIN_LOGIN, TextHelper::substr(REWRITED_SCRIPT, TextHelper::strlen(GeneralConfig::load()->get_site_path())));
 		}
-		else if (ModulesManager::is_module_installed(Environment::get_running_module_name()))
+		else if (ModulesManager::is_module_installed(self::$module_id))
 		{
 			if (!self::get_module()->is_activated())
 			{

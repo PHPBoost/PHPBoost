@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 07
+ * @version     PHPBoost 5.3 - last update: 2020 05 12
  * @since       PHPBoost 4.0 - 2013 02 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -237,10 +237,13 @@ abstract class AbstractCategoriesFormController extends ModuleController
 	}
 
 	/**
+	 * @param string $module_id id of the module (optional)
 	 * @return mixed[] Array of ActionAuthorization for AuthorizationsSettings
 	 */
-	public static function get_authorizations_settings()
+	public static function get_authorizations_settings($module_id = '')
 	{
+		$module = $module_id ? ModulesManager::get_module($module_id) : self::get_module();
+		
 		$authorizations = array(
 			new ActionAuthorization(self::$common_lang['authorizations.read'], Category::READ_AUTHORIZATIONS),
 			new VisitorDisabledActionAuthorization(self::$common_lang['authorizations.write'], Category::WRITE_AUTHORIZATIONS),
@@ -248,7 +251,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 			new MemberDisabledActionAuthorization(self::$common_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS)
 		);
 		
-		if (!self::get_module()->get_configuration()->has_contribution())
+		if ($module && !$module->get_configuration()->has_contribution())
 		{
 			unset($authorizations[2]);
 			$authorizations = array_values($authorizations);

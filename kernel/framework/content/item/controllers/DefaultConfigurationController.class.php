@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 14
+ * @version     PHPBoost 5.3 - last update: 2020 05 12
  * @since       PHPBoost 5.3 - 2020 02 11
 */
 
@@ -137,7 +137,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 
 		$form->add_fieldset($fieldset_authorizations);
 
-		$auth_settings = new AuthorizationsSettings(RootCategory::get_authorizations_settings());
+		$auth_settings = new AuthorizationsSettings(RootCategory::get_authorizations_settings(self::get_module()->get_id()));
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());
 		$fieldset_authorizations->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
 

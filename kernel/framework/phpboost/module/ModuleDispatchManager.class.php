@@ -14,12 +14,10 @@ class ModuleDispatchManager extends DispatchManager
 	/**
 	 * Redirect the request to the right controller using the url controller mappes list
 	 * @param UrlControllerMapper[] $url_controller_mappers the url controllers mapper list
-	 * @param string $module id of the module
 	 */
-	public static function dispatch(array $module_url_controller_mappers, $module_id)
+	public static function dispatch(array $url_controller_mappers = array())
 	{
-		$module_configuration = ModulesManager::get_module($module_id)->get_configuration();
-		$url_controller_mappers = $module_url_controller_mappers;
+		$module_configuration = ModulesManager::get_module(Environment::get_running_module_name())->get_configuration();
 		
 		if ($module_configuration->has_categories())
 		{
@@ -58,15 +56,7 @@ class ModuleDispatchManager extends DispatchManager
 			$url_controller_mappers[] = new UrlControllerMapper('DefaultSeveralItemsController', '`^/?$`');
 		}
 		
-		try
-		{
-			$dispatcher = new Dispatcher($url_controller_mappers);
-			$dispatcher->dispatch();
-		}
-		catch (NoUrlMatchException $ex)
-		{
-			self::handle_dispatch_exception($ex);
-		}
+		parent::dispatch($url_controller_mappers);
 	}
 }
 ?>
