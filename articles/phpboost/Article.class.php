@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 11
+ * @version     PHPBoost 5.3 - last update: 2020 05 12
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -51,7 +51,6 @@ class Article extends RichItem
 
 	protected function default_properties()
 	{
-		$this->content = ArticlesConfig::load()->get_default_content();
 		$this->set_additional_property('author_name_displayed', self::AUTHOR_NAME_DISPLAYED);
 	}
 }
