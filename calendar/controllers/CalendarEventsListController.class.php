@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 08
+ * @version     PHPBoost 5.3 - last update: 2020 05 13
  * @since       PHPBoost 4.1 - 2015 04 13
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -64,8 +64,8 @@ class CalendarEventsListController extends ModuleController
 		$table_model->set_caption($this->lang['calendar.events.list']);
 		$table_model->add_permanent_filter('parent_id = 0');
 
-		$table_model->add_filter(new HTMLTableDateTimeGreaterThanOrEqualsToSQLFilter('start_date', 'filter1', $this->lang['calendar.labels.start.date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('minimum', 'common'))));
-		$table_model->add_filter(new HTMLTableDateTimeLessThanOrEqualsToSQLFilter('start_date', 'filter2', $this->lang['calendar.labels.start.date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('maximum', 'common'))));
+		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('start_date', 'filter1', $this->lang['calendar.labels.start.date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('minimum', 'common'))));
+		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('start_date', 'filter2', $this->lang['calendar.labels.start.date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('maximum', 'common'))));
 
 		$table = new HTMLTable($table_model);
 		$table->set_filters_fieldset_class_HTML();
