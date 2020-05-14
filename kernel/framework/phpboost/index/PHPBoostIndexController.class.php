@@ -60,7 +60,7 @@ class PHPBoostIndexController extends AbstractController
 		$site_path = trim(dirname($site_path));
 		$site_path = ($site_path == '/') ? '' : $site_path;
 
-		if (($request->get_domain_name($this->general_config->get_site_url()) != $request->get_domain_name()) || ($this->general_config->get_site_path() != $site_path))
+		if (($request->get_is_subdomain() && $this->general_config->get_site_url() != $request->get_site_url()) || ($request->get_domain_name($this->general_config->get_site_url()) != $request->get_domain_name()) || ($this->general_config->get_site_path() != $site_path))
 		{
 			$this->general_config->set_site_url($request->get_site_url());
 			$this->general_config->set_site_path($site_path);
