@@ -2,10 +2,10 @@
 /**
  * @package     PHPBoost
  * @subpackage  Index
- * @copyright   &copy; 2005-2019 PHPBoost
+ * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 11 28
+ * @version     PHPBoost 5.3 - last update: 2020 05 14
  * @since       PHPBoost 3.0 - 2012 02 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -19,6 +19,8 @@ class PHPBoostIndexController extends AbstractController
 	{
 		$this->general_config = GeneralConfig::load();
 
+		$this->check_site_url_configuration();
+		
 		$other_home_page = $this->general_config->get_other_home_page();
 		if (TextHelper::strpos($other_home_page, '/index.php') !== false)
 		{
@@ -44,6 +46,30 @@ class PHPBoostIndexController extends AbstractController
 			} catch (UnexistingExtensionPointProviderException $e) {
 				AppContext::get_response()->redirect(UserUrlBuilder::home());
 			}
+		}
+	}
+
+	private function check_site_url_configuration()
+	{
+		$site_url = Appcontext::get_request()->get_site_url();
+		$site_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
+		if (!$site_path)
+		{
+			$site_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
+		}
+		$site_path = trim(dirname($site_path));
+		$site_path = ($site_path == '/') ? '' : $site_path;
+
+		if ($this->general_config->get_complete_site_url() != $site_url . $site_path)
+		{
+			$this->general_config->set_site_url($site_url);
+			$this->general_config->set_site_path($site_path);
+
+			GeneralConfig::save();
+			AppContext::get_cache_service()->clear_cache();
+			HtaccessFileCache::regenerate();
+			
+			AppContext::get_response()->redirect('/');
 		}
 	}
 
