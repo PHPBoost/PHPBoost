@@ -26,13 +26,13 @@
 				<i class="fa fa-caret-left" aria-hidden="true"></i>
 			</a>
 			<label for="CalendarAjaxCalendarController_month" class="sr-only">{@month}</label>
-			<select# IF C_MINI_MODULE # class="small"# ENDIF # name="CalendarAjaxCalendarController_month" id="CalendarAjaxCalendarController_month" onchange="ChangeMonth(jQuery('#CalendarAjaxCalendarController_year').val(), jQuery('#CalendarAjaxCalendarController_month').val());">
+			<select# IF C_MINI_MODULE # class="grouped-element small"# ENDIF # name="CalendarAjaxCalendarController_month" id="CalendarAjaxCalendarController_month" onchange="ChangeMonth(jQuery('#CalendarAjaxCalendarController_year').val(), jQuery('#CalendarAjaxCalendarController_month').val());">
 				# START months #
 					<option value="{months.VALUE}"# IF months.SELECTED # selected="selected"# ENDIF #>{months.NAME}</option>
 				# END months #
 			</select>
 			<label for="CalendarAjaxCalendarController_year" class="sr-only">{@year}</label>
-			<select# IF C_MINI_MODULE # class="small"# ENDIF # name="CalendarAjaxCalendarController_year" id="CalendarAjaxCalendarController_year" onchange="ChangeMonth(jQuery('#CalendarAjaxCalendarController_year').val(), jQuery('#CalendarAjaxCalendarController_month').val());">
+			<select# IF C_MINI_MODULE # class="grouped-element small"# ENDIF # name="CalendarAjaxCalendarController_year" id="CalendarAjaxCalendarController_year" onchange="ChangeMonth(jQuery('#CalendarAjaxCalendarController_year').val(), jQuery('#CalendarAjaxCalendarController_month').val());">
 				# START years #
 					<option value="{years.VALUE}"# IF years.SELECTED # selected="selected"# ENDIF #>{years.NAME}</option>
 				# END years #

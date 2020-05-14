@@ -3,8 +3,7 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-#date-select-form .grouped-element,
-#date-select-form select {
+#date-select-form .grouped-element {
 	border-width: 0;
 }
 

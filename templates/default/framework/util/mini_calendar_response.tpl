@@ -1,18 +1,18 @@
 <div class="cell-body date-select-container grouped-inputs">
-	<a class="date-select-nav" href="#" onclick="xmlhttprequest_calendar(${escapejs(FIELD)}, ${escapejs(INPUT_FIELD)}, ${escapejs(PREVIOUS_YEAR)}, ${escapejs(PREVIOUS_MONTH)}, 1, ${escapejs(CALENDAR_NUMBER)});return false;" aria-label="${LangLoader::get_message('next', 'common')}">
+	<a class="date-select-nav grouped-element" href="#" onclick="xmlhttprequest_calendar(${escapejs(FIELD)}, ${escapejs(INPUT_FIELD)}, ${escapejs(PREVIOUS_YEAR)}, ${escapejs(PREVIOUS_MONTH)}, 1, ${escapejs(CALENDAR_NUMBER)});return false;" aria-label="${LangLoader::get_message('next', 'common')}">
 		<i class="fa fa-caret-left fa-large" aria-hidden="true"></i>
 	</a>
-	<select onchange="xmlhttprequest_calendar(${escapejs(FIELD)}, ${escapejs(INPUT_FIELD)}, ${escapejs(YEAR)}, jQuery(this).val(), 1, ${escapejs(CALENDAR_NUMBER)});" class="date-select-month">
+	<select onchange="xmlhttprequest_calendar(${escapejs(FIELD)}, ${escapejs(INPUT_FIELD)}, ${escapejs(YEAR)}, jQuery(this).val(), 1, ${escapejs(CALENDAR_NUMBER)});" class="date-select-month grouped-element">
 		# START month #
 			{month.MONTH}
 		# END month #
 	</select>
-	<select onchange="xmlhttprequest_calendar(${escapejs(FIELD)}, ${escapejs(INPUT_FIELD)}, jQuery(this).val(), ${escapejs(MONTH)}, 1, ${escapejs(CALENDAR_NUMBER)});" class="date-select-year">
+	<select onchange="xmlhttprequest_calendar(${escapejs(FIELD)}, ${escapejs(INPUT_FIELD)}, jQuery(this).val(), ${escapejs(MONTH)}, 1, ${escapejs(CALENDAR_NUMBER)});" class="date-select-year grouped-element">
 		# START year #
 			{year.YEAR}
 		# END year #
 	</select>
-	<a class="date-select-nav" href="#" onclick="xmlhttprequest_calendar(${escapejs(FIELD)}, ${escapejs(INPUT_FIELD)}, ${escapejs(NEXT_YEAR)}, ${escapejs(NEXT_MONTH)}, 1, ${escapejs(CALENDAR_NUMBER)});return false;" aria-label="${LangLoader::get_message('previous', 'common')}">
+	<a class="date-select-nav grouped-element" href="#" onclick="xmlhttprequest_calendar(${escapejs(FIELD)}, ${escapejs(INPUT_FIELD)}, ${escapejs(NEXT_YEAR)}, ${escapejs(NEXT_MONTH)}, 1, ${escapejs(CALENDAR_NUMBER)});return false;" aria-label="${LangLoader::get_message('previous', 'common')}">
 		<i class="fa fa-caret-right fa-large" aria-hidden="true"></i>
 	</a>
 </div>
