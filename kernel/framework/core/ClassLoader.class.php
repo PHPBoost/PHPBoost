@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 12
+ * @version     PHPBoost 5.3 - last update: 2020 05 14
  * @since       PHPBoost 3.0 - 2009 10 21
  * @contributor mipel <mipel@phpboost.com>
 */
@@ -81,13 +81,27 @@ class ClassLoader
 	/**
 	 * Check if a module has a subclass of a parent class
 	 */
-	public static function has_module_subclasses_of($module_id, $parent_class)
+	public static function has_module_subclass_of($module_id, $parent_class)
 	{
 		$result = false;
 		foreach (self::get_module_classlist($module_id) as $class_name => $class_path)
 		{
 			if (is_subclass_of($class_name, $parent_class))
 				$result = true;
+		}
+		return $result;
+	}
+
+	/**
+	 * Get module subclass of a parent class if it has one
+	 */
+	public static function get_module_subclass_of($module_id, $parent_class)
+	{
+		$result = '';
+		foreach (self::get_module_classlist($module_id) as $class_name => $class_path)
+		{
+			if (is_subclass_of($class_name, $parent_class))
+				$result = $class_name;
 		}
 		return $result;
 	}

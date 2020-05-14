@@ -8,7 +8,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 12
+ * @version     PHPBoost 5.3 - last update: 2020 05 14
  * @since       PHPBoost 2.0 - 2008 01 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -177,7 +177,7 @@ class ExtensionPointProviderService
 				return $module_extension_point_class_name;
 			else
 			{
-				if (ClassLoader::has_module_subclasses_of($provider_id, 'Item'))
+				if (ClassLoader::has_module_subclass_of($provider_id, 'Item'))
 					return 'ItemsModule' . self::EXTENSION_POINT_PROVIDER_SUFFIX;
 				else
 					return 'Module' . self::EXTENSION_POINT_PROVIDER_SUFFIX;
