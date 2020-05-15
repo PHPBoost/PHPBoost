@@ -241,9 +241,9 @@ class ModuleConfiguration
 		$item_name = ClassLoader::get_module_subclass_of($this->module_id, 'Item');
 		if (empty($item_name))
 		{
-			if ($this->feature_is_enabled('item'))
+			if ($this->feature_is_enabled('items'))
 				$item_name = 'Item';
-			if ($this->feature_is_enabled('rich_item'))
+			if ($this->feature_is_enabled('rich_items'))
 				$item_name = 'RichItem';
 		}
 		return $item_name;
