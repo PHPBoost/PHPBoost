@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 14
+ * @version     PHPBoost 5.3 - last update: 2020 05 15
  * @since       PHPBoost 3.0 - 2009 10 21
  * @contributor mipel <mipel@phpboost.com>
 */
@@ -74,6 +74,7 @@ class ClassLoader
 	 */
 	public static function get_module_classlist($module_id)
 	{
+		self::$module_classlist = array();
 		self::add_classes(Path::phpboost_path() . '/' . $module_id, '`\.class\.php$`', true);
 		return self::$module_classlist;
 	}
