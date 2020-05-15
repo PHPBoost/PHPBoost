@@ -14,6 +14,7 @@ class ClassLoader
 	private static $cache_file = '/cache/autoload.php';
 	private static $autoload;
 	private static $module_classlist = array();
+	private static $module_id;
 	private static $already_reloaded = false;
 	private static $exclude_paths = array(
 		'/cache', '/images', '/lang', '/upload', '/templates',
@@ -74,8 +75,12 @@ class ClassLoader
 	 */
 	public static function get_module_classlist($module_id)
 	{
-		self::$module_classlist = array();
-		self::add_classes(Path::phpboost_path() . '/' . $module_id, '`\.class\.php$`', true);
+		if ($module_id != self::$module_id)
+		{
+			self::$module_classlist = array();
+			self::$module_id = $module_id;
+		}
+		self::add_classes(Path::phpboost_path() . '/' . self::$module_id, '`\.class\.php$`', true);
 		return self::$module_classlist;
 	}
 

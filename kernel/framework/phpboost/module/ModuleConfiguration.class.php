@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 30
+ * @version     PHPBoost 5.3 - last update: 2020 05 15
  * @since       PHPBoost 3.0 - 2009 12 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -148,12 +148,12 @@ class ModuleConfiguration
 
 	public function has_items()
 	{
-		return $this->item_name && class_exists($this->item_name) && is_subclass_of($this->item_name, 'Item');
+		return $this->item_name && class_exists($this->item_name) && ($this->item_name == 'Item' || is_subclass_of($this->item_name, 'Item'));
 	}
 
 	public function has_rich_items()
 	{
-		return $this->item_name && class_exists($this->item_name) && is_subclass_of($this->item_name, 'RichItem');
+		return $this->item_name && class_exists($this->item_name) && ($this->item_name == 'RichItem' || is_subclass_of($this->item_name, 'RichItem'));
 	}
 
 	public function get_items_table_name()
@@ -168,8 +168,8 @@ class ModuleConfiguration
 
 	public function has_categories()
 	{
-		$categories_cache_class = TextHelper::ucfirst($this->module_id) . 'CategoriesCache';
-		return ($this->feature_is_enabled('categories') || $this->feature_is_enabled('rich_categories') || (class_exists($categories_cache_class) && is_subclass_of($categories_cache_class, 'CategoriesCache')));
+		$categories_cache_class = ClassLoader::get_module_subclass_of($this->module_id, 'CategoriesCache');
+		return ($this->feature_is_enabled('categories') || $this->feature_is_enabled('rich_categories') || ($categories_cache_class && class_exists($categories_cache_class)));
 	}
 
 	public function has_contribution()
@@ -179,7 +179,16 @@ class ModuleConfiguration
 
 	public function get_configuration_name()
 	{
-		return $this->configuration_name;
+		if ($this->configuration_name)
+			return $this->configuration_name;
+		else
+		{
+			if ($this->has_rich_config_parameters() || $this->has_rich_items())
+				return 'DefaultRichModuleConfig';
+			if ($this->has_items())
+				return 'DefaultModuleConfig';
+		}
+		return '';
 	}
 
 	public function has_rich_config_parameters()
@@ -189,10 +198,11 @@ class ModuleConfiguration
 
 	public function get_configuration_parameters()
 	{
-		if ($this->configuration_name)
-			return $this->configuration_name::load($this->module_id);
+		$configuration_name = $this->get_configuration_name();
+		if ($configuration_name)
+			return $configuration_name::load($this->module_id);
 		else
-			return ($this->has_rich_config_parameters() || $this->has_rich_items()) ? DefaultRichModuleConfig::load($this->module_id) : DefaultModuleConfig::load($this->module_id);
+			return DefaultModuleConfig::load($this->module_id);
 	}
 
 	private function load_configuration($config_ini_file)
@@ -210,40 +220,33 @@ class ModuleConfiguration
 		$this->php_version            = !empty($config['php_version']) ? $config['php_version'] : ServerConfiguration::MIN_PHP_VERSION;
 		$this->repository             = !empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
 		$this->features               = !empty($config['features']) ? explode(',', preg_replace('/\s/', '', $config['features'])) : array();
-		$this->configuration_name     = !empty($config['configuration_name']) ? $config['configuration_name'] : $this->get_default_configuration_class_name();
-		$this->admin_main_page        = !empty($config['admin_main_page']) ? $config['admin_main_page'] : ($this->configuration_name ? ModulesUrlBuilder::admin($this->module_id)->rel() : '');
-		$this->admin_menu             = !empty($config['admin_menu']) ? $config['admin_menu'] : 'modules';
 		$this->contribution_interface = !empty($config['contribution_interface']) ? Url::to_rel('/' . $this->module_id . '/' . $config['contribution_interface']) : ($this->feature_is_enabled('contribution') ? ItemsUrlBuilder::add(Category::ROOT_CATEGORY, $this->module_id)->rel() : '');
 		$this->url_rewrite_rules      = !empty($config['rewrite_rules']) ? $config['rewrite_rules'] : array();
 		$this->item_name              = !empty($config['item_name']) ? $config['item_name'] : $this->get_default_item_class_name();
 		$this->items_table_name       = !empty($config['items_table_name']) ? $config['items_table_name'] : ($this->item_name || $this->has_categories() ? $this->module_id : '');
 		$this->categories_table_name  = !empty($config['categories_table_name']) ? $config['categories_table_name'] : ($this->has_categories() ? $this->module_id . '_cats' : '');
+		$this->configuration_name     = !empty($config['configuration_name']) ? $config['configuration_name'] : $this->get_default_configuration_class_name();
 		$this->home_page              = !empty($config['home_page']) ? $config['home_page'] : ($this->item_name ? 'index.php' : '');
+		$this->admin_main_page        = !empty($config['admin_main_page']) ? $config['admin_main_page'] : ($this->get_configuration_name() ? ModulesUrlBuilder::admin($this->module_id)->rel() : '');
+		$this->admin_menu             = !empty($config['admin_menu']) ? $config['admin_menu'] : 'modules';
 	}
 
 	private function get_default_configuration_class_name()
 	{
-		$configuration_class_name = TextHelper::ucfirst($this->module_id) . 'Config';
-		if (class_exists($configuration_class_name) && is_subclass_of($configuration_class_name, 'AbstractConfigData'))
-			return $configuration_class_name;
-
-		return '';
+		return ClassLoader::get_module_subclass_of($this->module_id, 'AbstractConfigData');
 	}
 
 	private function get_default_item_class_name()
 	{
-		$item_class_name = TextHelper::ucfirst($this->module_id);
-		if (class_exists($item_class_name) && is_subclass_of($item_class_name, 'Item'))
-			return $item_class_name;
-
-		if (substr($item_class_name, -1) == 's')
+		$item_name = ClassLoader::get_module_subclass_of($this->module_id, 'Item');
+		if (empty($item_name))
 		{
-			$item_class_name = substr($item_class_name, 0, -1);
-			if (class_exists($item_class_name) && is_subclass_of($item_class_name, 'Item'))
-				return $item_class_name;
+			if ($this->feature_is_enabled('item'))
+				$item_name = 'Item';
+			if ($this->feature_is_enabled('rich_item'))
+				$item_name = 'RichItem';
 		}
-
-		return '';
+		return $item_name;
 	}
 
 	private function load_description($desc_ini_file)
