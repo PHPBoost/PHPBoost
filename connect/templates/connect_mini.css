@@ -80,7 +80,7 @@
 		display: inline-flex;
 	}
 
-	.connect-container li {
-		padding: 0.309em !important;
+	.cell-list .connect-container li {
+		padding: 0.309em;
 	}
 }
