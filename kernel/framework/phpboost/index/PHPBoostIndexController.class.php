@@ -51,7 +51,7 @@ class PHPBoostIndexController extends AbstractController
 
 	private function check_site_url_configuration()
 	{
-		$site_url = Appcontext::get_request()->get_site_url();
+		$request = Appcontext::get_request();
 		$site_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
 		if (!$site_path)
 		{
@@ -62,7 +62,7 @@ class PHPBoostIndexController extends AbstractController
 
 		if (($request->get_is_subdomain() && $this->general_config->get_site_url() != $request->get_site_url()) || ($request->get_domain_name($this->general_config->get_site_url()) != $request->get_domain_name()) || ($this->general_config->get_site_path() != $site_path))
 		{
-			$this->general_config->set_site_url($site_url);
+			$this->general_config->set_site_url($request->get_site_url());
 			$this->general_config->set_site_path($site_path);
 
 			GeneralConfig::save();
