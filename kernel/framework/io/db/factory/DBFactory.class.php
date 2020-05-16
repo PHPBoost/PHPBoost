@@ -4,11 +4,12 @@
  * for the right sgbd.
  * @package     IO
  * @subpackage  DB\factory
- * @copyright   &copy; 2005-2019 PHPBoost
+ * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @version     PHPBoost 5.3 - last update: 2020 05 16
  * @since       PHPBoost 3.0 - 2009 10 01
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class DBFactory
@@ -67,7 +68,16 @@ class DBFactory
 			$data = self::load_config();
 			self::init_factory($data['dbms']);
 			self::$db_connection = self::new_db_connection();
-			self::$db_connection->connect($data);
+			try
+			{
+				self::$db_connection->connect($data);
+			}
+			catch (Exception $exception)
+			{
+				AppContext::get_response()->set_status_code(503);
+				echo 'An error in database connection parameters has been detected, please check your settings...';
+				die();
+			}
 		}
 		return self::$db_connection;
 	}
