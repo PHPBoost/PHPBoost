@@ -281,9 +281,9 @@
 					</p>
 				# ENDIF #
 			</div>
-			<div class="message-user-sign# IF msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
-				# IF msg.C_USER_SIGN #{msg.USER_SIGN}# ENDIF #
-			</div>
+			# IF msg.C_USER_SIGN #
+				<div class="message-user-sign# IF msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">{msg.USER_SIGN}</div>
+			# ENDIF #
 			<div class="message-footer-container# IF msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
 				<div class="message-user-assoc">
 					<div class="message-group-level">
