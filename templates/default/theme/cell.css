@@ -126,7 +126,8 @@ form > [class*="cell-"]:not(.cell-header) {
 	align-items: center;
 }
 
-.cell-list-inline ul li:first-child {
+.cell-list-inline ul li:first-child,
+.cell-list-inline ul li:last-child {
 	padding: 0.228em 0.809em;
 }
 

@@ -3,7 +3,7 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-#login {
+#module-connect  #login {
 	cursor: help;
 }
 
@@ -70,17 +70,17 @@
 }
 
 @media (min-width: 769px) {
-	.connect-container {
+	#module-connect .connect-container {
 		opacity: 1;
 		visibility: visible;
 		height: auto;
 	}
 
-	.cell-list-inline .connect-container form {
+	#module-connect .cell-list-inline .connect-container form {
 		display: inline-flex;
 	}
 
-	.cell-list .connect-container li {
+	#module-connect .cell-list .connect-container li {
 		padding: 0.309em;
 	}
 }
