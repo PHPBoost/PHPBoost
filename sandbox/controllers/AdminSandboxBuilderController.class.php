@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 05
+ * @version     PHPBoost 5.3 - last update: 2020 05 18
  * @since       PHPBoost 5.2 - 2019 11 01
 */
 
@@ -12,6 +12,7 @@ class AdminSandboxBuilderController extends AdminModuleController
 	private $view;
 	private $lang;
 	private $common_lang;
+	private $g_map_enabled;
 
 	/**
 	 * @var FormButtonSubmit
@@ -29,13 +30,6 @@ class AdminSandboxBuilderController extends AdminModuleController
 		$this->init();
 
 		$form = $this->build_form();
-
-		if (ModulesManager::is_module_installed('GoogleMaps') && ModulesManager::is_module_activated('GoogleMaps') && GoogleMapsConfig::load()->get_api_key())
-			$c_gmap = true;
-		else
-			$c_gmap = false;
-
-		$this->view->put_all(array('C_GMAP' => $c_gmap));
 
 		if ($this->submit_button->has_been_submited() || $this->preview_button->has_been_submited())
 		{
@@ -67,7 +61,10 @@ class AdminSandboxBuilderController extends AdminModuleController
 			}
 		}
 
-		$this->view->put('form', $form->display());
+		$this->view->put_all(array(
+			'C_GMAP' => $this->g_map_enabled,
+			'form'   => $form->display()
+		));
 
 		return new AdminSandboxDisplayResponse($this->view, $this->lang['builder.title']);
 	}
@@ -79,6 +76,7 @@ class AdminSandboxBuilderController extends AdminModuleController
 		$this->view = new FileTemplate('sandbox/AdminSandboxBuilderController.tpl');
 		$this->view->add_lang($this->common_lang);
 		$this->view->add_lang($this->lang);
+		$this->g_map_enabled = (ModulesManager::is_module_installed('GoogleMaps') && ModulesManager::is_module_activated('GoogleMaps') && GoogleMapsConfig::load()->get_api_key());
 	}
 
 	private function build_form()
@@ -428,7 +426,7 @@ class AdminSandboxBuilderController extends AdminModuleController
 			));
 
 		// GOOGLE MAPS
-		if (ModulesManager::is_module_installed('GoogleMaps') && ModulesManager::is_module_activated('GoogleMaps') && GoogleMapsConfig::load()->get_api_key())
+		if ($this->g_map_enabled)
 		{
 			$fieldset_maps = new FormFieldsetHTML('fieldset_maps', $this->lang['builder.googlemap']);
 			$form->add_fieldset($fieldset_maps);
@@ -457,7 +455,7 @@ class AdminSandboxBuilderController extends AdminModuleController
 		// AUTH
 		$fieldset3 = new FormFieldsetHTML('fieldset3', $this->lang['builder.authorization']);
 			$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization($this->lang['builder.authorization.1'], 1, $this->lang['builder.authorization.1.desc']), new ActionAuthorization($this->lang['builder.authorization.2'], 2)));
-			$auth_settings->build_from_auth_array(array('r1' => 3, 'r0' => 2, 'm1' => 1, '1' => 2));
+			$auth_settings->build_from_auth_array(array('r1' => 3, 'r0' => 2, 'm1' => 1, 1 => 2));
 			$auth_setter = new FormFieldAuthorizationsSetter('auth', $auth_settings);
 			$fieldset3->add_field($auth_setter);
 			$form->add_fieldset($fieldset3);

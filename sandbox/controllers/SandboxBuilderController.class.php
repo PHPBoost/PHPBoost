@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 13
+ * @version     PHPBoost 5.3 - last update: 2020 05 18
  * @since       PHPBoost 3.0 - 2009 12 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -17,6 +17,7 @@ class SandboxBuilderController extends ModuleController
 	private $lang;
 	private $sub_lang;
 	private $common_lang;
+	private $g_map_enabled;
 
 	/**
 	 * @var FormButtonSubmit
@@ -34,13 +35,6 @@ class SandboxBuilderController extends ModuleController
 		$this->init();
 
 		$form = $this->build_form();
-
-		if (ModulesManager::is_module_installed('GoogleMaps') && ModulesManager::is_module_activated('GoogleMaps') && GoogleMapsConfig::load()->get_api_key())
-			$c_gmap = true;
-		else
-			$c_gmap = false;
-
-		$this->view->put_all(array('C_GMAP' => $c_gmap));
 
 		if ($this->submit_button->has_been_submited() || $this->preview_button->has_been_submited())
 		{
@@ -73,7 +67,8 @@ class SandboxBuilderController extends ModuleController
 		}
 
 		$this->view->put_all(array(
-			'form' => $form->display(),
+			'C_GMAP'          => $this->g_map_enabled,
+			'form'            => $form->display(),
 			'SANDBOX_SUBMENU' => self::get_submenu()
 		));
 
@@ -87,21 +82,16 @@ class SandboxBuilderController extends ModuleController
 		$this->view = new FileTemplate('sandbox/SandboxBuilderController.tpl');
 		$this->view->add_lang($this->common_lang);
 		$this->view->add_lang($this->lang);
+		$this->g_map_enabled = (ModulesManager::is_module_installed('GoogleMaps') && ModulesManager::is_module_activated('GoogleMaps') && GoogleMapsConfig::load()->get_api_key());
 	}
 
 	private function get_submenu()
 	{
-		$submenu_lang = LangLoader::get('submenu', 'sandbox');
 		$submenu_tpl = new FileTemplate('sandbox/SandboxSubMenu.tpl');
-		$submenu_tpl->add_lang($submenu_lang);
-
-		if (ModulesManager::is_module_installed('GoogleMaps') && ModulesManager::is_module_activated('GoogleMaps') && GoogleMapsConfig::load()->get_api_key())
-			$c_gmap = true;
-		else
-			$c_gmap = false;
+		$submenu_tpl->add_lang(LangLoader::get('submenu', 'sandbox'));
 
 		$submenu_tpl->put_all(array(
-			'C_GMAP' => $c_gmap,
+			'C_GMAP'         => $this->g_map_enabled,
 			'C_SANDBOX_FORM' => true
 		));
 		return $submenu_tpl;
@@ -489,7 +479,7 @@ class SandboxBuilderController extends ModuleController
 				$tabs_04->set_description($this->common_lang['lorem.short.content']);
 
 		// GOOGLE MAPS
-		if (ModulesManager::is_module_installed('GoogleMaps') && ModulesManager::is_module_activated('GoogleMaps') && GoogleMapsConfig::load()->get_api_key())
+		if ($this->g_map_enabled)
 		{
 			$fieldset_maps = new FormFieldsetHTML('fieldset_maps', $this->lang['builder.googlemap']);
 			$form->add_fieldset($fieldset_maps);
@@ -510,7 +500,7 @@ class SandboxBuilderController extends ModuleController
 		// AUTH
 		$authorizations = new FormFieldsetHTML('authorizations', $this->lang['builder.authorization']);
 			$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization($this->lang['builder.authorization.1'], 1, $this->lang['builder.authorization.1.desc']), new ActionAuthorization($this->lang['builder.authorization.2'], 2)));
-			$auth_settings->build_from_auth_array(array('r1' => 3, 'r0' => 2, 'm1' => 1, '1' => 2));
+			$auth_settings->build_from_auth_array(array('r1' => 3, 'r0' => 2, 'm1' => 1, 1 => 2));
 			$auth_setter = new FormFieldAuthorizationsSetter('auth', $auth_settings);
 			$authorizations->add_field($auth_setter);
 			$form->add_fieldset($authorizations);
