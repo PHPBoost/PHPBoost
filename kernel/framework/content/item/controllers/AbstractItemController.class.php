@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 03
+ * @version     PHPBoost 5.3 - last update: 2020 005 18
  * @since       PHPBoost 5.3 - 2019 12 20
 */
 
@@ -67,14 +67,17 @@ abstract class AbstractItemController extends ModuleController
 
 	protected function display_unexisting_page()
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
-		DispatchManager::redirect($error_controller);
+		DispatchManager::redirect(PHPBoostErrors::unexisting_page());
 	}
 
 	protected function display_user_not_authorized_page()
 	{
-		$error_controller = PHPBoostErrors::user_not_authorized();
-		DispatchManager::redirect($error_controller);
+		DispatchManager::redirect(PHPBoostErrors::user_not_authorized());
+	}
+
+	protected function display_user_in_read_only_page()
+	{
+		DispatchManager::redirect(PHPBoostErrors::user_in_read_only());
 	}
 
 	protected function get_additional_view_parameters()

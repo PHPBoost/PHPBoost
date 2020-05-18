@@ -5,15 +5,13 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 30
+ * @version     PHPBoost 5.3 - last update: 2020 05 18
  * @since       PHPBoost 5.3 - 2020 03 12
 */
 
 class DefaultDisplayItemController extends AbstractItemController
 {
 	protected $item;
-	protected $category;
-
 	protected $current_url;
 
 	public function execute(HTTPRequestCustom $request)
@@ -39,7 +37,7 @@ class DefaultDisplayItemController extends AbstractItemController
 			try {
 				$this->item = self::get_items_manager()->get_item($id);
 			} catch (RowNotFoundException $e) {
-				$this->RowNotFoundException();
+				$this->display_unexisting_page();
 			}
 		}
 		return $this->item;
