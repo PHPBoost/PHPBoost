@@ -21,7 +21,9 @@ html, body {
 	padding: 0;
 }
 
-img, table, td, blockquote, code, pre, textarea, input, audio, video, object, .video-player { max-width: 100%; }
+img, table, td, blockquote, code, pre, textarea, input, audio, video, object, iframe { max-width: 100%; }
+
+iframe { border: none; }
 
 input, button, label, select, textarea, legend {
 	font-family: inherit;
@@ -110,6 +112,7 @@ figure {
     border-width: 1px;
     border-style: solid;
     border-color: transparent;
+	vertical-align: top;
 }
 
 figcaption {
