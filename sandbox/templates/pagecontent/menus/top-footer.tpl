@@ -119,7 +119,6 @@
 </nav>
 <script>
     $('#pushmenu-bottom').pushmenu({
-		maxWidth: false,
 		customToggle: jQuery('.toggle-bottom'), // null
 		navTitle: 'Push Menu Bottom', // null
 		pushContent: '#push-container',

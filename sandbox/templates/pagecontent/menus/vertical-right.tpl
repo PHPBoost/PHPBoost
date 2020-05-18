@@ -129,7 +129,6 @@
 </div>
 <script>
     $('#pushmenu-right').pushmenu({
-		maxWidth: false,
 		customToggle: jQuery('.toggle-right'), // null
 		navTitle: 'Push Menu Right', // null
 		pushContent: false,

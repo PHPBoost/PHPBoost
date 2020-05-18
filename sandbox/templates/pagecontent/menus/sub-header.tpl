@@ -114,7 +114,6 @@
 </nav>
 <script>
     $('#pushmenu-top').pushmenu({
-		maxWidth: false,
 		customToggle: jQuery('.toggle-top'), // null
 		navTitle: 'Push Menu Top', // null
 		pushContent: '#push-container',

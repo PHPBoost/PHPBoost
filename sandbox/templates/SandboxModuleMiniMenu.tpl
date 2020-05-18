@@ -296,7 +296,6 @@
 	<script src="{PATH_TO_ROOT}/sandbox/templates/js/sandbox.js"></script>
 	<script>
 	    $('#pushmenu-fwkboost').pushmenu({
-			maxWidth: false,
 			customToggle: jQuery('.fwkboost-toggle'), // null
 			navTitle: '{@sandbox.module.title}', // null
 			pushContent: '{PUSHED_CONTENT}',

@@ -548,8 +548,8 @@ h3.formatter-title { border-color: var(--main-dark); }
 
 .pushmenu a[href]:not([href="#"])>span.nav-next { border-color: var(--main-light); }
 
-.pushmenu span.nav-next::before,
-.pushmenu li.nav-back span::before { border-color: var(--txt-dark); }
+.pushmenu .nav-next span::before,
+.pushmenu .nav-back span::before { border-color: var(--txt-dark); }
 
 .nav-levels-overlap.nav-position-left.nav-open .nav-wrapper   { box-shadow: 1px 0 2px rgba(var(--darken), 0.2); }
 .nav-levels-overlap.nav-position-right.nav-open .nav-wrapper  { box-shadow: -1px 0 2px rgba(var(--darken), 0.2); }
@@ -570,11 +570,11 @@ h3.formatter-title { border-color: var(--main-dark); }
 .pushmenu.nav-levels-expand .nav-container li.level-open > .nav-item,
 .pushmenu.nav-levels-none .nav-container li.level-open > .nav-item { background-color: rgba(var(--main-rgb-d), 0.2); }
 
-.pushmenu.nav-levels-expand .nav-container li.level-open a,
-.pushmenu.nav-levels-none .nav-container li.level-open a { border-color: var(--main-light); }
+.pushmenu.nav-levels-expand .nav-container li.level-open .nav-item-wrapper > a,
+.pushmenu.nav-levels-none .nav-container li.level-open .nav-item-wrapper > a { border-color: var(--main-light); }
 
-.pushmenu.nav-levels-expand .nav-container li.level-open a:hover,
-.pushmenu.nav-levels-none .nav-container li.level-open a:hover { background-color: rgba(var(--main-rgb-d), 0.1); }
+.pushmenu.nav-levels-expand .nav-container li.level-open .nav-item-wrapper > a:hover,
+.pushmenu.nav-levels-none .nav-container li.level-open .nav-item-wrapper > a:hover { background-color: rgba(var(--main-rgb-d), 0.1); }
 
 .nav-levels-overlap .nav-wrapper { background-color: var(--bgc-main); }
 

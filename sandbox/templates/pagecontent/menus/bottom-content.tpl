@@ -76,7 +76,6 @@
 </nav>
 <script>
     $('#pushmenu-bottom-content').pushmenu({
-		maxWidth: false,
 		customToggle: jQuery('.toggle-bottom-content'), // null
 		navTitle: 'Push Menu Bottom expand', // null
 		pushContent: '#push-container',

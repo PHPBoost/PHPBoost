@@ -41,7 +41,6 @@
 &lt;/nav>
 &lt;script>
     jQuery('#pushmenu-[ID]').pushmenu({
-        maxWidth: false,
         customToggle: jQuery('.toggle-[ID]'), // null
         navTitle: '[TITLE]', // null
         pushContent: '[PUSHED_CONTENT]', // container pushed (body, #id_container, or whatever)
