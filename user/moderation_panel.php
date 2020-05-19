@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 05 05
+ * @version     PHPBoost 5.3 - last update: 2020 05 19
  * @since       PHPBoost 1.6 - 2007 03 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -45,7 +45,6 @@ if (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL)) //Si il
 $moderation_panel_template = new FileTemplate('user/moderation_panel.tpl');
 
 $moderation_panel_template->put_all(array(
-	'C_TINYMCE_EDITOR' => AppContext::get_current_user()->get_editor() == 'TinyMCE',
 	'L_MODERATION_PANEL' => $LANG['moderation_panel'],
 	'L_PUNISHMENT' => $LANG['punishment'],
 	'L_WARNING' => $LANG['warning'],

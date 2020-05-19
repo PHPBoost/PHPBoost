@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 29
+ * @version     PHPBoost 5.3 - last update: 2020 05 19
  * @since       PHPBoost 1.5 - 2006 08 08
  * @contributor Regis VIARRE <crowkait@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -50,7 +50,6 @@ if (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL) && $chec
 $tpl = new FileTemplate('forum/forum_moderation_panel.tpl');
 
 $vars_tpl = array(
-	'C_TINYMCE_EDITOR'   => AppContext::get_current_user()->get_editor() == 'TinyMCE',
 	'FORUM_NAME'         => $config->get_forum_name(),
 	'L_USERS_PUNISHMENT' => $LANG['punishment_management'],
 	'L_USERS_WARNING'    => $LANG['warning_management'],

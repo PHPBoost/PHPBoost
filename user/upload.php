@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 05
+ * @version     PHPBoost 5.3 - last update: 2020 05 19
  * @since       PHPBoost 1.6 - 2007 07 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -366,7 +366,6 @@ elseif (!empty($del_folder))
     $tpl->put_all(array(
         'C_POPUP' => !empty($popup),
         'POPUP' => $popup,
-        'C_TINYMCE_EDITOR' => AppContext::get_current_user()->get_editor() == 'TinyMCE',
         'C_DISPLAY_CLOSE_BUTTON' => $display_close_button,
         'FIELD' => $field,
         'FOLDER_ID' => !empty($folder) ? $folder : '0',

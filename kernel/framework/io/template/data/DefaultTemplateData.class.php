@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 01
+ * @version     PHPBoost 5.3 - last update: 2020 05 19
  * @since       PHPBoost 3.0 - 2010 02 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -52,6 +52,11 @@ class DefaultTemplateData implements TemplateData
 			'TOKEN'             => !empty($session) ? $session->get_token() : '',
 			'REWRITED_SCRIPT'   => REWRITED_SCRIPT
 		));
+		
+		foreach (ContentFormattingProvidersService::get_editors() as $id => $provider)
+		{
+			$this->put('C_' . TextHelper::strtoupper($id) . '_EDITOR', (int)($user->get_editor() == $id));
+		}
 	}
 
 	/**

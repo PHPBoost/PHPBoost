@@ -14,7 +14,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 01
+ * @version     PHPBoost 5.3 - last update: 2020 05 19
  * @since       PHPBoost 3.0 - 2010 02 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -48,6 +48,7 @@ interface TemplateData
 	 * 	<li>TOKEN is the CSRF protection token. It's to use in the critical actions to show that the user really
 	 * intended doing the action</li>
 	 * 	<li>REWRITED_SCRIPT the current url</li>
+	 * 	<li>C_*TEXT_EDITOR_NAME*_EDITOR for each installed editor, tell if current user use it or not. For instance C_BBCODE_EDITOR.</li>
 	 * </ul>
 	 */
 	function auto_load_frequent_vars();
