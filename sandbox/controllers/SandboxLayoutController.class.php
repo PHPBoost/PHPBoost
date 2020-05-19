@@ -38,17 +38,10 @@ class SandboxLayoutController extends ModuleController
 	{
 		$this->view->put_all(array(
 			'NO_AVATAR_URL'   => Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(UserAccountsConfig::NO_AVATAR_URL)),
-			'SANDBOX_SUBMENU' => self::get_submenu(),
-			'MESSAGE'         => self::build_message_view()
+			'MESSAGE'         => self::build_message_view(),
+			'MODAL'			  => $this->build_modal_view()->display(),
+			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
 		));
-	}
-
-	private function get_submenu()
-	{
-		$this->lang = LangLoader::get('submenu', 'sandbox');
-		$submenu_tpl = new FileTemplate('sandbox/SandboxSubMenu.tpl');
-		$submenu_tpl->add_lang($this->lang);
-		return $submenu_tpl;
 	}
 
 	private function build_message_view()
@@ -61,6 +54,57 @@ class SandboxLayoutController extends ModuleController
 		$message_tpl->put('NO_AVATAR_URL', Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(UserAccountsConfig::NO_AVATAR_URL)));
 
 		return $message_tpl;
+	}
+
+	private function build_modal_view()
+	{
+		$modal_form = new HTMLForm('Sandbox_Modal');
+		$modal_form->set_css_class('modal-container fieldset-content');
+
+		$modal_menu = new FormFieldMenuFieldset('modal_menu', '');
+			$modal_form->add_fieldset($modal_menu);
+			$modal_menu->set_css_class('modal-nav');
+
+			$modal_menu->add_field(new FormFieldSubTitle('modal', $this->lang['builder.modal.menu'] . ' ' . $this->common_lang['pinned.php'] . ' ' . $this->common_lang['pinned.html'], ''));
+
+			$modal_menu->add_field(new FormFieldMultitabsLinkList('modal_menu_list',
+				array(
+					new FormFieldMultitabsLinkElement($this->lang['builder.link.icon'], 'modal', 'Sandbox_Modal_modal_01', 'fa-cog'),
+					new FormFieldMultitabsLinkElement($this->lang['builder.link.img'], 'modal', 'Sandbox_Modal_modal_02', '', '/sandbox/sandbox_mini.png'),
+					new FormFieldMultitabsLinkElement($this->lang['builder.link'].' 3', 'modal', 'Sandbox_Modal_modal_03'),
+					new FormFieldMultitabsLinkElement($this->lang['builder.link'].' 4', 'modal', 'Sandbox_Modal_modal_04', '', '', '','button d-inline-block')
+				)
+			));
+
+			$modal_01 = new FormFieldsetMultitabsHTML('modal_01', $this->lang['builder.panel'].' 1',
+				array('css_class' => 'modal modal-animation first-tab', 'modal' => true)
+			);
+			$modal_form->add_fieldset($modal_01);
+
+			$modal_01->set_description($this->common_lang['lorem.short.content']);
+
+			$modal_02 = new FormFieldsetMultitabsHTML('modal_02', $this->lang['builder.panel'].' 2',
+				array('css_class' => 'modal modal-animation', 'modal' => true)
+			);
+			$modal_form->add_fieldset($modal_02);
+
+			$modal_02->set_description($this->common_lang['lorem.medium.content']);
+
+			$modal_03 = new FormFieldsetMultitabsHTML('modal_03', $this->lang['builder.panel'].' 3',
+				array('css_class' => 'modal modal-animation', 'modal' => true)
+			);
+			$modal_form->add_fieldset($modal_03);
+
+			$modal_03->set_description($this->common_lang['lorem.large.content']);
+
+			$modal_04 = new FormFieldsetMultitabsHTML('modal_04', $this->lang['builder.panel'].' 4',
+				array('css_class' => 'modal modal-animation', 'modal' => true)
+			);
+			$modal_form->add_fieldset($modal_04);
+
+			$modal_04->set_description($this->common_lang['lorem.short.content']);
+
+		return $modal_form;
 	}
 
 	private function check_authorizations()

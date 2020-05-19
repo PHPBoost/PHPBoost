@@ -5,7 +5,7 @@
 		</h1>
 	</header>
 	<div class="sandbox-summary">
-      <div class="close-summary" aria-label="${LangLoader::get_message('close_menu', 'admin')} {@sandbox.summary}">
+      <div class="close-summary" aria-label="${LangLoader::get_message('close_menu', 'admin')} Sommaire">
         <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
       </div>
       <ul>
@@ -22,7 +22,7 @@
       </ul>
     </div>
 	<div class="open-summary">
-        <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> {@sandbox.summary}
+        <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Sommaire
     </div>
 	<script>jQuery("#cssmenu-sandbox").menumaker({ title: "Sandbox", format: "multitoggle", breakpoint: 768 }); </script>
 

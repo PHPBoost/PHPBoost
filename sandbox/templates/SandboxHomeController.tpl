@@ -1,5 +1,5 @@
 <section>
-	# INCLUDE SANDBOX_SUB_MENU #
+	# INCLUDE SANDBOX_SUBMENU #
 	<header>
 		<h1>{@sandbox.module.title}</h1>
 	</header>
@@ -74,7 +74,7 @@
 					</div>
 				</div>
 				<div class="cell-footer">
-					<a class="pinned link-color" href="${relative_url(SandboxUrlBuilder::menus())}"><i class="fa fa-fw fa-eye"></i> {@welcome.see}</a>
+					<a class="pinned link-color" href="${relative_url(SandboxUrlBuilder::menus_nav())}"><i class="fa fa-fw fa-eye"></i> {@welcome.see}</a>
 				</div>
 			</div>
 		</div>

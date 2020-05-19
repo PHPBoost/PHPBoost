@@ -13,6 +13,11 @@
 ####################################################
 #                    French                        #
 ####################################################
+$lang['builder.modal.menu'] = 'Modal';
+$lang['builder.link.icon'] = 'Item avec icône';
+$lang['builder.link.img'] = 'Item avec image';
+$lang['builder.link'] = 'Item de Liste';
+$lang['builder.panel'] = 'Panneau';
 
 // Typogrphy
 $lang['fwkboost.title.fwkboost'] = 'Mise en page';

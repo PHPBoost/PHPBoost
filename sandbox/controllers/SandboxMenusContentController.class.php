@@ -8,7 +8,7 @@
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
-class SandboxPluginsController extends ModuleController
+class SandboxMenusContentController extends ModuleController
 {
 	private $tpl;
 
@@ -42,7 +42,7 @@ class SandboxPluginsController extends ModuleController
 	{
 		$this->common_lang = LangLoader::get('common', 'sandbox');
 		$this->lang = LangLoader::get('plugins', 'sandbox');
-		$this->tpl = new FileTemplate('sandbox/SandboxPluginsController.tpl');
+		$this->tpl = new FileTemplate('sandbox/SandboxMenusContentController.tpl');
 		$this->tpl->add_lang($this->common_lang);
 		$this->tpl->add_lang($this->lang);
 	}
@@ -56,7 +56,8 @@ class SandboxPluginsController extends ModuleController
 			'PRE_WIZARD_FORM' => file_get_contents('html/plugins/wizard-form.tpl'),
 			'PRE_WIZARD_HTML' => file_get_contents('html/plugins/wizard-html.tpl'),
 			'PRE_TOOTLTIP'    => file_get_contents('html/plugins/tooltip.tpl'),
-			'WIZARD_PHP_FORM' => $this->wizard_form->display()
+			'WIZARD_PHP_FORM' => $this->wizard_form->display(),
+			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
 		));
 	}
 
@@ -125,7 +126,7 @@ class SandboxPluginsController extends ModuleController
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->common_lang['sandbox.module.title'], SandboxUrlBuilder::home()->rel());
-		$breadcrumb->add($this->common_lang['title.plugins'], SandboxUrlBuilder::plugins()->rel());
+		$breadcrumb->add($this->common_lang['title.plugins'], SandboxUrlBuilder::menus_content()->rel());
 
 		return $response;
 	}

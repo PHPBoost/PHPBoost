@@ -21,7 +21,7 @@ class SandboxHomeController extends ModuleController
 
 		$this->view->put_all(array(
 			'WELCOME_MESSAGE' => FormatingHelper::second_parse($this->lang['welcome.message']),
-			'SANDBOX_SUB_MENU' => self::get_sub_tpl()
+			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
 		));
 
 		return $this->generate_response();
@@ -32,14 +32,6 @@ class SandboxHomeController extends ModuleController
 		$this->lang = LangLoader::get('common', 'sandbox');
 		$this->view = new FileTemplate('sandbox/SandboxHomeController.tpl');
 		$this->view->add_lang($this->lang);
-	}
-
-	private static function get_sub_tpl()
-	{
-		$sub_lang = LangLoader::get('submenu', 'sandbox');
-		$sub_tpl = new FileTemplate('sandbox/SandboxSubMenu.tpl');
-		$sub_tpl->add_lang($sub_lang);
-		return $sub_tpl;
 	}
 
 	private function check_authorizations()

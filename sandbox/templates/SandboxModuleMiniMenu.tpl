@@ -178,13 +178,13 @@
 							</a>
 						</li>
 						<li>
-							<a href="${relative_url(SandboxUrlBuilder::plugins())}">
+							<a href="${relative_url(SandboxUrlBuilder::menus_content())}">
 								<i class="fa fa-cube fa-fw" aria-hidden="true"></i>
 								<span>{@title.plugins}</span>
 							</a>
 						</li>
 						<li>
-							<a href="${relative_url(SandboxUrlBuilder::menus())}">
+							<a href="${relative_url(SandboxUrlBuilder::menus_nav())}">
 								<i class="fa fa-bars fa-fw" aria-hidden="true"></i>
 								<span>{@title.menu}</span>
 							</a>

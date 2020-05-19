@@ -38,17 +38,9 @@ class SandboxIconsController extends ModuleController
 	private function build_view()
 	{
 		$this->view->put_all(array(
-			'SANDBOX_SUBMENU' => self::get_submenu(),
 			'FA' => self::get_fa(),
+			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
 		));
-	}
-
-	private function get_submenu()
-	{
-		$submenu_lang = LangLoader::get('submenu', 'sandbox');
-		$submenu_tpl = new FileTemplate('sandbox/SandboxSubMenu.tpl');
-		$submenu_tpl->add_lang($submenu_lang);
-		return $submenu_tpl;
 	}
 
 	private function get_fa()

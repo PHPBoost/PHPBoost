@@ -19,8 +19,8 @@ $lang['sandbox.module.title'] = 'Bac à sable';
 
 $lang['title.config'] = 'Configuration';
 $lang['title.admin.fwkboost'] = 'Rendus dans l\'admin';
-$lang['title.builder'] = 'Constructeur PHP';
 $lang['title.fwkboost'] = 'FWKBoost';
+$lang['title.builder'] = 'Formulaires';
 $lang['title.component'] = 'Composants';
 $lang['title.layout'] = 'Mise en page';
 $lang['title.multitabs'] = 'Multitabs';
@@ -34,6 +34,10 @@ $lang['title.email'] = 'Email';
 $lang['title.template'] = 'Template';
 
 $lang['see.render'] = 'Voir le rendu';
+
+$lang['pinned.php'] = '<span class="pinned question smallest" data-tooltip-pos="top" aria-label="Cet élément peut être ajouté en php"><i class="fa fa-fw fa-terminal" aria-hidden="true"></i></span>';
+$lang['pinned.html'] = '<span class="pinned warning smallest" data-tooltip-pos="top" aria-label="Cet élément peut être ajouté en html"><i class="fab fa-fw fa-html5" aria-hidden="true"></i></span>';
+$lang['pinned.bbcode'] = '<span class="pinned warning smallest" data-tooltip-pos="top" aria-label="Cet élément peut être ajouté en bbcode"><i class="fa fa-fw fa-code" aria-hidden="true"></i></span>';
 
 // Page d'accueil
 $lang['welcome.message'] = '

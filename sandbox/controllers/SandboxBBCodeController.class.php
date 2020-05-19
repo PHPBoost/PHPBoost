@@ -83,21 +83,13 @@ class SandboxBBCodeController extends ModuleController
 
 		$this->view->put_all(array(
 			'C_WIKI'          => $c_wiki,
-			'SANDBOX_SUBMENU' => self::get_submenu(),
 			'TYPOGRAPHY'      => self::build_typography_view(),
 			'BLOCKS'          => self::build_blocks_view(),
 			'CODE'            => self::build_code_view(),
 			'LIST'            => self::build_list_view(),
 			'TABLE'           => self::build_table_view(),
+			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
 		));
-	}
-
-	private function get_submenu()
-	{
-		$submenu_lang = LangLoader::get('submenu', 'sandbox');
-		$submenu_tpl = new FileTemplate('sandbox/SandboxSubMenu.tpl');
-		$submenu_tpl->add_lang($submenu_lang);
-		return $submenu_tpl;
 	}
 
 	private function build_typography_view()

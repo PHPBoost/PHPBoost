@@ -69,7 +69,7 @@ class SandboxBuilderController extends ModuleController
 		$this->view->put_all(array(
 			'C_GMAP'          => $this->g_map_enabled,
 			'form'            => $form->display(),
-			'SANDBOX_SUBMENU' => self::get_submenu()
+			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
 		));
 
 		return $this->generate_response();
@@ -83,18 +83,6 @@ class SandboxBuilderController extends ModuleController
 		$this->view->add_lang($this->common_lang);
 		$this->view->add_lang($this->lang);
 		$this->g_map_enabled = (ModulesManager::is_module_installed('GoogleMaps') && ModulesManager::is_module_activated('GoogleMaps') && GoogleMapsConfig::load()->get_api_key());
-	}
-
-	private function get_submenu()
-	{
-		$submenu_tpl = new FileTemplate('sandbox/SandboxSubMenu.tpl');
-		$submenu_tpl->add_lang(LangLoader::get('submenu', 'sandbox'));
-
-		$submenu_tpl->put_all(array(
-			'C_GMAP'         => $this->g_map_enabled,
-			'C_SANDBOX_FORM' => true
-		));
-		return $submenu_tpl;
 	}
 
 	private function build_form()
@@ -499,7 +487,11 @@ class SandboxBuilderController extends ModuleController
 
 		// AUTH
 		$authorizations = new FormFieldsetHTML('authorizations', $this->lang['builder.authorization']);
-			$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization($this->lang['builder.authorization.1'], 1, $this->lang['builder.authorization.1.desc']), new ActionAuthorization($this->lang['builder.authorization.2'], 2)));
+			$auth_settings = new AuthorizationsSettings(
+				array(
+					new ActionAuthorization($this->lang['builder.authorization.1'], 1, $this->lang['builder.authorization.1.desc']),
+					new ActionAuthorization($this->lang['builder.authorization.2'], 2))
+				);
 			$auth_settings->build_from_auth_array(array('r1' => 3, 'r0' => 2, 'm1' => 1, 1 => 2));
 			$auth_setter = new FormFieldAuthorizationsSetter('auth', $auth_settings);
 			$authorizations->add_field($auth_setter);

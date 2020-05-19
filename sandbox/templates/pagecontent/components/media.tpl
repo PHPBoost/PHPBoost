@@ -32,18 +32,15 @@
 		<header>
 			<h5>{@fwkboost.youtube}</h5>
 		</header>
-		<div class="media-content">
-			<iframe class="youtube-player" src="https://www.youtube.com/embed/YE7VzlLtp-4" allowfullscreen="" width="100%" height="185"></iframe>
-			<!-- <video class="youtube-player" controls="" src="http://www.youtubeinmp4.com/redirect.php?video=YE7VzlLtp-4">
-				<source src="https://youtu.be/YE7VzlLtp-4" type="video/mp4" />
-			</video> -->
+		<div class="media-content" style="width: 800px; height: 450px">
+			<iframe class="youtube-player" src="https://www.youtube.com/embed/YE7VzlLtp-4" allowfullscreen=""></iframe>
 		</div>
 	</article>
 	<article id="movie">
 		<header>
 			<h5>{@fwkboost.movie}</h5>
 		</header>
-		<div class="media-content">
+		<div class="media-content" style="width: 800px; height: 450px">
 			<video class="video-player" controls="">
 				<source src="http://data.babsoweb.com/private/logo-pbt.mp4" type="video/mp4" />
 			</video>
@@ -84,20 +81,20 @@
 &lt;/a>
 <br />
 // Youtube
-&lt;div class="media-content">
-    &lt;iframe class="youtube-player" type="text/html" src="url/to/youtube/embeded/link" allowfullscreen="" width="100%" height="185" frameborder="0"></iframe> // Resize height="" to the right size
+&lt;div class="media-content" style="width: 800px; height: 450px">
+    &lt;iframe class="youtube-player" src="url/to/youtube/embeded/link" allowfullscreen=""></iframe> // Resize height="" to the right size
 &lt;/div>
 <br />
 // Movie
-&lt;div class="media-content">
+&lt;div class="media-content" style="width: 800px; height: 450px">
     &lt;video class="video-player" controls>
-        &lt;source src="path/to/video/file.ext" type="video/mp4" /> // Change the type of the video extension
+        &lt;source src="path/to/video/file.ext" type="video/mp4" />
     &lt;/video>
 &lt;/div>
 <br />
 // Sound
 &lt;audio class="audio-player" controls>
-    &lt;source src="path/to/video/audio.ext" /> // Change the type of the audio extension
+    &lt;source src="path/to/video/audio.ext" />
 &lt;/audio></code></pre>
             </div>
         </div>

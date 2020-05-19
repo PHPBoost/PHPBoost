@@ -54,7 +54,8 @@ class SandboxMultitabsController extends ModuleController
 			'PRE_ACCORDION_BASIC'    => file_get_contents('html/multitabs/accordion-basic.tpl'),
 			'PRE_ACCORDION_SIBLINGS' => file_get_contents('html/multitabs/accordion-siblings.tpl'),
 			'PRE_MODAL_HTML'         => file_get_contents('html/multitabs/modal-html.tpl'),
-			'PRE_TABS_HTML'          => file_get_contents('html/multitabs/tabs-html.tpl')
+			'PRE_TABS_HTML'          => file_get_contents('html/multitabs/tabs-html.tpl'),
+			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
 		));
 	}
 

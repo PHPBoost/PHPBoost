@@ -8,7 +8,7 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class SandboxMenuController extends ModuleController
+class SandboxMenusNavController extends ModuleController
 {
 	private $view;
 	private $common_lang;
@@ -29,7 +29,7 @@ class SandboxMenuController extends ModuleController
 	{
 		$this->common_lang = LangLoader::get('common', 'sandbox');
 		$this->lang = LangLoader::get('menu', 'sandbox');
-		$this->view = new FileTemplate('sandbox/SandboxMenuController.tpl');
+		$this->view = new FileTemplate('sandbox/SandboxMenusNavController.tpl');
 		$this->view->add_lang($this->common_lang);
 		$this->view->add_lang($this->lang);
 	}
@@ -38,17 +38,9 @@ class SandboxMenuController extends ModuleController
 	{
 		$this->view->put_all(array(
 			'L_ELEM' => $this->lang['cssmenu.element'],
-			'SANDBOX_SUBMENU' => self::get_submenu(),
-			'MARKUP' => self::get_markup()
+			'MARKUP' => self::get_markup(),
+			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
 		));
-	}
-
-	private function get_submenu()
-	{
-		$submenu_lang = LangLoader::get('submenu', 'sandbox');
-		$submenu_tpl = new FileTemplate('sandbox/SandboxSubMenu.tpl');
-		$submenu_tpl->add_lang($submenu_lang);
-		return $submenu_tpl;
 	}
 
 	private function get_markup()
@@ -76,7 +68,7 @@ class SandboxMenuController extends ModuleController
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->common_lang['sandbox.module.title'], SandboxUrlBuilder::home()->rel());
-		$breadcrumb->add($this->common_lang['title.menu'], SandboxUrlBuilder::menus()->rel());
+		$breadcrumb->add($this->common_lang['title.menu'], SandboxUrlBuilder::menus_nav()->rel());
 
 		return $response;
 	}

@@ -82,14 +82,6 @@ class SandboxUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function plugins()
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/plugins');
-	}
-
-	/**
-	 * @return Url
-	 */
 	public static function bbcode()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/bbcode');
@@ -106,9 +98,17 @@ class SandboxUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function menus()
+	public static function menus_content()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/menus');
+		return DispatchManager::get_url(self::$dispatcher, '/menus/content');
+	}
+
+	/**
+	 * @return Url
+	 */
+	public static function menus_nav()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/menus/nav');
 	}
 
 	/**

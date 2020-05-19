@@ -12,13 +12,13 @@
 ####################################################
 
 $lang['sandbox.title'] = 'Bac à sable';
-$lang['builder.title']  = 'Constructeur';
-$lang['fwkboost.title']  = 'FWKBoost';
+$lang['builder.title']  = 'Formulaires';
 $lang['component.title']  = 'Composants';
 $lang['layout.title']  = 'Mise en page';
 $lang['bbcode.title']  = 'BBCode';
 $lang['menus.title']  = 'Menus';
 $lang['icons.title']  = 'Icônes';
+$lang['tests.title']  = 'Tests PHP';
 $lang['table.title']  = 'Tableaux';
 $lang['emails.title']  = 'Emails';
 
@@ -34,7 +34,7 @@ $lang['hashtag.buttons']  = '# Boutons';
 $lang['hashtag.miscellaneous']  = '# Divers';
 $lang['hashtag.dates']  = '# Dates';
 $lang['hashtag.upload']  = '# Téléversement';
-$lang['hashtag.links']  = '# Menus';
+$lang['hashtag.links']  = 'Navigation';
 $lang['hashtag.classics']  = '# Classique';
 $lang['hashtag.modal']  = '# Modal';
 $lang['hashtag.accordion']  = '# Accordéon';
@@ -55,9 +55,9 @@ $lang['hashtag.progressbar']  = '# Barre de progression';
 $lang['hashtag.lists']  = '# Listes';
 $lang['hashtag.classic']  = '# Classiques';
 $lang['hashtag.explorer']  = '# Explorateur';
-$lang['hashtag.notation']  = '# Notation';
 $lang['hashtag.pagination']  = '# Pagination';
 $lang['hashtag.sortable']  = '# Sortables';
+$lang['hashtag.notation']  = '# Notation';
 $lang['hashtag.wizard']  = '# À étapes';
 $lang['hashtag.message.helper']  = '# Messages d\'alerte';
 $lang['hashtag.tooltip']  = '# Tooltip';
