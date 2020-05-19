@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 12
+ * @version     PHPBoost 5.3 - last update: 2020 05 19
  * @since       PHPBoost 5.3 - 2020 01 23
 */
 
@@ -16,10 +16,27 @@ class RichItem extends Item
 	public static function __static()
 	{
 		parent::__static();
-		self::add_additional_attribute('summary', array('type' => 'text', 'length' => 65000, 'fulltext' => true));
-		self::add_additional_attribute('thumbnail', array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"));
-		self::add_additional_attribute('author_custom_name', array('type' =>  'string', 'length' => 255, 'default' => "''"));
 		self::add_additional_attribute('views_number', array('type' => 'integer', 'length' => 11, 'default' => 0));
+		self::add_additional_attribute('summary', array('type' => 'text', 'length' => 65000, 'fulltext' => true));
+		self::add_additional_attribute('author_custom_name', array('type' =>  'string', 'length' => 255, 'default' => "''"));
+		
+		self::add_additional_attribute('thumbnail', array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''", 'attribute_other_field_parameters' => array(
+			'field_class' => 'FormFieldThumbnail',
+			'label' => LangLoader::get_message('form.picture', 'common'),
+			'default_value' => FormFieldThumbnail::DEFAULT_VALUE,
+			'default_picture' => self::THUMBNAIL_URL
+			)
+		));
+	}
+
+	public function get_views_number()
+	{
+		return $this->get_additional_property('views_number');
+	}
+
+	public function set_views_number(int $number)
+	{
+		$this->set_additional_property('views_number', $number);
 	}
 
 	public function get_summary()
@@ -43,6 +60,22 @@ class RichItem extends Item
 		return TextHelper::cut_string(@strip_tags($parsed_content ? $parsed_content : FormatingHelper::second_parse($this->content), '<br><br/>'), self::$module->get_configuration()->get_configuration_parameters()->get_auto_cut_characters_number());
 	}
 
+	public function get_author_custom_name()
+	{
+		return $this->get_additional_property('author_custom_name');
+	}
+
+	public function set_author_custom_name($value)
+	{
+		$this->set_additional_property('author_custom_name', $value);
+	}
+
+	public function is_author_custom_name_enabled()
+	{
+		$custom_name = $this->get_additional_property('author_custom_name');
+		return !empty($custom_name) && $custom_name != $this->get_author_user()->get_display_name();
+	}
+
 	public function get_thumbnail()
 	{
 		if (!$this->get_additional_property('thumbnail') instanceof Url)
@@ -62,39 +95,13 @@ class RichItem extends Item
 		$this->set_additional_property('thumbnail', $url);
 	}
 
-	public function get_author_custom_name()
-	{
-		return $this->get_additional_property('author_custom_name');
-	}
-
-	public function set_author_custom_name($value)
-	{
-		$this->set_additional_property('author_custom_name', $value);
-	}
-
-	public function is_author_custom_name_enabled()
-	{
-		$custom_name = $this->get_additional_property('author_custom_name');
-		return !empty($custom_name) && $custom_name != $this->get_author_user()->get_display_name();
-	}
-
-	public function get_views_number()
-	{
-		return $this->get_additional_property('views_number');
-	}
-
-	public function set_views_number(int $number)
-	{
-		$this->set_additional_property('views_number', $number);
-	}
-
 	protected function kernel_default_properties()
 	{
 		$this->set_content(self::$module->get_configuration()->get_configuration_parameters()->get_default_content());
-		$this->set_summary('');
-		$this->set_thumbnail(FormFieldThumbnail::DEFAULT_VALUE);
-		$this->set_author_custom_name('');
 		$this->set_views_number(0);
+		$this->set_summary('');
+		$this->set_author_custom_name('');
+		$this->set_thumbnail(FormFieldThumbnail::DEFAULT_VALUE);
 	}
 
 	protected static function get_kernel_additional_sorting_fields()
