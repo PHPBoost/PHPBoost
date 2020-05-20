@@ -512,7 +512,7 @@ class DefaultItemFormController extends AbstractItemController
 	/**
 	 * @return Response
 	 */
-	protected function build_response()
+	protected function generate_response()
 	{
 		$location_id = $this->get_item()->get_id() ? self::$module_id . '-edit-' . $this->get_item()->get_id() : '';
 
