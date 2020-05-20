@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 19
+ * @version     PHPBoost 5.3 - last update: 2020 05 20
  * @since       PHPBoost 5.3 - 2020 01 23
 */
 
@@ -47,6 +47,12 @@ class RichItem extends Item
 	public function set_summary($value)
 	{
 		$this->set_additional_property('summary', $value);
+	}
+
+	public function is_summary_enabled()
+	{
+		$summary = $this->get_additional_property('summary');
+		return !empty($summary);
 	}
 
 	public function get_real_summary($parsed_content = '')
