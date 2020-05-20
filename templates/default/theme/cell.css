@@ -34,7 +34,7 @@ form > [class*="cell-"]:not(.cell-header) {
 .cell-header {
 	display: flex;
 	align-items: center;
-	padding: 0.618em;
+	padding: 0.309em;
 	white-space: normal;
 }
 

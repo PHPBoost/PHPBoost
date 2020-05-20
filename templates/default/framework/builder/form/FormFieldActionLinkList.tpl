@@ -11,7 +11,7 @@
 						<i class="fa {action.CSS_CLASS}" aria-hidden="true"></i>
 						# ENDIF #
 					# ENDIF #
-					{action.TITLE}
+					<span>{action.TITLE}</span>
 				</a>
 			</li>
 		# END action #

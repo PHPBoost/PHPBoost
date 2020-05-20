@@ -549,7 +549,7 @@ h3.formatter-title { border-color: var(--main-dark); }
 .pushmenu a[href]:not([href="#"])>span.nav-next { border-color: var(--main-light); }
 
 .pushmenu .nav-next span::before,
-.pushmenu .nav-back span::before { border-color: var(--txt-dark); }
+.pushmenu li.nav-back span::before { border-color: var(--txt-dark); }
 
 .nav-levels-overlap.nav-position-left.nav-open .nav-wrapper   { box-shadow: 1px 0 2px rgba(var(--darken), 0.2); }
 .nav-levels-overlap.nav-position-right.nav-open .nav-wrapper  { box-shadow: -1px 0 2px rgba(var(--darken), 0.2); }
