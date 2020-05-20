@@ -15,7 +15,7 @@ class AdminSandboxDisplayResponse extends AdminMenuDisplayResponse
 
 		$this->add_link(LangLoader::get_message('configuration', 'admin'), $this->module->get_configuration()->get_admin_main_page());
 		$this->add_link(LangLoader::get_message('title.builder', 'common', 'sandbox'), SandboxUrlBuilder::admin_builder());
-		$this->add_link(LangLoader::get_message('title.fwkboost', 'common', 'sandbox'), SandboxUrlBuilder::admin_fwkboost());
+		$this->add_link(LangLoader::get_message('title.component', 'common', 'sandbox'), SandboxUrlBuilder::admin_component());
 
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($page_title);

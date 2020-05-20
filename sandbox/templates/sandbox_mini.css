@@ -3,7 +3,7 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-.fwkboost-mini-sandbox .stacked .stack-event.stack-sup { top: -0.456em; }
+.component-mini-sandbox .stacked .stack-event.stack-sup { top: -0.456em; }
 
 .sandbox-mini-form fieldset,
 .sandbox-mini-form .fieldset-inset {
@@ -26,7 +26,7 @@
 
 /* Toggle button position */
 
-.fwkboost-toggle {
+.component-toggle {
     padding: 0.1em 0.618em;
     text-align: center;
     z-index: 399;
@@ -38,7 +38,7 @@
 	opacity: 0.3;
 }
 
-.fwkboost-toggle:hover {
+.component-toggle:hover {
     opacity: 1;
     text-decoration: none;
 }
@@ -46,7 +46,7 @@
 .nav-item .mini-toolbox > .warning.blink { margin-right: 1.618em;}
 
 @media (min-width: 769px) {
-	.fwkboost-toggle {
+	.component-toggle {
     	padding: 0.5em 1.618em;
         position: fixed;
 	}

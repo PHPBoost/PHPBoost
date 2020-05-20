@@ -1,5 +1,5 @@
 <section>
-	# INCLUDE SANDBOX_SUB_MENU #
+	# INCLUDE SANDBOX_SUBMENU #
 	<header>
 		<h1>{@sandbox.module.title} - {@title.table}</h1>
 	</header>

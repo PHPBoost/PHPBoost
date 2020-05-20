@@ -15,132 +15,132 @@
 ####################################################
 
 // Pages
-$lang['fwkboost.page.title'] = 'Page title';
-$lang['fwkboost.more'] = 'Author | Creation date | Number of comments ...';
-$lang['fwkboost.picture'] = 'Picture';
+$lang['component.page.title'] = 'Page title';
+$lang['component.more'] = 'Author | Creation date | Number of comments ...';
+$lang['component.picture'] = 'Picture';
 
-$lang['fwkboost.class'] = 'class';
-$lang['fwkboost.form'] = 'form';
-$lang['fwkboost.options.file.title'] = 'Informations on files';
-$lang['fwkboost.options'] = '.options';
-$lang['fwkboost.options.sort_by'] = 'Order by';
-$lang['fwkboost.options.sort_by.alphabetical'] = 'Alphabetical';
-$lang['fwkboost.options.sort_by.size'] = 'Size';
-$lang['fwkboost.options.sort_by.date'] = 'Date';
-$lang['fwkboost.options.sort_by.popularity'] = 'Views';
-$lang['fwkboost.options.sort_by.note'] = 'Note';
-$lang['fwkboost.options.link'] = 'Link';
-$lang['fwkboost.options.option.title'] = 'Module option';
-$lang['fwkboost.options.option.com'] = 'No comment';
-$lang['fwkboost.modules_menus.direction.up'] = 'Up';
-$lang['fwkboost.modules_menus.direction.down'] = 'Down';
+$lang['component.class'] = 'class';
+$lang['component.form'] = 'form';
+$lang['component.options.file.title'] = 'Informations on files';
+$lang['component.options'] = '.options';
+$lang['component.options.sort_by'] = 'Order by';
+$lang['component.options.sort_by.alphabetical'] = 'Alphabetical';
+$lang['component.options.sort_by.size'] = 'Size';
+$lang['component.options.sort_by.date'] = 'Date';
+$lang['component.options.sort_by.popularity'] = 'Views';
+$lang['component.options.sort_by.note'] = 'Note';
+$lang['component.options.link'] = 'Link';
+$lang['component.options.option.title'] = 'Module option';
+$lang['component.options.option.com'] = 'No comment';
+$lang['component.modules_menus.direction.up'] = 'Up';
+$lang['component.modules_menus.direction.down'] = 'Down';
 
 // Typogrphie
-$lang['fwkboost.title.fwkboost'] = 'Layout';
-$lang['fwkboost.title.typography'] = 'Typography';
-$lang['fwkboost.titles'] = 'Titles';
-$lang['fwkboost.title'] = 'Title';
+$lang['component.title.component'] = 'Layout';
+$lang['component.title.typography'] = 'Typography';
+$lang['component.titles'] = 'Titles';
+$lang['component.title'] = 'Title';
 
-$lang['fwkboost.styles'] = 'Styles';
-$lang['fwkboost.text_bold'] = 'Bold text';
-$lang['fwkboost.text_italic'] = 'Italic text';
-$lang['fwkboost.text_underline'] = 'Underline text';
-$lang['fwkboost.text_strike'] = 'Strike text';
+$lang['component.styles'] = 'Styles';
+$lang['component.text_bold'] = 'Bold text';
+$lang['component.text_italic'] = 'Italic text';
+$lang['component.text_underline'] = 'Underline text';
+$lang['component.text_strike'] = 'Strike text';
 
-$lang['fwkboost.title.sizes'] = 'Text Sizes';
-$lang['fwkboost.text'] = 'Text';
-$lang['fwkboost.text.smaller'] = 'Smaller text';
-$lang['fwkboost.text.small'] = 'Small text';
-$lang['fwkboost.text.big'] = 'Big text';
-$lang['fwkboost.text.bigger'] = 'Bigger text';
-$lang['fwkboost.text.biggest'] = 'Biggest text';
-$lang['fwkboost.link'] = 'Hypertext link';
+$lang['component.title.sizes'] = 'Text Sizes';
+$lang['component.text'] = 'Text';
+$lang['component.text.smaller'] = 'Smaller text';
+$lang['component.text.small'] = 'Small text';
+$lang['component.text.big'] = 'Big text';
+$lang['component.text.bigger'] = 'Bigger text';
+$lang['component.text.biggest'] = 'Biggest text';
+$lang['component.link'] = 'Hypertext link';
 
-$lang['fwkboost.rank.color'] = 'User color ranking';
-$lang['fwkboost.admin'] = 'Administrator';
-$lang['fwkboost.modo'] = 'Moderator';
-$lang['fwkboost.member'] = 'Member';
+$lang['component.rank.color'] = 'User color ranking';
+$lang['component.admin'] = 'Administrator';
+$lang['component.modo'] = 'Moderator';
+$lang['component.member'] = 'Member';
 
 // Divers
-$lang['fwkboost.miscellaneous'] = 'Miscellaneous';
-$lang['fwkboost.main_actions_icons'] = 'Main actions icons';
-$lang['fwkboost.rss_feed'] = 'RSS feed';
-$lang['fwkboost.edit'] = 'Edit';
-$lang['fwkboost.delete'] = 'Delete';
-$lang['fwkboost.delete.confirm'] = 'Delete (automatic JS control with delete confirmation)';
-$lang['fwkboost.delete.confirm.custom'] = 'Delete (automatic JS control with custom confirmation)';
-$lang['fwkboost.delete.custom_message'] = 'Custom message';
+$lang['component.miscellaneous'] = 'Miscellaneous';
+$lang['component.main_actions_icons'] = 'Main actions icons';
+$lang['component.rss_feed'] = 'RSS feed';
+$lang['component.edit'] = 'Edit';
+$lang['component.delete'] = 'Delete';
+$lang['component.delete.confirm'] = 'Delete (automatic JS control with delete confirmation)';
+$lang['component.delete.confirm.custom'] = 'Delete (automatic JS control with custom confirmation)';
+$lang['component.delete.custom_message'] = 'Custom message';
 
-$lang['fwkboost.lists'] = 'Lists';
-$lang['fwkboost.element'] = 'Element';
+$lang['component.lists'] = 'Lists';
+$lang['component.element'] = 'Element';
 
-$lang['fwkboost.progress_bar'] = 'Progress bar';
-$lang['fwkboost.progress_bar.util_infos'] = 'Usefull informations';
-$lang['fwkboost.progress_bar.votes'] = '3 votes';
+$lang['component.progress_bar'] = 'Progress bar';
+$lang['component.progress_bar.util_infos'] = 'Usefull informations';
+$lang['component.progress_bar.votes'] = '3 votes';
 
-$lang['fwkboost.explorer'] = 'Explorer';
-$lang['fwkboost.root'] = 'Root';
-$lang['fwkboost.tree'] = 'Tree';
-$lang['fwkboost.cat'] = 'Category';
-$lang['fwkboost.file'] = 'File';
+$lang['component.explorer'] = 'Explorer';
+$lang['component.root'] = 'Root';
+$lang['component.tree'] = 'Tree';
+$lang['component.cat'] = 'Category';
+$lang['component.file'] = 'File';
 
-$lang['fwkboost.buttons'] = 'Buttons';
-$lang['fwkboost.buttons.other'] = 'Other buttons';
+$lang['component.buttons'] = 'Buttons';
+$lang['component.buttons.other'] = 'Other buttons';
 
-$lang['fwkboost.notation'] = 'Notation';
-$lang['fwkboost.notation.possible.values'] = 'Possible values';
-$lang['fwkboost.notation.example'] = 'Example for a rating of 2.4 on 5';
+$lang['component.notation'] = 'Notation';
+$lang['component.notation.possible.values'] = 'Possible values';
+$lang['component.notation.example'] = 'Example for a rating of 2.4 on 5';
 
-$lang['fwkboost.sortable'] = 'Drag & Drop Sortable';
-$lang['fwkboost.static.sortable'] = 'Spoted sortable';
-$lang['fwkboost.moving.sortable'] = 'Moving sortable';
-$lang['fwkboost.dropzone'] = 'Spot here';
-$lang['fwkboost.sortable.move'] = 'Moving';
+$lang['component.sortable'] = 'Drag & Drop Sortable';
+$lang['component.static.sortable'] = 'Spoted sortable';
+$lang['component.moving.sortable'] = 'Moving sortable';
+$lang['component.dropzone'] = 'Spot here';
+$lang['component.sortable.move'] = 'Moving';
 
 //Blockquote
-$lang['fwkboost.quote'] = 'Quote';
-$lang['fwkboost.code'] = 'Code';
-$lang['fwkboost.code.php'] = 'PHP code';
-$lang['fwkboost.hidden'] = 'Hidden text';
+$lang['component.quote'] = 'Quote';
+$lang['component.code'] = 'Code';
+$lang['component.code.php'] = 'PHP code';
+$lang['component.hidden'] = 'Hidden text';
 
 //Pagination
-$lang['fwkboost.pagination'] = 'Pagination';
+$lang['component.pagination'] = 'Pagination';
 
 //Tables
-$lang['fwkboost.table'] = 'Tables';
-$lang['fwkboost.table.description'] = 'Description';
-$lang['fwkboost.table.description.content'] = 'Table description';
-$lang['fwkboost.table.name'] = 'Name';
-$lang['fwkboost.table.caption'] = 'This is a table';
-$lang['fwkboost.table.caption.no.header'] = 'This is a table with no header';
-$lang['fwkboost.table.author'] = 'Author';
-$lang['fwkboost.table.test'] = 'Test';
-$lang['fwkboost.table.header'] = 'Header';
-$lang['fwkboost.table.sort.up'] = 'Sort up';
-$lang['fwkboost.table.sort.down'] = 'Sort down';
+$lang['component.table'] = 'Tables';
+$lang['component.table.description'] = 'Description';
+$lang['component.table.description.content'] = 'Table description';
+$lang['component.table.name'] = 'Name';
+$lang['component.table.caption'] = 'This is a table';
+$lang['component.table.caption.no.header'] = 'This is a table with no header';
+$lang['component.table.author'] = 'Author';
+$lang['component.table.test'] = 'Test';
+$lang['component.table.header'] = 'Header';
+$lang['component.table.sort.up'] = 'Sort up';
+$lang['component.table.sort.down'] = 'Sort down';
 
 //Messages
-$lang['fwkboost.messages.and.coms'] = 'Messages et comments';
-$lang['fwkboost.messages.login'] = 'admin';
-$lang['fwkboost.messages.level'] = 'Administrator';
-$lang['fwkboost.messages.date'] = '09/05/2016 at 03h37 pm';
-$lang['fwkboost.messages.content'] = 'This is a comment';
+$lang['component.messages.and.coms'] = 'Messages et comments';
+$lang['component.messages.login'] = 'admin';
+$lang['component.messages.level'] = 'Administrator';
+$lang['component.messages.date'] = '09/05/2016 at 03h37 pm';
+$lang['component.messages.content'] = 'This is a comment';
 
-$lang['fwkboost.alert.messages'] = 'Alert messages';
-$lang['fwkboost.message.success'] = 'This is a success message';
-$lang['fwkboost.message.notice'] = 'This is a notice message';
-$lang['fwkboost.message.warning'] = 'This is a warning message';
-$lang['fwkboost.message.error'] = 'This is a error message';
-$lang['fwkboost.message.question'] = 'This is a question:<br /> is the two-lines display working correctly?';
-$lang['fwkboost.message.member'] = 'This is a message limited to members';
-$lang['fwkboost.message.modo'] = 'This is a message limited to moderators';
-$lang['fwkboost.message.admin'] = 'This is a message limited to administrators';
-$lang['fwkboost.message.float-unlimited'] = 'This is a floating message without time limit';
-$lang['fwkboost.message.float-limited'] = 'This is a floating message with time limit';
-$lang['fwkboost.message.float-display'] = 'Display floating messages';
+$lang['component.alert.messages'] = 'Alert messages';
+$lang['component.message.success'] = 'This is a success message';
+$lang['component.message.notice'] = 'This is a notice message';
+$lang['component.message.warning'] = 'This is a warning message';
+$lang['component.message.error'] = 'This is a error message';
+$lang['component.message.question'] = 'This is a question:<br /> is the two-lines display working correctly?';
+$lang['component.message.member'] = 'This is a message limited to members';
+$lang['component.message.modo'] = 'This is a message limited to moderators';
+$lang['component.message.admin'] = 'This is a message limited to administrators';
+$lang['component.message.float-unlimited'] = 'This is a floating message without time limit';
+$lang['component.message.float-limited'] = 'This is a floating message with time limit';
+$lang['component.message.float-display'] = 'Display floating messages';
 
 //Blocs
-$lang['fwkboost.blocks'] = 'Blocks';
-$lang['fwkboost.block.title'] = 'Article title';
-$lang['fwkboost.blocks.per.line'] = 'per row';
+$lang['component.blocks'] = 'Blocks';
+$lang['component.block.title'] = 'Article title';
+$lang['component.blocks.per.line'] = 'per row';
 ?>

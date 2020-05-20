@@ -18,12 +18,11 @@
 $lang['sandbox.module.title'] = 'Sandbox';
 
 $lang['title.config'] = 'Configuration';
-$lang['title.admin.fwkboost'] = 'Form in administration';
+$lang['title.admin.component'] = 'Form in administration';
 $lang['title.builder'] = 'PHP builder';
-$lang['title.fwkboost'] = 'FWKBoost';
+$lang['title.component'] = 'FWKBoost';
 $lang['title.component'] = 'Componants';
 $lang['title.layout'] = 'Layouts';
-$lang['title.multitabs'] = 'Multitabs';
 $lang['title.plugins'] = 'Plugins';
 $lang['title.bbcode'] = 'BBCode';
 $lang['title.menu'] = 'Navigation menus ';
@@ -46,7 +45,7 @@ $lang['welcome.see'] = 'Front view';
 $lang['welcome.admin'] = 'Admin view';
 
 $lang['welcome.builder'] = 'The render of the different features using the PHP builder: form fields, maps, links menu, etc.';
-$lang['welcome.fwkboost'] = 'The render of componants from the HTML/CSS/JS FWKBoost framework.';
+$lang['welcome.component'] = 'The render of componants from the HTML/CSS/JS FWKBoost framework.';
 $lang['welcome.bbcode'] = 'The render of the sepcific elements from the bbcode, using a different design from FWKBoost.';
 $lang['welcome.menu'] = 'The render of navigation menusLe rendu des menus de navigations depending on each available location.';
 $lang['welcome.icons'] = 'A preview of what is possible to do with font-icons in PHPBoost.';

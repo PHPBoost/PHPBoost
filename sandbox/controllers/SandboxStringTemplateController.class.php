@@ -43,7 +43,8 @@ class SandboxStringTemplateController extends ModuleController
 		$bench_cached->stop();
 
 		$this->view->put_all(array(
-			'RESULT' => StringVars::replace_vars($this->lang['string_template.result'], array('non_cached_time' => $bench_non_cached->to_string(5), 'cached_time' => $bench_cached->to_string(5), 'string_length' => TextHelper::strlen($this->test)))
+			'RESULT' => StringVars::replace_vars($this->lang['string_template.result'], array('non_cached_time' => $bench_non_cached->to_string(5), 'cached_time' => $bench_cached->to_string(5), 'string_length' => TextHelper::strlen($this->test))),
+			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
 		));
 
 		return $this->generate_response();
@@ -99,11 +100,11 @@ class SandboxStringTemplateController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['title.string.template'], $this->lang['sandbox.module.title']);
+		$graphical_environment->set_page_title($this->lang['title.template'], $this->lang['sandbox.module.title']);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['sandbox.module.title'], SandboxUrlBuilder::home()->rel());
-		$breadcrumb->add($this->lang['title.string.template'], SandboxUrlBuilder::email()->rel());
+		$breadcrumb->add($this->lang['title.template'], SandboxUrlBuilder::email()->rel());
 
 		return $response;
 	}

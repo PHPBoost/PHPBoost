@@ -36,7 +36,7 @@ $lang['css.modules_menus.direction.up'] = 'Croissant';
 $lang['css.modules_menus.direction.down'] = 'Décroissant';
 
 // Typogrphie
-$lang['css.title.fwkboost'] = 'Mise en page';
+$lang['css.title.component'] = 'Mise en page';
 $lang['css.title.typography'] = 'Typographie';
 $lang['css.titles'] = 'Titres';
 $lang['css.title'] = 'Titre';

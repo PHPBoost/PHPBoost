@@ -28,19 +28,19 @@
 			<div class="cell">
 				<div class="cell-header">
 					<h6 class="cell-name">
-						{@title.fwkboost}
+						{@title.component}
 					</h6>
 					<i class="fab fa-fw fa-css3"></i>
 				</div>
 				<div class="cell-body">
 					<div class="cell-content">
-						{@welcome.fwkboost}
+						{@welcome.component}
 					</div>
 				</div>
 				<div class="cell-footer">
 					<a class="pinned link-color" href="${relative_url(SandboxUrlBuilder::component())}"><i class="fa fa-fw fa-eye"></i> {@title.component}</a>
 					<a class="pinned link-color" href="${relative_url(SandboxUrlBuilder::layout())}"><i class="fa fa-fw fa-eye"></i> {@title.layout}</a>
-					# IF IS_ADMIN #<a class="pinned link-color" href="${relative_url(SandboxUrlBuilder::admin_fwkboost())}"><i class="fa fa-fw fa-cog"></i> {@welcome.admin}</a># ENDIF #
+					# IF IS_ADMIN #<a class="pinned link-color" href="${relative_url(SandboxUrlBuilder::admin_component())}"><i class="fa fa-fw fa-cog"></i> {@welcome.admin}</a># ENDIF #
 				</div>
 			</div>
 		</div>

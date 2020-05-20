@@ -12,19 +12,8 @@
 ####################################################
 
 // EasyTabs
-$lang['plugins.tabs.title']  = 'Menu tabulaire';
-$lang['plugins.wizard.title']  = 'Menu wizard';
+
 $lang['plugins.tooltip.title']  = 'Tooltip';
-
-$lang['plugins.title.html']  = 'Déclaration en HTML';
-$lang['plugins.title.form']  = 'Déclaration dans un formulaire php';
-
-$lang['plugins.menu.title']  = 'Panneau';
-$lang['plugins.last.step']  = 'Panneau final';
-$lang['plugins.form.title']  = 'Titre du Panneau';
-$lang['plugins.form.subtitle']  = 'Sous Titre';
-$lang['plugins.form.input']  = 'Champ texte';
-
 $lang['plugins.tooltip']  = 'Tooltip';
 $lang['plugins.tooltip.desc']  = 'Par défaut, le tooltip s\'applique à toute balise possendant un attribut [aria-label]';
 $lang['plugins.tooltip.eg.basic']  = 'Au survol, la description déclarée dans l\'attribut aria-label apparait.';

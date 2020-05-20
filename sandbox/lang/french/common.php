@@ -18,26 +18,26 @@
 $lang['sandbox.module.title'] = 'Bac à sable';
 
 $lang['title.config'] = 'Configuration';
-$lang['title.admin.fwkboost'] = 'Rendus dans l\'admin';
-$lang['title.fwkboost'] = 'FWKBoost';
+$lang['title.admin.component'] = 'Rendus dans l\'admin';
+$lang['title.component'] = 'FWKBoost';
 $lang['title.builder'] = 'Formulaires';
 $lang['title.component'] = 'Composants';
 $lang['title.layout'] = 'Mise en page';
-$lang['title.multitabs'] = 'Multitabs';
-$lang['title.plugins'] = 'Plugins';
 $lang['title.bbcode'] = 'BBCode';
-$lang['title.menu'] = 'Menus de navigation';
+$lang['title.menu'] = 'Menus';
+$lang['title.menu.nav'] = 'Menus de navigation';
+$lang['title.menu.content'] = 'Menus de contenu';
 $lang['title.icons'] = 'Icônes';
 $lang['title.miscellaneous'] = 'Divers';
 $lang['title.table'] = 'Tableaux';
 $lang['title.email'] = 'Email';
 $lang['title.template'] = 'Template';
+$lang['title.php'] = 'Tests PHP';
 
 $lang['see.render'] = 'Voir le rendu';
 
-$lang['pinned.php'] = '<span class="pinned question smallest" data-tooltip-pos="top" aria-label="Cet élément peut être ajouté en php"><i class="fa fa-fw fa-terminal" aria-hidden="true"></i></span>';
-$lang['pinned.html'] = '<span class="pinned warning smallest" data-tooltip-pos="top" aria-label="Cet élément peut être ajouté en html"><i class="fab fa-fw fa-html5" aria-hidden="true"></i></span>';
-$lang['pinned.bbcode'] = '<span class="pinned warning smallest" data-tooltip-pos="top" aria-label="Cet élément peut être ajouté en bbcode"><i class="fa fa-fw fa-code" aria-hidden="true"></i></span>';
+$lang['pinned.php'] = '<span class="pinned moderator smallest" data-tooltip-pos="top" aria-label="Cet élément peut être ajouté en php"><i class="fa fa-fw fa-terminal" aria-hidden="true"></i></span>';
+$lang['pinned.bbcode'] = '<span class="pinned member smallest" data-tooltip-pos="top" aria-label="Cet élément peut être ajouté en bbcode"><i class="fa fa-fw fa-code" aria-hidden="true"></i></span>';
 
 // Page d'accueil
 $lang['welcome.message'] = '
@@ -50,7 +50,7 @@ $lang['welcome.see'] = 'Voir';
 $lang['welcome.admin'] = 'En admin';
 
 $lang['welcome.builder'] = 'Le rendu des différentes fonctionnailtés utilisables avec le constructeur PHP: champs de formulaire, maps, menus de liens, etc.';
-$lang['welcome.fwkboost'] = 'Le rendu des différents éléments du framework HTML/CSS/JS FWKBoost de PHPBoost.';
+$lang['welcome.component'] = 'Le rendu des différents éléments du framework HTML/CSS/JS FWKBoost de PHPBoost.';
 $lang['welcome.bbcode'] = 'Le rendu des éléments spécifiques déclarés en bbcode qui apportent un design différent du FWKBoost.';
 $lang['welcome.menu'] = 'Le rendu des menus de navigations selon les emplacements potentiels.';
 $lang['welcome.icons'] = 'Un aperçu de ce qu\'il est possible de faire dans phpboost au niveau des icônes-font.';

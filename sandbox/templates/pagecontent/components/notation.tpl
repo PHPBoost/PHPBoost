@@ -1,10 +1,10 @@
-<article id="fwkboost-notation" class="sandbox-block">
+<article id="component-notation" class="sandbox-block">
     <header>
-        <h5>{@fwkboost.notation}</h5>
+        <h5>{@component.notation}</h5>
     </header>
     <div class="content">
         <div>
-            {@fwkboost.notation.possible.values}
+            {@component.notation.possible.values}
             <p class="notation">
                 <a href="#" onclick="return false;" class="far star fa-star"><span class="star-width star-width-100"></span></a> <!-- 1 -->
                 <a href="#" onclick="return false;" class="far star fa-star"><span class="star-width star-width-75"></span></a>  <!-- 0.75 à 1 -->
@@ -14,7 +14,7 @@
             </p>
         </div>
         <div>
-            {@fwkboost.notation.example}
+            {@component.notation.example}
             <div class="notation">
                 <span class="stars">
                     <a href="#" onclick="return false;" class="far star fa-star"><span class="star-width star-width-100"></span></a>

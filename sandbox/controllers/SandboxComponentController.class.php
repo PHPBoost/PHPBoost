@@ -35,7 +35,7 @@ class SandboxComponentController extends ModuleController
 	private function init()
 	{
 		$this->common_lang = LangLoader::get('common', 'sandbox');
-		$this->lang = LangLoader::get('fwkboost', 'sandbox');
+		$this->lang = LangLoader::get('component', 'sandbox');
 		$this->view = new FileTemplate('sandbox/SandboxComponentController.tpl');
 		$this->view->add_lang($this->common_lang);
 		$this->view->add_lang($this->lang);
@@ -49,6 +49,7 @@ class SandboxComponentController extends ModuleController
 			'MEDIA'           => self::build_media_view(),
 			'PROGRESSBAR'     => self::build_progressbar_view(),
 			'LIST'            => self::build_list_view(),
+			'MODAL'			  => self::build_modal_view(),
 			'EXPLORER'        => self::build_explorer_view(),
 			'NOTATION'        => self::build_notation_view(),
 			'PAGINATION'      => self::build_pagination_view(),
@@ -63,14 +64,14 @@ class SandboxComponentController extends ModuleController
 	private function build_floating_messages()
 	{
 		$floating_messages = new HTMLForm('floating_messages', '', false);
-		$this->floating_messages_button = new FormButtonDefaultSubmit($this->lang['fwkboost.message.float-display'], 'floating_messages');
+		$this->floating_messages_button = new FormButtonDefaultSubmit($this->lang['component.message.float-display'], 'floating_messages');
 		$floating_messages->add_button($this->floating_messages_button);
 		$this->floating_messages = $floating_messages;
 	}
 
 	private function build_typography_view()
 	{
-		$this->lang = LangLoader::get('fwkboost', 'sandbox');
+		$this->lang = LangLoader::get('component', 'sandbox');
 		$this->common_lang = LangLoader::get('common', 'sandbox');
 		$typography_tpl = new FileTemplate('sandbox/pagecontent/components/typography.tpl');
 		$typography_tpl->add_lang($this->lang);
@@ -108,6 +109,64 @@ class SandboxComponentController extends ModuleController
 		$list_tpl->add_lang($this->lang);
 		$list_tpl->add_lang($this->common_lang);
 		return $list_tpl;
+	}
+
+	private function build_modal_view()
+	{
+		$modal_tpl = new FileTemplate('sandbox/pagecontent/components/modal.tpl');
+		$modal_tpl->add_lang($this->lang);
+		$modal_tpl->add_lang($this->common_lang);
+		$modal_tpl->put('MODAL_FORM', $this->build_modal_form()->display());
+		return $modal_tpl;
+	}
+
+	private function build_modal_form()
+	{
+		$modal_form = new HTMLForm('Sandbox_Modal');
+		$modal_form->set_css_class('modal-container fieldset-content');
+
+		$modal_menu = new FormFieldMenuFieldset('modal_menu', '');
+			$modal_form->add_fieldset($modal_menu);
+			$modal_menu->set_css_class('modal-nav');
+
+			$modal_menu->add_field(new FormFieldMultitabsLinkList('modal_menu_list',
+				array(
+					new FormFieldMultitabsLinkElement($this->lang['component.link.icon'], 'modal', 'Sandbox_Modal_modal_01', 'fa-cog'),
+					new FormFieldMultitabsLinkElement($this->lang['component.link.img'], 'modal', 'Sandbox_Modal_modal_02', '', '/sandbox/sandbox_mini.png'),
+					new FormFieldMultitabsLinkElement($this->lang['component.link'].' 3', 'modal', 'Sandbox_Modal_modal_03'),
+					new FormFieldMultitabsLinkElement($this->lang['component.link'].' 4', 'modal', 'Sandbox_Modal_modal_04', '', '', '','button d-inline-block')
+				)
+			));
+
+			$modal_01 = new FormFieldsetMultitabsHTML('modal_01', $this->lang['component.panel'].' 1',
+				array('css_class' => 'modal modal-animation first-tab', 'modal' => true)
+			);
+			$modal_form->add_fieldset($modal_01);
+
+			$modal_01->set_description($this->common_lang['lorem.short.content']);
+
+			$modal_02 = new FormFieldsetMultitabsHTML('modal_02', $this->lang['component.panel'].' 2',
+				array('css_class' => 'modal modal-animation', 'modal' => true)
+			);
+			$modal_form->add_fieldset($modal_02);
+
+			$modal_02->set_description($this->common_lang['lorem.medium.content']);
+
+			$modal_03 = new FormFieldsetMultitabsHTML('modal_03', $this->lang['component.panel'].' 3',
+				array('css_class' => 'modal modal-animation', 'modal' => true)
+			);
+			$modal_form->add_fieldset($modal_03);
+
+			$modal_03->set_description($this->common_lang['lorem.large.content']);
+
+			$modal_04 = new FormFieldsetMultitabsHTML('modal_04', $this->lang['component.panel'].' 4',
+				array('css_class' => 'modal modal-animation', 'modal' => true)
+			);
+			$modal_form->add_fieldset($modal_04);
+
+			$modal_04->set_description($this->common_lang['lorem.short.content']);
+
+		return $modal_form;
 	}
 
 	private function build_explorer_view()
@@ -170,14 +229,14 @@ class SandboxComponentController extends ModuleController
 		$alert_tpl->add_lang($this->common_lang);
 
 		$messages = array(
-			MessageHelper::display($this->lang['fwkboost.message.notice'], MessageHelper::NOTICE),
-			MessageHelper::display($this->lang['fwkboost.message.question'], MessageHelper::QUESTION),
-			MessageHelper::display($this->lang['fwkboost.message.success'], MessageHelper::SUCCESS),
-			MessageHelper::display($this->lang['fwkboost.message.warning'], MessageHelper::WARNING),
-			MessageHelper::display($this->lang['fwkboost.message.error'], MessageHelper::ERROR),
-			MessageHelper::display($this->lang['fwkboost.message.member'], MessageHelper::MEMBER_ONLY),
-			MessageHelper::display($this->lang['fwkboost.message.modo'], MessageHelper::MODERATOR_ONLY),
-			MessageHelper::display($this->lang['fwkboost.message.admin'], MessageHelper::ADMIN_ONLY)
+			MessageHelper::display($this->lang['component.message.notice'], MessageHelper::NOTICE),
+			MessageHelper::display($this->lang['component.message.question'], MessageHelper::QUESTION),
+			MessageHelper::display($this->lang['component.message.success'], MessageHelper::SUCCESS),
+			MessageHelper::display($this->lang['component.message.warning'], MessageHelper::WARNING),
+			MessageHelper::display($this->lang['component.message.error'], MessageHelper::ERROR),
+			MessageHelper::display($this->lang['component.message.member'], MessageHelper::MEMBER_ONLY),
+			MessageHelper::display($this->lang['component.message.modo'], MessageHelper::MODERATOR_ONLY),
+			MessageHelper::display($this->lang['component.message.admin'], MessageHelper::ADMIN_ONLY)
 		);
 
 		foreach ($messages as $message)
@@ -188,10 +247,10 @@ class SandboxComponentController extends ModuleController
 		$this->build_floating_messages();
 		if ($this->floating_messages_button->has_been_submited() && $this->floating_messages->validate()) {
 			$alert_tpl->put_all(array(
-				'FLOATING_SUCCESS'  => MessageHelper::display($this->lang['fwkboost.message.float-unlimited'], MessageHelper::SUCCESS, -1),
-				'FLOATING_NOTICE'   => MessageHelper::display($this->lang['fwkboost.message.float-limited'], MessageHelper::NOTICE, 3),
-				'FLOATING_WARNING'  => MessageHelper::display($this->lang['fwkboost.message.float-unlimited'], MessageHelper::WARNING, -1),
-				'FLOATING_ERROR'    => MessageHelper::display($this->lang['fwkboost.message.float-limited'], MessageHelper::ERROR, 6)
+				'FLOATING_SUCCESS'  => MessageHelper::display($this->lang['component.message.float-unlimited'], MessageHelper::SUCCESS, -1),
+				'FLOATING_NOTICE'   => MessageHelper::display($this->lang['component.message.float-limited'], MessageHelper::NOTICE, 3),
+				'FLOATING_WARNING'  => MessageHelper::display($this->lang['component.message.float-unlimited'], MessageHelper::WARNING, -1),
+				'FLOATING_ERROR'    => MessageHelper::display($this->lang['component.message.float-limited'], MessageHelper::ERROR, 6)
 			));
 		}
 		$alert_tpl->put('FLOATING_MESSAGES', $this->floating_messages->display());
@@ -220,11 +279,11 @@ class SandboxComponentController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->common_lang['title.fwkboost'],$this->common_lang['title.component'],  $this->common_lang['sandbox.module.title']);
+		$graphical_environment->set_page_title($this->common_lang['title.component'],$this->common_lang['title.component'],  $this->common_lang['sandbox.module.title']);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->common_lang['sandbox.module.title'], SandboxUrlBuilder::home()->rel());
-		$breadcrumb->add($this->common_lang['title.fwkboost']);
+		$breadcrumb->add($this->common_lang['title.component']);
 		$breadcrumb->add($this->common_lang['title.component']);
 
 		return $response;

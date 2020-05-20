@@ -1,22 +1,22 @@
-<div id="fwkboost-media" class="sandbox-block">
-    <h2>{@fwkboost.title.media}</h2>
+<div id="component-media" class="sandbox-block">
+    <h2>{@component.title.media}</h2>
     <article>
         <header>
-			<h5>{@fwkboost.image}</h5>
+			<h5>{@component.image} {@H|pinned.bbcode}</h5>
 		</header>
 		<div class="content">
             <figure style="max-width:300px">
-                <img src="{PATH_TO_ROOT}/sandbox/templates/images/paysage.png" alt="{@fwkboost.image}" />
+                <img src="{PATH_TO_ROOT}/sandbox/templates/images/paysage.png" alt="{@component.image}" />
             </figure>
             <figure style="max-width:300px">
-                <img src="{PATH_TO_ROOT}/sandbox/templates/images/square.png" alt="{@fwkboost.image}" />
-                <figcaption>{@fwkboost.caption.image}</figcaption>
+                <img src="{PATH_TO_ROOT}/sandbox/templates/images/square.png" alt="{@component.image}" />
+                <figcaption>{@component.caption.image}</figcaption>
             </figure>
 		</div>
     </article>
     <article id="lightbox">
 		<header>
-			<h5>{@fwkboost.lightbox}</h5>
+			<h5>{@component.lightbox} {@H|pinned.bbcode}</h5>
 		</header>
 		<div class="content">
 			<a href="{PATH_TO_ROOT}/sandbox/templates/images/paysage.png" data-lightbox="formatter" data-rel="lightcase:collection">
@@ -30,7 +30,7 @@
 
 	<article id="youtube">
 		<header>
-			<h5>{@fwkboost.youtube}</h5>
+			<h5>{@component.youtube} {@H|pinned.bbcode}</h5>
 		</header>
 		<div class="media-content" style="width: 800px; height: 450px">
 			<iframe class="youtube-player" src="https://www.youtube.com/embed/YE7VzlLtp-4" allowfullscreen=""></iframe>
@@ -38,7 +38,7 @@
 	</article>
 	<article id="movie">
 		<header>
-			<h5>{@fwkboost.movie}</h5>
+			<h5>{@component.movie} {@H|pinned.bbcode}</h5>
 		</header>
 		<div class="media-content" style="width: 800px; height: 450px">
 			<video class="video-player" controls="">
@@ -49,7 +49,7 @@
 
 	<article id="audio">
 		<header>
-			<h5>{@fwkboost.audio}</h5>
+			<h5>{@component.audio} {@H|pinned.bbcode}</h5>
 		</header>
 		<div class="content">
 			<audio class="audio-player" controls>
@@ -65,11 +65,11 @@
             <div class="formatter-content">
 <pre class="language-html line-numbers"><code class="language-html">// Image
 &lt;figure style="max-width:300px">
-    &lt;img src="path/to/picture.ext" alt="{@fwkboost.image}" />
+    &lt;img src="path/to/picture.ext" alt="{@component.image}" />
 &lt;/figure>
 &lt;figure style="max-width:300px">
-    &lt;img src="path/to/picture.ext" alt="{@fwkboost.image}" />
-    &lt;figcaption>{@fwkboost.caption.image}&lt;/figcaption>
+    &lt;img src="path/to/picture.ext" alt="{@component.image}" />
+    &lt;figcaption>{@component.caption.image}&lt;/figcaption>
 &lt;/figure>
 <br />
 // Lightbox

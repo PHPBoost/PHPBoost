@@ -45,7 +45,7 @@ class SandboxIconsController extends ModuleController
 
 	private function get_fa()
 	{
-		$css_lang = LangLoader::get('fwkboost', 'sandbox');
+		$css_lang = LangLoader::get('component', 'sandbox');
 		$fa_lang = LangLoader::get('icons', 'sandbox');
 		$fa_tpl = new FileTemplate('sandbox/pagecontent/icons/fa.tpl');
 		$fa_tpl->add_lang($fa_lang);

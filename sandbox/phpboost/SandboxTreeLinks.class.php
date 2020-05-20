@@ -16,10 +16,10 @@ class SandboxTreeLinks implements ModuleTreeLinksExtensionPoint
 		$tree = new ModuleTreeLinks();
 
 		$tree->add_link(new AdminModuleLink($lang['title.config'], SandboxUrlBuilder::config()));
-		$fwkboost_back = new AdminModuleLink($lang['title.admin.fwkboost'], SandboxUrlBuilder::admin_builder());
-		$fwkboost_back->add_sub_link(new AdminModuleLink($lang['title.builder'], SandboxUrlBuilder::admin_builder()));
-		$fwkboost_back->add_sub_link(new AdminModuleLink($lang['title.fwkboost'], SandboxUrlBuilder::admin_fwkboost()));
-		$tree->add_link($fwkboost_back);
+		$component_back = new AdminModuleLink($lang['title.admin.component'], SandboxUrlBuilder::admin_builder());
+		$component_back->add_sub_link(new AdminModuleLink($lang['title.builder'], SandboxUrlBuilder::admin_builder()));
+		$component_back->add_sub_link(new AdminModuleLink($lang['title.component'], SandboxUrlBuilder::admin_component()));
+		$tree->add_link($component_back);
 
 		return $tree;
 	}

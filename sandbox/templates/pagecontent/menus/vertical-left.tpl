@@ -7,6 +7,9 @@
             <nav id="cssmenu-left" class="cssmenu cssmenu-vertical cssmenu-left cssmenu-with-submenu">
                 <ul class="level-0">
                     <li>
+                        <a class="cssmenu-title" href="#"><span>{L_ELEM}</span></a>
+                    </li>
+                    <li>
                         <a class="cssmenu-title" href="#"><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur, possimus?</span></a>
                     </li>
                     <li class="has-sub">
@@ -14,7 +17,7 @@
                         <ul class="level-1">
                             <li>
                                 <a class="cssmenu-title" href="#">
-                                    <img src="sandbox_mini.png" alt="Element" width="16" height="16" />
+                                    <img src="../../sandbox/sandbox_mini.png" alt="Element" width="16" height="16" />
                                     <span>Lorem ipsum dolor sit amet.</span>
                                 </a>
                             </li>

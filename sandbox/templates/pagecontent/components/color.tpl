@@ -1,8 +1,8 @@
-<article id="fwkboost-colors" class="sandbox-block">
+<article id="component-colors" class="sandbox-block">
     <header>
-        <h2>{@fwkboost.color}</h2>
+        <h2>{@component.color} {@H|pinned.bbcode}</h2>
     </header>
-    {@H|fwkboost.color.explain}
+    {@H|component.color.explain}
     <span class="pinned notice">.notice</span>
     <span class="pinned question">.question</span>
     <span class="pinned success">.success</span>
@@ -47,6 +47,6 @@
 &lt;span class="... bgc notice">lorem ipsum&lt;/span>
 &lt;span class="... bgc-full notice">lorem ipsum&lt;/span></code></pre>
             </div>
-        </div>        
+        </div>
     </div>
 </article>

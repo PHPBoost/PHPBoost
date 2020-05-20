@@ -1,11 +1,11 @@
 # IF C_IS_SUPERADMIN #
 	<div id="module-mini-sandbox" class="mini-sandbox">
-		<a class="fwkboost-toggle pushmenu-toggle bgc-full administrator">
+		<a class="component-toggle pushmenu-toggle bgc-full administrator">
 			<i class="fa fa-wrench" aria-hidden="true"></i> <span>{@sandbox.module.title}</span>
 		</a>
-		<nav id="pushmenu-fwkboost" class="pushnav">
+		<nav id="pushmenu-component" class="pushnav">
 			<ul>
-				<li class="mini-sandbox-tools">
+				<li class="mini-sandbox-tools has-sub">
 					<span class="mini-toolbox flex-between">
 						<span><i class="fa fa-toolbox fa-fw error"></i> <span>{@mini.tools}</span></span>
 						# IF C_LOGGED_ERRORS #<span class="warning blink"><i class="fa fa-exclamation-triangle fa-fw"></i></span># ELSE #
@@ -47,7 +47,7 @@
 						</li>
 					</ul>
 				</li>
-				<li class="mini-sandbox-custom">
+				<li class="mini-sandbox-custom has-sub">
 					<span><i class="fa fa-fw fa-cogs moderator"></i> <span>{@mini.personalization}</span></span>
 					<ul>
 						<li>
@@ -138,8 +138,8 @@
 						</li>
 					</ul>
 				</li>
-				<li class="mini-sandbox-fwkboost">
-					<span><i class="fa iboost fa-iboost-phpboost fa-fw visitor"></i> <span>{@mini.fwkboost}</span></span>
+				<li class="mini-sandbox-component has-sub">
+					<span><i class="fa iboost fa-iboost-phpboost fa-fw visitor"></i> <span>{@mini.component}</span></span>
 					<ul>
 						<li>
 							<a href="${relative_url(SandboxUrlBuilder::home())}">
@@ -161,7 +161,7 @@
 						</li>
 						<li>
 							<a href="${relative_url(SandboxUrlBuilder::layout())}">
-								<i class="fab fa-css3 fa-fw" aria-hidden="true"></i>
+								<i class="fab fa-html5 fa-fw" aria-hidden="true"></i>
 								<span>{@title.layout}</span>
 							</a>
 						</li>
@@ -171,35 +171,46 @@
 								<span>{@title.bbcode}</span>
 							</a>
 						</li>
-						<li>
-							<a href="${relative_url(SandboxUrlBuilder::multitabs())}">
-								<i class="fa fa-list fa-fw" aria-hidden="true"></i>
-								<span>{@title.multitabs}</span>
-							</a>
-						</li>
-						<li>
-							<a href="${relative_url(SandboxUrlBuilder::menus_content())}">
-								<i class="fa fa-cube fa-fw" aria-hidden="true"></i>
-								<span>{@title.plugins}</span>
-							</a>
-						</li>
-						<li>
-							<a href="${relative_url(SandboxUrlBuilder::menus_nav())}">
+						<li class="has-sub">
+							<span>
 								<i class="fa fa-bars fa-fw" aria-hidden="true"></i>
 								<span>{@title.menu}</span>
-							</a>
+							</span>
+							<ul>
+								<li>
+									<a href="${relative_url(SandboxUrlBuilder::menus_nav())}">
+										<i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+										<span>{@title.menu.nav}</span>
+									</a>
+								</li>
+								<li>
+									<a href="${relative_url(SandboxUrlBuilder::menus_content())}">
+										<i class="fa fa-list fa-fw" aria-hidden="true"></i>
+										<span>{@title.menu.content}</span>
+									</a>
+								</li>
+							</ul>
 						</li>
-						<li>
-							<a href="${relative_url(SandboxUrlBuilder::table())}">
-								<i class="fa fa-table fa-fw" aria-hidden="true"></i>
-								<span>{@title.table}</span>
-							</a>
-						</li>
-						<li>
-							<a href="${relative_url(SandboxUrlBuilder::icons())}">
-								<i class="fa iboost fa-iboost-phpboost fa-fw" aria-hidden="true"></i>
-								<span>{@title.icons}</span>
-							</a>
+						<li class="has-sub">
+							<span>
+								<i class="fa fa-terminal fa-fw" aria-hidden="true"></i>
+								<span>{@title.php}</span>
+							</span>
+							<ul>
+								<li>
+									<a href="${relative_url(SandboxUrlBuilder::table())}">
+										<i class="fa fa-table fa-fw" aria-hidden="true"></i>
+										<span>{@title.table}</span>
+									</a>
+								</li>
+								<li>
+									<a href="${relative_url(SandboxUrlBuilder::email())}">
+										<i class="fa fa-table fa-fw" aria-hidden="true"></i>
+										<span>{@title.email}</span>
+									</a>
+								</li>
+
+							</ul>
 						</li>
 					</ul>
 				</li>
@@ -295,8 +306,8 @@
 	</div>
 	<script src="{PATH_TO_ROOT}/sandbox/templates/js/sandbox.js"></script>
 	<script>
-	    $('#pushmenu-fwkboost').pushmenu({
-			customToggle: jQuery('.fwkboost-toggle'), // null
+	    $('#pushmenu-component').pushmenu({
+			customToggle: jQuery('.component-toggle'), // null
 			navTitle: '{@sandbox.module.title}', // null
 			pushContent: '{PUSHED_CONTENT}',
 			position: '{OPENING_TYPE}', // left, right, top, bottom
@@ -307,7 +318,7 @@
 			# ENDIF #
 			levelTitles: true, // overlap only
 			levelSpacing: 40, // px - overlap only
-			navClass: 'fwkboost-mini-sandbox',
+			navClass: 'component-mini-sandbox',
 			disableBody: {DISABLED_BODY},
 			closeOnClick: true, // if disableBody is true
 			insertClose: true,

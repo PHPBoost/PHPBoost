@@ -16,6 +16,17 @@ class SandboxSubMenu
 
 		$view->put_all(array(
             'C_GMAP' => ModulesManager::is_module_installed('GoogleMaps') && ModulesManager::is_module_activated('GoogleMaps') && GoogleMapsConfig::load()->get_api_key(),
+            'U_HOME' => SandboxUrlBuilder::home()->rel(),
+            'U_BUILDER' => SandboxUrlBuilder::builder()->rel(),
+            'U_COMPONENT' => SandboxUrlBuilder::component()->rel(),
+            'U_LAYOUT' => SandboxUrlBuilder::layout()->rel(),
+            'U_BBCODE' => SandboxUrlBuilder::bbcode()->rel(),
+            'U_ICONS' => SandboxUrlBuilder::icons()->rel(),
+            'U_MENUS_NAV' => SandboxUrlBuilder::menus_nav()->rel(),
+            'U_MENUS_CONTENT' => SandboxUrlBuilder::menus_content()->rel(),
+            'U_TABLE' => SandboxUrlBuilder::table()->rel(),
+            'U_EMAIL' => SandboxUrlBuilder::email()->rel(),
+            'U_TEMPLATE' => SandboxUrlBuilder::template()->rel(),
 		));
 
         return $view;

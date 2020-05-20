@@ -2,7 +2,7 @@
 	# INCLUDE SANDBOX_SUBMENU #
 	<header>
 		<h1>
-			{@sandbox.module.title} - {@title.fwkboost} - {@title.component}
+			{@sandbox.module.title} - {@title.component} - {@title.component}
 		</h1>
 	</header>
 
@@ -13,6 +13,7 @@
 
 	# INCLUDE LIST #
 	# INCLUDE EXPLORER #
+	# INCLUDE MODAL #
 
 	# INCLUDE NOTATION #
 	# INCLUDE PAGINATION #

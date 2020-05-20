@@ -13,7 +13,7 @@
 
 $lang['sandbox.title'] = 'Bac à sable';
 $lang['builder.title']  = 'Constructeur';
-$lang['fwkboost.title']  = 'FWKBoost';
+$lang['component.title']  = 'FWKBoost';
 $lang['component.title']  = 'Composants';
 $lang['layout.title']  = 'Mise en page';
 $lang['bbcode.title']  = 'BBCode';

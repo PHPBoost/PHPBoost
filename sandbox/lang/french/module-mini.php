@@ -45,7 +45,7 @@ $lang['mini.user'] = 'Utilisateurs';
 $lang['mini.theme'] = 'Thèmes';
 $lang['mini.mod'] = 'Modules';
 
-$lang['mini.fwkboost'] = 'FWKBoost';
+$lang['mini.component'] = 'FWKBoost';
 $lang['mini.home'] = 'Accueil';
 $lang['mini.admin'] = 'Administration du mini';
 

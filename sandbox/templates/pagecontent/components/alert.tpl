@@ -1,6 +1,6 @@
-<article id="fwkboost-alerts" class="sandbox-block">
+<article id="component-alerts" class="sandbox-block">
     <header>
-        <h2>{@fwkboost.alert.messages}</h2>
+        <h2>{@component.alert.messages} {@H|pinned.bbcode}</h2>
     </header>
     # START messages # # INCLUDE messages.VIEW # # END messages #
     # INCLUDE FLOATING_MESSAGES # # INCLUDE FLOATING_SUCCESS # # INCLUDE FLOATING_NOTICE # # INCLUDE FLOATING_WARNING # # INCLUDE FLOATING_ERROR #
@@ -19,6 +19,6 @@
 &lt;div id="msg-helper-{ID}" class="message-helper bgc administrator">Lorem ipsum&lt;/div>
 </code></pre>
             </div>
-        </div>        
+        </div>
     </div>
 </article>

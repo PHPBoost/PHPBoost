@@ -17,10 +17,13 @@ $lang['component.title']  = 'Composants';
 $lang['layout.title']  = 'Mise en page';
 $lang['bbcode.title']  = 'BBCode';
 $lang['menus.title']  = 'Menus';
+$lang['menus.nav.title']  = 'Menus de navigation';
+$lang['menus.content.title']  = 'Menus de contenu';
 $lang['icons.title']  = 'Icônes';
 $lang['tests.title']  = 'Tests PHP';
 $lang['table.title']  = 'Tableaux';
 $lang['emails.title']  = 'Emails';
+$lang['template.title']  = 'Génération de templates';
 
 $lang['hashtag.table']  = '# Tableaux';
 $lang['hashtag.typography']  = '# Typographie';
@@ -35,11 +38,7 @@ $lang['hashtag.miscellaneous']  = '# Divers';
 $lang['hashtag.dates']  = '# Dates';
 $lang['hashtag.upload']  = '# Téléversement';
 $lang['hashtag.links']  = 'Navigation';
-$lang['hashtag.classics']  = '# Classique';
 $lang['hashtag.modal']  = '# Modal';
-$lang['hashtag.accordion']  = '# Accordéon';
-$lang['hashtag.tabs']  = '# Tabulaire';
-$lang['hashtag.wizard']  = '# Wizard';
 $lang['hashtag.gmap']  = '# Google Maps';
 $lang['hashtag.authorizations']  = '# Autorisations';
 $lang['hashtag.vertical.form']  = '# Formulaire vertical';
@@ -61,6 +60,9 @@ $lang['hashtag.notation']  = '# Notation';
 $lang['hashtag.wizard']  = '# À étapes';
 $lang['hashtag.message.helper']  = '# Messages d\'alerte';
 $lang['hashtag.tooltip']  = '# Tooltip';
+// Icons
+$lang['hashtag.font.awesome']  = '# Font-awesome &copy;';
+$lang['hashtag.icomoon']  = '# Icomoon &copy;';
 
 // Layout
 $lang['hashtag.message']  = '# Messages';
@@ -70,7 +72,10 @@ $lang['hashtag.blocks']  = '# Blocs';
 $lang['hashtag.code']  = '# Code';
 $lang['hashtag.wiki']  = '# Wiki';
 
-// Icons
-$lang['hashtag.font.awesome']  = '# Font-awesome &copy;';
-$lang['hashtag.icomoon']  = '# Icomoon &copy;';
+// Menus
+$lang['hashtag.classics']  = '# Liens';
+$lang['hashtag.accordion']  = '# Accordéon';
+$lang['hashtag.tabs']  = '# Tabulaire';
+$lang['hashtag.wizard']  = '# Wizard';
+
 ?>

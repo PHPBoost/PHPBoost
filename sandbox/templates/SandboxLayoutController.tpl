@@ -2,17 +2,16 @@
 	# INCLUDE SANDBOX_SUBMENU #
 	<header>
 		<h1>
-			{@sandbox.module.title} - {@title.fwkboost}
+			{@sandbox.module.title} - {@title.component}
 		</h1>
 	</header>
-	# INCLUDE MODAL #
 
 
-	<div id="fwkboost" class="sandbox-block">
-		<h2>{@fwkboost.title.fwkboost}</h2>
+	<div id="component" class="sandbox-block">
+		<h2>{@component.title.component}</h2>
 	</div>
 
-	
+
 	<footer></footer>
 </section>
 <script src="{PATH_TO_ROOT}/sandbox/templates/js/sandbox.js"></script>

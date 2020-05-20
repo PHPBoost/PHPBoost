@@ -42,9 +42,9 @@ class SandboxUrlBuilder
 	 * @return Url
 	 */
 
-	public static function admin_fwkboost()
+	public static function admin_component()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/fwkboost/');
+		return DispatchManager::get_url(self::$dispatcher, '/admin/component/');
 	}
 
 	/**
@@ -69,14 +69,6 @@ class SandboxUrlBuilder
 	public static function layout()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/layout');
-	}
-
-	/**
-	 * @return Url
-	 */
-	public static function multitabs()
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/multitabs');
 	}
 
 	/**

@@ -45,7 +45,7 @@ $lang['mini.user'] = 'Users';
 $lang['mini.theme'] = 'Themes';
 $lang['mini.mod'] = 'Modules';
 
-$lang['mini.fwkboost'] = 'FWKBoost';
+$lang['mini.component'] = 'FWKBoost';
 $lang['mini.home'] = 'Sandbox home page';
 $lang['mini.admin'] = 'Mini module administration';
 

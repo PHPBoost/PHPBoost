@@ -250,7 +250,7 @@ class SandboxBuilderController extends ModuleController
 			$select->add_field(new FormFieldSimpleSelectChoice('fake_select', $this->lang['builder.input.fake.select'],
 				array('1'),
 				array(
-					new FormFieldSelectChoiceOption(' ', '0'),
+					new FormFieldSelectChoiceOption('&nbsp;', '0'),
 					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'1', '1', array('selected' => true, 'data_option_icon' => 'far fa-id-card')),
 					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'2', '2', array('data_option_icon' => 'far fa-id-card')),
 					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'3', '3', array('data_option_icon' => 'far fa-id-card')),
@@ -332,139 +332,6 @@ class SandboxBuilderController extends ModuleController
 			$miscellaneous->add_field(new FormFieldUploadFile('upload_file', $this->lang['builder.file.upload'], '',
 				array('required' => true, 'class' => 'css-class')
 			));
-
-		// LINK LIST
-		$link_list = new FormFieldsetHTML('links_list', $this->lang['builder.links.menu']);
-			$form->add_fieldset($link_list);
-
-			// List actionsLinks
-			$link_list->add_field(new FormFieldSubTitle('simple_list', $this->lang['builder.links.list'], ''));
-
-			$link_list->add_field(new FormFieldActionLinkList('actionlink_list',
-				array(
-					new FormFieldActionLinkElement($this->lang['builder.link.icon'], '#', 'far fa-edit'),
-					new FormFieldActionLinkElement($this->lang['builder.link.img'], '#', '', '/sandbox/sandbox_mini.png'),
-					new FormFieldActionLinkElement($this->lang['builder.link'].' 3', '#', ''),
-					new FormFieldActionLinkElement($this->lang['builder.link'].' 4', '#', '')
-				),
-				array('class' => 'css-class')
-			));
-
-			// Accordion menu
-			// $fieldset_accordion_controls = new FormFieldsetAccordionControls('accordion_controls', '');
-			// $accordion_form->add_fieldset($fieldset_accordion_controls);
-			//
-			// $fieldset_tab_menu = new FormFieldMenuFieldset('tabmenulistID', '');
-			// $accordion_form->add_fieldset($fieldset_tab_menu);
-			//
-			// $fieldset_tab_menu->add_field(new FormFieldMultitabsLinkList('tabitemlistID',
-			//     array(
-			//         //new FormFieldMultitabsLinkElement(ItemTitle, 'accordion', 'HTMLFormID_targetID', 'fa-icon', 'picture_url', 'active_module'),
-			//         new FormFieldMultitabsLinkElement($this->lang['Pannel 01 tabitem'], 'accordion', 'HTMLFormID_targetID-01'),
-			//         new FormFieldMultitabsLinkElement($this->lang['multitabs.accordion.title.link'], 'accordion', 'HTMLFormID_targetID-02'),
-			//         new FormFieldMultitabsLinkElement($this->lang['multitabs.accordion.title.link'] . ' 03', 'accordion', 'HTMLFormID_targetID-03'),
-			//     )
-			// ));
-			//
-			// $fieldset_tab_one = new FormFieldsetMultitabsHTML('targetID-01', $this->lang['multitabs.panel.title'] . ' 01', array('css_class' => 'accordion accordion-animation'));
-			// $accordion_form->add_fieldset($fieldset_tab_one);
-			//
-			// $fieldset_tab_one->add_field(new FormFieldSubTitle('subtitleID', $this->lang['multitabs.form.subtitle'],''));
-			//
-			// $fieldset_tab_two = new FormFieldsetMultitabsHTML('targetID-02', $this->lang['multitabs.panel.title'] . ' 02', array('css_class' => 'accordion accordion-animation'));
-			// $accordion_form->add_fieldset($fieldset_tab_two);
-			//
-			// $fieldset_tab_three = new FormFieldsetMultitabsHTML('targetID-03', $this->lang['multitabs.panel.title'] . ' 03', array('css_class' => 'accordion accordion-animation'));
-			// $accordion_form->add_fieldset($fieldset_tab_three);
-
-
-			// Modal menu
-			$modal_menu = new FormFieldMenuFieldset('modal_menu', '');
-				$form->add_fieldset($modal_menu);
-				$modal_menu->set_css_class('modal-nav');
-
-				$modal_menu->add_field(new FormFieldSubTitle('modal', $this->lang['builder.modal.menu'], ''));
-
-				$modal_menu->add_field(new FormFieldMultitabsLinkList('modal_menu_list',
-					array(
-						new FormFieldMultitabsLinkElement($this->lang['builder.link.icon'], 'modal', 'Sandbox_Builder_modal_01', 'fa-cog'),
-						new FormFieldMultitabsLinkElement($this->lang['builder.link.img'], 'modal', 'Sandbox_Builder_modal_02', '', '/sandbox/sandbox_mini.png'),
-						new FormFieldMultitabsLinkElement($this->lang['builder.link'].' 3', 'modal', 'Sandbox_Builder_modal_03'),
-						new FormFieldMultitabsLinkElement($this->lang['builder.link'].' 4', 'modal', 'Sandbox_Builder_modal_04', '', '', '','button d-inline-block')
-					)
-				));
-
-				$modal_01 = new FormFieldsetMultitabsHTML('modal_01', $this->lang['builder.panel'].' 1',
-					array('css_class' => 'modal modal-animation first-tab', 'modal' => true)
-				);
-				$form->add_fieldset($modal_01);
-
-				$modal_01->set_description($this->common_lang['lorem.short.content']);
-
-				$modal_02 = new FormFieldsetMultitabsHTML('modal_02', $this->lang['builder.panel'].' 2',
-					array('css_class' => 'modal modal-animation', 'modal' => true)
-				);
-				$form->add_fieldset($modal_02);
-
-				$modal_02->set_description($this->common_lang['lorem.medium.content']);
-
-				$modal_03 = new FormFieldsetMultitabsHTML('modal_03', $this->lang['builder.panel'].' 3',
-					array('css_class' => 'modal modal-animation', 'modal' => true)
-				);
-				$form->add_fieldset($modal_03);
-
-				$modal_03->set_description($this->common_lang['lorem.large.content']);
-
-				$modal_04 = new FormFieldsetMultitabsHTML('modal_04', $this->lang['builder.panel'].' 4',
-					array('css_class' => 'modal modal-animation', 'modal' => true)
-				);
-				$form->add_fieldset($modal_04);
-
-				$modal_04->set_description($this->common_lang['lorem.short.content']);
-
-			// Tabs menu
-			$tabs_menu = new FormFieldMenuFieldset('tabs_menu', '');
-				$form->add_fieldset($tabs_menu);
-				$tabs_menu->set_css_class('tabs-nav');
-
-				$tabs_menu->add_field(new FormFieldSubTitle('tabs', $this->lang['builder.tabs.menu'], ''));
-
-				$tabs_menu->add_field(new FormFieldMultitabsLinkList('tabs_menu_list',
-					array(
-						new FormFieldMultitabsLinkElement($this->lang['builder.link.icon'], 'tabs', 'Sandbox_Builder_tabs_01', 'fa-cog'),
-						new FormFieldMultitabsLinkElement($this->lang['builder.link.img'], 'tabs', 'Sandbox_Builder_tabs_02', '', '/sandbox/sandbox_mini.png'),
-						new FormFieldMultitabsLinkElement($this->lang['builder.link'].' 3', 'tabs', 'Sandbox_Builder_tabs_03'),
-						new FormFieldMultitabsLinkElement($this->lang['builder.link'].' 4', 'tabs', 'Sandbox_Builder_tabs_04', '', '', '', 'button d-inline-block')
-					)
-				));
-
-				$tabs_01 = new FormFieldsetMultitabsHTML('tabs_01', $this->lang['builder.panel'].' 1',
-					array('css_class' => 'tabs tabs-animation first-tab')
-				);
-				$form->add_fieldset($tabs_01);
-
-				$tabs_01->set_description($this->common_lang['lorem.short.content']);
-
-				$tabs_02 = new FormFieldsetMultitabsHTML('tabs_02', $this->lang['builder.panel'].' 2',
-					array('css_class' => 'tabs tabs-animation')
-				);
-				$form->add_fieldset($tabs_02);
-
-				$tabs_02->set_description($this->common_lang['lorem.medium.content']);
-
-				$tabs_03 = new FormFieldsetMultitabsHTML('tabs_03', $this->lang['builder.panel'].' 3',
-					array('css_class' => 'tabs tabs-animation')
-				);
-				$form->add_fieldset($tabs_03);
-
-				$tabs_03->set_description($this->common_lang['lorem.large.content']);
-
-				$tabs_04 = new FormFieldsetMultitabsHTML('tabs_04', $this->lang['builder.panel'].' 4',
-					array('css_class' => 'tabs tabs-animation')
-				);
-				$form->add_fieldset($tabs_04);
-
-				$tabs_04->set_description($this->common_lang['lorem.short.content']);
 
 		// GOOGLE MAPS
 		if ($this->g_map_enabled)

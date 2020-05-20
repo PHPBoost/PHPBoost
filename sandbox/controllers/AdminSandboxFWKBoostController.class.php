@@ -27,13 +27,13 @@ class AdminSandboxFWKBoostController extends AdminModuleController
 
 		$this->build_view();
 
-		return new AdminSandboxDisplayResponse($this->view, $this->common_lang['sandbox.module.title'] . ' - ' . $this->common_lang['title.fwkboost']);
+		return new AdminSandboxDisplayResponse($this->view, $this->common_lang['sandbox.module.title'] . ' - ' . $this->common_lang['title.component']);
 	}
 
 	private function init()
 	{
 		$this->common_lang = LangLoader::get('common', 'sandbox');
-		$this->lang = LangLoader::get('fwkboost', 'sandbox');
+		$this->lang = LangLoader::get('component', 'sandbox');
 		$this->view = new FileTemplate('sandbox/AdminSandboxFWKBoostController.tpl');
 		$this->view->add_lang($this->common_lang);
 		$this->view->add_lang($this->lang);
@@ -58,14 +58,14 @@ class AdminSandboxFWKBoostController extends AdminModuleController
 		));
 
 		$messages = array(
-			MessageHelper::display($this->lang['fwkboost.message.notice'], MessageHelper::NOTICE),
-			MessageHelper::display($this->lang['fwkboost.message.question'], MessageHelper::QUESTION),
-			MessageHelper::display($this->lang['fwkboost.message.success'], MessageHelper::SUCCESS),
-			MessageHelper::display($this->lang['fwkboost.message.warning'], MessageHelper::WARNING),
-			MessageHelper::display($this->lang['fwkboost.message.error'], MessageHelper::ERROR),
-			MessageHelper::display($this->lang['fwkboost.message.member'], MessageHelper::MEMBER_ONLY),
-			MessageHelper::display($this->lang['fwkboost.message.modo'], MessageHelper::MODERATOR_ONLY),
-			MessageHelper::display($this->lang['fwkboost.message.admin'], MessageHelper::ADMIN_ONLY)
+			MessageHelper::display($this->lang['component.message.notice'], MessageHelper::NOTICE),
+			MessageHelper::display($this->lang['component.message.question'], MessageHelper::QUESTION),
+			MessageHelper::display($this->lang['component.message.success'], MessageHelper::SUCCESS),
+			MessageHelper::display($this->lang['component.message.warning'], MessageHelper::WARNING),
+			MessageHelper::display($this->lang['component.message.error'], MessageHelper::ERROR),
+			MessageHelper::display($this->lang['component.message.member'], MessageHelper::MEMBER_ONLY),
+			MessageHelper::display($this->lang['component.message.modo'], MessageHelper::MODERATOR_ONLY),
+			MessageHelper::display($this->lang['component.message.admin'], MessageHelper::ADMIN_ONLY)
 		);
 
 		foreach ($messages as $message)
@@ -80,10 +80,10 @@ class AdminSandboxFWKBoostController extends AdminModuleController
 		$this->build_floating_messages();
 		if ($this->floating_messages_button->has_been_submited() && $this->floating_messages->validate()) {
 			$this->view->put_all(array(
-				'FLOATING_SUCCESS'  => MessageHelper::display($this->lang['fwkboost.message.float-unlimited'], MessageHelper::SUCCESS, -1),
-				'FLOATING_NOTICE'   => MessageHelper::display($this->lang['fwkboost.message.float-limited'], MessageHelper::NOTICE, 3),
-				'FLOATING_WARNING'  => MessageHelper::display($this->lang['fwkboost.message.float-unlimited'], MessageHelper::WARNING, -1),
-				'FLOATING_ERROR'    => MessageHelper::display($this->lang['fwkboost.message.float-limited'], MessageHelper::ERROR, 6)
+				'FLOATING_SUCCESS'  => MessageHelper::display($this->lang['component.message.float-unlimited'], MessageHelper::SUCCESS, -1),
+				'FLOATING_NOTICE'   => MessageHelper::display($this->lang['component.message.float-limited'], MessageHelper::NOTICE, 3),
+				'FLOATING_WARNING'  => MessageHelper::display($this->lang['component.message.float-unlimited'], MessageHelper::WARNING, -1),
+				'FLOATING_ERROR'    => MessageHelper::display($this->lang['component.message.float-limited'], MessageHelper::ERROR, 6)
 			));
 		}
 		$this->view->put('FLOATING_MESSAGES', $this->floating_messages->display());
@@ -92,7 +92,7 @@ class AdminSandboxFWKBoostController extends AdminModuleController
 	private function build_floating_messages()
 	{
 		$floating_messages = new HTMLForm('floating_messages', '', false);
-		$this->floating_messages_button = new FormButtonDefaultSubmit($this->lang['fwkboost.message.float-display'], 'floating_messages');
+		$this->floating_messages_button = new FormButtonDefaultSubmit($this->lang['component.message.float-display'], 'floating_messages');
 		$floating_messages->add_button($this->floating_messages_button);
 		$this->floating_messages = $floating_messages;
 	}

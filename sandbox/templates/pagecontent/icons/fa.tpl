@@ -81,10 +81,10 @@
             <span id="copy-code-2" class="copy-code" aria-label="${LangLoader::get_message('tag_copytoclipboard', 'editor-common')}" onclick="copy_code_clipboard(2)"><i class="far fa-copy"></i></span>
             <span class="formatter-title">{@icons.howto.css.html.code}</span>
             <div id="copy-code-2-content" class="formatter-content copy-code-content">
-                <pre class="language-html"><code class="language-html">&lt;div class="message-helper bgc success">{@fwkboost.message.success}&lt;/div></code></pre>
+                <pre class="language-html"><code class="language-html">&lt;div class="message-helper bgc success">{@component.message.success}&lt;/div></code></pre>
             </div>
         </div>
-        <div class="message-helper bgc success">{@fwkboost.message.success}</div>
+        <div class="message-helper bgc success">{@component.message.success}</div>
 
         <br />
         <h4>{@icons.howto.bbcode}</h4>

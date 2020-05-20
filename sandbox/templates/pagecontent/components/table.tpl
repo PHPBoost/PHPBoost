@@ -1,45 +1,45 @@
-<article id="fwkboost-table" class="sandbox-block">
+<article id="component-table" class="sandbox-block">
     <header>
-        <h2>{@fwkboost.table}</h2>
+        <h2>{@component.table} {@H|pinned.bbcode}</h2>
     </header>
     <table class="table">
         <caption>
-            {@fwkboost.table.caption}
+            {@component.table.caption}
         </caption>
         <thead>
             <tr>
                 <th>
                     <span class="html-table-header-sortable">
-                        <a href="#" aria-label="{@fwkboost.table.sort.down}">
+                        <a href="#" aria-label="{@component.table.sort.down}">
                             <i class="fa fa-caret-up" aria-hidden="true"></i>
                         </a>
                     </span>
-                    {@fwkboost.table.name}
+                    {@component.table.name}
                     <span class="html-table-header-sortable">
-                        <a href="#" aria-label="{@fwkboost.table.sort.up}">
+                        <a href="#" aria-label="{@component.table.sort.up}">
                             <i class="fa fa-caret-down" aria-hidden="true"></i>
                         </a>
                     </span>
                 </th>
-                <th>{@fwkboost.table.description}</th>
-                <th>{@fwkboost.table.author}</th>
+                <th>{@component.table.description}</th>
+                <th>{@component.table.author}</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>{@fwkboost.table.test}</td>
-                <td>{@fwkboost.table.description}</td>
-                <td>{@fwkboost.table.author}</td>
+                <td>{@component.table.test}</td>
+                <td>{@component.table.description}</td>
+                <td>{@component.table.author}</td>
             </tr>
             <tr>
-                <td>{@fwkboost.table.test}</td>
-                <td>{@fwkboost.table.description}</td>
-                <td>{@fwkboost.table.author}</td>
+                <td>{@component.table.test}</td>
+                <td>{@component.table.description}</td>
+                <td>{@component.table.author}</td>
             </tr>
             <tr>
-                <td>{@fwkboost.table.test}</td>
-                <td>{@fwkboost.table.description}</td>
-                <td>{@fwkboost.table.author}</td>
+                <td>{@component.table.test}</td>
+                <td>{@component.table.description}</td>
+                <td>{@component.table.author}</td>
             </tr>
         </tbody>
         <tfoot>
@@ -51,23 +51,23 @@
 
     <table class="table-no-header">
         <caption>
-            {@fwkboost.table.caption.no.header}
+            {@component.table.caption.no.header}
         </caption>
         <tbody>
             <tr>
-                <td>{@fwkboost.table.test}</td>
-                <td>{@fwkboost.table.description}</td>
-                <td>{@fwkboost.table.author}</td>
+                <td>{@component.table.test}</td>
+                <td>{@component.table.description}</td>
+                <td>{@component.table.author}</td>
             </tr>
             <tr>
-                <td>{@fwkboost.table.test}</td>
-                <td>{@fwkboost.table.description}</td>
-                <td>{@fwkboost.table.author}</td>
+                <td>{@component.table.test}</td>
+                <td>{@component.table.description}</td>
+                <td>{@component.table.author}</td>
             </tr>
             <tr>
-                <td>{@fwkboost.table.test}</td>
-                <td>{@fwkboost.table.description}</td>
-                <td>{@fwkboost.table.author}</td>
+                <td>{@component.table.test}</td>
+                <td>{@component.table.description}</td>
+                <td>{@component.table.author}</td>
             </tr>
         </tbody>
         <tfoot>
@@ -81,13 +81,13 @@
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="formatter-content">
-<pre class="language-html line-numbers"><code class="language-html">// {@fwkboost.table.responsive.header}
+<pre class="language-html line-numbers"><code class="language-html">// {@component.table.responsive.header}
 &lt;table class="table">...&lt;/table>
 <br />
-// {@fwkboost.table.responsive.no.header}
+// {@component.table.responsive.no.header}
 &lt;table class="table-no-header">...&lt;/table>
 </code></pre>
             </div>
-        </div>        
+        </div>
     </div>
 </article>

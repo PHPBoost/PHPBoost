@@ -46,8 +46,34 @@ $lang['cssmenu.group'] = 'Menu groupes';
 $lang['cssmenu.static'] = 'Menu statique';
 $lang['cssmenu.static.footer'] = 'Menu statique pied de page';
 
-$lang['cssmenu.warning'] = 'Cette page a une structure spécifique de manière à afficher tous les types de menus de liens en fonction des emplacements potentiels susceptibles d\'être utilisés.
+$lang['cssmenu.warning'] = 'Cette page a une structure spécifique de manière à afficher tous les types de menus de navigation en fonction des emplacements potentiels susceptibles d\'être utilisés.
 <br /><br />Elle peut être mal adaptée si votre design ne respecte pas l\'arborescence et les noms des classes/id du thème Base.
 <br />Fichiers à modifier si nécessaire: /sandbox/html/menu .
 <br /><br />Si rien n\'est déclaré dans un emplacement, aucun menu n\'y apparait.';
+
+// Links
+$lang['menu.link.icon'] = 'Item avec icône';
+$lang['menu.link.img'] = 'Item avec image';
+$lang['menu.link'] = 'Item de Liste';
+$lang['menu.panel'] = 'Panneau';
+// Basic
+$lang['menu.basic'] = 'Menu de liens';
+// Accordion
+$lang['menu.accordion.title'] = 'Menu Accordéon';
+$lang['menu.accordion.options'] = 'Changez la classe css <code class="language-css">basic</code> en <code class="language-css">siblings</code> pour modifier le comportement d\'ouverture des panneaux et ainsi fermer un panneau ouvert lorsque vous en ouvrez un autre';
+$lang['menu.accordion.open'] = 'Ouvrir tous les panneaux';
+$lang['menu.accordion.close'] = 'Fermer tous les panneaux';
+// Tab
+$lang['menu.tabs.title']  = 'Menu tabulaire';
+// Wizard
+$lang['menu.wizard.title']  = 'Menu à étapes';
+$lang['menu.last.step']  = 'Panneau final';
+
+$lang['menu.title.html']  = 'Déclaration en HTML';
+$lang['menu.title.form']  = 'Déclaration dans un formulaire php';
+
+$lang['menu.panel']  = 'Panneau';
+$lang['menu.panel.title']  = 'Titre du Panneau';
+$lang['menu.panel.subtitle']  = 'Sous Titre';
+$lang['menu.panel.input']  = 'Champ texte';
 ?>
