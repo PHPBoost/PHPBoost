@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 12
+ * @version     PHPBoost 5.3 - last update: 2020 05 21
  * @since       PHPBoost 5.3 - 2020 02 11
 */
 
@@ -42,7 +42,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 	private function build_form()
 	{
 		$item_class_name = self::get_module()->get_configuration()->get_item_name();
-		$form = new HTMLForm(__CLASS__);
+		$form = new HTMLForm(self::$module_id . '_config_form');
 
 		$fieldset = new FormFieldsetHTMLHeading('configuration', StringVars::replace_vars($this->lang['configuration.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);

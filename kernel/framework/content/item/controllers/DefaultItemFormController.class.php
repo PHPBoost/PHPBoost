@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 20
+ * @version     PHPBoost 5.3 - last update: 2020 05 21
  * @since       PHPBoost 5.3 - 2020 05 16
 */
 
@@ -87,7 +87,7 @@ class DefaultItemFormController extends AbstractItemController
 
 	protected function build_form(HTTPRequestCustom $request)
 	{
-		$form = new HTMLForm(__CLASS__);
+		$form = new HTMLForm(self::$module_id . '_form');
 
 		$fieldset = new FormFieldsetHTMLHeading(self::$module_id, $this->is_new_item ? $this->items_lang['item.add'] : $this->items_lang['item.edit']);
 		$form->add_fieldset($fieldset);
@@ -157,10 +157,10 @@ class DefaultItemFormController extends AbstractItemController
 					array(
 						'events' => array('change' => '
 							if (HTMLForms.getField("publishing_state").getValue() == 2) {
-								jQuery("#' . __CLASS__ . '_publishing_start_date_field").show();
+								jQuery("#' . self::$module_id . '_form_publishing_start_date_field").show();
 								HTMLForms.getField("end_date_enabled").enable();
 							} else {
-								jQuery("#' . __CLASS__ . '_publishing_start_date_field").hide();
+								jQuery("#' . self::$module_id . '_form_publishing_start_date_field").hide();
 								HTMLForms.getField("end_date_enabled").disable();
 							}'
 						)
