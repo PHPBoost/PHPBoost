@@ -21,6 +21,8 @@ $lang['posted.by'] = 'Posted by : ';
 
 $lang['drag.and.drop.file'] = 'Click here or drag and drop one file';
 $lang['drag.and.drop.files'] = 'Click here or drag and drop files';
+$lang['click.and.add.file'] = 'Click here to add one file';
+$lang['click.and.add.files'] = 'Click here to add files';
 $lang['clear.list'] = 'Clear list';
 $lang['upload.helper'] = 'Authorized options for uploading';
 $lang['max.file.size'] = 'Maximum size per file';

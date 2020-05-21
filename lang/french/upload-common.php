@@ -21,6 +21,8 @@ $lang['posted.by'] = 'Déposé par : ';
 
 $lang['drag.and.drop.file'] = 'Cliquer ici ou déposer un fichier';
 $lang['drag.and.drop.files'] = 'Cliquer ici ou déposer des fichiers';
+$lang['click.and.add.file'] = 'Cliquer ici pour ajouter un fichier';
+$lang['click.and.add.files'] = 'Cliquer ici pour ajouter des fichiers';
 $lang['upload.helper'] = 'Options autorisées pour le téléversement';
 $lang['clear.list'] = 'Vider la liste';
 $lang['max.file.size'] = 'Taille maximum par fichier';

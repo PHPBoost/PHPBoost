@@ -1,6 +1,12 @@
 <div class="dnd-area">
 	<div class="dnd-dropzone">
-		<label for="inputfiles" class="dnd-label"># IF C_MULTIPLE #{@drag.and.drop.files}# ELSE #{@drag.and.drop.file}# ENDIF #<span class="d-block"></span></label>
+		<label for="inputfiles" class="dnd-label">
+			# IF C_MULTIPLE #
+				# IF IS_MOBILE_DEVICE #{@click.and.add.files}# ELSE #{@drag.and.drop.files}# ENDIF #
+			# ELSE #
+				# IF IS_MOBILE_DEVICE #{@click.and.add.file}# ELSE #{@drag.and.drop.file}# ENDIF #
+			# ENDIF #
+			<span class="d-block"></span></label>
 		<input type="file" name="${escape(NAME)}# IF C_MULTIPLE #[]# ENDIF #" id="${escape(HTML_ID)}" class="ufiles"# IF C_DISABLED # disabled="disabled" # ENDIF # />
 	</div>
 	<input type="hidden" name="max_file_size" value="{MAX_FILE_SIZE}">
