@@ -3,8 +3,8 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 18
- * @since       PHPBoost 3.0 - 2009 12 20
+ * @version     PHPBoost 5.3 - last update: 2020 05 21
+ * @since       PHPBoost 5.2 - 2020 05 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -50,7 +50,7 @@ class SandboxBuilderController extends ModuleController
 					'RICH_TEXT' => $form->get_value('rich_text'),
 					'RADIO' => $form->get_value('radio')->get_label(),
 					'CHECKBOX' => var_export($form->get_value('checkbox'), true),
-					'SELECT' => $form->get_value('select')->get_label(),
+					'SELECT_LABELS' => $form->get_value('select')->get_label(),
 					'HIDDEN' => $form->get_value('hidden'),
 					'DATE' => $form->get_value('date')->format(Date::FORMAT_DAY_MONTH_YEAR),
 					'DATE_TIME' => $form->get_value('date_time')->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
@@ -68,7 +68,9 @@ class SandboxBuilderController extends ModuleController
 
 		$this->view->put_all(array(
 			'C_GMAP'          => $this->g_map_enabled,
-			'form'            => $form->display(),
+			'FORM'            => $form->display(),
+			'FORM_MARKUP' => self::build_markup('sandbox/pagecontent/builder/form.tpl'),
+			'INPUT_MARKUP' => self::build_markup('sandbox/pagecontent/builder/input.tpl'),
 			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
 		));
 
@@ -85,11 +87,18 @@ class SandboxBuilderController extends ModuleController
 		$this->g_map_enabled = (ModulesManager::is_module_installed('GoogleMaps') && ModulesManager::is_module_activated('GoogleMaps') && GoogleMapsConfig::load()->get_api_key());
 	}
 
+	private function build_markup($tpl)
+	{
+		$view = new FileTemplate($tpl);
+		$view->add_lang($this->lang);
+		$view->add_lang($this->common_lang);
+		return $view;
+	}
+
 	private function build_form()
 	{
 		$security_config = SecurityConfig::load();
 		$form = new HTMLForm('Sandbox_Builder');
-		$form->set_css_class('accordion-container siblings modal-container tabs-container wizard-container fieldset-content');
 
 		// TEXT FIELDS
 		$text_fields = new FormFieldsetHTML('text_field', $this->lang['builder.title.inputs']);
@@ -147,14 +156,14 @@ class SandboxBuilderController extends ModuleController
 			));
 
 			// Password
-			// $text_fields->add_field($password = new FormFieldPasswordEditor('password', $this->lang['builder.input.password'], $this->lang['builder.input.password.placeholder'],
-			// 	array('description' => $security_config->get_internal_password_min_length() . $this->lang['builder.input.password.desc'], 'class' => 'css-class'),
-			// 	array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
-			// ));
-			// $text_fields->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['builder.input.password.confirm'], $this->lang['builder.input.password.placeholder'],
-			// 	array('description' => $security_config->get_internal_password_min_length() . $this->lang['builder.input.password.desc'], 'class' => 'css-class'),
-			// 	array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
-			// ));
+			$text_fields->add_field($password = new FormFieldPasswordEditor('password', $this->lang['builder.input.password'], $this->lang['builder.input.password.placeholder'],
+				array('description' => $security_config->get_internal_password_min_length() . $this->lang['builder.input.password.desc'], 'class' => 'css-class'),
+				array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
+			));
+			$text_fields->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['builder.input.password.confirm'], $this->lang['builder.input.password.placeholder'],
+				array('description' => $security_config->get_internal_password_min_length() . $this->lang['builder.input.password.desc'], 'class' => 'css-class'),
+				array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
+			));
 
 		// TEXTAREA
 		$textarea = new FormFieldsetHTML('textarea', $this->lang['builder.title.textarea']);
@@ -324,7 +333,7 @@ class SandboxBuilderController extends ModuleController
 			));
 
 			// Thumbnail
-			$miscellaneous->add_field(new FormFieldThumbnail('thumbnail', $this->lang['builder.thumbnail.picker'], '', '/sandbox/templates/images/paysage.png',
+			$miscellaneous->add_field(new FormFieldThumbnail('thumbnail', $this->lang['builder.thumbnail.picker'], '', FormFieldThumbnail::get_default_thumbnail_url(UserAccountsConfig::NO_AVATAR_URL),
 				array('class' => 'css-class')
 			));
 

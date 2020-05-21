@@ -3,8 +3,8 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 06
- * @since       PHPBoost 5.2 - 2020 03 06
+ * @version     PHPBoost 5.3 - last update: 2020 05 21
+ * @since       PHPBoost 5.2 - 2020 05 19
 */
 
 class SandboxSubMenu
@@ -15,18 +15,18 @@ class SandboxSubMenu
 		$view->add_lang(LangLoader::get('submenu', 'sandbox'));
 
 		$view->put_all(array(
-            'C_GMAP' => ModulesManager::is_module_installed('GoogleMaps') && ModulesManager::is_module_activated('GoogleMaps') && GoogleMapsConfig::load()->get_api_key(),
-            'U_HOME' => SandboxUrlBuilder::home()->rel(),
-            'U_BUILDER' => SandboxUrlBuilder::builder()->rel(),
-            'U_COMPONENT' => SandboxUrlBuilder::component()->rel(),
-            'U_LAYOUT' => SandboxUrlBuilder::layout()->rel(),
-            'U_BBCODE' => SandboxUrlBuilder::bbcode()->rel(),
-            'U_ICONS' => SandboxUrlBuilder::icons()->rel(),
-            'U_MENUS_NAV' => SandboxUrlBuilder::menus_nav()->rel(),
+            'C_GMAP'          => ModulesManager::is_module_installed('GoogleMaps') && ModulesManager::is_module_activated('GoogleMaps') && GoogleMapsConfig::load()->get_api_key(),
+            'U_HOME'          => SandboxUrlBuilder::home()->rel(),
+            'U_BUILDER'       => SandboxUrlBuilder::builder()->rel(),
+            'U_COMPONENT'     => SandboxUrlBuilder::component()->rel(),
+            'U_LAYOUT'        => SandboxUrlBuilder::layout()->rel(),
+            'U_BBCODE'        => SandboxUrlBuilder::bbcode()->rel(),
+            'U_ICONS'         => SandboxUrlBuilder::icons()->rel(),
+            'U_MENUS_NAV'     => SandboxUrlBuilder::menus_nav()->rel(),
             'U_MENUS_CONTENT' => SandboxUrlBuilder::menus_content()->rel(),
-            'U_TABLE' => SandboxUrlBuilder::table()->rel(),
-            'U_EMAIL' => SandboxUrlBuilder::email()->rel(),
-            'U_TEMPLATE' => SandboxUrlBuilder::template()->rel(),
+            'U_TABLE'         => SandboxUrlBuilder::table()->rel(),
+            'U_EMAIL'         => SandboxUrlBuilder::email()->rel(),
+            'U_TEMPLATE'      => SandboxUrlBuilder::template()->rel(),
 		));
 
         return $view;

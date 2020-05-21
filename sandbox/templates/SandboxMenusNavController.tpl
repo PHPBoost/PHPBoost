@@ -1,5 +1,4 @@
-
-<section>
+<section id="sandbox-nav-menus">
 	# INCLUDE SANDBOX_SUBMENU #
 	<header>
 		<h1>{@cssmenu.h1}</h1>

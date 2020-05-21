@@ -15,10 +15,12 @@
 ####################################################
 
 $lang['builder.explain'] = '
-<p>Cette page présente le rendu des éléments créés avec le constructeur php.</p>
+<p>Cette page présente le rendu des éléments de formulaire</p>
+<p>Créés avec le constructeur php, vous pouvez également les <a class="pinned bgc link-color" href="#markup-view">ajouter en html <i class="fa fa-caret-down"></i></a>.</p>
 <p>Pour accéder aux déclarations PHP de chaque élément, vous pouvez lire <a href="https://github.com/PHPBoost/PHPBoost/blob/master/sandbox/controllers/SandboxBuilderController.class.php#L110">le fichier</a> fourni avec ce module, ou la documentation de l\'API sur le site de <a href="https://www.phpboost.com/api"><i class="fa iboost fa-iboost-phpboost"></i> PHPHBoost</a></p>
 ';
 $lang['builder.title'] = 'Formulaire';
+$lang['builder.preview'] = 'Prévisualisation';
 
 $lang['builder.title.inputs'] = 'Champs texte';
 $lang['builder.title.textarea'] = 'Textarea';

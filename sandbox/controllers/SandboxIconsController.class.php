@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 05
+ * @version     PHPBoost 5.3 - last update: 2020 05 21
  * @since       PHPBoost 3.0 - 2012 05 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -46,12 +46,11 @@ class SandboxIconsController extends ModuleController
 	private function get_fa()
 	{
 		$css_lang = LangLoader::get('component', 'sandbox');
-		$fa_lang = LangLoader::get('icons', 'sandbox');
-		$fa_tpl = new FileTemplate('sandbox/pagecontent/icons/fa.tpl');
-		$fa_tpl->add_lang($fa_lang);
-		$fa_tpl->add_lang($css_lang);
+		$view = new FileTemplate('sandbox/pagecontent/icons/fa.tpl');
+		$view->add_lang($this->icons_lang);
+		$view->add_lang($css_lang);
 
-		//Social
+		// Social
 		$icons = array(
 			array('fab', 'facebook-f', '\f39e'),
 			array('fab', 'google-plus-g', '\f0d5'),
@@ -61,14 +60,14 @@ class SandboxIconsController extends ModuleController
 
 		foreach ($icons as $icon)
 		{
-			$fa_tpl->assign_block_vars('social', array(
+			$view->assign_block_vars('social', array(
 				'PREFIX' => $icon[0],
 				'FA'     => $icon[1],
 				'CODE'   => $icon[2]
 			));
 		}
 
-		//Responsive
+		// Responsive
 		$icons = array(
 			array('fas', 'tv', '\f26c'),
 			array('fas', 'desktop', '\f108'),
@@ -79,14 +78,14 @@ class SandboxIconsController extends ModuleController
 
 		foreach ($icons as $icon)
 		{
-			$fa_tpl->assign_block_vars('responsive', array(
+			$view->assign_block_vars('responsive', array(
 				'PREFIX' => $icon[0],
 				'FA'     => $icon[1],
 				'CODE'   => $icon[2]
 			));
 		}
 
-		return $fa_tpl;
+		return $view;
 	}
 
 	private function check_authorizations()

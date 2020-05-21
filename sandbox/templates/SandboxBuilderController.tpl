@@ -1,4 +1,4 @@
-<section>
+<section id="sandbox-builder">
 	# INCLUDE SANDBOX_SUBMENU #
 	<header>
 		<h1>
@@ -9,7 +9,7 @@
 	<article class="content">
 		{@H|builder.explain}
 		# IF C_PREVIEW #
-			<div class="message-helper bgc notice">Prévisualisation</div>
+			<div class="message-helper bgc notice">{@builder.preview}</div>
 		# ENDIF #
 
 		# IF C_RESULT #
@@ -29,7 +29,7 @@
 			<div class="spacer"></div>
 			<strong>CHECKBOX :</strong> {CHECKBOX}
 			<div class="spacer"></div>
-			<strong>SELECT :</strong> {SELECT}
+			<strong>SELECT_LABELS :</strong> {SELECT}
 			<div class="spacer"></div>
 			<strong>HIDDEN :</strong> {HIDDEN}
 			<div class="spacer"></div>
@@ -42,7 +42,12 @@
 			<strong>HIDDEN TEXT AREA TEXT FIELD :</strong> {H_T_TEXT_FIELD}
 		# ENDIF #
 
-		# INCLUDE form #
+		# INCLUDE FORM #
+
+		<div id="markup-view">
+			# INCLUDE FORM_MARKUP #
+			# INCLUDE INPUT_MARKUP #
+		</div>
 
 	</article>
 	<footer></footer>

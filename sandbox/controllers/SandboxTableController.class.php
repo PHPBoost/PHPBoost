@@ -87,7 +87,7 @@ class SandboxTableController extends ModuleController
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 
-		$this->view->put('table', $table->display());
+		$this->view->put('TABLE', $table->display());
 
 		return $table->get_page_number();
 	}

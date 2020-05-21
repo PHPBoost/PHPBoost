@@ -1,4 +1,4 @@
-<section>
+<section id="sandbox-home">
 	# INCLUDE SANDBOX_SUBMENU #
 	<header>
 		<h1>{@sandbox.module.title}</h1>

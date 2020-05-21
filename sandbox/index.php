@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 03
+ * @version     PHPBoost 5.3 - last update: 2020 05 21
  * @since       PHPBoost 3.0 - 2009 12 13
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -26,7 +26,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('SandboxMenusNavController', '`^/menus/nav/?`'),
 	new UrlControllerMapper('SandboxMenusContentController', '`^/menus/content/?`'),
 	new UrlControllerMapper('SandboxIconsController', '`^/icons/?`'),
-	new UrlControllerMapper('SandboxMailController', '`^/email/?`'),
+	new UrlControllerMapper('SandboxEmailController', '`^/email/?`'),
 	new UrlControllerMapper('SandboxHomeController', '`^.*$`')
 );
 DispatchManager::dispatch($url_controller_mappers);

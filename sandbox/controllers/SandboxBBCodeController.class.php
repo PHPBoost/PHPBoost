@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 05
+ * @version     PHPBoost 5.3 - last update: 2020 05 21
  * @since       PHPBoost 3.0 - 2012 05 05
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -38,12 +38,12 @@ class SandboxBBCodeController extends ModuleController
 	{
 		if (ModulesManager::is_module_installed('wiki')  && ModulesManager::is_module_activated('wiki'))
 		{
-			// Condition de présence du module retourne true
+			// return true when Wiki is on
 			$c_wiki = true;
 
 			include_once('../wiki/wiki_functions.php');
 
-			//On crée le menu des paragraphes et on enregistre le menu
+			// Create and store the paragraph menu
 			$contents = wiki_parse("
 				-- " . $this->lang['bbcode.paragraph'] . " 1 --
 				" . $this->common_lang['lorem.short.content'] . "
@@ -77,59 +77,27 @@ class SandboxBBCodeController extends ModuleController
 
 			$this->view->put('WIKI_CONTENTS', FormatingHelper::second_parse(wiki_no_rewrite($contents)));
 		} else {
-			// la condition de présence du module retourne false
+			// return false when Wiki is off
 			$c_wiki = false;
 		}
 
 		$this->view->put_all(array(
 			'C_WIKI'          => $c_wiki,
-			'TYPOGRAPHY'      => self::build_typography_view(),
-			'BLOCKS'          => self::build_blocks_view(),
-			'CODE'            => self::build_code_view(),
-			'LIST'            => self::build_list_view(),
-			'TABLE'           => self::build_table_view(),
+			'TYPOGRAPHY'      => self::build_markup('sandbox/pagecontent/bbcode/typography.tpl'),
+			'BLOCKS'          => self::build_markup('sandbox/pagecontent/bbcode/blocks.tpl'),
+			'CODE'            => self::build_markup('sandbox/pagecontent/bbcode/code.tpl'),
+			'LIST'            => self::build_markup('sandbox/pagecontent/bbcode/list.tpl'),
+			'TABLE'           => self::build_markup('sandbox/pagecontent/bbcode/table.tpl'),
 			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
 		));
 	}
 
-	private function build_typography_view()
+	private function build_markup($tpl)
 	{
-		$typo_tpl = new FileTemplate('sandbox/pagecontent/bbcode/typography.tpl');
-		$typo_tpl->add_lang($this->lang);
-		$typo_tpl->add_lang($this->common_lang);
-		return $typo_tpl;
-	}
-
-	private function build_blocks_view()
-	{
-		$blocks_tpl = new FileTemplate('sandbox/pagecontent/bbcode/blocks.tpl');
-		$blocks_tpl->add_lang($this->lang);
-		$blocks_tpl->add_lang($this->common_lang);
-		return $blocks_tpl;
-	}
-
-	private function build_code_view()
-	{
-		$code_tpl = new FileTemplate('sandbox/pagecontent/bbcode/code.tpl');
-		$code_tpl->add_lang($this->lang);
-		$code_tpl->add_lang($this->common_lang);
-		return $code_tpl;
-	}
-
-	private function build_list_view()
-	{
-		$list_tpl = new FileTemplate('sandbox/pagecontent/bbcode/list.tpl');
-		$list_tpl->add_lang($this->lang);
-		$list_tpl->add_lang($this->common_lang);
-		return $list_tpl;
-	}
-
-	private function build_table_view()
-	{
-		$table_tpl = new FileTemplate('sandbox/pagecontent/bbcode/table.tpl');
-		$table_tpl->add_lang($this->lang);
-		$table_tpl->add_lang($this->common_lang);
-		return $table_tpl;
+		$view = new FileTemplate($tpl);
+		$view->add_lang($this->lang);
+		$view->add_lang($this->common_lang);
+		return $view;
 	}
 
 	private function check_authorizations()

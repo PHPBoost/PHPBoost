@@ -52,16 +52,16 @@ class SandboxMenusContentController extends ModuleController
 		$this->build_wizard_form();
 
 		$this->tpl->put_all(array(
-			'BASIC' => self::build_basic_view(),
-			'ACCORDION' => self::build_accordion_view(),
-			'TABS' => self::build_tabs_view(),
-			'WIZARD' => self::build_wizard_view(),
+			'BASIC' => self::build_basic_markup(),
+			'ACCORDION' => self::build_accordion_markup(),
+			'TABS' => self::build_tabs_markup(),
+			'WIZARD' => self::build_wizard_markup(),
 			'NO_AVATAR_URL'   => Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(UserAccountsConfig::NO_AVATAR_URL)),
 			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
 		));
 	}
 
-	private function build_basic_view()
+	private function build_basic_markup()
 	{
 		$basic_tpl = new FileTemplate('sandbox/pagecontent/menus/basic.tpl');
 		$basic_tpl->add_lang($this->lang);
@@ -90,7 +90,7 @@ class SandboxMenusContentController extends ModuleController
 		return $basic_form;
 	}
 
-	private function build_accordion_view()
+	private function build_accordion_markup()
 	{
 		$accordion_tpl = new FileTemplate('sandbox/pagecontent/menus/accordion.tpl');
 		$accordion_tpl->add_lang($this->lang);
@@ -151,7 +151,7 @@ class SandboxMenusContentController extends ModuleController
 		return $accordion_form;
 	}
 
-	private function build_tabs_view()
+	private function build_tabs_markup()
 	{
 		$tabs_tpl = new FileTemplate('sandbox/pagecontent/menus/tabs.tpl');
 		$tabs_tpl->add_lang($this->lang);
@@ -209,13 +209,13 @@ class SandboxMenusContentController extends ModuleController
 		return $tabs_form;
 	}
 
-	private function build_wizard_view()
+	private function build_wizard_markup()
 	{
-		$wizard_tpl = new FileTemplate('sandbox/pagecontent/menus/wizard.tpl');
-		$wizard_tpl->add_lang($this->lang);
-		$wizard_tpl->add_lang($this->common_lang);
-		$wizard_tpl->put('WIZARD_FORM', $this->build_wizard_form()->display());
-		return $wizard_tpl;
+		$tpl = new FileTemplate('sandbox/pagecontent/menus/wizard.tpl');
+		$tpl->add_lang($this->lang);
+		$tpl->add_lang($this->common_lang);
+		$tpl->put('WIZARD_FORM', $this->build_wizard_form()->display());
+		return $tpl;
 	}
 
 	private function build_wizard_form()
@@ -231,7 +231,7 @@ class SandboxMenusContentController extends ModuleController
 			array(
 				new FormFieldActionLinkElement($this->lang['menu.panel'] . ' 01', '#', 'fa-cog'),
 				new FormFieldActionLinkElement($this->lang['menu.panel'] . ' 02', '#', 'fa-image'),
-				new FormFieldActionLinkElement($this->lang['menu.panel'] . ' 03', '#', '', '../../articles/articles_mini.png', 'articles'),
+				new FormFieldActionLinkElement($this->lang['menu.panel'] . ' 03', '#', '', PATH_TO_ROOT . 'articles/articles_mini.png', 'articles'),
 			)
 		));
 

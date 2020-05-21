@@ -1,4 +1,4 @@
-<section>
+<section id="sandbox-bbcode">
 	# INCLUDE SANDBOX_SUBMENU #
 	<header>
 		<h1>
@@ -40,4 +40,3 @@
 
 	<footer></footer>
 </section>
-<script src="{PATH_TO_ROOT}/sandbox/templates/js/sandbox.js"></script>

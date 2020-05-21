@@ -1,4 +1,4 @@
-<section id="sandbox-css">
+<section id="sandbox-component">
 	# INCLUDE SANDBOX_SUBMENU #
 	<header>
 		<h1>
@@ -28,4 +28,4 @@
 
 	<footer></footer>
 </section>
-<script>jQuery('#sandbox-css article a').on('click', function(){return false;});</script>
+<script>jQuery('#sandbox-component article a').on('click', function(){return false;});</script>
