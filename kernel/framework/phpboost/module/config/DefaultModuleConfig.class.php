@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 18
+ * @version     PHPBoost 5.3 - last update: 2020 05 21
  * @since       PHPBoost 5.3 - 2020 01 10
  * @contributor xela <xela@phpboost.com>
 */
@@ -47,9 +47,9 @@ class DefaultModuleConfig extends AbstractConfigData
 	/**
 	 * Saves the configuration in the database. As it become persistent.
 	 */
-	public static function save()
+	public static function save($module_id = '')
 	{
-		ConfigManager::save(self::$module_id, self::load(), 'config');
+		ConfigManager::save((!empty($module_id) ? $module_id : self::$module_id), self::load((!empty($module_id) ? $module_id : self::$module_id)), 'config');
 	}
 
 	/**

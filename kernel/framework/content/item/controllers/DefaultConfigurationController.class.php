@@ -177,7 +177,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 
 		$configuration_class_name = self::get_module()->get_configuration()->get_configuration_name();
-		$configuration_class_name::save();
+		$configuration_class_name::save(self::$module_id);
 		
 		if (self::get_module()->get_configuration()->has_categories())
 			CategoriesService::get_categories_manager()->regenerate_cache();
