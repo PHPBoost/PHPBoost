@@ -307,7 +307,7 @@ class DefaultItemFormController extends AbstractItemController
 				$this->get_item()->set_author_custom_name(($this->form->get_value('author_custom_name') && $this->form->get_value('author_custom_name') !== $this->get_item()->get_author_user()->get_display_name() ? $this->form->get_value('author_custom_name') : ''));
 		}
 		
-		foreach ($this->get_category()->get_additional_attributes_list() as $id => $attribute)
+		foreach ($this->get_item()->get_additional_attributes_list() as $id => $attribute)
 		{
 			$has_value = false;
 			foreach (array('attribute_pre_content_field_parameters', 'attribute_post_content_field_parameters', 'attribute_other_field_parameters') as $attribute_field)
