@@ -5,10 +5,14 @@
  * @link        https://nenadkaevik.github.io/wizzy/
  * @author      Nenad Kaevik
  * @doc         https://xpy.github.io/tipy/
- * @version     PHPBoost 5.3 - last update: 2019 07 30
+ * @version     PHPBoost 5.3 - last update: 2020 05 21
  * @since       PHPBoost 5.2 - 2019 07 29
  *
- * @patch		delete es6 (ie11) / replace wizzy -> wizzard - wz- -> wizard- - wz-wrapper -> wizard-container / let -> var
+ * @patch		delete es6 (ie11) / replace
+ *      wizzy -> wizzard 
+ *      wz- -> wizard-
+ *      wz-wrapper -> wizard-container
+ *      let -> var
 */
 
 (function($){
@@ -30,7 +34,7 @@
             var content = elem.find('.wizard-inner');
 
             var btnNext = '<a href="#" class="wizard-btn '+ settings.nextClass +' float-right" data-action="next"><i class="fas fa-2x fa-chevron-circle-right" aria-hidden="true"></i><span class="sr-only">next</span></a>';
-            var btnBack = '<a href="#" class="wizard-btn '+ settings.prevClass +'" data-action="back"><i class="fas fa-2x fa-chevron-circle-left" aria-hidden="true"></i><span class="sr-only">prev</span></a>';
+            var btnBack = '<a href="#" class="wizard-btn '+ settings.prevClass +' float-left" data-action="back"><i class="fas fa-2x fa-chevron-circle-left" aria-hidden="true"></i><span class="sr-only">prev</span></a>';
             var btnFinish = '<span class="wizard-btn '+ settings.finishClass +' float-right" data-action="finish"> <i class="fa fa-2x fa-check-circle success" aria-hidden="true"></i></span><span class="sr-only">finish</span>';
 
             var step_links = elem.find('nav ul li a').toArray();
