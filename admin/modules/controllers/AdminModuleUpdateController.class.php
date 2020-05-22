@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 25
+ * @version     PHPBoost 5.3 - last update: 2020 05 23
  * @since       PHPBoost 3.0 - 2011 09 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -236,12 +236,12 @@ class AdminModuleUpdateController extends AdminController
 						}
 						else
 						{
-							$this->view->put('MSG', MessageHelper::display($this->lang['modules.not_installed_module'], MessageHelper::NOTICE));
+							$this->view->put('MSG_WARNING', MessageHelper::display($this->lang['modules.not_installed_module'], MessageHelper::NOTICE));
 						}
 					}
 					else
 					{
-						$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('error.invalid_archive_content', 'status-messages-common'), MessageHelper::NOTICE));
+						$this->view->put('MSG_WARNING', MessageHelper::display(LangLoader::get_message('error.invalid_archive_content', 'status-messages-common'), MessageHelper::NOTICE));
 					}
 
 					$uploaded_file = new File($archive);
@@ -249,12 +249,12 @@ class AdminModuleUpdateController extends AdminController
 				}
 				else
 				{
-					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('upload.invalid_format', 'status-messages-common'), MessageHelper::NOTICE));
+					$this->view->put('MSG_WARNING', MessageHelper::display(LangLoader::get_message('upload.invalid_format', 'status-messages-common'), MessageHelper::NOTICE));
 				}
 			}
 			else
 			{
-				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('upload.error', 'status-messages-common'), MessageHelper::NOTICE));
+				$this->view->put('MSG_WARNING', MessageHelper::display(LangLoader::get_message('upload.error', 'status-messages-common'), MessageHelper::NOTICE));
 			}
 		}
 	}
