@@ -16,7 +16,7 @@
 
 		var cssmenu = $(this), settings = $.extend({
 			title: "Menu",
-			format: "dropdown",
+			format: "dropdown", // dropdown || multitoggle
 			breakpoint: 768,
 			sticky: false,
 			static: false,
@@ -97,8 +97,10 @@
 })(jQuery);
 
 
-// Current li - send class .current to an item from a cssmenu and it's parents if the item href correspond to the page url
+jQuery(document).ready(function(){
+
 	jQuery('.cssmenu-title').each(function(){
+		// Current li - send class .current to an item from a cssmenu and it's parents if the item href correspond to the page url
 		var link = jQuery(this).attr('href');
 		if(window.location.href.indexOf(link) > -1) { // if page url contains href of one of the cssmenu items
 			jQuery(this).parent().addClass('current'); // add class to it's parent (should be 'li')
@@ -106,6 +108,13 @@
 				jQuery(this).closest('.has-sub').addClass('current');  // add class to the parent subfolder
 				jQuery(this).closest('.cssmenu > ul > li').addClass('current'); // and to the first ancestor
 			}
+		}
+
+		// add picture width
+		if(jQuery(this).children('img').length) {
+			var imgWidth = jQuery(this).children('img').outerWidth(),
+				marginWidth = jQuery(this).children('span').css('marginLeft');
+			jQuery(this).css('padding-right', 'calc(' + imgWidth + 'px + ' + marginWidth + ')');
 		}
 	});
 
@@ -121,12 +130,4 @@
 			}
 		}
 	});
-
-// add picture width
- 	jQuery('.cssmenu-title').each(function(){
-		if(jQuery(this).children('img').length) {
-			var imgWidth = jQuery(this).children('img').outerWidth(),
-				marginWidth = jQuery(this).children('span').css('marginLeft');
-			jQuery(this).css('padding-right', 'calc(' + imgWidth + 'px + ' + marginWidth + ')');
-		}
-	});
+});
