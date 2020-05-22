@@ -18,7 +18,7 @@
         ...
     &lt;/ul>
 &lt;/nav>
-&lt;script>jQuery("#menu-[ID]").menumaker({ title: "menu-[TITLE]", format: "multitoggle", breakpoint: 768 });</script> // static: true
+&lt;script>jQuery("#menu-[ID]").menumaker({ title: "menu-[TITLE]", format: "multitoggle", breakpoint: 768 });&lt;/script> // static: true
 <br />
 // Pushmenu
 &lt;a class="toggle-[ID] pushmenu-toggle">

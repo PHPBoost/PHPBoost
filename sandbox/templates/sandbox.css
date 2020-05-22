@@ -91,5 +91,5 @@ body {
 /* --- Source code
 ----------------------------------------------------------------------------- */
 .formatter-hide .copy-code { float: none; }
-.formatter-content .formatter-content { padding: 0; max-height: none; border-width: 0; }
+.formatter-show .formatter-content .formatter-content { padding: 0; max-height: none; border-width: 0; }
 .formatter-content.formatter-code { text-align: right;}

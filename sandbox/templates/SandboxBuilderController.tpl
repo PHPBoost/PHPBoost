@@ -47,6 +47,11 @@
 		<div id="markup-view">
 			# INCLUDE FORM_MARKUP #
 			# INCLUDE INPUT_MARKUP #
+			# INCLUDE TEXTAREA_MARKUP #
+			# INCLUDE CHECKBOX_MARKUP #
+			# INCLUDE RADIO_MARKUP #
+			# INCLUDE SELECT_MARKUP #
+			# INCLUDE DND_MARKUP #
 		</div>
 
 	</article>

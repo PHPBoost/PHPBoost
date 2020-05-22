@@ -49,12 +49,15 @@ $lang['welcome.message'] = '
 $lang['welcome.see'] = 'Voir';
 $lang['welcome.admin'] = 'En admin';
 
-$lang['welcome.builder'] = 'Le rendu des différentes fonctionnailtés utilisables avec le constructeur PHP: champs de formulaire, maps, menus de liens, etc.';
+$lang['welcome.builder'] = 'Le rendu des différents champs de formulaire, textarea, checkbox, etc.';
 $lang['welcome.component'] = 'Le rendu des différents éléments du framework HTML/CSS/JS FWKBoost de PHPBoost.';
 $lang['welcome.bbcode'] = 'Le rendu des éléments spécifiques déclarés en bbcode qui apportent un design différent du FWKBoost.';
-$lang['welcome.menu'] = 'Le rendu des menus de navigations selon les emplacements potentiels.';
-$lang['welcome.icons'] = 'Un aperçu de ce qu\'il est possible de faire dans phpboost au niveau des icônes-font.';
+$lang['welcome.layout'] = 'Le rendu des différentes mises en page, messages, cellules, grille d\'affichage, du FWKBoost.';
+$lang['welcome.menu'] = 'Le rendu des menus de navigations selon les emplacements potentiels, et de contenu.';
 $lang['welcome.misc'] = 'Diverses pages de test en php.';
+
+$lang['welcome.see.nav'] = 'Navigation';
+$lang['welcome.see.content'] = 'Contenu';
 
 // Lorem
 $lang['lorem.short.content'] = 'Etiam hendrerit, tortor et faucibus dapibus, eros orci porta eros, in facilisis ipsum ipsum at nisl';

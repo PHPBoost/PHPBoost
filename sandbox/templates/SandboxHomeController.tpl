@@ -39,7 +39,7 @@
 				</div>
 				<div class="cell-footer">
 					<a class="pinned link-color" href="${relative_url(SandboxUrlBuilder::component())}"><i class="fa fa-fw fa-eye"></i> {@title.component}</a>
-					<a class="pinned link-color" href="${relative_url(SandboxUrlBuilder::layout())}"><i class="fa fa-fw fa-eye"></i> {@title.layout}</a>
+					<a class="pinned link-color" href="${relative_url(SandboxUrlBuilder::icons())}"><i class="fa fa-fw fa-eye"></i> {@title.icons}</a>
 					# IF IS_ADMIN #<a class="pinned link-color" href="${relative_url(SandboxUrlBuilder::admin_component())}"><i class="fa fa-fw fa-cog"></i> {@welcome.admin}</a># ENDIF #
 				</div>
 			</div>
@@ -64,6 +64,24 @@
 			<div class="cell">
 				<div class="cell-header">
 					<h6 class="cell-name">
+						{@title.layout}
+					</h6>
+					<i class="fab fa-fw fa-fort-awesome"></i>
+				</div>
+				<div class="cell-body">
+					<div class="cell-content">
+						{@welcome.layout}
+					</div>
+				</div>
+				<div class="cell-footer">
+					<a class="pinned link-color" href="${relative_url(SandboxUrlBuilder::layout())}"><i class="fa fa-fw fa-eye"></i> {@welcome.see}</a>
+				</div>
+			</div>
+		</div>
+		<div class="cell-flex cell-tile cell-columns-2">
+			<div class="cell">
+				<div class="cell-header">
+					<h6 class="cell-name">
 						{@title.menu}
 					</h6>
 					<i class="fa fa-fw fa-list"></i>
@@ -74,25 +92,8 @@
 					</div>
 				</div>
 				<div class="cell-footer">
-					<a class="pinned link-color" href="${relative_url(SandboxUrlBuilder::menus_nav())}"><i class="fa fa-fw fa-eye"></i> {@welcome.see}</a>
-				</div>
-			</div>
-		</div>
-		<div class="cell-flex cell-tile cell-columns-2">
-			<div class="cell">
-				<div class="cell-header">
-					<h6 class="cell-name">
-						{@title.icons}
-					</h6>
-					<i class="fab fa-fw fa-fort-awesome"></i>
-				</div>
-				<div class="cell-body">
-					<div class="cell-content">
-						{@welcome.icons}
-					</div>
-				</div>
-				<div class="cell-footer">
-					<a class="pinned link-color" href="${relative_url(SandboxUrlBuilder::icons())}"><i class="fa fa-fw fa-eye"></i> {@welcome.see}</a>
+					<a class="pinned link-color" href="${relative_url(SandboxUrlBuilder::menus_nav())}"><i class="fa fa-fw fa-list"></i> {@welcome.see.nav}</a>
+					<a class="pinned link-color" href="${relative_url(SandboxUrlBuilder::menus_content())}"><i class="fa fa-fw fa-list-ol"></i> {@welcome.see.content}</a>
 				</div>
 			</div>
 			<div class="cell">
