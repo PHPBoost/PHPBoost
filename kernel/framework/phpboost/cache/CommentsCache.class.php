@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2014 12 22
+ * @version     PHPBoost 5.3 - last update: 2020 05 24
  * @since       PHPBoost 3.0 - 2011 09 24
 */
 
@@ -70,14 +70,15 @@ class CommentsCache implements CacheData
 		return null;
 	}
 
-	public function get_comments_by_module($module_id, $id_in_module, $topic_identifier)
+	public function get_comments_by_module($module_id, $id_in_module = '', $topic_identifier = CommentsTopic::DEFAULT_TOPIC_IDENTIFIER)
 	{
 		$comments = array();
 		foreach ($this->comments as $id_comment => $informations)
 		{
-			if ($informations['module_id'] == $module_id && $informations['id_in_module'] == $id_in_module && $informations['topic_identifier'] == $topic_identifier)
+			if ($informations['module_id'] == $module_id && $informations['topic_identifier'] == $topic_identifier)
 			{
-				$comments[$id_comment] = $informations;
+				if (($id_in_module && $informations['id_in_module'] == $id_in_module) || !$id_in_module)
+					$comments[$id_comment] = $informations;
 			}
 		}
 		return $comments;

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 12 20
+ * @version     PHPBoost 5.3 - last update: 2020 05 24
  * @since       PHPBoost 1.6 - 2007 08 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -78,8 +78,10 @@ $LANG['pages_explain'] = 'Vous êtes sur le panneau de contrôle des pages. Vous
 <p>Cette balise existe uniquement sur les modules pages et wiki.</p>
 <div class="message-helper bgc warning">Pour des raisons de sécurité il est interdit d\'insérer du code PHP dans les pages.</div>';
 $LANG['pages_redirections'] = 'Gestion des redirections';
-$LANG['pages_num_pages'] = '%d page(s) existante(s)';
-$LANG['pages_num_coms'] = '%d commentaire(s) sur l\'ensemble des pages soit %1.1f commentaire par page';
+$LANG['pages_num_pages'] = '%d pages existantes';
+$LANG['pages_num_page'] = '%d page existante';
+$LANG['pages_num_coms'] = '%d commentaires sur l\'ensemble des pages soit %1.1f commentaire par page';
+$LANG['pages_num_com'] = '%d commentaire sur l\'ensemble des pages soit %1.1f commentaire par page';
 $LANG['pages_stats'] = 'Statistiques';
 $LANG['pages_tools'] = 'Outils';
 

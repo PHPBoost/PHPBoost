@@ -11,8 +11,8 @@
 	<div class="content">
 		{L_EXPLAIN_PAGES}
 		<hr />
-		<p>{NUM_PAGES}</p>
-		<p>{NUM_COMS}</p>
+		# IF C_PAGES #<p>{NUM_PAGES}</p># ENDIF #
+		# IF C_COMS #<p>{NUM_COMS}</p># ENDIF #
 		<div class="explorer">
 			<div class="cats">
 				<h2>{L_EXPLORER}</h2>

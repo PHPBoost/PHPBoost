@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 28
+ * @version     PHPBoost 5.3 - last update: 2020 05 24
  * @since       PHPBoost 3.0 - 2011 09 25
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -80,7 +80,7 @@ class CommentsManager
 		self::regenerate_cache();
 	}
 
-	public static function get_comments_number($module_id, $id_in_module, $topic_identifier)
+	public static function get_comments_number($module_id, $id_in_module = '', $topic_identifier = CommentsTopic::DEFAULT_TOPIC_IDENTIFIER)
 	{
 		return CommentsDAO::get_comments_number($module_id, $id_in_module, $topic_identifier);
 	}

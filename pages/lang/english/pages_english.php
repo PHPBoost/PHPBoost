@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 11 02
+ * @version     PHPBoost 5.3 - last update: 2020 05 24
  * @since       PHPBoost 1.6 - 2007 08 18
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -77,8 +77,10 @@ $LANG['pages_explain'] = 'You are in the "pages" module control panel. Here you 
 <p>This tag only exist on pages and wiki modules.</p>
 <div class="message-helper bgc warning">For security reason, insert PHP code is forbidden in "pages" module.</div>';
 $LANG['pages_redirections'] = 'Redirections';
-$LANG['pages_num_pages'] = '%d existing page(s)';
-$LANG['pages_num_coms'] = '%d comments on the whole pages, which corresponds to %1.1f commentary by page';
+$LANG['pages_num_pages'] = '%d existing pages';
+$LANG['pages_num_page'] = '%d existing page';
+$LANG['pages_num_coms'] = '%d comments on the whole pages, which corresponds to %1.1f comment per page';
+$LANG['pages_num_com'] = '%d comment on the whole pages, which corresponds to %1.1f comment per page';
 $LANG['pages_stats'] = 'Statistics';
 $LANG['pages_tools'] = 'Tools';
 
@@ -90,7 +92,7 @@ $LANG['pages_rename_page'] = 'Rename the page <em>%s</em>';
 $LANG['pages_new_title'] = 'New title of this page';
 $LANG['pages_create_redirection'] = 'Create a redirection from the previous title to the current title?';
 $LANG['pages_explain_rename'] = 'You are just going to rename the page. You have to know that every link pointing up to that page will be broken. That\'s why you have the possibility of creating a redirection from the previous title to the new one, which won\'t break those links.';
-$LANG['pages_confirm_delete_redirection'] = addslashes('Are you sure you want to delete this redirection ?');
+$LANG['pages_confirm_delete_redirection'] = 'Are you sure you want to delete this redirection ?';
 $LANG['pages_delete_redirection'] = 'Delete this redirection';
 $LANG['pages_redirected_from'] = 'Redirected from <em>%s</em>';
 $LANG['pages_redirection_title'] = 'Redirection title';

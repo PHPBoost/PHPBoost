@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 01
+ * @version     PHPBoost 5.3 - last update: 2020 05 24
  * @since       PHPBoost 3.0 - 2011 03 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -205,7 +205,7 @@ class CommentsService
 	 * @param string $topic_identifier topic identifier (use if you have several comments system)
 	 * @return string
 	 */
-	public static function get_lang_comments($module_id, $id_in_module, $topic_identifier = CommentsTopic::DEFAULT_TOPIC_IDENTIFIER)
+	public static function get_lang_comments($module_id, $id_in_module = '', $topic_identifier = CommentsTopic::DEFAULT_TOPIC_IDENTIFIER)
 	{
 		$comments_number = CommentsManager::get_comments_number($module_id, $id_in_module, $topic_identifier);
 		$lang = $comments_number > 1 ? self::$comments_lang['comments'] : self::$comments_lang['comment'];
@@ -245,7 +245,7 @@ class CommentsService
 	 * @param string $topic_identifier topic identifier (use if you have several comments system)
 	 * @return string number comments
 	 */
-	public static function get_comments_number($module_id, $id_in_module, $topic_identifier = CommentsTopic::DEFAULT_TOPIC_IDENTIFIER)
+	public static function get_comments_number($module_id, $id_in_module = '', $topic_identifier = CommentsTopic::DEFAULT_TOPIC_IDENTIFIER)
 	{
 		return CommentsManager::get_comments_number($module_id, $id_in_module, $topic_identifier);
 	}
