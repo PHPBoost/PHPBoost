@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 28
+ * @version     PHPBoost 5.3 - last update: 2020 05 23
  * @since       PHPBoost 1.6 - 2007 08 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -161,6 +161,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 		$tpl->put_all(array(
 			'C_ACTIV_COM' => true,
 			'U_COM' => PagesUrlBuilder::get_link_item_com($page_infos['id']),
+			'COM_NB' => $comments_number,
 			'L_COM' => $comments_number > 0 ? sprintf($LANG['pages_display_coms'], $comments_number) : $LANG['pages_post_com']
 		));
 	}

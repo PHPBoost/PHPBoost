@@ -4,7 +4,7 @@
 	</header>
 	<article id="pages-item-{ID}" class="pages-item single-item">
 		<div class="controls align-right">
-			# IF C_ACTIV_COM #<a href="{U_COM}" aria-label="{L_COM}"><i class="fa fa-fw fa-comments" aria-hidden="true"></i></a># ENDIF #
+			# IF C_ACTIV_COM #<a href="{U_COM}" aria-label="{L_COM}"><i class="fa fa-fw fa-comments" aria-hidden="true"></i>({COM_NB})</a># ENDIF #
 			# IF C_TOOLS_AUTH #
 				<a href="{U_RENAME}" aria-label="{L_RENAME}"><i class="fa fa-fw fa-magic" aria-hidden="true"></i></a>
 				<a href="{U_EDIT}" aria-label="{L_EDIT}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
