@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 05 05
+ * @version   	PHPBoost 5.2 - last update: 2020 05 24
  * @since   	PHPBoost 3.0 - 2012 02 09
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -37,12 +37,12 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 
 		$tpl = new FileTemplate('pages/index.tpl');
 
-		$num_pages = PersistenceContext::get_querier()->count(PREFIX . "pages", 'WHERE redirect = 0');
-		$num_coms = (int)CommentsService::get_number_and_lang_comments('pages', $pages['id']);
+		//$num_pages = PersistenceContext::get_querier()->count(PREFIX . "pages", 'WHERE redirect = 0');
+		//$num_coms = (int)CommentsService::get_number_and_lang_comments('pages', $pages['id']);
 
 		$tpl->put_all(array(
-			'NUM_PAGES' => sprintf($LANG['pages_num_pages'], $num_pages),
-			'NUM_COMS' => sprintf($LANG['pages_num_coms'], $num_coms, ($num_pages > 0 ? $num_coms / $num_pages : 0)),
+			//'NUM_PAGES' => sprintf($LANG['pages_num_pages'], $num_pages),
+			//'NUM_COMS' => sprintf($LANG['pages_num_coms'], $num_coms, ($num_pages > 0 ? $num_coms / $num_pages : 0)),
 			'L_EXPLAIN_PAGES' => $LANG['pages_explain'],
 			'L_STATS' => $LANG['pages_stats']
 		));
