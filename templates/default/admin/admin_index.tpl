@@ -161,7 +161,7 @@
 								# START comments_list #
 									<li>
 										<span class="controls# IF IS_MOBILE_DEVICE # flex-between# ENDIF #">
-											<label class="checkbox" for="multiple-checkbox-{comments_list.COMMENT_NUMBER}">
+											<label class="checkbox" for="multiple-checkbox-{comments_list.COMMENT_NUMBER}" aria-label="${LangLoader::get_message('select.element', 'common')}">
 												<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{comments_list.COMMENT_NUMBER}" name="delete-checkbox-{comments_list.COMMENT_NUMBER}" onclick="delete_button_display({COMMENTS_NUMBER});" />
 												<span>&nbsp;</span>
 											</label>
