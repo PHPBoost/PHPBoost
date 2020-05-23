@@ -42,7 +42,7 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 			'C_PAGES'         => $num_pages > 0,
 			'NUM_PAGES'       => sprintf(($num_pages <= 1 ? $LANG['pages_num_page'] : $LANG['pages_num_pages']), $num_pages),
 			'C_COMS'          => $num_coms > 0,
-			'NUM_COMS'        => sprintf(($num_coms <= 1 ? $LANG['pages_num_com'] : $LANG['pages_num_coms'], $num_coms, ($num_pages > 0 ? $num_coms / $num_pages : 0)),
+			'NUM_COMS'        => sprintf(($num_coms <= 1 ? $LANG['pages_num_com'] : $LANG['pages_num_coms']), $num_coms, ($num_pages > 0 ? $num_coms / $num_pages : 0)),
 			'L_EXPLAIN_PAGES' => $LANG['pages_explain'],
 			'L_STATS'         => $LANG['pages_stats']
 		));
