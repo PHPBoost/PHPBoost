@@ -91,7 +91,7 @@ class UserUsersListController extends AbstractController
 				new HTMLTableRowCell(Date::to_format($row['registration_date'], Date::FORMAT_DAY_MONTH_YEAR)),
 				new HTMLTableRowCell($posted_msg),
 				new HTMLTableRowCell(!empty($row['last_connection_date']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('never', 'main')),
-				new HTMLTableRowCell(new LinkHTMLElement(UserUrlBuilder::personnal_message($row['user_id']), '<i class="far fa-fw fa-envelope"></i>', array('aria-label' => $this->lang['private_message']), 'button small'))
+				new HTMLTableRowCell(new LinkHTMLElement(UserUrlBuilder::personnal_message($row['user_id']), '<i class="far fa-fw fa-people-arrows"></i>', array('aria-label' => $this->lang['private_message']), 'button small'))
 			);
 
 			if (AppContext::get_current_user()->is_admin())

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost - 2014 Some Web Media
  * @license     https://www.opensource.org/licenses/mit-license.php
  * @author      Some Web Media
- * @link        https://github.com/somewebmedia/pushmenu
+ * @link        https://github.com/somewebmedia/hc-offcanvas-nav
  * @version     PHPBoost 5.3 - last update: 2020 05 18
  * @since       PHPBoost 5.3 - 2020 01 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>

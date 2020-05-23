@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 21
+ * @version     PHPBoost 5.3 - last update: 2020  05 23
  * @since       PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -236,6 +236,7 @@ $LANG['recipient'] = 'Recipient';
 $LANG['post_new_convers'] = 'Create a new conversation';
 $LANG['new_pm'] = 'New private message';
 $LANG['pm_conversation_link'] = 'Read the full discussion';
+$LANG['pm.status'] = 'Message status';
 $LANG['read'] = 'Read';
 $LANG['not_read'] = 'Not read';
 $LANG['last_message'] = 'Last message';

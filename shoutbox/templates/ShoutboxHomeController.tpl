@@ -29,7 +29,7 @@
 							</h3>
 							<div class="message-actions">
 								# IF messages.C_DELETE #
-									<label for="multiple-checkbox-{messages.MESSAGE_NUMBER}" class="checkbox">
+									<label for="multiple-checkbox-{messages.MESSAGE_NUMBER}" class="checkbox" aria-label="${LangLoader::get_message('select.element', 'common')}">
 										<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{messages.MESSAGE_NUMBER}" name="delete-checkbox-{messages.MESSAGE_NUMBER}" onclick="delete_button_display({MESSAGES_NUMBER});" />
 										<span>&nbsp;</span>
 									</label>
@@ -70,7 +70,7 @@
 		# END messages #
 		# IF C_MULTIPLE_DELETE_DISPLAYED #
 			<div class="mini-checkbox">
-				<label for="delete-all-checkbox" class="checkbox">
+				<label for="delete-all-checkbox" class="checkbox" aria-label="${LangLoader::get_message('select.all.elements', 'common')}">
 					<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {MESSAGES_NUMBER});">
 					<span aria-label="${LangLoader::get_message('select.all.elements', 'common')}">&nbsp;</span>
 				</label>

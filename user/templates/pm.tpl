@@ -69,9 +69,11 @@
 				<thead>
 					<tr>
 						<th>
-							<i class="fa fa-envelope"></i>
+							<span aria-label="${LangLoader::get_message('select.elements', 'common')}"><i class="far fa-square" aria-hidden="true"></i></span>
 						</th>
-						<th></th>
+						<th>
+							<span aria-label="${LangLoader::get_message('pm.status', 'main')}"><i class="fa fa-eye" aria-hidden="true"></i></span>
+						</th>
 						<th>
 							{L_TITLE}
 						</th>
@@ -90,13 +92,13 @@
 					# START convers.list #
 						<tr>
 							<td>
-								<label for="d{convers.list.INCR}" class="checkbox">
+								<label for="d{convers.list.INCR}" class="checkbox" aria-label="${LangLoader::get_message('select.element', 'common')}">
 									<input type="checkbox" id="d{convers.list.INCR}" name="{convers.list.ID}" />
 									<span>&nbsp;</span>
 								</label>
 							</td>
 							<td class="convers-announce">
-								<i class="fa fa-envelope {convers.list.ANNOUNCE}"></i>
+								<span aria-label="${LangLoader::get_message('pm.status', 'main')}"><i class="fa fa-people-arrows {convers.list.ANNOUNCE}" aria-hidden="true"></i></span>
 							</td>
 							<td class="convers-title">
 								{convers.list.ANCRE} <a href="pm{convers.list.U_CONVERS}">{convers.list.TITLE}</a> &nbsp;<span class="smaller">[{convers.list.U_AUTHOR}]</span>
@@ -125,7 +127,7 @@
 					<tr>
 						<td colspan="6">
 							<div class="align-left">
-								<label for="validc" class="checkbox">
+								<label for="validc" class="checkbox" aria-label="${LangLoader::get_message('select.all.elements', 'common')}">
 									<input type="checkbox" id="validc" onclick="check_convers(this.checked, 'd');" />
 									<span>&nbsp;</span>
 								</label>
@@ -141,13 +143,13 @@
 			<table class="table-no-header announce-legend">
 				<tr>
 					<td>
-						<i class="fa fa-envelope message-announce" aria-hidden="true"></i> {L_READ}
+						<i class="fa fa-people-arrows message-announce" aria-hidden="true"></i> {L_READ}
 					</td>
 					<td>
-						<i class="fa fa-envelope message-announce-track" aria-hidden="true"></i> {L_TRACK}
+						<i class="fa fa-people-arrows message-announce-track" aria-hidden="true"></i> {L_TRACK}
 					</td>
 					<td>
-						<i class="fa fa-envelope message-announce-new" aria-hidden="true"></i> {L_NOT_READ}
+						<i class="fa fa-people-arrows message-announce-new" aria-hidden="true"></i> {L_NOT_READ}
 					</td>
 				</tr>
 			</table>

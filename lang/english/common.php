@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 08
+ * @version     PHPBoost 5.3 - last update: 2020 05 23
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -198,5 +198,7 @@ $lang['pagination.page'] = 'To Page';
 
 //Multiple select
 $lang['select'] = 'Select';
+$lang['select.element'] = 'Select this element';
+$lang['select.elements'] = 'Select elements';
 $lang['select.all.elements'] = 'Select all elements';
 ?>

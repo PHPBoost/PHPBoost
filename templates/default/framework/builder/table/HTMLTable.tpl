@@ -22,7 +22,7 @@
 			# ENDIF #
 			<thead>
 				<tr>
-					# IF C_MULTIPLE_DELETE_DISPLAYED #<th><span class="sr-only">${LangLoader::get_message('select', 'common')}</span></th># ENDIF #
+					# IF C_MULTIPLE_DELETE_DISPLAYED #<th><span aria-label="${LangLoader::get_message('select.elements', 'common')}"><i class="far fa-square" aria-hidden="true"></i></span></th># ENDIF #
 					# START header_column #
 						<th
 							# IF header_column.C_CSS_CLASSES # class="{header_column.CSS_CLASSES}"# ENDIF #
@@ -56,7 +56,7 @@
 					# IF C_MULTIPLE_DELETE_DISPLAYED #
 						<td class="mini-checkbox">
 							# IF row.C_DISPLAY_DELETE_INPUT #
-								<label for="multiple-checkbox-{row.ELEMENT_NUMBER}" class="checkbox">
+								<label for="multiple-checkbox-{row.ELEMENT_NUMBER}" class="checkbox" aria-label="${LangLoader::get_message('select.element', 'common')}">
 									<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{row.ELEMENT_NUMBER}" name="delete-checkbox-{row.ELEMENT_NUMBER}" onclick="delete_button_display({ELEMENTS_NUMBER});" />
 									<span>&nbsp;<span class="sr-only">${LangLoader::get_message('select', 'common')}</span></span>
 								</label>
@@ -82,9 +82,9 @@
 							<div class="flex-between">
 								# IF C_MULTIPLE_DELETE_DISPLAYED #
 									<div class="mini-checkbox">
-										<label for="delete-all-checkbox" class="checkbox">
+										<label for="delete-all-checkbox" class="checkbox" aria-label="${LangLoader::get_message('select.all.elements', 'common')}">
 											<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {ELEMENTS_NUMBER});">
-											<span aria-label="${LangLoader::get_message('select.all.elements', 'common')}">&nbsp;</span>
+											<span>&nbsp;</span>
 										</label>
 										<input type="hidden" name="token" value="{TOKEN}" />
 										<button type="submit" id="delete-all-button" name="delete-selected-elements" value="true" class="button submit" data-confirmation="delete-element" disabled="disabled">${LangLoader::get_message('delete', 'common')}</button>

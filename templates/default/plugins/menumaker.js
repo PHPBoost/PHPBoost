@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost - 2015 CssMenuMaker
  * @license     https://www.opensource.org/licenses/mit-license.php
  * @author      CssMenuMaker
- * @link        https://app.cssmenumaker.com/?theme_id=8
+ * @link        https://github.com/cssmenumaker/jQuery-Plugin-Responsive-Drop-Down
  * @version     PHPBoost 5.3 - last update: 2019 11 18
  * @since       PHPBoost 5.0 - 2016 03 30
  * @contributor Arnaud GENET <elenwii@phpboost.com>
