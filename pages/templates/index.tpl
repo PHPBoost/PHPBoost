@@ -11,6 +11,8 @@
 	<div class="content">
 		{L_EXPLAIN_PAGES}
 		<hr />
+		<p>{NUM_PAGES}</p>
+		<p>{NUM_COMS}</p>
 		<div class="explorer">
 			<div class="cats">
 				<h2>{L_EXPLORER}</h2>
