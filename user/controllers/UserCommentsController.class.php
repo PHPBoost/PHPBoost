@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 01
+ * @version   	PHPBoost 5.2 - last update: 2020 05 23
  * @since   	PHPBoost 3.0 - 2012 02 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -142,9 +142,7 @@ class UserCommentsController extends AbstractController
 
 		$comments_tpl = new FileTemplate('framework/content/comments/comments.tpl');
 		$comments_tpl->put_all(array(
-			'COMMENTS_LIST' => $template,
-			'MODULE_ID' => $row['module_id'],
-			'ID_IN_MODULE' => $row['id_in_module']
+			'COMMENTS_LIST' => $template
 		));
 		return $comments_tpl;
 	}
