@@ -73,9 +73,9 @@ class SandboxBuilderController extends ModuleController
 			'INPUT_MARKUP'    => self::build_markup('sandbox/pagecontent/builder/input.tpl'),
 			'TEXTAREA_MARKUP' => self::build_markup('sandbox/pagecontent/builder/textarea.tpl'),
 			'CHECKBOX_MARKUP' => self::build_markup('sandbox/pagecontent/builder/checkbox.tpl'),
-			'RADIO_MARKUP' => self::build_markup('sandbox/pagecontent/builder/radio.tpl'),
-			'SELECT_MARKUP' => self::build_markup('sandbox/pagecontent/builder/select.tpl'),
-			'DND_MARKUP' => self::build_markup('sandbox/pagecontent/builder/dnd.tpl'),
+			'RADIO_MARKUP'    => self::build_markup('sandbox/pagecontent/builder/radio.tpl'),
+			'SELECT_MARKUP'   => self::build_markup('sandbox/pagecontent/builder/select.tpl'),
+			'DND_MARKUP'      => self::build_markup('sandbox/pagecontent/builder/dnd.tpl'),
 			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
 		));
 

@@ -304,9 +304,8 @@
 			</ul>
 		</nav>
 	</div>
-	<script src="{PATH_TO_ROOT}/sandbox/templates/js/sandbox.js"></script>
 	<script>
-	    $('#pushmenu-component').pushmenu({
+	    jQuery('#pushmenu-component').pushmenu({
 			customToggle: jQuery('.component-toggle'), // null
 			navTitle: '{@sandbox.module.title}', // null
 			pushContent: '{PUSHED_CONTENT}',
@@ -314,7 +313,7 @@
 			# IF C_NO_EXPANSION #
 				levelOpen: false,
 			# ELSE #
-				levelOpen: '{EXPANSION_TYPE}', // 'overlap', 'expand', false
+				levelOpen: '{EXPANSION_TYPE}', // 'overlap', 'expand'
 			# ENDIF #
 			levelTitles: true, // overlap only
 			levelSpacing: 40, // px - overlap only
@@ -326,6 +325,16 @@
 			insertBack: true,
 			labelBack: ${escapejs(LangLoader::get_message('back', 'main'))}
 	    });
+
+		// get window sizes on resize
+		jQuery('#window-width').append(jQuery(window).innerWidth() + 'px');
+		jQuery('#window-height').append(jQuery(window).innerHeight() + 'px');
+		jQuery(window).on('resize', function() {
+		    jQuery('#window-width').empty();
+		    jQuery('#window-width').append(jQuery(window).innerWidth() + 'px');
+		    jQuery('#window-height').empty();
+		    jQuery('#window-height').append(jQuery(window).innerHeight() + 'px');
+		});
 	</script>
 	<script src="{PATH_TO_ROOT}/templates/default/plugins/form/validator.js"></script>
 	<script src="{PATH_TO_ROOT}/templates/default/plugins/form/form.js"></script>

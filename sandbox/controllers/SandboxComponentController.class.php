@@ -53,9 +53,9 @@ class SandboxComponentController extends ModuleController
 			'NOTATION'        => self::build_markup('sandbox/pagecontent/components/notation.tpl'),
 			'SORTABLE'        => self::build_markup('sandbox/pagecontent/components/sortable.tpl'),
 			'TOOLTIP'         => self::build_markup('sandbox/pagecontent/components/tooltip.tpl'),
-			'MODAL'			  => self::build_modal_markup(),
-			'PAGINATION'      => self::build_pagination_markup(),
-			'TABLE'           => self::build_table_markup(),
+			'MODAL'			  => self::build_markup('sandbox/pagecontent/components/modal.tpl'),
+			'PAGINATION'      => self::build_markup('sandbox/pagecontent/components/pagination.tpl'),
+			'TABLE'           => self::build_markup('sandbox/pagecontent/components/table.tpl'),
 			'MESSAGE_HELPER'  => self::build_alert_markup(),
 			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
 		));
@@ -74,15 +74,20 @@ class SandboxComponentController extends ModuleController
 		$view = new FileTemplate($tpl);
 		$view->add_lang($this->lang);
 		$view->add_lang($this->common_lang);
-		return $view;
-	}
 
-	private function build_modal_markup()
-	{
-		$view = new FileTemplate('sandbox/pagecontent/components/modal.tpl');
-		$view->add_lang($this->lang);
-		$view->add_lang($this->common_lang);
-		$view->put('MODAL_FORM', $this->build_modal_form()->display());
+		$pagination_full = new ModulePagination(2, 15, 5);
+		$pagination_full->set_url(new Url('#%d'));
+		$pagination_light = new ModulePagination(2, 15, 5, Pagination::LIGHT_PAGINATION);
+		$pagination_light->set_url(new Url('#%d'));
+		$pagination = new ModulePagination(2, 15, 5);
+		$pagination->set_url(new Url('#%d'));
+
+		$view->put_all(array(
+			'MODAL_FORM'       => $this->build_modal_form()->display(),
+			'PAGINATION_FULL'  => $pagination_full->display(),
+			'PAGINATION_LIGHT' => $pagination_light->display(),
+			'PAGINATION_TABLE' => $pagination->display()
+		));
 		return $view;
 	}
 
@@ -133,35 +138,6 @@ class SandboxComponentController extends ModuleController
 			$modal_04->set_description($this->common_lang['lorem.short.content']);
 
 		return $modal_form;
-	}
-
-	private function build_pagination_markup()
-	{
-		$view = new FileTemplate('sandbox/pagecontent/components/pagination.tpl');
-		$view->add_lang($this->lang);
-		$view->add_lang($this->common_lang);
-
-		$pagination_full = new ModulePagination(2, 15, 5);
-		$pagination_full->set_url(new Url('#%d'));
-		$view->put('PAGINATION_FULL', $pagination_full->display());
-
-		$pagination_light = new ModulePagination(2, 15, 5, Pagination::LIGHT_PAGINATION);
-		$pagination_light->set_url(new Url('#%d'));
-		$view->put('PAGINATION_LIGHT', $pagination_light->display());
-
-		return $view;
-	}
-
-	private function build_table_markup()
-	{
-		$view = new FileTemplate('sandbox/pagecontent/components/table.tpl');
-		$view->add_lang($this->lang);
-		$view->add_lang($this->common_lang);
-
-		$pagination = new ModulePagination(2, 15, 5);
-		$pagination->set_url(new Url('#%d'));
-		$view->put('PAGINATION_TABLE', $pagination->display());
-		return $view;
 	}
 
 	private function build_alert_markup()

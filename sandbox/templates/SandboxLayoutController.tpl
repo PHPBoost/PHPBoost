@@ -2,14 +2,12 @@
 	# INCLUDE SANDBOX_SUBMENU #
 	<header>
 		<h1>
-			{@sandbox.module.title} - {@title.component}
+			{@sandbox.module.title} - {@layout.title.layouts}
 		</h1>
 	</header>
 
-
-	<div id="component" class="sandbox-block">
-		<h2>{@component.title.component}</h2>
-	</div>
+	# INCLUDE MESSAGE #
+	# INCLUDE SORTABLE #
 
 
 	<footer></footer>

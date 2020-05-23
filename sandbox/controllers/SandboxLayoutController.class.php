@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 28
+ * @version     PHPBoost 5.3 - last update: 2020 05 22
  * @since       PHPBoost 5.3 - 2020 03 04
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -28,7 +28,7 @@ class SandboxLayoutController extends ModuleController
 	private function init()
 	{
 		$this->common_lang = LangLoader::get('common', 'sandbox');
-		$this->lang = LangLoader::get('component', 'sandbox');
+		$this->lang = LangLoader::get('layout', 'sandbox');
 		$this->view = new FileTemplate('sandbox/SandboxLayoutController.tpl');
 		$this->view->add_lang($this->common_lang);
 		$this->view->add_lang($this->lang);
@@ -37,22 +37,27 @@ class SandboxLayoutController extends ModuleController
 	private function build_view()
 	{
 		$this->view->put_all(array(
-			'NO_AVATAR_URL'   => Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(UserAccountsConfig::NO_AVATAR_URL)),
-			'MESSAGE'         => self::build_message_view(),
+			'MESSAGE'         => self::build_markup('sandbox/pagecontent/layout/message.tpl'),
+			'CELL_LAYOUT' => self::build_markup('sandbox/pagecontent/layout/cell_layout.tpl'),
+			'SORTABLE' => self::build_markup('sandbox/pagecontent/layout/sortable.tpl'),
 			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
 		));
 	}
 
-	private function build_message_view()
+	private function build_markup($tpl)
 	{
-		$this->lang = LangLoader::get('component', 'sandbox');
-		$this->common_lang = LangLoader::get('common', 'sandbox');
-		$message_tpl = new FileTemplate('sandbox/pagecontent/layout/message.tpl');
-		$message_tpl->add_lang($this->lang);
-		$message_tpl->add_lang($this->common_lang);
-		$message_tpl->put('NO_AVATAR_URL', Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(UserAccountsConfig::NO_AVATAR_URL)));
+		$view = new FileTemplate($tpl);
+		$view->add_lang($this->lang);
+		$view->add_lang($this->common_lang);
 
-		return $message_tpl;
+		$date = new Date();
+		$view->put_all(array(
+			'TODAY' => $date->format(Date::FORMAT_DAY_MONTH_YEAR),
+			'TODAY_TIME' => $date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
+			'NO_AVATAR_URL' => Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(UserAccountsConfig::NO_AVATAR_URL))
+		));
+
+		return $view;
 	}
 
 	private function check_authorizations()
@@ -68,11 +73,10 @@ class SandboxLayoutController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->common_lang['title.component'], $this->common_lang['title.layout'], $this->common_lang['sandbox.module.title']);
+		$graphical_environment->set_page_title($this->common_lang['title.layout'], $this->common_lang['sandbox.module.title']);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->common_lang['sandbox.module.title'], SandboxUrlBuilder::home()->rel());
-		$breadcrumb->add($this->common_lang['title.component']);
 		$breadcrumb->add($this->common_lang['title.layout']);
 
 		return $response;
