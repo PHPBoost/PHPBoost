@@ -69,7 +69,7 @@
 				<thead>
 					<tr>
 						<th>
-							<span aria-label="${LangLoader::get_message('select.elements', 'common')}"><i class="fa fa-check" aria-hidden="true"></i></span>
+							<span aria-label="${LangLoader::get_message('select.elements', 'common')}"><i class="far fa-square" aria-hidden="true"></i></span>
 						</th>
 						<th>
 							<span aria-label="${LangLoader::get_message('pm.status', 'main')}"><i class="fa fa-eye" aria-hidden="true"></i></span>

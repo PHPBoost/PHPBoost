@@ -165,7 +165,7 @@
 												<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{comments_list.COMMENT_NUMBER}" name="delete-checkbox-{comments_list.COMMENT_NUMBER}" onclick="delete_button_display({COMMENTS_NUMBER});" />
 												<span>&nbsp;</span>
 											</label>
-											<a href="{comments_list.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+											<a href="{comments_list.U_DELETE}" aria-label="${LangLoader::get_message('select.element', 'common')}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 											<a href="{comments_list.U_LINK}" aria-label="${LangLoader::get_message('pm_conversation_link', 'main')}">
 												<i class="far fa-fw fa-hand-point-right" aria-hidden="true"></i> {comments_list.MODULE_NAME}
 											</a>
@@ -178,9 +178,9 @@
 									<p class="align-center"><a class="d-inline-block button bgc-full link-color" href="${relative_url(UserUrlBuilder::comments())}">{L_VIEW_ALL_COMMENTS}</a></p>
 								</li>
 								<li class="mini-checkbox">
-									<label for="delete-all-checkbox" class="checkbox">
+									<label for="delete-all-checkbox" class="checkbox" aria-label="${LangLoader::get_message('select.all.comments', 'comments-common')}">
 										<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {COMMENTS_NUMBER});">
-										<span aria-label="${LangLoader::get_message('select.all.comments', 'comments-common')}">&nbsp;</span>
+										<span>&nbsp;</span>
 									</label>
 									<input type="hidden" name="token" value="{TOKEN}" />
 									<button type="submit" id="delete-all-button" name="delete-selected-comments" value="true" class="button submit" data-confirmation="delete-element" disabled="disabled">${LangLoader::get_message('delete', 'common')}</button>

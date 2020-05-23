@@ -60,7 +60,7 @@ class UserCommentsController extends AbstractController
 		$this->tpl->add_lang($this->lang);
 		$this->tpl->put('MODULE_CHOICE_FORM', $this->build_modules_choice_form()->display());
 		$this->tpl->put('COMMENTS', $this->build_view($request));
-		
+
 		if ($request->get_string('delete-selected-comments', false))
 		{
 			for ($i = 1 ; $i <= $this->comments_number ; $i++)
@@ -117,10 +117,10 @@ class UserCommentsController extends AbstractController
 			$id = $row['id_comment'];
 			$path = $row['path'];
 			$this->ids[$this->comments_number] = $id;
-			
+
 			if ($row['user_id'] == $this->current_user->get_id())
 				$display_delete_button = true;
-			
+
 			$timestamp = new Date($row['comment_timestamp'], Timezone::SERVER_TIMEZONE);
 
 			$group_color = User::get_group_color($row['groups'], $row['level']);
@@ -172,7 +172,7 @@ class UserCommentsController extends AbstractController
 			'COMMENTS_LIST'   => $template,
 			'COMMENTS_NUMBER' => $this->comments_number
 		));
-		
+
 		return $comments_tpl;
 	}
 
