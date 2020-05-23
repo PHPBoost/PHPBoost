@@ -26,7 +26,7 @@
 
 /* Toggle button position */
 
-.component-toggle {
+.fwkboost-toggle {
     padding: 0.1em 0.618em;
     text-align: center;
     z-index: 399;
@@ -38,7 +38,7 @@
 	opacity: 0.3;
 }
 
-.component-toggle:hover {
+.fwkboost-toggle:hover {
     opacity: 1;
     text-decoration: none;
 }
@@ -46,7 +46,7 @@
 .nav-item .mini-toolbox > .warning.blink { margin-right: 1.618em;}
 
 @media (min-width: 769px) {
-	.component-toggle {
+	.fwkboost-toggle {
     	padding: 0.5em 1.618em;
         position: fixed;
 	}

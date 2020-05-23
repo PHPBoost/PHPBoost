@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 08
+ * @version     PHPBoost 5.3 - last update: 2020 05 23
  * @since       PHPBoost 5.1 - 2017 09 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -149,7 +149,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 			'PHP_VERSION'  => ServerConfiguration::get_phpversion(),
 			'DBMS_VERSION' => PersistenceContext::get_dbms_utils()->get_dbms_version(),
 			'INSTALL_DATE' => GeneralConfig::load()->get_site_install_date()->format(Date::FORMAT_DAY_MONTH_YEAR),
-			'COMMENTS_NB'  => count(CommentsCache::load()->get_comments()),
+			'COMMENTS_NB'  => CommentsCache::load()->get_count_comments(),
 			'ERRORS_NB'    => count($this->get_logged_errors_nb()),
 			'404_NB'       => $nb_404,
 

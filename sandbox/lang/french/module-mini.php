@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 02
+ * @version     PHPBoost 5.3 - last update: 2020 05 23
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -45,7 +45,7 @@ $lang['mini.user'] = 'Utilisateurs';
 $lang['mini.theme'] = 'Thèmes';
 $lang['mini.mod'] = 'Modules';
 
-$lang['mini.component'] = 'FWKBoost';
+$lang['mini.fwkboost'] = 'FWKBoost';
 $lang['mini.home'] = 'Accueil';
 $lang['mini.admin'] = 'Administration du mini';
 
