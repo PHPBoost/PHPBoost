@@ -76,7 +76,7 @@
 			if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 			{
 				if( document.getElementById('forum_track_pm_img') )
-					document.getElementById('forum_track_pm_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-envelope error"></i>' : '<i class="fa fa-envelope-open-text success"></i>';
+					document.getElementById('forum_track_pm_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-people-arrows error"></i>' : '<i class="fa fa-people-arrows-open-text success"></i>';
 				if( document.getElementById('forum_track_pm_msg') )
 					document.getElementById('forum_track_pm_msg').innerHTML = xhr_object.responseText == '1' ? "{L_UNSUBSCRIBE_PM}" : "{L_SUBSCRIBE_PM}";
 				is_track_pm = xhr_object.responseText == '1' ? true : false;
@@ -214,10 +214,10 @@
 						</div>
 						<div class="message-user-links">
 							# IF msg.C_USER_PM #
-								<a href="{msg.U_USER_PM}" class="button submit smaller user-pm">${LangLoader::get_message('pm', 'main')}</a>
+								<a href="{msg.U_USER_PM}" class="button submit smaller user-pm" aria-label="${LangLoader::get_message('pm', 'main')}"><i class="fa fa-people-arrows fa-fw"></i></a>
 							# ENDIF #
 							# IF msg.C_USER_MAIL #
-								<a href="{msg.U_USER_MAIL}" class="button submit smaller user-mail">${LangLoader::get_message('mail', 'main')}</a>
+								<a href="{msg.U_USER_MAIL}" class="button submit smaller user-mail" aria-label="${LangLoader::get_message('mail', 'main')}"><i class="fa fa-mail-bulk fa-fw"></i></a>
 							# ENDIF #
 							# START msg.ext_fields #
 								{msg.ext_fields.BUTTON}

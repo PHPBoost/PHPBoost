@@ -100,7 +100,7 @@
 						<span>{L_PRIVATE_PROFIL}</span>
 						# IF C_HAS_PM #
 							<span class="stacked blink member">
-								<i class="fa fa-fw fa-envelope" aria-hidden="true"></i>
+								<i class="fa fa-fw fa-people-arrows" aria-hidden="true"></i>
 								<span class="stack-event stack-circle stack-sup stack-right bgc member">{NUMBER_PM}</span>
 							</span>
 						# ENDIF #
@@ -129,7 +129,7 @@
 						</li>
 						<li class="# IF C_VERTICAL #li-stretch # ELSE #li-spaced # ENDIF #connect-pm">
 							<span # IF C_HAS_PM #class="stacked blink member"# ENDIF #>
-								<i class="fa fa-fw fa-envelope" aria-hidden="true"></i>
+								<i class="fa fa-fw fa-people-arrows" aria-hidden="true"></i>
 								# IF C_HAS_PM #<span class="stack-event stack-circle stack-sup stack-right bgc member">{NUMBER_PM}</span> # ENDIF #
 							</span>
 							<a href="{U_USER_PM}">

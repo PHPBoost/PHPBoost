@@ -18,11 +18,11 @@
 				<a href="{U_USER_PM}">
 					# IF C_HAS_PM #
 						<span class="stacked blink">
-							<i class="fa fa-envelope fa-2x" aria-hidden="true"></i>
+							<i class="fa fa-people-arrows fa-2x" aria-hidden="true"></i>
 							<span class="stack-event stack-right stack-circle bgc-full error text-strong">{NUMBER_PM}</span>
 						</span>
 					# ELSE #
-						<i class="fa fa-envelope fa-2x"></i>
+						<i class="fa fa-people-arrows fa-2x"></i>
 					# END IF #
 					<span class="profile-element-title">${LangLoader::get_message('private_message', 'main')}</span>
 				</a>

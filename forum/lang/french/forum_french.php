@@ -93,7 +93,7 @@ $LANG['alert_success'] = 'Vous avez signalé avec succès la non-conformité du 
 $LANG['alert_topic_already_done'] = 'Nous vous remercions d\'avoir pris l\'initiative d\'aider l\'équipe modératrice, mais un membre a déjà signalé une non-conformité de ce sujet.';
 $LANG['alert_back'] = 'Retour au sujet';
 $LANG['explain_track'] = '
-    Cocher la case <span class="text-strong">MP</span> (<i class="far fa-envelope"></i>) pour recevoir un message privé,
+    Cocher la case <span class="text-strong">MP</span> (<i class="far fa-people-arrows"></i>) pour recevoir un message privé,
     <span class="text-strong">Mail</span> (<i class="fa fa-mail-bulk"></i>) pour un email, lors d\'une réponse au sujet suivi.
     <br />Cocher la case <span class="text-strong">supprimer</span> (<i class="far fa-trash-alt"></i>) pour ne plus suivre le sujet.';
 $LANG['sub_forums'] = 'Sous-forums';

@@ -39,7 +39,7 @@
 						<th class="forum-pm" aria-label="{L_PM}">
 							<label for="" class="checkbox">
 								<input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'p');">
-								<span><i class="fa fa-envelope hidden-small-screens" aria-hidden="true"></i></span>
+								<span><i class="fa fa-people-arrows hidden-small-screens" aria-hidden="true"></i></span>
 							</label>
 							<span class="hidden-large-screens">{L_PM}</span>
 						</th>
