@@ -97,7 +97,7 @@
 			if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 			{
 				if( document.getElementById('forum_track_mail_img') )
-					document.getElementById('forum_track_mail_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-at error"></i>' : '<i class="fa fa-at success"></i>';
+					document.getElementById('forum_track_mail_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-mail-bulk error"></i>' : '<i class="fa fa-mail-bulk success"></i>';
 				if( document.getElementById('forum_track_mail_msg') )
 					document.getElementById('forum_track_mail_msg').innerHTML = xhr_object.responseText == '1' ? "{L_UNSUBSCRIBE}" : "{L_SUBSCRIBE}";
 				is_track_mail = xhr_object.responseText == '1' ? true : false;

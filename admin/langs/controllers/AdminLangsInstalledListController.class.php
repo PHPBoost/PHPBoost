@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 03 21
+ * @version     PHPBoost 5.3 - last update: 2020 05 23
  * @since       PHPBoost 3.0 - 2011 04 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -92,7 +92,7 @@ class AdminLangsInstalledListController extends AdminController
 				}
 				$lang_number++;
 			}
-			
+
 			$number_ids = count($lang_ids);
 			if ($number_ids > 1)
 			{
@@ -103,7 +103,7 @@ class AdminLangsInstalledListController extends AdminController
 			}
 			else
 				$id = $number_ids ? $lang_ids[0] : '';
-			
+
 			if ($number_ids)
 				AppContext::get_response()->redirect(AdminLangsUrlBuilder::uninstall($id));
 		}

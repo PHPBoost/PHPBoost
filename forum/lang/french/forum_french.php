@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 18
+ * @version     PHPBoost 5.3 - last update: 2020 05 23
  * @since       PHPBoost 1.6 - 2006 11 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -94,7 +94,7 @@ $LANG['alert_topic_already_done'] = 'Nous vous remercions d\'avoir pris l\'initi
 $LANG['alert_back'] = 'Retour au sujet';
 $LANG['explain_track'] = '
     Cocher la case <span class="text-strong">MP</span> (<i class="far fa-envelope"></i>) pour recevoir un message privé,
-    <span class="text-strong">Mail</span> (<i class="fa fa-at"></i>) pour un email, lors d\'une réponse au sujet suivi.
+    <span class="text-strong">Mail</span> (<i class="fa fa-mail-bulk"></i>) pour un email, lors d\'une réponse au sujet suivi.
     <br />Cocher la case <span class="text-strong">supprimer</span> (<i class="far fa-trash-alt"></i>) pour ne plus suivre le sujet.';
 $LANG['sub_forums'] = 'Sous-forums';
 $LANG['moderation_forum'] = 'Modération du forum';
