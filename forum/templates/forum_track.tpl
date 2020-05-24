@@ -46,7 +46,7 @@
 						<th class="forum-mail" aria-label="{L_MAIL}">
 							<label for="" class="checkbox">
 								<input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'm');">
-								<span><i class="fa fa-mail-bulk hidden-small-screens" aria-hidden="true"></i></span>
+								<span><i class="fa iboost fa-iboost-email hidden-small-screens" aria-hidden="true"></i></span>
 							</label>
 							<span class="hidden-large-screens">{L_MAIL}</span>
 						</th>

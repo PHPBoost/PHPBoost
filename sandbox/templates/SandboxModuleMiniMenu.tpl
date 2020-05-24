@@ -205,7 +205,7 @@
 								</li>
 								<li>
 									<a href="${relative_url(SandboxUrlBuilder::email())}">
-										<i class="fa fa-mail-bulk fa-fw" aria-hidden="true"></i>
+										<i class="fa iboost fa-iboost-email fa-fw" aria-hidden="true"></i>
 										<span>{@title.email}</span>
 									</a>
 								</li>

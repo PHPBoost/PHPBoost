@@ -584,7 +584,7 @@
 			</li>
 			<li id="links-mail" class="bbcode-elements">
 				<span class="bbcode-button{AUTH_MAIL}" # IF NOT C_DISABLED_MAIL #data-modal# ENDIF # data-target="block-mail{FIELD}" role="button" aria-label="{@bbcode.mail}">
-					<i class="fa fa-fw fa-mail-bulk" aria-hidden="true"></i>
+					<i class="fa fa-fw iboost fa-iboost-email" aria-hidden="true"></i>
 				</span>
 				<div id="block-mail{FIELD}" class="modal modal-animation">
 					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>

@@ -97,7 +97,7 @@
 			if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 			{
 				if( document.getElementById('forum_track_mail_img') )
-					document.getElementById('forum_track_mail_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-mail-bulk error"></i>' : '<i class="fa fa-mail-bulk success"></i>';
+					document.getElementById('forum_track_mail_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa iboost fa-iboost-email error"></i>' : '<i class="fa iboost fa-iboost-email success"></i>';
 				if( document.getElementById('forum_track_mail_msg') )
 					document.getElementById('forum_track_mail_msg').innerHTML = xhr_object.responseText == '1' ? "{L_UNSUBSCRIBE}" : "{L_SUBSCRIBE}";
 				is_track_mail = xhr_object.responseText == '1' ? true : false;
@@ -217,7 +217,7 @@
 								<a href="{msg.U_USER_PM}" class="button submit smaller user-pm" aria-label="${LangLoader::get_message('pm', 'main')}"><i class="fa fa-people-arrows fa-fw"></i></a>
 							# ENDIF #
 							# IF msg.C_USER_MAIL #
-								<a href="{msg.U_USER_MAIL}" class="button submit smaller user-mail" aria-label="${LangLoader::get_message('mail', 'main')}"><i class="fa fa-mail-bulk fa-fw"></i></a>
+								<a href="{msg.U_USER_MAIL}" class="button submit smaller user-mail" aria-label="${LangLoader::get_message('mail', 'main')}"><i class="fa iboost fa-iboost-email fa-fw"></i></a>
 							# ENDIF #
 							# START msg.ext_fields #
 								{msg.ext_fields.BUTTON}

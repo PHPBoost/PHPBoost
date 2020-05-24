@@ -76,7 +76,7 @@
 								<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span>
 								<span>
 									{themes_installed.AUTHOR}
-									# IF themes_installed.C_AUTHOR_EMAIL # <a href="mailto:{themes_installed.AUTHOR_EMAIL}" class="pinned bgc notice" aria-label="${LangLoader::get_message('email', 'user-common')}"><i class="fa fa-mail-bulk fa-fw" aria-hidden="true"></i></a># ENDIF #
+									# IF themes_installed.C_AUTHOR_EMAIL # <a href="mailto:{themes_installed.AUTHOR_EMAIL}" class="pinned bgc notice" aria-label="${LangLoader::get_message('email', 'user-common')}"><i class="fa iboost fa-iboost-email fa-fw" aria-hidden="true"></i></a># ENDIF #
 									# IF themes_installed.C_AUTHOR_WEBSITE # <a href="{themes_installed.AUTHOR_WEBSITE}" class="pinned bgc question" aria-label="${LangLoader::get_message('index.site', 'main')}"><i class="fa fa-share-square fa-fw" aria-hidden="true"></i></a> # ENDIF #
 								</span>
 							</li>

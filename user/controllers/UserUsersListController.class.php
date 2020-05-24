@@ -87,7 +87,7 @@ class UserUsersListController extends AbstractController
 
 			$html_table_row = array(
 				new HTMLTableRowCell($author),
-				new HTMLTableRowCell($row['show_email'] == 1 ? new LinkHTMLElement('mailto:' . $row['email'], '<i class="fa fa-fw fa-mail-bulk"></i>', array('aria-label' => $this->lang['email']), 'button small') : ''),
+				new HTMLTableRowCell($row['show_email'] == 1 ? new LinkHTMLElement('mailto:' . $row['email'], '<i class="fa fa-fw iboost fa-iboost-email"></i>', array('aria-label' => $this->lang['email']), 'button small') : ''),
 				new HTMLTableRowCell(Date::to_format($row['registration_date'], Date::FORMAT_DAY_MONTH_YEAR)),
 				new HTMLTableRowCell($posted_msg),
 				new HTMLTableRowCell(!empty($row['last_connection_date']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('never', 'main')),

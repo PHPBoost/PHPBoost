@@ -33,7 +33,7 @@
 						<ul class="level-2">
 							<li><a href="${relative_url(AdminConfigUrlBuilder::general_config())}"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{L_CONFIG_GENERAL}</a></li>
 							<li><a href="${relative_url(AdminConfigUrlBuilder::advanced_config())}"><i aria-hidden="true" class="fa fa-fw fa-cogs"></i>{L_CONFIG_ADVANCED}</a></li>
-							<li><a href="${relative_url(AdminConfigUrlBuilder::mail_config())}"><i aria-hidden="true" class="fa fa-fw fa-mail-bulk"></i>{L_MAIL_CONFIG}</a></li>
+							<li><a href="${relative_url(AdminConfigUrlBuilder::mail_config())}"><i aria-hidden="true" class="fa fa-fw iboost fa-iboost-email"></i>{L_MAIL_CONFIG}</a></li>
 						</ul>
 					</li>
 					<li>
