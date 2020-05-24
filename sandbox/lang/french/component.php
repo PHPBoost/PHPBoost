@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 09
+ * @version     PHPBoost 5.3 - last update: 2020 05 24
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -93,19 +93,12 @@ $lang['component.panel'] = 'Panneau';
 // Modal
 $lang['component.modal'] = 'Modal';
 
-
 // Pagination
 $lang['component.pagination'] = 'Pagination';
 $lang['component.pagination.prev'] = 'Vers la première page';
 $lang['component.pagination.page'] = 'Vers la page';
 $lang['component.pagination.this'] = 'Page courrante';
 $lang['component.pagination.next'] = 'Vers la dernière page';
-
-$lang['component.sortable'] = 'Sortable Drag & Drop';
-$lang['component.static.sortable'] = 'Sortable positionné';
-$lang['component.moving.sortable'] = 'Sortable en mouvement';
-$lang['component.dropzone'] = 'déplacer ici';
-$lang['component.sortable.move'] = 'Déplacer';
 
 // Blockquote
 $lang['component.quote'] = 'Citation';

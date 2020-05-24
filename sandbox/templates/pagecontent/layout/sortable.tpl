@@ -1,4 +1,4 @@
-<div id="messages" class="sandbox-block">
+<div id="sortables" class="sandbox-block">
 
     <article>
         <header>
@@ -69,6 +69,25 @@
                     <input type="hidden" name="tree" id="tree" value="">
                 </fieldset>
             </form>
+        </div>
+        <div class="content">
+            <ul class="sortable-block">
+                <li class="sortable-element">
+                    <div class="sortable-selector" aria-label="{@layout.sortable.move}"></div>
+                    <div class="sortable-title">
+                        <span><a>{@layout.static.sortable}</a></span>
+                    </div>
+                </li>
+                <li class="sortable-element dragged" style="position: relative;">
+                    <div class="sortable-selector" aria-label="{@layout.sortable.move}"></div>
+                    <div class="sortable-title">
+                        <span><a>{@layout.moving.sortable}</a></span>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropzone">{@layout.dropzone}</div>
+                </li>
+            </ul>
         </div>
     </article>
     <!-- Source code -->

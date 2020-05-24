@@ -15,10 +15,10 @@
                                 ${LangLoader::get_message('registered_on', 'main')} : {TODAY}
                             </div>
                             <div class="message-user-links">
-                                <a href="#" class="button submit smaller">MP</a>
+                                <a href="#" class="button submit smaller"><i class="fa fa-people-arrows" aria-hidden="true"></i></a>
                                 <a href="#" class="button submit smaller">Facebook</a>
                                 <a href="#" class="button submit smaller">Twitter</a>
-                                <a href="#" class="button submit smaller"><i class="far fa-envelope"></i></a>
+                                <a href="#" class="button submit smaller"><i class="far fa-envelope" aria-hidden="true"></i></a>
                             </div>
                         </div>
                         <div class="message-user">

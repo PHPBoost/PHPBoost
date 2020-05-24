@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 22
+ * @version     PHPBoost 5.3 - last update: 2020 05 24
  * @since       PHPBoost 5.3 - 2020 03 04
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -37,9 +37,10 @@ class SandboxLayoutController extends ModuleController
 	private function build_view()
 	{
 		$this->view->put_all(array(
+			'GRID'            => self::build_markup('sandbox/pagecontent/layout/grid.tpl'),
+			'CELL'            => self::build_markup('sandbox/pagecontent/layout/cell.tpl'),
 			'MESSAGE'         => self::build_markup('sandbox/pagecontent/layout/message.tpl'),
-			'CELL_LAYOUT' => self::build_markup('sandbox/pagecontent/layout/cell_layout.tpl'),
-			'SORTABLE' => self::build_markup('sandbox/pagecontent/layout/sortable.tpl'),
+			'SORTABLE'        => self::build_markup('sandbox/pagecontent/layout/sortable.tpl'),
 			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
 		));
 	}
@@ -54,7 +55,8 @@ class SandboxLayoutController extends ModuleController
 		$view->put_all(array(
 			'TODAY' => $date->format(Date::FORMAT_DAY_MONTH_YEAR),
 			'TODAY_TIME' => $date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-			'NO_AVATAR_URL' => Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(UserAccountsConfig::NO_AVATAR_URL))
+			'NO_AVATAR_URL' => Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(UserAccountsConfig::NO_AVATAR_URL)),
+			'U_PICTURE' => Url::to_rel('/sandbox/templates/images/default.png'),
 		));
 
 		return $view;

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 21
+ * @version     PHPBoost 5.3 - last update: 2020 05 24
  * @since       PHPBoost 3.0 - 2012 05 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -51,7 +51,6 @@ class SandboxComponentController extends ModuleController
 			'LIST'            => self::build_markup('sandbox/pagecontent/components/list.tpl'),
 			'EXPLORER'        => self::build_markup('sandbox/pagecontent/components/explorer.tpl'),
 			'NOTATION'        => self::build_markup('sandbox/pagecontent/components/notation.tpl'),
-			'SORTABLE'        => self::build_markup('sandbox/pagecontent/components/sortable.tpl'),
 			'TOOLTIP'         => self::build_markup('sandbox/pagecontent/components/tooltip.tpl'),
 			'MODAL'			  => self::build_markup('sandbox/pagecontent/components/modal.tpl'),
 			'PAGINATION'      => self::build_markup('sandbox/pagecontent/components/pagination.tpl'),

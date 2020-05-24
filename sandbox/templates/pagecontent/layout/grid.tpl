@@ -1,0 +1,110 @@
+<div id="grid" class="sandbox-block">
+
+    <article>
+        <header>
+            <h5>{@layout.grid}</h5>
+        </header>
+        <div class="content">{@H|layout.grid.explain}</div>
+        <div class="content">
+            <h5>{@layout.grid.free}</h5>
+            <p>{@layout.grid.free.explain}</p>
+            <div class="cell-flex layout-content-demo">
+                <article class="cell" style="width: 140px;"><div class="cell-grid-demo">140px</div></article>
+                <article class="cell" style="width: 240px;"><div class="cell-grid-demo">240px</div></article>
+                <article class="cell" style="width: 340px;"><div class="cell-grid-demo">340px</div></article>
+                <article class="cell" style="width: 440px;"><div class="cell-grid-demo">440px</div></article>
+            </div>
+            <p>{@H|layout.grid.free.forced.explain}</p>
+            <div class="cell-flex layout-content-demo">
+                <article class="cell cell-100"><div class="cell-grid-demo">100%</div></article>
+                <article class="cell cell-1-4"><div class="cell-grid-demo">1/4</div></article>
+                <article class="cell cell-1-3"><div class="cell-grid-demo">1/3</div></article>
+                <article class="cell cell-1-2"><div class="cell-grid-demo">1/2</div></article>
+                <article class="cell cell-2-3"><div class="cell-grid-demo">2/3</div></article>
+                <article class="cell cell-3-4"><div class="cell-grid-demo">3/4</div></article>
+            </div>
+        </div>
+        <div class="content">
+            <h5>{@layout.grid.block.columns}</h5>
+            <p>{@layout.grid.block.columns.explain}</p>
+            <p><code class="language-css">.cell-columns-4</code></p>
+            <div class="cell-flex cell-columns-4 layout-content-demo">
+                <article class="cell"><div class="cell-grid-demo"></div></article>
+                <article class="cell"><div class="cell-grid-demo"></div></article>
+                <article class="cell"><div class="cell-grid-demo"></div></article>
+                <article class="cell"><div class="cell-grid-demo"></div></article>
+            </div>
+            <p><code class="language-css">.cell-columns-3</code></p>
+            <div class="cell-flex cell-columns-3 layout-content-demo">
+                <article class="cell"><div class="cell-grid-demo"></div></article>
+                <article class="cell"><div class="cell-grid-demo"></div></article>
+                <article class="cell"><div class="cell-grid-demo"></div></article>
+                <article class="cell"><div class="cell-grid-demo"></div></article>
+            </div>
+            <p><code class="language-css">.cell-columns-2</code></p>
+            <div class="cell-flex cell-columns-2 layout-content-demo">
+                <article class="cell"><div class="cell-grid-demo"></div></article>
+                <article class="cell"><div class="cell-grid-demo"></div></article>
+                <article class="cell"><div class="cell-grid-demo"></div></article>
+                <article class="cell"><div class="cell-grid-demo"></div></article>
+            </div>
+            <p>{@H|layout.grid.block.columns.forced.explain}</p>
+            <p><code class="language-css">.cell-columns-3</code></p>
+            <div class="cell-flex cell-columns-3 layout-content-demo">
+                <article class="cell cell-2-3"><div class="cell-grid-demo">2/3</div></article>
+                <article class="cell cell-1-3"><div class="cell-grid-demo">1/3</div></article>
+                <article class="cell cell-1-4"><div class="cell-grid-demo">1/4</div></article>
+                <article class="cell cell-3-4"><div class="cell-grid-demo">3/4</div></article>
+                <article class="cell cell-1-2"><div class="cell-grid-demo">1/2</div></article>
+                <article class="cell cell-1-2"><div class="cell-grid-demo">1/2</div></article>
+                <article class="cell"><div class="cell-grid-demo"></div></article>
+                <article class="cell"><div class="cell-grid-demo"></div></article>
+                <article class="cell"><div class="cell-grid-demo"></div></article>
+            </div>
+        </div>
+
+        <h5>{@layout.grid.list}</h5>
+        <p>{@layout.grid.list.explain}</p>
+        <p><code class="language-css">.cell-row</code></p>
+        <div class="cell-flex cell-row layout-content-demo">
+            <article class="cell"><div class="cell-grid-demo"></div></article>
+            <article class="cell"><div class="cell-grid-demo"></div></article>
+            <article class="cell cell-1-3"><div class="cell-grid-demo">1/3</div></article>
+            <article class="cell cell-1-4"><div class="cell-grid-demo">1/4</div></article>
+        </div>
+    </article>
+
+    <!-- Source code -->
+    <div class="formatter-container formatter-hide no-js tpl">
+        <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
+        <div class="formatter-content formatter-code">
+            <div class="formatter-content">
+<pre class="language-html line-numbers"><code class="language-html">// {@layout.grid.free}
+&lt;div class="cell-flex">
+    &lt;article class="cell">... &lt;/article>
+    &lt;article class="cell">... &lt;/article>
+    &lt;article class="cell">... &lt;/article>
+&lt;/div>
+// {@layout.grid.block.columns}
+&lt;div class="cell-flex cell-columns-[NUMBER]"> // 1 to 4
+    &lt;article class="cell">... &lt;/article>
+    &lt;article class="cell">... &lt;/article>
+    &lt;article class="cell">... &lt;/article>
+&lt;/div>
+// {@layout.grid.list}
+&lt;div class="cell-flex cell-row">
+    &lt;article class="cell">... &lt;/article>
+    &lt;article class="cell">... &lt;/article>
+    &lt;article class="cell">... &lt;/article>
+&lt;/div>
+// {@layout.grid.forced}
+&lt;div class="cell-flex ...">
+    &lt;article class="cell cell-[RATIO]">... &lt;/article>
+    // [RATIO] = 1-4 / 1-3 / 1-2 / 2-3 / 3-4
+&lt;/div>
+
+</code></pre>
+            </div>
+        </div>
+    </div>
+</div>

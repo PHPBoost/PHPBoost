@@ -6,6 +6,8 @@
 		</h1>
 	</header>
 
+	# INCLUDE GRID #
+	# INCLUDE CELL #
 	# INCLUDE MESSAGE #
 	# INCLUDE SORTABLE #
 

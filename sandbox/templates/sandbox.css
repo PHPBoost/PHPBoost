@@ -88,6 +88,19 @@ body {
 	margin-bottom: 1.618em;
 }
 
+.layout-content-demo {
+	border: 1px dashed rgba(var(--darken), 0.4);
+	margin-bottom: 1.618em;
+}
+
+.cell-grid-demo {
+	height: 80px;
+	background-color: rgba(var(--main-rgb-l), 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 /* --- Source code
 ----------------------------------------------------------------------------- */
 .formatter-hide .copy-code { float: none; }

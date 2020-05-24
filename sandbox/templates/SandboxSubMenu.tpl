@@ -33,17 +33,16 @@
                     <li><a href="{U_COMPONENT}#component-colors" class="cssmenu-title"><span>{@hashtag.colors}</span></a></li>
                     <li><a href="{U_COMPONENT}#component-media" class="cssmenu-title"><span>{@hashtag.media}</span></a></li>
                     <li><a href="{U_COMPONENT}#component-progressbar" class="cssmenu-title"><span>{@hashtag.progressbar}</span></a></li>
+                    <li><a href="{U_COMPONENT}#component-notation" class="cssmenu-title"><span>{@hashtag.notation}</span></a></li>
+                    <li><a href="{U_COMPONENT}#component-modal" class="cssmenu-title"><span>{@hashtag.modal}</span></a></li>
                     <li class="has-sub">
                         <a href="{U_COMPONENT}#component-lists" class="cssmenu-title"><span>{@hashtag.lists}</span></a>
                         <ul>
                             <li><a href="{U_COMPONENT}#component-lists" class="cssmenu-title"><span>{@hashtag.classic}</span></a></li>
                             <li><a href="{U_COMPONENT}#component-explorer" class="cssmenu-title"><span>{@hashtag.explorer}</span></a></li>
                             <li><a href="{U_COMPONENT}#component-pagination" class="cssmenu-title"><span>{@hashtag.pagination}</span></a></li>
-                            <li><a href="{U_COMPONENT}#component-sortable" class="cssmenu-title"><span>{@hashtag.sortable}</span></a></li>
                         </ul>
                     </li>
-                    <li><a href="{U_COMPONENT}#component-modal" class="cssmenu-title"><span>{@hashtag.modal}</span></a></li>
-                    <li><a href="{U_COMPONENT}#component-notation" class="cssmenu-title"><span>{@hashtag.notation}</span></a></li>
                     <li><a href="{U_COMPONENT}#component-table" class="cssmenu-title"><span>{@hashtag.table}</span></a></li>
                     <li><a href="{U_COMPONENT}#component-alerts" class="cssmenu-title"><span>{@hashtag.message.helper}</span></a></li>
                     <li><a href="{U_COMPONENT}#component-tooltip" class="cssmenu-title"><span>{@hashtag.tooltip}</span></a></li>
@@ -59,7 +58,10 @@
             <li class="has-sub fwk-layout">
                 <a href="{U_LAYOUT}" class="cssmenu-title"><span>{@layout.title}</span></a>
                 <ul>
+                    <li><a href="{U_LAYOUT}#grid" class="cssmenu-title"><span>{@hashtag.grid}</span></a></li>
+                    <li><a href="{U_LAYOUT}#cell" class="cssmenu-title"><span>{@hashtag.cell}</span></a></li>
                     <li><a href="{U_LAYOUT}#messages" class="cssmenu-title"><span>{@hashtag.message}</span></a></li>
+                    <li><a href="{U_LAYOUT}#sortables" class="cssmenu-title"><span>{@hashtag.sortable}</span></a></li>
                 </ul>
             </li>
             <li class="has-sub">

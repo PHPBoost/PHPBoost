@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 05
+ * @version     PHPBoost 5.3 - last update: 2020 05 24
  * @since       PHPBoost 5.3 - 2020 02 24
 */
 
@@ -55,7 +55,6 @@ $lang['hashtag.lists']  = '# Listes';
 $lang['hashtag.classic']  = '# Classiques';
 $lang['hashtag.explorer']  = '# Explorateur';
 $lang['hashtag.pagination']  = '# Pagination';
-$lang['hashtag.sortable']  = '# Sortables';
 $lang['hashtag.notation']  = '# Notation';
 $lang['hashtag.wizard']  = '# À étapes';
 $lang['hashtag.message.helper']  = '# Messages d\'alerte';
@@ -65,7 +64,10 @@ $lang['hashtag.font.awesome']  = '# Font-awesome &copy;';
 $lang['hashtag.icomoon']  = '# Icomoon &copy;';
 
 // Layout
+$lang['hashtag.grid']  = '# Grille d\'affichage';
+$lang['hashtag.cell']  = '# Cellules';
 $lang['hashtag.message']  = '# Messages';
+$lang['hashtag.sortable']  = '# Sortables';
 
 // BBCode
 $lang['hashtag.blocks']  = '# Blocs';

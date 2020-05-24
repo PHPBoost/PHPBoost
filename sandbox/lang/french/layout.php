@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 22
+ * @version     PHPBoost 5.3 - last update: 2020 05 24
  * @since       PHPBoost 5.2 - 2020 05 22
 */
 
@@ -11,13 +11,30 @@
 #                    French                        #
 ####################################################
 
-// Typogrphy
+// Generics
 $lang['layout.title.layouts'] = 'Mises en page';
 $lang['layout.titles'] = 'Titres';
 $lang['layout.title'] = 'Titre';
 $lang['layout.title.sub'] = 'Sous titre';
 $lang['layout.items'] = 'Éléments';
 $lang['layout.item'] = 'Élément';
+
+// Grid
+$lang['layout.grid'] = 'Grille d\'affichage';
+$lang['layout.grid.explain'] = '
+    <p>Il y a 3 types d\'affichage "en cellule" dans PHPBoost: libre, en mosaïc et en liste.</p>';
+$lang['layout.grid.free'] = 'Cellules libres';
+$lang['layout.grid.free.explain'] = 'Chaque cellule est tributaire de ses propres dimensions. Les cellules s\'alignent au maximum de la largeur du conteneur, puis passent à la ligne automatiquement.';
+$lang['layout.grid.free.forced.explain'] = 'On peut forcer la largeur des cellules qui n\'ont pas de dimension définie. <span class="pinned small">Pour les écrans > 1024px</span>';
+$lang['layout.grid.block.columns'] = 'Cellules en mosaïc';
+$lang['layout.grid.block.columns.explain'] = 'Les cellules sans dimension ont leur largeur définie par la classe du parent.';
+$lang['layout.grid.block.columns.forced.explain'] = 'On peut aussi forcer la largeur des cellules malgré la mise en page définie par le parent. <span class="pinned small">Pour les écrans > 1024px</span>';
+$lang['layout.grid.list'] = 'Cellules en liste';
+$lang['layout.grid.list.explain'] = 'Quelques soient leurs dimensions, les cellules sont affichées les unes en dessous des autres.';
+$lang['layout.grid.forced'] = 'Cellules forcées';
+
+// Cell
+$lang['layout.cell'] = 'Cellules';
 
 // Messages
 $lang['layout.messages.and.coms'] = 'Messages et commentaires';
@@ -30,6 +47,12 @@ $lang['layout.user.sign'] = 'Signature du membre';
 $lang['layout.sortables'] = 'Eléments réorganisables';
 $lang['layout.sortables.legend'] = 'Liste des éléments';
 $lang['layout.delete.confirmation'] = 'Voulez-vous vraiment supprimer cet élément ?';
+
+$lang['layout.sortable.dnd'] = 'Drag & Drop';
+$lang['layout.static.sortable'] = 'Sortable positionné';
+$lang['layout.moving.sortable'] = 'Sortable en mouvement';
+$lang['layout.dropzone'] = 'déplacer ici';
+$lang['layout.sortable.move'] = 'Déplacer';
 
 //Blocs
 $lang['layout.blocks'] = 'Blocs';
