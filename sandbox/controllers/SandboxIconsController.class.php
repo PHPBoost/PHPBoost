@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 21
+ * @version     PHPBoost 5.3 - last update: 2020 05 25
  * @since       PHPBoost 3.0 - 2012 05 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -38,7 +38,8 @@ class SandboxIconsController extends ModuleController
 	private function build_view()
 	{
 		$this->view->put_all(array(
-			'FA' => self::get_fa(),
+			'FA'              => self::get_fa(),
+			'ICOMOON'         => self::build_markup('sandbox/pagecontent/icons/icomoon.tpl'),
 			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
 		));
 	}
@@ -47,6 +48,7 @@ class SandboxIconsController extends ModuleController
 	{
 		$css_lang = LangLoader::get('component', 'sandbox');
 		$view = new FileTemplate('sandbox/pagecontent/icons/fa.tpl');
+		$view->add_lang($this->lang);
 		$view->add_lang($this->icons_lang);
 		$view->add_lang($css_lang);
 
@@ -87,6 +89,21 @@ class SandboxIconsController extends ModuleController
 
 		return $view;
 	}
+
+	private function build_markup($tpl)
+	{
+		$view = new FileTemplate($tpl);
+		$view->add_lang($this->icons_lang);
+		$view->add_lang($this->lang);
+		$css_lang = LangLoader::get('component', 'sandbox');
+		$view->add_lang($css_lang);
+		// $view->add_lang($this->common_lang);
+
+		$view->put_all(array(
+		));
+		return $view;
+	}
+
 
 	private function check_authorizations()
 	{

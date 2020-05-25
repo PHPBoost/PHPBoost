@@ -10,6 +10,7 @@
 	</header>
 
 	# INCLUDE FA #
+	# INCLUDE ICOMOON #
 
 	<footer></footer>
 </section>
