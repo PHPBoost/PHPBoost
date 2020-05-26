@@ -45,17 +45,17 @@
 				<div class="cell-header">
 					<h3><i class="fa fa-bell" aria-hidden="true"></i> {L_ADMIN_ALERTS}</h3>
 				</div>
+				<div class="cell-alert">
+					# IF C_UNREAD_ALERTS #
+						<div class="message-helper bgc warning">{L_UNREAD_ALERT}</div>
+					# ELSE #
+						<div class="message-helper bgc success">{L_NO_UNREAD_ALERT}</div>
+					# ENDIF #
+				</div>
 				<div class="cell-body">
 					<div class="cell-content">
 						# IF C_UNREAD_ALERTS #
-							<div class="message-helper bgc warning">{L_UNREAD_ALERT}</div>
-						# ELSE #
-							<div class="message-helper bgc success">{L_NO_UNREAD_ALERT}</div>
-						# ENDIF #
-						# IF C_UNREAD_ALERTS #
-						<p class="align-center">
-							<a href="admin_alerts.php">{L_DISPLAY_ALL_ALERTS}</a>
-						</p>
+							<p class="align-center"><a href="admin_alerts.php">{L_DISPLAY_ALL_ALERTS}</a></p>
 						# ENDIF #
 					</div>
 				</div>
