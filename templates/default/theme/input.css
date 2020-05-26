@@ -100,6 +100,7 @@ option {
 	margin: 0 0 0.309em;
 }
 
+.grouped-inputs label,
 .grouped-inputs input,
 .grouped-inputs select,
 .inputs-with-sup .label-sup {
@@ -125,6 +126,7 @@ option {
 .grouped-left  { justify-content: flex-start; }
 
 .grouped-element {
+	padding: 0.309em 0.618em;
 	border-width: 1px 0 1px 1px;
 	border-style: solid;
 }
@@ -144,18 +146,18 @@ a.grouped-element,
 	border: none;
 }
 
+.grouped-inputs label,
 .grouped-inputs button,
 .grouped-inputs span,
 .grouped-inputs a {
 	display: flex;
 	margin: 0;
-	justify-content: center;
+	justify-content: flex-start;
 	align-items: center;
 }
 
-.grouped-inputs .cssmenu-select span,
-.grouped-inputs .cssmenu-select a {
-	justify-content: flex-start;
+.grouped-inputs .cssmenu-select button {
+	justify-content: center;
 }
 
 .grouped-inputs .grouped-element input:not([type="checkbox"]):not([type="radio"]),
