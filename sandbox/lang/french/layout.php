@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 24
+ * @version     PHPBoost 5.3 - last update: 2020 05 26
  * @since       PHPBoost 5.2 - 2020 05 22
 */
 
@@ -21,8 +21,7 @@ $lang['layout.item'] = 'Élément';
 
 // Grid
 $lang['layout.grid'] = 'Grille d\'affichage';
-$lang['layout.grid.explain'] = '
-    <p>Il y a 3 types d\'affichage "en cellule" dans PHPBoost: libre, en mosaïc et en liste.</p>';
+$lang['layout.grid.explain'] = '<p>Il y a 3 types d\'affichage "en cellule" dans PHPBoost: libre, en mosaïc et en liste.</p>';
 $lang['layout.grid.free'] = 'Cellules libres';
 $lang['layout.grid.free.explain'] = 'Chaque cellule est tributaire de ses propres dimensions. Les cellules s\'alignent au maximum de la largeur du conteneur, puis passent à la ligne automatiquement.';
 $lang['layout.grid.free.forced.explain'] = 'On peut forcer la largeur des cellules qui n\'ont pas de dimension définie. <span class="pinned small">Pour les écrans > 1024px</span>';
@@ -35,6 +34,16 @@ $lang['layout.grid.forced'] = 'Cellules forcées';
 
 // Cell
 $lang['layout.cell'] = 'Cellules';
+$lang['layout.cell.columns'] = 'Liste d\'articles en mosaïque (defaut)';
+$lang['layout.cell.row'] = 'Liste d\'article en liste';
+$lang['layout.cell.all'] = 'Eléments de cellule';
+$lang['layout.title.more'] = 'Informations du contenu';
+$lang['layout.title.alert'] = 'Message d\'alerte';
+$lang['layout.title.content'] = 'Contenu';
+$lang['layout.title.form'] = 'Formulaire';
+$lang['layout.title.list'] = 'Liste';
+$lang['layout.title.table'] = 'Table';
+$lang['layout.title.footer'] = 'Pied de cellule';
 
 // Messages
 $lang['layout.messages.and.coms'] = 'Messages et commentaires';

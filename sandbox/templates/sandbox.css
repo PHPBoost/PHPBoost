@@ -101,6 +101,8 @@ body {
 	align-items: center;
 }
 
+/* #cell .layout-content-demo .cell *:not(thead th) { background-color: rgba(var(--main-rgb-l), 0.05); } */
+
 /* --- Source code
 ----------------------------------------------------------------------------- */
 .formatter-hide .copy-code { float: none; }
