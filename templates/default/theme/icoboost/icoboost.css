@@ -107,10 +107,15 @@
 .color-tag.fa-iboost-tag-57 { color: #FFC21C; }
 .color-tag.fa-iboost-tag-58 { color: #8693BD; }
 
-/* HAck bbcode bar */
-.bbcode-bar .iboost {position: relative; }
-.bbcode-bar .iboost::before {
+/* Hack position */
+.iboost {
+    position: relative;
+    min-width: 1em;
+}
+
+.iboost::before {
     position: absolute;
     left: 0;
-    bottom: -3px;
+    right: 0;
+    bottom: -0.12em;
 }
