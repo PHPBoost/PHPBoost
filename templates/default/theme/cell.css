@@ -6,6 +6,7 @@
 
 .cell header,
 .cell footer,
+.cell form,
 .cell-header button {
 	margin: 0;
 }
@@ -63,7 +64,7 @@ form > [class*="cell-"]:not(.cell-header) {
 }
 
 .cell-alert .message-helper {
-	margin: 0;
+	margin: -1px;
 }
 
 .cell-thumbnail {
@@ -94,6 +95,7 @@ form > [class*="cell-"]:not(.cell-header) {
     opacity: 1
 }
 
+/* --- list --- */
 .cell-list ul {
 	margin: 0;
 	padding: 0;
@@ -131,15 +133,13 @@ form > [class*="cell-"]:not(.cell-header) {
 	padding: 0.228em 0.809em;
 }
 
-.cell-textarea textarea { border-width: 0; }
-
 /* --- table --- */
 .cell-table {
     overflow: auto;
 }
 
 .cell-table table {
-    margin: -2px 0 0;
+    margin: 0;
 }
 
 .cell-table td { border-width: 0 0 1px 0; }
@@ -150,14 +150,19 @@ form > [class*="cell-"]:not(.cell-header) {
 	.cell-table tr:last-child td { border-width: 0; }
 }
 
+/* --- form --- */
+.cell-textarea textarea {
+	border-width: 0;
+}
+
 .cell-form .cell-label,
 .cell-form .cell-input {
 	padding: 0.456em 0.618em
 }
 
+.cell-input:not(.grouped-inputs):not(.input-element-date),
 .cell-input:not(.grouped-inputs):not(.input-element-date) input:not([type="checkbox"]):not([type="radio"]),
-.cell-input select,
-.cell-input textarea {
+.cell-input select {
 	width: 100%;
 }
 

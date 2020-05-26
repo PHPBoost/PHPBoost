@@ -83,7 +83,7 @@
 
 	.cell-flex .cell-form .cell-label { width: 40%; }
 
-	.cell-flex .cell-form .cell-input { width: 60%; }
+	.cell-flex .cell-form .cell-label + .cell-input { width: 60%; }
 }
 
 .cell-flex .cell-footer { flex: 0 1 auto; }
