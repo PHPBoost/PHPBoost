@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 25
+ * @version     PHPBoost 5.3 - last update: 2020 05 26
  * @since       PHPBoost 3.0 - 2011 04 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -200,10 +200,16 @@ class AdminLangsNotInstalledListController extends AdminController
 						$archive_content = $zip->listContent();
 					}
 
+					$lang_name = TextHelper::substr($upload->get_filename(), 0, TextHelper::strpos($upload->get_filename(), '.'));
 					$archive_root_content = array();
 					$required_files = array('/config.ini', '/admin-common.php', '/common.php');
 					foreach ($archive_content as $element)
 					{
+						if (TextHelper::strpos($element['filename'], $lang_name) === 0)
+						{
+							$element['filename'] = str_replace($lang_name . '/', '', $element['filename']);
+							$archive_root_content[0] = array('filename' => $lang_name, 'folder' => 1);
+						}
 						if (TextHelper::substr($element['filename'], -1) == '/')
 							$element['filename'] = TextHelper::substr($element['filename'], 0, -1);
 						if (TextHelper::substr_count($element['filename'], '/') == 0)
@@ -212,14 +218,14 @@ class AdminLangsNotInstalledListController extends AdminController
 						{
 							$name_in_archive = str_replace($archive_root_content[0]['filename'] . '/', '/', $element['filename']);
 
-							if (in_array($name_in_archive, $required_files))
+							if (in_array($name_in_archive, $required_files) || in_array('/' . $name_in_archive, $required_files))
 							{
 								unset($required_files[array_search($name_in_archive, $required_files)]);
 							}
 						}
 					}
 
-					if (count($archive_root_content) == 1 && $archive_root_content[0]['folder'] && empty($required_files))
+					if ($archive_root_content[0]['folder'] && empty($required_files))
 					{
 						$lang_id = $archive_root_content[0]['filename'];
 						if (!LangsManager::get_lang_existed($lang_id))

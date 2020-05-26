@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 23
+ * @version     PHPBoost 5.3 - last update: 2020 05 26
  * @since       PHPBoost 3.0 - 2011 09 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -198,10 +198,16 @@ class AdminModuleUpdateController extends AdminController
 						$archive_content = $zip->listContent();
 					}
 
+					$module_name = TextHelper::substr($upload->get_filename(), 0, TextHelper::strpos($upload->get_filename(), '.'));
 					$archive_root_content = array();
 					$required_files = array('/config.ini');
 					foreach ($archive_content as $element)
 					{
+						if (TextHelper::strpos($element['filename'], $module_name) === 0)
+						{
+							$element['filename'] = str_replace($module_name . '/', '', $element['filename']);
+							$archive_root_content[0] = array('filename' => $module_name, 'folder' => 1);
+						}
 						if (TextHelper::substr($element['filename'], -1) == '/')
 							$element['filename'] = TextHelper::substr($element['filename'], 0, -1);
 						if (TextHelper::substr_count($element['filename'], '/') == 0)
@@ -210,14 +216,14 @@ class AdminModuleUpdateController extends AdminController
 						{
 							$name_in_archive = str_replace($archive_root_content[0]['filename'] . '/', '/', $element['filename']);
 
-							if (in_array($name_in_archive, $required_files))
+							if (in_array($name_in_archive, $required_files) || in_array('/' . $name_in_archive, $required_files))
 							{
 								unset($required_files[array_search($name_in_archive, $required_files)]);
 							}
 						}
 					}
 
-					if (count($archive_root_content) == 1 && $archive_root_content[0]['folder'] && empty($required_files))
+					if ($archive_root_content[0]['folder'] && empty($required_files))
 					{
 						$module_id = $archive_root_content[0]['filename'];
 						if (ModulesManager::is_module_installed($module_id))
@@ -236,12 +242,12 @@ class AdminModuleUpdateController extends AdminController
 						}
 						else
 						{
-							$this->view->put('MSG_WARNING', MessageHelper::display($this->lang['modules.not_installed_module'], MessageHelper::NOTICE));
+							$this->view->put('MSG_WARNING', MessageHelper::display($this->lang['modules.not_installed_module'], MessageHelper::WARNING));
 						}
 					}
 					else
 					{
-						$this->view->put('MSG_WARNING', MessageHelper::display(LangLoader::get_message('error.invalid_archive_content', 'status-messages-common'), MessageHelper::NOTICE));
+						$this->view->put('MSG_WARNING', MessageHelper::display(LangLoader::get_message('error.invalid_archive_content', 'status-messages-common'), MessageHelper::WARNING));
 					}
 
 					$uploaded_file = new File($archive);
@@ -249,12 +255,12 @@ class AdminModuleUpdateController extends AdminController
 				}
 				else
 				{
-					$this->view->put('MSG_WARNING', MessageHelper::display(LangLoader::get_message('upload.invalid_format', 'status-messages-common'), MessageHelper::NOTICE));
+					$this->view->put('MSG_WARNING', MessageHelper::display(LangLoader::get_message('upload.invalid_format', 'status-messages-common'), MessageHelper::WARNING));
 				}
 			}
 			else
 			{
-				$this->view->put('MSG_WARNING', MessageHelper::display(LangLoader::get_message('upload.error', 'status-messages-common'), MessageHelper::NOTICE));
+				$this->view->put('MSG_WARNING', MessageHelper::display(LangLoader::get_message('upload.error', 'status-messages-common'), MessageHelper::WARNING));
 			}
 		}
 	}
