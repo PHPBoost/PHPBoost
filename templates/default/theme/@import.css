@@ -10,6 +10,7 @@
 @import url('../../default/theme/lightcase.css') screen;
 @import url('../../default/theme/icoboost/icoboost.css') screen;
 @import url('../../default/theme/prism.css') screen;
+@import url('../../default/theme/linedwrap.css') screen;
 
 @import url('../../default/theme/@variables.css') screen;
 @import url('../../default/theme/form.css') screen;
@@ -17,7 +18,6 @@
 @import url('../../default/theme/input.css') screen;
 @import url('../../default/theme/datepicker.css') screen;
 @import url('../../default/theme/constraint.css') screen;
-@import url('../../default/theme/linedwrap.css') screen;
 @import url('../../default/theme/authorizations.css') screen;
 @import url('../../default/theme/checkbox.css') screen;
 @import url('../../default/theme/radio.css') screen;

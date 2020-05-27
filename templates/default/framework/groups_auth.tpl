@@ -20,7 +20,7 @@
 		<div id="advanced_authb{IDSELECT}" class="advanced-auth advanced-auth-select"# IF NOT C_ADVANCED_AUTH_OPEN # style="display: none;"# ENDIF #>
 			<div id="advanced_auth{IDSELECT}" class="advanced-auth advanced-auth-input"# IF NOT C_ADVANCED_AUTH_OPEN # style="display: none;"# ENDIF #>
 				<div class="grouped-inputs">
-					<label for="login{IDSELECT}"><span class="sr-only">{L_ADD_USER}</span></label>
+					<label for="login{IDSELECT}" class="sr-only">{L_ADD_USER}</label>
 					<input class="grouped-element" type="text" size="14" value="" id="login{IDSELECT}" name="login{IDSELECT}" placeholder="{L_ADD_USER}">
 					<button class="grouped-element button" onclick="XMLHttpRequest_search_members('{IDSELECT}', '{THEME}', 'add_member_auth', '{L_REQUIRE_PSEUDO}');" type="button" name="valid" aria-label="{L_SEARCH_MEMBER}">
 						<i class="fa fa-search-plus" aria-hidden="true"></i>
