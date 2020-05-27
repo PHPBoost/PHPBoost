@@ -18,7 +18,7 @@
                                 <a href="#" class="button submit smaller"><i class="fa fa-people-arrows" aria-hidden="true"></i></a>
                                 <a href="#" class="button submit smaller">Facebook</a>
                                 <a href="#" class="button submit smaller">Twitter</a>
-                                <a href="#" class="button submit smaller"><i class="far fa-envelope" aria-hidden="true"></i></a>
+                                <a href="#" class="button submit smaller"><i class="fa iboost fa-iboost-email" aria-hidden="true"></i></a>
                             </div>
                         </div>
                         <div class="message-user">

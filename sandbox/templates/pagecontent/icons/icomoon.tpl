@@ -1,5 +1,6 @@
 <div id="icomoon" class="sandbox-block">
     <article>
+        <i class="fa iboost fa-iboost-email fa-3x"></i> <i class="fa iboost fa-iboost-phpboost fa-3x"></i>
         <header>
             <h2>{@H|icons.icomoon}</h2>
         </header>

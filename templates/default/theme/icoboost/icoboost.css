@@ -111,6 +111,7 @@
 .iboost {
     position: relative;
     min-width: 1em;
+    min-height: 1em;
 }
 
 .iboost::before {

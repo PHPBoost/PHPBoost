@@ -1,5 +1,6 @@
 <div id="font-awesome" class="sandbox-block">
     <article class="content">
+        <i class="fab fa-fort-awesome-alt fa-3x"></i> <i class="fab fa-font-awesome-flag fa-3x"></i> 
         <header>
             <h2>{@H|icons.fa}</h2>
         </header>
