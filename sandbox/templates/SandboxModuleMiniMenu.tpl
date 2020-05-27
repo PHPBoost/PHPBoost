@@ -217,6 +217,26 @@
 								</li>
 							</ul>
 						</li>
+						<li class="has-sub">
+							<span>
+								<i class="fa fa-cog fa-fw" aria-hidden="true"></i>
+								<span>{@title.admin.component}</span>
+							</span>
+							<ul>
+								<li>
+									<a href="${relative_url(SandboxUrlBuilder::admin_builder())}">
+										<i class="far fa-square fa-fw" aria-hidden="true"></i>
+										<span>{@title.builder}</span>
+									</a>
+								</li>
+								<li>
+									<a href="${relative_url(SandboxUrlBuilder::admin_component())}">
+										<i class="fab fa-html5 fa-fw" aria-hidden="true"></i>
+										<span>{@title.component}</span>
+									</a>
+								</li>
+							</ul>
+						</li>
 					</ul>
 				</li>
 				<li class="mini-sandbox-switcher">

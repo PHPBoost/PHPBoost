@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 28
+ * @version     PHPBoost 5.3 - last update: 2020 05 27
  * @since       PHPBoost 5.2 - 2019 07 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -52,10 +52,10 @@ class SandboxMenusContentController extends ModuleController
 		$this->build_wizard_form();
 
 		$this->tpl->put_all(array(
-			'BASIC' => self::build_basic_markup(),
-			'ACCORDION' => self::build_accordion_markup(),
-			'TABS' => self::build_tabs_markup(),
-			'WIZARD' => self::build_wizard_markup(),
+			'BASIC'           => self::build_basic_markup(),
+			'ACCORDION'       => self::build_accordion_markup(),
+			'TABS'            => self::build_tabs_markup(),
+			'WIZARD'          => self::build_wizard_markup(),
 			'NO_AVATAR_URL'   => Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(UserAccountsConfig::NO_AVATAR_URL)),
 			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
 		));

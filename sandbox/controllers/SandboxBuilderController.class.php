@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 22
+ * @version     PHPBoost 5.3 - last update: 2020 05 27
  * @since       PHPBoost 5.2 - 2020 05 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -76,6 +76,7 @@ class SandboxBuilderController extends ModuleController
 			'RADIO_MARKUP'    => self::build_markup('sandbox/pagecontent/builder/radio.tpl'),
 			'SELECT_MARKUP'   => self::build_markup('sandbox/pagecontent/builder/select.tpl'),
 			'DND_MARKUP'      => self::build_markup('sandbox/pagecontent/builder/dnd.tpl'),
+			'BUTTON_MARKUP'   => self::build_markup('sandbox/pagecontent/builder/button.tpl'),
 			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
 		));
 

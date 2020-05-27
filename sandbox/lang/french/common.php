@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 21
+ * @version     PHPBoost 5.3 - last update: 2020 05 27
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -19,7 +19,6 @@ $lang['sandbox.module.title'] = 'Bac à sable';
 
 $lang['title.config'] = 'Configuration';
 $lang['title.admin.component'] = 'Rendus dans l\'admin';
-$lang['title.component'] = 'FWKBoost';
 $lang['title.builder'] = 'Formulaires';
 $lang['title.component'] = 'Composants';
 $lang['title.layout'] = 'Mise en page';

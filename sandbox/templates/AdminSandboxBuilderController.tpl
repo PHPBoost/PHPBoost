@@ -1,4 +1,4 @@
-<section>
+<section id="admin-sandbox-builder">
 	<header>
 		<h1>
 			{@sandbox.module.title} - {@title.builder}
@@ -40,9 +40,22 @@
 			<strong>HIDDEN TEXT AREA TEXT FIELD :</strong> {H_T_TEXT_FIELD}
 		# ENDIF #
 
-		# INCLUDE form #
+		# INCLUDE FORM #
+
+		<div id="markup-view">
+			# INCLUDE FORM_MARKUP #
+			# INCLUDE INPUT_MARKUP #
+			# INCLUDE TEXTAREA_MARKUP #
+			# INCLUDE CHECKBOX_MARKUP #
+			# INCLUDE RADIO_MARKUP #
+			# INCLUDE SELECT_MARKUP #
+			# INCLUDE DND_MARKUP #
+			# INCLUDE BUTTON_MARKUP #
+		</div>
 
 	</article>
 	<footer></footer>
 </section>
-<script src="{PATH_TO_ROOT}/sandbox/templates/js/sandbox.js"></script>
+<script>jQuery('#admin-sandbox-builder article a').on('click', function(){return false;});</script>
+<script src="{PATH_TO_ROOT}/templates/default/plugins/form/validator.js"></script>
+<script src="{PATH_TO_ROOT}/templates/default/plugins/form/form.js"></script>

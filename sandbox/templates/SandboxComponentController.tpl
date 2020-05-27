@@ -2,7 +2,7 @@
 	# INCLUDE SANDBOX_SUBMENU #
 	<header>
 		<h1>
-			{@sandbox.module.title} - {@title.component} - {@title.component}
+			{@sandbox.module.title} - {@title.component}
 		</h1>
 	</header>
 
