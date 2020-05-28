@@ -111,6 +111,10 @@ body.push-nav-open {
     padding-left: 0.618em;
 }
 
+.pushmenu .nav-item span.cssmenu-title {
+    padding: 0;
+}
+
 .pushmenu .nav-item p { margin: 0; }
 
 .pushmenu.disable-body::after,
