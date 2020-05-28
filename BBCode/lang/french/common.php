@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 10 09
+ * @version     PHPBoost 5.3 - last update: 2020 05 28
  * @since       PHPBoost 4.1 - 2014 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -67,7 +67,7 @@ $lang['bbcode.custom.div'] = 'Conteneur personnalisable';
 $lang['bbcode.custom.div.alert'] = 'Ces critères nécessitent la connaissance des langages HTML/CSS et les propriétés du thème utilisé.';
 $lang['bbcode.custom.div.id'] = 'Identifiant';
 $lang['bbcode.fieldset'] = 'Bloc champs';
-$lang['bbcode.fieldset.lengend'] = 'Titre du bloc champs';
+$lang['bbcode.fieldset.legend'] = 'Titre du bloc champs';
 $lang['bbcode.abbr'] = 'Abréviation';
 $lang['bbcode.abbr.label'] = 'Nom complet';
 
@@ -86,10 +86,10 @@ $lang['bbcode.style'] = 'Style';
 // Links
 $lang['bbcode.link'] = 'Lien';
 $lang['bbcode.link.url'] = 'Adresse du lien';
-$lang['bbcode.link.name'] = 'Texte du lien';
+$lang['bbcode.link.label'] = 'Texte du lien';
 
 $lang['bbcode.mail'] = 'Adresse email';
-$lang['bbcode.mail.name'] = 'Texte de la balise';
+$lang['bbcode.mail.label'] = 'Texte de la balise';
 
 $lang['bbcode.wikipedia'] = 'Lien wikipedia';
 $lang['bbcode.wikipedia.word'] = 'Mot';
@@ -130,10 +130,9 @@ $lang['bbcode.figure.caption'] = 'Description de l\'image';
 
 $lang['bbcode.upload'] = 'Attacher un fichier';
 
-// Right bottom block : Code
 $lang['bbcode.smileys'] = 'Smileys';
 $lang['bbcode.fa'] = 'Icônes Font Awesome';
-$lang['bbcode.fa.tag'] = '[fa=fa-style,fa-option]nom de l\'icône[/fa]';
+$lang['bbcode.fa.tag'] = '[fa=fa-style,fa-option]nom de l\'icône (sans le "fa-")[/fa]';
 $lang['bbcode.code'] = 'Code';
 $lang['bbcode.code.custom.name'] = 'Chemin vers un fichier';
 $lang['bbcode.code.name'] = 'Langage';
@@ -147,6 +146,4 @@ $lang['bbcode.math'] = 'Insérer du code mathématique';
 $lang['bbcode.html'] = 'Insérer du code html';
 
 $lang['bbcode.help'] = 'Aide BBcode';
-
-$lang['bbcode.more'] = 'Afficher/cacher les autres fonctions';
 ?>

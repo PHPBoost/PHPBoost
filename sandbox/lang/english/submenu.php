@@ -11,66 +11,71 @@
 #                    English                       #
 ####################################################
 
-$lang['sandbox.title'] = 'Bac à sable';
-$lang['builder.title']  = 'Constructeur';
-$lang['component.title']  = 'FWKBoost';
-$lang['component.title']  = 'Composants';
-$lang['layout.title']  = 'Mise en page';
+$lang['sandbox.title'] = 'Sandbox';
+$lang['builder.title']  = 'Forms';
+$lang['component.title']  = 'Components';
+$lang['layout.title']  = 'Layout';
 $lang['bbcode.title']  = 'BBCode';
 $lang['menus.title']  = 'Menus';
-$lang['icons.title']  = 'Icônes';
-$lang['table.title']  = 'Tableaux';
+$lang['menus.nav.title']  = 'Navigation menus';
+$lang['menus.content.title']  = 'Content menus';
+$lang['icons.title']  = 'Icons';
+$lang['table.title']  = 'Table';
+$lang['tests.title']  = 'PHP tests';
 $lang['emails.title']  = 'Emails';
+$lang['template.title']  = 'Template generator';
 
-$lang['hashtag.table']  = '# Tableaux';
-$lang['hashtag.typography']  = '# Typographie';
+$lang['hashtag.table']  = '# Table';
+$lang['hashtag.typography']  = '# Typography';
 
 // Builder
-$lang['hashtag.text.fields']  = '# Champs texte';
+$lang['hashtag.text.fields']  = '# Text fields';
 $lang['hashtag.textareas']  = '# Textareas';
-$lang['hashtag.choices']  = '# Puces / Coches';
-$lang['hashtag.selects']  = '# Selecteurs';
-$lang['hashtag.buttons']  = '# Boutons';
-$lang['hashtag.miscellaneous']  = '# Divers';
+$lang['hashtag.choices']  = '# Radios / checkboxes';
+$lang['hashtag.selects']  = '# Selects';
+$lang['hashtag.buttons']  = '# Buttons';
+$lang['hashtag.miscellaneous']  = '# Miscellaneous';
 $lang['hashtag.dates']  = '# Dates';
-$lang['hashtag.upload']  = '# Téléversement';
+$lang['hashtag.upload']  = '# Upload';
 $lang['hashtag.links']  = '# Menus';
-$lang['hashtag.classics']  = '# Classique';
 $lang['hashtag.modal']  = '# Modal';
-$lang['hashtag.accordion']  = '# Accordéon';
-$lang['hashtag.tabs']  = '# Tabulaire';
-$lang['hashtag.wizard']  = '# Wizard';
 $lang['hashtag.gmap']  = '# Google Maps';
-$lang['hashtag.authorizations']  = '# Autorisations';
-$lang['hashtag.vertical.form']  = '# Formulaire vertical';
-$lang['hashtag.horizontal.form']  = '# Formulaire horizontal';
+$lang['hashtag.authorizations']  = '# Autorizations';
+$lang['hashtag.vertical.form']  = '# Vertical form';
+$lang['hashtag.horizontal.form']  = '# Horizontal form';
 
 // Components
-$lang['hashtag.titles']  = '# Titres';
-$lang['hashtag.sizes']  = '# Tailles';
+$lang['hashtag.titles']  = '# Titles';
+$lang['hashtag.sizes']  = '# Sizes';
 $lang['hashtag.styles']  = '# Styles';
-$lang['hashtag.colors']  = '# Couleurs';
+$lang['hashtag.colors']  = '# Coulors';
 $lang['hashtag.media']  = '# Media';
-$lang['hashtag.progressbar']  = '# Barre de progression';
-$lang['hashtag.lists']  = '# Listes';
-$lang['hashtag.classic']  = '# Classiques';
-$lang['hashtag.explorer']  = '# Explorateur';
-$lang['hashtag.notation']  = '# Notation';
+$lang['hashtag.progressbar']  = '# Progress bar';
+$lang['hashtag.lists']  = '# Lists';
+$lang['hashtag.classic']  = '# Classics';
+$lang['hashtag.explorer']  = '# Explorer';
 $lang['hashtag.pagination']  = '# Pagination';
-$lang['hashtag.sortable']  = '# Sortables';
-$lang['hashtag.wizard']  = '# À étapes';
-$lang['hashtag.message.helper']  = '# Messages d\'alerte';
+$lang['hashtag.notation']  = '# Notation';
+$lang['hashtag.message.helper']  = '# Alerts';
 $lang['hashtag.tooltip']  = '# Tooltip';
+// Icons
+$lang['hashtag.font.awesome']  = '# Font-awesome &copy;';
+$lang['hashtag.icomoon']  = '# Icomoon &copy;';
 
 // Layout
+$lang['hashtag.grid']  = '# Grid';
+$lang['hashtag.cell']  = '# Cells';
 $lang['hashtag.message']  = '# Messages';
+$lang['hashtag.sortable']  = '# Sortables';
 
 // BBCode
 $lang['hashtag.blocks']  = '# Blocs';
 $lang['hashtag.code']  = '# Code';
 $lang['hashtag.wiki']  = '# Wiki';
 
-// Icons
-$lang['hashtag.font.awesome']  = '# Font-awesome &copy;';
-$lang['hashtag.icomoon']  = '# Icomoon &copy;';
+// Menus
+$lang['hashtag.links']  = '# Links';
+$lang['hashtag.accordion']  = '# Accordion';
+$lang['hashtag.tabs']  = '# Tabular';
+$lang['hashtag.wizard']  = '# Wizard';
 ?>

@@ -411,7 +411,7 @@
 							<div class="cell-name">{@bbcode.fieldset}</div>
 						</div>
 						<div class="cell-form">
-							<label for="bb_legend{FIELD}" class="cell-label">{@bbcode.fieldset.lengend}</label>
+							<label for="bb_legend{FIELD}" class="cell-label">{@bbcode.fieldset.legend}</label>
 							<div class="cell-input"><input type="text" id="bb_legend{FIELD}"></div>
 						</div>
 						<div class="cell-form">
@@ -571,7 +571,7 @@
 							</div>
 						</div>
 						<div class="cell-form">
-							<label class="cell-label" for="bb_link_name{FIELD}">{@bbcode.link.name}</label>
+							<label class="cell-label" for="bb_link_name{FIELD}">{@bbcode.link.label}</label>
 							<div class="cell-input">
 								<input id="bb_link_name{FIELD}" type="text" name="bb_link_name{FIELD}">
 							</div>
@@ -599,7 +599,7 @@
 							</div>
 						</div>
 						<div class="cell-form">
-							<label class="cell-label" for="bb_mail_name{FIELD}">{@bbcode.mail.name}</label>
+							<label class="cell-label" for="bb_mail_name{FIELD}">{@bbcode.mail.label}</label>
 							<div class="cell-input">
 								<input id="bb_mail_name{FIELD}" type="text" name="bb_mail_name{FIELD}">
 							</div>

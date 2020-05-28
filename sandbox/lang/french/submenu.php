@@ -56,7 +56,6 @@ $lang['hashtag.classic']  = '# Classiques';
 $lang['hashtag.explorer']  = '# Explorateur';
 $lang['hashtag.pagination']  = '# Pagination';
 $lang['hashtag.notation']  = '# Notation';
-$lang['hashtag.wizard']  = '# À étapes';
 $lang['hashtag.message.helper']  = '# Messages d\'alerte';
 $lang['hashtag.tooltip']  = '# Tooltip';
 // Icons
@@ -75,9 +74,9 @@ $lang['hashtag.code']  = '# Code';
 $lang['hashtag.wiki']  = '# Wiki';
 
 // Menus
-$lang['hashtag.classics']  = '# Liens';
+$lang['hashtag.links']  = '# Liens';
 $lang['hashtag.accordion']  = '# Accordéon';
 $lang['hashtag.tabs']  = '# Tabulaire';
-$lang['hashtag.wizard']  = '# Wizard';
+$lang['hashtag.wizard']  = '# À étapes';
 
 ?>

@@ -82,7 +82,7 @@
                     <li class="has-sub">
                         <a href="{U_MENUS_CONTENT}" class="cssmenu-title"><span>{@menus.content.title}</span></a>
                         <ul>
-                            <li><a href="{U_MENUS_CONTENT}#menu-basic" class="cssmenu-title"><span>{@hashtag.classics}</span></a></li>
+                            <li><a href="{U_MENUS_CONTENT}#menu-basic" class="cssmenu-title"><span>{@hashtag.links}</span></a></li>
                             <li><a href="{U_MENUS_CONTENT}#menu-accordion" class="cssmenu-title"><span>{@hashtag.accordion}</span></a></li>
                             <li><a href="{U_MENUS_CONTENT}#menu-tabs" class="cssmenu-title"><span>{@hashtag.tabs}</span></a></li>
                             <li><a href="{U_MENUS_CONTENT}#menu-wizard" class="cssmenu-title"><span>{@hashtag.wizard}</span></a></li>
