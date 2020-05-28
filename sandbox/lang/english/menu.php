@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 07 31
+ * @version     PHPBoost 5.3 - last update: 2020 05 28
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -50,4 +50,32 @@ $lang['cssmenu.warning'] = 'This page has a specific structure to display all ki
 <br /><br />It could be ugly if you don\'t use the rules of the Base template.
 <br />File to modify if necessaray: /sandbox/html/menu
 <br /><br />If nothing is declared in a place you won\'t see any menu in it.';
+
+// Links
+$lang['menu.link.icon'] = 'Item with icon';
+$lang['menu.link.img'] = 'Item with picture';
+$lang['menu.link'] = 'List item';
+$lang['menu.panel'] = 'Panel';
+// Basic
+$lang['menu.basic'] = 'Links menu';
+// Accordion
+$lang['menu.accordion.title'] = 'Accordion menu';
+$lang['menu.accordion.options'] = 'Change css class <code class="language-css">basic</code> to <code class="language-css">siblings</code> to modify panel opening behaviour and close all panels when open a new one.';
+$lang['menu.accordion.open'] = 'Open all panels';
+$lang['menu.accordion.close'] = 'Close all panels';
+
+// Tabs
+$lang['menu.tabs.title']  = 'Tabs menu';
+
+// Wizard
+$lang['menu.wizard.title']  = 'Wizard menu';
+$lang['menu.last.step']  = 'Panneau final';
+
+$lang['menu.title.html']  = 'HTML markup';
+$lang['menu.title.form']  = 'PHP form markup';
+
+$lang['menu.panel']  = 'Panel';
+$lang['menu.panel.title']  = 'Panel title';
+$lang['menu.panel.subtitle']  = 'Sub title';
+$lang['menu.panel.input']  = 'Text field';
 ?>

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 07 31
+ * @version     PHPBoost 5.3 - last update: 2020 05 28
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -14,20 +14,18 @@
 #                    English                       #
 ####################################################
 
+$lang['bbcode.explain'] = '
+    <p>This page shows elements declared with bbcode bringing a different design from the <a href="' . SandboxUrlBuilder::component()->rel() . '">FWKBoost</a>.</p>
+    <p>To know BBCode language, please refere to the complete documentation on offical <a href="https://www.phpboost.com/wiki"><i class="fa iboost fa-iboost-phpboost"></i> PHPHBoost</a> website.</p>
+';
+
 $lang['bbcode.title.typography'] = 'Typography';
 
 $lang['bbcode.titles'] = 'Titles';
-$lang['bbcode.title_1'] = 'Title 1';
-$lang['bbcode.title_2'] = 'Title 2';
-$lang['bbcode.title_3'] = 'Title 3';
-$lang['bbcode.title_4'] = 'Title 4';
-$lang['bbcode.title_5'] = 'Title 5';
+$lang['bbcode.title'] = 'Title';
 
-$lang['bbcode.title.lists'] = 'Lists';
-$lang['bbcode.element'] = 'Element';
-$lang['bbcode.element_1'] = 'Element 1';
-$lang['bbcode.element_2'] = 'Element 2';
-$lang['bbcode.element_3'] = 'Element 3';
+$lang['bbcode.lists'] = 'Lists';
+$lang['bbcode.item'] = 'Element';
 
 $lang['bbcode.title.blocks'] = 'Blocks';
 $lang['bbcode.paragraph'] = 'Paragraph';
@@ -53,4 +51,11 @@ $lang['bbcode.title.table'] = 'Table';
 $lang['bbcode.table.header'] = 'Header';
 $lang['bbcode.table.name'] = 'Name';
 $lang['bbcode.table.description'] = 'Description';
+
+// Wiki
+$lang['wiki.not'] = 'The Wiki module is not installed  and/or activated.';
+$lang['wiki.conditions'] = 'You must overload the wiki into your template to see changes.';
+$lang['wiki.module'] = 'Wiki Module';
+$lang['wiki.table.of.contents'] = 'Contents summary';
+$lang['wiki.contents'] = 'Wiki content';
 ?>

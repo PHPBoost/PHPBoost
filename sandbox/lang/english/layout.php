@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 26
+ * @version     PHPBoost 5.3 - last update: 2020 05 28
  * @since       PHPBoost 5.2 - 2020 05 22
 */
 
@@ -12,81 +12,54 @@
 ####################################################
 
 // Generics
-$lang['layout.title.layouts'] = 'Mises en page';
-$lang['layout.titles'] = 'Titres';
-$lang['layout.title'] = 'Titre';
-$lang['layout.title.sub'] = 'Sous titre';
-$lang['layout.items'] = 'Éléments';
-$lang['layout.item'] = 'Élément';
+$lang['layout.title.layouts'] = 'Layout';
+$lang['layout.titles'] = 'Titles';
+$lang['layout.title'] = 'Title';
+$lang['layout.title.sub'] = 'Sub title';
+$lang['layout.items'] = 'Elements';
+$lang['layout.item'] = 'Element';
 
 // Grid
-$lang['layout.grid'] = 'Grille d\'affichage';
-$lang['layout.grid.explain'] = '<p>Il y a 3 types d\'affichage "en cellule" dans PHPBoost: libre, en mosaïc et en liste.</p>';
-$lang['layout.grid.free'] = 'Cellules libres';
-$lang['layout.grid.free.explain'] = 'Chaque cellule est tributaire de ses propres dimensions. Les cellules s\'alignent au maximum de la largeur du conteneur, puis passent à la ligne automatiquement.';
-$lang['layout.grid.free.forced.explain'] = 'On peut forcer la largeur des cellules qui n\'ont pas de dimension définie. <span class="pinned small">Pour les écrans > 1024px</span>';
-$lang['layout.grid.block.columns'] = 'Cellules en mosaïc';
-$lang['layout.grid.block.columns.explain'] = 'Les cellules sans dimension ont leur largeur définie par la classe du parent.';
-$lang['layout.grid.block.columns.forced.explain'] = 'On peut aussi forcer la largeur des cellules malgré la mise en page définie par le parent. <span class="pinned small">Pour les écrans > 1024px</span>';
-$lang['layout.grid.list'] = 'Cellules en liste';
-$lang['layout.grid.list.explain'] = 'Quelques soient leurs dimensions, les cellules sont affichées les unes en dessous des autres.';
-$lang['layout.grid.forced'] = 'Cellules forcées';
+$lang['layout.grid'] = 'Layout grid';
+$lang['layout.grid.explain'] = '<p>There are three kind of cells grid layout: free cells, mosaïc grid and list.</p>';
+$lang['layout.grid.free'] = 'Free cells';
+$lang['layout.grid.free.explain'] = 'Each cell is dependent on its own dimensions. Cells are horizontally aligned and automaticaly go to the next line  when they exeed limits.';
+$lang['layout.grid.free.forced.explain'] = 'You can force width of undefined cells. <span class="pinned small">for > 1024px screens</span>';
+$lang['layout.grid.block.columns'] = 'Mosaïc grid';
+$lang['layout.grid.block.columns.explain'] = 'Width of cells are defined by the parent container.';
+$lang['layout.grid.block.columns.forced.explain'] = 'You can resize each cell even if it\'s define by the parent container. <span class="pinned small">for > 1024px screens</span>';
+$lang['layout.grid.list'] = 'List';
+$lang['layout.grid.list.explain'] = 'Whatever the width of cells, they are vertically aligned.';
+$lang['layout.grid.forced'] = 'Forced cells';
 
 // Cell
-$lang['layout.cell'] = 'Cellules';
-$lang['layout.cell.columns'] = 'Liste d\'articles en mosaïque (defaut)';
-$lang['layout.cell.row'] = 'Liste d\'article en liste';
-$lang['layout.cell.all'] = 'Eléments de cellule';
-$lang['layout.title.more'] = 'Informations du contenu';
-$lang['layout.title.alert'] = 'Message d\'alerte';
-$lang['layout.title.content'] = 'Contenu';
-$lang['layout.title.form'] = 'Formulaire';
-$lang['layout.title.list'] = 'Liste';
+$lang['layout.cell'] = 'Cells';
+$lang['layout.cell.columns'] = 'Mosaïc items layout (default)';
+$lang['layout.cell.row'] = 'List items layout';
+$lang['layout.cell.all'] = 'Cell elements';
+$lang['layout.title.more'] = 'Content information';
+$lang['layout.title.alert'] = 'Alerts';
+$lang['layout.title.content'] = 'Content';
+$lang['layout.title.form'] = 'Form';
+$lang['layout.title.list'] = 'List';
 $lang['layout.title.table'] = 'Table';
-$lang['layout.title.footer'] = 'Pied de cellule';
+$lang['layout.title.footer'] = 'Cell footer';
 
 // Messages
-$lang['layout.messages.and.coms'] = 'Messages et commentaires';
+$lang['layout.messages.and.coms'] = 'Messages and comments';
 $lang['layout.messages.login'] = 'admin';
-$lang['layout.messages.level'] = 'Administrateur';
-$lang['layout.messages.date'] = '05/09/2013 à 15h37';
-$lang['layout.user.sign'] = 'Signature du membre';
+$lang['layout.messages.level'] = 'Administrator';
+$lang['layout.user.sign'] = 'Membre signature';
 
 // Sortables
-$lang['layout.sortables'] = 'Eléments réorganisables';
-$lang['layout.sortables.legend'] = 'Liste des éléments';
-$lang['layout.delete.confirmation'] = 'Voulez-vous vraiment supprimer cet élément ?';
+$lang['layout.sortables'] = 'Sortable elements';
+$lang['layout.sortables.legend'] = 'Elements list';
+$lang['layout.delete.confirmation'] = 'Do you really want to delete this element?';
 
 $lang['layout.sortable.dnd'] = 'Drag & Drop';
-$lang['layout.static.sortable'] = 'Sortable positionné';
+$lang['layout.static.sortable'] = 'Psotioned element';
 $lang['layout.moving.sortable'] = 'Sortable en mouvement';
-$lang['layout.dropzone'] = 'déplacer ici';
-$lang['layout.sortable.move'] = 'Déplacer';
-
-//Blocs
-$lang['layout.blocks'] = 'Blocs';
-$lang['layout.block.title'] = 'Titre de l\'article';
-$lang['layout.blocks.per.line'] = 'par ligne';
-
-// Pages
-$lang['layout.page.title'] = 'Titre de la page';
-$lang['layout.more'] = 'Auteur | Date de création | Nombre de commentaires ...';
-$lang['layout.picture'] = 'Image';
-
-$lang['layout.class'] = 'class';
-$lang['layout.form'] = 'form';
-$lang['layout.options.file.title'] = 'Informations sur le fichier';
-$lang['layout.options'] = '.options';
-$lang['layout.options.sort_by'] = 'Trier selon';
-$lang['layout.options.sort_by.alphabetical'] = 'Alphabétique';
-$lang['layout.options.sort_by.size'] = 'Taille';
-$lang['layout.options.sort_by.date'] = 'Date';
-$lang['layout.options.sort_by.popularity'] = 'Vues';
-$lang['layout.options.sort_by.note'] = 'Note';
-$lang['layout.options.link'] = 'Lien';
-$lang['layout.options.option.title'] = 'Option du module';
-$lang['layout.options.option.com'] = 'Aucun commentaire';
-$lang['layout.modules_menus.direction.up'] = 'Croissant';
-$lang['layout.modules_menus.direction.down'] = 'Décroissant';
+$lang['layout.dropzone'] = 'drop here';
+$lang['layout.sortable.move'] = 'Move';
 
 ?>

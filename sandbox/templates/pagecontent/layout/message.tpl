@@ -31,7 +31,7 @@
                             </div>
                         </div>
                         <div class="message-infos">
-                            <time datetime="{@layout.messages.date}" itemprop="datePublished">{TODAY_TIME}</time>
+                            <time datetime="{TODAY_TIME}" itemprop="datePublished">{TODAY_TIME}</time>
                             <a href="#ID" aria-label="${LangLoader::get_message('link.to.anchor', 'comments-common')}">\#ID</a>
                         </div>
                     </div>

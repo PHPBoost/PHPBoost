@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 27
+ * @version     PHPBoost 5.3 - last update: 2020 05 28
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -53,7 +53,7 @@ $lang['welcome.builder'] = 'Le rendu des différents champs de formulaire, texta
 $lang['welcome.component'] = 'Le rendu des différents éléments du framework HTML/CSS/JS FWKBoost de PHPBoost.';
 $lang['welcome.bbcode'] = 'Le rendu des éléments spécifiques déclarés en bbcode qui apportent un design différent du FWKBoost.';
 $lang['welcome.layout'] = 'Le rendu des différentes mises en page, messages, cellules, grille d\'affichage, du FWKBoost.';
-$lang['welcome.menu'] = 'Le rendu des menus de navigations selon les emplacements potentiels, et de contenu.';
+$lang['welcome.menu'] = 'Le rendu des menus de navigations selon les emplacements potentiels, et des menus de contenu.';
 $lang['welcome.misc'] = 'Diverses pages de test en php.';
 
 $lang['welcome.see.nav'] = 'Navigation';
@@ -78,6 +78,9 @@ $lang['sandbox.source.code'] = 'Voir le code source';
 $lang['sandbox.pbt.doc'] = 'la documentation de PHPBoost';
 
 // Template
-$lang['string_template.result'] = 'Temps de génération du template sans cache : :non_cached_time secondes<br />Temps de génération du template avec cache : :cached_time secondes<br />Longueur de la chaîne : :string_length caractères.';
-
+$lang['string_template.result'] = '
+    <p>Temps de génération du template sans cache : :non_cached_time secondes.</p>
+    <p>Temps de génération du template avec cache : :cached_time secondes.</p>
+    <p>Longueur de la chaîne : :string_length caractères.</p>
+';
 ?>

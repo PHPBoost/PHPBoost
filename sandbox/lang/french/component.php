@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 24
+ * @version     PHPBoost 5.3 - last update: 2020 05 28
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -64,7 +64,6 @@ $lang['component.audio'] = 'Audio';
 
 // Lists
 $lang['component.lists'] = 'Listes';
-$lang['component.element'] = 'Élément';
 
 $lang['component.progress_bar'] = 'Barre de progression';
 $lang['component.progress_bar.util_infos'] = 'Informations utiles';
@@ -75,12 +74,6 @@ $lang['component.root'] = 'Racine';
 $lang['component.tree'] = 'Arborescence';
 $lang['component.cat'] = 'Catégorie';
 $lang['component.file'] = 'Fichier';
-
-$lang['component.buttons'] = 'Boutons';
-$lang['component.button'] = 'Bouton';
-$lang['component.button.reset'] = 'Défaut';
-$lang['component.button.color'] = 'En couleur';
-$lang['component.buttons.other'] = 'Autres boutons';
 
 $lang['component.notation'] = 'Notation';
 $lang['component.notation.possible.values'] = 'Valeurs possibles';
@@ -121,13 +114,6 @@ $lang['component.table.sort.down'] = 'Décroissant';
 $lang['component.table.responsive.header'] = 'Tableau responsive avec entête';
 $lang['component.table.responsive.no.header'] = 'Tableau responsive sans entête';
 
-// Messages
-$lang['component.messages.and.coms'] = 'Messages et commentaires';
-$lang['component.messages.login'] = 'admin';
-$lang['component.messages.level'] = 'Administrateur';
-$lang['component.messages.date'] = '05/09/2013 à 15h37';
-$lang['component.messages.content'] = 'Ceci est un commentaire';
-
 $lang['component.alert.messages'] = 'Messages d\'alerte';
 $lang['component.message.success'] = 'Ceci est un message de succès';
 $lang['component.message.notice'] = 'Ceci est un message d\'information';
@@ -145,7 +131,7 @@ $lang['component.message.float-display'] = 'Afficher les messages éphémères';
 $lang['component.tooltip'] = 'Tooltip';
 $lang['component.tooltip.custom'] = 'Tooltip personnalisé';
 $lang['component.tooltip.desc'] = '
-    Un "tooltip" est une description indexée à un élément qui est cachée par défaut et qui apparait au survol de l\'élément (les exemples sont montrés avec la classe <code class="language-css">.pinned</code>). <br />
+    Un "tooltip" est une description indexée à un élément qui est cachée par défaut et qui apparait au survol de l\'élément (les exemples suivants sont montrés avec la classe <code class="language-css">.pinned</code>). <br />
     Par défaut, dans PHPBoost le tooltip s\'applique à toute balise possédant un attribut <code class="language-html">aria-label</code>.';
 $lang['component.tooltip.eg.basic'] = 'Au survol, la description déclarée dans l\'attribut aria-label apparait.';
 $lang['component.tooltip.label.basic'] = 'ce plugin supporte les balises html sans attribut dans la description.
@@ -166,31 +152,4 @@ $lang['component.tooltip.options'] = '
     <code class="language-markup">data-tooltip-pos</code> pour forcer la position du tooltip (top|right|bottom|left) <br />
     <code class="language-markup">data-tooltip-class</code> pour ajouter des class de personnalisation ("display-none" pour ne pas afficher le tooltip mais laisser le aria-label)<br />
 ';
-
-//Blocs
-$lang['component.blocks'] = 'Blocs';
-$lang['component.block.title'] = 'Titre de l\'article';
-$lang['component.blocks.per.line'] = 'par ligne';
-
-// Pages
-$lang['component.page.title'] = 'Titre de la page';
-$lang['component.more'] = 'Auteur | Date de création | Nombre de commentaires ...';
-$lang['component.picture'] = 'Image';
-
-$lang['component.class'] = 'class';
-$lang['component.form'] = 'form';
-$lang['component.options.file.title'] = 'Informations sur le fichier';
-$lang['component.options'] = '.options';
-$lang['component.options.sort_by'] = 'Trier selon';
-$lang['component.options.sort_by.alphabetical'] = 'Alphabétique';
-$lang['component.options.sort_by.size'] = 'Taille';
-$lang['component.options.sort_by.date'] = 'Date';
-$lang['component.options.sort_by.popularity'] = 'Vues';
-$lang['component.options.sort_by.note'] = 'Note';
-$lang['component.options.link'] = 'Lien';
-$lang['component.options.option.title'] = 'Option du module';
-$lang['component.options.option.com'] = 'Aucun commentaire';
-$lang['component.modules_menus.direction.up'] = 'Croissant';
-$lang['component.modules_menus.direction.down'] = 'Décroissant';
-
 ?>

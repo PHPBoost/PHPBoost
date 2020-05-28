@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 21
+ * @version     PHPBoost 5.3 - last update: 2020 05 28
  * @since       PHPBoost 5.2 - 2020 05 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -35,8 +35,4 @@ $lang['email.smtp.secure_protocol.none'] = 'Aucun';
 $lang['email.smtp.secure_protocol.tls'] = 'TLS';
 $lang['email.smtp.secure_protocol.ssl'] = 'SSL';
 $lang['email.success'] = 'L\'email a été envoyé';
-
-// Template
-$lang['string_template.result'] = 'Temps de génération du template sans cache : :non_cached_time secondes<br />Temps de génération du template avec cache : :cached_time secondes<br />Longueur de la chaîne : :string_length caractères.';
-
 ?>

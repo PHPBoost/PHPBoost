@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 05
+ * @version     PHPBoost 5.3 - last update: 2020 05 28
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,8 +15,8 @@
 ####################################################
 
 $lang['bbcode.explain'] = '
-<p>Cette page présente le rendu des éléments spécifiques déclarés en BBCode qui apportent un design différent du <a href="' . SandboxUrlBuilder::component()->rel() . '">FWKBoost</a>.</p>
-<p>Pour connaitre le langage BBCode, la documentation complète est fournie sur le site de <a href="https://www.phpboost.com/wiki"><i class="fa iboost fa-iboost-phpboost"></i> PHPHBoost</a></p>
+    <p>Cette page présente le rendu des éléments spécifiques déclarés en BBCode qui apportent un design différent du <a href="' . SandboxUrlBuilder::component()->rel() . '">FWKBoost</a>.</p>
+    <p>Pour connaitre le langage BBCode, la documentation complète est fournie sur le site de <a href="https://www.phpboost.com/wiki"><i class="fa iboost fa-iboost-phpboost"></i> PHPHBoost</a></p>
 ';
 
 $lang['bbcode.title.typography'] = 'Typographie';
@@ -53,7 +53,7 @@ $lang['bbcode.table.name'] = 'Nom';
 $lang['bbcode.table.description'] = 'Description';
 
 // Wiki
-$lang['wiki.not'] = 'Le module Wiki n\'est pas installé et/ou activé';
+$lang['wiki.not'] = 'Le module Wiki n\'est pas installé et/ou activé.';
 $lang['wiki.conditions'] = 'Vous devez porter le module wiki dans votre thème pour que vos modifications soient actives.';
 $lang['wiki.module'] = 'Module Wiki';
 $lang['wiki.table.of.contents'] = 'Table des matières';

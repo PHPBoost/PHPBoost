@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 21
+ * @version     PHPBoost 5.3 - last update: 2020 05 28
  * @since       PHPBoost 5.2 - 2020 05 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -16,27 +16,23 @@
 
 // Mail
 $lang['email.title'] = 'Email';
-$lang['email.sender_email'] = 'Email de l\'expéditeur';
-$lang['email.sender_name'] = 'Nom de l\'expéditeur';
-$lang['email.recipient_email'] = 'Email du destinataire';
-$lang['email.recipient_name'] = 'Nom du destinataire';
-$lang['email.subject'] = 'Objet de l\'email';
-$lang['email.content'] = 'Contenu';
-$lang['email.smtp_config'] = 'Configuration SMTP';
-$lang['email.smtp_config.explain'] = 'Cochez la case si vous voulez utiliser une connexion SMTP directe pour envoyer l\'email.';
-$lang['email.use_smtp'] = 'Utiliser SMTP';
-$lang['email.smtp_configuration'] = 'Configuration des paramètres SMTP pour l\'envoi';
-$lang['email.smtp.host'] = 'Nom d\'hôte';
+$lang['email.sender_email'] = 'Sender email';
+$lang['email.sender_name'] = 'Sender name';
+$lang['email.recipient_email'] = 'Recipient email';
+$lang['email.recipient_name'] = 'Recipient name';
+$lang['email.subject'] = 'Email object';
+$lang['email.content'] = 'Content';
+$lang['email.smtp_config'] = 'SMTP Configuration' ;
+$lang['email.smtp_config.explain'] = 'Check the box if you want to use a direct SMTP connection to send the email.';
+$lang['email.use_smtp'] = 'Use SMTP';
+$lang['email.smtp_configuration'] = 'Configuration of SMTP parameters for sending';
+$lang['email.smtp.host'] = 'Host name';
 $lang['email.smtp.port'] = 'Port';
-$lang['email.smtp.login'] = 'Identifiant';
-$lang['email.smtp.password'] = 'Mot de passe';
-$lang['email.smtp.secure_protocol'] = 'Protocole de sécurisation';
-$lang['email.smtp.secure_protocol.none'] = 'Aucun';
+$lang['email.smtp.login'] = 'Login';
+$lang['email.smtp.password'] = 'Password';
+$lang['email.smtp.secure_protocol'] = 'Security protocol';
+$lang['email.smtp.secure_protocol.none'] = 'None';
 $lang['email.smtp.secure_protocol.tls'] = 'TLS';
 $lang['email.smtp.secure_protocol.ssl'] = 'SSL';
-$lang['email.success'] = 'L\'email a été envoyé';
-
-// Template
-$lang['string_template.result'] = 'Temps de génération du template sans cache : :non_cached_time secondes<br />Temps de génération du template avec cache : :cached_time secondes<br />Longueur de la chaîne : :string_length caractères.';
-
+$lang['email.success'] = 'The email has been sent.';
 ?>

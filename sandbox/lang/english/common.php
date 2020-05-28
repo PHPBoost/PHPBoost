@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 01
+ * @version     PHPBoost 5.3 - last update: 2020 05 28
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -19,20 +19,25 @@ $lang['sandbox.module.title'] = 'Sandbox';
 
 $lang['title.config'] = 'Configuration';
 $lang['title.admin.component'] = 'Form in administration';
-$lang['title.builder'] = 'PHP builder';
-$lang['title.component'] = 'FWKBoost';
+$lang['title.builder'] = 'Forms';
 $lang['title.component'] = 'Componants';
 $lang['title.layout'] = 'Layouts';
-$lang['title.plugins'] = 'Plugins';
 $lang['title.bbcode'] = 'BBCode';
-$lang['title.menu'] = 'Navigation menus ';
+$lang['title.menu'] = 'Menus';
+$lang['title.menu.nav'] = 'Navigation menus ';
+$lang['title.menu.content'] = 'Content menus';
 $lang['title.icons'] = 'Icons ';
 $lang['title.miscellaneous'] = 'Miscellaneous';
 $lang['title.table'] = 'Tables';
 $lang['title.email'] = 'Email';
 $lang['title.template'] = 'Template';
+$lang['title.php'] = 'PHP tests';
 
 $lang['see.render'] = 'See render';
+$lang['phpboost.doc'] = 'PHPBoost documentation';
+
+$lang['pinned.php'] = '<span class="pinned moderator smallest" data-tooltip-pos="top" aria-label="This element can be added by php"><i class="fa fa-fw fa-terminal" aria-hidden="true"></i></span>';
+$lang['pinned.bbcode'] = '<span class="pinned member smallest" data-tooltip-pos="top" aria-label="This element can be added by bbcode"><i class="fa fa-fw fa-code" aria-hidden="true"></i></span>';
 
 // Home page
 $lang['welcome.message'] = '
@@ -47,12 +52,14 @@ $lang['welcome.admin'] = 'Admin view';
 $lang['welcome.builder'] = 'The render of the different features using the PHP builder: form fields, maps, links menu, etc.';
 $lang['welcome.component'] = 'The render of componants from the HTML/CSS/JS FWKBoost framework.';
 $lang['welcome.bbcode'] = 'The render of the sepcific elements from the bbcode, using a different design from FWKBoost.';
-$lang['welcome.menu'] = 'The render of navigation menusLe rendu des menus de navigations depending on each available location.';
-$lang['welcome.icons'] = 'A preview of what is possible to do with font-icons in PHPBoost.';
+$lang['welcome.layout'] = 'Render of different layouts, messages, cells, grid, of FWKBoost.';
+$lang['welcome.menu'] = 'The render of navigation menus depending on each available location, and some of content menus.';
 $lang['welcome.misc'] = 'Various PHP test pages.';
 
-// Lorem
+$lang['welcome.see.nav'] = 'Navigation';
+$lang['welcome.see.content'] = 'Contenu';
 
+// Lorem
 $lang['lorem.short.content'] = 'Etiam hendrerit, tortor et faucibus dapibus, eros orci porta eros, in facilisis ipsum ipsum at nisl';
 $lang['lorem.medium.content'] = 'Fusce vitae consequat nisl. Fusce vestibulum porta ipsum ac consectetur. Duis finibus mauris eu feugiat congue.
 Aenean aliquam accumsan ipsum, ac dapibus dui ultricies non. In hac habitasse platea dictumst. Aenean mi nibh, varius vel lacus at, tincidunt luctus eros.
@@ -66,35 +73,15 @@ sed viverra tortor diam pretium metus. In hac habitasse platea dictumst. Ut veli
 Integer elementum faucibus finibus. Nullam et felis sit amet felis blandit iaculis. Vestibulum massa arcu, finibus id enim ac, commodo aliquam metus.
 Vestibulum feugiat urna nunc, et eleifend velit posuere ac. Vestibulum sagittis tempus nunc, sit amet dignissim ipsum sollicitudin eget.';
 
-// Common
+// Helpers
 $lang['sandbox.source.code'] = 'See the source code';
 $lang['sandbox.pbt.doc'] = 'PHPBoost documentation';
 
-
-// Mail
-
-$lang['mail.title'] = 'Email';
-$lang['mail.sender_mail'] = 'Sender email';
-$lang['mail.sender_name'] = 'Sender name';
-$lang['mail.recipient_mail'] = 'Recipient email';
-$lang['mail.recipient_name'] = 'Recipient name';
-$lang['mail.subject'] = 'Email subject';
-$lang['mail.content'] = 'Content';
-$lang['mail.smtp_config'] = 'SMTP configuration';
-$lang['mail.smtp_config.explain'] = 'If you want to use a direct SMTP connection to send the email, check the box.';
-$lang['mail.use_smtp'] = 'Use SMTP';
-$lang['mail.smtp_configuration'] = 'SMTP parameters configuration';
-$lang['mail.smtp.host'] = 'Host name';
-$lang['mail.smtp.port'] = 'Port';
-$lang['mail.smtp.login'] = 'Login';
-$lang['mail.smtp.password'] = 'Password';
-$lang['mail.smtp.secure_protocol'] = 'Secure protocol';
-$lang['mail.smtp.secure_protocol.none'] = 'None';
-$lang['mail.smtp.secure_protocol.tls'] = 'TLS';
-$lang['mail.smtp.secure_protocol.ssl'] = 'SSL';
-$lang['mail.success'] = 'The email has been sent';
-
-//Template
-$lang['string_template.result'] = 'Template generation duration without cache : :non_cached_time seconds<br />Template generation duration with cache: :cached_time seconds<br />Lenght of the parsed string: :string_length chars.';
+// Template
+$lang['string_template.result'] = '
+    <p>Template generation time without cache : :non_cached_time secondes.</p>
+    <p>Template generation time with cache : :cached_time secondes.</p>
+    <p>String length : :string_length caractères.</p>
+';
 
 ?>

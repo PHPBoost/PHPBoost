@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 20
+ * @version     PHPBoost 5.3 - last update: 2020 05 28
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -63,8 +63,10 @@ $lang['menu.accordion.title'] = 'Menu Accordéon';
 $lang['menu.accordion.options'] = 'Changez la classe css <code class="language-css">basic</code> en <code class="language-css">siblings</code> pour modifier le comportement d\'ouverture des panneaux et ainsi fermer un panneau ouvert lorsque vous en ouvrez un autre';
 $lang['menu.accordion.open'] = 'Ouvrir tous les panneaux';
 $lang['menu.accordion.close'] = 'Fermer tous les panneaux';
-// Tab
+
+// Tabs
 $lang['menu.tabs.title']  = 'Menu tabulaire';
+
 // Wizard
 $lang['menu.wizard.title']  = 'Menu à étapes';
 $lang['menu.last.step']  = 'Panneau final';

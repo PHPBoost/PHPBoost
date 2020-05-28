@@ -7,9 +7,6 @@
             <nav id="cssmenu-left" class="cssmenu cssmenu-vertical cssmenu-left cssmenu-with-submenu">
                 <ul class="level-0">
                     <li>
-                        <a class="cssmenu-title" href="#"><span>{L_ELEM}</span></a>
-                    </li>
-                    <li>
                         <a class="cssmenu-title" href="#"><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur, possimus?</span></a>
                     </li>
                     <li class="has-sub">
