@@ -106,8 +106,10 @@
             </div>
             <div class="cell-form">
                 <div class="grouped-inputs">
-                    <label for="" class="grouped-element">Label</label>
-                    <input type="text" class="grouped-element" value="input">
+                    <label for="input-id" class="grouped-element">
+                        <span class="grouped-element">Label</span>
+                        <input id="input-id" type="text" class="grouped-element" value="input">
+                    </label>
                     <select name="" id="" class="grouped-element">
                         <option value="">select</option>
                         <option value="">{@layout.item}</option>
@@ -227,8 +229,10 @@
 &lt;/div>
 &lt;div class="cell-form">
     &lt;div class="grouped-inputs">
-        &lt;label for="" class="grouped-element">...&lt;/label>
-        &lt;input type="text" class="grouped-element" value="...">
+        &lt;label for="input-id" class="grouped-element">
+            &lt;span class="grouped-element">...&lt;/span>
+            &lt;input id="input-id" type="text" class="grouped-element" value="...">
+        &lt;/label>
         &lt;select name="" id="" class="grouped-element">...&lt;/select>
         &lt;a href="" class="grouped-element">...&lt;/a>
     &lt;/div>

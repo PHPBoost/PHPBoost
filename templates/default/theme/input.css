@@ -100,7 +100,6 @@ option {
 	margin: 0 0 0.309em;
 }
 
-.grouped-inputs label,
 .grouped-inputs input,
 .grouped-inputs select,
 .inputs-with-sup .label-sup {
@@ -126,7 +125,6 @@ option {
 .grouped-left  { justify-content: flex-start; }
 
 .grouped-element {
-	padding: 0.309em 0.618em;
 	border-width: 1px 0 1px 1px;
 	border-style: solid;
 }

@@ -160,6 +160,8 @@ form > [class*="cell-"]:not(.cell-header) {
 	padding: 0.456em 0.618em
 }
 
+.cell-form .grouped-inputs { width: 100%; }
+
 .cell-input:not(.grouped-inputs):not(.input-element-date),
 .cell-input:not(.grouped-inputs):not(.input-element-date) input:not([type="checkbox"]):not([type="radio"]),
 .cell-input select {
