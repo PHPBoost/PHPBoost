@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 03 26
+ * @version     PHPBoost 5.2 - last update: 2020 05 20
  * @since       PHPBoost 2.0 - 2008 08 29
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -89,7 +89,7 @@ class AdministratorAlertService
 			$array_result = array();
 			$result = self::$db_querier->select("SELECT id, entitled, fixing_url, current_status, creation_date, identifier, id_in_module, type, priority, description
 			FROM " . DB_TABLE_EVENTS  . "
-			WHERE contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "' AND " . implode($criterias, " AND "));
+			WHERE contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "' AND " . implode(' AND ', $criterias));
 
 			while ($row = $result->fetch())
 			{
