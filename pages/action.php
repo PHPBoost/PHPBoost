@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2020 01 05
+ * @version   	PHPBoost 5.2 - last update: 2020 05 30
  * @since   	PHPBoost 1.6 - 2007 08 18
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -159,7 +159,7 @@ elseif ($del_cat_post > 0 && $report_cat >= 0)
 	//On fait un tableau contenant la liste des sous catégories de cette catégorie
 	pages_find_subcats($sub_cats, $page_infos['id_cat']);
 	$sub_cats[] = $page_infos['id_cat']; //On rajoute la catégorie que l'on supprime
-	$id_to_delete = implode($sub_cats, ', ');
+	$id_to_delete = implode(', ', $sub_cats);
 
 	if ($remove_action == 'move_all') //Vérifications préliminaires si on va tout supprimer
 	{
