@@ -14,7 +14,9 @@ class StatsModuleUpdateVersion extends ModuleUpdateVersion
 		parent::__construct('stats');
 
 		$this->delete_old_files_list = array(
-			'/phpboost/StatsMenusExtensionPoint.class.php'
+			'/lang/french/stats_french.php',
+			'/lang/english/stats_english.php',
+			'/phpboost/StatsMenusExtensionPoint.class.php',
 		);
 	}
 }

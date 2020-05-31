@@ -3,128 +3,129 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2017 03 26
+ * @version     PHPBoost 5.3 - last update: 2020 05 31
  * @since       PHPBoost 1.6 - 2007 09 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ####################################################
 #                    English                       #
 ####################################################
 
-$LANG['stats.module.title'] = 'Statistics';
-$LANG['more_stats'] = 'More statistics';
-$LANG['last_member'] = 'Latest member';
-$LANG['percentage'] = 'Percentage';
-$LANG['member_registered'] = '<strong>%d</strong> registered member';
-$LANG['member_registered_s'] = '<strong>%d</strong> registered members';
-$LANG['admin.authorizations'] = 'Permissions';
-$LANG['admin.authorizations.read'] = 'Permission to display the statistics';
-$LANG['config.elements.number.per.page'] = 'Elements number per page';
-$LANG['config.elements.number.per.page.explain'] = 'For referent websites and keywords.';
-$LANG['config.require.elements.number'] = 'The number of elements per page can\'t be null.';
+$lang['stats.module.title'] = 'Statistics';
+$lang['more.stats'] = 'More statistics';
+$lang['last.member'] = 'Latest member';
+$lang['percentage'] = 'Percentage';
+$lang['member.registered'] = '<strong>%d</strong> registered member';
+$lang['member.registered.s'] = '<strong>%d</strong> registered members';
+$lang['admin.authorizations'] = 'Permissions';
+$lang['admin.authorizations.read'] = 'Permission to display the statistics';
+$lang['config.elements.number.per.page'] = 'Elements number per page';
+$lang['config.elements.number.per.page.explain'] = 'For referent websites and keywords.';
+$lang['config.require.elements.number'] = 'The number of elements per page can\'t be null.';
 
 
 //Robots
-$LANG['robot'] = 'Robot';
-$LANG['robots'] = 'Robots';
-$LANG['unknown_bot'] = 'Unknown robot';
-$LANG['erase_rapport'] = 'Erase rapport';
-$LANG['number_r_visit'] = 'Number of views';
+$lang['robot'] = 'Robot';
+$lang['robots'] = 'Robots';
+$lang['unknown_bot'] = 'Unknown robot';
+$lang['erase.rapport'] = 'Erase rapport';
+$lang['number.r.visit'] = 'Number of views';
 
 //Stats
-$LANG['more_stats'] = 'More stats';
-$LANG['site'] = 'Site';
-$LANG['referer_s'] = 'Referent websites';
-$LANG['no_referer'] = 'no referent website';
-$LANG['page_s'] = 'Displayed pages';
-$LANG['browser_s'] = 'Browsers';
-$LANG['keyword_s'] = 'Keywords';
-$LANG['no_keyword'] = 'no keyword';
-$LANG['os'] = 'Operating systems';
-$LANG['fai'] = 'Internet Access Providers';
-$LANG['all_fai'] = 'See all Internet access providers';
-$LANG['10_fai'] = 'See the 10 principal Internet access providers';
-$LANG['number'] = 'Number of ';
-$LANG['start'] = 'Creation of the website';
-$LANG['stat_lang'] = 'Visitor\'s Countries';
-$LANG['all_langs'] = 'See all visitor\'s countries';
-$LANG['10_langs'] = 'See the 10 most common countries of visitors';
-$LANG['visits_year'] = 'See statistics for the year';
-$LANG['unknown'] = 'Unknown';
-$LANG['last_member'] = 'Last member registered';
-$LANG['top_10_posters'] = 'Top 10: posters';
-$LANG['version'] = 'Version';
-$LANG['colors'] = 'Colors';
-$LANG['calendar'] = 'Calendar';
-$LANG['events'] = 'Events';
+$lang['site'] = 'Site';
+$lang['referer.s'] = 'Referent websites';
+$lang['no.referer'] = 'no referent website';
+$lang['page.s'] = 'Displayed pages';
+$lang['browser.s'] = 'Browsers';
+$lang['keyword.s'] = 'Keywords';
+$lang['no.keyword'] = 'no keyword';
+$lang['os'] = 'Operating systems';
+$lang['number'] = 'Number of ';
+$lang['start'] = 'Creation of the website';
+$lang['stat.lang'] = 'Visitor\'s Countries';
+$lang['visits.year'] = 'See statistics for the year';
+$lang['unknown'] = 'Unknown';
+$lang['top.10.posters'] = 'Top 10: posters';
+$lang['version'] = 'Version';
+$lang['colors'] = 'Colors';
+$lang['calendar'] = 'Calendar';
+$lang['events'] = 'Events';
 
 //Sites référents.
-$LANG['total_visit'] = 'Total visits';
-$LANG['average_visit'] = 'Average visits';
-$LANG['trend'] = 'Trend';
-$LANG['last_update'] = 'Last visit';
+$lang['total.visit'] = 'Total visits';
+$lang['average.visit'] = 'Average visits';
+$lang['trend'] = 'Trend';
+$lang['last.update'] = 'Last visit';
 
 //Navigateurs.
 global $stats_array_browsers;
 $stats_array_browsers = array(
-	'chrome' => array('Chrome', 'chrome.png'),
-	'chromium' => array('Chromium', 'chromium.png'),
-	'edge' => array('Edge', 'edge.png'),
-	'epic' => array('Epic Privacy', 'epic.png'),
-	'falcon' => array('Falcon', 'falcon.png'),
-	'firefox' => array('Firefox', 'firefox.png'),
+	'chrome'           => array('Chrome', 'chrome.png'),
+	'chromium'         => array('Chromium', 'chromium.png'),
+	'edge'             => array('Edge', 'edge.png'),
+	'epic'             => array('Epic Privacy', 'epic.png'),
+	'falcon'           => array('Falcon', 'falcon.png'),
+	'firefox'          => array('Firefox', 'firefox.png'),
 	'internetexplorer' => array('Internet Explorer', 'internetexplorer.png'),
-	'icab' => array('Icab', 'icab.png'),
-	'iron' => array('SRWare Iron', 'iron.png'),
-	'konqueror' => array('Konqueror', 'konqueror.png'),
-	'lynx' => array('Lynx', 'lynx.png'),
-	'links' => array('Links', 'links.png'),
-	'lunascape' => array('Lunascape', 'lunascape.png'),
-	'maxthon' => array('Maxthon', 'maxthon.png'),
-	'opera' => array('Opera', 'opera.png'),
-	'phoenix' => array('Phoenix', 'phoenix.png'),
-	'safari' => array('Safari', 'safari.png'),
-	'silk' => array('Amazone Silk', 'silk.png'),
-	'seamonkey' => array('SeaMonkey', 'seamonkey.png'),
-	'tor' => array('Tor', 'tor.png'),
-	'uc' => array('UC Browser', 'uc.png'),
-	'vivaldi' => array('Vivaldi', 'vivaldi.png'),
-	'yandex' => array('Yandex', 'yandex.png'),
+	'icab'             => array('Icab', 'icab.png'),
+	'iron'             => array('SRWare Iron', 'iron.png'),
+	'konqueror'        => array('Konqueror', 'konqueror.png'),
+	'lynx'             => array('Lynx', 'lynx.png'),
+	'links'            => array('Links', 'links.png'),
+	'lunascape'        => array('Lunascape', 'lunascape.png'),
+	'maxthon'          => array('Maxthon', 'maxthon.png'),
+	'opera'            => array('Opera', 'opera.png'),
+	'phoenix'          => array('Phoenix', 'phoenix.png'),
+	'safari'           => array('Safari', 'safari.png'),
+	'silk'             => array('Amazone Silk', 'silk.png'),
+	'seamonkey'        => array('SeaMonkey', 'seamonkey.png'),
+	'tor'              => array('Tor', 'tor.png'),
+	'uc'               => array('UC Browser', 'uc.png'),
+	'vivaldi'          => array('Vivaldi', 'vivaldi.png'),
+	'yandex'           => array('Yandex', 'yandex.png'),
 
-	'phone' => array('Mobile', 'phone.png'),
-	'other' => array('Autres', 'other.png')
+	'phone'            => array('Mobile', 'phone.png'),
+	'other'            => array('Autres', 'other.png')
 	);
 
 	//Système d'exploitation.
-	global $stats_array_os;
-	$stats_array_os = array(
-	'android' => array('Android', 'android.png'),
-	'ios' => array('IOS', 'iphone.png'),
-	'windowsphone' => array('Windows phone', 'windows8.png'),
-	'windows10' => array('Windows 10', 'windows10.png'),
-	'windows8.1' => array('Windows 8.1', 'windows8.png'),
-	'windows8' => array('Windows 8', 'windows8.png'),
-	'windowsseven' => array('Windows 7', 'windowsseven.png'),
-	'windowsvista' => array('Windows Vista', 'windowsvista.png'),
-	'windowsserver2003' => array('Windows Server 2003', 'windowsxp.png'),
-	'windowsxp' => array('Windows XP', 'windowsxp.png'),
-	'windowsold' => array('Old Windows (before 2000)', 'windowsold.png'),
-	'linux' => array('Linux', 'linux.png'),
-	'macintosh' => array('Mac OS', 'mac.png'),
-	'sunos' => array('SunOS', 'sun.png'),
-	'os2' => array('OS2', 'os2.png'),
-	'freebsd' => array('FreeBSD', 'freebsd.png'),
-	'netbsd' => array('NetBSD', 'freebsd.png'),
-	'aix' => array('AIX', 'aix.png'),
-	'irix' => array('Irix', 'irix.png'),
-	'hp-ux' => array('HP-UX', 'hpux.png'),
-	'wii' => array('Wii', 'wii.png'),
-	'psp' => array('PSP', 'psp.png'),
-	'playstation3' => array('Playstation 3', 'ps3.png'),
-	'phone' => array('Phone', 'phone.png'),
-	'other' => array('Others', 'other.png')
+global $stats_array_os;
+$stats_array_os = array(
+	'macintosh'         => array('Mac OS', 'mac.png'),
+
+	'windows10'         => array('Windows 10', 'windows10.png'),
+	'windows8.1'        => array('Windows 8.1', 'windows8.png'),
+	'windows8'          => array('Windows 8', 'windows8.png'),
+	'windowsseven'      => array('Windows 7', 'windowsseven.png'),
+	'windowsvista'      => array('Windows Vista', 'windowsvista.png'),
+	'windowsserver2003' => array('Windows Serveur 2003', 'windowsxp.png'),
+	'windowsxp'         => array('Windows XP', 'windowsxp.png'),
+	'windowsold'        => array('Ancien Windows (avant 2000)', 'windowsold.png'),
+
+	'linux'             => array('Linux', 'linux.png'),
+	'sunos'             => array('SunOS', 'sun.png'),
+	'os2'               => array('OS2', 'os2.png'),
+	'freebsd'           => array('FreeBSD', 'freebsd.png'),
+	'netbsd'            => array('NetBSD', 'freebsd.png'),
+	'aix'               => array('AIX', 'aix.png'),
+	'irix'              => array('Irix', 'irix.png'),
+	'hp-ux'             => array('HP-UX', 'hpux.png'),
+
+	'wii'               => array('Wii', 'wii.png'),
+	'psp'               => array('PSP', 'psp.png'),
+	'playstation3'      => array('Playstation 3', 'ps3.png'),
+	'playstation4'      => array('Playstation 4', 'ps3.png'),
+	'xboxone'           => array('Xbox One', 'other.png'),
+
+	'android'           => array('Android', 'android.png'),
+	'ios'               => array('IOS', 'iphone.png'),
+	'phone'             => array('Mobile', 'phone.png'),
+	'windowsphone'      => array('Windows phone', 'windows8.png'),
+
+	'other'             => array('Autres', 'other.png')
 );
 
 //Pays.

@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 10 30
+ * @version     PHPBoost 5.3 - last update: 2020 05 31
  * @since       PHPBoost 1.6 - 2007 01 25
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '../..');
@@ -45,9 +46,9 @@ if (!empty($stats_referer))
 		{
 			$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
 
-			$tpl = new FileTemplate('stats/stats_tables.tpl');
+			$view = new FileTemplate('stats/stats_tables.tpl');
 
-			$tpl->put_all(array(
+			$view->put_all(array(
 				'C_REFERER' => true,
 				'FULL_URL' => $row['url'] . $row['relative_url'],
 				'RELATIVE_URL' => $row['url'] . $row['relative_url'],
@@ -60,7 +61,7 @@ if (!empty($stats_referer))
 				'TREND' => $trend_parameters['trend'],
 			));
 
-			echo $tpl->display();
+			echo $view->display();
 		}
 		$result->dispose();
 	}
@@ -86,9 +87,9 @@ elseif (!empty($stats_keyword))
 		{
 			$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
 
-			$tpl = new FileTemplate('stats/stats_tables.tpl');
+			$view = new FileTemplate('stats/stats_tables.tpl');
 
-			$tpl->put_all(array(
+			$view->put_all(array(
 				'FULL_URL' => $row['url'],
 				'TOTAL_VISIT' => $row['total_visit'],
 				'AVERAGE' => $trend_parameters['average'],
@@ -99,7 +100,7 @@ elseif (!empty($stats_keyword))
 				'TREND' => $trend_parameters['trend'],
 			));
 
-			echo $tpl->display();
+			echo $view->display();
 		}
 		$result->dispose();
 	}

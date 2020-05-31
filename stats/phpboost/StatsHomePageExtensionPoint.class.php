@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 16
+ * @version     PHPBoost 5.3 - last update: 2020 05 30
  * @since       PHPBoost 3.0 - 2012 02 08
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -25,27 +25,30 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 
 	private function get_title()
 	{
-		global $LANG;
+		$lang = LangLoader::get('common', 'stats');
 
-		load_module_lang('stats');
-
-		return $LANG['stats.module.title'];
+		return $lang['stats.module.title'];
 	}
 
 	private function get_view()
 	{
 		$this->check_authorizations();
+		$lang = LangLoader::get('common', 'stats');
+		$main_lang = LangLoader::get('main');
+		$date_lang = LangLoader::get('date-common');
 
-		global $LANG, $auth_write, $Bread_crumb, $members, $pages, $pages_year, $referer, $keyword, $visit, $visit_year, $os, $browser, $user_lang, $stats_array_browsers, $stats_array_os, $stats_array_lang, $bot;
+		global $auth_write, $Bread_crumb, $members, $pages, $pages_year, $referer, $keyword, $visit, $visit_year, $os, $browser, $user_lang, $stats_array_browsers, $stats_array_os, $stats_array_lang, $bot;
 
 		require_once(PATH_TO_ROOT . '/stats/stats_begin.php');
 
-		$tpl = new FileTemplate('stats/stats.tpl');
+		$view = new FileTemplate('stats/stats.tpl');
+		$view->add_lang($lang);
+		$view->add_lang($main_lang);
+		$view->add_lang($date_lang);
 
-		$date_lang = LangLoader::get('date-common');
 		$_NBR_ELEMENTS_PER_PAGE = StatsConfig::load()->get_elements_number_per_page();
 
-		$tpl->put_all(array(
+		$view->put_all(array(
 			'U_STATS_SITE'    => url('.php?site=1', '-site.php'),
 			'U_STATS_USERS'   => url('.php?members=1', '-members.php'),
 			'U_STATS_VISIT'   => url('.php?visit=1', '-visit.php'),
@@ -55,18 +58,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			'U_STATS_BROWSER' => url('.php?browser=1', '-browser.php'),
 			'U_STATS_OS'      => url('.php?os=1', '-os.php'),
 			'U_STATS_LANG'    => url('.php?lang=1', '-lang.php'),
-			'U_STATS_ROBOTS'  => url('.php?bot=1', '-bot.php'),
-			'L_SITE'     => $LANG['site'],
-			'L_STATS'    => $LANG['stats.module.title'],
-			'L_USERS'    => $LANG['member_s'],
-			'L_VISITS'   => $LANG['guest_s'],
-			'L_PAGES'    => $LANG['page_s'],
-			'L_REFERER'  => $LANG['referer_s'],
-			'L_KEYWORD'  => $LANG['keyword_s'],
-			'L_BROWSERS' => $LANG['browser_s'],
-			'L_ROBOTS'   => $LANG['robot_s'],
-			'L_OS'       => $LANG['os'],
-			'L_LANG'     => $LANG['stat_lang']
+			'U_STATS_ROBOTS'  => url('.php?bot=1', '-bot.php')
 		));
 
 		if ($members)
@@ -75,7 +67,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			$last_user_group_color = User::get_group_color($stats_cache->get_stats_properties('last_member_groups'), $stats_cache->get_stats_properties('last_member_level'));
 			$user_sex_field = ExtendedFieldsCache::load()->get_extended_field_by_field_name('user_sex');
 
-			$tpl->put_all(array(
+			$view->put_all(array(
 				'C_STATS_USERS' => true,
 				'C_LAST_USER_GROUP_COLOR' => !empty($last_user_group_color),
 				'C_DISPLAY_SEX' => (!empty($user_sex_field) && $user_sex_field['display']),
@@ -84,16 +76,8 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				'LAST_USER_GROUP_COLOR' => $last_user_group_color,
 				'U_LAST_USER_PROFILE' => UserUrlBuilder::profile($stats_cache->get_stats_properties('last_member_id'))->rel(),
 				'USERS' => $stats_cache->get_stats_properties('nbr_members'),
-				'GRAPH_RESULT_THEME' => !file_exists('../cache/theme.png') ? '<img src="display_stats.php?theme=1" alt="' . $LANG['theme_s'] . '" />' : '<img src="../cache/theme.png" alt="' . $LANG['theme_s'] . '" />',
-				'GRAPH_RESULT_SEX' => !file_exists('../cache/sex.png') ? '<img src="display_stats.php?sex=1" alt="' . $LANG['sex'] . '" />' : '<img src="../cache/sex.png" alt="' . $LANG['sex'] . '" />',
-				'L_LAST_USER' => $LANG['last_member'],
-				'L_TEMPLATES' => $LANG['theme_s'],
-				'L_PSEUDO' => LangLoader::get_message('display_name', 'user-common'),
-				'L_MSG' => $LANG['message_s'],
-				'L_TOP_TEN_POSTERS' => $LANG['top_10_posters'],
-				'L_COLORS' => $LANG['colors'],
-				'L_USERS' => $LANG['member_s'],
-				'L_SEX' => $LANG['sex']
+				'GRAPH_RESULT_THEME' => !file_exists('../cache/theme.png') ? '<img src="display_stats.php?theme=1" alt="' . $main_lang['theme_s'] . '" />' : '<img src="../cache/theme.png" alt="' . $main_lang['theme_s'] . '" />',
+				'GRAPH_RESULT_SEX' => !file_exists('../cache/sex.png') ? '<img src="display_stats.php?sex=1" alt="' . $main_lang['sex'] . '" />' : '<img src="../cache/sex.png" alt="' . $main_lang['sex'] . '" />'
 			));
 
 			$stats_array = array();
@@ -108,10 +92,10 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			foreach ($Stats->data_stats as $name => $angle_value)
 			{
 				$array_color = $Stats->array_allocated_color[$Stats->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
-				$tpl->assign_block_vars('templates', array(
+				$view->assign_block_vars('templates', array(
 					'NBR_THEME' => NumberHelper::round(($angle_value*$Stats->nbr_entry)/360, 0),
 					'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
-					'THEME' => ($name == 'Other') ? $LANG['other'] : $name,
+					'THEME' => ($name == 'Other') ? $lang['other'] : $name,
 					'PERCENT' => NumberHelper::round(($angle_value/3.6), 1)
 				));
 			}
@@ -127,13 +111,13 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				switch ($row['user_sex'])
 				{
 					case 0:
-					$name = $LANG['unknown'];
+					$name = $lang['unknown'];
 					break;
 					case 1:
-					$name = $LANG['male'];
+					$name = $main_lang['male'];
 					break;
 					case 2:
-					$name = $LANG['female'];
+					$name = $main_lang['female'];
 					break;
 				}
 				$stats_array[$name] = $row['compt'];
@@ -145,10 +129,10 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			foreach ($Stats->data_stats as $name => $angle_value)
 			{
 				$array_color = $Stats->array_allocated_color[$Stats->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
-				$tpl->assign_block_vars('sex', array(
-					'NBR_MBR' => NumberHelper::round(($angle_value*$Stats->nbr_entry)/360, 0),
+				$view->assign_block_vars('sex', array(
+					'MEMBERS_NUMBER' => NumberHelper::round(($angle_value*$Stats->nbr_entry)/360, 0),
 					'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
-					'SEX' => ($name == 'Other') ? $LANG['other'] : $name,
+					'SEX' => ($name == 'Other') ? $lang['other'] : $name,
 					'PERCENT' => NumberHelper::round(($angle_value/3.6), 1)
 				));
 			}
@@ -162,7 +146,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			{
 				$user_group_color = User::get_group_color($row['groups'], $row['level']);
 
-				$tpl->assign_block_vars('top_poster', array(
+				$view->assign_block_vars('top_poster', array(
 					'C_USER_GROUP_COLOR' => !empty($user_group_color),
 					'ID' => $i,
 					'LOGIN' => $row['display_name'],
@@ -186,17 +170,6 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 
 			$visit_counter_total = !empty($visit_counter['nbr_ip']) ? $visit_counter['nbr_ip'] : 1;
 			$visit_counter_day = !empty($visit_counter['total']) ? $visit_counter['total'] : 1;
-
-			$tpl->put_all(array(
-				'L_TODAY' => $date_lang['today'],
-				'L_TOTAL' => $LANG['total'],
-				'L_AVERAGE' => $LANG['average'],
-				'L_VISITORS' => $LANG['guest_s'],
-				'L_VISITS_DAY' => $LANG['guest_s'],
-				'L_DAY' => $date_lang['date'],
-				'L_MONTH' => $date_lang['month'],
-				'L_SUBMIT' => $LANG['submit']
-			));
 
 			$time = Date::to_format(Date::DATE_NOW, 'Ym');
 			$current_year = TextHelper::substr($time, 0, 4);
@@ -223,7 +196,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$info = $this->db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(nbr) as max_month', 'SUM(nbr) as sum_month', 'COUNT(DISTINCT(stats_month)) as nbr_month'), 'WHERE stats_year=:year GROUP BY stats_year', array('year' => $visit_year));
 				} catch (RowNotFoundException $e) {}
 
-				$tpl->put_all(array(
+				$view->put_all(array(
 					'C_STATS_VISIT' => true,
 					'TYPE' => 'visit',
 					'VISIT_TOTAL' => $visit_counter_total,
@@ -248,15 +221,15 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$selected = ($i == $year) ? ' selected="selected"' : '';
 					$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 				}
-				$tpl->put_all(array(
+				$view->put_all(array(
 					'C_STATS_YEAR' => true,
 					'STATS_YEAR' => $years
 				));
 
 				if (@extension_loaded('gd'))
 				{
-					$tpl->put_all(array(
-						'GRAPH_RESULT' => '<img src="display_stats.php?visit_year=1&amp;year=' . $visit_year . '" alt="' . $LANG['total_visit'] . '" />'
+					$view->put_all(array(
+						'GRAPH_RESULT' => '<img src="display_stats.php?visit_year=1&amp;year=' . $visit_year . '" alt="' . $lang['total.visit'] . '" />'
 					));
 
 					//On fait la liste des visites journalières
@@ -269,7 +242,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					while ($row = $result->fetch())
 					{
 						//On affiche les stats numériquement dans un tableau en dessous
-						$tpl->assign_block_vars('value', array(
+						$view->assign_block_vars('value', array(
 							'U_DETAILS' => '<a href="stats' . url('.php?m=' . $row['stats_month'] . '&amp;y=' . $visit_year . '&amp;visit=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
 							'NBR' => $row['total']
 						));
@@ -291,7 +264,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					}
 					$result->dispose();
 
-					$tpl->put_all(array(
+					$view->put_all(array(
 						'C_STATS_NO_GD' => true
 					));
 
@@ -312,7 +285,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 							$diff = $row['stats_month'] - $i;
 							for ($j = 0; $j < $diff; $j++)
 							{
-								$tpl->assign_block_vars('values', array(
+								$view->assign_block_vars('values', array(
 									'HEIGHT' => 0
 								));
 							}
@@ -326,15 +299,15 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
 						$height = $row['total'] / $max_month * 200;
 
-						$tpl->assign_block_vars('values', array(
+						$view->assign_block_vars('values', array(
 							'HEIGHT' => ceil($height)
 						));
 
-						$tpl->assign_block_vars('values.head', array(
+						$view->assign_block_vars('values.head', array(
 						));
 
 						//On affiche les stats numériquement dans un tableau en dessous
-						$tpl->assign_block_vars('value', array(
+						$view->assign_block_vars('value', array(
 							'U_DETAILS' => '<a href="stats' . url('.php?m=' . $row['stats_month'] . '&amp;y=' . $visit_year . '&amp;visit=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
 							'NBR' => $row['total']
 						));
@@ -348,7 +321,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$date_day = isset($date_day) ? $date_day : 1;
 					for	($i = $last_month; $i < 12; $i++)
 					{
-						$tpl->assign_block_vars('end_td', array(
+						$view->assign_block_vars('end_td', array(
 							'END_TD' => '<td style="width:13px;">&nbsp;</td>'
 						));
 					}
@@ -356,7 +329,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$i = 1;
 					foreach ($array_l_months as $value)
 					{
-						$tpl->assign_block_vars('legend', array(
+						$view->assign_block_vars('legend', array(
 							'LEGEND' => (in_array($i, $months_not_empty)) ? '<a href="stats' . url('.php?m=' . $i . '&amp;y=' . $visit_year . '&amp;visit=1') . '#stats">' . TextHelper::substr($value, 0, 3) . '</a>' : TextHelper::substr($value, 0, 3)
 						));
 						$i++;
@@ -381,7 +354,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$info = $this->db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(nbr) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(nbr) as sum_nbr', 'AVG(nbr) as avg_nbr'), 'WHERE stats_year=:year AND stats_month=:month GROUP BY stats_month', array('year' => $year, 'month' => $month));
 				} catch (RowNotFoundException $e) {}
 
-				$tpl->put_all(array(
+				$view->put_all(array(
 					'C_STATS_VISIT' => true,
 					'TYPE' => 'visit',
 					'VISIT_TOTAL' => $visit_counter_total,
@@ -394,7 +367,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					'U_NEXT_LINK' => url('.php?m=' . $next_month . '&amp;y=' . $next_year . '&amp;visit=1', '-visit.php?m=' . $next_month . '&amp;y=' . $next_year),
 					'U_PREVIOUS_LINK' => url('.php?m=' . $previous_month . '&amp;y=' . $previous_year . '&amp;visit=1', '-visit.php?m=' . $previous_month . '&amp;y=' . $previous_year),
 					'U_YEAR' => '<a href="stats' . url('.php?year=' . $year) . '#stats">' . $year . '</a>',
-					'U_VISITS_MORE' => '<a href="stats' . url('.php?year=' . $year) . '#stats">' . $LANG['visits_year'] . ' ' . $year . '</a>'
+					'U_VISITS_MORE' => '<a href="stats' . url('.php?year=' . $year) . '#stats">' . $lang['visits.year'] . ' ' . $year . '</a>'
 				));
 
 				$months = '';
@@ -415,7 +388,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$selected = ($i == $year) ? ' selected="selected"' : '';
 					$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 				}
-				$tpl->put_all(array(
+				$view->put_all(array(
 					'C_STATS_YEAR' => true,
 					'C_STATS_MONTH' => true,
 					'STATS_YEAR' => $years,
@@ -424,8 +397,8 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 
 				if (@extension_loaded('gd'))
 				{
-					$tpl->put_all(array(
-						'GRAPH_RESULT' => '<img src="display_stats.php?visit_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="' . $LANG['total_visit'] . '" />'
+					$view->put_all(array(
+						'GRAPH_RESULT' => '<img src="display_stats.php?visit_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="' . $lang['total.visit'] . '" />'
 					));
 
 					//On fait la liste des visites journalières
@@ -441,7 +414,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						$date_day = ($row['day'] < 10) ? 0 . $row['day'] : $row['day'];
 
 						//On affiche les stats numériquement dans un tableau en dessous
-						$tpl->assign_block_vars('value', array(
+						$view->assign_block_vars('value', array(
 							'U_DETAILS' => $date_day . '/' . sprintf('%02d', $month) . '/' . $year,
 							'NBR' => $row['nbr']
 						));
@@ -453,7 +426,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					//Mois selectionné.
 					if (!empty($month) && !empty($year))
 					{
-						$tpl->put_all(array(
+						$view->put_all(array(
 							'C_STATS_NO_GD' => true
 						));
 
@@ -477,7 +450,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 							{
 								for ($z = 1; $z < $row['day']; $z++)
 								{
-									$tpl->assign_block_vars('values', array(
+									$view->assign_block_vars('values', array(
 										'HEIGHT' => 0
 									));
 								}
@@ -491,7 +464,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 								$diff = $row['day'] - $i;
 								for ($j = 0; $j < $diff; $j++)
 								{
-									$tpl->assign_block_vars('values', array(
+									$view->assign_block_vars('values', array(
 										'HEIGHT' => 0
 									));
 								}
@@ -501,17 +474,17 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 							//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
 							$height = ($row['nbr'] / $info['max_nbr']) * 200;
 
-							$tpl->assign_block_vars('values', array(
+							$view->assign_block_vars('values', array(
 								'HEIGHT' => ceil($height)
 							));
 
-							$tpl->assign_block_vars('values.head', array(
+							$view->assign_block_vars('values.head', array(
 							));
 
 							$date_day = ($row['day'] < 10) ? 0 . $row['day'] : $row['day'];
 
 							//On affiche les stats numériquement dans un tableau en dessous
-							$tpl->assign_block_vars('value', array(
+							$view->assign_block_vars('value', array(
 								'U_DETAILS' => $date_day . '/' . sprintf('%02d', $month) . '/' . $year,
 								'NBR' => $row['nbr']
 							));
@@ -524,7 +497,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						$date_day = isset($date_day) ? $date_day : 1;
 						for	($i = $date_day; $i < ($array_month[$month - 1] - 1); $i++)
 						{
-							$tpl->assign_block_vars('end_td', array(
+							$view->assign_block_vars('end_td', array(
 								'END_TD' => '<td style="width:13px;">&nbsp;</td>'
 							));
 						}
@@ -532,7 +505,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						//On liste les jours en dessous du graphique
 						for ($i = 1; $i <= $array_month[$month - 1]; $i++)
 						{
-							$tpl->assign_block_vars('legend', array(
+							$view->assign_block_vars('legend', array(
 								'LEGEND' => $i
 							));
 						}
@@ -581,17 +554,6 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			$pages_total = $pages_total + $pages_day;
 			$pages_day = !empty($pages_day) ? $pages_day : 1;
 
-			$tpl->put_all(array(
-				'L_TODAY' => $date_lang['today'],
-				'L_TOTAL' => $LANG['total'],
-				'L_AVERAGE' => $LANG['average'],
-				'L_VISITORS' => $LANG['page_s'] . ':',
-				'L_VISITS_DAY' => $LANG['page_s'],
-				'L_DAY' => $date_lang['date'],
-				'L_MONTH' => $date_lang['month'],
-				'L_SUBMIT' => $LANG['submit']
-			));
-
 			//Gestion des mois pour s'adapter au array défini dans lang/main.php
 			$array_l_months = array($date_lang['january'], $date_lang['february'], $date_lang['march'], $date_lang['april'], $date_lang['may'], $date_lang['june'],
 			$date_lang['july'], $date_lang['august'], $date_lang['september'], $date_lang['october'], $date_lang['november'], $date_lang['december']);
@@ -608,7 +570,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$info = $this->db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(pages) as max_nbr', 'SUM(pages) as sum_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month'), 'WHERE stats_year = :year AND pages_detail <> \'\' GROUP BY stats_year', array('year' => $pages_year));
 				} catch (RowNotFoundException $e) {}
 
-				$tpl->put_all(array(
+				$view->put_all(array(
 					'C_STATS_VISIT' => true,
 					'TYPE' => 'pages',
 					'VISIT_TOTAL' => $pages_total,
@@ -634,15 +596,15 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$selected = ($i == $year) ? ' selected="selected"' : '';
 					$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 				}
-				$tpl->put_all(array(
+				$view->put_all(array(
 					'C_STATS_YEAR' => true,
 					'STATS_YEAR' => $years
 				));
 
 				if (@extension_loaded('gd'))
 				{
-					$tpl->put_all(array(
-						'GRAPH_RESULT' => '<img src="display_stats.php?pages_year=1&amp;year=' . $pages_year . '" alt="' . $LANG['total_visit'] . '" />'
+					$view->put_all(array(
+						'GRAPH_RESULT' => '<img src="display_stats.php?pages_year=1&amp;year=' . $pages_year . '" alt="' . $lang['total.visit'] . '" />'
 					));
 
 					//On fait la liste des visites journalières
@@ -655,7 +617,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					while ($row = $result->fetch())
 					{
 						//On affiche les stats numériquement dans un tableau en dessous
-						$tpl->assign_block_vars('value', array(
+						$view->assign_block_vars('value', array(
 							'U_DETAILS' => '<a href="stats' . url('.php?m=' . $row['stats_month'] . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
 							'NBR' => $row['total']
 						));
@@ -676,7 +638,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						$max_month = ($row['total'] <= $max_month) ? $max_month : $row['total'];
 					}
 
-					$tpl->put_all(array(
+					$view->put_all(array(
 						'C_STATS_NO_GD' => true
 					));
 
@@ -697,7 +659,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 							$diff = $row['stats_month'] - $i;
 							for ($j = 0; $j < $diff; $j++)
 							{
-								$tpl->assign_block_vars('values', array(
+								$view->assign_block_vars('values', array(
 									'HEIGHT' => 0
 								));
 							}
@@ -711,15 +673,15 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
 						$height = $row['total'] / $info['max_month'] * 200;
 
-						$tpl->assign_block_vars('months', array(
+						$view->assign_block_vars('months', array(
 							'HEIGHT' => ceil($height)
 						));
 
-						$tpl->assign_block_vars('values.head', array(
+						$view->assign_block_vars('values.head', array(
 						));
 
 						//On affiche les stats numériquement dans un tableau en dessous
-						$tpl->assign_block_vars('value', array(
+						$view->assign_block_vars('value', array(
 							'U_DETAILS' => '<a href="stats' . url('.php?m=' . $row['stats_month'] . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
 							'NBR' => $row['total']
 						));
@@ -733,7 +695,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$date_day = isset($date_day) ? $date_day : 1;
 					for	($i = $last_month; $i < 12; $i++)
 					{
-						$tpl->assign_block_vars('end_td', array(
+						$view->assign_block_vars('end_td', array(
 							'END_TD' => '<td style="width:13px;">&nbsp;</td>'
 						));
 					}
@@ -741,7 +703,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$i = 1;
 					foreach ($array_l_months as $value)
 					{
-						$tpl->assign_block_vars('legend', array(
+						$view->assign_block_vars('legend', array(
 							'LEGEND' => (in_array($i, $months_not_empty)) ? '<a href="stats' . url('.php?m=' . $i . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . TextHelper::substr($value, 0, 3) . '</a>' : TextHelper::substr($value, 0, 3)
 						));
 						$i++;
@@ -763,7 +725,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				$previous_month = ($month > 1) ? ($day == 1 ? $month - 1 : $month) : 12;
 				$previous_year = ($month > 1) ? $year : $year - 1;
 
-				$tpl->put_all(array(
+				$view->put_all(array(
 					'C_STATS_VISIT' => true,
 					'TYPE' => 'pages',
 					'VISIT_TOTAL' => $pages_total,
@@ -775,7 +737,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					'U_NEXT_LINK' => url('.php?d=' . $next_day . '&amp;m=' . $next_month . '&amp;y=' . $next_year . '&amp;pages=1', '-pages.php?d=' . $next_day . '&amp;m=' . $next_month . '&amp;y=' . $next_year),
 					'U_PREVIOUS_LINK' => url('.php?d=' . $previous_day . '&amp;m=' . $previous_month . '&amp;y=' . $previous_year . '&amp;pages=1', '-pages.php?d=' . $previous_day . '&amp;m=' . $previous_month . '&amp;y=' . $previous_year),
 					'U_YEAR' => '<a href="stats' . url('.php?pages_year=' . $year) . '#stats">' . $year . '</a>',
-					'U_VISITS_MORE' => '<a href="stats' . url('.php?pages_year=' . $year) . '#stats">' . $LANG['visits_year'] . ' ' . $year . '</a>'
+					'U_VISITS_MORE' => '<a href="stats' . url('.php?pages_year=' . $year) . '#stats">' . $lang['visits.year'] . ' ' . $year . '</a>'
 				));
 
 				$days = '';
@@ -804,14 +766,14 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 				}
 
-				$tpl->put_all(array(
+				$view->put_all(array(
 					'C_STATS_DAY' => true,
 					'C_STATS_MONTH' => true,
 					'C_STATS_YEAR' => true,
 					'STATS_DAY' => $days,
 					'STATS_MONTH' => $months,
 					'STATS_YEAR' => $years,
-					'GRAPH_RESULT' => '<img src="display_stats.php?pages_day=1&amp;year=' . $year . '&amp;month=' . $month . '&amp;day=' . $day . '" alt="' . $LANG['total_visit'] . '" />'
+					'GRAPH_RESULT' => '<img src="display_stats.php?pages_day=1&amp;year=' . $year . '&amp;month=' . $month . '&amp;day=' . $day . '" alt="' . $lang['total.visit'] . '" />'
 				));
 
 				//On fait la liste des visites journalières
@@ -827,7 +789,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$date_day = ($row['stats_day'] < 10) ? 0 . $row['stats_day'] : $row['stats_day'];
 
 					//On affiche les stats numériquement dans un tableau en dessous
-					$tpl->assign_block_vars('value', array(
+					$view->assign_block_vars('value', array(
 						'U_DETAILS' => '<a href="stats' . url('.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year'] . '&amp;pages=1', '-pages.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year']) . '#stats">' . $date_day . '/' . sprintf('%02d', $row['stats_month']) . '/' . $row['stats_year'] . '</a>',
 						'NBR' => $row['pages']
 					));
@@ -846,7 +808,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				$previous_month = ($month > 1) ? $month - 1 : 12;
 				$previous_year = ($month > 1) ? $year : $year - 1;
 
-				$tpl->put_all(array(
+				$view->put_all(array(
 					'C_STATS_VISIT' => true,
 					'TYPE' => 'pages',
 					'VISIT_TOTAL' => $pages_total,
@@ -859,7 +821,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					'U_NEXT_LINK' => url('.php?m=' . $next_month . '&amp;y=' . $next_year . '&amp;pages=1', '-pages.php?m=' . $next_month . '&amp;y=' . $next_year),
 					'U_PREVIOUS_LINK' => url('.php?m=' . $previous_month . '&amp;y=' . $previous_year . '&amp;pages=1', '-pages.php?m=' . $previous_month . '&amp;y=' . $previous_year),
 					'U_YEAR' => '<a href="stats' . url('.php?pages_year=' . $year) . '#stats">' . $year . '</a>',
-					'U_VISITS_MORE' => '<a href="stats' . url('.php?pages_year=' . $year) . '#stats">' . $LANG['visits_year'] . ' ' . $year . '</a>'
+					'U_VISITS_MORE' => '<a href="stats' . url('.php?pages_year=' . $year) . '#stats">' . $lang['visits.year'] . ' ' . $year . '</a>'
 				));
 
 				$months = '';
@@ -880,7 +842,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$selected = ($i == $year) ? ' selected="selected"' : '';
 					$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 				}
-				$tpl->put_all(array(
+				$view->put_all(array(
 					'C_STATS_YEAR' => true,
 					'C_STATS_MONTH' => true,
 					'STATS_YEAR' => $years,
@@ -889,8 +851,8 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 
 				if (@extension_loaded('gd'))
 				{
-					$tpl->put_all(array(
-						'GRAPH_RESULT' => '<img src="display_stats.php?pages_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="' . $LANG['total_visit'] . '" />'
+					$view->put_all(array(
+						'GRAPH_RESULT' => '<img src="display_stats.php?pages_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="' . $lang['total.visit'] . '" />'
 					));
 
 					//On fait la liste des visites journalières
@@ -906,7 +868,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						$date_day = ($row['stats_day'] < 10) ? 0 . $row['stats_day'] : $row['stats_day'];
 
 						//On affiche les stats numériquement dans un tableau en dessous
-						$tpl->assign_block_vars('value', array(
+						$view->assign_block_vars('value', array(
 							'U_DETAILS' => '<a href="stats' . url('.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year'] . '&amp;pages=1', '-pages.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year']) . '#stats">' . $date_day . '/' . sprintf('%02d', $row['stats_month']) . '/' . $row['stats_year'] . '</a>',
 							'NBR' => $row['pages']
 						));
@@ -918,7 +880,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					//Mois selectionné.
 					if (!empty($month) && !empty($year))
 					{
-						$tpl->put_all(array(
+						$view->put_all(array(
 							'C_STATS_NO_GD' => true
 						));
 
@@ -942,7 +904,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 							{
 								for ($z = 1; $z < $row['day']; $z++)
 								{
-									$tpl->assign_block_vars('days', array(
+									$view->assign_block_vars('days', array(
 										'HEIGHT' => 0
 									));
 								}
@@ -956,7 +918,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 								$diff = $row['day'] - $i;
 								for ($j = 0; $j < $diff; $j++)
 								{
-									$tpl->assign_block_vars('days', array(
+									$view->assign_block_vars('days', array(
 										'HEIGHT' => 0
 									));
 								}
@@ -966,17 +928,17 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 							//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
 							$height = ($row['pages'] / $info['max_nbr']) * 200;
 
-							$tpl->assign_block_vars('values', array(
+							$view->assign_block_vars('values', array(
 								'HEIGHT' => ceil($height)
 							));
 
-							$tpl->assign_block_vars('values.head', array(
+							$view->assign_block_vars('values.head', array(
 							));
 
 							$date_day = ($row['day'] < 10) ? 0 . $row['day'] : $row['day'];
 
 							//On affiche les stats numériquement dans un tableau en dessous
-							$tpl->assign_block_vars('value', array(
+							$view->assign_block_vars('value', array(
 								'U_DETAILS' => $date_day . '/' . sprintf('%02d', $row['stats_month']) . '/' . $row['stats_year'],
 								'NBR' => $row['pages']
 							));
@@ -989,7 +951,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						$date_day = isset($date_day) ? $date_day : 1;
 						for	($i = $date_day; $i < ($array_month[$month - 1] - 1); $i++)
 						{
-							$tpl->assign_block_vars('end_td', array(
+							$view->assign_block_vars('end_td', array(
 								'END_TD' => '<td style="width:13px;">&nbsp;</td>'
 							));
 						}
@@ -997,7 +959,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						//On liste les jours en dessous du graphique
 						for ($i = 1; $i <= $array_month[$month - 1]; $i++)
 						{
-							$tpl->assign_block_vars('legend', array(
+							$view->assign_block_vars('legend', array(
 								'LEGEND' => $i
 							));
 						}
@@ -1035,7 +997,7 @@ Debug::dump($_NBR_ELEMENTS_PER_PAGE);
 			{
 				$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
 
-				$tpl->assign_block_vars('referer_list', array(
+				$view->assign_block_vars('referer_list', array(
 					'ID' => $row['id'],
 					'URL' => $row['url'],
 					'NBR_LINKS' => $row['count'],
@@ -1047,17 +1009,11 @@ Debug::dump($_NBR_ELEMENTS_PER_PAGE);
 			}
 			$result->dispose();
 
-			$tpl->put_all(array(
+			$view->put_all(array(
 				'C_STATS_REFERER' => true,
 				'C_REFERERS' => $nbr_referer,
 				'C_PAGINATION' => $pagination->has_several_pages(),
 				'PAGINATION' => $pagination->display(),
-				'L_URL' => $LANG['url'],
-				'L_TOTAL_VISIT' => $LANG['total_visit'],
-				'L_AVERAGE_VISIT' => $LANG['average_visit'],
-				'L_TREND' => $LANG['trend'],
-				'L_LAST_UPDATE' => $LANG['last_update'],
-				'L_NO_REFERER' => $LANG['no_referer'],
 			));
 		}
 		elseif ($keyword)
@@ -1088,7 +1044,7 @@ Debug::dump($_NBR_ELEMENTS_PER_PAGE);
 			{
 				$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
 
-				$tpl->assign_block_vars('keyword_list', array(
+				$view->assign_block_vars('keyword_list', array(
 					'ID' => $row['id'],
 					'KEYWORD' => $row['relative_url'],
 					'NBR_LINKS' => $row['count'],
@@ -1100,17 +1056,11 @@ Debug::dump($_NBR_ELEMENTS_PER_PAGE);
 			}
 			$result->dispose();
 
-			$tpl->put_all(array(
+			$view->put_all(array(
 				'C_STATS_KEYWORD' => true,
 				'C_KEYWORDS' => $nbr_keyword,
 				'C_PAGINATION' => $pagination->has_several_pages(),
 				'PAGINATION' => $pagination->display(),
-				'L_SEARCH_ENGINE' => $LANG['keyword_s'],
-				'L_TOTAL_VISIT' => $LANG['total_visit'],
-				'L_AVERAGE_VISIT' => $LANG['average_visit'],
-				'L_TREND' => $LANG['trend'],
-				'L_LAST_UPDATE' => $LANG['last_update'],
-				'L_NO_KEYWORD' => $LANG['no_keyword'],
 			));
 		}
 		elseif ($browser || $os || $user_lang) //Graphiques camenbert.
@@ -1118,12 +1068,9 @@ Debug::dump($_NBR_ELEMENTS_PER_PAGE);
 			$path = '../images/stats/';
 			if (!empty($browser))
 			{
-				$tpl->put_all(array(
+				$view->put_all(array(
 					'C_STATS_BROWSERS' => true,
-					'GRAPH_RESULT' => !file_exists('../cache/browsers.png') ? '<img src="display_stats.php?browsers=1" alt="' . $LANG['browser_s'] . '" />' : '<img src="../cache/browsers.png" alt="' . $LANG['browser_s'] . '" />',
-					'L_BROWSERS' => $LANG['browser_s'],
-					'L_COLORS' => $LANG['colors'],
-					'L_PERCENTAGE' => $LANG['percentage']
+					'GRAPH_RESULT' => !file_exists('../cache/browsers.png') ? '<img src="display_stats.php?browsers=1" alt="' . $lang['browser.s'] . '" />' : '<img src="../cache/browsers.png" alt="' . $lang['browser.s'] . '" />',
 				));
 				$stats_menu = 'browsers';
 				$array_stats_info = $stats_array_browsers;
@@ -1131,12 +1078,9 @@ Debug::dump($_NBR_ELEMENTS_PER_PAGE);
 			}
 			elseif (!empty($os))
 			{
-				$tpl->put_all(array(
+				$view->put_all(array(
 					'C_STATS_OS' => true,
-					'GRAPH_RESULT' => !file_exists('../cache/os.png') ? '<img src="display_stats.php?os=1" alt="' . $LANG['os'] . '" />' : '<img src="../cache/os.png" alt="' . $LANG['os'] . '" />',
-					'L_OS' => $LANG['os'],
-					'L_COLORS' => $LANG['colors'],
-					'L_PERCENTAGE' => $LANG['percentage']
+					'GRAPH_RESULT' => !file_exists('../cache/os.png') ? '<img src="display_stats.php?os=1" alt="' . $lang['os'] . '" />' : '<img src="../cache/os.png" alt="' . $lang['os'] . '" />',
 				));
 				$stats_menu = 'os';
 				$array_stats_info = $stats_array_os;
@@ -1144,12 +1088,9 @@ Debug::dump($_NBR_ELEMENTS_PER_PAGE);
 			}
 			elseif (!empty($user_lang))
 			{
-				$tpl->put_all(array(
+				$view->put_all(array(
 					'C_STATS_LANG' => true,
-					'GRAPH_RESULT' => !file_exists('../cache/lang.png') ? '<img src="display_stats.php?lang=1" alt="' . $LANG['stat_lang'] . '" />' : '<img src="../cache/lang.png" alt="' . $LANG['stat_lang'] . '" />',
-					'L_LANG' => $LANG['stat_lang'],
-					'L_COLORS' => $LANG['colors'],
-					'L_PERCENTAGE' => $LANG['percentage']
+					'GRAPH_RESULT' => !file_exists('../cache/lang.png') ? '<img src="display_stats.php?lang=1" alt="' . $lang['stat.lang'] . '" />' : '<img src="../cache/lang.png" alt="' . $lang['stat.lang'] . '" />',
 				));
 				$stats_menu = 'lang';
 				$array_stats_info = $stats_array_lang;
@@ -1174,8 +1115,8 @@ Debug::dump($_NBR_ELEMENTS_PER_PAGE);
 					$value_name = 'other';
 					$angle_value += $percent_other;
 					$percent_other += $angle_value;
-					$stats_img = !empty($array_stats_info['other'][1]) ? '<img src="'. TPL_PATH_TO_ROOT . '/images/stats/' . $array_stats_info['other'][1] . '" alt="' . $LANG['other'] . '" />' : '<img src="' . TPL_PATH_TO_ROOT . '/images/stats/other.png" alt="' . $LANG['other'] . '" />';
-					$name_stats = $LANG['other'];
+					$stats_img = !empty($array_stats_info['other'][1]) ? '<img src="'. TPL_PATH_TO_ROOT . '/images/stats/' . $array_stats_info['other'][1] . '" alt="' . $lang['other'] . '" />' : '<img src="' . TPL_PATH_TO_ROOT . '/images/stats/other.png" alt="' . $lang['other'] . '" />';
+					$name_stats = $lang['other'];
 				}
 				else
 				{
@@ -1194,7 +1135,7 @@ Debug::dump($_NBR_ELEMENTS_PER_PAGE);
 			//Affichage.
 			foreach ($array_order as $value_name => $angle_value)
 			{
-				$tpl->assign_block_vars('list', array(
+				$view->assign_block_vars('list', array(
 					'COLOR' => 'RGB(' . trim(implode(', ', $array_stats_tmp[$value_name][1]), ', ') . ')',
 					'IMG' => $array_stats_tmp[$value_name][2],
 					'L_NAME' => $array_stats_tmp[$value_name][0],
@@ -1207,7 +1148,7 @@ Debug::dump($_NBR_ELEMENTS_PER_PAGE);
 			$array_robot = StatsSaver::retrieve_stats('robots');
 			if (isset($array_robot['unknow_bot']))
 			{
-				$array_robot[$LANG['unknown']] = $array_robot['unknow_bot'];
+				$array_robot[$lang['unknown']] = $array_robot['unknow_bot'];
 				unset($array_robot['unknow_bot']);
 			}
 			$robots_visits_number = 0;
@@ -1223,7 +1164,7 @@ Debug::dump($_NBR_ELEMENTS_PER_PAGE);
 				foreach ($Stats->data_stats as $key => $angle_value)
 				{
 						$array_color = $Stats->array_allocated_color[$Stats->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
-						$tpl->assign_block_vars('list', array(
+						$view->assign_block_vars('list', array(
 							'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
 							'VIEWS' => $array_robot[$key],
 							'PERCENT' => NumberHelper::round(($angle_value/3.6), 1),
@@ -1232,28 +1173,21 @@ Debug::dump($_NBR_ELEMENTS_PER_PAGE);
 				}
 			}
 
-			$tpl->put_all(array(
+			$view->put_all(array(
 				'C_STATS_ROBOTS' => true,
 				'C_ROBOTS_DATA' => $robots_visits_number,
-				'L_ERASE_RAPPORT' => $LANG['erase_rapport'],
-				'L_ERASE' => $LANG['erase'],
-				'L_COLORS' => $LANG['colors'],
-				'L_VIEW_NUMBER' => $LANG['number_r_visit'],
-				'L_LAST_UPDATE' => $LANG['last_update']
 			));
 		}
 		else
 		{
-			$tpl->put_all(array(
+			$view->put_all(array(
 				'C_STATS_SITE' => true,
 				'START' => GeneralConfig::load()->get_site_install_date()->format(Date::FORMAT_DAY_MONTH_YEAR),
-				'VERSION' => GeneralConfig::load()->get_phpboost_major_version(),
-				'L_START' => $LANG['start'],
-				'L_VERSION' => $LANG['version']
+				'VERSION' => GeneralConfig::load()->get_phpboost_major_version()
 			));
 		}
 
-		return $tpl;
+		return $view;
 	}
 
 	private function check_authorizations()

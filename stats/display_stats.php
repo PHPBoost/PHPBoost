@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 03 16
+ * @version     PHPBoost 5.3 - last update: 2020 05 31
  * @since       PHPBoost 1.6 - 2007 08 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -28,7 +28,8 @@ $get_pages_year = (bool)retrieve(GET, 'pages_year', false);
 
 include_once(PATH_TO_ROOT . '/kernel/begin.php');
 AppContext::get_session()->no_session_location(); //Ne réactualise pas l'emplacement du visiteur/membre
-load_module_lang('stats'); //Chargement de la langue du module.
+$lang = LangLoader::get('common', 'stats');
+$main_lang = LangLoader::get('main');
 
 $Stats = new ImagesStats();
 
@@ -65,7 +66,7 @@ if ($get_visit_month)
 	}
 	$Stats->load_data($array_stats, 'histogram', 5);
 	//Tracé de l'histogramme.
-	$Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('days', 'date-common'), $LANG['guest_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
+	$Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('days', 'date-common'), $lang['guest_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
 }
 elseif ($get_visit_year)
 {
@@ -95,7 +96,7 @@ elseif ($get_visit_year)
 	}
 	$Stats->load_data($array_stats, 'histogram', 5);
 	//Tracé de l'histogramme.
-	$Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('month', 'date-common'), $LANG['guest_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
+	$Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('month', 'date-common'), $lang['guest_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
 }
 elseif ($get_pages_day)
 {
@@ -126,7 +127,7 @@ elseif ($get_pages_day)
 	}
 	$Stats->load_data($array_stats, 'histogram', 5);
 	//Tracé de l'histogramme.
-	$Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('hours', 'date-common'), $LANG['page_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
+	$Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('hours', 'date-common'), $lang['page.s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
 }
 elseif ($get_pages_month)
 {
@@ -160,7 +161,7 @@ elseif ($get_pages_month)
 	}
 	$Stats->load_data($array_stats, 'histogram', 5);
 	//Tracé de l'histogramme.
-	$Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('days', 'date-common'), $LANG['page_s']), NO_DRAW_LEGEND, NO_DRAW_VALUES, 8);
+	$Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('days', 'date-common'), $lang['page.s']), NO_DRAW_LEGEND, NO_DRAW_VALUES, 8);
 }
 elseif ($get_pages_year)
 {
@@ -190,7 +191,7 @@ elseif ($get_pages_year)
 	}
 	$Stats->load_data($array_stats, 'histogram', 5);
 	//Tracé de l'histogramme.
-	$Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('month', 'date-common'), $LANG['page_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
+	$Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('month', 'date-common'), $lang['page.s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
 }
 elseif ($get_brw) //Navigateurs.
 {
@@ -300,13 +301,13 @@ elseif ($get_sex)
 		switch ($row['user_sex'])
 		{
 			case 0:
-				$name = $LANG['unknown'];
+				$name = $lang['unknown'];
 				break;
 			case 1:
-				$name = $LANG['male'];
+				$name = $main_lang['male'];
 				break;
 			case 2:
-				$name = $LANG['female'];
+				$name = $main_lang['female'];
 				break;
 		}
 		$array_stats[$name] = $row['compt'];
@@ -321,7 +322,7 @@ elseif ($get_bot)
 	$array_robot = StatsSaver::retrieve_stats('robots');
 	if (isset($array_robot['unknow_bot']))
 	{
-		$array_robot[$LANG['unknown']] = $array_robot['unknow_bot'];
+		$array_robot[$lang['unknown']] = $array_robot['unknow_bot'];
 		unset($array_robot['unknow_bot']);
 	}
 
