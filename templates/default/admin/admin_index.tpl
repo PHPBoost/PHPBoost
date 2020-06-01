@@ -45,15 +45,13 @@
 				<div class="cell-header">
 					<h3><i class="fa fa-bell" aria-hidden="true"></i> {L_ADMIN_ALERTS}</h3>
 				</div>
-				<div class="cell-alert">
-					# IF C_UNREAD_ALERTS #
-						<div class="message-helper bgc warning">{L_UNREAD_ALERT}</div>
-					# ELSE #
-						<div class="message-helper bgc success">{L_NO_UNREAD_ALERT}</div>
-					# ENDIF #
-				</div>
 				<div class="cell-body">
 					<div class="cell-content">
+						# IF C_UNREAD_ALERTS #
+							<div class="message-helper bgc warning">{L_UNREAD_ALERT}</div>
+						# ELSE #
+							<div class="message-helper bgc success">{L_NO_UNREAD_ALERT}</div>
+						# ENDIF #
 						# IF C_UNREAD_ALERTS #
 							<p class="align-center"><a href="admin_alerts.php">{L_DISPLAY_ALL_ALERTS}</a></p>
 						# ENDIF #
@@ -150,6 +148,14 @@
 				</div>
 			</div>
 
+			<div class="cell dashboard-advices">
+				<div class="cell-body">
+					<div class="cell-content">
+						# INCLUDE ADVISES #
+					</div>
+				</div>
+			</div>
+
 			<div class="cell dashboard-comments">
 				<div class="cell-header">
 					<h3><i class="fa fa-comment" aria-hidden="true"></i> {L_LAST_COMMENTS}</h3>
@@ -166,7 +172,7 @@
 													<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{comments_list.COMMENT_NUMBER}" name="delete-checkbox-{comments_list.COMMENT_NUMBER}" onclick="delete_button_display({COMMENTS_NUMBER});" />
 													<span>&nbsp;</span>
 												</label>
-												<a href="{comments_list.U_DELETE}" aria-label="${LangLoader::get_message('select.element', 'common')}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>												
+												<a href="{comments_list.U_DELETE}" aria-label="${LangLoader::get_message('select.element', 'common')}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 											</span>
 											<a href="{comments_list.U_LINK}" aria-label="${LangLoader::get_message('pm_conversation_link', 'main')}">
 												<i class="far fa-fw fa-hand-point-right" aria-hidden="true"></i> {comments_list.MODULE_NAME}
@@ -194,14 +200,6 @@
 							# ENDIF #
 						</ul>
 					</form>
-				</div>
-			</div>
-
-			<div class="cell dashboard-advices">
-				<div class="cell-body">
-					<div class="cell-content">
-						# INCLUDE ADVISES #
-					</div>
 				</div>
 			</div>
 

@@ -35,6 +35,7 @@ button[id*="menu_element"] {
 fieldset[id*="advises"] .form-element {
 	padding: 0.618em;
 	width: 100%;
+	border-width: 0;
 }
 
 @media (min-width: 1367px) {

@@ -24,7 +24,15 @@
 
 .cell-body textarea { margin: 0; }
 
-#writing_pad_content { height: 264px; }
+.dashboard-writting-pad form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-writting-pad form textarea {
+    flex: 1 1 auto;
+}
 
 /* --- Alerts --- */
 .alert-priority {
