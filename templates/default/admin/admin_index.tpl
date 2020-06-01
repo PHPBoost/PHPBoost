@@ -161,11 +161,13 @@
 								# START comments_list #
 									<li>
 										<span class="controls# IF IS_MOBILE_DEVICE # flex-between# ENDIF #">
-											<label class="checkbox" for="multiple-checkbox-{comments_list.COMMENT_NUMBER}" aria-label="${LangLoader::get_message('select.element', 'common')}">
-												<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{comments_list.COMMENT_NUMBER}" name="delete-checkbox-{comments_list.COMMENT_NUMBER}" onclick="delete_button_display({COMMENTS_NUMBER});" />
-												<span>&nbsp;</span>
-											</label>
-											<a href="{comments_list.U_DELETE}" aria-label="${LangLoader::get_message('select.element', 'common')}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+											<span>
+												<label class="checkbox" for="multiple-checkbox-{comments_list.COMMENT_NUMBER}" aria-label="${LangLoader::get_message('select.element', 'common')}">
+													<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{comments_list.COMMENT_NUMBER}" name="delete-checkbox-{comments_list.COMMENT_NUMBER}" onclick="delete_button_display({COMMENTS_NUMBER});" />
+													<span>&nbsp;</span>
+												</label>
+												<a href="{comments_list.U_DELETE}" aria-label="${LangLoader::get_message('select.element', 'common')}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>												
+											</span>
 											<a href="{comments_list.U_LINK}" aria-label="${LangLoader::get_message('pm_conversation_link', 'main')}">
 												<i class="far fa-fw fa-hand-point-right" aria-hidden="true"></i> {comments_list.MODULE_NAME}
 											</a>
