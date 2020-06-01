@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2015 06 29
+ * @version     PHPBoost 5.3 - last update: 2020 06 01
  * @since       PHPBoost 4.0 - 2013 11 23
  * @contributor xela <xela@phpboost.com>
 */
@@ -24,7 +24,8 @@ class PollTreeLinks implements ModuleTreeLinksExtensionPoint
 
 		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), new Url('/poll/admin_poll_config.php')));
 
-		$tree->add_link(new AdminModuleLink(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('poll')->get_configuration()->get_documentation()));
+		if (ModulesManager::get_module('poll')->get_configuration()->get_documentation())
+			$tree->add_link(new AdminModuleLink(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('poll')->get_configuration()->get_documentation()));
 
 		return $tree;
 	}

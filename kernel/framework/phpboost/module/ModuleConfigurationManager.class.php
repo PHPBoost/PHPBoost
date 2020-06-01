@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 23
+ * @version     PHPBoost 5.3 - last update: 2020 06 01
  * @since       PHPBoost 3.0 - 2009 12 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -84,8 +84,7 @@ class ModuleConfigurationManager
 				return $desc_ini_file;
 			}
 		}
-		throw new IOException('Module "' . $module_id . '" description desc.ini not found in' .
-			    '/' . $module_id . '/lang/');
+		throw new IOException('Module "' . $module_id . '" description desc.ini not found in /' . $module_id . '/lang/');
 	}
 }
 ?>

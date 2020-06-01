@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2017 07 20
+ * @version     PHPBoost 5.3 - last update: 2020 06 01
  * @since       PHPBoost 4.0 - 2013 11 23
  * @contributor xela <xela@phpboost.com>
 */
@@ -15,7 +15,8 @@ class OnlineTreeLinks implements ModuleTreeLinksExtensionPoint
 		$tree = new ModuleTreeLinks();
 
 		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin-common'), OnlineUrlBuilder::configuration()));
-		$tree->add_link(new AdminModuleLink(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('online')->get_configuration()->get_documentation()));
+		if (ModulesManager::get_module('online')->get_configuration()->get_documentation())
+			$tree->add_link(new AdminModuleLink(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('online')->get_configuration()->get_documentation()));
 
 		return $tree;
 	}
