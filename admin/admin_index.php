@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 01
+ * @version     PHPBoost 5.3 - last update: 2020 06 01
  * @since       PHPBoost 1.2 - 2005 06 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -34,7 +34,7 @@ $result = PersistenceContext::get_querier()->select("
 	LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " topic ON comments.id_topic = topic.id_topic
 	LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = comments.user_id
 	ORDER BY comments.timestamp DESC
-	LIMIT 30"
+	LIMIT 15"
 );
 $comments_number = 0;
 $ids = array();

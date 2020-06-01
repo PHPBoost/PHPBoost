@@ -60,8 +60,15 @@
 /* --- Main content --- */
 .cat-description,
 .content {
+	margin-bottom: 0.618em;
+}
+
+@media (min-width: 769px) {
+	.cat-description,
+	.content {
 	padding: 0.809em;
-	margin-bottom: 1.618em;
+		margin-bottom: 1.618em;
+	}
 }
 
 .cat-description::before,

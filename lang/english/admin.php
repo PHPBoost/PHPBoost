@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 08
+ * @version     PHPBoost 5.3 - last update: 2020 06 01
  * @since       PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -68,7 +68,7 @@ $LANG['no_core_update_available'] = 'No newer version, system is up to date';
 $LANG['module_update_available'] = 'Module update available !';
 $LANG['no_module_update_available'] = 'No newer module versions available, you are up to date !';
 $LANG['unknow_update'] = 'Impossible to check update';
-$LANG['user_online'] = 'Registered user(s)';
+$LANG['user_online'] = 'Online user(s)';
 $LANG['last_update'] = 'Last update';
 $LANG['quick_links'] = 'Quick links';
 $LANG['action.members_management'] = 'Members';
