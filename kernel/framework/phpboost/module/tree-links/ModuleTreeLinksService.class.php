@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 10 20
+ * @version     PHPBoost 5.3 - last update: 2020 06 01
  * @since       PHPBoost 4.1 - 2013 11 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -54,7 +54,7 @@ class ModuleTreeLinksService
 
 		$tpl = new FileTemplate('framework/module/admin_module_actions_links_menu.tpl');
 		$tpl->put_all(array(
-			'U_LINK' => TPL_PATH_TO_ROOT . '/' . $id_module . '/' . $configuration->get_admin_main_page(),
+			'U_LINK' => preg_match('/' . $id_module . '/', $admin_main_page) ? $admin_main_page : TPL_PATH_TO_ROOT . '/' . $id_module . '/' . $admin_main_page,
 			'NAME' => $configuration->get_name(),
 			'IMG' => TPL_PATH_TO_ROOT . '/' . $id_module . '/' . $id_module . '_mini.png',
 			'C_HAS_SUB_LINK' => false,
