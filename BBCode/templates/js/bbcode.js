@@ -354,9 +354,9 @@ function bbcode_movie(field)
 function bbcode_lightbox(field)
 {
 	var url = document.getElementById('bb_lightbox' + field).value,
-		max_width = document.getElementById('bb_lightbox_width' + field).value,
+		width = document.getElementById('bb_lightbox_width' + field).value,
 		insert_url = (url != '' && url != null) ? url : '',
-		insert_width = (max_width != '' && max_width != null) ? ' style="max-width: ' + max_width + 'px;"' : '';
+		insert_width = (width != '' && width != null) ? ' style="width: ' + width + 'px;"' : '';
 
 	insertbbcode('[lightbox=' + insert_url + '][img' + insert_width + ']' + insert_url, '[/img][/lightbox]', field);
 }
@@ -369,7 +369,7 @@ function bbcode_figure(field)
 		thumb_width = document.getElementById('bb_picture_width' + field).value,
 		insert_url = (url != '' && url != null) ? url : '',
 		insert_alt = (alt != '' && alt != null) ? ' alt="' + alt + '"' : '',
-		insert_width = (thumb_width != '' && thumb_width != null) ? ' style="max-width: ' + thumb_width + 'px"' : '';
+		insert_width = (thumb_width != '' && thumb_width != null) ? ' style="width: ' + thumb_width + 'px"' : '';
 		if(thumb_width < 0) thumb_width = 10;
 
 	if(caption != '' && caption != null)
