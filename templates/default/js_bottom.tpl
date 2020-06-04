@@ -96,21 +96,22 @@
 
 // Owl Carousel
  	jQuery('[id*="slideboost"] > br').remove();
-	jQuery('[id*="slideboost"]').owlCarousel({
-		autoplay: true,
-		autoplayTimeout: 2000,
-		loop: true,
-		margin: 15,
-		smartSpeed: 1000,
-		autoplayHoverPause: true,
-		responsive: {
-			0: { items: 1},
-			768: { items: 2},
-			1024: { items: 3},
-			1366: { items: 4}
-		}
-	})
-	.addClass('owl-carousel');
+	jQuery('[id*="slideboost"]')
+		.addClass('owl-carousel')
+		.owlCarousel({
+			autoplay: true,
+			autoplayTimeout: 2000,
+			loop: true,
+			margin: 15,
+			smartSpeed: 1000,
+			autoplayHoverPause: true,
+			responsive: {
+				0: { items: 1},
+				768: { items: 2},
+				1024: { items: 3},
+				1366: { items: 4}
+			}
+	});
 </script>
 
 # IF C_COOKIEBAR_ENABLED #
