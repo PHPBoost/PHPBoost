@@ -93,6 +93,24 @@
 
 // Add a colored square to the element and color its borders if it has
  	jQuery('[data-color-surround]').colorSurround();
+
+// Owl Carousel
+ 	jQuery('[id*="slideboost"] > br').remove();
+	jQuery('[id*="slideboost"]').owlCarousel({
+		autoplay: true,
+		autoplayTimeout: 2000,
+		loop: true,
+		margin: 15,
+		smartSpeed: 1000,
+		autoplayHoverPause: true,
+		responsive: {
+			0: { items: 1},
+			768: { items: 2},
+			1024: { items: 3},
+			1366: { items: 4}
+		}
+	})
+	.addClass('owl-carousel');
 </script>
 
 # IF C_COOKIEBAR_ENABLED #
