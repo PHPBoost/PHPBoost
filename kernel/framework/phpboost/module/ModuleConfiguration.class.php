@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 15
+ * @version     PHPBoost 5.3 - last update: 2020 06 04
  * @since       PHPBoost 3.0 - 2009 12 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -193,7 +193,7 @@ class ModuleConfiguration
 
 	public function has_rich_config_parameters()
 	{
-		return $this->configuration_name && class_exists($this->configuration_name) && is_subclass_of($this->configuration_name, 'DefaultRichModuleConfig');
+		return $this->get_configuration_name() && class_exists($this->get_configuration_name()) && is_subclass_of($this->get_configuration_name(), 'DefaultRichModuleConfig');
 	}
 
 	public function get_configuration_parameters()
