@@ -361,7 +361,7 @@ li:last-child .accordion .content-panel {
 	margin-bottom: 0.1618em;
 }
 
-.cssmenu-select li.has-sub > .cssmenu-title {
+.cssmenu-select .has-sub > .cssmenu-title {
 	padding: calc(0.618em - 1px) 1.618em calc(0.618em - 1px) 0.618em !important;
 	border-width: 1px;
 	border-style: solid;
