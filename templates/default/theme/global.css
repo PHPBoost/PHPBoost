@@ -113,6 +113,9 @@ a.pinned { cursor: pointer; }
 .stacked .stack-event.stack-sup   { top: -0.809em; }
 .stacked .stack-event.stack-sub   { bottom: -0.809em; }
 
+.stacked .stack-event.stack-icon.stack-sup   { top: -0.456em; }
+.stacked .stack-event.stack-icon.stack-sub   { bottom: -0.456em; }
+
 .stacked .stack-event.stack-center   {
 	top: 50%;
 	left: 50%;

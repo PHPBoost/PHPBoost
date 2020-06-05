@@ -54,7 +54,7 @@
 							<a href="{PATH_TO_ROOT}/admin/menus/menus.php">
 								<span class="stacked">
 									<i class="fa fa-fw fa-bars" aria-hidden="true"></i>
-									<i class="fa fa-cog stack-event stack-sup stack-right notice" aria-hidden="true"></i>
+									<i class="fa fa-cog stack-event stack-icon stack-sup stack-right notice" aria-hidden="true"></i>
 								</span> <span>{@mini.menus} <span class="smaller">{@title.config} /  {@mini.add}</span></span>
 							</a>
 						</li>
@@ -75,7 +75,7 @@
 						<li>
 							<a href="${relative_url(AdminThemeUrlBuilder::list_installed_theme())}">
 								<span class="stacked">
-									<i class="fa fa-cog stack-event stack-sup stack-right notice" aria-hidden="true"></i>
+									<i class="fa fa-cog stack-event stack-icon stack-sup stack-right notice" aria-hidden="true"></i>
 									<i class="far fa-fw fa-image" aria-hidden="true"></i>
 								</span> <span>{@mini.theme} <span class="smaller">{@mini.manage}</span></span>
 							</a>
@@ -84,7 +84,7 @@
 							<a href="${relative_url(AdminThemeUrlBuilder::add_theme())}">
 								<span class="stacked">
 									<i class="far fa-fw fa-image" aria-hidden="true"></i>
-									<i class="fa fa-plus stack-event stack-sup stack-right success" aria-hidden="true"></i>
+									<i class="fa fa-plus stack-event stack-icon stack-sup stack-right success" aria-hidden="true"></i>
 								</span> <span>{@mini.theme} <span class="smaller">{@mini.add}</span></span>
 							</a>
 						</li>
@@ -92,7 +92,7 @@
 							<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}">
 								<span class="stacked">
 									<i class="fa fa-fw fa-cubes" aria-hidden="true"></i>
-									<i class="fa fa-cog stack-event stack-sup stack-right notice" aria-hidden="true"></i>
+									<i class="fa fa-cog stack-event stack-icon stack-sup stack-right notice" aria-hidden="true"></i>
 								</span> <span>{@mini.mod} <span class="smaller">{@mini.manage}</span></span>
 							</a>
 						</li>
@@ -100,7 +100,7 @@
 							<a href="${relative_url(AdminModulesUrlBuilder::add_module())}">
 								<span class="stacked">
 									<i class="fa fa-fw fa-cubes" aria-hidden="true"></i>
-									<i class="fa fa-plus stack-event stack-sup stack-right success" aria-hidden="true"></i>
+									<i class="fa fa-plus stack-event stack-icon stack-sup stack-right success" aria-hidden="true"></i>
 								</span> <span>{@mini.mod} <span class="smaller">{@mini.add}</span></span>
 							</a>
 						</li>
@@ -108,7 +108,7 @@
 							<a href="${relative_url(AdminMembersUrlBuilder::management())}">
 								<span class="stacked">
 									<i class="far fa-fw fa-user" aria-hidden="true"></i>
-									<i class="fa fa-cog stack-event stack-sup stack-right notice" aria-hidden="true"></i>
+									<i class="fa fa-cog stack-event stack-icon stack-sup stack-right notice" aria-hidden="true"></i>
 								</span> <span>{@mini.user} <span class="smaller">{@mini.manage}</span></span>
 							</a>
 						</li>
@@ -116,7 +116,7 @@
 							<a href="${relative_url(AdminMembersUrlBuilder::add())}">
 								<span class="stacked">
 									<i class="far fa-fw fa-image" aria-hidden="true"></i>
-									<i class="fa fa-plus stack-event stack-sup stack-right success" aria-hidden="true"></i>
+									<i class="fa fa-plus stack-event stack-icon stack-sup stack-right success" aria-hidden="true"></i>
 								</span> <span>{@mini.user} <span class="smaller">{@mini.add}</span></span>
 							</a>
 						</li>
@@ -124,7 +124,7 @@
 							<a href="${relative_url(AdminConfigUrlBuilder::general_config())}">
 								<span class="stacked">
 									<i class="fa fa-fw fa-university" aria-hidden="true"></i>
-									<i class="fa fa-cog stack-event stack-sup stack-right notice" aria-hidden="true"></i>
+									<i class="fa fa-cog stack-event stack-icon stack-sup stack-right notice" aria-hidden="true"></i>
 								</span> <span>{@title.config} <span class="smaller">{@mini.general.config}</span></span>
 							</a>
 						</li>
@@ -132,7 +132,7 @@
 							<a href="${relative_url(AdminConfigUrlBuilder::advanced_config())}">
 								<span class="stacked">
 									<i class="fa fa-fw fa-university" aria-hidden="true"></i>
-									<i class="fa fa-plus stack-event stack-sup stack-right success" aria-hidden="true"></i>
+									<i class="fa fa-plus stack-event stack-icon stack-sup stack-right success" aria-hidden="true"></i>
 								</span> <span>{@title.config} <span class="smaller">{@mini.advanced.config}</span></span>
 							</a>
 						</li>
@@ -293,14 +293,14 @@
 								<div class="align-center" role="contentinfo" aria-label="{@mini.viewport.h}">
 									<span class="stacked">
 										<i class="fa fa-tv" aria-hidden="true"></i>
-										<i class="fa fa-arrows-alt-h stack-event stack-sup stack-right" aria-hidden="true"></i>
+										<i class="fa fa-arrows-alt-h stack-event stack-icon stack-sup stack-right" aria-hidden="true"></i>
 									</span>
 									<p id="window-width"></p>
 								</div>
 								<div class="align-center">
 									<span class="stacked" role="contentinfo" aria-label="{@mini.viewport.v}">
 										<i class="fa fa-tv" aria-hidden="true"></i>
-										<i class="fa fa-arrows-alt-v stack-event stack-sup stack-right" aria-hidden="true"></i>
+										<i class="fa fa-arrows-alt-v stack-event stack-icon stack-sup stack-right" aria-hidden="true"></i>
 									</span>
 									<p id="window-height"></p>
 								</div>
@@ -314,7 +314,7 @@
 					<a href="${relative_url(SandboxUrlBuilder::home())}" aria-label="{@mini.home}">
 						<span class="stacked">
 							<i class="fa fa-fw fa-hard-hat" aria-hidden="true"></i>
-							<i class="fa fa-home stack-event stack-sup stack-right notice" aria-hidden="true"></i>
+							<i class="fa fa-home stack-event stack-icon stack-sup stack-right notice" aria-hidden="true"></i>
 						</span>
 					</a>
 				</li>
@@ -322,7 +322,7 @@
 					<a href="${relative_url(SandboxUrlBuilder::config())}" aria-label="{@mini.admin}">
 						<span class="stacked">
 							<i class="fa fa-fw fa-hard-hat" aria-hidden="true"></i>
-							<i class="fa fa-cog stack-event stack-sup stack-left notice" aria-hidden="true"></i>
+							<i class="fa fa-cog stack-event stack-icon stack-sup stack-left notice" aria-hidden="true"></i>
 						</span>
 					</a>
 				</li>
