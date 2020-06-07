@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2019 01 10
+ * @version   	PHPBoost 5.2 - last update: 2020 06 07
  * @since   	PHPBoost 3.0 - 2011 09 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -24,7 +24,7 @@ $lang['modules.update_module'] = 'Update a module';
 $lang['modules.delete_module'] = 'Delete or deactivate a module';
 $lang['modules.delete_module_multiple'] = 'Delete or deactivate modules';
 $lang['modules.installed_modules'] = 'Installed modules';
-$lang['modules.available_modules'] = 'Avalable Modules disponibles';
+$lang['modules.available_modules'] = 'Available modules';
 
 //Warnings
 $lang['modules.warning_before_install'] = '<span class="message-helper warning">A module must be enabled, disabled or deleted only from this page. <br />Don\'t remove it directly from the FTP and/or the database.</span><span class="message-helper notice">The installed modules are automatically enabled. Do not forget to disable them if necessary.</span>';
