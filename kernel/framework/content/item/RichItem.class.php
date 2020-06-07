@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 20
+ * @version     PHPBoost 5.3 - last update: 2020 06 07
  * @since       PHPBoost 5.3 - 2020 01 23
 */
 
@@ -13,14 +13,14 @@ class RichItem extends Item
 {
 	const THUMBNAIL_URL = '/templates/default/images/default_item_thumbnail.png';
 	
-	public static function __static()
+	public function __construct($module_id = '')
 	{
-		parent::__static();
-		self::add_additional_attribute('views_number', array('type' => 'integer', 'length' => 11, 'default' => 0));
-		self::add_additional_attribute('summary', array('type' => 'text', 'length' => 65000, 'fulltext' => true));
-		self::add_additional_attribute('author_custom_name', array('type' =>  'string', 'length' => 255, 'default' => "''"));
+		parent::__construct($module_id);
+		$this->add_additional_attribute('views_number', array('type' => 'integer', 'length' => 11, 'default' => 0));
+		$this->add_additional_attribute('summary', array('type' => 'text', 'length' => 65000, 'fulltext' => true));
+		$this->add_additional_attribute('author_custom_name', array('type' =>  'string', 'length' => 255, 'default' => "''"));
 		
-		self::add_additional_attribute('thumbnail', array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''", 'attribute_other_field_parameters' => array(
+		$this->add_additional_attribute('thumbnail', array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''", 'attribute_other_field_parameters' => array(
 			'field_class' => 'FormFieldThumbnail',
 			'label' => LangLoader::get_message('form.picture', 'common'),
 			'default_value' => FormFieldThumbnail::DEFAULT_VALUE,

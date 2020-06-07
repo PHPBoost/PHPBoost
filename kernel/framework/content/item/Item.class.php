@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 21
+ * @version     PHPBoost 5.3 - last update: 2020 06 07
  * @since       PHPBoost 5.3 - 2019 12 20
 */
 
@@ -31,9 +31,9 @@ class Item
 	protected static $module_id;
 	protected static $module;
 	protected $additional_attributes_values = array();
-	protected static $additional_attributes_list = array();
-	protected static $additional_attributes_items_table_fields = array();
-	protected static $additional_attributes_items_table_options = array();
+	protected $additional_attributes_list = array();
+	protected $additional_attributes_items_table_fields = array();
+	protected $additional_attributes_items_table_options = array();
 
 	const READ_AUTHORIZATIONS = 1;
 	const WRITE_AUTHORIZATIONS = 2;
@@ -47,23 +47,12 @@ class Item
 	const ASC = 'ASC';
 	const DESC = 'DESC';
 
-	public static function __static()
-	{
-		self::$module_id = Environment::get_running_module_name();
-		self::$module    = ModulesManager::get_module(self::$module_id);
-	}
-
 	public function __construct($module_id = '')
 	{
 		if ($module_id)
-		{
 			self::$module_id = $module_id;
-			self::$module    = ModulesManager::get_module(self::$module_id);
-		}
-		else
-		{
-			self::__static();
-		}
+		if (self::$module_id)
+			self::$module = ModulesManager::get_module(self::$module_id);
 	}
 
 	public function get_id()
@@ -317,12 +306,12 @@ class Item
 		return $this->get_authorizations_checker()->moderation() || (($this->get_authorizations_checker()->write() || ($this->get_authorizations_checker()->contribution() && !$this->is_published())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 
-	protected static function add_additional_attribute($id, array $parameters)
+	protected function add_additional_attribute($id, array $parameters)
 	{
 		if (isset($parameters['key']))
 		{
 			if ($parameters['key'] == true)
-				self::$additional_attributes_items_table_options[$id] = array('type' => 'key', 'fields' => $id);
+				$this->additional_attributes_items_table_options[$id] = array('type' => 'key', 'fields' => $id);
 			
 			unset($parameters['key']);
 		}
@@ -330,7 +319,7 @@ class Item
 		if (isset($parameters['fulltext']))
 		{
 			if ($parameters['fulltext'] == true)
-				self::$additional_attributes_items_table_options[$id] = array('type' => 'fulltext', 'fields' => $id);
+				$this->additional_attributes_items_table_options[$id] = array('type' => 'fulltext', 'fields' => $id);
 			
 			unset($parameters['fulltext']);
 		}
@@ -338,29 +327,39 @@ class Item
 		if (isset($parameters['is_url']))
 		{
 			if ($parameters['is_url'] == true)
-				self::$additional_attributes_list[$id] = array('is_url' => $parameters['is_url']);
+				$this->additional_attributes_list[$id] = array('is_url' => $parameters['is_url']);
 			
 			unset($parameters['is_url']);
 		}
 		else
-			self::$additional_attributes_list[$id] = array('is_url' => false);
+			$this->additional_attributes_list[$id] = array('is_url' => false);
 		
 		foreach (array('attribute_pre_content_field_parameters', 'attribute_post_content_field_parameters', 'attribute_other_field_parameters') as $attribute_field)
 		{
 			if (isset($parameters[$attribute_field]))
 			{
-				self::$additional_attributes_list[$id][$attribute_field] = $parameters[$attribute_field];
+				$this->additional_attributes_list[$id][$attribute_field] = $parameters[$attribute_field];
 				
 				unset($parameters[$attribute_field]);
 			}
 		}
 		
-		self::$additional_attributes_items_table_fields[$id] = $parameters;
+		$this->additional_attributes_items_table_fields[$id] = $parameters;
 	}
 
 	public function get_additional_attributes_list()
 	{
-		return self::$additional_attributes_list;
+		return $this->additional_attributes_list;
+	}
+
+	public function get_additional_attributes_items_table_fields()
+	{
+		return $this->additional_attributes_items_table_fields;
+	}
+
+	public function get_additional_attributes_items_table_options()
+	{
+		return $this->additional_attributes_items_table_options;
 	}
 
 	public function get_properties()
@@ -397,7 +396,7 @@ class Item
 			$properties['sources'] = TextHelper::serialize($this->get_sources());
 		}
 		
-		foreach (self::$additional_attributes_list as $id => $attribute)
+		foreach ($this->additional_attributes_list as $id => $attribute)
 		{
 			if ($attribute['is_url'])
 				$properties[$id] = $this->additional_attributes_values[$id]->relative();
@@ -460,7 +459,7 @@ class Item
 			$this->set_sources(!empty($properties['sources']) ? TextHelper::unserialize($properties['sources']) : array());
 		}
 		
-		foreach (self::$additional_attributes_list as $id => $attribute)
+		foreach ($this->additional_attributes_list as $id => $attribute)
 		{
 			if (isset($properties[$id]))
 			{
@@ -678,54 +677,53 @@ class Item
 		return $vars;
 	}
 
-	public static function create_items_table($module_id = '')
+	public static function create_items_table($module_id)
 	{
-		if ($module_id)
-		{
-			self::$module_id = $module_id;
-			self::$module    = new Module($module_id, true);
-		}
+		$module = new Module($module_id, true);
+		
+		$class_name = get_called_class();
+		$object = new $class_name($module_id);
 		
 		$kernel_additional_fields = $kernel_additional_indexes = array();
 		
-		if (self::$module->get_configuration()->has_categories())
+		if ($module->get_configuration()->has_categories())
 		{
 			$kernel_additional_fields['id_category'] = array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0);
 			$kernel_additional_indexes['id_category'] = array('type' => 'key', 'fields' => 'id_category');
 		}
 		
-		if (self::$module->get_configuration()->feature_is_enabled('deferred_publication'))
+		if ($module->get_configuration()->feature_is_enabled('deferred_publication'))
 		{
 			$kernel_additional_fields['publishing_start_date'] = array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0);
 			$kernel_additional_fields['publishing_end_date'] = array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0);
 		}
 		
-		if (self::$module->get_configuration()->feature_is_enabled('sources'))
+		if ($module->get_configuration()->feature_is_enabled('sources'))
 		{
 			$kernel_additional_fields['sources'] = array('type' => 'text', 'length' => 65000);
 		}
 		
 		$fields = array_merge(array(
-			'id'                                  => array('type' => 'integer', 'length' => 11,  'notnull' => 1, 'autoincrement' => true),
-			self::get_title_label()               => array('type' => 'string',  'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'rewrited_' . self::get_title_label() => array('type' => 'string',  'length' => 255, 'default' => "''"),
-			self::get_content_label()             => array('type' => 'text',    'length' => 16777215),
-			'author_user_id'                      => array('type' => 'integer', 'length' => 11,  'notnull' => 1, 'default' => 0),
-			'creation_date'                       => array('type' => 'integer', 'length' => 11,  'notnull' => 1, 'default' => 0),
-			'update_date'                         => array('type' => 'integer', 'length' => 11,  'notnull' => 1, 'default' => 0),
-			'published'                           => array('type' => 'integer', 'length' => 1,   'notnull' => 1, 'default' => 0)
-		), $kernel_additional_fields, self::$additional_attributes_items_table_fields);
-
+			'id'                                         => array('type' => 'integer', 'length' => 11,  'notnull' => 1, 'autoincrement' => true),
+			$class_name::get_title_label()               => array('type' => 'string',  'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'rewrited_' . $class_name::get_title_label() => array('type' => 'string',  'length' => 255, 'default' => "''"),
+			$class_name::get_content_label()             => array('type' => 'text',    'length' => 16777215),
+			'author_user_id'                             => array('type' => 'integer', 'length' => 11,  'notnull' => 1, 'default' => 0),
+			'creation_date'                              => array('type' => 'integer', 'length' => 11,  'notnull' => 1, 'default' => 0),
+			'update_date'                                => array('type' => 'integer', 'length' => 11,  'notnull' => 1, 'default' => 0),
+			'published'                                  => array('type' => 'integer', 'length' => 1,   'notnull' => 1, 'default' => 0)
+		), $kernel_additional_fields, $object->get_additional_attributes_items_table_fields());
+		
 		$options = array(
 			'primary' => array('id'),
 			'indexes' => array_merge(array(
-				'title'   => array('type' => 'fulltext', 'fields' => self::get_title_label()),
-				'content' => array('type' => 'fulltext', 'fields' => self::get_content_label())
-				), $kernel_additional_indexes, self::$additional_attributes_items_table_options
+				'title'   => array('type' => 'fulltext', 'fields' => $class_name::get_title_label()),
+				'content' => array('type' => 'fulltext', 'fields' => $class_name::get_content_label())
+				), $kernel_additional_indexes, $object->get_additional_attributes_items_table_options()
 			)
 		);
 
-		PersistenceContext::get_dbms_utils()->create_table(self::$module->get_configuration()->get_items_table_name(), $fields, $options);
+		PersistenceContext::get_dbms_utils()->create_table($module->get_configuration()->get_items_table_name(), $fields, $options);
 	}
 }
 ?>
