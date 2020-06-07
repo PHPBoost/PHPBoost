@@ -178,14 +178,14 @@ class Category
 		return $this->additional_attributes_list;
 	}
 
-	public function get_additional_attributes_items_table_fields()
+	public function get_additional_attributes_categories_table_fields()
 	{
-		return $this->additional_attributes_items_table_fields;
+		return $this->additional_attributes_categories_table_fields;
 	}
 
-	public function get_additional_attributes_items_table_options()
+	public function get_additional_attributes_categories_table_options()
 	{
-		return $this->additional_attributes_items_table_options;
+		return $this->additional_attributes_categories_table_options;
 	}
 
 	public function get_properties()
