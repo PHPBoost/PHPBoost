@@ -36,6 +36,12 @@ class Category
 
 	const ROOT_CATEGORY = '0';
 
+	public function __construct()
+	{
+		$this->set_kernel_additional_attributes_list();
+		$this->set_additional_attributes_list();
+	}
+
 	public function get_id()
 	{
 		return $this->id;
@@ -177,6 +183,10 @@ class Category
 	{
 		return $this->additional_attributes_list;
 	}
+
+	protected function set_kernel_additional_attributes_list() {}
+
+	protected function set_additional_attributes_list() {}
 
 	public function get_additional_attributes_categories_table_fields()
 	{

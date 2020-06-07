@@ -13,9 +13,8 @@ class RichItem extends Item
 {
 	const THUMBNAIL_URL = '/templates/default/images/default_item_thumbnail.png';
 	
-	public function __construct($module_id = '')
+	protected function set_kernel_additional_attributes_list()
 	{
-		parent::__construct($module_id);
 		$this->add_additional_attribute('views_number', array('type' => 'integer', 'length' => 11, 'default' => 0));
 		$this->add_additional_attribute('summary', array('type' => 'text', 'length' => 65000, 'fulltext' => true));
 		$this->add_additional_attribute('author_custom_name', array('type' =>  'string', 'length' => 255, 'default' => "''"));

@@ -20,17 +20,22 @@ class ForumCategory extends Category
 
 	public function __construct()
 	{
+		parent::__construct();
 		$this->type = self::TYPE_CATEGORY;
-		$this->add_additional_attribute('status', array('type' => 'boolean', 'notnull' => 1, 'default' => 0));
-		$this->add_additional_attribute('description', array('type' => 'text', 'length' => 65000));
-		$this->add_additional_attribute('last_topic_id', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0, 'key' => true));
-		$this->add_additional_attribute('url', array('type' => 'string', 'length' => 255, 'default' => "''"));
 		$this->set_additional_property('description', '');
 		$this->set_additional_property('status', self::STATUS_UNLOCKED);
 		$this->set_additional_property('last_topic_id', 0);
 		$this->set_additional_property('url', '');
 	}
-	
+
+	protected function set_additional_attributes_list()
+	{
+		$this->add_additional_attribute('status', array('type' => 'boolean', 'notnull' => 1, 'default' => 0));
+		$this->add_additional_attribute('description', array('type' => 'text', 'length' => 65000));
+		$this->add_additional_attribute('last_topic_id', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0, 'key' => true));
+		$this->add_additional_attribute('url', array('type' => 'string', 'length' => 255, 'default' => "''"));
+	}
+
 	public function set_type($type)
 	{
 		$this->type = $type;

@@ -9,7 +9,7 @@
 
 class CalendarCategory extends Category
 {
-	public function __construct()
+	protected function set_additional_attributes_list()
 	{
 		$this->add_additional_attribute('color', array('type' => 'string', 'length' => 250, 'default' => "''", 'attribute_field_parameters' => array(
 			'field_class'   => 'FormFieldColorPicker',

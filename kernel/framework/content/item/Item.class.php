@@ -53,6 +53,9 @@ class Item
 			self::$module_id = $module_id;
 		if (self::$module_id)
 			self::$module = ModulesManager::get_module(self::$module_id);
+		
+		$this->set_kernel_additional_attributes_list();
+		$this->set_additional_attributes_list();
 	}
 
 	public function get_id()
@@ -351,6 +354,10 @@ class Item
 	{
 		return $this->additional_attributes_list;
 	}
+
+	protected function set_kernel_additional_attributes_list() {}
+
+	protected function set_additional_attributes_list() {}
 
 	public function get_additional_attributes_items_table_fields()
 	{

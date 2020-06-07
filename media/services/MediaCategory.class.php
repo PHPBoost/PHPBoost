@@ -9,9 +9,8 @@
 
 class MediaCategory extends RichCategory
 {
-	public function __construct()
+	protected function set_additional_attributes_list()
 	{
-		parent::__construct();
 		$this->add_additional_attribute('content_type', array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0, 'attribute_field_parameters' => array(
 			'field_class' => 'FormFieldSimpleSelectChoice',
 			'label' => LangLoader::get_message('content_type', 'common', 'media'),

@@ -15,7 +15,7 @@ class RichCategory extends Category
 {
 	const THUMBNAIL_URL = '/templates/default/images/default_category_thumbnail.png';
 
-	public function __construct()
+	protected function set_kernel_additional_attributes_list()
 	{
 		$this->add_additional_attribute('description', array('type' => 'text', 'length' => 65000, 'attribute_field_parameters' => array(
 			'field_class' => 'FormFieldRichTextEditor',

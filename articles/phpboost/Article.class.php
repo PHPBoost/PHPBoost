@@ -18,9 +18,8 @@ class Article extends RichItem
 	const AUTHOR_NAME_NOTDISPLAYED = 0;
 	const AUTHOR_NAME_DISPLAYED = 1;
 	
-	public function __construct()
+	protected function set_additional_attributes_list()
 	{
-		parent::__construct('articles');
 		$this->add_additional_attribute('author_name_displayed', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => self::AUTHOR_NAME_DISPLAYED));
 	}
 
