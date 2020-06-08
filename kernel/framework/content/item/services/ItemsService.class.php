@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 14
+ * @version     PHPBoost 5.3 - last update: 2020 06 09
  * @since       PHPBoost 5.3 - 2020 01 08
 */
 
@@ -34,7 +34,7 @@ class ItemsService
 	public static function get_items_lang($module_id, $filename = 'common')
 	{
 		$items_lang = LangLoader::get('items-common');
-		$module_lang = LangLoader::get($filename, $module_id);
+		$module_lang = LangLoader::filename_exists($filename, $module_id) ? LangLoader::get($filename, $module_id) : array();
 		$parameters = array();
 		
 		foreach (array('all.items', 'last.items', 'an.item', 'the.item', 'items.number', 'items', 'item') as $element)

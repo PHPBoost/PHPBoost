@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 10 30
+ * @version     PHPBoost 5.3 - last update: 2020 06 09
  * @since       PHPBoost 3.0 - 2009 09 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -76,6 +76,17 @@ class LangLoader
 	}
 
 	/**
+	 * Check if the language file exists
+	 * @param string $filename the language filename
+	 * @param string $module the module to look for languages files in
+	 * @return bool true if filename exists, false otherwise
+	 */
+	public static function filename_exists($filename, $module = '')
+	{
+		return self::get_real_lang_path($module, $filename, '', false);
+	}
+
+	/**
 	 * Retrieves the language file <code>$filename</code> in
 	 * <code>/$module/lang/$locale/$filename.php</code>
 	 * If module is empty, the kernel lang folder will be used
@@ -119,9 +130,10 @@ class LangLoader
 	 * @param string $folder the folder to look in
 	 * @param string $filename the language filename
 	 * @param string $forced_file the language filename to return inevitably
+	 * @param bool $throw_exception_on_failure tell if throw an exception on failure. If set to false, false will be returned
 	 * @return string the real language file path
 	 */
-	private static function get_real_lang_path($folder, $filename, $forced_file = '')
+	private static function get_real_lang_path($folder, $filename, $forced_file = '', $throw_exception_on_failure = true)
 	{
 		$real_folder = PATH_TO_ROOT . (!empty($folder) ? '/' . $folder : '') . '/lang/';
 		$filename_with_extension = '/' . $filename . '.php';
@@ -157,7 +169,10 @@ class LangLoader
 			}
 		}
 
-		throw new LangNotFoundException($folder, $filename);
+		if ($throw_exception_on_failure)
+			throw new LangNotFoundException($folder, $filename);
+		else
+			return false;
 	}
 
 	/**
