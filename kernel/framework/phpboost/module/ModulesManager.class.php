@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 04 25
+ * @version     PHPBoost 5.3 - last update: 2020 06 09
  * @since       PHPBoost 2.0 - 2008 10 12
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -211,6 +211,39 @@ class ModulesManager
 
 		MenuService::add_mini_module($module_identifier, $generate_cache);
 
+		// Resize picture and create mini picture if needed
+		$picture = PATH_TO_ROOT . '/' . $module_identifier . '/' . $module_identifier . '.png';
+		$file = new File($picture);
+		if ($file->exists())
+		{
+			$resizer = new ImageResizer();
+			$image = new Image($picture);
+			if ($image->get_width() != 32 || $image->get_height() != 32)
+			{
+				try {
+					$resizer->resize_with_max_values($image, 32, 32, $picture);
+				} catch (UnsupportedOperationException $e) {}
+			}
+			$mini_picture = PATH_TO_ROOT . '/' . $module_identifier . '/' . $module_identifier . '_mini.png';
+			$file = new File($mini_picture);
+			if (!$file->exists())
+			{
+				try {
+					$resizer->resize_with_max_values($image, 16, 16, $mini_picture);
+				} catch (UnsupportedOperationException $e) {}
+			}
+			else
+			{
+				$image = new Image($mini_picture);
+				if ($image->get_width() != 16 || $image->get_height() != 16)
+				{
+					try {
+						$resizer->resize_with_max_values($image, 16, 16, $picture);
+					} catch (UnsupportedOperationException $e) {}
+				}
+			}
+		}
+		
 		if ($generate_cache)
 		{
 			MenuService::generate_cache();
