@@ -528,12 +528,16 @@ h3.formatter-title { border-color: var(--main-dark); }
     border-color: var(--bdr-main);
 }
 
+a.nav-next {
+	border-color: var(--bdr-main);
+}
+
 .pushmenu .nav-item .button.submit,
 .pushmenu .nav-item .button.submit:hover,
 .pushmenu .nav-item .button.submit:active {
     background-color: transparent;
     border-width: 0;
-	color:  var(--main-dark);
+	color: var(--main-dark);
 }
 
 .pushmenu:not(.touch-device) .nav-item:hover { background-color: rgba(var(--main-rgb-d), 0.1); }

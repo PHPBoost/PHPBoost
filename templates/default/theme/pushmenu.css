@@ -193,6 +193,10 @@ body.push-nav-open {
     position: static;
 }
 
+.pushmenu.nav-levels-overlap ul li.nav-parent .nav-item-wrapper {
+    position: relative;
+}
+
 .pushmenu.nav-levels-overlap ul li.level-open > .nav-wrapper {
     visibility: visible;
     transform: translate3d(0, 0, 0);
@@ -306,7 +310,7 @@ body.push-nav-open {
 .pushmenu li.nav-close span,
 .pushmenu li.nav-parent .nav-next,
 .pushmenu li.nav-back span {
-    width: 2.618em;
+    width: 2.809em;
     position: absolute;
     top: 0;
     right: 0;
@@ -345,8 +349,14 @@ body.push-nav-open {
 
 .pushmenu li.nav-close span::after { transform: rotate(-45deg); }
 
-.pushmenu a[href]:not([href="#"])>span.nav-next {
+.pushmenu a[href]:not([href="#"]) > span.nav-next {
     border-width: 0 0 0 1px;
+    border-style: solid;
+    border-color: transparent;
+}
+
+a.nav-next {
+    border-width: 0 0 1px 1px ;
     border-style: solid;
     border-color: transparent;
 }
@@ -355,7 +365,7 @@ body.push-nav-open {
 .pushmenu li.nav-back span::before {
     content: '';
     position: absolute;
-    top: 50%;
+    top: 1.456em;
     left: 50%;
     width: 8px;
     height: 8px;

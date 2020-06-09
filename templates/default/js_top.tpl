@@ -1,5 +1,4 @@
 <script>
-<!--
 	//Variables PHPBoost
 	var PATH_TO_ROOT = "{PATH_TO_ROOT}";
 	var TOKEN        = "{TOKEN}";
@@ -24,7 +23,6 @@
 	var L_COOKIEBAR_CHANGE_CHOICE = ${escapejs(LangLoader::get_message('cookiebar.change-choice', 'user-common'))};
 	var U_COOKIEBAR_ABOUTCOOKIE   = '${relative_url(UserUrlBuilder::aboutcookie())}';
 	# ENDIF #
--->
 </script>
 
 <script src="{PATH_TO_ROOT}/kernel/lib/js/jquery/jquery.js"></script>
