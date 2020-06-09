@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 14
+ * @version     PHPBoost 5.3 - last update: 2020 06 09
  * @since       PHPBoost 5.3 - 2020 01 08
 */
 
@@ -34,7 +34,7 @@ $lang['config.items.default.sort.field'] = ':Items default display order';
 $lang['config.items.default.sort.mode'] = ':Items default display direction';
 $lang['config.auto.cut.characters.number'] = 'Default length of :items summary';
 $lang['config.auto.cut.characters.number.explain'] = 'Number of characters displayed in the summary by default';
-$lang['config.items.summary.displayed.to.guests'] = 'Display :items summary to guests if they don\'t have read authorization';
+$lang['config.items.summary.displayed.to.guests'] = 'Display :items summary to guests if they don\'t have read permission';
 $lang['config.item.default.content'] = ':Item default content';
 
 //SEO
