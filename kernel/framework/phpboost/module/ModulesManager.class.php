@@ -218,7 +218,7 @@ class ModulesManager
 		{
 			$resizer = new ImageResizer();
 			$image = new Image($picture);
-			if ($image->get_width() != 32 || $image->get_height() != 32)
+			if ($image->get_width() > 32 && $image->get_height() > 32)
 			{
 				try {
 					$resizer->resize_with_max_values($image, 32, 32, $picture);
@@ -235,7 +235,7 @@ class ModulesManager
 			else
 			{
 				$image = new Image($mini_picture);
-				if ($image->get_width() != 16 || $image->get_height() != 16)
+				if ($image->get_width() > 16 && $image->get_height() > 16)
 				{
 					try {
 						$resizer->resize_with_max_values($image, 16, 16, $picture);
