@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 06 07
+ * @version     PHPBoost 5.3 - last update: 2020 06 09
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -15,24 +15,6 @@
 
 class Article extends RichItem
 {
-	const AUTHOR_NAME_NOTDISPLAYED = 0;
-	const AUTHOR_NAME_DISPLAYED = 1;
-	
-	protected function set_additional_attributes_list()
-	{
-		$this->add_additional_attribute('author_name_displayed', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => self::AUTHOR_NAME_DISPLAYED));
-	}
-
-	public function get_author_name_displayed()
-	{
-		return $this->get_additional_property('author_name_displayed');
-	}
-
-	public function set_author_name_displayed($value)
-	{
-		$this->set_additional_property('author_name_displayed', $value);
-	}
-
 	public function get_real_summary($parsed_content = '')
 	{
 		$summary = $this->get_additional_property('summary');
@@ -46,11 +28,6 @@ class Article extends RichItem
 			$clean_content = preg_split('`\[page\].+\[/page\](.*)`usU', $parsed_content, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 			return TextHelper::cut_string(@strip_tags($clean_content[0], '<br><br/>'), (int)ArticlesConfig::load()->get_auto_cut_characters_number());
 		}
-	}
-
-	protected function default_properties()
-	{
-		$this->set_additional_property('author_name_displayed', self::AUTHOR_NAME_DISPLAYED);
 	}
 }
 ?>
