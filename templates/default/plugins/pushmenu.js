@@ -819,7 +819,7 @@
                     else {
                       attachToLink(
                         // create "next" link separately
-                        $(`<a href="#" class="nav-next" aria-label="${nav_title} Submenu" role="menuitem" tabindex="0"><span>`)
+                        $(`<a href="#" class="nav-next" aria-label="${nav_title}" role="menuitem" tabindex="0"><span>`)
                           .on('click', stopPropagation)
                           .insertAfter($a)
                       );
