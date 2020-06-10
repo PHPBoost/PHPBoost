@@ -22,7 +22,7 @@ jQuery.fn.tooltip = function(content,pos,classes) {
 
 	// Add Optional Classes
 	classes = classes || '';
-	var classAttr = (classes !== '')?'class="tooltip '+classes+'"': '';
+	var classAttr = (classes !== '') ?  classes : '';
 
 	var tooltipWidth = this.outerWidth(),
 		tooltipHeight = this.outerHeight(),
@@ -41,7 +41,7 @@ jQuery.fn.tooltip = function(content,pos,classes) {
 
 	// Set tooltip and/or params
 	if($('#tooltip')[0] === undefined)
-		$('body').append('<div id="tooltip" '+classAttr+' ></div>');  // Add one or...
+		$('body').append('<div id="tooltip" class="tooltip '+classAttr+'" ></div>');  // Add one or...
 	else
 		$('#tooltip').attr("class", "tooltip " + classes);  // Change the existing one...
 
