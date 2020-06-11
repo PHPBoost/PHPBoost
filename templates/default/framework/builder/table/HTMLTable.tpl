@@ -58,19 +58,19 @@
 							# IF row.C_DISPLAY_DELETE_INPUT #
 								<label for="multiple-checkbox-{row.ELEMENT_NUMBER}" class="checkbox" aria-label="${LangLoader::get_message('select.element', 'common')}">
 									<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{row.ELEMENT_NUMBER}" name="delete-checkbox-{row.ELEMENT_NUMBER}" onclick="delete_button_display({ELEMENTS_NUMBER});" />
-									<span>&nbsp;<span class="sr-only">${LangLoader::get_message('select', 'common')}</span></span>
+									<span>&nbsp;</span>
 								</label>
 							# ENDIF #
 						</td>
 					# ENDIF #
 					# START row.cell #
-					<td
-						# IF row.cell.C_COLSPAN #colspan="{row.cell.COLSPAN}"# ENDIF #
-						# IF row.cell.C_ID # id="{row.cell.ID}"# ENDIF #
-						# IF row.cell.C_CSS_CLASSES # class="{row.cell.CSS_CLASSES}"# ENDIF #
-						# IF row.cell.C_CSS_STYLE # style="{row.cell.CSS_STYLE}"# ENDIF #>
-						{row.cell.VALUE}
-					</td>
+						<td
+							# IF row.cell.C_COLSPAN #colspan="{row.cell.COLSPAN}"# ENDIF #
+							# IF row.cell.C_ID # id="{row.cell.ID}"# ENDIF #
+							# IF row.cell.C_CSS_CLASSES # class="{row.cell.CSS_CLASSES}"# ENDIF #
+							# IF row.cell.C_CSS_STYLE # style="{row.cell.CSS_STYLE}"# ENDIF #>
+							{row.cell.VALUE}
+						</td>
 					# END row.cell #
 				</tr>
 				# END row #
