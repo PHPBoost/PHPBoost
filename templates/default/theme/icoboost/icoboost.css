@@ -60,23 +60,8 @@
 .fa-iboost-tag-52:before {
     content: "\e052"; }
 
-.fa-iboost-tag-53:before {
-    content: "\e053"; }
-
-.fa-iboost-tag-54:before {
-    content: "\e054"; }
-
-.fa-iboost-tag-55:before {
-    content: "\e055"; }
-
-.fa-iboost-tag-56:before {
-    content: "\e056"; }
-
-.fa-iboost-tag-57:before {
-    content: "\e057"; }
-
-.fa-iboost-tag-58:before {
-    content: "\e058"; }
+.fa-iboost-tag-60:before {
+    content: "\e060"; }
 
 /* Tri colors logo */
 .fa-stack.logo-stack {
@@ -100,12 +85,7 @@
 /* Tag colors */
 .color-tag.fa-iboost-tag-51 { color: #134F61; }
 .color-tag.fa-iboost-tag-52 { color: #16A086; }
-.color-tag.fa-iboost-tag-53 { color: #0B72B7; }
-.color-tag.fa-iboost-tag-54 { color: #366493; }
-.color-tag.fa-iboost-tag-55 { color: #E3A127; }
-.color-tag.fa-iboost-tag-56 { color: #E45126; }
-.color-tag.fa-iboost-tag-57 { color: #FFC21C; }
-.color-tag.fa-iboost-tag-58 { color: #8693BD; }
+.color-tag.fa-iboost-tag-60 { color: #0B72B7; }
 
 /* Hack position */
 .iboost {
