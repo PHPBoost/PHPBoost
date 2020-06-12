@@ -14,10 +14,10 @@
 	float: right;
 	width: 100px;
 	height: 100px;
-	background-image: url(../images/logo.png);
+	background-image: url(../images/logo.svg);
 	background-repeat: no-repeat;
 	background-position: center ;
-	background-size: cover;
+	background-size: contain;
 }
 
 /* --- System report --- */
