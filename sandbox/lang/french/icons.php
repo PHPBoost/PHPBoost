@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 25
+ * @version     PHPBoost 6.0 - last update: 2020 05 25
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -54,7 +54,7 @@ $lang['icons.icomoon.howto.explain'] = '
     <p>L\'application Icomoon permet d\'ajouter des icônes personnalisées sous forme d\'icon font à l\'instar de Font-Awesome.</p>
     <p>Ainsi, moyennant une petite astuce à la création des icônes, il sera possible de les utiliser autant en html que dans le contenu des articles via le bbcode.</p>
 ';
-$lang['icons.icomoon.howto.update'] = 'Cette méthode est implémentable quelque soit la version de PHPBoost et une occurence appelée <span class="text-strong">ICOBoost</span> est implémentée depuis la version 5.3 . Cette dernière est nécessaire pour afficher certaines icônes dans phpboost qui n\'existent pas dans Font-Awesome.';
+$lang['icons.icomoon.howto.update'] = 'Cette méthode est implémentable quelque soit la version de PHPBoost et une occurence appelée <span class="text-strong">ICOBoost</span> est implémentée depuis la version 6.0. Cette dernière est nécessaire pour afficher certaines icônes dans phpboost qui n\'existent pas dans Font-Awesome.';
 $lang['icons.icomoon.howto.guide.title'] = 'L\'application';
 $lang['icons.icomoon.howto.guide'] = '
     <p>

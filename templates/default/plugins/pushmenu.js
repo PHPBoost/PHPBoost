@@ -4,8 +4,8 @@
  * @license     https://www.opensource.org/licenses/mit-license.php
  * @author      Some Web Media
  * @link        https://github.com/somewebmedia/hc-offcanvas-nav
- * @version     PHPBoost 5.3 - last update: 2020 05 18
- * @since       PHPBoost 5.3 - 2020 01 14
+ * @version     PHPBoost 6.0 - last update: 2020 05 18
+ * @since       PHPBoost 6.0 - 2020 01 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  *
  * Patch - replace occurences

@@ -5,7 +5,7 @@
  * @author      Cornel Boppart <cornel@bopp-art.com>
  * @link        https://github.com/cbopp-art/lightcase/
  * @doc         https://cornel.bopp-art.com/lightcase/
- * @version     PHPBoost 5.3 - last update: 2019 07 23
+ * @version     PHPBoost 6.0 - last update: 2019 07 23
  * @since       PHPBoost 5.1 - 2017 09 17
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>

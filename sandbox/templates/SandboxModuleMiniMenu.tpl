@@ -139,14 +139,8 @@
 					</ul>
 				</li>
 				<li class="mini-sandbox-fwkboost has-sub">
-					<span><i class="fa iboost fa-iboost-phpboost fa-fw visitor"></i> <span>{@mini.fwkboost}</span></span>
+					<a href="${relative_url(SandboxUrlBuilder::home())}"><i class="fa iboost fa-iboost-phpboost fa-fw visitor"></i> <span>{@mini.fwkboost}</span></a>
 					<ul>
-						<li>
-							<a href="${relative_url(SandboxUrlBuilder::home())}">
-								<i class="fa fa-hard-hat fa-fw" aria-hidden="true"></i>
-								<span>{@mini.home}</span>
-							</a>
-						</li>
 						<li>
 							<a href="${relative_url(SandboxUrlBuilder::builder())}">
 								<i class="far fa-square fa-fw" aria-hidden="true"></i>

@@ -5,7 +5,7 @@
  * @author      Tomas Kirda
  * @link        https://github.com/devbridge/jQuery-Autocomplete
  * @doc         https://www.devbridge.com/sourcery/components/jquery-autocomplete/
- * @version     PHPBoost 5.3 - last update: 2018 08 09
+ * @version     PHPBoost 6.0 - last update: 2018 08 09
  * @since       PHPBoost 5.0 - 2016 03 30
 */
 

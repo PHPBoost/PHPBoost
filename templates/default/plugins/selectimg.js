@@ -3,8 +3,8 @@
  * @copyright   &copy; 2005-2020 PHPBoost - 2019 babsolune
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 20
- * @since       PHPBoost 5.3 - 2020 01 20
+ * @version     PHPBoost 6.0 - last update: 2020 02 20
+ * @since       PHPBoost 6.0 - 2020 01 20
 */
 
 (function($) {

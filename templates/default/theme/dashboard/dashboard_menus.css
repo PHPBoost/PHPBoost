@@ -64,10 +64,10 @@
 		display: inline-block;
 		height: 1.618em;
 		width: 1.618em;
-		background-image: url(../images/logo.svg);
+		background-image: url(../images/logo.png);
 		background-repeat: no-repeat;
 		background-position: center ;
-		background-size: contain;
+		background-size: cover;
 		vertical-align: middle;
 	}
 }

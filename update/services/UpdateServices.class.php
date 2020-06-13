@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 06
+ * @version     PHPBoost 6.0 - last update: 2020 05 06
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -20,7 +20,7 @@ class UpdateServices
 	const UNKNOWN_ERROR = 3;
 
 	// New version number
-	const NEW_KERNEL_VERSION = '5.3';
+	const NEW_KERNEL_VERSION = '6.0';
 
 	private static $token_file_content = '1';
 

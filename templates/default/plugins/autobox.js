@@ -5,7 +5,7 @@
  * @author      Dumitru Uzun
  * @link        https://duzun.me
  * @doc         https://github.com/duzun/jquery.autobox
- * @version     PHPBoost 5.3 - last update: 2020 03 12
+ * @version     PHPBoost 6.0 - last update: 2020 03 12
  * @since       PHPBoost 5.2 - 2020 03 12
  *
  * Patch
