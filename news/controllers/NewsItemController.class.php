@@ -177,7 +177,7 @@ class NewsItemController extends ModuleController
 			$this->view->put_all(array(
 				'C_RELATED_LINKS' => true,
 				'C_'. $row['type'] .'_ITEM' => true,
-				$row['type'] . '_ITEM' => $row['name'],
+				$row['type'] . '_ITEM' => $row['title'],
 				'U_'. $row['type'] .'_ITEM' => NewsUrlBuilder::display_item($row['id_category'], CategoriesService::get_categories_manager()->get_categories_cache()->get_category($row['id_category'])->get_rewrited_name(), $row['id'], $row['rewrited_title'])->rel(),
 				'U_'. $row['type'] .'_THUMBNAIL' => !empty($row['thumbnail_url']) ? Url::to_rel($row['thumbnail_url']) : $this->item->get_default_thumbnail()->rel()
 			));
