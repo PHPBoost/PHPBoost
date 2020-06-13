@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 10
+ * @version     PHPBoost 5.3 - last update: 2020 06 13
  * @since       PHPBoost 4.0 - 2013 02 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -15,7 +15,11 @@
 #                     English                      #
 ####################################################
 
-$lang['news'] = 'News';
+$lang['module.title'] = 'News';
+
+$lang['items'] = 'news';
+$lang['item'] = 'news';
+
 $lang['news.add'] = 'Add news';
 $lang['news.edit'] = 'Edit news';
 $lang['news.pending'] = 'Pending news';
@@ -26,7 +30,8 @@ $lang['news.seo.description.root'] = 'All website :site news.';
 $lang['news.seo.description.tag'] = 'All news on :subject.';
 $lang['news.seo.description.pending'] = 'All pending news.';
 
-$lang['news.view'] = 'views';
+$lang['news.view'] = 'view';
+$lang['news.views'] = 'views';
 
 $lang['news.form.summary'] = 'News summary';
 $lang['news.form.summary.description'] = 'For the summary of the news is displayed, please activate the option in the module configuration';

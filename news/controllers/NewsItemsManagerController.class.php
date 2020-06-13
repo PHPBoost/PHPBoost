@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 05 08
+ * @version     PHPBoost 5.3 - last update: 2020 06 13
  * @since       PHPBoost 4.0 - 2013 06 24
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -11,7 +11,7 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class NewsManageController extends AdminModuleController
+class NewsItemsManagerController extends AdminModuleController
 {
 	private $lang;
 	private $view;
@@ -43,11 +43,11 @@ class NewsManageController extends AdminModuleController
 		$display_categories = CategoriesService::get_categories_manager()->get_categories_cache()->has_categories();
 
 		$columns = array(
-			new HTMLTableColumn(LangLoader::get_message('form.name', 'common'), 'name'),
+			new HTMLTableColumn(LangLoader::get_message('form.name', 'common'), 'title'),
 			new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category'),
 			new HTMLTableColumn(LangLoader::get_message('author', 'common'), 'display_name'),
 			new HTMLTableColumn(LangLoader::get_message('form.date.creation', 'common'), 'creation_date'),
-			new HTMLTableColumn(LangLoader::get_message('status', 'common'), 'approbation_type'),
+			new HTMLTableColumn(LangLoader::get_message('status', 'common'), 'publication'),
 			new HTMLTableColumn(LangLoader::get_message('actions', 'admin-common'), '', array('sr-only' => true))
 		);
 
@@ -72,14 +72,14 @@ class NewsManageController extends AdminModuleController
 			$this->elements_number++;
 			$this->ids[$this->elements_number] = $news->get_id();
 
-			$edit_link = new EditLinkHTMLElement(NewsUrlBuilder::edit_news($news->get_id()));
-			$delete_link = new DeleteLinkHTMLElement(NewsUrlBuilder::delete_news($news->get_id()));
+			$edit_link = new EditLinkHTMLElement(NewsUrlBuilder::edit_item($news->get_id()));
+			$delete_link = new DeleteLinkHTMLElement(NewsUrlBuilder::delete_item($news->get_id()));
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
 
 			$row = array(
-				new HTMLTableRowCell(new LinkHTMLElement(NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_title()), $news->get_title()), 'left'),
+				new HTMLTableRowCell(new LinkHTMLElement(NewsUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_title()), $news->get_title()), 'left'),
 				new HTMLTableRowCell(new LinkHTMLElement(NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), ($category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('none_e', 'common') : $category->get_name()))),
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell($news->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
@@ -116,7 +116,7 @@ class NewsManageController extends AdminModuleController
 
 				NewsService::clear_cache();
 
-				AppContext::get_response()->redirect(NewsUrlBuilder::manage_news(), LangLoader::get_message('process.success', 'status-messages-common'));
+				AppContext::get_response()->redirect(NewsUrlBuilder::manage_items(), LangLoader::get_message('process.success', 'status-messages-common'));
 
 		}
 	}
@@ -135,13 +135,13 @@ class NewsManageController extends AdminModuleController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['news.management'], $this->lang['news'], $page);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::manage_news());
+		$graphical_environment->set_page_title($this->lang['news.management'], $this->lang['module.title'], $page);
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::manage_items());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['news'], NewsUrlBuilder::home());
+		$breadcrumb->add($this->lang['module.title'], NewsUrlBuilder::home());
 
-		$breadcrumb->add($this->lang['news.management'], NewsUrlBuilder::manage_news());
+		$breadcrumb->add($this->lang['news.management'], NewsUrlBuilder::manage_items());
 
 		return $response;
 	}

@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 04
+ * @version     PHPBoost 5.3 - last update: 2020 06 13
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class NewsUrlBuilder
@@ -20,19 +21,9 @@ class NewsUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/admin/config/');
 	}
 
-	public static function manage_news()
+	public static function manage_items()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/manage/');
-	}
-
-	public static function display_news($id_category, $rewrited_name_category, $id_news, $rewrited_title)
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id_news . '-' . $rewrited_title . '/');
-	}
-
-	public static function display_comments_news($id_category, $rewrited_name_category, $id_news, $rewrited_title)
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id_news . '-' . $rewrited_title . '/#comments-list');
 	}
 
 	public static function display_category($id, $rewrited_name, $page = 1)
@@ -48,24 +39,34 @@ class NewsUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/tag/'. $rewrited_name .'/' . $page);
 	}
 
-	public static function display_pending_news($page = 1)
+	public static function display_pending_items($page = 1)
 	{
 		$page = $page !== 1 ? $page . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/pending/' . $page);
 	}
 
-	public static function add_news($id_category = null)
+	public static function display_item($id_category, $rewrited_name_category, $id_news, $rewrited_title)
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id_news . '-' . $rewrited_title . '/');
+	}
+
+	public static function display_item_comments($id_category, $rewrited_name_category, $id_news, $rewrited_title)
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id_news . '-' . $rewrited_title . '/#comments-list');
+	}
+
+	public static function add_item($id_category = null)
 	{
 		$id_category = !empty($id_category) ? $id_category . '/': '';
 		return DispatchManager::get_url(self::$dispatcher, '/add/' . $id_category);
 	}
 
-	public static function edit_news($id)
+	public static function edit_item($id)
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/edit/');
 	}
 
-	public static function delete_news($id)
+	public static function delete_item($id)
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/?' . 'token=' . AppContext::get_session()->get_token());
 	}

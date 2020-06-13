@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 20
+ * @version     PHPBoost 5.3 - last update: 2020 06 13
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class NewsService
@@ -75,7 +76,7 @@ class NewsService
 
 	public static function update_views_number(News $news)
 	{
-		self::$db_querier->update(NewsSetup::$news_table, array('number_view' => $news->get_views_number()), 'WHERE id=:id', array('id' => $news->get_id()));
+		self::$db_querier->update(NewsSetup::$news_table, array('views_number' => $news->get_views_number()), 'WHERE id=:id', array('id' => $news->get_id()));
 	}
 }
 ?>

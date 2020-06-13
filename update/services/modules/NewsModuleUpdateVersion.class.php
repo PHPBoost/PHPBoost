@@ -14,9 +14,16 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 	public function __construct()
 	{
 		parent::__construct('news');
-		
+
 		$this->content_tables = array(PREFIX . 'news');
 		$this->delete_old_files_list = array(
+			'/controllers/NewsDeleteController.class.php',
+			'/controllers/NewsDisplayCategoryController.class.php',
+			'/controllers/NewsDisplayNewsController.class.php',
+			'/controllers/NewsDisplayPendingNewsController.class.php',
+			'/controllers/NewsDisplayNewsTagController.class.php',
+			'/controllers/NewsFormController.class.php',
+			'/controllers/NewsManageController.class.php',
 			'/phpboost/NewsComments.class.php',
 			'/phpboost/NewsNewContent.class.php',
 			'/phpboost/NewsSitemapExtensionPoint.class.php',
@@ -24,18 +31,26 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 			'/services/NewsAuthorizationsService.class.php',
 			'/services/NewsKeywordsCache.class.php',
 			'/templates/NewsFormFieldSelectSources.tpl',
+			'/templates/NewsDisplayNewsController.tpl',
+			'/templates/NewsDisplaySeveralNewsController.tpl',
 			'/util/AdminNewsDisplayResponse.class.php'
 		);
 		$this->delete_old_folders_list = array(
 			'/controllers/categories',
 			'/fields'
 		);
-		
+
 		$this->database_columns_to_modify = array(
 			array(
 				'table_name' => PREFIX . 'news',
 				'columns' => array(
-					'contents' => 'contents MEDIUMTEXT'
+					'name'    		   => 'title VARCHAR(255) NOT NULL DEFAULT ""',
+					'rewrited_name'    => 'rewrited_title VARCHAR(255) NOT NULL DEFAULT ""',
+					'contents'         => 'content MEDIUMTEXT',
+					'short_contents'   => 'summary TEXT',
+					'picture_url'      => 'thumbnail_url VARCHAR(255) NOT NULL DEFAULT ""',
+					'approbation_type' => 'publication INT(1) NOT NULL DEFAULT 0',
+					'number_view'      => 'views_number INT(11) NOT NULL DEFAULT 0',
 				)
 			)
 		);

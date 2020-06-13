@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 26
+ * @version     PHPBoost 5.3 - last update: 2020 06 13
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,13 +15,13 @@
 class News
 {
 	private $id;
-	private $id_cat;
+	private $id_category;
 	private $title;
 	private $rewrited_title;
 	private $contents;
 	private $summary;
 
-	private $approbation_type;
+	private $publication;
 	private $start_date;
 	private $end_date;
 	private $end_date_enabled;
@@ -52,19 +52,19 @@ class News
 		return $this->id;
 	}
 
-	public function set_id_cat($id_cat)
+	public function set_id_category($id_category)
 	{
-		$this->id_cat = $id_cat;
+		$this->id_category = $id_category;
 	}
 
-	public function get_id_cat()
+	public function get_id_category()
 	{
-		return $this->id_cat;
+		return $this->id_category;
 	}
 
 	public function get_category()
 	{
-		return CategoriesService::get_categories_manager()->get_categories_cache()->get_category($this->id_cat);
+		return CategoriesService::get_categories_manager()->get_categories_cache()->get_category($this->id_category);
 	}
 
 	public function set_title($title)
@@ -126,25 +126,25 @@ class News
 		return !empty($this->summary);
 	}
 
-	public function set_approbation_type($approbation_type)
+	public function set_publication($publication)
 	{
-		$this->approbation_type = $approbation_type;
+		$this->publication = $publication;
 	}
 
-	public function get_approbation_type()
+	public function get_publication()
 	{
-		return $this->approbation_type;
+		return $this->publication;
 	}
 
 	public function is_visible()
 	{
 		$now = new Date();
-		return CategoriesAuthorizationsService::check_authorizations($this->id_cat)->read() && ($this->get_approbation_type() == self::APPROVAL_NOW || ($this->get_approbation_type() == self::APPROVAL_DATE && $this->get_start_date()->is_anterior_to($now) && ($this->end_date_enabled ? $this->get_end_date()->is_posterior_to($now) : true)));
+		return CategoriesAuthorizationsService::check_authorizations($this->id_category)->read() && ($this->get_publication() == self::APPROVAL_NOW || ($this->get_publication() == self::APPROVAL_DATE && $this->get_start_date()->is_anterior_to($now) && ($this->end_date_enabled ? $this->get_end_date()->is_posterior_to($now) : true)));
 	}
 
 	public function get_status()
 	{
-		switch ($this->approbation_type) {
+		switch ($this->publication) {
 			case self::APPROVAL_NOW:
 				return LangLoader::get_message('status.approved.now', 'common');
 			break;
@@ -312,29 +312,29 @@ class News
 
 	public function is_authorized_to_add()
 	{
-		return CategoriesAuthorizationsService::check_authorizations($this->id_cat)->write() || CategoriesAuthorizationsService::check_authorizations($this->id_cat)->contribution();
+		return CategoriesAuthorizationsService::check_authorizations($this->id_category)->write() || CategoriesAuthorizationsService::check_authorizations($this->id_category)->contribution();
 	}
 
 	public function is_authorized_to_edit()
 	{
-		return CategoriesAuthorizationsService::check_authorizations($this->id_cat)->moderation() || ((CategoriesAuthorizationsService::check_authorizations($this->get_id_cat())->write() || (CategoriesAuthorizationsService::check_authorizations($this->get_id_cat())->contribution() && !$this->is_visible())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
+		return CategoriesAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((CategoriesAuthorizationsService::check_authorizations($this->get_id_category())->write() || (CategoriesAuthorizationsService::check_authorizations($this->get_id_category())->contribution() && !$this->is_visible())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 
 	public function is_authorized_to_delete()
 	{
-		return CategoriesAuthorizationsService::check_authorizations($this->id_cat)->moderation() || ((CategoriesAuthorizationsService::check_authorizations($this->get_id_cat())->write() || (CategoriesAuthorizationsService::check_authorizations($this->get_id_cat())->contribution() && !$this->is_visible())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
+		return CategoriesAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((CategoriesAuthorizationsService::check_authorizations($this->get_id_category())->write() || (CategoriesAuthorizationsService::check_authorizations($this->get_id_category())->contribution() && !$this->is_visible())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 
 	public function get_properties()
 	{
 		return array(
 			'id' => $this->get_id(),
-			'id_category' => $this->get_id_cat(),
-			'name' => $this->get_title(),
-			'rewrited_name' => $this->get_rewrited_title(),
-			'contents' => $this->get_contents(),
-			'short_contents' => $this->get_summary(),
-			'approbation_type' => $this->get_approbation_type(),
+			'id_category' => $this->get_id_category(),
+			'title' => $this->get_title(),
+			'rewrited_title' => $this->get_rewrited_title(),
+			'content' => $this->get_contents(),
+			'summary' => $this->get_summary(),
+			'publication' => $this->get_publication(),
 			'start_date' => $this->get_start_date() !== null ? $this->get_start_date()->get_timestamp() : 0,
 			'end_date' => $this->get_end_date() !== null ? $this->get_end_date()->get_timestamp() : 0,
 			'top_list_enabled' => (int)$this->top_list_enabled(),
@@ -342,8 +342,8 @@ class News
 			'updated_date' => $this->get_updated_date() !== null ? $this->get_updated_date()->get_timestamp() : 0,
 			'author_custom_name' => $this->get_author_custom_name(),
 			'author_user_id' => $this->get_author_user()->get_id(),
-			'number_view' => $this->get_views_number(),
-			'picture_url' => $this->get_thumbnail()->relative(),
+			'views_number' => $this->get_views_number(),
+			'thumbnail_url' => $this->get_thumbnail()->relative(),
 			'sources' => TextHelper::serialize($this->get_sources())
 		);
 	}
@@ -351,20 +351,20 @@ class News
 	public function set_properties(array $properties)
 	{
 		$this->id = $properties['id'];
-		$this->id_cat = $properties['id_category'];
-		$this->title = $properties['name'];
-		$this->rewrited_title = $properties['rewrited_name'];
-		$this->contents = $properties['contents'];
-		$this->summary = $properties['short_contents'];
-		$this->views_number = $properties['number_view'];
-		$this->approbation_type = $properties['approbation_type'];
+		$this->id_category = $properties['id_category'];
+		$this->title = $properties['title'];
+		$this->rewrited_title = $properties['rewrited_title'];
+		$this->contents = $properties['content'];
+		$this->summary = $properties['summary'];
+		$this->views_number = $properties['views_number'];
+		$this->publication = $properties['publication'];
 		$this->start_date = !empty($properties['start_date']) ? new Date($properties['start_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->end_date = !empty($properties['end_date']) ? new Date($properties['end_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->end_date_enabled = !empty($properties['end_date']);
 		$this->top_list_enabled = (bool)$properties['top_list_enabled'];
 		$this->creation_date = new Date($properties['creation_date'], Timezone::SERVER_TIMEZONE);
 		$this->updated_date = !empty($properties['updated_date']) ? new Date($properties['updated_date'], Timezone::SERVER_TIMEZONE) : null;
-		$this->thumbnail_url = new Url($properties['picture_url']);
+		$this->thumbnail_url = new Url($properties['thumbnail_url']);
 		$this->sources = !empty($properties['sources']) ? TextHelper::unserialize($properties['sources']) : array();
 
 		$user = new User();
@@ -379,11 +379,11 @@ class News
 		$this->author_custom_name_enabled = !empty($properties['author_custom_name']);
 	}
 
-	public function init_default_properties($id_cat = Category::ROOT_CATEGORY)
+	public function init_default_properties($id_category = Category::ROOT_CATEGORY)
 	{
-		$this->id_cat = $id_cat;
+		$this->id_category = $id_category;
         $this->contents = NewsConfig::load()->get_default_contents();
-		$this->approbation_type = self::APPROVAL_NOW;
+		$this->publication = self::APPROVAL_NOW;
 		$this->author_user = AppContext::get_current_user();
 		$this->start_date = new Date();
 		$this->end_date = new Date();
@@ -434,9 +434,10 @@ class News
 			'C_AUTHOR_DISPLAYED'   => $news_config->get_author_displayed(),
 			'C_AUTHOR_CUSTOM_NAME' => $this->is_author_custom_name_enabled(),
 			'C_VIEWS_NUMBER'       => $news_config->get_views_number(),
+			'C_SEVERAL_VIEWS'      => $this->get_views_number() > 1,
 			'C_READ_MORE'          => !$this->get_summary_enabled() && TextHelper::strlen($contents) > $news_config->get_characters_number_to_cut() && $description != @strip_tags($contents, '<br><br/>'),
 			'C_SOURCES'            => $nbr_sources > 0,
-			'C_DIFFERED'           => $this->approbation_type == self::APPROVAL_DATE,
+			'C_DIFFERED'           => $this->publication == self::APPROVAL_DATE,
 			'C_TOP_LIST'           => $this->top_list_enabled(),
 			'C_NEW_CONTENT'        => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('news', $this->get_start_date() != null ? $this->get_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_visible(),
 			'C_ID_CARD'            => ContentManagementConfig::load()->module_id_card_is_enabled('news') && $this->is_visible(),
@@ -449,7 +450,7 @@ class News
 			'STATUS'             => $this->get_status(),
 			'AUTHOR_CUSTOM_NAME' => $this->author_custom_name,
 			'C_AUTHOR_EXIST'     => $user->get_id() !== User::VISITOR_LEVEL,
-			'PSEUDO'             => $user->get_display_name(),
+			'AUTHOR_DISPLAY_NAME'             => $user->get_display_name(),
 			'USER_LEVEL_CLASS'   => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR'   => $user_group_color,
 			'ID_CARD'            => IdcardService::display_idcard($user),
@@ -467,14 +468,14 @@ class News
 			'U_CATEGORY_THUMBNAIL' => $category->get_thumbnail()->rel(),
 			'U_EDIT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY ? NewsUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($category->get_id())->rel(),
 
-			'U_SYNDICATION'    => SyndicationUrlBuilder::rss('news', $this->id_cat)->rel(),
+			'U_SYNDICATION'    => SyndicationUrlBuilder::rss('news', $this->id_category)->rel(),
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
-			'U_ITEM'           => NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_title)->rel(),
+			'U_ITEM'           => NewsUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_title)->rel(),
 			'U_CATEGORY'       => NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
-			'U_EDIT'           => NewsUrlBuilder::edit_news($this->id)->rel(),
-			'U_DELETE'         => NewsUrlBuilder::delete_news($this->id)->rel(),
+			'U_EDIT'           => NewsUrlBuilder::edit_item($this->id)->rel(),
+			'U_DELETE'         => NewsUrlBuilder::delete_item($this->id)->rel(),
 			'U_THUMBNAIL'      => $this->get_thumbnail()->rel(),
-			'U_COMMENTS'       => NewsUrlBuilder::display_comments_news($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_title)->rel()
+			'U_COMMENTS'       => NewsUrlBuilder::display_item_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_title)->rel()
 		));
 	}
 

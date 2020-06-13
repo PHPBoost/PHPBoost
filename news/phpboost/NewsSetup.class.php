@@ -7,6 +7,7 @@
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class NewsSetup extends DefaultModuleSetup
@@ -55,18 +56,18 @@ class NewsSetup extends DefaultModuleSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'name' => array('type' => 'string', 'length' => 250, 'notnull' => 1, 'default' => "''"),
-			'rewrited_name' => array('type' => 'string', 'length' => 250, 'default' => "''"),
-			'contents' => array('type' => 'text', 'length' => 16777215),
-			'short_contents' => array('type' => 'text', 'length' => 65000),
+			'title' => array('type' => 'string', 'length' => 250, 'notnull' => 1, 'default' => "''"),
+			'rewrited_title' => array('type' => 'string', 'length' => 250, 'default' => "''"),
+			'content' => array('type' => 'text', 'length' => 16777215),
+			'summary' => array('type' => 'text', 'length' => 65000),
 			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'updated_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'approbation_type' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
+			'publication' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'start_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'number_view' => array('type' => 'integer', 'length' => 11, 'default' => 0),
+			'views_number' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'top_list_enabled' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'picture_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'thumbnail_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'author_custom_name' => array('type' =>  'string', 'length' => 255, 'default' => "''"),
 			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'sources' => array('type' => 'text', 'length' => 65000),
@@ -75,9 +76,9 @@ class NewsSetup extends DefaultModuleSetup
 			'primary' => array('id'),
 			'indexes' => array(
 				'id_category' => array('type' => 'key', 'fields' => 'id_category'),
-				'title' => array('type' => 'fulltext', 'fields' => 'name'),
-				'contents' => array('type' => 'fulltext', 'fields' => 'contents'),
-				'short_contents' => array('type' => 'fulltext', 'fields' => 'short_contents')
+				'title' => array('type' => 'fulltext', 'fields' => 'title'),
+				'content' => array('type' => 'fulltext', 'fields' => 'content'),
+				'summary' => array('type' => 'fulltext', 'fields' => 'summary')
 		));
 		PersistenceContext::get_dbms_utils()->create_table(self::$news_table, $fields, $options);
 	}
@@ -113,18 +114,18 @@ class NewsSetup extends DefaultModuleSetup
 		PersistenceContext::get_querier()->insert(self::$news_table, array(
 			'id' => 1,
 			'id_category' => 1,
-			'name' => $this->messages['news.title'],
-			'rewrited_name' => Url::encode_rewrite($this->messages['news.title']),
-			'contents' => $this->messages['news.content'],
-			'short_contents' => '',
+			'title' => $this->messages['news.title'],
+			'rewrited_title' => Url::encode_rewrite($this->messages['news.title']),
+			'content' => $this->messages['news.content'],
+			'summary' => '',
 			'creation_date' => time(),
 			'updated_date' => 0,
-			'approbation_type' => News::APPROVAL_NOW,
+			'publication' => News::APPROVAL_NOW,
 			'start_date' => 0,
 			'end_date' => 0,
-			'number_view' => 0,
+			'views_number' => 0,
 			'top_list_enabled' => 0,
-			'picture_url' => '/templates/default/images/default_item_thumbnail.png',
+			'thumbnail_url' => '/templates/default/images/default_item_thumbnail.png',
 			'author_custom_name' => '',
 			'author_user_id' => 1,
 			'sources' => TextHelper::serialize(array())
