@@ -87,7 +87,7 @@ body {
 #site-logo {
 	width: 60px;
 	height: 60px;
-	background-image: url(images/logo.png);
+	background-image: url(images/logo.svg);
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: contain;
