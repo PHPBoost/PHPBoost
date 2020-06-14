@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 10 08
+ * @version     PHPBoost 6.0 - last update: 2020 06 14
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -35,11 +35,26 @@ $lang['external-auth.account-exists'] = 'Vous avez déjà un compte sur le site.
 $lang['external-auth.email-not-found'] = 'L\'adresse email de votre compte n\'a pas pu être récupérée, votre compte ne peut pas être associé.';
 $lang['external-auth.user-data-not-found'] = 'Les informations de votre compte n\'ont pas pu être récupérées, votre compte ne peut pas être créé.';
 
-//Contribution
+// Contribution
+$lang['my.items'] = 'Mes contributions';
 $lang['contribution'] = 'Contribution';
-$lang['contribution.explain'] = 'Votre contribution suivra le parcours classique et sera traitée dans le panneau de contribution. <span class="error text-strong">La modification est possible tant que la contribution n\'a pas été approuvée.</span> Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.';
+$lang['contribution.member.edition'] = 'Modification de contribution par l\'auteur';
+$lang['contribution.explain'] = '
+    Votre contribution suivra le parcours des éléments en attente d\'approbation et sera traitée dans le panneau de contribution.
+    <span class="error text-strong">La modification est possible tant que la contribution n\'a pas été approuvée.</span>
+    Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.';
+$lang['contribution.extended.explain'] = '
+    Votre contribution suivra le parcours des éléments en attente d\'approbation et sera traitée dans le panneau de contribution.
+    <span class="error text-strong">La modification est possible avant son approbation ainsi qu\'après.</span>
+    Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.
+    Si vous modifiez votre contribution <span class="text-strong">après approbation</span>, elle sera retraité dans le panneau de contribution, en attente d\'une nouvelle approbation';
+$lang['contribution.member.edition.explain'] = '
+    Vous êtes sur le point de modifier votre contribution. Elle va être déplacée dans les éléments en attente afin d\'être traitée
+    et une nouvelle alerte sera envoyée à un administrateur.';
 $lang['contribution.description'] = 'Complément de contribution';
 $lang['contribution.description.explain'] = 'Expliquez les raisons de votre contribution. Ce champ est facultatif mais il peut aider un approbateur à prendre sa décision.';
+$lang['contribution.member.edition.description'] = 'Complément de modification';
+$lang['contribution.member.edition.description.desc'] = 'Expliquez ce que vous avez modifié pour un meilleur traitement d\'approbation.';
 $lang['contribution.confirmed'] = 'Votre contribution a bien été enregistrée.';
 $lang['contribution.confirmed.messages'] = '<p>Vous pourrez la suivre dans le <a href="' . UserUrlBuilder::contribution_panel()->rel() . '">panneau de contribution</a>
 et éventuellement discuter avec les validateurs si leur choix n\'est pas franc.</p><p>Merci d\'avoir participé à la vie du site !</p>';

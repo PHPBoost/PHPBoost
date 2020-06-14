@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 10 08
+ * @version     PHPBoost 6.0 - last update: 2020 06 14
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -35,11 +35,26 @@ $lang['external-auth.account-exists'] = 'You already have an account. To use thi
 $lang['external-auth.email-not-found'] = 'The email address of your account could not be retrieved, your account can not be associated.';
 $lang['external-auth.user-data-not-found'] = 'The informations of your account could not be retrieved, your account can not be created.';
 
-//Contribution
+// Contribution
+$lang['my.items'] = 'My contributions';
 $lang['contribution'] = 'Contribution';
-$lang['contribution.explain'] = 'Your contribution will be treated in the contribution panel. <span class="error text-strong">Amendment is possible until the contribution has been approved.</span> In the next field, you can justify your contribution to explain your demarche to a moderator.';
-$lang['contribution.description'] = 'Contribution counterpart';
+$lang['contribution.member.edition'] = 'Contribution modification by the author';
+$lang['contribution.explain'] = '
+    Your contribution will be treated in the contribution panel.
+    <span class="error text-strong">Amendment is possible until the contribution has been approved.</span>
+    In the next field, you can justify your contribution to explain your demarche to a moderator.';
+$lang['contribution.extended.explain'] = '
+    Your contribution will be treated in the contribution panel.
+    <span class="error text-strong">Amendment is possible until the contribution has been approved or after.</span>
+    In the next field, you can justify your contribution to explain your demarche to a moderator.
+    If you modify your contribution after <span class="text-strong">its approbation</span>, it will be sent back to the contribution panel, waiting for a new approbation';
+$lang['contribution.member.edition.explain'] = '
+    You are about to modify your contribution. It will be sent back to the contribution panel to be treated
+    and a new alert will be sent to approvers.';
+$lang['contribution.description'] = 'Additional contribution';
 $lang['contribution.description.explain'] = 'Explain the reasons of your contribution. This field is not required but it may help the moderator to make his decision.';
+$lang['contribution.member.edition.description'] = 'Additional modification';
+$lang['contribution.member.edition.description.desc'] = 'Please explain what you have modified to help approvers.';
 $lang['contribution.confirmed'] = 'Your contribution has been saved.';
 $lang['contribution.confirmed.messages'] = '<p>You can follow it into the <a href="' . UserUrlBuilder::contribution_panel()->rel() . '">contribution panel</a>
 and possibly discuss with the validators if their choice is not straightforward.</p><p>Thank you for participating in the life of the site!</p>';
