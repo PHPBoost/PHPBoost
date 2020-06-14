@@ -154,6 +154,8 @@ a.grouped-element,
 	align-items: center;
 }
 
+.grouped-inputs button { justify-content: center; }
+
 .grouped-inputs .cssmenu-select button {
 	justify-content: center;
 }

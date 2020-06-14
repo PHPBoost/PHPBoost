@@ -29,8 +29,9 @@
 	content: '\f0d8';
 }
 
-#module-connect .connect-contents.cell-list-inline ul {
+#module-connect .cell-list-inline ul {
 	flex-direction: column;
+	flex-wrap: nowrap;
 }
 
 #module-connect .cell-list .li-spaced a {
@@ -45,8 +46,9 @@
 	#module-connect .js-menu-button {
 		display: none;
 	}
-	#module-connect .connect-contents.cell-list-inline ul {
+	#module-connect .cell-list-inline ul {
 		flex-direction: row;
+		flex-wrap: wrap;
 	}
 }
 
