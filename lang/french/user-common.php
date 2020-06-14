@@ -47,7 +47,7 @@ $lang['contribution.extended.explain'] = '
     Votre contribution suivra le parcours des éléments en attente d\'approbation et sera traitée dans le panneau de contribution.
     <span class="error text-strong">La modification est possible avant son approbation ainsi qu\'après.</span>
     Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.
-    Si vous modifiez votre contribution <span class="text-strong">après approbation</span>, elle sera retraité dans le panneau de contribution, en attente d\'une nouvelle approbation';
+    Si vous modifiez votre contribution <span class="text-strong">après approbation</span>, elle sera retraitée dans le panneau de contribution, en attente d\'une nouvelle approbation';
 $lang['contribution.member.edition.explain'] = '
     Vous êtes sur le point de modifier votre contribution. Elle va être déplacée dans les éléments en attente afin d\'être traitée
     et une nouvelle alerte sera envoyée à un administrateur.';
