@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 13
+ * @version     PHPBoost 6.0 - last update: 2020 06 14
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -193,13 +193,24 @@ class NewsItemFormController extends ModuleController
 
 	private function build_contribution_fieldset($form)
 	{
+		$user_common = LangLoader::get('user-common');
 		if ($this->get_news()->get_id() === null && $this->is_contributor_member())
 		{
-			$fieldset = new FormFieldsetHTML('contribution', LangLoader::get_message('contribution', 'user-common'));
-			$fieldset->set_description(MessageHelper::display($this->lang['news.form.contribution.explain'] . ' ' . LangLoader::get_message('contribution.explain', 'user-common'), MessageHelper::WARNING)->render());
+			$fieldset = new FormFieldsetHTML('contribution', $user_common['contribution']);
+			$fieldset->set_description(MessageHelper::display($user_common['contribution.extended.explain'], MessageHelper::WARNING)->render());
 			$form->add_fieldset($fieldset);
 
-			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', LangLoader::get_message('contribution.description', 'user-common'), '', array('description' => LangLoader::get_message('contribution.description.explain', 'user-common'))));
+			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $user_common['contribution.description'], '', array('description' => $user_common['contribution.description.explain'])));
+		}
+		elseif ($this->get_news()->is_visible() && $this->get_news()->is_authorized_to_edit() && !AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
+		{
+			$fieldset = new FormFieldsetHTML('member_edition', $user_common['contribution.member.edition']);
+			$fieldset->set_description(MessageHelper::display($user_common['contribution.member.edition.explain'], MessageHelper::WARNING)->render());
+			$form->add_fieldset($fieldset);
+
+			$fieldset->add_field(new FormFieldRichTextEditor('edition_description', $user_common['contribution.member.edition.description'], '',
+				array('description' => $user_common['contribution.member.edition.description.desc'])
+			));
 		}
 	}
 

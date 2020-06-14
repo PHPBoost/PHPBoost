@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 13
+ * @version     PHPBoost 6.0 - last update: 2020 06 14
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -43,6 +43,12 @@ class NewsUrlBuilder
 	{
 		$page = $page !== 1 ? $page . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/pending/' . $page);
+	}
+
+	public static function display_member_items($page = 1)
+	{
+		$page = $page !== 1 ? $page . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/member/' . $page);
 	}
 
 	public static function display_item($id_category, $rewrited_name_category, $id_news, $rewrited_title)

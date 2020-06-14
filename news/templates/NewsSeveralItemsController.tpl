@@ -5,7 +5,13 @@
 			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF ## ENDIF #
 		</div>
 		<h1>
-			# IF C_PENDING_NEWS #{@news.pending}# ELSE #{@module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF #
+			# IF C_PENDING_NEWS #
+				{@news.pending}
+			# ELSE #
+				{@module.title}
+				# IF C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
+				# IF C_MEMBER_ITEMS # - ${LangLoader::get_message('my.items', 'user-common')}# ENDIF #
+			# ENDIF #
 		</h1>
 	</header>
 	# IF C_NO_ITEM #
@@ -30,20 +36,22 @@
 					<div class="cell-body">
 						<div class="cell-infos">
 							<div class="more">
-								# IF items.C_AUTHOR_DISPLAYED #
-									<span class="pinned {items.USER_LEVEL_CLASS}"# IF items.C_USER_GROUP_COLOR # style="color:{items.USER_GROUP_COLOR};border-color:{items.USER_GROUP_COLOR};"# ENDIF #>
-										# IF items.C_AUTHOR_CUSTOM_NAME #
-											<i class="far fa-user" aria-hidden="true"></i> <span class="custom-author">{items.AUTHOR_CUSTOM_NAME}</span>
-										# ELSE #
-											# IF items.C_AUTHOR_EXIST #
-												<a itemprop="author" class="{items.USER_LEVEL_CLASS}" href="{items.U_AUTHOR_PROFILE}"# IF items.C_USER_GROUP_COLOR # style="color:{items.USER_GROUP_COLOR}"# ENDIF #>
-													<i class="far fa-user" aria-hidden="true"></i> {items.AUTHOR_DISPLAY_NAME}
-												</a>
+								# IF NOT C_MEMBER_ITEMS #
+									# IF items.C_AUTHOR_DISPLAYED #
+										<span class="pinned {items.USER_LEVEL_CLASS}"# IF items.C_USER_GROUP_COLOR # style="color:{items.USER_GROUP_COLOR};border-color:{items.USER_GROUP_COLOR};"# ENDIF #>
+											# IF items.C_AUTHOR_CUSTOM_NAME #
+												<i class="far fa-user" aria-hidden="true"></i> <span class="custom-author">{items.AUTHOR_CUSTOM_NAME}</span>
 											# ELSE #
-												<i class="far fa-user" aria-hidden="true"></i> <span class="visitor">{items.AUTHOR_DISPLAY_NAME}</span>
+												# IF items.C_AUTHOR_EXIST #
+													<a itemprop="author" class="{items.USER_LEVEL_CLASS}" href="{items.U_AUTHOR_PROFILE}"# IF items.C_USER_GROUP_COLOR # style="color:{items.USER_GROUP_COLOR}"# ENDIF #>
+														<i class="far fa-user" aria-hidden="true"></i> {items.AUTHOR_DISPLAY_NAME}
+													</a>
+												# ELSE #
+													<i class="far fa-user" aria-hidden="true"></i> <span class="visitor">{items.AUTHOR_DISPLAY_NAME}</span>
+												# ENDIF #
 											# ENDIF #
-										# ENDIF #
-									</span>
+										</span>
+									# ENDIF #
 								# ENDIF #
 								<span class="pinned">
 									<i class="far fa-calendar-alt" aria-hidden="true"></i> <time datetime="# IF NOT items.C_DIFFERED #{items.DATE_ISO8601}# ELSE #{items.DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT items.C_DIFFERED #{items.DATE}# ELSE #{items.DIFFERED_START_DATE}# ENDIF #</time>
