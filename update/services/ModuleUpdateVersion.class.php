@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 02
+ * @version     PHPBoost 6.0 - last update: 2020 06 15
  * @since       PHPBoost 3.0 - 2012 02 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -48,13 +48,16 @@ abstract class ModuleUpdateVersion implements UpdateVersion
 		if (ModulesManager::is_module_installed($this->module_id))
 		{
 			$this->tables_list = $this->db_utils->list_tables(true);
-
-			$this->add_database_columns();
-			$this->delete_database_columns();
+			
 			$this->modify_database_columns();
 			$this->modify_database_categories_columns();
 
+			$this->execute_module_specific_changes();
+			
+			$this->add_database_columns();
 			$this->add_database_keys();
+			
+			$this->delete_database_columns();
 			$this->delete_database_keys();
 			
 			$this->update_content();
@@ -180,6 +183,11 @@ abstract class ModuleUpdateVersion implements UpdateVersion
 			}
 		}
 	}
+	
+	/**
+	 * Execute module specific changes
+	 */
+	protected function execute_module_specific_changes() {}
 
 	/**
 	 * Update the content to parse new code and css classes.
