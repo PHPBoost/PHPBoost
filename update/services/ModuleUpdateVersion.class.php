@@ -51,11 +51,11 @@ abstract class ModuleUpdateVersion implements UpdateVersion
 			
 			$this->modify_database_columns();
 			$this->modify_database_categories_columns();
-
-			$this->execute_module_specific_changes();
 			
 			$this->add_database_columns();
 			$this->add_database_keys();
+			
+			$this->execute_module_specific_changes();
 			
 			$this->delete_database_columns();
 			$this->delete_database_keys();
