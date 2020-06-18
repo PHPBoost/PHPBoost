@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 02 04
+ * @version     PHPBoost 6.0 - last update: 2020 06 18
  * @since       PHPBoost 6.0 - 2020 01 10
 */
 
@@ -19,6 +19,8 @@ class DefaultRichModuleConfig extends DefaultModuleConfig
 	const SUMMARY_DISPLAYED_TO_GUESTS = 'summary_displayed_to_guests';
 	const AUTO_CUT_CHARACTERS_NUMBER = 'auto_cut_characters_number';
 	const AUTHOR_DISPLAYED = 'author_displayed';
+	const DATE_DISPLAYED = 'date_displayed';
+	const UPDATE_DATE_DISPLAYED = 'update_date_displayed';
 	const VIEWS_NUMBER_ENABLED = 'views_number_enabled';
 	
 	const CATEGORIES_PER_PAGE = 'categories_per_page';
@@ -47,6 +49,8 @@ class DefaultRichModuleConfig extends DefaultModuleConfig
 				self::SUMMARY_DISPLAYED_TO_GUESTS => false,
 				self::AUTO_CUT_CHARACTERS_NUMBER  => 150,
 				self::AUTHOR_DISPLAYED            => true,
+				self::DATE_DISPLAYED              => true,
+				self::UPDATE_DATE_DISPLAYED       => true,
 				self::VIEWS_NUMBER_ENABLED        => false,
 				self::CATEGORIES_PER_PAGE         => 10,
 				self::CATEGORIES_PER_ROW          => 3,

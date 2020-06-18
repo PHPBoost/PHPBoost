@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 21
+ * @version     PHPBoost 6.0 - last update: 2020 06 18
  * @since       PHPBoost 6.0 - 2020 02 11
 */
 
@@ -71,7 +71,15 @@ class DefaultConfigurationController extends AbstractAdminItemController
 				array(new FormFieldConstraintIntegerRange(20, 1000))
 			));
 
-			$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->lang['config.author_displayed'], $this->config->get_author_displayed(),
+			$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->lang['config.author.displayed'], $this->config->get_author_displayed(),
+				array('class' => 'custom-checkbox')
+			));
+
+			$fieldset->add_field(new FormFieldCheckbox('date_displayed', $this->lang['config.date.displayed'], $this->config->get_date_displayed(),
+				array('class' => 'custom-checkbox')
+			));
+
+			$fieldset->add_field(new FormFieldCheckbox('update_date_displayed', $this->lang['config.update.date.displayed'], $this->config->update_date_displayed(),
 				array('class' => 'custom-checkbox')
 			));
 
@@ -159,6 +167,8 @@ class DefaultConfigurationController extends AbstractAdminItemController
 			$this->config->set_summary_displayed_to_guests($this->form->get_value('summary_displayed_to_guests'));
 			$this->config->set_auto_cut_characters_number($this->form->get_value('auto_cut_characters_number'));
 			$this->config->set_author_displayed($this->form->get_value('author_displayed'));
+			$this->config->set_date_displayed($this->form->get_value('date_displayed'));
+			$this->config->set_update_date_displayed($this->form->get_value('update_date_displayed'));
 			$this->config->set_views_number_enabled($this->form->get_value('views_number_enabled'));
 			$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
 			if($this->config->get_display_type() == DefaultRichModuleConfig::GRID_VIEW)

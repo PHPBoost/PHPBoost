@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 30 10
+ * @version     PHPBoost 6.0 - last update: 2020 06 18
  * @since       PHPBoost 4.0 - 2013 12 13
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -47,6 +47,8 @@ $lang['config.items.default.sort.field'] = 'Default items display order';
 $lang['config.items.default.sort.mode'] = 'Default items display direction';
 $lang['config.author_displayed'] = 'Display author\'s name'; // To be deleted
 $lang['config.author.displayed'] = 'Display author\'s name';
+$lang['config.date.displayed'] = 'Display publication date';
+$lang['config.update.date.displayed'] = 'Display update date';
 $lang['config.views.number.enabled'] = 'Display views number';
 $lang['config.comments_enabled'] = 'Enable comments';
 $lang['config.notation_enabled'] = 'Enable notation';
