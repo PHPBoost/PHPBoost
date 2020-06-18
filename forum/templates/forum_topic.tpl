@@ -270,7 +270,7 @@
 				{msg.FORUM_MSG_CONTENTS}
 
 				# IF msg.C_FORUM_USER_EDITOR #
-					<p class="user-editor">
+					<p class="message-edition">
 						{L_EDIT_BY}
 						# IF msg.C_FORUM_USER_EDITOR_LOGIN #
 							<a href="{msg.U_FORUM_USER_EDITOR_PROFILE}">{msg.FORUM_USER_EDITOR_LOGIN}</a>

@@ -52,6 +52,14 @@
 					</header>
 					<div class="message-content# IF messages.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
 						{messages.CONTENTS}
+						# IF messages.C_ENABLED_UPDATE_DATE #
+							<p class="message-edition">
+								<span class="text-strong">${LangLoader::get_message('form.date.update', 'common')} : </span>
+								<time datetime="{messages.UPDATE_DATE_ISO8601}# ENDIF #" itemprop="dateModified">
+									{messages.UPDATE_DATE}
+								</time>
+							</p>
+						# ENDIF #
 					</div>
 					# IF messages.C_USER_GROUPS #
 						<footer class="message-footer-container# IF messages.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">

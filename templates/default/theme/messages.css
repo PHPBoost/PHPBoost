@@ -56,9 +56,18 @@
     justify-content: space-between;
     flex: 1 1 auto;
 }
+
 .message-content {
     border-width: 0 1px 1px;
     flex: 1 1 auto;
+}
+
+.message-edition {
+	margin-top: 2.618em;
+	padding: 0.618em 0;
+	font-size: 0.809em;
+	font-style: italic;
+	display: block;
 }
 
 .message-user,
