@@ -79,7 +79,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 				array('class' => 'custom-checkbox')
 			));
 
-			$fieldset->add_field(new FormFieldCheckbox('update_date_displayed', $this->lang['config.update.date.displayed'], $this->config->update_date_displayed(),
+			$fieldset->add_field(new FormFieldCheckbox('update_date_displayed', $this->lang['config.update.date.displayed'], $this->config->get_update_date_displayed(),
 				array('class' => 'custom-checkbox')
 			));
 
