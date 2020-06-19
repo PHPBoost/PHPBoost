@@ -180,7 +180,10 @@ li:last-child .accordion .content-panel {
     }
 
     .modal.active-panel .content-panel {
-        top: 1.618em;
+        top: 50%;
+        max-height: calc(100vh - 3.236em);
+        transform: translate(-50%, -50%);
+        overflow: auto;
     }
 }
 
