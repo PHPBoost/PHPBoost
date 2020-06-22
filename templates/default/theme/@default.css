@@ -100,10 +100,18 @@ h6 { font-size: 1.228em; }
 
 h1, h2, h3, h4, h5, h6 {
 	font-weight: 400;
-	word-wrap: normal;
-	overflow-wrap: normal;
-	hyphens: none;
+	word-wrap: break-word;
+	overflow-wrap: break-word ;
+	hyphens: auto;
 	line-height: normal;
+}
+
+@media (min-width:769px) {
+	h1, h2, h3, h4, h5, h6 {
+		word-wrap: normal;
+		overflow-wrap: normal;
+		hyphens: none;
+	}
 }
 
 /* --- figure --- */

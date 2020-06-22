@@ -7,6 +7,10 @@
  * Contains links menu properties for menus built with MenuMaker
 */
 
+pre[class*="language-"] {
+	overflow-x: auto;
+}
+
 code[class*="language-"],
 pre[class*="language-"] {
 	color: black;

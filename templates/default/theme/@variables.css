@@ -50,10 +50,10 @@
     --success-light  : #2EDC82;
 
 /* .warning */
-    --warning-rgb-d  : 233, 87, 63;
-    --warning-dark   : #E9573F;
-    --warning-rgb-l  : 252, 125, 95;
-    --warning-light  : #FC7D5F;
+    --warning-rgb-d  : 238, 128, 39;
+    --warning-dark   : #EE8027;
+    --warning-rgb-l  : 237, 154, 87;
+    --warning-light  : #ED9A57;
 
 /* .error */
     --error-rgb-d   : 191, 38, 60;
