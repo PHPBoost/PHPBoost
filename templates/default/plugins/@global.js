@@ -47,7 +47,7 @@ jQuery(document).ready(function(){
 	jQuery('.formatter-code').each( function(){
 		if ( !jQuery(this).children('.formatter-content').hasClass('copy-code-content') )
 		{
-			jQuery(this).prepend('<span id="copy-code-' + IDCODE + '" class="copy-code" aria-label="' + L_COPYTOCLIPBOARD + '" onclick="copy_code_clipboard(' + IDCODE + ')"><i class="far fa-lg fa-clone"></i></span>');
+			jQuery(this).prepend('<span id="copy-code-' + IDCODE + '" class="copy-code" aria-label="' + L_COPYTOCLIPBOARD + '" onclick="copy_code_clipboard(' + IDCODE + ')"><i class="far fa-clone fa-lg"></i></span>');
 			jQuery(this).children('.formatter-content').attr("id", 'copy-code-' + IDCODE + '-content');
 			jQuery(this).children('.formatter-content').addClass('copy-code-content');
 			IDCODE = IDCODE + 1;
