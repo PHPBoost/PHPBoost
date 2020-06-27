@@ -23,6 +23,13 @@
                 <a href="{U_COMPONENT}" class="cssmenu-title"><span>{@component.title}</span></a>
                 <ul>
                     <li class="has-sub">
+                        <a href="{U_ICONS}" class="cssmenu-title"><span>{@icons.title}</span></a>
+                        <ul>
+                            <li><a href="{U_ICONS}#font-awesome" class="cssmenu-title"><span>{@hashtag.font.awesome}</span></a></li>
+                            <li><a href="{U_ICONS}#icomoon" class="cssmenu-title"><span>{@hashtag.icomoon}</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="has-sub">
                         <a href="{U_COMPONENT}#component-typography" class="cssmenu-title"><span>{@hashtag.typography}</span></a>
                         <ul>
                             <li><a href="{U_COMPONENT}#component-titles" class="cssmenu-title"><span>{@hashtag.titles}</span></a></li>
@@ -46,13 +53,6 @@
                     <li><a href="{U_COMPONENT}#component-table" class="cssmenu-title"><span>{@hashtag.table}</span></a></li>
                     <li><a href="{U_COMPONENT}#component-alerts" class="cssmenu-title"><span>{@hashtag.message.helper}</span></a></li>
                     <li><a href="{U_COMPONENT}#component-tooltip" class="cssmenu-title"><span>{@hashtag.tooltip}</span></a></li>
-                    <li class="has-sub">
-                        <a href="{U_ICONS}" class="cssmenu-title"><span>{@icons.title}</span></a>
-                        <ul>
-                            <li><a href="{U_ICONS}#font-awesome" class="cssmenu-title"><span>{@hashtag.font.awesome}</span></a></li>
-                            <li><a href="{U_ICONS}#icomoon" class="cssmenu-title"><span>{@hashtag.icomoon}</span></a></li>
-                        </ul>
-                    </li>
                 </ul>
             </li>
             <li class="has-sub fwk-layout">
