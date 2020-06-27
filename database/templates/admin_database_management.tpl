@@ -173,21 +173,21 @@
 					<input type="hidden" name="token" value="{TOKEN}">
 					<div class="cell-flex cell-columns-3 no-style">
 						<div class="cell">
-							<button type="submit" name="optimize" value="true" class="button submit">
+							<button type="submit" name="optimize" value="true" class="button submit bigger">
 								<i class="fa fa-chart-bar fa-fw" aria-hidden="true"></i>
 								{L_OPTIMIZE}
 							</button>
 						</div>
 						<div class="cell">
 
-							<button type="submit" name="repair" value="true" class="button submit">
+							<button type="submit" name="repair" value="true" class="button submit bigger">
 								<i class="fa fa-cogs fa-fw" aria-hidden="true"></i>
 								{L_REPAIR}
 							</button>
 						</div>
 						<div class="cell">
 
-							<button type="submit" name="backup" value="true" class="button submit">
+							<button type="submit" name="backup" value="true" class="button submit bigger">
 								<i class="fa fa-save fa-fw" aria-hidden="true"></i>
 								{L_BACKUP}
 							</button>

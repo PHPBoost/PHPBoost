@@ -401,7 +401,7 @@
 		</div>
 
 		<div id="valid-position-menus">
-			<button type="submit" class="button submit" name="valid" value="true">{L_VALID_POSTIONS}</button>
+			<button type="submit" class="button submit big" name="valid" value="true"><i class="far fa-fw fa-check-square"></i> {L_VALID_POSTIONS}</button>
 			<input type="hidden" name="theme" value="{NAME_THEME}">
 			<input type="hidden" name="token" value="{TOKEN}">
 		</div>
