@@ -48,4 +48,4 @@ var FormFieldSelectSources = new FormFieldSelectSources();
 	</div>
 # END fieldelements #
 </div>
-<a href="javascript:FormFieldSelectSources.add_field();" id="add-${escape(ID)}" class="field-source-more-value" aria-label="{@form.add.source}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+<a href="javascript:FormFieldSelectSources.add_field();" id="add-${escape(ID)}" class="add-more-values" aria-label="{@form.add.source}"><i class="far fa-lg fa-plus-square" aria-hidden="true"></i></a>

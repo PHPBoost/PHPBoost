@@ -236,7 +236,6 @@ aside:not(#menu-left):not(#menu-right) {
 .star-width-90  { width: 78%;  }
 .star-width-100 { width: 100%; }
 
-
 /* --- Options --- */
 .options {
 	margin: 0.309em 0;
@@ -247,6 +246,7 @@ aside:not(#menu-left):not(#menu-right) {
 	border-color: transparent;
 	font-size: 0.809em;
 }
+
 .options .form-element {padding: 0;}
 
 @media (min-width: 769px) {
@@ -337,4 +337,10 @@ a.wikipedia-link:after {
 .category-color {
 	border-left-width: 5px !important;
 	border-left-style: solid;
+}
+
+/* --- Add values in form --- */
+.add-more-values {
+	display: inline-block;
+	padding: 1em 0 0;
 }

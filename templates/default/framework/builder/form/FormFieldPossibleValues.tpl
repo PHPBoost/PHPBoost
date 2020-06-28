@@ -66,7 +66,7 @@ var FormFieldPossibleValues = new FormFieldPossibleValues();
 		</div>
 	# END fieldelements #
 </div>
-<a href="javascript:FormFieldPossibleValues.add_field();" id="add_${escape(HTML_ID)}" class="form-field-more-values" aria-label="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+<a href="javascript:FormFieldPossibleValues.add_field();" id="add_${escape(HTML_ID)}" class="add-more-values" aria-label="${LangLoader::get_message('add', 'common')}"><i class="far fa-lg fa-plus-square" aria-hidden="true"></i></a>
 <a href="#" onclick="return false;" id="uncheck_default_${escape(HTML_ID)}"# IF NOT C_HAS_DEFAULT_VALUE # style="display: none;"# ENDIF # class="small">${LangLoader::get_message('field.possible_values.delete_default', 'admin-user-common')}</a>
 <script>
 <!--
