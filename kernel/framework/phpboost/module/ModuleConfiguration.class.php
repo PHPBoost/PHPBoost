@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 05
+ * @version     PHPBoost 6.0 - last update: 2020 06 30
  * @since       PHPBoost 3.0 - 2009 12 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -227,7 +227,7 @@ class ModuleConfiguration
 		$this->categories_table_name  = !empty($config['categories_table_name']) ? $config['categories_table_name'] : ($this->has_categories() ? $this->module_id . '_cats' : '');
 		$this->configuration_name     = !empty($config['configuration_name']) ? $config['configuration_name'] : $this->get_default_configuration_class_name();
 		$this->home_page              = !empty($config['home_page']) ? $config['home_page'] : ($this->item_name ? 'index.php' : '');
-		$this->admin_main_page        = !empty($config['admin_main_page']) ? $config['admin_main_page'] : ($this->get_configuration_name() ? ModulesUrlBuilder::admin($this->module_id)->rel() : '');
+		$this->admin_main_page        = !empty($config['admin_main_page']) ? $config['admin_main_page'] : ($this->get_configuration_name() ? ModulesUrlBuilder::admin($this->module_id)->relative() : '');
 		$this->admin_menu             = !empty($config['admin_menu']) ? $config['admin_menu'] : 'modules';
 	}
 
