@@ -3,76 +3,74 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Alain091 <alain091@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2015 06 29
+ * @version     PHPBoost 6.0 - last update: 2020 06 30
  * @since       PHPBoost 3.0 - 2011 08 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class PagesFeedProvider implements FeedProvider
 {
-	function get_feeds_list()
+	public function get_feeds_list()
 	{
-		global $LANG;
-
-		require_once(PATH_TO_ROOT.'/pages/pages_functions.php');
-
-		$cats_tree = new FeedsCat('pages', 0, $LANG['root']);
-		$categories = PagesCategoriesCache::load()->get_categories();
-		build_pages_cat_children($cats_tree, array_values($categories));
-		$feeds = new FeedsList();
-		$feeds->add_feed($cats_tree, Feed::DEFAULT_FEED_NAME);
-		return $feeds;
+		return CategoriesService::get_categories_manager('pages')->get_feeds_categories_module()->get_feed_list();
 	}
 
-	function get_feed_data_struct($idcat = 0, $name = '')
+	public function get_feed_data_struct($idcat = 0, $name = '')
 	{
-		global $LANG;
-
-		$querier = PersistenceContext::get_querier();
-		$pages_config = PagesConfig::load();
-
-		if (!defined('READ_PAGE'))
-			require_once(PATH_TO_ROOT.'/pages/pages_defines.php');
-		load_module_lang('pages');
-
-		$data = new FeedData();
-
-		$data->set_title($LANG['pages_rss_desc']);
-		$data->set_date(new Date());
-		$data->set_link(SyndicationUrlBuilder::rss('pages', $idcat));
-		$data->set_host(HOST);
-		$data->set_desc($LANG['pages_rss_desc']);
-		$data->set_lang($LANG['xml_lang']);
-		$data->set_auth_bit(READ_PAGE);
-
-		$where_clause = !empty($idcat) ? ' WHERE p.id_cat = :idcat'  : '';
-		$results = $querier->select('SELECT p.*
-			FROM ' . PREFIX . 'pages p ' .
-				$where_clause . '
-			ORDER BY p.timestamp DESC LIMIT :limit OFFSET 0', array(
-				'idcat' => $idcat,
-				'limit' => 10));
-
-		// Generation of the feed's items
-		foreach ($results as $row)
+		$module_id = 'pages';
+		if (CategoriesService::get_categories_manager($module_id)->get_categories_cache()->category_exists($idcat))
 		{
-			$item = new FeedItem();
+			$querier = PersistenceContext::get_querier();
+			$category = CategoriesService::get_categories_manager($module_id)->get_categories_cache()->get_category($idcat);
 
-			$link = new Url(PagesUrlBuilder::get_link_item($row['encoded_title']));
+			$site_name = GeneralConfig::load()->get_site_name();
+			$site_name = $idcat != Category::ROOT_CATEGORY ? $site_name . ' : ' . $category->get_name() : $site_name;
 
-			$item->set_title(stripslashes($row['title']));
-			$item->set_link($link);
-			$item->set_guid($link);
-			$item->set_desc(preg_replace('`\[page\](.+)\[/page\]`uU', '<br /><strong>$1</strong><hr />', FormatingHelper::second_parse($row['contents'])));
-			$item->set_date(new Date($row['timestamp'], Timezone::SERVER_TIMEZONE));
-			$item->set_auth(empty($row['auth']) ? $pages_config->get_authorizations() : TextHelper::unserialize($row['auth']));
+			$feed_module_name = LangLoader::get_message('module.title', 'common', 'pages');
+			$data = new FeedData();
+			$data->set_title($feed_module_name . ' - ' . $site_name);
+			$data->set_date(new Date());
+			$data->set_link(SyndicationUrlBuilder::rss('pages', $idcat));
+			$data->set_host(HOST);
+			$data->set_desc($feed_module_name . ' - ' . $site_name);
+			$data->set_lang(LangLoader::get_message('xml_lang', 'main'));
+			$data->set_auth_bit(Category::READ_AUTHORIZATIONS);
 
-			$data->add_item($item);
+			$categories = CategoriesService::get_categories_manager($module_id)->get_children($idcat, new SearchCategoryChildrensOptions(), true);
+			$ids_categories = array_keys($categories);
+
+			$now = new Date();
+			$results = $querier->select('SELECT pages.id, pages.id_category, pages.name, pages.rewrited_name, pages.contents, pages.summary, pages.creation_date, pages.thumbnail_url, cat.rewrited_name AS rewrited_name_cat
+				FROM ' . PagesSetup::$pages_table . ' pages
+				LEFT JOIN '. PagesSetup::$pages_cats_table .' cat ON cat.id = pages.id_category
+				WHERE pages.id_category IN :ids_categories
+				AND (publication = 1 OR (publication = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))
+				ORDER BY pages.creation_date DESC', array(
+					'ids_categories' => $ids_categories,
+					'timestamp_now' => $now->get_timestamp()
+			));
+
+			foreach ($results as $row)
+			{
+				$row['rewrited_name_cat'] = !empty($row['id_category']) ? $row['rewrited_name_cat'] : 'root';
+				$link = PagesUrlBuilder::display_item($row['id_category'], $row['rewrited_name_cat'], $row['id'], $row['rewrited_name']);
+
+				$item = new FeedItem();
+				$item->set_title($row['title']);
+				$item->set_link($link);
+				$item->set_guid($link);
+				$item->set_desc(FormatingHelper::second_parse($row['contents']));
+				$item->set_date(new Date($row['creation_date'], Timezone::SERVER_TIMEZONE));
+				$item->set_image_url($row['thumbnail_url']);
+				$item->set_auth(CategoriesService::get_categories_manager($module_id)->get_heritated_authorizations($row['id_category'], Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
+				$data->add_item($item);
+			}
+			$results->dispose();
+
+			return $data;
 		}
-		$results->dispose();
-
-		return $data;
 	}
 }
 ?>

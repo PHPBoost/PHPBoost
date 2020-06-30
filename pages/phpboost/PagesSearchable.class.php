@@ -3,67 +3,38 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 08 20
+ * @version     PHPBoost 6.0 - last update: 2019 08 30
  * @since       PHPBoost 3.0 - 2010 05 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
-
-class PagesSearchable extends AbstractSearchableExtensionPoint
+class PagesSearchable extends DefaultSearchable
 {
-	public function get_search_request($args)
-	/**
-	 *  Renvoie la requête de recherche
-	 */
+	public function __construct()
 	{
-		$search = $args['search'];
-		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
+		$module_id = 'pages';
+		parent::__construct($module_id);
+		$this->read_authorization = CategoriesAuthorizationsService::check_authorizations()->read();
 
-		require_once(PATH_TO_ROOT . '/pages/pages_defines.php');
-		$categories = PagesCategoriesCache::load()->get_categories();
+		$this->table_name = PagesSetup::$pages_table;
 
-		$unauth_cats = '';
-		if (!AppContext::get_current_user()->check_auth(PagesConfig::load()->get_authorizations(), READ_PAGE))
-			$unauth_cats .= '0,';
-		foreach ($categories as $id => $cat)
-		{
-			if (!AppContext::get_current_user()->check_auth($cat['auth'], READ_PAGE))
-				$unauth_cats .= $id.',';
-		}
-		$unauth_cats = !empty($unauth_cats) ? " AND p.id_cat NOT IN (" . trim($unauth_cats, ',') . ")" : '';
+		$this->authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $module_id);
 
-		$results = array();
-		$result = PersistenceContext::get_querier()->select("SELECT ".
-		$args['id_search']." AS `id_search`,
-		p.id AS `id_content`,
-		p.title AS `title`,
-		( 2 * FT_SEARCH_RELEVANCE(p.title, '".$args['search']."' IN BOOLEAN MODE) + FT_SEARCH_RELEVANCE(p.contents, '".$args['search']."' IN BOOLEAN MODE) ) / 3 * " . $weight . " AS `relevance`,
-		CONCAT('" . PATH_TO_ROOT . "/pages/pages.php?title=',p.encoded_title) AS `link`,
-		p.auth AS `auth`
-		FROM " . PREFIX . "pages p
-		WHERE ( FT_SEARCH(title, '".$args['search']."*' IN BOOLEAN MODE) OR FT_SEARCH(contents, '".$args['search']."*' IN BOOLEAN MODE) )".$unauth_cats . "
-		LIMIT 100 OFFSET 0");
+		$this->use_keywords = true;
 
-		while ($row = $result->fetch())
-		{
-			if ( !empty($row['auth']) )
-			{
-				$auth = TextHelper::unserialize($row['auth']);
-				if ( !AppContext::get_current_user()->check_auth($auth, READ_PAGE) )
-				{
-					unset($row['auth']);
-					array_push($results, $row);
-				}
-			}
-			else
-			{
-				unset($row['auth']);
-				array_push($results, $row);
-			}
-		}
-		$result->dispose();
+		$this->field_title = 'title';
+		$this->field_rewrited_title = 'rewrited_title';
+		$this->field_content = 'content';
 
-		return $results;
+		$this->has_summary = false;
+		$this->field_summary = '';
+
+		$this->field_published = 'publication';
+
+		$this->has_validation_period = true;
+		$this->field_validation_start_date = 'start_date';
+		$this->field_validation_end_date = 'end_date';
 	}
 }
 ?>
