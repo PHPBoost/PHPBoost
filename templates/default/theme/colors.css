@@ -710,6 +710,18 @@ a,
 	color: var(--txt-light)
 }
 
+.logo-color {
+	color: var(--logo-dark);
+	border-color: var(--logo-dark);
+}
+
+.bgc.logo-color { background-color: rgba(var(--logo-rgb-d), 0.2);}
+
+.bgc-full.logo-color {
+	background-color: var(--logo-dark);
+	color: var(--txt-light)
+}
+
 a:hover,
 .link-color:hover {
 	color: var(--main-light);
