@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 08 02
+ * @version     PHPBoost 6.0 - last update: 2020 06 30
  * @since       PHPBoost 3.0 - 2011 09 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -96,7 +96,7 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 		$theme_choise_fieldset->add_field(
 			new FormFieldSimpleSelectChoice('select_theme', $this->lang['customization.interface.select-theme'], $theme_selected,
 				$this->list_themes(),
-				array('class' => 'third-field', 'events' => array('change' => 'document.location.href = "' . AdminCustomizeUrlBuilder::customize_interface()->rel() . '" + HTMLForms.getField(\'select_theme\').getValue()'))
+				array('class' => 'top-field third-field', 'events' => array('change' => 'document.location.href = "' . AdminCustomizeUrlBuilder::customize_interface()->rel() . '" + HTMLForms.getField(\'select_theme\').getValue()'))
 			)
 		);
 
@@ -112,30 +112,30 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 			{
 				$picture = '<img src="' . Url::to_rel($header_logo_file->get_path()) . '" alt="' . $this->lang['customization.interface.logo.current'] . '" />';
 				$customize_interface_fieldset->add_field(new FormFieldFree('current_logo', $this->lang['customization.interface.logo.current'], $picture,
-					array('class' => 'third-field top-field')
+					array('class' => 'top-field third-field')
 				));
 			}
 			else
 			{
 				$customize_interface_fieldset->add_field(new FormFieldFree('current_logo', $this->lang['customization.interface.logo.current'], '<span class="text-strong error">' . $this->lang['customization.interface.logo.current.erased'] .'</span>',
-					array('class' => 'third-field top-field')
+					array('class' => 'top-field third-field')
 				));
 			}
 		}
 		else
 		{
 			$customize_interface_fieldset->add_field(new FormFieldFree('current_logo', $this->lang['customization.interface.logo.current'], $this->lang['customization.interface.logo.current.null'],
-				array('class' => 'third-field top-field')
+				array('class' => 'top-field third-field')
 			));
 		}
 
 		$customize_interface_fieldset->add_field(new FormFieldFilePicker('header_logo', $this->lang['customization.interface.logo.current.change'],
-			array('class' => 'third-field', 'description' => $this->lang['customization.interface.logo.current.change-explain']),
+			array('class' => 'top-field third-field', 'description' => $this->lang['customization.interface.logo.current.change-explain']),
 			array(new FormFieldConstraintPictureFile())
 		));
 
 		$customize_interface_fieldset->add_field(new FormFieldCheckbox('use_default_logo', $this->lang['customization.interface.logo.use-default'], FormFieldCheckbox::UNCHECKED,
-			array('class' => 'third-field top-field custom-checkbox')
+			array('class' => 'top-field third-field custom-checkbox')
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
