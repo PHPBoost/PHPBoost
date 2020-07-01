@@ -138,7 +138,7 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 		while ($row = $result->fetch())
 		{
 			// UPDATE category columns
-			$this->querier->update(PREFIX . 'pages_cats', array('name' => TextHelper::htmlspecialchars($row['title']), 'rewrited_name' => $row['rewrited_title'], 'description' => $row['content'], 'auth' => $row['auth']), 'WHERE id=:id', array('id' => $row['cat_id']));
+			$this->querier->update(PREFIX . 'pages_cats', array('name' => $row['title'], 'rewrited_name' => $row['rewrited_title'], 'description' => $row['content'], 'auth' => $row['auth']), 'WHERE id=:id', array('id' => $row['cat_id']));
 		}
 		$result->dispose();
 
