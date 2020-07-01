@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Alain091 <alain091@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 30
+ * @version     PHPBoost 6.0 - last update: 2020 07 01
  * @since       PHPBoost 3.0 - 2011 08 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -42,7 +42,7 @@ class PagesFeedProvider implements FeedProvider
 			$ids_categories = array_keys($categories);
 
 			$now = new Date();
-			$results = $querier->select('SELECT pages.id, pages.id_category, pages.name, pages.rewrited_name, pages.contents, pages.summary, pages.creation_date, pages.thumbnail_url, cat.rewrited_name AS rewrited_name_cat
+			$results = $querier->select('SELECT pages.id, pages.id_category, pages.title, pages.rewrited_title, pages.content, pages.creation_date, pages.thumbnail_url, cat.rewrited_name AS rewrited_name_cat
 				FROM ' . PagesSetup::$pages_table . ' pages
 				LEFT JOIN '. PagesSetup::$pages_cats_table .' cat ON cat.id = pages.id_category
 				WHERE pages.id_category IN :ids_categories
@@ -61,7 +61,7 @@ class PagesFeedProvider implements FeedProvider
 				$item->set_title($row['title']);
 				$item->set_link($link);
 				$item->set_guid($link);
-				$item->set_desc(FormatingHelper::second_parse($row['contents']));
+				$item->set_desc(FormatingHelper::second_parse($row['content']));
 				$item->set_date(new Date($row['creation_date'], Timezone::SERVER_TIMEZONE));
 				$item->set_image_url($row['thumbnail_url']);
 				$item->set_auth(CategoriesService::get_categories_manager($module_id)->get_heritated_authorizations($row['id_category'], Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
