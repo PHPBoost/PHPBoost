@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 30
+ * @version     PHPBoost 6.0 - last update: 2020 07 01
  * @since       PHPBoost 4.0 - 2014 05 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -117,6 +117,18 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 
 	protected function execute_module_specific_changes()
 	{
+		// Delete backslash from db contents
+		$slash = $this->querier->select('SELECT id, title
+			FROM ' . PREFIX . 'pages'
+		);
+
+		while ($row = $slash->fetch())
+		{
+			$this->querier->update(PREFIX . 'pages', array('title' => stripslashes($row['title'])), 'WHERE id=:id', array('id' => $row['id']));
+		}
+		$slash->dispose();
+
+		// Set categories from old `ìs_cat` pages
 		$result = $this->querier->select('SELECT page.id, page.title, page.rewrited_title, page.auth, page.is_cat, page.content, cat.id as cat_id
 			FROM ' . PREFIX . 'pages page
 			LEFT JOIN ' . PREFIX . 'pages_cats cat ON cat.id_page = page.id
@@ -126,7 +138,7 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 		while ($row = $result->fetch())
 		{
 			// UPDATE category columns
-			$this->querier->update(PREFIX . 'pages_cats', array('name' => $row['title'], 'rewrited_name' => $row['rewrited_title'], 'description' => $row['content'], 'auth' => $row['auth']), 'WHERE id=:id', array('id' => $row['cat_id']));
+			$this->querier->update(PREFIX . 'pages_cats', array('name' => TextHelper::htmlspecialchars($row['title']), 'rewrited_name' => $row['rewrited_title'], 'description' => $row['content'], 'auth' => $row['auth']), 'WHERE id=:id', array('id' => $row['cat_id']));
 		}
 		$result->dispose();
 
