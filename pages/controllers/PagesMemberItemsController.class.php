@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 30
+ * @version     PHPBoost 6.0 - last update: 2020 07 01
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
@@ -66,12 +66,14 @@ class PagesMemberItemsController extends ModuleController
 		)));
 
 		$this->view->put_all(array(
-			'C_MEMBER_ITEMS'	  => true,
-			'C_ITEMS'             => $result->get_rows_count() > 0,
-			'C_SEVERAL_ITEMS'     => $result->get_rows_count() > 1,
+			'C_NO_ITEM'       => $result->get_rows_count() == 0,
+			'C_ITEMS'         => $result->get_rows_count() > 0,
+			'C_MEMBER_ITEMS'  => true,
+			'C_ITEMS'         => $result->get_rows_count() > 0,
+			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
 
-			'ID_CATEGORY'         => $this->get_category()->get_id(),
-			'CATEGORY_NAME'       => $this->get_category()->get_name(),
+			'ID_CATEGORY'     => $this->get_category()->get_id(),
+			'CATEGORY_NAME'   => $this->get_category()->get_name(),
 		));
 
 		while($row = $result->fetch())
@@ -182,7 +184,7 @@ class PagesMemberItemsController extends ModuleController
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], PagesUrlBuilder::home());
-		$breadcrumb->add(AppContext::get_current_user()->get_display_name(), PagesUrlBuilder::display_member_items());
+		$breadcrumb->add($this->user_lang['my.items'], PagesUrlBuilder::display_member_items());
 
 		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->category->get_id(), true));
 		foreach ($categories as $id => $category)
