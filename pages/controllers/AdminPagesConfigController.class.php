@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 30
+ * @version     PHPBoost 6.0 - last update: 2020 07 01
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
@@ -83,13 +83,6 @@ class AdminPagesConfigController extends AdminModuleController
 		));
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $this->common_lang['authorizations'],
-			array('description' => $this->admin_common_lang['config.authorizations.explain'])
-		);
-		$form->add_fieldset($fieldset_authorizations);
-
-
-
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', LangLoader::get_message('authorizations', 'common'),
 			array('description' => $this->admin_common_lang['config.authorizations.explain'])
 		);
 		$form->add_fieldset($fieldset_authorizations);
