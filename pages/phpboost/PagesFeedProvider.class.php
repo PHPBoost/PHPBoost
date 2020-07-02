@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Alain091 <alain091@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 01
+ * @version     PHPBoost 6.0 - last update: 2020 07 02
  * @since       PHPBoost 3.0 - 2011 08 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -55,7 +55,7 @@ class PagesFeedProvider implements FeedProvider
 			foreach ($results as $row)
 			{
 				$row['rewrited_name_cat'] = !empty($row['id_category']) ? $row['rewrited_name_cat'] : 'root';
-				$link = PagesUrlBuilder::display_item($row['id_category'], $row['rewrited_name_cat'], $row['id'], $row['rewrited_name']);
+				$link = PagesUrlBuilder::display_item($row['id_category'], $row['rewrited_name_cat'], $row['id'], $row['rewrited_title']);
 
 				$item = new FeedItem();
 				$item->set_title($row['title']);
