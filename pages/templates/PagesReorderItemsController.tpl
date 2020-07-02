@@ -67,11 +67,6 @@
 			{@module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
 		</h1>
 	</header>
-	# IF C_CATEGORY_DESCRIPTION #
-		<div class="cat-description">
-			{CATEGORY_DESCRIPTION}
-		</div>
-	# ENDIF #
 
 	# IF C_ITEMS #
 		<div class="content">

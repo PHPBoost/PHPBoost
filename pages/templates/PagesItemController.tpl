@@ -28,9 +28,9 @@
 					<time datetime="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT C_DIFFERED #{DATE}# ELSE #{DIFFERED_START_DATE}# ENDIF #</time>
 				</span>
 				<span class="pinned" aria-label="${LangLoader::get_message('category', 'categories-common')}"><i class="far fa-fw fa-folder"></i> <a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a></span>
-				<span class="pinned" aria-label="{VIEWS_NUMBER} # IF C_SEVERAL_VIEWS #{@pages.views}# ELSE #{@pages.view}# ENDIF #"><i class="far fa-fw fa-eye"></i> {VIEWS_NUMBER}</span>
+				# IF C_VIEWS_NUMBER #<span class="pinned" aria-label="{VIEWS_NUMBER} # IF C_SEVERAL_VIEWS #{@pages.views}# ELSE #{@pages.view}# ENDIF #"><i class="far fa-fw fa-eye"></i> {VIEWS_NUMBER}</span># ENDIF #
 				# IF C_ENABLED_COMMENTS #
-					<span"pinned" aria-label="${LangLoader::get_message('sort_by.comments.number', 'common')}"><i class="far fa-fw fa-comments"></i> # IF C_COMMENTS # {COMMENTS_NUMBER} # ENDIF # {L_COMMENTS}</span>
+					<span"pinned" aria-label="${LangLoader::get_message('sort_by.comments.number', 'common')}"><i class="far fa-fw fa-comments"></i># IF C_COMMENTS # {COMMENTS_NUMBER}# ENDIF # {L_COMMENTS}</span>
 				# ENDIF #
 			</div>
 			# IF C_CONTROLS #
@@ -43,7 +43,7 @@
 
 		<div class="content">
 			# IF C_HAS_THUMBNAIL #
-					<img class="item-thumbnail" src="{U_THUMBNAIL}" alt="{NAME}" itemprop="thumbnailUrl" />
+				<img class="item-thumbnail" src="{U_THUMBNAIL}" alt="{NAME}" itemprop="thumbnailUrl" />
 			# ENDIF #
 
 			<div itemprop="text">{CONTENT}</div>

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 30
+ * @version     PHPBoost 6.0 - last update: 2020 07 02
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
@@ -358,7 +358,7 @@ class Page
 		$this->id_category = $id_category;
         $this->content = PagesConfig::load()->get_default_content();
 		$this->publication = self::APPROVAL_NOW;
-		$this->author_display = true;
+		$this->author_display = false;
 		$this->author_user = AppContext::get_current_user();
 		$this->start_date = new Date();
 		$this->end_date = new Date();
@@ -425,6 +425,7 @@ class Page
 				'PSEUDO'             => $user->get_display_name(),
 				'USER_LEVEL_CLASS'   => UserService::get_level_class($user->get_level()),
 				'USER_GROUP_COLOR'   => $user_group_color,
+				'C_VIEWS_NUMBER'     => $config->get_views_number(),
 				'VIEWS_NUMBER'       => $this->get_views_number(),
 
 				'C_COMMENTS'      => !empty($comments_number),

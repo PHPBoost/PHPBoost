@@ -28,6 +28,13 @@
 					${LangLoader::get_message('no_item_now', 'common')}
 				</div>
 			# ELSE #
+				# IF C_CONTROLS #
+					# IF C_SEVERAL_ITEMS #
+						<div class="align-right controls">
+							<a href="{U_REORDER_ITEMS}" aria-label="${LangLoader::get_message('reorder', 'common')}"><i class="fa fa-fw fa-exchange-alt"></i></a>
+						</div>
+					# ENDIF #
+				# ENDIF #
 				<table class="table-no-header">
 					<tbody>
 						# START items #
@@ -53,9 +60,11 @@
 										</span>
 									# ENDIF #
 								</td>
-								<td>
-									<span class="pinned" role="contentinfo" aria-label="{items.VIEWS_NUMBER} # IF items.C_SEVERAL_VIEWS #{@pages.views}# ELSE #{@pages.view}# ENDIF #"><i class="far fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span></td>
-								</td>
+								# IF C_VIEWS_NUMBER #
+									<td>
+										<span class="pinned" role="contentinfo" aria-label="{items.VIEWS_NUMBER} # IF items.C_SEVERAL_VIEWS #{@pages.views}# ELSE #{@pages.view}# ENDIF #"><i class="far fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span></td>
+									</td>
+								# ENDIF #
 								<td>
 									# IF items.C_CONTROLS #
 										# IF items.C_EDIT #

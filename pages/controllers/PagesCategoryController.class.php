@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 30
+ * @version     PHPBoost 6.0 - last update: 2020 07 02
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
@@ -61,13 +61,15 @@ class PagesCategoryController extends ModuleController
 		)));
 
 		$this->view->put_all(array(
+			'C_CONTROLS' => AppContext::get_current_user()->get_level() == User::ADMIN_LEVEL,
 			'C_NO_ITEM' => $result->get_rows_count() == 0,
 			'C_ITEMS' => $result->get_rows_count() > 0,
 			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
 			'CATEGORY_ID' => $this->get_category()->get_id(),
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
 			'U_CATEGORY_THUMBNAIL' => $this->get_category()->get_thumbnail()->rel(),
-			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? PagesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id())->rel()
+			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? PagesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id())->rel(),
+			'U_REORDER_ITEMS' => PagesUrlBuilder::reorder_items($this->get_category()->get_id(),$this->get_category()->get_rewrited_name())->rel()
 		));
 
 		while($row = $result->fetch())

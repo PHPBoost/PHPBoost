@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 01
+ * @version     PHPBoost 6.0 - last update: 2020 07 02
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
@@ -74,6 +74,10 @@ class AdminPagesConfigController extends AdminModuleController
 			array('class' => 'custom-checkbox')
 		));
 
+		$fieldset->add_field(new FormFieldCheckbox('views_number', $this->admin_common_lang['config.views.number.enabled'], $this->config->get_views_number(),
+			array('class' => 'custom-checkbox')
+		));
+
 		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->admin_common_lang['config.root_category_description'], $this->config->get_root_category_description(),
 			array('rows' => 8, 'cols' => 47)
 		));
@@ -102,6 +106,7 @@ class AdminPagesConfigController extends AdminModuleController
 	{
 		$this->config->set_left_column($this->form->get_value('left_column'));
 		$this->config->set_right_column($this->form->get_value('right_column'));
+		$this->config->set_views_number($this->form->get_value('views_number'));
 		$this->config->set_root_category_description($this->form->get_value('root_category_description'));
 		$this->config->set_default_content($this->form->get_value('default_content'));
         $this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());

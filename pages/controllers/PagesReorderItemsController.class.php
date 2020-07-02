@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 30
+ * @version     PHPBoost 6.0 - last update: 2020 07 02
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
@@ -59,9 +59,6 @@ class PagesReorderItemsController extends ModuleController
 		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
 
 		$this->view->put_all(array(
-			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
-			'C_SEVERAL_ITEMS' => $this->get_category()->get_id() == Category::ROOT_CATEGORY && !empty($category_description),
-			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
 			'C_ITEMS' => $result->get_rows_count() > 0,
 			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
 			'ID_CAT' => $this->get_category()->get_id(),
