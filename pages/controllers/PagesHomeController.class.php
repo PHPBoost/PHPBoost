@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 30
+ * @version     PHPBoost 6.0 - last update: 2020 07 03
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
@@ -37,7 +37,16 @@ class PagesHomeController extends ModuleController
 	private function build_view()
 	{
 		$now = new Date();
-		$comments_config = CommentsConfig::load();
+		$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY);
+
+		$total = PagesService::count();
+
+		$this->view->put_all(array(
+			'C_CONTROLS'             => AppContext::get_current_user()->get_level() == User::ADMIN_LEVEL,
+			'C_CATEGORY_DESCRIPTION' => !empty($this->config->get_root_category_description()),
+			'CATEGORY_DESCRIPTION'   => $this->config->get_root_category_description(),
+			'TOTAL_ITEMS'            => $total,
+		));
 
 		// Root category pages
 		$root_result = PersistenceContext::get_querier()->select('SELECT *
@@ -46,7 +55,8 @@ class PagesHomeController extends ModuleController
 			AND (publication = 1 OR (publication = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))
 			ORDER BY pages.i_order', array(
 				'timestamp_now' => $now->get_timestamp()
-			));
+		));
+
 		while ($row = $root_result->fetch())
 		{
 				$item = new Page();
@@ -56,39 +66,38 @@ class PagesHomeController extends ModuleController
 		}
 		$root_result->dispose();
 
-		$result_cat = PersistenceContext::get_querier()->select('SELECT pages_cat.*
-		FROM '. PagesSetup::$pages_cats_table .' pages_cat
-		ORDER BY pages_cat.id_parent ASC, pages_cat.c_order ASC'
+		// Subcategories and subcategories pages
+		$result_cat = PersistenceContext::get_querier()->select('SELECT *
+			FROM '. PagesSetup::$pages_cats_table .' pages_cat
+			WHERE id IN :authorized_categories
+			ORDER BY pages_cat.id_parent ASC, pages_cat.c_order ASC', array(
+				'authorized_categories' => $authorized_categories,
+			)
 		);
-		$this->view->put_all(array(
-			'C_CATEGORY_DESCRIPTION' => !empty($this->config->get_root_category_description()),
-			'CATEGORY_DESCRIPTION' => $this->config->get_root_category_description(),
-		));
 
 		while ($row_cat = $result_cat->fetch())
 		{
-			$id_cat = $row_cat['id'];
-
-			$result = PersistenceContext::get_querier()->select('SELECT pages.*
-			FROM '. PagesSetup::$pages_table .' pages
-			WHERE pages.id_category = :id_cat
-			AND (publication = 1 OR (publication = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))
-			ORDER BY i_order', array(
-				'id_cat' => $id_cat,
-				'timestamp_now' => $now->get_timestamp()
+			$result = PersistenceContext::get_querier()->select('SELECT *
+				FROM '. PagesSetup::$pages_table .' pages
+				WHERE id_category = :id_cat
+				AND (publication = 1 OR (publication = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))
+				ORDER BY i_order', array(
+					'id_cat' => $row_cat['id'],
+					'timestamp_now' => $now->get_timestamp()
 			));
 
 			$this->view->assign_block_vars('categories', array(
-				'C_CONTROLS' => AppContext::get_current_user()->get_level() == User::ADMIN_LEVEL,
-				'C_ITEMS' => $result->get_rows_count() > 0,
-				'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
-				'CATEGORY_ID' => $row_cat['id'],
+				'C_ITEMS'            => $result->get_rows_count() > 0,
+				'C_NO_ITEM'          => $result->get_rows_count() == 0,
+				'C_SEVERAL_ITEMS'    => $result->get_rows_count() > 1,
+				'ITEMS_NUMBER'       => $result->get_rows_count(),
+				'CATEGORY_ID'        => $row_cat['id'],
 				'CATEGORY_SUB_ORDER' => $row_cat['c_order'],
 				'CATEGORY_PARENT_ID' => $row_cat['id_parent'],
-				'CATEGORY_NAME' => $row_cat['name'],
-				'CATEGORY_R_NAME' => $row_cat['rewrited_name'],
-				'U_CATEGORY' => PagesUrlBuilder::display_category($row_cat['id'], $row_cat['rewrited_name'])->rel(),
-				'U_REORDER_ITEMS' => PagesUrlBuilder::reorder_items($row_cat['id'], $row_cat['rewrited_name'])->rel()
+				'CATEGORY_NAME'      => $row_cat['name'],
+				'CATEGORY_R_NAME'    => $row_cat['rewrited_name'],
+				'U_CATEGORY'         => PagesUrlBuilder::display_category($row_cat['id'], $row_cat['rewrited_name'])->rel(),
+				'U_REORDER_ITEMS'    => PagesUrlBuilder::reorder_items($row_cat['id'], $row_cat['rewrited_name'])->rel()
 			));
 			while ($row = $result->fetch())
 			{

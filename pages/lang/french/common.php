@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 30
+ * @version     PHPBoost 6.0 - last update: 2020 07 03
  * @since       PHPBoost 1.6 - 2007 08 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -26,6 +26,7 @@ $lang['pages.views'] = 'vues';
 $lang['pages.view'] = 'vue';
 
 $lang['pages.management'] = 'Gestion des pages';
+$lang['pages.number'] = 'Nombre de pages';
 
 // config
 $lang['config.left.column'] = 'Masquer les blocs de gauche';
