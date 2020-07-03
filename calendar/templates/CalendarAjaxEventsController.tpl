@@ -57,6 +57,7 @@
 									<time class="text-strong" datetime="{event.START_DATE_ISO8601}" itemprop="startDate">{event.START_DATE}</time>
 									- <time class="text-strong" datetime="{event.END_DATE_ISO8601}" itemprop="endDate">{event.END_DATE}</time>
 								</span>
+								<span class="pinned" data-color-surround="{event.CATEGORY_COLOR}"><i class="far fa-fw fa-folder"></i> {event.CATEGORY_NAME}</span>
 								# IF event.C_PARTICIPATION_ENABLED #
 									# IF event.C_DISPLAY_PARTICIPANTS #
 										<span class="pinned">
@@ -93,6 +94,7 @@
 							</div>
 
 							<div itemprop="text">{event.CONTENTS}</div>
+
 						</div>
 					</div>
 					<footer>

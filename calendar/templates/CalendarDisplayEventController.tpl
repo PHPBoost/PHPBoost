@@ -12,7 +12,8 @@
 
 		<div class="flex-between">
 			<div class="more">
-					<i class="fa fa-user"></i> # IF C_AUTHOR_EXIST #<a itemprop="author" href="{U_AUTHOR_PROFILE}" class="{AUTHOR_LEVEL_CLASS}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR}</a># ELSE #<span class="visitor">{AUTHOR}</span># ENDIF #
+				<span class="pinned"><i class="fa fa-user"></i> # IF C_AUTHOR_EXIST #<a itemprop="author" href="{U_AUTHOR_PROFILE}" class="{AUTHOR_LEVEL_CLASS}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR}</a># ELSE #<span class="visitor">{AUTHOR}</span># ENDIF #</span>
+				<span class="pinned" data-color-surround="{CATEGORY_COLOR}"><i class="far fa-fw fa-folder"></i> {CATEGORY_NAME}</span>
 			</div>
 			# IF C_CONTROLS #
 				<div class="controls align-right">
