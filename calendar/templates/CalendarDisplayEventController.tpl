@@ -50,11 +50,11 @@
 						<ul>
 							<li class="li-stretch">
 								<span class="text-strong">{@calendar.labels.start.date}</span>
-								<time datetime="{START_DATE_ISO8601}" itemprop="startDate">{START_DATE}</time>
+								<time datetime="{START_DATE_ISO8601}" itemprop="startDate">{START_DATE_FULL}</time>
 							</li>
 							<li class="li-stretch">
 								<span class="text-strong">{@calendar.labels.end.date}</span>
-								<time datetime="{END_DATE_ISO8601}" itemprop="endDate">{END_DATE}</time>
+								<time datetime="{END_DATE_ISO8601}" itemprop="endDate">{END_DATE_FULL}</time>
 							</li>
 							# IF C_LOCATION #
 								<li itemprop="location" itemscope itemtype="http://schema.org/Place">
