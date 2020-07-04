@@ -86,7 +86,7 @@
 							# ENDIF #
 							# IF C_UNREAD_ALERTS #
 							<p class="smaller center">
-								<a href="admin_alerts.php">{L_DISPLAY_ALL_ALERTS}</a>
+								<a href="{PATH_TO_ROOT}/admin/admin_alerts.php">{L_DISPLAY_ALL_ALERTS}</a>
 							</p>
 							# ENDIF #
 						</div>
