@@ -153,12 +153,15 @@ abstract class ModuleUpdateVersion implements UpdateVersion
 		{
 			if (in_array($table['table_name'], $this->tables_list))
 			{
-				$columns = $this->db_utils->desc_table($table['table_name']);
-				
-				foreach ($table['keys'] as $column_name => $fulltext)
+				if (isset($table['keys']))
 				{
-					if (!isset($columns[$column_name]['key']) || !$columns[$column_name]['key'])
-						$this->querier->inject('ALTER TABLE ' . $table['table_name'] . ' ADD ' . ($fulltext ? 'FULLTEXT ' : '') . 'KEY `' . $column_name . '` (`' . $column_name . '`)');
+					$columns = $this->db_utils->desc_table($table['table_name']);
+				
+					foreach ($table['keys'] as $column_name => $fulltext)
+					{
+						if (!isset($columns[$column_name]['key']) || !$columns[$column_name]['key'])
+							$this->querier->inject('ALTER TABLE ' . $table['table_name'] . ' ADD ' . ($fulltext ? 'FULLTEXT ' : '') . 'KEY `' . $column_name . '` (`' . $column_name . '`)');
+					}
 				}
 			}
 		}
@@ -173,12 +176,15 @@ abstract class ModuleUpdateVersion implements UpdateVersion
 		{
 			if (in_array($table['table_name'], $this->tables_list))
 			{
-				$columns = $this->db_utils->desc_table($table['table_name']);
-				
-				foreach ($table['keys'] as $column_name)
+				if (isset($table['keys']))
 				{
-					if (isset($columns[$column_name]['key']) && $columns[$column_name]['key'])
-						$this->querier->inject('ALTER TABLE ' . $table['table_name'] . ' DROP KEY `' . $column_name . '`');
+					$columns = $this->db_utils->desc_table($table['table_name']);
+				
+					foreach ($table['keys'] as $column_name)
+					{
+						if (isset($columns[$column_name]['key']) && $columns[$column_name]['key'])
+							$this->querier->inject('ALTER TABLE ' . $table['table_name'] . ' DROP KEY `' . $column_name . '`');
+					}
 				}
 			}
 		}
