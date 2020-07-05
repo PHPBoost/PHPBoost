@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 01 23
+ * @version   	PHPBoost 5.2 - last update: 2020 07 05
  * @since   	PHPBoost 4.1 - 2015 05 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -189,7 +189,7 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 
 		$fieldset->add_field(new FormFieldFree('save_database', '', MessageHelper::display($lang['advises.save_database'], MessageHelper::SUCCESS)->render()));
 
-		if (!DatabaseConfig::load()->is_database_tables_optimization_enabled())
+		if (ModulesManager::is_module_installed('database') && ModulesManager::is_module_activated('database') && !DatabaseConfig::load()->is_database_tables_optimization_enabled())
 			$fieldset->add_field(new FormFieldFree('optimize_database_tables', '', MessageHelper::display($lang['advises.optimize_database_tables'], MessageHelper::SUCCESS)->render()));
 
 		if ($security_config->get_internal_password_min_length() == 6 && $security_config->get_internal_password_strength() == SecurityConfig::PASSWORD_STRENGTH_WEAK && !$security_config->are_login_and_email_forbidden_in_password())
