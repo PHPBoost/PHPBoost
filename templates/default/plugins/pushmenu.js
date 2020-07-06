@@ -4,7 +4,7 @@
  * @license     https://www.opensource.org/licenses/mit-license.php
  * @author      Some Web Media
  * @link        https://github.com/somewebmedia/hc-offcanvas-nav
- * @version     PHPBoost 6.0 - last update: 2020 06 27
+ * @version     PHPBoost 6.0 - last update: 2020 07 06
  * @since       PHPBoost 6.0 - 2020 01 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  *
@@ -15,7 +15,7 @@
  *      hcOffcanvasNav => pushmenu (plugin name)
  *       - replace properties
  *      push-nav-trigger => concat display block->inline-flex
- *      finding the <create "next" link separately> => replace <href="#"> by <name="something">
+ *      replace <href="#"> by <name="something">
 */
 
 
@@ -322,7 +322,7 @@
 
         if (!Settings.customToggle) {
           // our toggle
-          $toggle = $(`<a href="#" aria-label="Open Menu" class="push-nav-trigger ${navUniqId}"><span></span></a>`)
+          $toggle = $(`<a name="open_menu" aria-label="Open Menu" class="push-nav-trigger ${navUniqId}"><span></span></a>`)
             .on('click', toggleNav);
           $originalNav.after($toggle);
         }
@@ -685,7 +685,7 @@
 
                 const $a = $item_link.length
                   ? $item_link.clone(false, true).addClass('nav-item')
-                  : $(`<${item.subnav.length ? 'a href="#"' : 'span'} class="nav-item">`).append($item_content.clone(true, true)).on('click', stopPropagation);
+                  : $(`<${item.subnav.length ? 'a name="nav-item"' : 'span'} class="nav-item">`).append($item_content.clone(true, true)).on('click', stopPropagation);
 
                 if ($a.is('a')) {
                   $a
@@ -839,7 +839,7 @@
               if (Settings.insertBack !== false && Settings.levelOpen === 'overlap') {
                 const $children_menus = $content.children('ul');
                 const backLabel = (Settings.levelTitleAsBack ? (backTitle || Settings.labelBack) : Settings.labelBack) || '';
-                let $back = $(`<li class="nav-back"><a href="#" role="menuitem" tabindex="0">${backLabel}<span></span></a></li>`);
+                let $back = $(`<li class="nav-back"><a name="nav-back" role="menuitem" tabindex="0">${backLabel}<span></span></a></li>`);
                 const closeThisLevel = () => closeLevel(level, backIndex);
 
                 $back
@@ -865,7 +865,7 @@
             // insert close link
             if (level === 0 && Settings.insertClose !== false) {
               const $nav_ul = $content.children('ul');
-              const $close = $(`<li class="nav-close"><a href="#" role="menuitem" tabindex="0">${Settings.labelClose || ''}<span></span></a></li>`);
+              const $close = $(`<li class="nav-close"><a name="nav-close" role="menuitem" tabindex="0">${Settings.labelClose || ''}<span></span></a></li>`);
 
               $close
                 .children('a')
