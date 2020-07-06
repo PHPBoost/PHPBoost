@@ -92,7 +92,8 @@ form > [class*="cell-"]:not(.cell-header) {
 }
 
 .cell-thumbnail-caption:hover {
-    opacity: 1
+    opacity: 1;
+	text-decoration: none;
 }
 
 /* --- list --- */

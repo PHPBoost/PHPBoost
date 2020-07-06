@@ -4,7 +4,7 @@
 # ENDIF #
 		<div class="cell-form# IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF #">
 			<form action="{REWRITED_SCRIPT}" method="get">
-				<div class="# IF C_HORIZONTAL #grouped-inputs grouped-auto grouped-left# ELSE #cell-input# ENDIF #">
+				<div class="# IF C_HORIZONTAL #grouped-inputs grouped-auto grouped-left# ENDIF #">
 					# IF C_HORIZONTAL #<span class="grouped-element">{@switch.lang}</span># ENDIF #
 					<div class="grouped-element">
 						<label for="switchlang"><span class="sr-only">${LangLoader::get_message('select', 'common')}</span></label>
