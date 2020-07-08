@@ -13,7 +13,7 @@
 	border-color: transparent;
 	background-color: transparent;
 	text-align: center;
-	white-space: nowrap;
+	display: inline-block;
 	transition: all 0.2s steps(3, end);
 }
 
