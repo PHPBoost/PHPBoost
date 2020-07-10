@@ -14,7 +14,6 @@ class ClassLoader
 	private static $cache_file = '/cache/autoload.php';
 	private static $autoload;
 	private static $modules_classlist = array();
-	private static $module_id;
 	private static $already_reloaded = false;
 	private static $exclude_paths = array(
 		'/cache', '/images', '/lang', '/upload', '/templates',
