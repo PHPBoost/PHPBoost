@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 15
+ * @version     PHPBoost 6.0 - last update: 2020 07 10
  * @since       PHPBoost 3.0 - 2009 10 21
  * @contributor mipel <mipel@phpboost.com>
 */
@@ -13,7 +13,7 @@ class ClassLoader
 {
 	private static $cache_file = '/cache/autoload.php';
 	private static $autoload;
-	private static $module_classlist = array();
+	private static $modules_classlist = array();
 	private static $module_id;
 	private static $already_reloaded = false;
 	private static $exclude_paths = array(
@@ -71,31 +71,11 @@ class ClassLoader
 	}
 
 	/**
-	 * Get the class list of a module
-	 */
-	public static function get_module_classlist($module_id)
-	{
-		if ($module_id != self::$module_id)
-		{
-			self::$module_classlist = array();
-			self::$module_id = $module_id;
-		}
-		self::add_classes(Path::phpboost_path() . '/' . self::$module_id, '`\.class\.php$`', true);
-		return self::$module_classlist;
-	}
-
-	/**
 	 * Check if a module has a subclass of a parent class
 	 */
 	public static function has_module_subclass_of($module_id, $parent_class)
 	{
-		$result = false;
-		foreach (self::get_module_classlist($module_id) as $class_name => $class_path)
-		{
-			if (is_subclass_of($class_name, $parent_class))
-				$result = true;
-		}
-		return $result;
+		return (bool)self::get_module_subclass_of($module_id, $parent_class);
 	}
 
 	/**
@@ -104,10 +84,16 @@ class ClassLoader
 	public static function get_module_subclass_of($module_id, $parent_class)
 	{
 		$result = '';
-		foreach (self::get_module_classlist($module_id) as $class_name => $class_path)
+		if (isset(self::$modules_classlist[$module_id]))
 		{
-			if (is_subclass_of($class_name, $parent_class))
-				$result = $class_name;
+			foreach (self::$modules_classlist[$module_id] as $class_name => $class_path)
+			{
+				if (is_subclass_of($class_name, $parent_class))
+				{
+					$result = $class_name;
+					break;
+				}
+			}
 		}
 		return $result;
 	}
@@ -136,7 +122,7 @@ class ClassLoader
 				self::add_classes(Path::phpboost_path() . $path, $phpboost_classfile_pattern);
 			}
 			self::add_classes(Path::phpboost_path() . '/kernel/framework/io/db/dbms/Doctrine/', '`\.php$`');
-			self::generate_autoload_cache();
+			//self::generate_autoload_cache();
 		}
 	}
 
@@ -152,20 +138,27 @@ class ClassLoader
 		return array_key_exists($classname, self::$autoload);
 	}
 
-	private static function add_classes($directory, $pattern, $module_classlist = false, $recursive = true)
+	private static function add_classes($directory, $pattern, $recursive = true)
 	{
 		$files = array();
 		$folder = new Folder($directory);
 		$relative_path = Path::get_path_from_root($folder->get_path());
+		
+		$path_folders = explode('/', $relative_path);
+		$module_id = $path_folders[1];
+		
 		$files = $folder->get_files($pattern);
 		foreach ($files as $file)
 		{
 			$filename = $file->get_name();
 			$classname = $file->get_name_without_extension();
-			if ($module_classlist)
-				self::$module_classlist[$classname] = $relative_path . '/' . $filename;
-			else
-				self::$autoload[$classname] = $relative_path . '/' . $filename;
+			if ($module_id  && !in_array($module_id, array('admin', 'kernel', 'lang', 'syndication', 'user')))
+			{
+				if(!isset(self::$modules_classlist[$module_id]))
+					self::$modules_classlist[$module_id] = array();
+				self::$modules_classlist[$module_id][$classname] = $relative_path . '/' . $filename;
+			}
+			self::$autoload[$classname] = $relative_path . '/' . $filename;
 		}
 
 		if ($recursive)
@@ -176,7 +169,7 @@ class ClassLoader
 				if (!in_array($a_folder->get_path_from_root(), self::$exclude_paths)
 				&& !in_array($a_folder->get_name(), self::$exclude_folders_names))
 				{
-					self::add_classes($a_folder->get_path(), $pattern, $module_classlist);
+					self::add_classes($a_folder->get_path(), $pattern);
 				}
 			}
 		}
@@ -187,7 +180,9 @@ class ClassLoader
 		$file = new File(PATH_TO_ROOT . self::$cache_file);
 		try
 		{
-		 	$file->write('<?php self::$autoload = ' . var_export(self::$autoload, true) . '; ?>');
+		 	$file->write('<?php self::$autoload = ' . var_export(self::$autoload, true) . ';');
+		 	$file->append('self::$modules_classlist = ' . var_export(self::$modules_classlist, true) . ';');
+			$file->append('?>');
 		 	$file->close();
 		}
 		catch (IOException $ex)
