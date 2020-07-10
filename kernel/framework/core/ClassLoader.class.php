@@ -30,10 +30,6 @@ class ClassLoader
 	public static function init_autoload()
 	{
 		spl_autoload_register(array(get_class(), 'autoload'));
-		if (!self::inc(PATH_TO_ROOT . self::$cache_file))
-		{
-			self::generate_classlist();
-		}
 	}
 
 	/**
@@ -122,7 +118,7 @@ class ClassLoader
 				self::add_classes(Path::phpboost_path() . $path, $phpboost_classfile_pattern);
 			}
 			self::add_classes(Path::phpboost_path() . '/kernel/framework/io/db/dbms/Doctrine/', '`\.php$`');
-			//self::generate_autoload_cache();
+			self::generate_autoload_cache();
 		}
 	}
 
