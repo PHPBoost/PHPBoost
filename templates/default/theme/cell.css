@@ -61,6 +61,7 @@ form > [class*="cell-"]:not(.cell-header) {
 
 .cell-content {
     padding: 0.618em;
+	max-width: 100%;
 }
 
 .cell-alert .message-helper {
