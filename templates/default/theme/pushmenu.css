@@ -279,7 +279,7 @@ body.push-nav-open {
 
 .pushmenu a,
 .pushmenu .nav-item {
-    padding: 0.618em;
+    padding: 0.618em 0.309em;
     z-index: 1;
     border-width: 0 0 1px;
     border-style: solid;
