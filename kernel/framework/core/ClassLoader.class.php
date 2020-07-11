@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 10
+ * @version     PHPBoost 6.0 - last update: 2020 07 11
  * @since       PHPBoost 3.0 - 2009 10 21
  * @contributor mipel <mipel@phpboost.com>
 */
@@ -40,7 +40,7 @@ class ClassLoader
 		if (!isset(self::$autoload[$classname]) || !self::inc(PATH_TO_ROOT . self::$autoload[$classname]))
 		{
 			self::generate_classlist();
-			if (isset(self::$autoload[$classname]))
+			if (isset(self::$autoload[$classname]) && file_exists(PATH_TO_ROOT . self::$autoload[$classname]))
 			{
 				require_once PATH_TO_ROOT . self::$autoload[$classname];
 			}
