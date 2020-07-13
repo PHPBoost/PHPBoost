@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 04 03
+ * @version     PHPBoost 6.0 - last update: 2020 07 13
  * @since       PHPBoost 5.0 - 2017 03 09
  * @contributor xela <xela@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -30,6 +30,15 @@ class NewsletterModuleUpdateVersion extends ModuleUpdateVersion
 				'table_name' => PREFIX . 'newsletter_subscribers',
 				'columns' => array(
 					'subscription_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
+				)
+			)
+		);
+		
+		$this->database_columns_to_modify = array(
+			array(
+				'table_name' => PREFIX . 'newsletter_streams',
+				'columns' => array(
+					'image' => 'thumbnail VARCHAR(255) NOT NULL DEFAULT ""'
 				)
 			)
 		);

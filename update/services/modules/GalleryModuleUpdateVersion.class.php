@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 30
+ * @version     PHPBoost 6.0 - last update: 2020 07 13
  * @since       PHPBoost 5.1 - 2018 01 27
  * @contributor xela <xela@phpboost.com>
 */
@@ -31,6 +31,12 @@ class GalleryModuleUpdateVersion extends ModuleUpdateVersion
 				'table_name' => PREFIX . 'gallery',
 				'columns' => array(
 					'idcat' => 'id_category INT(11) NOT NULL DEFAULT 0'
+				)
+			),
+			array(
+				'table_name' => PREFIX . 'gallery_cats',
+				'columns' => array(
+					'image' => 'thumbnail VARCHAR(255) NOT NULL DEFAULT ""'
 				)
 			)
 		);

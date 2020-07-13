@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 29
+ * @version     PHPBoost 6.0 - last update: 2020 07 13
  * @since       PHPBoost 3.0 - 2012 04 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -51,6 +51,12 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 					'picture_url'      => 'thumbnail_url VARCHAR(255) NOT NULL DEFAULT ""',
 					'approbation_type' => 'publication INT(1) NOT NULL DEFAULT 0',
 					'number_view'      => 'views_number INT(11) NOT NULL DEFAULT 0',
+				)
+			),
+			array(
+				'table_name' => PREFIX . 'news_cats',
+				'columns' => array(
+					'image' => 'thumbnail VARCHAR(255) NOT NULL DEFAULT ""'
 				)
 			)
 		);

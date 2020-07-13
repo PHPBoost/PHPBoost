@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 09
+ * @version     PHPBoost 6.0 - last update: 2020 07 13
  * @since       PHPBoost 4.0 - 2014 02 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -58,6 +58,12 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 					'number_view'           => 'views_number INT(11) NOT NULL DEFAULT 0',
 					'date_created'          => 'creation_date INT(11) NOT NULL DEFAULT 0',
 					'date_updated'          => 'update_date INT(11) NOT NULL DEFAULT 0'
+				)
+			),
+			array(
+				'table_name' => PREFIX . 'articles_cats',
+				'columns' => array(
+					'image' => 'thumbnail VARCHAR(255) NOT NULL DEFAULT ""'
 				)
 			)
 		);
