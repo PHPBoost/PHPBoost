@@ -5,7 +5,7 @@
 		# IF C_MENU_CONTAINER #
 			<div id="links-menu-{ID}" class="cell-mini cell-mini-vertical cell-tile cssmenu-content# IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF #">
 				<div class="cell">
-					<div class="cell-header menu-vertical-{DEPTH} hidden-small-screens">
+					<div class="cell-header menu-vertical-{DEPTH}">
 		# ENDIF #
 			<a class="toggle-{ID} pushmenu-toggle">
 				# IF C_IMG #

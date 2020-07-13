@@ -28,6 +28,12 @@ form > [class*="cell-"]:not(.cell-header) {
 	border-width: 0 1px 1px;
 }
 
+@media (max-width: 768px) {
+	[id*="links-menu-"] .cell-body {
+		border-width: 1px;
+	}
+}
+
 .new-content .cell-header {
 	border-left-width: 3px;
 }
