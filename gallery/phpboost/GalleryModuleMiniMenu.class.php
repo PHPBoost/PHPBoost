@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 06
+ * @version     PHPBoost 6.0 - last update: 2020 07 14
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -61,7 +61,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 			$break = 0;
 			foreach ($array_random_pics as $array_pics_info)
 			{
-				if (CategoriesAuthorizationsService::check_authorizations($array_pics_info['id_category'], 'gallery')->read())
+				if (isset($array_pics_info['id_category']) && CategoriesAuthorizationsService::check_authorizations($array_pics_info['id_category'], 'gallery')->read())
 				{
 					$gallery_mini[] = $array_pics_info;
 					$break++;
