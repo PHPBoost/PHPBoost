@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 21
+ * @version     PHPBoost 6.0 - last update: 2020 07 15
  * @since       PHPBoost 6.0 - 2020 05 16
 */
 
@@ -65,7 +65,7 @@ class DefaultItemFormController extends AbstractItemController
 			{
 				$item_class = self::get_module()->get_configuration()->get_item_name();
 				$this->is_new_item = true;
-				$this->item = new $item_class();
+				$this->item = new $item_class(self::$module_id);
 				$this->item->init_default_properties(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY));
 			}
 		}
