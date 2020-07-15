@@ -63,11 +63,15 @@ td.alert-priority { border-width: 0 0 1px 0; }
 .text-helper {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
-.text-helper span {
-    width: calc(100% / 2.1);
+.text-helper span { width: 100%; }
+
+@media (min-width: 769px) {
+    .text-helper span { width: calc(100% / 2.1); }
 }
+
 
 /*  */
 .copy-to-clipboard {
