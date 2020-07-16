@@ -25,11 +25,11 @@ class CategoriesService
 		return array_keys($categories);
 	}
 
-	public static function get_categories_manager($module_id = '')
+	public static function get_categories_manager($requested_module_id = '')
 	{
 		if (self::$categories_manager === null || (!empty($module_id) && $module_id != self::$categories_manager->get_module_id()))
 		{
-			$module_id = !empty($module_id) ? $module_id : Environment::get_running_module_name();
+			$module_id = !empty($requested_module_id) ? $requested_module_id : Environment::get_running_module_name();
 			
 			if (preg_match('/^index\.php\?/suU', $module_id))
 				$module_id = GeneralConfig::load()->get_module_home_page();
@@ -38,7 +38,7 @@ class CategoriesService
 			
 			$categories_cache_class = ClassLoader::get_module_subclass_of($module_id, 'CategoriesCache');
 			if ($categories_cache_class)
-				$categories_cache = call_user_func_array($categories_cache_class . '::load', array($module_id));
+				$categories_cache = !empty($requested_module_id) ? call_user_func_array($categories_cache_class . '::load', array($requested_module_id)) : call_user_func($categories_cache_class . '::load');
 			else if ($module->get_configuration()->feature_is_enabled('rich_categories'))
 				$categories_cache = DefaultRichCategoriesCache::load($module_id);
 			else if ($module->get_configuration()->feature_is_enabled('categories'))
