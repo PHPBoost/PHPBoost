@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 02 04
+ * @version     PHPBoost 6.0 - last update: 2020 07 16
  * @since       PHPBoost 4.0 - 2013 01 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -378,7 +378,7 @@ class CategoriesManager
 	public function regenerate_cache()
 	{
 		$class = get_class($this->get_categories_cache());
-		call_user_func(array($class, 'invalidate'));
+		call_user_func_array($class . '::invalidate', array($this->module_id));
 	}
 
 	/**
