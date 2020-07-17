@@ -27,8 +27,6 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 		$phpboost_4_1_release_date = new Date('2014-07-15');
 		$phpboost_5_0_release_date = new Date('2016-02-16');
 		$phpboost_5_1_release_date = new Date('2017-07-18');
-		$phpboost_5_2_release_date = new Date('2019-01-28');
-		$phpboost_6_0_release_date = new Date('2020-11-18');
 
 		if (GeneralConfig::load()->get_site_install_date()->is_anterior_to($phpboost_4_1_release_date))
 		{
@@ -155,19 +153,16 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 			$this->urls_mappings[] = new UrlMapping('^([a-zA-Z/]+)/admin/manage([^.]*)?$', '$1/manage$2', 'L,R=301');
 		}
 
-		if (GeneralConfig::load()->get_site_install_date()->is_anterior_to($phpboost_6_0_release_date))
+		// Pages
+		if (ModulesManager::is_module_installed('pages') && ModulesManager::is_module_activated('pages') && class_exists('PagesService'))
 		{
-			// Pages
-			if (ModulesManager::is_module_installed('pages') && ModulesManager::is_module_activated('pages') && class_exists('PagesService'))
+			$this->urls_mappings[] = new UrlMapping('^pages/pages\.php$', '/pages/', 'L,R=301');
+
+			$categories = CategoriesService::get_categories_manager('pages')->get_categories_cache()->get_categories();
+
+			foreach ($categories as $id => $category)
 			{
-				$this->urls_mappings[] = new UrlMapping('^pages/pages\.php$', '/pages/', 'L,R=301');
-
-				$categories = CategoriesService::get_categories_manager('pages')->get_categories_cache()->get_categories();
-
-				foreach ($categories as $id => $category)
-				{
-					$this->urls_mappings[] = new UrlMapping('^pages/' . '(\+?[^.]*)\.php$', '/pages/' . $id . '-' . $category->get_rewrited_name() . '/', 'L,R=301');
-				}
+				$this->urls_mappings[] = new UrlMapping('^pages/' . '(\+?[^.]*)\.php$', '/pages/' . $id . '-' . $category->get_rewrited_name() . '/', 'L,R=301');
 			}
 		}
 
