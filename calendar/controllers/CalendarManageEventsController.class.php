@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 12
+ * @version   	PHPBoost 5.2 - last update: 2020 07 19
  * @since   	PHPBoost 4.0 - 2013 07 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -79,7 +79,7 @@ class CalendarManageEventsController extends AdminModuleController
 				new HTMLTableRowCell(new SpanHTMLElement($category->get_name(), array('style' => $category->get_id() != Category::ROOT_CATEGORY && $category->get_color() ? 'color:' . $category->get_color() : ''))),
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell(LangLoader::get_message('from_date', 'main') . ' ' . $event->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . $br->display() . LangLoader::get_message('to_date', 'main') . ' ' . $event->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
-				new HTMLTableRowCell($event->belongs_to_a_serie() ? $this->lang['calendar.labels.repeat.' . $event->get_content()->get_repeat_type()] . ' - ' . $event->get_content()->get_repeat_number() . ' ' . $this->lang['calendar.labels.repeat_times'] : LangLoader::get_message('no', 'common')),
+				new HTMLTableRowCell($event->belongs_to_a_serie() ? $this->get_repeat_type_label($event) . ' - ' . $event->get_content()->get_repeat_number() . ' ' . $this->lang['calendar.labels.repeat_times'] : LangLoader::get_message('no', 'common')),
 				new HTMLTableRowCell($event->get_content()->is_approved() ? LangLoader::get_message('yes', 'common') : LangLoader::get_message('no', 'common')),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display())
 			);
@@ -94,6 +94,32 @@ class CalendarManageEventsController extends AdminModuleController
 		$this->view->put('table', $table->display());
 
 		return $table->get_page_number();
+	}
+
+	private function get_repeat_type_label(CalendarEvent $event)
+	{
+		$label = CalendarEventContent::NEVER;
+
+		switch ($event->get_content()->get_repeat_type())
+		{
+			case CalendarEventContent::DAILY :
+				$label = LangLoader::get_message('every_day', 'date-common');
+				break;
+
+			case CalendarEventContent::WEEKLY :
+				$label = LangLoader::get_message('every_week', 'date-common');
+				break;
+
+			case CalendarEventContent::MONTHLY :
+				$label = LangLoader::get_message('every_month', 'date-common');
+				break;
+
+			case CalendarEventContent::YEARLY :
+				$label = LangLoader::get_message('every_year', 'date-common');
+				break;
+		}
+
+		return $label;
 	}
 
 	private function check_authorizations()
