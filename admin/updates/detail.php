@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 03 28
+ * @version   	PHPBoost 5.2 - last update: 2020 07 19
  * @since   	PHPBoost 1.6 - 2008 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -50,11 +50,12 @@ if ($app instanceof Application)
 		
 		if ($app->get_type() == 'kernel' && $major_version == $new_major_version && $actual_minor_version < ($new_minor_version - 1))
 		{
-			$url = str_replace(array($major_version . '.' . ($new_minor_version - 1), $major_version . '.' . $new_minor_version), array($major_version . '.' . $actual_minor_version, $major_version . '.' . ($actual_minor_version + 1)), $app->get_autoupdate_url());
 			$unread_alerts = AdministratorAlertService::get_unread_alerts();
-			
-			for ($i = $actual_minor_version ; $i < $new_minor_version ; $i++)
+
+			for ($processed_version = $actual_minor_version ; $processed_version < $new_minor_version ; $processed_version++)
 			{
+				$url = str_replace(array($major_version . '.' . ($new_minor_version - 1), $major_version . '.' . $new_minor_version), array($major_version . '.' . $processed_version, $major_version . '.' . ($processed_version + 1)), $app->get_autoupdate_url());
+
 				$download_status = FileSystemHelper::download_remote_file($url, $temporary_dir_path);
 				if (!$download_status)
 				{
@@ -62,18 +63,16 @@ if ($app instanceof Application)
 					$installation_error = true;
 					break;
 				}
-				
-				$url = str_replace(array($major_version . '.' . ($i + 1), $major_version . '.' . $i), array($major_version . '.' . ($i + 2), $major_version . '.' . ($i + 1)), $url);
-				
+
 				foreach ($unread_alerts as $key => $alert)
 				{
 					$details = TextHelper::unserialize($alert->get_properties());
-					if ($details instanceof Application && $details->get_version() == $major_version . '.' . ($i + 1))
+					if ($details instanceof Application && $details->get_version() == $major_version . '.' . ($processed_version + 1))
 					{
 						// Set admin alert status to processed
 						$alert->set_status(AdministratorAlert::ADMIN_ALERT_STATUS_PROCESSED);
 						AdministratorAlertService::save_alert($alert);
-						
+
 						unset($unread_alerts[$key]);
 					}
 				}
