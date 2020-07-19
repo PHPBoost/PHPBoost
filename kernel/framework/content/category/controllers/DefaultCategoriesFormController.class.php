@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 31
+ * @version     PHPBoost 6.0 - last update: 2020 07 19
  * @since       PHPBoost 6.0 - 2019 11 02
 */
 
@@ -18,17 +18,17 @@ class DefaultCategoriesFormController extends AbstractCategoriesFormController
 
 	protected function get_categories_management_url()
 	{
-		return CategoriesUrlBuilder::manage_categories();
+		return CategoriesUrlBuilder::manage_categories(Environment::get_running_module_name());
 	}
 
 	protected function get_add_category_url()
 	{
-		return CategoriesUrlBuilder::add_category(AppContext::get_request()->get_getint('id_parent', 0));
+		return CategoriesUrlBuilder::add_category(AppContext::get_request()->get_getint('id_parent', 0), Environment::get_running_module_name());
 	}
 
 	protected function get_edit_category_url(Category $category)
 	{
-		return CategoriesUrlBuilder::edit_category($category->get_id());
+		return CategoriesUrlBuilder::edit_category($category->get_id(), Environment::get_running_module_name());
 	}
 
 	protected function get_module_home_page_url()
