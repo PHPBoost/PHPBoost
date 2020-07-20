@@ -315,7 +315,7 @@ class KernelSetup
 				'name' => array('type' => 'unique', 'fields' => 'name',
 				'rewrited_name' => array('type' => 'unique', 'fields' => 'rewrited_name')
 		)));
-		PersistenceContext::get_dbms_utils()->create_table(self::$keywords_table, $fields, $options);
+		self::$db_utils->create_table(self::$keywords_table, $fields, $options);
 	}
 
 	private function create_keywords_relations_table()
@@ -325,7 +325,7 @@ class KernelSetup
 			'module_id' => array('type' => 'string', 'length' => 25, 'default' => "''"),
 			'id_keyword' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 		);
-		PersistenceContext::get_dbms_utils()->create_table(self::$keywords_relations_table, $fields);
+		self::$db_utils->create_table(self::$keywords_relations_table, $fields);
 	}
 
 	private function create_member_table()
