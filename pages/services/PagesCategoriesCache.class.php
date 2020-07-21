@@ -3,13 +3,23 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 30
+ * @version     PHPBoost 6.0 - last update: 2020 07 21
  * @since       PHPBoost 4.1 - 2015 06 29
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class PagesCategoriesCache extends DefaultRichCategoriesCache
 {
+	public function get_table_name()
+	{
+		return PagesSetup::$pages_cats_table;
+	}
+
+	public function get_table_name_containing_items()
+	{
+		return PagesSetup::$pages_table;
+	}
+
 	public function get_module_identifier()
 	{
 		return 'pages';

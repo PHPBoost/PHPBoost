@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 30
+ * @version     PHPBoost 6.0 - last update: 2020 07 21
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
@@ -102,7 +102,7 @@ class PagesService
 		Feed::clear_cache('pages');
 		KeywordsCache::invalidate();
 		PagesCache::invalidate();
-        CategoriesService::get_categories_manager()->regenerate_cache();
+        CategoriesService::get_categories_manager('pages')->regenerate_cache();
 	}
 }
 ?>
