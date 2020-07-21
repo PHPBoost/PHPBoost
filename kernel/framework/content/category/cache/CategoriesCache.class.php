@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 06
+ * @version     PHPBoost 6.0 - last update: 2020 07 21
  * @since       PHPBoost 4.0 - 2013 01 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor janus57 <janus57@phpboost.com>
@@ -58,15 +58,18 @@ abstract class CategoriesCache implements CacheData
 		$root_category = $categories_cache->get_root_category();
 		$root_category->set_elements_number($categories_cache->get_category_elements_number($root_category->get_id()));
 		$this->categories[Category::ROOT_CATEGORY] = $root_category;
-		$result = PersistenceContext::get_querier()->select_rows($categories_cache->get_table_name(), array('*'), 'ORDER BY id_parent, c_order');
-		while ($row = $result->fetch())
+		if ($categories_cache->get_table_name())
 		{
-			$category = new $category_class();
-			$category->set_properties($row);
-			$this->categories[$row['id']] = $category;
+			$result = PersistenceContext::get_querier()->select_rows($categories_cache->get_table_name(), array('*'), 'ORDER BY id_parent, c_order');
+			while ($row = $result->fetch())
+			{
+				$category = new $category_class();
+				$category->set_properties($row);
+				$this->categories[$row['id']] = $category;
+			}
+			$result->dispose();
 		}
-		$result->dispose();
-
+		
 		foreach ($this->categories as &$category)
 		{
 			if (!$category->has_special_authorizations())
