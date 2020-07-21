@@ -42,7 +42,8 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 
 			foreach ($categories as $id => $category)
 			{
-				$this->urls_mappings[] = new UrlMapping('^pages/' . '(\+?[^.]*)\.php$', '/pages/' . $id . '-' . $category->get_rewrited_name() . '/', 'L,R=301');
+				if ($id != Category::ROOT_CATEGORY)
+					$this->urls_mappings[] = new UrlMapping('^pages/' . '(\+?[^.]*)\.php$', '/pages/' . $id . '-' . $category->get_rewrited_name() . '/', 'L,R=301');
 			}
 		}
 
