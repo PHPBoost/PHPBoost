@@ -100,7 +100,7 @@
 		.addClass('owl-carousel')
 		.owlCarousel({
 			autoplay: true,
-			autoplayTimeout: 2000,
+			autoplayTimeout: 3500,
 			loop: true,
 			margin: 15,
 			smartSpeed: 1000,
