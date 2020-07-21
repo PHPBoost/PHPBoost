@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 02 22
+ * @version     PHPBoost 6.0 - last update: 2020 07 21
  * @since       PHPBoost 3.0 - 2009 11 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -151,18 +151,20 @@ class MySQLDBMSUtils implements DBMSUtils
 	{
 		if (is_array($tables))
 		{
-			$tables = implode('`, `', $tables);
+			$tables = implode('`, `', array_filter($tables));
 		}
-		$this->inject('OPTIMIZE TABLE`' . $tables . '`;');
+		if (!empty($tables))
+			$this->inject('OPTIMIZE TABLE`' . $tables . '`;');
 	}
 
 	public function repair($tables)
 	{
 		if (is_array($tables))
 		{
-			$tables = implode('`, `', $tables);
+			$tables = implode('`, `', array_filter($tables));
 		}
-		$this->inject('REPAIR TABLE `' . $tables . '`;');
+		if (!empty($tables))
+			$this->inject('REPAIR TABLE `' . $tables . '`;');
 	}
 
 	public function add_column($table_name, $column_name, array $column_description)
