@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 06
+ * @version     PHPBoost 6.0 - last update: 2020 07 21
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -191,6 +191,9 @@ class UpdateServices
 		if (ModulesManager::is_module_installed('UrlUpdater'))
 			ModulesManager::uninstall_module('UrlUpdater');
 
+		// Mise en maintenance du site s'il ne l'est pas déjà
+		$this->put_site_under_maintenance();
+
 		if (GeneralConfig::load()->get_phpboost_major_version() != self::NEW_KERNEL_VERSION)
 		{
 			// Mise à jour des configurations
@@ -199,9 +202,6 @@ class UpdateServices
 
 		// Mise à jour des tables du noyau
 		$this->update_kernel_tables();
-
-		// Mise en maintenance du site s'il ne l'est pas déjà
-		$this->put_site_under_maintenance();
 
 		// Mise à jour de la version du noyau
 		$this->update_kernel_version();
@@ -255,8 +255,8 @@ class UpdateServices
 					$success = false;
 					$message = $e->getMessage();
 				}
-				$this->add_error_to_file('enabling maintenance', $success, $message);
 			}
+			$this->add_error_to_file('enabling maintenance', $success, $message);
 		}
 	}
 
