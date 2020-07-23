@@ -8,7 +8,7 @@
 			# IF C_PENDING #
 				{@items.pending}
 			# ELSE #
-				{MODULE_NAME}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
+				{MODULE_NAME}# IF C_CATEGORY ## IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF #
 			# ENDIF #
 		</h1>
 	</header>

@@ -146,7 +146,7 @@
 							# IF C_ENABLED_UPDATE_DATE #
 								<li class="li-stretch">
 									<span class="text-strong">${LangLoader::get_message('form.date.update', 'common')} : </span>
-									<time datetime="{UPDATE_DATE_ISO8601}# ENDIF #" itemprop="dateModified">
+									<time datetime="{UPDATE_DATE_ISO8601}" itemprop="dateModified">
 										{UPDATE_DATE}
 									</time>
 								</li>
