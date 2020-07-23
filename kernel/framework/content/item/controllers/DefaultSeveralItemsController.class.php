@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 21
+ * @version     PHPBoost 6.0 - last update: 2020 07 23
  * @since       PHPBoost 6.0 - 2020 01 22
 */
 
@@ -84,25 +84,38 @@ class DefaultSeveralItemsController extends AbstractItemController
 		}
 		else
 		{
-			$this->sql_condition = 'WHERE id_category = :id_category
-			AND (published = ' . Item::PUBLISHED . (self::get_module()->get_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))' : '') . ')';
-			
-			$this->sql_parameters['id_category'] = $this->get_category()->get_id();
-			
-			$this->page_title = $this->category->get_id() != Category::ROOT_CATEGORY ? $this->category->get_name() : self::get_module()->get_configuration()->get_name();
-			$this->page_description = method_exists($this->category, 'get_description') ? $this->category->get_description() : '';
-			if (!$this->page_description)
-				$this->page_description = StringVars::replace_vars($this->items_lang['items.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->category->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category', 'categories-common') . ' ' . $this->category->get_name() : '');
-			$this->current_url = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
-			$this->pagination_url = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id, $requested_sort_field, $requested_sort_mode, '%d', $this->subcategories_page);
-			$this->url_without_sorting_parameters = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id);
-			
-			$this->view->put_all(array(
-				'C_SYNDICATION' => true,
-				'U_SYNDICATION' => SyndicationUrlBuilder::rss(self::$module_id, $this->get_category()->get_id())->rel()
-			));
-			
-			$this->build_categories_listing_view();
+			if (self::get_module()->get_configuration()->has_categories())
+			{
+				$this->sql_condition = 'WHERE id_category = :id_category
+				AND (published = ' . Item::PUBLISHED . (self::get_module()->get_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))' : '') . ')';
+				
+				$this->sql_parameters['id_category'] = $this->get_category()->get_id();
+				
+				$this->page_title = $this->category->get_id() != Category::ROOT_CATEGORY ? $this->category->get_name() : self::get_module()->get_configuration()->get_name();
+				$this->page_description = method_exists($this->category, 'get_description') ? $this->category->get_description() : '';
+				if (!$this->page_description)
+					$this->page_description = StringVars::replace_vars($this->items_lang['items.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->category->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category', 'categories-common') . ' ' . $this->category->get_name() : '');
+				$this->current_url = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
+				$this->pagination_url = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id, $requested_sort_field, $requested_sort_mode, '%d', $this->subcategories_page);
+				$this->url_without_sorting_parameters = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id);
+				
+				$this->view->put_all(array(
+					'C_SYNDICATION' => true,
+					'U_SYNDICATION' => SyndicationUrlBuilder::rss(self::$module_id, $this->get_category()->get_id())->rel()
+				));
+				
+				$this->build_categories_listing_view();
+			}
+			else
+			{
+				$this->sql_condition = 'WHERE (published = ' . Item::PUBLISHED . (self::get_module()->get_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))' : '') . ')';
+				
+				$this->page_title = self::get_module()->get_configuration()->get_name();
+				$this->page_description = StringVars::replace_vars($this->items_lang['items.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name()));
+				$this->current_url = ItemsUrlBuilder::display_category(Category::ROOT_CATEGORY, 'root', self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
+				$this->pagination_url = ItemsUrlBuilder::display_category(Category::ROOT_CATEGORY, 'root', self::$module_id, $requested_sort_field, $requested_sort_mode, '%d');
+				$this->url_without_sorting_parameters = ItemsUrlBuilder::display_category(Category::ROOT_CATEGORY, 'root', self::$module_id);
+			}
 		}
 	}
 
@@ -303,27 +316,30 @@ class DefaultSeveralItemsController extends AbstractItemController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->page_title, ($this->category !== null && $this->category->get_id() == Category::ROOT_CATEGORY ? '' : self::get_module()->get_configuration()->get_name()), $this->page);
+		$graphical_environment->set_page_title($this->page_title, (!self::get_module()->get_configuration()->has_categories() || $this->category !== null && $this->category->get_id() == Category::ROOT_CATEGORY ? '' : self::get_module()->get_configuration()->get_name()), $this->page);
 		$graphical_environment->get_seo_meta_data()->set_description($this->page_description, $this->page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url($this->current_url);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add(self::get_module()->get_configuration()->get_name(), ModulesUrlBuilder::home());
 
-		if ($this->category !== null)
+		if (self::get_module()->get_configuration()->has_categories())
 		{
-			$sort_field = ($this->sort_field != $this->config->get_items_default_sort_field() || $this->sort_mode != $this->config->get_items_default_sort_mode()) ? $this->sort_field : '';
-			$sort_mode = $this->sort_mode != $this->config->get_items_default_sort_mode() ? $this->sort_mode : '';
-			
-			$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->category->get_id(), true));
-			foreach ($categories as $id => $category)
+			if ($this->category !== null)
 			{
-				if ($category->get_id() != Category::ROOT_CATEGORY)
-					$breadcrumb->add($category->get_name(), ItemsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), self::$module_id, $sort_field, $sort_mode, ($category->get_id() == $this->category->get_id() ? $this->page : 1)));
+				$sort_field = ($this->sort_field != $this->config->get_items_default_sort_field() || $this->sort_mode != $this->config->get_items_default_sort_mode()) ? $this->sort_field : '';
+				$sort_mode = $this->sort_mode != $this->config->get_items_default_sort_mode() ? $this->sort_mode : '';
+				
+				$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->category->get_id(), true));
+				foreach ($categories as $id => $category)
+				{
+					if ($category->get_id() != Category::ROOT_CATEGORY)
+						$breadcrumb->add($category->get_name(), ItemsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), self::$module_id, $sort_field, $sort_mode, ($category->get_id() == $this->category->get_id() ? $this->page : 1)));
+				}
 			}
+			else
+				$breadcrumb->add($this->page_title, $this->current_url);
 		}
-		else
-			$breadcrumb->add($this->page_title, $this->current_url);
 
 		return $response;
 	}

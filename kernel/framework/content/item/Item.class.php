@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 07
+ * @version     PHPBoost 6.0 - last update: 2020 07 23
  * @since       PHPBoost 6.0 - 2019 12 20
 */
 
@@ -235,7 +235,7 @@ class Item
 	public function is_published()
 	{
 		$now = new Date();
-		return CategoriesAuthorizationsService::check_authorizations($this->id_category)->read() && ($this->get_publishing_state() == self::PUBLISHED || ($this->get_publishing_state() == self::DEFERRED_PUBLICATION && $this->get_publishing_start_date()->is_anterior_to($now) && ($this->end_date_enabled ? $this->get_publishing_end_date()->is_posterior_to($now) : true)));
+		return $this->get_authorizations_checker()->read() && ($this->get_publishing_state() == self::PUBLISHED || ($this->get_publishing_state() == self::DEFERRED_PUBLICATION && $this->get_publishing_start_date()->is_anterior_to($now) && ($this->end_date_enabled ? $this->get_publishing_end_date()->is_posterior_to($now) : true)));
 	}
 
 	public function get_status()
@@ -296,7 +296,7 @@ class Item
 
 	private function get_authorizations_checker()
 	{
-		return self::$module->get_configuration()->has_categories() ? CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, self::$module_id) : ItemsAuthorizationsService::check_authorizations(self::$module_id);
+		return self::$module->get_configuration()->has_categories() ? CategoriesAuthorizationsService::check_authorizations($this->id_category ? $this->id_category : Category::ROOT_CATEGORY, self::$module_id) : ItemsAuthorizationsService::check_authorizations(self::$module_id);
 	}
 
 	public function is_authorized_to_add()
@@ -422,13 +422,15 @@ class Item
 	public function set_properties(array $properties)
 	{
 		$this->set_id($properties['id']);
-		$this->set_id_category($properties['id_category']);
 		$this->set_title($properties[self::get_title_label()]);
 		$this->set_rewrited_title($properties['rewrited_' . self::get_title_label()]);
 		$this->set_content($properties[self::get_content_label()]);
 		$this->set_creation_date(new Date($properties['creation_date'], Timezone::SERVER_TIMEZONE));
 		$this->update_date = !empty($properties['update_date']) ? new Date($properties['update_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->set_publishing_state($properties['published']);
+		
+		if (self::$module->get_configuration()->has_categories())
+			$this->set_id_category($properties['id_category']);
 		
 		$author = new User();
 		if (!empty($properties['author_user_id']))
