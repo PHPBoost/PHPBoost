@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 15
+ * @version     PHPBoost 6.0 - last update: 2020 07 24
  * @since       PHPBoost 6.0 - 2020 05 16
 */
 
@@ -496,9 +496,19 @@ class DefaultItemFormController extends AbstractItemController
 		elseif ($this->get_item()->is_published())
 		{
 			if ($this->is_new_item)
-				AppContext::get_response()->redirect(ItemsUrlBuilder::display($this->get_item()->get_id(), $this->get_item()->get_rewrited_name(), $this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id), StringVars::replace_vars($this->items_lang['items.message.success.add'], array('title' => $this->get_item()->get_title())));
+			{
+				if (self::get_module()->get_configuration()->has_categories())
+					AppContext::get_response()->redirect(ItemsUrlBuilder::display($this->get_item()->get_category()->get_id(), $this->get_item()->get_category()->get_rewrited_name(), $this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id), StringVars::replace_vars($this->items_lang['items.message.success.add'], array('title' => $this->get_item()->get_title())));
+				else
+					AppContext::get_response()->redirect(ItemsUrlBuilder::display_item($this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id), StringVars::replace_vars($this->items_lang['items.message.success.add'], array('title' => $this->get_item()->get_title())));
+			}
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ItemsUrlBuilder::display($this->get_item()->get_id(), $this->get_item()->get_rewrited_name(), $this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id)), StringVars::replace_vars($this->items_lang['items.message.success.edit'], array('title' => $this->get_item()->get_title())));
+			{
+				if (self::get_module()->get_configuration()->has_categories())
+					AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ItemsUrlBuilder::display($this->get_item()->get_category()->get_id(), $this->get_item()->get_category()->get_rewrited_name(), $this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id)), StringVars::replace_vars($this->items_lang['items.message.success.edit'], array('title' => $this->get_item()->get_title())));
+				else
+					AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ItemsUrlBuilder::display_item($this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id)), StringVars::replace_vars($this->items_lang['items.message.success.edit'], array('title' => $this->get_item()->get_title())));
+			}
 		}
 		else
 		{

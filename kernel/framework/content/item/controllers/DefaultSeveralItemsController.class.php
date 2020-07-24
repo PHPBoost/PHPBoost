@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 23
+ * @version     PHPBoost 6.0 - last update: 2020 07 24
  * @since       PHPBoost 6.0 - 2020 01 22
 */
 
@@ -52,12 +52,21 @@ class DefaultSeveralItemsController extends AbstractItemController
 		
 		if (TextHelper::strstr($request->get_current_url(), '/tag/'))
 		{
-			$this->sql_condition = 'WHERE keywords_relations.id_keyword = :id_keyword
-			AND id_category IN :authorized_categories
-			AND (published = ' . Item::PUBLISHED . (self::get_module()->get_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))' : '') . ')';
+			if (self::get_module()->get_configuration()->has_categories())
+			{
+				$this->sql_condition = 'WHERE keywords_relations.id_keyword = :id_keyword
+				AND id_category IN :authorized_categories
+				AND (published = ' . Item::PUBLISHED . (self::get_module()->get_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))' : '') . ')';
+				
+				$this->sql_parameters['authorized_categories'] = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $this->config->get_summary_displayed_to_guests());
+			}
+			else
+			{
+				$this->sql_condition = 'WHERE keywords_relations.id_keyword = :id_keyword
+				AND (published = ' . Item::PUBLISHED . (self::get_module()->get_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))' : '') . ')';
+			}
 			
 			$this->sql_parameters['id_keyword'] = $this->get_keyword()->get_id();
-			$this->sql_parameters['authorized_categories'] = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $this->config->get_summary_displayed_to_guests());
 			
 			$this->page_title = $this->get_keyword()->get_name();
 			$this->page_description = StringVars::replace_vars($this->items_lang['items.seo.description.tag'], array('subject' => $this->get_keyword()->get_name()));
@@ -67,12 +76,21 @@ class DefaultSeveralItemsController extends AbstractItemController
 		}
 		else if (TextHelper::strstr($request->get_current_url(), '/pending/'))
 		{
-			$this->sql_condition = 'WHERE id_category IN :authorized_categories
-			' . (!CategoriesAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
-			AND (published = ' . Item::NOT_PUBLISHED . (self::get_module()->get_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND (publishing_start_date > :timestamp_now OR (publishing_end_date != 0 AND publishing_end_date < :timestamp_now)))' : '') . ')';
+			if (self::get_module()->get_configuration()->has_categories())
+			{
+				$this->sql_condition = 'WHERE id_category IN :authorized_categories
+				' . (!CategoriesAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
+				AND (published = ' . Item::NOT_PUBLISHED . (self::get_module()->get_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND (publishing_start_date > :timestamp_now OR (publishing_end_date != 0 AND publishing_end_date < :timestamp_now)))' : '') . ')';
+				
+				$this->sql_parameters['authorized_categories'] = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $this->config->get_summary_displayed_to_guests());
+			}
+			else
+			{
+				$this->sql_condition = 'WHERE ' . (!ItemsAuthorizationsService::check_authorizations()->moderation() ? 'author_user_id = :user_id AND ' : '') . '
+				(published = ' . Item::NOT_PUBLISHED . (self::get_module()->get_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND (publishing_start_date > :timestamp_now OR (publishing_end_date != 0 AND publishing_end_date < :timestamp_now)))' : '') . ')';
+			}
 			
 			$this->sql_parameters['user_id'] = AppContext::get_current_user()->get_id();
-			$this->sql_parameters['authorized_categories'] = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $this->config->get_summary_displayed_to_guests());
 			
 			$this->page_title = $this->items_lang['items.pending'];
 			$this->page_description = $this->items_lang['items.seo.description.pending'];
@@ -260,7 +278,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 			'CATEGORY_ID'                => $this->get_category()->get_id(),
 			'CATEGORY_NAME'              => $this->get_category()->get_name(),
 			'SUBCATEGORIES_PAGINATION'   => $subcategories_pagination->display(),
-			'U_EDIT_CATEGORY'            => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? ModulesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id())->rel(),
+			'U_EDIT_CATEGORY'            => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? ModulesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id(), self::$module_id)->rel(),
 		));
 	}
 

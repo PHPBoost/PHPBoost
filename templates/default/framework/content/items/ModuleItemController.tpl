@@ -2,8 +2,11 @@
 	<header>
 		<div class="align-right controls">
 			# IF C_SYNDICATION #<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a># ENDIF #
-			{MODULE_NAME}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
-			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
+			{MODULE_NAME}
+			# IF C_HAS_CATEGORIES #
+				# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
+				# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
+			# ENDIF #
 		</div>
 		<h1 itemprop="name">{TITLE}</h1>
 	</header>
