@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 10
+ * @version     PHPBoost 6.0 - last update: 2020 07 24
  * @since       PHPBoost 3.0 - 2012 08 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -150,20 +150,15 @@ $lang = array(
 								<p>Thanks to all the members of the community who cheer us on daily and contribute to the software quality by reporting bugs and suggestion improvements, which allows to lead to a stable and powerful CMS.</p>
 								<p>Thanks to the members of our teams and particulary to <strong>benflovideo</strong> for communication team, <strong>mipel</strong>, <strong>olivierb</strong> and <strong>xela</strong> for the documentation writing, <strong>ElenWii</strong> and <strong>babsolune</strong> for the graphics, <strong>benflovideo</strong>, <strong>mipel</strong> and <strong>olivierb</strong> for the moderation of the community and <strong>janus57</strong> for support in development and community help on the forum.</p>
 								<h2>Other projects</h2>
-								<p>PHPBoost uses different tools allowing it to enlarge its features panel enough implying the development time rising. Most of these tools are under GNU/GPL license.</p>
+								<p>PHPBoost uses different tools allowing it to enlarge its features panel enough implying the development time rising. Most of these tools under GNU/GPL license come from <a href="https://github.com/">Github</a>.</p>
 								<ul>
-									<li><a href="https://notepad-plus-plus.org">Notepad++</a> and <a href="http://www.sublimetext.com">Sublime Text</a>: Very powerful text editors used for the whole development, thanks a lot!</li>
-									<li><a href="http://www.phpconcept.net/pclzip/">PCLZIP by PHPConcept</a>: PHP library which manage work with zip files.</li>
-									<li><a href="http://www.xm1math.net/phpmathpublisher/">PHPMathPublisher</a>: Functions which permit us to interpret LaTeX language and export it to pictures viewable by a web browser.</li>
-									<li><a href="http://www.tinymce.com">TinyMCE</a>: TinyMCE is a <acronym aria-label="What You See Is What You Get">WYSIWYG</acronym> editor which allows users to see their text formatting in real time.</li>
-									<li><a href="http://qbnz.com/highlighter/">GeSHi</a>: Generic Syntax Highlighter used to highlight the source code of many programming languages.</li>
-									<li><a href="http://jquery.com">jQuery</a>: Javascript and <acronym aria-label="Asynchronous Javascript And XML">AJAX</acronym> Framework</li>
-									<li><a href="http://flowplayer.org">Flowplayer</a>: flash video reader</li>
+									<li><a href="https://notepad-plus-plus.org">Notepad++</a>, <a href="https://atom.io/">Atom</a>, <a href="https://fr.netbeans.org/">NetBeans</a> and <a href="https://www.sublimetext.com">Sublime Text</a>: Very powerful text editors used for the whole development, thanks a lot!</li>
+									<li><a href="https://github.com/chamilo/pclzip">PCLZIP</a> by <a href="https://www.phpconcept.net/">PHPConcept</a>: PHP library which manage work with zip files.</li>
+									<li><a href="https://github.com/daanforever/phpmathpublisher">PHPMathPublisher</a>: Functions which permit us to interpret LaTeX language and export it to pictures viewable by a web browser.</li>
+									<li><a href="https://www.tiny.cloud/">TinyMCE</a>: TinyMCE is a <abbr aria-label="What You See Is What You Get">WYSIWYG</abbr> editor which allows users to see their text formatting in real time.</li>
+									<li><a href="https://github.com/GeSHi/geshi-1.0">GeSHi</a> and <a href="https://prismjs.com/">Prismjs</a>: Generic Syntax Highlighters used to highlight the source code of many programming languages.</li>
+									<li><a href="http://jquery.com">jQuery</a>: Javascript and <abbr aria-label="Asynchronous Javascript And XML">AJAX</abbr> Framework</li>
 									<li><a href="http://fontawesome.io">Font Awesome</a>: icons librairy</li>
-									<li><a href="http://l-lin.github.io/font-awesome-animation/">Font Awesome Animation</a> : Animation for librairy Font Awesome</li>
-									<li><a href="http://cornel.bopp-art.com/lightcase/">Lightcase.js</a>: responsive Lightbox</li>
-									<li><a href="https://github.com/cssmenumaker/jQuery-Plugin-Responsive-Drop-Down">CssMenuMaker</a>: Menus responsive</li>
-									<li><a href="http://www.jerrylow.com/basictable/">BasicTable.js</a>: Tables responsive</li>
 								</ul>
 							</div>
 						</fieldset>
