@@ -31,6 +31,8 @@ abstract class ModuleUpdateVersion implements UpdateVersion
 	public function __construct($module_id)
 	{
 		self::$module_id = $module_id;
+		self::$delete_old_files_list = array();
+		self::$delete_old_folders_list = array();
 		$this->querier = PersistenceContext::get_querier();
 		$this->db_utils = PersistenceContext::get_dbms_utils();
 	}
