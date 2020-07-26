@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 30
+ * @version     PHPBoost 6.0 - last update: 2020 07 26
  * @since       PHPBoost 3.0 - 2012 02 08
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -95,7 +95,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				$view->assign_block_vars('templates', array(
 					'NBR_THEME' => NumberHelper::round(($angle_value*$Stats->nbr_entry)/360, 0),
 					'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
-					'THEME' => ($name == 'Other') ? $lang['other'] : $name,
+					'THEME' => ($name == 'Other') ? $main_lang['other'] : $name,
 					'PERCENT' => NumberHelper::round(($angle_value/3.6), 1)
 				));
 			}
@@ -132,7 +132,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				$view->assign_block_vars('sex', array(
 					'MEMBERS_NUMBER' => NumberHelper::round(($angle_value*$Stats->nbr_entry)/360, 0),
 					'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
-					'SEX' => ($name == 'Other') ? $lang['other'] : $name,
+					'SEX' => ($name == 'Other') ? $main_lang['other'] : $name,
 					'PERCENT' => NumberHelper::round(($angle_value/3.6), 1)
 				));
 			}
@@ -1115,8 +1115,8 @@ Debug::dump($_NBR_ELEMENTS_PER_PAGE);
 					$value_name = 'other';
 					$angle_value += $percent_other;
 					$percent_other += $angle_value;
-					$stats_img = !empty($array_stats_info['other'][1]) ? '<img src="'. TPL_PATH_TO_ROOT . '/images/stats/' . $array_stats_info['other'][1] . '" alt="' . $lang['other'] . '" />' : '<img src="' . TPL_PATH_TO_ROOT . '/images/stats/other.png" alt="' . $lang['other'] . '" />';
-					$name_stats = $lang['other'];
+					$stats_img = !empty($array_stats_info['other'][1]) ? '<img src="'. TPL_PATH_TO_ROOT . '/images/stats/' . $array_stats_info['other'][1] . '" alt="' . $main_lang['other'] . '" />' : '<img src="' . TPL_PATH_TO_ROOT . '/images/stats/other.png" alt="' . $main_lang['other'] . '" />';
+					$name_stats = $main_lang['other'];
 				}
 				else
 				{
