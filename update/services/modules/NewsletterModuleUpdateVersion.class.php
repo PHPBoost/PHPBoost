@@ -15,7 +15,7 @@ class NewsletterModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('newsletter');
 
-		$this->delete_old_files_list = array(
+		self::$delete_old_files_list = array(
 			'/controllers/streams/NewsletterStreamsManageController.class.php',
 			'/phpboost/NewsletterHomePageExtensionPoint.class.php',
 			'/templates/NewsletterArchivesController.tpl',

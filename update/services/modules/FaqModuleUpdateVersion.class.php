@@ -15,7 +15,7 @@ class FaqModuleUpdateVersion extends ModuleUpdateVersion
 		parent::__construct('faq');
 		
 		$this->content_tables = array(array('name' => PREFIX . 'faq', 'content_field' => 'answer'));
-		$this->delete_old_files_list = array(
+		self::$delete_old_files_list = array(
 			'/lang/english/config.php',
 			'/lang/french/config.php',
 			'/phpboost/FaqNewContent.class.php',
@@ -24,7 +24,7 @@ class FaqModuleUpdateVersion extends ModuleUpdateVersion
 			'/services/FaqAuthorizationsService.class.php',
 			'/util/AdminFaqDisplayResponse.class.php'
 		);
-		$this->delete_old_folders_list = array(
+		self::$delete_old_folders_list = array(
 			'/controllers/categories'
 		);
 		

@@ -14,7 +14,7 @@ class WebModuleUpdateVersion extends ModuleUpdateVersion
 		parent::__construct('web');
 
 		$this->content_tables = array(PREFIX . 'web');
-		$this->delete_old_files_list = array(
+		self::$delete_old_files_list = array(
 			'/lang/english/config.php',
 			'/lang/french/config.php',
 			'/phpboost/WebComments.class.php',
@@ -29,7 +29,7 @@ class WebModuleUpdateVersion extends ModuleUpdateVersion
 			'/templates/WebDisplayWebLinkController.tpl',
 			'/util/AdminWebDisplayResponse.class.php'
 		);
-		$this->delete_old_folders_list = array(
+		self::$delete_old_folders_list = array(
 			'/controllers/categories'
 		);
 		

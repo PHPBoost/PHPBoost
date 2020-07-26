@@ -10,12 +10,12 @@
 
 abstract class ModuleUpdateVersion implements UpdateVersion
 {
-	protected $module_id;
+	protected static $module_id;
 	
 	protected $content_tables = array();
 	
-	protected $delete_old_files_list = array();
-	protected $delete_old_folders_list = array();
+	protected static $delete_old_files_list = array();
+	protected static $delete_old_folders_list = array();
 	
 	protected $database_columns_to_add = array();
 	protected $database_columns_to_delete = array();
@@ -30,14 +30,14 @@ abstract class ModuleUpdateVersion implements UpdateVersion
 
 	public function __construct($module_id)
 	{
-		$this->module_id = $module_id;
+		self::$module_id = $module_id;
 		$this->querier = PersistenceContext::get_querier();
 		$this->db_utils = PersistenceContext::get_dbms_utils();
 	}
 
 	public function get_module_id()
 	{
-		return $this->module_id;
+		return self::$module_id;
 	}
 
 	public function execute()
@@ -45,7 +45,7 @@ abstract class ModuleUpdateVersion implements UpdateVersion
 		self::delete_old_files();
 		self::delete_old_folders();
 		
-		if (ModulesManager::is_module_installed($this->module_id))
+		if (ModulesManager::is_module_installed(self::$module_id))
 		{
 			$this->tables_list = $this->db_utils->list_tables(true);
 			
@@ -201,9 +201,9 @@ abstract class ModuleUpdateVersion implements UpdateVersion
 	 */
 	public static function delete_old_files()
 	{
-		foreach ($this->delete_old_files_list as $file_name)
+		foreach (self::$delete_old_files_list as $file_name)
 		{
-			$file_name = !preg_match('~/' . $this->module_id . '/~', $file_name) ? PATH_TO_ROOT . '/' . $this->module_id . $file_name : $filename;
+			$file_name = !preg_match('~/' . self::$module_id . '/~', $file_name) ? PATH_TO_ROOT . '/' . self::$module_id . $file_name : $filename;
 			$file = new File($file_name);
 			$file->delete();
 		}
@@ -214,9 +214,9 @@ abstract class ModuleUpdateVersion implements UpdateVersion
 	 */
 	public static function delete_old_folders()
 	{
-		foreach ($this->delete_old_folders_list as $folder_name)
+		foreach (self::$delete_old_folders_list as $folder_name)
 		{
-			$folder_name = !preg_match('~/' . $this->module_id . '/~', $folder_name) ? PATH_TO_ROOT . '/' . $this->module_id . $folder_name : $folder_name;
+			$folder_name = !preg_match('~/' . self::$module_id . '/~', $folder_name) ? PATH_TO_ROOT . '/' . self::$module_id . $folder_name : $folder_name;
 			$folder = new Folder($folder_name);
 			if ($folder->exists())
 				$folder->delete();

@@ -14,7 +14,7 @@ class ShoutboxModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('shoutbox');
 		
-		$this->delete_old_files_list = array(
+		self::$delete_old_files_list = array(
 			'/phpboost/ShoutboxHomePageExtensionPoint.class.php',
 			'/phpboost/ShoutboxTreeLinks.class.php',
 			'/util/AdminShoutboxDisplayResponse.class.php'

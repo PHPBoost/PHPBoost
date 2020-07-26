@@ -13,7 +13,7 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('wiki');
 		
-		$this->delete_old_files_list = array('/phpboost/WikiNewContent.class.php');
+		self::$delete_old_files_list = array('/phpboost/WikiNewContent.class.php');
 		
 		$this->database_columns_to_add = array(
 			array(

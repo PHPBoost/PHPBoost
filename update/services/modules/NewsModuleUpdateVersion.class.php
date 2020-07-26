@@ -16,7 +16,7 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 		parent::__construct('news');
 
 		$this->content_tables = array(PREFIX . 'news');
-		$this->delete_old_files_list = array(
+		self::$delete_old_files_list = array(
 			'/controllers/NewsDeleteController.class.php',
 			'/controllers/NewsDisplayCategoryController.class.php',
 			'/controllers/NewsDisplayNewsController.class.php',
@@ -35,7 +35,7 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 			'/templates/NewsDisplaySeveralNewsController.tpl',
 			'/util/AdminNewsDisplayResponse.class.php'
 		);
-		$this->delete_old_folders_list = array(
+		self::$delete_old_folders_list = array(
 			'/controllers/categories',
 			'/fields'
 		);

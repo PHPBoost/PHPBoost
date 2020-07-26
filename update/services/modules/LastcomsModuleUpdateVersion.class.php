@@ -12,7 +12,7 @@ class LastcomsModuleUpdateVersion extends ModuleUpdateVersion
 	public function __construct()
 	{
 		parent::__construct('lastcoms');
-		$this->delete_old_folders_list = array(
+		self::$delete_old_folders_list = array(
 			'/util'
 		);
 	}

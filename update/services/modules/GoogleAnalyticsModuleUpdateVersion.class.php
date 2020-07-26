@@ -13,7 +13,7 @@ class GoogleAnalyticsModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('GoogleAnalytics');
 
-		$this->delete_old_folders_list = array(
+		self::$delete_old_folders_list = array(
 			'/util'
 		);
 	}

@@ -15,7 +15,7 @@ class QuotesModuleUpdateVersion extends ModuleUpdateVersion
 		parent::__construct('quotes');
 
 		$this->content_tables = array(array('name' => PREFIX . 'quotes', 'content_field' => 'quote'));
-		$this->delete_old_files_list = array(
+		self::$delete_old_files_list = array(
 			'/controllers/AdminQuotesManageController.class.php',
 			'/lang/english/config.php',
 			'/lang/french/config.php',
@@ -25,7 +25,7 @@ class QuotesModuleUpdateVersion extends ModuleUpdateVersion
 			'/services/QuotesAuthorizationsService.class.php',
 			'/util/AdminQuotesDisplayResponse.class.php'
 		);
-		$this->delete_old_folders_list = array(
+		self::$delete_old_folders_list = array(
 			'/controllers/categories'
 		);
 		

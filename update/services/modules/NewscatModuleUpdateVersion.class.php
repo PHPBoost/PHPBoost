@@ -13,7 +13,7 @@ class NewscatModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('newscat');
 
-		$this->delete_old_folders_list = array(
+		self::$delete_old_folders_list = array(
 			'/util'
 		);
 	}

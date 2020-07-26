@@ -14,7 +14,7 @@ class BugtrackerModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('bugtracker');
 
-		$this->delete_old_files_list = array(
+		self::$delete_old_files_list = array(
 			'/phpboost/BugtrackerHomePageExtensionPoint.class.php'
 		);
 	}

@@ -14,7 +14,7 @@ class GalleryModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('gallery');
 		
-		$this->delete_old_files_list = array(
+		self::$delete_old_files_list = array(
 			'/phpboost/GalleryComments.class.php',
 			'/phpboost/GalleryNewContent.class.php',
 			'/phpboost/GalleryNotation.class.php',
@@ -22,7 +22,7 @@ class GalleryModuleUpdateVersion extends ModuleUpdateVersion
 			'/phpboost/GalleryHomePageExtensionPoint.class.php',
 			'/services/GalleryAuthorizationsService.class.php'
 		);
-		$this->delete_old_folders_list = array(
+		self::$delete_old_folders_list = array(
 			'/controllers/categories'
 		);
 		

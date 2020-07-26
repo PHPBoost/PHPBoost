@@ -15,7 +15,7 @@ class MediaModuleUpdateVersion extends ModuleUpdateVersion
 		parent::__construct('media');
 		
 		$this->content_tables = array(PREFIX . 'media');
-		$this->delete_old_files_list = array(
+		self::$delete_old_files_list = array(
 			'/lang/english/config.php',
 			'/lang/french/config.php',
 			'/phpboost/MediaComments.class.php',
@@ -26,7 +26,7 @@ class MediaModuleUpdateVersion extends ModuleUpdateVersion
 			'/services/MediaAuthorizationsService.class.php',
 			'/util/AdminMediaDisplayResponse.class.php'
 		);
-		$this->delete_old_folders_list = array(
+		self::$delete_old_folders_list = array(
 			'/controllers/categories'
 		);
 		

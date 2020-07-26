@@ -13,7 +13,7 @@ class HomeLandingModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('HomeLanding');
 
-		$this->delete_old_files_list = array(
+		self::$delete_old_files_list = array(
 			'/templates/pagecontent/onepage.tpl',
 			'/templates/pagecontent/articles.tpl',
 			'/templates/pagecontent/articles-cat.tpl',

@@ -15,7 +15,7 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 		parent::__construct('smallads');
 
 		$this->content_tables = array(PREFIX . 'smallads');
-		$this->delete_old_files_list = array(
+		self::$delete_old_files_list = array(
 			'/controllers/AdminSmalladsConfigController.class.php',
 			'/controllers/SmalladsHomeController.class.php',
 			'/fields/SmalladsFormFieldSelectSources.class.php',
@@ -34,7 +34,7 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 			'/smallads.php',
 			'/smallads_begin.php'
 		);
-		$this->delete_old_folders_list = array(
+		self::$delete_old_folders_list = array(
 			'/controllers/categories'
 		);
 

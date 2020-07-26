@@ -13,7 +13,7 @@ class SandboxModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('sandbox');
 
-		$this->delete_old_files_list = array(
+		self::$delete_old_files_list = array(
 			'/controllers/SandboxFormController.class.php',
 			'/controllers/SandboxGraphicsCSSController.class.php',
 			'/controllers/SandboxMailController.class.php',
@@ -24,7 +24,7 @@ class SandboxModuleUpdateVersion extends ModuleUpdateVersion
 			'/templates/SandboxMailController.tpl',
 			'/templates/SandboxMenuController.tpl',
 		);
-		$this->delete_old_folders_list = array(
+		self::$delete_old_folders_list = array(
 			'/html',
 			'/templates/js',
 		);

@@ -16,7 +16,7 @@ class DownloadModuleUpdateVersion extends ModuleUpdateVersion
 		parent::__construct('download');
 
 		$this->content_tables = array(PREFIX . 'download');
-		$this->delete_old_files_list = array(
+		self::$delete_old_files_list = array(
 			'/lang/english/config.php',
 			'/lang/french/config.php',
 			'/phpboost/DownloadComments.class.php',
@@ -28,7 +28,7 @@ class DownloadModuleUpdateVersion extends ModuleUpdateVersion
 			'/services/DownloadKeywordsCache.class.php',
 			'/util/AdminDownloadDisplayResponse.class.php'
 		);
-		$this->delete_old_folders_list = array(
+		self::$delete_old_folders_list = array(
 			'/controllers/categories'
 		);
 

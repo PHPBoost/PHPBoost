@@ -13,7 +13,7 @@ class DictionaryModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('dictionary');
 		
-		$this->delete_old_files_list = array(
+		self::$delete_old_files_list = array(
 			'/phpboost/DictionaryHomePageExtensionPoint.class.php'
 		);
 	}

@@ -14,7 +14,7 @@ class GuestbookModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('guestbook');
 
-		$this->delete_old_files_list = array(
+		self::$delete_old_files_list = array(
 			'/phpboost/GuestbookHomePageExtensionPoint.class.php',
 			'/phpboost/GuestbookMessagesCache.class.php',
 			'/phpboost/GuestbookTreeLinks.class.php',

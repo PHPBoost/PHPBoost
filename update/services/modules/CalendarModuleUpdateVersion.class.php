@@ -16,7 +16,7 @@ class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 		parent::__construct('calendar');
 		
 		$this->content_tables = array(PREFIX . 'calendar_events_content');
-		$this->delete_old_files_list = array(
+		self::$delete_old_files_list = array(
 			'/controllers/categories/CalendarCategoriesFormController.class.php',
 			'/controllers/categories/CalendarCategoriesManageController.class.php',
 			'/controllers/categories/CalendarDeleteCategoryController.class.php',

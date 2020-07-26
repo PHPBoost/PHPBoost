@@ -12,7 +12,7 @@ class CountdownModuleUpdateVersion extends ModuleUpdateVersion
 	public function __construct()
 	{
 		parent::__construct('countdown');
-		$this->delete_old_folders_list = array(
+		self::$delete_old_folders_list = array(
 			'/util'
 		);
 	}

@@ -15,9 +15,10 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 		parent::__construct('articles');
 
 		$this->content_tables = array(PREFIX . 'articles');
-		$this->delete_old_files_list = array(
+		self::$delete_old_files_list = array(
 			'/controllers/AdminArticlesConfigController.class.php',
 			'/controllers/ArticlesDeleteController.class.php',
+			'/controllers/ArticlesDisplayArticlesController.class.php',
 			'/controllers/ArticlesDisplayArticlesTagController.class.php',
 			'/controllers/ArticlesDisplayCategoryController.class.php',
 			'/controllers/ArticlesDisplayPendingArticlesController.class.php',
@@ -39,7 +40,7 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 			'/templates/ArticlesDisplaySeveralArticlesController.tpl',
 			'/templates/ArticlesFormFieldSelectSources.tpl'
 		);
-		$this->delete_old_folders_list = array(
+		self::$delete_old_folders_list = array(
 			'/controllers/categories',
 			'/fields',
 			'/services',

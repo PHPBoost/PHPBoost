@@ -15,7 +15,7 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 		parent::__construct('pages');
 
 		$this->content_tables = array(PREFIX . 'pages');
-		$this->delete_old_files_list = array(
+		self::$delete_old_files_list = array(
 			'/lang/english/pages_english.php',
 			'/lang/french/pages_french.php',
 			'/phpboost/PagesCategoriesCache.class.php',

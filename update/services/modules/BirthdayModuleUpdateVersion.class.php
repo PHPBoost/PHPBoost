@@ -13,7 +13,7 @@ class BirthdayModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('birthday');
 
-		$this->delete_old_folders_list = array(
+		self::$delete_old_folders_list = array(
 			'/util'
 		);
 	}

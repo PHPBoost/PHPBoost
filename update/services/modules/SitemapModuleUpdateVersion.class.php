@@ -13,7 +13,7 @@ class SitemapModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('sitemap');
 		
-		$this->delete_old_files_list = array(
+		self::$delete_old_files_list = array(
 			'/phpboost/SitemapHomePageExtensionPoint.class.php'
 		);
 	}

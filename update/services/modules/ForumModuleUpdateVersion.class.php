@@ -14,7 +14,7 @@ class ForumModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('forum');
 		
-		$this->delete_old_files_list = array(
+		self::$delete_old_files_list = array(
 			'/controllers/categories/ForumCategoriesManageController.class.php',
 			'/controllers/categories/ForumDeleteCategoryController.class.php',
 			'/phpboost/ForumHomePageExtensionPoint.class.php',
