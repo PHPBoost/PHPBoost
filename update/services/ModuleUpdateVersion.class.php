@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 13
+ * @version     PHPBoost 6.0 - last update: 2020 07 26
  * @since       PHPBoost 3.0 - 2012 02 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -42,8 +42,8 @@ abstract class ModuleUpdateVersion implements UpdateVersion
 
 	public function execute()
 	{
-		$this->delete_old_files();
-		$this->delete_old_folders();
+		self::delete_old_files();
+		self::delete_old_folders();
 		
 		if (ModulesManager::is_module_installed($this->module_id))
 		{
@@ -199,7 +199,7 @@ abstract class ModuleUpdateVersion implements UpdateVersion
 	/**
 	 * Deletes the old files of the modules which are not necessary anymore.
 	 */
-	private function delete_old_files()
+	public static function delete_old_files()
 	{
 		foreach ($this->delete_old_files_list as $file_name)
 		{
@@ -212,7 +212,7 @@ abstract class ModuleUpdateVersion implements UpdateVersion
 	/**
 	 * Deletes the old folders and their content of the modules which are not necessary anymore.
 	 */
-	private function delete_old_folders()
+	public static function delete_old_folders()
 	{
 		foreach ($this->delete_old_folders_list as $folder_name)
 		{

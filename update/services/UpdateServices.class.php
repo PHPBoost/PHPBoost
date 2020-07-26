@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 21
+ * @version     PHPBoost 6.0 - last update: 2020 07 26
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -340,16 +340,16 @@ class UpdateServices
 			{
 				if (in_array($id, array_keys($update_modules_class)))
 				{
-					$object = new $update_modules_class[$id]();
+					$module_update = new $update_modules_class[$id]();
 					try {
-						$object->execute();
+						$module_update->execute();
 						$success = true;
 						$message = '';
 					} catch (Exception $e) {
 						$success = false;
 						$message = $e->getMessage();
 					}
-					$this->add_error_to_file($class['type'] . ' ' . $object->get_module_id(), $success, $message);
+					$this->add_error_to_file($class['type'] . ' ' . $module_update->get_module_id(), $success, $message);
 				}
 				else
 				{
@@ -359,6 +359,16 @@ class UpdateServices
 			}
 			else
 			{
+				if (in_array($id, array_keys($update_modules_class)))
+				{
+					$module_update = new $update_modules_class[$id]();
+					if (is_subclass_of($module_update, 'ModuleUpdateVersion'))
+					{
+						$module_update::delete_old_files();
+						$module_update::delete_old_folders();
+					}
+				}
+				
 				ModulesManager::update_module($id, false, false);
 				$this->add_information_to_file('module ' . $id, 'has been disabled because : incompatible with new version');
 

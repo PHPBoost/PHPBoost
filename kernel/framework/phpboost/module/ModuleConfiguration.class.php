@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 22
+ * @version     PHPBoost 6.0 - last update: 2020 07 26
  * @since       PHPBoost 3.0 - 2009 12 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -223,7 +223,7 @@ class ModuleConfiguration
 		$this->contribution_interface = !empty($config['contribution_interface']) ? Url::to_rel('/' . $this->module_id . '/' . $config['contribution_interface']) : ($this->feature_is_enabled('contribution') ? ItemsUrlBuilder::add(Category::ROOT_CATEGORY, $this->module_id)->rel() : '');
 		$this->url_rewrite_rules      = !empty($config['rewrite_rules']) ? $config['rewrite_rules'] : array();
 		
-		if (GeneralConfig::load()->get_phpboost_major_version() >= '6.0' && $this->compatibility >= '6.0')
+		if (ModulesManager::is_module_installed($this->module_id) && GeneralConfig::load()->get_phpboost_major_version() >= '6.0' && $this->compatibility >= '6.0' && ModulesConfig::load()->get_module($this->module_id)->get_installed_version() == $this->version)
 		{
 			$this->item_name              = !empty($config['item_name']) ? $config['item_name'] : $this->get_default_item_class_name();
 			$this->items_table_name       = !empty($config['items_table_name']) ? $config['items_table_name'] : ($this->item_name || $this->has_categories() ? $this->module_id : '');
