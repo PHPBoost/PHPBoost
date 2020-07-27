@@ -81,7 +81,7 @@
 						</div>
 						# IF NOT C_FULL_ITEM_DISPLAY #
 							# IF items.C_HAS_THUMBNAIL #
-								<div class="cell-thumbnail cell-landscape">
+								<div class="cell-thumbnail cell-landscape cell-center">
 									<img itemprop="thumbnailUrl" src="{items.U_THUMBNAIL}" alt="{items.TITLE}" />
 									<a class="cell-thumbnail-caption" href="{items.U_ITEM}">
 										# IF items.C_READ_MORE #[${LangLoader::get_message('read-more', 'common')}]# ELSE #<i class="fa fa-eye"></i># ENDIF #

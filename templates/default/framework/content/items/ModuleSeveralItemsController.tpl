@@ -30,7 +30,7 @@
 					</div>
 					# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
 						<div class="cell-body">
-							<div class="cell-thumbnail">
+							<div class="cell-thumbnail cell-landscape cell-center">
 								<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
 								<a class="cell-thumbnail-caption" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
 									${LangLoader::get_message('see.category', 'categories-common')}
@@ -211,7 +211,7 @@
 							</div>
 							# IF NOT C_FULL_ITEM_DISPLAY #
 								# IF items.C_HAS_THUMBNAIL #
-									<div class="cell-thumbnail">
+									<div class="cell-thumbnail cell-landscape cell-center">
 										<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
 										<a class="cell-thumbnail-caption" href="{items.U_ITEM}">
 											${LangLoader::get_message('see.details', 'common')}

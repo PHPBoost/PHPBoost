@@ -27,7 +27,7 @@
 						</div>
 							# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
 						<div class="cell-body">
-							<div class="cell-thumbnail">
+							<div class="cell-thumbnail cell-landscape cell-center">
 								<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
 								<a class="cell-thumbnail-caption" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
 									${LangLoader::get_message('see.category', 'categories-common')}
@@ -107,7 +107,7 @@
 								# ENDIF #
 							</div>
 							# IF file.C_HAS_PICTURE #
-								<div class="cell-thumbnail">
+								<div class="cell-thumbnail cell-landscape cell-center">
 									<img itemprop="thumbnailUrl" src="{file.PICTURE}" alt="{file.NAME}" />
 									<a class="cell-thumbnail-caption" href="{file.U_MEDIA_LINK}" aria-label="${LangLoader::get_message('see.details', 'common')}"><i class="fa fa-2x fa-play-circle"></i></a>
 								</div>

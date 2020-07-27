@@ -1,7 +1,7 @@
 # IF C_QUESTIONS #
 	<script>
 		var questions_number = {QUESTIONS_NUMBER};
-		
+
 		function delete_question(id_question)
 		{
 			if (confirm(${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))}))
@@ -16,7 +16,7 @@
 							questions_number--;
 							jQuery("#question-title-" + returnData.deleted_id).remove();
 							jQuery("#question" + returnData.deleted_id).remove();
-							
+
 							if (questions_number == 0) {
 								jQuery(".accordion-container").hide();
 								jQuery("#no-item-message").show();
@@ -61,20 +61,18 @@
 			# START sub_categories_list #
 				<div class="cell category-{sub_categories_list.CATEGORY_ID}">
 					<div class="cell-header">
-						<div class="cell-name align-center"><a class="subcat-title" itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></div>
+						<h5 class="cell-name"><a class="subcat-title" itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
+						<span class="small pinned notice" aria-label="# IF sub_categories_list.C_MORE_THAN_ONE_QUESTION #${TextHelper::lcfirst(LangLoader::get_message('faq.questions', 'common', 'faq'))}# ELSE #${TextHelper::lcfirst(LangLoader::get_message('faq.form.question', 'common', 'faq'))}# ENDIF #">{sub_categories_list.QUESTIONS_NUMBER}</span>
 					</div>
 					<div class="cell-body">
 						# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
-							<div class="cell-thumbnail cell-landscape">
+							<div class="cell-thumbnail cell-landscape cell-center">
 								<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
 								<a class="cell-thumbnail-caption" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
 									${LangLoader::get_message('see.category', 'categories-common')}
 								</a>
 							</div>
 						# ENDIF #
-						<div class="cell-content align-center">
-							{sub_categories_list.QUESTIONS_NUMBER} # IF sub_categories_list.C_MORE_THAN_ONE_QUESTION #${TextHelper::lcfirst(LangLoader::get_message('faq.questions', 'common', 'faq'))}# ELSE #${TextHelper::lcfirst(LangLoader::get_message('faq.form.question', 'common', 'faq'))}# ENDIF #
-						</div>
 					</div>
 				</div>
 			# END sub_categories_list #

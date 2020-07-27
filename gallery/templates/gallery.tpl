@@ -303,7 +303,7 @@
 				<div class="cell category-{sub_categories_list.CATEGORY_ID}" itemscope>
 					<div class="cell-header">
 						<h5 class="cell-name" itemprop="name"><a href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
-						<span class="small pinned" role="contentinfo" itemprop="items" aria-label="{sub_categories_list.PICTURES_NUMBER} # IF sub_categories_list.C_SEVERAL_PICTURES #{@gallery.items}# ELSE #{@gallery.item}# ENDIF #">{sub_categories_list.PICTURES_NUMBER}</span>
+						<span class="small pinned notice" role="contentinfo" itemprop="items" aria-label="{sub_categories_list.PICTURES_NUMBER} # IF sub_categories_list.C_SEVERAL_PICTURES #{@gallery.items}# ELSE #{@gallery.item}# ENDIF #">{sub_categories_list.PICTURES_NUMBER}</span>
 					</div>
 					<div class="cell-body">
 						<div class="cell-thumbnail cell-landscape cell-center" itemprop="thumbnail">

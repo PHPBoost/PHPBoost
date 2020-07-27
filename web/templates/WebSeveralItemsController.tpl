@@ -26,7 +26,7 @@
 					</div>
 					# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
 						<div class="cell-body">
-							<div class="cell-thumbnail">
+							<div class="cell-thumbnail cell-landscape cell-center">
 								<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
 								<a class="cell-thumbnail-caption" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
 									${LangLoader::get_message('see.category', 'categories-common')}
@@ -120,7 +120,7 @@
 
 							# IF NOT C_FULL_ITEM_DISPLAY #
 								# IF weblinks.C_IS_ADORNED #
-									<div class="cell-thumbnail">
+									<div class="cell-thumbnail cell-landscape cell-center">
 										# IF weblinks.C_IS_PARTNER #
 											# IF weblinks.C_HAS_PARTNER_THUMBNAIL #
 												<img src="{weblinks.U_PARTNER_THUMBNAIL}" alt="{weblinks.TITLE}" itemprop="image" />
