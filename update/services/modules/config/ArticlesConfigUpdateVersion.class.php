@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 04
+ * @version     PHPBoost 6.0 - last update: 2020 07 29
  * @since       PHPBoost 6.0 - 2020 05 03
 */
 
@@ -43,6 +43,20 @@ class ArticlesConfigUpdateVersion extends ConfigUpdateVersion
 				break;
 			}
 			$config->set_items_default_sort_mode(in_array(TextHelper::strtoupper($old_config->get_items_default_sort_field()), array(Item::ASC, Item::DESC)) ? TextHelper::strtolower($old_config->get_items_default_sort_field()) : TextHelper::strtolower(Item::DESC));
+			
+			switch ($old_config->get_display_type())
+			{
+				case 'mosaic':
+					$config->set_display_type('grid_view');
+				break;
+				case 'list':
+					$config->set_display_type('list_view');
+				break;
+				default:
+					$config->set_display_type($old_config->get_display_type());
+				break;
+			}
+			
 			ArticlesConfig::save();
 			
 			return true;
