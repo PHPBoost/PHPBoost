@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 04 26
+ * @version     PHPBoost 6.0 - last update: 2020 07 31
  * @since       PHPBoost 3.0 - 2011 02 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -65,18 +65,27 @@ class NewslettersubscribeController extends ModuleController
 
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('subscribe_newsletters', $this->lang['subscribe.newsletters']);
+		$fieldset = new FormFieldsetHTMLHeading('subscribe.newsletters', $this->lang['subscribe.newsletters']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldMailEditor('mail', $this->lang['subscribe.mail'], $email,
 			array('required' => true)
 		));
 
-		if (($this->current_user->check_level(User::MEMBER_LEVEL) && $email == $this->current_user->get_email()) || $this->current_user->is_admin())
+		if ($this->current_user->check_level(User::MEMBER_LEVEL) && $email == $this->current_user->get_email())
+		{
 			$newsletter_subscribe = NewsletterService::get_member_id_streams($this->current_user->get_id());
+		}
+		else if ($this->current_user->is_admin())
+		{
+			if ($user = UserService::get_user_by_email($email))
+				$newsletter_subscribe = NewsletterService::get_member_id_streams($user->get_id());
+			else
+				$newsletter_subscribe = NewsletterService::get_visitor_id_streams($email);
+		}
 		else
 			$newsletter_subscribe = array();
-
+		
 		$fieldset->add_field(new FormFieldMultipleCheckbox('newsletter_choice', $this->lang['subscribe.newsletter_choice'], $newsletter_subscribe, $this->get_streams(),
 			array('required' => true)
 		));
