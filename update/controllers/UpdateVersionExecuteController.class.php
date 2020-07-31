@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 02 08
+ * @version     PHPBoost 6.0 - last update: 2020 08 01
  * @since       PHPBoost 3.0 - 2012 03 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -170,6 +170,8 @@ class UpdateVersionExecuteController extends UpdateController
 		$action_fieldset = new FormFieldsetSubmit('actions');
 		$back = new FormButtonLinkCssImg($this->lang['step.previous'], UpdateServices::database_config_file_checked() ? UpdateUrlBuilder::server_configuration() : UpdateUrlBuilder::database(), 'fa fa-arrow-left');
 		$action_fieldset->add_element($back);
+		$refresh = new FormButtonLinkCssImg(LangLoader::get_message('refresh', 'main'), UpdateUrlBuilder::update()->rel(), 'fa fa-sync');
+		$action_fieldset->add_element($refresh);
 		$this->submit = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'finish', 'jQuery(\'#update-in-progress-container\').show();');
 		$action_fieldset->add_element($this->submit);
 		$form->add_fieldset($action_fieldset);
