@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2020 04 26
+ * @version   	PHPBoost 5.2 - last update: 2020 07 31
  * @since   	PHPBoost 3.0 - 2011 02 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -77,8 +77,8 @@ class NewslettersubscribeController extends ModuleController
 		}
 		else if ($this->current_user->is_admin())
 		{
-			if ($user = UserService::get_user_by_email($this->form->get_value('mail')))
-				$newsletter_subscribe = NewsletterService::get_member_id_streams($this->current_user->get_id());
+			if ($user = UserService::get_user_by_email($email))
+				$newsletter_subscribe = NewsletterService::get_member_id_streams($user->get_id());
 			else
 				$newsletter_subscribe = NewsletterService::get_visitor_id_streams($email);
 		}
