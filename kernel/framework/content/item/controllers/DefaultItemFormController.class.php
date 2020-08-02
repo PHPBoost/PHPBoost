@@ -276,6 +276,7 @@ class DefaultItemFormController extends AbstractItemController
 				$parameters = $attribute[$attribute_field];
 				$field_class = $parameters['field_class'];
 				$options = isset($parameters['options']) ? $parameters['options'] : array();
+				$constraints = isset($parameters['constraints']) ? $parameters['constraints'] : array();
 				
 				if ($this->is_new_item)
 					$value = isset($parameters['default_value']) ? $parameters['default_value'] : '';
@@ -285,7 +286,7 @@ class DefaultItemFormController extends AbstractItemController
 				if ($field_class == 'FormFieldThumbnail')
 					$fieldset->add_field(new $field_class($id, $parameters['label'], $value, isset($parameters['default_picture']) ? $parameters['default_picture'] : '', $options));
 				else
-					$fieldset->add_field(new $field_class($id, $parameters['label'], $value, $options));
+					$fieldset->add_field(new $field_class($id, $parameters['label'], $value, $options, $constraints));
 			}
 		}
 	}
