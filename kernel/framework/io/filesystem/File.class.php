@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Nicolas Duhamel <akhenathon2@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2019 04 03
+ * @version     PHPBoost 6.0 - last update: 2020 08 06
  * @since       PHPBoost 2.0 - 2008 07 06
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
@@ -172,14 +172,11 @@ class File extends FileSystemElement
 	public function delete()
 	{
 		$this->close();
-		if (file_exists($this->get_path()))
+		if (file_exists($this->get_path()) && !@unlink($this->get_path()))
 		{
-			if (!unlink($this->get_path()))
-			{
-				// Empty the file if it couldn't delete it
-				$this->erase();
-				throw new IOException('The file ' . $this->get_path()  . ' couldn\'t been deleted');
-			}
+			// Empty the file if it couldn't delete it
+			$this->erase();
+			throw new IOException('The file ' . $this->get_path()  . ' couldn\'t been deleted');
 		}
 	}
 
