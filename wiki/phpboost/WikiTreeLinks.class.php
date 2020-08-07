@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 01
+ * @version     PHPBoost 6.0 - last update: 2020 08 07
  * @since       PHPBoost 3.0 - 2013 12 03
  * @contributor xela <xela@phpboost.com>
 */
@@ -22,7 +22,7 @@ class WikiTreeLinks implements ModuleTreeLinksExtensionPoint
 		$tree = new ModuleTreeLinks();
 
 		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), new Url('/wiki/admin_wiki.php')));
-		$tree->add_link(new AdminModuleLink($LANG['authorizations'], new Url('/wiki/admin_wiki_groups.php')));
+		$tree->add_link(new AdminModuleLink(LangLoader::get_message('authorizations', 'common'), new Url('/wiki/admin_wiki_groups.php')));
 
 		$tree->add_link(new ModuleLink($LANG['wiki_create_article'], new Url('/wiki/post.php' . ($id_cat > 0 ? '?id_parent=' . $id_cat : '')), $current_user->check_auth($config->get_authorizations(), WIKI_CREATE_ARTICLE)));
 		$tree->add_link(new ModuleLink($LANG['wiki_create_cat'], new Url('/wiki/post.php?type=cat' . ($id_cat > 0 ? '&amp;id_parent=' . $id_cat : '')), $current_user->check_auth($config->get_authorizations(), WIKI_CREATE_CAT)));

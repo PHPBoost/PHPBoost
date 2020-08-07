@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 12 20
+ * @version     PHPBoost 6.0 - last update: 2020 08 07
  * @since       PHPBoost 1.6 - 2007 05 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -455,9 +455,6 @@ $tpl->put_all(array(
 	'L_ALERT_REMOVING_CAT' => str_replace('\'', '\\\'', $LANG['wiki_alert_removing_cat']),
 	'L_UPDATE' => $LANG['update'],
 	'L_RESET' => $LANG['reset'],
-	'L_EXPLAIN_SELECT_MULTIPLE' => $LANG['explain_select_multiple'],
-	'L_SELECT_ALL' => $LANG['select_all'],
-	'L_SELECT_NONE' => $LANG['select_none'],
 	'L_CREATE_ARTICLE' => $LANG['wiki_auth_create_article'],
 	'L_CREATE_CAT' => $LANG['wiki_auth_create_cat'],
 	'L_RESTORE_ARCHIVE' => $LANG['wiki_auth_restore_archive'],

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 12 24
+ * @version     PHPBoost 6.0 - last update: 2020 08 07
  * @since       PHPBoost 1.6 - 2007 10 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -76,11 +76,6 @@ $LANG['wiki_edition_restriction'] = 'Edition permissions';
 $LANG['wiki_no_restriction'] = 'No restrictions';
 $LANG['wiki_auth_management'] = 'Permissions management';
 $LANG['wiki_auth_management_article'] = 'Permissions management of the article <em>%s</em>';
-$LANG['explain_select_multiple'] = 'Press Ctrl then click into the list to choose some options.';
-$LANG['select_all'] = 'Select all';
-$LANG['select_none'] = 'Unselect all';
-$LANG['ranks'] = 'Ranks';
-$LANG['groups'] = 'Groups';
 $LANG['wiki_explain_restore_default_auth'] = 'Don\'t take into account any particular restriction to this article; permissions of this article will be global permissions.';
 $LANG['wiki_restore_default_auth'] = 'Default permissions';
 
@@ -174,7 +169,6 @@ $LANG['wiki_confirm_remove_article'] = 'Are you sure you want to delete this art
 $LANG['wiki_not_a_cat'] = 'You have not selected a valid category!';
 
 //RSS
-$LANG['wiki_rss'] = 'RSS Flow';
 $LANG['wiki_rss_cat'] = 'Last articles of the category: %s';
 $LANG['wiki_rss_last_articles'] = '%s: last articles';
 
@@ -192,7 +186,6 @@ $LANG['wiki_confirm_unwatch_this_topic'] = 'Are you sure you want to delete this
 
 //Administration
 $LANG['authorizations'] = 'Authorizations';
-$LANG['wiki_groups_config'] = 'Groups management';
 $LANG['explain_wiki_groups'] = 'You can configure here everything concerning authorizations. You can attribute authorizations to a level and specials persmissions to a group.';
 $LANG['wiki_auth_read'] = 'Read articles';
 $LANG['wiki_auth_create_article'] = 'Create an article';

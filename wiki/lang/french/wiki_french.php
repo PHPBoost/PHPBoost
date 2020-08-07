@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 12 23
+ * @version     PHPBoost 6.0 - last update: 2020 08 07
  * @since       PHPBoost 1.6 - 2006 12 02
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -70,7 +70,6 @@ $LANG['wiki_paragraph_name'] = 'Veuillez entrer le titre du paragraphe';
 $LANG['wiki_paragraph_name_example'] = 'Titre du paragraphe';
 
 //Restrictions d'accès
-$LANG['authorizations'] = 'Autorisations';
 $LANG['wiki_member_restriction'] = 'Cet article est protégé, seuls les membres peuvent le modifier';
 $LANG['wiki_modo_restriction'] = 'Cet article est protégé, seuls les modérateurs peuvent le modifier';
 $LANG['wiki_admin_restriction'] = 'Cet article est protégé, seuls les administrateurs peuvent le modifier';
@@ -78,11 +77,6 @@ $LANG['wiki_edition_restriction'] = 'Restriction à l\'édition';
 $LANG['wiki_no_restriction'] = 'Aucune restriction';
 $LANG['wiki_auth_management'] = 'Gestion des niveaux d\'autorisation';
 $LANG['wiki_auth_management_article'] = 'Gestion du niveau d\'autorisation de l\'article <em>%s</em>';
-$LANG['explain_select_multiple'] = 'Maintenez ctrl puis cliquer dans la liste pour faire plusieurs choix';
-$LANG['select_all'] = 'Tout sélectionner';
-$LANG['select_none'] = 'Tout désélectionner';
-$LANG['ranks'] = 'Rangs';
-$LANG['groups'] = 'Groupes';
 $LANG['wiki_explain_restore_default_auth'] = 'Ne pas considérer de restriction particulière pour cet article; les autorisations seront les autorisations globales du wiki';
 $LANG['wiki_restore_default_auth'] = 'Autorisations par défaut';
 
@@ -176,7 +170,6 @@ $LANG['wiki_confirm_remove_article'] = 'Etes-vous sur de vouloir supprimer cet a
 $LANG['wiki_not_a_cat'] = 'Vous n\'avez pas sélectionné de catégorie valide !';
 
 //RSS
-$LANG['wiki_rss'] = 'Flux RSS';
 $LANG['wiki_rss_cat'] = 'Derniers articles de la catégorie %s';
 $LANG['wiki_rss_last_articles'] = '%s : derniers articles';
 
@@ -193,7 +186,6 @@ $LANG['wiki_no_favorite'] = 'Aucun article en favoris';
 $LANG['wiki_confirm_unwatch_this_topic'] = 'Etes-vous certain de vouloir supprimer cet article de vos favoris ?';
 
 //Administration
-$LANG['wiki_groups_config'] = 'Configuration des groupes';
 $LANG['explain_wiki_groups'] = 'Vous pouvez paramétrer ici tout ce qui concerne les autorisations. Vous pouvez attribuer des autorisations à un niveau mais aussi des autorisations spéciales à un groupe.';
 $LANG['wiki_auth_read'] = 'Lire les articles';
 $LANG['wiki_auth_create_article'] = 'Créer un article';
