@@ -35,7 +35,6 @@ class Item
 	protected $additional_attributes_list = array();
 	protected $additional_attributes_items_table_fields = array();
 	protected $additional_attributes_items_table_options = array();
-	protected $kernel_changing_fields_options_list = array();
 
 	const READ_AUTHORIZATIONS = 1;
 	const WRITE_AUTHORIZATIONS = 2;
@@ -58,7 +57,6 @@ class Item
 		
 		$this->set_kernel_additional_attributes_list();
 		$this->set_additional_attributes_list();
-		$this->set_kernel_changing_fields_options_list();
 	}
 
 	public function get_id()
@@ -370,18 +368,6 @@ class Item
 	public function get_additional_attributes_items_table_options()
 	{
 		return $this->additional_attributes_items_table_options;
-	}
-
-	protected function add_kernel_changing_field_options($id, array $options)
-	{
-		$this->kernel_changing_fields_options_list[$id] = $options;
-	}
-
-	protected function set_kernel_changing_fields_options_list() {}
-
-	public function get_kernel_changing_fields_options_list()
-	{
-		return $this->kernel_changing_fields_options_list;
 	}
 
 	public function get_properties()

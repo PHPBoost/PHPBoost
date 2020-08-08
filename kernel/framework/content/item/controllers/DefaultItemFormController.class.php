@@ -128,7 +128,7 @@ class DefaultItemFormController extends AbstractItemController
 		$this->build_pre_content_fields($fieldset);
 
 		$fieldset->add_field(new FormFieldRichTextEditor($this->item_class::get_content_label(), $this->common_lang['form.content'], $this->get_item()->get_content(),
-			(isset($this->get_item()->get_kernel_changing_fields_options_list()[$this->item_class::get_content_label()])) ? array_merge(array('rows' => 15, 'required' => true), $this->get_item()->get_kernel_changing_fields_options_list()[$this->item_class::get_content_label()]) : array('rows' => 15, 'required' => true)
+			array('rows' => 15, 'required' => true)
 		));
 
 		$this->build_post_content_fields($fieldset);
