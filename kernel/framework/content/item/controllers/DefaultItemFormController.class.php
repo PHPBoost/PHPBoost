@@ -94,7 +94,7 @@ class DefaultItemFormController extends AbstractItemController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor($this->item_class::get_title_label(), $this->common_lang['form.' . $this->item_class::get_title_label()], $this->get_item()->get_title(),
-			(isset($this->get_item()->get_kernel_changing_fields_options_list()[$this->item_class::get_content_label()])) ? array_merge(array('rows' => 15, 'required' => true), $this->get_item()->get_kernel_changing_fields_options_list()[$this->item_class::get_content_label()]) : array('rows' => 15, 'required' => true)
+			array('required' => true)
 		));
 
 		if ((self::get_module()->get_configuration()->has_categories() && CategoriesAuthorizationsService::check_authorizations($this->get_item()->get_id_category(), self::$module_id)->moderation()) || (!self::get_module()->get_configuration()->has_categories() && ItemsAuthorizationsService::check_authorizations(self::$module_id)->moderation()))
@@ -128,7 +128,7 @@ class DefaultItemFormController extends AbstractItemController
 		$this->build_pre_content_fields($fieldset);
 
 		$fieldset->add_field(new FormFieldRichTextEditor($this->item_class::get_content_label(), $this->common_lang['form.content'], $this->get_item()->get_content(),
-			array('rows' => 15, 'required' => true)
+			(isset($this->get_item()->get_kernel_changing_fields_options_list()[$this->item_class::get_content_label()])) ? array_merge(array('rows' => 15, 'required' => true), $this->get_item()->get_kernel_changing_fields_options_list()[$this->item_class::get_content_label()]) : array('rows' => 15, 'required' => true)
 		));
 
 		$this->build_post_content_fields($fieldset);
