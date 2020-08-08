@@ -284,7 +284,7 @@ class DefaultItemFormController extends AbstractItemController
 				
 				$ref_class = new ReflectionClass($field_class);
 				unset($parameters['field_class']);
-     			array_unshift($parameters, $id);
+				array_unshift($parameters, $id);
 				$field_instance = $ref_class->newInstanceArgs($parameters);
 				$fieldset->add_field($field_instance);
 			}
