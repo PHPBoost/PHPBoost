@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 24
+ * @version     PHPBoost 6.0 - last update: 2020 08 08
  * @since       PHPBoost 6.0 - 2019 12 20
+ * @contributor xela <xela@phpboost.com>
 */
 
 class Item
@@ -34,6 +35,7 @@ class Item
 	protected $additional_attributes_list = array();
 	protected $additional_attributes_items_table_fields = array();
 	protected $additional_attributes_items_table_options = array();
+	protected $kernel_changing_fields_options_list = array();
 
 	const READ_AUTHORIZATIONS = 1;
 	const WRITE_AUTHORIZATIONS = 2;
@@ -56,6 +58,7 @@ class Item
 		
 		$this->set_kernel_additional_attributes_list();
 		$this->set_additional_attributes_list();
+		$this->set_kernel_changing_fields_options_list();
 	}
 
 	public function get_id()
@@ -367,6 +370,18 @@ class Item
 	public function get_additional_attributes_items_table_options()
 	{
 		return $this->additional_attributes_items_table_options;
+	}
+
+	protected function add_kernel_changing_field_options($id, array $options)
+	{
+		$this->kernel_changing_fields_options_list[$id] = $options;
+	}
+
+	protected function set_kernel_changing_fields_options_list() {}
+
+	public function get_kernel_changing_fields_options_list()
+	{
+		return $this->kernel_changing_fields_options_list;
 	}
 
 	public function get_properties()

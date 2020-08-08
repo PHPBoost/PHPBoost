@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 24
+ * @version     PHPBoost 6.0 - last update: 2020 08 08
  * @since       PHPBoost 6.0 - 2020 05 16
+ * @contributor xela <xela@phpboost.com>
 */
 
 class DefaultItemFormController extends AbstractItemController
@@ -93,7 +94,7 @@ class DefaultItemFormController extends AbstractItemController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor($this->item_class::get_title_label(), $this->common_lang['form.' . $this->item_class::get_title_label()], $this->get_item()->get_title(),
-			array('required' => true)
+			(isset($this->get_item()->get_kernel_changing_fields_options_list()[$this->item_class::get_content_label()])) ? array_merge(array('rows' => 15, 'required' => true), $this->get_item()->get_kernel_changing_fields_options_list()[$this->item_class::get_content_label()]) : array('rows' => 15, 'required' => true)
 		));
 
 		if ((self::get_module()->get_configuration()->has_categories() && CategoriesAuthorizationsService::check_authorizations($this->get_item()->get_id_category(), self::$module_id)->moderation()) || (!self::get_module()->get_configuration()->has_categories() && ItemsAuthorizationsService::check_authorizations(self::$module_id)->moderation()))
@@ -275,18 +276,17 @@ class DefaultItemFormController extends AbstractItemController
 			{
 				$parameters = $attribute[$attribute_field];
 				$field_class = $parameters['field_class'];
-				$options = isset($parameters['options']) ? $parameters['options'] : array();
-				$constraints = isset($parameters['constraints']) ? $parameters['constraints'] : array();
 				
-				if ($this->is_new_item)
-					$value = isset($parameters['default_value']) ? $parameters['default_value'] : '';
-				else
-					$value = ($this->get_item()->get_additional_property($id) instanceof Url) ? $this->get_item()->get_additional_property($id)->relative() : $this->get_item()->get_additional_property($id);
+				if (!$this->is_new_item)
+				{
+					$parameters['value'] = ($this->get_item()->get_additional_property($id) instanceof Url) ? $this->get_item()->get_additional_property($id)->relative() : $this->get_item()->get_additional_property($id);
+				}
 				
-				if ($field_class == 'FormFieldThumbnail')
-					$fieldset->add_field(new $field_class($id, $parameters['label'], $value, isset($parameters['default_picture']) ? $parameters['default_picture'] : '', $options));
-				else
-					$fieldset->add_field(new $field_class($id, $parameters['label'], $value, $options, $constraints));
+				$ref_class = new ReflectionClass($field_class);
+				unset($parameters['field_class']);
+     			array_unshift($parameters, $id);
+     			$field_instance = $ref_class->newInstanceArgs($parameters);
+     			$fieldset->add_field($field_instance);
 			}
 		}
 	}

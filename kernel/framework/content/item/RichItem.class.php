@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 07
+ * @version     PHPBoost 6.0 - last update: 2020 08 08
  * @since       PHPBoost 6.0 - 2020 01 23
+ * @contributor xela <xela@phpboost.com>
 */
 
 class RichItem extends Item
@@ -22,7 +23,7 @@ class RichItem extends Item
 		$this->add_additional_attribute('thumbnail', array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''", 'attribute_other_field_parameters' => array(
 			'field_class' => 'FormFieldThumbnail',
 			'label' => LangLoader::get_message('form.picture', 'common'),
-			'default_value' => FormFieldThumbnail::DEFAULT_VALUE,
+			'value' => FormFieldThumbnail::DEFAULT_VALUE,
 			'default_picture' => self::THUMBNAIL_URL
 			)
 		));
