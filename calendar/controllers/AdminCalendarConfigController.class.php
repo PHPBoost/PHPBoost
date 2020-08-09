@@ -23,6 +23,7 @@ class AdminCalendarConfigController extends AdminModuleController
 	private $submit_button;
 
 	private $lang;
+	private $admin_common_lang;
 
 	private $user_born_field;
 
@@ -39,6 +40,7 @@ class AdminCalendarConfigController extends AdminModuleController
 
 		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
+		$tpl->add_lang($this->admin_common_lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -57,6 +59,7 @@ class AdminCalendarConfigController extends AdminModuleController
 	{
 		$this->user_born_field = ExtendedFieldsCache::load()->get_extended_field_by_field_name('user_born');
 		$this->lang = LangLoader::get('common', 'calendar');
+		$this->admin_common_lang = LangLoader::get('admin-common');
 		$this->config = CalendarConfig::load();
 	}
 
@@ -68,14 +71,21 @@ class AdminCalendarConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_number_per_page', $this->lang['calendar.config.items_number_per_page'], $this->config->get_items_number_per_page(),
-			array('class' => 'top-field', 'min' => 1, 'max' => 50, 'required' => true),
+			array('class' => 'third-field', 'min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
+		$fieldset->add_field(new FormFieldNumberEditor('characters_number_to_cut', $this->admin_common_lang['config.characters.number.to.cut'], $this->config->get_characters_number_to_cut(),
+			array('class' => 'third-field', 'min' => 20, 'max' => 1000, 'required' => true),
+			array(new FormFieldConstraintIntegerRange(20, 1000)
+		)));
+
 		$fieldset->add_field(new FormFieldColorPicker('event_color', $this->lang['calendar.config.event_color'], $this->config->get_event_color(),
-			array('class' => 'top-field'),
+			array('class' => 'third-field'),
 			array(new FormFieldConstraintRegex('`^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$`iu'))
 		));
+
+		$fieldset->add_field(new FormFieldSpacer('birthday_display', ''));
 
 		if (!empty($this->user_born_field) && !$this->user_born_field['display'])
 		{
@@ -101,7 +111,7 @@ class AdminCalendarConfigController extends AdminModuleController
 				array(new FormFieldConstraintRegex('`^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$`iu'))
 			));
 		}
-        
+
         $fieldset->add_field(new FormFieldRichTextEditor('default_contents', $this->lang['calendar.default.contents'], $this->config->get_default_contents(),
 			array('rows' => 8, 'cols' => 47)
 		));

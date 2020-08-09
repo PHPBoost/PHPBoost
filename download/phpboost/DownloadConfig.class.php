@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 12
+ * @version     PHPBoost 6.0 - last update: 2020 08 09
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -39,7 +39,7 @@ class DownloadConfig extends AbstractConfigData
 
 	const DEFERRED_OPERATIONS = 'deferred_operations';
 
-	const CHARACTERS_TO_DISPLAY = 150;
+	const CHARACTERS_NUMBER_TO_CUT = 'characters_number_to_cut';
 
 	public function get_categories_per_page()
 	{
@@ -271,6 +271,16 @@ class DownloadConfig extends AbstractConfigData
 		$this->set_property(self::DEFERRED_OPERATIONS, $deferred_operations);
 	}
 
+	public function get_characters_number_to_cut()
+	{
+		return $this->get_property(self::CHARACTERS_NUMBER_TO_CUT);
+	}
+
+	public function set_characters_number_to_cut($number)
+	{
+		$this->set_property(self::CHARACTERS_NUMBER_TO_CUT, $number);
+	}
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -294,6 +304,7 @@ class DownloadConfig extends AbstractConfigData
 			self::FILES_NUMBER_IN_MENU => 5,
 			self::LIMIT_OLDEST_FILE_DAY_IN_MENU_ENABLED => false,
 			self::OLDEST_FILE_DAY_IN_MENU => 30,
+			self::CHARACTERS_NUMBER_TO_CUT => 128,
 			self::AUTHORIZATIONS => array('r-1' => 33, 'r0' => 37, 'r1' => 61),
 			self::DEFERRED_OPERATIONS => array()
 		);

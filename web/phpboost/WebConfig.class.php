@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 12
+ * @version     PHPBoost 6.0 - last update: 2020 08 09
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -34,7 +34,7 @@ class WebConfig extends AbstractConfigData
 
 	const DEFERRED_OPERATIONS = 'deferred_operations';
 
-	const NUMBER_CARACTERS_BEFORE_CUT = 150;
+	const CHARACTERS_NUMBER_TO_CUT = 'characters_number_to_cut';
 
 	public function get_categories_per_page()
 	{
@@ -206,6 +206,16 @@ class WebConfig extends AbstractConfigData
 		$this->set_property(self::DEFERRED_OPERATIONS, $deferred_operations);
 	}
 
+	public function get_characters_number_to_cut()
+	{
+		return $this->get_property(self::CHARACTERS_NUMBER_TO_CUT);
+	}
+
+	public function set_characters_number_to_cut($number)
+	{
+		$this->set_property(self::CHARACTERS_NUMBER_TO_CUT, $number);
+	}
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -223,6 +233,7 @@ class WebConfig extends AbstractConfigData
 			self::DEFAULT_CONTENTS => '',
 			self::DESCRIPTIONS_DISPLAYED_TO_GUESTS => false,
 			self::ROOT_CATEGORY_DESCRIPTION => CategoriesService::get_default_root_category_description('web'),
+			self::CHARACTERS_NUMBER_TO_CUT => 128,
 			self::PARTNERS_SORT_FIELD => WebLink::SORT_ALPHABETIC,
 			self::PARTNERS_SORT_MODE => WebLink::ASC,
 			self::PARTNERS_NUMBER_IN_MENU => 5,

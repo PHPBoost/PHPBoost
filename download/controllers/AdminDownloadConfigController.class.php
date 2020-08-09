@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 25
+ * @version     PHPBoost 6.0 - last update: 2020 08 09
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -46,6 +46,7 @@ class AdminDownloadConfigController extends AdminModuleController
 		{
 			$this->save();
 			$this->form->get_field_by_id('display_summary_to_guests')->set_hidden($this->config->get_display_type() == DownloadConfig::TABLE_VIEW);
+			$this->form->get_field_by_id('characters_number_to_cut')->set_hidden($this->config->get_full_item_display() && $this->config->get_display_type() !== DownloadConfig::GRID_VIEW);
 			$this->form->get_field_by_id('full_item_display')->set_hidden($this->config->get_display_type() !== DownloadConfig::LIST_VIEW);
 			$this->form->get_field_by_id('items_per_row')->set_hidden($this->config->get_display_type() !== DownloadConfig::GRID_VIEW);
 			$this->form->get_field_by_id('oldest_file_day_in_menu')->set_hidden(!$this->config->is_limit_oldest_file_day_in_menu_enabled());
@@ -135,10 +136,25 @@ class AdminDownloadConfigController extends AdminModuleController
 
 		$fieldset->add_field(new FormFieldCheckbox('full_item_display', $this->admin_common_lang['config.full.item.display'], $this->config->is_full_item_displayed(),
 			array(
+				'class' => 'custom-checkbox',
 				'hidden' => $this->config->get_display_type() !== DownloadConfig::LIST_VIEW,
-				'class' => 'custom-checkbox'
+				'events' => array('click' => '
+					if (HTMLForms.getField("full_item_display").getValue()) {
+						HTMLForms.getField("characters_number_to_cut").disable();
+					} else {
+						HTMLForms.getField("characters_number_to_cut").enable();
+					}'
+				)
 			)
 		));
+
+		$fieldset->add_field(new FormFieldNumberEditor('characters_number_to_cut', $this->admin_common_lang['config.characters.number.to.cut'], $this->config->get_characters_number_to_cut(),
+			array(
+				'min' => 20, 'max' => 1000, 'required' => true,
+				'hidden' => $this->config->get_display_type() == DownloadConfig::LIST_VIEW && $this->config->get_full_item_display()
+			),
+			array(new FormFieldConstraintIntegerRange(20, 1000)
+		)));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_summary_to_guests', $this->admin_common_lang['config.display.summary.to.guests'], $this->config->is_summary_displayed_to_guests(),
 			array(
