@@ -14,7 +14,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 	/**
 	 * @var HTMLForm
 	 */
-	private $form;
+	protected $form;
 	/**
 	 * @var FormButtonSubmit
 	 */
