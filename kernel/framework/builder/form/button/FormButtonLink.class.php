@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 08 02
+ * @version     PHPBoost 6.0 - last update: 2020 08 14
  * @since       PHPBoost 3.0 - 2010 10 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -18,7 +18,7 @@ class FormButtonLink extends AbstractFormButton
 		$full_label = $action = '';
 		if (!empty($img))
 		{
-			$full_label = '<img src="' . $img . '" alt="' . $label . '" />';
+			$full_label = '<img src="' . $img . '" alt="' . $label . '" aria-label="' . $label . '" />';
 		}
 		else
 		{

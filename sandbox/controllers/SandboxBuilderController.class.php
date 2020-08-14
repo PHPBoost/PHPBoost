@@ -407,6 +407,15 @@ class SandboxBuilderController extends ModuleController
 			$buttons->add_element(new FormButtonButton('.warning.bgc', '', 'bgc-warning-button', 'bgc warning'));
 			$buttons->add_element(new FormButtonButton('.warning.bgc-full', '', 'bgc-full-warning-button', 'bgc-full warning'));
 
+			$buttons->add_field(new FormFieldSpacer('alternate_buttons', 'Buttons with link'));
+			$buttons->add_element(new FormButtonLink('Button with picture', 'https://www.phpboost.com', PATH_TO_ROOT . '/templates/default/theme/images/logo.png', '', ''));
+			$buttons->add_element(new FormButtonLink('Button with confirm', 'https://www.phpboost.com', '', 'bgc-full question button', 'Go to PHPBoost official website'));
+			$buttons->add_element(new FormButtonLinkCssImg('Button', 'https://www.phpboost.com','fa fa-share', 'Button with alternate text and icon'));
+
+			$buttons->add_field(new FormFieldSpacer('alternate_submit_buttons', 'Alternative submit buttons'));
+			$buttons->add_element(new FormButtonSubmitCssImg('Submit with icon', 'fa fa-check', 'Submit', ''));
+			$buttons->add_element(new FormButtonSubmitImg('Button with img', PATH_TO_ROOT . '/templates/default/theme/images/logo.png', ''));
+
 		// SUBMIT BUTTONS
 		$buttons_fieldset = new FormFieldsetSubmit('button_submit');
 			$buttons_fieldset->add_element(new FormButtonReset());
