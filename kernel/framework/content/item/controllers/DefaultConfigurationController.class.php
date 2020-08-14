@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 18
+ * @version     PHPBoost 6.0 - last update: 2020 08 14
  * @since       PHPBoost 6.0 - 2020 02 11
+ * @contributor xela <xela@phpboost.com>
 */
 
 class DefaultConfigurationController extends AbstractAdminItemController
@@ -43,6 +44,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 	{
 		$item_class_name = self::get_module()->get_configuration()->get_item_name();
 		$form = new HTMLForm(self::$module_id . '_config_form');
+		$this->add_additional_fieldsets($form);
 
 		$fieldset = new FormFieldsetHTMLHeading('configuration', StringVars::replace_vars($this->lang['configuration.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
@@ -195,8 +197,10 @@ class DefaultConfigurationController extends AbstractAdminItemController
 
 	protected function hide_fields() {}
 
-	protected function add_additional_fields(&$fieldset) {}
+	protected function add_additional_fields($fieldset) {}
 
 	protected function save_additional_fields() {}
+	
+	protected function add_additional_fieldsets($form) {}
 }
 ?>
