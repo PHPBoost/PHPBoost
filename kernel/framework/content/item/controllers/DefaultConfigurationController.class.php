@@ -197,10 +197,10 @@ class DefaultConfigurationController extends AbstractAdminItemController
 
 	protected function hide_fields() {}
 
-	protected function add_additional_fields($fieldset) {}
+	protected function add_additional_fields(&$fieldset) {}
 
 	protected function save_additional_fields() {}
 	
-	protected function add_additional_fieldsets($form) {}
+	protected function add_additional_fieldsets(&$form) {}
 }
 ?>
