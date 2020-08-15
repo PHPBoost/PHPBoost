@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 03 09
+ * @version     PHPBoost 6.0 - last update: 2020 08 15
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -111,6 +111,8 @@ $lang['builder.input.hidden'] = 'Champ caché';
 $lang['builder.free.html'] = 'Champ libre';
 $lang['builder.date'] = 'Date';
 $lang['builder.date.hm'] = 'Date/heure/minutes';
+$lang['builder.possible.values'] = 'Add possible values options';
+$lang['builder.sources'] = 'Add sources';
 $lang['builder.color'] = 'Couleur';
 $lang['builder.search'] = 'Recherche';
 $lang['builder.file.picker'] = 'Fichier';

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 27
+ * @version     PHPBoost 6.0 - last update: 2020 08 15
  * @since       PHPBoost 5.2 - 2020 05 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -316,6 +316,16 @@ class SandboxBuilderController extends ModuleController
 			// Date time
 			$miscellaneous->add_field(new FormFieldDateTime('date_time', $this->lang['builder.date.hm'], null,
 				array('required' => true, 'class' => 'css-class')
+			));
+
+			// Possible values
+			$miscellaneous->add_field(new FormFieldPossibleValues('possible_values_inputs', $this->lang['builder.possible.values'], array(),
+				array('class' => 'css-class')
+			));
+
+			// Sources
+			$miscellaneous->add_field(new FormFieldSelectSources('select_sources', $this->lang['builder.sources'], array(),
+				array('class' => 'css-class')
 			));
 
 			// Color picker

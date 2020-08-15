@@ -109,13 +109,14 @@ option {
 	width: 1%;
 }
 
-.form-field-values .grouped-inputs { width: 90%; }
-
 .possible-values {
     display: flex;
+	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
 }
+
+.possible-values .grouped-inputs { width: 90%; }
 
 .grouped-auto select,
 .grouped-auto input {

@@ -338,8 +338,3 @@ a.wikipedia-link:after {
 	border-left-width: 5px !important;
 	border-left-style: solid;
 }
-
-/* --- Add values in form --- */
-.add-more-values {
-	padding: 1em 0 0;
-}
