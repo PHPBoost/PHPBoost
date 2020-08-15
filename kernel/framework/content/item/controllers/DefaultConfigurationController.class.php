@@ -44,7 +44,6 @@ class DefaultConfigurationController extends AbstractAdminItemController
 	{
 		$item_class_name = self::get_module()->get_configuration()->get_item_name();
 		$form = new HTMLForm(self::$module_id . '_config_form');
-		$this->add_additional_fieldsets($form);
 
 		$fieldset = new FormFieldsetHTMLHeading('configuration', StringVars::replace_vars($this->lang['configuration.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
@@ -117,6 +116,8 @@ class DefaultConfigurationController extends AbstractAdminItemController
 			$fieldset->add_field(new FormFieldRichTextEditor('default_content', $this->items_lang['config.item.default.content'], $this->config->get_default_content(),
 				array('rows' => 8, 'cols' => 47)
 			));
+			
+			$this->add_additional_fieldsets($form);
 
 			if (self::get_module()->get_configuration()->has_categories())
 			{
