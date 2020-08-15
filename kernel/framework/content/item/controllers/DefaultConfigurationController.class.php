@@ -140,9 +140,11 @@ class DefaultConfigurationController extends AbstractAdminItemController
 			}
 		}
 		else
-			$this->add_additional_fieldsets($form);
+		{
 			$this->add_additional_fields($fieldset);
-
+			$this->add_additional_fieldsets($form);
+		}
+		
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', LangLoader::get_message('authorizations', 'common'),
 			array('description' => $this->lang['config.authorizations.explain'])
 		);
