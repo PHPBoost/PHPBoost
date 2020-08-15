@@ -11,7 +11,7 @@ FormFieldPossibleValues.prototype = {
 		if (this.integer <= this.max_input) {
 			var id = this.id_input + '_' + this.integer;
 
-			jQuery('<div/>', {id : id, class: 'custom-radio'}).appendTo('#input_fields_' + this.id_input);
+			jQuery('<div/>', {id : id, class: 'possible-values custom-radio'}).appendTo('#input_fields_' + this.id_input);
 
 			jQuery('<div/>', {id : id + '_radio', class: 'form-field-radio'}).appendTo('#' + id);
 			jQuery('<label/>', {class : 'radio', for : 'field_is_default_' + this.id_input + '_' + this.integer}).appendTo('#' + id + '_radio');
@@ -19,10 +19,10 @@ FormFieldPossibleValues.prototype = {
 			jQuery('<span/>', {class : 'is-default-title'}).html('&nbsp;').appendTo('#' + id + '_radio label');
 			jQuery('#' + id + '_radio').after(' ');
 
-			jQuery('<input/>', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{@field.name}'}).appendTo('#' + id);
+			jQuery('<div/>', {id : id + '_inputs', class: 'grouped-inputs'}).appendTo('#' + id);
+			jQuery('<input/>', {class : 'grouped-element', type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{@field.name}'}).appendTo('#' + id + '_inputs');
 			jQuery('#field_name_' + id).after(' ');
-
-			jQuery('<a/>', {href : 'javascript:FormFieldPossibleValues.delete_field('+ this.integer +');', id : 'delete_' + id, 'aria-label' : "${LangLoader::get_message('delete', 'common')}"}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#' + id);
+			jQuery('<a/>', {class : 'grouped-element', href : 'javascript:FormFieldPossibleValues.delete_field('+ this.integer +');', id : 'delete_' + id, 'aria-label' : "${LangLoader::get_message('delete', 'common')}"}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#' + id + '_inputs');
 
 			jQuery('<script/>').html('jQuery("#field_is_default_' + id + '").on(\'click\',function(){ jQuery("#uncheck_default_${escape(HTML_ID)}").show(); });').appendTo('#' + id);
 
@@ -47,34 +47,33 @@ var FormFieldPossibleValues = new FormFieldPossibleValues();
 <div id="input_fields_${escape(HTML_ID)}" class="form-field-values">
 	<span class="text-strong is-default-title hidden-small-screens">{@field.possible_values.is_default}</span>
 	# START fieldelements #
-		<div id="${escape(HTML_ID)}_{fieldelements.ID}" class="custom-radio">
+		<div id="${escape(HTML_ID)}_{fieldelements.ID}" class="possible-values custom-radio">
 			<div class="form-field-radio">
 				<label class="radio" for="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}">
 					<input type="radio" name="field_is_default_${escape(HTML_ID)}" id="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.ID}"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF #>
 					<span class="is-default-title">&nbsp;</span>
 				</label>
 			</div>
-			<input type="text" name="field_name_${escape(HTML_ID)}_{fieldelements.ID}" id="field_name_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.TITLE}" placeholder="{@field.name}"/>
-			<a href="javascript:FormFieldPossibleValues.delete_field({fieldelements.ID});" id="delete_${escape(HTML_ID)}_{fieldelements.ID}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+			<div class="grouped-inputs">
+				<input class="grouped-element" type="text" name="field_name_${escape(HTML_ID)}_{fieldelements.ID}" id="field_name_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.TITLE}" placeholder="{@field.name}"/>
+				<a class="grouped-element" href="javascript:FormFieldPossibleValues.delete_field({fieldelements.ID});" id="delete_${escape(HTML_ID)}_{fieldelements.ID}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+			</div>
+
 			<script>
-			<!--
-			jQuery("#field_is_default_${escape(HTML_ID)}_{fieldelements.ID}").on('click',function(){
-				jQuery("#uncheck_default_${escape(HTML_ID)}").show();
-			});
-			-->
+				jQuery("#field_is_default_${escape(HTML_ID)}_{fieldelements.ID}").on('click',function(){
+					jQuery("#uncheck_default_${escape(HTML_ID)}").show();
+				});
 			</script>
 		</div>
 	# END fieldelements #
 </div>
 <a href="javascript:FormFieldPossibleValues.add_field();" id="add_${escape(HTML_ID)}" class="add-more-values" aria-label="${LangLoader::get_message('add', 'common')}"><i class="far fa-lg fa-plus-square" aria-hidden="true"></i></a>
-<a href="#" onclick="return false;" id="uncheck_default_${escape(HTML_ID)}"# IF NOT C_HAS_DEFAULT_VALUE # style="display: none;"# ENDIF # class="small">${LangLoader::get_message('field.possible_values.delete_default', 'admin-user-common')}</a>
+<a href="#" onclick="return false;" id="uncheck_default_${escape(HTML_ID)}"# IF NOT C_HAS_DEFAULT_VALUE # style="display: none;"# ENDIF # class="small float-right"> <i class="fa fa-times" aria-hidden="true"></i> {@field.possible_values.delete_default}</a>
 <script>
-<!--
-jQuery(document).ready(function() {
-	jQuery("#uncheck_default_${escape(HTML_ID)}").on('click',function() {
-		jQuery("input[name=field_is_default_${escape(HTML_ID)}]").prop("checked", false);
-		jQuery("#uncheck_default_${escape(HTML_ID)}").hide();
+	jQuery(document).ready(function() {
+		jQuery("#uncheck_default_${escape(HTML_ID)}").on('click',function() {
+			jQuery("input[name=field_is_default_${escape(HTML_ID)}]").prop("checked", false);
+			jQuery("#uncheck_default_${escape(HTML_ID)}").hide();
+		});
 	});
-});
--->
 </script>

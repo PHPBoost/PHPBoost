@@ -77,6 +77,7 @@ optgroup {
 option {
 	padding: 0 0.228em;
 }
+
 @media (min-width: 769px) {
 	[type="text"],
 	[type="email"],
@@ -106,6 +107,14 @@ option {
 	flex: 1 1 auto;
 	margin: 0;
 	width: 1%;
+}
+
+.form-field-values .grouped-inputs { width: 90%; }
+
+.possible-values {
+    display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .grouped-auto select,

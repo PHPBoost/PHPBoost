@@ -68,22 +68,7 @@ select {
 }
 
 /* --- possible values ------------------------------------------------------ */
-[id*="_possible_values_"] > div > div > div {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-	justify-content: space-between;
-	align-items: center;
-}
-
-.form-field-values input[type="text"] {
-	width: 80%;
-}
-
 @media (min-width: 769px) {
-	[id*="_possible_values_"] > div > div > div {
-	    flex-wrap: nowrap;
-	}
 
 	[id*="_possible_values_"] .form-field-radio [type="radio"]:not(:checked) + label::before,
 	[id*="_possible_values_"] .form-field-radio [type="radio"]:checked + label::before {
