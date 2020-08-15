@@ -118,7 +118,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 			));
 			
 			$this->add_additional_fieldsets($form);
-
+			
 			if (self::get_module()->get_configuration()->has_categories())
 			{
 				$fieldset_categories = new FormFieldsetHTML('categories', LangLoader::get_message('categories', 'categories-common'));
@@ -140,6 +140,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 			}
 		}
 		else
+			$this->add_additional_fieldsets($form);
 			$this->add_additional_fields($fieldset);
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', LangLoader::get_message('authorizations', 'common'),
