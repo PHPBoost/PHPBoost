@@ -91,6 +91,8 @@ select {
 	width: 100%;
 }
 
+.no-flex .fieldset-inset { display: inline-block; }
+
 .form-element.form-element-textarea {
 	width: 100%;
 }

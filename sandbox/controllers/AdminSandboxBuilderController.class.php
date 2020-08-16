@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 27
+ * @version     PHPBoost 6.0 - last update: 2020 08 16
  * @since       PHPBoost 5.2 - 2020 05 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -319,6 +319,16 @@ class AdminSandboxBuilderController extends AdminModuleController
 				array('required' => true, 'class' => 'css-class')
 			));
 
+			// Possible values
+			$miscellaneous->add_field(new FormFieldPossibleValues('possible_values_inputs', $this->lang['builder.possible.values'], array(),
+				array('class' => 'css-class')
+			));
+
+			// Sources
+			$miscellaneous->add_field(new FormFieldSelectSources('select_sources', $this->lang['builder.sources'], array(),
+				array('class' => 'css-class')
+			));
+
 			// Color picker
 			$miscellaneous->add_field(new FormFieldColorPicker('color', $this->lang['builder.color'], '#366393',
 				array('class' => 'top-field css-class')
@@ -397,6 +407,7 @@ class AdminSandboxBuilderController extends AdminModuleController
 		// BUTTONS
 		$buttons = new FormFieldsetHTML('buttons', $this->lang['builder.title.buttons']);
 			$form->add_fieldset($buttons);
+			$buttons->set_css_class('no-flex');
 			$buttons->add_field(new FormFieldSpacer('all_buttons_explain', $this->lang['builder.all.buttons']));
 
 			$buttons->add_field(new FormFieldSpacer('button_sizes', $this->lang['builder.button.sizes']));
@@ -407,6 +418,15 @@ class AdminSandboxBuilderController extends AdminModuleController
 			$buttons->add_element(new FormButtonButton('.warning', '', 'warning-button', 'warning'));
 			$buttons->add_element(new FormButtonButton('.warning.bgc', '', 'bgc-warning-button', 'bgc warning'));
 			$buttons->add_element(new FormButtonButton('.warning.bgc-full', '', 'bgc-full-warning-button', 'bgc-full warning'));
+
+			$buttons->add_field(new FormFieldSpacer('alternate_buttons', $this->lang['builder.button.link']));
+			$buttons->add_element(new FormButtonLink($this->lang['builder.button.picture'], 'https://www.phpboost.com', Url::to_rel('/templates/default/theme/images/logo.png'), '', ''));
+			$buttons->add_element(new FormButtonLink($this->lang['builder.button.confirm'], 'https://www.phpboost.com', '', 'bgc-full question button', $this->lang['builder.button.confirm.alert']));
+			$buttons->add_element(new FormButtonLinkCssImg('Button', 'https://www.phpboost.com','fa fa-share', $this->lang['builder.button.icon']));
+
+			$buttons->add_field(new FormFieldSpacer('alternate_submit_buttons', $this->lang['builder.button.alternate.send']));
+			$buttons->add_element(new FormButtonSubmitCssImg($this->lang['builder.button.icon'], 'fa fa-check', 'Submit', ''));
+			$buttons->add_element(new FormButtonSubmitImg($this->lang['builder.button.picture'], Url::to_rel('/templates/default/theme/images/logo.png'), ''));
 
 		// SUBMIT BUTTONS
 		$buttons_fieldset = new FormFieldsetSubmit('button_submit');

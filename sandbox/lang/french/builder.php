@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 08 15
+ * @version     PHPBoost 6.0 - last update: 2020 08 16
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -91,13 +91,18 @@ $lang['builder.input.timezone'] = 'TimeZone';
 $lang['builder.input.user.completion'] = 'Auto complétion utilisateurs';
 
 // Buttons
-$lang['builder.all.buttons'] = 'Tous les boutons sont pré-définis avec la classe .button';
+$lang['builder.all.buttons'] = 'Tous les boutons sont pré-définis avec la classe .button <br /><br />';
 $lang['builder.send.button'] = 'Envoyer';
-$lang['builder.send.button.alt'] = 'Envoyer .alt';
 $lang['builder.preview'] = 'Prévisualiser';
 $lang['builder.button'] = 'Bouton';
 $lang['builder.button.sizes'] = 'Avec une taille';
 $lang['builder.button.colors'] = 'Avec une couleur';
+$lang['builder.button.link'] = 'Avec un lien';
+$lang['builder.button.picture'] = 'Avec une image';
+$lang['builder.button.icon'] = 'Avec une icône';
+$lang['builder.button.confirm'] = 'Avec une confirmation';
+$lang['builder.button.confirm.alert'] = 'Ce lien vous redirige vers le site officiel.';
+$lang['builder.button.alternate.send'] = 'Boutons alternatifs de validation';
 $lang['builder.buttons'] = 'Boutons';
 $lang['builder.button.small'] = 'Bouton .small';
 $lang['builder.button.basic'] = 'Bouton .basic';

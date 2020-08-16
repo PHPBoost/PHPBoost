@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 08 15
+ * @version     PHPBoost 6.0 - last update: 2020 08 16
  * @since       PHPBoost 5.2 - 2020 05 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -417,14 +417,14 @@ class SandboxBuilderController extends ModuleController
 			$buttons->add_element(new FormButtonButton('.warning.bgc', '', 'bgc-warning-button', 'bgc warning'));
 			$buttons->add_element(new FormButtonButton('.warning.bgc-full', '', 'bgc-full-warning-button', 'bgc-full warning'));
 
-			$buttons->add_field(new FormFieldSpacer('alternate_buttons', 'Buttons with link'));
-			$buttons->add_element(new FormButtonLink('Button with picture', 'https://www.phpboost.com', PATH_TO_ROOT . '/templates/default/theme/images/logo.png', '', ''));
-			$buttons->add_element(new FormButtonLink('Button with confirm', 'https://www.phpboost.com', '', 'bgc-full question button', 'Go to PHPBoost official website'));
-			$buttons->add_element(new FormButtonLinkCssImg('Button', 'https://www.phpboost.com','fa fa-share', 'Button with alternate text and icon'));
+			$buttons->add_field(new FormFieldSpacer('alternate_buttons', $this->lang['builder.button.link']));
+			$buttons->add_element(new FormButtonLink($this->lang['builder.button.picture'], 'https://www.phpboost.com', Url::to_rel('/templates/default/theme/images/logo.png'), '', ''));
+			$buttons->add_element(new FormButtonLink($this->lang['builder.button.confirm'], 'https://www.phpboost.com', '', 'bgc-full question button', $this->lang['builder.button.confirm.alert']));
+			$buttons->add_element(new FormButtonLinkCssImg('Button', 'https://www.phpboost.com','fa fa-share', $this->lang['builder.button.icon']));
 
-			$buttons->add_field(new FormFieldSpacer('alternate_submit_buttons', 'Alternative submit buttons'));
-			$buttons->add_element(new FormButtonSubmitCssImg('Submit with icon', 'fa fa-check', 'Submit', ''));
-			$buttons->add_element(new FormButtonSubmitImg('Button with img', PATH_TO_ROOT . '/templates/default/theme/images/logo.png', ''));
+			$buttons->add_field(new FormFieldSpacer('alternate_submit_buttons', $this->lang['builder.button.alternate.send']));
+			$buttons->add_element(new FormButtonSubmitCssImg($this->lang['builder.button.icon'], 'fa fa-check', 'Submit', ''));
+			$buttons->add_element(new FormButtonSubmitImg($this->lang['builder.button.picture'], Url::to_rel('/templates/default/theme/images/logo.png'), ''));
 
 		// SUBMIT BUTTONS
 		$buttons_fieldset = new FormFieldsetSubmit('button_submit');
