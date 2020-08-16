@@ -15,9 +15,9 @@
 ####################################################
 
 $lang['builder.explain'] = '
-<p>Cette page présente le rendu des éléments de formulaire</p>
-<p>Créés avec le constructeur php, vous pouvez également les <a class="pinned bgc link-color" href="#markup-view">ajouter en html <i class="fa fa-caret-down"></i></a>.</p>
-<p>Pour accéder aux déclarations PHP de chaque élément, vous pouvez lire <a href="https://github.com/PHPBoost/PHPBoost/blob/master/sandbox/controllers/SandboxBuilderController.class.php#L110">le fichier</a> fourni avec ce module, ou la documentation de l\'API sur le site de <a href="https://www.phpboost.com/api"><i class="fa iboost fa-iboost-phpboost"></i> PHPHBoost</a></p>
+    <p>Cette page présente le rendu des éléments de formulaire</p>
+    <p>Créés avec le constructeur php, vous pouvez également les <a class="pinned bgc link-color" href="#markup-view">ajouter en html <i class="fa fa-caret-down"></i></a>.</p>
+    <p>Pour accéder aux déclarations PHP de chaque élément, vous pouvez lire <a href="https://github.com/PHPBoost/PHPBoost/blob/master/sandbox/controllers/SandboxBuilderController.class.php#L110">le fichier</a> fourni avec ce module, ou la documentation de l\'API sur le site de <a href="https://www.phpboost.com/api"><i class="fa iboost fa-iboost-phpboost"></i> PHPHBoost</a></p>
 ';
 $lang['builder.title'] = 'Formulaire';
 $lang['builder.preview'] = 'Prévisualisation';
@@ -75,10 +75,9 @@ $lang['builder.input.multiline'] = 'Champ texte multi lignes';
 $lang['builder.input.multiline.desc'] = 'Description';
 $lang['builder.input.multiline.lorem'] = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut tempor lacus.';
 $lang['builder.input.rich.text'] = 'Champ texte avec éditeur';
-$lang['builder.input.rich.text.placeholder'] = 'Créer un site <strong>facilement</strong>';
+$lang['builder.input.rich.text.placeholder'] = 'Lorem ipsum dolor sit <strong>amet</strong>';
 
 // Choices
-$lang['builder.input.choices'] = 'Champs à sélection';
 $lang['builder.input.checkbox'] = 'Case à cocher';
 $lang['builder.input.multiple.checkbox'] = 'Case à cocher multiple';
 $lang['builder.input.radio'] = 'Boutons radio';
@@ -89,24 +88,6 @@ $lang['builder.input.choice'] = 'Choix ';
 $lang['builder.input.choice.group'] = 'Groupe ';
 $lang['builder.input.timezone'] = 'TimeZone';
 $lang['builder.input.user.completion'] = 'Auto complétion utilisateurs';
-
-// Buttons
-$lang['builder.all.buttons'] = 'Tous les boutons sont pré-définis avec la classe .button <br /><br />';
-$lang['builder.send.button'] = 'Envoyer';
-$lang['builder.preview'] = 'Prévisualiser';
-$lang['builder.button'] = 'Bouton';
-$lang['builder.button.sizes'] = 'Avec une taille';
-$lang['builder.button.colors'] = 'Avec une couleur';
-$lang['builder.button.link'] = 'Avec un lien';
-$lang['builder.button.picture'] = 'Avec une image';
-$lang['builder.button.icon'] = 'Avec une icône';
-$lang['builder.button.confirm'] = 'Avec une confirmation';
-$lang['builder.button.confirm.alert'] = 'Ce lien vous redirige vers le site officiel.';
-$lang['builder.button.alternate.send'] = 'Boutons alternatifs de validation';
-$lang['builder.buttons'] = 'Boutons';
-$lang['builder.button.small'] = 'Bouton .small';
-$lang['builder.button.basic'] = 'Bouton .basic';
-$lang['builder.button.basic.alt'] = 'Bouton .basic.alt';
 
 // Miscellaneaous
 $lang['builder.title.miscellaneous'] = 'Divers';
@@ -154,4 +135,17 @@ $lang['builder.authorization.2'] = 'Action 2';
 $lang['builder.vertical.desc'] = 'Formulaire vertical';
 $lang['builder.horizontal.desc'] = 'Formulaire horizontal';
 
+// Buttons
+$lang['builder.all.buttons'] = 'Tous les boutons sont pré-définis avec la classe .button <br /><br />';
+$lang['builder.send.button'] = 'Envoyer';
+$lang['builder.button'] = 'Bouton';
+$lang['builder.button.sizes'] = 'Avec une taille';
+$lang['builder.button.colors'] = 'Avec une couleur';
+$lang['builder.button.link'] = 'Avec un lien';
+$lang['builder.button.picture'] = 'Avec une image';
+$lang['builder.button.icon'] = 'Avec une icône';
+$lang['builder.button.confirm'] = 'Avec une confirmation';
+$lang['builder.button.confirm.alert'] = 'Ce lien vous redirige vers le site officiel.';
+$lang['builder.button.alternate.send'] = 'Boutons alternatifs de validation';
+$lang['builder.buttons'] = 'Boutons';
 ?>

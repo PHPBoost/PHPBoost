@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 25
+ * @version     PHPBoost 6.0 - last update: 2020 08 16
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -27,11 +27,11 @@ $lang['icons.fa.list'] = 'La liste complète des icônes et de leur code associ�
 $lang['icons.fa.howto'] = 'Comment ça marche ?';
 $lang['icons.fa.howto.explain'] = 'Font-Awesome est une <span class="text-strong">icon font</span>: une police de caractère qui permet d\'afficher des icônes simplement.';
 $lang['icons.fa.howto.update'] = 'Elle est implémentée depuis la version 4.1 de PHPBoost. Chaque mise à jour de Font-Awesome est implémentée dans la mise à jour suivante de PHPBoost.';
-$lang['icons.fa.howto.html'] = 'En html';
+$lang['icons.fa.howto.html'] = 'En HTML';
 $lang['icons.fa.howto.html.class'] = 'On utilise le nom de l\'icône en tant que classe : ';
 $lang['icons.fa.howto.html.class.result.i'] = 'donnera l\'icône "edit" suivie du texte : ';
 $lang['icons.fa.howto.html.class.result.a'] = 'donnera le lien précédé de l\'icône "globe" : ';
-$lang['icons.fa.howto.html.class.result.all'] = 'Il en est de même pour tout type de balise html.';
+$lang['icons.fa.howto.html.class.result.all'] = 'Il en est de même pour tout type de balise HTML.';
 $lang['icons.fa.howto.css'] = 'En CSS';
 $lang['icons.fa.howto.css.class'] = 'Il faut définir votre classe, puis le code de votre icône en tant que contenu du ::before ou du ::after de la classe :';
 $lang['icons.fa.howto.css.css.code'] = 'Code CSS :';
