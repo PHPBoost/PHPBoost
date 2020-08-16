@@ -83,8 +83,11 @@ var ContactFormFieldObjectPossibleValues = new ContactFormFieldObjectPossibleVal
 	</div>
 # END fieldelements #
 </div>
-<a href="javascript:ContactFormFieldObjectPossibleValues.add();" id="add-${escape(HTML_ID)}" class="form-field-more-values" aria-label="${LangLoader::get_message('add', 'common')}"><i class="far fa-lg fa-plus-square" aria-hidden="true"></i></a>
-<a href="#" onclick="return false;" id="uncheck_default_${escape(HTML_ID)}"# IF NOT C_HAS_DEFAULT_VALUE # style="display: none;"# ENDIF # class="small float-right"><i class="fa fa-times" aria-hidden="true"></i> ${LangLoader::get_message('field.possible_values.delete_default', 'admin-user-common')}</a>
+<div class="flex-between">
+	<a href="javascript:ContactFormFieldObjectPossibleValues.add();" id="add-${escape(HTML_ID)}" class="form-field-more-values" aria-label="${LangLoader::get_message('add', 'common')}"><i class="far fa-lg fa-plus-square" aria-hidden="true"></i></a>
+	<a href="#" onclick="return false;" id="uncheck_default_${escape(HTML_ID)}"# IF NOT C_HAS_DEFAULT_VALUE # style="display: none;"# ENDIF # class="small"><i class="fa fa-times" aria-hidden="true"></i> ${LangLoader::get_message('field.possible_values.delete_default', 'admin-user-common')}</a>
+</div>
+
 <script>
 	jQuery(document).ready(function() {
 		jQuery("#uncheck_default_${escape(HTML_ID)}").on('click',function() {

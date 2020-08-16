@@ -67,8 +67,11 @@ var FormFieldPossibleValues = new FormFieldPossibleValues();
 		</div>
 	# END fieldelements #
 </div>
-<a href="javascript:FormFieldPossibleValues.add_field();" id="add_${escape(HTML_ID)}" class="add-more-values" aria-label="${LangLoader::get_message('add', 'common')}"><i class="far fa-lg fa-plus-square" aria-hidden="true"></i></a>
-<a href="#" onclick="return false;" id="uncheck_default_${escape(HTML_ID)}"# IF NOT C_HAS_DEFAULT_VALUE # style="display: none;"# ENDIF # class="small float-right"> <i class="fa fa-times" aria-hidden="true"></i> {@field.possible_values.delete_default}</a>
+<div class="flex-between">
+	<a href="javascript:FormFieldPossibleValues.add_field();" id="add_${escape(HTML_ID)}" class="add-more-values" aria-label="${LangLoader::get_message('add', 'common')}"><i class="far fa-lg fa-plus-square" aria-hidden="true"></i></a>
+	<a href="#" onclick="return false;" id="uncheck_default_${escape(HTML_ID)}"# IF NOT C_HAS_DEFAULT_VALUE # style="display: none;"# ENDIF # class="small"> <i class="fa fa-times" aria-hidden="true"></i> {@field.possible_values.delete_default}</a>
+</div>
+
 <script>
 	jQuery(document).ready(function() {
 		jQuery("#uncheck_default_${escape(HTML_ID)}").on('click',function() {
