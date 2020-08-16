@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 23
+ * @version     PHPBoost 6.0 - last update: 2020 08 16
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -121,7 +121,7 @@ class DownloadFormController extends ModuleController
 		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->common_lang['form.description'], $this->get_downloadfile()->get_contents(), array('rows' => 15, 'required' => true)));
 
 		$fieldset->add_field(new FormFieldCheckbox('summary_enabled', $this->common_lang['form.short_contents.enabled'], $this->get_downloadfile()->is_summary_enabled(),
-			array('description' => StringVars::replace_vars($this->common_lang['form.short_contents.enabled.description'], array('number' => DownloadConfig::CHARACTERS_TO_DISPLAY)), 'events' => array('click' => '
+			array('description' => StringVars::replace_vars($this->common_lang['form.short_contents.enabled.description'], array('number' => DownloadConfig::CHARACTERS_NUMBER_TO_CUT)), 'events' => array('click' => '
 			if (HTMLForms.getField("summary_enabled").getValue()) {
 				HTMLForms.getField("summary").enable();
 			} else {

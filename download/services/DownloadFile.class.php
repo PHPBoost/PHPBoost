@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 23
+ * @version     PHPBoost 6.0 - last update: 2020 08 16
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -179,7 +179,7 @@ class DownloadFile
 		{
 			return FormatingHelper::second_parse($this->summary);
 		}
-		return TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>'), (int)DownloadConfig::CHARACTERS_TO_DISPLAY);
+		return TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>'), (int)DownloadConfig::CHARACTERS_NUMBER_TO_CUT);
 	}
 
 	public function get_approbation_type()
@@ -527,7 +527,7 @@ class DownloadFile
 				'C_CONTROLS'			 => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
 				'C_EDIT'                 => $this->is_authorized_to_edit(),
 				'C_DELETE'               => $this->is_authorized_to_delete(),
-				'C_READ_MORE'            => !$this->is_summary_enabled() && TextHelper::strlen($contents) > DownloadConfig::CHARACTERS_TO_DISPLAY && $real_summary != @strip_tags($contents, '<br><br/>'),
+				'C_READ_MORE'            => !$this->is_summary_enabled() && TextHelper::strlen($contents) > DownloadConfig::CHARACTERS_NUMBER_TO_CUT && $real_summary != @strip_tags($contents, '<br><br/>'),
 				'C_SIZE'                 => !empty($this->size),
 				'C_HAS_THUMBNAIL'        => $this->has_thumbnail(),
 				'C_SOFTWARE_VERSION'     => !empty($this->software_version),
