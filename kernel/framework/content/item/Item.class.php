@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 08 08
+ * @version     PHPBoost 6.0 - last update: 2020 08 17
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor xela <xela@phpboost.com>
 */
@@ -331,12 +331,19 @@ class Item
 		if (isset($parameters['is_url']))
 		{
 			if ($parameters['is_url'] == true)
-				$this->additional_attributes_list[$id] = array('is_url' => $parameters['is_url']);
+				$this->additional_attributes_list[$id] = array('is_url' => $parameters['is_url'], 'is_array' => false);
 			
 			unset($parameters['is_url']);
 		}
+		elseif (isset($parameters['is_array']))
+		{
+			if ($parameters['is_array'] == true)
+				$this->additional_attributes_list[$id] = array('is_array' => $parameters['is_array'], 'is_url' => false);
+			
+			unset($parameters['is_array']);
+		}
 		else
-			$this->additional_attributes_list[$id] = array('is_url' => false);
+			$this->additional_attributes_list[$id] = array('is_url' => false, 'is_array' => false);
 		
 		foreach (array('attribute_pre_content_field_parameters', 'attribute_post_content_field_parameters', 'attribute_other_field_parameters') as $attribute_field)
 		{
@@ -408,6 +415,8 @@ class Item
 		{
 			if ($attribute['is_url'])
 				$properties[$id] = $this->additional_attributes_values[$id]->relative();
+			elseif ($attribute['is_array'])
+				$properties[$id] = TextHelper::serialize($this->additional_attributes_values[$id]);
 			else
 				$properties[$id] = $this->additional_attributes_values[$id];
 		}
@@ -473,15 +482,17 @@ class Item
 		{
 			if (isset($properties[$id]))
 			{
-				$this->set_additional_property($id, $properties[$id], $attribute['is_url']);
+				$this->set_additional_property($id, $properties[$id], $attribute['is_url'], $attribute['is_array']);
 			}
 		}
 	}
 
-	public function set_additional_property($id, $value, $is_url = false)
+	public function set_additional_property($id, $value, $is_url = false, $is_array = false)
 	{
 		if ($is_url)
 			$this->additional_attributes_values[$id] = new Url($value);
+		elseif ($is_array)
+			$this->additional_attributes_values[$id] = TextHelper::unserialize($value);
 		else
 			$this->additional_attributes_values[$id] = $value;
 	}
