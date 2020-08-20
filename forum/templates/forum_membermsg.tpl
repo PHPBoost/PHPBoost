@@ -2,7 +2,7 @@
 
 		# INCLUDE forum_top #
 
-		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-membermsg" class="forum-contents">
+		<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-membermsg" class="forum-contents">
 			<header class="flex-between">
 				<h2>
 					{L_VIEW_MSG_USER}
@@ -12,7 +12,7 @@
 			<div class="content">
 
 				# START list #
-					<article id="d{list.ID}" class="message-container message-small category-{list.CATEGORY_ID}" itemscope="itemscope" itemtype="http://schema.org/Comment">
+					<article id="d{list.ID}" class="message-container message-small category-{list.CATEGORY_ID}" itemscope="itemscope" itemtype="https://schema.org/Comment">
 						<span id="m{list.ID}"></span>
 						<header class="message-header-container">
 							# IF list.C_USER_AVATAR #<img class="message-user-avatar" src="{list.U_USER_AVATAR}" alt="${LangLoader::get_message('avatar', 'user-common')}"># ENDIF #

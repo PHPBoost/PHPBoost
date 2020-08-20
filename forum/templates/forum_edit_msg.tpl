@@ -11,7 +11,7 @@
 		-->
 		</script>
 
-		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-edit-message" class="forum-contents">
+		<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-edit-message" class="forum-contents">
 			<header>
 				<h2>
 					<a href="index.php">{L_FORUM_INDEX}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i>

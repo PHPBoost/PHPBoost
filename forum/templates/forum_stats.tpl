@@ -1,6 +1,6 @@
 		# INCLUDE forum_top #
 
-		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-stats">
+		<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-stats">
 			<header>
 				<h2>{L_STATS}</h2>
 			</header>

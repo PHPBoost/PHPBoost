@@ -6,7 +6,7 @@
 	# IF C_EVENTS #
 		<div class="cell-row">
 			# START event #
-				<article itemscope="itemscope" itemtype="http://schema.org/Event" id="article-calendar-{event.ID}" class="calendar-item several-items category-{event.CATEGORY_ID} cell# IF event.C_NEW_CONTENT # new-content# ENDIF #">
+				<article itemscope="itemscope" itemtype="https://schema.org/Event" id="article-calendar-{event.ID}" class="calendar-item several-items category-{event.CATEGORY_ID} cell# IF event.C_NEW_CONTENT # new-content# ENDIF #">
 					<header class="cell-header">
 						<h2 class="cell-name" itemprop="name">
 							<a href="{event.U_ITEM}" itemprop="url">{event.TITLE}</a>
@@ -22,7 +22,7 @@
 							# ENDIF #
 							# IF C_COMMENTS_ENABLED #<a class="pinned" href="{event.U_COMMENTS}"><i class="fa fa-comments" aria-hidden="true"></i> {event.L_COMMENTS}</a># ENDIF #
 							# IF event.C_LOCATION #
-								<span class="pinned" itemscope="itemscope" itemtype="http://schema.org/Place">
+								<span class="pinned" itemscope="itemscope" itemtype="https://schema.org/Place">
 									<i class="fa fa-fw fa-map-marker-alt"></i>
 									<span class="text-strong" itemprop="name">{event.LOCATION}</span>
 								</span>
@@ -46,7 +46,7 @@
 								<a class="cell-thumbnail-caption" href="{event.U_ITEM}" itemprop="thumbnailUrl" aria-label="{event.TITLE}"><i class="far fa-eye" aria-hidden="true"></i></a>
 							</div>
 						# ENDIF #
-						<div class="cell-content" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+						<div class="cell-content" itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 							# IF event.C_CANCELLED #
 							<span class="message-helper bgc error">{@calendar.cancelled.event}</span>
 							# ENDIF #

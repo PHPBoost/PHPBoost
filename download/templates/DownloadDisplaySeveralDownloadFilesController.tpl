@@ -142,7 +142,7 @@
 		# ELSE #
 			<div class="# IF C_GRID_VIEW #cell-flex cell-columns-{ITEMS_PER_ROW}# ELSE #cell-row# ENDIF #">
 				# START downloadfiles #
-					<article id="download-item-{downloadfiles.ID}" class="download-item several-items category-{downloadfiles.CATEGORY_ID} cell# IF downloadfiles.C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+					<article id="download-item-{downloadfiles.ID}" class="download-item several-items category-{downloadfiles.CATEGORY_ID} cell# IF downloadfiles.C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 						<header class="cell-header">
 							<h2 class="cell-name"><a href="{downloadfiles.U_ITEM}" itemprop="name">{downloadfiles.TITLE}</a></h2>
 						</header>

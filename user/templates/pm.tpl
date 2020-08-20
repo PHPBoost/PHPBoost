@@ -169,7 +169,7 @@
 		# IF pm.C_PAGINATION #<div class="float-right"># INCLUDE pm.PAGINATION #</div># ENDIF #
 
 	# START pm.msg #
-		<article id="article-pm-{pm.msg.ID}" class="pm-item several-items message-container message-small message-offset" itemscope="itemscope" itemtype="http://schema.org/Comment">
+		<article id="article-pm-{pm.msg.ID}" class="pm-item several-items message-container message-small message-offset" itemscope="itemscope" itemtype="https://schema.org/Comment">
 			<span id="m{pm.msg.ID}"></span>
 		    <header class="message-header-container# IF pm.msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
 				# IF pm.msg.C_AVATAR #<img src="{pm.msg.USER_AVATAR}" alt="{pm.msg.USER_PSEUDO}" class="message-user-avatar" /># ENDIF #

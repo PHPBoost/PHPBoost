@@ -311,7 +311,7 @@ It enables the website to remember your actions and preferences (such as login, 
 <h2 class="formatter-title">Others cookies :</h2>
 ' . GeneralConfig::load()->get_site_name() . ' does not use any tracking cookies. However, using google-analytics module or social-media buttons need some tracking cookies
 <h2 class="formatter-title">How to control cookies ?</h2>
-You can control and/or delete cookies as you wish – for details, see <a href="http://www.aboutcookies.org">aboutcookies.org</a>. <br />
+You can control and/or delete cookies as you wish – for details, see <a href="https://www.aboutcookies.org">aboutcookies.org</a>. <br />
 You can delete all cookies that are already on your computer and you can set most browsers to prevent them from being placed. If you do this, however, you may have to manually adjust some preferences every time you visit a site and some services and functionalities may not work.
 ';
 $lang['cookiebar.understand']  = 'Ok';

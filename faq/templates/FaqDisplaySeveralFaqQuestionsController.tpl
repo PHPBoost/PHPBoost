@@ -105,7 +105,7 @@
 				</ul>
 			</nav>
 			# START questions #
-				<article id="question{questions.ID}" itemscope="itemscope" itemtype="http://schema.org/CreativeWork" class="accordion accordion-animation faq-item several-items# IF questions.C_NEW_CONTENT # new-content# ENDIF #">
+				<article id="question{questions.ID}" itemscope="itemscope" itemtype="https://schema.org/CreativeWork" class="accordion accordion-animation faq-item several-items# IF questions.C_NEW_CONTENT # new-content# ENDIF #">
 					<div class="content-panel faq-answer-container" itemprop="text">
 						<div class="controls align-right">
 							<a href="{questions.U_LINK}" onclick="copy_to_clipboard('{questions.U_ABSOLUTE_LINK}');return false;" aria-label="{questions.L_LINK_QUESTION}"><i class="fa fa-fw fa-anchor" aria-hidden="true"></i></a>

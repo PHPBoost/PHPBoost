@@ -5,7 +5,7 @@
             <h5>{@layout.messages.and.coms}</h5>
         </header>
         <div class="content">
-            <article id="comID" class="message-container" itemscope="itemscope" itemtype="http://schema.org/Comment">
+            <article id="comID" class="message-container" itemscope="itemscope" itemtype="https://schema.org/Comment">
                 <header class="message-header-container">
                     <img class="message-user-avatar" src="{NO_AVATAR_URL}" alt="${LangLoader::get_message('avatar', 'user-common')}">
                     <div class="message-header-infos">
@@ -63,7 +63,7 @@
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="formatter-content">
-<pre class="language-html line-numbers"><code class="language-html">&lt;article id="Id" class="message-container (message-small/message-offset)" itemscope="itemscope" itemtype="http://schema.org/Comment">
+<pre class="language-html line-numbers"><code class="language-html">&lt;article id="Id" class="message-container (message-small/message-offset)" itemscope="itemscope" itemtype="https://schema.org/Comment">
     &lt;header class="message-header-container (#IF CURRENT#current-user-message)">
         &lt;img class="message-user-avatar" src="Url" alt="Text">
         &lt;div class="message-header-infos">

@@ -4,7 +4,7 @@
  * @license     https://www.opensource.org/licenses/mit-license.php
  * @author      Jonas von Andrian
  * @link        https://github.com/johnny/jquery-sortable
- * @doc         http://johnny.github.io/jquery-sortable/
+ * @doc         https://johnny.github.io/jquery-sortable/
  * @version     PHPBoost 6.0 - last update: 2018 08 09
  * @since       PHPBoost 5.0 - 2016 03 30
 */

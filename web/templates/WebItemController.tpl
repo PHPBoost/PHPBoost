@@ -10,7 +10,7 @@
 	# IF NOT C_VISIBLE #
 		# INCLUDE NOT_VISIBLE_MESSAGE #
 	# ENDIF #
-	<article id="web-item-{ID}" itemscope="itemscope" itemtype="http://schema.org/CreativeWork" class="web-item single-item# IF C_IS_PARTNER # content-friends# ENDIF ## IF C_IS_PRIVILEGED_PARTNER # content-privileged-friends# ENDIF ## IF C_NEW_CONTENT # new-content# ENDIF#">
+	<article id="web-item-{ID}" itemscope="itemscope" itemtype="https://schema.org/CreativeWork" class="web-item single-item# IF C_IS_PARTNER # content-friends# ENDIF ## IF C_IS_PRIVILEGED_PARTNER # content-privileged-friends# ENDIF ## IF C_NEW_CONTENT # new-content# ENDIF#">
 		# IF C_CONTROLS #
 			<div class="align-right controls">
 				# IF C_EDIT #<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #

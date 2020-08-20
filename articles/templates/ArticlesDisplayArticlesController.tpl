@@ -10,7 +10,7 @@
 
 	# INCLUDE NOT_VISIBLE_MESSAGE #
 
-	<article id="article-articles-{ID}" class="articles-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="http://schema.org/Article">
+	<article id="article-articles-{ID}" class="articles-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="https://schema.org/Article">
 		<div class="flex-between">
 			<div class="more">
 				# IF C_AUTHOR_DISPLAYED #

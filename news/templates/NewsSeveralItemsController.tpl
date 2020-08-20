@@ -27,7 +27,7 @@
 					id="news-item-{items.ID}"
 					class="news-items several-items category-{items.CATEGORY_ID} cell# IF items.C_TOP_LIST # top-list# ENDIF ## IF items.C_NEW_CONTENT # new-content# ENDIF #"
 					itemscope="itemscope"
-					itemtype="http://schema.org/CreativeWork">
+					itemtype="https://schema.org/CreativeWork">
 
 					<header class="cell-header">
 						<h2 class="cell-name"><a href="{items.U_ITEM}"><span itemprop="name">{items.TITLE}</span></a></h2>

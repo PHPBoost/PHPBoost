@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{L_XML_LANGUAGE}"# IF C_OPENGRAPH # prefix="og: http://ogp.me/ns#"# ENDIF #>
+<html lang="{L_XML_LANGUAGE}"# IF C_OPENGRAPH # prefix="og: https://ogp.me/ns#"# ENDIF #>
 	<head>
 		<meta charset="utf-8" />
 		<title>{TITLE}</title>
@@ -47,7 +47,7 @@
 		# INCLUDE JS_TOP #
 	</head>
 
-	<body itemscope="itemscope" itemtype="http://schema.org/WebPage">
+	<body itemscope="itemscope" itemtype="https://schema.org/WebPage">
 		<div id="push-container" class="body-wrapper">
 			# INCLUDE BODY #
 		</div>

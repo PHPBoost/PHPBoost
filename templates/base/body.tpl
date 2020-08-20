@@ -66,15 +66,15 @@
 		<div id="main-content" itemprop="mainContentOfPage">
 			# INCLUDE ACTIONS_MENU #
 			<nav id="breadcrumb" itemprop="breadcrumb">
-				<ol itemscope itemtype="http://schema.org/BreadcrumbList">
-					<li itemprop="itemListElement" itemscope itemtype="http://data-vocabulary.org/ListItem">
+				<ol itemscope itemtype="https://schema.org/BreadcrumbList">
+					<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
 						<a href="{START_PAGE}" itemprop="item">
 							<span itemprop="name">${LangLoader::get_message('home', 'main')}</span>
     						<meta itemprop="position" content="1" />
 						</a>
 					</li>
 					# START link_bread_crumb #
-						<li itemprop="itemListElement" itemscope itemtype="http://data-vocabulary.org/ListItem" # IF link_bread_crumb.C_CURRENT # class="current" # ENDIF #>
+						<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" # IF link_bread_crumb.C_CURRENT # class="current" # ENDIF #>
 							<a href="{link_bread_crumb.URL}" itemprop="item">
 								<span itemprop="name">{link_bread_crumb.TITLE}</span>
 	    						<meta itemprop="position" content="{link_bread_crumb.POSITION}" />

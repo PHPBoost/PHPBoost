@@ -1,5 +1,5 @@
 # START comments #
-	<article id="com{comments.ID_COMMENT}" class="comment-item several-items message-container message-small" itemscope="itemscope" itemtype="http://schema.org/Comment">
+	<article id="com{comments.ID_COMMENT}" class="comment-item several-items message-container message-small" itemscope="itemscope" itemtype="https://schema.org/Comment">
 		<header class="message-header-container">
 			# IF comments.C_AVATAR #<img src="{comments.U_AVATAR}" alt="${LangLoader::get_message('avatar', 'user-common')}" class="message-user-avatar" /># ENDIF #
 			<div class="message-header-infos">

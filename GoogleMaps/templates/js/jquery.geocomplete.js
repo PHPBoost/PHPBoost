@@ -2,8 +2,8 @@
  * jQuery Geocoding and Places Autocomplete Plugin - V 1.7.0
  *
  * @author Martin Kleppe <kleppe@ubilabs.net>, 2016
- * @author Ubilabs http://ubilabs.net, 2016
- * @license MIT License <http://www.opensource.org/licenses/mit-license.php>
+ * @author Ubilabs https://ubilabs.net, 2016
+ * @license MIT License <https://www.opensource.org/licenses/mit-license.php>
  */
 
 // # $.geocomplete()
@@ -24,15 +24,15 @@
   // * `bounds` - Whether to snap geocode search to map bounds. Default: `true` if false search globally. Alternatively pass a custom `LatLngBounds object.
   // * `autoselect` - Automatically selects the highlighted item or the first item from the suggestions list on Enter.
   // * `detailsAttribute` - The attribute's name to use as an indicator. Default: `"name"`
-  // * `mapOptions` - Options to pass to the `google.maps.Map` constructor. See the full list [here](http://code.google.com/apis/maps/documentation/javascript/reference.html#MapOptions).
+  // * `mapOptions` - Options to pass to the `google.maps.Map` constructor. See the full list [here](https://developers.google.com/maps/documentation/javascript/reference?csw=1#MapOptions).
   // * `mapOptions.zoom` - The inital zoom level. Default: `14`
   // * `mapOptions.scrollwheel` - Whether to enable the scrollwheel to zoom the map. Default: `false`
   // * `mapOptions.mapTypeId` - The map type. Default: `"roadmap"`
-  // * `markerOptions` - The options to pass to the `google.maps.Marker` constructor. See the full list [here](http://code.google.com/apis/maps/documentation/javascript/reference.html#MarkerOptions).
+  // * `markerOptions` - The options to pass to the `google.maps.Marker` constructor. See the full list [here](https://developers.google.com/maps/documentation/javascript/reference?csw=1#MarkerOptions).
   // * `markerOptions.draggable` - If the marker is draggable. Default: `false`. Set to true to enable dragging.
   // * `markerOptions.disabled` - Do not show marker. Default: `false`. Set to true to disable marker.
   // * `maxZoom` - The maximum zoom level too zoom in after a geocoding response. Default: `16`
-  // * `types` - An array containing one or more of the supported types for the places request. Default: `['geocode']` See the full list [here](http://code.google.com/apis/maps/documentation/javascript/places.html#place_search_requests).
+  // * `types` - An array containing one or more of the supported types for the places request. Default: `['geocode']` See the full list [here](https://developers.google.com/maps/documentation/javascript/places?csw=1#place_search_requests).
   // * `blur` - Trigger geocode when input loses focus.
   // * `geocodeAfterResult` - If blur is set to true, choose whether to geocode if user has explicitly selected a result before blur.
   // * `restoreValueAfterBlur` - Restores the input's value upon blurring. Default is `false` which ignores the setting.

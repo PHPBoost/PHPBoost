@@ -11,7 +11,7 @@
 			# INCLUDE NOT_VISIBLE_MESSAGE #
 		</article>
 	# ENDIF #
-	<article id="news-item-{ID}" class="news-item# IF C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+	<article id="news-item-{ID}" class="news-item# IF C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 		<div class="flex-between">
 			<div class="more">
 				# IF C_AUTHOR_DISPLAYED #

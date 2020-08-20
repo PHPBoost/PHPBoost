@@ -40,12 +40,12 @@ var FormFieldSelectSources = new FormFieldSelectSources();
 </script>
 
 <div id="input_fields_${escape(ID)}">
-# START fieldelements #
-	<div class="sources-link grouped-inputs" id="${escape(ID)}_{fieldelements.ID}">
-		<input class="grouped-element" type="text" name="field_name_${escape(ID)}_{fieldelements.ID}" id="field_name_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@form.source.name}"/>
-		<input class="grouped-element" type="url" name="field_value_${escape(ID)}_{fieldelements.ID}" id="field_value_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.VALUE}" placeholder="{@form.source.url}"/>
-		<a class="grouped-element" href="javascript:FormFieldSelectSources.delete_field({fieldelements.ID});" data-confirmation="delete-element" aria-label="{@form.del.source}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
-	</div>
-# END fieldelements #
+	# START fieldelements #
+		<div class="sources-link grouped-inputs" id="${escape(ID)}_{fieldelements.ID}">
+			<input class="grouped-element" type="text" name="field_name_${escape(ID)}_{fieldelements.ID}" id="field_name_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@form.source.name}"/>
+			<input class="grouped-element" type="url" name="field_value_${escape(ID)}_{fieldelements.ID}" id="field_value_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.VALUE}" placeholder="{@form.source.url}"/>
+			<a class="grouped-element" href="javascript:FormFieldSelectSources.delete_field({fieldelements.ID});" data-confirmation="delete-element" aria-label="{@form.del.source}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+		</div>
+	# END fieldelements #
 </div>
 <a href="javascript:FormFieldSelectSources.add_field();" id="add-${escape(ID)}" class="add-more-values" aria-label="{@form.add.source}"><i class="far fa-lg fa-plus-square" aria-hidden="true"></i></a>

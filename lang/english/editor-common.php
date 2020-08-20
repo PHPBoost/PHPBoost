@@ -13,7 +13,7 @@
 #                     English                      #
 ####################################################
 
-$lang['wikipedia_subdomain'] = 'en'; //Sub-domain on wikipedia (--> http://EN.wikipedia.com/)
+$lang['wikipedia_subdomain'] = 'en'; //Sub-domain on wikipedia (--> https://en.wikipedia.com/)
 $lang['code_too_long_error'] = 'The code you want to highlight is too large and would use too much resources to be highlighted. Please reduce its size or split it.';
 $lang['feed_tag_error'] = 'The feed of the module <em>:module</em> that you want to display couldn\'t be found or the options you entered aren\'t correct.';
 $lang['format_bold'] = 'Bold';

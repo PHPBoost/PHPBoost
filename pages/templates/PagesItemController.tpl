@@ -10,7 +10,7 @@
 	# IF NOT C_VISIBLE #
 		# INCLUDE NOT_VISIBLE_MESSAGE #
 	# ENDIF #
-	<article itemscope="itemscope" itemtype="http://schema.org/CreativeWork" id="pages-item-{ID}" class="pages-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #">
+	<article itemscope="itemscope" itemtype="https://schema.org/CreativeWork" id="pages-item-{ID}" class="pages-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #">
 		<div class="flex-between">
 			<div class="more">
 				# IF C_AUTHOR_DISPLAYED #

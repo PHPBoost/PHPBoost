@@ -15,7 +15,7 @@
 		# ENDIF #
 		<form method="post" class="fieldset-content">
 			# START messages #
-				<article id="m{messages.ID}" class="{MODULE_ID}-item {MODULE_ID}-items message-container message-small" itemscope="itemscope" itemtype="http://schema.org/Comment">
+				<article id="m{messages.ID}" class="{MODULE_ID}-item {MODULE_ID}-items message-container message-small" itemscope="itemscope" itemtype="https://schema.org/Comment">
 					<header class="message-header-container">
 						# IF messages.C_AVATAR #
 							<img class="message-user-avatar" src="{messages.U_AVATAR}" alt="${LangLoader::get_message('avatar', 'user-common')}" />

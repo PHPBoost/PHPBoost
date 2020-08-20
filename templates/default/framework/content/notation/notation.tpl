@@ -1,6 +1,6 @@
 # IF C_STATIC_DISPLAY #
 	# IF C_NOTES #
-		<div role="note" aria-label="${LangLoader::get_message('note', 'common')}: {AVERAGE_NOTES}/{NOTATION_SCALE}" class="notation static-notation" itemprop="aggregateRating" itemscope="itemscope" itemtype="http://schema.org/AggregateRating">
+		<div role="note" aria-label="${LangLoader::get_message('note', 'common')}: {AVERAGE_NOTES}/{NOTATION_SCALE}" class="notation static-notation" itemprop="aggregateRating" itemscope="itemscope" itemtype="https://schema.org/AggregateRating">
 			# START star #
 				<a href="#" onclick="return false;" class="far star fa-star" id="star-{ID_IN_MODULE}-{star.I}" aria-hidden="true"><span class="star-width {star.STAR_WIDTH}"></span></a>
 			# END star #
@@ -27,7 +27,7 @@
 		jQuery(document).ready(function() { new Note('{ID_IN_MODULE}', '{NOTATION_SCALE}', '{AVERAGE_NOTES}', '{ALREADY_NOTE}'); });
 	</script>
 
-	<div class="notation" id="notation-{ID_IN_MODULE}" # IF C_NOTES #itemprop="aggregateRating" itemscope="itemscope" itemtype="http://schema.org/AggregateRating"# ENDIF #>
+	<div class="notation" id="notation-{ID_IN_MODULE}" # IF C_NOTES #itemprop="aggregateRating" itemscope="itemscope" itemtype="https://schema.org/AggregateRating"# ENDIF #>
 		<span class="stars">
 			# START star #
 				<a aria-label="${LangLoader::get_message('add_note', 'common')} {star.I}/{NOTATION_SCALE}" href="#" onclick="return false;" class="far star fa-star" id="star-{ID_IN_MODULE}-{star.I}"><span class="star-width {star.STAR_WIDTH}"></span></a>

@@ -80,7 +80,7 @@
 
 		<div class="forum-links">
 			# IF C_USER_CONNECTED #
-				<nav itemscope itemtype="http://schema.org/SiteNavigationElement" class="cssmenu cssmenu-group float-right" id="cssmenu-forum-top-link">
+				<nav itemscope itemtype="https://schema.org/SiteNavigationElement" class="cssmenu cssmenu-group float-right" id="cssmenu-forum-top-link">
 					<ul>
 						<li>
 							<span class="cssmenu-title">
@@ -127,7 +127,7 @@
 				</nav>
 			# ELSE #
 			# IF C_FORUM_CONNEXION #
-				<nav itemscope itemtype="http://schema.org/SiteNavigationElement" class="cssmenu cssmenu-group float-right" id="cssmenu-sign-in-top-link">
+				<nav itemscope itemtype="https://schema.org/SiteNavigationElement" class="cssmenu cssmenu-group float-right" id="cssmenu-sign-in-top-link">
 					<ul>
 						<li>
 							<span class="cssmenu-title">

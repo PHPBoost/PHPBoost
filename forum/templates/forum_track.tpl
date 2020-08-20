@@ -9,7 +9,7 @@
 </script>
 
 <form action="track{U_TRACK_ACTION}" method="post">
-	<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-track">
+	<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-track">
 		<header>
 			<h2>
 				<a href="{U_FORUM_CAT}">{FORUM_CAT}</a>

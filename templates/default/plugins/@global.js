@@ -364,8 +364,8 @@ function XMLHttpRequest_search_members(searchid, theme, insert_mode, alert_empty
 //Pour savoir si une fonction existe
 function functionExists(function_name)
 {
-	// http://kevin.vanzonneveld.net
-	// + original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+	// https://kvz.io/
+	// + original by: Kevin van Zonneveld (https://kvz.io/)
 	// + improved by: Steve Clay
 	// + improved by: Legaev Andrey
 	// * example 1: function_exists('isFinite');
@@ -549,7 +549,7 @@ function eraseCookie(name) {
  *    $Id: jquery-linedtextarea.js 464 2010-01-08 10:36:33Z alan $
  *
  * Released under the MIT License:
- *    http://www.opensource.org/licenses/mit-license.php
+ *    https://www.opensource.org/licenses/mit-license.php
  *
  * History:
  *   - 2010.01.08: Fixed a Google Chrome layout problem

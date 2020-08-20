@@ -1,6 +1,6 @@
 <svg
- xmlns="http://www.w3.org/2000/svg"
- xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns="https://www.w3.org/2000/svg"
+ xmlns:xlink="https://www.w3.org/1999/xlink"
  width="724px" height="720px">
 <path fill-rule="evenodd"  fill="rgb(24, 45, 66)"
  d="M22.000,20.000 L702.000,20.000 L702.000,700.000 L22.000,700.000 L22.000,20.000 Z"/>

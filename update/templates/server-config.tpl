@@ -4,7 +4,7 @@
 
 	<div class="content">
 		<div class="float-right pbt-box align-center">
-			<a href="http://www.php.net/">
+			<a href="https://www.php.net/">
 				<img src="templates/images/php.png" alt="PHP" class="float-right" />
 			</a>
 		</div>

@@ -18,12 +18,18 @@
 <div id="admin-contents">
 	<div class="database-menu">
 		<nav id="breadcrumb" itemprop="breadcrumb">
-			<ol>
-				<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-					<a href="admin_database.php#tables">{L_DATABASE_MANAGEMENT}</a>
+			<ol itemscope itemtype="https://schema.org/BreadcrumbList">
+				<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+					<a href="admin_database.php#tables" itemprop="item">
+						<span itemprop="name">{L_DATABASE_MANAGEMENT}</span>
+						<meta itemprop="position" content="1" />
+					</a>
 				</li>
-				<li class="current" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-					<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{TABLE_NAME}</a>
+				<li class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+					<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure" itemprop="item">
+						<span itemprop="name">{TABLE_NAME}</span>
+						<meta itemprop="position" content="2" />
+					</a>
 				</li>
 			</ol>
 		</nav>

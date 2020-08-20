@@ -119,7 +119,7 @@
 	# ENDIF #
 </script>
 
-<article id="article-forum-{ID}" class="forum-contents category-{IDCAT}" itemscope="itemscope" itemtype="http://schema.org/Creativework">
+<article id="article-forum-{ID}" class="forum-contents category-{IDCAT}" itemscope="itemscope" itemtype="https://schema.org/Creativework">
 	<header>
 		# IF C_PAGINATION #<span class="float-left"># INCLUDE PAGINATION #</span># ENDIF #
 		# IF C_FORUM_MODERATOR #
@@ -197,7 +197,7 @@
 		</div>
 	# ENDIF #
 	# START msg #
-		<div id="d{msg.ID}" class="message-container" itemscope="itemscope" itemtype="http://schema.org/Comment">
+		<div id="d{msg.ID}" class="message-container" itemscope="itemscope" itemtype="https://schema.org/Comment">
 			<span id="m{msg.ID}"></span>
 			<div class="message-header-container">
 				# IF msg.C_USER_AVATAR #<img class="message-user-avatar" src="{msg.U_USER_AVATAR}" alt="${LangLoader::get_message('avatar', 'user-common')}"># ENDIF #

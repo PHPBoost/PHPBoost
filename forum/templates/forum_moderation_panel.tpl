@@ -1,6 +1,6 @@
 # INCLUDE forum_top #
 
-<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-moderation-panel" class="forum-contents">
+<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-moderation-panel" class="forum-contents">
 	<header>
 		<h2>
 			<a href="index.php">{FORUM_NAME}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i>

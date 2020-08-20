@@ -312,7 +312,7 @@ De base, ' . GeneralConfig::load()->get_site_name() . ' utilise les cookies pour
 
 <h2 class="formatter-title">Comment contrôler les cookies ?</h2>
 Vous pouvez contrôler et/ou supprimer des cookies comme vous le souhaitez.<br />
-Pour en savoir plus, consultez le site web <a href="http://www.aboutcookies.org">aboutcookies.org</a>.<br />
+Pour en savoir plus, consultez le site web <a href="https://www.aboutcookies.org">aboutcookies.org</a>.<br />
 Vous avez la possibilité de supprimer tous les cookies déjà stockés sur votre ordinateur et de configurer la plupart des navigateurs pour qu\'ils les bloquent. Toutefois, dans ce cas, vous devrez peut-être indiquer vous-mêmes certaines préférences chaque fois que vous vous rendrez sur le site, et certains services et fonctionnalités risquent de ne pas être accessibles.
 ';
 $lang['cookiebar.understand']  = 'J\'ai compris';

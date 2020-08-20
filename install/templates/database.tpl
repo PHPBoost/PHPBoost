@@ -10,7 +10,7 @@
 			<div class="message-helper bgc error">{ERROR}</div>
 		# END #
 		<div class="float-right pbt-box align-center">
-			<a href="http://www.mysql.com/">
+			<a href="https://www.mysql.com/">
 				<img src="templates/images/mysql.png" alt="MySQL" class="float-right" />
 			</a>
 		</div>

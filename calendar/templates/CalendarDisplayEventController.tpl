@@ -8,7 +8,7 @@
 			<span itemprop="name">{TITLE}</span>
 		</h1>
 	</header>
-	<div itemscope="itemscope" itemtype="http://schema.org/Event" id="article-calendar-{ID}" class="calendar-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #">
+	<div itemscope="itemscope" itemtype="https://schema.org/Event" id="article-calendar-{ID}" class="calendar-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #">
 
 		<div class="flex-between">
 			<div class="more">
@@ -31,7 +31,7 @@
 			# INCLUDE NOT_VISIBLE_MESSAGE #
 		# ENDIF #
 
-		<div class="content# IF C_CANCELLED # error# ENDIF #" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+		<div class="content# IF C_CANCELLED # error# ENDIF #" itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 
 			# IF C_CANCELLED #
 			<span class="message-helper bgc error">{@calendar.cancelled.event}</span>
@@ -57,7 +57,7 @@
 								<time datetime="{END_DATE_ISO8601}" itemprop="endDate">{END_DATE_FULL}</time>
 							</li>
 							# IF C_LOCATION #
-								<li itemprop="location" itemscope itemtype="http://schema.org/Place">
+								<li itemprop="location" itemscope itemtype="https://schema.org/Place">
 									<span class="text-strong">{@calendar.labels.location}: </span>
 									<span itemprop="name">{LOCATION}</span>
 								</li>
@@ -121,7 +121,7 @@
 		</aside>
 
 		# IF C_LOCATION #
-			<aside class="location-map" itemprop="location" itemscope itemtype="http://schema.org/Place">
+			<aside class="location-map" itemprop="location" itemscope itemtype="https://schema.org/Place">
 				# IF C_LOCATION_MAP #<div class="location-map">{LOCATION_MAP}</div># ENDIF #
 			</aside>
 		# ENDIF #

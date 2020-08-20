@@ -15,7 +15,7 @@
 		# ENDIF #
 		<form method="post" class="fieldset-content">
 		# START messages #
-			<article id="article-shoutbox-{messages.ID}" class="shoutbox-item several-items message-container message-small message-offset" itemscope="itemscope" itemtype="http://schema.org/Comment">
+			<article id="article-shoutbox-{messages.ID}" class="shoutbox-item several-items message-container message-small message-offset" itemscope="itemscope" itemtype="https://schema.org/Comment">
 				<header class="message-header-container# IF messages.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
 					# IF messages.C_AVATAR #<img src="{messages.U_AVATAR}" alt="${LangLoader::get_message('avatar', 'user-common')}" class="message-user-avatar" /># ENDIF #
 					<div class="message-header-infos">
