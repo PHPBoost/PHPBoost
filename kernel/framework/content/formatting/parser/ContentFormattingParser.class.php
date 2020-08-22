@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 11 08
+ * @version     PHPBoost 6.0 - last update: 2020 08 22
  * @since       PHPBoost 2.0 - 2008 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -343,7 +343,7 @@ abstract class ContentFormattingParser extends AbstractParser
 		$lang = (!empty($matches[2])) ? $matches[2] : LangLoader::get_message('wikipedia_subdomain', 'editor-common');
 		$page_url = !empty($matches[1]) ? $matches[1] : $matches[3];
 
-		return '<a href="http://' . $lang . '.wikipedia.org/wiki/' . $page_url . '" class="wikipedia-link">' . $matches[3] . '</a>';
+		return '<a href="https://' . $lang . '.wikipedia.org/wiki/' . $page_url . '" class="wikipedia-link">' . $matches[3] . '</a>';
 	}
 }
 ?>
