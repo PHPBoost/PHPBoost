@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 09 18
+ * @version     PHPBoost 6.0 - last update: 2020 08 22
  * @since       PHPBoost 4.0 - 2013 09 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -13,7 +13,9 @@
 
 class FormFieldPossibleValues extends AbstractFormField
 {
+	private $min_input = 1;
 	private $max_input = 100;
+	private $display_default = true;
 
 	public function __construct($id, $label = '', array $value = array(), array $field_options = array(), array $constraints = array())
 	{
@@ -38,10 +40,10 @@ class FormFieldPossibleValues extends AbstractFormField
 			{
 				$has_default = $options['is_default'] ? true : $has_default;
 				$tpl->assign_block_vars('fieldelements', array(
-					'ID' => $i,
-					'NAME' => $name,
+					'ID'         => $i,
+					'NAME'       => $name,
 					'IS_DEFAULT' => (int) $options['is_default'],
-					'TITLE' => stripslashes($options['title'])
+					'TITLE'      => stripslashes($options['title'])
 				));
 				$i++;
 			}
@@ -49,23 +51,27 @@ class FormFieldPossibleValues extends AbstractFormField
 
 		if ($i == 0)
 		{
-			$tpl->assign_block_vars('fieldelements', array(
-				'ID' => $i,
-				'NAME' => '',
-				'IS_DEFAULT' => 0,
-				'TITLE' => ''
-			));
-			$i++;
+			for ($i = 0 ; $i < $this->min_input ; $i++)
+			{
+				$tpl->assign_block_vars('fieldelements', array(
+					'ID'         => $i,
+					'NAME'       => '',
+					'IS_DEFAULT' => 0,
+					'TITLE'      => ''
+				));
+			}
 		}
 
 		$tpl->put_all(array(
-			'NAME' => $this->get_html_id(),
-			'ID' => $this->get_id(),
-			'HTML_ID' => $this->get_html_id(),
-			'C_DISABLED' => $this->is_disabled(),
-			'MAX_INPUT' => $this->max_input,
-		 	'NBR_FIELDS' => $i,
-			'C_HAS_DEFAULT_VALUE' => $has_default
+			'NAME'                    => $this->get_html_id(),
+			'ID'                      => $this->get_id(),
+			'HTML_ID'                 => $this->get_html_id(),
+			'C_DISABLED'              => $this->is_disabled(),
+			'MIN_INPUT'               => $this->min_input,
+			'MAX_INPUT'               => $this->max_input,
+			'C_DISPLAY_DEFAULT_RADIO' => $this->display_default,
+		 	'NBR_FIELDS'              => $i,
+			'C_HAS_DEFAULT_VALUE'     => $has_default
 		));
 
 		$template->assign_block_vars('fieldelements', array(
@@ -105,9 +111,17 @@ class FormFieldPossibleValues extends AbstractFormField
 			$attribute = TextHelper::strtolower($attribute);
 			switch ($attribute)
 			{
+				 case 'min_input':
+					$this->min_input = $value;
+					unset($field_options['min_input']);
+					break;
 				 case 'max_input':
 					$this->max_input = $value;
 					unset($field_options['max_input']);
+					break;
+				 case 'display_default':
+					$this->display_default = (bool)$value;
+					unset($field_options['display_default']);
 					break;
 			}
 		}
