@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 18
+ * @version     PHPBoost 6.0 - last update: 2020 08 22
  * @since       PHPBoost 6.0 - 2019 12 20
 */
 
@@ -21,11 +21,11 @@ abstract class AbstractItemController extends ModuleController
 	{
 		parent::__construct($module_id);
 		$this->config = self::get_module()->get_configuration()->get_configuration_parameters();
-		$this->lang = LangLoader::filename_exists('common', self::get_module()->get_id()) ? LangLoader::get('common', self::get_module()->get_id()) : array();
+		$this->lang = array_merge(LangLoader::get('common'), (LangLoader::filename_exists('common', self::get_module()->get_id()) ? LangLoader::get('common', self::get_module()->get_id()) : array()));
 		$this->items_lang = ItemsService::get_items_lang(self::get_module()->get_id());
 		$this->view = $this->get_template_to_use();
 		
-		$this->view->add_lang(array_merge(LangLoader::get('common'), $this->lang, $this->items_lang));
+		$this->view->add_lang(array_merge($this->lang, $this->items_lang));
 		
 		if (self::get_module()->get_configuration()->feature_is_enabled('comments') && CommentsConfig::load()->module_comments_is_enabled(self::get_module()->get_id()))
 			$this->enabled_features[] = 'comments';
