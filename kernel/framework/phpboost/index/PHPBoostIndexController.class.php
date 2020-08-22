@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 14
+ * @version     PHPBoost 6.0 - last update: 2020 08 22
  * @since       PHPBoost 3.0 - 2012 02 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -52,15 +52,15 @@ class PHPBoostIndexController extends AbstractController
 	private function check_site_url_configuration()
 	{
 		$request = Appcontext::get_request();
-		$site_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
-		if (!$site_path)
+		$site_path = trim(dirname(str_replace('/index.php', '', (!empty($_SERVER['SCRIPT_NAME']) ? $_SERVER['SCRIPT_NAME'] : getenv('SCRIPT_NAME')))));
+		$folder = new Folder(PATH_TO_ROOT);
+		foreach ($folder->get_folders() as $f)
 		{
-			$site_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
+			$site_path = trim(preg_replace('`/' . $f->get_name() . '$`u', '', $site_path));
 		}
-		$site_path = trim(dirname($site_path));
 		$site_path = ($site_path == '/') ? '' : $site_path;
-
-		if (($request->get_is_subdomain() && $this->general_config->get_site_url() != $request->get_site_url()) || ($request->get_domain_name($this->general_config->get_site_url()) != $request->get_domain_name()) || ($this->general_config->get_site_path() != $site_path))
+		
+		if (($request->get_is_subdomain() && $this->general_config->get_site_url() != $request->get_site_url()) || ($request->get_domain_name($this->general_config->get_site_url()) != $request->get_domain_name()) || ($site_path && !preg_match('/\/error/', $site_path) && $this->general_config->get_site_path() != $site_path))
 		{
 			$this->general_config->set_site_url($request->get_site_url());
 			$this->general_config->set_site_path($site_path);
