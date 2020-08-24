@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 08 16
+ * @version     PHPBoost 6.0 - last update: 2020 08 24
  * @since       PHPBoost 5.2 - 2020 05 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -287,9 +287,6 @@ class AdminSandboxBuilderController extends AdminModuleController
 		$miscellaneous = new FormFieldsetHTML('miscellaneous', $this->lang['builder.title.miscellaneous']);
 			$form->add_fieldset($miscellaneous);
 
-			// CAPTCHA
-			$miscellaneous->add_field(new FormFieldCaptcha('Captcha'));
-
 			// HIDDEN
 			$miscellaneous->add_field(new FormFieldHidden('hidden', $this->lang['builder.input.hidden']));
 
@@ -403,6 +400,12 @@ class AdminSandboxBuilderController extends AdminModuleController
 			$form->add_fieldset($horizontal_fieldset);
 			$horizontal_fieldset->add_field(new FormFieldTextEditor('texthor', $this->lang['builder.input.text'], $this->lang['builder.input.text.lorem'], array('required' => true, 'class' => 'css-class')));
 			$horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert', $this->lang['builder.input.checkbox'], FormFieldCheckbox::CHECKED, array('class' => 'css-class')));
+
+		// CAPTCHA
+		$captcha = new FormFieldsetHTML('captcha', 'Captcha');
+			$form->add_fieldset($captcha);
+
+			$captcha->add_field(new FormFieldCaptcha('Captcha'));
 
 		// BUTTONS
 		$buttons = new FormFieldsetHTML('buttons', $this->lang['builder.title.buttons']);
