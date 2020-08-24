@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 03 26
+ * @version     PHPBoost 6.0 - last update: 2020 08 24
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -149,7 +149,7 @@ class WebLink
 		{
 			return FormatingHelper::second_parse($this->summary);
 		}
-		return TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>'), (int)WebConfig::NUMBER_CARACTERS_BEFORE_CUT);
+		return TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>'), (int)WebConfig::CHARACTERS_NUMBER_TO_CUT);
 	}
 
 	public function get_approbation_type()
@@ -452,7 +452,7 @@ class WebLink
 				'C_CONTROLS'              => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
 				'C_EDIT'                  => $this->is_authorized_to_edit(),
 				'C_DELETE'                => $this->is_authorized_to_delete(),
-				'C_READ_MORE'             => !$this->is_summary_enabled() && TextHelper::strlen($contents) > WebConfig::NUMBER_CARACTERS_BEFORE_CUT && $real_summary != @strip_tags($contents, '<br><br/>'),
+				'C_READ_MORE'             => !$this->is_summary_enabled() && TextHelper::strlen($contents) > WebConfig::CHARACTERS_NUMBER_TO_CUT && $real_summary != @strip_tags($contents, '<br><br/>'),
 				'C_USER_GROUP_COLOR'      => !empty($user_group_color),
 				'C_IS_ADORNED'            => $this->has_thumbnail() || $this->has_partner_thumbnail(),
 				'C_HAS_THUMBNAIL'         => $this->has_thumbnail(),
