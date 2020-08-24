@@ -5,10 +5,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 08 22
+ * @version     PHPBoost 6.0 - last update: 2020 08 24
  * @since       PHPBoost 4.0 - 2013 09 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldPossibleValues extends AbstractFormField
@@ -70,8 +71,9 @@ class FormFieldPossibleValues extends AbstractFormField
 			'MIN_INPUT'               => $this->min_input,
 			'MAX_INPUT'               => $this->max_input,
 			'C_DISPLAY_DEFAULT_RADIO' => $this->display_default,
-		 	'NBR_FIELDS'              => $i,
-			'C_HAS_DEFAULT_VALUE'     => $has_default
+		 	'FIELDS_NUMBER'           => $i,
+			'C_HAS_DEFAULT_VALUE'     => $has_default,
+			'C_DELETE'				  => $i > $this->min_input
 		));
 
 		$template->assign_block_vars('fieldelements', array(
