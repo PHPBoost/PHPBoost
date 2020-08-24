@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2020 08 22
+ * @version     PHPBoost 5.2 - last update: 2020 08 24
  * @since       PHPBoost 3.0 - 2012 02 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -52,7 +52,7 @@ class PHPBoostIndexController extends AbstractController
 	private function check_site_url_configuration()
 	{
 		$request = Appcontext::get_request();
-		$site_path = trim(dirname(str_replace('/index.php', '', (!empty($_SERVER['SCRIPT_NAME']) ? $_SERVER['SCRIPT_NAME'] : getenv('SCRIPT_NAME')))));
+		$site_path = trim(str_replace('/index.php', '', (!empty($_SERVER['SCRIPT_NAME']) ? $_SERVER['SCRIPT_NAME'] : getenv('SCRIPT_NAME'))));
 		$folder = new Folder(PATH_TO_ROOT);
 		foreach ($folder->get_folders() as $f)
 		{
