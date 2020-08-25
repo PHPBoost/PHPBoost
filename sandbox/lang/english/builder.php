@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 08 16
+ * @version     PHPBoost 6.0 - last update: 2020 08 25
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -107,6 +107,7 @@ $lang['builder.file.picker'] = 'File';
 $lang['builder.multiple.file.picker'] = 'Several files';
 $lang['builder.thumbnail.picker'] = 'Thumbnail';
 $lang['builder.file.upload'] = 'Link to file';
+$lang['builder.captcha'] = 'You have to be disconnected to see this field on the bottom of this page, before the list of source codes.';
 
 // Links
 $lang['builder.links.menu'] = 'Links menu';

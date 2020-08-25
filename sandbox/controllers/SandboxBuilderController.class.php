@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 08 24
+ * @version     PHPBoost 6.0 - last update: 2020 08 25
  * @since       PHPBoost 5.2 - 2020 05 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -91,6 +91,7 @@ class SandboxBuilderController extends ModuleController
 		$this->view->add_lang($this->common_lang);
 		$this->view->add_lang($this->lang);
 		$this->g_map_enabled = (ModulesManager::is_module_installed('GoogleMaps') && ModulesManager::is_module_activated('GoogleMaps') && GoogleMapsConfig::load()->get_api_key());
+		$this->content_management_config = ContentManagementConfig::load();
 	}
 
 	private function build_markup($tpl)
@@ -401,10 +402,13 @@ class SandboxBuilderController extends ModuleController
 			$horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert', $this->lang['builder.input.checkbox'], FormFieldCheckbox::CHECKED, array('class' => 'css-class')));
 
 		// CAPTCHA
-		$captcha = new FormFieldsetHTML('captcha', 'Captcha');
+			$captcha = new FormFieldsetHTML('captcha', 'Captchas');
 			$form->add_fieldset($captcha);
+			$captcha->add_field(new FormFieldSpacer('captcha', $this->lang['builder.captcha']));
 
-			$captcha->add_field(new FormFieldCaptcha('Captcha'));
+			// formfield to use if there's no validation button on the page
+			// $captcha->add_field(new FormFieldCaptcha('captcha'));
+
 
 		// BUTTONS
 		$buttons = new FormFieldsetHTML('buttons', $this->lang['builder.title.buttons']);
