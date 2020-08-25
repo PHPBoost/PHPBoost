@@ -1,5 +1,6 @@
 <script>
 	var FormFieldPossibleValues = function(){
+		this.fields_number = {FIELDS_NUMBER};
 		this.integer = {FIELDS_NUMBER};
 		this.id_input = ${escapejs(HTML_ID)};
 		this.min_input = {MIN_INPUT};
@@ -8,7 +9,7 @@
 
 	FormFieldPossibleValues.prototype = {
 		add_field : function () {
-			if (this.integer <= this.max_input) {
+			if (this.fields_number <= this.max_input) {
 				var id = this.id_input + '_' + this.integer;
 
 				jQuery('<div/>', {id : id, class: 'possible-values custom-radio'}).appendTo('#input_fields_' + this.id_input);
@@ -31,19 +32,20 @@
 				# ENDIF #
 
 				this.integer++;
-				if (this.integer > this.min_input)
+				this.fields_number++;
+				if (this.fields_number > this.min_input)
 					jQuery('#input_fields_${escape(HTML_ID)}').find('a[id*="delete_"]').removeClass('icon-disabled');
 			}
-			if (this.integer == this.max_input) {
+			if (this.fields_number == this.max_input) {
 				jQuery('#add_' + this.id_input).hide();
 			}
 		},
 		delete_field : function (id) {
-			if (this.integer > this.min_input) {
+			if (this.fields_number > this.min_input) {
 				var id = this.id_input + '_' + id;
 				jQuery('#' + id).remove();
-				this.integer--;
-				if (this.integer <= this.min_input)
+				this.fields_number--;
+				if (this.fields_number <= this.min_input)
 					jQuery('#input_fields_${escape(HTML_ID)}').find('a[id*="delete_"]').addClass('icon-disabled');
 			}
 			jQuery('#add_' + this.id_input).show();
