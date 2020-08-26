@@ -43,6 +43,12 @@
 		delete_field : function (id) {
 			if (this.fields_number > this.min_input) {
 				var id = this.id_input + '_' + id;
+				
+				# IF C_DISPLAY_DEFAULT_RADIO #
+				if (jQuery("#field_is_default_" + id).is(':checked'))
+					jQuery("#uncheck_default_${escape(HTML_ID)}").hide();
+				# ENDIF #
+				
 				jQuery('#' + id).remove();
 				this.fields_number--;
 				if (this.fields_number <= this.min_input)
