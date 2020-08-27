@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 11
+ * @version     PHPBoost 6.0 - last update: 2020 08 27
  * @since       PHPBoost 6.0 - 2019 12 20
+ * @contributor xela <xela@phpboost.com>
 */
 
 class ItemsManager
@@ -67,7 +68,7 @@ class ItemsManager
 	 */
 	public function update(Item $item)
 	{
-		self::$db_querier->update(self::$items_table, $item->get_properties(), 'WHERE id=:id', array('id', $item->get_id()));
+		self::$db_querier->update(self::$items_table, $item->get_properties(), 'WHERE id=:id', array('id' => $item->get_id()));
 	}
 
 	 /**
