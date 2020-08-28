@@ -89,6 +89,7 @@ $lang['calendar.authorizations.register'] = 'Autorisation de s\'inscrire à l\'�
 
 // SEO
 $lang['calendar.seo.description.root'] = 'Tous les événements du site :site.';
+$lang['calendar.seo.description.member'] = 'Tous les événements créés par un membre.';
 $lang['calendar.seo.description.pending'] = 'Tous les événements en attente.';
 $lang['calendar.seo.description.events.list'] = 'Liste des événements du site :site.';
 

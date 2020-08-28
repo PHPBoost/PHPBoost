@@ -173,13 +173,11 @@ class CalendarFormController extends ModuleController
 		$auth_setter = new FormFieldAuthorizationsSetter('register_authorizations', $auth_settings, array('hidden' => !$event_content->is_registration_authorized()));
 		$fieldset->add_field($auth_setter);
 
-		if (CategoriesAuthorizationsService::check_authorizations($event_content->get_category_id())->moderation())
-		{
-			if ($this->get_event()->get_id() !== null)
-				$fieldset->add_field(new FormFieldCheckbox('cancelled', $this->lang['calendar.labels.cancel'], $this->get_event()->get_content()->is_cancelled()));
+		if ($this->get_event()->get_id() !== null)
+			$fieldset->add_field(new FormFieldCheckbox('cancelled', $this->lang['calendar.labels.cancel'], $this->get_event()->get_content()->is_cancelled()));
 
+		if (CategoriesAuthorizationsService::check_authorizations($event_content->get_category_id())->moderation())
 			$fieldset->add_field(new FormFieldCheckbox('approved', $common_lang['form.approve'], $event_content->is_approved()));
-		}
 
 		$this->build_contribution_fieldset($form);
 
@@ -194,13 +192,24 @@ class CalendarFormController extends ModuleController
 
 	private function build_contribution_fieldset($form)
 	{
+		$user_common = LangLoader::get('user-common');
 		if ($this->get_event()->get_id() === null && $this->is_contributor_member())
 		{
-			$fieldset = new FormFieldsetHTML('contribution', LangLoader::get_message('contribution', 'user-common'));
-			$fieldset->set_description(MessageHelper::display($this->lang['calendar.labels.contribution.explain'] . ' ' . LangLoader::get_message('contribution.explain', 'user-common'), MessageHelper::WARNING)->render());
+			$fieldset = new FormFieldsetHTML('contribution', $user_common['contribution']);
+			$fieldset->set_description(MessageHelper::display($user_common['contribution.extended.explain'], MessageHelper::WARNING)->render());
 			$form->add_fieldset($fieldset);
 
-			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', LangLoader::get_message('contribution.description', 'user-common'), '', array('description' => LangLoader::get_message('contribution.description.explain', 'user-common'))));
+			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $user_common['contribution.description'], '', array('description' => $user_common['contribution.description.explain'])));
+		}
+		elseif ($this->get_event()->is_authorized_to_edit() && !AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
+		{
+			$fieldset = new FormFieldsetHTML('member_edition', $user_common['contribution.member.edition']);
+			$fieldset->set_description(MessageHelper::display($user_common['contribution.member.edition.explain'], MessageHelper::WARNING)->render());
+			$form->add_fieldset($fieldset);
+
+			$fieldset->add_field(new FormFieldRichTextEditor('edition_description', $user_common['contribution.member.edition.description'], '',
+				array('description' => $user_common['contribution.member.edition.description.desc'])
+			));
 		}
 	}
 
@@ -289,13 +298,13 @@ class CalendarFormController extends ModuleController
 				$event_content->hide_map();
 		}
 
+		if ($event->get_id() !== null && $this->form->get_value('cancelled'))
+			$event_content->cancel();
+		if ($event->get_id() !== null && !$this->form->get_value('cancelled'))
+			$event_content->uncancel();
+
 		if (CategoriesAuthorizationsService::check_authorizations($event_content->get_category_id())->moderation())
 		{
-			if ($event->get_id() !== null && $this->form->get_value('cancelled'))
-				$event_content->cancel();
-			if ($event->get_id() !== null && !$this->form->get_value('cancelled'))
-				$event_content->uncancel();
-
 			if ($this->form->get_value('approved'))
 				$event_content->approve();
 			else
@@ -471,22 +480,25 @@ class CalendarFormController extends ModuleController
 
 	private function contribution_actions(CalendarEvent $event, $id_event)
 	{
-		if ($this->is_contributor_member() && $event->get_id() === null)
+		if ($event->get_id() === null)
 		{
-			$contribution = new Contribution();
-			$contribution->set_id_in_module($id_event);
-			$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
-			$contribution->set_entitled($event->get_content()->get_title());
-			$contribution->set_fixing_url(CalendarUrlBuilder::edit_event($id_event)->relative());
-			$contribution->set_poster_id(AppContext::get_current_user()->get_id());
-			$contribution->set_module('calendar');
-			$contribution->set_auth(
-				Authorizations::capture_and_shift_bit_auth(
-					CategoriesService::get_categories_manager()->get_heritated_authorizations($event->get_content()->get_category_id(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
-					Category::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
-				)
-			);
-			ContributionService::save_contribution($contribution);
+			if($this->is_contributor_member())
+			{
+				$contribution = new Contribution();
+				$contribution->set_id_in_module($id_event);
+				$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
+				$contribution->set_entitled($event->get_content()->get_title());
+				$contribution->set_fixing_url(CalendarUrlBuilder::edit_event($id_event)->relative());
+				$contribution->set_poster_id(AppContext::get_current_user()->get_id());
+				$contribution->set_module('calendar');
+				$contribution->set_auth(
+					Authorizations::capture_and_shift_bit_auth(
+						CategoriesService::get_categories_manager()->get_heritated_authorizations($event->get_content()->get_category_id(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
+						Category::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
+					)
+				);
+				ContributionService::save_contribution($contribution);
+			}
 		}
 		else
 		{

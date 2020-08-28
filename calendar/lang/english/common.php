@@ -89,6 +89,7 @@ $lang['calendar.authorizations.register'] = 'Register permissions';
 
 // SEO
 $lang['calendar.seo.description.root'] = 'All :site\'s events.';
+$lang['calendar.seo.description.member'] = 'All events created by a member.';
 $lang['calendar.seo.description.pending'] = 'All pending events.';
 $lang['calendar.seo.description.events.list'] = ':site\'s events list.';
 

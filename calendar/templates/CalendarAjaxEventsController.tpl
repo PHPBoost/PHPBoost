@@ -1,6 +1,6 @@
 <section id="module-calendar-events">
 	<header>
-		<h2 class="align-center"># IF C_PENDING_PAGE #{@calendar.pending.events}# ELSE #{@calendar.events.of} {DATE}# ENDIF #</h2>
+		<h2 class="align-center"># IF C_PENDING_PAGE #{@calendar.pending.events}# ELSE ## IF NOT C_MEMBER_ITEMS #{@calendar.events.of} {DATE}# ENDIF ## ENDIF #</h2>
 	</header>
 
 	# IF C_EVENTS #

@@ -6,7 +6,7 @@
 			<a href="${relative_url(SyndicationUrlBuilder::rss('calendar'))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 		</div>
 		<h1>
-			{@calendar.module.title}
+			{@calendar.module.title}# IF C_MEMBER_ITEMS # - ${LangLoader::get_message('my.items', 'user-common')}# ENDIF #
 		</h1>
 	</header>
 	<div class="content">
