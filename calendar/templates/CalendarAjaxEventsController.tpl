@@ -87,9 +87,9 @@
 											<a href="{event.U_UNSUSCRIBE}" class="button alt-button">{@calendar.labels.unsuscribe}</a>
 										# ENDIF #
 									# ELSE #
-										# IF event.C_MAX_PARTICIPANTS_REACHED #<span class="small text-italic">{@calendar.labels.max_participants_reached}</span># ENDIF #
+										# IF event.C_MAX_PARTICIPANTS_REACHED #<span class="small text-italic">{@calendar.labels.max.participants.reached}</span># ENDIF #
 									# ENDIF #
-									# IF event.C_REGISTRATION_CLOSED #<span class="small text-italic">{@calendar.labels.registration_closed}</span># ENDIF #
+									# IF event.C_REGISTRATION_CLOSED #<span class="small text-italic">{@calendar.labels.registration.closed}</span># ENDIF #
 								# ENDIF #
 							</div>
 

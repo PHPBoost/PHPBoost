@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 16
+ * @version     PHPBoost 6.0 - last update: 2020 08 28
  * @since       PHPBoost 3.0 - 2012 11 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -67,10 +67,10 @@ class AdminCalendarConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('configuration', StringVars::replace_vars(LangLoader::get_message('configuration.module.title', 'admin-common'), array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$fieldset = new FormFieldsetHTMLHeading('configuration', StringVars::replace_vars($this->admin_common_lang['configuration.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_number_per_page', $this->lang['calendar.config.items_number_per_page'], $this->config->get_items_number_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_number_per_page', $this->lang['calendar.config.items.number.per.page'], $this->config->get_items_number_per_page(),
 			array('class' => 'third-field', 'min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
@@ -80,7 +80,7 @@ class AdminCalendarConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(20, 1000)
 		)));
 
-		$fieldset->add_field(new FormFieldColorPicker('event_color', $this->lang['calendar.config.event_color'], $this->config->get_event_color(),
+		$fieldset->add_field(new FormFieldColorPicker('event_color', $this->lang['calendar.config.event.color'], $this->config->get_event_color(),
 			array('class' => 'third-field'),
 			array(new FormFieldConstraintRegex('`^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$`iu'))
 		));
@@ -89,11 +89,11 @@ class AdminCalendarConfigController extends AdminModuleController
 
 		if (!empty($this->user_born_field) && !$this->user_born_field['display'])
 		{
-			$fieldset->add_field(new FormFieldHTML('user_born_disabled_msg', MessageHelper::display($this->lang['calendar.error.e_user_born_field_disabled'], MessageHelper::WARNING)->render()));
+			$fieldset->add_field(new FormFieldHTML('user_born_disabled_msg', MessageHelper::display($this->lang['calendar.error.user.born.field.disabled'], MessageHelper::WARNING)->render()));
 		}
 		else
 		{
-			$fieldset->add_field(new FormFieldCheckbox('members_birthday_enabled', $this->lang['calendar.config.members_birthday_enabled'], $this->config->is_members_birthday_enabled(),
+			$fieldset->add_field(new FormFieldCheckbox('members_birthday_enabled', $this->lang['calendar.config.members.birthday.enabled'], $this->config->is_members_birthday_enabled(),
 				array(
 					'class' => 'custom-checkbox',
 					'events' => array('click' => '
@@ -106,7 +106,7 @@ class AdminCalendarConfigController extends AdminModuleController
 				)
 			));
 
-			$fieldset->add_field(new FormFieldColorPicker('birthday_color', $this->lang['calendar.config.birthday_color'], $this->config->get_birthday_color(),
+			$fieldset->add_field(new FormFieldColorPicker('birthday_color', $this->lang['calendar.config.birthday.color'], $this->config->get_birthday_color(),
 				array('hidden' => !$this->config->is_members_birthday_enabled()),
 				array(new FormFieldConstraintRegex('`^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$`iu'))
 			));

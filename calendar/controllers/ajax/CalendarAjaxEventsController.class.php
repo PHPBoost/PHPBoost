@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 11 11
+ * @version     PHPBoost 6.0 - last update: 2020 08 28
  * @since       PHPBoost 4.0 - 2014 03 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CalendarAjaxEventsController extends AbstractController
@@ -85,7 +86,7 @@ class CalendarAjaxEventsController extends AbstractController
 			'C_COMMENTS_ENABLED' => $comments_config->module_comments_is_enabled('calendar'),
 			'C_EVENTS' => $events_number > 0,
 			'DATE' => $day . ' ' . $array_l_month[$month - 1] . ' ' . $year,
-			'L_EVENTS_NUMBER' => $events_number > 1 ? StringVars::replace_vars($this->lang['calendar.labels.events_number'], array('events_number' => $events_number)) : $this->lang['calendar.labels.one_event'],
+			'L_EVENTS_NUMBER' => $events_number > 1 ? StringVars::replace_vars($this->lang['calendar.labels.events.number'], array('events_number' => $events_number)) : $this->lang['calendar.labels.one.event'],
 		));
 
 		if (!empty($events_list))

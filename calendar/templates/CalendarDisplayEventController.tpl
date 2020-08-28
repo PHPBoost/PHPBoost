@@ -77,12 +77,12 @@
 								# ENDIF #
 								# IF C_REGISTRATION_CLOSED #
 									<li>
-										<span class="small text-italic">{@calendar.labels.registration_closed}</span>
+										<span class="small text-italic">{@calendar.labels.registration.closed}</span>
 									</li>
 								# ELSE #
 									# IF C_MAX_PARTICIPANTS_REACHED #
 										<li>
-											<span class="small text-italic">{@calendar.labels.max_participants_reached}</span>
+											<span class="small text-italic">{@calendar.labels.max.participants.reached}</span>
 										</li>
 									# ELSE #
 										# IF C_PARTICIPATE #

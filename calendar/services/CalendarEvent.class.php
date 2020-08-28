@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 03 18
+ * @version     PHPBoost 6.0 - last update: 2020 08 28
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -210,8 +210,8 @@ class CalendarEvent
 				'AUTHOR' => $author->get_display_name(),
 				'AUTHOR_LEVEL_CLASS' => UserService::get_level_class($author->get_level()),
 				'AUTHOR_GROUP_COLOR' => $author_group_color,
-				'L_MISSING_PARTICIPANTS' => $missing_participants_number > 1 ? StringVars::replace_vars($lang['calendar.labels.remaining_places'], array('missing_number' => $missing_participants_number)) : $lang['calendar.labels.remaining_place'],
-				'L_REGISTRATION_DAYS_LEFT' => $registration_days_left > 1 ? StringVars::replace_vars($lang['calendar.labels.remaining_days'], array('days_left' => $registration_days_left)) : $lang['calendar.labels.remaining_day'],
+				'L_MISSING_PARTICIPANTS' => $missing_participants_number > 1 ? StringVars::replace_vars($lang['calendar.labels.remaining.places'], array('missing_number' => $missing_participants_number)) : $lang['calendar.labels.remaining.place'],
+				'L_REGISTRATION_DAYS_LEFT' => $registration_days_left > 1 ? StringVars::replace_vars($lang['calendar.labels.remaining.days'], array('days_left' => $registration_days_left)) : $lang['calendar.labels.remaining.day'],
 				'C_NEW_CONTENT' => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('calendar', $this->content->get_creation_date()->get_timestamp()),
 
 				//Category
