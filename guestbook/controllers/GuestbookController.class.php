@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 01
+ * @version     PHPBoost 6.0 - last update: 2020 09 02
  * @since       PHPBoost 3.0 - 2012 12 12
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -12,7 +12,7 @@ class GuestbookController extends ModuleController
 {
 	private $lang;
 	private $view;
-	
+
 	private $elements_number = 0;
 	private $ids = array();
 	private $hide_delete_input = array();
@@ -66,11 +66,11 @@ class GuestbookController extends ModuleController
 			}
 			else
 				$this->hide_delete_input[] = $message->get_id();
-			
+
 			$this->view->assign_block_vars('messages', array_merge($message->get_array_tpl_vars($page), array(
 				'C_CURRENT_USER_MESSAGE' => AppContext::get_current_user()->get_display_name() == $row['login'],
 				'C_AVATAR' => $row['user_avatar'] || $user_accounts_config->is_default_avatar_enabled(),
-				'C_USER_GROUPS' => !empty($row['groups']),
+				'C_USER_GROUPS' => !empty($row['user_groups']),
 				'MESSAGE_NUMBER' => $this->elements_number,
 				'U_AVATAR' => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : $user_accounts_config->get_default_avatar()
 			)));
@@ -85,7 +85,7 @@ class GuestbookController extends ModuleController
 					if ($groups_cache->group_exists($user_group_id))
 					{
 						$group = $groups_cache->get_group($user_group_id);
-						$this->view->assign_block_vars('messages.user_groups', array(
+						$this->view->assign_block_vars('messages.usergroups', array(
 							'C_GROUP_PICTURE' => !empty($group['img']),
 							'GROUP_PICTURE' => $group['img'],
 							'GROUP_NAME' => $group['name']
@@ -149,7 +149,7 @@ class GuestbookController extends ModuleController
 			$page = AppContext::get_request()->get_getint('page', 1);
 			if ($page > 1 && $deleted_messages_number == GuestbookConfig::load()->get_items_per_page())
 				$page--;
-			
+
 			AppContext::get_response()->redirect(GuestbookUrlBuilder::home($page), LangLoader::get_message('process.success', 'status-messages-common'));
 		}
 	}

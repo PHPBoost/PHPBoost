@@ -3,11 +3,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 04 29
+ * @version     PHPBoost 6.0 - last update: 2020 09 02
  * @since       PHPBoost 2.0 - 2008 07 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor ph-7 <me@ph7.me>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once('../kernel/begin.php');
@@ -146,7 +147,7 @@ if ($contribution_id > 0)
 		FROM ' . DB_TABLE_MEMBER . ' member
 		WHERE user_id = :user_id', array('user_id' => $contribution->get_poster_id()))->fetch();
 
-	$contributor_group_color = User::get_group_color($contributor['groups'], $contributor['level']);
+	$contributor_group_color = User::get_group_color($contributor['user_groups'], $contributor['level']);
 
 	$template->put_all(array(
 		'C_WRITE_AUTH' => AppContext::get_current_user()->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT),
@@ -172,7 +173,7 @@ if ($contribution_id > 0)
 			FROM ' . DB_TABLE_MEMBER . ' member
 			WHERE user_id = :user_id', array('user_id' => $contribution->get_fixer_id()))->fetch();
 
-		$fixer_group_color = User::get_group_color($fixer['groups'], $fixer['level']);
+		$fixer_group_color = User::get_group_color($fixer['user_groups'], $fixer['level']);
 
 		$template->put_all(array(
 			'C_CONTRIBUTION_FIXED' => true,

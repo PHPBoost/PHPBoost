@@ -3,16 +3,17 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2015 12 10
+ * @version     PHPBoost 6.0 - last update: 2020 09 01
  * @since       PHPBoost 2.0 - 2007 12 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 //Listes les utilisateurs en ligne.
 function forum_list_user_online($condition)
 {
 	list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
-	$result = PersistenceContext::get_querier()->select("SELECT s.user_id, m.level, m.display_name, m.groups
+	$result = PersistenceContext::get_querier()->select("SELECT s.user_id, m.level, m.display_name, m.user_groups
 	FROM " . DB_TABLE_SESSIONS . " s
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id
 	WHERE s.timestamp > :timestamp " . $condition . "
@@ -21,7 +22,7 @@ function forum_list_user_online($condition)
 	));
 	while ($row = $result->fetch())
 	{
-		$group_color = User::get_group_color($row['groups'], $row['level']);
+		$group_color = User::get_group_color($row['user_groups'], $row['level']);
 		switch ($row['level']) //Coloration du membre suivant son level d'autorisation.
 		{
 			case -1:

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 01
+ * @version     PHPBoost 6.0 - last update: 2020 09 02
  * @since       PHPBoost 1.5 - 2006 07 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -716,7 +716,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	$j = 0;
 	$result = PersistenceContext::get_querier()->select("SELECT
 		msg.id, msg.user_id, msg.timestamp, msg.view_status, msg.contents,
-		m.display_name, m.level, m.email, m.show_email, m.registration_date AS registered, m.posted_msg, m.warning_percentage, m.delay_banned, m.groups,
+		m.display_name, m.level, m.email, m.show_email, m.registration_date AS registered, m.posted_msg, m.warning_percentage, m.delay_banned, m.user_groups,
 		ext_field.user_avatar,
 		s.user_id AS connect
 	FROM " . DB_TABLE_PM_MSG . " msg
@@ -748,7 +748,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		$row['contents'] = ($quote_last_msg == 1 && $i == 0) ? '<span class="text-strong">' . $LANG['quote_last_msg'] . '</span><br /><br />' . $row['contents'] : $row['contents'];
 		$i++;
 
-		$group_color = User::get_group_color($row['groups'], $row['level']);
+		$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
 		$date = new Date($row['timestamp'],Timezone::SERVER_TIMEZONE);
 
@@ -908,9 +908,9 @@ else //Liste des conversation, dans la boite du membre.
 	$result = PersistenceContext::get_querier()->select("SELECT
 		pm.id, pm.title, pm.user_id, pm.user_id_dest, pm.user_convers_status, pm.nbr_msg, pm.last_user_id, pm.last_msg_id, pm.last_timestamp,
 		msg.view_status,
-		m.display_name AS login, m.level AS level, m.groups AS user_groups,
-		m1.display_name AS login_dest,  m1.level AS dest_level, m1.groups AS dest_groups,
-		m2.display_name AS last_login, m2.level AS last_level, m2.groups AS last_groups
+		m.display_name AS login, m.level AS level, m.user_groups AS m_user_groups,
+		m1.display_name AS login_dest,  m1.level AS dest_level, m1.user_groups AS dest_groups,
+		m2.display_name AS last_login, m2.level AS last_level, m2.user_groups AS last_groups
 	FROM " . DB_TABLE_PM_TOPIC . "  pm
 	LEFT JOIN " . DB_TABLE_PM_MSG . " msg ON msg.id = pm.last_msg_id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = pm.user_id

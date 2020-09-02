@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 21
+ * @version     PHPBoost 6.0 - last update: 2020 09 02
  * @since       PHPBoost 4.0 - 2013 06 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -22,11 +22,11 @@ class AjaxSearchUserAutoCompleteController extends AbstractController
 		$suggestions = array();
 
 		try {
-			$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, groups FROM " . DB_TABLE_MEMBER . " WHERE display_name LIKE '" . str_replace('*', '%', $request->get_value('value', '')) . "%'");
+			$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, user_groups FROM " . DB_TABLE_MEMBER . " WHERE display_name LIKE '" . str_replace('*', '%', $request->get_value('value', '')) . "%'");
 
 			while($row = $result->fetch())
 			{
-				$user_group_color = User::get_group_color($row['groups'], $row['level']);
+				$user_group_color = User::get_group_color($row['user_groups'], $row['level']);
 
 				$suggestion = '';
 

@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 19
+ * @version     PHPBoost 6.0 - last update: 2020 09 02
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UserViewProfileController extends AbstractController
@@ -45,7 +46,7 @@ class UserViewProfileController extends AbstractController
 	{
 		$registration_date = !empty($this->user_infos['registration_date']) ? Date::to_format($this->user_infos['registration_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('unknown', 'main');
 		$last_connection_date = !empty($this->user_infos['last_connection_date']) ? Date::to_format($this->user_infos['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('never', 'main');
-		$has_groups = $this->build_groups(explode('|', $this->user_infos['groups']));
+		$has_groups = $this->build_groups(explode('|', $this->user_infos['user_groups']));
 		$extended_fields_number = 0;
 
 		foreach (MemberExtendedFieldsService::display_profile_fields($user_id) as $field)

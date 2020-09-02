@@ -272,7 +272,7 @@ class User
 			$this->warning_percentage = $properties['warning_percentage'];
 
 			$this->display_name = $properties['display_name'];
-			$this->set_groups($properties['groups']);
+			$this->set_groups($properties['user_groups']);
 		}
 	}
 
@@ -301,7 +301,7 @@ class User
 			'unread_pm' => 0,
 			'registration_date' => 0,
 			'last_connection_date' => time(),
-			'groups' => '',
+			'user_groups' => '',
 			'warning_percentage' => 0,
 			'delay_banned' => 0,
 			'delay_readonly' => 0

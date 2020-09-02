@@ -3,11 +3,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 19
+ * @version     PHPBoost 6.0 - last update: 2020 09 02
  * @since       PHPBoost 1.6 - 2007 03 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once('../kernel/begin.php');
@@ -122,7 +123,7 @@ if ($action == 'punish')
 		));
 
 		$i = 0;
-		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, groups, delay_readonly
+		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, user_groups, delay_readonly
 		FROM " . PREFIX . "member
 		WHERE delay_readonly > :now
 		ORDER BY delay_readonly DESC", array(
@@ -130,7 +131,7 @@ if ($action == 'punish')
 		));
 		while ($row = $result->fetch())
 		{
-			$group_color = User::get_group_color($row['groups'], $row['level']);
+			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
 			$moderation_panel_template->assign_block_vars('member_list', array(
 				'C_USER_GROUP_COLOR' => !empty($group_color),
@@ -158,7 +159,7 @@ if ($action == 'punish')
 	else //On affiche les infos sur l'utilisateur
 	{
 		try {
-			$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'groups', 'delay_readonly'), 'WHERE user_id=:id', array('id' => $id_get));
+			$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'user_groups', 'delay_readonly'), 'WHERE user_id=:id', array('id' => $id_get));
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
@@ -193,7 +194,7 @@ if ($action == 'punish')
 			$select .= '<option value="' . $time . '" ' . $selected . '>' . TextHelper::strtolower($array_sanction[$key]) . '</option>';
 		}
 
-		$group_color = User::get_group_color($member['groups'], $member['level']);
+		$group_color = User::get_group_color($member['user_groups'], $member['level']);
 		$moderation_panel_template->put_all(array(
 			'C_MODO_PANEL_USER_INFO' => true,
 			'C_USER_GROUP_COLOR' => !empty($group_color),
@@ -308,13 +309,13 @@ else if ($action == 'warning')
 		));
 
 		$i = 0;
-		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, groups, warning_percentage
+		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, user_groups, warning_percentage
 		FROM " . PREFIX . "member
 		WHERE warning_percentage > 0
 		ORDER BY warning_percentage");
 		while ($row = $result->fetch())
 		{
-			$group_color = User::get_group_color($row['groups'], $row['level']);
+			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
 			$moderation_panel_template->assign_block_vars('member_list', array(
 				'C_USER_GROUP_COLOR' => !empty($group_color),
@@ -342,7 +343,7 @@ else if ($action == 'warning')
 	else //On affiche les infos sur l'utilisateur
 	{
 		try {
-			$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'groups', 'warning_percentage'), 'WHERE user_id=:id', array('id' => $id_get));
+			$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'user_groups', 'warning_percentage'), 'WHERE user_id=:id', array('id' => $id_get));
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
@@ -359,7 +360,7 @@ else if ($action == 'warning')
 				$select .= '<option value="' . 10 * $j . '">' . 10 * $j . '%</option>';
 		}
 
-		$group_color = User::get_group_color($member['groups'], $member['level']);
+		$group_color = User::get_group_color($member['user_groups'], $member['level']);
 
 		$moderation_panel_template->put_all(array(
 			'C_MODO_PANEL_USER_INFO' => true,
@@ -447,7 +448,7 @@ else
 		));
 
 		$i = 0;
-		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, groups, delay_banned, warning_percentage
+		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, user_groups, delay_banned, warning_percentage
 		FROM " . PREFIX . "member
 		WHERE delay_banned > :now OR warning_percentage = 100
 		ORDER BY delay_banned", array(
@@ -455,7 +456,7 @@ else
 		));
 		while ($row = $result->fetch())
 		{
-			$group_color = User::get_group_color($row['groups'], $row['level']);
+			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
 			$moderation_panel_template->assign_block_vars('member_list', array(
 				'C_USER_GROUP_COLOR' => !empty($group_color),
@@ -483,13 +484,13 @@ else
 	else //On affiche les infos sur l'utilisateur
 	{
 		try {
-			$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'groups', 'delay_banned', 'warning_percentage'), 'WHERE user_id=:id', array('id' => $id_get));
+			$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'user_groups', 'delay_banned', 'warning_percentage'), 'WHERE user_id=:id', array('id' => $id_get));
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
 
-		$group_color = User::get_group_color($member['groups'], $member['level']);
+		$group_color = User::get_group_color($member['user_groups'], $member['level']);
 
 		$moderation_panel_template->put_all(array(
 			'C_MODO_PANEL_USER_BAN' => true,

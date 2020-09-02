@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 08 02
+ * @version     PHPBoost 6.0 - last update: 2020 09 02
  * @since       PHPBoost 1.6 - 2006 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -56,7 +56,10 @@ if (!empty($id_article))
 	$delete_auth = (!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_DELETE_ARCHIVE)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_DELETE_ARCHIVE)) ? true : false;
 
 	//on va chercher le contenu de la page
-	$result = PersistenceContext::get_querier()->select("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents, c.user_id, c.user_ip, c.change_reason, m.display_name, m.groups, m.level, c.id_article, c.activ
+	$result = PersistenceContext::get_querier()->select("SELECT
+		a.title, a.encoded_title,
+		c.timestamp, c.id_contents, c.user_id, c.user_ip, c.change_reason, c.id_article, c.activ,
+		m.display_name, m.user_groups, m.level
 		FROM " . PREFIX . "wiki_contents c
 		LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = c.id_article
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = c.user_id
@@ -73,7 +76,7 @@ if (!empty($id_article))
 		//Suppression
 		$actions .= ($row['activ'] != 1 && $delete_auth) ? '<a href="' . url('action.php?del_contents=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()) . '" aria-label="' . LangLoader::get_message('delete', 'common') . '" data-confirmation="' . $LANG['wiki_confirm_delete_archive'] . '"><i class="far fa-trash-alt" aria-hidden="true"></i></a>' : '';
 
-		$group_color = User::get_group_color($row['groups'], $row['level']);
+		$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
 		$tpl->assign_block_vars('list', array(
 			'TITLE' => $LANG['wiki_consult_article'],
@@ -134,7 +137,10 @@ else //On affiche la liste des modifications
 		'PAGINATION' => $pagination->display(),
 	));
 
-	$result = PersistenceContext::get_querier()->select("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents AS id, c.user_id, c.user_ip, m.display_name, m.groups, m.level, c.id_article, c.activ,  a.id_contents
+	$result = PersistenceContext::get_querier()->select("SELECT
+		a.title, a.encoded_title,
+		c.timestamp, c.id_contents AS id, c.user_id, c.user_ip, c.id_article, c.activ,  a.id_contents,
+		m.display_name, m.user_groups, m.level
 		FROM " . PREFIX . "wiki_articles a
 		LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = c.user_id
@@ -149,7 +155,7 @@ else //On affiche la liste des modifications
 
 	while ($row = $result->fetch())
 	{
-		$group_color = User::get_group_color($row['groups'], $row['level']);
+		$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
 		$tpl->assign_block_vars('list', array(
 			'TITLE' => stripslashes($row['title']),

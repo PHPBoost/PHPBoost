@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 01
+ * @version     PHPBoost 6.0 - last update: 2020 09 02
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UserExploreGroupsController extends AbstractController
@@ -75,7 +76,7 @@ class UserExploreGroupsController extends AbstractController
 			//Affichage de tous les groupes + admin + modos sur la même page
 			//Affichages des administrateurs et des modérateurs
 			$users_data = PersistenceContext::get_querier()->select('SELECT
-				member.user_id, member.display_name, member.level, member.groups, member.warning_percentage, member.delay_banned, ext_field.user_avatar
+				member.user_id, member.display_name, member.level, member.user_groups, member.warning_percentage, member.delay_banned, ext_field.user_avatar
 				FROM ' . DB_TABLE_MEMBER . ' member
 				LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' ext_field ON ext_field.user_id = member.user_id
 				WHERE member.level IN (1,2)
@@ -156,7 +157,7 @@ class UserExploreGroupsController extends AbstractController
 		if (!empty($group_users_id))
 		{
 			$users_data = PersistenceContext::get_querier()->select('SELECT
-				member.user_id, member.display_name, member.level, member.groups, member.warning_percentage, member.delay_banned, ext_field.user_avatar
+				member.user_id, member.display_name, member.level, member.user_groups, member.warning_percentage, member.delay_banned, ext_field.user_avatar
 				FROM ' . DB_TABLE_MEMBER . ' member
 				LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' ext_field ON ext_field.user_id = member.user_id
 				WHERE member.user_id IN (' . $group_users_id . ')
@@ -177,7 +178,7 @@ class UserExploreGroupsController extends AbstractController
 	{
 		$user_accounts_config = UserAccountsConfig::load();
 
-		$group_color = User::get_group_color($user['groups'], $user['level']);
+		$group_color = User::get_group_color($user['user_groups'], $user['level']);
 		$this->view->assign_block_vars($list_name, array(
 			'C_AVATAR'          => $user['user_avatar'] || $user_accounts_config->is_default_avatar_enabled(),
 			'C_GROUP_COLOR'     => !empty($group_color),

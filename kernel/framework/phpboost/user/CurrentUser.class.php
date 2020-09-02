@@ -21,9 +21,9 @@ class CurrentUser extends User
 			Environment::load_imports();
 			Environment::init();
 		}
-		
+
 		$session = AppContext::get_session();
-		
+
 		return new self($session);
 	}
 
@@ -62,7 +62,7 @@ class CurrentUser extends User
 			$this->groups_auth[$idgroup] = $array_info['auth'];
 		}
 
-		$groups = explode('|', $session->get_cached_data('groups', ''));
+		$groups = explode('|', $session->get_cached_data('user_groups', ''));
 		array_unshift($groups, 'r' . $this->level);
 		$this->set_groups($groups);
 	}

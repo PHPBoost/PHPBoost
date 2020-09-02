@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 02 11
+ * @version     PHPBoost 6.0 - last update: 2020 09 02
  * @since       PHPBoost 4.0 - 2013 11 27
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CalendarEventParticipant
@@ -69,7 +70,7 @@ class CalendarEventParticipant
 		$this->user_id = $properties['user_id'];
 		$this->display_name = $properties['display_name'];
 		$this->level = $properties['level'];
-		$this->user_groups = explode('|', $properties['groups']);
+		$this->user_groups = explode('|', $properties['user_groups']);
 	}
 
 	public function get_array_tpl_vars()

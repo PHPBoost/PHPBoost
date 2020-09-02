@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 02 17
+ * @version     PHPBoost 6.0 - last update: 2020 09 02
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -241,7 +241,7 @@ class GalleryDisplayCategoryController extends ModuleController
 			{
 				$info_pics = array();
 				try {
-					$info_pics = $this->db_querier->select_single_row_query("SELECT g.*, m.display_name, m.groups, m.level, notes.average_notes, notes.number_notes, note.note
+					$info_pics = $this->db_querier->select_single_row_query("SELECT g.*, m.display_name, m.user_groups, m.level, notes.average_notes, notes.number_notes, note.note
 					FROM " . GallerySetup::$gallery_table . " g
 					LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 					LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = g.id AND com.module_id = 'gallery'
@@ -350,7 +350,7 @@ class GalleryDisplayCategoryController extends ModuleController
 						$cat_list .= $option->display()->render();
 					}
 
-					$group_color = User::get_group_color($info_pics['groups'], $info_pics['level']);
+					$group_color = User::get_group_color($info_pics['user_groups'], $info_pics['level']);
 
 					$date = new Date($info_pics['timestamp'], Timezone::SERVER_TIMEZONE);
 
@@ -469,7 +469,7 @@ class GalleryDisplayCategoryController extends ModuleController
 				$j = 0;
 				$result = $this->db_querier->select("SELECT
 					g.id, g.id_category, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, g.user_id, g.views, g.aprob,
-					m.display_name, m.groups, m.level,
+					m.display_name, m.user_groups, m.level,
 					notes.average_notes, notes.number_notes, note.note
 				FROM " . GallerySetup::$gallery_table . " g
 				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
@@ -536,7 +536,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					$notation->set_average_notes($row['average_notes']);
 					$notation->set_user_already_noted(!empty($row['note']));
 
-					$group_color = User::get_group_color($row['groups'], $row['level']);
+					$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
 					$comments_topic->set_id_in_module($row['id']);
 

@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 01
+ * @version     PHPBoost 6.0 - last update: 2020 09 01
  * @since       PHPBoost 1.2 - 2005 06 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once('../admin/admin_begin.php');
@@ -42,7 +43,7 @@ while ($row = $result->fetch())
 {
 	$comments_number++;
 	$ids[$comments_number] = $row['id'];
-	$group_color = User::get_group_color($row['groups'], $row['level']);
+	$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
 	$tpl->assign_block_vars('comments_list', array_merge(
 		Date::get_array_tpl_vars(new Date($row['comment_timestamp'], Timezone::SERVER_TIMEZONE), 'date'),
@@ -153,7 +154,7 @@ $tpl->put_all(array(
 
 
 //Liste des personnes en lignes.
-$result = PersistenceContext::get_querier()->select("SELECT s.user_id, s.ip, s.timestamp, s.location_script, s.location_title, s.cached_data, m.display_name, m.groups, m.level
+$result = PersistenceContext::get_querier()->select("SELECT s.user_id, s.ip, s.timestamp, s.location_script, s.location_title, s.cached_data, m.display_name, m.user_groups, m.level
 FROM " . DB_TABLE_SESSIONS . " s
 LEFT JOIN " . DB_TABLE_MEMBER . " m ON s.user_id = m.user_id
 WHERE s.timestamp > :timestamp
@@ -169,7 +170,7 @@ while ($row = $result->fetch())
 		$row['display_name'] = ($cached_data['level'] == User::ROBOT_LEVEL && $cached_data['display_name'] == 'unknow_bot') ? LangLoader::get_message('unknow_bot', 'admin') : $cached_data['display_name'];
 	}
 
-	$group_color = User::get_group_color($row['groups'], $row['level']);
+	$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
 	$tpl->assign_block_vars('user', array(
 		'C_ROBOT' => $row['level'] == User::ROBOT_LEVEL,

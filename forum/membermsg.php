@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 02
+ * @version     PHPBoost 6.0 - last update: 2020 09 01
  * @since       PHPBoost 1.6 - 2007 04 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -75,7 +75,7 @@ if (!empty($view_msg)) // Display all user's messages
 		$result = PersistenceContext::get_querier()->select("SELECT
 			msg.id, msg.user_id, msg.idtopic, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, msg.contents,
 			m2.display_name AS login_edit,
-			m.groups, m.display_name, m.level, m.email, m.show_email, m.registration_date AS registered, m.posted_msg, m.warning_percentage, m.delay_banned,
+			m.user_groups, m.display_name, m.level, m.email, m.show_email, m.registration_date AS registered, m.posted_msg, m.warning_percentage, m.delay_banned,
 			t.title, t.status, t.id_category, t.nbr_msg,
 			c.name,
 			s.user_id AS connect,
@@ -108,7 +108,7 @@ if (!empty($view_msg)) // Display all user's messages
 			//Ajout du marqueur d'édition si activé.
 			$edit_mark = ($row['timestamp_edit'] > 0 && $config->is_edit_mark_enabled()) ? '<span class="edit-pseudo">' . $LANG['edit_by'] . ' <a href="'. UserUrlBuilder::profile($row['user_id_edit'])->rel() .'">' . $row['login_edit'] . '</a> ' . $LANG['on'] . ' ' . Date::to_format($row['timestamp_edit'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '</span><br />' : '';
 
-			$group_color = User::get_group_color($row['groups'], $row['level']);
+			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
 			//Rang de l'utilisateur.
 			$user_rank = ($row['level'] === '0') ? $LANG['member'] : $LANG['guest'];
@@ -151,7 +151,7 @@ if (!empty($view_msg)) // Display all user's messages
 
 			$topic_date           = new Date($row['timestamp'], Timezone::SERVER_TIMEZONE);
 			$user_registered_date = new Date($row['registered'], Timezone::SERVER_TIMEZONE);
-			
+
 			$topic_page = 1;
 			if ($row['nbr_msg'] > $config->get_number_messages_per_page())
 			{
@@ -161,7 +161,7 @@ if (!empty($view_msg)) // Display all user's messages
 				ORDER BY id ASC", array(
 					'idtopic' => $row['idtopic']
 				));
-				
+
 				$current_message = 0;
 				while ($msg_id_row = $msg_id_result->fetch())
 				{
@@ -190,7 +190,7 @@ if (!empty($view_msg)) // Display all user's messages
 				'USER_IMG_ASSOC'   => $rank_img,
 				'C_USER_AVATAR'    => $row['user_avatar'] || $user_accounts_config->is_default_avatar_enabled(),
 				'U_USER_AVATAR'    => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : $user_accounts_config->get_default_avatar(),
-				'C_USER_GROUPS'    => !empty($row['groups']),
+				'C_USER_GROUPS'    => !empty($row['user_groups']),
 				'C_IS_USER'        => !$is_guest,
 				'C_USER_MSG'       => $row['posted_msg'] >= 1,
 				'U_USER_MSG'       => UserUrlBuilder::messages($row['user_id'])->rel(),
@@ -219,10 +219,10 @@ if (!empty($view_msg)) // Display all user's messages
 			)));
 
 			//Affichage des groupes du membre.
-			if (!empty($row['groups']))
+			if (!empty($row['user_groups']))
 			{
 				$user_groups = '';
-				$array_user_groups = explode('|', $row['groups']);
+				$array_user_groups = explode('|', $row['user_groups']);
 				foreach (GroupsService::get_groups() as $idgroup => $array_group_info)
 				{
 					$group_color = User::get_group_color($idgroup);

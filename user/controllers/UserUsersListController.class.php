@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 18
+ * @version     PHPBoost 6.0 - last update: 2020 09 02
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -81,7 +81,7 @@ class UserUsersListController extends AbstractController
 			$this->ids[$this->elements_number] = $row['user_id'];
 
 			$posted_msg = !empty($row['posted_msg']) ? $row['posted_msg'] : '0';
-			$group_color = User::get_group_color($row['groups'], $row['level']);
+			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
 			$author = new LinkHTMLElement(UserUrlBuilder::profile($row['user_id']), $row['display_name'], (!empty($group_color) ? array('style' => 'color: ' . $group_color) : array()), UserService::get_level_class($row['level']));
 

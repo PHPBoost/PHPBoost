@@ -6,10 +6,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 12 18
+ * @version     PHPBoost 6.0 - last update: 2020 09 02
  * @since       PHPBoost 1.6 - 2007 05 18
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('ADMIN_NOAUTH_DEFAULT', false); //Admin non obligatoirement sélectionné.
@@ -35,12 +36,12 @@ class GroupsService
 	public static function add_member($user_id, $idgroup)
 	{
 		//On insère le groupe au champ membre.
-		$user_groups = self::$db_querier->get_column_value(DB_TABLE_MEMBER, 'groups', 'WHERE user_id = :user_id', array('user_id' => $user_id));
+		$user_groups = self::$db_querier->get_column_value(DB_TABLE_MEMBER, 'user_groups', 'WHERE user_id = :user_id', array('user_id' => $user_id));
 		$user_groups = explode('|', $user_groups);
 		if (!in_array($idgroup, $user_groups)) //Le membre n'appartient pas déjà au groupe.
 		{
 			array_push($user_groups, $idgroup);
-			self::$db_querier->update(DB_TABLE_MEMBER, array('groups' => (trim(implode('|', $user_groups), '|'))), 'WHERE user_id = :user_id', array('user_id' => $user_id));
+			self::$db_querier->update(DB_TABLE_MEMBER, array('user_groups' => (trim(implode('|', $user_groups), '|'))), 'WHERE user_id = :user_id', array('user_id' => $user_id));
 			$return = true;
 		}
 		else
@@ -73,7 +74,7 @@ class GroupsService
 	public static function edit_member($user_id, $array_user_groups)
 	{
 		//Récupération des groupes précédent du membre.
-		$user_groups_old = self::$db_querier->get_column_value(DB_TABLE_MEMBER, 'groups', 'WHERE user_id = :user_id', array('user_id' => $user_id));
+		$user_groups_old = self::$db_querier->get_column_value(DB_TABLE_MEMBER, 'user_groups', 'WHERE user_id = :user_id', array('user_id' => $user_id));
 		$array_user_groups_old = explode('|', $user_groups_old);
 
 		//Insertion du différentiel positif des groupes précédent du membre et ceux choisis dans la table des groupes.
@@ -139,7 +140,7 @@ class GroupsService
 	public static function remove_member($user_id, $idgroup)
 	{
 		//Suppression dans la table des membres.
-		$user_groups = self::$db_querier->get_column_value(DB_TABLE_MEMBER, 'groups', 'WHERE user_id = :user_id', array('user_id' => $user_id));
+		$user_groups = self::$db_querier->get_column_value(DB_TABLE_MEMBER, 'user_groups', 'WHERE user_id = :user_id', array('user_id' => $user_id));
 
 		$user_groups = explode('|', $user_groups);
 
@@ -147,7 +148,7 @@ class GroupsService
 		if($key !== false)
 			unset($user_groups[$key]);
 
-		self::$db_querier->update(DB_TABLE_MEMBER, array('groups' => implode('|', $user_groups)), 'WHERE user_id = :user_id', array('user_id' => $user_id));
+		self::$db_querier->update(DB_TABLE_MEMBER, array('user_groups' => implode('|', $user_groups)), 'WHERE user_id = :user_id', array('user_id' => $user_id));
 
 		//Suppression dans la table des groupes.
 		$members_group = '';

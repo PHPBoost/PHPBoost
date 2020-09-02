@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 26
+ * @version     PHPBoost 6.0 - last update: 2020 09 02
  * @since       PHPBoost 3.0 - 2012 02 08
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -138,13 +138,13 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			}
 
 			$i = 1;
-			$result = $this->db_querier->select("SELECT user_id, display_name, level, groups, posted_msg
+			$result = $this->db_querier->select("SELECT user_id, display_name, level, user_groups, posted_msg
 			FROM " . DB_TABLE_MEMBER . "
 			ORDER BY posted_msg DESC
 			LIMIT 10 OFFSET 0");
 			while ($row = $result->fetch())
 			{
-				$user_group_color = User::get_group_color($row['groups'], $row['level']);
+				$user_group_color = User::get_group_color($row['user_groups'], $row['level']);
 
 				$view->assign_block_vars('top_poster', array(
 					'C_USER_GROUP_COLOR' => !empty($user_group_color),

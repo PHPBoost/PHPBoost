@@ -3,11 +3,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 29
+ * @version     PHPBoost 6.0 - last update: 2020 09 02
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once('../kernel/begin.php');
@@ -74,7 +75,14 @@ if ($pagination->current_page_is_empty() && $page > 1)
 	DispatchManager::redirect($error_controller);
 }
 
-$result = PersistenceContext::get_querier()->select("SELECT c.id as cid, m1.display_name AS login, m1.level AS user_level, m1.groups AS groups, m2.display_name AS last_login, m2.level AS last_user_level, m2.groups AS last_user_groups, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id, t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
+$result = PersistenceContext::get_querier()->select("SELECT
+	c.id as cid,
+	m1.display_name AS login, m1.level AS user_level, m1.user_groups AS m_user_groups,
+	m2.display_name AS last_login, m2.level AS last_user_level, m2.user_groups AS last_user_groups,
+	t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id, t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg,
+	v.last_view_id,
+	p.question,
+	tr.id AS idtrack
 FROM " . PREFIX . "forum_topics t
 LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.id_category
 LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = :user_id
@@ -128,7 +136,7 @@ while ($row = $result->fetch())
 	$topic_pagination = new ModulePagination($page, $row['nbr_msg'], $config->get_number_messages_per_page(), Pagination::LIGHT_PAGINATION);
 	$topic_pagination->set_url(new Url('/forum/topic' . url('.php?id=' . $row['id'] . '&amp;pt=%d', '-' . $row['id'] . '-%d' . $rewrited_title . '.php')));
 
-	$group_color      = User::get_group_color($row['groups'], $row['user_level']);
+	$group_color      = User::get_group_color($row['m_user_groups'], $row['user_level']);
 	$last_group_color = User::get_group_color($row['last_user_groups'], $row['last_user_level']);
 
 	$last_msg_date = new Date($row['last_timestamp'], Timezone::SERVER_TIMEZONE);

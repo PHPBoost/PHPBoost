@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 08
+ * @version     PHPBoost 6.0 - last update: 2020 09 01
  * @since       PHPBoost 1.6 - 2007 03 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -469,7 +469,7 @@ else
 		$now = new Date();
 		if (!empty($folder_member) && empty($folder) || $show_public)
 		{
-			$result = PersistenceContext::get_querier()->select("SELECT up.id, up.public, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.display_name, m.level, m.groups
+			$result = PersistenceContext::get_querier()->select("SELECT up.id, up.public, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.display_name, m.level, m.user_groups
 	    	FROM " . DB_TABLE_UPLOAD . " up
 	    	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
 	        WHERE " . $where_clause . "
@@ -480,7 +480,7 @@ else
 		}
 		else
 		{
-			$result = PersistenceContext::get_querier()->select("SELECT up.id, up.public, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.display_name, m.level, m.groups
+			$result = PersistenceContext::get_querier()->select("SELECT up.id, up.public, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.display_name, m.level, m.user_groups
 			FROM " . DB_TABLE_UPLOAD . " up
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
 			WHERE idcat = :id" . ((empty($folder) || $folder_info['user_id'] <= 0) ? ' AND up.user_id = -1' : ' AND up.user_id != -1'), array(
@@ -531,7 +531,7 @@ else
 					$bbcode = '[url=/upload/' . $row['path'] . ']' . $row['name'] . '[/url]';
 					$link = PATH_TO_ROOT . '/upload/' . $row['path'];
 			}
-			$group_color = User::get_group_color($row['groups'], $row['level']);
+			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
 			$template->assign_block_vars($loop_id, array(
 				'C_ENABLED_THUMBNAILS' => FileUploadConfig::load()->get_display_file_thumbnail(),

@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 05
+ * @version     PHPBoost 6.0 - last update: 2020 09 01
  * @since       PHPBoost 3.0 - 2012 11 20
  * @contributor Mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CalendarService
@@ -119,7 +120,7 @@ class CalendarService
 		self::delete_event_content('WHERE id = :id', array(
 			'id' => $content_id
 		));
-		
+
 		self::delete_event('WHERE content_id = :id', array(
 			'id' => $content_id
 		));
@@ -177,7 +178,7 @@ class CalendarService
 	{
 		$participants = array();
 
-		$result = self::$db_querier->select('SELECT event_id, member.user_id, display_name, level, groups
+		$result = self::$db_querier->select('SELECT event_id, member.user_id, display_name, level, user_groups
 		FROM ' . CalendarSetup::$calendar_users_relation_table . ' participants
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = participants.user_id
 		WHERE event_id = :id', array(

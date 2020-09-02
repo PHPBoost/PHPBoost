@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 01
+ * @version     PHPBoost 6.0 - last update: 2020 09 02
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -210,7 +210,7 @@ $i = 0;
 $j = 0;
 $result = PersistenceContext::get_querier()->select("SELECT
 	msg.id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, msg.contents,
-	m.user_id, m.delay_readonly, m.delay_banned, m.display_name as login, m.level, m.groups, m.email, m.show_email, m.registration_date AS registered, m.posted_msg,
+	m.user_id, m.delay_readonly, m.delay_banned, m.display_name as login, m.level, m.user_groups, m.email, m.show_email, m.registration_date AS registered, m.posted_msg,
 	p.question, p.answers, p.voter_id, p.votes, p.type,
 	ext_field.user_avatar,
 	m2.display_name as login_edit,
@@ -363,7 +363,7 @@ while ( $row = $result->fetch() )
 		$rank_img = TPL_PATH_TO_ROOT . '/forum/templates/images/ranks/' . $user_rank_icon;
 
 	$user_accounts_config = UserAccountsConfig::load();
-	$user_group_color     = User::get_group_color($row['groups'], $row['level']);
+	$user_group_color     = User::get_group_color($row['user_groups'], $row['level']);
 
 	$user_sign_field = $extended_fields_cache->get_extended_field_by_field_name('user_sign');
 
@@ -390,7 +390,7 @@ while ( $row = $result->fetch() )
 		'C_USER_IMG_ASSOC'            => !empty($rank_img),
 		'C_USER_AVATAR'               => $row['user_avatar'] || $user_accounts_config->is_default_avatar_enabled(),
 		'U_USER_AVATAR'               => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : $user_accounts_config->get_default_avatar(),
-		'C_USER_GROUPS'               => $row['groups'],
+		'C_USER_GROUPS'               => $row['user_groups'],
 		'C_IS_USER'                   => !$is_guest,
 		'C_USER_MSG'                  => $row['posted_msg'] >= 1,
 		'U_USER_MSG'                  => UserUrlBuilder::messages($row['user_id'])->rel(),
@@ -425,10 +425,10 @@ while ( $row = $result->fetch() )
 	)));
 
 	//Affichage des groupes du membre.
-	if (!empty($row['groups']))
+	if (!empty($row['user_groups']))
 	{
 		$user_groups = '';
-		$array_user_groups = explode('|', $row['groups']);
+		$array_user_groups = explode('|', $row['user_groups']);
 		foreach (GroupsService::get_groups() as $idgroup => $array_group_info)
 		{
 			$group_color = User::get_group_color($idgroup);

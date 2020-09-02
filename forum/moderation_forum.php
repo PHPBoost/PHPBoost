@@ -3,11 +3,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 29
+ * @version     PHPBoost 6.0 - last update: 2020 09 02
  * @since       PHPBoost 1.5 - 2006 08 08
  * @contributor Regis VIARRE <crowkait@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once('../kernel/begin.php');
@@ -137,8 +138,8 @@ if ($action == 'alert') //Gestion des alertes
 		$i = 0;
 		$result = PersistenceContext::get_querier()->select("SELECT
 			ta.id, ta.title, ta.timestamp, ta.status, ta.user_id, ta.idtopic, ta.idmodo,
-			m2.display_name AS login_modo, m2.level AS modo_level, m2.groups AS modo_groups,
-			m.display_name, m.level AS user_level, m.groups,
+			m2.display_name AS login_modo, m2.level AS modo_level, m2.user_groups AS modo_groups,
+			m.display_name, m.level AS user_level, m.user_groups,
 			t.title AS topic_title,
 			c.id AS cid
 		FROM " . PREFIX . "forum_alerts ta
@@ -153,7 +154,7 @@ if ($action == 'alert') //Gestion des alertes
 		while ($row = $result->fetch())
 		{
 			$modo_group_color = ($row['status'] != 0) ? User::get_group_color($row['modo_groups'], $row['modo_level']) : '';
-			$group_color = User::get_group_color($row['groups'], $row['user_level']);
+			$group_color = User::get_group_color($row['user_groups'], $row['user_level']);
 			$time = new Date($row['timestamp'], Timezone::SERVER_TIMEZONE);
 
 			$tpl->assign_block_vars('alert_list', array_merge(
@@ -194,8 +195,12 @@ if ($action == 'alert') //Gestion des alertes
 		//Vérification des autorisations.
 		$authorized_categories = CategoriesService::get_authorized_categories();
 
-		$result = PersistenceContext::get_querier()->select("
-		SELECT ta.id, ta.title, ta.timestamp, ta.status, ta.user_id, ta.idtopic, ta.idmodo, m2.display_name AS login_modo, m2.level AS modo_level, m2.groups AS modo_groups, m.display_name, m.level AS user_level, m.groups, t.title AS topic_title, t.id_category, c.id AS cid, ta.contents
+		$result = PersistenceContext::get_querier()->select("SELECT
+			ta.id, ta.title, ta.timestamp, ta.status, ta.user_id, ta.idtopic, ta.idmodo, ta.contents,
+			m2.display_name AS login_modo, m2.level AS modo_level, m2.user_groups AS modo_groups,
+			m.display_name, m.level AS user_level, m.user_groups,
+			t.title AS topic_title, t.id_category,
+			c.id AS cid
 		FROM " . PREFIX . "forum_alerts ta
 		LEFT JOIN " . PREFIX . "forum_topics t ON t.id = ta.idtopic
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = ta.user_id
@@ -221,7 +226,7 @@ if ($action == 'alert') //Gestion des alertes
 			}
 
 			$modo_group_color = ($row['status'] != 0) ? User::get_group_color($row['modo_groups'], $row['modo_level']) : '';
-			$group_color = User::get_group_color($row['groups'], $row['user_level']);
+			$group_color = User::get_group_color($row['user_groups'], $row['user_level']);
 			$time = new Date($row['timestamp'], Timezone::SERVER_TIMEZONE);
 
 			$tpl->put_all(array_merge(
@@ -346,7 +351,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		));
 
 		$i = 0;
-		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, groups, delay_readonly
+		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, user_groups, delay_readonly
 		FROM " . PREFIX . "member
 		WHERE delay_readonly > :timestamp_now
 		ORDER BY delay_readonly", array(
@@ -354,7 +359,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		));
 		while ($row = $result->fetch())
 		{
-			$group_color = User::get_group_color($row['groups'], $row['level']);
+			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 			$info = new Date($row['delay_readonly'], Timezone::SERVER_TIMEZONE);
 
 			$tpl->assign_block_vars('user_list', array_merge(
@@ -383,7 +388,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 	else //On affiche les infos sur l'utilisateur
 	{
 		try {
-			$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'groups', 'delay_readonly'), 'WHERE user_id=:id', array('id' => $id_get));
+			$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'user_groups', 'delay_readonly'), 'WHERE user_id=:id', array('id' => $id_get));
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
@@ -423,7 +428,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		$editor = AppContext::get_content_formatting_service()->get_default_editor();
 		$editor->set_identifier('action_contents');
 
-		$group_color = User::get_group_color($member['groups'], $member['level']);
+		$group_color = User::get_group_color($member['user_groups'], $member['level']);
 
 		$tpl->put_all(array(
 			'C_FORUM_USER_INFO' => true,
@@ -558,13 +563,13 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		));
 
 		$i = 0;
-		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, groups, warning_percentage
+		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, user_groups, warning_percentage
 		FROM " . PREFIX . "member
 		WHERE warning_percentage > 0
 		ORDER BY warning_percentage");
 		while ($row = $result->fetch())
 		{
-			$group_color = User::get_group_color($row['groups'], $row['level']);
+			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
 			$tpl->assign_block_vars('user_list', array(
 				'C_GROUP_COLOR' => !empty($group_color),
@@ -592,7 +597,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 	else //On affiche les infos sur l'utilisateur
 	{
 		try {
-			$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'groups', 'delay_readonly', 'warning_percentage'), 'WHERE user_id=:id', array('id' => $id_get));
+			$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'user_groups', 'delay_readonly', 'warning_percentage'), 'WHERE user_id=:id', array('id' => $id_get));
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
@@ -611,7 +616,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		$editor = AppContext::get_content_formatting_service()->get_default_editor();
 		$editor->set_identifier('action_contents');
 
-		$group_color = User::get_group_color($member['groups'], $member['level']);
+		$group_color = User::get_group_color($member['user_groups'], $member['level']);
 
 		$tpl->put_all(array(
 			'C_FORUM_USER_INFO' => true,
@@ -682,7 +687,10 @@ else //Panneau de modération
 	$end = !empty($get_more) ? $get_more : 15; //Limit.
 	$i = 0;
 
-	$result = PersistenceContext::get_querier()->select("SELECT h.action, h.user_id, h.user_id_action, h.url, h.timestamp, m.display_name, m.level AS user_level, m.groups, m2.display_name as member, m2.level as member_level, m2.groups as member_groups
+	$result = PersistenceContext::get_querier()->select("SELECT
+		h.action, h.user_id, h.user_id_action, h.url, h.timestamp,
+		m.display_name, m.level AS user_level, m.user_groups,
+		m2.display_name as member, m2.level as member_level, m2.user_groups as member_groups
 	FROM " . PREFIX . "forum_history h
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = h.user_id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = h.user_id_action
@@ -692,7 +700,7 @@ else //Panneau de modération
 	));
 	while ($row = $result->fetch())
 	{
-		$group_color = User::get_group_color($row['groups'], $row['user_level']);
+		$group_color = User::get_group_color($row['user_groups'], $row['user_level']);
 		$member_group_color = User::get_group_color($row['member_groups'], $row['member_level']);
 		$date = new Date($row['timestamp'], Timezone::SERVER_TIMEZONE);
 

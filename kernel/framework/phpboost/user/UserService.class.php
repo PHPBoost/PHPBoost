@@ -6,9 +6,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 10 28
+ * @version     PHPBoost 6.0 - last update: 2020 09 02
  * @since       PHPBoost 3.0 - 2012 03 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UserService
@@ -33,7 +34,7 @@ class UserService
 			$result = self::$querier->insert(DB_TABLE_MEMBER, array(
 				'display_name' => TextHelper::htmlspecialchars($user->get_display_name()),
 				'level' => $user->get_level(),
-				'groups' => implode('|', $user->get_groups()),
+				'user_groups' => implode('|', $user->get_groups()),
 				'email' => $user->get_email(),
 				'show_email' => (int)$user->get_show_email(),
 				'locale' => $user->get_locale(),
@@ -113,7 +114,7 @@ class UserService
 		self::$querier->update(DB_TABLE_MEMBER, array(
 			'display_name' => TextHelper::htmlspecialchars($user->get_display_name()),
 			'level' => $user->get_level(),
-			'groups' => implode('|', $user->get_groups()),
+			'user_groups' => implode('|', $user->get_groups()),
 			'email' => $user->get_email(),
 			'show_email' => (int)$user->get_show_email(),
 			'locale' => $user->get_locale(),
@@ -312,13 +313,13 @@ class UserService
 	{
 		if ($user_id != User::VISITOR_LEVEL)
 		{
-			$user = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'groups'), 'WHERE user_id=:user_id', array('user_id' => $user_id));
+			$user = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'user_groups'), 'WHERE user_id=:user_id', array('user_id' => $user_id));
 
 			if ($user)
 			{
 				$tpl = new FileTemplate('user/UserProfileLink.tpl');
 
-				$group_color = User::get_group_color($user['groups'], $user['level']);
+				$group_color = User::get_group_color($user['user_groups'], $user['level']);
 
 				$tpl->put_all(array(
 					'C_GROUP_COLOR' => !empty($group_color),

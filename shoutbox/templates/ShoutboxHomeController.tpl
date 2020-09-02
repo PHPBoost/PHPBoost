@@ -55,13 +55,13 @@
 					<footer class="message-footer-container# IF messages.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
 						<div class="message-user-infos">
 							<div class="message-group-level">
-								# START messages.user_groups #
-									# IF messages.user_groups.C_GROUP_PICTURE #
-									<img src="{PATH_TO_ROOT}/images/group/{messages.user_groups.GROUP_PICTURE}" alt="{messages.user_groups.GROUP_NAME}" class="message-user-group message-user-group-{messages.user_groups.GROUP_ID}" />
+								# START messages.usergroups #
+									# IF messages.usergroups.C_GROUP_PICTURE #
+									<img src="{PATH_TO_ROOT}/images/group/{messages.usergroups.GROUP_PICTURE}" alt="{messages.usergroups.GROUP_NAME}" class="message-user-group message-user-group-{messages.usergroups.GROUP_ID}" />
 									# ELSE #
-									${LangLoader::get_message('group', 'main')}: {messages.user_groups.GROUP_NAME}
+									${LangLoader::get_message('group', 'main')}: {messages.usergroups.GROUP_NAME}
 									# ENDIF #
-								# END user_groups #
+								# END usergroups #
 							</div>
 						</div>
 					</footer>

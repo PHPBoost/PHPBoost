@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 31
+ * @version     PHPBoost 6.0 - last update: 2020 09 02
  * @since       PHPBoost 1.2 - 2005 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once('../admin/admin_begin.php');
@@ -213,7 +214,9 @@ if ($nbr_pics > 0)
 	{
 		$info_pics = array();
 		try {
-			$info_pics = PersistenceContext::get_querier()->select_single_row_query("SELECT g.id, g.id_category, g.name, g.user_id, g.views, g.width, g.height, g.weight, g.timestamp, g.aprob, m.display_name, m.level, m.groups
+			$info_pics = PersistenceContext::get_querier()->select_single_row_query("SELECT
+				g.id, g.id_category, g.name, g.user_id, g.views, g.width, g.height, g.weight, g.timestamp, g.aprob,
+				m.display_name, m.level, m.user_groups
 			FROM " . GallerySetup::$gallery_table . " g
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 			WHERE g.id_category = :id_category AND g.id = :id", array(
@@ -319,7 +322,7 @@ if ($nbr_pics > 0)
 				$cat_list .= $option->display()->render();
 			}
 
-			$group_color = User::get_group_color($info_pics['groups'], $info_pics['level']);
+			$group_color = User::get_group_color($info_pics['user_groups'], $info_pics['level']);
 
 			$date = new Date($info_pics['timestamp'], Timezone::SERVER_TIMEZONE);
 
@@ -367,7 +370,9 @@ if ($nbr_pics > 0)
 	else
 	{
 		$j = 0;
-		$result = PersistenceContext::get_querier()->select("SELECT g.id, g.id_category, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, m.display_name, m.user_id, m.level, m.groups
+		$result = PersistenceContext::get_querier()->select("SELECT
+			g.id, g.id_category, g.name, g.path, g.timestamp, g.aprob, g.width, g.height,
+			m.display_name, m.user_id, m.level, m.user_groups
 		FROM " . GallerySetup::$gallery_table . " g
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 		WHERE g.id_category = :id_category
@@ -418,7 +423,7 @@ if ($nbr_pics > 0)
 				$cat_list .= $option->display()->render();
 			}
 
-			$group_color = User::get_group_color($row['groups'], $row['level']);
+			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
 			$tpl->assign_block_vars('pics.list', array(
 				'C_APPROVED' => $row['aprob'],

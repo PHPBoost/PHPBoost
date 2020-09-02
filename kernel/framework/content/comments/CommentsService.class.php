@@ -6,10 +6,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 24
+ * @version     PHPBoost 6.0 - last update: 2020 09 02
  * @since       PHPBoost 3.0 - 2011 03 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CommentsService
@@ -272,7 +273,7 @@ class CommentsService
 			$result = PersistenceContext::get_querier()->select("SELECT
 					comments.*, comments.timestamp AS comment_timestamp, comments.id AS id_comment,
 					topic.is_locked, topic.path,
-					member.user_id, member.display_name, member.level, member.groups,
+					member.user_id, member.display_name, member.level, member.user_groups,
 					ext_field.user_avatar
 				FROM " . DB_TABLE_COMMENTS . " comments
 				LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " topic ON comments.id_topic = topic.id_topic
@@ -293,7 +294,7 @@ class CommentsService
 					self::$display_delete_button = true;
 
 				$timestamp = new Date($row['comment_timestamp'], Timezone::SERVER_TIMEZONE);
-				$group_color = User::get_group_color($row['groups'], $row['level']);
+				$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
 				$template->assign_block_vars('comments', array_merge(
 					Date::get_array_tpl_vars($timestamp,'date'),

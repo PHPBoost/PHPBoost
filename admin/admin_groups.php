@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 10 15
+ * @version     PHPBoost 6.0 - last update: 2020 09 01
  * @since       PHPBoost 1.2 - 2005 06 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -260,13 +260,13 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 		if (!empty($members))
 		{
 			$members = str_replace('|', ',', $members);
-			$result = PersistenceContext::get_querier()->select('SELECT user_id, display_name, level, groups
+			$result = PersistenceContext::get_querier()->select('SELECT user_id, display_name, level, user_groups
 				FROM ' . DB_TABLE_MEMBER . '
 				WHERE user_id IN (' . $members . ')');
 
 			while ($row = $result->fetch())
 			{
-				$group_color = User::get_group_color($row['groups'], $row['level']);
+				$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
 				$template->assign_block_vars('member', array(
 					'C_GROUP_COLOR' => !empty($group_color),

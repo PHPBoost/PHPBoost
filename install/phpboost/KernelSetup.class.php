@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 11 28
+ * @version     PHPBoost 6.0 - last update: 2020 09 01
  * @since       PHPBoost 3.0 - 2010 05 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class KernelSetup
@@ -344,7 +345,7 @@ class KernelSetup
 			'posted_msg' => array('type' => 'integer', 'length' => 6, 'notnull' => 1, 'default' => 0),
 			'registration_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'last_connection_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'groups' => array('type' => 'text', 'length' => 65000),
+			'user_groups' => array('type' => 'text', 'length' => 65000),
 			'warning_percentage' => array('type' => 'integer', 'length' => 6, 'notnull' => 1, 'default' => 0),
 			'delay_banned' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'delay_readonly' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),

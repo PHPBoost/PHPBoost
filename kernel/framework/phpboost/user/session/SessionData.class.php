@@ -6,12 +6,13 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 02 28
+ * @version     PHPBoost 6.0 - last update: 2020 09 02
  * @since       PHPBoost 3.0 - 2010 11 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class SessionData
@@ -465,7 +466,8 @@ class SessionData
 	{
 		try
 		{
-			$data->cached_data = PersistenceContext::get_querier()->select_single_row_query('SELECT member.user_id AS m_user_id, member.display_name, member.level, member.email, member.show_email, member.locale, member.theme, member.timezone, member.editor, member.unread_pm, member.posted_msg, member.registration_date, member.last_connection_date, member.groups, member.warning_percentage, member.delay_banned, member.delay_readonly, member_extended_fields.*
+			$data->cached_data = PersistenceContext::get_querier()->select_single_row_query('SELECT
+				member.user_id AS m_user_id, member.display_name, member.level, member.email, member.show_email, member.locale, member.theme, member.timezone, member.editor, member.unread_pm, member.posted_msg, member.registration_date, member.last_connection_date, member.user_groups, member.warning_percentage, member.delay_banned, member.delay_readonly, member_extended_fields.*
 			FROM ' . DB_TABLE_MEMBER . ' member
 			LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' member_extended_fields ON member_extended_fields.user_id = member.user_id
 			WHERE member.user_id = :user_id', array(

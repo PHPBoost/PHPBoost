@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 02 20
+ * @version     PHPBoost 6.0 - last update: 2020 09 01
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -110,7 +110,7 @@ if (!empty($id_get))
 		$result = PersistenceContext::get_querier()->select('SELECT
 			c.id AS cid, c.id_parent, c.name, c.rewrited_name, c.description as subname, c.url, c.last_topic_id, c.status AS cat_status,
 			t.id AS tid, t.id_category, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, t.status,
-			m.user_id, m.display_name, m.level AS user_level, m.groups,
+			m.user_id, m.display_name, m.level AS user_level, m.user_groups,
 			v.last_view_id
 		FROM ' . ForumSetup::$forum_cats_table . ' c
 		LEFT JOIN ' . ForumSetup::$forum_topics_table . ' t ON t.id = c.last_topic_id
@@ -163,7 +163,7 @@ if (!empty($id_get))
 
 					$last_topic_title = (($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '') . ' ' . $row['title'];
 
-					$last_group_color = User::get_group_color($row['groups'], $row['user_level']);
+					$last_group_color = User::get_group_color($row['user_groups'], $row['user_level']);
 				}
 				else
 				{
@@ -317,8 +317,8 @@ if (!empty($id_get))
 
 	$nbr_topics_display = 0;
 	$result = PersistenceContext::get_querier()->select("SELECT
-		m1.display_name AS login, m1.level AS user_level, m1.groups AS user_groups,
-		m2.display_name AS last_login, m2.level AS last_user_level, m2.groups AS last_user_groups,
+		m1.display_name AS login, m1.level AS user_level, m1.user_groups AS m_user_groups,
+		m2.display_name AS last_login, m2.level AS last_user_level, m2.user_groups AS last_user_groups,
 		t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id , t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, t.id_category,
 		v.last_view_id,
 		p.question,
@@ -388,7 +388,7 @@ if (!empty($id_get))
 		$topic_pagination = new ModulePagination($page, $row['nbr_msg'], $config->get_number_messages_per_page(), Pagination::LIGHT_PAGINATION);
 		$topic_pagination->set_url(new Url('/forum/topic' . url('.php?id=' . $row['id'] . '&amp;pt=%d', '-' . $row['id'] . '-%d' . $rewrited_title_topic . '.php')));
 
-		$group_color      = User::get_group_color($row['user_groups'], $row['user_level']);
+		$group_color      = User::get_group_color($row['m_user_groups'], $row['user_level']);
 		$last_group_color = User::get_group_color($row['last_user_groups'], $row['last_user_level']);
 
 		$last_msg_date = new Date($row['last_timestamp'], Timezone::SERVER_TIMEZONE);

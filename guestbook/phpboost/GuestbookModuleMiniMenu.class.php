@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 03
+ * @version     PHPBoost 6.0 - last update: 2020 09 02
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class GuestbookModuleMiniMenu extends ModuleMiniMenu
@@ -53,7 +54,7 @@ class GuestbookModuleMiniMenu extends ModuleMiniMenu
 
 			if ($random_message !== null)
 			{
-				$user_group_color = User::get_group_color($random_message['groups'], $random_message['level']);
+				$user_group_color = User::get_group_color($random_message['user_groups'], $random_message['level']);
 
 				$tpl->put_all(array(
 					'C_ANY_MESSAGE_GUESTBOOK' => true,
