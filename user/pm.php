@@ -974,7 +974,7 @@ else //Liste des conversation, dans la boite du membre.
 		$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 		$last_page = ($last_page > 1) ? 'p=' . $last_page . '&amp;' : '';
 
-		$group_color = User::get_group_color($row['user_groups'], $row['level']);
+		$group_color = User::get_group_color($row['m_user_groups'], $row['level']);
 
 		if ($row['user_id'] == -1)
 			$author = $LANG['admin'];
