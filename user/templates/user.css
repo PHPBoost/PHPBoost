@@ -263,12 +263,10 @@ table.announce-legend td {
 @media (min-width: 1024px) {
 	.list-members-container > .content {
 		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: space-between;
 	}
 	.user-card { width: calc(100% / 2.1); }
-}
-
-@media (min-width: 1370px) {
-	.user-card { width: calc(100% / 3.1); }
 }
 
 .user-card .content {
@@ -307,6 +305,7 @@ table.announce-legend td {
 	border-style: solid;
 	flex: 1 1 auto;
 	margin: -1px -1px -1px 0;
+	padding: 0 0 0.618em;
 }
 
 /* --- PM --- */
