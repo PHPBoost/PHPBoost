@@ -27,7 +27,7 @@
 
 					# IF C_EXTENDED_FIELDS #
 					# START members_list.extended_fields #
-						<div class="user-extended-field">{members_list.extended_fields.NAME} : {members_list.extended_fields.VALUE}</div>
+						<div class="user-extended-field"><span class="text-strong">{members_list.extended_fields.NAME}</span> : {members_list.extended_fields.VALUE}</div>
 
 					# END members_list.extended_fields #
 					# ENDIF #
@@ -92,7 +92,7 @@
 
 							# IF C_EXTENDED_FIELDS #
 							# START admins_list.extended_fields #
-							<div class="user-extended-field">{admins_list.extended_fields.NAME} : {admins_list.extended_fields.VALUE}</div>
+							<div class="user-extended-field"><span class="text-strong">{admins_list.extended_fields.NAME}</span> : {admins_list.extended_fields.VALUE}</div>
 							# END admins_list.extended_fields #
 							# ENDIF #
 						</div>
@@ -133,7 +133,7 @@
 
 							# IF C_EXTENDED_FIELDS #
 							# START modos_list.extended_fields #
-							<div class="user-extended-field">{modos_list.extended_fields.NAME} : {modos_list.extended_fields.VALUE}</div>
+							<div class="user-extended-field"><span class="text-strong">{modos_list.extended_fields.NAME}</span> : {modos_list.extended_fields.VALUE}</div>
 							# END modos_list.extended_fields #
 							# ENDIF #
 						</div>
@@ -179,7 +179,7 @@
 
 									# IF C_EXTENDED_FIELDS #
 									# START group.group_members_list.extended_fields #
-									<div class="user-extended-field">{group.group_members_list.extended_fields.NAME} : {group.group_members_list.extended_fields.VALUE}</div>
+									<div class="user-extended-field"><span class="text-strong">{group.group_members_list.extended_fields.NAME}</span> : {group.group_members_list.extended_fields.VALUE}</div>
 									# END group.group_members_list.extended_fields #
 									# ENDIF #
 								</div>

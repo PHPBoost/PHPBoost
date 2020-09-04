@@ -159,7 +159,7 @@ table.announce-legend td {
 		margin: 2em 0;
 	}
 
-/* --   groupe   -- */
+/* --   group   -- */
 /* ---------------- */
 .group-container {
 	display: flex;
@@ -185,6 +185,7 @@ table.announce-legend td {
 
 .list-members-container > .content {
 	display: flex;
+	flex-direction: column;
 	overflow: hidden;
 	padding: 0;
 	max-height: 0;
@@ -256,22 +257,18 @@ table.announce-legend td {
 
 .user-card {
 	border-width: 2px;
+	width: 100%;
+}
+
+@media (min-width: 1024px) {
+	.list-members-container > .content {
+		flex-direction: row;
+	}
+	.user-card { width: calc(100% / 2.1); }
 }
 
 @media (min-width: 1370px) {
-	.elements-container > .user-card { width: calc(100% / 3.1); }
-}
-
-@media (min-width: 590px) and (max-width: 1369px) {
-	#module-user-group-list .elements-container,
-	#module-user-groups-list .elements-container {
-		flex-direction: row;
-	}
-	.elements-container > .user-card { width: calc(100% / 2.3); }
-}
-
-@media (max-width: 591px)  {
-	.elements-container > .user-card { width: calc(100%); }
+	.user-card { width: calc(100% / 3.1); }
 }
 
 .user-card .content {
