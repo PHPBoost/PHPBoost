@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 16
+ * @version     PHPBoost 6.0 - last update: 2020 09 04
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -26,30 +26,26 @@ class UserRegistrationService
 		{
 			case UserAccountsConfig::AUTOMATIC_USER_ACCOUNTS_VALIDATION:
 				$parameters = array(
-					'pseudo' => $pseudo,
-					'site_name' => $site_name,
-					'host' => $general_config->get_complete_site_url(),
-					'login' => $login,
-					'lost_password_link' => $lost_password_link,
+					'pseudo'                      => $pseudo,
+					'site_name'                   => $site_name,
+					'host'                        => $general_config->get_complete_site_url(),
+					'login'                       => $login,
+					'lost_password_link'          => $lost_password_link,
 					'accounts_validation_explain' => $lang['registration.email.automatic-validation'],
-					'signature' => MailServiceConfig::load()->get_mail_signature()
+					'signature'                   => MailServiceConfig::load()->get_mail_signature()
 				);
 				$content = StringVars::replace_vars($lang['registration.content-mail' . ($admin_creation ? '.admin' : '')], $parameters);
 				AppContext::get_mail_service()->send_from_properties($email, $subject, $content);
 				break;
 			case UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION:
 				$parameters = array(
-					'pseudo' => $pseudo,
-					'site_name' => $site_name,
-					'host' => $general_config->get_complete_site_url(),
-					'login' => $login,
-					'lost_password_link' => $lost_password_link,
-					'accounts_validation_explain' =>
-				StringVars::replace_vars(
-				$lang['registration.email.mail-validation'],
-				array('validation_link' => UserUrlBuilder::confirm_registration($registration_pass)->absolute())
-				),
-					'signature' => MailServiceConfig::load()->get_mail_signature()
+					'pseudo'                      => $pseudo,
+					'site_name'                   => $site_name,
+					'host'                        => $general_config->get_complete_site_url(),
+					'login'                       => $login,
+					'lost_password_link'          => $lost_password_link,
+					'accounts_validation_explain' => StringVars::replace_vars($lang['registration.email.mail-validation'], array('validation_link' => UserUrlBuilder::confirm_registration($registration_pass)->absolute())),
+					'signature'                   => MailServiceConfig::load()->get_mail_signature()
 				);
 				$content = StringVars::replace_vars($lang['registration.content-mail' . ($admin_creation ? '.admin' : '')], $parameters);
 				AppContext::get_mail_service()->send_from_properties($email, $subject, $content);
@@ -65,13 +61,13 @@ class UserRegistrationService
 				AdministratorAlertService::save_alert($alert);
 
 				$parameters = array(
-					'pseudo' => $pseudo,
-					'site_name' => $site_name,
-					'host' => $general_config->get_complete_site_url(),
-					'login' => $login,
-					'lost_password_link' => $lost_password_link,
+					'pseudo'                      => $pseudo,
+					'site_name'                   => $site_name,
+					'host'                        => $general_config->get_complete_site_url(),
+					'login'                       => $login,
+					'lost_password_link'          => $lost_password_link,
 					'accounts_validation_explain' => $lang['registration.email.administrator-validation'],
-					'signature' => MailServiceConfig::load()->get_mail_signature()
+					'signature'                   => MailServiceConfig::load()->get_mail_signature()
 				);
 				$content = StringVars::replace_vars($lang['registration.content-mail' . ($admin_creation ? '.admin' : '')], $parameters);
 				AppContext::get_mail_service()->send_from_properties($email, $subject, $content);

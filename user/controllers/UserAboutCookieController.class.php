@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Arnaud GENET <elenwii@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 30
+ * @version     PHPBoost 6.0 - last update: 2020 09 04
  * @since       PHPBoost 5.0 - 2016 09 18
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -37,7 +37,7 @@ class UserAboutCookieController extends AbstractController
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::aboutcookie());
 
 		$this->template->put_all(array(
-			'ABOUTCOOKIE_TITLE' => $config->get_cookiebar_aboutcookie_title(),
+			'ABOUTCOOKIE_TITLE'   => $config->get_cookiebar_aboutcookie_title(),
 			'ABOUTCOOKIE_CONTENT' => FormatingHelper::second_parse($config->get_cookiebar_aboutcookie_content())
 		));
 

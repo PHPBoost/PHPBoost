@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2015 11 23
+ * @version     PHPBoost 6.0 - last update: 2020 09 04
  * @since       PHPBoost 3.0 - 2009 12 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -103,13 +103,13 @@ class UserErrorController extends AbstractController
 	{
 		$this->view->put_all(array(
 			'ERROR_TYPE' => $this->get_error_type(),
-			'TITLE' => $this->title,
-			'MESSAGE' => $this->message,
-			'U_LINK' => $this->link,
-			'TIME' => $this->time,
-			'LINK_NAME' => $this->link_name,
-			'HAS_LINK' => !empty($this->link) && !empty($this->link_name),
-			'HAS_TIME' => !empty($this->time) && !empty($this->link),
+			'TITLE'      => $this->title,
+			'MESSAGE'    => $this->message,
+			'U_LINK'     => $this->link,
+			'TIME'       => $this->time,
+			'LINK_NAME'  => $this->link_name,
+			'HAS_LINK'   => !empty($this->link) && !empty($this->link_name),
+			'HAS_TIME'   => !empty($this->time) && !empty($this->link),
 		));
 	}
 

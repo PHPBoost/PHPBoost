@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 02
+ * @version     PHPBoost 6.0 - last update: 2020 09 04
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -52,31 +52,33 @@ class UserViewProfileController extends AbstractController
 		foreach (MemberExtendedFieldsService::display_profile_fields($user_id) as $field)
 		{
 			$this->tpl->assign_block_vars('extended_fields', array(
-				'NAME' => $field['name'],
+				'NAME'          => $field['name'],
 				'REWRITED_NAME' => Url::encode_rewrite($field['name']),
-				'VALUE' => $field['value']
+				'VALUE'         => $field['value']
 			));
 			$extended_fields_number++;
 		}
 
 		$this->tpl->put_all(array(
-			'C_DISPLAY_EDIT_LINK' => $this->user_infos['user_id'] == AppContext::get_current_user()->get_id() || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
-			'C_IS_BANNED' => $this->user->is_banned(),
-			'C_GROUPS' => $has_groups,
-			'C_DISPLAY_MAIL_LINK' => AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), UserAccountsConfig::AUTH_READ_MEMBERS_BIT) && $this->user_infos['show_email'],
-			'C_DISPLAY_PM_LINK' => !$this->same_user_view_profile($user_id) && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
-			'C_EXTENDED_FIELDS' => $extended_fields_number,
-			'TITLE_PROFILE' => $this->user_infos['user_id'] == AppContext::get_current_user()->get_id() ? $this->lang['profile'] : StringVars::replace_vars($this->lang['profile_of'], array('name' => $this->user_infos['display_name'])),
-			'DISPLAY_NAME' => $this->user_infos['display_name'],
-			'LEVEL' => UserService::get_level_lang($this->user_infos['level']),
-			'LEVEL_CLASS' => UserService::get_level_class($this->user_infos['level']),
-			'REGISTRATION_DATE' => $registration_date,
-			'MESSAGES_NUMBER' => $this->user_infos['posted_msg'],
-			'LAST_CONNECTION_DATE' => $last_connection_date,
-			'EMAIL' => $this->user_infos['email'],
-			'U_EDIT_PROFILE' => UserUrlBuilder::edit_profile($user_id)->rel(),
+			'C_DISPLAY_EDIT_LINK'     => $this->user_infos['user_id'] == AppContext::get_current_user()->get_id() || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
+			'C_IS_BANNED'             => $this->user->is_banned(),
+			'C_GROUPS'                => $has_groups,
+			'C_DISPLAY_MAIL_LINK'     => AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), UserAccountsConfig::AUTH_READ_MEMBERS_BIT) && $this->user_infos['show_email'],
+			'C_DISPLAY_PM_LINK'       => !$this->same_user_view_profile($user_id) && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
+			'C_EXTENDED_FIELDS'       => $extended_fields_number,
+
+			'TITLE_PROFILE'           => $this->user_infos['user_id'] == AppContext::get_current_user()->get_id() ? $this->lang['profile'] : StringVars::replace_vars($this->lang['profile_of'], array('name' => $this->user_infos['display_name'])),
+			'DISPLAY_NAME'            => $this->user_infos['display_name'],
+			'LEVEL'                   => UserService::get_level_lang($this->user_infos['level']),
+			'LEVEL_CLASS'             => UserService::get_level_class($this->user_infos['level']),
+			'REGISTRATION_DATE'       => $registration_date,
+			'MESSAGES_NUMBER'         => $this->user_infos['posted_msg'],
+			'LAST_CONNECTION_DATE'    => $last_connection_date,
+			'EMAIL'                   => $this->user_infos['email'],
+
+			'U_EDIT_PROFILE'          => UserUrlBuilder::edit_profile($user_id)->rel(),
 			'U_DISPLAY_USER_MESSAGES' => UserUrlBuilder::messages($user_id)->rel(),
-			'U_DISPLAY_USER_PM' => UserUrlBuilder::personnal_message($user_id)->rel()
+			'U_DISPLAY_USER_PM'       => UserUrlBuilder::personnal_message($user_id)->rel()
 		));
 	}
 
@@ -95,11 +97,11 @@ class UserViewProfileController extends AbstractController
 			{
 				$group = $groups_cache->get_group($group_id);
 				$this->tpl->assign_block_vars('groups', array(
-					'ID' => $group_id,
-					'C_PICTURE' => !empty($group['img']),
-					'NAME' => $group['name'],
+					'ID'              => $group_id,
+					'C_PICTURE'       => !empty($group['img']),
+					'NAME'            => $group['name'],
 					'U_GROUP_PICTURE' => TPL_PATH_TO_ROOT .'/images/group/' . $group['img'],
-					'U_GROUP' => UserUrlBuilder::group($group_id)->rel()
+					'U_GROUP'         => UserUrlBuilder::group($group_id)->rel()
 				));
 				$has_groups = true;
 			}

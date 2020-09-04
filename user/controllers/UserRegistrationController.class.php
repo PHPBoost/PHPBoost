@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 08 02
+ * @version     PHPBoost 6.0 - last update: 2020 09 04
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -63,10 +63,14 @@ class UserRegistrationController extends AbstractController
 		$fieldset->add_field(new FormFieldHTML('validation_method', $this->get_accounts_validation_method_explain()));
 
 		$fieldset->add_field($display_name = new FormFieldTextEditor('display_name', $this->lang['display_name'], '',
-			array('maxlength' => 100, 'required' => true, 'description'=> $this->lang['display_name.explain'], 'events' => array('blur' => '
-				if (!HTMLForms.getField("login").getValue() && HTMLForms.getField("display_name").validate() == "") {
-					HTMLForms.getField("login").setValue(HTMLForms.getField("display_name").getValue().replace(/\s/g, \'\'));
-				}')
+			array(
+				'maxlength' => 100, 'required' => true,
+				'description'=> $this->lang['display_name.explain'],
+				'events' => array('blur' => '
+					if (!HTMLForms.getField("login").getValue() && HTMLForms.getField("display_name").validate() == "") {
+						HTMLForms.getField("login").setValue(HTMLForms.getField("display_name").getValue().replace(/\s/g, \'\'));
+					}'
+				)
 			),
 			array(new FormFieldConstraintLengthRange(3, 100), new FormFieldConstraintDisplayNameExists())
 		));
@@ -79,12 +83,15 @@ class UserRegistrationController extends AbstractController
 		$fieldset->add_field(new FormFieldCheckbox('user_hide_mail', $this->lang['email.hide'], FormFieldCheckbox::CHECKED));
 
 		$fieldset->add_field($custom_login_checked = new FormFieldCheckbox('custom_login', $this->lang['login.custom'], false,
-			array('description'=> $this->lang['login.custom.explain'], 'events' => array('click' => '
-				if (HTMLForms.getField("custom_login").getValue()) {
-					HTMLForms.getField("login").enable();
-				} else {
-					HTMLForms.getField("login").disable();
-				}')
+			array(
+				'description'=> $this->lang['login.custom.explain'],
+				'events' => array('click' => '
+					if (HTMLForms.getField("custom_login").getValue()) {
+						HTMLForms.getField("login").enable();
+					} else {
+						HTMLForms.getField("login").disable();
+					}'
+				)
 			)
 		));
 
@@ -94,9 +101,13 @@ class UserRegistrationController extends AbstractController
 		));
 
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '',
-			array('description' => StringVars::replace_vars($this->lang['password.explain'], array('number' => $security_config->get_internal_password_min_length())), 'required' => true, 'autocomplete' => false),
+			array(
+				'required' => true, 'autocomplete' => false,
+				'description' => StringVars::replace_vars($this->lang['password.explain'], array('number' => $security_config->get_internal_password_min_length()))
+			),
 			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
 		));
+
 		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '',
 			array('required' => true, 'autocomplete' => false),
 			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
@@ -118,14 +129,20 @@ class UserRegistrationController extends AbstractController
 		if (count(ThemesManager::get_activated_and_authorized_themes_map()) > 1)
 		{
 			$options_fieldset->add_field(new FormFieldThemesSelect('theme', $this->lang['theme'], $this->user_accounts_config->get_default_theme(),
-				array('check_authorizations' => true, 'events' => array('change' => $this->build_javascript_picture_themes()))
+				array(
+					'check_authorizations' => true,
+					'events' => array('change' => $this->build_javascript_picture_themes())
+				)
 			));
+
 			$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['theme.preview'], '<img id="img_theme" src="'. $this->get_picture_theme() .'" alt="' . $this->lang['theme.preview'] . '" class="preview-img" />'));
 		}
 
 		$options_fieldset->add_field(new FormFieldEditors('text-editor', $this->lang['text-editor'], ContentFormattingConfig::load()->get_default_editor()));
 
-		$options_fieldset->add_field(new FormFieldLangsSelect('lang', $this->lang['lang'], $this->user_accounts_config->get_default_lang(), array('check_authorizations' => true)));
+		$options_fieldset->add_field(new FormFieldLangsSelect('lang', $this->lang['lang'], $this->user_accounts_config->get_default_lang(),
+			array('check_authorizations' => true)
+		));
 
 		$this->member_extended_fields_service->display_form_fields();
 
@@ -141,8 +158,7 @@ class UserRegistrationController extends AbstractController
 			$agreement = new FormFieldHTML('agreement', '<div id="id-message-helper" class="message-helper bgc notice user-agreement">' . $agreement_text . '</div>');
 			$agreement_fieldset->add_field($agreement);
 
-			$agreement_fieldset->add_field(new FormFieldCheckbox('agree', $this->lang['agreement.agree'],
-				FormFieldCheckbox::UNCHECKED,
+			$agreement_fieldset->add_field(new FormFieldCheckbox('agree', $this->lang['agreement.agree'], FormFieldCheckbox::UNCHECKED,
 				array('required' => $this->lang['agreement.agree.required'])
 			));
 		}

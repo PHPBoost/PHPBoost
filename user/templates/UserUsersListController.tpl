@@ -4,12 +4,12 @@
 	</header>
 	<div class="content">
 		# INCLUDE FORM #
-		
+
 		# IF C_ARE_GROUPS #
 			# INCLUDE SELECT_GROUP #
 		# ENDIF #
 
-		# INCLUDE table #
+		# INCLUDE TABLE #
 	</div>
 	<footer></footer>
 </section>

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 10 09
+ * @version     PHPBoost 6.0 - last update: 2020 09 04
  * @since       PHPBoost 3.0 - 2012 04 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -111,15 +111,15 @@ class UserLoginController extends AbstractController
 	private function init_vars_template()
 	{
 		$external_authentication = 0;
-		
+
 		foreach (AuthenticationService::get_external_auths_activated() as $id => $authentication)
 		{
 			$this->view->assign_block_vars('external_auth', array(
-				'U_CONNECT' => UserUrlBuilder::connect($id)->rel(),
-				'ID' => $id,
-				'NAME' => $authentication->get_authentication_name(),
+				'U_CONNECT'  => UserUrlBuilder::connect($id)->rel(),
+				'ID'         => $id,
+				'NAME'       => $authentication->get_authentication_name(),
 				'IMAGE_HTML' => $authentication->get_image_renderer_html(),
-				'CSS_CLASS' => $authentication->get_css_class()
+				'CSS_CLASS'  => $authentication->get_css_class()
 			));
 			$external_authentication++;
 		}
@@ -127,13 +127,13 @@ class UserLoginController extends AbstractController
 		$this->view->put_all(array(
 			'C_REGISTRATION_ENABLED' => UserAccountsConfig::load()->is_registration_enabled(),
 			'C_DISPLAY_EXTERNAL_AUTHENTICATION' => $external_authentication,
-			'C_USER_LOGIN' => $this->login_type == self::USER_LOGIN && !$this->maintain_config->is_under_maintenance(),
-			'C_ADMIN_LOGIN' => $this->login_type == self::ADMIN_LOGIN,
-			'C_HAS_ERROR' => $this->has_error,
-			'U_REGISTER' => UserUrlBuilder::registration()->rel(),
+			'C_USER_LOGIN'      => $this->login_type == self::USER_LOGIN && !$this->maintain_config->is_under_maintenance(),
+			'C_ADMIN_LOGIN'     => $this->login_type == self::ADMIN_LOGIN,
+			'C_HAS_ERROR'       => $this->has_error,
+			'U_REGISTER'        => UserUrlBuilder::registration()->rel(),
 			'U_FORGET_PASSWORD' => UserUrlBuilder::forget_password()->rel(),
 			'L_FORGET_PASSWORD' => $this->lang['forget-password'],
-			'LOGIN_FORM' => $this->form->display(),
+			'LOGIN_FORM'        => $this->form->display(),
 		));
 
 		if ($this->maintain_config->is_under_maintenance())
@@ -274,7 +274,7 @@ class UserLoginController extends AbstractController
 				}
 			}
 
-			//Calcul du format de la date
+			// Calculating date format
 			$array_release = array(Date::to_format($end_timestamp, 'Y', Timezone::SITE_TIMEZONE), (Date::to_format($end_timestamp, 'n', Timezone::SITE_TIMEZONE) - 1), Date::to_format($end_timestamp, 'j', Timezone::SITE_TIMEZONE), Date::to_format($end_timestamp, 'G', Timezone::SITE_TIMEZONE), Date::to_format($end_timestamp, 'i', Timezone::SITE_TIMEZONE), Date::to_format($end_timestamp, 's', Timezone::SITE_TIMEZONE));
 
 			$array_now = array(Date::to_format(time(), 'Y', Timezone::SITE_TIMEZONE), (Date::to_format(time(), 'n', Timezone::SITE_TIMEZONE) - 1), Date::to_format(time(), 'j', Timezone::SITE_TIMEZONE), Date::to_format(time(), 'G', Timezone::SITE_TIMEZONE), Date::to_format(time(), 'i', Timezone::SITE_TIMEZONE), Date::to_format(time(), 's', Timezone::SITE_TIMEZONE));
@@ -295,7 +295,7 @@ class UserLoginController extends AbstractController
 		{
 			$this->view->put_all(array(
 				'C_DISPLAY_DELAY' => true,
-				'DELAY' => isset($array_delay[$key + 1]) ? $array_delay[$key + 1] : '0'
+				'DELAY'           => isset($array_delay[$key + 1]) ? $array_delay[$key + 1] : '0'
 			));
 		}
 	}

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 02
+ * @version     PHPBoost 6.0 - last update: 2020 09 04
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -38,7 +38,7 @@ class UserExploreGroupsController extends AbstractController
 
 		if (!empty($group_id))
 		{
-			//Affichage d'un seul groupe sur la page
+			// Single group display
 			$group = $this->groups_cache->get_group($group_id);
 
 			$users_data = "";
@@ -73,10 +73,11 @@ class UserExploreGroupsController extends AbstractController
 		}
 		else
 		{
-			//Affichage de tous les groupes + admin + modos sur la même page
-			//Affichages des administrateurs et des modérateurs
+			// Display of all groups + administrators + moderators
+			// Display of administrators and moderators
 			$users_data = PersistenceContext::get_querier()->select('SELECT
-				member.user_id, member.display_name, member.level, member.user_groups, member.warning_percentage, member.delay_banned, ext_field.user_avatar
+				member.user_id, member.display_name, member.level, member.user_groups, member.warning_percentage, member.delay_banned,
+				ext_field.user_avatar
 				FROM ' . DB_TABLE_MEMBER . ' member
 				LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' ext_field ON ext_field.user_id = member.user_id
 				WHERE member.level IN (1,2)
@@ -100,10 +101,10 @@ class UserExploreGroupsController extends AbstractController
 				}
 			}
 
-			//Affichages de tous les groupes
+			// Display of all groups
 			foreach ($this->groups_cache->get_groups() as $key => $group)
 			{
-				//Récupération du nombre de membre dans le groupe
+				// Retrieving the number of members in the group
 				$users_data = "";
 				$number_member = 0;
 				$group_users_id = "";
@@ -120,7 +121,7 @@ class UserExploreGroupsController extends AbstractController
 					}
 				}
 
-				// Affichage des groupes pour selection
+				// Display of groups for selection
 				$group_color = User::get_group_color($key);
 				$this->view->assign_block_vars('group', array(
 					'GROUP_ID'        => $key,
@@ -136,7 +137,7 @@ class UserExploreGroupsController extends AbstractController
 					'U_ADMIN_GROUPS'  => TPL_PATH_TO_ROOT .'/admin/admin_groups.php?id=' . $group_id,
 				));
 
-				// Affichage des membres des groupes
+				// Display of members
 				if (!empty($group_users_id))
 					$this->display_group_user($group_users_id, 'group.group_members_list');
 			}
@@ -157,7 +158,8 @@ class UserExploreGroupsController extends AbstractController
 		if (!empty($group_users_id))
 		{
 			$users_data = PersistenceContext::get_querier()->select('SELECT
-				member.user_id, member.display_name, member.level, member.user_groups, member.warning_percentage, member.delay_banned, ext_field.user_avatar
+				member.user_id, member.display_name, member.level, member.user_groups, member.warning_percentage, member.delay_banned,
+				ext_field.user_avatar
 				FROM ' . DB_TABLE_MEMBER . ' member
 				LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' ext_field ON ext_field.user_id = member.user_id
 				WHERE member.user_id IN (' . $group_users_id . ')
@@ -180,14 +182,14 @@ class UserExploreGroupsController extends AbstractController
 
 		$group_color = User::get_group_color($user['user_groups'], $user['level']);
 		$this->view->assign_block_vars($list_name, array(
-			'C_AVATAR'          => $user['user_avatar'] || $user_accounts_config->is_default_avatar_enabled(),
-			'C_GROUP_COLOR'     => !empty($group_color),
-			'PSEUDO'            => $user['display_name'],
-			'LEVEL'             => ($user['warning_percentage'] < '100' || (time() - $user['delay_banned']) < 0) ? UserService::get_level_lang($user['level']) : $this->lang['banned'],
-			'LEVEL_CLASS'       => UserService::get_level_class($user['level']),
-			'GROUP_COLOR'       => $group_color,
-			'U_PROFILE'         => UserUrlBuilder::profile($user['user_id'])->rel(),
-			'U_AVATAR'          => $user['user_avatar'] ? Url::to_rel($user['user_avatar']) : $user_accounts_config->get_default_avatar()
+			'C_AVATAR'      => $user['user_avatar'] || $user_accounts_config->is_default_avatar_enabled(),
+			'C_GROUP_COLOR' => !empty($group_color),
+			'PSEUDO'        => $user['display_name'],
+			'LEVEL'         => ($user['warning_percentage'] < '100' || (time() - $user['delay_banned']) < 0) ? UserService::get_level_lang($user['level']) : $this->lang['banned'],
+			'LEVEL_CLASS'   => UserService::get_level_class($user['level']),
+			'GROUP_COLOR'   => $group_color,
+			'U_PROFILE'     => UserUrlBuilder::profile($user['user_id'])->rel(),
+			'U_AVATAR'      => $user['user_avatar'] ? Url::to_rel($user['user_avatar']) : $user_accounts_config->get_default_avatar()
 		));
 
 		foreach (MemberExtendedFieldsService::display_profile_fields($user['user_id']) as $field)

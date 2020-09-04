@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 01
+ * @version     PHPBoost 6.0 - last update: 2020 09 04
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -44,26 +44,28 @@ class UserHomeProfileController extends AbstractController
 		$contribution_number = $this->get_unread_contributions_number();
 		$is_authorized_files_panel = $this->user->check_auth(FileUploadConfig::load()->get_authorization_enable_interface_files(), FileUploadConfig::AUTH_FILES_BIT);
 		$this->tpl->put_all(array(
-			'C_USER_AUTH_FILES' => $is_authorized_files_panel,
-			'C_USER_INDEX' => true,
-			'C_IS_MODERATOR' => $this->user->get_level() >= User::MODERATOR_LEVEL,
+			'C_USER_AUTH_FILES'     => $is_authorized_files_panel,
+			'C_USER_INDEX'          => true,
+			'C_IS_MODERATOR'        => $this->user->get_level() >= User::MODERATOR_LEVEL,
 			'C_UNREAD_CONTRIBUTION' => $contribution_number != 0,
+			'C_UNREAD_ALERT'        => (bool)AdministratorAlertService::get_number_unread_alerts(),
+			'C_HAS_PM'              => $this->user->get_unread_pm() > 0,
+			'C_AVATAR_IMG'          => !empty($user_avatar) || $user_accounts_config->is_default_avatar_enabled(),
 			'C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION' => $contribution_number > 0,
-			'C_UNREAD_ALERT' => (bool)AdministratorAlertService::get_number_unread_alerts(),
-			'C_HAS_PM' => $this->user->get_unread_pm() > 0,
-			'C_AVATAR_IMG' => !empty($user_avatar) || $user_accounts_config->is_default_avatar_enabled(),
-			'COLSPAN' => $is_authorized_files_panel ? 3 : 2,
-			'PSEUDO' => $this->user->get_display_name(),
+
+			'COLSPAN'              => $is_authorized_files_panel ? 3 : 2,
+			'PSEUDO'               => $this->user->get_display_name(),
+			'NUMBER_PM'            => $this->user->get_unread_pm(),
+			'MSG_MBR'              => FormatingHelper::second_parse(UserAccountsConfig::load()->get_welcome_message()),
 			'NUMBER_UNREAD_ALERTS' => AdministratorAlertService::get_number_unread_alerts(),
 			'NUMBER_UNREAD_CONTRIBUTIONS' => $contribution_number,
-			'NUMBER_PM' => $this->user->get_unread_pm(),
-			'MSG_MBR' => FormatingHelper::second_parse(UserAccountsConfig::load()->get_welcome_message()),
-			'U_USER_PM' => UserUrlBuilder::personnal_message($this->user->get_id())->rel(),
+
+			'U_USER_PM'            => UserUrlBuilder::personnal_message($this->user->get_id())->rel(),
 			'U_CONTRIBUTION_PANEL' => UserUrlBuilder::contribution_panel()->rel(),
-			'U_MODERATION_PANEL' => UserUrlBuilder::moderation_panel()->rel(),
-			'U_UPLOAD' => UserUrlBuilder::upload_files_panel()->rel(),
-			'U_AVATAR_IMG' => $user_avatar ? Url::to_rel($user_avatar) : $user_accounts_config->get_default_avatar(),
-			'U_VIEW_PROFILE' => UserUrlBuilder::profile($this->user->get_id())->rel()
+			'U_MODERATION_PANEL'   => UserUrlBuilder::moderation_panel()->rel(),
+			'U_UPLOAD'             => UserUrlBuilder::upload_files_panel()->rel(),
+			'U_AVATAR_IMG'         => $user_avatar ? Url::to_rel($user_avatar) : $user_accounts_config->get_default_avatar(),
+			'U_VIEW_PROFILE'       => UserUrlBuilder::profile($this->user->get_id())->rel()
 		));
 
 		$modules = AppContext::get_extension_provider_service()->get_extension_point(UserExtensionPoint::EXTENSION_POINT);
@@ -74,7 +76,7 @@ class UserHomeProfileController extends AbstractController
 				'C_IMG_USER_MSG'  => !empty($img),
 				'IMG_USER_MSG'    => $img,
 				'NAME_USER_MSG'   => $module->get_messages_list_link_name(),
-				'NUMBER_MESSAGES'  => (int)$module->get_number_messages($this->user->get_id()),
+				'NUMBER_MESSAGES' => (int)$module->get_number_messages($this->user->get_id()),
 				'U_LINK_USER_MSG' => $module->get_messages_list_url($this->user->get_id())
 			));
 		}
@@ -84,8 +86,8 @@ class UserHomeProfileController extends AbstractController
 	{
 		$unread_contributions = UnreadContributionsCache::load();
 
-		//Vaut 0 si l'utilisateur n'a aucune contribution. Est > 0 si on connait le nombre de contributions
-		//Vaut -1 si l'utilisateur a au moins une contribution (mais on ne sait pas combien à cause des recoupements entre les groupes)
+		// Worth 0 if the user has no contribution. Is > 0 if the number of contributions is known
+		// Worth -1 if the user has at least one contribution (but we do not know how much because of the overlaps between the groups)
 		$contribution_number = 0;
 
 		if ($this->user->check_level(User::ADMIN_LEVEL))

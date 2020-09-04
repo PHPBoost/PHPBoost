@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 02
+ * @version     PHPBoost 6.0 - last update: 2020 09 04
  * @since       PHPBoost 2.0 - 2008 07 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -13,7 +13,7 @@
 
 require_once('../kernel/begin.php');
 
-if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Si il n'est pas member (les invités n'ont rien à faire ici)
+if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) // If user is not member (guests have nothing to do here)
 {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
@@ -29,7 +29,7 @@ if ($contribution_id > 0)
 {
 	$contribution = new Contribution();
 
-	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
+	// Loading the contribution into an object from the database and checking if the user is authorizes to read it
 	if (($contribution = ContributionService::find_by_id($contribution_id)) == null || (!AppContext::get_current_user()->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT) && $contribution->get_poster_id() != AppContext::get_current_user()->get_id()))
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
@@ -42,12 +42,13 @@ if ($contribution_id > 0)
 
 	define('TITLE', $LANG['contribution_panel'] . ' - ' . $contribution->get_entitled());
 }
-//Modification d'une contribution
+
+// Contribution modification
 elseif ($id_update > 0)
 {
 	$contribution = new Contribution();
 
-	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
+	// Loading the contribution into an object from the database and checking if the user is authorizes to read it
 	if (($contribution = ContributionService::find_by_id($id_update)) == null || !AppContext::get_current_user()->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT))
 	{
     	$error_controller = PHPBoostErrors::unexisting_page();
@@ -61,7 +62,7 @@ elseif ($id_update > 0)
 
 	define('TITLE', $LANG['contribution_panel'] . ' - ' . $LANG['contribution_edition']);
 }
-//Enregistrement de la modification d'une contribution
+// Saving contribution modification
 elseif ($id_to_update > 0)
 {
 	$contribution = new Contribution();
@@ -72,19 +73,19 @@ elseif ($id_to_update > 0)
 	   DispatchManager::redirect($error_controller);
     }
 
-	//Récupération des éléments de la contribution
+	// Retriving parts of contribution
 	$entitled = retrieve(POST, 'entitled', '', TSTRING_UNCHANGE);
 	$description = stripslashes(retrieve(POST, 'contents', '', TSTRING_PARSE));
 	$status = retrieve(POST, 'status', Event::EVENT_STATUS_UNREAD);
 
-	//Si le titre n'est pas vide
+	// If title is not empty
 	if (!empty($entitled))
 	{
-		//Mise à jour de l'objet contribution
+		// Object Contribution update
 		$contribution->set_entitled($entitled);
 		$contribution->set_description($description);
 
-		//Changement de statut ? On regarde si la contribution a été réglée
+		// Status change ? Checking if contribution has been validated
 		if ($status == Event::EVENT_STATUS_PROCESSED && $contribution->get_status() != Event::EVENT_STATUS_PROCESSED)
 		{
 			$contribution->set_fixer_id(AppContext::get_current_user()->get_id());
@@ -93,24 +94,26 @@ elseif ($id_to_update > 0)
 
 		$contribution->set_status($status);
 
-		//Enregistrement en base de données
+		// Saving in database
 		ContributionService::save_contribution($contribution);
 
 		AppContext::get_response()->redirect(UserUrlBuilder::contribution_panel($contribution->get_id()));
 	}
-	//Erreur
+
+	// Error
 	else
 		AppContext::get_response()->redirect(UserUrlBuilder::contribution_panel());
 }
-//Suppression d'une contribution
+
+// Delete contribution
 elseif ($id_to_delete > 0)
 {
-	//Vérification de la validité du jeton
+	// Checking if session is valid
 	AppContext::get_session()->csrf_get_protect();
 
 	$contribution = new Contribution();
 
-	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
+	// Loading the contribution into an object from the database and checking if the user is authorizes to read it
 	if (($contribution = ContributionService::find_by_id($id_to_delete)) == null || (!AppContext::get_current_user()->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT)))
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
@@ -166,7 +169,7 @@ if ($contribution_id > 0)
 		'FIXING_URL' => Url::to_rel($contribution->get_fixing_url())
 	));
 
-	//Si la contribution a été traitée
+	// If contribution has been validated
 	if ($contribution->get_status() == Event::EVENT_STATUS_PROCESSED)
 	{
 		$fixer = PersistenceContext::get_querier()->select('SELECT *
@@ -204,7 +207,8 @@ if ($contribution_id > 0)
 		'U_DELETE' => url('contribution_panel.php?del=' . $contribution_id . '&amp;token=' . AppContext::get_session()->get_token())
 	));
 }
-//Modification d'une contribution
+
+// Contribution modification
 elseif ($id_update > 0)
 {
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
@@ -237,13 +241,13 @@ else
 		'C_CONTRIBUTION_LIST' => true
 	));
 
-	//Nombre de contributions
+	// Contributions number
 	$num_contributions = 1;
 	define('CONTRIBUTIONS_PER_PAGE', 20);
 
 	$page = AppContext::get_request()->get_getint('p', 1);
 
-	//Gestion des critères de tri
+	// Filters management
 	$criteria = retrieve(GET, 'criteria', 'current_status');
 	$order = retrieve(GET, 'order', 'asc');
 
@@ -251,17 +255,17 @@ else
 		$criteria = 'current_status';
 	$order = $order == 'desc' ? 'desc' : 'asc';
 
-	//On liste les contributions
+	// Listing contributions
 	foreach (ContributionService::get_all_contributions($criteria, $order) as $this_contribution)
 	{
-		//Obligé de faire une variable temp à cause de php4.
+		// Temporary variable for php4.
 		$creation_date = $this_contribution->get_creation_date();
 		$fixing_date = $this_contribution->get_fixing_date();
 
-		//Affichage des contributions du membre
+		// Display of contribution member
 		if (AppContext::get_current_user()->check_auth($this_contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT) || AppContext::get_current_user()->get_id() == $this_contribution->get_poster_id())
 		{
-			//On affiche seulement si on est dans le bon cadre d'affichage
+			// Display conditions
 			if ($num_contributions > CONTRIBUTIONS_PER_PAGE * ($page - 1) && $num_contributions <= CONTRIBUTIONS_PER_PAGE * $page)
 			{
 				$poster_group_color = User::get_group_color($this_contribution->get_poster_groups(), $this_contribution->get_poster_level());
@@ -269,7 +273,7 @@ else
 
 				$template->assign_block_vars('contributions', array(
 					'C_POSTER_GROUP_COLOR' => !empty($poster_group_color),
-					'C_FIXER_GROUP_COLOR' => !empty($fixer_group_color),
+					'C_FIXER_GROUP_COLOR'  => !empty($fixer_group_color),
 					'ENTITLED' => $this_contribution->get_entitled(),
 					'MODULE' => $this_contribution->get_module_name(),
 					'STATUS' => $this_contribution->get_status_name(),
@@ -306,15 +310,15 @@ else
 	if ($num_contributions > 1)
 		$template->put_all(array(
 			'C_PAGINATION' => $pagination->has_several_pages(),
-			'PAGINATION' => $pagination->display()
+			'PAGINATION'   => $pagination->display()
 		));
 	else
 		$template->put_all(array(
-			'C_NO_CONTRIBUTION' => true,
+			'C_NO_CONTRIBUTION'            => true,
 			'L_NO_CONTRIBUTION_TO_DISPLAY' => LangLoader::get_message('no_item_now', 'common')
 		));
 
-	//Liste des modules proposant de contribuer
+	// List of modules with contribution
 	define('NUMBER_OF_MODULES_PER_LINE', 4);
 	$i_module = 0;
     $modules = ModulesManager::get_activated_modules_map_sorted_by_localized_name();
@@ -338,60 +342,60 @@ else
 
 			$template->assign_block_vars('row.module', array(
 				'U_MODULE_LINK' => $contribution_interface,
-				'MODULE_ID' => $module->get_id(),
-				'MODULE_NAME' => $module->get_configuration()->get_name(),
-				'LINK_TITLE' => sprintf($LANG['contribute_in_module_name'], $module->get_configuration()->get_name())
+				'MODULE_ID'     => $module->get_id(),
+				'MODULE_NAME'   => $module->get_configuration()->get_name(),
+				'LINK_TITLE'    => sprintf($LANG['contribute_in_module_name'], $module->get_configuration()->get_name())
 			));
 			$i_module++;
 		}
 	}
 
 	$template->put_all(array(
-		'L_ENTITLED' => $LANG['contribution_entitled'],
-		'L_STATUS' => $LANG['contribution_status'],
-		'L_POSTER' => $LANG['contributor'],
-		'L_CREATION_DATE' => $LANG['contribution_creation_date'],
-		'L_FIXER' => $LANG['contribution_fixer'],
-		'L_FIXING_DATE' => $LANG['contribution_fixing_date'],
-		'L_MODULE' => $LANG['contribution_module'],
-		'L_CONTRIBUTION_PANEL' => $LANG['contribution_panel'],
-		'L_CONTRIBUTION_LIST' => $LANG['contribution_list'],
-		'L_CONTRIBUTE' => $LANG['contribute'],
-		'L_CONTRIBUTE_EXPLAIN' => $LANG['contribute_in_modules_explain'],
+		'L_ENTITLED'                      => $LANG['contribution_entitled'],
+		'L_STATUS'                        => $LANG['contribution_status'],
+		'L_POSTER'                        => $LANG['contributor'],
+		'L_CREATION_DATE'                 => $LANG['contribution_creation_date'],
+		'L_FIXER'                         => $LANG['contribution_fixer'],
+		'L_FIXING_DATE'                   => $LANG['contribution_fixing_date'],
+		'L_MODULE'                        => $LANG['contribution_module'],
+		'L_CONTRIBUTION_PANEL'            => $LANG['contribution_panel'],
+		'L_CONTRIBUTION_LIST'             => $LANG['contribution_list'],
+		'L_CONTRIBUTE'                    => $LANG['contribute'],
+		'L_CONTRIBUTE_EXPLAIN'            => $LANG['contribute_in_modules_explain'],
 		'L_NO_MODULE_IN_WHICH_CONTRIBUTE' => $LANG['no_module_to_contribute'],
 		'C_NO_MODULE_IN_WHICH_CONTRIBUTE' => $i_module == 0
 	));
 
-	//Gestion du tri
+	// Sorting management
 	$template->put_all(array(
-		'C_ORDER_ENTITLED_ASC' => $criteria == 'entitled' && $order == 'asc',
-		'U_ORDER_ENTITLED_ASC' => url('contribution_panel.php?p=' . $page . '&amp;criteria=entitled&amp;order=asc'),
-		'C_ORDER_ENTITLED_DESC' => $criteria == 'entitled' && $order == 'desc',
-		'U_ORDER_ENTITLED_DESC' => url('contribution_panel.php?p=' . $page . '&amp;criteria=entitled&amp;order=desc'),
-		'C_ORDER_MODULE_ASC' => $criteria == 'module' && $order == 'asc',
-		'U_ORDER_MODULE_ASC' => url('contribution_panel.php?p=' . $page . '&amp;criteria=module&amp;order=asc'),
-		'C_ORDER_MODULE_DESC' => $criteria == 'module' && $order == 'desc',
-		'U_ORDER_MODULE_DESC' => url('contribution_panel.php?p=' . $page . '&amp;criteria=module&amp;order=desc'),
-		'C_ORDER_STATUS_ASC' => $criteria == 'current_status' && $order == 'asc',
-		'U_ORDER_STATUS_ASC' => url('contribution_panel.php?p=' . $page . '&amp;criteria=current_status&amp;order=asc'),
-		'C_ORDER_STATUS_DESC' => $criteria == 'current_status' && $order == 'desc',
-		'U_ORDER_STATUS_DESC' => url('contribution_panel.php?p=' . $page . '&amp;criteria=current_status&amp;order=desc'),
-		'C_ORDER_CREATION_DATE_ASC' => $criteria == 'creation_date' && $order == 'asc',
-		'U_ORDER_CREATION_DATE_ASC' => url('contribution_panel.php?p=' . $page . '&amp;criteria=creation_date&amp;order=asc'),
+		'C_ORDER_ENTITLED_ASC'       => $criteria == 'entitled' && $order == 'asc',
+		'U_ORDER_ENTITLED_ASC'       => url('contribution_panel.php?p =' . $page . '&amp;criteria =entitled&amp;order=asc'),
+		'C_ORDER_ENTITLED_DESC'      => $criteria == 'entitled' && $order == 'desc',
+		'U_ORDER_ENTITLED_DESC'      => url('contribution_panel.php?p =' . $page . '&amp;criteria =entitled&amp;order=desc'),
+		'C_ORDER_MODULE_ASC'         => $criteria == 'module' && $order == 'asc',
+		'U_ORDER_MODULE_ASC'         => url('contribution_panel.php?p =' . $page . '&amp;criteria =module&amp;order=asc'),
+		'C_ORDER_MODULE_DESC'        => $criteria == 'module' && $order == 'desc',
+		'U_ORDER_MODULE_DESC'        => url('contribution_panel.php?p =' . $page . '&amp;criteria =module&amp;order=desc'),
+		'C_ORDER_STATUS_ASC'         => $criteria == 'current_status' && $order == 'asc',
+		'U_ORDER_STATUS_ASC'         => url('contribution_panel.php?p =' . $page . '&amp;criteria =current_status&amp;order=asc'),
+		'C_ORDER_STATUS_DESC'        => $criteria == 'current_status' && $order == 'desc',
+		'U_ORDER_STATUS_DESC'        => url('contribution_panel.php?p =' . $page . '&amp;criteria =current_status&amp;order=desc'),
+		'C_ORDER_CREATION_DATE_ASC'  => $criteria == 'creation_date' && $order == 'asc',
+		'U_ORDER_CREATION_DATE_ASC'  => url('contribution_panel.php?p =' . $page . '&amp;criteria =creation_date&amp;order=asc'),
 		'C_ORDER_CREATION_DATE_DESC' => $criteria == 'creation_date' && $order == 'desc',
-		'U_ORDER_CREATION_DATE_DESC' => url('contribution_panel.php?p=' . $page . '&amp;criteria=creation_date&amp;order=desc'),
-		'C_ORDER_FIXING_DATE_ASC' => $criteria == 'fixing_date' && $order == 'asc',
-		'U_ORDER_FIXING_DATE_ASC' => url('contribution_panel.php?p=' . $page . '&amp;criteria=fixing_date&amp;order=asc'),
-		'C_ORDER_FIXING_DATE_DESC' => $criteria == 'fixing_date' && $order == 'desc',
-		'U_ORDER_FIXING_DATE_DESC' => url('contribution_panel.php?p=' . $page . '&amp;criteria=fixing_date&amp;order=desc'),
-		'C_ORDER_POSTER_ASC' => $criteria == 'poster_id' && $order == 'asc',
-		'U_ORDER_POSTER_ASC' => url('contribution_panel.php?p=' . $page . '&amp;criteria=poster_id&amp;order=asc'),
-		'C_ORDER_POSTER_DESC' => $criteria == 'poster_id' && $order == 'desc',
-		'U_ORDER_POSTER_DESC' => url('contribution_panel.php?p=' . $page . '&amp;criteria=poster_id&amp;order=desc'),
-		'C_ORDER_FIXER_ASC' => $criteria == 'fixer_id' && $order == 'asc',
-		'U_ORDER_FIXER_ASC' => url('contribution_panel.php?p=' . $page . '&amp;criteria=fixer_id&amp;order=asc'),
-		'C_ORDER_FIXER_DESC' => $criteria == 'fixer_id' && $order == 'desc',
-		'U_ORDER_FIXER_DESC' => url('contribution_panel.php?p=' . $page . '&amp;criteria=fixer_id&amp;order=desc')
+		'U_ORDER_CREATION_DATE_DESC' => url('contribution_panel.php?p =' . $page . '&amp;criteria =creation_date&amp;order=desc'),
+		'C_ORDER_FIXING_DATE_ASC'    => $criteria == 'fixing_date' && $order == 'asc',
+		'U_ORDER_FIXING_DATE_ASC'    => url('contribution_panel.php?p =' . $page . '&amp;criteria =fixing_date&amp;order=asc'),
+		'C_ORDER_FIXING_DATE_DESC'   => $criteria == 'fixing_date' && $order == 'desc',
+		'U_ORDER_FIXING_DATE_DESC'   => url('contribution_panel.php?p =' . $page . '&amp;criteria =fixing_date&amp;order=desc'),
+		'C_ORDER_POSTER_ASC'         => $criteria == 'poster_id' && $order == 'asc',
+		'U_ORDER_POSTER_ASC'         => url('contribution_panel.php?p =' . $page . '&amp;criteria =poster_id&amp;order=asc'),
+		'C_ORDER_POSTER_DESC'        => $criteria == 'poster_id' && $order == 'desc',
+		'U_ORDER_POSTER_DESC'        => url('contribution_panel.php?p =' . $page . '&amp;criteria =poster_id&amp;order=desc'),
+		'C_ORDER_FIXER_ASC'          => $criteria == 'fixer_id' && $order == 'asc',
+		'U_ORDER_FIXER_ASC'          => url('contribution_panel.php?p =' . $page . '&amp;criteria =fixer_id&amp;order=asc'),
+		'C_ORDER_FIXER_DESC'         => $criteria == 'fixer_id' && $order == 'desc',
+		'U_ORDER_FIXER_DESC'         => url('contribution_panel.php?p =' . $page . '&amp;criteria =fixer_id&amp;order=desc')
 	));
 }
 

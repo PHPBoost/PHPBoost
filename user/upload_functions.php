@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 05 05
+ * @version     PHPBoost 6.0 - last update: 2020 09 04
  * @since       PHPBoost 1.6 - 2007 09 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -11,13 +11,13 @@
 
 if (defined('PHPBOOST') !== true)	exit;
 
-//Catégories (affichage si on connait la catégorie et qu'on veut reformer l'arborescence)
+// Categories (Display if category is known and the tree has to be reformed)
 function display_cat_explorer($id, &$cats, $display_select_link = 1, $user_id)
 {
 	if ($id > 0)
 	{
 		$id_cat = $id;
-		//On remonte l'arborescence des catégories afin de savoir quelle catégorie développer
+		// Reform the categories tree to know witch category has to be open
 		do
 		{
 			$id_cat = -1;
@@ -31,10 +31,10 @@ function display_cat_explorer($id, &$cats, $display_select_link = 1, $user_id)
 		while ($id_cat > 0);
 	}
 
-	//Maintenant qu'on connait l'arborescence on part du début
+	// Start from first
 	$cats_list = '<ul class="upload-cat-list">' . show_cat_contents(0, $cats, $id, $display_select_link, $user_id) . '</ul>';
 
-	//On liste les catégories ouvertes pour la fonction javascript
+	// List of opened categories to send to the javascript function
 	$opened_cats_list = '';
 	foreach ($cats as $key => $row)
 	{
@@ -50,7 +50,7 @@ function display_cat_explorer($id, &$cats, $display_select_link = 1, $user_id)
 
 }
 
-//Fonction récursive pour l'affichage des catégories
+// Recursive function for the display of categories
 function show_cat_contents($id_cat, $cats, $id, $display_select_link, $user_id)
 {
 	$line = '';
@@ -59,12 +59,12 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link, $user_id)
 	WHERE user_id = :user_id
 	AND id_parent = :id_parent
 	ORDER BY name", array(
-		'user_id' => $user_id,
+		'user_id'   => $user_id,
 		'id_parent' => $id_cat
 	));
 	while ($row = $result->fetch())
 	{
-		if (in_array($row['id'], $cats)) //Si cette catégorie contient notre catégorie, on l'explore
+		if (in_array($row['id'], $cats)) // If the category belongs to another, explore the parent
 		{
 			$line .= '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');" class="far fa-minus-square" id="img2_' . $row['id'] . '"></a> <a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');" class="fa fa-folder-open" id="img_' . $row['id'] . '"></a>&nbsp;<span id="class-' . $row['id'] . '" class="' . ($row['id'] == $id ? 'upload-selected-cat' : '') . '"><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['name'] . '</a></span><span id="cat_' . $row['id'] . '">
 			<ul class="upload-cat-explorer">'
@@ -72,14 +72,14 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link, $user_id)
 		}
 		else
 		{
-			//On compte le nombre de catégories présentes pour savoir si on donne la possibilité de faire un sous dossier
+			// Count existing categries to make possible subfolder creation
 			$sub_cats_number = PersistenceContext::get_querier()->count(DB_TABLE_UPLOAD_CAT, 'WHERE id_parent = :id', array(
 				'id' => $row['id']
 			));
-			//Si cette catégorie contient des sous catégories, on propose de voir son contenu
+			// If this category has subcategories, its content is visible
 			if ($sub_cats_number > 0)
 				$line .= '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');" class="far fa-plus-square" id="img2_' . $row['id'] . '"></a> <a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');" class="fa fa-folder" id="img_' . $row['id'] . '"></a>&nbsp;<span id="class-' . $row['id'] . '" class="' . ($row['id'] == $id ? 'upload-selected-cat' : '') . '"><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['name'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>';
-			else //Sinon on n'affiche pas le "+"
+			else // If not, hide the "+"
 				$line .= '<li class="upload-no-sub-cat"><i class="fa fa-folder"></i>&nbsp;<span id="class-' . $row['id'] . '" class="' . ($row['id'] == $id ? 'upload-selected-cat' : '') . '"><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['name'] . '</a></span></li>';
 		}
 	}
@@ -87,7 +87,7 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link, $user_id)
 	return "\n" . $line;
 }
 
-//Fonction qui détermine toutes les sous-catégories d'une catégorie (récursive)
+// Function to define all sub-categories (recursive)
 function upload_find_subcats(&$array, $id_cat, $user_id)
 {
 	$result = PersistenceContext::get_querier()->select("SELECT id
@@ -99,7 +99,7 @@ function upload_find_subcats(&$array, $id_cat, $user_id)
 	while ($row = $result->fetch())
 	{
 		$array[] = $row['id'];
-		//On rappelle la fonction pour la catégorie fille
+		// Callback the function for the child category
 		upload_find_subcats($array, $row['id'], $user_id);
 	}
 	$result->dispose();

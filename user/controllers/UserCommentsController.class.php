@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 02
+ * @version     PHPBoost 6.0 - last update: 2020 09 04
  * @since       PHPBoost 3.0 - 2012 02 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -89,8 +89,8 @@ class UserCommentsController extends AbstractController
 			'PAGINATION' => $pagination->display()
 		));
 
-		$result = PersistenceContext::get_querier()->select('
-			SELECT comments.*, comments.timestamp AS comment_timestamp, comments.id AS id_comment,
+		$result = PersistenceContext::get_querier()->select('SELECT
+			comments.*, comments.timestamp AS comment_timestamp, comments.id AS id_comment,
 			topic.*,
 			member.user_id, member.display_name, member.level, member.user_groups,
 			ext_field.user_avatar

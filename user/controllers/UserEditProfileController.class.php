@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 09
+ * @version     PHPBoost 6.0 - last update: 2020 09 04
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -119,16 +119,24 @@ class UserEditProfileController extends AbstractController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field($display_name = new FormFieldTextEditor('display_name', $this->lang['display_name'], $this->user->get_display_name(),
-			array('maxlength' => 100, 'required' => true, 'description'=> $this->lang['display_name.explain'], 'disabled' => !AppContext::get_current_user()->is_admin() && !$this->user_accounts_config->are_users_allowed_to_change_display_name() && $this->user->get_display_name(), 'events' => array('blur' => '
-				if (!HTMLForms.getField("login").getValue() && HTMLForms.getField("display_name").validate() == "") {
-					HTMLForms.getField("login").setValue(HTMLForms.getField("display_name").getValue().replace(/\s/g, \'\'));
-				}')
+			array(
+				'maxlength' => 100, 'required' => true,
+				'description'=> $this->lang['display_name.explain'],
+				'disabled' => !AppContext::get_current_user()->is_admin() && !$this->user_accounts_config->are_users_allowed_to_change_display_name() && $this->user->get_display_name(),
+				'events' => array('blur' => '
+					if (!HTMLForms.getField("login").getValue() && HTMLForms.getField("display_name").validate() == "") {
+						HTMLForms.getField("login").setValue(HTMLForms.getField("display_name").getValue().replace(/\s/g, \'\'));
+					}'
+				)
 			),
 			array(new FormFieldConstraintLengthRange(3, 100), new FormFieldConstraintDisplayNameExists($this->user->get_id()))
 		));
 
 		$fieldset->add_field($email = new FormFieldMailEditor('email', $this->lang['email'], $this->user->get_email(),
-			array('required' => true, 'disabled' => !AppContext::get_current_user()->is_admin() && !$this->user_accounts_config->are_users_allowed_to_change_email() && $this->user->get_email()),
+			array(
+				'required' => true,
+				'disabled' => !AppContext::get_current_user()->is_admin() && !$this->user_accounts_config->are_users_allowed_to_change_email() && $this->user->get_email()
+			),
 			array(new FormFieldConstraintMailExist($this->user->get_id()))
 		));
 
@@ -183,22 +191,29 @@ class UserEditProfileController extends AbstractController
 		));
 
 		$connect_fieldset->add_field($login = new FormFieldTextEditor('login', $this->lang['login'], ($has_custom_login ? $this->internal_auth_infos['login'] : preg_replace('/\s+/u', '', $this->user->get_display_name())),
-			array(	'required' => true,
-					'hidden' => !$internal_auth_connected || !$has_custom_login,
-					'maxlength' => 25
-				),
+			array(
+				'required' => true, 'maxlength' => 25,
+				'hidden' => !$internal_auth_connected || !$has_custom_login
+			),
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists($this->user->get_id()))
 		));
 
 		if ($this->user->get_id() == AppContext::get_current_user()->get_id())
 		{
-			$connect_fieldset->add_field(new FormFieldPasswordEditor('old_password', $this->lang['password.old'], '', array(
-				'description' => $this->lang['password.old.explain'], 'autocomplete' => false, 'hidden' => !$internal_auth_connected))
-			);
+			$connect_fieldset->add_field(new FormFieldPasswordEditor('old_password', $this->lang['password.old'], '',
+				array(
+					'autocomplete' => false,
+					'description' => $this->lang['password.old.explain'],
+					'hidden' => !$internal_auth_connected
+				)
+			));
 		}
 
 		$connect_fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '',
-			array('description' => StringVars::replace_vars($this->lang['password.explain'], array('number' => $security_config->get_internal_password_min_length())), 'autocomplete' => false, 'hidden' => !$internal_auth_connected),
+			array(
+				'description' => StringVars::replace_vars($this->lang['password.explain'], array('number' => $security_config->get_internal_password_min_length())),
+				'autocomplete' => false, 'hidden' => !$internal_auth_connected
+			),
 			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
 		));
 
@@ -237,14 +252,19 @@ class UserEditProfileController extends AbstractController
 		if (count(ThemesManager::get_activated_and_authorized_themes_map()) > 1)
 		{
 			$options_fieldset->add_field(new FormFieldThemesSelect('theme', $this->lang['theme'], $this->user->get_theme(),
-				array('check_authorizations' => true, 'events' => array('change' => $this->build_javascript_picture_themes()))
+				array(
+					'check_authorizations' => true,
+					'events' => array('change' => $this->build_javascript_picture_themes())
+				)
 			));
 			$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['theme.preview'], '<img id="img_theme" src="'. $this->get_picture_theme($this->user->get_theme()) .'" alt="' . $this->lang['theme.preview'] . '" class="preview-img" />'));
 		}
 
 		$options_fieldset->add_field(new FormFieldEditors('text-editor', $this->lang['text-editor'], $this->user->get_editor()));
 
-		$options_fieldset->add_field(new FormFieldLangsSelect('lang', $this->lang['lang'], $this->user->get_locale(), array('check_authorizations' => true)));
+		$options_fieldset->add_field(new FormFieldLangsSelect('lang', $this->lang['lang'], $this->user->get_locale(),
+			array('check_authorizations' => true)
+		));
 
 		if (AppContext::get_current_user()->is_admin())
 		{

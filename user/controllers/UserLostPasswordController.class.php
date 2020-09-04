@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 16
+ * @version     PHPBoost 6.0 - last update: 2020 09 04
  * @since       PHPBoost 3.0 - 2011 07 25
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -79,10 +79,10 @@ class UserLostPasswordController extends AbstractController
 
 		$general_config = GeneralConfig::load();
 		$parameters = array(
-			'pseudo' => $user->get_display_name(),
-			'host' => $general_config->get_complete_site_url(),
+			'pseudo'               => $user->get_display_name(),
+			'host'                 => $general_config->get_complete_site_url(),
 			'change_password_link' => UserUrlBuilder::change_password($change_password_pass)->absolute(),
-			'signature' => MailServiceConfig::load()->get_mail_signature()
+			'signature'            => MailServiceConfig::load()->get_mail_signature()
 		);
 		$subject = $general_config->get_site_name() . ' : ' . $this->lang['forget-password'];
 		$content = StringVars::replace_vars($this->lang['forget-password.mail.content'], $parameters);

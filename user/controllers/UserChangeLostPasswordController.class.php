@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 07 30
+ * @version     PHPBoost 6.0 - last update: 2020 09 04
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -21,7 +21,7 @@ class UserChangeLostPasswordController extends AbstractController
 
 		$change_password_pass = $request->get_getstring('key','');
 		$user_id = $change_password_pass ? PHPBoostAuthenticationMethod::change_password_pass_exists($change_password_pass) : 0;
-		
+
 		if (!$user_id)
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();
@@ -52,14 +52,17 @@ class UserChangeLostPasswordController extends AbstractController
 		$security_config = SecurityConfig::load();
 		$user = UserService::get_user($user_id);
 		$internal_auth_infos = PHPBoostAuthenticationMethod::get_auth_infos($user_id);
-		
+
 		$form = new HTMLForm(__CLASS__);
 
 		$fieldset = new FormFieldsetHTMLHeading('fieldset', $this->lang['change-password']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password.new'], '',
-			array('description' => StringVars::replace_vars($this->lang['password.explain'], array('number' => $security_config->get_internal_password_min_length())), 'required' => true, 'autocomplete' => false),
+			array(
+				'required' => true, 'autocomplete' => false,
+				'description' => StringVars::replace_vars($this->lang['password.explain'], array('number' => $security_config->get_internal_password_min_length()))
+			),
 			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
 		));
 
@@ -70,17 +73,17 @@ class UserChangeLostPasswordController extends AbstractController
 
 		$fieldset->add_field($email = new FormFieldHidden('email', $user->get_email()));
 		$fieldset->add_field($login = new FormFieldHidden('login', $internal_auth_infos['login'] && $user->get_email() !== $internal_auth_infos['login'] ? $internal_auth_infos['login'] : preg_replace('/\s+/u', '', $user->get_display_name())));
-		
+
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
-		
+
 		if ($security_config->are_login_and_email_forbidden_in_password())
 		{
 			$form->add_constraint(new FormConstraintFieldsNotIncluded($email, $password, LangLoader::get_message('form.login_and_mail_must_not_be_contained_in_second_field', 'status-messages-common')));
 			$form->add_constraint(new FormConstraintFieldsNotIncluded($login, $password, LangLoader::get_message('form.login_and_mail_must_not_be_contained_in_second_field', 'status-messages-common')));
 		}
-		
+
 		$this->form = $form;
 	}
 
