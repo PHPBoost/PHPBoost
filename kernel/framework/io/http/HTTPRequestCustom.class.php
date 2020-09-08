@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2020 05 14
+ * @version     PHPBoost 5.2 - last update: 2020 09 08
  * @since       PHPBoost 3.0 - 2009 10 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -335,9 +335,9 @@ class HTTPRequestCustom
 		return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && TextHelper::strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 	}
 
-	private static function get_http_host()
+	private static function get_server_name()
 	{
-		return (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST');
+		return (isset($_SERVER['SERVER_NAME'])) ? $_SERVER['SERVER_NAME'] : getenv('SERVER_NAME');
 	}
 
 	public function get_is_https()
@@ -352,11 +352,11 @@ class HTTPRequestCustom
 
 	public function get_is_localhost()
 	{
-		$patterns = array('localhost', 'local.dev', '127.0.0.1', '::1');
+		$patterns = array('localhost', 'local.dev', 'local.pbt', '127.0.0.1', '::1');
 
 		foreach ($patterns as $value)
 		{
-			if (TextHelper::strpos(self::get_http_host(), $value) !== false)
+			if (TextHelper::strpos(self::get_server_name(), $value) !== false)
 				return true;
 		}
 
@@ -365,13 +365,18 @@ class HTTPRequestCustom
 
 	public function get_site_url()
 	{
-		return 'http' . ($this->get_is_https() ? 's' : '') . '://' . self::get_http_host();
+		return 'http' . ($this->get_is_https() ? 's' : '') . '://' . self::get_server_name();
+	}
+
+	public function get_current_url()
+	{
+		return $this->get_site_url() . $_SERVER['REQUEST_URI'];
 	}
 
 	// get full site domain url
 	public function get_site_domain_name()
 	{
-		return self::get_http_host();
+		return self::get_server_name();
 	}
 
 	// get site domain name (without host)
