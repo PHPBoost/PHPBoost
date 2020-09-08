@@ -762,8 +762,6 @@ figure { border-color: var(--bdr-main); }
 abbr,
 a.wikipedia-link { border-bottom-color: var(--main-dark); }
 
-.infos-container { border-color: var(--main-dark); }
-
 /* --- Colors classes --------------------------------------------------------------- */
 .floating-element,
 .message-helper { background-color: var(--bgc-main) }
