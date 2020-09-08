@@ -762,17 +762,7 @@ figure { border-color: var(--bdr-main); }
 abbr,
 a.wikipedia-link { border-bottom-color: var(--main-dark); }
 
-.user-card {
-	background-color: var(--bgc-alt);
-	border-color: var(--bdr-main);
-}
-
 .infos-container { border-color: var(--main-dark); }
-
-.user-level {
-	background-color: var(--main-dark);
-	color: var(--txt-light);
-}
 
 /* --- Colors classes --------------------------------------------------------------- */
 .floating-element,

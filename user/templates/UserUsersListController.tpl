@@ -8,7 +8,7 @@
 		# IF C_ARE_GROUPS #
 			# INCLUDE SELECT_GROUP #
 		# ENDIF #
-
+		<div class="spacer"></div>
 		# INCLUDE TABLE #
 	</div>
 	<footer></footer>

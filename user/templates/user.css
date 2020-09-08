@@ -149,16 +149,6 @@ table.announce-legend td {
 	padding: 0.618em 0;
 }
 
-
-	#module-user-group-list header h1 {
-		margin-top: 1.309em;
-		text-align: left;
-	}
-
-	#module-user-group-list > .content {
-		margin: 2em 0;
-	}
-
 /* --   group   -- */
 /* ---------------- */
 .group-container {
@@ -166,35 +156,18 @@ table.announce-legend td {
 	flex-direction: column;
 }
 
-.groups-list-container > header {
-	text-align: center;
-}
-
 .list-members-container {
 	flex: 0 0 auto;
 }
 
-.list-members-container > header {
-	margin: 0;
-	padding: 0;
-}
-
-.list-members-container > header h2 {
-	font-size: 1.618em;
-}
-
-.list-members-container > .content {
-	display: flex;
-	flex-direction: column;
+.list-members-container > .user-card {
 	overflow: hidden;
-	padding: 0;
 	max-height: 0;
 	transition: 0.3s ease;
 }
 
-.list-members-container.selected > .content {
+.list-members-container.selected > .user-card {
 	max-height: 9999px;
-	padding: 0.456em;
 }
 
 .list-admins-container {
@@ -244,68 +217,9 @@ table.announce-legend td {
 	opacity: 1;
 }
 
-.group-has-img {
-	max-width: 150px;
-}
-
-.user-card,
-.user-card header,
-.user-card .content {
-	margin: 0;
-	padding: 0;
-}
-
-.user-card {
-	border-width: 2px;
-	width: 100%;
-}
-
-@media (min-width: 1024px) {
-	.list-members-container > .content {
-		flex-direction: row;
-		flex-wrap: wrap;
-		justify-content: space-between;
-	}
-	.user-card { width: calc(100% / 2.1); }
-}
-
-.user-card .content {
-	display: flex;
-	height: 100%;
-}
-
-.user-card .content:after,
-.user-card .content:before {
-	display: none;
-}
-
-.user-card .avatar-container {
-	margin: 0.809em 0.456em 0.809em 0.456em;
-	flex: 0 0 90px;
-}
-
-.user-level {
-	margin-top: 1em;
-	padding-left: 0.456em;
-	text-transform: capitalize;
-}
-
-.user-pseudo,
-.user-extended-field {
-	padding-left: 0.456em;
-}
-
-.user-extended-field {
-	font-size: 0.809em;
-	text-align: left;
-}
-
-.infos-container {
-	border-width: 0 0 0 8px;
-	border-style: solid;
-	flex: 1 1 auto;
-	margin: -1px -1px -1px 0;
-	padding: 0 0 0.618em;
+.user-card-avatar,
+.group-has-img img {
+	max-height: 3em;
 }
 
 /* --- PM --- */
