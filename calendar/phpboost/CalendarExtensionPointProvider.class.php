@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 12
+ * @version     PHPBoost 6.0 - last update: 2020 09 08
  * @since       PHPBoost 2.0 - 2008 07 07
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,6 +15,11 @@ class CalendarExtensionPointProvider extends ItemsModuleExtensionPointProvider
 	public function home_page()
 	{
 		return new DefaultHomePageDisplay($this->get_id(), CalendarDisplayCategoryController::get_view());
+	}
+
+	public function sitemap()
+	{
+		return new CalendarSitemapExtensionPoint();
 	}
 
 	public function url_mappings()
