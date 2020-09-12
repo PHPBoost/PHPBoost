@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 04
+ * @version     PHPBoost 6.0 - last update: 2020 09 12
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -54,7 +54,8 @@ class UserViewProfileController extends AbstractController
 			$this->tpl->assign_block_vars('extended_fields', array(
 				'NAME'          => $field['name'],
 				'REWRITED_NAME' => Url::encode_rewrite($field['name']),
-				'VALUE'         => $field['value']
+				'VALUE'         => $field['value'],
+				'C_AVATAR'		=> Url::encode_rewrite($field['name']) == 'avatar'
 			));
 			$extended_fields_number++;
 		}

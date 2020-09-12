@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 23
+ * @version     PHPBoost 6.0 - last update: 2020 09 12
  * @since       PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -330,6 +330,7 @@ S\'il s\'agit d\'une erreur veuillez contacter l\'administrateur du site.
 //Panneau de contribution
 $LANG['contribution_panel'] = 'Panneau de contribution';
 $LANG['contribution'] = 'Contribution';
+$LANG['contribution.details'] = 'Détails de la contribution';
 $LANG['contribution_status_unread'] = 'Non traitée';
 $LANG['contribution_status_being_processed'] = 'En cours';
 $LANG['contribution_status_processed'] = 'Traitée';
@@ -343,6 +344,8 @@ $LANG['contribution_fixer'] = 'Responsable';
 $LANG['contribution_fixing_date'] = 'Date de clôture';
 $LANG['contribution_module'] = 'Module';
 $LANG['process_contribution'] = 'Traiter la contribution';
+$LANG['change.contribution'] = 'Modifier le statut de la contribution';
+$LANG['delete.contribution'] = 'Supprimer la contribution';
 $LANG['confirm_delete_contribution'] = 'Etes-vous sûr de vouloir supprimer cette contribution ?';
 $LANG['contribution_list'] = 'Liste des contributions';
 $LANG['contribute'] = 'Contribuer';

@@ -3,7 +3,7 @@
 # ENDIF #
 <section id="module-user-error-403">
 	<header><h1>${escape(TITLE)}</h1></header>
-	<div class="content">
+	<article class="content">
 		<i class="fa fa-minus-circle fa-4x error"></i>
 
 		<div class="type-error">
@@ -20,6 +20,6 @@
 			<strong><a href="{U_LINK}">${escape(LINK_NAME)}</a></strong>
 		</div>
 		# ENDIF #
-	</div>
+	</article>
 	<footer></footer>
 </section>

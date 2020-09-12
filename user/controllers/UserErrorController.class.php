@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 04
+ * @version     PHPBoost 6.0 - last update: 2020 09 12
  * @since       PHPBoost 3.0 - 2009 12 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UserErrorController extends AbstractController
@@ -101,15 +102,22 @@ class UserErrorController extends AbstractController
 
 	private function fill_view()
 	{
+		$theme_id = AppContext::get_current_user()->get_theme();
+		if (file_exists(PATH_TO_ROOT . '/templates/' . $theme_id . '/images/tornado.png'))
+			$error_img = TPL_PATH_TO_ROOT . '/templates/' . $theme_id . '/images/tornado.png';
+		else
+			$error_img = TPL_PATH_TO_ROOT . '/templates/default/images/tornado.png';
+
 		$this->view->put_all(array(
-			'ERROR_TYPE' => $this->get_error_type(),
-			'TITLE'      => $this->title,
-			'MESSAGE'    => $this->message,
-			'U_LINK'     => $this->link,
-			'TIME'       => $this->time,
-			'LINK_NAME'  => $this->link_name,
-			'HAS_LINK'   => !empty($this->link) && !empty($this->link_name),
-			'HAS_TIME'   => !empty($this->time) && !empty($this->link),
+			'ERROR_TYPE'  => $this->get_error_type(),
+			'TITLE'       => $this->title,
+			'MESSAGE'     => $this->message,
+			'U_LINK'      => $this->link,
+			'U_ERROR_IMG' => $error_img,
+			'TIME'        => $this->time,
+			'LINK_NAME'   => $this->link_name,
+			'HAS_LINK'    => !empty($this->link) && !empty($this->link_name),
+			'HAS_TIME'    => !empty($this->time) && !empty($this->link),
 		));
 	}
 

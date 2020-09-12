@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020  05 23
+ * @version     PHPBoost 6.0 - last update: 2020 09 12
  * @since       PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -330,6 +330,7 @@ It may be an error, if you think it is, you can contact the administrator of the
 //Panneau de contribution
 $LANG['contribution_panel'] = 'Contribution panel';
 $LANG['contribution'] = 'Contribution';
+$LANG['contribution.details'] = 'Contribution details';
 $LANG['contribution_status_unread'] = 'Unsolved';
 $LANG['contribution_status_being_processed'] = 'In progress';
 $LANG['contribution_status_processed'] = 'Solved';
@@ -343,6 +344,8 @@ $LANG['contribution_fixer'] = 'Fixer';
 $LANG['contribution_fixing_date'] = 'Fixing date';
 $LANG['contribution_module'] = 'Module';
 $LANG['process_contribution'] = 'Process the contribution';
+$LANG['change.contribution'] = 'Modify the contribution status';
+$LANG['delete.contribution'] = 'Delete the contribution';
 $LANG['confirm_delete_contribution'] = 'Do you really want to delete this contribution?';
 $LANG['contribution_list'] = 'Contribution list';
 $LANG['contribute'] = 'Contribute';

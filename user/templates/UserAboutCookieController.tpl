@@ -2,9 +2,8 @@
 	<header>
 		<h1>{ABOUTCOOKIE_TITLE}</h1>
 	</header>
-	<div class="content">
+	<article class="content">
 		{ABOUTCOOKIE_CONTENT}
-	</div>
-	<footer id="cookiebar-change-choice">
-	</footer>
+	</article>
+	<footer id="cookiebar-change-choice"></footer>
 </section>

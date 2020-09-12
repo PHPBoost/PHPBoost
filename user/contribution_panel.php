@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 04
+ * @version     PHPBoost 6.0 - last update: 2020 09 12
  * @since       PHPBoost 2.0 - 2008 07 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -190,7 +190,7 @@ if ($contribution_id > 0)
 	}
 
 	$template->put_all(array(
-		'L_CONTRIBUTION' => $LANG['contribution'],
+		'L_CONTRIBUTION_DETAILS' => $LANG['contribution.details'],
 		'L_ENTITLED' => $LANG['contribution_entitled'],
 		'L_DESCRIPTION' => $LANG['contribution_description'],
 		'L_STATUS' => $LANG['contribution_status'],
@@ -200,6 +200,8 @@ if ($contribution_id > 0)
 		'L_FIXING_DATE' => $LANG['contribution_fixing_date'],
 		'L_MODULE' => $LANG['contribution_module'],
 		'L_PROCESS_CONTRIBUTION' => $LANG['process_contribution'],
+		'L_CHANGE_CONTRIBUTION' => $LANG['change.contribution'],
+		'L_DELETE_CONTRIBUTION' => $LANG['delete.contribution'],
 		'L_CONFIRM_DELETE_CONTRIBUTION' => $LANG['confirm_delete_contribution'],
 		'L_DELETE' => LangLoader::get_message('delete', 'common'),
 		'L_UPDATE' => $LANG['update'],

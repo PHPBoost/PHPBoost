@@ -4,7 +4,7 @@ jQuery(document).ready(function() {
 	jQuery('ul#categories').sortable({
 		handle: '.sortable-selector',
 		placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>',
-		onDrop: function ($item, container, _super, event) { 
+		onDrop: function ($item, container, _super, event) {
 			change_reposition_pictures();
 			$item.removeClass(container.group.options.draggedClass).removeAttr("style");
 			$("body").removeClass(container.group.options.bodyClass);
@@ -33,12 +33,12 @@ function change_children_reposition_pictures(list)
 			jQuery("#move-up-" + list[i].id).hide();
 		else
 			jQuery("#move-up-" + list[i].id).show();
-		
+
 		if (jQuery('#cat-' + list[i].id).is(':last-child'))
 			jQuery("#move-down-" + list[i].id).hide();
 		else
 			jQuery("#move-down-" + list[i].id).show();
-		
+
 		if (typeof list[i].children !== 'undefined')
 		{
 			var children = list[i].children[0];
@@ -57,17 +57,17 @@ function change_reposition_pictures()
 <form action="{REWRITED_SCRIPT}" method="post" onsubmit="serialize_sortable();">
 	<fieldset>
 		<legend><h1>{FIELDSET_TITLE}</h1></legend>
-			<div class="fieldset-inset">
-				<ul id="categories" class="sortable-block">
-					# IF C_NO_CATEGORIES #
-						<div class="align-center">${LangLoader::get_message('no_item_now', 'common')}</div>
-					# ELSE #
-						# START children #
-							{children.child}
-						# END children #
-					# ENDIF #
-				</ul>
-			</div>
+		<div class="fieldset-inset">
+			<ul id="categories" class="sortable-block">
+				# IF C_NO_CATEGORIES #
+					<div class="align-center">${LangLoader::get_message('no_item_now', 'common')}</div>
+				# ELSE #
+					# START children #
+						{children.child}
+					# END children #
+				# ENDIF #
+			</ul>
+		</div>
 	</fieldset>
 	# IF C_MORE_THAN_ONE_CATEGORY #
 	<fieldset class="fieldset-submit">
