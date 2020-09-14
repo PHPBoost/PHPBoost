@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 05 05
+ * @version     PHPBoost 6.0 - last update: 2020 09 14
  * @since       PHPBoost 3.0 - 2010 12 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -54,7 +54,7 @@ class MemberUserSexExtendedField extends AbstractMemberExtendedField
 	{
 		if ($member_extended_field->get_value())
 		{
-			return array('name' => $member_extended_field->get_name(), 'value' => $this->get_picture_sex($member_extended_field->get_value()));
+			return array('name' => $member_extended_field->get_name(), 'field_name' => $member_extended_field->get_field_name(), 'value' => $this->get_picture_sex($member_extended_field->get_value()));
 		}
 	}
 
