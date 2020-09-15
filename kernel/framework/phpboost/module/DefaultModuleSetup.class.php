@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 02 28
+ * @version     PHPBoost 6.0 - last update: 2020 09 15
  * @since       PHPBoost 2.0 - 2009 01 16
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor xela <xela@phpboost.com>
 */
 
 class DefaultModuleSetup implements ModuleSetup
@@ -97,7 +98,7 @@ class DefaultModuleSetup implements ModuleSetup
 			self::$dbms_utils->drop($tables_list);
 	}
 
-	private function create_tables()
+	protected function create_tables()
 	{
 		if ($this->module_id)
 		{
