@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 15
+ * @version     PHPBoost 6.0 - last update: 2020 09 16
  * @since       PHPBoost 2.0 - 2009 01 16
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -90,7 +90,7 @@ class DefaultModuleSetup implements ModuleSetup
 		return $tables_list;
 	}
 
-	private function drop_tables()
+	protected function drop_tables()
 	{
 		$tables_list = $this->get_sql_tables_list();
 		
