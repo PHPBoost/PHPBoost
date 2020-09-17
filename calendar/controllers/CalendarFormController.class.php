@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 08 28
+ * @version     PHPBoost 6.0 - last update: 2020 09 17
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -480,25 +480,26 @@ class CalendarFormController extends ModuleController
 
 	private function contribution_actions(CalendarEvent $event, $id_event)
 	{
-		if ($event->get_id() === null)
+		if($this->is_contributor_member())
 		{
-			if($this->is_contributor_member())
-			{
-				$contribution = new Contribution();
-				$contribution->set_id_in_module($id_event);
+			$contribution = new Contribution();
+			$contribution->set_id_in_module($id_event);
+			if ($event->get_id() === null)
 				$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
-				$contribution->set_entitled($event->get_content()->get_title());
-				$contribution->set_fixing_url(CalendarUrlBuilder::edit_event($id_event)->relative());
-				$contribution->set_poster_id(AppContext::get_current_user()->get_id());
-				$contribution->set_module('calendar');
-				$contribution->set_auth(
-					Authorizations::capture_and_shift_bit_auth(
-						CategoriesService::get_categories_manager()->get_heritated_authorizations($event->get_content()->get_category_id(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
-						Category::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
-					)
-				);
-				ContributionService::save_contribution($contribution);
-			}
+			else
+				$contribution->set_description(stripslashes($this->form->get_value('edition_description')));
+
+			$contribution->set_entitled($event->get_content()->get_title());
+			$contribution->set_fixing_url(CalendarUrlBuilder::edit_event($id_event)->relative());
+			$contribution->set_poster_id(AppContext::get_current_user()->get_id());
+			$contribution->set_module('calendar');
+			$contribution->set_auth(
+				Authorizations::capture_and_shift_bit_auth(
+					CategoriesService::get_categories_manager()->get_heritated_authorizations($event->get_content()->get_category_id(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
+					Category::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
+				)
+			);
+			ContributionService::save_contribution($contribution);
 		}
 		else
 		{

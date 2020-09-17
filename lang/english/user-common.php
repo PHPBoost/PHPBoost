@@ -47,7 +47,7 @@ $lang['contribution.extended.explain'] = '
     Your contribution will be treated in the contribution panel.
     <span class="error text-strong">Amendment is possible until the contribution has been approved or after.</span>
     In the next field, you can justify your contribution to explain your demarche to a moderator.
-    If you modify your contribution after <span class="text-strong">its approbation</span>, it will be sent back to the contribution panel, waiting for a new approbation';
+    If you modify your contribution after <span class="text-strong">its approbation</span>, it will be sent back to the contribution panel, waiting for a new approbation.';
 $lang['contribution.member.edition.explain'] = '
     You are about to modify your contribution. It will be sent back to the contribution panel to be treated
     and a new alert will be sent to approvers.';

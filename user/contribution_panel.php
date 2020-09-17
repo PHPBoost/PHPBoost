@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 12
+ * @version     PHPBoost 6.0 - last update: 2020 09 17
  * @since       PHPBoost 2.0 - 2008 07 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -280,7 +280,7 @@ else
 					'MODULE' => $this_contribution->get_module_name(),
 					'STATUS' => $this_contribution->get_status_name(),
 					'CREATION_DATE' => $creation_date->format(Date::FORMAT_DAY_MONTH_YEAR),
-					'FIXING_DATE' => $fixing_date->format(Date::FORMAT_DAY_MONTH_YEAR),
+					'FIXING_DATE' => $fixing_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 					'POSTER' => $this_contribution->get_poster_login(),
 					'POSTER_LEVEL_CLASS' => UserService::get_level_class($this_contribution->get_poster_level()),
 					'POSTER_GROUP_COLOR' => $poster_group_color,

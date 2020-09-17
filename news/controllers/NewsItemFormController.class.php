@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 14
+ * @version     PHPBoost 6.0 - last update: 2020 09 17
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -380,25 +380,26 @@ class NewsItemFormController extends ModuleController
 
 	private function contribution_actions(News $item, $id_news)
 	{
-		if ($item->get_id() === null)
+		if ($this->is_contributor_member())
 		{
-			if ($this->is_contributor_member())
-			{
-				$contribution = new Contribution();
-				$contribution->set_id_in_module($id_news);
+			$contribution = new Contribution();
+			$contribution->set_id_in_module($id_news);
+			if ($item->get_id() === null)
 				$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
-				$contribution->set_entitled($item->get_title());
-				$contribution->set_fixing_url(NewsUrlBuilder::edit_item($id_news)->relative());
-				$contribution->set_poster_id(AppContext::get_current_user()->get_id());
-				$contribution->set_module('news');
-				$contribution->set_auth(
-					Authorizations::capture_and_shift_bit_auth(
-						CategoriesService::get_categories_manager()->get_heritated_authorizations($item->get_id_category(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
-						Category::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
-					)
-				);
-				ContributionService::save_contribution($contribution);
-			}
+			else
+				$contribution->set_description(stripslashes($this->form->get_value('edition_description')));
+
+			$contribution->set_entitled($item->get_title());
+			$contribution->set_fixing_url(NewsUrlBuilder::edit_item($id_news)->relative());
+			$contribution->set_poster_id(AppContext::get_current_user()->get_id());
+			$contribution->set_module('news');
+			$contribution->set_auth(
+				Authorizations::capture_and_shift_bit_auth(
+					CategoriesService::get_categories_manager()->get_heritated_authorizations($item->get_id_category(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
+					Category::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
+				)
+			);
+			ContributionService::save_contribution($contribution);
 		}
 		else
 		{
