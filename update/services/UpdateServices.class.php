@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 01
+ * @version     PHPBoost 6.0 - last update: 2020 09 17
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -292,7 +292,8 @@ class UpdateServices
 		self::$db_querier->inject('UPDATE ' . PREFIX . 'authentication_method SET method = replace(method, \'fb\', \'facebook\')');
 		self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'sessions CHANGE location_script location_script VARCHAR(200) NOT NULL DEFAULT ""');
 
-		self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member CHANGE COLUMN groups user_groups VARCHAR(65000)');
+		if (isset($columns['groups']))
+			self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member CHANGE groups user_groups VARCHAR(65000)');
 	}
 
 	private function update_kernel_version()
