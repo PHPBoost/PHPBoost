@@ -185,7 +185,7 @@
 .cssmenu-right.small-screen li:hover > ul   { right: 0;               }
 .cssmenu-left.small-screen li:hover > ul    { left: 0;                }
 
-/* Uncomment to unfold the last top-level item to the left for a horizontal menu */
+/* Uncomment to unfold the last top-level item to the left for an horizontal menu */
 /*
 .cssmenu-horizontal > ul > li:hover:last-child > ul {
 	left: auto;
@@ -199,7 +199,7 @@
 */
 
 /* --- Small screens  ------------------------------------------------------- */
-/* change the viewprot limit in /templates/default/framework/menus/link.tpl */
+/* change the viewport limit in /templates/default/framework/menus/links.tpl on line 38 */
 
 .small-screen,
 .small-screen ul,

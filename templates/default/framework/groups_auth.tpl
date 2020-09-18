@@ -58,7 +58,7 @@
 	{
 		var i;
 
-		//Sélection des groupes.
+		// Groups selection
 		var selectidgroups = jQuery('#groups_auth' + id)[0];
 		for(i = 0; i < selectidgroups.length; i++)
 		{
@@ -66,7 +66,7 @@
 				selectidgroups[i].selected = status;
 		}
 
-		//Sélection des membres.
+		// Member selection
 		var selectidmember = jQuery('#members_auth' + id)[0];
 		for(i = 0; i < selectidmember.length; i++)
 		{
@@ -85,11 +85,11 @@
 		}
 	}
 
-	//Fonction d'ajout de membre dans les autorisations.
+	// Function to add a member to authorizations
 	function XMLHttpRequest_add_member_auth(searchid, user_id, login, alert_already_auth)
 	{
 		var selectid = jQuery('#members_auth' + searchid)[0];
-		for(var i = 0; i < selectid.length; i++) //Vérifie que le membre n'est pas déjà dans la liste.
+		for(var i = 0; i < selectid.length; i++) // Check if member isn't already in thel list
 		{
 			if (selectid[i].value == user_id)
 			{
@@ -101,7 +101,7 @@
 		oOption.id = searchid + 'm' + (selectid.length - 1);
 			oOption.selected = true;
 
-		if (jQuery('#members_auth' + searchid)) //Ajout du membre.
+		if (jQuery('#members_auth' + searchid)) // Add the member.
 			jQuery('#members_auth' + searchid)[0].options[selectid.length] = oOption;
 	}
 

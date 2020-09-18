@@ -15,10 +15,10 @@
 				# ENDIF #
 	            <span>{TITLE}</span>
           	</a>
-			<nav id="pushmenu-{ID}" class="pushnav# IF C_MENU_HORIZONTAL # # ENDIF ## IF C_MENU_VERTICAL # # ENDIF ## IF C_MENU_STATIC # # ENDIF ## IF C_MENU_LEFT # # ENDIF ## IF C_MENU_RIGHT # # ENDIF ## IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF ## IF C_MENU_WITH_SUBMENU # pushmenu-with-submenu# ENDIF #">
+			<nav id="pushmenu-{ID}" class="pushnav# IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF ## IF C_MENU_WITH_SUBMENU # pushmenu-with-submenu# ENDIF #">
 				<ul class=""># START elements #{elements.DISPLAY}# END elements #</ul>
 			</nav>
-		# IF C_MENU_CONTAINER # <!-- Close mini-module-container -->
+		# IF C_MENU_CONTAINER #
 				</div>
 			</div>
 		</div>
@@ -49,14 +49,14 @@
 
 	# ENDIF #
 
-	# IF C_NEXT_MENU # <!-- Sub Element for Menu -->
+	# IF C_NEXT_MENU #
 		<li>
 			# IF C_URL #
 				<a href="{REL_URL}"># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF #<span>{TITLE}</span></a>
 			# ELSE #
 				<span># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF#<span>{TITLE}</span></span>
 			# ENDIF #
-			# IF C_HAS_CHILD # <!-- Add Sub-Menu Element -->
+			# IF C_HAS_CHILD #
 				<ul># START elements #{elements.DISPLAY}# END elements #</ul>
 			# ENDIF #
 		</li>

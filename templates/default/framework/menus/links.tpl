@@ -1,8 +1,8 @@
-# IF C_MENU # <!-- Menu -->
+# IF C_MENU #
 
-	# IF C_FIRST_MENU # <!-- Menu container NAV -->
+	# IF C_FIRST_MENU #
 
-		# IF C_MENU_CONTAINER # <!-- Open mini-module-container -->
+		# IF C_MENU_CONTAINER #
 			<div id="links-menu-{ID}" class="cell-mini cell-mini-vertical cell-tile cssmenu-content# IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF #">
 				<div class="cell">
 					<div class="cell-header menu-vertical-{DEPTH} hidden-small-screens">
@@ -30,7 +30,7 @@
 			<ul class="level-{DEPTH}# IF NOT C_MENU_CONTAINER ## IF C_IMG # menu-with-img# ENDIF ## ENDIF #"># START elements #{elements.DISPLAY}# END elements #</ul>
 		</nav>
 
-		# IF C_MENU_CONTAINER # <!-- Close mini-module-container -->
+		# IF C_MENU_CONTAINER #
 				</div>
 			</div>
 		</div>
@@ -38,25 +38,25 @@
 		<script>jQuery("#cssmenu-${escape(ID)}").menumaker({ title: "{TITLE}", format: "multitoggle", breakpoint: 768# IF C_MENU_STATIC #, static: true# ENDIF # }); </script>
 	# ENDIF #
 
-	# IF C_NEXT_MENU # <!-- Sub Element for Menu -->
-	<li # IF C_HAS_CHILD #class="has-sub" # ENDIF #>
+	# IF C_NEXT_MENU #
+		<li# IF C_HAS_CHILD # class="has-sub"# ENDIF #>
+			# IF C_URL #
+				<a href="{REL_URL}" class="cssmenu-title"># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF #<span>{TITLE}</span></a>
+			# ELSE #
+				<span class="cssmenu-title"># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF#<span>{TITLE}</span></span>
+			# ENDIF #
+			# IF C_HAS_CHILD #
+				<ul class="level-{DEPTH}"># START elements #{elements.DISPLAY}# END elements #</ul>
+			# ENDIF #
+		</li>
+	# ENDIF #
+
+# ELSE #
+	<li>
 		# IF C_URL #
 			<a href="{REL_URL}" class="cssmenu-title"># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF #<span>{TITLE}</span></a>
 		# ELSE #
-			<span class="cssmenu-title"># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF#<span>{TITLE}</span></span>
-		# ENDIF #
-		# IF C_HAS_CHILD # <!-- Add Sub-Menu Element -->
-			<ul class="level-{DEPTH}"># START elements #{elements.DISPLAY}# END elements #</ul>
+			<span class="cssmenu-title"># IF C_IMG #<img src="{REL_IMG}" alt="" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF#<span>{TITLE}</span></span>
 		# ENDIF #
 	</li>
-	# ENDIF #
-
-# ELSE # <!-- Menu Element -->
-<li>
-	# IF C_URL #
-		<a href="{REL_URL}" class="cssmenu-title"># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF #<span>{TITLE}</span></a>
-	# ELSE #
-		<span class="cssmenu-title"># IF C_IMG #<img src="{REL_IMG}" alt="" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF#<span>{TITLE}</span></span>
-	# ENDIF #
-</li>
 # ENDIF #

@@ -1,4 +1,4 @@
-// Recherche d'une chaîne dans une autre.
+// Search string into srting
 
 function strpos(haystack, needle)
 {

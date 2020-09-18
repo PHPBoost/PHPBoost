@@ -23,7 +23,7 @@
 		}
 
 		/**
-		 *  Check if we can hide the floating message-helper container.
+		 *  Check if the floating message-helper container can be hidden.
 		 *  @param none
 		 */
 		function hide_floating_message_container()
