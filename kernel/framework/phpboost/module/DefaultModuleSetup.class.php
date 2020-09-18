@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 17
+ * @version     PHPBoost 6.0 - last update: 2020 09 18
  * @since       PHPBoost 2.0 - 2009 01 16
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -15,7 +15,7 @@ class DefaultModuleSetup implements ModuleSetup
 {
 	protected static $db_querier;
 	protected static $dbms_utils;
-	private $module_id;
+	protected $module_id;
 	protected $module_configuration;
 	private $id_category = 1;
 	private $id_item = 1;
@@ -96,7 +96,11 @@ class DefaultModuleSetup implements ModuleSetup
 		
 		if ($tables_list)
 			self::$dbms_utils->drop($tables_list);
+		
+		$this->drop_additional_tables();
 	}
+	
+	protected function drop_additional_tables() {}
 
 	private function create_tables()
 	{
@@ -115,7 +119,10 @@ class DefaultModuleSetup implements ModuleSetup
 				$category_class_name::create_categories_table($this->module_configuration->get_categories_table_name());
 			}
 		}
+		$this->create_additional_tables();
 	}
+	
+	protected function create_additional_tables() {}
 	
 	protected function insert_default_data()
 	{
