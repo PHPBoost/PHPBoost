@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 01
+ * @version     PHPBoost 6.0 - last update: 2020 09 22
  * @since       PHPBoost 4.0 - 2014 05 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -117,37 +117,42 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 
 	protected function execute_module_specific_changes()
 	{
-		// Delete backslash from db contents
-		$slash = $this->querier->select('SELECT id, title
-			FROM ' . PREFIX . 'pages'
-		);
-
-		while ($row = $slash->fetch())
+		$columns = self::$db_utils->desc_table(PREFIX . 'pages');
+		
+		if (isset($columns['auth']))
 		{
-			$this->querier->update(PREFIX . 'pages', array('title' => stripslashes($row['title'])), 'WHERE id=:id', array('id' => $row['id']));
+			// Delete backslash from db contents
+			$slash = $this->querier->select('SELECT id, title
+				FROM ' . PREFIX . 'pages'
+			);
+
+			while ($row = $slash->fetch())
+			{
+				$this->querier->update(PREFIX . 'pages', array('title' => stripslashes($row['title'])), 'WHERE id=:id', array('id' => $row['id']));
+			}
+			$slash->dispose();
+
+			// Set categories from old `ìs_cat` pages
+			$result = $this->querier->select('SELECT page.id, page.title, page.rewrited_title, page.auth, page.is_cat, page.content, cat.id as cat_id
+				FROM ' . PREFIX . 'pages page
+				LEFT JOIN ' . PREFIX . 'pages_cats cat ON cat.id_page = page.id
+				WHERE page.is_cat = 1'
+			);
+
+			while ($row = $result->fetch())
+			{
+				// UPDATE category columns
+				$this->querier->update(PREFIX . 'pages_cats', array('name' => $row['title'], 'rewrited_name' => $row['rewrited_title'], 'description' => $row['content'], 'auth' => $row['auth']), 'WHERE id=:id', array('id' => $row['cat_id']));
+			}
+			$result->dispose();
+
+			//Delete old is_cat pages
+			$this->querier->delete(PREFIX . 'pages', 'WHERE is_cat = 1');
+
+			// update publication and special_authorizations
+			$this->querier->update(PREFIX . 'pages', array('publication' => 1), 'WHERE publication = 0');
+			$this->querier->update(PREFIX . 'pages_cats', array('special_authorizations' => 1), 'WHERE auth != ""');
 		}
-		$slash->dispose();
-
-		// Set categories from old `ìs_cat` pages
-		$result = $this->querier->select('SELECT page.id, page.title, page.rewrited_title, page.auth, page.is_cat, page.content, cat.id as cat_id
-			FROM ' . PREFIX . 'pages page
-			LEFT JOIN ' . PREFIX . 'pages_cats cat ON cat.id_page = page.id
-			WHERE page.is_cat = 1'
-		);
-
-		while ($row = $result->fetch())
-		{
-			// UPDATE category columns
-			$this->querier->update(PREFIX . 'pages_cats', array('name' => $row['title'], 'rewrited_name' => $row['rewrited_title'], 'description' => $row['content'], 'auth' => $row['auth']), 'WHERE id=:id', array('id' => $row['cat_id']));
-		}
-		$result->dispose();
-
-		//Delete old is_cat pages
-		$this->querier->delete(PREFIX . 'pages', 'WHERE is_cat = 1');
-
-		// update publication and special_authorizations
-		$this->querier->update(PREFIX . 'pages', array('publication' => 1), 'WHERE publication = 0');
-		$this->querier->update(PREFIX . 'pages_cats', array('special_authorizations' => 1), 'WHERE auth != ""');
 	}
 
 }
