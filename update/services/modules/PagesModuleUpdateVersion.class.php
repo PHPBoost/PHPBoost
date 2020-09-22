@@ -117,7 +117,7 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 
 	protected function execute_module_specific_changes()
 	{
-		$columns = self::$db_utils->desc_table(PREFIX . 'pages');
+		$columns = $this->db_utils->desc_table(PREFIX . 'pages');
 		
 		if (isset($columns['auth']))
 		{
