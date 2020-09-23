@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 03
+ * @version     PHPBoost 6.0 - last update: 2020 09 23
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -33,11 +33,11 @@ $mime_type = array(
 
 // Tpl file depending on mime type.
 $mime_type_tpl = array(
+	'application/x-shockwave-flash' => 'format/media_swf.tpl',
 	'video/x-flv' => 'format/media_flv.tpl',
 	'video/mp4' => 'format/media_html5_player.tpl',
 	'video/ogg' => 'format/media_html5_player.tpl',
 	'video/webm' => 'format/media_html5_player.tpl',
-	'application/x-shockwave-flash' => 'format/media_swf.tpl',
 	'audio/mpeg' => 'format/media_mp3.tpl',
 	'video/host' => 'format/host_player.tpl',
 	'audio/host' => 'format/host_player.tpl',
@@ -54,7 +54,7 @@ $host_ok = array(
 		'player.vimeo.com',
 		'www.youtube.com',
 		'youtu.be',
-		'www.labsoweb.fr'
+		'odysee.com'
 	),
 	'audio' => array(
 		'music.amazon.com',
@@ -70,6 +70,7 @@ $host_players = array(
 	'youtu' => 'https://www.youtube.com/embed/',
     'vimeo' => 'https://player.vimeo.com/video/',
     'dailymotion' => 'https://www.dailymotion.com/embed/video/',
+    'odysee' => 'https://odysee.com/$/embed/',
     'arte' => 'https://www.arte.tv/player/v5/',
     'soundcloud' => 'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/',
 )

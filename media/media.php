@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 02
+ * @version     PHPBoost 6.0 - last update: 2020 09 23
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -73,7 +73,7 @@ elseif ($id_media > 0)
 	define('DESCRIPTION', TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse(stripslashes($media['contents'])), '<br><br/>'), 150));
 	require_once('../kernel/header.php');
 
-	//MAJ du compteur.
+	// Update counter
 	PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "media SET counter = counter + 1 WHERE id = :id", array('id' => $id_media));
 
 	$notation = new Notation();
@@ -158,6 +158,20 @@ elseif ($id_media > 0)
 		    if(strpos($media_id, $watch) !== false)
 		        $media_id = substr_replace($media_id, '', 0, 8);
 
+			// Odysee
+			$odysee_player =  strpos($dirname, 'odysee') !== false;
+			$odysee_dl_link = strpos($dirname, 'download') !== false;
+			$odysee_embed_link = strpos($dirname, 'embed') !== false;
+			if($odysee_player && ($odysee_dl_link || $odysee_embed_link)) {
+				$explode = explode('/', $dirname);
+		        $media_id = $explode[5] . '/' . $media_id;
+			}
+			else {
+				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
+				$LANG['e.bad.url.odysee']);
+				DispatchManager::redirect($controller);
+			}
+
 			// Soudcloud
 			$soundcloud_player = strpos($dirname, 'soundcloud') !== false;
 			if($soundcloud_player) {
@@ -187,7 +201,7 @@ elseif ($id_media > 0)
 
 	$tpl->put('media_format', $media_tpl);
 
-	//Affichage commentaires.
+	// Comments display
 	if (AppContext::get_request()->get_getint('com', 0) == 0)
 	{
 		$comments_topic = new MediaCommentsTopic();

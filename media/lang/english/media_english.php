@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2018 12 31
+ * @version     PHPBoost 6.0 - last update: 2020 09 23
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -80,5 +80,14 @@ $LANG['e_mime_unknow_media'] = 'The type of multimedia file could not be determi
 $LANG['e_link_empty_media'] = 'Please enter a link for your multimedia file!';
 $LANG['e_link_invalid_media'] = 'Please enter a valid link for your multimedia file!';
 $LANG['e_unexist_media'] = 'The multimedia file requested doesn\'t exist!';
+$LANG['e.bad.url.odysee'] = '
+    The Odysee url entered is not valid. <br />
+    In the share tab
+    In the <span class="pinned question">Share</span> tab under the video, choose one of the following two urls:
+    <ul>
+        <li><span class="pinned question">Embed this content</span> / url provided in <span class="pinned question">Embedded</span></li>
+        <li><span class="pinned question">Links</span> / url provided in <span class="pinned question">Download link</span></li>
+    </ul>
+';
 
 ?>

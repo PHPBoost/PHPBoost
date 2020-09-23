@@ -81,5 +81,13 @@ $LANG['e_mime_unknow_media'] = 'Impossible de déterminer le type de ce fichier 
 $LANG['e_link_empty_media'] = 'Veuillez renseigner le lien de votre fichier multimédia !';
 $LANG['e_link_invalid_media'] = 'Veuillez renseigner un lien valide pour votre fichier multimédia !';
 $LANG['e_unexist_media'] = 'Le fichier multimédia demandé n\'existe pas !';
+$LANG['e.bad.url.odysee'] = '
+    L\'url Odysee renseignée n\'est pas valide. <br />
+    Dans l\'onglet <span class="pinned question">Partager</span> sous la vidéo, choisir une des deux url suivantes:
+    <ul>
+        <li><span class="pinned question">Intégrer ce contenu</span> / url fournie dans <span class="pinned question">Intégré</span></li>
+        <li><span class="pinned question">Liens</span> / url fournie dans <span class="pinned question">Lien de téléchargement</span></li>
+    </ul>
+';
 
 ?>
