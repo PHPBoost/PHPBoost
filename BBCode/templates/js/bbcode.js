@@ -2,7 +2,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 11 09
+ * @version     PHPBoost 6.0 - last update: 2020 09 23
  * @since       PHPBoost 1.2 - 2005 08 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -332,8 +332,9 @@ function bbcode_anchor(field)
 function bbcode_sound(field)
 {
 	var sound_url = document.getElementById('bb_sound_url' + field).value,
-		insert_sound = (sound_url != '' && sound_url != null) ? sound_rl : '';
-		insertbbcode('[sound]' + insert_sound, '[/sound]', field);
+		insert_sound = (sound_url != '' && sound_url != null) ? sound_url : '';
+
+	insertbbcode('[sound]' + insert_sound, '[/sound]', field);
 }
 
 function bbcode_movie(field)
