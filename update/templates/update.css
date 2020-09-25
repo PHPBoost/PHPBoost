@@ -6,14 +6,14 @@
 }
 
 .row-current .cssmenu-title {
-	border-color: var(--warning-dark);
-    background-color: rgba(var(--main-rgb-d), 0.5);
+	border-color: var(--warning-tone);
+    background-color: rgba(var(--main-rgb-t), 0.5);
 }
 
 .row-next .cssmenu-title {}
 .row-success .cssmenu-title {
-	border-color: var(--success-dark);
-	background-color: rgba(var(--main-rgb-d), 0.5);
+	border-color: var(--success-tone);
+	background-color: rgba(var(--main-rgb-t), 0.5);
 }
 
 @media (min-width: 769px) {
@@ -110,7 +110,7 @@ section header h2 {
 	display: block;
 	z-index: 2000;
 	opacity: 0.8;
-	background-color: var(--main-darker);
+	background-color: var(--main-dark);
 	top: -9999px;
 	bottom: -9999px;
 	left: 0;

@@ -8,25 +8,25 @@
  /* --- dashboard_shape.css ---------------------------------------------------- */
 	body {
  		background-color: var(--bgc-alt);
-	    color: var(--txt-dark);
+	    color: var(--txt-main);
  	}
 
  	#header-admin {
-		background-image: linear-gradient(to bottom, var(--main-dark) 0%, var(--main-darker) 100%);
-		background-color: var(--main-dark);
-		color: var(--txt-light);
+		background-image: linear-gradient(to bottom, var(--main-tone) 0%, var(--main-dark) 100%);
+		background-color: var(--main-tone);
+		color: var(--txt-alt);
  	}
 
 	#site-name {
-		color: var(--txt-light);
+		color: var(--txt-alt);
 	}
 
  	#footer {
- 		background-color: var(--main-darker);
- 		border-color: var(--main-dark);
+ 		background-color: var(--main-dark);
+ 		border-color: var(--main-tone);
  	}
 
- 	#footer span { color: var(--txt-light); }
+ 	#footer span { color: var(--txt-alt); }
 
 /* --- Content -------------------------------------------------------------- */
 
@@ -53,7 +53,7 @@
 }
 
 .cell-thumbnail a:hover {
-    color: var(--txt-light);
+    color: var(--txt-alt);
 }
 
 .cell-modal .content-panel.cell {
@@ -71,23 +71,23 @@
 
 /* --- Table ----------------------------------------------------------------- */
 table thead th {
-	background-color: var(--main-dark);
-	color: var(--txt-light);
+	background-color: var(--main-tone);
+	color: var(--txt-alt);
 }
 
-table thead th a { color: var(--txt-light); }
+table thead th a { color: var(--txt-alt); }
 
 .html-table-header-sortable:hover a,
 .html-table-header-sortable.sort-active a {
 	background-color: var(--bgc-main);
-	color: var(--txt-dark);
+	color: var(--txt-main);
 }
 
-.alert-very-low-priority  { color: var(--notice-dark); border-color: var(--notice-dark); background-color: rgba(var(--notice-rgb-d), 0.2); }
-.alert-low-priority       { color: var(--question-dark); border-color: var(--question-dark); background-color: rgba(var(--question-rgb-d), 0.2); }
-.alert-medium-priority    { color: var(--success-dark); border-color: var(--success-dark); background-color: rgba(var(--success-rgb-d), 0.2); }
-.alert-high-priority      { color: var(--warning-dark); border-color: var(--warning-dark); background-color: rgba(var(--warning-rgb-d), 0.2); }
-.alert-very-high-priority { color: var(--error-dark); border-color: var(--error-dark); background-color: rgba(var(--error-rgb-d), 0.2); }
+.alert-very-low-priority  { color: var(--notice-tone); border-color: var(--notice-tone); background-color: rgba(var(--notice-rgb-t), 0.2); }
+.alert-low-priority       { color: var(--question-tone); border-color: var(--question-tone); background-color: rgba(var(--question-rgb-t), 0.2); }
+.alert-medium-priority    { color: var(--success-tone); border-color: var(--success-tone); background-color: rgba(var(--success-rgb-t), 0.2); }
+.alert-high-priority      { color: var(--warning-tone); border-color: var(--warning-tone); background-color: rgba(var(--warning-rgb-t), 0.2); }
+.alert-very-high-priority { color: var(--error-tone); border-color: var(--error-tone); background-color: rgba(var(--error-rgb-t), 0.2); }
 
 /* --- Form elements --------------------------------------------------------- */
 .button {
@@ -96,11 +96,11 @@ table thead th a { color: var(--txt-light); }
 }
 
 .button-hover {
-	border-color: var(--txt-dark);
+	border-color: var(--txt-main);
 }
 
 .button-active {
-	border-color: var(--main-dark);
+	border-color: var(--main-tone);
 }
 
 @media (min-width: 769px) {
@@ -166,25 +166,25 @@ select:focus {
 }
 
 .mini-checkbox .checkbox [type="checkbox"]:checked + span::after {
-	color: var(--main-dark);
+	color: var(--main-tone);
 }
 
 .custom-checkbox .checkbox [type="checkbox"] + span::before {
-	border-color: var(--error-dark);
+	border-color: var(--error-tone);
 }
 
 .custom-checkbox .checkbox [type="checkbox"]:checked + span::before {
-	border-color: var(--success-dark);
+	border-color: var(--success-tone);
 }
 
 .custom-checkbox .checkbox [type="checkbox"] + span::after {
-	background-color: var(--error-dark);
-	color: var(--txt-light);
+	background-color: var(--error-tone);
+	color: var(--txt-alt);
 }
 
 .custom-checkbox .checkbox [type="checkbox"]:checked + span::after {
-	background-color: var(--success-dark);
-	color: var(--txt-light);
+	background-color: var(--success-tone);
+	color: var(--txt-alt);
 }
 
 .custom-radio .radio [type="radio"]:not(:checked) + span::before,
@@ -200,7 +200,7 @@ select:focus {
 }
 
 .custom-radio .radio [type="radio"]:checked + span:after {
-	background-color: var(--main-dark);
+	background-color: var(--main-tone);
 	background-image: linear-gradient(to bottom, rgba(var(--lighten), 0.18) 0%, rgba(var(--darken), 0.1) 100%);
 }
 
@@ -230,38 +230,38 @@ select:focus {
 .admin-menu ul.modal-menu li:hover > a,
 .modal-menu li.current > a,
 .modal-menu li:hover > a,
-.admin-li.current:hover > a { border-color: var(--main-dark); }
+.admin-li.current:hover > a { border-color: var(--main-tone); }
 
 nav.admin-index li:hover {
 	background-color: rgba(var(--darken), 0.1);
 }
 
 nav.admin-index a {
-	color: var(--txt-light);
+	color: var(--txt-alt);
 }
 
 .admin-li > a {
-	color: var(--txt-light);
+	color: var(--txt-alt);
 }
 
 .admin-li > a:hover {
-	text-shadow: 3px 3px var(--main-darker);
+	text-shadow: 3px 3px var(--main-dark);
 }
 
 .modal-menu > li > a {
 	border-color: var(--bdr-main);
-	color: var(--txt-dark);
+	color: var(--txt-main);
 }
 
 #admin-quick-menu {
-	background-color: var(--administrator-dark);
+	background-color: var(--administrator-tone);
 }
 
 #admin-quick-menu li .quick-link {
-	color: var(--txt-light);
+	color: var(--txt-alt);
 }
 
-.js-menu-button { color: var(--txt-light)}
+.js-menu-button { color: var(--txt-alt)}
 
 @media (min-width: 769px) {
 
@@ -271,7 +271,7 @@ nav.admin-index a {
 	}
 
 	#admin-quick-menu li .quick-link {
-		color: var(--main-dark);
+		color: var(--main-tone);
 	}
 
 	#admin-quick-menu li:hover .quick-link {
@@ -286,20 +286,20 @@ nav.admin-index a {
 /* --- Menu Manager --- */
 @media (max-width: 769px) {
     .themesmanagement {
-    	background-color: var(--administrator-dark);
-    	color: var(--txt-light);
+    	background-color: var(--administrator-tone);
+    	color: var(--txt-alt);
     }
 
     .themesmanagement select {
         background-color: var(--bgc-main);
-        color: var(--administrator-dark)
+        color: var(--administrator-tone)
     }
 }
 
 @media (min-width: 769px) {
 	.themesmanagement {
 		background-color: var(--bgc-main);
-		color: var(--main-dark);
+		color: var(--main-tone);
 	}
 }
 

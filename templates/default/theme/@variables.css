@@ -5,125 +5,125 @@
 */
 
 :root {
-    --txt-rgb-d    : 85, 85, 85;
-    --txt-dark     : #555555;
-    --txt-rgb-l    : 255, 255, 255;
-    --txt-light    : #FFFFFF;
+    --txt-rgb-m: 85, 85, 85;
+    --txt-main:  #555555;
+    --txt-rgb-a: 255, 255, 255;
+    --txt-alt:   #FFFFFF;
 
-    --bgc-rgb-m    : 255, 255, 255;
-    --bgc-main     : #FFFFFF;
-    --bgc-rgb-a    : 236, 242, 249;
-    --bgc-alt      : #ECF2F8;
+    --bgc-rgb-m: 255, 255, 255;
+    --bgc-main:  #FFFFFF;
+    --bgc-rgb-a: 236, 242, 249;
+    --bgc-alt:   #ECF2F8;
 
-    --bdr-rgb-m    : 189, 194, 201;
-    --bdr-main     : #BDC2C9;
-    --bdr-rgb-a    : 187, 217, 245;
-    --bdr-alt      : #bcd9f5;
+    --bdr-rgb-m: 189, 194, 201;
+    --bdr-main:  #BDC2C9;
+    --bdr-rgb-a: 187, 217, 245;
+    --bdr-alt:   #BCD9F5;
 
-    --darken : 0, 0, 0;
-    --lighten: 255, 255, 255;
+    --darken :   0, 0, 0;
+    --lighten:   255, 255, 255;
 
 /* .main - .link-color */
-    --main-rgb-dr  : 32, 58, 84;
-    --main-darker  : #203a54;
-    --main-rgb-d   : 50, 100, 147;
-    --main-dark    : #366493;
-    --main-rgb-l   : 83, 145, 193;
-    --main-light   : #5391c0;
+    --main-rgb-d: 32, 58, 84;
+    --main-dark:  #203A54;
+    --main-rgb-t: 50, 100, 147;
+    --main-tone:  #366493;
+    --main-rgb-l: 83, 145, 193;
+    --main-light: #5391C0;
 
 /* .logo */
-    --logo-rgb-dr  : 1, 72, 119;
-    --logo-darker  : #014877;
-    --logo-rgb-d   : 2, 125, 184;
-    --logo-dark    : #027db8;
-    --logo-rgb-l   : 3, 172, 219;
-    --logo-light   : #03acdb;
+    --logo-rgb-d: 1, 72, 119;
+    --logo-dark:  #014877;
+    --logo-rgb-t: 2, 125, 184;
+    --logo-tone:  #027DB8;
+    --logo-rgb-l: 3, 172, 219;
+    --logo-light: #03ACDB;
 
 /* .notice */
-    --notice-rgb-dr  : 103, 81, 61;
-    --notice-darker  : #67513d;
-    --notice-rgb-d   : 170, 142, 105;
-    --notice-dark    : #AA8E69;
-    --notice-rgb-l   : 209, 188, 151;
-    --notice-light   : #d1bc97;
+    --notice-rgb-d: 103, 81, 61;
+    --notice-dark:  #67513D;
+    --notice-rgb-t: 170, 142, 105;
+    --notice-tone:  #AA8E69;
+    --notice-rgb-l: 209, 188, 151;
+    --notice-light: #D1BC97;
 
 /* .question */
-    --question-rgb-dr  : 35, 108, 177;
-    --question-darker  : #236cb1;
-    --question-rgb-d   : 59, 175, 218;
-    --question-dark    : #3BAFDA;
-    --question-rgb-l   : 91, 213, 237;
-    --question-light   : #5bd5ed;
+    --question-rgb-d: 35, 108, 177;
+    --question-dark:  #236CB1;
+    --question-rgb-t: 59, 175, 218;
+    --question-tone:  #3BAFDA;
+    --question-rgb-l: 91, 213, 237;
+    --question-light: #5BD5ED;
 
 /* .success */
-    --success-rgb-dr : 25, 122, 59;
-    --success-darker : #197a3b;
-    --success-rgb-d  : 42, 186, 102;
-    --success-dark   : #2ABA66;
-    --success-rgb-l  : 66, 221, 148;
-    --success-light  : #42dc94;
+    --success-rgb-d: 25, 122, 59;
+    --success-dark:  #197A3B;
+    --success-rgb-t: 42, 186, 102;
+    --success-tone:  #2ABA66;
+    --success-rgb-l: 66, 221, 148;
+    --success-light: #42DC94;
 
 /* .warning */
-    --warning-rgb-dr : 218, 73, 23;
-    --warning-darker : #da4917;
-    --warning-rgb-d  : 238, 128, 39;
-    --warning-dark   : #EE8027;
-    --warning-rgb-l  : 247, 175, 61;
-    --warning-light  : #f7af3d;
+    --warning-rgb-d: 218, 73, 23;
+    --warning-dark:  #DA4917;
+    --warning-rgb-t: 238, 128, 39;
+    --warning-tone:  #EE8027;
+    --warning-rgb-l: 247, 175, 61;
+    --warning-light: #F7AF3D;
 
 /* .error */
-    --error-rgb-dr  : 129, 23, 36;
-    --error-darker  : #811724;
-    --error-rgb-d   : 191, 38, 60;
-    --error-dark    : #BF263C;
-    --error-rgb-l   : 223, 59, 92;
-    --error-light   : #df3b5c;
+    --error-rgb-d: 129, 23, 36;
+    --error-dark:  #811724;
+    --error-rgb-t: 191, 38, 60;
+    --error-tone:  #BF263C;
+    --error-rgb-l: 223, 59, 92;
+    --error-light: #DF3B5C;
 
 /* .star - .link-color-alt */
-    --star-rgb-dr : 189, 135, 39;
-    --star-darker : #bd8727;
-    --star-rgb-d  : 224, 195, 65;
-    --star-dark   : #E0C341;
-    --star-rgb-l  : 240, 225, 98;
-    --star-light  : #f0e163;
+    --star-rgb-d: 189, 135, 39;
+    --star-dark:  #BD8727;
+    --star-rgb-t: 224, 195, 65;
+    --star-tone:  #E0C341;
+    --star-rgb-l: 240, 225, 98;
+    --star-light: #F0E163;
 
 /* .visitor */
-    --visitor-rgb-dr  : 32, 80, 94;
-    --visitor-darker  : #20505e;
-    --visitor-rgb-d   : 54, 140, 161;
-    --visitor-dark    : #368CA1;
-    --visitor-rgb-l   : 83, 186, 203;
-    --visitor-light   : #53bacb;
+    --visitor-rgb-d: 32, 80, 94;
+    --visitor-dark:  #20505E;
+    --visitor-rgb-t: 54, 140, 161;
+    --visitor-tone:  #368CA1;
+    --visitor-rgb-l: 83, 186, 203;
+    --visitor-light: #53BACB;
 
 /* .custom-author */
-    --custom-author-rgb-dr  : 47, 31, 26;
-    --custom-author-darker  : #2f1f1a;
-    --custom-author-rgb-d   : 80, 52, 44;
-    --custom-author-dark    : #50342C;
-    --custom-author-rgb-l   : 120, 81, 69;
-    --custom-author-light   : #785145;
+    --custom-author-rgb-d: 47, 31, 26;
+    --custom-author-dark:  #2F1F1A;
+    --custom-author-rgb-t: 80, 52, 44;
+    --custom-author-tone:  #50342C;
+    --custom-author-rgb-l: 120, 81, 69;
+    --custom-author-light: #785145;
 
 /* .member */
-    --member-rgb-dr  : 33, 125, 90;
-    --member-darker  : #217d5a;
-    --member-rgb-d   : 72, 252, 173;
-    --member-dark    : #37BC9B;
-    --member-rgb-l   : 85, 221, 199;
-    --member-light   : #55ddc7;
+    --member-rgb-d: 33, 125, 90;
+    --member-dark:  #217D5A;
+    --member-rgb-t: 72, 252, 173;
+    --member-tone:  #37BC9B;
+    --member-rgb-l: 85, 221, 199;
+    --member-light: #55DDC7;
 
 /* .moderator */
-    --moderator-rgb-dr : 86, 70, 181;
-    --moderator-darker : #5646b5;
-    --moderator-rgb-d  : 150, 122, 221;
-    --moderator-dark   : #967ADC;
-    --moderator-rgb-l  : 195, 169, 238;
-    --moderator-light  : #c3a9ee;
+    --moderator-rgb-d: 86, 70, 181;
+    --moderator-dark:  #5646B5;
+    --moderator-rgb-t: 150, 122, 221;
+    --moderator-tone:  #967ADC;
+    --moderator-rgb-l: 195, 169, 238;
+    --moderator-light: #C3A9EE;
 
 /* .administrator */
-    --administrator-rgb-dr  : 31, 30, 31;
-    --administrator-darker  : #1e1d1e;
-    --administrator-rgb-d   : 50, 49, 51;
-    --administrator-dark    : #323133;
-    --administrator-rgb-l   : 78, 76, 79;
-    --administrator-light   : #4e4c4f;
+    --administrator-rgb-d: 31, 30, 31;
+    --administrator-dark:  #1E1D1E;
+    --administrator-rgb-t: 50, 49, 51;
+    --administrator-tone:  #323133;
+    --administrator-rgb-l: 78, 76, 79;
+    --administrator-light: #4E4C4F;
 }

@@ -112,7 +112,7 @@ ul.no-list a i.fa {
 
 .wiki-list-top {
 	padding: 0.382em;
-	background-color: rgba(var(--main-rgb-d), 0.1);
+	background-color: rgba(var(--main-rgb-t), 0.1);
 	font-weight: bold;
 }
 
@@ -142,8 +142,8 @@ body {
 	left: 50%;
 	transform: translateX(-50%);
 	padding: 0.1em 0.809em;
-	background-color: var(--main-dark);
-	color: var(--txt-light);
+	background-color: var(--main-tone);
+	color: var(--txt-alt);
 	display: block;
 }
 
