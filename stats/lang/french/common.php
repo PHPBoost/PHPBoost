@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2017 03 26
+ * @version     PHPBoost 6.0 - last update: 2020 09 28
  * @since       PHPBoost 1.6 - 2007 09 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -26,14 +26,14 @@ $lang['config.elements.number.per.page'] = 'Nombre d\'éléments par page';
 $lang['config.elements.number.per.page.explain'] = 'Pour les sites référents et les mots clés.';
 $lang['config.require.elements.number'] = 'Le nombre d\'éléments par page ne peut pas être nul.';
 
-//Robots
+// Robots
 $lang['robot'] = 'Robot';
 $lang['robots'] = 'Robots';
 $lang['unknown_bot'] = 'Robot inconnu';
 $lang['erase.rapport'] = 'Effacer le rapport';
 $lang['number.r.visit'] = 'Nombre de visite(s)';
 
-//Statistiques
+// Statistiques
 $lang['site'] = 'Site';
 $lang['referer.s'] = 'Sites référents';
 $lang['no.referer'] = 'Aucun site référent';
@@ -53,13 +53,13 @@ $lang['colors'] = 'Couleurs';
 $lang['calendar'] = 'Calendrier';
 $lang['events'] = 'Evénements';
 
-//Sites référents.
+// Referent websites
 $lang['total.visit'] = 'Total des visites';
 $lang['average.visit'] = 'Visites moyennes';
 $lang['trend'] = 'Tendance';
 $lang['last.update'] = 'Dernière visite';
 
-//Navigateurs.
+// Browsers
 global $stats_array_browsers;
 $stats_array_browsers = array(
 	'brave'            => array('Brave', 'brave.png'),
@@ -69,7 +69,7 @@ $stats_array_browsers = array(
 	'firefox'          => array('Firefox', 'firefox.png'),
 	'opera'            => array('Opera', 'opera.png'),
 	'safari'           => array('Safari', 'safari.png'),
-	'tor'              => array('Tor', 'edge.png'),
+	'tor'              => array('Tor', 'tor.png'),
 
 	'epic'             => array('Epic Privacy', 'epic.png'),
 	'falcon'           => array('Falcon', 'falcon.png'),
@@ -92,7 +92,7 @@ $stats_array_browsers = array(
 	'other'            => array('Autres', 'other.png')
 );
 
-//Système d'exploitation.
+// Operating systems
 global $stats_array_os;
 $stats_array_os = array(
 	'macintosh'         => array('Mac OS', 'mac.png'),
@@ -129,10 +129,9 @@ $stats_array_os = array(
 	'other'             => array('Autres', 'other.png')
 );
 
-//Pays.
+// Countries
 global $stats_array_lang;
 $stats_array_lang = array(
-	'ac' => array('Ascension (île)', 'ac.png'),
 	'ad' => array('Andorre', 'ad.png'),
 	'ae' => array('Emirats Arabes Unis', 'ae.png'),
 	'af' => array('Afghanistan', 'af.png'),
@@ -144,7 +143,7 @@ $stats_array_lang = array(
 	'ao' => array('Angola', 'ao.png'),
 	'aq' => array('Antarctique', 'aq.png'),
 	'ar' => array('Argentine', 'ar.png'),
-	'as' => array('American Samoa', 'as.png'),
+	'as' => array('Samoa américaines', 'as.png'),
 	'at' => array('Autriche', 'at.png'),
 	'au' => array('Australie', 'au.png'),
 	'aw' => array('Aruba', 'aw.png'),
@@ -164,34 +163,33 @@ $stats_array_lang = array(
 	'br' => array('Brésil', 'br.png'),
 	'bs' => array('Bahamas', 'bs.png'),
 	'bt' => array('Bhoutan', 'bt.png'),
-	'bv' => array('Bouvet (île)', 'bv.png'),
+	'bv' => array('Île Bouvet', 'bv.png'),
 	'bw' => array('Botswana', 'bw.png'),
 	'by' => array('Biélorussie', 'by.png'),
 	'bz' => array('Bélize', 'bz.png'),
 	'ca' => array('Canada', 'ca.png'),
-	'cc' => array('Cocos (Keeling) îles', 'cc.png'),
-	'cd' => array('Rép. dém. du Congo', 'cd.png'),
-	'cf' => array('Rép Centrafricaine', 'cf.png'),
+	'cc' => array('Îles Cocos', 'cc.png'),
+	'cd' => array('R.D. du Congo', 'cd.png'),
+	'cf' => array('R. Centrafricaine', 'cf.png'),
 	'cg' => array('Congo', 'cg.png'),
 	'ch' => array('Suisse', 'ch.png'),
 	'ci' => array('Côte d\'Ivoire', 'ci.png'),
-	'ck' => array('Cook (îles)', 'ck.png'),
+	'ck' => array('Îles Cook', 'ck.png'),
 	'cl' => array('Chili', 'cl.png'),
 	'cm' => array('Cameroun', 'cm.png'),
 	'cn' => array('Chine', 'cn.png'),
 	'co' => array('Colombie', 'co.png'),
 	'cr' => array('Costa Rica', 'cr.png'),
-	'cs' => array('Serbie Montenegro', 'cs.png'),
 	'cu' => array('Cuba', 'cu.png'),
 	'cv' => array('Cap Vert', 'cv.png'),
-	'cx' => array('Christmas (île)', 'cx.png'),
+	'cx' => array('Îles Christmas', 'cx.png'),
 	'cy' => array('Chypre', 'cy.png'),
-	'cz' => array('Tchéquie', 'cz.png'),
+	'cz' => array('R. Tchèque', 'cz.png'),
 	'de' => array('Allemagne', 'de.png'),
 	'dj' => array('Djibouti', 'dj.png'),
 	'dk' => array('Danemark', 'dk.png'),
 	'dm' => array('Dominique', 'dm.png'),
-	'do' => array('Rép Dominicaine', 'do.png'),
+	'do' => array('R. Dominicaine', 'do.png'),
 	'dz' => array('Algérie', 'dz.png'),
 	'ec' => array('Equateur', 'ec.png'),
 	'ee' => array('Estonie', 'ee.png'),
@@ -202,11 +200,12 @@ $stats_array_lang = array(
 	'et' => array('Ethiopie', 'et.png'),
 	'fi' => array('Finlande', 'fi.png'),
 	'fj' => array('Fidji', 'fj.png'),
-	'fk' => array('Falkland (Malouines) îles', 'fk.png'),
+	'fk' => array('Îles Falkland', 'fk.png'),
 	'fm' => array('Micronésie', 'fm.png'),
-	'fo' => array('Faroe (îles)', 'fo.png'),
+	'fo' => array('Îles Féroé', 'fo.png'),
 	'fr' => array('France', 'fr.png'),
 	'ga' => array('Gabon', 'ga.png'),
+	'gb' => array('Grande Bretagne', 'gb.png'),
 	'gd' => array('Grenade', 'gd.png'),
 	'ge' => array('Géorgie', 'ge.png'),
 	'gf' => array('Guyane Française', 'gf.png'),
@@ -223,9 +222,9 @@ $stats_array_lang = array(
 	'gt' => array('Guatemala', 'gt.png'),
 	'gu' => array('Guam', 'gu.png'),
 	'gw' => array('Guinée-Bissau', 'gw.png'),
-	'gy' => array('Guyana', 'gy.png'),
+	'gy' => array('Guyane', 'gy.png'),
 	'hk' => array('Hong Kong', 'hk.png'),
-	'hm' => array('Heard et McDonald (îles)', 'hm.png'),
+	'hm' => array('Îles Heard et McDonald', 'hm.png'),
 	'hn' => array('Honduras', 'hn.png'),
 	'hr' => array('Croatie', 'hr.png'),
 	'ht' => array('Haiti', 'ht.png'),
@@ -233,9 +232,9 @@ $stats_array_lang = array(
 	'id' => array('Indonésie', 'id.png'),
 	'ie' => array('Irlande', 'ie.png'),
 	'il' => array('Israël', 'il.png'),
-	'im' => array('Ile de Man', 'im.png'),
+	'im' => array('Île de Man', 'im.png'),
 	'in' => array('Inde', 'in.png'),
-	'io' => array('Ter. Brit. Océan Indien', 'io.png'),
+	'io' => array('Ter.Br. Océan Indien', 'io.png'),
 	'iq' => array('Iraq', 'iq.png'),
 	'ir' => array('Iran', 'ir.png'),
 	'is' => array('Islande', 'is.png'),
@@ -253,7 +252,7 @@ $stats_array_lang = array(
 	'kp' => array('Corée du nord', 'kp.png'),
 	'kr' => array('Corée du sud', 'kr.png'),
 	'kw' => array('Koweït', 'kw.png'),
-	'ky' => array('Caïmanes (îles)', 'ky.png'),
+	'ky' => array('Îles Caïmans', 'ky.png'),
 	'kz' => array('Kazakhstan', 'kz.png'),
 	'la' => array('Laos', 'la.png'),
 	'lb' => array('Liban', 'lb.png'),
@@ -269,19 +268,20 @@ $stats_array_lang = array(
 	'ma' => array('Maroc', 'ma.png'),
 	'mc' => array('Monaco', 'mc.png'),
 	'md' => array('Moldavie', 'md.png'),
+	'me' => array('Monténégro', 'me.png'),
 	'mg' => array('Madagascar', 'mg.png'),
-	'mh' => array('Marshall (îles)', 'mh.png'),
+	'mh' => array('Îles Marshall', 'mh.png'),
 	'mk' => array('Macédoine', 'mk.png'),
 	'ml' => array('Mali', 'ml.png'),
 	'mm' => array('Myanmar', 'mm.png'),
 	'mn' => array('Mongolie', 'mn.png'),
 	'mo' => array('Macao', 'mo.png'),
-	'mp' => array('Mariannes du nord (îles)', 'mp.png'),
+	'mp' => array('Îles Mariannes du nord', 'mp.png'),
 	'mq' => array('Martinique', 'mq.png'),
 	'mr' => array('Mauritanie', 'mr.png'),
 	'ms' => array('Montserrat', 'ms.png'),
 	'mt' => array('Malte', 'mt.png'),
-	'mu' => array('Maurice (île)', 'mu.png'),
+	'mu' => array('Île Maurice', 'mu.png'),
 	'mv' => array('Maldives', 'mv.png'),
 	'mw' => array('Malawi', 'mw.png'),
 	'mx' => array('Mexique', 'mx.png'),
@@ -290,7 +290,7 @@ $stats_array_lang = array(
 	'na' => array('Namibie', 'na.png'),
 	'nc' => array('Nouvelle Calédonie', 'nc.png'),
 	'ne' => array('Niger', 'ne.png'),
-	'nf' => array('Norfolk (île)', 'nf.png'),
+	'nf' => array('Île Norfolk', 'nf.png'),
 	'ng' => array('Nigéria', 'ng.png'),
 	'ni' => array('Nicaragua', 'ni.png'),
 	'nl' => array('Pays Bas', 'nl.png'),
@@ -303,32 +303,32 @@ $stats_array_lang = array(
 	'pa' => array('Panama', 'pa.png'),
 	'pe' => array('Pérou', 'pe.png'),
 	'pf' => array('Polynésie Française', 'pf.png'),
-	'pg' => array('Papouasie Nvelle Guinée', 'pg.png'),
+	'pg' => array('Papouasie Nouvelle Guinée', 'pg.png'),
 	'ph' => array('Philippines', 'ph.png'),
 	'pk' => array('Pakistan', 'pk.png'),
 	'pl' => array('Pologne', 'pl.png'),
 	'pm' => array('St. Pierre et Miquelon', 'pm.png'),
-	'pn' => array('Pitcairn (île)', 'pn.png'),
+	'pn' => array('Île Pitcairn', 'pn.png'),
 	'pr' => array('Porto Rico', 'pr.png'),
 	'ps' => array('Palestine', 'ps.png'),
 	'pt' => array('Portugal', 'pt.png'),
 	'pw' => array('Palau', 'pw.png'),
 	'py' => array('Paraguay', 'py.png'),
 	'qa' => array('Qatar', 'qa.png'),
-	're' => array('Réunion (île de la)', 're.png'),
+	're' => array('Île de la Réunion', 're.png'),
 	'ro' => array('Roumanie', 'ro.png'),
 	'ru' => array('Russie', 'ru.png'),
-	'rs' => array('Russie', 'rs.png'),
+	'rs' => array('Serbie', 'rs.png'),
 	'rw' => array('Rwanda', 'rw.png'),
 	'sa' => array('Arabie Saoudite', 'sa.png'),
-	'sb' => array('Salomon (îles)', 'sb.png'),
+	'sb' => array('Îles Salomon', 'sb.png'),
 	'sc' => array('Seychelles', 'sc.png'),
 	'sd' => array('Soudan', 'sd.png'),
 	'se' => array('Suède', 'se.png'),
 	'sg' => array('Singapour', 'sg.png'),
 	'sh' => array('St. Hélène', 'sh.png'),
 	'si' => array('Slovénie', 'si.png'),
-	'sj' => array('Svalbard/Jan Mayen (îles)', 'sj.png'),
+	'sj' => array('Îles Svalbard et Jan Mayen', 'sj.png'),
 	'sk' => array('Slovaquie', 'sk.png'),
 	'sl' => array('Sierra Leone', 'sl.png'),
 	'sm' => array('Saint-Marin', 'sm.png'),
@@ -336,13 +336,12 @@ $stats_array_lang = array(
 	'so' => array('Somalie', 'so.png'),
 	'sr' => array('Suriname', 'sr.png'),
 	'st' => array('Sao Tome et Principe', 'st.png'),
-	'su' => array('Ex U.R.S.S.', 'su.png'),
 	'sv' => array('Salvador', 'sv.png'),
 	'sy' => array('Syrie', 'sy.png'),
 	'sz' => array('Swaziland', 'sz.png'),
-	'tc' => array('Turks et Caïques (îles)', 'tc.png'),
+	'tc' => array('Îles Turks et Caïques', 'tc.png'),
 	'td' => array('Tchad', 'td.png'),
-	'tf' => array('Territoires Fr du sud', 'tf.png'),
+	'tf' => array('Ter.Fr. du sud', 'tf.png'),
 	'tg' => array('Togo', 'tg.png'),
 	'th' => array('Thailande', 'th.png'),
 	'tj' => array('Tadjikistan', 'tj.png'),
@@ -359,29 +358,25 @@ $stats_array_lang = array(
 	'ua' => array('Ukraine', 'ua.png'),
 	'ug' => array('Ouganda', 'ug.png'),
 	'uk' => array('Royaume Uni', 'uk.png'),
-	'gb' => array('Grande Bretagne', 'gb.png'),
-	'um' => array('US Minor Outlying (îles)', 'um.png'),
+	'um' => array('Îles Mineures éloignées des États-Unis', 'um.png'),
 	'us' => array('États-Unis', 'us.png'),
 	'uy' => array('Uruguay', 'uy.png'),
 	'uz' => array('Ouzbékistan', 'uz.png'),
 	'va' => array('Vatican', 'va.png'),
 	'vc' => array('St Vincent et les Grenadines', 'vc.png'),
 	've' => array('Venezuela', 've.png'),
-	'vg' => array('Vierges Brit. (îles)', 'vg.png'),
-	'vi' => array('Vierges USA (îles)', 'vi.png'),
+	'vg' => array('Îles Vierges (UK)', 'vg.png'),
+	'vi' => array('Îles Vierges (US)', 'vi.png'),
 	'vn' => array('Viêt Nam', 'vn.png'),
 	'vu' => array('Vanuatu', 'vu.png'),
-	'wf' => array('Wallis et Futuna (îles)', 'wf.png'),
-	'ws' => array('Western Samoa', 'ws.png'),
+	'wf' => array('Îles Wallis et Futuna', 'wf.png'),
+	'ws' => array('Samoa', 'ws.png'),
+	'xk' => array('Kosovo', 'rs.png'),
 	'ye' => array('Yemen', 'ye.png'),
 	'yt' => array('Mayotte', 'yt.png'),
-	'yu' => array('Yugoslavie', 'yu.png'),
 	'za' => array('Afrique du Sud', 'za.png'),
 	'zm' => array('Zambie', 'zm.png'),
-	'zr' => array('Rép. Dém. du Congo (ex Zaïre)', 'zr.png'),
 	'zw' => array('Zimbabwe', 'zw.png'),
-	'tv' => array('Tuvalu', 'tv.png'),
-	'ws' => array('Western Samoa', 'ws.png'),
 	'other' => array('Autres', 'other.png')
 );
 ?>

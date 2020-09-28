@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 09 08
+ * @version     PHPBoost 6.0 - last update: 2020 09 28
  * @since       PHPBoost 3.0 - 2011 09 25
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ####################################################
@@ -12,7 +13,6 @@
 ####################################################
 
 $lang = array(
-	'ac' => 'Ascension Islands',
 	'ad' => 'Andorra',
 	'ae' => 'United Arab Emirates',
 	'af' => 'Afghanistan',
@@ -61,7 +61,6 @@ $lang = array(
 	'cn' => 'China',
 	'co' => 'Colombia',
 	'cr' => 'Costa Rica',
-	'cs' => 'Serbia Montenegro',
 	'cu' => 'Cuba',
 	'cv' => 'Cape Verde',
 	'cx' => 'Christmas Island',
@@ -87,6 +86,7 @@ $lang = array(
 	'fo' => 'Faroe Islands',
 	'fr' => 'France',
 	'ga' => 'Gabon',
+	'gb' => 'Great Britain',
 	'gd' => 'Grenada',
 	'ge' => 'Georgia',
 	'gf' => 'French Guyana',
@@ -117,7 +117,7 @@ $lang = array(
 	'in' => 'India',
 	'io' => 'British Indian Ocean Territory',
 	'iq' => 'Iraq',
-	'ir' => 'Iran, (Islamic Republic of',
+	'ir' => 'Iran',
 	'is' => 'Iceland',
 	'it' => 'Italy',
 	'je' => 'Jersey',
@@ -130,8 +130,8 @@ $lang = array(
 	'ki' => 'Kiribati',
 	'km' => 'Comoros',
 	'kn' => 'Saint Kitts and Nevis',
-	'kp' => 'Korea, (Democratic People\'s Republic of',
-	'kr' => 'Korea, (Republic of',
+	'kp' => 'North Korea',
+	'kr' => 'South Korea',
 	'kw' => 'Kuwait',
 	'ky' => 'Cayman Islands',
 	'kz' => 'Kazakhstan',
@@ -148,7 +148,8 @@ $lang = array(
 	'ly' => 'Libya',
 	'ma' => 'Morocco',
 	'mc' => 'Monaco',
-	'md' => 'Moldova, (Republic of',
+	'md' => 'Moldova',
+	'me' => 'Montenegro',
 	'mg' => 'Madagascar',
 	'mh' => 'Marshall Islands',
 	'mk' => 'Macedonia',
@@ -197,8 +198,8 @@ $lang = array(
 	'qa' => 'Qatar',
 	're' => 'Reunion Island',
 	'ro' => 'Romania',
-	'ru' => 'Russian Federation',
-	'rs' => 'Russia',
+	'ru' => 'Russia',
+	'rs' => 'Serbia',
 	'rw' => 'Rwanda',
 	'sa' => 'Saudi Arabia',
 	'sb' => 'Solomon Islands',
@@ -216,7 +217,6 @@ $lang = array(
 	'so' => 'Somalia',
 	'sr' => 'Suriname',
 	'st' => 'Sao Tome and Principe',
-	'su' => 'Old U.S.S.R',
 	'sv' => 'El Salvador',
 	'sy' => 'Syrian Arab Republic',
 	'sz' => 'Swaziland',
@@ -239,7 +239,6 @@ $lang = array(
 	'ua' => 'Ukraine',
 	'ug' => 'Uganda',
 	'uk' => 'United Kingdom',
-	'gb' => 'Great Britain',
 	'um' => 'United States Minor Outlying Islands',
 	'us' => 'United States',
 	'uy' => 'Uruguay',
@@ -253,15 +252,13 @@ $lang = array(
 	'vu' => 'Vanuatu',
 	'wf' => 'Wallis and Futuna',
 	'ws' => 'Samoa',
+	'xk' => 'Kosovo',
 	'ye' => 'Yemen',
 	'yt' => 'Mayotte',
-	'yu' => 'Yugoslavia',
 	'za' => 'South Africa',
 	'zm' => 'Zambia',
 	'zr' => 'Zaire',
 	'zw' => 'Zimbabwe',
-	'tv' => 'Tuvalu',
-	'ws' => 'Samoa',
 	'other' => 'Others',
 );
 ?>

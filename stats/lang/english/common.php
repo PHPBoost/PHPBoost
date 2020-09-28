@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 31
+ * @version     PHPBoost 6.0 - last update: 2020 09 28
  * @since       PHPBoost 1.6 - 2007 09 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -27,14 +27,14 @@ $lang['config.elements.number.per.page.explain'] = 'For referent websites and ke
 $lang['config.require.elements.number'] = 'The number of elements per page can\'t be null.';
 
 
-//Robots
+// Robots
 $lang['robot'] = 'Robot';
 $lang['robots'] = 'Robots';
 $lang['unknown_bot'] = 'Unknown robot';
 $lang['erase.rapport'] = 'Erase rapport';
 $lang['number.r.visit'] = 'Number of views';
 
-//Stats
+// Statistiques
 $lang['site'] = 'Site';
 $lang['referer.s'] = 'Referent websites';
 $lang['no.referer'] = 'no referent website';
@@ -54,21 +54,26 @@ $lang['colors'] = 'Colors';
 $lang['calendar'] = 'Calendar';
 $lang['events'] = 'Events';
 
-//Sites référents.
+// Referent websites
 $lang['total.visit'] = 'Total visits';
 $lang['average.visit'] = 'Average visits';
 $lang['trend'] = 'Trend';
 $lang['last.update'] = 'Last visit';
 
-//Navigateurs.
+// Browsers
 global $stats_array_browsers;
 $stats_array_browsers = array(
+	'brave'            => array('Brave', 'brave.png'),
 	'chrome'           => array('Chrome', 'chrome.png'),
 	'chromium'         => array('Chromium', 'chromium.png'),
 	'edge'             => array('Edge', 'edge.png'),
+	'firefox'          => array('Firefox', 'firefox.png'),
+	'opera'            => array('Opera', 'opera.png'),
+	'safari'           => array('Safari', 'safari.png'),
+	'tor'              => array('Tor', 'tor.png'),
+
 	'epic'             => array('Epic Privacy', 'epic.png'),
 	'falcon'           => array('Falcon', 'falcon.png'),
-	'firefox'          => array('Firefox', 'firefox.png'),
 	'internetexplorer' => array('Internet Explorer', 'internetexplorer.png'),
 	'icab'             => array('Icab', 'icab.png'),
 	'iron'             => array('SRWare Iron', 'iron.png'),
@@ -77,21 +82,18 @@ $stats_array_browsers = array(
 	'links'            => array('Links', 'links.png'),
 	'lunascape'        => array('Lunascape', 'lunascape.png'),
 	'maxthon'          => array('Maxthon', 'maxthon.png'),
-	'opera'            => array('Opera', 'opera.png'),
 	'phoenix'          => array('Phoenix', 'phoenix.png'),
-	'safari'           => array('Safari', 'safari.png'),
 	'silk'             => array('Amazone Silk', 'silk.png'),
 	'seamonkey'        => array('SeaMonkey', 'seamonkey.png'),
-	'tor'              => array('Tor', 'tor.png'),
 	'uc'               => array('UC Browser', 'uc.png'),
 	'vivaldi'          => array('Vivaldi', 'vivaldi.png'),
 	'yandex'           => array('Yandex', 'yandex.png'),
 
 	'phone'            => array('Mobile', 'phone.png'),
-	'other'            => array('Autres', 'other.png')
+	'other'            => array('Other', 'other.png')
 	);
 
-	//Système d'exploitation.
+// Operating systems
 global $stats_array_os;
 $stats_array_os = array(
 	'macintosh'         => array('Mac OS', 'mac.png'),
@@ -103,7 +105,7 @@ $stats_array_os = array(
 	'windowsvista'      => array('Windows Vista', 'windowsvista.png'),
 	'windowsserver2003' => array('Windows Serveur 2003', 'windowsxp.png'),
 	'windowsxp'         => array('Windows XP', 'windowsxp.png'),
-	'windowsold'        => array('Ancien Windows (avant 2000)', 'windowsold.png'),
+	'windowsold'        => array('Older Windows (before 2000)', 'windowsold.png'),
 
 	'linux'             => array('Linux', 'linux.png'),
 	'sunos'             => array('SunOS', 'sun.png'),
@@ -125,13 +127,12 @@ $stats_array_os = array(
 	'phone'             => array('Mobile', 'phone.png'),
 	'windowsphone'      => array('Windows phone', 'windows8.png'),
 
-	'other'             => array('Autres', 'other.png')
+	'other'             => array('Other', 'other.png')
 );
 
-//Pays.
+// Countries
 global $stats_array_lang;
 $stats_array_lang = array(
-	'ac' => array('Ascension Islands', 'ac.png'),
 	'ad' => array('Andorra', 'ad.png'),
 	'ae' => array('United Arab Emirates', 'ae.png'),
 	'af' => array('Afghanistan', 'af.png'),
@@ -169,7 +170,7 @@ $stats_array_lang = array(
 	'bz' => array('Belize', 'bz.png'),
 	'ca' => array('Canada', 'ca.png'),
 	'cc' => array('Cocos (Keeling) Islands', 'cc.png'),
-	'cd' => array('Congo, (The Democratic Republic of the', 'cd.png'),
+	'cd' => array('Democratic Republic of the Congo', 'cd.png'),
 	'cf' => array('Central African Republic', 'cf.png'),
 	'cg' => array('Congo', 'cg.png'),
 	'ch' => array('Switzerland', 'ch.png'),
@@ -180,7 +181,6 @@ $stats_array_lang = array(
 	'cn' => array('China', 'cn.png'),
 	'co' => array('Colombia', 'co.png'),
 	'cr' => array('Costa Rica', 'cr.png'),
-	'cs' => array('Serbia Montenegro', 'cs.png'),
 	'cu' => array('Cuba', 'cu.png'),
 	'cv' => array('Cape Verde', 'cv.png'),
 	'cx' => array('Christmas Island', 'cx.png'),
@@ -206,6 +206,7 @@ $stats_array_lang = array(
 	'fo' => array('Faroe Islands', 'fo.png'),
 	'fr' => array('France', 'fr.png'),
 	'ga' => array('Gabon', 'ga.png'),
+	'gb' => array('Great Britain', 'gb.png'),
 	'gd' => array('Grenada', 'gd.png'),
 	'ge' => array('Georgia', 'ge.png'),
 	'gf' => array('French Guyana', 'gf.png'),
@@ -267,7 +268,8 @@ $stats_array_lang = array(
 	'ly' => array('Libya', 'ly.png'),
 	'ma' => array('Morocco', 'ma.png'),
 	'mc' => array('Monaco', 'mc.png'),
-	'md' => array('Moldova, (Republic of', 'md.png'),
+	'md' => array('Republic of Moldova', 'md.png'),
+	'me' => array('Montenegro', 'me.png'),
 	'mg' => array('Madagascar', 'mg.png'),
 	'mh' => array('Marshall Islands', 'mh.png'),
 	'mk' => array('Macedonia', 'mk.png'),
@@ -316,8 +318,8 @@ $stats_array_lang = array(
 	'qa' => array('Qatar', 'qa.png'),
 	're' => array('Reunion Island', 're.png'),
 	'ro' => array('Romania', 'ro.png'),
-	'ru' => array('Russian Federation', 'ru.png'),
-	'rs' => array('Russia', 'rs.png'),
+	'ru' => array('Russia', 'ru.png'),
+	'rs' => array('Serbia', 'rs.png'),
 	'rw' => array('Rwanda', 'rw.png'),
 	'sa' => array('Saudi Arabia', 'sa.png'),
 	'sb' => array('Solomon Islands', 'sb.png'),
@@ -327,7 +329,7 @@ $stats_array_lang = array(
 	'sg' => array('Singapore', 'sg.png'),
 	'sh' => array('Saint Helena', 'sh.png'),
 	'si' => array('Slovenia', 'si.png'),
-	'sj' => array('Svalbard', 'sj.png'),
+	'sj' => array('Svalbard and Jan Mayen', 'sj.png'),
 	'sk' => array('Slovakia', 'sk.png'),
 	'sl' => array('Sierra Leone', 'sl.png'),
 	'sm' => array('San Marino', 'sm.png'),
@@ -335,9 +337,8 @@ $stats_array_lang = array(
 	'so' => array('Somalia', 'so.png'),
 	'sr' => array('Suriname', 'sr.png'),
 	'st' => array('Sao Tome and Principe', 'st.png'),
-	'su' => array('Old U.S.S.R', 'su.png'),
 	'sv' => array('El Salvador', 'sv.png'),
-	'sy' => array('Syrian Arab Republic', 'sy.png'),
+	'sy' => array('Syria', 'sy.png'),
 	'sz' => array('Swaziland', 'sz.png'),
 	'tc' => array('Turks and Caicos Islands', 'tc.png'),
 	'td' => array('Chad', 'td.png'),
@@ -354,16 +355,15 @@ $stats_array_lang = array(
 	'tt' => array('Trinidad and Tobago', 'tt.png'),
 	'tv' => array('Tuvalu', 'tv.png'),
 	'tw' => array('Taiwan', 'tw.png'),
-	'tz' => array('Tanzania, (United Republic of', 'tz.png'),
+	'tz' => array('Tanzania', 'tz.png'),
 	'ua' => array('Ukraine', 'ua.png'),
 	'ug' => array('Uganda', 'ug.png'),
 	'uk' => array('United Kingdom', 'uk.png'),
-	'gb' => array('Great Britain', 'gb.png'),
 	'um' => array('United States Minor Outlying Islands', 'um.png'),
 	'us' => array('United States', 'us.png'),
 	'uy' => array('Uruguay', 'uy.png'),
 	'uz' => array('Uzbekistan', 'uz.png'),
-	'va' => array('Vatican City', 'va.png'),
+	'va' => array('Vatican', 'va.png'),
 	'vc' => array('Saint Vincent and the Grenadines', 'vc.png'),
 	've' => array('Venezuela', 've.png'),
 	'vg' => array('Virgin Islands, (British', 'vg.png'),
@@ -372,15 +372,12 @@ $stats_array_lang = array(
 	'vu' => array('Vanuatu', 'vu.png'),
 	'wf' => array('Wallis and Futuna', 'wf.png'),
 	'ws' => array('Samoa', 'ws.png'),
+	'xk' => array('Kosovo', 'rs.png'),
 	'ye' => array('Yemen', 'ye.png'),
 	'yt' => array('Mayotte', 'yt.png'),
-	'yu' => array('Yugoslavia', 'yu.png'),
 	'za' => array('South Africa', 'za.png'),
 	'zm' => array('Zambia', 'zm.png'),
-	'zr' => array('Zaire', 'zr.png'),
 	'zw' => array('Zimbabwe', 'zw.png'),
-	'tv' => array('Tuvalu', 'tv.png'),
-	'ws' => array('Samoa', 'ws.png'),
-	'other' => array('Others', 'other.png')
+	'other' => array('Other', 'other.png')
 );
 ?>
