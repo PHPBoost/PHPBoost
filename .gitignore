@@ -1,4 +1,4 @@
-#Kernel
+# Kernel
 cache/*
 stats/cache/*
 robots.txt
@@ -9,7 +9,7 @@ kernel/db/config.php
 *.htaccess
 update/update_followed.txt
 
-#Images & fichiers
+# Images & files
 images/group/*
 images/avatars/*
 images/maths/*
@@ -18,36 +18,50 @@ images/smileys/*
 gallery/pics/*
 upload/*
 
-#Modules non officiel
-HomeCustom
+# Non official modules
+birthday
+countdown
 CMSMigrant
+dictionary
+EasyCss
+GoogleAnalytics
+HomeCustom
+HomeLanding
+lastcoms
+newscat
 PHPBoostOfficial
+quotes
+ServerStatus
 smallads
+steam
+teamspeack
+WikiStatus
 
-#Themes non officiels
+# Non official graphic templates
 !templates
-# Ignore le répertoire des thèmes :
+# Ignore template directories :
 templates/*.*
 templates/*
-# Sauf les thèmes suivants :
+# Except following templates :
 !templates/base
 !templates/default
 
-#Langues non officiels
+# Non official languages
 !lang
-# Ignore le répertoire des langues :
+# Ignore language directories :
 lang/*.*
 lang/*
-# Sauf les langues suivantes :
+# Except following languages :
 !lang/french
 !lang/english
 
-#Fichiers projets
+# Editor folder/file projects
+nbproject
 *.sublime-project
 *.sublime-workspace
 
-#Repertoire commencant par un .
+# Directories starting by a dot (.)
 .*/
 
-#Fichier de configuration nginx
+# nginx file configuration
 nginx.conf
