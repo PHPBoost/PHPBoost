@@ -5,7 +5,7 @@
 						<li>
 							<a href="{U_COM}" class="cssmenu-title">
 								<i class="fa fa-fw fa-comments" aria-hidden="true"></i>
-								<span>{L_COM}</span>
+								<span>{L_COM} {COM_NB}</span>
 							</a>
 						</li>
 					# ENDIF #
