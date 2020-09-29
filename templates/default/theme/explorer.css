@@ -38,16 +38,6 @@
 	border-color: transparent;
 }
 
-.explorer .content ul {
-	margin: 0;
-	padding: 0;
-	list-style-type: none;
-}
-
-.explorer .content ul ul {
-	margin-left: 1em;
-}
-
 .explorer .content ul a.parent {
 	float: left;
 	height: 0;

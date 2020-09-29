@@ -12,8 +12,8 @@
 	</header>
 	<div class="cats">
 		<h2>{L_CATS}</h2>
-		<div class="content">
-			<ul class="no-list">
+		<div class="content no-list">
+			<ul>
 				<li><a id="class-0" class="{CAT_0}" href="javascript:open_cat(0);"><i class="fa fa-folder" aria-hidden="true"></i> {L_ROOT}</a>
 					<ul>
 						# START list #
@@ -35,7 +35,7 @@
 	</div>
 	<div class="files">
 		<h2>{L_CONTENTS}</h2>
-		<div class="content" id="cat-contents">
+		<div class="content no-list" id="cat-contents">
 			<ul>
 				# START list_cats #
 				<li>

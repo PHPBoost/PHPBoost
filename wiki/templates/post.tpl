@@ -59,7 +59,7 @@
 					<div class="form-field">
 						<div class="explorer">
 							<div class="cats">
-								<div class="content">
+								<div class="content no-list">
 									<ul>
 										<li><a class="{CAT_0}" id="class-0" href="javascript:select_cat(0);"><i class="fa fa-folder" aria-hidden="true"></i>{L_DO_NOT_SELECT_ANY_CAT}</a>
 											<ul>

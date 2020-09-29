@@ -23,10 +23,6 @@
 .wiki-list-4 { list-style-type: lower-alpha; 	}
 .wiki-list-5 { list-style-type: lower-greek; 	}
 
-ul.no-list {
-	margin: 0 0 0 1.309em;
-}
-
 ul.no-list a i.fa {
 	width: 1.228em;
 }

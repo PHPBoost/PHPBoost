@@ -36,10 +36,10 @@ h6.formatter-title {
 }
 
 h2.formatter-title { font-size: 2.8rem; margin-left: 0; }
-h3.formatter-title { font-size: 2.6rem; margin-left: 1rem; }
-h4.formatter-title { font-size: 2.4rem; margin-left: 2rem; }
-h5.formatter-title { font-size: 2.2rem; margin-left: 3rem; }
-h6.formatter-title { font-size: 2.0rem; margin-left: 4rem; }
+h3.formatter-title { font-size: 2.6rem; margin-left: 1.618rem; }
+h4.formatter-title { font-size: 2.4rem; margin-left: 3.236rem; }
+h5.formatter-title { font-size: 2.2rem; margin-left: 4.854rem; }
+h6.formatter-title { font-size: 2.0rem; margin-left: 6.472rem; }
 
 .formatter-title + br + .formatter-title {
 	margin-top: 0;

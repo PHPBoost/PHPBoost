@@ -44,10 +44,6 @@ a.pinned { cursor: pointer; }
 	width: 1.309em;
 }
 
-.no-list {
-	list-style: none;
-}
-
 /* --- Search engines --- */
 .robot {
 	font-size: 0.9em;
@@ -173,6 +169,14 @@ a.pinned { cursor: pointer; }
 	.w100 { width: 100% !important; }
 }
 
+/* --- Lists --- */
+.no-list ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.no-list ul ul { margin: 0 0 0 1.618em; }
 
 /* --- Alignment --- */
 .indent { text-indent: 2.618em; }

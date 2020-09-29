@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 11 25
+ * @version     PHPBoost 6.0 - last update: 2020 09 29
  * @since       PHPBoost 1.6 - 2006 05 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -19,12 +19,12 @@ function wiki_parse($contents)
 {
 	$content_manager = AppContext::get_content_formatting_service()->get_default_factory();
 	$parser = $content_manager->get_parser();
-	
+
 	//Parse la balise link
 	$parser->add_module_special_tag('`\[link=([a-z0-9+#-_]+)\](.+)\[/link\]`isuU', '<a href="/wiki/$1">$2</a>');
 	$parser->set_content($contents);
 	$parser->parse();
-	
+
 	return $parser->get_content();
 }
 
@@ -33,12 +33,12 @@ function wiki_unparse($contents)
 {
 	$content_manager = AppContext::get_content_formatting_service()->get_default_factory();
 	$unparser = $content_manager->get_unparser();
-	
+
 	//Unparse la balise link
 	$unparser->add_module_special_tag('`<a href="/wiki/([a-z0-9+#-_]+)">(.*)</a>`suU', '[link=$1]$2[/link]');
 	$unparser->set_content($contents);
 	$unparser->parse();
-	
+
 	return $unparser->get_content();
 }
 
@@ -49,7 +49,7 @@ function wiki_second_parse($contents)
 	$second_parser = $content_manager->get_second_parser();
 	$second_parser->set_content(wiki_unparse($contents));
 	$second_parser->parse();
-	
+
 	return $second_parser->get_content();
 }
 
@@ -73,36 +73,36 @@ function wiki_explode_menu(&$content)
 	//On supprime d'abord toutes les occurences de balises CODE que nous réinjecterons à la fin pour ne pas y toucher
 	$pickup_code = wiki_pick_up_tag($content, 'code', '=[^,\s]+(?:,[01]){0,2}');
 	$content = $pickup_code['contents'];
-	
+
 	$lines = explode("\n", $content);
 	$num_lines = count($lines);
 	$max_level_expected = 2;
-	
+
 	$list = array();
-	
+
 	//We read the text line by line
 	foreach ($lines as $id => &$line)
 	{
 		for ($level = 2; $level <= $max_level_expected; $level++)
 		{
 			$matches = array();
-			
+
 			//If the line contains a title
 			if (preg_match('`^(?:<br />)?\s*[\-]{' . $level . '}[\s]+(.+)[\s]+[\-]{' . $level . '}(?:<br />)?\s*$`u', $line, $matches))
 			{
 				$title_name = strip_tags(TextHelper::html_entity_decode($matches[1]));
-				
+
 				//We add it to the list
 				$list[] = array($level - 1, $title_name);
 				//Now we wait one of its children or its brother
 				$max_level_expected = min($level + 1, WIKI_MENU_MAX_DEPTH + 1);
-				
+
 				//Réinsertion
 				$line = '<h' . $level . ' class="formatter-title wiki-paragraph-' .  $level . '" id="paragraph-' . Url::encode_rewrite($title_name) . '">' . TextHelper::htmlspecialchars($title_name) .'</h' . $level . '><br />' . "\n";
 			}
 		}
 	}
-	
+
 	$content = implode("\n", $lines);
 
 	//On réinsère les fragments de code qui ont été prévelevés pour ne pas les considérer
@@ -111,7 +111,7 @@ function wiki_explode_menu(&$content)
 		$pickup_code['array_tags']['code'] = array_map(function($string) {return preg_replace('`^\[code(=.+)?\](.+)\[/code\]$`isuU', '[[CODE$1]]$2[[/CODE]]', TextHelper::htmlspecialchars($string, ENT_NOQUOTES));}, $pickup_code['array_tags']['code']);
 		$content = wiki_reimplant_tag('code', $pickup_code['array_tags'], $content);
 	}
-	
+
 	return $list;
 }
 
@@ -122,17 +122,17 @@ function wiki_display_menu($menu_list)
 	{
 		return '';
 	}
-	
+
 	$menu = '';
 	$last_level = 0;
-	
+
 	foreach ($menu_list as $title)
 	{
 		$current_level = $title[0];
-		
+
 		$title_name = stripslashes($title[1]);
 		$title_link = '<a href="#paragraph-' . Url::encode_rewrite($title_name) . '">' . TextHelper::htmlspecialchars($title_name) . '</a>';
-		
+
 		if ($current_level > $last_level)
 		{
 			$menu .= '<ol class="wiki-list wiki-list-' . $current_level . '"><li>' . $title_link;
@@ -151,14 +151,14 @@ function wiki_display_menu($menu_list)
 		}
 		$last_level = $title[0];
 	}
-	
+
 	//End
 	if (TextHelper::substr($menu, TextHelper::strlen($menu) - 4, 4) == '<li>')
 	{
 		$menu = TextHelper::substr($menu, 0, TextHelper::strlen($menu) - 4);
 	}
 	$menu .= str_repeat('</li></ol>', $last_level);
-	
+
 	return $menu;
 }
 
@@ -166,7 +166,7 @@ function wiki_display_menu($menu_list)
 function display_wiki_cat_explorer($id, &$cats, $display_select_link = 1)
 {
 	$categories = WikiCategoriesCache::load()->get_categories();
-	
+
 	if ($id > 0)
 	{
 		$id_cat = $id;
@@ -175,14 +175,14 @@ function display_wiki_cat_explorer($id, &$cats, $display_select_link = 1)
 		{
 			$cats[] = (int)$categories[$id_cat]['id_parent'];
 			$id_cat = (int)$categories[$id_cat]['id_parent'];
-		}	
+		}
 		while ($id_cat > 0);
 	}
-	
+
 
 	//Maintenant qu'on connait l'arborescence on part du début
-	$cats_list = '<ul class="no-list">' . show_wiki_cat_contents(0, $cats, $id, $display_select_link) . '</ul>';
-	
+	$cats_list = '<div class="no-list"><ul>' . show_wiki_cat_contents(0, $cats, $id, $display_select_link) . '</ul></div>';
+
 	//On liste les catégories ouvertes pour la fonction javascript
 	$opened_cats_list = '';
 	foreach ($cats as $key => $value)
@@ -210,7 +210,7 @@ function show_wiki_cat_contents($id_cat, $cats, $id, $display_select_link)
 			if (in_array($key, $cats)) //Si cette catégorie contient notre catégorie, on l'explore
 			{
 				$line .= '<li class="sub"><a class="parent" href="javascript:show_wiki_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><i class="far fa-minus-square" id="img-subfolder-' . $key . '"></i><i class="fa fa-folder-open" id="img-folder-' . $key . '"></i></a><a id="class-' . $key . '" class="' . ($key == $id ? 'selected' : '') . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . stripslashes($cat['title']) . '</a><span id="cat-' . $key . '">
-				<ul class="no-list">'
+				<ul>'
 				. show_wiki_cat_contents($key, $cats, $id, $display_select_link) . '</ul></span></li>';
 			}
 			else
@@ -394,7 +394,7 @@ function wiki_pick_up_tag($content, $tag, $arguments = '')
 {
 	$parsed_content = '';
 	$array_tags = array();
-	
+
 	//On éclate le contenu selon les tags (avec imbrication bien qu'on ne les gèrera pas => ça permettra de faire [code][code]du code[/code][/code])
 	$split_code = wiki_preg_split_safe_recurse($content, $tag, $arguments);
 
@@ -426,7 +426,7 @@ function wiki_pick_up_tag($content, $tag, $arguments = '')
 	}
 	else
 		$parsed_content = $content;
-	
+
 	return array('contents' => $parsed_content, 'array_tags' => $array_tags);
 }
 

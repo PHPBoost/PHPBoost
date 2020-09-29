@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 10 30
+ * @version     PHPBoost 6.0 - last update: 2020 09 29
  * @since       PHPBoost 1.6 - 2006 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once('../kernel/begin.php');
@@ -27,7 +28,7 @@ $categories = WikiCategoriesCache::load()->get_categories();
 //Listage des répertoires dont le répertoire parent est connu
 if ($id_cat != 0)
 {
-	echo '<ul class="no-list">';
+	echo '<div class="no-list"><ul>';
 	//On sélectionne les répetoires dont l'id parent est connu
 	$result = PersistenceContext::get_querier()->select("SELECT c.id, a.title, a.encoded_title
 	FROM " . PREFIX . "wiki_cats c
@@ -47,7 +48,7 @@ if ($id_cat != 0)
 			echo '<li class="sub"><a id="class-' . $row['id'] . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');"><i class="fa fa-folder"></i></span>' . stripslashes($row['title']) . '</a></li>';
 	}
 	$result->dispose();
-	echo '</ul>';
+	echo '</ul></div>';
 }
 //Retour de la localisation du dossier
 elseif ($select_cat && empty($open_cat) && $root == 0)
