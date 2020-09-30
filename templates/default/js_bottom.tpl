@@ -34,7 +34,7 @@
 		});
 	});
 
-// BBCode table with no header
+// BBCode tables because they have no header
 	jQuery('.formatter-table').each(function(){
 		$this = jQuery(this).find('tbody tr:first-child td');
 		if (!$this.hasClass('formatter-table-head'))
@@ -89,7 +89,7 @@
 	});
 
 // Autoresize Textareas
-	$(document).autoboxOn('textarea:not(.lined textarea)');
+	// $(document).autoboxOn('textarea:not(.lined textarea)');
 
 // Add a colored square to the element and color its borders if it has
  	jQuery('[data-color-surround]').colorSurround();
