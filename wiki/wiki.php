@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 12 02
+ * @version     PHPBoost 6.0 - last update: 2020 09 30
  * @since       PHPBoost 1.6 - 2006 10 09
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -162,7 +162,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 		array(
 		'ID' => $article_infos['id'],
 		'ID_CAT' => $article_infos['id_cat'],
-		'CATEGORY_TITLE' => $article_infos['id_cat'] == 0 ? ($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']) : $categories[$article_infos['id_cat']]['title'],
+		'CATEGORY_TITLE' => $article_infos['id_cat'] == 0 ? ($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']) : stripslashes($categories[$article_infos['id_cat']]['title']),
 		'TITLE' => stripslashes($article_infos['title']),
 		'CONTENTS' => FormatingHelper::second_parse(wiki_no_rewrite($article_infos['content'])),
 		'HITS' => ($config->is_hits_counter_enabled() && $id_contents == 0) ? sprintf($LANG['wiki_article_hits'], (int)$article_infos['hits']) : '',
