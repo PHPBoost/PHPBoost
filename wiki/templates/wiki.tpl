@@ -86,9 +86,9 @@
 			# END menu #
 			<div class="spacer"></div>
 			{CONTENTS}
-			<div class="spacer"></div>
-			${ContentSharingActionsMenuService::display()}
 		</div>
+		<div class="spacer"></div>
+		${ContentSharingActionsMenuService::display()}
 
 	</div>
 	<footer><div class="wiki-hits">{HITS}</div></footer>
