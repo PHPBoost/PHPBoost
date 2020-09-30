@@ -432,6 +432,8 @@ td.calendar-weekend { background-color: rgba(var(--main-rgb-t), 0.1); }
 	border-color: var(--bdr-main);
 }
 
+pre[style*="display:inline"] { background-color: var(--bgc-alt); }
+
 h2.formatter-title,
 h3.formatter-title { border-color: var(--main-tone); }
 
