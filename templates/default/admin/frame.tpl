@@ -7,9 +7,9 @@
 
 		<!-- Theme CSS -->
 		# IF C_CSS_CACHE_ENABLED #
-			<link rel="stylesheet" href="${CSSCacheManager::get_css_path('/templates/default/theme/@import.css')}" type="text/css" media="screen, print" />
+			<link rel="stylesheet" href="${CSSCacheManager::get_css_path('/templates/default/theme/dashboard/@import.css')}" type="text/css" media="screen, print" />
 		# ELSE #
-			<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/@import.css" type="text/css" media="screen, print" />
+			<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/dashboard/@import.css" type="text/css" media="screen, print" />
 		# ENDIF #
 
 		<!-- Modules CSS -->
