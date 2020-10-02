@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 18
+ * @version     PHPBoost 6.0 - last update: 2020 10 02
  * @since       PHPBoost 2.0 - 2009 01 16
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -142,9 +142,9 @@ class DefaultModuleSetup implements ModuleSetup
 	{
 		if (isset($lang['categories']) && is_array($lang['categories']))
 		{
-			foreach($lang['categories'] as $category)
+			foreach($lang['categories'] as $id => $category)
 			{
-				$this->add_category($category['category.name'], isset($category['category.description']) ? $category['category.description'] : '');
+				$this->add_category($category['category.name'], isset($category['category.description']) ? $category['category.description'] : '', isset($category['category.thumbnail']) ? $category['category.thumbnail'] : FormFieldThumbnail::DEFAULT_VALUE, isset($category['category.id_parent']) ? $category['category.id_parent'] : Category::ROOT_CATEGORY, $this->get_default_category_additional_fields($lang, $id));
 			}
 		}
 	}
@@ -153,14 +153,46 @@ class DefaultModuleSetup implements ModuleSetup
 	{
 		if (isset($lang['items']) && is_array($lang['items']))
 		{
-			foreach($lang['items'] as $item)
+			foreach($lang['items'] as $id => $item)
 			{
-				$this->add_item($item['item.title'], $item['item.content'], isset($lang['item.summary']) ? $item['item.summary'] : '');
+				$this->add_item($item['item.title'], $item['item.content'], isset($item['item.summary']) ? $item['item.summary'] : '', isset($item['item.thumbnail']) ? $item['item.thumbnail'] : FormFieldThumbnail::DEFAULT_VALUE, isset($item['item.id_category']) ? $item['item.id_category'] : Category::ROOT_CATEGORY, $this->get_default_item_additional_fields($lang, $id));
 			}
 		}
 	}
 	
-	protected function add_category($name, $description = '', $thumbnail = FormFieldThumbnail::DEFAULT_VALUE, $id_parent = 0, $auth = '', $additional_fields = array())
+	protected function get_default_category_additional_fields($lang, $category_id)
+	{
+		$additional_fields = array();
+		if (isset($lang['categories']) && is_array($lang['categories']) && isset($lang['categories'][$category_id]) && is_array($lang['categories'][$category_id]))
+		{
+			foreach($lang['categories'][$category_id] as $field_name => $field_value)
+			{
+				if (preg_match('/category\.additional_fields\./', $field_name))
+				{
+					$additional_fields[str_replace('category.additional_fields.', '', $field_name)] = $field_value;
+				}
+			}
+		}
+		return $additional_fields;
+	}
+	
+	protected function get_default_item_additional_fields($lang, $item_id)
+	{
+		$additional_fields = array();
+		if (isset($lang['items']) && is_array($lang['items']) && isset($lang['items'][$item_id]) && is_array($lang['items'][$item_id]))
+		{
+			foreach($lang['items'][$item_id] as $field_name => $field_value)
+			{
+				if (preg_match('/item\.additional_fields\./', $field_name))
+				{
+					$additional_fields[str_replace('item.additional_fields.', '', $field_name)] = $field_value;
+				}
+			}
+		}
+		return $additional_fields;
+	}
+	
+	protected function add_category($name, $description = '', $thumbnail = FormFieldThumbnail::DEFAULT_VALUE, $id_parent = Category::ROOT_CATEGORY, $additional_fields = array(), $auth = '')
 	{
 		self::$db_querier->insert($this->module_configuration->get_categories_table_name(), array_merge(array(
 			'id' => $this->id_category,
