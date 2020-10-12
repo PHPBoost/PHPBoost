@@ -335,7 +335,7 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button hide-modal" onclick="bbcode_table('{FIELD}');bb_hide_block('7', '{FIELD}', 0);">{@bbcode.insert.table}</span>
+							<span class="button hide-modal" onclick="bbcode_table('{FIELD}');">{@bbcode.insert.table}</span>
 						</div>
 					</div>
 				</div>
@@ -895,7 +895,7 @@
 							<ul>
 								# START smileys #
 									<li>
-										<span class="hide-modal" onclick="insertbbcode('{smileys.CODE}', 'smile', '{FIELD}');bb_hide_block('1', '{FIELD}', 0);return false;" role="button" aria-label="{smileys.CODE}">
+										<span class="hide-modal" onclick="insertbbcode('{smileys.CODE}', 'smile', '{FIELD}');" role="button" aria-label="{smileys.CODE}">
 											<img src="{smileys.URL}" alt="{smileys.CODE}" aria-hidden="true" class="smiley" />
 										</span>
 									</li>

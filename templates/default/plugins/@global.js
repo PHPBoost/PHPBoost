@@ -429,50 +429,6 @@ function copy_to_clipboard(tocopy)
 		});
 	}
 
-// BBCode (old) show/reveal tags submenu
-	var delay = 300; // Delay to close submenu on mouse leave
-	var timeout;
-	var displayed = false;
-	var previous_bblock;
-
-	// Display block.
-	function bb_display_block(divID, field)
-	{
-		var i;
-
-		if( timeout )
-			clearTimeout(timeout);
-
-		var block = document.getElementById('bb-block' + divID + field);
-		if( block.style.display == 'none' )
-		{
-			if( document.getElementById(previous_bblock) )
-				document.getElementById(previous_bblock).style.display = 'none';
-			block.style.display = 'block';
-			displayed = true;
-			previous_bblock = 'bb-block' + divID + field;
-		}
-		else
-		{
-			block.style.display = 'none';
-			displayed = false;
-		}
-	}
-
-	// Hide block.
-	function bb_hide_block(bbfield, field, stop)
-	{
-		if( stop && timeout )
-		{
-			clearTimeout(timeout);
-		}
-		else if( displayed )
-		{
-			clearTimeout(timeout);
-			timeout = setTimeout('bb_display_block(\'' + bbfield + '\',	\'' + field + '\')', delay);
-		}
-	}
-
 // Scroll position management (scroll-to-top + cookie-bar)
 	function scroll_to( position ) {
 		if ( position > 800) {
