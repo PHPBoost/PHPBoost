@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost - 2019 babsolune
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 10 12
+ * @version     PHPBoost 6.0 - last update: 2020 10 13
  * @since       PHPBoost 6.0 - 2020 10 12
 */
 
@@ -14,6 +14,7 @@
             return this.each(function() {
 
                 jQuery(this).hide(); // Hide the select
+                jQuery(this).siblings('.general-selector').hide();
 
                 var option = jQuery(this).children('option'); // define all options of the list
 
@@ -48,7 +49,7 @@
                         optionItem.addClass(' ' + classOption);
 
                     if(disabledOption) {
-                        optionLi.css('cursor', 'not-allowed');
+                        optionLi.css('cursor', 'text').addClass('disabled-option');
                         optionItem.css('pointer-events', 'none');
                     }
 
@@ -72,6 +73,20 @@
                             return attr == 'selected' ? null : 'selected';
                         });
                     });
+                });
+
+                var $select = jQuery(this),
+                    selectAll = $select.siblings('.select-all'),
+                    deselectAll = $select.siblings('.deselect-all');
+
+                selectAll.on('click', function(){
+                    $select.siblings('.cssmenu-select-multiple').find('li:not(.disabled-option)').addClass('selected-option');
+                    $select.find('option:not([disabled])').attr('selected', 'selected');
+                });
+
+                deselectAll.on('click', function(){
+                    $select.siblings('.cssmenu-select-multiple').find('li:not(.disabled-option)').removeClass('selected-option');
+                    $select.find('option:not([disabled])').attr('selected', null);
                 });
             });
         }
