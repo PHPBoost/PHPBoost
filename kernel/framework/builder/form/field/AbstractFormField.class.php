@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 24
+ * @version     PHPBoost 6.0 - last update: 2020 10 13
  * @since       PHPBoost 3.0 - 2010 01 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -48,6 +48,10 @@ abstract class AbstractFormField implements FormField
 	 * @var boolean
 	 */
 	protected $select_to_list = false;
+	/**
+	 * @var boolean
+	 */
+	protected $multiple_select_to_list = false;
 	/**
 	 * @var boolean
 	 */
@@ -381,6 +385,10 @@ abstract class AbstractFormField implements FormField
 					$this->set_select_to_list($value);
 					unset($field_options['select_to_list']);
 					break;
+				case 'multiple_select_to_list':
+					$this->set_multiple_select_to_list($value);
+					unset($field_options['multiple_select_to_list']);
+					break;
 				case 'readonly':
 					$this->set_readonly($value);
 					unset($field_options['readonly']);
@@ -497,6 +505,7 @@ abstract class AbstractFormField implements FormField
 			'C_HAS_LABEL' => !empty($description) || $this->get_label() != '',
 			'C_DISABLED' => $this->is_disabled(),
 			'C_SELECT_TO_LIST' => $this->is_select_to_list(),
+			'C_MULTIPLE_SELECT_TO_LIST' => $this->is_multiple_select_to_list(),
 			'C_READONLY' => $this->is_readonly(),
 			'C_HIDDEN' => $this->is_hidden(),
 			'C_PATTERN' => $this->has_pattern(),
@@ -592,6 +601,26 @@ abstract class AbstractFormField implements FormField
 	protected function set_select_to_list($select_to_list)
 	{
 		$this->select_to_list = $select_to_list;
+	}
+
+	public function is_multiple_select_to_list()
+	{
+		return $this->multiple_select_to_list;
+	}
+
+	public function transformed_multiple_select()
+	{
+		$this->set_multiple_select_to_list(true);
+	}
+
+	public function not_transformed_multiple_select()
+	{
+		$this->set_multiple_select_to_list(false);
+	}
+
+	protected function set_multiple_select_to_list($multiple_select_to_list)
+	{
+		$this->multiple_select_to_list = $multiple_select_to_list;
 	}
 
 	public function is_readonly()

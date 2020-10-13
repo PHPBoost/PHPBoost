@@ -84,6 +84,7 @@ $lang['builder.input.radio'] = 'Boutons radio';
 $lang['builder.input.select'] = 'Liste déroulante';
 $lang['builder.input.fake.select'] = 'Liste déroulante avec images/icônes';
 $lang['builder.input.multiple.select'] = 'Liste déroulante multiple';
+$lang['builder.input.fake.multiple.select'] = 'Liste déroulante multiple avec images/icônes';
 $lang['builder.input.choice'] = 'Choix ';
 $lang['builder.input.choice.group'] = 'Groupe ';
 $lang['builder.input.timezone'] = 'TimeZone';

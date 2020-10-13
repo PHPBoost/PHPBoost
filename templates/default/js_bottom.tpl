@@ -65,9 +65,14 @@
 // Wizard
     jQuery('.wizard-container').wizard();
 
-// Selectimg
-	jQuery('.select-to-list').selectimg({
+// SelectImg
+	jQuery('.select-to-list').selectImg({
 		ariaLabel : ${escapejs(LangLoader::get_message('click.to.select', 'common'))}
+	});
+
+// SelectImg multi
+	jQuery('.multiple-select-to-list').multipleSelectImg({
+		ariaLabel : ${escapejs(LangLoader::get_message('click.to.multiple.select', 'common'))}
 	});
 
 // sizes of .cell-thumbnail

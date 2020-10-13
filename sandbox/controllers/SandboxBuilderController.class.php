@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 08 25
+ * @version     PHPBoost 6.0 - last update: 2020 10 13
  * @since       PHPBoost 5.2 - 2020 05 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -233,7 +233,7 @@ class SandboxBuilderController extends ModuleController
 			// SELECT
 			$select->add_field(new FormFieldSimpleSelectChoice('select', $this->lang['builder.input.select'], '',
 				array(
-					new FormFieldSelectChoiceOption(' ', '0'),
+					new FormFieldSelectChoiceOption('&nbsp;', '0'),
 					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'1', '1'),
 					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'2', '2'),
 					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'3', '3'),
@@ -267,11 +267,23 @@ class SandboxBuilderController extends ModuleController
 				array('1'),
 				array(
 					new FormFieldSelectChoiceOption('&nbsp;', '0'),
-					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'1', '1', array('selected' => true, 'data_option_icon' => 'far fa-id-card')),
+					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'1', '1', array('data_option_class' => 'bgc-full question', 'selected' => true, 'data_option_icon' => 'far fa-id-card')),
 					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'2', '2', array('data_option_icon' => 'far fa-id-card')),
-					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'3', '3', array('data_option_icon' => 'far fa-id-card')),
+					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'3', '3', array('data_option_icon' => 'far fa-id-card'))
 				),
 				array('class' => 'css-class', 'select_to_list' => true)
+			));
+			$select->add_field(new FormFieldMultipleSelectChoice('fake_multiple_select', $this->lang['builder.input.fake.multiple.select'],
+				array(),
+				array(
+					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'1', '1', array('data_option_class' => 'bgc-full question', 'data_option_icon' => 'far fa-id-card')),
+					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'2', '2', array('data_option_class' => 'bgc error')),
+					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'3', '3', array('data_option_class' => 'indent')),
+					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'4', '4', array('data_option_class' => 'bgc-full question', 'selected' => true, 'data_option_icon' => 'far fa-id-card')),
+					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'5', '5'),
+					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'6', '6')
+				),
+				array('class' => 'css-class', 'multiple_select_to_list' => true)
 			));
 
 			// Autocomplete

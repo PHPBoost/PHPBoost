@@ -213,12 +213,17 @@ body {
 
 optgroup { border-color: var(--bdr-main); }
 
-select[multiple] option:checked {
+select[multiple] option:checked,
+.selected-option a {
 	background-image: linear-gradient(0deg, var(--main-tone) 0%, var(--main-tone) 100%);
 	color: var(--txt-alt);
 }
 
 select[multiple] option[disabled] { color: var(--error-tone); }
+
+.multiple-select-list {
+	border-color: var(--bdr-main);
+}
 
 legend { border-color: var(--bdr-main); }
 

@@ -67,6 +67,14 @@ textarea {
 	max-width: 100%;
 }
 
+.multiple-select-list {
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+}
+
+.multiple-select-list a { cursor: pointer; }
+
 optgroup {
 	border-width: 0 0 1px 0;
 	border-style: solid;

@@ -41,6 +41,7 @@
 <script src="{PATH_TO_ROOT}/templates/default/plugins/owl.carousel.js"></script>
 <script src="{PATH_TO_ROOT}/templates/default/plugins/pushmenu.js"></script>
 <script src="{PATH_TO_ROOT}/templates/default/plugins/selectimg.js"></script>
+<script src="{PATH_TO_ROOT}/templates/default/plugins/selectimg.multi.js"></script>
 <script src="{PATH_TO_ROOT}/templates/default/plugins/sortable.js"></script>
 <script src="{PATH_TO_ROOT}/templates/default/plugins/tooltip.js"></script>
 <script src="{PATH_TO_ROOT}/templates/default/plugins/wizard.js"></script>

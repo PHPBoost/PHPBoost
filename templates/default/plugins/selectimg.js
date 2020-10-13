@@ -9,7 +9,7 @@
 
 (function($) {
     $.fn.extend({
-        selectimg: function(params) {
+        selectImg: function(params) {
             var defaults = {
                 ariaLabel : 'Click to select'
             };
@@ -41,6 +41,7 @@
                     var textOption = jQuery(this).text(),
                         imgOption = jQuery(this).attr('data-option-img'),
                         iconOption = jQuery(this).attr('data-option-icon'),
+                        classOption = jQuery(this).attr('data-option-class'),
                         valueOption = jQuery(this).val(),
                         selectedOption = jQuery(this).attr('selected');
 
@@ -55,7 +56,7 @@
                             selectedIcon.addClass(iconOption);
                     }
                     // Build the complete list of options
-                    var optionLi = jQuery('<li/>', {value : valueOption}).appendTo(uList),
+                    var optionLi = jQuery('<li/>', {value : valueOption, class: classOption}).appendTo(uList),
                         optionItem = jQuery('<a/>')
                             .addClass('cssmenu-title')
                             .attr('data-name', valueOption)
@@ -89,7 +90,7 @@
                     var newOption = jQuery(this).attr('data-name'),
                         newText = jQuery(this).text(),
                         newImg = jQuery(this).find('img').attr('src'),
-                        newIcon = jQuery(this).find('i').attr('class') ;
+                        newIcon = jQuery(this).find('i').attr('class');
 
                     // Send values to the fake selector
                     jQuery(this).closest('nav').find(selectedText).text(newText);

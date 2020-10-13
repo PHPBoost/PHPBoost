@@ -10,10 +10,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 10 28
+ * @version     PHPBoost 6.0 - last update: 2020 10 13
  * @since       PHPBoost 2.0 - 2009 04 28
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldMultipleSelectChoice extends AbstractFormField
@@ -121,11 +122,11 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 			'CSS_CLASS' => $this->get_css_class(),
 			'C_DISABLED' => $this->is_disabled(),
 			'C_REQUIRED' => $this->is_required(),
+			'C_MULTIPLE_SELECT_TO_LIST' => $this->is_multiple_select_to_list(),
 			'L_SELECT_ALL' => $lang['select_all'],
 			'L_UNSELECT_ALL' => $lang['select_none'],
 			'L_SELECT_EXPLAIN' => $lang['explain_select_multiple']
 		));
-
 
 		foreach ($this->get_options() as $multiple_select_option)
 		{

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 24
+ * @version     PHPBoost 6.0 - last update: 2020 10 13
  * @since       PHPBoost 3.0 - 2010 01 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -20,6 +20,7 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 	private $disable = false;
 	private $data_option_img = '';
 	private $data_option_icon = '';
+	private $data_option_class = '';
 
 	/**
 	 * @var FormField
@@ -125,6 +126,16 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 		return $this->data_option_icon;
 	}
 
+	public function set_data_option_class($value)
+	{
+		$this->data_option_class = $value;
+	}
+
+	protected function get_data_option_class()
+	{
+		return $this->data_option_class;
+	}
+
 	protected function get_field_id()
 	{
 		return $this->get_field()->get_html_id();
@@ -172,6 +183,10 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 				case 'data_option_icon':
 					$this->set_data_option_icon($value);
 					unset($field_choice_options['data_option_icon']);
+					break;
+				case 'data_option_class':
+					$this->set_data_option_class($value);
+					unset($field_choice_options['data_option_class']);
 					break;
 				default :
 					throw new FormBuilderException('The class ' . get_class($this) . ' hasn\'t the ' . $attribute . ' attribute');

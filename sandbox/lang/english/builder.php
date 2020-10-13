@@ -84,6 +84,7 @@ $lang['builder.input.radio'] = 'Radio buttons';
 $lang['builder.input.select'] = 'Select';
 $lang['builder.input.fake.select'] = 'Fake select with icons/pictures';
 $lang['builder.input.multiple.select'] = 'Multiple select';
+$lang['builder.input.fake.multiple.select'] = 'Fake multiple select with icons/pictures';
 $lang['builder.input.choice'] = 'Choice ';
 $lang['builder.input.choice.group'] = 'Group ';
 $lang['builder.input.timezone'] = 'TimeZone';
