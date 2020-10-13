@@ -263,7 +263,7 @@ class SandboxBuilderController extends ModuleController
 			));
 
 			// Fake select
-			$select->add_field(new FormFieldSimpleSelectChoice('fake_select', $this->lang['builder.input.fake.select'],
+			$select->add_field(new FormFieldSimpleSelectChoice('fake_select', $this->lang['builder.input.select.to.list'],
 				array('1'),
 				array(
 					new FormFieldSelectChoiceOption('&nbsp;', '0'),
@@ -273,11 +273,11 @@ class SandboxBuilderController extends ModuleController
 				),
 				array('class' => 'css-class', 'select_to_list' => true)
 			));
-			$select->add_field(new FormFieldMultipleSelectChoice('fake_multiple_select', $this->lang['builder.input.fake.multiple.select'],
+			$select->add_field(new FormFieldMultipleSelectChoice('fake_multiple_select', $this->lang['builder.input.multiple.select.to.list'],
 				array(),
 				array(
 					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'1', '1', array('data_option_class' => 'bgc-full question', 'data_option_icon' => 'far fa-id-card')),
-					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'2', '2', array('data_option_class' => 'bgc error')),
+					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'2', '2', array('data_option_class' => 'bgc error', 'disable' => true)),
 					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'3', '3', array('data_option_class' => 'indent')),
 					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'4', '4', array('data_option_class' => 'bgc-full question', 'selected' => true, 'data_option_icon' => 'far fa-id-card')),
 					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'5', '5'),

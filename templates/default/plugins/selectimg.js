@@ -43,7 +43,8 @@
                         iconOption = jQuery(this).attr('data-option-icon'),
                         classOption = jQuery(this).attr('data-option-class'),
                         valueOption = jQuery(this).val(),
-                        selectedOption = jQuery(this).attr('selected');
+                        selectedOption = jQuery(this).attr('selected'),
+                        disabledOption = jQuery(this).attr('disabled');
 
                     if(selectHasSelected && selectedOption == 'selected') // if one of the option is already selected
                     {
@@ -65,6 +66,12 @@
                            	.text(textOption)
                             .appendTo(optionItem);
                     if(selectedOption) optionLi.addClass('current'); // Add current class to the selected option
+
+                    if(disabledOption) {
+                        optionLi.css('cursor', 'not-allowed');
+                        optionItem.css('pointer-events', 'none');
+                    }
+
                     if(imgOption)
                         var imgItem = jQuery('<img/>')
                             .attr('src', imgOption)

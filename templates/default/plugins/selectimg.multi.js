@@ -31,7 +31,8 @@
                         iconOption = jQuery(this).attr('data-option-icon'),
                         classOption = jQuery(this).attr('data-option-class'),
                         valueOption = jQuery(this).val(),
-                        selectedOption = jQuery(this).attr('selected');
+                        selectedOption = jQuery(this).attr('selected'),
+                        disabledOption = jQuery(this).attr('disabled');
 
                     // Build the complete list of options
                     var optionLi = jQuery('<li/>', {value : valueOption}).appendTo(uSelect),
@@ -45,6 +46,11 @@
 
                     if(classOption)
                         optionItem.addClass(' ' + classOption);
+
+                    if(disabledOption) {
+                        optionLi.css('cursor', 'not-allowed');
+                        optionItem.css('pointer-events', 'none');
+                    }
 
                     if(selectedOption) optionLi.addClass('selected-option'); // Add selected-option class to the selected option
 
