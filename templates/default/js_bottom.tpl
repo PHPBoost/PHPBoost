@@ -71,9 +71,7 @@
 	});
 
 // SelectImg multi
-	jQuery('.multiple-select-to-list').multipleSelectImg({
-		ariaLabel : ${escapejs(LangLoader::get_message('click.to.multiple.select', 'common'))}
-	});
+	jQuery('.multiple-select-to-list').multipleSelectImg();
 
 // sizes of .cell-thumbnail
 	jQuery('.cell-thumbnail.cell-landscape').each(function() {
