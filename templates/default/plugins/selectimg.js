@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost - 2019 babsolune
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 10 13
+ * @version     PHPBoost 6.0 - last update: 2020 10 14
  * @since       PHPBoost 6.0 - 2020 01 20
 */
 
@@ -23,10 +23,10 @@
 
                 // Creation of the list structure which will replace it
                 var formList = jQuery(this).parent(),
-                    navList = jQuery('<nav/>', {class : 'cssmenu cssmenu-select cssmenu-horizontal'}).prependTo(formList),
+                    navList = jQuery('<nav/>', {class : 'cssmenu cssmenu-select cssmenu-horizontal', role: 'combobox'}).prependTo(formList),
                     uSelect = jQuery('<ul/>').appendTo(navList),
                     liSelect = jQuery('<li/>', {class : 'has-sub'}).prependTo(uSelect),
-                    uList = jQuery('<ul/>', {class : 'options-list'}).appendTo(liSelect);
+                    uList = jQuery('<ul/>', {class : 'options-list', role: 'combobox list'}).appendTo(liSelect);
 
                 var selectHasSelected = jQuery(this).val().length; // check if one of the options is selected
 
@@ -57,7 +57,7 @@
                             selectedIcon.addClass(iconOption);
                     }
                     // Build the complete list of options
-                    var optionLi = jQuery('<li/>', {value : valueOption, class: classOption}).appendTo(uList),
+                    var optionLi = jQuery('<li/>', {value : valueOption, class: classOption, role: 'combobox option'}).appendTo(uList),
                         optionItem = jQuery('<a/>')
                             .addClass('cssmenu-title')
                             .attr('data-name', valueOption)
@@ -65,7 +65,8 @@
                         optionText = jQuery('<span/>')
                            	.text(textOption)
                             .appendTo(optionItem);
-                    if(selectedOption) optionLi.addClass('current'); // Add current class to the selected option
+
+                    if(selectedOption) optionLi.addClass('selected-option'); // Add current class to the selected option
 
                     if(disabledOption) {
                         optionLi.css('cursor', 'text');
@@ -77,6 +78,7 @@
                             .attr('src', imgOption)
                             .attr('alt', textOption)
                             .prependTo(optionItem);
+
                     if(iconOption)
                         var iconItem = jQuery('<i/>')
                             .addClass(iconOption)
@@ -93,6 +95,8 @@
 
                 jQuery('.options-list a').on('click', function(e) { // When an option is clicked
                     e.preventDefault();
+                    // Add selected class
+                    jQuery(this).parent().addClass('selected-option');
                     // Get values of the chosen option
                     var newOption = jQuery(this).attr('data-name'),
                         newText = jQuery(this).text(),
@@ -103,12 +107,19 @@
                     jQuery(this).closest('nav').find(selectedText).text(newText);
                     if(newImg != null)
                         jQuery(this).closest('nav').find(selectedImg).removeAttr('src').attr('src', newImg);
+                    else
+                        jQuery(this).closest('nav').find(selectedImg).removeAttr('src');
 
                     if(newIcon != null)
                         jQuery(this).closest('nav').find(selectedIcon).removeClass().addClass(newIcon);
+                    else
+                        jQuery(this).closest('nav').find(selectedIcon).removeClass();
 
                     // Change val() of the real select
                     jQuery(select).val(newOption).change();
+
+                    // Remove selected class from all other items
+                    jQuery(this).parent().siblings().removeClass('selected-option');
                 });
 
                 // Close all opened fake select when click outside
