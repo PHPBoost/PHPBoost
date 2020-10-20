@@ -9,6 +9,7 @@
 				{@items.pending}
 			# ELSE #
 				{MODULE_NAME}# IF C_CATEGORY ## IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF #
+				# IF C_MEMBER_ITEMS # - {@items.mine}# ENDIF #
 			# ENDIF #
 		</h1>
 	</header>
@@ -54,7 +55,7 @@
 				<thead>
 					<tr>
 						<th>${TextHelper::ucfirst(@title)}</th>
-						# IF C_ENABLED_AUTHOR #<th class="col-small">${TextHelper::ucfirst(@author)}</th># ENDIF #
+						# IF NOT C_MEMBER_ITEMS ## IF C_ENABLED_AUTHOR #<th class="col-small">${TextHelper::ucfirst(@author)}</th># ENDIF ## ENDIF #
 						# IF C_ENABLED_DATE #<th class="col-small">${TextHelper::ucfirst(@date)}</th># ENDIF #
 						# IF C_ENABLED_CATEGORY #<th class="col-small">${TextHelper::ucfirst(@category)}</th># ENDIF #
 						# IF C_ENABLED_VIEWS #<th class="col-small">${TextHelper::ucfirst(@views)}</th># ENDIF #
@@ -71,7 +72,8 @@
 							<td>
 								<a href="{items.U_ITEM}" itemprop="name"# IF items.C_NEW_CONTENT # class="new-content"# ENDIF#>{items.TITLE}</a>
 							</td>
-							# IF C_AUTHOR_DISPLAYED #
+							# IF NOT C_MEMBER_ITEMS #
+								# IF C_AUTHOR_DISPLAYED #
 								<td>
 									<i class="far fa-user"></i>
 									# IF items.C_AUTHOR_CUSTOM_NAME #
@@ -86,6 +88,7 @@
 										# ENDIF #
 									# ENDIF #
 								</td>
+								# ENDIF #
 							# ENDIF #
 							# IF C_ENABLED_DATE #
 								<td>
@@ -148,17 +151,19 @@
 						<div class="cell-body">
 							<div class="cell-infos">
 								<div class="more">
-									# IF C_AUTHOR_DISPLAYED #
+									# IF NOT C_MEMBER_ITEMS #
+										# IF C_AUTHOR_DISPLAYED #
 										<i class="far fa-user"></i>
-										# IF items.C_AUTHOR_CUSTOM_NAME #
+											# IF items.C_AUTHOR_CUSTOM_NAME #
 											<span class="pinned">{items.AUTHOR_CUSTOM_NAME}</span>
-										# ELSE #
-											# IF items.C_AUTHOR_EXIST #
+											# ELSE #
+												# IF items.C_AUTHOR_EXIST #
 												<a itemprop="author" href="{items.U_AUTHOR}" class="pinned# IF C_AUTHOR_GROUP_COLOR # {items.AUTHOR_GROUP_COLOR}# ELSE # {items.AUTHOR_LEVEL_CLASS}# ENDIF #">
 													{items.AUTHOR_DISPLAY_NAME}
 												</a>
-											# ELSE #
+												# ELSE #
 												<span class="pinned">{items.AUTHOR_DISPLAY_NAME}</span>
+												# ENDIF #
 											# ENDIF #
 										# ENDIF #
 									# ENDIF #

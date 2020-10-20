@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 24
+ * @version     PHPBoost 6.0 - last update: 2020 10 20
  * @since       PHPBoost 6.0 - 2020 01 22
 */
 
@@ -73,6 +73,31 @@ class DefaultSeveralItemsController extends AbstractItemController
 			$this->current_url = ItemsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
 			$this->pagination_url = ItemsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), self::$module_id, $requested_sort_field, $requested_sort_mode, '%d');
 			$this->url_without_sorting_parameters = ItemsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), self::$module_id);
+		}
+		else if (TextHelper::strstr($request->get_current_url(), '/my_items/'))
+		{
+			if (self::get_module()->get_configuration()->has_categories())
+			{
+				$this->sql_condition = 'WHERE id_category IN :authorized_categories
+				AND author_user_id = :user_id
+				AND (published = ' . Item::PUBLISHED . (self::get_module()->get_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))' : '') . ')';
+				
+				$this->sql_parameters['authorized_categories'] = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $this->config->get_summary_displayed_to_guests());
+			}
+			else
+			{
+				$this->sql_condition = 'WHERE author_user_id = :user_id
+				AND (published = ' . Item::PUBLISHED . (self::get_module()->get_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))' : '') . ')';
+			}
+			
+			$this->sql_parameters['user_id'] = AppContext::get_current_user()->get_id();
+			
+			$this->page_title = $this->items_lang['items.mine'];
+			$this->current_url = ItemsUrlBuilder::display_member_items(self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
+			$this->pagination_url = ItemsUrlBuilder::display_member_items(self::$module_id, $requested_sort_field, $requested_sort_mode, '%d');
+			$this->url_without_sorting_parameters = ItemsUrlBuilder::display_member_items(self::$module_id);
+			
+			$this->view->put('C_MEMBER_ITEMS', true);
 		}
 		else if (TextHelper::strstr($request->get_current_url(), '/pending/'))
 		{
@@ -335,29 +360,27 @@ class DefaultSeveralItemsController extends AbstractItemController
 
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->page_title, (!self::get_module()->get_configuration()->has_categories() || $this->category !== null && $this->category->get_id() == Category::ROOT_CATEGORY ? '' : self::get_module()->get_configuration()->get_name()), $this->page);
-		$graphical_environment->get_seo_meta_data()->set_description($this->page_description, $this->page);
+		if ($this->page_description)
+			$graphical_environment->get_seo_meta_data()->set_description($this->page_description, $this->page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url($this->current_url);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add(self::get_module()->get_configuration()->get_name(), ModulesUrlBuilder::home());
 
-		if (self::get_module()->get_configuration()->has_categories())
+		if (self::get_module()->get_configuration()->has_categories() && $this->category !== null)
 		{
-			if ($this->category !== null)
+			$sort_field = ($this->sort_field != $this->config->get_items_default_sort_field() || $this->sort_mode != $this->config->get_items_default_sort_mode()) ? $this->sort_field : '';
+			$sort_mode = $this->sort_mode != $this->config->get_items_default_sort_mode() ? $this->sort_mode : '';
+			
+			$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->category->get_id(), true));
+			foreach ($categories as $id => $category)
 			{
-				$sort_field = ($this->sort_field != $this->config->get_items_default_sort_field() || $this->sort_mode != $this->config->get_items_default_sort_mode()) ? $this->sort_field : '';
-				$sort_mode = $this->sort_mode != $this->config->get_items_default_sort_mode() ? $this->sort_mode : '';
-				
-				$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->category->get_id(), true));
-				foreach ($categories as $id => $category)
-				{
-					if ($category->get_id() != Category::ROOT_CATEGORY)
-						$breadcrumb->add($category->get_name(), ItemsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), self::$module_id, $sort_field, $sort_mode, ($category->get_id() == $this->category->get_id() ? $this->page : 1)));
-				}
+				if ($category->get_id() != Category::ROOT_CATEGORY)
+					$breadcrumb->add($category->get_name(), ItemsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), self::$module_id, $sort_field, $sort_mode, ($category->get_id() == $this->category->get_id() ? $this->page : 1)));
 			}
-			else
-				$breadcrumb->add($this->page_title, $this->current_url);
 		}
+		else
+			$breadcrumb->add($this->page_title, $this->current_url);
 
 		return $response;
 	}

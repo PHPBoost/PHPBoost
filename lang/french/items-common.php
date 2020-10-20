@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 02 14
+ * @version     PHPBoost 6.0 - last update: 2020 10 20
  * @since       PHPBoost 6.0 - 2020 01 08
 */
 
@@ -25,6 +25,7 @@ $lang['items.management'] = 'Gestion des :items';
 $lang['items.manage'] = 'Gérer les :items';
 $lang['item.add'] = 'Ajouter :an_item';
 $lang['item.edit'] = 'Modifier :the_item';
+$lang['items.mine'] = 'Mes :items';
 $lang['items.pending'] = ':Items en attente';
 
 //Configuration
