@@ -367,7 +367,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add(self::get_module()->get_configuration()->get_name(), ModulesUrlBuilder::home());
 
-		if (self::get_module()->get_configuration()->has_categories() && $this->category !== null)
+		if (self::get_module()->get_configuration()->has_categories() && $this->category)
 		{
 			$sort_field = ($this->sort_field != $this->config->get_items_default_sort_field() || $this->sort_mode != $this->config->get_items_default_sort_mode()) ? $this->sort_field : '';
 			$sort_mode = $this->sort_mode != $this->config->get_items_default_sort_mode() ? $this->sort_mode : '';
