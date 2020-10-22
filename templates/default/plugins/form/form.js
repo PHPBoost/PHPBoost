@@ -283,7 +283,12 @@ FormField.prototype = {
 			return field.prop("checked");
 		}
 		else {
-			return field.val();
+			field_value = field.val();
+			if (field_value != null) {
+				return field_value;
+			} else {
+				return '';
+			}
 		}
 	},
 	setValue : function(value) {
