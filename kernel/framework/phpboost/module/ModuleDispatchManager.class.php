@@ -49,13 +49,13 @@ class ModuleDispatchManager extends DispatchManager
 				$url_controller_mappers[] = new UrlControllerMapper('DefaultDisplayItemController', '`^(?:/([0-9]+)-([a-z0-9-_]+))/?$`', array('id', 'rewrited_title'));
 			
 			//Items display
-			$url_controller_mappers[] = new UrlControllerMapper('DefaultSeveralItemsController', '`^/my_items/?([0-9]+)?/?([a-z_]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('page', 'field', 'sort', 'page'));
-			$url_controller_mappers[] = new UrlControllerMapper('DefaultSeveralItemsController', '`^/pending/?([0-9]+)?/?([a-z_]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('page', 'field', 'sort', 'page'));
+			$url_controller_mappers[] = new UrlControllerMapper('DefaultSeveralItemsController', '`^/my_items/?([a-z_]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page'));
+			$url_controller_mappers[] = new UrlControllerMapper('DefaultSeveralItemsController', '`^/pending/?([a-z_]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page'));
 			if ($module_configuration->feature_is_enabled('keywords'))
-				$url_controller_mappers[] = new UrlControllerMapper('DefaultSeveralItemsController', '`^/tag/([a-z0-9-_]+)/?([0-9]+)?/?([a-z_]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('tag', 'page', 'field', 'sort', 'page'));
+				$url_controller_mappers[] = new UrlControllerMapper('DefaultSeveralItemsController', '`^/tag/([a-z0-9-_]+)/?([a-z_]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('tag', 'field', 'sort', 'page'));
 			
 			//Categories and home page display
-			$url_controller_mappers[] = new UrlControllerMapper('DefaultSeveralItemsController', '`^/([0-9]+)-([a-z0-9-_]+)/?([0-9]+)?/?([a-z_]+)?/?([a-z]+)?/?([0-9]+)?/?([0-9]+)?/?$`', array('id_category', 'rewrited_name', 'page', 'field', 'sort', 'page', 'subcategories_page'));
+			$url_controller_mappers[] = new UrlControllerMapper('DefaultSeveralItemsController', '`^/([0-9]+)-([a-z0-9-_]+)/?([a-z_]+)?/?([a-z]+)?/?([0-9]+)?/?([0-9]+)?/?$`', array('id_category', 'rewrited_name', 'field', 'sort', 'page', 'subcategories_page'));
 			$url_controller_mappers[] = new UrlControllerMapper('DefaultSeveralItemsController', '`^/?$`');
 		}
 		

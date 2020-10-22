@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 10 20
+ * @version     PHPBoost 6.0 - last update: 2020 10 22
  * @since       PHPBoost 6.0 - 2020 01 22
 */
 
@@ -32,7 +32,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 	{
 		$this->init($request);
 		$this->check_authorizations();
-		$this->build_view();
+		$this->build_view($request);
 
 		return $this->generate_response();
 	}
@@ -71,7 +71,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 			$this->page_title = $this->get_keyword()->get_name();
 			$this->page_description = StringVars::replace_vars($this->items_lang['items.seo.description.tag'], array('subject' => $this->get_keyword()->get_name()));
 			$this->current_url = ItemsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
-			$this->pagination_url = ItemsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), self::$module_id, $requested_sort_field, $requested_sort_mode, '%d');
+			$this->pagination_url = ItemsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), self::$module_id, $this->sort_field, $this->sort_mode, '%d');
 			$this->url_without_sorting_parameters = ItemsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), self::$module_id);
 		}
 		else if (TextHelper::strstr($request->get_current_url(), '/my_items/'))
@@ -94,7 +94,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 			
 			$this->page_title = $this->items_lang['items.mine'];
 			$this->current_url = ItemsUrlBuilder::display_member_items(self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
-			$this->pagination_url = ItemsUrlBuilder::display_member_items(self::$module_id, $requested_sort_field, $requested_sort_mode, '%d');
+			$this->pagination_url = ItemsUrlBuilder::display_member_items(self::$module_id, $this->sort_field, $this->sort_mode, '%d');
 			$this->url_without_sorting_parameters = ItemsUrlBuilder::display_member_items(self::$module_id);
 			
 			$this->view->put('C_MEMBER_ITEMS', true);
@@ -120,7 +120,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 			$this->page_title = $this->items_lang['items.pending'];
 			$this->page_description = $this->items_lang['items.seo.description.pending'];
 			$this->current_url = ItemsUrlBuilder::display_pending(self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
-			$this->pagination_url = ItemsUrlBuilder::display_pending(self::$module_id, $requested_sort_field, $requested_sort_mode, '%d');
+			$this->pagination_url = ItemsUrlBuilder::display_pending(self::$module_id, $this->sort_field, $this->sort_mode, '%d');
 			$this->url_without_sorting_parameters = ItemsUrlBuilder::display_pending(self::$module_id);
 			
 			$this->view->put('C_PENDING', true);
@@ -139,7 +139,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 				if (!$this->page_description)
 					$this->page_description = StringVars::replace_vars($this->items_lang['items.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->category->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category', 'categories-common') . ' ' . $this->category->get_name() : '');
 				$this->current_url = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
-				$this->pagination_url = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id, $requested_sort_field, $requested_sort_mode, '%d', $this->subcategories_page);
+				$this->pagination_url = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id, $this->sort_field, $this->sort_mode, '%d', $this->subcategories_page);
 				$this->url_without_sorting_parameters = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id);
 				
 				$this->view->put_all(array(
@@ -156,7 +156,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 				$this->page_title = self::get_module()->get_configuration()->get_name();
 				$this->page_description = StringVars::replace_vars($this->items_lang['items.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name()));
 				$this->current_url = ItemsUrlBuilder::display_category(Category::ROOT_CATEGORY, 'root', self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
-				$this->pagination_url = ItemsUrlBuilder::display_category(Category::ROOT_CATEGORY, 'root', self::$module_id, $requested_sort_field, $requested_sort_mode, '%d');
+				$this->pagination_url = ItemsUrlBuilder::display_category(Category::ROOT_CATEGORY, 'root', self::$module_id, $this->sort_field, $this->sort_mode, '%d');
 				$this->url_without_sorting_parameters = ItemsUrlBuilder::display_category(Category::ROOT_CATEGORY, 'root', self::$module_id);
 			}
 		}
@@ -189,7 +189,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 		return $this->keyword;
 	}
 
-	protected function build_view()
+	protected function build_view(HTTPRequestCustom $request)
 	{
 		$pagination = $this->get_pagination();
 		$sorting_fields_list = Item::get_sorting_fields_list();
@@ -202,7 +202,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 			'C_PAGINATION'    => $pagination->has_several_pages(),
 			'PAGINATION'      => $pagination->display(),
 			'CATEGORY_NAME'   => $this->keyword !== null ? $this->get_keyword()->get_name() : ($this->category !== null ? $this->get_category()->get_name() : ''),
-			'SORTING_FORM'    => $this->build_sorting_form()
+			'SORTING_FORM'    => $this->build_sorting_form($request)
 		));
 		
 		foreach ($items as $item)
@@ -211,7 +211,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 		}
 	}
 
-	protected function build_sorting_form()
+	protected function build_sorting_form(HTTPRequestCustom $request)
 	{
 		$form = new HTMLForm(self::$module_id . '_sorting_form', '', false);
 		$form->set_css_class('options');
@@ -225,8 +225,12 @@ class DefaultSeveralItemsController extends AbstractItemController
 		$form->add_fieldset($fieldset);
 
 		$item_class_name = self::get_module()->get_configuration()->get_item_name();
+		$fields_list = $item_class_name::get_sorting_field_options();
+		if (TextHelper::strstr($request->get_current_url(), '/my_items/'))
+			unset($fields_list['author']);
+		
 		$select_change_redirect = 'document.location = "' . $this->url_without_sorting_parameters->rel() . '" + HTMLForms.getField("sort_field").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();';
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_field', '', $this->sort_field, $item_class_name::get_sorting_field_options(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_field', '', $this->sort_field, $fields_list,
 			array(
 				'select_to_list' => true, 
 				'events'         => array('change' => $select_change_redirect)

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 08 17
+ * @version     PHPBoost 6.0 - last update: 2020 10 22
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor xela <xela@phpboost.com>
 */
@@ -566,7 +566,7 @@ class Item
 		
 		foreach (self::get_sorting_fields_list() as $id => $parameters)
 		{
-			$sort_options[] = new FormFieldSelectChoiceOption($parameters['label'], $id, array('data_option_icon' => $parameters['icon']));
+			$sort_options[$id] = new FormFieldSelectChoiceOption($parameters['label'], $id, array('data_option_icon' => $parameters['icon']));
 		}
 		
 		return $sort_options;
