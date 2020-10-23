@@ -21,6 +21,10 @@ $lang['calendar.module.title'] = 'Calendrier';
 $lang['items'] = 'événements';
 $lang['item'] = 'événement';
 
+$lang['an.item'] = 'un événement';
+$lang['the.item'] = 'l\'événement';
+$lang['items.mine'] = 'Mes événements';
+
 // Configuration
 $lang['calendar.default.contents'] = 'Contenu par défaut d\'un événement';
 

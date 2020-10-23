@@ -6,15 +6,21 @@
 			<a href="${relative_url(SyndicationUrlBuilder::rss('calendar'))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 		</div>
 		<h1>
-			{@calendar.module.title}# IF C_MEMBER_ITEMS # - ${LangLoader::get_message('my.items', 'user-common')}# ENDIF #
+			# IF C_PENDING_PAGE #
+				{@calendar.pending.events}
+			# ELSE #
+				# IF C_MEMBER_ITEMS #
+					{@items.mine}
+				# ELSE #
+					{@calendar.module.title}
+				# ENDIF #
+			# ENDIF #
 		</h1>
 	</header>
 	<div class="content">
-		# IF NOT C_PENDING_PAGE #
-			<div id="calendar">
-				# INCLUDE CALENDAR #
-			</div>
-		# ENDIF #
+		<div id="calendar">
+			# INCLUDE CALENDAR #
+		</div>
 
 		<div id="events">
 			# INCLUDE EVENTS #
