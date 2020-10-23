@@ -20,6 +20,10 @@ $lang['module.title'] = 'News';
 $lang['items'] = 'news';
 $lang['item'] = 'news';
 
+$lang['an.item'] = 'an news';
+$lang['the.item'] = 'the news';
+$lang['items.mine'] = 'My news';
+
 $lang['news.add'] = 'Add news';
 $lang['news.edit'] = 'Edit news';
 $lang['news.pending'] = 'Pending news';
