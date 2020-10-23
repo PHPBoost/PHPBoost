@@ -8,9 +8,11 @@
 			# IF C_PENDING_NEWS #
 				{@news.pending}
 			# ELSE #
-				{@module.title}
-				# IF C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
-				# IF C_MEMBER_ITEMS # - ${LangLoader::get_message('my.items', 'user-common')}# ENDIF #
+				# IF C_MEMBER_ITEMS #
+			 		{@items.mine}
+				# ELSE #
+					{@module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
+				# ENDIF #
 			# ENDIF #
 		</h1>
 	</header>

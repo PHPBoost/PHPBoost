@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 14
+ * @version     PHPBoost 6.0 - last update: 2020 10 23
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -31,7 +31,7 @@ $url_controller_mappers = array(
 
 	new UrlControllerMapper('NewsTagController', '`^/tag/([a-z0-9-_]+)?/?([0-9]+)?/?$`', array('tag', 'page')),
 	new UrlControllerMapper('NewsPendingItemsController', '`^/pending/([0-9]+)?/?$`', array('page')),
-	new UrlControllerMapper('NewsMemberItemsController', '`^/member/([0-9]+)?/?$`', array('page')),
+	new UrlControllerMapper('NewsMemberItemsController', '`^/my_items/([0-9]+)?/?$`', array('page')),
 
 	new UrlControllerMapper('NewsItemController', '`^/([0-9]+)-([a-z0-9-_]+)/([0-9]+)-([a-z0-9-_]+)/?$`', array('id_category', 'rewrited_name_category', 'id', 'rewrited_name')),
 

@@ -131,7 +131,7 @@
 /* --- Inline --------------------------------------------------------------- */
 @media (min-width: 769px) {
 	.cell-inline .cell {
-		max-width: 235px;
+		max-width: 234px;
 	}
 }
 

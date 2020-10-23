@@ -3,14 +3,13 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 02 
+ * @version     PHPBoost 6.0 - last update: 2020 10 23
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
 class PagesMemberItemsController extends ModuleController
 {
 	private $lang;
-	private $user_lang;
 	private $view;
 	private $category;
 	private $config;
@@ -30,7 +29,6 @@ class PagesMemberItemsController extends ModuleController
 
 	private function init()
 	{
-		$this->user_lang = LangLoader::get('user-common');
 		$this->lang = LangLoader::get('common', 'pages');
 		$this->view = new FileTemplate('pages/PagesSeveralItemsController.tpl');
 		$this->view->add_lang($this->lang);
@@ -176,16 +174,16 @@ class PagesMemberItemsController extends ModuleController
 
 		$graphical_environment = $response->get_graphical_environment();
 
-		$graphical_environment->set_page_title($this->user_lang['my.items']);
+		$graphical_environment->set_page_title($this->lang['items.mine']);
 
-		$description = $this->user_lang['my.items'] . ' - ' . $this->category->get_description() . ($this->category->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category', 'categories-common') . ' ' . $this->category->get_name() : '');
+		$description = $this->lang['items.mine'] . ' - ' . $this->category->get_description() . ($this->category->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category', 'categories-common') . ' ' . $this->category->get_name() : '');
 		$graphical_environment->get_seo_meta_data()->set_description($description);
 
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(PagesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name()));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], PagesUrlBuilder::home());
-		$breadcrumb->add($this->user_lang['my.items'], PagesUrlBuilder::display_member_items());
+		$breadcrumb->add($this->lang['items.mine'], PagesUrlBuilder::display_member_items());
 
 		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->category->get_id(), true));
 		foreach ($categories as $id => $category)

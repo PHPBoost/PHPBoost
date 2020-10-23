@@ -8,9 +8,11 @@
 			# IF C_PENDING_ITEMS #
 				{@pending.items}
 			# ELSE #
-				{@items}
-				# IF C_MEMBER_ITEMS # - ${LangLoader::get_message('my.items', 'user-common')}# ENDIF #
-				# IF C_CATEGORIES # - {CATEGORY_NAME}# ENDIF #
+				# IF C_MEMBER_ITEMS #
+					{@items.mine}
+				# ELSE #
+					{@items}# IF C_CATEGORIES # - {CATEGORY_NAME}# ENDIF #
+				# ENDIF #
 			# ENDIF #
 		</h1>
 	</header>
@@ -39,12 +41,14 @@
 				<tbody>
 					# START items #
 						<tr>
-							<td aria-label="${LangLoader::get_message('form.date.creation', 'common')}" class="align-left"><a href="{items.U_ITEM}"><span itemprop="name"><i class="far fa-fw fa-file-alt" aria-hidden="true"></i> {items.TITLE}</a></td>
+							<td class="align-left"><a href="{items.U_ITEM}"><span itemprop="name"><i class="far fa-fw fa-file-alt" aria-hidden="true"></i> {items.TITLE}</a></td>
 							<td aria-label="${LangLoader::get_message('form.date.creation', 'common')}"><i class="far fa-calendar-plus" aria-hidden="true"></i> <time datetime="# IF NOT items.C_DIFFERED #{items.DATE_ISO8601}# ELSE #{items.DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT items.C_DIFFERED #{items.DATE}# ELSE #{items.DIFFERED_START_DATE}# ENDIF #</time></td>
 							<td aria-label="${LangLoader::get_message('form.date.update', 'common')}"><i class="far fa-calendar-check" aria-hidden="true"></i> <time datetime="{items.UPDATED_DATE_ISO8601}" itemprop="datePublished">{items.UPDATED_DATE}</time></td>
-							<td># IF NOT C_CATEGORIES #<a itemprop="about" href="{items.U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {items.CATEGORY_NAME}</a># ENDIF #</td>
-							<td>
-								# IF NOT C_MEMBER_ITEMS #
+							# IF NOT C_CATEGORIES #
+								<td><a itemprop="about" href="{items.U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {items.CATEGORY_NAME}</a></td>
+							# ENDIF #
+							# IF NOT C_MEMBER_ITEMS #
+								<td>
 									<span class="pinned {items.USER_LEVEL_CLASS}"# IF items.C_USER_GROUP_COLOR # style="color:{items.USER_GROUP_COLOR};border-color:{items.USER_GROUP_COLOR};"# ENDIF #>
 										# IF items.C_AUTHOR_CUSTOM_NAME #
 											<i class="far fa-user" aria-hidden="true"></i> <span class="custom-author">{items.AUTHOR_CUSTOM_NAME}</span>
@@ -58,8 +62,8 @@
 											# ENDIF #
 										# ENDIF #
 									</span>
-								# ENDIF #
-							</td>
+								</td>
+							# ENDIF #
 							# IF C_VIEWS_NUMBER #
 								<td>
 									<span class="pinned" role="contentinfo" aria-label="{items.VIEWS_NUMBER} # IF items.C_SEVERAL_VIEWS #{@pages.views}# ELSE #{@pages.view}# ENDIF #"><i class="far fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span></td>
@@ -80,7 +84,7 @@
 					# IF C_SUB_CATEGORIES #
 						# START sub_categories_list #
 							<tr>
-								<td colspan="5" class="align-left">
+								<td colspan="4" class="align-left">
 									<a href="{sub_categories_list.U_CATEGORY}"><i class="far fa-fw fa-folder"></i> {sub_categories_list.CATEGORY_NAME}</a>
 								</td>
 								<td colspan="2">

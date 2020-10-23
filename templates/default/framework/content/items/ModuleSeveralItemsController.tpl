@@ -8,8 +8,11 @@
 			# IF C_PENDING #
 				{@items.pending}
 			# ELSE #
-				{MODULE_NAME}# IF C_CATEGORY ## IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF #
-				# IF C_MEMBER_ITEMS # - {@items.mine}# ENDIF #
+				# IF C_MEMBER_ITEMS #
+					{@items.mine}
+				# ELSE #
+					{MODULE_NAME}# IF C_CATEGORY ## IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF #
+				# ENDIF #
 			# ENDIF #
 		</h1>
 	</header>
@@ -74,20 +77,20 @@
 							</td>
 							# IF NOT C_MEMBER_ITEMS #
 								# IF C_AUTHOR_DISPLAYED #
-								<td>
-									<i class="far fa-user"></i>
-									# IF items.C_AUTHOR_CUSTOM_NAME #
-										<span class="pinned">{items.AUTHOR_CUSTOM_NAME}</span>
-									# ELSE #
-										# IF items.C_AUTHOR_EXIST #
-											<a itemprop="author" href="{items.U_AUTHOR}" class="pinned# IF C_AUTHOR_GROUP_COLOR # {items.AUTHOR_GROUP_COLOR}# ELSE # {items.AUTHOR_LEVEL_CLASS}# ENDIF #">
-												{items.AUTHOR_DISPLAY_NAME}
-											</a>
+									<td>
+										<i class="far fa-user"></i>
+										# IF items.C_AUTHOR_CUSTOM_NAME #
+											<span class="pinned">{items.AUTHOR_CUSTOM_NAME}</span>
 										# ELSE #
-											<span class="pinned">{items.AUTHOR_DISPLAY_NAME}</span>
+											# IF items.C_AUTHOR_EXIST #
+												<a itemprop="author" href="{items.U_AUTHOR}" class="pinned# IF C_AUTHOR_GROUP_COLOR # {items.AUTHOR_GROUP_COLOR}# ELSE # {items.AUTHOR_LEVEL_CLASS}# ENDIF #">
+													{items.AUTHOR_DISPLAY_NAME}
+												</a>
+											# ELSE #
+												<span class="pinned">{items.AUTHOR_DISPLAY_NAME}</span>
+											# ENDIF #
 										# ENDIF #
-									# ENDIF #
-								</td>
+									</td>
 								# ENDIF #
 							# ENDIF #
 							# IF C_ENABLED_DATE #
@@ -153,16 +156,16 @@
 								<div class="more">
 									# IF NOT C_MEMBER_ITEMS #
 										# IF C_AUTHOR_DISPLAYED #
-										<i class="far fa-user"></i>
+											<i class="far fa-user"></i>
 											# IF items.C_AUTHOR_CUSTOM_NAME #
-											<span class="pinned">{items.AUTHOR_CUSTOM_NAME}</span>
+												<span class="pinned">{items.AUTHOR_CUSTOM_NAME}</span>
 											# ELSE #
 												# IF items.C_AUTHOR_EXIST #
-												<a itemprop="author" href="{items.U_AUTHOR}" class="pinned# IF C_AUTHOR_GROUP_COLOR # {items.AUTHOR_GROUP_COLOR}# ELSE # {items.AUTHOR_LEVEL_CLASS}# ENDIF #">
-													{items.AUTHOR_DISPLAY_NAME}
-												</a>
+													<a itemprop="author" href="{items.U_AUTHOR}" class="pinned# IF C_AUTHOR_GROUP_COLOR # {items.AUTHOR_GROUP_COLOR}# ELSE # {items.AUTHOR_LEVEL_CLASS}# ENDIF #">
+														{items.AUTHOR_DISPLAY_NAME}
+													</a>
 												# ELSE #
-												<span class="pinned">{items.AUTHOR_DISPLAY_NAME}</span>
+													<span class="pinned">{items.AUTHOR_DISPLAY_NAME}</span>
 												# ENDIF #
 											# ENDIF #
 										# ENDIF #

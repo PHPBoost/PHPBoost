@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 03
+ * @version     PHPBoost 6.0 - last update: 2020 10 23
  * @since       PHPBoost 1.6 - 2007 08 18
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -19,6 +19,8 @@ $lang['items'] = 'pages';
 $lang['item'] = 'page';
 
 $lang['an.item'] = 'a page';
+$lang['the.item'] = 'the page';
+$lang['items.mine'] = 'My pages';
 $lang['pending.items'] = 'Pending pages';
 
 $lang['pages.views'] = 'views';

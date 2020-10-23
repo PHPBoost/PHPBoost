@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 14
+ * @version     PHPBoost 6.0 - last update: 2020 10 23
  * @since       PHPBoost 5.2 - 2013 06 14
 */
 
@@ -11,7 +11,6 @@ class NewsMemberItemsController extends ModuleController
 {
 	private $view;
 	private $lang;
-	private $user_lang;
 	private $config;
 
 	public function execute(HTTPRequestCustom $request)
@@ -27,7 +26,6 @@ class NewsMemberItemsController extends ModuleController
 
 	public function init()
 	{
-		$this->user_lang = LangLoader::get('user-common');
 		$this->lang = LangLoader::get('common', 'news');
 		$this->view = new FileTemplate('news/NewsSeveralItemsController.tpl');
 		$this->view->add_lang($this->lang);
@@ -122,13 +120,13 @@ class NewsMemberItemsController extends ModuleController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->user_lang['my.items'], $this->lang['module.title'], $page);
+		$graphical_environment->set_page_title($this->lang['items.mine'], $this->lang['module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['news.seo.description.pending'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::display_pending_items($page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], NewsUrlBuilder::home());
-		$breadcrumb->add($this->user_lang['my.items'], NewsUrlBuilder::display_member_items($page));
+		$breadcrumb->add($this->lang['items.mine'], NewsUrlBuilder::display_member_items($page));
 
 		return $response;
 	}
