@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 22
+ * @version     PHPBoost 6.0 - last update: 2020 10 23
  * @since       PHPBoost 4.0 - 2014 05 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -21,6 +21,7 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 			'/phpboost/PagesCategoriesCache.class.php',
 			'/phpboost/PagesHomePageExtensionPoint.class.php',
 			'/phpboost/PagesSitemapExtensionPoint.class.php',
+			'/phpboost/PagesTreeLinks.class.php',
 			'/templates/action.tpl',
 			'/templates/admin_pages.tpl',
 			'/templates/com.tpl',
@@ -118,7 +119,7 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 	protected function execute_module_specific_changes()
 	{
 		$columns = $this->db_utils->desc_table(PREFIX . 'pages');
-		
+
 		if (isset($columns['auth']))
 		{
 			// Delete backslash from db contents
