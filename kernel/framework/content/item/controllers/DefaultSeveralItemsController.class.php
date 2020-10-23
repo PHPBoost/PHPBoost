@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 10 22
+ * @version     PHPBoost 6.0 - last update: 2020 10 23
  * @since       PHPBoost 6.0 - 2020 01 22
 */
 
@@ -229,18 +229,17 @@ class DefaultSeveralItemsController extends AbstractItemController
 		if (TextHelper::strstr($request->get_current_url(), '/my_items/'))
 			unset($fields_list['author']);
 		
-		$select_change_redirect = 'document.location = "' . $this->url_without_sorting_parameters->rel() . '" + HTMLForms.getField("sort_field").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();';
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_field', '', $this->sort_field, $fields_list,
 			array(
 				'select_to_list' => true, 
-				'events'         => array('change' => $select_change_redirect)
+				'events'         => array('change' => 'document.location = "' . $this->url_without_sorting_parameters->rel() . '" + HTMLForms.getField("sort_field").getValue() + "/' . $this->sort_mode . '"' . ($this->page > 1 ? ' + "/' . $this->page . '"' : '') . ';')
 			)
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $this->sort_mode, $item_class_name::get_sorting_mode_options(),
 			array(
 				'select_to_list' => true, 
-				'events'         => array('change' => $select_change_redirect)
+				'events'         => array('change' => 'document.location = "' . $this->url_without_sorting_parameters->rel() . '" + HTMLForms.getField("sort_field").getValue() + "/" + HTMLForms.getField("sort_mode").getValue()' . ($this->page > 1 ? ' + "/' . $this->page . '"' : '') . ';')
 			)
 		));
 
