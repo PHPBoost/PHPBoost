@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 30
+ * @version     PHPBoost 6.0 - last update: 2020 10 23
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
@@ -36,7 +36,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('PagesDeleteItemController', '`^/([0-9]+)/delete/?$`', array('id')),
 	new UrlControllerMapper('PagesItemController', '`^/([0-9]+)-([a-z0-9-_]+)/([0-9]+)-([a-z0-9-_]+)?/?$`', array('id_category', 'rewrited_name_category', 'id', 'rewrited_name')),
 
-	new UrlControllerMapper('PagesMemberItemsController', '`^/member/?$`'),
+	new UrlControllerMapper('PagesMemberItemsController', '`^/my_items/?$`'),
 	new UrlControllerMapper('PagesTagController', '`^/tag/([a-z0-9-_]+)?/?([a-z_]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('tag', 'field', 'sort', 'page')),
 	new UrlControllerMapper('PagesPendingItemsController', '`^/pending(?:/([a-z_]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
 	new UrlControllerMapper('PagesReorderItemsController', '`^/reorder/([0-9]+)-?([a-z0-9-_]+)?/?$`', array('id_category', 'rewrited_name')),
