@@ -27,7 +27,7 @@ class CalendarTreeLinks extends DefaultTreeLinks
 	{
 		$requested_date = $this->get_requested_date();
 		$module_id = 'calendar';
-		$lang = LangLoader::get('common', 'calendar');
+		$lang = LangLoader::get('common', $module_id);
 
 		$tree->add_link(new ModuleLink($lang['items.mine'], CalendarUrlBuilder::display_member_items(), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->write() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->contribution() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation()));
 		$tree->add_link(new ModuleLink($lang['calendar.events.list'], CalendarUrlBuilder::events_list($requested_date['year'], $requested_date['month'], $requested_date['day']), $this->get_authorizations()->read()));
