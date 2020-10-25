@@ -21,7 +21,6 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 			'/phpboost/PagesCategoriesCache.class.php',
 			'/phpboost/PagesHomePageExtensionPoint.class.php',
 			'/phpboost/PagesSitemapExtensionPoint.class.php',
-			'/phpboost/PagesTreeLinks.class.php',
 			'/templates/action.tpl',
 			'/templates/admin_pages.tpl',
 			'/templates/com.tpl',
