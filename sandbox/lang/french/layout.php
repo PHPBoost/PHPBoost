@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 28
+ * @version     PHPBoost 6.0 - last update: 2020 10 28
  * @since       PHPBoost 5.2 - 2020 05 22
 */
 
@@ -34,15 +34,15 @@ $lang['layout.grid.forced'] = 'Cellules forcées';
 
 // Cell
 $lang['layout.cell'] = 'Cellules';
-$lang['layout.cell.columns'] = 'Liste d\'articles en mosaïque (défaut)';
-$lang['layout.cell.row'] = 'Liste d\'article en liste';
+$lang['layout.cell.columns'] = 'Liste d\'éléments en mosaïque (défaut)';
+$lang['layout.cell.row'] = 'Liste d\'éléments en liste';
 $lang['layout.cell.all'] = 'Eléments de cellule';
 $lang['layout.title.more'] = 'Informations du contenu';
 $lang['layout.title.alert'] = 'Message d\'alerte';
 $lang['layout.title.content'] = 'Contenu';
 $lang['layout.title.form'] = 'Formulaire';
 $lang['layout.title.list'] = 'Liste';
-$lang['layout.title.table'] = 'Tablea';
+$lang['layout.title.table'] = 'Tableau';
 $lang['layout.title.footer'] = 'Pied de cellule';
 
 // Messages

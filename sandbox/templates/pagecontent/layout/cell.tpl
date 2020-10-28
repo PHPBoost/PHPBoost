@@ -86,18 +86,20 @@
                 <h6 class="cell-name">{@layout.title.form}</h6>
             </header>
             <div class="cell-form">
-                <div class="cell-input"><input type="text" value="input"></div>
+                <div class="cell-input"><input type="text" placeholder="input text"></div>
             </div>
             <div class="cell-form">
                 <div class="cell-label">
-                    Label
-                    <span class="field-description">{@layout.item}</span>
+                    <label for="label-and-input">
+                        Label
+                        <span class="field-description">{@layout.item}</span>
+                    </label>
                 </div>
-                <div class="cell-input"><input type="text" value="input + label" /></div>
+                <div class="cell-input"><input type="text" id="label-and-input" placeholder="input text" /></div>
             </div>
             <div class="cell-form">
                 <div class="cell-input">
-                    <select name="" id="">
+                    <select name="">
                         <option value="">select</option>
                         <option value="">{@layout.item}</option>
                         <option value="">{@layout.item}</option>
@@ -107,10 +109,10 @@
             <div class="cell-form">
                 <div class="grouped-inputs">
                     <label for="input-id" class="grouped-element">
-                        <span class="grouped-element">Label</span>
-                        <input id="input-id" type="text" class="grouped-element" value="input">
+                        <span>Label</span>
                     </label>
-                    <select name="" id="" class="grouped-element">
+                    <input class="grouped-element" id="input-id" type="text" placeholder="input text">
+                    <select name="" class="grouped-element">
                         <option value="">select</option>
                         <option value="">{@layout.item}</option>
                         <option value="">{@layout.item}</option>
@@ -120,10 +122,12 @@
             </div>
             <div class="cell-textarea">
 				<textarea name="textarea" rows="3">Textarea : {@lorem.short.content}</textarea>
-				<fieldset class="fieldset-submit">
-					<button type="submit" class="button submit" name="submit" value="true">{@layout.item}</button>
-					<button type="reset" class="button reset-button" value="true">{@layout.item}</button>
-				</fieldset>
+            </div>
+            <div class="cell-form cell-center">
+                <fieldset class="fieldset-submit">
+                    <button type="submit" class="button submit" name="submit" value="true">{@layout.item}</button>
+                    <button type="reset" class="button reset-button" value="true">{@layout.item}</button>
+                </fieldset>
             </div>
         </article>
         <article class="cell">
@@ -224,7 +228,7 @@
 &lt;/div>
 &lt;div class="cell-form">
     &lt;div class="cell-input">
-        &lt;select name="" id="">...&lt;/select>
+        &lt;select name="">...&lt;/select>
     &lt;/div>
 &lt;/div>
 &lt;div class="cell-form">
@@ -233,7 +237,7 @@
             &lt;span class="grouped-element">...&lt;/span>
             &lt;input id="input-id" type="text" class="grouped-element" value="...">
         &lt;/label>
-        &lt;select name="" id="" class="grouped-element">...&lt;/select>
+        &lt;select name="" class="grouped-element">...&lt;/select>
         &lt;a href="" class="grouped-element">...&lt;/a>
     &lt;/div>
 &lt;/div>
