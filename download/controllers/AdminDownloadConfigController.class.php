@@ -104,7 +104,7 @@ class AdminDownloadConfigController extends AdminModuleController
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->admin_common_lang['config.display.type'], $this->config->get_display_type(),
 			array(
-				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.grid'], DownloadConfig::GRID_VIEW, array('data_option_icon' => 'far fa-id-card')),
+				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.grid'], DownloadConfig::GRID_VIEW, array('data_option_icon' => 'fa fa-th-large')),
 				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.list'], DownloadConfig::LIST_VIEW, array('data_option_icon' => 'fa fa-list')),
 				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.table'], DownloadConfig::TABLE_VIEW, array('data_option_icon' => 'fa fa-table'))
 			),
