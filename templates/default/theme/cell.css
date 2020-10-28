@@ -103,6 +103,14 @@ form > [class*="cell-"]:not(.cell-header) {
 	text-decoration: none;
 }
 
+.cell-thumbnail iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
 /* --- list --- */
 .cell-list ul {
 	margin: 0;
