@@ -82,10 +82,6 @@ form > [class*="cell-"]:not(.cell-header) {
 	align-items: flex-start;
 }
 
-.cell-thumbnail.cell-center {
-	align-items: center;
-}
-
 .cell-thumbnail-caption {
     position: absolute;
     top: 0;
@@ -110,6 +106,22 @@ form > [class*="cell-"]:not(.cell-header) {
 	left: 0;
 	width: 100%;
 	height: 100%;
+}
+
+/* --- Position --- */
+.cell-start {
+	justify-content: flex-start;
+	align-items: flex-start;
+}
+
+.cell-center {
+	justify-content: center;
+	align-items: center;
+}
+
+.cell-end {
+	justify-content: flex-end;
+	align-items: flex-end;
 }
 
 /* --- list --- */

@@ -78,7 +78,6 @@
 @media (min-width: 769px) {
 	.cell-flex .cell-form {
 		flex-direction: row;
-		justify-content: space-between;
 	}
 
 	.cell-flex .cell-form .cell-label { width: 40%; }
