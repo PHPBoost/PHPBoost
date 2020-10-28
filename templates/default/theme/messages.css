@@ -24,9 +24,7 @@
     border-color: transparent;
 }
 
-.message-user-sign {
-    border-width: 0 1px;
-}
+.message-user-sign { border-width: 0 1px; }
 
 .message-header-container {
     display: flex;
@@ -39,16 +37,12 @@
 .message-header-infos,
 .message-content,
 .message-user-sign,
-.message-footer-container {
-    padding: 0.309em 0.618em;
-}
+.message-footer-container { padding: 0.309em 0.618em; }
 
 .message-user-infos,
 .message-actions a,
 .message-user-sign,
-.message-footer-container {
-    font-size: 0.809em
-}
+.message-footer-container { font-size: 0.809em; }
 
 .message-header-infos {
     display: flex;
@@ -93,17 +87,11 @@
 }
 
 .message-actions,
-.message-infos {
-    text-align: right;
-}
+.message-infos { text-align: right; }
 
-.message-actions a {
-    padding: 0 0.228em;
-}
+.message-actions a { padding: 0 0.228em; }
 
-.message-actions .checkbox input {
-    margin-top: -0.1618em;
-}
+.message-actions .checkbox input { margin-top: -0.1618em; }
 
 .message-footer-container {
     border-width: 0 1px 1px;
@@ -111,35 +99,25 @@
     margin: 0;
 }
 
-.message-user-management {
-    justify-content: flex-end;
-}
+.message-user-management { justify-content: flex-end; }
 
 /* --- Current user --- */
 .current-user-message .message-user-avatar { order: 2 }
 .current-user-message .message-header-infos { order: 1 }
 
 .current-user-message .message-user,
-.current-user-message .message-infos {
-    flex-direction: row-reverse;
-}
+.current-user-message .message-infos { flex-direction: row-reverse; }
 
 /* --- message offset --- */
-.message-container.message-offset {
-	justify-content: flex-start;
-}
+.message-container.message-offset { justify-content: flex-start; }
 
 .message-offset .message-header-container,
 .message-offset .message-content,
-.message-offset .message-footer-container {
-	width: 90%;
-}
+.message-offset .message-footer-container { width: 90%; }
 
 .message-offset .current-user-message.message-header-container,
 .message-offset .current-user-message.message-content,
-.message-offset .current-user-message.message-footer-container {
-	align-self: flex-end;
-}
+.message-offset .current-user-message.message-footer-container { align-self: flex-end; }
 
 /* --- Moderation --- */
 .message-moderate {
@@ -150,19 +128,12 @@
 	vertical-align: middle;
 }
 
-.message-moderate a {
-	vertical-align: top;
-}
+.message-moderate a { vertical-align: top; }
 
 /* --- view message --- */
+.view-topic { padding: 0.809em 0; }
 
-.view-topic {
-	padding: 0.809em 0;
-}
-
-.view-topic i {
-	margin: 0 0 0.1618em 0.309em;
-}
+.view-topic i { margin: 0 0 0.1618em 0.309em; }
 
 /* hexagon  -- set img.-picture in div.-avatar*/
 /* .message-user-avatar {

@@ -233,8 +233,7 @@ strong,
 .spacer { clear: both; }
 
 /* --- Smileys --- */
-.smiley {
-	vertical-align: middle; }
+.smiley { vertical-align: middle; }
 
 /* --- Icons --- */
 .icon-disabled {

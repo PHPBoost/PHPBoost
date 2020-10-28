@@ -138,9 +138,7 @@ body {
 	color: var(--main-light);
 }
 
-.button:active {
-	background-color: rgba(var(--main-rgb-t), 0.1);
-}
+.button:active { background-color: rgba(var(--main-rgb-t), 0.1); }
 
 .button.reset-button,
 .reset-button {
@@ -169,14 +167,10 @@ body {
 }
 
 .button.alt-button:hover,
-.alt-button:hover {
-	background-color: var(--star-light);
-}
+.alt-button:hover { background-color: var(--star-light); }
 
 .button.alt-button:active,
-.alt-button:active {
-	background-color: var(--star-tone);
-}
+.alt-button:active { background-color: var(--star-tone); }
 
 .button.submit,
 .submit {
@@ -202,14 +196,10 @@ body {
 }
 
 .button.alt-submit:hover,
-.alt-submit:hover {
-	background-color: var(--moderator-light);
-}
+.alt-submit:hover { background-color: var(--moderator-light); }
 
 .button.alt-submit:active,
-.alt-submit:active {
-	background-color: var(--moderator-tone);
-}
+.alt-submit:active { background-color: var(--moderator-tone); }
 
 optgroup { border-color: var(--bdr-main); }
 
@@ -221,9 +211,7 @@ select[multiple] option:checked,
 
 select[multiple] option[disabled] { color: var(--error-tone); }
 
-.multiple-select-list {
-	border-color: var(--bdr-main);
-}
+.multiple-select-list { border-color: var(--bdr-main); }
 
 legend { border-color: var(--bdr-main); }
 
@@ -271,9 +259,7 @@ textarea:focus,
 select:focus { background-color: var(--bgc-alt); }
 
 [disabled],
-[disabled]:hover {
-	border-color: var(--notice-tone);
-}
+[disabled]:hover { border-color: var(--notice-tone); }
 
 [readonly],
 [readonly]:hover {
@@ -390,9 +376,7 @@ td,
 	color: var(--main-tone);
 }
 
-.html-table-header-sortable.sort-active a {
-	border-color: var(--bgc-main);
-}
+.html-table-header-sortable.sort-active a { border-color: var(--bgc-main); }
 
 .calendar-block table.date-picker th { border-color: var(--bdr-main); }
 
@@ -411,13 +395,13 @@ td.calendar-weekend { background-color: rgba(var(--main-rgb-t), 0.1); }
 /* --- Font Awesome icons --------------------------------------------------- */
 .user-locked .fa-user-lock:before   { color: var(--error-tone); }
 .user-unlocked .fa-user-lock:before { color: var(--success-tone); }
-.fa-male:before             { color: #8DC3E9; }
-.fa-female:before           { color: #F49CC4; }
+.fa-male:before             		{ color: #8DC3E9; }
+.fa-female:before           		{ color: #F49CC4; }
 
 .fa-announce:before,
-.fa-announce-hot:before     { color: var(--main-light); }
+.fa-announce-hot:before     		{ color: var(--main-light); }
 .fa-announce-new:before,
-.fa-announce-new-hot:before { color: var(--success-tone); }
+.fa-announce-new-hot:before 		{ color: var(--success-tone); }
 
 /* --- formatter & bbcode --------------------------------------------------- */
 .bbcode-bar {
@@ -454,9 +438,7 @@ h3.formatter-title { border-color: var(--main-tone); }
 }
 
 /* --- Highlighted text --- */
-.highlight-search-word {
-	background-color: var(--star-tone);
-}
+.highlight-search-word { background-color: var(--star-tone); }
 
 /* -- cssmenu.css ----------------------------------------------------------- */
 .cssmenu ul ul,
@@ -469,13 +451,9 @@ h3.formatter-title { border-color: var(--main-tone); }
 	.cssmenu ul > li:hover > .cssmenu-title  { background-color: rgba(var(--main-rgb-t), 0.1); }
 	.cssmenu ul > li.current > .cssmenu-title  { background-color: rgba(var(--main-rgb-t), 0.1); }
 
-	.cssmenu-group .cssmenu-title {
-		border-color: var(--main-tone);
-	}
+	.cssmenu-group .cssmenu-title { border-color: var(--main-tone); }
 
-	.cssmenu-group .cssmenu-title:hover  {
-		border-color: var(--main-light);
-	}
+	.cssmenu-group .cssmenu-title:hover  { border-color: var(--main-light); }
 }
 
 .cssmenu-static ul ul {
@@ -502,9 +480,7 @@ h3.formatter-title { border-color: var(--main-tone); }
 	background-color: rgba(var(--main-rgb-t), 0.1);
 }
 
-.cssmenu-actionslinks:hover .menu-button:after {
-	background-color: var(--bgc-main);
-}
+.cssmenu-actionslinks:hover .menu-button:after { background-color: var(--bgc-main); }
 
 .cssmenu-actionslinks.small-screen .menu-button:after {
 	background-color: transparent;
@@ -527,17 +503,12 @@ h3.formatter-title { border-color: var(--main-tone); }
 .pushmenu::after,
 .pushmenu .nav-wrapper::after { background-color: rgba(var(--darken), 0.3); }
 
-.pushmenu .nav-container {
-	background-color: var(--bgc-main);
-}
+.pushmenu .nav-container { background-color: var(--bgc-main); }
 
-.pushmenu .nav-item {
-    border-color: var(--bdr-main);
-}
+.pushmenu .nav-item { border-color: var(--bdr-main); }
 
-a.nav-next {
-	border-color: var(--bdr-main);
-}
+.pushmenu.rtl a.nav-next,
+a.nav-next { border-color: var(--bdr-main); }
 
 .pushmenu .nav-item .button.submit,
 .pushmenu .nav-item .button.submit:hover,
@@ -558,7 +529,6 @@ a.nav-next {
 .pushmenu li.nav-close span::after { border-color: var(--txt-main); }
 
 .pushmenu a[href]:not([href="#"])>span.nav-next { border-color: var(--main-light); }
-
 .pushmenu .nav-next span::before,
 .pushmenu li.nav-back span::before { border-color: var(--txt-main); }
 
@@ -588,6 +558,7 @@ a.nav-next {
 .pushmenu.nav-levels-none .nav-container li.level-open .nav-item-wrapper > a:hover { background-color: rgba(var(--main-rgb-t), 0.1); }
 
 .nav-levels-overlap .nav-wrapper { background-color: var(--bgc-main); }
+
 
 /* --- lightcase --- */
 a[class*='lightcase-icon-'], a[class*='lightcase-icon-']:focus { color: rgba(var(--lighten), 0.2); }

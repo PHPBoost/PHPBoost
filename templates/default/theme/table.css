@@ -50,17 +50,11 @@ td,
 	border-color: transparent;
 }
 
-tfoot td[colspan] {
-	border-width: 0 1px 1px 1px;
-}
+tfoot td[colspan] { border-width: 0 1px 1px 1px; }
 
-.bt td {
-	border-bottom-width: 0;
-}
+.bt td { border-bottom-width: 0; }
 
-.bt td:last-child {
-	border-width: 0 0 1px;
-}
+.bt td:last-child { border-width: 0 0 1px; }
 
 /* --- Footer --- */
 tfoot td {
@@ -68,13 +62,9 @@ tfoot td {
 	font-size: 0.9em;
 }
 
-tfoot td * {
-	vertical-align: middle;
-}
+tfoot td * { vertical-align: middle; }
 
-tfoot td select {
-	padding: 0.1618em 0.309em;
-}
+tfoot td select { padding: 0.1618em 0.309em; }
 
 @media (min-width: 769px) {
 	th,
@@ -85,13 +75,9 @@ tfoot td select {
 	}
 }
 
-.html-table-filters {
-	padding: 0.809em;
-}
+.html-table-filters { padding: 0.809em; }
 
-.html-table-elements-number {
-	text-align: left;
-}
+.html-table-elements-number { text-align: left; }
 
 /* --- thead patch for formated tables --- */
 .formatter-table td.formatter-table-head {
@@ -101,20 +87,14 @@ tfoot td select {
 	font-weight: normal;
 }
 
-.formatter-table td.formatter-table-head p {
-	margin-bottom: 0;
-}
+.formatter-table td.formatter-table-head p { margin-bottom: 0; }
 
-.bt.formatter-table td.formatter-table-head {
-	display: none;
-}
+.bt.formatter-table td.formatter-table-head { display: none; }
 
 
 /* --- Responsive Table - basictable.js ------------------------------------- */
 .bt thead,
-.bt thead th {
-	display: none;
-}
+.bt thead th { display: none; }
 
 .bt tfoot th,
 .bt tfoot td,
@@ -135,19 +115,13 @@ tfoot td select {
 
 .bt tfoot th.bt-hide,
 .bt tfoot td.bt-hide,
-.bt tbody td.bt-hide {
-	display: none;
-}
+.bt tbody td.bt-hide { display: none; }
 
 .bt tfoot th .bt-content,
 .bt tfoot td .bt-content,
-.bt tbody td .bt-content {
-	vertical-align: top;
-}
+.bt tbody td .bt-content { vertical-align: top; }
 
-.bt thead th:first-child{
-	display: block;
-}
+.bt thead th:first-child{ display: block; }
 
 .bt tbody td {
 	display: block;
@@ -164,9 +138,7 @@ tfoot td select {
 	font-weight: bold;
 }
 
-.bt tbody td.bt-hide {
-	display: none;
-}
+.bt tbody td.bt-hide { display: none; }
 
 .bt tbody td .bt-content {
 	display: inline-block;
@@ -182,9 +154,7 @@ tfoot td select {
 }
 
 .bt tfoot td::before,
-.bt.bt--no-header tbody td::before {
-	display: none;
-}
+.bt.bt--no-header tbody td::before { display: none; }
 
 .bt tfoot .bt-content {
 	width: 100%;
@@ -205,9 +175,7 @@ tfoot td select {
 }
 
 @media (min-width: 769px) {
-	.html-table-header-sortable {
-		display: inline-block;
-	}
+	.html-table-header-sortable { display: inline-block; }
 }
 
 /* --- Options -------------------------------------------------------------- */
@@ -216,9 +184,7 @@ tfoot td select {
 	overflow: auto;
 }
 
-.large-table th {
-    white-space: nowrap;
-}
+.large-table th { white-space: nowrap; }
 
 .large-table .bt-content,
 .bt.large-table .bt-content {
@@ -243,24 +209,14 @@ tfoot td select {
 	border-color: transparent;
 }
 
-.bordered-table td:last-child {
-	border-width: 1px 1px 0 1px;
-}
+.bordered-table td:last-child { border-width: 1px 1px 0 1px; }
 
-.bordered-table tr:last-child td {
-	border-width: 1px 0 1px 1px;
-}
+.bordered-table tr:last-child td { border-width: 1px 0 1px 1px; }
 
-.bordered-table tr:last-child td:last-child {
-	border-width: 1px;
-}
+.bordered-table tr:last-child td:last-child { border-width: 1px; }
 
 .bordered-table .bt td,
 .bordered-table .bt tbody tr td:last-child,
-.bordered-table .bt tr:last-child td {
-	border-width: 1px 1px 0 1px;
-}
+.bordered-table .bt tr:last-child td { border-width: 1px 1px 0 1px; }
 
-.bordered-table .bt tr:last-child td:last-child {
-	border-width: 1px;
-}
+.bordered-table .bt tr:last-child td:last-child { border-width: 1px; }

@@ -6,14 +6,10 @@
 */
 
 /* --- Module-mini ---------------------------------------------------------- */
-.cssmenu-content .module-mini-contents {
-	padding: 0;
-}
+.cssmenu-content .module-mini-contents { padding: 0; }
 
 /* --- General classes ------------------------------------------------------ */
-.cssmenu {
-	font-size: 0;
-}
+.cssmenu { font-size: 0; }
 
 .cssmenu,
 .cssmenu ul,
@@ -36,9 +32,7 @@
 	clear: both;
 }
 
-.cssmenu-img {
-	display: none;
-}
+.cssmenu-img { display: none; }
 
 @media (min-width: 769px) {
 	.cssmenu-img {
@@ -46,26 +40,16 @@
 		margin-left: 1.309rem;
 	}
 
-	.cssmenu-horizontal .cssmenu-img {
-		vertical-align: bottom;
-	}
+	.cssmenu-horizontal .cssmenu-img { vertical-align: bottom; }
 
-	.cssmenu .menu-with-img {
-		display: inline-block;
-	}
+	.cssmenu .menu-with-img { display: inline-block; }
 
-	.module-mini-top img {
-		margin: 0 0.309em 0 0;
-	}
+	.module-mini-top img { margin: 0 0.309em 0 0; }
 }
 
-.cssmenu-horizontal > ul > li > ul {
-	min-width: 100%;
-}
+.cssmenu-horizontal > ul > li > ul { min-width: 100%; }
 
-.cssmenu li:hover > .cssmenu-title {
-	text-decoration: none;
-}
+.cssmenu li:hover > .cssmenu-title { text-decoration: none; }
 
 .cssmenu-title {
 	padding: 0.456em 0.618em;
@@ -79,25 +63,18 @@
 }
 
 @media (min-width: 769px) {
-	.cssmenu-title {
-		white-space: nowrap;
-	}
-	.cssmenu-vertical > ul > li > .cssmenu-title {
-		white-space: normal;
-	}
+	.cssmenu-title { white-space: nowrap; }
+
+	.cssmenu-vertical > ul > li > .cssmenu-title { white-space: normal; }
 }
 
 .cssmenu-title img + span,
 .cssmenu-title i + span,
-.cssmenu-title span + span {
-	margin-left: 0.456em;
-}
+.cssmenu-title span + span { margin-left: 0.456em; }
 
 
 /* --- Item classes --------------------------------------------------------- */
-.cssmenu-horizontal {
-	display: table;
-}
+.cssmenu-horizontal { display: table; }
 
 .cssmenu-horizontal > ul > li {
 	display: inline-block;
@@ -105,23 +82,15 @@
 }
 
 .cssmenu-vertical li,
-.cssmenu-actionslinks li {
-	display: block;
-}
+.cssmenu-actionslinks li { display: block; }
 
 /* --- Sub-menu Indicator --- */
-.cssmenu-horizontal li > .cssmenu-title {
-	padding: 0.618em;
-}
+.cssmenu-horizontal li > .cssmenu-title { padding: 0.618em; }
 
 .cssmenu-horizontal ul li.has-sub > .cssmenu-title,
-.cssmenu-vertical.cssmenu-left ul li.has-sub > .cssmenu-title {
-	padding-right: 1.618em;
-}
+.cssmenu-vertical.cssmenu-left ul li.has-sub > .cssmenu-title { padding-right: 1.618em; }
 
-.cssmenu-right ul li.has-sub > .cssmenu-title {
-	padding-left: 1.618em;
-}
+.cssmenu-right ul li.has-sub > .cssmenu-title { padding-left: 1.618em; }
 
 .cssmenu ul li.has-sub > .cssmenu-title:after,
 .cssmenu-right ul li.has-sub > .cssmenu-title:before {
@@ -141,9 +110,7 @@
 	transition: 0.2s;
 }
 
-.cssmenu-right ul li.has-sub > .cssmenu-title:after {
-	content: '';
-}
+.cssmenu-right ul li.has-sub > .cssmenu-title:after { content: ''; }
 
 .cssmenu-right ul li.has-sub > .cssmenu-title:before {
 	left: 0.809em;
@@ -155,13 +122,9 @@
 	transition: 0.2s;
 }
 
-.cssmenu-right ul li.has-sub:hover > .cssmenu-title:after {
-	content: '';
-}
+.cssmenu-right ul li.has-sub:hover > .cssmenu-title:after { content: ''; }
 
-.cssmenu-right ul li.has-sub:hover > .cssmenu-title:before {
-	content: '\f068';
-}
+.cssmenu-right ul li.has-sub:hover > .cssmenu-title:before { content: '\f068'; }
 
 /* --- Sub-menu position --- */
 .cssmenu ul ul {
@@ -208,9 +171,7 @@
 	width: 100%;
 }
 
-.cssmenu-actionslinks.small-screen ul {
-	top: 100%;
-}
+.cssmenu-actionslinks.small-screen ul { top: 100%; }
 
 .cssmenu.small-screen ul ul,
 .small-screen ul ul ul {
@@ -224,9 +185,7 @@
 
 .cssmenu.small-screen ul ul,
 .small-screen ul ul ul,
-.cssmenu-vertical.small-screen .cssmenu-title {
-	text-align: left;
-}
+.cssmenu-vertical.small-screen .cssmenu-title { text-align: left; }
 
 .cssmenu-horizontal.small-screen ul ul li:hover > ul,
 .cssmenu-left.small-screen li:hover > ul {
@@ -247,22 +206,14 @@
 	width: 100%;
 }
 
-.small-screen ul ul li .cssmenu-title  {
-	padding-left: 1em;
-}
+.small-screen ul ul li .cssmenu-title  { padding-left: 1em; }
 
 .small-screen ul ul ul li .cssmenu-title,
-.cssmenu-actionslinks.small-screen ul li ul li ul li .cssmenu-title  {
-	padding-left: 1.618em;
-}
+.cssmenu-actionslinks.small-screen ul li ul li ul li .cssmenu-title  { padding-left: 1.618em; }
 
-.small-screen ul ul ul ul li .cssmenu-title {
-	padding-left: 2em;
-}
+.small-screen ul ul ul ul li .cssmenu-title { padding-left: 2em; }
 
-.small-screen ul ul ul ul ul li .cssmenu-title {
-	padding-left: 2.618em;
-}
+.small-screen ul ul ul ul ul li .cssmenu-title { padding-left: 2.618em; }
 
 /* --- Small screens button --- */
 .menu-button {
@@ -294,15 +245,11 @@
 	top: 0;
 }
 
-.small-screen .menu-button.menu-opened:after {
-	content: '\f00d';
-}
+.small-screen .menu-button.menu-opened:after { content: '\f00d'; }
 
 /* --- Small screens sub-menu button --- */
 .cssmenu.small-screen ul li.has-sub > .cssmenu-title:after,
-.cssmenu-right.small-screen ul li.has-sub > .cssmenu-title:before {
-	display: none;
-}
+.cssmenu-right.small-screen ul li.has-sub > .cssmenu-title:before { display: none; }
 
 .small-screen .submenu-button {
 	position: absolute;
@@ -340,9 +287,7 @@
 	margin: 0.809rem 0.809rem 2.809rem 3.618rem;
 }
 
-.cssmenu-actionslinks .menu-button {
-	display: block;
-}
+.cssmenu-actionslinks .menu-button { display: block; }
 
 .cssmenu-actionslinks .menu-button:after {
 	position: absolute;
@@ -359,9 +304,7 @@
 	border-color: transparent;
 }
 
-.cssmenu-actionslinks:hover .menu-button:after {
-	border-bottom-width: 0;
-}
+.cssmenu-actionslinks:hover .menu-button:after { border-bottom-width: 0; }
 
 .cssmenu-actionslinks ul {
 	position: absolute;
@@ -396,9 +339,7 @@
 	padding: 0.618em;
 }
 
-.cssmenu-actionslinks.small-screen .menu-button.menu-opened:after {
-	content: '\f00d';
-}
+.cssmenu-actionslinks.small-screen .menu-button.menu-opened:after { content: '\f00d'; }
 
 .cssmenu-actionslinks.small-screen .menu-button:hover + ul,
 .cssmenu-actionslinks.small-screen .menu-button + ul:hover {
@@ -413,33 +354,21 @@
 	width: 100%;
 }
 
-.cssmenu-actionslinks.small-screen.cssmenu-right .cssmenu-title {
-	text-align: left;
-}
+.cssmenu-actionslinks.small-screen.cssmenu-right .cssmenu-title { text-align: left; }
 
-.cssmenu-actionslinks.small-screen ul ul .cssmenu-title {
-	padding-left: 0.618em;
-}
+.cssmenu-actionslinks.small-screen ul ul .cssmenu-title { padding-left: 0.618em; }
 
 .cssmenu-actionslinks.small-screen ul li.has-sub > .submenu-button,
-.cssmenu-actionslinks.small-screen ul li.has-sub > .cssmenu-title  {
-	display: none;
-}
+.cssmenu-actionslinks.small-screen ul li.has-sub > .cssmenu-title  { display: none; }
 
 
 /* --- Small screens cssmenu-tools variant ----------------------------------- */
-.cssmenu-tools.small-screen {
-	height: auto;
-}
+.cssmenu-tools.small-screen { height: auto; }
 
 .cssmenu-tools.small-screen li.has-sub > a,
-.cssmenu-tools.small-screen li.has-sub > .submenu-button {
-	display: block;
-}
+.cssmenu-tools.small-screen li.has-sub > .submenu-button { display: block; }
 
-.cssmenu-tools .menu-button:after {
-	content: "\f0c9";
-}
+.cssmenu-tools .menu-button:after { content: "\f0c9"; }
 
 
 /* --- Cssmenu-group variant ------------------------------------------------ */
@@ -448,9 +377,7 @@
 	margin-bottom: 1.618rem;
 }
 
-.cssmenu-group li {
-	display: inline-block;
-}
+.cssmenu-group li { display: inline-block; }
 
 .cssmenu-group .cssmenu-title {
 	font-size: 1.456rem;
@@ -462,18 +389,12 @@
 	text-decoration: none;
 }
 
-.cssmenu-group li:last-child .cssmenu-title {
-	border-right-width: 1px;
-}
+.cssmenu-group li:last-child .cssmenu-title { border-right-width: 1px; }
 
-.cssmenu-group .cssmenu-title-icon {
-    padding: 0.5em 0.482em 0.5em;
-}
+.cssmenu-group .cssmenu-title-icon { padding: 0.5em 0.482em 0.5em; }
 
 /* --- Small screens cssmenu-group variant --- */
-.cssmenu-group.small-screen ul li .cssmenu-title {
-	padding: 0.309em 0.618em;
-}
+.cssmenu-group.small-screen ul li .cssmenu-title { padding: 0.309em 0.618em; }
 
 
 /* --- Cssmenu-static variant ----------------------------------------------- */
@@ -482,18 +403,12 @@
 	vertical-align: top;
 }
 
-.cssmenu-static > ul > li > .cssmenu-title {
-	text-align: center;
-}
+.cssmenu-static > ul > li > .cssmenu-title { text-align: center; }
 
 .cssmenu-static ul li.has-sub > .cssmenu-title:after,
-.cssmenu-static ul li.has-sub > .cssmenu-title:before {
-	display: none;
-}
+.cssmenu-static ul li.has-sub > .cssmenu-title:before { display: none; }
 
-.cssmenu-static > ul > li {
-	padding: 0 0.618em;
-}
+.cssmenu-static > ul > li { padding: 0 0.618em; }
 
 .cssmenu-static > ul > li > .cssmenu-title {
 	margin: 0 0 0.618em 0;
@@ -507,13 +422,9 @@
 	z-index: 0;
 }
 
-.cssmenu-static ul ul > li > .cssmenu-title {
-	padding: 0.228em 1.618em 0.228em 0.618em;
-}
+.cssmenu-static ul ul > li > .cssmenu-title { padding: 0.228em 1.618em 0.228em 0.618em; }
 
-.cssmenu-static ul ul ul > li > .cssmenu-title {
-	padding: 0.228em 1.618em;
-}
+.cssmenu-static ul ul ul > li > .cssmenu-title { padding: 0.228em 1.618em; }
 
 
 /* --- Small screens cssmenu-static --- */

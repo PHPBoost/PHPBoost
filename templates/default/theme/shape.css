@@ -28,9 +28,7 @@ body {
 }
 
 @media (min-width: 769px) {
-	body {
-		font-size: 1.618em;
-	}
+	body { font-size: 1.618em; }
 }
 
 #header,
@@ -41,9 +39,7 @@ body {
 }
 
 @media (min-width: 769px)  {
-	#header {
-		padding: 1.618em 0;
-	}
+	#header { padding: 1.618em 0; }
 
 	#top-header,
 	#sub-header,
@@ -56,9 +52,7 @@ body {
 	#top-header,
 	#sub-header,
 	#global,
-	#footer {
-		width: 768px;
-	}
+	#footer { width: 768px; }
 }
 
 @media (min-width: 1025px) { #top-header, #sub-header, #global, #footer { width: 1024px; } }
@@ -66,18 +60,14 @@ body {
 
 
 /* --- Header --------------------------------------------------------------- */
-#header {
-	position: relative;
-}
+#header { position: relative; }
 
 #top-header {
 	display: flex;
 	flex-direction: column;
 }
 
-#top-header-content {
-	flex: 1 1 auto;
-}
+#top-header-content { flex: 1 1 auto; }
 
 #site-infos {
 	display: flex;
@@ -94,9 +84,7 @@ body {
 	flex: 0 0 auto;
 }
 
-#site-name-container {
-	margin: 0.2em 0 0 0.809em;
-}
+#site-name-container { margin: 0.228em 0 0 0.809em; }
 
 #site-name {
 	font-size: 1.618em;
@@ -113,22 +101,16 @@ body {
 }
 
 @media (min-width: 769px) {
-	#top-header {
-		flex-direction: row;
-	}
+	#top-header { flex-direction: row; }
 
-	#top-header-content {
-		align-self: flex-end;
-	}
+	#top-header-content { align-self: flex-end; }
 
 	#site-logo {
 		width: 90px;
 		height: 90px;
 	}
 
-	#site-name-container {
-		margin: 0 0 0 1.618em;
-	}
+	#site-name-container { margin: 0 0 0 1.618em; }
 
 	#site-name {
 		font-size: 3.236em;
@@ -155,46 +137,30 @@ body {
 }
 
 #menu-left,
-#menu-right {
-	width: 100%;
-}
-
-#menu-left {
-	order : 2;
-}
-
-#menu-right {
-	order : 3;
-}
+#menu-right { width: 100%; }
+#menu-left  { order : 2; }
+#menu-right { order : 3; }
 
 @media (min-width: 769px) {
-	#global {
-		flex-direction: row;
-	}
-
-	#menu-left { margin-right: 1.618em; }
-	#menu-right { margin-left: 1.618em; }
+	#global { flex-direction: row; }
 
 	#menu-left,
-	#menu-right {
-		width: calc(100% / 13 * 3.5);
-	}
-
-	#menu-left.narrow-menu-left  { margin-right: 0.809em; }
-	#menu-right.narrow-menu-right { margin-left: 0.809em; }
-
-	#menu-left.narrow-menu-left,
-	#menu-right.narrow-menu-right {
-		width: calc(100% / 13 * 2.5);
-	}
+	#menu-right { width: calc(100% / 13 * 3.5); }
 
 	#menu-left  {
+		margin-right: 1.618em;
 		order : 1;
 	}
 
 	#menu-right {
+		margin-left: 1.618em;
 		order : 3;
 	}
+
+	#menu-left.narrow-menu-left,
+	#menu-right.narrow-menu-right { width: calc(100% / 13 * 2.5); }
+	#menu-left.narrow-menu-left   { margin-right: 0.809em; }
+	#menu-right.narrow-menu-right { margin-left: 0.809em; }
 
 	#main {
 		padding: 0 0 1.618em;
@@ -204,18 +170,12 @@ body {
 
 	#main.main-with-left,
 	#main.main-with-right,
-	#main.main-with-left.main-with-right {
-		flex: 1 0 auto;
-	}
+	#main.main-with-left.main-with-right { flex: 1 0 auto; }
 
 	#main.main-with-left,
-	#main.main-with-right {
-		width: calc(100% - ((100% / 13 * 5)));
-	}
+	#main.main-with-right { width: calc(100% - ((100% / 13 * 5))); }
 
-	#main.main-with-left.main-with-right {
-		width: calc(100% - ((100% / 13 * 8)));
-	}
+	#main.main-with-left.main-with-right { width: calc(100% - ((100% / 13 * 8))); }
 }
 
 section {
@@ -226,24 +186,16 @@ section {
 }
 
 @media (min-width: 769px) {
-	section {
-		margin: 0.809em auto;
-	}
+	section { margin: 0.809em auto; }
 }
 
 /* --- Up and under main content --- */
-#top-content {
-	margin: 0 0 1.618em 0;
-}
+#top-content { margin: 0 0 1.618em 0; }
 
-#bottom-content {
-	margin: 1.618em 0 0;
-}
+#bottom-content { margin: 1.618em 0 0; }
 
 /* --- Footer --------------------------------------------------------------- */
-#top-footer {
-	padding: 0.809em;
-}
+#top-footer { padding: 0.809em; }
 
 #footer {
 	clear: both;
@@ -272,17 +224,11 @@ section {
 	display: block;
 }
 
-.footer-infos span.footer-infos-separator {
-	display: none;
-}
+.footer-infos span.footer-infos-separator { display: none; }
 
 @media (min-width: 769px) {
 	.footer-infos span,
-	.footer-infos span.footer-infos-separator {
-		display: inline-block;
-	}
+	.footer-infos span.footer-infos-separator { display: inline-block; }
 
-	.footer-infos {
-		padding: 0.618em 0 0;
-	}
+	.footer-infos { padding: 0.618em 0 0; }
 }

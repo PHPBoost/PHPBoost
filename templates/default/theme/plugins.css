@@ -18,9 +18,7 @@
 .content-panel { padding: 0.618em; }
 
 /* --- Multitabs Accordion -------------------------------------------------- */
-.accordion-container .accordion-controls {
-    text-align: right;
-}
+.accordion-container .accordion-controls { text-align: right; }
 
 .accordion-controls span {
     display: inline-block;
@@ -59,9 +57,7 @@
     content: '\f078'
 }
 
-.accordion-container > .accordion-nav > ul > li > a.active-tab:after {
-    content: '\f077';
-}
+.accordion-container > .accordion-nav > ul > li > a.active-tab:after { content: '\f077'; }
 
 .accordion-animation  {
     height: 0;
@@ -88,9 +84,7 @@
     border-color: transparent;
 }
 
-li:last-child .accordion .content-panel {
-    border-width: 0 1px 1px;
-}
+li:last-child .accordion .content-panel { border-width: 0 1px 1px; }
 
 /* --- Multitabs Modals ----------------------------------------------------- */
 .modal-btn {
@@ -188,18 +182,14 @@ li:last-child .accordion .content-panel {
 }
 
 /* --- Multitabs Tabs ------------------------------------------------------- */
-.tabs-container > .tabs-nav {
-    margin-bottom: 1.618em;
-}
+.tabs-container > .tabs-nav { margin-bottom: 1.618em; }
 
 .tabs-container > .tabs-nav > ul {
     margin: 0;
     padding: 0;
 }
 
-.tabs-container > .tabs-nav > ul > li {
-    display: inline-block;
-}
+.tabs-container > .tabs-nav > ul > li { display: inline-block; }
 
 .tabs-container > .tabs-nav > ul > li a {
     display: block;
@@ -222,9 +212,8 @@ li:last-child .accordion .content-panel {
 }
 
 /* --- tooltip -------------------------------------------------------------- */
-.tooltip {
-    display: none;
-}
+.tooltip { display: none; }
+
 @media (min-width: 769px) {
     .tooltip {
         display: block;
@@ -254,9 +243,7 @@ li:last-child .accordion .content-panel {
 	transition-duration: 0.4s;
 }
 
-.wizard-container .wizard-header {
-	padding: 10px;
-}
+.wizard-container .wizard-header { padding: 10px; }
 
 .wizard-container .wizard-header ul {
 	margin: 0;
@@ -282,13 +269,9 @@ li:last-child .accordion .content-panel {
     cursor: default;
 }
 
-.wizard-container .wizard-header a.completed-step {
-    cursor: pointer;
-}
+.wizard-container .wizard-header a.completed-step { cursor: pointer; }
 
-.wizard-container .wizard-header a:hover {
-    text-decoration: none;
-}
+.wizard-container .wizard-header a:hover { text-decoration: none; }
 
 .wizard-container .wizard-header li span {
 	position: relative;
@@ -310,9 +293,7 @@ li:last-child .accordion .content-panel {
 	animation-duration: 0.4s;
 }
 
-.wizard-container .wizard-step.active-step {
-	display: block;
-}
+.wizard-container .wizard-step.active-step { display: block; }
 
 .wizard-container .wizard-navigator {
 	width: 100%;
@@ -323,12 +304,10 @@ li:last-child .accordion .content-panel {
 }
 
 @media (min-width: 768px) {
-	.wizard-container .wizard-header ul {
-		flex-direction: row;
-	}
+	.wizard-container .wizard-header ul { flex-direction: row; }
 }
 
-/* --- Cssmenu select (fake select) --- */
+/* --- Cssmenu select (select converted to list) --- */
 .cssmenu-select,
 .cssmenu-select li,
 .cssmenu-select li .cssmenu-title {
@@ -347,22 +326,16 @@ li:last-child .accordion .content-panel {
 	transition: 0.2s;
 }
 
-.cssmenu-select ul li.has-sub:hover ul {
-	left: -9999px;
-}
+.cssmenu-select ul li.has-sub:hover ul { left: -9999px; }
 
-.cssmenu-select.cssmenu-open ul li.has-sub ul {
-	left: 0;
-}
+.cssmenu-select.cssmenu-open ul li.has-sub ul { left: 0; }
 
 .cssmenu-select li .cssmenu-title {
 	cursor: pointer;
 	font-size: 1.4rem;
 }
 
-.cssmenu-select .has-sub {
-	margin-bottom: 0.1618em;
-}
+.cssmenu-select .has-sub { margin-bottom: 0.1618em; }
 
 .cssmenu-select .has-sub > .cssmenu-title {
 	padding: calc(0.618em - 1px) 1.618em calc(0.618em - 1px) 0.618em !important;

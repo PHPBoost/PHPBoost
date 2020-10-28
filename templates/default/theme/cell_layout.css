@@ -56,9 +56,7 @@
 .cell-flex .cell-list,
 .cell-flex .cell-table,
 .cell-flex .cell-textarea,
-.flex-wide {
-	flex: 1 1 auto;
-}
+.flex-wide { flex: 1 1 auto; }
 
 .cell-flex .cell-list-inline ul {
 	display: flex;
@@ -71,14 +69,10 @@
 	flex-direction: column;
 }
 
-.cell-flex .cell-form.grouped-inputs {
-	flex-direction: row;
-}
+.cell-flex .cell-form.grouped-inputs { flex-direction: row; }
 
 @media (min-width: 769px) {
-	.cell-flex .cell-form {
-		flex-direction: row;
-	}
+	.cell-flex .cell-form { flex-direction: row; }
 
 	.cell-flex .cell-form .cell-label { width: 40%; }
 
@@ -129,20 +123,14 @@
 
 /* --- Inline --------------------------------------------------------------- */
 @media (min-width: 769px) {
-	.cell-inline .cell {
-		max-width: 234px;
-	}
+	.cell-inline .cell { max-width: 234px; }
 }
 
 /* --- Mini module ---------------------------------------------------------- */
-.cell-mini-vertical .cell {
-	padding:  0.618em 0 0;
-}
+.cell-mini-vertical .cell { padding:  0.618em 0 0; }
 
 .cell-mini .cell-form .cell-label,
-.cell-mini .cell-form .cell-input {
-	padding: 0;
-}
+.cell-mini .cell-form .cell-input { padding: 0; }
 
 .cell-mini fieldset { margin: 0; }
 

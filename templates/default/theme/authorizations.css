@@ -10,9 +10,7 @@
     flex-wrap: wrap;
 }
 
-.form-element-auth {
-    width: 100%;
-}
+.form-element-auth { width: 100%; }
 
 .advanced-auth-container {
 	display: flex;
@@ -30,18 +28,14 @@
         flex-direction: row;
     }
 
-    .advanced-auth-container select {
-        width: auto;
-    }
+    .advanced-auth-container select { width: auto; }
 
     .advanced-auth-select {
         min-width: 180px;
         min-height: 106px;
     }
 
-    .advanced-auth-input {
-    	margin-left: 0.309em;
-    }
+    .advanced-auth-input { margin-left: 0.309em; }
 }
 
 .advanced-auth-input-result {

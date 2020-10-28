@@ -16,19 +16,13 @@
 }
 
 @media (min-width: 769px) {
-	.sharing-elements-list {
-		justify-content: flex-start;
-	}
+	.sharing-elements-list { justify-content: flex-start; }
 }
 
-.sharing-element {
-	flex: 0 0 auto;
-}
+.sharing-element { flex: 0 0 auto; }
 
 @media (min-width: 769px) {
-	.sharing-element {
-		margin: 0 0.309em 0.309em 0;
-	}
+	.sharing-element { margin: 0 0.309em 0.309em 0; }
 }
 
 .sharing-element a {

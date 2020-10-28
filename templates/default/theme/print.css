@@ -8,9 +8,9 @@
 	margin: 0;
 	padding: 0;
 	font-size: 100%;
-	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	outline: none; }
+	outline: none;
+}
 
 body {
 	margin: auto;
@@ -18,28 +18,20 @@ body {
 	background-color: #FFFFFF;
 	font-family: serif;
 	font-size: 1.309em;
-	color: black;
+	color: #000000;
 }
 
-h1 {
-	border-bottom: 1px solid #000000;
-}
+h1 { border-bottom: 1px solid #000000; }
 
-td, th {
-	border: 1px solid #000000;
-}
+td, th { border: 1px solid #000000; }
 
-th {
-	font-weight: bold;
-}
+th { font-weight: bold; }
 
-img, table, td, blockquote, code, pre, textarea, input, video, object, iframe {
-	max-width: 100%; }
+img, table, td, blockquote, code, pre, textarea, input, video, object, iframe { max-width: 100%; }
 
 div, textarea, table, td, th, code, pre, samp {
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	hyphens: auto;
-	-ms-hyphens: auto;
-	-moz-hyphens: auto;
-	-webkit-hyphens: auto; }
+	-webkit-hyphens: auto;
+}

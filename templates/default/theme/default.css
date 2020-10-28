@@ -163,9 +163,7 @@ abbr {
 .blink { animation: blink 1.5s ease-in-out infinite; }
 
 /* --- Debug --- */
-.debugger {
-	padding: 0.618em 1.618em;
-}
+.debugger { padding: 0.618em 1.618em; }
 
 
 /* --- Basic font ----------------------------------------------------------- */

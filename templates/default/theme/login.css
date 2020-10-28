@@ -20,6 +20,4 @@
 	max-width: 100%;
 }
 
-.cookiebar-container {
-	position: fixed;
-}
+.cookiebar-container { position: fixed; }

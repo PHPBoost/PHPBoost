@@ -12,20 +12,14 @@
 	vertical-align: top;
 }
 
-.explorer h2 {
-	font-size: 1.618em;
-}
+.explorer h2 { font-size: 1.618em; }
 
 @media (min-width: 481px) {
 	.explorer .cats,
-	.explorer .files {
-		width: calc(100% / 2.1);
-	}
+	.explorer .files { width: calc(100% / 2.1); }
 }
 
-.explorer .cats {
-	min-width: 200px;
-}
+.explorer .cats { min-width: 200px; }
 
 .form-field .explorer,
 .form-field .explorer .cats { width: 100%; }
@@ -61,14 +55,8 @@
 	margin-right: 0.309em;
 }
 
-.explorer .content ul i:before {
-	vertical-align: middle;
-}
+.explorer .content ul i:before { vertical-align: middle; }
 
-.explorer .content ul a.parent i:first-child {
-	width: 0.809em;
-}
+.explorer .content ul a.parent i:first-child { width: 0.809em; }
 
-.explorer .content ul a.parent i:first-child:before {
-	font-size: 0.809em;
-}
+.explorer .content ul a.parent i:first-child:before { font-size: 0.809em; }

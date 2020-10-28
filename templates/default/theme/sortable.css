@@ -24,22 +24,16 @@
 	border-color: transparent;
 }
 
-.sortable-element:hover {
-	transition: all 0.2s;
-}
+.sortable-element:hover { transition: all 0.2s; }
 
 .sortable-element > .sortable-block {
 	flex: 1 1 100%;
 	padding: 0 0 0 1.809em;
 }
 
-.sortable-element .sortable-element {
-	border-width: 1px 0 1px 1px;
-}
+.sortable-element .sortable-element { border-width: 1px 0 1px 1px; }
 
-.sortable-selector {
-	padding: 0 0 0 0.309em;
-}
+.sortable-selector { padding: 0 0 0 0.309em; }
 
 @media (min-width:769px){
 
@@ -71,17 +65,11 @@
 	align-items: center;
 }
 
-.sortable-title:hover {
-	transition: all 0.2s linear;
-}
+.sortable-title:hover { transition: all 0.2s linear; }
 
-.sortable-block fieldset {
-	padding: 0 1.618em;
-}
+.sortable-block fieldset { padding: 0 1.618em; }
 
-.sortable-block .sortable-actions a {
-    padding: 0.618em 0.309em;
-}
+.sortable-block .sortable-actions a { padding: 0.618em 0.309em; }
 
 .sortable-block .sortable-actions {
 	flex: 0 1 auto;
@@ -90,9 +78,7 @@
 	transition: opacity 0.2s;
 }
 
-.sortable-block .sortable-element hr {
-	margin-top: 0.309em;
-}
+.sortable-block .sortable-element hr { margin-top: 0.309em; }
 
 .sortable-block .sortable-element label {
 	/* margin-left: 0.809em; */
@@ -100,9 +86,7 @@
 
 .sortable-block .sortable-actions img,
 .sortable-block .sortable-element:hover label,
-.sortable-block .sortable-element .fa:hover {
-	cursor: pointer;
-}
+.sortable-block .sortable-element .fa:hover { cursor: pointer; }
 
 .sortable-actions a { text-decoration: none;}
 
@@ -113,9 +97,7 @@
 }
 
 body.dragging,
-body.dragging * {
-	cursor: move !important;
-}
+body.dragging * { cursor: move !important; }
 
 .dropzone {
 	margin: 0.618em 0;
@@ -127,6 +109,4 @@ body.dragging * {
 	border-color: transparent;
 }
 
-.preview img {
-	overflow: hidden;
-}
+.preview img { overflow: hidden; }

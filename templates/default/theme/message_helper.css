@@ -33,9 +33,7 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.text-helper .message-helper-small {
-	width: 50%;
-}
+.text-helper .message-helper-small { width: 50%; }
 
 .message-helper.error:before         { content: "\f00d"; } /* copy times */
 .message-helper.notice:before        { content: "\f12a"; } /* copy exclamation */
@@ -59,9 +57,7 @@
 	.floating-message-container {top: 3.228em;}
 }
 
-.floating-message-container.active-message {
-	z-index: 1000;
-}
+.floating-message-container.active-message { z-index: 1000; }
 
 .floating-message-container .floating-element {
 	opacity: 0;
@@ -85,6 +81,4 @@
 	padding-top: 0.1618em;
 }
 
-.floating-message-container .message-helper > a {
-	cursor: pointer;
-}
+.floating-message-container .message-helper > a { cursor: pointer; }

@@ -4,18 +4,14 @@
  *
 */
 
-.required-fields-text {
-	text-align: center;
-}
+.required-fields-text { text-align: center; }
 
 .field-required input,
 .field-required textarea,
 .field-required select,
 .constraint-status-right input,
 .constraint-status-right textarea,
-.constraint-status-right select {
-    padding-left: 1.618em;
-}
+.constraint-status-right select { padding-left: 1.618em; }
 
 /* --- Constraint icons --- */
 .field-required:after,
@@ -32,9 +28,7 @@
 }
 
 .constraint-status-right .field-required:after,
-.constraint-status-right .picture-status-constraint:after {
-	left: 0.309em;
-}
+.constraint-status-right .picture-status-constraint:after { left: 0.309em; }
 
 .field-required:after {
 	opacity: 0.6;
@@ -58,21 +52,13 @@
 	font-size: 1.5rem;
 }
 
-.constraint-status-right .field-required:after {
-	content: " ";
-}
+.constraint-status-right .field-required:after { content: " "; }
 
-.constraint-status-right .picture-status-constraint:after {
-	content: "\f00c";
-}
+.constraint-status-right .picture-status-constraint:after { content: "\f00c"; }
 
-.constraint-status-error i.picture-status-constraint {
-	content: "\f056";
-}
+.constraint-status-error i.picture-status-constraint { content: "\f056"; }
 
-.constraint-status-right .form-field-multi-select.field-required:after {
-	top: 0.309em;
-}
+.constraint-status-right .form-field-multi-select.field-required:after { top: 0.309em; }
 
 .form-field-multi-select.field-required:after {
 	top: 1em;
@@ -92,9 +78,7 @@
 
 .form-field-radio-button.field-required,
 .form-field-checkbox.field-required,
-.form-field-multiple-checkbox.field-required {
-	padding-left: 1.618em;
-}
+.form-field-multiple-checkbox.field-required { padding-left: 1.618em; }
 
 /* --- Error text --- */
 .text-status-constraint {

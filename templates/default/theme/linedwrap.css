@@ -4,9 +4,7 @@
  *
 */
 
-.linedwrap {
-	max-width: 100%;
-}
+.linedwrap { max-width: 100%; }
 
 .linedtextarea {
 	display: inline-block;

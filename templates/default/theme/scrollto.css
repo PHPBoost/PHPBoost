@@ -14,19 +14,13 @@
     opacity: 0.5;
 }
 
-.scroll-to:hover {
-    opacity: 1;
-}
+.scroll-to:hover { opacity: 1; }
 
 .scroll-to,
-.scroll-to i {
-    transition: 0.2s;
-}
+.scroll-to i { transition: 0.2s; }
 
 .scroll-to:hover,
-.scroll-to:hover i  {
-    transition: 0.3s;
-}
+.scroll-to:hover i  { transition: 0.3s; }
 
 #scroll-to-top {
     bottom: 0;
@@ -41,11 +35,7 @@
 }
 
 @media (min-width: 769px) {
-    .scroll-to i {
-        font-size: 1.618em;
-    }
+    .scroll-to i { font-size: 1.618em; }
 
-    #scroll-to-bottom {
-        padding: 0.309em 1.618em 0.309em;
-    }
+    #scroll-to-bottom { padding: 0.309em 1.618em 0.309em; }
 }

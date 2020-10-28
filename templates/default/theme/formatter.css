@@ -18,22 +18,16 @@ h2.formatter-title {
 	margin-top: 2.618rem;
 }
 
-h3.formatter-title {
-	border-width: 0 0 2px;
-}
+h3.formatter-title { border-width: 0 0 2px; }
 
-h4.formatter-title {
-	text-decoration: underline;
-}
+h4.formatter-title { text-decoration: underline; }
 
 h5.formatter-title {
 	font-style: italic;
 	text-decoration: underline;
 }
 
-h6.formatter-title {
-	font-style: italic;
-}
+h6.formatter-title { font-style: italic; }
 
 h2.formatter-title { font-size: 2.8rem; margin-left: 0; }
 h3.formatter-title { font-size: 2.6rem; margin-left: 1.618rem; }
@@ -41,18 +35,14 @@ h4.formatter-title { font-size: 2.4rem; margin-left: 3.236rem; }
 h5.formatter-title { font-size: 2.2rem; margin-left: 4.854rem; }
 h6.formatter-title { font-size: 2.0rem; margin-left: 6.472rem; }
 
-.formatter-title + br + .formatter-title {
-	margin-top: 0;
-}
+.formatter-title + br + .formatter-title { margin-top: 0; }
 
 .formatter-container {
 	position: relative;
 	display: block;
 }
 
-.formatter-container .formatter-title {
-	font-weight: bold;
-}
+.formatter-container .formatter-title { font-weight: bold; }
 
 .formatter-content {
 	margin: 0;
@@ -97,9 +87,7 @@ h6.formatter-title { font-size: 2.0rem; margin-left: 6.472rem; }
 	border-color: transparent;
 }
 
-.formatter-show .formatter-hide-message {
-	display: none;
-}
+.formatter-show .formatter-hide-message { display: none; }
 
 .formatter-hide-close-button.pinned {
 	padding: 0.228em 1em;
@@ -113,26 +101,18 @@ h6.formatter-title { font-size: 2.0rem; margin-left: 6.472rem; }
 	transition: all 0.3s linear;
 }
 
-.formatter-show .formatter-hide-close-button {
-	display: block;
-}
+.formatter-show .formatter-hide-close-button { display: block; }
 
-.formatter-hide-close-button:hover {
-	transition: all 0.3s linear;
-}
+.formatter-hide-close-button:hover { transition: all 0.3s linear; }
 
-.formatter-code .formatter-title {
-	margin: 1rem 0 0.5rem 0;
-}
+.formatter-code .formatter-title { margin: 1rem 0 0.5rem 0; }
 
 .formatter-code .formatter-content {
 	overflow: auto;
 	max-height: 500px;
 }
 
-.copy-code-content {
-	border-style: dashed;
-}
+.copy-code-content { border-style: dashed; }
 
 .formatter-blockquote .title-perso { padding-left: 1.618em; }
 
@@ -172,13 +152,9 @@ h6.formatter-title { font-size: 2.0rem; margin-left: 6.472rem; }
 	transition: all 0.3s linear;
 }
 
-.copy-code-txt {
-	padding: 0 0 0 0.228em;
-}
+.copy-code-txt { padding: 0 0 0 0.228em; }
 
-.formatter-acronym {
-	cursor: help;
-}
+.formatter-acronym { cursor: help; }
 
 .formatter-block {
 	display: block;
@@ -187,18 +163,14 @@ h6.formatter-title { font-size: 2.0rem; margin-left: 6.472rem; }
 	overflow: hidden;
 }
 
-.formatter-fieldset {
-	margin: 0.618em;
-}
+.formatter-fieldset { margin: 0.618em; }
 
 .formatter-ul {
 	text-align: left;
 	list-style-position: inside;
 }
 
-.code ol {
-	margin-left: 3em;
-}
+.code ol { margin-left: 3em; }
 
 /* --- menu de flux --- */
 .feed-list {

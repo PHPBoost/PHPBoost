@@ -176,10 +176,6 @@ label[for="delete-all-checkbox"] span {
 
 /* --- Thumbnail field --- */
 .form-field-thumbnail-choice .grouped-inputs,
-.form-field-thumbnail-choice + .form-field-thumbnail-preview {
-	margin: 1em 0;
-}
+.form-field-thumbnail-choice + .form-field-thumbnail-preview { margin: 1em 0; }
 
-.form-field-thumbnail-choice + .form-field-thumbnail-preview .form-field-preview {
-	margin-top: 1em;
-}
+.form-field-thumbnail-choice + .form-field-thumbnail-preview .form-field-preview { margin-top: 1em; }

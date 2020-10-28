@@ -31,28 +31,18 @@
 	transition: all 0.2s linear;
 }
 
-.light-pagination .pagination-item a {
-	border-radius: 50%;
-}
+.light-pagination .pagination-item a { border-radius: 50%; }
 
 .pagination-item a:hover {
 	transition: all 0.1s linear;
 	text-decoration: none;
 }
 
-.pagination-item a:active {
-	transition: all 0.2s linear;
-}
+.pagination-item a:active { transition: all 0.2s linear; }
 
-.pagination-item li a.current-page {
-	text-decoration: none;
-}
+.pagination-item li a.current-page { text-decoration: none; }
 
 .pagination-item-bis li a.prev-page:hover,
-.pagination-item-bis li a.next-page:hover {
-	text-decoration: underline;
-}
+.pagination-item-bis li a.next-page:hover { text-decoration: underline; }
 
-.pages-pagination a {
-	text-decoration: none;
-}
+.pages-pagination a { text-decoration: none; }

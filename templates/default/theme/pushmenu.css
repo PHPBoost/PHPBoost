@@ -67,20 +67,16 @@ body.push-nav-open {
 .pushmenu li:not(.custom-content) a {
     position: relative;
     display: block;
-    box-sizing: border-box;
     cursor: pointer;
 }
 
-.pushmenu li:not(.custom-content) a[disabled] {
-    cursor: not-allowed;
-}
+.pushmenu li:not(.custom-content) a[disabled] { cursor: not-allowed; }
+
 .pushmenu li:not(.custom-content) a,
-.pushmenu li:not(.custom-content) a:hover {
-    text-decoration: none;
-}
-.pushmenu input[type="checkbox"] {
-    display: none;
-}
+.pushmenu li:not(.custom-content) a:hover { text-decoration: none; }
+
+.pushmenu input[type="checkbox"] { display: none; }
+
 .pushmenu label {
     position: absolute;
     top: 0;
@@ -107,13 +103,9 @@ body.push-nav-open {
 
 .pushmenu .nav-item i + span,
 .pushmenu .nav-item span + span,
-.pushmenu .nav-item img + span {
-    padding-left: 0.618em;
-}
+.pushmenu .nav-item img + span { padding-left: 0.618em; }
 
-.pushmenu .nav-item span.cssmenu-title {
-    padding: 0;
-}
+.pushmenu .nav-item span.cssmenu-title { padding: 0; }
 
 .pushmenu .nav-item p { margin: 0; }
 
@@ -176,9 +168,7 @@ body.push-nav-open {
     max-height: 100vh;
 }
 
-.pushmenu.nav-levels-overlap .nav-wrapper {
-    max-height: 100vh;
-}
+.pushmenu.nav-levels-overlap .nav-wrapper { max-height: 100vh; }
 
 .pushmenu.nav-levels-overlap ul .nav-wrapper {
     position: absolute;
@@ -189,13 +179,9 @@ body.push-nav-open {
     transition: visibility 0s ease 0.4s, transform 0.4s ease;
 }
 
-.pushmenu.nav-levels-overlap ul li.nav-parent {
-    position: static;
-}
+.pushmenu.nav-levels-overlap ul li.nav-parent { position: static; }
 
-.pushmenu.nav-levels-overlap ul li.nav-parent .nav-item-wrapper {
-    position: relative;
-}
+.pushmenu.nav-levels-overlap ul li.nav-parent .nav-item-wrapper { position: relative; }
 
 .pushmenu.nav-levels-overlap ul li.level-open > .nav-wrapper {
     visibility: visible;
@@ -212,13 +198,9 @@ body.push-nav-open {
     transform: translate3d(-100%, 0, 0);
 }
 
-.pushmenu.nav-position-right {
-    right: 0;
-}
+.pushmenu.nav-position-right { right: 0; }
 
-.pushmenu.nav-position-right .nav-container {
-    right: 0;
-}
+.pushmenu.nav-position-right .nav-container { right: 0; }
 
 .pushmenu.nav-position-right.nav-levels-overlap li .nav-wrapper {
     right: 0;
@@ -262,9 +244,7 @@ body.push-nav-open {
 
 .cell-mini .pushmenu-toggle { padding: 0; }
 
-.pushmenu-toggle span {
-    padding: 0 0 0 0.618em;
-}
+.pushmenu-toggle span { padding: 0 0 0 0.618em; }
 
 .push-nav-trigger {
     position: relative;
@@ -466,9 +446,9 @@ a.nav-next {
 }
 
 .pushmenu.rtl a.nav-next {
-    border-left: none;
-    border-right: 1px solid #2c5d8f;
+    border-width: 0 1px 1px 0 ;
 }
+
 .pushmenu.rtl li.nav-parent .nav-item {
     padding-right: 17px;
     padding-left: 58px;

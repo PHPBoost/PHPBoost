@@ -5,14 +5,10 @@
  * Contains css for datepicker input & calendar block
 */
 
-.form-element-date-time {
-    flex-direction: column;
-}
+.form-element-date-time { flex-direction: column; }
 
 @media (min-width: 1025px) {
-    .form-element-date-time {
-        flex-direction: row;
-    }
+    .form-element-date-time { flex-direction: row; }
 }
 
 .form-field-date,
@@ -37,9 +33,7 @@
     font-size: 0.809em
 }
 
-.form-element .fa-calendar-alt {
-	cursor: pointer;
-}
+.form-element .fa-calendar-alt { cursor: pointer; }
 
 /* --- Grouped input --- */
 .calendar-container > a {
@@ -48,9 +42,7 @@
 }
 
 /* --- calendar block ------------------------------------------------------- */
-.calendar-block table.date-picker thead th {
-    border-width: 0 0 1px;
-}
+.calendar-block table.date-picker thead th { border-width: 0 0 1px; }
 
 .date-picker .square-cell {
     position: relative;
@@ -73,9 +65,7 @@
 	position: relative;
 }
 
-.calendar-block .date-select-nav i {
-	padding: 0 0.618em;
-}
+.calendar-block .date-select-nav i { padding: 0 0.618em; }
 
 .calendar-block .date-picker thead tr th {
 	padding: 0.618em 0;
