@@ -9,7 +9,7 @@
 			jQuery('button[name="mail_newsletter_button"]').attr('aria-label', "{@newsletter.unsubscribe_newsletters}");
 		};
 	</script>
-	<form id="newsletter-mini-subscription-form" action="{PATH_TO_ROOT}/newsletter/?url=/subscribe/" method="post">
+	<form class="cell-form" id="newsletter-mini-subscription-form" action="{PATH_TO_ROOT}/newsletter/?url=/subscribe/" method="post">
 		<fieldset>
 			<legend class="sr-only">${LangLoader::get_message('email', 'user-common')}</legend>
 			<label for="newsletter-email" class="sr-only">${LangLoader::get_message('email', 'user-common')}</label>
@@ -34,12 +34,12 @@
 # ELSE #
 	<div id="newsletter" class="cell-mini# IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF #">
 		<div class="cell">
-			<form action="{PATH_TO_ROOT}/newsletter/?url=/subscribe/" method="post">
+			<form class="cell-form" action="{PATH_TO_ROOT}/newsletter/?url=/subscribe/" method="post">
 				<fieldset>
 					<legend class="sr-only">${LangLoader::get_message('email', 'user-common')}</legend>
 					<div class="cell-form grouped-inputs grouped-auto grouped-right">
 						<span class="newsletter-title grouped-element">{@newsletter}</span>
-						<label for="newsletter-email" class="sr-only">${LangLoader::get_message('email', 'user-common')}</label>
+						<label class="grouped-element" for="newsletter-email" class="sr-only">${LangLoader::get_message('email', 'user-common')}</label>
 						<input class="grouped-element" id="newsletter-email" type="text" name="mail_newsletter" maxlength="50" value="{USER_MAIL}" placeholder="${LangLoader::get_message('email', 'user-common')}" aria-labelledby="NewsletterButton">
 						<input type="hidden" name="subscribe" value="subscribe">
 						<input type="hidden" name="token" value="{TOKEN}">
