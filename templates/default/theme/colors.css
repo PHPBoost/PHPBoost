@@ -640,14 +640,7 @@ a[class*='lightcase-icon-']:hover {
 
 /* -- global ---------------------------------------------------------------- */
 /* --- cell --- */
-.cell-tile .cell-header,
-.cell-tile .cell-infos,
-.cell-tile .cell-body,
-.cell-tile .cell-list,
-.cell-tile .cell-table,
-.cell-tile .cell-form,
-.cell-tile .cell-textarea,
-.cell-tile .cell-footer {
+.cell-tile .cell > [class*="cell-"] {
 	background-color: var(--bgc-alt);
 	border-color: var(--bdr-main);
 }
@@ -655,7 +648,7 @@ a[class*='lightcase-icon-']:hover {
 .cell-list li:hover,
 .cell-list .current { background-color: rgba(var(--main-rgb-t), 0.1); }
 
-.cell-mini [class*="cell-"] { background-color: transparent; }
+.cell-mini .cell > [class*="cell-"] { background-color: transparent; }
 
 .no-style {
 	background-color: transparent !important;
