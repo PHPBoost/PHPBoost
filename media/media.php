@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2020 10 28
+ * @version     PHPBoost 6.0 - last update: 2020 11 02
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -165,11 +165,29 @@ elseif ($id_media > 0)
 			if($odysee_player) {
 				if($odysee_dl_link || $odysee_embed_link) {
 					$explode = explode('/', $dirname);
-			        $media_id = $explode[5] . '/' . $media_id;
+			        $media_id = $explode[5] . '/' . $media_id; // add video title in final url
 				}
 				else {
 					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
 					$LANG['e.bad.url.odysee']);
+					DispatchManager::redirect($controller);
+				}
+			}
+
+			// Peertube
+			$peertube_link = $config->get_peertube_constant();
+			$peertube_host = explode('/', $peertube_link);
+			$peertube_host_player = explode('.', $peertube_host[2]);
+			$sliced_name = array_slice($peertube_host_player, 0, -1);
+			$peertube_player = implode('.', $sliced_name);
+			$player_is_peertube =  strpos($dirname, $peertube_player) !== false;
+			$peertube_videos_link = strpos($dirname, 'videos') !== false;
+			$peertube_watch_link = strpos($dirname, 'watch') !== false;
+			$peertube_embed_link = strpos($dirname, 'embed') !== false;
+			if($player_is_peertube) {
+				if(!$peertube_videos_link && (!$peertube_embed_link || !$peertube_watch_link)) {
+					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
+					$LANG['e.bad.url.peertube']);
 					DispatchManager::redirect($controller);
 				}
 			}

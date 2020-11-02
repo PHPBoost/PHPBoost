@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 10 19
+ * @version     PHPBoost 6.0 - last update: 2020 10 29
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -45,12 +45,12 @@ class MediaDisplayCategoryController extends ModuleController
 		$comments_config = CommentsConfig::load();
 		$content_management_config = ContentManagementConfig::load();
 
-		//Contenu de la catégorie
+		// Contenu de la catégorie
 		$page = AppContext::get_request()->get_getint('p', 1);
 		$subcategories_page = AppContext::get_request()->get_getint('subcategories_page', 1);
 		$get_sort = retrieve(GET, 'sort', '');
 		$get_mode = retrieve(GET, 'mode', '');
-		$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
+		$mode = ($get_mode == 'desc') ? 'DESC' : 'ASC';
 		$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
 		$subcategories = CategoriesService::get_categories_manager('media')->get_categories_cache()->get_children($this->get_category()->get_id(), CategoriesService::get_authorized_categories($this->get_category()->get_id(), true, 'media'));
@@ -109,11 +109,11 @@ class MediaDisplayCategoryController extends ModuleController
 
 		switch ($get_sort)
 		{
+			default:
 			case 'alpha':
 				$sort = 'name';
 				$selected_fields['alpha'] = ' selected="selected"';
 				break;
-			default:
 			case 'date':
 				$sort = 'timestamp';
 				$selected_fields['date'] = ' selected="selected"';
@@ -132,13 +132,13 @@ class MediaDisplayCategoryController extends ModuleController
 				break;
 		}
 
-		if ($mode == 'ASC')
+		if ($mode == 'DESC')
 		{
-			$selected_fields['asc'] = ' selected="selected"';
+			$selected_fields['desc'] = ' selected="selected"';
 		}
 		else
 		{
-			$selected_fields['desc'] = ' selected="selected"';
+			$selected_fields['asc'] = ' selected="selected"';
 		}
 
 		$this->tpl->put_all(array(

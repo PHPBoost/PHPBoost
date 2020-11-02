@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 25
+ * @version     PHPBoost 6.0 - last update: 2020 11 02
  * @since       PHPBoost 4.1 - 2015 02 03
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -126,6 +126,13 @@ class AdminMediaConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
 
+		$fieldset_constant = new FormFieldsetHTML('constant_host', $this->lang['config.constant.host']);
+		$form->add_fieldset($fieldset_constant);
+
+		$fieldset_constant->add_field(new FormFieldTextEditor('peertube_constant', $this->lang['config.constant.host.peertube'], $this->config->get_peertube_constant(),
+			array('description' => $this->lang['config.constant.host.peertube.desc'])
+		));
+
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', LangLoader::get_message('authorizations', 'common'),
 			array('description' => $this->admin_common_lang['config.authorizations.explain'])
 		);
@@ -160,6 +167,8 @@ class AdminMediaConfigController extends AdminModuleController
 		$this->config->set_root_category_description($this->form->get_value('root_category_description'));
 		$this->config->set_root_category_content_type($this->form->get_value('root_category_content_type')->get_raw_value());
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
+
+		$this->config->set_peertube_constant($this->form->get_value('peertube_constant'));
 
 		MediaConfig::save();
 		CategoriesService::get_categories_manager()->regenerate_cache();

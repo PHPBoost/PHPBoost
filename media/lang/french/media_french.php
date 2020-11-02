@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2018 12 31
+ * @version     PHPBoost 6.0 - last update: 2020 11 02
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -89,5 +89,6 @@ $LANG['e.bad.url.odysee'] = '
         <li><span class="pinned question">Liens</span> / url fournie dans <span class="pinned question">Lien de téléchargement</span></li>
     </ul>
 ';
+$LANG['e.bad.url.peertube'] = 'L\'url PeerTube renseignée n\'est pas valide. Elle ne correspond pas à l\'url renseignée dans la configuration du module.';
 
 ?>

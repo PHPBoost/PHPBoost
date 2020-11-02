@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 10
+ * @version     PHPBoost 6.0 - last update: 2020 11 02
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor xela <xela@phpboost.com>
 */
@@ -35,6 +35,9 @@ $lang['content_type.video'] = 'Video';
 $lang['config.max_video_width'] = 'Maximum video width';
 $lang['config.max_video_height'] = 'Maximum video height';
 $lang['config.root_category_content_type'] = 'Multimedia root category type of files allowed';
+$lang['config.constant.host'] = 'Trusted hosts';
+$lang['config.constant.host.peertube'] = 'Peertube';
+$lang['config.constant.host.peertube.desc'] = '<a href="https://joinpeertube.org">Joinpeertube.org</a> - <a href="https://instances.joinpeertube.org/instances/">List of instances</a>';
 
 //SEO
 $lang['media.seo.description.root'] = 'All :site\'s multimedia files.';

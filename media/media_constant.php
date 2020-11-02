@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 23
+ * @version     PHPBoost 6.0 - last update: 2020 11 02
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -18,15 +18,15 @@ define('MEDIA_STATUS_APROBED', 2);
 // Authorized files extension.
 $mime_type = array(
 	'audio' => array(
-		'mp3' => 'audio/mpeg',
+		'mp3'   => 'audio/mpeg',
 		'ahost' => 'audio/host',
 	),
 	'video' => array(
-		'flv' => 'video/x-flv',
-		'mp4' => 'video/mp4',
-		'ogg' => 'video/ogg',
-		'webm' => 'video/webm',
-		'swf' => 'application/x-shockwave-flash',
+		'flv'   => 'video/x-flv',
+		'mp4'   => 'video/mp4',
+		'ogg'   => 'video/ogg',
+		'webm'  => 'video/webm',
+		'swf'   => 'application/x-shockwave-flash',
 		'vhost' => 'video/host',
 	)
 );
@@ -35,16 +35,26 @@ $mime_type = array(
 $mime_type_tpl = array(
 	'application/x-shockwave-flash' => 'format/media_swf.tpl',
 	'video/x-flv' => 'format/media_flv.tpl',
-	'video/mp4' => 'format/media_html5_player.tpl',
-	'video/ogg' => 'format/media_html5_player.tpl',
-	'video/webm' => 'format/media_html5_player.tpl',
-	'audio/mpeg' => 'format/media_mp3.tpl',
-	'video/host' => 'format/host_player.tpl',
-	'audio/host' => 'format/host_player.tpl',
+	'video/mp4'   => 'format/media_html5_player.tpl',
+	'video/ogg'   => 'format/media_html5_player.tpl',
+	'video/webm'  => 'format/media_html5_player.tpl',
+	'audio/mpeg'  => 'format/media_mp3.tpl',
+	'video/host'  => 'format/host_player.tpl',
+	'audio/host'  => 'format/host_player.tpl',
 );
 
 // Trusted host
+$config = MediaConfig::load();
+$peertube_link = $config->get_peertube_constant();
+$peertube_host = explode('/', $peertube_link);
 $host_ok = array(
+	'audio' => array(
+		'music.amazon.com',
+		'www.deezer.com',
+		'www.spotify.com',
+		'soundcloud.com',
+		'w.soundcloud.com',
+	),
 	'video' => array(
 		'www.arte.tv',
 		'www.dailymotion.com',
@@ -54,25 +64,23 @@ $host_ok = array(
 		'player.vimeo.com',
 		'www.youtube.com',
 		'youtu.be',
-		'odysee.com'
-	),
-	'audio' => array(
-		'music.amazon.com',
-		'www.deezer.com',
-		'www.spotify.com',
-		'soundcloud.com',
-		'w.soundcloud.com',
+		'odysee.com',
+		$peertube_host[2]
 	)
 );
 
+$peertube_host_player = explode('.', $peertube_host[2]);
+$sliced_name = array_slice($peertube_host_player, 0, -1);
+$peertube_player = implode('.', $sliced_name);
 // Host file players
 $host_players = array(
-	'youtu' => 'https://www.youtube.com/embed/',
-    'vimeo' => 'https://player.vimeo.com/video/',
-    'dailymotion' => 'https://www.dailymotion.com/embed/video/',
-    'odysee' => 'https://odysee.com/$/embed/',
-    'arte' => 'https://www.arte.tv/player/v5/',
-    'soundcloud' => 'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/',
+	'youtu'          => 'https://www.youtube.com/embed/',
+    'vimeo'          => 'https://player.vimeo.com/video/',
+    'dailymotion'    => 'https://www.dailymotion.com/embed/video/',
+    'odysee'         => 'https://odysee.com/$/embed/',
+    $peertube_player => $peertube_link . '/videos/embed/',
+    'arte'           => 'https://www.arte.tv/player/v5/',
+    'soundcloud'     => 'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/',
 )
 
 ?>

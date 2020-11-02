@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 10
+ * @version     PHPBoost 6.0 - last update: 2020 11 02
  * @since       PHPBoost 4.1 - 2015 02 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -29,6 +29,8 @@ class MediaConfig extends AbstractConfigData
 	const CONTENT_TYPE_MUSIC_AND_VIDEO = 0;
 	const CONTENT_TYPE_MUSIC = 1;
 	const CONTENT_TYPE_VIDEO = 2;
+
+	const PEERTUBE_CONSTANT = '';
 
 	public function get_categories_number_per_page()
 	{
@@ -160,6 +162,16 @@ class MediaConfig extends AbstractConfigData
 		$this->set_property(self::AUTHORIZATIONS, $authorizations);
 	}
 
+	public function get_peertube_constant()
+	{
+		return $this->get_property(self::PEERTUBE_CONSTANT);
+	}
+
+	public function set_peertube_constant($value)
+	{
+		$this->set_property(self::PEERTUBE_CONSTANT, $value);
+	}
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -176,7 +188,8 @@ class MediaConfig extends AbstractConfigData
 			self::MAX_VIDEO_HEIGHT => 570,
 			self::ROOT_CATEGORY_DESCRIPTION => CategoriesService::get_default_root_category_description('media'),
 			self::ROOT_CATEGORY_CONTENT_TYPE => self::CONTENT_TYPE_MUSIC_AND_VIDEO,
-			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13)
+			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13),
+			self::PEERTUBE_CONSTANT => 'https://peertube.fr'
 		);
 	}
 
