@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 08 08
+ * @version     PHPBoost 6.0 - last update: 2020 11 04
  * @since       PHPBoost 6.0 - 2020 05 16
  * @contributor xela <xela@phpboost.com>
 */
@@ -127,9 +127,12 @@ class DefaultItemFormController extends AbstractItemController
 
 		$this->build_pre_content_fields($fieldset);
 
-		$fieldset->add_field(new FormFieldRichTextEditor($this->item_class::get_content_label(), $this->common_lang['form.content'], $this->get_item()->get_content(),
-			array('rows' => 15, 'required' => true)
-		));
+		if ($this->get_item()->content_field_enabled())
+		{
+			$fieldset->add_field(new FormFieldRichTextEditor($this->item_class::get_content_label(), $this->common_lang['form.content'], $this->get_item()->get_content(),
+				array('rows' => 15, 'required' => true)
+			));
+		}
 
 		$this->build_post_content_fields($fieldset);
 
@@ -298,7 +301,10 @@ class DefaultItemFormController extends AbstractItemController
 		if (self::get_module()->get_configuration()->has_categories() && CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
 			$this->get_item()->set_id_category($this->form->get_value('id_category')->get_raw_value());
 
-		$this->get_item()->set_content($this->form->get_value($this->item_class::get_content_label()));
+		if ($this->get_item()->content_field_enabled())
+		{
+			$this->get_item()->set_content($this->form->get_value($this->item_class::get_content_label()));
+		}
 
 		if (self::get_module()->get_configuration()->has_rich_items())
 		{

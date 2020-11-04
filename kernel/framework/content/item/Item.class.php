@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 10 26
+ * @version     PHPBoost 6.0 - last update: 2020 11 04
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor xela <xela@phpboost.com>
 */
@@ -35,6 +35,8 @@ class Item
 	protected $additional_attributes_list = array();
 	protected $additional_attributes_items_table_fields = array();
 	protected $additional_attributes_items_table_options = array();
+	
+	protected $content_field_enabled = true;
 
 	const READ_AUTHORIZATIONS = 1;
 	const WRITE_AUTHORIZATIONS = 2;
@@ -377,17 +379,28 @@ class Item
 		return $this->additional_attributes_items_table_options;
 	}
 
+	protected function disable_content_field()
+	{
+		$this->content_field_enabled = false;
+	}
+
+	public function content_field_enabled()
+	{
+		return $this->content_field_enabled;
+	}
+
 	public function get_properties()
 	{
 		$category_properties = self::$module->get_configuration()->has_categories() ? array('id_category' => $this->get_id_category()) : array();
+		$content_properties = $this->content_field_enabled ? array(self::get_content_label() => $this->get_content()) : array();
 		
 		return array_merge(
 			$category_properties,
+			$content_properties,
 			array(
 			'id'                                  => $this->get_id(),
 			self::get_title_label()               => $this->get_title(),
 			'rewrited_' . self::get_title_label() => $this->get_rewrited_title(),
-			self::get_content_label()             => $this->get_content(),
 			'author_user_id'                      => $this->get_author_user()->get_id(),
 			'creation_date'                       => $this->get_creation_date()->get_timestamp(),
 			'update_date'                         => $this->get_update_date() !== null ? $this->get_update_date()->get_timestamp() : 0,
@@ -434,7 +447,10 @@ class Item
 		$this->set_id($properties['id']);
 		$this->set_title($properties[self::get_title_label()]);
 		$this->set_rewrited_title($properties['rewrited_' . self::get_title_label()]);
-		$this->set_content($properties[self::get_content_label()]);
+		
+		if ($this->content_field_enabled)
+			$this->set_content($properties[self::get_content_label()]);
+		
 		$this->set_creation_date(new Date($properties['creation_date'], Timezone::SERVER_TIMEZONE));
 		$this->update_date = !empty($properties['update_date']) ? new Date($properties['update_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->set_publishing_state($properties['published']);
@@ -655,7 +671,7 @@ class Item
 			// Item parameters
 			'ID'                                              => $this->get_id(),
 			TextHelper::strtoupper(self::get_title_label())   => $this->get_title(),
-			TextHelper::strtoupper(self::get_content_label()) => $content,
+			TextHelper::strtoupper(self::get_content_label()) => $this->content_field_enabled ? $content : '',
 			'AUTHOR_DISPLAY_NAME'                             => $author->get_display_name(),
 			'AUTHOR_LEVEL_CLASS'                              => UserService::get_level_class($author->get_level()),
 			'AUTHOR_GROUP_COLOR'                              => $author_group_color,
@@ -708,6 +724,14 @@ class Item
 		
 		$kernel_additional_fields = $kernel_additional_indexes = array();
 		
+		if ($this->content_field_enabled)
+		{
+			$content_field = array($class_name::get_content_label() => array('type' => 'text',    'length' => 16777215));
+			$content_option = array('content' => array('type' => 'fulltext', 'fields' => $class_name::get_content_label()));
+		}
+		else
+			$content_field = $content_option = array();
+		
 		if ($module->get_configuration()->has_categories())
 		{
 			$kernel_additional_fields['id_category'] = array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0);
@@ -728,7 +752,10 @@ class Item
 		$fields = array_merge(array(
 			'id'                                         => array('type' => 'integer', 'length' => 11,  'notnull' => 1, 'autoincrement' => true),
 			$class_name::get_title_label()               => array('type' => 'string',  'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'rewrited_' . $class_name::get_title_label() => array('type' => 'string',  'length' => 255, 'default' => "''"),
+			'rewrited_' . $class_name::get_title_label() => array('type' => 'string',  'length' => 255, 'default' => "''")
+		),
+		$content_field,
+		array(
 			$class_name::get_content_label()             => array('type' => 'text',    'length' => 16777215),
 			'author_user_id'                             => array('type' => 'integer', 'length' => 11,  'notnull' => 1, 'default' => 0),
 			'creation_date'                              => array('type' => 'integer', 'length' => 11,  'notnull' => 1, 'default' => 0),
@@ -739,9 +766,8 @@ class Item
 		$options = array(
 			'primary' => array('id'),
 			'indexes' => array_merge(array(
-				'title'   => array('type' => 'fulltext', 'fields' => $class_name::get_title_label()),
-				'content' => array('type' => 'fulltext', 'fields' => $class_name::get_content_label())
-				), $kernel_additional_indexes, $object->get_additional_attributes_items_table_options()
+					'title'   => array('type' => 'fulltext', 'fields' => $class_name::get_title_label())
+				), $content_option, $kernel_additional_indexes, $object->get_additional_attributes_items_table_options()
 			)
 		);
 
