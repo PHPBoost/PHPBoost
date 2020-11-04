@@ -163,9 +163,13 @@ class DefaultItemFormController extends AbstractItemController
 							if (HTMLForms.getField("publishing_state").getValue() == 2) {
 								jQuery("#' . self::$module_id . '_form_publishing_start_date_field").show();
 								HTMLForms.getField("end_date_enabled").enable();
+								if (HTMLForms.getField("end_date_enabled").getValue()) {
+									HTMLForms.getField("publishing_end_date").enable();
+								}
 							} else {
 								jQuery("#' . self::$module_id . '_form_publishing_start_date_field").hide();
 								HTMLForms.getField("end_date_enabled").disable();
+								HTMLForms.getField("publishing_end_date").disable();
 							}'
 						)
 					)
