@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 30
+ * @version     PHPBoost 6.0 - last update: 2020 11 05
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
@@ -148,9 +148,13 @@ class PagesItemFormController extends ModuleController
 				if (HTMLForms.getField("publication").getValue() == 2) {
 					jQuery("#' . __CLASS__ . '_start_date_field").show();
 					HTMLForms.getField("end_date_enabled").enable();
+					if (HTMLForms.getField("end_date_enabled").getValue()) {
+						HTMLForms.getField("end_date").enable();
+					}
 				} else {
 					jQuery("#' . __CLASS__ . '_start_date_field").hide();
 					HTMLForms.getField("end_date_enabled").disable();
+					HTMLForms.getField("end_date").disable();
 				}'))
 			));
 

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 08 25
+ * @version     PHPBoost 6.0 - last update: 2020 11 05
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -160,9 +160,13 @@ class WebFormController extends ModuleController
 						if (HTMLForms.getField("approbation_type").getValue() == 2) {
 							jQuery("#' . __CLASS__ . '_start_date_field").show();
 							HTMLForms.getField("end_date_enabled").enable();
+							if (HTMLForms.getField("end_date_enabled").getValue()) {
+								HTMLForms.getField("end_date").enable();
+							}
 						} else {
 							jQuery("#' . __CLASS__ . '_start_date_field").hide();
 							HTMLForms.getField("end_date_enabled").disable();
+							HTMLForms.getField("end_date").disable();
 						}'
 					)
 				)
