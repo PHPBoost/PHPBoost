@@ -39,7 +39,7 @@
 					<legend class="sr-only">${LangLoader::get_message('email', 'user-common')}</legend>
 					<div class="cell-form grouped-inputs grouped-auto grouped-right">
 						<span class="newsletter-title grouped-element">{@newsletter}</span>
-						<label class="grouped-element" for="newsletter-email" class="sr-only">${LangLoader::get_message('email', 'user-common')}</label>
+						<label class="sr-only" for="newsletter-email">${LangLoader::get_message('email', 'user-common')}</label>
 						<input class="grouped-element" id="newsletter-email" type="text" name="mail_newsletter" maxlength="50" value="{USER_MAIL}" placeholder="${LangLoader::get_message('email', 'user-common')}" aria-labelledby="NewsletterButton">
 						<input type="hidden" name="subscribe" value="subscribe">
 						<input type="hidden" name="token" value="{TOKEN}">

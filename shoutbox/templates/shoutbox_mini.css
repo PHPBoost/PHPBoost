@@ -21,7 +21,7 @@
 }
 
 .cell-mini #shoutbox-bbcode-container [class*="cell-"] {
-    background-color: #ECF2F8 !important;
+    background-color: var(--bgc-alt) !important;
 }
 
 .bbcode-block-container::after {
