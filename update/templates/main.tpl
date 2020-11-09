@@ -99,7 +99,7 @@ ${resources('update/update')}
 			</footer>
 		</div>
 		<script>
-			jQuery('.lang-selector').selectimg({
+			jQuery('.lang-selector').selectImg({
 				ariaLabel : ${escapejs(LangLoader::get_message('click.to.select', 'common'))}
 			});
 		</script>
