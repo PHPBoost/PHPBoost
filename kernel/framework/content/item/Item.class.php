@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 04
+ * @version     PHPBoost 6.0 - last update: 2020 11 09
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor xela <xela@phpboost.com>
 */
@@ -724,7 +724,7 @@ class Item
 		
 		$kernel_additional_fields = $kernel_additional_indexes = array();
 		
-		if ($this->content_field_enabled)
+		if ($object->content_field_enabled())
 		{
 			$content_field = array($class_name::get_content_label() => array('type' => 'text',    'length' => 16777215));
 			$content_option = array('content' => array('type' => 'fulltext', 'fields' => $class_name::get_content_label()));
