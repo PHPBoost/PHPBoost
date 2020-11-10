@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 09
+ * @version     PHPBoost 6.0 - last update: 2020 11 10
  * @since       PHPBoost 3.0 - 2011 04 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -233,10 +233,10 @@ class AdminThemesNotInstalledListController extends AdminController
 						{
 							$name_in_archive = str_replace($archive_root_content[0]['filename'] . '/', '/', $element['filename']);
 
-							if (in_array($name_in_archive, $required_files) || in_array('/' . $name_in_archive, $required_files))
-							{
+							if (in_array($name_in_archive, $required_files))
 								unset($required_files[array_search($name_in_archive, $required_files)]);
-							}
+							else if (in_array('/' . $name_in_archive, $required_files))
+								unset($required_files[array_search('/' . $name_in_archive, $required_files)]);
 						}
 					}
 
