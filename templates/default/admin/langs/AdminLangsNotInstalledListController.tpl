@@ -1,7 +1,7 @@
+# INCLUDE MSG #
 # INCLUDE UPLOAD_FORM #
 <form action="{REWRITED_SCRIPT}" method="post" class="fieldset-content">
 	<input type="hidden" name="token" value="{TOKEN}">
-	# INCLUDE MSG #
 	<section id="not-installed-langs-container" class="addons-container langs-elements-container not-installed-elements-container">
 		<header class="legend">{@langs.available_langs}</header>
 		# IF C_LANG_AVAILABLE #

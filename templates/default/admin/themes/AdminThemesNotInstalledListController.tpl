@@ -1,7 +1,7 @@
+# INCLUDE MSG #
 # INCLUDE UPLOAD_FORM #
 <form action="{REWRITED_SCRIPT}" method="post" class="fieldset-content">
 	<input type="hidden" name="token" value="{TOKEN}">
-	# INCLUDE MSG #
 	<section id="not-installed-themes-container" class="addons-container themes-elements-container not-installed-elements-container">
 		<header class="legend">{@themes.available_themes}</header>
 		# IF C_THEME_AVAILABLE #
