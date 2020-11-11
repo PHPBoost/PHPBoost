@@ -7,14 +7,14 @@
 			var xhr_object = null;
 			var data = null;
 			var filename = PATH_TO_ROOT + "/wiki/xmlhttprequest.php" + (display_select_link != 0 ? "?display_select_link=1&token=" + TOKEN : "?token=" + TOKEN);
-			
+
 			if(window.XMLHttpRequest) // Firefox
 			   xhr_object = new XMLHttpRequest();
 			else if(window.ActiveXObject) // Internet Explorer
 			   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
 			else // XMLHttpRequest non supporté par le navigateur
 			    return;
-				
+
 			if( id_cat > 0 )
 			{
 				//Si le dossier est fermé on l'ouvre sinon on le ferme
@@ -23,35 +23,35 @@
 					data = "id_cat=" + id_cat;
 					xhr_object.open("POST", filename, true);
 
-					xhr_object.onreadystatechange = function() 
+					xhr_object.onreadystatechange = function()
 					{
-						if( xhr_object.readyState == 4 ) 
+						if( xhr_object.readyState == 4 )
 						{
 							document.getElementById("cat-" + id_cat).innerHTML = xhr_object.responseText;
-							document.getElementById("img-folder-" + id_cat).className = 'fa fa-folder-open';
+							document.getElementById("img-folder-" + id_cat).className = 'fa fa-fw fa-folder-open';
 							if( document.getElementById("img-subfolder-" + id_cat) )
-								document.getElementById("img-subfolder-" + id_cat).className = 'far fa-minus-square';
+								document.getElementById("img-subfolder-" + id_cat).className = 'far fa-fw fa-minus-square';
 							cat_status[id_cat] = 1;
 						}
 					}
 
 					xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 					xhr_object.send(data);
-				}	
+				}
 				else if( cat_status[id_cat] == 0 )
 				{
 					document.getElementById("cat-" + id_cat).style.display = 'block';
-					document.getElementById("img-folder-" + id_cat).className = 'fa fa-folder-open';
+					document.getElementById("img-folder-" + id_cat).className = 'fa fa-fw fa-folder-open';
 					if( document.getElementById("img-subfolder-" + id_cat) )
-						document.getElementById("img-subfolder-" + id_cat).className = 'far fa-minus-square';
+						document.getElementById("img-subfolder-" + id_cat).className = 'far fa-fw fa-minus-square';
 					cat_status[id_cat] = 1;
 				}
 				else
 				{
 					document.getElementById("cat-" + id_cat).style.display = 'none';
-					document.getElementById("img-folder-" + id_cat).className = 'fa fa-folder';
+					document.getElementById("img-folder-" + id_cat).className = 'fa fa-fw fa-folder';
 					if( document.getElementById("img-subfolder-" + id_cat) )
-						document.getElementById("img-subfolder-" + id_cat).className = 'far fa-plus-square';
+						document.getElementById("img-subfolder-" + id_cat).className = 'far fa-fw fa-plus-square';
 					cat_status[id_cat] = 0;
 				}
 			}
@@ -62,23 +62,23 @@
 			var xhr_object = null;
 			var data = null;
 			var filename = PATH_TO_ROOT + "/wiki/xmlhttprequest.php?select_cat=1&token=" + TOKEN;
-			
+
 			if(window.XMLHttpRequest) // Firefox
 			   xhr_object = new XMLHttpRequest();
 			else if(window.ActiveXObject) // Internet Explorer
 			   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
 			else // XMLHttpRequest non supporté par le navigateur
 			    return;
-				
+
 			if( id_cat >= 0 && id_cat != selected_cat )
 			{
 				data = "selected_cat=" + id_cat;
 
 				xhr_object.open("POST", filename, true);
 
-				xhr_object.onreadystatechange = function() 
+				xhr_object.onreadystatechange = function()
 				{
-					if( xhr_object.readyState == 4 ) 
+					if( xhr_object.readyState == 4 )
 					{
 						document.getElementById("selected_cat").innerHTML = xhr_object.responseText;
 						document.getElementById("id_cat").value = id_cat;
@@ -102,13 +102,13 @@
 				alert(enter_text);
 				return false;
 			}
-			
+
 			if (tinymce_editor)
 				insertTinyMceContent('[link=' + url_encode_rewrite(link_name) + '][/link]'); //insertion pour tinymce.
 			else
 				insertbbcode('[link=' + url_encode_rewrite(link_name) + ']', '[/link]', 'contents');
 		}
-		
+
 		function insert_paragraph(level)
 		{
 			var string = '-';
@@ -124,15 +124,15 @@
 		{
 			var textarea = document.getElementById(field);
 			var scroll = textarea.scrollTop;
-			
+
 			var title = prompt(enter_paragraph_name, title_paragraph);
-			
+
 			if (tinymce_editor) {
 				insertTinyMceContent('<br/>' + open_balise + ' ' + title + ' ' + close_balise + '<br/>'); //insertion pour tinymce.
 			} else {
 				if( close_balise != "" && title != null && title != enter_paragraph_name )
 					textarea.value += "\n" + open_balise + " " + title + " " + close_balise + "\n";
-					
+
 				textarea.focus();
 				textarea.scrollTop = scroll;
 			}
@@ -146,7 +146,7 @@
 			var sel_start = target.selectionStart;
 			var sel_end = target.selectionEnd;
 			var scroll = target.scrollTop; //Position verticale.
-			
+
 			if( sel_end == 1 || sel_end == 2 )
 			{
 				sel_end = sel_length;
@@ -155,9 +155,9 @@
 			var string_start = (target.value).substring(0, sel_start);
 			var selection = (target.value).substring(sel_start, sel_end);
 			var string_end = (target.value).substring(sel_end, sel_length);
-			
+
 			var title = selection != "" ? selection : prompt(enter_paragraph_name, title_paragraph);
-			
+
 			if (tinymce_editor) {
 				insertTinyMceContent('<br/>' + open_balise + ' ' + title + ' ' + close_balise + '<br/>'); //insertion pour tinymce.
 			} else {
@@ -176,10 +176,10 @@
 						target.focus();
 					}
 				}
-				
+
 				target.scrollTop = scroll; //Remet à la bonne position le textarea.
 			}
-			
+
 			return;
 		}
 
@@ -188,9 +188,9 @@
 		{
 			selText = false;
 			var scroll = target.scrollTop; //Position verticale.
-			
+
 			selection = document.selection.createRange().text; // Sélection
-			
+
 			var title = selection != "" ? selection : prompt(enter_paragraph_name, title_paragraph);
 
 			if (tinymce_editor) {
@@ -203,11 +203,11 @@
 					else
 						document.selection.createRange().text = "\n" + open_balise + ' ' + selection + ' ' + close_balise + "\n";
 				}
-				
+
 				target.scrollTop = scroll; //Remet à la bonne position le textarea.
 				selText = '';
 			}
-			
+
 			return;
 		}
 
@@ -235,23 +235,23 @@
 			var xhr_object = null;
 			var data = null;
 			var filename = PATH_TO_ROOT + "/wiki/xmlhttprequest.php?select_cat=1&display_select_link=0" + (id_cat == 0 ? "&root=1" : "") + "&token=" + TOKEN;
-			
+
 			if(window.XMLHttpRequest) // Firefox
 			   xhr_object = new XMLHttpRequest();
 			else if(window.ActiveXObject) // Internet Explorer
 			   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
 			else // XMLHttpRequest non supporté par le navigateur
 			    return;
-				
+
 			if( id_cat >= 0 && id_cat != selected_cat )
 			{
 				data = "open_cat=" + id_cat;
 
 				xhr_object.open("POST", filename, true);
 
-				xhr_object.onreadystatechange = function() 
+				xhr_object.onreadystatechange = function()
 				{
-					if( xhr_object.readyState == 4 ) 
+					if( xhr_object.readyState == 4 )
 					{
 						document.getElementById("cat-contents").innerHTML = xhr_object.responseText;
 						document.getElementById("class-" + id_cat).className = "selected";
