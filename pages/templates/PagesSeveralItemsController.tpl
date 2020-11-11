@@ -25,10 +25,12 @@
 			</div>
 		# ENDIF #
 
-		# IF C_NO_ITEM #
-			<div class="message-helper bgc notice align-center">
-				${LangLoader::get_message('no_item_now', 'common')}
-			</div>
+		# IF NOT C_SUB_CATEGORIES #
+			# IF C_NO_ITEM #
+				<div class="message-helper bgc notice align-center">
+					${LangLoader::get_message('no_item_now', 'common')}
+				</div>
+			# ENDIF #
 		# ENDIF #
 		# IF C_CONTROLS #
 			# IF C_SEVERAL_ITEMS #
