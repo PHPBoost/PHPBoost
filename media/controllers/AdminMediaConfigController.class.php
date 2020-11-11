@@ -22,7 +22,7 @@ class AdminMediaConfigController extends AdminModuleController
 	private $submit_button;
 
 	private $lang;
-	private $admin_common_lang;
+	private $config_lang;
 
 	/**
 	 * @var MediaConfig
@@ -35,26 +35,26 @@ class AdminMediaConfigController extends AdminModuleController
 
 		$this->build_form();
 
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$view = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+		$view->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
 			$this->form->get_field_by_id('items_number_per_row')->set_hidden($this->config->get_display_type() !== MediaConfig::GRID_VIEW);
-			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+			$view->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$view->put('FORM', $this->form->display());
 
-		return new DefaultAdminDisplayResponse($tpl);
+		return new DefaultAdminDisplayResponse($view);
 	}
 
 	private function init()
 	{
 		$this->config = MediaConfig::load();
 		$this->lang = LangLoader::get('common', 'media');
-		$this->admin_common_lang = LangLoader::get('admin-common');
+		$this->config_lang = LangLoader::get('admin-common');
 	}
 
 	private function build_form()
@@ -64,51 +64,51 @@ class AdminMediaConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTMLHeading('configuration', StringVars::replace_vars(LangLoader::get_message('configuration.module.title', 'admin-common'), array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldNumberEditor('categories_number_per_page', $this->admin_common_lang['config.categories_number_per_page'], $this->config->get_categories_number_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('categories_number_per_page', $this->config_lang['config.categories_number_per_page'], $this->config->get_categories_number_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('categories_number_per_row', $this->admin_common_lang['config.categories.per.row'], $this->config->get_categories_number_per_row(),
+		$fieldset->add_field(new FormFieldNumberEditor('categories_number_per_row', $this->config_lang['config.categories.per.row'], $this->config->get_categories_number_per_row(),
 			array('min' => 1, 'max' => 4, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('root_category_content_type', $this->lang['config.root_category_content_type'], $this->config->get_root_category_content_type(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('root_category_content_type', $this->lang['config.root.category.content.type'], $this->config->get_root_category_content_type(),
 			array(
-				new FormFieldSelectChoiceOption($this->lang['content_type.music_and_video'], MediaConfig::CONTENT_TYPE_MUSIC_AND_VIDEO),
-				new FormFieldSelectChoiceOption($this->lang['content_type.music'], MediaConfig::CONTENT_TYPE_MUSIC),
-				new FormFieldSelectChoiceOption($this->lang['content_type.video'], MediaConfig::CONTENT_TYPE_VIDEO)
+				new FormFieldSelectChoiceOption($this->lang['content.type.music.and.video'], MediaConfig::CONTENT_TYPE_MUSIC_AND_VIDEO),
+				new FormFieldSelectChoiceOption($this->lang['content.type.music'], MediaConfig::CONTENT_TYPE_MUSIC),
+				new FormFieldSelectChoiceOption($this->lang['content.type.video'], MediaConfig::CONTENT_TYPE_VIDEO)
 			)
 		));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->admin_common_lang['config.root_category_description'], $this->config->get_root_category_description(),
+		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->config_lang['config.root_category_description'], $this->config->get_root_category_description(),
 			array('rows' => 8, 'cols' => 47)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_number_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_items_number_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_number_per_page', $this->config_lang['config.items_number_per_page'], $this->config->get_items_number_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('max_video_width', $this->lang['config.max_video_width'], $this->config->get_max_video_width(),
+		$fieldset->add_field(new FormFieldNumberEditor('max_video_width', $this->lang['config.max.video.width'], $this->config->get_max_video_width(),
 			array('min' => 50, 'max' => 2000, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(50, 2000))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('max_video_height', $this->lang['config.max_video_height'], $this->config->get_max_video_height(),
+		$fieldset->add_field(new FormFieldNumberEditor('max_video_height', $this->lang['config.max.video.height'], $this->config->get_max_video_height(),
 			array('min' => 50, 'max' => 2000, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(50, 2000))
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->admin_common_lang['config.author_displayed'], $this->config->is_author_displayed(),
+		$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->config_lang['config.author_displayed'], $this->config->is_author_displayed(),
 			array('class' => 'custom-checkbox')
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->admin_common_lang['config.display.type'], $this->config->get_display_type(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->config_lang['config.display.type'], $this->config->get_display_type(),
 			array(
-				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.grid'], MediaConfig::GRID_VIEW),
-				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.list'], MediaConfig::LIST_VIEW),
+				new FormFieldSelectChoiceOption($this->config_lang['config.display.type.grid'], MediaConfig::GRID_VIEW),
+				new FormFieldSelectChoiceOption($this->config_lang['config.display.type.list'], MediaConfig::LIST_VIEW),
 			),
 			array('events' => array('change' => '
 				if (HTMLForms.getField("display_type").getValue() == \'' . MediaConfig::GRID_VIEW . '\') {
@@ -119,7 +119,7 @@ class AdminMediaConfigController extends AdminModuleController
 			))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_number_per_row', $this->admin_common_lang['config.items.per.row'], $this->config->get_items_number_per_row(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_number_per_row', $this->config_lang['config.items.per.row'], $this->config->get_items_number_per_row(),
 			array(
 				'min' => 1, 'max' => 4, 'required' => true, 'hidden' => $this->config->get_display_type() !== MediaConfig::GRID_VIEW
 			),
@@ -134,7 +134,7 @@ class AdminMediaConfigController extends AdminModuleController
 		));
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', LangLoader::get_message('authorizations', 'common'),
-			array('description' => $this->admin_common_lang['config.authorizations.explain'])
+			array('description' => $this->config_lang['config.authorizations.explain'])
 		);
 		$form->add_fieldset($fieldset_authorizations);
 

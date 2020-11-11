@@ -13,16 +13,16 @@ class MediaCategory extends RichCategory
 	{
 		$this->add_additional_attribute('content_type', array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0, 'attribute_field_parameters' => array(
 			'field_class' => 'FormFieldSimpleSelectChoice',
-			'label' => LangLoader::get_message('content_type', 'common', 'media'),
+			'label' => LangLoader::get_message('content.type', 'common', 'media'),
 			'options' => array(
-				new FormFieldSelectChoiceOption(LangLoader::get_message('content_type.music_and_video', 'common', 'media'), MediaConfig::CONTENT_TYPE_MUSIC_AND_VIDEO),
-				new FormFieldSelectChoiceOption(LangLoader::get_message('content_type.music', 'common', 'media'), MediaConfig::CONTENT_TYPE_MUSIC),
-				new FormFieldSelectChoiceOption(LangLoader::get_message('content_type.video', 'common', 'media'), MediaConfig::CONTENT_TYPE_VIDEO)
+				new FormFieldSelectChoiceOption(LangLoader::get_message('content.type.music.and.video', 'common', 'media'), MediaConfig::CONTENT_TYPE_MUSIC_AND_VIDEO),
+				new FormFieldSelectChoiceOption(LangLoader::get_message('content.type.music', 'common', 'media'), MediaConfig::CONTENT_TYPE_MUSIC),
+				new FormFieldSelectChoiceOption(LangLoader::get_message('content.type.video', 'common', 'media'), MediaConfig::CONTENT_TYPE_VIDEO)
 				)
 			)
 		));
 	}
-	
+
 	public function get_content_type()
 	{
 		return $this->get_additional_property('content_type');

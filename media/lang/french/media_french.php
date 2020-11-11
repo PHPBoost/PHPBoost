@@ -18,15 +18,12 @@ global $MEDIA_LANG;
 
 $MEDIA_LANG = array(
 // media.php
-'add_on_date' => 'Ajouté le %s',
 'n_time' => '%d fois',
 'n_times' => '%d fois',
 'num_note' => '%d note',
 'num_notes' => '%d notes',
 'num_media' => '%d fichier multimédia',
 'num_medias' => '%d fichiers multimédias',
-'sort_popularity' => 'Popularité',
-'sort_title' => 'Titre',
 'media_infos' => 'Information sur le fichier multimédia',
 'media_added_by' => 'Par',
 'view_n_times' => 'Vu %d fois',

@@ -22,7 +22,7 @@ $NUMBER_ELEMENTS_PER_PAGE = 25;
 
 $tpl = new FileTemplate('media/moderation_media.tpl');
 
-$Bread_crumb->add(LangLoader::get_message('module_title', 'common', 'media'), url('media.php'));
+$Bread_crumb->add(LangLoader::get_message('module.title', 'common', 'media'), url('media.php'));
 $Bread_crumb->add($LANG['modo_panel'], url('moderation_media.php'));
 $request = AppContext::get_request();
 

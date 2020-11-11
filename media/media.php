@@ -34,7 +34,9 @@ if (empty($id_media))
 // Display the media file.
 elseif ($id_media > 0)
 {
-	$tpl = new FileTemplate('media/media.tpl');
+	$view = new FileTemplate('media/media.tpl');
+	$lang = LangLoader::get('common', 'media');
+	$view->add_lang($lang);
 	$config = MediaConfig::load();
 	$comments_config = CommentsConfig::load();
 	$content_management_config = ContentManagementConfig::load();
@@ -88,7 +90,7 @@ elseif ($id_media > 0)
 
 	$date = new Date($media['timestamp'], Timezone::SERVER_TIMEZONE);
 
-	$tpl->put_all(array_merge(
+	$view->put_all(array_merge(
 		Date::get_array_tpl_vars($date, 'date'),
 		array(
 			'ID' => $id_media,
@@ -119,7 +121,7 @@ elseif ($id_media > 0)
 			'U_DELETE_MEDIA' => url('media_action.php?del=' . $id_media . '&amp;token=' . AppContext::get_session()->get_token()),
 			'U_POPUP_MEDIA' => url('media_popup.php?id=' . $id_media),
 			'CATEGORY_ID' => $media['id_category'],
-			'CATEGORY_NAME' => $media['id_category'] == Category::ROOT_CATEGORY ? LangLoader::get_message('module_title', 'common', 'media') : CategoriesService::get_categories_manager()->get_categories_cache()->get_category($media['id_category'])->get_name(),
+			'CATEGORY_NAME' => $media['id_category'] == Category::ROOT_CATEGORY ? $lang['module.title'] : CategoriesService::get_categories_manager()->get_categories_cache()->get_category($media['id_category'])->get_name(),
 			'U_EDIT_CATEGORY' => $media['id_category'] == Category::ROOT_CATEGORY ? MediaUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($media['id_category'])->rel()
 		)
 	));
@@ -219,7 +221,7 @@ elseif ($id_media > 0)
 		'MEDIA_ID' => $media_id
 	));
 
-	$tpl->put('media_format', $media_tpl);
+	$view->put('media_format', $media_tpl);
 
 	// Comments display
 	if (AppContext::get_request()->get_getint('com', 0) == 0)
@@ -227,11 +229,11 @@ elseif ($id_media > 0)
 		$comments_topic = new MediaCommentsTopic();
 		$comments_topic->set_id_in_module($id_media);
 		$comments_topic->set_url(new Url('/media/media.php?id='. $id_media . '&com=0'));
-		$tpl->put_all(array(
+		$view->put_all(array(
 			'COMMENTS' => CommentsService::display($comments_topic)->render()
 		));
 	}
-	$tpl->display();
+	$view->display();
 }
 
 require_once('../kernel/footer.php');

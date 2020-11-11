@@ -6,7 +6,7 @@
 				# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a># ENDIF #
 			</div>
 			<h1>
-				${LangLoader::get_message('module_title', 'common', 'media')}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
+				{@module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
 			</h1>
 		</header>
 		# IF C_CATEGORY_DESCRIPTION #
@@ -79,47 +79,48 @@
 			<div class="spacer"></div>
 
 			<div class="# IF C_GRID_VIEW #cell-flex cell-columns-{ITEMS_NUMBER_PER_ROW}# ELSE #cell-row# ENDIF #">
-				# START file #
-					<article id="article-media-{file.ID}" class="media-item several-items category-{file.CATEGORY_ID} cell# IF file.C_NEW_CONTENT # new-content# ENDIF #">
+				# START items #
+					<article id="article-media-{items.ID}" class="media-item several-items category-{items.CATEGORY_ID} cell# IF items.C_NEW_CONTENT # new-content# ENDIF #">
 						<header class="cell-header">
 							<h2 class="cell-name">
-								<a href="{file.U_MEDIA_LINK}">{file.NAME}</a>
+								<a href="{items.U_MEDIA_LINK}">{items.NAME}</a>
 							</h2>
 						</header>
 						<div class="cell-body">
 							<div class="cell-infos">
 								<div class="more">
-									<span class="pinned"><i class="fa fa-user" aria-hidden="true"></i> {file.AUTHOR}</span>
-									<span class="pinned" role="contentinfo" aria-label="{file.COUNT} ${LangLoader::get_message('sort_by.views.number', 'common')}"><i class="fa fa-eye" aria-hidden="true"></i> {file.COUNT}</span>
+									<span class="pinned"><i class="fa fa-user" aria-hidden="true"></i> {items.AUTHOR}</span>
+									<span class="pinned" aria-label="{@add.on.date}"><i class="fa fa-calendar-alt" aria-hidden="true"></i> <time datetime="{items.DATE_ISO8601}" itemprop="datePublished">{items.DATE}</time></span>
+									<span class="pinned" role="contentinfo" aria-label="${LangLoader::get_message('sort_by.views.number', 'common')}: {items.COUNT} "><i class="fa fa-eye" aria-hidden="true"></i> {items.COUNT}</span>
 									# IF C_DISPLAY_COMMENTS #
-											<span class="pinned"><i class="fa fa-comments" aria-hidden="true"></i> {file.U_COM_LINK}</span>
+										<span class="pinned"><i class="fa fa-comments" aria-hidden="true"></i> {items.U_COM_LINK}</span>
 									# ENDIF #
 									# IF C_DISPLAY_NOTATION #
-										<div class="pinned">{L_NOTE} {file.NOTE}</div>
+										<div class="pinned">{L_NOTE} {items.NOTE}</div>
 									# ENDIF #
 								</div>
 								# IF C_CONTROLS #
 									<div class="controls align-right">
-										<a href="{file.U_ADMIN_UNVISIBLE_MEDIA}" aria-label="{L_UNAPROBED}"><i class="fa fa-fw fa-eye-slash"></i></a>
-										<a href="{file.U_ADMIN_EDIT_MEDIA}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit"></i></a>
-										<a href="{file.U_ADMIN_DELETE_MEDIA}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt"></i></a>
+										<a href="{items.U_ADMIN_UNVISIBLE_MEDIA}" aria-label="{L_UNAPROBED}"><i class="fa fa-fw fa-eye-slash"></i></a>
+										<a href="{items.U_ADMIN_EDIT_MEDIA}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit"></i></a>
+										<a href="{items.U_ADMIN_DELETE_MEDIA}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt"></i></a>
 									</div>
 								# ENDIF #
 							</div>
-							# IF file.C_HAS_PICTURE #
+							# IF items.C_HAS_PICTURE #
 								<div class="cell-thumbnail cell-landscape cell-center">
-									<img itemprop="thumbnailUrl" src="{file.PICTURE}" alt="{file.NAME}" />
-									<a class="cell-thumbnail-caption" href="{file.U_MEDIA_LINK}" aria-label="${LangLoader::get_message('see.details', 'common')}"><i class="fa fa-2x fa-play-circle"></i></a>
+									<img itemprop="thumbnailUrl" src="{items.PICTURE}" alt="{items.NAME}" />
+									<a class="cell-thumbnail-caption" href="{items.U_MEDIA_LINK}" aria-label="${LangLoader::get_message('see.details', 'common')}"><i class="fa fa-2x fa-play-circle"></i></a>
 								</div>
 							# ENDIF #
-							# IF file.C_DESCRIPTION #
+							# IF items.C_DESCRIPTION #
 								<div itemprop="text" class="cell-content">
-									{file.DESCRIPTION}
+									{items.DESCRIPTION}
 								</div>
 							# ENDIF #
 						</div>
 					</article>
-				# END file #
+				# END items #
 			</div>
 		# ENDIF #
 
@@ -137,7 +138,7 @@
 	<section id="module-media" class="category-{CATEGORY_ID}">
 		<header>
 			<div class="controls align-right">
-				${LangLoader::get_message('module_title', 'common', 'media')}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
+				{@module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 			</div>
 			<h1>
 				{NAME}

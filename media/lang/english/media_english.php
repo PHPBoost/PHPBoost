@@ -17,15 +17,12 @@ global $MEDIA_LANG;
 
 $MEDIA_LANG = array(
 // media.php
-'add_on_date' => 'Added on %s',
 'n_time' => '%d time',
 'n_times' => '%d times',
 'num_note' => '%d note',
 'num_notes' => '%d notes',
 'num_media' => '%d multimedia file',
 'num_medias' => '%d multimedia files',
-'sort_popularity' => 'Popularity',
-'sort_title' => 'Title',
 'media_infos' => 'Information on the multimedia file',
 'media_added_by' => 'By',
 'view_n_times' => 'Seen %d time(s)',

@@ -15,15 +15,15 @@
 ####################################################
 
 $lang = array(
-	'media_name' => 'Video - Big Buck Bunny',
-	'media_contents' => 'Demonstration video.<br />
-<br />
-Here is a small demonstration video file that illustrates how this module works.<br />
-<br />
-Nice video !',
-	'media_url' => 'https://www.youtube.com/watch?v=MiKw3uPGHB4',
-	'media_name_cat' => 'Videos',
-	'media_contents_cat' => 'This category contains a demonstration video file.',
+	'media.name' => 'Video - Big Buck Bunny',
+	'media.content' => '
+		Demonstration video.<br /><br />
+		Here is a demonstration video file illustrating how this module works.<br /><br />
+		Enjoy video !
+	',
+	'media.url' => 'https://www.youtube.com/watch?v=MiKw3uPGHB4',
+	'media.cat.name' => 'Videos',
+	'media.cat.content' => 'This category contains a demonstration video file.',
 );
 
 ?>

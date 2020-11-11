@@ -13,27 +13,26 @@
 #                      French                      #
 ####################################################
 
-$lang['module_title'] = 'Multimédia';
+$lang['module.title'] = 'Multimédia';
 
 $lang['items'] = 'fichiers multimédia';
 $lang['item'] = 'fichier multimédia';
 
 $lang['media.actions.add'] = 'Ajouter un fichier multimédia';
 $lang['media.manage'] = 'Gérer les fichiers multimédia';
-$lang['media.management'] = 'Gestion des fichiers multimédia';
 
-$lang['media.item'] = 'fichier multimédia';
-$lang['media.items'] = 'fichiers multimédia';
+$lang['add.on.date'] = 'Ajouté le';
 
-$lang['content_type'] = 'Types de fichiers autorisés';
-$lang['content_type.music_and_video'] = 'Musique & Vidéo';
-$lang['content_type.music'] = 'Musique';
-$lang['content_type.video'] = 'Vidéo';
+// Categories
+$lang['content.type'] = 'Types de fichiers autorisés';
+$lang['content.type.music.and.video'] = 'Musique & Vidéo';
+$lang['content.type.music'] = 'Musique';
+$lang['content.type.video'] = 'Vidéo';
 
 // configuration
-$lang['config.max_video_width'] = 'Largeur maximale d\'une vidéo';
-$lang['config.max_video_height'] = 'Hauteur maximale d\'une vidéo';
-$lang['config.root_category_content_type'] = 'Types de fichiers autorisés dans la racine des fichiers multimédia';
+$lang['config.max.video.width'] = 'Largeur maximale d\'une vidéo';
+$lang['config.max.video.height'] = 'Hauteur maximale d\'une vidéo';
+$lang['config.root.category.content.type'] = 'Types de fichiers autorisés dans la racine des fichiers multimédia';
 $lang['config.constant.host'] = 'Hébergeurs de confiance';
 $lang['config.constant.host.peertube'] = 'Peertube';
 $lang['config.constant.host.peertube.desc'] = '<a href="https://joinpeertube.org">Joinpeertube.org</a> - <a href="https://instances.joinpeertube.org/instances/">Liste des instances</a>';

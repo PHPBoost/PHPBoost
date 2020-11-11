@@ -12,7 +12,7 @@
 #                      English                     #
 ####################################################
 
-$lang['module_title'] = 'Multimedia';
+$lang['module.title'] = 'Multimedia';
 
 $lang['items'] = 'multimedia files';
 $lang['item'] = 'multimedia file';
@@ -21,20 +21,22 @@ $lang['an.item'] = 'a multimedia file';
 
 $lang['media.actions.add'] = 'Add multimedia file';
 $lang['media.manage'] = 'Manage multimedia files';
-$lang['media.management'] = 'Multimedia files management';
 
-$lang['media.item'] = 'multimedia file';
-$lang['media.items'] = 'multimedia files';
+$lang['add.on.date'] = 'Added on';
 
-$lang['content_type'] = 'Type of files allowed';
-$lang['content_type.music_and_video'] = 'Music and Video';
-$lang['content_type.music'] = 'Music';
-$lang['content_type.video'] = 'Video';
+// Items manager
+$lang['media.unaprobed'] = 'Unaprobed';
+
+// Categories
+$lang['content.type'] = 'Type of files allowed';
+$lang['content.type.music.and.video'] = 'Music and Video';
+$lang['content.type.music'] = 'Music';
+$lang['content.type.video'] = 'Video';
 
 //config
-$lang['config.max_video_width'] = 'Maximum video width';
-$lang['config.max_video_height'] = 'Maximum video height';
-$lang['config.root_category_content_type'] = 'Multimedia root category type of files allowed';
+$lang['config.max.video.width'] = 'Maximum video width';
+$lang['config.max.video.height'] = 'Maximum video height';
+$lang['config.root.category.content.type'] = 'Multimedia root category type of files allowed';
 $lang['config.constant.host'] = 'Trusted hosts';
 $lang['config.constant.host.peertube'] = 'Peertube';
 $lang['config.constant.host.peertube.desc'] = '<a href="https://joinpeertube.org">Joinpeertube.org</a> - <a href="https://instances.joinpeertube.org/instances/">List of instances</a>';
