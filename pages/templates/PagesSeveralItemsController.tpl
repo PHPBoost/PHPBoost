@@ -43,7 +43,14 @@
 					<tr>
 						<td class="align-left"><a href="{items.U_ITEM}"><span itemprop="name"><i class="far fa-fw fa-file-alt" aria-hidden="true"></i> {items.TITLE}</a></td>
 						<td aria-label="${LangLoader::get_message('form.date.creation', 'common')}"><i class="far fa-calendar-plus" aria-hidden="true"></i> <time datetime="# IF NOT items.C_DIFFERED #{items.DATE_ISO8601}# ELSE #{items.DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT items.C_DIFFERED #{items.DATE}# ELSE #{items.DIFFERED_START_DATE}# ENDIF #</time></td>
-						<td aria-label="${LangLoader::get_message('form.date.update', 'common')}"><i class="far fa-calendar-check" aria-hidden="true"></i> <time datetime="{items.UPDATED_DATE_ISO8601}" itemprop="datePublished">{items.UPDATED_DATE}</time></td>
+						<td aria-label="${LangLoader::get_message('form.date.update', 'common')}">
+							<i class="far fa-calendar-check" aria-hidden="true"></i>
+							# IF items.C_UPDATED_DATE #
+								<time datetime="{items.UPDATED_DATE_ISO8601}" itemprop="datePublished">{items.UPDATED_DATE}</time>
+							# ELSE #
+								<span>--</span>
+							# ENDIF #
+						</td>
 						# IF NOT C_CATEGORIES #
 							<td><a itemprop="about" href="{items.U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {items.CATEGORY_NAME}</a></td>
 						# ENDIF #
