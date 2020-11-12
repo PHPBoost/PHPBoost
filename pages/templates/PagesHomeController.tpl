@@ -5,7 +5,7 @@
 			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF ## ENDIF #
 		</div>
 		<h1 class="flex-between">
-			{@module.title} # IF C_CONTROLS #<span class="smallest" aria-label="{@pages.number}">({TOTAL_ITEMS})</span># ENDIF #
+			{@module.title}
 		</h1>
 	</header>
 
