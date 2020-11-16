@@ -128,7 +128,9 @@ class NewsItemFormController extends ModuleController
 
 		$other_fieldset->add_field(new FormFieldUploadFile('thumbnail', $this->common_lang['form.picture'], $this->get_news()->get_thumbnail()->relative()));
 
-		$other_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_news()->get_id(), 'keywords', $this->common_lang['form.keywords'], array('description' => $this->common_lang['form.keywords.description'])));
+		$other_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_news()->get_id(), 'keywords', $this->common_lang['form.keywords'],
+			array('description' => $this->common_lang['form.keywords.description'])
+		));
 
 		$other_fieldset->add_field(new FormFieldSelectSources('sources', $this->common_lang['form.sources'], $this->get_news()->get_sources()));
 
@@ -143,43 +145,54 @@ class NewsItemFormController extends ModuleController
 
 			if (!$this->is_new_item)
 			{
-				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->common_lang['form.update.date.creation'], false, array('hidden' => $this->get_news()->get_publication() != News::NOT_APPROVAL)
+				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->common_lang['form.update.date.creation'], false,
+					array('hidden' => $this->get_news()->get_publication() != News::NOT_APPROVAL)
 				));
 			}
 
-			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('publication', $this->common_lang['form.approbation'], $this->get_news()->get_publication(),
+			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('approbation_type', $this->common_lang['form.approbation'], $this->get_news()->get_publication(),
 				array(
 					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.not'], News::NOT_APPROVAL),
 					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.now'], News::APPROVAL_NOW),
 					new FormFieldSelectChoiceOption($this->common_lang['status.approved.date'], News::APPROVAL_DATE),
 				),
-				array('events' => array('change' => '
-				if (HTMLForms.getField("publication").getValue() == 2) {
-					jQuery("#' . __CLASS__ . '_start_date_field").show();
-					HTMLForms.getField("end_date_enable").enable();
-					if (HTMLForms.getField("end_date_enable").getValue()) {
-						HTMLForms.getField("end_date").enable();
-					}
-				} else {
-					jQuery("#' . __CLASS__ . '_start_date_field").hide();
-					HTMLForms.getField("end_date_enable").disable();
-					HTMLForms.getField("end_date").disable();
-				}'))
+				array(
+					'events' => array('change' => '
+						if (HTMLForms.getField("approbation_type").getValue() == 2) {
+							jQuery("#' . __CLASS__ . '_start_date_field").show();
+							HTMLForms.getField("end_date_enable").enable();
+							if (HTMLForms.getField("end_date_enable").getValue()) {
+								HTMLForms.getField("end_date").enable();
+							}
+						} else {
+							jQuery("#' . __CLASS__ . '_start_date_field").hide();
+							HTMLForms.getField("end_date_enable").disable();
+							HTMLForms.getField("end_date").disable();
+						}'
+					)
+				)
 			));
 
-			$publication_fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->common_lang['form.date.start'], ($this->get_news()->get_start_date() === null ? new Date() : $this->get_news()->get_start_date()), array('hidden' => ($this->get_news()->get_publication() != News::APPROVAL_DATE))));
+			$publication_fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->common_lang['form.date.start'], ($this->get_news()->get_start_date() === null ? new Date() : $this->get_news()->get_start_date()),
+				array('hidden' => ($this->get_news()->get_publication() != News::APPROVAL_DATE))
+			));
 
-			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enable', $this->common_lang['form.date.end.enable'], $this->get_news()->end_date_enabled(), array(
-			'hidden' => ($this->get_news()->get_publication() != News::APPROVAL_DATE),
-			'events' => array('click' => '
-			if (HTMLForms.getField("end_date_enable").getValue()) {
-				HTMLForms.getField("end_date").enable();
-			} else {
-				HTMLForms.getField("end_date").disable();
-			}'
-			))));
+			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enable', $this->common_lang['form.date.end.enable'], $this->get_news()->end_date_enabled(),
+				array(
+					'hidden' => ($this->get_news()->get_publication() != News::APPROVAL_DATE),
+					'events' => array('click' => '
+						if (HTMLForms.getField("end_date_enable").getValue()) {
+							HTMLForms.getField("end_date").enable();
+						} else {
+							HTMLForms.getField("end_date").disable();
+						}'
+					)
+				)
+			));
 
-			$publication_fieldset->add_field($end_date = new FormFieldDateTime('end_date', $this->common_lang['form.date.end'], ($this->get_news()->get_end_date() === null ? new Date() : $this->get_news()->get_end_date()), array('hidden' => !$this->get_news()->end_date_enabled())));
+			$publication_fieldset->add_field($end_date = new FormFieldDateTime('end_date', $this->common_lang['form.date.end'], ($this->get_news()->get_end_date() === null ? new Date() : $this->get_news()->get_end_date()),
+				array('hidden' => !$this->get_news()->end_date_enabled())
+			));
 
 			$end_date->add_form_constraint(new FormConstraintFieldsDifferenceSuperior($start_date, $end_date));
 
@@ -318,7 +331,7 @@ class NewsItemFormController extends ModuleController
 			$rewrited_title = $this->form->get_value('personalize_rewrited_title') && !empty($rewrited_title) ? $rewrited_title : Url::encode_rewrite($this->item->get_title());
 			$this->item->set_rewrited_title($rewrited_title);
 			$this->item->set_top_list_enabled($this->form->get_value('top_list'));
-			$this->item->set_publication($this->form->get_value('publication')->get_raw_value());
+			$this->item->set_publication($this->form->get_value('approbation_type')->get_raw_value());
 			if ($this->item->get_publication() == News::APPROVAL_DATE)
 			{
 				$config = NewsConfig::load();

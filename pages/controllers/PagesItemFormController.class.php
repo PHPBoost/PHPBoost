@@ -145,43 +145,54 @@ class PagesItemFormController extends ModuleController
 
 			if (!$this->get_page()->is_published())
 			{
-				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->common_lang['form.update.date.creation'], false, array('hidden' => $this->get_page()->get_status() != Page::NOT_APPROVAL)
+				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->common_lang['form.update.date.creation'], false,
+					array('hidden' => $this->get_page()->get_status() != Page::NOT_APPROVAL)
 				));
 			}
 
-			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('publication', $this->common_lang['form.approbation'], $this->get_page()->get_publication(),
+			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('approbation_type', $this->common_lang['form.approbation'], $this->get_page()->get_publication(),
 				array(
 					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.not'], Page::NOT_APPROVAL),
 					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.now'], Page::APPROVAL_NOW),
 					new FormFieldSelectChoiceOption($this->common_lang['status.approved.date'], Page::APPROVAL_DATE),
 				),
-				array('events' => array('change' => '
-				if (HTMLForms.getField("publication").getValue() == 2) {
-					jQuery("#' . __CLASS__ . '_start_date_field").show();
-					HTMLForms.getField("end_date_enabled").enable();
-					if (HTMLForms.getField("end_date_enabled").getValue()) {
-						HTMLForms.getField("end_date").enable();
-					}
-				} else {
-					jQuery("#' . __CLASS__ . '_start_date_field").hide();
-					HTMLForms.getField("end_date_enabled").disable();
-					HTMLForms.getField("end_date").disable();
-				}'))
+				array(
+					'events' => array('change' => '
+						if (HTMLForms.getField("approbation_type").getValue() == 2) {
+							jQuery("#' . __CLASS__ . '_start_date_field").show();
+							HTMLForms.getField("end_date_enabled").enable();
+							if (HTMLForms.getField("end_date_enabled").getValue()) {
+								HTMLForms.getField("end_date").enable();
+							}
+						} else {
+							jQuery("#' . __CLASS__ . '_start_date_field").hide();
+							HTMLForms.getField("end_date_enabled").disable();
+							HTMLForms.getField("end_date").disable();
+						}'
+					)
+				)
 			));
 
-			$publication_fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->common_lang['form.date.start'], ($this->get_page()->get_start_date() === null ? new Date() : $this->get_page()->get_start_date()), array('hidden' => ($this->get_page()->get_publication() != Page::APPROVAL_DATE))));
+			$publication_fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->common_lang['form.date.start'], ($this->get_page()->get_start_date() === null ? new Date() : $this->get_page()->get_start_date()),
+				array('hidden' => $this->get_page()->get_publication() != Page::APPROVAL_DATE)
+			));
 
-			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->common_lang['form.date.end.enable'], $this->get_page()->is_end_date_enabled(), array(
-			'hidden' => ($this->get_page()->get_publication() != Page::APPROVAL_DATE),
-			'events' => array('click' => '
-			if (HTMLForms.getField("end_date_enabled").getValue()) {
-				HTMLForms.getField("end_date").enable();
-			} else {
-				HTMLForms.getField("end_date").disable();
-			}'
-			))));
+			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->common_lang['form.date.end.enable'], $this->get_page()->is_end_date_enabled(),
+				array(
+					'hidden' => ($this->get_page()->get_publication() != Page::APPROVAL_DATE),
+					'events' => array('click' => '
+						if (HTMLForms.getField("end_date_enabled").getValue()) {
+							HTMLForms.getField("end_date").enable();
+						} else {
+							HTMLForms.getField("end_date").disable();
+						}'
+					)
+				)
+			));
 
-			$publication_fieldset->add_field($end_date = new FormFieldDateTime('end_date', $this->common_lang['form.date.end'], ($this->get_page()->get_end_date() === null ? new Date() : $this->get_page()->get_end_date()), array('hidden' => !$this->get_page()->is_end_date_enabled())));
+			$publication_fieldset->add_field($end_date = new FormFieldDateTime('end_date', $this->common_lang['form.date.end'], ($this->get_page()->get_end_date() === null ? new Date() : $this->get_page()->get_end_date()),
+				array('hidden' => !$this->get_page()->is_end_date_enabled())
+			));
 
 			$end_date->add_form_constraint(new FormConstraintFieldsDifferenceSuperior($start_date, $end_date));
 		}
@@ -317,7 +328,7 @@ class PagesItemFormController extends ModuleController
 				$item->set_creation_date($this->form->get_value('creation_date'));
 			}
 
-			$item->set_publication($this->form->get_value('publication')->get_raw_value());
+			$item->set_publication($this->form->get_value('approbation_type')->get_raw_value());
 			if ($item->get_publication() == Page::APPROVAL_DATE)
 			{
 				$deferred_operations = $this->config->get_deferred_operations();
