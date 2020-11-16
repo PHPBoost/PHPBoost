@@ -171,7 +171,8 @@ class DownloadFormController extends ModuleController
 
 			if (!$this->get_downloadfile()->is_visible())
 			{
-				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->common_lang['form.update.date.creation'], false, array('hidden' => $this->get_downloadfile()->get_status() != DownloadFile::NOT_APPROVAL)
+				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->common_lang['form.update.date.creation'], false,
+					array('hidden' => $this->get_downloadfile()->get_status() != DownloadFile::NOT_APPROVAL)
 				));
 			}
 
@@ -181,36 +182,44 @@ class DownloadFormController extends ModuleController
 					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.now'], DownloadFile::APPROVAL_NOW),
 					new FormFieldSelectChoiceOption($this->common_lang['status.approved.date'], DownloadFile::APPROVAL_DATE),
 				),
-				array('events' => array('change' => '
-				if (HTMLForms.getField("approbation_type").getValue() == 2) {
-					jQuery("#' . __CLASS__ . '_start_date_field").show();
-					HTMLForms.getField("end_date_enabled").enable();
-					if (HTMLForms.getField("end_date_enabled").getValue()) {
-						HTMLForms.getField("end_date").enable();
-					}
-				} else {
-					jQuery("#' . __CLASS__ . '_start_date_field").hide();
-					HTMLForms.getField("end_date_enabled").disable();
-					HTMLForms.getField("end_date").disable();
-				}'))
+				array(
+					'events' => array('change' => '
+						if (HTMLForms.getField("approbation_type").getValue() == 2) {
+							jQuery("#' . __CLASS__ . '_start_date_field").show();
+							HTMLForms.getField("end_date_enabled").enable();
+							if (HTMLForms.getField("end_date_enabled").getValue()) {
+								HTMLForms.getField("end_date").enable();
+							}
+						} else {
+							jQuery("#' . __CLASS__ . '_start_date_field").hide();
+							HTMLForms.getField("end_date_enabled").disable();
+							HTMLForms.getField("end_date").disable();
+						}'
+					)
+				)
 			));
 
-			$publication_fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->common_lang['form.date.start'], ($this->get_downloadfile()->get_start_date() === null ? new Date() : $this->get_downloadfile()->get_start_date()), array('hidden' => ($this->get_downloadfile()->get_approbation_type() != DownloadFile::APPROVAL_DATE))));
+			$publication_fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->common_lang['form.date.start'], ($this->get_downloadfile()->get_start_date() === null ? new Date() : $this->get_downloadfile()->get_start_date()),
+				array('hidden' => ($this->get_downloadfile()->get_approbation_type() != DownloadFile::APPROVAL_DATE))
+			));
 
-			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->common_lang['form.date.end.enable'], $this->get_downloadfile()->is_end_date_enabled(), array(
-			'hidden' => ($this->get_downloadfile()->get_approbation_type() != DownloadFile::APPROVAL_DATE),
-			'events' => array('click' => '
-			if (HTMLForms.getField("end_date_enabled").getValue()) {
-				HTMLForms.getField("end_date").enable();
-			} else {
-				HTMLForms.getField("end_date").disable();
-			}'
-			))));
+			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->common_lang['form.date.end.enable'], $this->get_downloadfile()->is_end_date_enabled(),
+				array(
+					'hidden' => ($this->get_downloadfile()->get_approbation_type() != DownloadFile::APPROVAL_DATE),
+					'events' => array('click' => '
+						if (HTMLForms.getField("end_date_enabled").getValue()) {
+							HTMLForms.getField("end_date").enable();
+						} else {
+							HTMLForms.getField("end_date").disable();
+						}'
+					)
+				)
+			));
 
 			$publication_fieldset->add_field($end_date = new FormFieldDateTime('end_date', $this->common_lang['form.date.end'], ($this->get_downloadfile()->get_end_date() === null ? new Date() : $this->get_downloadfile()->get_end_date()),
 				array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_end_date_enabled', false) : !$this->get_downloadfile()->is_end_date_enabled()))
 			));
-			
+
 			$end_date->add_form_constraint(new FormConstraintFieldsDifferenceSuperior($start_date, $end_date));
 		}
 
