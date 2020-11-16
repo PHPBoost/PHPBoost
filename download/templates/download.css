@@ -23,15 +23,13 @@
 	}
 
 	#onblurContainerResponseDownloadFormController_file_size,
+	#onblurContainerResponseDownloadFormController_file_size_unit,
 	#DownloadFormController_file_size_field,
+	#DownloadFormController_file_size_unit,
 	#DownloadFormController_file_size_field label,
 	#DownloadFormController_file_size_unit_field {
 		width: auto;
 		margin-right: 0.618em;
-	}
-
-	#DownloadFormController_file_size_unit_field  label {
-		display: none;
 	}
 
 	#DownloadFormController_file_size_unit_field  select {
