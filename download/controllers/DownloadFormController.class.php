@@ -100,7 +100,7 @@ class DownloadFormController extends ModuleController
 			$file_size = $file_size_unit = 0;
 
 		$fieldset->add_field(new FormFieldDecimalNumberEditor('file_size', $this->lang['download.form.file.size'], $file_size,
-			array('min' => 0, 'step' => 0.01, 'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_determine_file_size_automatically_enabled', false) : $this->is_file_size_automatic()), 'required' => true)
+			array('min' => 0, 'step' => 0.01, 'hidden' => ($request->is_post_method() ? $request->get_postbool(__CLASS__ . '_determine_file_size_automatically_enabled', false) : $this->is_file_size_automatic()), 'required' => true)
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('file_size_unit', $this->lang['download.form.file.size.unit'], $file_size_unit,
@@ -110,7 +110,7 @@ class DownloadFormController extends ModuleController
 				new FormFieldSelectChoiceOption($this->common_lang['unit.megabytes'], $this->common_lang['unit.megabytes']),
 				new FormFieldSelectChoiceOption($this->common_lang['unit.gigabytes'], $this->common_lang['unit.gigabytes'])
 			),
-			array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_determine_file_size_automatically_enabled', false) : $this->is_file_size_automatic()), 'required' => true)
+			array('hidden' => ($request->is_post_method() ? $request->get_postbool(__CLASS__ . '_determine_file_size_automatically_enabled', false) : $this->is_file_size_automatic()), 'required' => true)
 		));
 
 		if ($this->get_downloadfile()->get_id() !== null && $this->get_downloadfile()->get_downloads_number() > 0)
