@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 05
+ * @version     PHPBoost 6.0 - last update: 2020 11 16
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -100,7 +100,7 @@ class DownloadFormController extends ModuleController
 			$file_size = $file_size_unit = 0;
 
 		$fieldset->add_field(new FormFieldDecimalNumberEditor('file_size', $this->lang['download.form.file.size'], $file_size,
-			array('min' => 0, 'step' => 0.01, 'hidden' => $this->is_file_size_automatic(), 'required' => true)
+			array('min' => 0, 'step' => 0.01, 'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_determine_file_size_automatically_enabled', false) : $this->is_file_size_automatic()), 'required' => true)
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('file_size_unit', $this->lang['download.form.file.size.unit'], $file_size_unit,
@@ -110,7 +110,7 @@ class DownloadFormController extends ModuleController
 				new FormFieldSelectChoiceOption($this->common_lang['unit.megabytes'], $this->common_lang['unit.megabytes']),
 				new FormFieldSelectChoiceOption($this->common_lang['unit.gigabytes'], $this->common_lang['unit.gigabytes'])
 			),
-			array('hidden' => $this->is_file_size_automatic(), 'required' => true)
+			array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_determine_file_size_automatically_enabled', false) : $this->is_file_size_automatic()), 'required' => true)
 		));
 
 		if ($this->get_downloadfile()->get_id() !== null && $this->get_downloadfile()->get_downloads_number() > 0)
@@ -129,9 +129,9 @@ class DownloadFormController extends ModuleController
 			}'))
 		));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->common_lang['form.description'], $this->get_downloadfile()->get_summary(), array(
-			'hidden' => !$this->get_downloadfile()->is_summary_enabled(),
-		)));
+		$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->common_lang['form.description'], $this->get_downloadfile()->get_summary(),
+			array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_summary_enabled', false) : !$this->get_downloadfile()->is_summary_enabled()))
+		));
 
 		if ($this->config->is_author_displayed())
 		{
@@ -144,9 +144,9 @@ class DownloadFormController extends ModuleController
 				}'))
 			));
 
-			$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->common_lang['form.author_custom_name'], $this->get_downloadfile()->get_author_custom_name(), array(
-				'hidden' => !$this->get_downloadfile()->is_author_custom_name_enabled(),
-			)));
+			$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->common_lang['form.author_custom_name'], $this->get_downloadfile()->get_author_custom_name(),
+				array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_author_custom_name_enabled', false) : !$this->get_downloadfile()->is_author_custom_name_enabled()))
+			));
 		}
 
 		$other_fieldset = new FormFieldsetHTML('other', $this->common_lang['form.other']);
@@ -195,7 +195,7 @@ class DownloadFormController extends ModuleController
 				}'))
 			));
 
-			$publication_fieldset->add_field(new FormFieldDateTime('start_date', $this->common_lang['form.date.start'], ($this->get_downloadfile()->get_start_date() === null ? new Date() : $this->get_downloadfile()->get_start_date()), array('hidden' => ($this->get_downloadfile()->get_approbation_type() != DownloadFile::APPROVAL_DATE))));
+			$publication_fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->common_lang['form.date.start'], ($this->get_downloadfile()->get_start_date() === null ? new Date() : $this->get_downloadfile()->get_start_date()), array('hidden' => ($this->get_downloadfile()->get_approbation_type() != DownloadFile::APPROVAL_DATE))));
 
 			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->common_lang['form.date.end.enable'], $this->get_downloadfile()->is_end_date_enabled(), array(
 			'hidden' => ($this->get_downloadfile()->get_approbation_type() != DownloadFile::APPROVAL_DATE),
@@ -207,7 +207,11 @@ class DownloadFormController extends ModuleController
 			}'
 			))));
 
-			$publication_fieldset->add_field(new FormFieldDateTime('end_date', $this->common_lang['form.date.end'], ($this->get_downloadfile()->get_end_date() === null ? new Date() : $this->get_downloadfile()->get_end_date()), array('hidden' => !$this->get_downloadfile()->is_end_date_enabled())));
+			$publication_fieldset->add_field($end_date = new FormFieldDateTime('end_date', $this->common_lang['form.date.end'], ($this->get_downloadfile()->get_end_date() === null ? new Date() : $this->get_downloadfile()->get_end_date()),
+				array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_end_date_enabled', false) : !$this->get_downloadfile()->is_end_date_enabled()))
+			));
+			
+			$end_date->add_form_constraint(new FormConstraintFieldsDifferenceSuperior($start_date, $end_date));
 		}
 
 		$this->build_contribution_fieldset($form);

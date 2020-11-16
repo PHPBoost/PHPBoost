@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 05
+ * @version     PHPBoost 6.0 - last update: 2020 11 16
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -79,7 +79,7 @@ class NewsItemFormController extends ModuleController
 
 			$fieldset->add_field(new FormFieldTextEditor('rewrited_title', $this->common_lang['form.rewrited_name'], $this->get_news()->get_rewrited_title(), array(
 				'description' => $this->common_lang['form.rewrited_name.description'],
-				'hidden' => !$this->get_news()->rewrited_title_is_personalized()
+				'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_personalize_rewrited_title', false) : !$this->get_news()->rewrited_title_is_personalized())
 			), array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu'))));
 		}
 
@@ -103,7 +103,7 @@ class NewsItemFormController extends ModuleController
 		));
 
 		$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->lang['news.form.summary'], $this->get_news()->get_summary(), array(
-			'hidden' => !$this->get_news()->get_summary_enabled(),
+			'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_summary_enabled', false) : !$this->get_news()->get_summary_enabled()),
 			'description' => !NewsConfig::load()->get_full_item_display() ? '<span class="error">' . $this->lang['news.form.summary.description'] . '</span>' : ''
 		)));
 
@@ -119,7 +119,7 @@ class NewsItemFormController extends ModuleController
 			));
 
 			$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->common_lang['form.author_custom_name'], $this->get_news()->get_author_custom_name(), array(
-				'hidden' => !$this->get_news()->is_author_custom_name_enabled(),
+				'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_author_custom_name_enabled', false) : !$this->get_news()->is_author_custom_name_enabled())
 			)));
 		}
 
@@ -167,7 +167,7 @@ class NewsItemFormController extends ModuleController
 				}'))
 			));
 
-			$publication_fieldset->add_field(new FormFieldDateTime('start_date', $this->common_lang['form.date.start'], ($this->get_news()->get_start_date() === null ? new Date() : $this->get_news()->get_start_date()), array('hidden' => ($this->get_news()->get_publication() != News::APPROVAL_DATE))));
+			$publication_fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->common_lang['form.date.start'], ($this->get_news()->get_start_date() === null ? new Date() : $this->get_news()->get_start_date()), array('hidden' => ($this->get_news()->get_publication() != News::APPROVAL_DATE))));
 
 			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enable', $this->common_lang['form.date.end.enable'], $this->get_news()->end_date_enabled(), array(
 			'hidden' => ($this->get_news()->get_publication() != News::APPROVAL_DATE),
@@ -179,7 +179,9 @@ class NewsItemFormController extends ModuleController
 			}'
 			))));
 
-			$publication_fieldset->add_field(new FormFieldDateTime('end_date', $this->common_lang['form.date.end'], ($this->get_news()->get_end_date() === null ? new Date() : $this->get_news()->get_end_date()), array('hidden' => !$this->get_news()->end_date_enabled())));
+			$publication_fieldset->add_field($end_date = new FormFieldDateTime('end_date', $this->common_lang['form.date.end'], ($this->get_news()->get_end_date() === null ? new Date() : $this->get_news()->get_end_date()), array('hidden' => !$this->get_news()->end_date_enabled())));
+
+			$end_date->add_form_constraint(new FormConstraintFieldsDifferenceSuperior($start_date, $end_date));
 
 			$publication_fieldset->add_field(new FormFieldCheckbox('top_list', $this->lang['news.form.top_list'], $this->get_news()->top_list_enabled()));
 		}

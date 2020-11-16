@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 05
+ * @version     PHPBoost 6.0 - last update: 2020 11 16
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -95,9 +95,9 @@ class WebFormController extends ModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->common_lang['form.description'], $this->get_weblink()->get_summary(), array(
-			'hidden' => !$this->get_weblink()->is_summary_enabled(),
-		)));
+		$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->common_lang['form.description'], $this->get_weblink()->get_summary(),
+			array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_summary_enabled', false) : !$this->get_weblink()->is_summary_enabled()))
+		));
 
 		$other_fieldset = new FormFieldsetHTML('other', $this->common_lang['form.other']);
 		$form->add_fieldset($other_fieldset);
@@ -119,13 +119,13 @@ class WebFormController extends ModuleController
 			)
 		)));
 
-		$other_fieldset->add_field(new FormFieldUploadPictureFile('partner_thumbnail', $this->lang['web.form.partner_thumbnail'], $this->get_weblink()->get_partner_thumbnail()->relative(), array(
-			'hidden' => !$this->get_weblink()->is_partner()
-		)));
+		$other_fieldset->add_field(new FormFieldUploadPictureFile('partner_thumbnail', $this->lang['web.form.partner_thumbnail'], $this->get_weblink()->get_partner_thumbnail()->relative(),
+			array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_partner', false) : !$this->get_weblink()->is_partner()))
+		));
 
 		$other_fieldset->add_field(new FormFieldCheckbox('privileged_partner', $this->lang['web.form.privileged_partner'], $this->get_weblink()->is_privileged_partner(),
 			array(
-				'description' => $this->lang['web.form.privileged_partner.explain'], 'hidden' => !$this->get_weblink()->is_partner()
+				'description' => $this->lang['web.form.privileged_partner.explain'], 'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_partner', false) : !$this->get_weblink()->is_partner())
 			))
 		);
 
@@ -172,7 +172,7 @@ class WebFormController extends ModuleController
 				)
 			));
 
-			$publication_fieldset->add_field(new FormFieldDateTime('start_date', $this->common_lang['form.date.start'], ($this->get_weblink()->get_start_date() === null ? new Date() : $this->get_weblink()->get_start_date()),
+			$publication_fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->common_lang['form.date.start'], ($this->get_weblink()->get_start_date() === null ? new Date() : $this->get_weblink()->get_start_date()),
 				array('hidden' => ($this->get_weblink()->get_approbation_type() != WebLink::APPROVAL_DATE))
 			));
 
@@ -189,9 +189,11 @@ class WebFormController extends ModuleController
 				)
 			));
 
-			$publication_fieldset->add_field(new FormFieldDateTime('end_date', $this->common_lang['form.date.end'], ($this->get_weblink()->get_end_date() === null ? new Date() : $this->get_weblink()->get_end_date()),
-				array('hidden' => !$this->get_weblink()->is_end_date_enabled())
+			$publication_fieldset->add_field($end_date = new FormFieldDateTime('end_date', $this->common_lang['form.date.end'], ($this->get_weblink()->get_end_date() === null ? new Date() : $this->get_weblink()->get_end_date()),
+				array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_end_date_enabled', false) : !$this->get_weblink()->is_end_date_enabled()))
 			));
+			
+			$end_date->add_form_constraint(new FormConstraintFieldsDifferenceSuperior($start_date, $end_date));
 		}
 
 		$this->build_contribution_fieldset($form);

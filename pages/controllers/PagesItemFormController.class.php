@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 05
+ * @version     PHPBoost 6.0 - last update: 2020 11 16
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
@@ -78,7 +78,7 @@ class PagesItemFormController extends ModuleController
 
 			$fieldset->add_field(new FormFieldTextEditor('rewrited_title', $this->common_lang['form.rewrited_name'], $this->get_page()->get_rewrited_title(), array(
 				'description' => $this->common_lang['form.rewrited_name.description'],
-				'hidden' => !$this->get_page()->rewrited_title_is_personalized()
+				'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_personalize_rewrited_title', false) : !$this->get_page()->rewrited_title_is_personalized())
 			), array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu'))));
 		}
 
@@ -95,12 +95,23 @@ class PagesItemFormController extends ModuleController
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('author_display', LangLoader::get_message('config.author.displayed', 'admin-common'), $this->get_page()->get_author_display(),
-			array('description' => $this->lang['author.display.explain'])
+			array('description' => $this->lang['author.display.explain'],
+				'events' => array('click' => '
+					if (HTMLForms.getField("author_display").getValue()) {
+						HTMLForms.getField("author_custom_name_enabled").enable();
+						if (HTMLForms.getField("author_custom_name_enabled").getValue()) {
+							HTMLForms.getField("author_custom_name").enable();
+						}
+					} else {
+						HTMLForms.getField("author_custom_name_enabled").disable();
+						HTMLForms.getField("author_custom_name").disable();
+					}')
+			)
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('author_custom_name_enabled', $this->common_lang['form.author_custom_name_enabled'], $this->get_page()->is_author_custom_name_enabled(),
 			array(
-				'hidden' => !$this->get_page()->get_author_display(),
+				'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_author_display', false) : !$this->get_page()->get_author_display()),
 				'events' => array('click' => '
 					if (HTMLForms.getField("author_custom_name_enabled").getValue()) {
 						HTMLForms.getField("author_custom_name").enable();
@@ -111,7 +122,7 @@ class PagesItemFormController extends ModuleController
 		));
 
 		$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->common_lang['form.author_custom_name'], $this->get_page()->get_author_custom_name(), array(
-			'hidden' => !$this->get_page()->is_author_custom_name_enabled() || !$this->get_page()->get_author_display(),
+			'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_author_custom_name_enabled', false) : !$this->get_page()->is_author_custom_name_enabled() || !$this->get_page()->get_author_display())
 		)));
 
 		$other_fieldset = new FormFieldsetHTML('other', $this->common_lang['form.other']);
@@ -158,7 +169,7 @@ class PagesItemFormController extends ModuleController
 				}'))
 			));
 
-			$publication_fieldset->add_field(new FormFieldDateTime('start_date', $this->common_lang['form.date.start'], ($this->get_page()->get_start_date() === null ? new Date() : $this->get_page()->get_start_date()), array('hidden' => ($this->get_page()->get_publication() != Page::APPROVAL_DATE))));
+			$publication_fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->common_lang['form.date.start'], ($this->get_page()->get_start_date() === null ? new Date() : $this->get_page()->get_start_date()), array('hidden' => ($this->get_page()->get_publication() != Page::APPROVAL_DATE))));
 
 			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->common_lang['form.date.end.enable'], $this->get_page()->is_end_date_enabled(), array(
 			'hidden' => ($this->get_page()->get_publication() != Page::APPROVAL_DATE),
@@ -170,7 +181,9 @@ class PagesItemFormController extends ModuleController
 			}'
 			))));
 
-			$publication_fieldset->add_field(new FormFieldDateTime('end_date', $this->common_lang['form.date.end'], ($this->get_page()->get_end_date() === null ? new Date() : $this->get_page()->get_end_date()), array('hidden' => !$this->get_page()->is_end_date_enabled())));
+			$publication_fieldset->add_field($end_date = new FormFieldDateTime('end_date', $this->common_lang['form.date.end'], ($this->get_page()->get_end_date() === null ? new Date() : $this->get_page()->get_end_date()), array('hidden' => !$this->get_page()->is_end_date_enabled())));
+
+			$end_date->add_form_constraint(new FormConstraintFieldsDifferenceSuperior($start_date, $end_date));
 		}
 
 		$this->build_contribution_fieldset($form);

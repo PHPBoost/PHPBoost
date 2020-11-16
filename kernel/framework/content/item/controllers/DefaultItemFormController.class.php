@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 04
+ * @version     PHPBoost 6.0 - last update: 2020 11 16
  * @since       PHPBoost 6.0 - 2020 05 16
  * @contributor xela <xela@phpboost.com>
 */
@@ -20,6 +20,10 @@ class DefaultItemFormController extends AbstractItemController
 	 * @var FormButtonSubmit
 	 */
 	protected $submit_button;
+	/**
+	 * @var HTTPRequestCustom
+	 */
+	protected $request;
 
 	protected $item;
 	protected $item_class;
@@ -27,9 +31,9 @@ class DefaultItemFormController extends AbstractItemController
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
+		$this->init($request);
 		$this->check_authorizations();
-		$this->build_form($request);
+		$this->build_form();
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -42,8 +46,9 @@ class DefaultItemFormController extends AbstractItemController
 		return $this->generate_response();
 	}
 
-	protected function init()
+	protected function init(HTTPRequestCustom $request)
 	{
+		$this->request = $request;
 		$this->common_lang = LangLoader::get('common');
 		$this->get_item();
 		$this->item_class = self::get_module()->get_configuration()->get_item_name();
@@ -86,7 +91,7 @@ class DefaultItemFormController extends AbstractItemController
 			$this->display_user_in_read_only_page();
 	}
 
-	protected function build_form(HTTPRequestCustom $request)
+	protected function build_form()
 	{
 		$form = new HTMLForm(self::$module_id . '_form');
 
@@ -112,7 +117,7 @@ class DefaultItemFormController extends AbstractItemController
 			));
 
 			$fieldset->add_field(new FormFieldTextEditor('rewrited_' . $this->item_class::get_title_label(), $this->common_lang['form.rewrited_name'], $this->get_item()->get_rewrited_title(),
-				array('description' => $this->common_lang['form.rewrited_name.description'], 'hidden' => !$this->get_item()->rewrited_title_is_personalized()),
+				array('description' => $this->common_lang['form.rewrited_name.description'], 'hidden' => ($this->request->is_post_method() ? !$this->request->get_postbool(self::$module_id . '_form_personalize_rewrited_' . $this->item_class::get_title_label(), false) : !$this->get_item()->rewrited_title_is_personalized())),
 				array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu'))
 			));
 		}
@@ -175,7 +180,7 @@ class DefaultItemFormController extends AbstractItemController
 					)
 				));
 
-				$publication_fieldset->add_field(new FormFieldDateTime('publishing_start_date', $this->common_lang['form.date.start'],
+				$publication_fieldset->add_field($publishing_start_date = new FormFieldDateTime('publishing_start_date', $this->common_lang['form.date.start'],
 					($this->get_item()->get_publishing_start_date() === null ? new Date() : $this->get_item()->get_publishing_start_date()),
 					array('hidden' => ($this->get_item()->get_publishing_state() != Item::DEFERRED_PUBLICATION))
 				));
@@ -192,11 +197,13 @@ class DefaultItemFormController extends AbstractItemController
 						)
 					)
 				));
-
-				$publication_fieldset->add_field(new FormFieldDateTime('publishing_end_date', $this->common_lang['form.date.end'],
+				
+				$publication_fieldset->add_field($publishing_end_date = new FormFieldDateTime('publishing_end_date', $this->common_lang['form.date.end'],
 					($this->get_item()->get_publishing_end_date() === null ? new date() : $this->get_item()->get_publishing_end_date()),
-					array('hidden' => !$this->get_item()->end_date_enabled())
+					array('hidden' => ($this->request->is_post_method() ? !$this->request->get_postbool(self::$module_id . '_form_end_date_enabled', false) : !$this->get_item()->end_date_enabled()))
 				));
+				
+				$publishing_end_date->add_form_constraint(new FormConstraintFieldsDifferenceSuperior($publishing_start_date, $publishing_end_date));
 			}
 			else
 			{
@@ -206,7 +213,7 @@ class DefaultItemFormController extends AbstractItemController
 
 		$this->build_contribution_fieldset($form);
 
-		$fieldset->add_field(new FormFieldHidden('referrer', $request->get_url_referrer()));
+		$fieldset->add_field(new FormFieldHidden('referrer', $this->request->get_url_referrer()));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -234,7 +241,7 @@ class DefaultItemFormController extends AbstractItemController
 			));
 
 			$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->common_lang['form.summary'], $this->get_item()->get_summary(), array(
-				'hidden' => !$this->get_item()->is_summary_enabled()
+				'hidden' => ($this->request->is_post_method() ? !$this->request->get_postbool(self::$module_id . '_form_summary_enabled', false) : !$this->get_item()->is_summary_enabled())
 			)));
 			
 			if ($this->config->get_author_displayed())
@@ -249,7 +256,7 @@ class DefaultItemFormController extends AbstractItemController
 				));
 
 				$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->common_lang['form.author_custom_name'], $this->get_item()->get_author_custom_name(), array(
-					'hidden' => !$this->get_item()->is_author_custom_name_enabled()
+					'hidden' => ($this->request->is_post_method() ? !$this->request->get_postbool(self::$module_id . '_form_author_custom_name_enabled', false) : !$this->get_item()->is_author_custom_name_enabled())
 				)));
 			}
 		}
