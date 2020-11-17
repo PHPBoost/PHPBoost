@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost - 2019 babsolune
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 11 15
+ * @version     PHPBoost 6.0 - last update: 2020 11 17
  * @since       PHPBoost 6.0 - 2019 11 15
 */
 
@@ -166,21 +166,22 @@ var tooltipController = function(attr){
 	var checkerIn = '['+attr+']';
 	var $tar;
 
-	var removeTooltip = function(e){
-		$tar.leave();
-		$tar = undefined;
-	};
-
 	function tooltipCheck(e){
-		var $tmptar = $(e.target).closest(checkerIn);
+		var $tmptar = jQuery(e.target).closest(checkerIn);
 		$tar = ( $tmptar.is(checkerIn) && !$tmptar.is($tar) ) ? $tmptar : ( $tar || $tmptar );
 		if($tar.is(checkerIn)){
 			var tooltipClass = $tar.attr('data-tooltip-class') || '';
 			var tooltipPos = $tar.attr('data-tooltip-pos') || 'all';
 			$tar.tooltip(null,tooltipPos,tooltipClass);
-			$($tar).off('mouseleave touchend',removeTooltip).one('mouseleave touchend',removeTooltip);
+			jQuery($tar).off('mouseleave touchend',removeTooltip).one('mouseleave touchend',removeTooltip);
 		}
 	}
+
+	var removeTooltip = function(e){
+		if (jQuery($tar).length > 0)
+			$tar.leave();
+		$tar = undefined;
+	};
 
 	$(document).off('mouseover touchstart',tooltipCheck).on('mouseover touchstart',tooltipCheck);
 	return this;
