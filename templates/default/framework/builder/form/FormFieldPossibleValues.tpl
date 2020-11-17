@@ -23,7 +23,7 @@
 				# ENDIF #
 
 				jQuery('<div/>', {id : id + '_inputs', class: 'grouped-inputs'}).appendTo('#' + id);
-				jQuery('<input/>', {class : 'grouped-element', type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{@field.name}'}).appendTo('#' + id + '_inputs');
+				jQuery('<input/>', {class : 'grouped-element', type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{PLACEHOLDER}'}).appendTo('#' + id + '_inputs');
 				jQuery('#field_name_' + id).after(' ');
 				jQuery('<a/>', {class : 'grouped-element', href : 'javascript:FormFieldPossibleValues.delete_field('+ this.integer +');', id : 'delete_' + id, 'aria-label' : "${LangLoader::get_message('delete', 'common')}"}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#' + id + '_inputs');
 
@@ -75,7 +75,7 @@
 			# ENDIF #
 
 			<div class="grouped-inputs">
-				<input class="grouped-element" type="text" name="field_name_${escape(HTML_ID)}_{fieldelements.ID}" id="field_name_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.TITLE}" placeholder="{@field.name}"/>
+				<input class="grouped-element" type="text" name="field_name_${escape(HTML_ID)}_{fieldelements.ID}" id="field_name_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.TITLE}" placeholder="{PLACEHOLDER}"/>
 				<a class="grouped-element# IF NOT C_DELETE # icon-disabled# ENDIF #" href="javascript:FormFieldPossibleValues.delete_field({fieldelements.ID});" id="delete_${escape(HTML_ID)}_{fieldelements.ID}" aria-label="${LangLoader::get_message('delete', 'common')}"# IF C_DELETE # data-confirmation="delete-element"# ENDIF #><i class="far fa-trash-alt" aria-hidden="true"></i></a>
 			</div>
 
