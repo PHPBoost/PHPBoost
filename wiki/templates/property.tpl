@@ -64,7 +64,7 @@
 	<script>
 		status = new Array();
 		# START status.status_array #
-		status[{status.status_array.ID}] = "{status.status_array.TEXT}";
+			status[{status.status_array.ID}] = "{status.status_array.TEXT}";
 		# END status.status_array #
 
 		function show_status()
@@ -72,7 +72,7 @@
 			if( document.getElementById('radio_undefined').checked )
 				change_type(-1);
 
-			//Si il s'agit d'un statut pr�d�fini
+			// If it's a predefine status
 			if( document.getElementById('id_status').value > 0 && status[document.getElementById('id_status').value] != "" )
 			{
 				document.getElementById('current_status').innerHTML = status[parseInt(document.getElementById('id_status').value)];
@@ -238,21 +238,21 @@
 		</thead>
 		<tbody>
 			# START redirect.list #
-			<tr>
-				<td>
-					{redirect.list.REDIRECTION_NAME}
-				</td>
-				<td>
-					<a href="{redirect.list.U_REDIRECTION_DELETE}" data-confirmation="{L_ALERT_DELETE_REDIRECTION}" aria-label="{REDIRECTION_DELETE}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
-				</td>
-			</tr>
+				<tr>
+					<td>
+						{redirect.list.REDIRECTION_NAME}
+					</td>
+					<td>
+						<a href="{redirect.list.U_REDIRECTION_DELETE}" data-confirmation="{L_ALERT_DELETE_REDIRECTION}" aria-label="{REDIRECTION_DELETE}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+					</td>
+				</tr>
 			# END redirect.list #
 			# IF NO_REDIRECTION #
-			<tr>
-				<td colspan="2">
-					{L_NO_REDIRECTION}
-				</td>
-			</tr>
+				<tr>
+					<td colspan="2">
+						{L_NO_REDIRECTION}
+					</td>
+				</tr>
 			# ENDIF #
 		</tbody>
 		<tfoot>

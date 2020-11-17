@@ -17,11 +17,11 @@
 	margin: 0.3em 0 0 0;
 }
 
-.wiki-list-1 { list-style-type: upper-roman; 	}
-.wiki-list-2 { list-style-type: decimal; 	}
-.wiki-list-3 { list-style-type: upper-alpha; 	}
-.wiki-list-4 { list-style-type: lower-alpha; 	}
-.wiki-list-5 { list-style-type: lower-greek; 	}
+.wiki-list-1 { list-style-type: upper-roman; }
+.wiki-list-2 { list-style-type: decimal; 	 }
+.wiki-list-3 { list-style-type: upper-alpha; }
+.wiki-list-4 { list-style-type: lower-alpha; }
+.wiki-list-5 { list-style-type: lower-greek; }
 
 ul.no-list a i.fa {
 	width: 1.228em;
@@ -102,22 +102,6 @@ ul.no-list a i.fa {
 
 .explorer h2 {
 	font-size: 1.228em;
-}
-
-/* Main categories - Last articles */
-
-.wiki-list-top {
-	padding: 0.382em;
-	background-color: rgba(var(--main-rgb-t), 0.1);
-	font-weight: bold;
-}
-
-.wiki-list-item {
-	padding: 0.1618em 0.309em;
-}
-
-.wiki-list-item i {
-    font-size: 0.809em;
 }
 
 .col-max{

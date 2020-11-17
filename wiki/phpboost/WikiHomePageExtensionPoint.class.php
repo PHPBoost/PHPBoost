@@ -3,11 +3,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2017 08 24
+ * @version     PHPBoost 6.0 - last update: 2020 11 17
  * @since       PHPBoost 3.0 - 2012 01 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class WikiHomePageExtensionPoint implements HomePageExtensionPoint
@@ -76,7 +77,8 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 			if ($i == 0)
 			{
 				$tpl->put_all(array(
-					'L_NO_ARTICLE' => $LANG['wiki_no_article'],
+					'C_NO_ITEM' => true,
+					'L_NO_ITEM' => $LANG['wiki_no_article'],
 				));
 			}
 		}
@@ -101,7 +103,8 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 			}
 			if ($i == 0)
 			$tpl->put_all(array(
-				'L_NO_CAT' => $LANG['wiki_no_cat'],
+				'C_NO_CATEGORY' => true,
+				'L_NO_CATEGORY' => $LANG['wiki_no_cat'],
 			));
 		}
 

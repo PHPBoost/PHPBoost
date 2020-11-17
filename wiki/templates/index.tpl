@@ -22,43 +22,56 @@
 		</div>
 	</article>
 
-	<div class="elements-container columns-2">
+	<div class="cell-flex cell-columns-2 cell-tile">
 		# START cat_list #
-			<aside class="block">
-				<div class="wiki-list-container">
-					<div class="wiki-list-top">{cat_list.L_CATS}</div>
-					<div class="wiki-list-content">
-						# START cat_list.list #
-							<div class="wiki-list-item">
-								<i class="fa fa-folder small" aria-hidden="true"></i> <a href="{PATH_TO_ROOT}/wiki/{cat_list.list.U_CAT}">{cat_list.list.CAT}</a>
-							</div>
-						# END cat_list.list #
-					</div>
-					{L_NO_CAT}
+			<aside class="cell">
+				<div class="cell-header">
+					<h6 class="cell-name">{cat_list.L_CATS}</h6>
 				</div>
+				# IF C_NO_CATEGORY #
+					<div class="cell-body">
+						<div class="cell-content">{L_NO_CATEGORY}</div>
+					</div>
+				# ELSE #
+					<div class="cell-list">
+						<ul>
+							# START cat_list.list #
+								<li>
+									<i class="fa fa-folder small" aria-hidden="true"></i> <a href="{PATH_TO_ROOT}/wiki/{cat_list.list.U_CAT}">{cat_list.list.CAT}</a>
+								</li>
+							# END cat_list.list #
+						</ul>
+					</div>
+				# ENDIF #
 			</aside>
 		# END cat_list #
 		# START last_articles #
-			<aside class="block">
-				<div class="wiki-list-container">
-					<div class="wiki-list-top">
-						# IF last_articles.C_ARTICLES #
-							<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" aria-label="${LangLoader::get_message('syndication', 'common')}">
-								<i class="fa fa-rss small" aria-hidden="true"></i>
-							</a>
-						# ENDIF #
+			<aside class="cell">
+				<div class="cell-header">
+					<h6 class="cell-name">
 						{last_articles.L_ARTICLES}
-					</div>
-					<div class="wiki-list-content">
-						# START last_articles.list #
-							<div class="wiki-list-item">
-								<i class="fa fa-file-alt small" aria-hidden="true"></i> <a href="{PATH_TO_ROOT}/wiki/{last_articles.list.U_ARTICLE}" class="wiki-list-element">{last_articles.list.ARTICLE}</a>
-							</div>
-						# END last_articles.list #
-						{L_NO_ARTICLE}
-					</div>
-					<div class="table-footer wiki-list-bottom"></div>
+					</h6>
+					# IF last_articles.C_ARTICLES #
+						<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" aria-label="${LangLoader::get_message('syndication', 'common')}">
+							<i class="fa fa-rss warning" aria-hidden="true"></i>
+						</a>
+					# ENDIF #
 				</div>
+				# IF C_NO_ITEM #
+					<div class="cell-body">
+						<div class="cell-content">{L_NO_ITEM}</div>
+					</div>
+				# ELSE #
+					<div class="cell-list">
+						<ul>
+							# START last_articles.list #
+								<li>
+									<i class="fa fa-file-alt small" aria-hidden="true"></i> <a href="{PATH_TO_ROOT}/wiki/{last_articles.list.U_ARTICLE}" class="wiki-list-element">{last_articles.list.ARTICLE}</a>
+								</li>
+							# END last_articles.list #
+						</ul>
+					</div>
+				# ENDIF #
 			</aside>
 		# END last_articles #
 

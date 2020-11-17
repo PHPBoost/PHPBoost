@@ -15,18 +15,18 @@
 				<li><a id="class-0" class="{CAT_0}" href="javascript:open_cat(0);"><i class="fa fa-fw fa-folder" aria-hidden="true"></i> {L_ROOT}</a>
 					<ul>
 						# START list #
-						<li class="sub">
-							# IF list.U_FOLDER #
-								<a class="parent" href="javascript:show_wiki_cat_contents({list.ID}, 0);">
-									<i class="far fa-fw fa-plus-square" id="img-subfolder-{list.ID}"></i>
-									<i id="img-folder-{list.ID}" class="fa fa-fw fa-folder"></i>
-								</a>
-								<a id="class-{list.ID}" href="javascript:open_cat({list.ID});">{list.TITLE}</a>
-							# ELSE #
-								<a id="class-{list.ID}" href="javascript:open_cat({list.ID});"><i class="fa fa-fw fa-folder" aria-hidden="true"></i> {list.TITLE}</a>
-							# ENDIF #
-							<span id="cat-{list.ID}"></span>
-						</li>
+							<li class="sub">
+								# IF list.U_FOLDER #
+									<a class="parent" href="javascript:show_wiki_cat_contents({list.ID}, 0);">
+										<i class="far fa-fw fa-plus-square" id="img-subfolder-{list.ID}"></i>
+										<i id="img-folder-{list.ID}" class="fa fa-fw fa-folder"></i>
+									</a>
+									<a id="class-{list.ID}" href="javascript:open_cat({list.ID});">{list.TITLE}</a>
+								# ELSE #
+									<a id="class-{list.ID}" href="javascript:open_cat({list.ID});"><i class="fa fa-fw fa-folder" aria-hidden="true"></i> {list.TITLE}</a>
+								# ENDIF #
+								<span id="cat-{list.ID}"></span>
+							</li>
 						# END list #
 						{CAT_LIST}
 					</ul>

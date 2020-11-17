@@ -8,42 +8,44 @@
 	</header>
 	<div id="article-wiki-{ID}" class="article-wiki# IF C_NEW_CONTENT # new-content# ENDIF #">
 
-		<div class="elements-container columns-2">
+		<div class="cell-flex cell-columns-2 cell-tile">
 			# START cat #
 				# IF cat.list_cats #
-					<aside class="block">
-						<div class="wiki-list-container">
-							<div class="wiki-list-top">{L_SUB_CATS}</div>
-							<div class="wiki-list-content">
-								# START cat.list_cats #
-									<div class="wiki-list-item">
-										<i class="fa fa-folder" aria-hidden="true"></i> <a href="{cat.list_cats.U_CAT}">{cat.list_cats.NAME}</a>
-									</div>
-								# END cat.list_cats #
-								# START cat.no_sub_cat #
-									<div class="wiki-list-item">{cat.no_sub_cat.NO_SUB_CAT}</div>
-								# END cat.no_sub_cat #
-							</div>
+					<aside class="cell">
+						<div class="cell-header">
+							<h6 class="cell-name">{L_SUB_CATS}</h6>
 						</div>
+						<div class="cell-list">
+							<ul>
+								# START cat.list_cats #
+									<li>
+										<i class="fa fa-folder" aria-hidden="true"></i> <a href="{cat.list_cats.U_CAT}">{cat.list_cats.NAME}</a>
+									</li>
+								# END cat.list_cats #
+							</ul>
+						</div>
+						# START cat.no_sub_cat #
+							<div class="cell-body"><div class="cell-content">{cat.no_sub_cat.NO_SUB_CAT}</div></div>
+						# END cat.no_sub_cat #
 					</aside>
 				# ENDIF #
-				<aside class="block">
-					<div class="wiki-list-container">
-						<div class="wiki-list-top">{L_SUB_ARTICLES}</div>
-						<div class="wiki-list-content">
-							# START cat.list_art #
-								<div class="wiki-list-item">
-									<i class="fa fa-file" aria-hidden="true"></i> <a href="{cat.list_art.U_ARTICLE}">{cat.list_art.TITLE}</a>
-								</div>
-							# END cat.list_art #
-							# START cat.no_sub_article #
-								<div class="wiki-list-item">{cat.no_sub_article.NO_SUB_ARTICLE}</div>
-							# END cat.no_sub_article #
-						</div>
+				<aside class="cell">
+					<div class="cell-header">
+						<h6 class="cell-name">{L_SUB_ARTICLES}</h6>
 					</div>
+					<div class="cell-list">
+						<ul>
+							# START cat.list_art #
+								<li>
+									<i class="fa fa-file" aria-hidden="true"></i> <a href="{cat.list_art.U_ARTICLE}">{cat.list_art.TITLE}</a>
+								</li>
+							# END cat.list_art #
+						</ul>
+					</div>
+					# START cat.no_sub_article #
+						<div class="cell-body"><div class="cell-content">{cat.no_sub_article.NO_SUB_ARTICLE}</div></div>
+					# END cat.no_sub_article #
 				</aside>
-
-
 			# END cat #
 			<div class="spacer"></div>
 		</div>
@@ -148,7 +150,6 @@
 # ELSE #
 
 <script>
-	<!--
 	// smooth scroll when clicking on a inside link
 	jQuery('a[href^="#paragraph"]').on('click',function() {
 		var the_id = $(this).attr("href");
@@ -158,6 +159,5 @@
 		}, 'slow');
 		return false;
 	})
-	-->
 </script>
 # ENDIF #
