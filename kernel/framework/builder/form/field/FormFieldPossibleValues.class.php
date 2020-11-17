@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 08 24
+ * @version     PHPBoost 6.0 - last update: 2020 11 17
  * @since       PHPBoost 4.0 - 2013 09 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -17,6 +17,7 @@ class FormFieldPossibleValues extends AbstractFormField
 	private $min_input = 1;
 	private $max_input = 100;
 	private $display_default = true;
+	private $placeholder;
 
 	public function __construct($id, $label = '', array $value = array(), array $field_options = array(), array $constraints = array())
 	{
@@ -70,6 +71,7 @@ class FormFieldPossibleValues extends AbstractFormField
 			'C_DISABLED'              => $this->is_disabled(),
 			'MIN_INPUT'               => $this->min_input,
 			'MAX_INPUT'               => $this->max_input,
+			'PLACEHOLDER'             => $this->placeholder ? $this->placeholder : $lang['field.name'],
 			'C_DISPLAY_DEFAULT_RADIO' => $this->display_default,
 		 	'FIELDS_NUMBER'           => $i,
 			'C_HAS_DEFAULT_VALUE'     => $has_default,
@@ -124,6 +126,10 @@ class FormFieldPossibleValues extends AbstractFormField
 				 case 'display_default':
 					$this->display_default = (bool)$value;
 					unset($field_options['display_default']);
+					break;
+				 case 'placeholder':
+					$this->placeholder = (bool)$value;
+					unset($field_options['placeholder']);
 					break;
 			}
 		}
