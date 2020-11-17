@@ -6,7 +6,7 @@
 		</div>
 		<h1 itemprop="name">{TITLE}</h1>
 	</header>
-	<div id="article-wiki-{ID}" class="article-wiki# IF C_NEW_CONTENT # new-content# ENDIF #">
+	<div id="article-wiki-{ID}" class="wiki-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #">
 
 		<div class="cell-flex cell-columns-2 cell-tile">
 			# START cat #
@@ -97,27 +97,37 @@
 </section>
 
 # IF C_STICKY_MENU #
-<script>
-/* Push the body and the nav over by the menu div width over */
-	var summaryWidth = jQuery('.wiki-sticky').innerWidth();
-	var viewportWidth = jQuery(window).width();
+	<script>
+		/* Push the body and the nav over by the menu div width over */
+		var summaryWidth = jQuery('.wiki-sticky').innerWidth();
+		var viewportWidth = jQuery(window).width();
 
-	jQuery('.wiki-sticky-title').on('click',function(f) {
-		jQuery('.wiki-sticky-title').removeClass('blink');
-		jQuery('.wiki-sticky').animate({
-			left: "0px",
-			'max-width': viewportWidth + 'px'
-		}, 200);
+		jQuery('.wiki-sticky-title').on('click',function(f) {
+			jQuery('.wiki-sticky-title').removeClass('blink');
+			jQuery('.wiki-sticky').animate({
+				left: "0px",
+				'max-width': viewportWidth + 'px'
+			}, 200);
 
-		jQuery('body').animate({
-			left: summaryWidth + 'px'
-		}, 200);
-		f.stopPropagation();
-	});
+			jQuery('body').animate({
+				left: summaryWidth + 'px'
+			}, 200);
+			f.stopPropagation();
+		});
 
-	/* Then push them back by clicking outside the menu or on an inside link*/
-	jQuery(document).on('click',function(f) {
-		if (jQuery(f.target).is('.wiki-sticky-title') === false) {
+		/* Then push them back by clicking outside the menu or on an inside link*/
+		jQuery(document).on('click',function(f) {
+			if (jQuery(f.target).is('.wiki-sticky-title') === false) {
+				jQuery('.wiki-sticky').animate({
+					left: -summaryWidth + 'px'
+				}, 200);
+
+				jQuery('body').animate({
+					left: "0px"
+				}, 200);
+			}
+		});
+		jQuery('.wiki-sticky a').on('click',function() {
 			jQuery('.wiki-sticky').animate({
 				left: -summaryWidth + 'px'
 			}, 200);
@@ -125,39 +135,28 @@
 			jQuery('body').animate({
 				left: "0px"
 			}, 200);
-		}
-	});
-	jQuery('.wiki-sticky a').on('click',function() {
-		jQuery('.wiki-sticky').animate({
-			left: -summaryWidth + 'px'
-		}, 200);
+		});
 
-		jQuery('body').animate({
-			left: "0px"
-		}, 200);
-	});
+		// smooth scroll when clicking on an inside link
+		jQuery('.wiki-sticky a').on('click',function(){
+			var the_id = jQuery(this).attr("href");
 
-	// smooth scroll when clicking on an inside link
-	jQuery('.wiki-sticky a').on('click',function(){
-		var the_id = jQuery(this).attr("href");
-
-		jQuery('html, body').animate({
-			scrollTop:jQuery(the_id).offset().top
-		}, 'slow');
-		return false;
-	});
-</script>
+			jQuery('html, body').animate({
+				scrollTop:jQuery(the_id).offset().top
+			}, 'slow');
+			return false;
+		});
+	</script>
 # ELSE #
+	<script>
+		// smooth scroll when clicking on a inside link
+		jQuery('a[href^="#paragraph"]').on('click',function() {
+			var the_id = $(this).attr("href");
 
-<script>
-	// smooth scroll when clicking on a inside link
-	jQuery('a[href^="#paragraph"]').on('click',function() {
-		var the_id = $(this).attr("href");
-
-		$('html, body').animate({
-			scrollTop:$(the_id).offset().top
-		}, 'slow');
-		return false;
-	})
-</script>
+			$('html, body').animate({
+				scrollTop:$(the_id).offset().top
+			}, 'slow');
+			return false;
+		})
+	</script>
 # ENDIF #
