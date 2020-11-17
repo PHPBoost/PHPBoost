@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 14
+ * @version     PHPBoost 6.0 - last update: 2020 11 17
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -425,58 +425,62 @@ class News
 			Date::get_array_tpl_vars($this->creation_date,'date'),
 			Date::get_array_tpl_vars($this->start_date,'differed_start_date'),
 			array(
-			'C_VISIBLE'            => $this->is_visible(),
-			'C_CONTROLS'		   => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
-			'C_EDIT'               => $this->is_authorized_to_edit(),
-			'C_DELETE'             => $this->is_authorized_to_delete(),
-			'C_HAS_THUMBNAIL'      => $this->has_thumbnail(),
-			'C_USER_GROUP_COLOR'   => !empty($user_group_color),
-			'C_AUTHOR_DISPLAYED'   => $news_config->get_author_displayed(),
-			'C_AUTHOR_CUSTOM_NAME' => $this->is_author_custom_name_enabled(),
-			'C_VIEWS_NUMBER'       => $news_config->get_views_number(),
-			'C_SEVERAL_VIEWS'      => $this->get_views_number() > 1,
-			'C_READ_MORE'          => !$this->get_summary_enabled() && TextHelper::strlen($contents) > $news_config->get_characters_number_to_cut() && $description != @strip_tags($contents, '<br><br/>'),
-			'C_SOURCES'            => $nbr_sources > 0,
-			'C_DIFFERED'           => $this->publication == self::APPROVAL_DATE,
-			'C_TOP_LIST'           => $this->top_list_enabled(),
-			'C_NEW_CONTENT'        => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('news', $this->get_start_date() != null ? $this->get_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_visible(),
-			'C_ID_CARD'            => ContentManagementConfig::load()->module_id_card_is_enabled('news') && $this->is_visible(),
+				// Conditions
+				'C_VISIBLE'            => $this->is_visible(),
+				'C_CONTROLS'		   => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
+				'C_EDIT'               => $this->is_authorized_to_edit(),
+				'C_DELETE'             => $this->is_authorized_to_delete(),
+				'C_HAS_THUMBNAIL'      => $this->has_thumbnail(),
+				'C_AUTHOR_GROUP_COLOR' => !empty($user_group_color),
+				'C_AUTHOR_DISPLAYED'   => $news_config->get_author_displayed(),
+				'C_AUTHOR_CUSTOM_NAME' => $this->is_author_custom_name_enabled(),
+				'C_VIEWS_NUMBER'       => $news_config->get_views_number(),
+				'C_SEVERAL_VIEWS'      => $this->get_views_number() > 1,
+				'C_READ_MORE'          => !$this->get_summary_enabled() && TextHelper::strlen($contents) > $news_config->get_characters_number_to_cut() && $description != @strip_tags($contents, '<br><br/>'),
+				'C_SOURCES'            => $nbr_sources > 0,
+				'C_DIFFERED'           => $this->publication == self::APPROVAL_DATE,
+				'C_TOP_LIST'           => $this->top_list_enabled(),
+				'C_NEW_CONTENT'        => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('news', $this->get_start_date() != null ? $this->get_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_visible(),
+				'C_ID_CARD'            => ContentManagementConfig::load()->module_id_card_is_enabled('news') && $this->is_visible(),
 
-			// News
-			'ID'                 => $this->id,
-			'TITLE'              => $this->title,
-			'CONTENTS'           => $contents,
-			'SUMMARY'       	 => $description,
-			'STATUS'             => $this->get_status(),
-			'AUTHOR_CUSTOM_NAME' => $this->author_custom_name,
-			'C_AUTHOR_EXIST'     => $user->get_id() !== User::VISITOR_LEVEL,
-			'AUTHOR_DISPLAY_NAME'             => $user->get_display_name(),
-			'USER_LEVEL_CLASS'   => UserService::get_level_class($user->get_level()),
-			'USER_GROUP_COLOR'   => $user_group_color,
-			'ID_CARD'            => IdcardService::display_idcard($user),
+				// Item
+				'ID'                  => $this->id,
+				'TITLE'               => $this->title,
+				'CONTENTS'            => $contents,
+				'SUMMARY' 	          => $description,
+				'STATUS'              => $this->get_status(),
+				'AUTHOR_CUSTOM_NAME'  => $this->author_custom_name,
+				'C_AUTHOR_EXIST'      => $user->get_id() !== User::VISITOR_LEVEL,
+				'AUTHOR_DISPLAY_NAME' => $user->get_display_name(),
+				'AUTHOR_LEVEL_CLASS'  => UserService::get_level_class($user->get_level()),
+				'AUTHOR_GROUP_COLOR'  => $user_group_color,
+				'ID_CARD'             => IdcardService::display_idcard($user),
 
-			'C_COMMENTS'      => !empty($comments_number),
-			'L_COMMENTS'      => CommentsService::get_lang_comments('news', $this->id),
-			'COMMENTS_NUMBER' => $comments_number,
-			'VIEWS_NUMBER'    => $this->get_views_number(),
+				// Comments
+				'C_COMMENTS'      => !empty($comments_number),
+				'L_COMMENTS'      => CommentsService::get_lang_comments('news', $this->id),
+				'COMMENTS_NUMBER' => $comments_number,
+				'VIEWS_NUMBER'    => $this->get_views_number(),
 
-			// Category
-			'C_ROOT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY,
-			'CATEGORY_ID'          => $category->get_id(),
-			'CATEGORY_NAME'        => $category->get_name(),
-			'CATEGORY_DESCRIPTION' => $category->get_description(),
-			'U_CATEGORY_THUMBNAIL' => $category->get_thumbnail()->rel(),
-			'U_EDIT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY ? NewsUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($category->get_id())->rel(),
+				// Categories
+				'C_ROOT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY,
+				'CATEGORY_ID'          => $category->get_id(),
+				'CATEGORY_NAME'        => $category->get_name(),
+				'CATEGORY_DESCRIPTION' => $category->get_description(),
+				'U_CATEGORY_THUMBNAIL' => $category->get_thumbnail()->rel(),
+				'U_EDIT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY ? NewsUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($category->get_id())->rel(),
 
-			'U_SYNDICATION'    => SyndicationUrlBuilder::rss('news', $this->id_category)->rel(),
-			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
-			'U_ITEM'           => NewsUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_title)->rel(),
-			'U_CATEGORY'       => NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
-			'U_EDIT'           => NewsUrlBuilder::edit_item($this->id)->rel(),
-			'U_DELETE'         => NewsUrlBuilder::delete_item($this->id)->rel(),
-			'U_THUMBNAIL'      => $this->get_thumbnail()->rel(),
-			'U_COMMENTS'       => NewsUrlBuilder::display_item_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_title)->rel()
-		));
+				// Links
+				'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $this->id_category)->rel(),
+				'U_AUTHOR'      => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
+				'U_ITEM'        => NewsUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_title)->rel(),
+				'U_CATEGORY'    => NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
+				'U_EDIT'        => NewsUrlBuilder::edit_item($this->id)->rel(),
+				'U_DELETE'      => NewsUrlBuilder::delete_item($this->id)->rel(),
+				'U_THUMBNAIL'   => $this->get_thumbnail()->rel(),
+				'U_COMMENTS'    => NewsUrlBuilder::display_item_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_title)->rel()
+			)
+		);
 	}
 
 	public function get_array_tpl_source_vars($source_name)

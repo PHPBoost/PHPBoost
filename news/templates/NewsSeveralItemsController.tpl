@@ -40,12 +40,12 @@
 							<div class="more">
 								# IF NOT C_MEMBER_ITEMS #
 									# IF items.C_AUTHOR_DISPLAYED #
-										<span class="pinned {items.USER_LEVEL_CLASS}"# IF items.C_USER_GROUP_COLOR # style="color:{items.USER_GROUP_COLOR};border-color:{items.USER_GROUP_COLOR};"# ENDIF #>
+										<span class="pinned {items.AUTHOR_LEVEL_CLASS}"# IF items.C_AUTHOR_GROUP_COLOR # style="color:{items.AUTHOR_GROUP_COLOR};border-color:{items.AUTHOR_GROUP_COLOR};"# ENDIF #>
 											# IF items.C_AUTHOR_CUSTOM_NAME #
 												<i class="far fa-user" aria-hidden="true"></i> <span class="custom-author">{items.AUTHOR_CUSTOM_NAME}</span>
 											# ELSE #
 												# IF items.C_AUTHOR_EXIST #
-													<a itemprop="author" class="{items.USER_LEVEL_CLASS}" href="{items.U_AUTHOR_PROFILE}"# IF items.C_USER_GROUP_COLOR # style="color:{items.USER_GROUP_COLOR}"# ENDIF #>
+													<a itemprop="author" class="{items.AUTHOR_LEVEL_CLASS}" href="{items.U_AUTHOR}"# IF items.C_AUTHOR_GROUP_COLOR # style="color:{items.AUTHOR_GROUP_COLOR}"# ENDIF #>
 														<i class="far fa-user" aria-hidden="true"></i> {items.AUTHOR_DISPLAY_NAME}
 													</a>
 												# ELSE #
