@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 16
+ * @version     PHPBoost 6.0 - last update: 2020 11 17
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -200,12 +200,12 @@ class DownloadFormController extends ModuleController
 			));
 
 			$publication_fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->common_lang['form.date.start'], ($this->get_downloadfile()->get_start_date() === null ? new Date() : $this->get_downloadfile()->get_start_date()),
-				array('hidden' => ($this->get_downloadfile()->get_approbation_type() != DownloadFile::APPROVAL_DATE))
+				array('hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_approbation_type', 0) != DownloadFile::APPROVAL_DATE) : ($this->get_downloadfile()->get_approbation_type() != DownloadFile::APPROVAL_DATE)))
 			));
 
 			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->common_lang['form.date.end.enable'], $this->get_downloadfile()->is_end_date_enabled(),
 				array(
-					'hidden' => ($this->get_downloadfile()->get_approbation_type() != DownloadFile::APPROVAL_DATE),
+					'hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_approbation_type', 0) != DownloadFile::APPROVAL_DATE) : ($this->get_downloadfile()->get_approbation_type() != DownloadFile::APPROVAL_DATE)),
 					'events' => array('click' => '
 						if (HTMLForms.getField("end_date_enabled").getValue()) {
 							HTMLForms.getField("end_date").enable();

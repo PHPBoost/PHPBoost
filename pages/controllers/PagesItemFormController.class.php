@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 16
+ * @version     PHPBoost 6.0 - last update: 2020 11 17
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
@@ -174,12 +174,12 @@ class PagesItemFormController extends ModuleController
 			));
 
 			$publication_fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->common_lang['form.date.start'], ($this->get_page()->get_start_date() === null ? new Date() : $this->get_page()->get_start_date()),
-				array('hidden' => $this->get_page()->get_publication() != Page::APPROVAL_DATE)
+				array('hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_approbation_type', 0) != Page::APPROVAL_DATE) : $this->get_page()->get_publication() != Page::APPROVAL_DATE))
 			));
 
 			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->common_lang['form.date.end.enable'], $this->get_page()->is_end_date_enabled(),
 				array(
-					'hidden' => ($this->get_page()->get_publication() != Page::APPROVAL_DATE),
+					'hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_approbation_type', 0) != Page::APPROVAL_DATE) : ($this->get_page()->get_publication() != Page::APPROVAL_DATE)),
 					'events' => array('click' => '
 						if (HTMLForms.getField("end_date_enabled").getValue()) {
 							HTMLForms.getField("end_date").enable();
@@ -191,7 +191,7 @@ class PagesItemFormController extends ModuleController
 			));
 
 			$publication_fieldset->add_field($end_date = new FormFieldDateTime('end_date', $this->common_lang['form.date.end'], ($this->get_page()->get_end_date() === null ? new Date() : $this->get_page()->get_end_date()),
-				array('hidden' => !$this->get_page()->is_end_date_enabled())
+				array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_end_date_enabled', false) : !$this->get_page()->is_end_date_enabled()))
 			));
 
 			$end_date->add_form_constraint(new FormConstraintFieldsDifferenceSuperior($start_date, $end_date));

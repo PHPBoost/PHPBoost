@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 16
+ * @version     PHPBoost 6.0 - last update: 2020 11 17
  * @since       PHPBoost 6.0 - 2020 05 16
  * @contributor xela <xela@phpboost.com>
 */
@@ -182,12 +182,12 @@ class DefaultItemFormController extends AbstractItemController
 
 				$publication_fieldset->add_field($publishing_start_date = new FormFieldDateTime('publishing_start_date', $this->common_lang['form.date.start'],
 					($this->get_item()->get_publishing_start_date() === null ? new Date() : $this->get_item()->get_publishing_start_date()),
-					array('hidden' => ($this->get_item()->get_publishing_state() != Item::DEFERRED_PUBLICATION))
+					array('hidden' => ($this->request->is_post_method() ? ($this->request->get_postint(self::$module_id . '_form_publishing_state', 0) != Item::DEFERRED_PUBLICATION) : ($this->get_item()->get_publishing_state() != Item::DEFERRED_PUBLICATION)))
 				));
 
 				$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->common_lang['form.date.end.enable'], $this->get_item()->end_date_enabled(),
 					array(
-						'hidden' => ($this->get_item()->get_publishing_state() != Item::DEFERRED_PUBLICATION),
+						'hidden' => ($this->request->is_post_method() ? ($this->request->get_postint(self::$module_id . '_form_publishing_state', 0) != Item::DEFERRED_PUBLICATION) : ($this->get_item()->get_publishing_state() != Item::DEFERRED_PUBLICATION)),
 						'events' => array('click' => '
 							if (HTMLForms.getField("end_date_enabled").getValue()) {
 								HTMLForms.getField("publishing_end_date").enable();
@@ -240,9 +240,9 @@ class DefaultItemFormController extends AbstractItemController
 				}'))
 			));
 
-			$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->common_lang['form.summary'], $this->get_item()->get_summary(), array(
-				'hidden' => ($this->request->is_post_method() ? !$this->request->get_postbool(self::$module_id . '_form_summary_enabled', false) : !$this->get_item()->is_summary_enabled())
-			)));
+			$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->common_lang['form.summary'], $this->get_item()->get_summary(),
+				array('required' => true, 'hidden' => ($this->request->is_post_method() ? !$this->request->get_postbool(self::$module_id . '_form_summary_enabled', false) : !$this->get_item()->is_summary_enabled()))
+			));
 			
 			if ($this->config->get_author_displayed())
 			{
@@ -255,9 +255,9 @@ class DefaultItemFormController extends AbstractItemController
 					}'))
 				));
 
-				$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->common_lang['form.author_custom_name'], $this->get_item()->get_author_custom_name(), array(
-					'hidden' => ($this->request->is_post_method() ? !$this->request->get_postbool(self::$module_id . '_form_author_custom_name_enabled', false) : !$this->get_item()->is_author_custom_name_enabled())
-				)));
+				$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->common_lang['form.author_custom_name'], $this->get_item()->get_author_custom_name(),
+					array('required' => true, 'hidden' => ($this->request->is_post_method() ? !$this->request->get_postbool(self::$module_id . '_form_author_custom_name_enabled', false) : !$this->get_item()->is_author_custom_name_enabled()))
+				));
 			}
 		}
 		$this->get_additional_attributes_fields($fieldset, 'attribute_post_content_field_parameters');
