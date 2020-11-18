@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 17
+ * @version     PHPBoost 6.0 - last update: 2020 11 18
  * @since       PHPBoost 4.0 - 2013 09 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -128,7 +128,7 @@ class FormFieldPossibleValues extends AbstractFormField
 					unset($field_options['display_default']);
 					break;
 				 case 'placeholder':
-					$this->placeholder = (bool)$value;
+					$this->placeholder = $value;
 					unset($field_options['placeholder']);
 					break;
 			}
