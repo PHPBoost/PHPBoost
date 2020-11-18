@@ -60,9 +60,7 @@ class SandboxBuilderController extends ModuleController
 
 				$file = $form->get_value('file');
 				if ( $file !== null)
-				{
 					$this->view->put_all(array('FILE' => $file->get_name() . ' - ' . $file->get_size() . 'b - ' . $file->get_mime_type()));
-				}
 			}
 		}
 
@@ -280,7 +278,7 @@ class SandboxBuilderController extends ModuleController
 					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'2', '2', array('data_option_class' => 'bgc error', 'disable' => true)),
 					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'3', '3', array('data_option_class' => 'indent')),
 					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'4', '4', array('data_option_class' => 'bgc-full question', 'selected' => true, 'data_option_icon' => 'far fa-id-card')),
-					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'5', '5'),
+					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'5', '5', array('data_option_img' => '../templates/default/theme/images/logo_mini.png')),
 					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'6', '6')
 				),
 				array('class' => 'css-class', 'multiple_select_to_list' => true)
@@ -329,9 +327,9 @@ class SandboxBuilderController extends ModuleController
 			));
 
 			// Possible values
-			$miscellaneous->add_field(new FormFieldPossibleValues('possible_values_inputs', $this->lang['builder.possible.values'], array(),
-				array('class' => 'css-class')
-			));
+			// $miscellaneous->add_field(new FormFieldPossibleValues('possible_values_inputs', $this->lang['builder.possible.values'], array(),
+			// 	array('class' => 'css-class')
+			// ));
 
 			// Sources
 			$miscellaneous->add_field(new FormFieldSelectSources('select_sources', $this->lang['builder.sources'], array(),
