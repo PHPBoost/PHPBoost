@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 08 08
+ * @version     PHPBoost 6.0 - last update: 2020 11 18
  * @since       PHPBoost 6.0 - 2020 01 23
  * @contributor xela <xela@phpboost.com>
 */
@@ -20,7 +20,7 @@ class RichItem extends Item
 		$this->add_additional_attribute('summary', array('type' => 'text', 'length' => 65000, 'fulltext' => true));
 		$this->add_additional_attribute('author_custom_name', array('type' =>  'string', 'length' => 255, 'default' => "''"));
 		
-		$this->add_additional_attribute('thumbnail', array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''", 'attribute_other_field_parameters' => array(
+		$this->add_additional_attribute('thumbnail', array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''", 'attribute_options_field_parameters' => array(
 			'field_class' => 'FormFieldThumbnail',
 			'label' => LangLoader::get_message('form.picture', 'common'),
 			'value' => FormFieldThumbnail::DEFAULT_VALUE,

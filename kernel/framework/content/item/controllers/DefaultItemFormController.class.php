@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 17
+ * @version     PHPBoost 6.0 - last update: 2020 11 18
  * @since       PHPBoost 6.0 - 2020 05 16
  * @contributor xela <xela@phpboost.com>
 */
@@ -141,7 +141,7 @@ class DefaultItemFormController extends AbstractItemController
 
 		$this->build_post_content_fields($fieldset);
 
-		$this->build_fieldset_other($form);
+		$this->build_fieldset_options($form);
 
 		if ((self::get_module()->get_configuration()->has_categories() && CategoriesAuthorizationsService::check_authorizations($this->get_item()->get_id_category(), self::$module_id)->moderation()) || (!self::get_module()->get_configuration()->has_categories() && ItemsAuthorizationsService::check_authorizations(self::$module_id)->moderation()))
 		{
@@ -263,10 +263,10 @@ class DefaultItemFormController extends AbstractItemController
 		$this->get_additional_attributes_fields($fieldset, 'attribute_post_content_field_parameters');
 	}
 
-	protected function build_fieldset_other(HTMLForm $form)
+	protected function build_fieldset_options(HTMLForm $form)
 	{
-		$fieldset = new FormFieldsetHTML('other', $this->common_lang['form.other']);
-		$this->get_additional_attributes_fields($fieldset, 'attribute_other_field_parameters');
+		$fieldset = new FormFieldsetHTML('options', $this->common_lang['form.options']);
+		$this->get_additional_attributes_fields($fieldset, 'attribute_options_field_parameters');
 
 		if (self::get_module()->get_configuration()->feature_is_enabled('keywords'))
 			$fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_item()->get_id(), 'keywords', $this->common_lang['form.keywords'],
@@ -328,7 +328,7 @@ class DefaultItemFormController extends AbstractItemController
 		foreach ($this->get_item()->get_additional_attributes_list() as $id => $attribute)
 		{
 			$has_value = false;
-			foreach (array('attribute_pre_content_field_parameters', 'attribute_post_content_field_parameters', 'attribute_other_field_parameters') as $attribute_field)
+			foreach (array('attribute_pre_content_field_parameters', 'attribute_post_content_field_parameters', 'attribute_options_field_parameters') as $attribute_field)
 			{
 				if (isset($attribute[$attribute_field]))
 				{

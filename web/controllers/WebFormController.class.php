@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 17
+ * @version     PHPBoost 6.0 - last update: 2020 11 18
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -99,12 +99,12 @@ class WebFormController extends ModuleController
 			array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_summary_enabled', false) : !$this->get_weblink()->is_summary_enabled()))
 		));
 
-		$other_fieldset = new FormFieldsetHTML('other', $this->common_lang['form.other']);
-		$form->add_fieldset($other_fieldset);
+		$options_fieldset = new FormFieldsetHTML('options', $this->common_lang['form.options']);
+		$form->add_fieldset($options_fieldset);
 
-		$other_fieldset->add_field(new FormFieldUploadPictureFile('picture', $this->common_lang['form.picture'], $this->get_weblink()->get_thumbnail()->relative()));
+		$options_fieldset->add_field(new FormFieldUploadPictureFile('picture', $this->common_lang['form.picture'], $this->get_weblink()->get_thumbnail()->relative()));
 
-		$other_fieldset->add_field(new FormFieldCheckbox('partner', $this->lang['web.form.partner'], $this->get_weblink()->is_partner(), array(
+		$options_fieldset->add_field(new FormFieldCheckbox('partner', $this->lang['web.form.partner'], $this->get_weblink()->is_partner(), array(
 			'events' => array('click' => '
 				if (HTMLForms.getField("partner").getValue()) {
 					HTMLForms.getField("partner_thumbnail").enable();
@@ -119,17 +119,17 @@ class WebFormController extends ModuleController
 			)
 		)));
 
-		$other_fieldset->add_field(new FormFieldUploadPictureFile('partner_thumbnail', $this->lang['web.form.partner_thumbnail'], $this->get_weblink()->get_partner_thumbnail()->relative(),
+		$options_fieldset->add_field(new FormFieldUploadPictureFile('partner_thumbnail', $this->lang['web.form.partner_thumbnail'], $this->get_weblink()->get_partner_thumbnail()->relative(),
 			array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_partner', false) : !$this->get_weblink()->is_partner()))
 		));
 
-		$other_fieldset->add_field(new FormFieldCheckbox('privileged_partner', $this->lang['web.form.privileged_partner'], $this->get_weblink()->is_privileged_partner(),
+		$options_fieldset->add_field(new FormFieldCheckbox('privileged_partner', $this->lang['web.form.privileged_partner'], $this->get_weblink()->is_privileged_partner(),
 			array(
 				'description' => $this->lang['web.form.privileged_partner.explain'], 'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_partner', false) : !$this->get_weblink()->is_partner())
 			))
 		);
 
-		$other_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_weblink()->get_id(), 'keywords', $this->common_lang['form.keywords'],
+		$options_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_weblink()->get_id(), 'keywords', $this->common_lang['form.keywords'],
 			array('description' => $this->common_lang['form.keywords.description']))
 		);
 

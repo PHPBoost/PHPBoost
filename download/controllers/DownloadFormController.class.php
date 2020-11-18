@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 17
+ * @version     PHPBoost 6.0 - last update: 2020 11 18
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -149,16 +149,16 @@ class DownloadFormController extends ModuleController
 			));
 		}
 
-		$other_fieldset = new FormFieldsetHTML('other', $this->common_lang['form.other']);
-		$form->add_fieldset($other_fieldset);
+		$options_fieldset = new FormFieldsetHTML('options', $this->common_lang['form.options']);
+		$form->add_fieldset($options_fieldset);
 
-		$other_fieldset->add_field(new FormFieldUploadPictureFile('thumbnail', $this->common_lang['form.picture'], $this->get_downloadfile()->get_thumbnail()->relative()));
+		$options_fieldset->add_field(new FormFieldUploadPictureFile('thumbnail', $this->common_lang['form.picture'], $this->get_downloadfile()->get_thumbnail()->relative()));
 
-		$other_fieldset->add_field(new FormFieldTextEditor('software_version', $this->lang['software.version'], $this->get_downloadfile()->get_software_version()));
+		$options_fieldset->add_field(new FormFieldTextEditor('software_version', $this->lang['software.version'], $this->get_downloadfile()->get_software_version()));
 
-		$other_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_downloadfile()->get_id(), 'keywords', $this->common_lang['form.keywords'], array('description' => $this->common_lang['form.keywords.description'])));
+		$options_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_downloadfile()->get_id(), 'keywords', $this->common_lang['form.keywords'], array('description' => $this->common_lang['form.keywords.description'])));
 
-		$other_fieldset->add_field(new FormFieldSelectSources('sources', $this->common_lang['form.sources'], $this->get_downloadfile()->get_sources()));
+		$options_fieldset->add_field(new FormFieldSelectSources('sources', $this->common_lang['form.sources'], $this->get_downloadfile()->get_sources()));
 
 		if (DownloadAuthorizationsService::check_authorizations($this->get_downloadfile()->get_id_category())->moderation())
 		{
