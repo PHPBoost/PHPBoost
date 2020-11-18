@@ -17,7 +17,6 @@ class FormFieldPossibleValues extends AbstractFormField
 	private $min_input = 1;
 	private $max_input = 100;
 	private $display_default = true;
-	private $placeholder;
 
 	public function __construct($id, $label = '', array $value = array(), array $field_options = array(), array $constraints = array())
 	{
@@ -115,19 +114,19 @@ class FormFieldPossibleValues extends AbstractFormField
 			$attribute = TextHelper::strtolower($attribute);
 			switch ($attribute)
 			{
-				 case 'min_input':
+			 	case 'min_input':
 					$this->min_input = $value;
 					unset($field_options['min_input']);
 					break;
-				 case 'max_input':
+			 	case 'max_input':
 					$this->max_input = $value;
 					unset($field_options['max_input']);
 					break;
-				 case 'display_default':
+				case 'display_default':
 					$this->display_default = (bool)$value;
 					unset($field_options['display_default']);
 					break;
-				 case 'placeholder':
+			 	case 'placeholder':
 					$this->placeholder = $value;
 					unset($field_options['placeholder']);
 					break;
