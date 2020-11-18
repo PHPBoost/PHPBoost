@@ -17,6 +17,7 @@ class FormFieldPossibleValues extends AbstractFormField
 	private $min_input = 1;
 	private $max_input = 100;
 	private $display_default = true;
+	protected $placeholder = '';
 
 	public function __construct($id, $label = '', array $value = array(), array $field_options = array(), array $constraints = array())
 	{
