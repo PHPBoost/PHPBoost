@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 12 24
+ * @version     PHPBoost 6.0 - last update: 2020 11 19
  * @since       PHPBoost 3.0 - 2010 04 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -94,12 +94,12 @@ $lang = array(
 	'advanced-config.config.unknown' => 'Unknown sur votre serveur',
 
 	'advanced-config.htaccess-manual-content' => 'Content of the .htaccess file',
-	'advanced-config.htaccess-manual-content.explain' => 'In this field you can put the instructions you would like to integrate into the .htaccess file
-		which is at the root of the website. For instance, you can force special settings on your Apache web server.',
+	'advanced-config.htaccess-manual-content.explain' => 'In this field you can put the instructions you would like to integrate into the .htaccess file which is at the root of the website. For instance, you can force special settings on your Apache web server.',
+	'advanced-config.nginx-manual-content' => 'Content of the nginx.conf file',
+	'advanced-config.nginx-manual-content.explain' => 'In this field you can put the instructions you would like to integrate into the nginx.conf file which is at the root of the website. For instance, you can force special settings on your web server.',
 
 	'advanced-config.robots-content' => 'Content of the robots.txt file',
-	'advanced-config.robots-content.explain' => 'In this field you can put the instructions you would like to integrate into the robots.txt file
-		which is at the root of the website. For instance, you can prevent robots from index some parts of the website.',
+	'advanced-config.robots-content.explain' => 'In this field you can put the instructions you would like to integrate into the robots.txt file which is at the root of the website. For instance, you can prevent robots from index some parts of the website.',
 
 	'advanced-config.sessions-config' => 'Users connection',
 	'advanced-config.cookie-name' => 'Sessions cookie name',

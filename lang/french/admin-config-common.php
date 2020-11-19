@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 12 24
+ * @version     PHPBoost 6.0 - last update: 2020 11 19
  * @since       PHPBoost 3.0 - 2010 04 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -95,6 +95,8 @@ $lang = array(
 
 	'advanced-config.htaccess-manual-content' => 'Contenu du fichier .htaccess',
 	'advanced-config.htaccess-manual-content.explain' => 'Vous pouvez dans ce champ mettre les instructions que vous souhaitez intégrer au fichier .htaccess qui se trouve à la racine du site, par exemple pour forcer une configuration du serveur web Apache.',
+	'advanced-config.nginx-manual-content' => 'Contenu du fichier nginx.conf',
+	'advanced-config.nginx-manual-content.explain' => 'Vous pouvez dans ce champ mettre les instructions que vous souhaitez intégrer au fichier nginx.conf qui se trouve à la racine du site, par exemple pour forcer une configuration du serveur web.',
 
 	'advanced-config.robots-content' => 'Contenu du fichier robots.txt',
 	'advanced-config.robots-content.explain' => 'Vous pouvez dans ce champ mettre les instructions que vous souhaitez intégrer au fichier robots.txt qui se trouve à la racine du site, par exemple pour empêcher les robots d\'indexer certaines parties du site.',

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 25
+ * @version     PHPBoost 6.0 - last update: 2020 11 19
  * @since       PHPBoost 3.0 - 2011 07 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -236,13 +236,15 @@ class AdminAdvancedConfigController extends AdminController
 			));
  		}
 
-		$htaccess_manual_content_fieldset = new FormFieldsetHTML('htaccess_manual_content', $this->lang['advanced-config.htaccess-manual-content']);
-		$form->add_fieldset($htaccess_manual_content_fieldset);
+		$protection_file_name = !preg_match('/apache/i', $_SERVER["SERVER_SOFTWARE"]) ? 'nginx' : 'htaccess';
+		
+		$protection_file_manual_content_fieldset = new FormFieldsetHTML('protection_file_manual_content', $this->lang['advanced-config.' . $protection_file_name . '-manual-content']);
+		$form->add_fieldset($protection_file_manual_content_fieldset);
 
-		$htaccess_manual_content_fieldset->add_field(new FormFieldMultiLineTextEditor('htaccess_manual_content', $this->lang['advanced-config.htaccess-manual-content'], $this->server_environment_config->get_htaccess_manual_content(),
+		$protection_file_manual_content_fieldset->add_field(new FormFieldMultiLineTextEditor('protection_file_manual_content', $this->lang['advanced-config.' . $protection_file_name . '-manual-content'], $this->server_environment_config->get_htaccess_manual_content(),
 			array(
 				'rows' => 7,
-				'description' => $this->lang['advanced-config.htaccess-manual-content.explain']
+				'description' => $this->lang['advanced-config.' . $protection_file_name . '-manual-content.explain']
 			)
 		));
 
@@ -469,7 +471,10 @@ class AdminAdvancedConfigController extends AdminController
 			$this->server_environment_config->disable_hsts_security();
 		}
 
-		$this->server_environment_config->set_htaccess_manual_content(TextHelper::html_entity_decode($this->form->get_value('htaccess_manual_content')));
+		if (!preg_match('/apache/i', $_SERVER["SERVER_SOFTWARE"]))
+			$this->server_environment_config->set_nginx_manual_content(TextHelper::html_entity_decode($this->form->get_value('protection_file_manual_content')));
+		else
+			$this->server_environment_config->set_htaccess_manual_content(TextHelper::html_entity_decode($this->form->get_value('protection_file_manual_content')));
 
 		$robots_file = new File(PATH_TO_ROOT . '/robots.txt');
 		$robots_file->write($this->form->get_value('robots_content'));
