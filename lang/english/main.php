@@ -354,7 +354,7 @@ $LANG['contribute_in_module_name'] = 'Contribute in %s';
 $LANG['no_module_to_contribute'] = 'No module in which you can contribute is installed.';
 
 //Footer
-$LANG['powered_by'] = 'Boosted by';
+$LANG['powered_by'] = 'Humbly powered by';
 $LANG['phpboost_right'] = '';
 $LANG['phpboost_link'] = 'Link to PHPBoost CMS official website';
 $LANG['sql_req'] = ' Requests';
