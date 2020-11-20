@@ -16,9 +16,9 @@
 
 $lang['cat.name'] = 'Test';
 $lang['cat.description'] = 'Test category';
-$lang['news.title'] = 'Your site within PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version();
-$lang['news.content'] = 'Your PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' website is now installed and running. To help you build your website,
-each module home has a message to guide you through its configuration. We strongly recommand to do the followings :  <br />
+$lang['news.title'] = 'Your site under PHPBoost CMS';
+$lang['news.content'] = 'Your website powered by PHPBoost is now installed and functional. To help you building your website,
+each module homepage has a message to guide you through its configuration. We strongly recommand to do the followings :  <br />
 <br />
 <h2 class="formatter-title">Delete the "install" folder</h2><br />
 <br />
