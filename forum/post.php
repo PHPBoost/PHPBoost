@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 29
+ * @version     PHPBoost 6.0 - last update: 2020 11 20
  * @since       PHPBoost 1.2 - 2005 10 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -306,22 +306,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 ' . $contents;
 					}
 
-					$Forumfct->Update_msg($idt_get, $topic['last_msg_id'], $message_content, $topic['last_user_id']); //Mise à jour du topic.
-					$last_msg_id = $topic['last_msg_id'];
-
-					$last_timestamp = time();
-					//Mise à jour de la date du dernier message du topic pour marquer le message comme non lu chez les autres membres
-					PersistenceContext::get_querier()->update(PREFIX . "forum_topics", array('last_timestamp' => $last_timestamp), 'WHERE id = :idtopic', array('idtopic' => $idt_get));
-
-					//On met à jour le last_topic_id dans la catégorie dans le lequel le message a été posté et ses parents
-					$categories = array_keys(CategoriesService::get_categories_manager()->get_parents($topic['id_category'], true));
-					PersistenceContext::get_querier()->update(ForumSetup::$forum_cats_table, array('last_topic_id' => $idt_get), 'WHERE id IN :categories_id', array('categories_id' => $categories));
-
-					//On supprime les marqueurs de messages lus pour ce message.
-					PersistenceContext::get_querier()->delete(PREFIX . 'forum_view', 'WHERE idtopic=:id AND last_view_id=:id_message', array('id' => $idt_get, 'id_message' => $last_msg_id));
-
-					//On marque le topic comme lu pour le posteur
-					mark_topic_as_read($idt_get, $last_msg_id, $last_timestamp);
+					$Forumfct->Update_msg($idt_get, $topic['last_msg_id'], $message_content, $topic['last_user_id']); //Mise à jour du message.
 				}
 
 				//Redirection après post.

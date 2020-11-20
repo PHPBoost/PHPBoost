@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 29
+ * @version     PHPBoost 6.0 - last update: 2020 11 20
  * @since       PHPBoost 2.0 - 2007 12 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -145,6 +145,26 @@ class Forum
 		$edit_mark = (!ForumAuthorizationsService::check_authorizations()->hide_edition_mark()) ? ", timestamp_edit = '" . time() . "', user_id_edit = '" . AppContext::get_current_user()->get_id() . "'" : '';
 		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_msg SET contents = '" . FormatingHelper::strparse($contents) . "'" . $edit_mark . " WHERE id = '" . $idmsg . "'");
 
+		$last_timestamp = time();
+		//Mise à jour de la date du dernier message du topic pour marquer le message comme non lu chez les autres membres
+		PersistenceContext::get_querier()->update(PREFIX . "forum_topics", array('last_timestamp' => $last_timestamp), 'WHERE id = :idtopic', array('idtopic' => $idtopic));
+
+		//On récupère l'id de la catégorie du topic.
+		$topic_id_category = 0;
+		try {
+			$topic_id_category = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'id_category', 'WHERE id=:id', array('id' => $idtopic));
+		} catch (RowNotFoundException $e) {}
+		
+		//On met à jour le last_topic_id dans la catégorie dans le lequel le message a été posté et ses parents
+		$categories = array_keys(CategoriesService::get_categories_manager()->get_parents($topic_id_category, true));
+		PersistenceContext::get_querier()->update(ForumSetup::$forum_cats_table, array('last_topic_id' => $idtopic), 'WHERE id IN :categories_id', array('categories_id' => $categories));
+
+		//On supprime les marqueurs de messages lus pour ce message.
+		PersistenceContext::get_querier()->delete(PREFIX . 'forum_view', 'WHERE idtopic=:id AND last_view_id=:id_message', array('id' => $idtopic, 'id_message' => $idmsg));
+
+		//On marque le topic comme lu pour le posteur
+		mark_topic_as_read($idtopic, $idmsg, $last_timestamp);
+		
 		$nbr_msg_before = PersistenceContext::get_querier()->count(PREFIX . "forum_msg", 'WHERE idtopic = :idtopic AND id < :id', array('idtopic' => $idtopic, 'id' => $idmsg));
 
 		//Calcul de la page sur laquelle se situe le message.
