@@ -15,19 +15,13 @@
 }
 
 @media (min-width: 769px) {
-	.sharing-elements-list {
-		justify-content: flex-start;
-	}
+	.sharing-elements-list { justify-content: flex-start; }
 }
 
-.sharing-element {
-	flex: 0 0 auto;
-}
+.sharing-element { flex: 0 0 auto; }
 
 @media (min-width: 769px) {
-	.sharing-element {
-		margin: 0 0.309em 0.309em 0;
-	}
+	.sharing-element { margin: 0 0.309em 0.309em 0; }
 }
 
 .sharing-element a {
@@ -43,35 +37,27 @@
 /* -- Social Connect -- */
 /* -------------------- */
 a.social-connect {
-	display: inline-block;
+	display: block;
 	vertical-align: middle;
 	padding: 0.309em;
 	text-align: center;
 	font-size: 0.618em;
 }
 
-@media (max-width: 468px) {
-	a.social-connect.login-page {
-		display: block;
-	}
+@media (min-width: 769px) {
+	a.social-connect.login-page { display: block; }
 }
 
-a.social-connect.login-page {
-	margin: 0.809em 0;
-}
+a.social-connect.login-page { margin: 0.809em 0; }
 
 .horizontal-fieldset a.social-connect {
 	margin: 0;
 	vertical-align: middle;
 }
 
-a.social-connect i:before {
-	transition: 0.2s ease-out;
-}
+a.social-connect i:before { transition: 0.2s ease-out; }
 
-a.social-connect:hover i:before {
-	transition: 0.2s ease-out;
-}
+a.social-connect:hover i:before { transition: 0.2s ease-out; }
 
 span.social-connect i:before { font-size: 1.618em; }
 span.social-connect { padding: 1em 1.618em; }
@@ -80,9 +66,7 @@ a.social-connect i:before { font-size: 1.618em; }
 
 a.social-connect { padding: 0.809em 1.618em; }
 
-a.social-connect span {
-	display: none;
-}
+a.social-connect span { display: none; }
 
 .social-connect { color: #DEDEDE; }
 
@@ -181,8 +165,3 @@ a.social-connect span {
 		padding-right: 2.618em;
 	}
 }
-
-.social-networks-menu:first-child {  }
-/* --- Mini Module
---------------------------------- */
-#module-mini-social-networks {}
