@@ -45,7 +45,7 @@ a.social-connect {
 }
 
 @media (min-width: 769px) {
-	a.social-connect.login-page { display: block; }
+	a.social-connect.login-page { display: inline-block; }
 }
 
 a.social-connect.login-page { margin: 0.809em 0; }
