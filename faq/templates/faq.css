@@ -2,9 +2,7 @@
 * Copy this file into your theme to customize the module.
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
-.faq-reorder-form {
-	width: 100%;
-}
+.faq-reorder-form { width: 100%; }
 
 .faq-answer-container {
 	padding: 0.618em 0.309em 0.618em 0;
@@ -29,13 +27,9 @@
 	overflow: initial;
 }
 
-.faq-question-element .question-title {
-	margin-left: 0.309em;
-}
+.faq-question-element .question-title { margin-left: 0.309em; }
 
-.sortable-title .question-title span {
-    font-size: 1.9rem;
-}
+.sortable-title .question-title span { font-size: 1.809rem; }
 
 /* hack pour l'ancre */
 .question-anchor {
@@ -48,6 +42,4 @@
 	padding: 0;
 }
 
-#questions-titles-list hr {
-	margin: 0 1.309em 0;
-}
+#questions-titles-list hr { margin: 0 1.309em 0; }

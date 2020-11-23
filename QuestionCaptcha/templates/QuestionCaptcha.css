@@ -15,11 +15,7 @@ textarea.answers {
 }
 
 @media (min-width: 769px) {
-	textarea.answers {
-		width: 47%;
-	}
+	textarea.answers { width: 47%; }
 }
 
-.fa-trash-alt {
-	margin: 1.482em 0 0 0.309em;
-}
+.fa-trash-alt { margin: 1.482em 0 0 0.309em; }

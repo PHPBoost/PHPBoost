@@ -4,27 +4,17 @@
 */
 
 /* --- Forum table --- */
-#module-forum table.bt tbody td.forum-last-topic .bt-content {
-	max-width: 63%;
-}
+#module-forum table.bt tbody td.forum-last-topic .bt-content { max-width: 63%; }
 
-#module-forum table tbody td .bt-content span {
-	text-align: left;
-}
+#module-forum table tbody td .bt-content span { text-align: left; }
 
-#module-forum table.bt tbody tr:last-child td:last-child {
-	border-width: 0 0 1px;
-}
+#module-forum table.bt tbody tr:last-child td:last-child { border-width: 0 0 1px; }
 
 #module-forum header h2 > i,
-.footer-forum > i {
-	font-size: 0.618em;
-}
+.footer-forum > i { font-size: 0.618em; }
 
 @media (min-width: 769px) {
-	.forum-index {
-		display: block;
-	}
+	.forum-index { display: block; }
 }
 
 .forum-links .cssmenu-group > ul > li .cssmenu-title,
@@ -35,31 +25,20 @@
 
 .forum-links .cssmenu-title img + span,
 .forum-links .cssmenu-title i + span,
-.forum-links .cssmenu-title span + span {
-    margin-left: 0;
-}
+.forum-links .cssmenu-title span + span { margin-left: 0; }
 
-.forum-links .cssmenu.cssmenu-group > ul > li > .cssmenu-title {
-	padding: 0.309em;
-}
+.forum-links .cssmenu.cssmenu-group > ul > li > .cssmenu-title { padding: 0.309em; }
 
-.reload-unread {
-	padding: 0 0 0 0.309em;
-}
+.reload-unread { padding: 0 0 0 0.309em; }
 
-/* -- details des pages
-============================================================================= */
+/* --- Pages details -------------------------------------------------------- */
 
 /* --- pagination --- */
 article header ul.pagination,
-article footer ul.pagination {
-	display: inline;
-}
+article footer ul.pagination { display: inline; }
 
-/*--- details des topic --- */
-.user-group {
-	display: block;
-}
+/*--- Topic details --- */
+.user-group { display: block; }
 
 .forum-post-form .fieldset-submit {
 	margin-bottom: 0.309em;
@@ -84,16 +63,11 @@ article footer ul.pagination {
 	width: 80%;
 }
 
-
 @media (max-width: 768px) {
-	.forum-poll-table td {
-		text-align: left;
-	}
+	.forum-poll-table td { text-align: left; }
 }
 
-.delete-message {
-	cursor:pointer;
-}
+.delete-message { cursor:pointer; }
 
 .edit-pseudo {
 	margin: 1.618em 0 1.309em;
@@ -103,28 +77,20 @@ article footer ul.pagination {
 }
 
 /* --- stats --- */
-.forum-stats span {
-	display: block;
-}
+.forum-stats span { display: block; }
 
 /* --- moderation --- */
 @media (min-width: 769px) {
-	#article-forum-moderation #id-message-helper.notice {
-		width: 80%;
-	}
+	#article-forum-moderation #id-message-helper.notice { width: 80%; }
 }
 
 
-/* --- creation de topic --- */
-#add_poll_field_link {
-	width: 185px;
-}
+/* --- Topic creation --- */
+#add_poll_field_link { width: 185px; }
 
 
-/* --- header du contenu de la page --- */
-.forum-contents header {
-	margin: 0;
-}
+/* --- Page content header --- */
+.forum-contents header { margin: 0; }
 
 .forum-contents header h2 {
 	border: none;
@@ -132,33 +98,21 @@ article footer ul.pagination {
 	font-size: 1.382em;
 }
 
-.footer-forum {
-	padding: 0 0.618em;
-}
+.footer-forum { padding: 0 0.618em; }
 
-.forum-contents table {
-	margin-top: 0;
-}
+.forum-contents table { margin-top: 0; }
 
-ul.pagination a {
-	padding: 0.309em;
-}
+ul.pagination a { padding: 0.309em; }
 
 @media (min-width: 769px) {
-	ul.pagination a {
-		padding: 0.228em;
-	}
+	ul.pagination a { padding: 0.228em; }
 }
 
-.desc-forum {
-	font-size: 0.809em;
-}
+.desc-forum { font-size: 0.809em; }
 
-/* --- Contenu de la page --- */
+/* --- Page content --- */
 @media (min-width: 769px) {
-	.forum-contents {
-		padding: 0 0.809em;
-	}
+	.forum-contents { padding: 0 0.809em; }
 }
 
 .content {
@@ -166,7 +120,7 @@ ul.pagination a {
 	clear: both;
 }
 
-/* --- Messages non lus --- */
+/* --- Unread messages --- */
 .forum-refresh {
 	position: relative;
 	float: left;
@@ -199,12 +153,10 @@ ul.pagination a {
 		overflow: visible !important;
 	}
 
-	.forum-notread {
-		padding: 0.456em 0.228em;
-	}
+	.forum-notread { padding: 0.456em 0.228em; }
 }
 
-/* --- contenu des tables ======================================================= */
+/* --- Tables content --- */
 .forum-display-block {
 	display: block;
 	margin: 0.309em 0;
@@ -217,7 +169,7 @@ ul.pagination a {
 	min-height: 150px;
 }
 
-/* --- taille des colonnes --- */
+/* --- Columns sizes --- */
 @media (min-width: 980px) {
 
 	.td20P 	{ width: 20%; }
@@ -241,24 +193,20 @@ ul.pagination a {
 	.forum-delete 			{ width: 4.56em;  }
 	.forum-last-topic 		{ width: 11em;    }
 
-	td.forum-last-topic {
-		font-size: 0.809em;
-	}
+	td.forum-last-topic { font-size: 0.809em; }
 
-	td.forum-topic {
-		text-align: left;
-	}
+	td.forum-topic { text-align: left; }
 }
 
-/* Cadre des liens: alerter les moderateurs et suivre le sujet */
+/* --- Forum actions --- */
 .forum-action {
 	margin-top: 0.309em;
 	text-align: center;
 }
 
-/* Les des categories de niveau 0 */
+/* --- Categories level 0 --------------------------------------------------- */
 
-/* Affichage des membres en ligne */
+/* --- Connected users --- */
 .forum-online {
 	padding: 0.309em 0.309em 0 0.309em;
 	height: auto;
@@ -277,16 +225,12 @@ ul.pagination a {
 }
 
 @media (max-width: 768px) {
-	.forum-online-select {
-		max-width: 100%;
-	}
+	.forum-online-select { max-width: 100%; }
 }
 
-/* Contenu */
+/* --- Content --- */
 
-.pagin-forum {
-	float: right;
-}
+.pagin-forum { float: right; }
 
 
 
@@ -297,25 +241,17 @@ ul.pagination a {
 	td.forum-subject-nb,
 	td.forum-message-nb,
 	td.forum-view,
-	td.forum-author {
-		display: none !important;
-	}
+	td.forum-author { display: none !important; }
 
-	td.forum-last-topic {
-		margin-bottom: 0.228em;
-	}
+	td.forum-last-topic { margin-bottom: 0.228em; }
 }
 
-/* -- footer ==================================================================== */
+/* --- footer --- */
 #forum-bottom {
 	margin: 1em 0 0.309em 0;
 	padding: 0.809em;
 }
 
-#forum-bottom .forum-message-options {
-	border-bottom: none;
-}
+#forum-bottom .forum-message-options { border-bottom: none; }
 
-.forum-stats {
-	display: block;
-}
+.forum-stats { display: block; }

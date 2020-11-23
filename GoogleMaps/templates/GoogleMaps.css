@@ -3,9 +3,7 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-.map-address-input {
-	width: 100%;
-}
+.map-address-input { width: 100%; }
 
 .map-canvas {
 	width: 100%;

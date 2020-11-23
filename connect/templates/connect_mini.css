@@ -3,9 +3,7 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-#module-connect  #login {
-	cursor: help;
-}
+#module-connect  #login { cursor: help; }
 
 #module-connect .js-menu-button {
 	display: block;
@@ -13,9 +11,7 @@
 	position: relative;
 }
 
-#module-connect .js-menu-button .stacked {
-	margin: 0 0 0 0.809em;
-}
+#module-connect .js-menu-button .stacked { margin: 0 0 0 0.809em; }
 
 #module-connect .js-menu-button::after {
 	position: absolute;
@@ -25,22 +21,16 @@
 	right: 0.809em;
 }
 
-#module-connect.active-connect .js-menu-button::after {
-	content: '\f0d8';
-}
+#module-connect.active-connect .js-menu-button::after { content: '\f0d8'; }
 
 #module-connect .cell-list-inline ul {
 	flex-direction: column;
 	flex-wrap: nowrap;
 }
 
-#module-connect .cell-list .li-spaced a {
-	padding-right: 0.618em;
-}
+#module-connect .cell-list .li-spaced a { padding-right: 0.618em; }
 
-#module-connect .cell-list li:hover {
-    background-color: transparent;
-}
+#module-connect .cell-list li:hover { background-color: transparent; }
 
 #module-connect .li-spaced {
 	padding: 0.456em;
@@ -48,9 +38,7 @@
 }
 
 @media (min-width: 768px) {
-	#module-connect .js-menu-button {
-		display: none;
-	}
+	#module-connect .js-menu-button { display: none; }
 
 	#module-connect .cell-list-inline ul {
 		flex-direction: row;
@@ -75,9 +63,7 @@
 }
 
 .active-connect .js-menu-button,
-.js-menu-button:hover {
-	text-decoration: none;
-}
+.js-menu-button:hover { text-decoration: none; }
 
 @media (min-width: 769px) {
 	#module-connect .connect-container {
@@ -86,11 +72,7 @@
 		height: auto;
 	}
 
-	#module-connect .cell-list-inline .connect-container form {
-		display: inline-flex;
-	}
+	#module-connect .cell-list-inline .connect-container form { display: inline-flex; }
 
-	#module-connect .cell-list .connect-container li {
-		padding: 0.309em;
-	}
+	#module-connect .cell-list .connect-container li { padding: 0.309em; }
 }

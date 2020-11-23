@@ -9,13 +9,9 @@
 .wiki-paragraph-4 {}
 .wiki-paragraph-5 {}
 
-.wiki-list {
-	margin: 0.456em 0 0 2.618em;
-}
+.wiki-list { margin: 0.456em 0 0 2.618em; }
 
-.wiki-list-1 > li {
-	margin: 0.3em 0 0 0;
-}
+.wiki-list-1 > li { margin: 0.3em 0 0 0; }
 
 .wiki-list-1 { list-style-type: upper-roman; }
 .wiki-list-2 { list-style-type: decimal; 	 }
@@ -23,9 +19,7 @@
 .wiki-list-4 { list-style-type: lower-alpha; }
 .wiki-list-5 { list-style-type: lower-greek; }
 
-ul.no-list a i.fa {
-	width: 1.228em;
-}
+ul.no-list a i.fa { width: 1.228em; }
 
 #module-wiki .content .options {
 	float: none;
@@ -33,9 +27,7 @@ ul.no-list a i.fa {
 	margin: 2.618em 0 0;
 }
 
-#module-wiki hr {
-	margin: 0 auto 1.618em;
-}
+#module-wiki hr { margin: 0 auto 1.618em; }
 
 .wiki-summary {
 	display: inline-block;
@@ -48,17 +40,11 @@ ul.no-list a i.fa {
 	margin-bottom: 2.618em;
 }
 
-.wiki-summary-title {
-	font-weight: bold;
-}
+.wiki-summary-title { font-weight: bold; }
 
-.futur-cat-pages {
-	padding-left: 1em;
-}
+.futur-cat-pages { padding-left: 1em; }
 
-#article-wiki .content {
-	margin-bottom: 1.618em;
-}
+#article-wiki .content { margin-bottom: 1.618em; }
 
 #article-wiki .content .options {
 	float: none;
@@ -70,29 +56,17 @@ ul.no-list a i.fa {
 	text-align: center;
 }
 
-.wiki-bbcode {
-	margin-bottom: -0.382em;
-}
+.wiki-bbcode { margin-bottom: -0.382em; }
 
-.wiki-bbcode .bbcode-containers {
-	border-top: none;
-}
+.wiki-bbcode .bbcode-containers { border-top: none; }
 
-.bbcode li.bbcode-elements > a.bbcode-wiki-insert {
-	width: 100%;
-}
+.bbcode li.bbcode-elements > a.bbcode-wiki-insert { width: 100%; }
 
-.wiki-bbcode.bbcode li:nth-child(3).bbcode-elements > a {
-	padding: 0;
-}
+.wiki-bbcode.bbcode li:nth-child(3).bbcode-elements > a { padding: 0; }
 
-.wiki-tools-container {
-	margin-bottom: 1.482em;
-}
+.wiki-tools-container { margin-bottom: 1.482em; }
 
-#wiki-link-container li {
-	margin: 0 0.228em 0 0;
-}
+#wiki-link-container li { margin: 0 0.228em 0 0; }
 
 .explorer h1,
 .wiki-history h1 {
@@ -100,13 +74,9 @@ ul.no-list a i.fa {
 	margin-bottom: 1.309rem;
 }
 
-.explorer h2 {
-	font-size: 1.228em;
-}
+.explorer h2 { font-size: 1.228em; }
 
-.col-max{
-    max-width: 200px;
-}
+.col-max{ max-width: 200px; }
 
 /* --- sticky needs --- */
 
@@ -137,9 +107,7 @@ body {
 		transform: rotate(-90deg);
 	}
 
-	.wiki-sticky-title:hover {
-		opacity: 1;
-	}
+	.wiki-sticky-title:hover { opacity: 1; }
 }
 
 .wiki-sticky-title {
@@ -158,28 +126,16 @@ body {
 	height: 100%;
 }
 
-.wiki-sticky ol {
-	margin-left: 0.618em;
-}
+.wiki-sticky ol { margin-left: 0.618em; }
 
 @media (min-width: 769px) {
-	.wiki-sticky {
-		top: 5em;
-	}
+	.wiki-sticky { top: 5em; }
 
-	.wiki-sticky > ol {
-		margin-left: 3.618em;
-	}
+	.wiki-sticky > ol { margin-left: 3.618em; }
 
-	.wiki-sticky ol ol{
-		margin-left: 1.618em;
-	}
+	.wiki-sticky ol ol{ margin-left: 1.618em; }
 }
 
-.wiki-sticky a:hover {
-	background-color: rgba(0, 0, 0, 0.05);
-}
+.wiki-sticky a:hover { background-color: rgba(var(--darken), 0.05); }
 
-.wiki-sticky > ol > li > a {
-	text-transform: uppercase;
-}
+.wiki-sticky > ol > li > a { text-transform: uppercase; }

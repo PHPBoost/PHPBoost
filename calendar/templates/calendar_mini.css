@@ -4,14 +4,10 @@
 */
 
 #date-select-form .grouped-element,
-#date-select-form select {
-	border-width: 0;
-}
+#date-select-form select { border-width: 0; }
 
 .calendar-table.mini-calendar th,
-.calendar-table.mini-calendar td {
-    width: calc(100% / 8);
-}
+.calendar-table.mini-calendar td { width: calc(100% / 8); }
 
 .calendar-table.mini-calendar th,
 .calendar-table.mini-calendar .calendar-week,
@@ -20,16 +16,12 @@
 	font-size: 0.809em;
 }
 
-.calendar-table.mini-calendar td a {
-    display: block;
-}
+.calendar-table.mini-calendar td a { display: block; }
 
 @media (min-width: 481px) {
 	.calendar-table.mini-calendar th,
 	.calendar-table.mini-calendar .calendar-week,
-	.calendar-table.mini-calendar td a {
-		padding: 0.809em 0.1618em;
-	}
+	.calendar-table.mini-calendar td a { padding: 0.809em 0.1618em; }
 }
 
 @media (min-width: 769px) {
@@ -44,9 +36,7 @@
 @media (min-width: 1025px) {
 	.calendar-table.mini-calendar th,
 	.calendar-table.mini-calendar .calendar-week,
-	.calendar-table.mini-calendar td a {
-		font-size: 0.809em;
-	}
+	.calendar-table.mini-calendar td a { font-size: 0.809em; }
 }
 
 .mini-calendar td[class*="calendar-"],
@@ -60,13 +50,9 @@
     display: block;
 }
 
-.mini-calendar td.calendar-week {
-	padding: 0.456em;
-}
+.mini-calendar td.calendar-week { padding: 0.456em; }
 
-#calendar .mini-calendar .calendar-event a {
-	position: relative;
-}
+#calendar .mini-calendar .calendar-event a { position: relative; }
 
 #calendar .mini-calendar .calendar-event a .event-spot {
 	position: absolute;

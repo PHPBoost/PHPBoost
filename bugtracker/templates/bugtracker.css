@@ -3,26 +3,20 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-#cssmenu-bugtrackerpageslist {
-	margin-bottom: 10px;
-}
+#cssmenu-bugtrackerpageslist { margin-bottom: 0.809em; }
 
 .cssmenu-group .cssmenu-title-icon {
 	border-width: 1px 0 1px 0;
 }
 
-.legend-line {
-	padding: 0 0 8px 0;
-}
+.legend-line { padding: 0 0 0.618em 0; }
 
 .legend-color {
 	font-size: 2em;
 	vertical-align: -1px;
 }
 
-.legend {
-	padding-right: 20px;
-}
+.legend { padding-right: 1.309em; }
 
 .title-column 	{ width: 30%; }
 .small-column 	{ width: 10%; }
@@ -30,21 +24,13 @@
 #status-chart 	{ width: 90%; }
 
 table.version-list tfoot tr th,
-table.categories-list tfoot tr th {
-	padding: 8px 0;
-}
+table.categories-list tfoot tr th { padding: 0.618em 0; }
 
-table.version-list input[id*="release_date"] {
-	width: 80%;
-}
+table.version-list input[id*="release_date"] { width: 80%; }
 
-table.bt .bt-content {
-	width: 65% !important;
-}
+table.bt .bt-content { width: 65% !important; }
 
-.form-field-progressbar {
-	width: 25%;
-}
+.form-field-progressbar { width: 25%; }
 
 .cw25 {
 	width: 100%;
@@ -52,9 +38,7 @@ table.bt .bt-content {
 }
 
 @media (min-width: 981px) {
-	.cw25 {
-		width: calc(100% / 4);
-	}
+	.cw25 { width: calc(100% / 4); }
 }
 
 div[id*="calendar"] {
@@ -63,18 +47,12 @@ div[id*="calendar"] {
 }
 
 @media (max-width: 980px) {
-	table.version-list div[id*="calendar"] {
-		display: none !important;
-	}
+	table.version-list div[id*="calendar"] { display: none !important; }
 
-	table.version-list .fa-calendar-alt {
-		display: none !important;
-	}
+	table.version-list .fa-calendar-alt { display: none !important; }
 }
 
-.bugtracker-actions a {
-	padding: 0.228em;
-}
+.bugtracker-actions a { padding: 0.228em; }
 
 @media (max-width: 768px) {
 	.bugtracker-actions a {
@@ -83,9 +61,7 @@ div[id*="calendar"] {
 	}
 }
 
-.bugtracker-filter {
-	text-align: left;
-}
+.bugtracker-filter { text-align: left; }
 
 .table-form .fieldset-content,
 .table-form .horizontal-fieldset,
@@ -95,4 +71,5 @@ div[id*="calendar"] {
 	padding: 0;
 	display: block;
 }
+
 .table-form select { width : 100%; }

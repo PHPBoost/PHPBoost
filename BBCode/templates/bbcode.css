@@ -21,15 +21,11 @@
 }
 
 /* --- content of elements --- */
-.hide-modal {
-	cursor: pointer;
-}
+.hide-modal { cursor: pointer; }
 
 .constraint-status-right .bbcode-elements input,
 .constraint-status-right .bbcode-elements select,
-.constraint-status-right .bbcode-elements textarea {
-	padding-left: 0.618em;
-}
+.constraint-status-right .bbcode-elements textarea { padding-left: 0.618em; }
 
 .bbcode-elements .flex-between .formatter-title {
 	flex: 1 1 auto;
@@ -41,13 +37,9 @@
 	align-self: flex-end;
 }
 
-.bbcode-label {
-	flex: 1 1 auto;
-}
+.bbcode-label { flex: 1 1 auto; }
 
-.bbcode-elements .button {
-	display: inline-block;
-}
+.bbcode-elements .button { display: inline-block; }
 
 .bbcode-container .cell-table.color-table td {
 	cursor: pointer;

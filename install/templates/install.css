@@ -17,14 +17,10 @@
 }
 
 @media (min-width: 769px) {
-    .step-menu .cssmenu-title {
-        border-width: 0 0 0 5px;
-    }
+    .step-menu .cssmenu-title { border-width: 0 0 0 5px; }
 }
 
-.help-menu .cssmenu-title {
-    color: var(--txt-alt);
-}
+.help-menu .cssmenu-title { color: var(--txt-alt); }
 
 @media (max-width: 768px) {
 
@@ -50,9 +46,7 @@
 		padding: 0;
 	}
 
-	.step-menu.cssmenu > ul > li > .cssmenu-title span {
-		display: none;
-	}
+	.step-menu.cssmenu > ul > li > .cssmenu-title span { display: none; }
 }
 
 /* --- Content -------------------------------------------------------------- */
@@ -63,13 +57,9 @@
     border-color: var(--bdr-main);
 }
 
-.admin-main {
-    flex: 1 1 auto;
-}
+.admin-main { flex: 1 1 auto; }
 
-section header {
-	margin-bottom: 0.809em;
-}
+section header { margin-bottom: 0.809em; }
 
 section header h2 {
 	padding: 0.809em;
@@ -82,20 +72,14 @@ section header h2 {
     padding: 1em 2em;
 }
 
-.next-step button {
-    border-width: 1px 0 1px 1px;
-}
+.next-step button { border-width: 1px 0 1px 1px; }
 
 .next-step button:hover,
-.next-step button:last-child {
-    border-width: 1px;
-}
+.next-step button:last-child { border-width: 1px; }
 
 /* --- Welcome -------------------------------------------------------------- */
 @media (min-width: 769px) {
-	.pbt-box {
-		padding: 0 0.456em 0.456em 6.18em;
-	}
+	.pbt-box { padding: 0 0.456em 0.456em 6.18em; }
 }
 
 /* --- License -------------------------------------------------------------- */
@@ -136,14 +120,10 @@ section header h2 {
 	text-align: center;
 }
 
-.finish-menu ul li a {
-	text-decoration: none;
-}
+.finish-menu ul li a { text-decoration: none; }
 
 .finish-menu ul li i,
-.finish-menu ul li span {
-	display: block;
-}
+.finish-menu ul li span { display: block; }
 
 @media (min-width: 769px) {
 	.finish-menu ul li {
@@ -152,7 +132,5 @@ section header h2 {
 	}
 
 	.finish-menu ul li i,
-	.finish-menu ul li span {
-		display: block;
-	}
+	.finish-menu ul li span { display: block; }
 }

@@ -3,28 +3,18 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-#module-articles hr {
-	margin-top: 0.618em;
-}
+#module-articles hr { margin-top: 0.618em; }
 
 .articles-item.several-items h2,
-.articles-item.several-items .more {
-	margin: 0;
-}
+.articles-item.several-items .more { margin: 0; }
 
-.articles-item.several-items img {
-	padding: 0 0 0.618em 0;
-}
+.articles-item.several-items img { padding: 0 0 0.618em 0; }
 
 /* --- Pages pagination --- */
-.pages-pagination {
-	width: 100%;
-}
+.pages-pagination { width: 100%; }
 
 @media (min-width: 769px) {
-	.pages-pagination {
-		width: calc(100% / 3);
-	}
+	.pages-pagination { width: calc(100% / 3); }
 }
 
 span.content + hr {
@@ -38,8 +28,6 @@ span.content + hr {
     list-style-type: none;
 }
 
-.form-field-action-link i {
-	font-size: 1.618em;
-}
+.form-field-action-link i { font-size: 1.618em; }
 
 .fa-pagebreak:before { content: "\f477"; }

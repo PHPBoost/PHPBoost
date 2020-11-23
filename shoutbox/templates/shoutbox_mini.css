@@ -12,45 +12,23 @@
 	line-height: 1;
 }
 
-.shout-horizontal {
-	padding-left: 1.5em;
-}
+.shout-horizontal { padding-left: 1.5em; }
 
-.bbcode-elements.bbcode-block-shoutbox {
-	position: static !important;
-}
+.bbcode-elements.bbcode-block-shoutbox { position: static !important; }
 
-.cell-mini #shoutbox-bbcode-container [class*="cell-"] {
-    background-color: var(--bgc-alt) !important;
-}
+.cell-mini #shoutbox-bbcode-container [class*="cell-"] { background-color: var(--bgc-alt) !important; }
 
-.bbcode-block-container::after {
-    border-color: transparent;
-}
+.bbcode-block-container::after { border-color: transparent; }
 
-.shout-form-container {
-	text-align: center;
-}
+.shout-form-container { text-align: center; }
 
-.shout-form-container label {
-	display: block;
-}
+.shout-form-container label { display: block; }
 
 #shoutbox-bbcode-container ul {
 	margin: 0;
 	padding: 0;
 }
 
-.shoutbox-message-container {}
-.shoutbox-message-date {}
+.shoutbox-message { font-size: 0.809em; }
 
-.shoutbox-message {
-	font-size: 0.809em;
-}
-
-span.shoutbox-message-author {
-	font-style: italic;
-}
-
-.shoutbox-message-content {
-}
+span.shoutbox-message-author { font-style: italic; }

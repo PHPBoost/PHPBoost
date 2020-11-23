@@ -3,9 +3,7 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-.online-users-container {
-	margin: 0.618em 0;
-}
+.online-users-container { margin: 0.618em 0; }
 
 .online-user {
 	display: block;

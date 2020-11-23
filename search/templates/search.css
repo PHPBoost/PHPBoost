@@ -3,16 +3,11 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 /* Config */
-.fieldset-refresh .form-element {
-	align-content: center;
-}
+.fieldset-refresh .form-element { align-content: center; }
 
-/* -- Zone de saisie de la recherche
--------------------------------------------*/
+/* --- Search input area --- */
 
-#forms-selection {
-	padding: 0;
-}
+#forms-selection { padding: 0; }
 
 #forms-selection a {
 	display: block;
@@ -25,27 +20,17 @@
 	width: auto;
 }
 
-.SpecializedForm {
-	padding: 0 5px;
-}
+.SpecializedForm { padding: 0 0.309em; }
 
 @media (max-width: 768px) {
-	#module-search .options {
-		float: none;
-	}
+	#module-search .options { float: none; }
 
-	#module-search #form-all .form-element label {
-		text-align: center;
-	}
+	#module-search #form-all .form-element label { text-align: center; }
 
-	#module-search #form-all .form-element label span {
-		font-size: 0.8em;
-	}
+	#module-search #form-all .form-element label span { font-size: 0.809em; }
 }
 
-/* -- Zone des resultats
--------------------------------------------*/
-
+/* --- Results area --- */
 .results {
 	margin-top: 30px;
 	min-height: 50px;
@@ -77,11 +62,9 @@
 	padding: 10px;
 }
 
-.search-results li {
-	padding: 5px;
-}
+.search-results li { padding: 0.309em; }
 
 .PaginationResults {
-	padding: 5px;
+	padding: 0.309em;
 	text-align: right;
 }

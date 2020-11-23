@@ -3,9 +3,7 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-.themes-switcher {
-	padding: 0.809em;
-}
+.themes-switcher { padding: 0.809em; }
 
 .themes-switcher-vertical select {
 	display: block;

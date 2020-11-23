@@ -3,24 +3,16 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-#download-sources-container {
-	margin: 1em 1em 1em 2em;
-}
+#download-sources-container { margin: 1em 1em 1em 2em; }
 
-.download-sources-title {
-	font-weight: bold;
-}
+.download-sources-title { font-weight: bold; }
 
-.article-download.several-items .actions {
-	padding-top: 0.618em;
-}
+.article-download.several-items .actions { padding-top: 0.618em; }
 
 
 @media (min-width: 769px) {
 	#DownloadFormController_file_size_field,
-	#DownloadFormController_file_size_unit_field {
-		display: inline-block;
-	}
+	#DownloadFormController_file_size_unit_field { display: inline-block; }
 
 	#onblurContainerResponseDownloadFormController_file_size,
 	#onblurContainerResponseDownloadFormController_file_size_unit,
@@ -30,7 +22,5 @@
 		margin-right: 0.618em;
 	}
 
-	#DownloadFormController_file_size_unit_field  select {
-		width: 120px;
-	}
+	#DownloadFormController_file_size_unit_field  select { width: 120px; }
 }

@@ -3,18 +3,12 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-#date-select-form .grouped-element {
-	border-width: 0;
-}
+#date-select-form .grouped-element { border-width: 0; }
 
-.location-map {
-	margin: 0.618em 0;
-}
+.location-map { margin: 0.618em 0; }
 
 .calendar-table th,
-.calendar-table td {
-    width: calc(100% / 8);
-}
+.calendar-table td { width: calc(100% / 8); }
 
 td[class*="calendar-"],
 td[class*="calendar-"]:last-child {
@@ -27,9 +21,7 @@ td[class*="calendar-"]:last-child {
     display: block;
 }
 
-#calendar .calendar-event a {
-	position: relative;
-}
+#calendar .calendar-event a { position: relative; }
 
 #calendar .calendar-event a .event-spot {
 	position: absolute;

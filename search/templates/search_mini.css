@@ -10,7 +10,5 @@
 }
 
 @media (min-width: 769px) {
-	#mini-search-form {
-		margin: 0.618em 1.618em 0.618em 0;
-	}
+	#mini-search-form { margin: 0.618em 1.618em 0.618em 0; }
 }

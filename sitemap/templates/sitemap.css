@@ -3,10 +3,6 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-hr {
-    margin: 0.618em 0;
-}
+hr { margin: 0.618em 0; }
 
-h2 img {
-    margin-bottom: 0.228em;
-}
+h2 img { margin-bottom: 0.228em; }
