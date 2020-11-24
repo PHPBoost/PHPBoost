@@ -355,6 +355,6 @@
 		    jQuery('#window-height').append(jQuery(window).innerHeight() + 'px');
 		});
 	</script>
-	<script src="{PATH_TO_ROOT}/templates/default/plugins/form/validator.js"></script>
-	<script src="{PATH_TO_ROOT}/templates/default/plugins/form/form.js"></script>
+	<script src="{PATH_TO_ROOT}/templates/@default/plugins/form/validator.js"></script>
+	<script src="{PATH_TO_ROOT}/templates/@default/plugins/form/form.js"></script>
 # ENDIF #
