@@ -35,7 +35,7 @@
 		# ELSE #
 			<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/@import.css" type="text/css" />
 		# ENDIF #
-		# IF C_CSS_LOGIN_DISPLAYED #<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/login.css" type="text/css" media="screen" /># ENDIF #
+		# IF C_CSS_LOGIN_DISPLAYED #<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/@default/theme/login.css" type="text/css" media="screen" /># ENDIF #
 
 		<!-- Modules CSS -->
 		{MODULES_CSS}

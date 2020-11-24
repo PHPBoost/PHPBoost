@@ -1,1 +1,0 @@
-<a href="{URL}" # IF C_HAS_CSS_CLASSES #class="{CSS_CLASSES}"# ENDIF ## START attributes # {attributes.TYPE}="{attributes.VALUE}"# END attributes #># IF C_HAS_ICON #<i class="{CSS_CLASSES}"></i># ENDIF #{CONTENT}</a>
