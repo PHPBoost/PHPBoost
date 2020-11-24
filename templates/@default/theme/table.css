@@ -1,0 +1,222 @@
+/*
+ * Copy this file into your theme to customize it.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
+ *
+ * Contains elements for responsive HTML tables.
+ * 		- Basics
+ * 		- Responsive Table - basictable.js
+*/
+
+/* --- Basics --------------------------------------------------------------- */
+table {
+	margin: 0.618em 0;
+	padding: 0;
+	width: 100%;
+	border-spacing: 0;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+	border-collapse: collapse;
+}
+
+/* --- Header --- */
+table caption {
+	margin: 0.456em 0 0.456em 1.482em;
+	border-width: 0 0 1px;
+	border-style: solid;
+	border-color: transparent;
+	font-size: 1.482em;
+	text-align: left;
+}
+
+th,
+.table-head {
+	padding: 0.228em;
+	font-size: 1.2em;
+	text-align: center;
+	font-weight: normal;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+}
+
+/* --- Content --- */
+td,
+.table-element-container {
+	padding: 0.456em;
+	text-align: center;
+	border-width: 0 0 1px;
+	border-style: solid;
+	border-color: transparent;
+}
+
+tfoot td[colspan] { border-width: 0 1px 1px 1px; }
+
+.bt td { border-bottom-width: 0; }
+
+.bt td:last-child { border-width: 0 0 1px; }
+
+/* --- Footer --- */
+tfoot td {
+	padding: 0.228em;
+	font-size: 0.9em;
+}
+
+tfoot td * { vertical-align: middle; }
+
+tfoot td select { padding: 0.1618em 0.309em; }
+
+@media (min-width: 769px) {
+	th,
+	td,
+	tfoot td {
+		padding: 0.618em;
+		font-size: 1em;
+	}
+}
+
+.html-table-filters { padding: 0.809em; }
+
+.html-table-elements-number { text-align: left; }
+
+/* --- thead patch for formated tables --- */
+.formatter-table td.formatter-table-head {
+	padding: 0.618em;
+	font-size: 1.482em;
+	text-align: center;
+	font-weight: normal;
+}
+
+.formatter-table td.formatter-table-head p { margin-bottom: 0; }
+
+.bt.formatter-table td.formatter-table-head { display: none; }
+
+
+/* --- Responsive Table - basictable.js ------------------------------------- */
+.bt thead,
+.bt thead th { display: none; }
+
+.bt tfoot th,
+.bt tfoot td,
+.bt tbody td {
+	display: flex;
+	vertical-align: top;
+}
+
+.bt tfoot th::before,
+.bt tfoot td::before,
+.bt tbody td::before {
+	content: attr(data-th) ": ";
+	display: inline-block;
+	flex-shrink: 0;
+	font-weight: bold;
+	width: 6.5em;
+}
+
+.bt tfoot th.bt-hide,
+.bt tfoot td.bt-hide,
+.bt tbody td.bt-hide { display: none; }
+
+.bt tfoot th .bt-content,
+.bt tfoot td .bt-content,
+.bt tbody td .bt-content { vertical-align: top; }
+
+.bt thead th:first-child{ display: block; }
+
+.bt tbody td {
+	display: block;
+	width: 100%;
+	text-align: left;
+	vertical-align: top;
+}
+
+.bt tbody td:before {
+	display: inline-block;
+	min-width: 7em;
+	width: 35%;
+	content: attr(data-th);
+	font-weight: bold;
+}
+
+.bt tbody td.bt-hide { display: none; }
+
+.bt tbody td .bt-content {
+	display: inline-block;
+	padding-left: 0.309em;
+	max-width: 100%;
+	vertical-align: top;
+}
+
+.bt-wrapper.active {
+	max-height: 310px;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+.bt tfoot td::before,
+.bt.bt--no-header tbody td::before { display: none; }
+
+.bt tfoot .bt-content {
+	width: 100%;
+	padding: 0.618em;
+}
+
+/* --- Sortable filters ----------------------------------------------------- */
+.html-table-header-sortable {
+	display: none;
+	padding: 0.309em 0;
+}
+
+.html-table-header-sortable a {
+	padding: 0 0.309em;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+}
+
+@media (min-width: 769px) {
+	.html-table-header-sortable { display: inline-block; }
+}
+
+/* --- Options -------------------------------------------------------------- */
+.responsive-table {
+	max-width: 100%;
+	overflow: auto;
+}
+
+.large-table th { white-space: nowrap; }
+
+.large-table .bt-content,
+.bt.large-table .bt-content {
+    display: inline-block;
+    max-width: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* --- Columns sizes --- */
+.col-smaller { width: 3em;  }
+.col-small   { width: 6em;  }
+.col-large   { width: 9em;  }
+.col-larger  { width: 12em; }
+.col-xlarge  { width: 15em; }
+
+/* --- bordered-table --- */
+.bordered-table td {
+	border-width: 1px 0 0 1px;
+	border-style: solid;
+	border-color: transparent;
+}
+
+.bordered-table td:last-child { border-width: 1px 1px 0 1px; }
+
+.bordered-table tr:last-child td { border-width: 1px 0 1px 1px; }
+
+.bordered-table tr:last-child td:last-child { border-width: 1px; }
+
+.bordered-table .bt td,
+.bordered-table .bt tbody tr td:last-child,
+.bordered-table .bt tr:last-child td { border-width: 1px 1px 0 1px; }
+
+.bordered-table .bt tr:last-child td:last-child { border-width: 1px; }

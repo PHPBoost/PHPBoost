@@ -1,0 +1,29 @@
+/*
+ * Copy this file into your theme to customize it.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
+ *
+*/
+
+#global {
+	padding: 0.809em;
+	min-height: 0;
+	width: 100%;
+	border-spacing: 1px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+@media (min-width: 769px) {
+	#global {
+		padding: 2.618em;
+		align-items: center;
+	}
+}
+
+.fieldset-content {
+	margin: 0 auto;
+	max-width: 100%;
+}
+
+.cookiebar-container { position: fixed; }

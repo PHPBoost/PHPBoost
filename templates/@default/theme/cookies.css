@@ -1,0 +1,73 @@
+/*
+ * Copy this file into your theme to customize it.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
+ *
+*/
+
+.cookiebar-container {
+	z-index: 201;
+	left: 0;
+	right: 0;
+	top: 0;
+	padding: 0.456em 1.309em;
+	font-size: 0.809em;
+	text-align: center;
+}
+
+@media (max-width: 768px) {
+	.cookiebar-container {
+		position: fixed;
+		top: auto;
+		bottom: 0;
+		padding: 1.309em 1.309em 0.456em 1.309em;
+		margin: 1em 0.456em;
+		border-style: solid;
+		border-width: 1px;
+		font-size: 1em;
+	}
+}
+
+.cookiebar-container.fixed { position: fixed; }
+
+.cookiebar-content { text-align: justify; }
+
+@media (min-width: 769px) {
+	.cookiebar-content {
+		display: inline-block;
+		max-width: calc(100% - 400px);
+		vertical-align: top;
+	}
+
+	.cookiebar-actions {
+		display: inline-block;
+		width: 400px;
+	}
+}
+
+@media (max-width: 768px) {
+	.cookiebar-content { margin-bottom: 0.309em; }
+
+	.cookiebar-actions { margin: 1em 0 0.309em 0; }
+}
+
+@media (max-width: 480px) {
+	.cookiebar-more {
+		display: block;
+		margin: 0.618em 0 0.309em 0;
+	}
+}
+
+.aboutcookie-title {
+	font-size: 1.3em;
+	line-height: 1.3em;
+	font-weight: bold
+}
+
+.aboutcookie-title + p { margin: 0 0 1.309em 0; }
+
+#cookiebar-change-choice {
+	margin-top: 0.618em;
+	text-align: center;
+}
+
+.cookiebar-change-choice-link { text-align: center; }

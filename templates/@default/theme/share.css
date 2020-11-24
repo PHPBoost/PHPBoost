@@ -1,0 +1,33 @@
+/*
+ * Copy this file into your theme to customize it.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
+ *
+*/
+
+.sharing-elements-list {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: row;
+	text-align: center;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+@media (min-width: 769px) {
+	.sharing-elements-list { justify-content: flex-start; }
+}
+
+.sharing-element { flex: 0 0 auto; }
+
+@media (min-width: 769px) {
+	.sharing-element { margin: 0 0.309em 0.309em 0; }
+}
+
+.sharing-element a {
+	display: block;
+	padding: 0.618em 1.228em;
+	display: block;
+	margin: 0 0.1em 0.309em 0;
+}

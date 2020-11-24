@@ -1,0 +1,287 @@
+/*
+ * Copy this file into your theme to customize it.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
+ *
+ * Contains standalone framework classes
+ *
+*/
+
+/* --- Sizes --- */
+.smallest { font-size: 0.456em; vertical-align: middle; }
+.smaller  { font-size: 0.618em; vertical-align: middle; }
+.small    { font-size: 0.809em; vertical-align: middle; }
+.normal   { font-size: 1.000em;  }
+.big      { font-size: 1.228em;  }
+.bigger   { font-size: 1.456em;  }
+.biggest  { font-size: 2.1618em; }
+
+.h-padding { padding: 0 0.618em; }
+.v-padding { padding: 0.618em 0; }
+
+.pinned {
+	display: inline-block;
+	padding: 0 0.228em;
+	margin: 0 0 0.228em 0;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+	border-radius: 3px;
+	cursor: default;
+}
+
+a.pinned { cursor: pointer; }
+
+.pinned[data-color-surround] {
+	padding-left: 1.618em;
+	position: relative;
+}
+
+.data-color-surround {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: 1.309em;
+}
+
+/* --- Search engines --- */
+.robot {
+	font-size: 0.9em;
+	font-weight: bold;
+}
+
+/* --- Member search (AJAX) --- */
+.xmlhttprequest-result-search {
+	overflow: auto;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+}
+
+.xmlhttprequest-result-search span {
+	display: block;
+	padding: 0.309em 0.618em;
+}
+
+/* --- add ellispsis --- */
+.ellipsis {
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* --- Country flags in select --- */
+.flag-selector {
+	padding-left: 3.309em;
+	background-position: 0.309em;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+/* -- screen reader only --- */
+.sr-only {
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+/* --- Stacked element --- */
+.stacked {
+    position: relative;
+	display: inline-block;
+}
+
+.stacked .stack-event {
+    position: absolute;
+    padding: 0 0.309em;
+    font-size: 0.809em;
+	white-space: nowrap;
+}
+
+.stacked .stack-event.stack-left  { right: calc(100% - 0.809em); }
+.stacked .stack-event.stack-right { left: calc(100% - 0.809em); }
+.stacked .stack-event.stack-sup   { top: -0.809em; }
+.stacked .stack-event.stack-sub   { bottom: -0.809em; }
+
+.stacked .stack-event.stack-icon.stack-sup   { top: -0.456em; }
+.stacked .stack-event.stack-icon.stack-sub   { bottom: -0.456em; }
+
+.stacked .stack-event.stack-center   {
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.stacked .stack-event.stack-circle {
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 1.309em;
+}
+
+/* --- Floating sub container --- */
+.dropdown-container {
+	z-index: 10;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+}
+
+/* --- Coast to coast elements --- */
+.flex-between {
+    display: flex !important;
+	justify-content: space-between;
+	flex-direction: row;
+	align-items: center;
+}
+
+/* --- Display --- */
+.d-flex         { display: flex; }
+.d-inline 	    { display: inline; }
+.d-block 	    { display: block; }
+.d-inline-block { display: inline-block; }
+
+.span-mobile { display: block;}
+@media (min-width:769px) {
+	.span-mobile { display: inline;}
+}
+
+/* --- Sizes --- */
+@media (min-width: 769px) {
+	.w10  { width: 10% !important;  }
+	.w20  { width: 20% !important;  }
+	.w25  { width: 25% !important;  }
+	.w30  { width: 30% !important;  }
+	.w33  { width: calc(100% / 3) !important;  }
+	.w40  { width: 40% !important;  }
+	.w50  { width: 50% !important;  }
+	.w60  { width: 60% !important;  }
+	.w66  { width: calc(100% / 3 * 2) !important;  }
+	.w70  { width: 70% !important;  }
+	.w75  { width: 75% !important;  }
+	.w80  { width: 80% !important;  }
+	.w90  { width: 90% !important;  }
+	.w100 { width: 100% !important; }
+}
+
+/* --- Lists --- */
+.no-list ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.no-list ul ul { margin: 0 0 0 1.618em; }
+
+/* --- Alignment --- */
+.indent { text-indent: 2.618em; }
+.indent::first-letter {
+	font-weight: 600;
+	font-size: 130.9%
+}
+
+.float-left,
+.float-right { padding: 0.809em 0; }
+
+@media (min-width: 481px) {
+	.float-left  { float: left; }
+	.float-right { float: right; }
+}
+
+@media (min-width: 769px) {
+	.float-left   {
+		float: left;
+		padding: 0.618em 0.809em 0.618em 0;
+	}
+	.float-right {
+		float: right;
+		padding: 0.618em 0 0.809em 0.618em;
+	}
+}
+
+.valign-top		{ vertical-align: top; }
+.valign-middle 	{ vertical-align: middle; }
+.valign-bottom 	{ vertical-align: bottom; }
+
+/* --- Text --- */
+strong,
+.text-strong    { font-weight: bold; }
+.text-italic    { font-style: italic; }
+.text-underline { text-decoration: underline; }
+.text-strike 	{ text-decoration: line-through; }
+.align-center   { text-align: center; }
+.align-left     { text-align: left; }
+.align-right    { text-align: right; }
+.align-justify  { text-align: justify; }
+
+/* --- Hidden --- */
+.hidden { display: none; }
+
+@media (max-width: 768px) {
+	.hidden-small-screens { display: none; }
+}
+
+@media (min-width: 769px) {
+	.hidden-large-screens { display: none; }
+}
+
+.spacer { clear: both; }
+
+/* --- Smileys --- */
+.smiley { vertical-align: middle; }
+
+/* --- Icons --- */
+.icon-disabled {
+	opacity: 0.3;
+	cursor: default;
+}
+
+/* --- Opacity --- */
+.low-opacity {
+	opacity: 0.40; }
+
+/* --- Debug --- */
+.error-handler {
+	width: auto;
+	max-width: 750px;
+	margin: 1em auto;
+}
+
+/* --- Preview elements --- */
+.loading-preview-container { position: relative; }
+
+.loading-preview {
+	position: absolute;
+	z-index: 10;
+	margin: 90px auto auto auto;
+	width: 100%;
+	text-align: center;
+}
+
+/* Sticky */
+
+.sticky-menu {
+	position: sticky;
+	top: 0;
+	left: 0;
+	z-index: 9;
+	margin-bottom: 2.618em;
+	background-color: var(--bgc-alt);
+}
+
+/* --- Announces & messaging icons ------------------------------------------ */
+.fa-announce:before,
+.fa-announce-new:before 		{ content: "\f075"; } /* copy comment */
+.fa-announce-hot:before,
+.fa-announce-new-hot:before 	{ content: "\f086"; } /* copy comments */
+.fa-announce-lock:before,
+.fa-announce-new-lock:before 	{ content: "\f023"; } /* copy lock */
+.fa-announce-post:before,
+.fa-announce-new-post:before 	{ content: "\f071"; } /* copy exclamation-triangle */
+.fa-announce-top:before,
+.fa-announce-new-top:before 	{ content: "\f06a"; } /* copy exclamation-circle */

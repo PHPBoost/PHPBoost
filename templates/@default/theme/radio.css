@@ -1,0 +1,63 @@
+/*
+ * Copy this file into your theme to customize it.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
+ *
+*/
+
+.radio {
+	padding: 0.228em;
+    margin: 0.228em 0;
+	display: block;
+}
+
+.inline-radio .radio { margin: 0 0.456em 0  0; }
+
+.inline-radio .radio,
+.inline-radio .form-field-radio { display: inline-block; }
+
+@media (max-width: 768px) {
+	.radio .is-default-title{ margin: 0 0 0 1.309em; }
+}
+
+.bt-content .radio { margin: 3px 0.618em 0 0; }
+
+/* --- Custom radio --- */
+.custom-radio .radio [type="radio"] {
+	position: absolute;
+	opacity: 0;
+}
+
+.custom-radio .radio [type="radio"] + span {
+	position: relative;
+	padding: 0 0.618em 0 1.618em;
+	cursor: pointer;
+}
+
+.custom-radio .radio [type="radio"] + span:before,
+.custom-radio .radio [type="radio"] + span:after {
+	content: '';
+	position: absolute;
+}
+
+.custom-radio .radio [type="radio"] + span:before {
+	top: 2px;
+	left: -2px;
+	width: 16px;
+	height: 16px;
+	border-radius: 15px;
+	transition: background-color .2s;
+}
+
+.custom-radio .radio [type="radio"] + span:after {
+	top: 4px;
+	left: 0;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	transition: all 0.2s;
+}
+
+@media (max-width: 768px) {
+	.custom-radio .radio [type="radio"] + span:before { top: 1px; }
+	.custom-radio .radio [type="radio"] + span:after  { top: 3px; }
+}

@@ -1,0 +1,84 @@
+/*
+ * Copy this file into your theme to customize it.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
+ *
+*/
+
+.message-helper {
+	position: relative;
+	display: block;
+	margin: 0.309em 0 1em;
+	padding: 0.618em 0.618em 0.618em 2.618em;
+	height: auto;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+	line-height: 1.2;
+	text-align: left;
+	overflow: hidden;
+}
+
+.message-helper:before {
+	position: absolute;
+	left: 6px;
+	top: 7px;
+	width: 28px;
+	font-family: 'Font Awesome 5 Free';
+	font-weight: 900;
+	font-style: normal;
+	line-height: normal;
+	font-size: 1.5em;
+	text-align: center;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.text-helper .message-helper-small { width: 50%; }
+
+.message-helper.error:before         { content: "\f00d"; } /* copy times */
+.message-helper.notice:before        { content: "\f12a"; } /* copy exclamation */
+.message-helper.warning:before       { content: "\f071"; } /* copy exclamation-triangle */
+.message-helper.success:before       { content: "\f00c"; } /* copy check */
+.message-helper.question:before      { content: "\f128"; } /* copy question */
+.message-helper.member:before        { content: "\f007"; } /* copy exclamation-triangle */
+.message-helper.moderator:before     { content: "\f505"; } /* copy exclamation-triangle */
+.message-helper.administrator:before { content: "\f508"; } /* copy exclamation-triangle */
+
+/* --- Floating messages ---------------------------------------------------- */
+.floating-message-container {
+	position: fixed;
+	left: 50%;
+	transform: translateX(-50%);
+	top: 0.618em;
+	padding: 1px;
+}
+
+@media (min-width: 769px) {
+	.floating-message-container {top: 3.228em;}
+}
+
+.floating-message-container.active-message { z-index: 1000; }
+
+.floating-message-container .floating-element {
+	opacity: 0;
+    margin: 0.618em 0 1.309em;
+}
+
+.floating-message-container .floating-element .message-helper {
+    margin: 0;
+	overflow: visible;
+}
+
+.floating-message-container .close-message {
+	position: absolute;
+	z-index: 1;
+	top: -13px;
+	right: -12px;
+	height: 1.482em;
+	width: 1.482em;
+	border-radius: 100em;
+	text-align: center;
+	padding-top: 0.1618em;
+}
+
+.floating-message-container .message-helper > a { cursor: pointer; }

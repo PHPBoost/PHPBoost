@@ -1,0 +1,44 @@
+/*
+ * Copy this file into your theme to customize it.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
+ *
+*/
+
+.auth-setter {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.form-element-auth { width: 100%; }
+
+.advanced-auth-container {
+	display: flex;
+    flex-direction: column;
+}
+
+.advanced-auth-container select {
+	overflow-x: auto;
+    width: 100%;
+}
+
+@media (min-width: 769px) {
+    .advanced-auth-container {
+    	display: flex;
+        flex-direction: row;
+    }
+
+    .advanced-auth-container select { width: auto; }
+
+    .advanced-auth-select {
+        min-width: 180px;
+        min-height: 106px;
+    }
+
+    .advanced-auth-input { margin-left: 0.309em; }
+}
+
+.advanced-auth-input-result {
+	margin: 0.1618em 0 0 0;
+	padding: 0.309em;
+}

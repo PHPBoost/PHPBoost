@@ -1,0 +1,73 @@
+/*
+ * Copy this file into your theme to customize it.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
+ *
+ * Contains css for datepicker input & calendar block
+*/
+
+.form-element-date-time { flex-direction: column; }
+
+@media (min-width: 1025px) {
+    .form-element-date-time { flex-direction: row; }
+}
+
+.form-field-date,
+.form-field-datetime {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.form-field-datetime .label-time {
+	max-width: 18%;
+	position: relative;
+}
+
+.label-time::after {
+    position: absolute;
+    bottom: calc(100% + 0.228em);
+    right: 0.228em;
+    content: attr(data-time);
+    padding: 0.228em;
+    line-height: 0.5;
+    font-size: 0.809em
+}
+
+.form-element .fa-calendar-alt { cursor: pointer; }
+
+/* --- Grouped input --- */
+.calendar-container > a {
+    height: 100%;
+    font-size: 1.309em
+}
+
+/* --- calendar block ------------------------------------------------------- */
+.calendar-block table.date-picker thead th { border-width: 0 0 1px; }
+
+.date-picker .square-cell {
+    position: relative;
+    width: calc(100% / 7);
+}
+
+.date-picker .square-cell .calendar-day {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-field .calendar-container {
+	display: inline-block;
+	position: relative;
+}
+
+.calendar-block .date-select-nav i { padding: 0 0.618em; }
+
+.calendar-block .date-picker thead tr th {
+	padding: 0.618em 0;
+	font-weight: bold;
+}

@@ -1,0 +1,234 @@
+/*
+ * Copy this file into your theme to customize it.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
+ *
+ * Layout
+*/
+
+html {
+	font-size: 100%;
+	font-size: 10px;
+}
+
+body {
+	position: relative;
+	height: auto;
+	min-height: 100%;
+	font-size: 1.456em;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 300;
+}
+
+.body-wrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	opacity: 0;
+	min-height: 100vh;
+}
+
+@media (min-width: 769px) {
+	body { font-size: 1.618em; }
+}
+
+#header,
+#global,
+#footer {
+	width: 100%;
+	padding: 0.809em;
+}
+
+@media (min-width: 769px)  {
+	#header { padding: 1.618em 0; }
+
+	#top-header,
+	#sub-header,
+	#global,
+	#footer {
+		margin: 0 auto;
+		padding: 1.618em 0;
+	}
+
+	#top-header,
+	#sub-header,
+	#global,
+	#footer { width: 768px; }
+}
+
+@media (min-width: 1025px) { #top-header, #sub-header, #global, #footer { width: 1024px; } }
+@media (min-width: 1367px) { #top-header, #sub-header, #global, #footer { width: 1280px; } }
+
+
+/* --- Header --------------------------------------------------------------- */
+#header { position: relative; }
+
+#top-header {
+	display: flex;
+	flex-direction: column;
+}
+
+#top-header-content { flex: 1 1 auto; }
+
+#site-infos {
+	display: flex;
+	flex: 1 1 auto;
+}
+
+#site-logo {
+	width: 60px;
+	height: 60px;
+	background-image: url(images/logo.svg);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	flex: 0 0 auto;
+}
+
+#site-name-container { margin: 0.228em 0 0 0.809em; }
+
+#site-name {
+	font-size: 1.618em;
+	display: block;
+	font-weight: 400;
+	text-decoration: none;
+}
+
+#site-slogan {
+	display: block;
+	padding: 0.3236em 0 0 0.1618em;
+	font-size: 0.8em;
+	letter-spacing: 0.1em;
+}
+
+@media (min-width: 769px) {
+	#top-header { flex-direction: row; }
+
+	#top-header-content { align-self: flex-end; }
+
+	#site-logo {
+		width: 90px;
+		height: 90px;
+	}
+
+	#site-name-container { margin: 0 0 0 1.618em; }
+
+	#site-name {
+		font-size: 3.236em;
+		line-height: 1.2em;
+	}
+
+	#site-slogan {
+		font-size: 1em;
+		padding: 0.1em 0 0 0.1618em;
+	}
+}
+
+
+/* --- Global --------------------------------------------------------------- */
+#global {
+	display: flex;
+	flex-direction: column;
+	flex: 1 1 auto;
+}
+
+#main {
+	width: 100%;
+	order : 1;
+}
+
+#menu-left,
+#menu-right { width: 100%; }
+#menu-left  { order : 2; }
+#menu-right { order : 3; }
+
+@media (min-width: 769px) {
+	#global { flex-direction: row; }
+
+	#menu-left,
+	#menu-right { width: calc(100% / 13 * 3.5); }
+
+	#menu-left  {
+		margin-right: 1.618em;
+		order : 1;
+	}
+
+	#menu-right {
+		margin-left: 1.618em;
+		order : 3;
+	}
+
+	#menu-left.narrow-menu-left,
+	#menu-right.narrow-menu-right { width: calc(100% / 13 * 2.5); }
+	#menu-left.narrow-menu-left   { margin-right: 0.809em; }
+	#menu-right.narrow-menu-right { margin-left: 0.809em; }
+
+	#main {
+		padding: 0 0 1.618em;
+		order : 2;
+		flex: 1 0 auto;
+	}
+
+	#main.main-with-left,
+	#main.main-with-right,
+	#main.main-with-left.main-with-right { flex: 1 0 auto; }
+
+	#main.main-with-left,
+	#main.main-with-right { width: calc(100% - ((100% / 13 * 5))); }
+
+	#main.main-with-left.main-with-right { width: calc(100% - ((100% / 13 * 8))); }
+}
+
+section {
+	position: relative;
+	margin: 0 auto;
+	width: 100%;
+	padding: 0 0 0.809em;
+}
+
+@media (min-width: 769px) {
+	section { margin: 0.809em auto; }
+}
+
+/* --- Up and under main content --- */
+#top-content { margin: 0 0 1.618em 0; }
+
+#bottom-content { margin: 1.618em 0 0; }
+
+/* --- Footer --------------------------------------------------------------- */
+#top-footer { padding: 0.809em; }
+
+#footer {
+	clear: both;
+	border-width: 4px 0 0 0;
+	border-style: solid;
+	border-color: transparent;
+}
+
+.footer-content {
+	margin: 0 auto 0 auto;
+	padding: 0.809em;
+}
+
+.footer-infos {
+	margin: auto;
+	padding: 0.809em;
+	min-height: 40px;
+	border-width: 1px 0 0 0;
+	border-style: solid;
+	border-color: transparent;
+	text-align: center;
+}
+
+.footer-infos span {
+	font-size: 0.8em;
+	display: block;
+}
+
+.footer-infos span.footer-infos-separator { display: none; }
+
+@media (min-width: 769px) {
+	.footer-infos span,
+	.footer-infos span.footer-infos-separator { display: inline-block; }
+
+	.footer-infos { padding: 0.618em 0 0; }
+}

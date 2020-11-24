@@ -1,0 +1,178 @@
+/*
+ * Copy this file into your theme to customize it.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
+ *
+ * Common styles for form elements
+*/
+
+/* --- Form elements --- */
+.form-element {
+	margin: 0.618em 0 0;
+	padding: 0.618em;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+}
+
+.form-element.form-element-textarea { flex-direction: column; }
+
+.fieldset-description { margin: 0 1em 0.618em 1em; }
+
+@media (min-width: 769px) {
+	.form-element { flex-direction: row; }
+
+	.fieldset-description { margin: 0 1.618em 1.482em 1.618em; }
+}
+
+.form-element [id$="user_avatar"] img { max-width: 200px; }
+
+.form-element > label { padding: 0 0.618em 0.618em 0; }
+
+.subtitle-label { font-size: 1.456em; }
+
+.field-description {
+	display: block;
+	font-size: 0.809em;
+	font-style: italic;
+	font-weight: 300;
+}
+
+.form-field {
+	position: relative;
+	width: 100%;
+	align-self: flex-start;
+}
+
+.form-field-free-large {
+	width: 100%;
+	max-width: none;
+}
+
+.form-field-action-link { text-align: center; }
+
+.form-element > label {
+	display: inline-block;
+	width: 100%;
+	text-align: left;
+}
+
+@media (min-width: 1025px) {
+	.form-element > label { width: 40%; }
+
+	.form-field { width: 60%; }
+
+	.form-field-textarea { width: 100%; }
+}
+
+.form-spacer { width: 100%; }
+
+/* --- Textarea --- */
+.form-field-textarea {
+	position: relative;
+	display: inline;
+	width: 100%;
+}
+
+.form-element-textarea .form-field-textarea { display: block; }
+
+.form-element-preview, .form-element-reset {
+	margin: 0.309em auto 0 auto;
+	text-align: center;
+	display: inline;
+}
+
+@media (min-width: 1025px) {
+	.form-element-textarea > label { width: 100%; }
+}
+
+/* --- Auto-completion --- */
+.autocomplete-suggestion {
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+	overflow: auto;
+}
+
+.autocomplete-suggestion strong { font-weight: normal; }
+
+.autocomplete-suggestion {
+	padding: 0.1618em 0.309em;
+	white-space: nowrap;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+.autocomplete-no-suggestion { text-align: center; }
+
+/* --- AJAX Preview --- */
+.xmlhttprequest-preview {
+	overflow: auto;
+	height: auto;
+	margin: 0.228em 0;
+}
+
+.xmlhttprequest-preview img { max-width: 600px; }
+
+/* --- Input sizes --- */
+.field-smaller 	{ width: 29px;  }
+.field-small   	{ width: 77px;  }
+.field-large   	{ width: 200px; }
+.field-xlarge 	{ width: 250px; }
+
+/* --- Hide Chrome password generator --- */
+.cip-icon-key-small { display: none !important; }
+
+/* --- Checkbox - radio --- */
+.inline-radio .radio,
+.inline-radio .form-field-radio,
+.inline-checkbox .checkbox,
+.inline-checkbox .form-field-checkbox {
+   display: inline-block;
+ 	margin: 0 0.456em 0 0;
+}
+
+label[for="delete-all-checkbox"] { position: relative; }
+label[for="delete-all-checkbox"] span {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+/* --- Fieldset --- */
+.vertical-fieldset,
+.horizontal-fieldset { margin: 1.309em 0; }
+
+.vertical-fieldset .form-element,
+.horizontal-fieldset .form-element { margin: 0 0.309em 0 0.309em; }
+
+.horizontal-fieldset .form-element label { display: inline; }
+
+.horizontal-fieldset .form-field {
+	display: block;
+	width: 100%;
+}
+
+.vertical-fieldset .form-element label,
+.horizontal-fieldset .form-element label {
+	width: auto;
+	vertical-align: middle;
+	font-weight: bold;
+}
+
+/* --- Fake fieldset / legend --- */
+.fieldset-content {
+	margin: auto;
+	margin-top: 1.309em;
+}
+
+@media (max-width: 768px) {
+	.fieldset-content { margin-top: 0.618em; }
+}
+
+/* --- Thumbnail field --- */
+.form-field-thumbnail-choice .grouped-inputs,
+.form-field-thumbnail-choice + .form-field-thumbnail-preview { margin: 1em 0; }
+
+.form-field-thumbnail-choice + .form-field-thumbnail-preview .form-field-preview { margin-top: 1em; }
