@@ -5,21 +5,21 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 18
+ * @version     PHPBoost 6.0 - last update: 2020 11 24
  * @since       PHPBoost 6.0 - 2020 01 23
  * @contributor xela <xela@phpboost.com>
 */
 
 class RichItem extends Item
 {
-	const THUMBNAIL_URL = '/templates/default/images/default_item_thumbnail.png';
-	
+	const THUMBNAIL_URL = '/templates/@default/images/default_item_thumbnail.png';
+
 	protected function set_kernel_additional_attributes_list()
 	{
 		$this->add_additional_attribute('views_number', array('type' => 'integer', 'length' => 11, 'default' => 0));
 		$this->add_additional_attribute('summary', array('type' => 'text', 'length' => 65000, 'fulltext' => true));
 		$this->add_additional_attribute('author_custom_name', array('type' =>  'string', 'length' => 255, 'default' => "''"));
-		
+
 		$this->add_additional_attribute('thumbnail', array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''", 'attribute_options_field_parameters' => array(
 			'field_class' => 'FormFieldThumbnail',
 			'label' => LangLoader::get_message('form.picture', 'common'),
@@ -58,7 +58,7 @@ class RichItem extends Item
 	public function get_real_summary($parsed_content = '')
 	{
 		$summary = $this->get_additional_property('summary');
-		
+
 		if (!empty($summary))
 		{
 			return FormatingHelper::second_parse($summary);
@@ -119,19 +119,19 @@ class RichItem extends Item
 	{
 		$content = $parsed_content ? $parsed_content : FormatingHelper::second_parse($this->content);
 		$summary = $this->get_real_summary($content);
-		
+
 		return array(
 			// Conditions
 			'C_HAS_THUMBNAIL'      => $this->has_thumbnail(),
 			'C_AUTHOR_CUSTOM_NAME' => $this->is_author_custom_name_enabled(),
 			'C_READ_MORE'          => !$this->get_additional_property('summary') && TextHelper::strlen($content) > self::$module->get_configuration()->get_configuration_parameters()->get_auto_cut_characters_number() && $summary != @strip_tags($content, '<br><br/>'),
 			'C_SEVERAL_VIEWS'      => $this->get_views_number() > 1,
-			
+
 			// Item parameters
 			'SUMMARY'              => $summary,
 			'AUTHOR_CUSTOM_NAME'   => $this->get_author_custom_name(),
 			'VIEWS_NUMBER'         => $this->get_views_number(),
-			
+
 			// Links
 			'U_THUMBNAIL'          => $this->get_thumbnail()->rel()
 		);
