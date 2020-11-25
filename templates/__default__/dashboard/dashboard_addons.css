@@ -5,13 +5,9 @@
  * Contains css for addons menu in modules/themes/langs administration page
 */
 
-.addon {
-    position: relative;
-}
+.addon { position: relative; }
 
-.disabled-addon {
-	opacity: 0.5
-}
+.disabled-addon { opacity: 0.5 }
 
 .addon-menu-container {
 	display: inline-block;
@@ -42,9 +38,7 @@
 	font-weight: 900;
 }
 
-.addon-with-menu .opened.addon-menu-title::after {
-	content: '\f0d8';
-}
+.addon-with-menu .opened.addon-menu-title::after { content: '\f0d8'; }
 
 .multiple-select-menu-container .addon-menu-title::after {
 	top: 1em;
@@ -52,17 +46,11 @@
 	content: '\f0d8';
 }
 
-.multiple-select-menu-container .opened.addon-menu-title::after {
-	content: '\f0d7';
-}
+.multiple-select-menu-container .opened.addon-menu-title::after { content: '\f0d7'; }
 
-.addon-menu-title:hover {
-	text-decoration: none;
-}
+.addon-menu-title:hover { text-decoration: none; }
 
-.not-compatible span.addon-menu-title {
-	cursor: not-allowed;
-}
+.not-compatible span.addon-menu-title { cursor: not-allowed; }
 
 .addon-menu-content {
 	position: absolute;
@@ -82,9 +70,7 @@
 }
 
 @media (min-width: 769px) {
-	.multiple-select-menu-container .addon-menu-content {
-		width: 180px;
-	}
+	.multiple-select-menu-container .addon-menu-content { width: 180px; }
 }
 
 .opened + .addon-menu-content {
@@ -93,9 +79,7 @@
 	transition: 0.1s;
 }
 
-.multiple-select-menu-container .opened + .addon-menu-content {
-	right: 0;
-}
+.multiple-select-menu-container .opened + .addon-menu-content { right: 0; }
 
 .addon-menu-item > * {
 	display: block;
@@ -119,9 +103,7 @@
 	font-size: 1.309em;
 }
 
-.addon-auth.default-addon {
-	cursor: not-allowed;
-}
+.addon-auth.default-addon { cursor: not-allowed; }
 
 .addon-auth-content {
 	position: absolute;
@@ -141,14 +123,10 @@
 }
 
 @media (min-width: 769px) {
-	.theme-element .opened > .addon-auth-content {
-		bottom: 0.309em;
-	}
+	.theme-element .opened > .addon-auth-content { bottom: 0.309em; }
 }
 
-.addon-auth-content select {
-	max-height: 185px;
-}
+.addon-auth-content select { max-height: 185px; }
 
 .advanced-auth-text { text-align: left; }
 
@@ -175,7 +153,7 @@
 	right: 2.618em;
 }
 
-.multiple-select-button { padding: 0.309em 0.809em; }
+.multiple-select-button        { padding: 0.309em 0.809em; }
 .multiple-select-button button { padding: 0; }
 
 .multiple-select-menu {
@@ -183,9 +161,7 @@
 	padding: 0.809em 2.809em 1em 0.809em;
 }
 
-.multiple-select-menu:hover {
-	text-decoration: none;
-}
+.multiple-select-menu:hover { text-decoration: none; }
 
 .multiple-select-menu-container button.select-all-button {
 	display: inline-block;

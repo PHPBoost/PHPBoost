@@ -5,31 +5,23 @@
  * Specific dashboard styles for form elements
 */
 
-/* --- Buttons -------------------------------------------------------------- */
-
+/* --- Buttons --- */
 button[id*="menu_element"] {
 	width: 100%;
 	margin-bottom: 0.618em;
 }
 
 @media (min-width: 769px) {
-	button[id*="menu_element"] {
-		width: auto;
-	}
+	button[id*="menu_element"] { width: auto; }
 }
 
-/* --- Fieldset ------------------------------------------------------------- */
-
+/* --- Fieldset --- */
 #AdminLoggedErrorsControllerList_fbuttons,
-#AdminErrorsController404List_fbuttons{
-	padding: 0 0.309em;
-}
+#AdminErrorsController404List_fbuttons{ padding: 0 0.309em; }
 
 @media (min-width: 769px) {
 	#AdminErrorsController404List_fbuttons,
-	#AdminLoggedErrorsControllerList_fbuttons {
-		padding: 0 1.309em;
-	}
+	#AdminLoggedErrorsControllerList_fbuttons { padding: 0 1.309em; }
 }
 
 fieldset[id*="advises"] .form-element {
@@ -39,12 +31,10 @@ fieldset[id*="advises"] .form-element {
 }
 
 @media (min-width: 1367px) {
-	fieldset[id*="advises"] .form-element {
-		width: calc(100% / 2);
-	}
+	fieldset[id*="advises"] .form-element { width: calc(100% / 2); }
 }
 
-/* --- Inputs --------------------------------------------------------------- */
+/* --- Inputs --- */
 [type="text"],
 [type="email"],
 [type="url"],
@@ -58,31 +48,25 @@ select {
 	width: 100%;
 	padding: 0.618em;
 }
+
 [type="color"] { width: 100%; }
 
 @media (min-width:769px){
 	p[id*="filter"] select,
-	p[id*="filter"] input{
-		width: 200px;
-	}
+	p[id*="filter"] input{ width: 200px; }
 }
 
-/* --- possible values ------------------------------------------------------ */
+/* --- possible values --- */
 @media (min-width: 769px) {
-
 	[id*="_possible_values_"] .form-field-radio [type="radio"]:not(:checked) + label::before,
-	[id*="_possible_values_"] .form-field-radio [type="radio"]:checked + label::before {
-	    top: -0.809em;
-	}
+	[id*="_possible_values_"] .form-field-radio [type="radio"]:checked + label::before { top: -0.809em; }
 
 	[id*="_possible_values_"] .form-field-radio [type="radio"]:not(:checked) + label::after,
-	[id*="_possible_values_"] .form-field-radio [type="radio"]:checked + label::after {
-	    top: -0.618em;
-	}
+	[id*="_possible_values_"] .form-field-radio [type="radio"]:checked + label::after { top: -0.618em; }
 
 }
 
-/* --- Form elements -------------------------------------------------------- */
+/* --- Form elements --- */
 .fieldset-content .fieldset-inset,
 .form-element {
     display: flex;
@@ -93,9 +77,7 @@ select {
 
 .no-flex .fieldset-inset { display: inline-block; }
 
-.form-element.form-element-textarea {
-	width: 100%;
-}
+.form-element.form-element-textarea { width: 100%; }
 
 .form-element {
     flex-direction: column;
@@ -106,9 +88,7 @@ select {
 	border-color: transparent;
 }
 
-.form-element.top-field {
-	justify-content: flex-start;
-}
+.form-element.top-field { justify-content: flex-start; }
 
 .form-element.full-field,
 .form-element.half-field,
@@ -116,17 +96,18 @@ select {
 
 @media (min-width: 769px) {
 	.fieldset-content .modal .content-panel.fieldset-inset { width: 80%; }
+
 	.form-element { width: calc(100% / 2); }
-	.form-element.form-subtitle {
-		padding: 1.618em 1.618em 0.618em 0;
-	}
+
+	.form-element.form-subtitle { padding: 1.618em 1.618em 0.618em 0; }
+
 	.form-element.half-field,
 	.form-element.third-field { width: calc(100% / 2); }
 }
 
 @media (min-width: 1025px) {
-	.form-element.half-field    { width: calc(100% / 2); }
-	.form-element.third-field   { width: calc(100% / 3); }
+	.form-element.half-field  { width: calc(100% / 2); }
+	.form-element.third-field { width: calc(100% / 3); }
 }
 
 @media (min-width: 1281px) {
@@ -143,18 +124,14 @@ select {
 .form-field,
 .form-field-map,
 .form-element-auth .form-field,
-.form-field-textarea {
-	width: 100%;
-}
+.form-field-textarea { width: 100%; }
 
 .form-field-free-large {
 	width: 100%;
 	max-width: none;
 }
 
-.form-field-action-link {
-	text-align: center;
-}
+.form-field-action-link { text-align: center; }
 
 .form-field-action-link ul {
 	margin: 0.309em;
@@ -166,16 +143,12 @@ select {
 	margin: 2px 0.618em;
 }
 
-.form-field-action-link ul li a {
-	text-decoration: none;
-}
+.form-field-action-link ul li a { text-decoration: none; }
 
 /* --- Textarea --- */
 .bbcode-bar { width: 100% !important; }
 
-.form-element-textarea .form-field-textarea {
-	display: block;
-}
+.form-element-textarea .form-field-textarea { display: block; }
 
 .form-element-preview, .form-element-reset {
 	margin-top: 0.309em;
@@ -185,12 +158,8 @@ select {
 
 /* --- Authorizations --- */
 .auth-setter,
-.form-element-auth {
-	width: 100%;
-}
+.form-element-auth { width: 100%; }
 
 @media (min-width: 769px) {
-	.form-element-auth {
-		width: 50%;
-	}
+	.form-element-auth { width: 50%; }
 }

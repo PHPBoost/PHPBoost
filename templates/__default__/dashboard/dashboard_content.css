@@ -5,10 +5,8 @@
  * Dashboard specifics
 */
 
-/* --- Home page ------------------------------------------------------------ */
-.welcome-desc h2 {
-	padding: 0 0 0.382em;
-}
+/* --- Home page --- */
+.welcome-desc h2 { padding: 0 0 0.382em; }
 
 .index-logo {
 	float: right;
@@ -21,34 +19,21 @@
 }
 
 /* --- System report --- */
+.system-report { font-family: monospace; }
 
-.system-report {
-	font-family: monospace;
-}
-
-/* --- statistiques --------------------------------------------------------- */
+/* --- statistiques --- */
 @media (max-width: 768px) {
-	#menustats .js-menu-button {
-		display: block;
-	}
+	#menustats .js-menu-button { display: block; }
 }
 
-.bargraph img {
-	width: 100%;
-}
+.bargraph img { width: 100%; }
 
 @media (min-width: 641px) {
-	.bargraph img {
-		width:auto;
-	}
+	.bargraph img { width:auto; }
 }
 
-.fieldset-img {
-	width: 100%;
-}
+.fieldset-img { width: 100%; }
 
 @media (min-width: 641px) {
-	.fieldset-img {
-		width: auto;
-	}
+	.fieldset-img { width: auto; }
 }
