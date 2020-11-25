@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 10 26
+ * @version     PHPBoost 6.0 - last update: 2020 11 25
  * @since       PHPBoost 5.2 - 2019 10 26
 */
 
@@ -224,54 +224,74 @@ class NginxFileCache implements CacheData
 
 	private function force_redirection_if_available()
 	{
-		/* $domain = AppContext::get_request()->get_domain_name();
+		$domain = AppContext::get_request()->get_domain_name();
 		
 		if (!$this->server_environment_config->is_redirection_https_enabled() && $this->server_environment_config->is_redirection_www_enabled() && $this->server_environment_config->is_redirection_www_mode_with_www())
 		{
 			$this->add_section('Site redirection to www');
-			$this->add_line('RewriteCond %{HTTP_HOST} !^www\. [NC]');
-			$this->add_line('RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]');
+			$this->add_line('if ($host !~ "^www\.") {');
+			$this->add_line('	rewrite ^(.*)$ http://www.$http_host/$1 permanent;');
+			$this->add_line('}');
 		}
 		
 		if (!$this->server_environment_config->is_redirection_https_enabled() && $this->server_environment_config->is_redirection_www_enabled() && !$this->server_environment_config->is_redirection_www_mode_with_www())
 		{
 			$this->add_section('Site redirection to NON-www');
-			$this->add_line('RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]');
-			$this->add_line('RewriteRule ^(.*)$ http://%1/$1 [R=301,L]');
+			$this->add_line('if ($host ~ "^www\.") {');
+			$this->add_line('	rewrite ^www\.(.*)$ http://%1/$1 permanent;');
+			$this->add_line('}');
 		}
 		
 		if ($this->server_environment_config->is_redirection_https_enabled() && $this->server_environment_config->is_redirection_www_enabled() && $this->server_environment_config->is_redirection_www_mode_with_www())
 		{
 			$this->add_section('Force to use HTTPS AND ...');
-			$this->add_line('RewriteCond %{HTTPS} !=on'); //check if HTTPS not "on"
-			$this->add_line('RewriteCond %{SERVER_PORT} 80 [OR]'); // OR if the server port is 80
-			$this->add_line('RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]'); // OR if the website is behind a load balancer
-			$this->add_line('RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]');
+			$this->add_line('if ($https != "on") {');
+			$this->add_line('	rewrite .* https://$http_host$request_uri permanent;');
+			$this->add_line('}');
+			$this->add_line('if ($server_port = 80) {');
+			$this->add_line('	rewrite .* https://$http_host$request_uri permanent;');
+			$this->add_line('}');
+			$this->add_line('if ($http_x_forwarded_proto != https) {');
+			$this->add_line('	rewrite .* https://$http_host$request_uri permanent;');
+			$this->add_line('}');
 			$this->add_section('... WWW');
-			$this->add_line('RewriteCond %{HTTP_HOST} !^www\. [NC]');
-			$this->add_line('RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]');
+			$this->add_line('if ($host !~ "^www\.") {');
+			$this->add_line('	rewrite ^(.*)$ https://www.$http_host/$1 permanent;');
+			$this->add_line('}');
 		}
 		
 		if ($this->server_environment_config->is_redirection_https_enabled() && $this->server_environment_config->is_redirection_www_enabled() && !$this->server_environment_config->is_redirection_www_mode_with_www())
 		{
 			$this->add_section('Force to use HTTPS AND ...');
-			$this->add_line('RewriteCond %{HTTPS} !=on'); //check if HTTPS not "on"
-			$this->add_line('RewriteCond %{SERVER_PORT} 80 [OR]'); // OR if the server port is 80
-			$this->add_line('RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]'); // OR if the website is behind a load balancer
-			$this->add_line('RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]');
+			$this->add_line('if ($https != "on") {');
+			$this->add_line('	rewrite .* https://$http_host$request_uri permanent;');
+			$this->add_line('}');
+			$this->add_line('if ($server_port = 80) {');
+			$this->add_line('	rewrite .* https://$http_host$request_uri permanent;');
+			$this->add_line('}');
+			$this->add_line('if ($http_x_forwarded_proto != https) {');
+			$this->add_line('	rewrite .* https://$http_host$request_uri permanent;');
+			$this->add_line('}');
 			$this->add_section('... NON-WWW');
-			$this->add_line('RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]');
-			$this->add_line('RewriteRule ^(.*)$ https://%1/$1 [R=301,L]');
+			$this->add_line('if ($host ~ "^www\.") {');
+			$this->add_line('	rewrite ^www\.(.*)$ http://%1/$1 permanent;');
+			$this->add_line('}');
 		}
 		
 		if ($this->server_environment_config->is_redirection_https_enabled() && !$this->server_environment_config->is_redirection_www_enabled())
 		{
 			$this->add_section('Force to use HTTPS WITH SUBDOMAIN');
-			$this->add_line('RewriteCond %{HTTPS} !=on'); //check if HTTPS not "on"
-			$this->add_line('RewriteCond %{SERVER_PORT} 80 [OR]'); // OR if the server port is 80
-			$this->add_line('RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]'); // OR if the website is behind a load balancer
-			$this->add_line('RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]');
-		} */
+			$this->add_section('Force to use HTTPS AND ...');
+			$this->add_line('if ($https != "on") {');
+			$this->add_line('	rewrite .* https://$http_host$request_uri permanent;');
+			$this->add_line('}');
+			$this->add_line('if ($server_port = 80) {');
+			$this->add_line('	rewrite .* https://$http_host$request_uri permanent;');
+			$this->add_line('}');
+			$this->add_line('if ($http_x_forwarded_proto != https) {');
+			$this->add_line('	rewrite .* https://$http_host$request_uri permanent;');
+			$this->add_line('}');
+		}
 	}
 
 	private function add_bandwidth_protection()
@@ -442,16 +462,19 @@ class NginxFileCache implements CacheData
 
 	private static function update_nginx_file()
 	{
-		$file = new File(PATH_TO_ROOT . '/nginx.conf');
+		if (!preg_match('/apache/i', $_SERVER["SERVER_SOFTWARE"]))
+		{
+			$file = new File(PATH_TO_ROOT . '/nginx.conf');
 
-		try
-		{
-			$file->write(self::get_file_content());
-			$file->close();
-		}
-		catch(IOException $ex)
-		{
-			ErrorHandler::add_error_in_log('Couldn\'t write the nginx.conf file. Please check the site root read authorizations.', '');
+			try
+			{
+				$file->write(self::get_file_content());
+				$file->close();
+			}
+			catch(IOException $ex)
+			{
+				ErrorHandler::add_error_in_log('Couldn\'t write the nginx.conf file. Please check the site root read authorizations.', '');
+			}
 		}
 	}
 
