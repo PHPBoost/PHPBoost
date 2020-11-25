@@ -47,9 +47,11 @@
 						</span>
 					# ENDIF #
 					# IF C_ENABLED_CATEGORY #
+						# IF NOT C_ROOT_CATEGORY #
 						<span class="pinned">
 							<a itemprop="about" href="{U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {CATEGORY_NAME}</a>
 						</span>
+						# ENDIF #
 					# ENDIF #
 					# IF C_ENABLED_VIEWS #
 						<span class="pinned" role="contentinfo" aria-label="{VIEWS_NUMBER} # IF C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #">
@@ -155,10 +157,12 @@
 								</li>
 							# ENDIF #
 							# IF C_ENABLED_CATEGORY #
+								# IF NOT C_ROOT_CATEGORY #
 								<li class="li-stretch">
 									<span class="text-strong">${TextHelper::ucfirst(@category)} : </span>
 									<span><a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a></span>
 								</li>
+								# ENDIF #
 							# ENDIF #
 							# IF C_ENABLED_COMMENTS #
 								<li>
