@@ -5,6 +5,8 @@
 
 #module-connect  #login { cursor: help; }
 
+#module-connect .social-connect { display: inline-block; }
+
 #module-connect .js-menu-button {
 	display: block;
 	padding: 0.309em 0.809em;
