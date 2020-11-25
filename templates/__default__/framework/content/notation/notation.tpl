@@ -20,7 +20,7 @@
 			var NOTATION_LANG_NOTES = ${escapejs(L_NOTES)};
 			var NOTATION_USER_CONNECTED = ${escapejs(IS_USER_CONNECTED)};
 		</script>
-		<script src="{PATH_TO_ROOT}/templates/@default/plugins/notation.js"></script>
+		<script src="{PATH_TO_ROOT}/templates/__default__/plugins/notation.js"></script>
 	# ENDIF #
 
 	<script>

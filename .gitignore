@@ -44,7 +44,7 @@ templates/*.*
 templates/*
 # Except following templates :
 !templates/base
-!templates/@default
+!templates/__default__
 
 # Non official languages
 !lang

@@ -28,20 +28,20 @@
 <script src="{PATH_TO_ROOT}/kernel/lib/js/jquery/jquery.js"></script>
 <script src="{PATH_TO_ROOT}/kernel/lib/js/prism/prism.js"></script>
 
-<script src="{PATH_TO_ROOT}/templates/@default/plugins/@global.js"></script>
+<script src="{PATH_TO_ROOT}/templates/__default__/plugins/@global.js"></script>
 
-<script src="{PATH_TO_ROOT}/templates/@default/plugins/autocomplete.js"></script>
-<script src="{PATH_TO_ROOT}/templates/@default/plugins/autobox.js"></script>
-<script src="{PATH_TO_ROOT}/templates/@default/plugins/basictable.js"></script>
-<script src="{PATH_TO_ROOT}/templates/@default/plugins/dndfiles.js"></script>
-<script src="{PATH_TO_ROOT}/templates/@default/plugins/lightcase.js"></script>
-<script src="{PATH_TO_ROOT}/templates/@default/plugins/linedtextarea.js"></script>
-<script src="{PATH_TO_ROOT}/templates/@default/plugins/menumaker.js"></script>
-<script src="{PATH_TO_ROOT}/templates/@default/plugins/multitabs.js"></script>
-<script src="{PATH_TO_ROOT}/templates/@default/plugins/owl.carousel.js"></script>
-<script src="{PATH_TO_ROOT}/templates/@default/plugins/pushmenu.js"></script>
-<script src="{PATH_TO_ROOT}/templates/@default/plugins/selectimg.js"></script>
-<script src="{PATH_TO_ROOT}/templates/@default/plugins/selectimg.multi.js"></script>
-<script src="{PATH_TO_ROOT}/templates/@default/plugins/sortable.js"></script>
-<script src="{PATH_TO_ROOT}/templates/@default/plugins/tooltip.js"></script>
-<script src="{PATH_TO_ROOT}/templates/@default/plugins/wizard.js"></script>
+<script src="{PATH_TO_ROOT}/templates/__default__/plugins/autocomplete.js"></script>
+<script src="{PATH_TO_ROOT}/templates/__default__/plugins/autobox.js"></script>
+<script src="{PATH_TO_ROOT}/templates/__default__/plugins/basictable.js"></script>
+<script src="{PATH_TO_ROOT}/templates/__default__/plugins/dndfiles.js"></script>
+<script src="{PATH_TO_ROOT}/templates/__default__/plugins/lightcase.js"></script>
+<script src="{PATH_TO_ROOT}/templates/__default__/plugins/linedtextarea.js"></script>
+<script src="{PATH_TO_ROOT}/templates/__default__/plugins/menumaker.js"></script>
+<script src="{PATH_TO_ROOT}/templates/__default__/plugins/multitabs.js"></script>
+<script src="{PATH_TO_ROOT}/templates/__default__/plugins/owl.carousel.js"></script>
+<script src="{PATH_TO_ROOT}/templates/__default__/plugins/pushmenu.js"></script>
+<script src="{PATH_TO_ROOT}/templates/__default__/plugins/selectimg.js"></script>
+<script src="{PATH_TO_ROOT}/templates/__default__/plugins/selectimg.multi.js"></script>
+<script src="{PATH_TO_ROOT}/templates/__default__/plugins/sortable.js"></script>
+<script src="{PATH_TO_ROOT}/templates/__default__/plugins/tooltip.js"></script>
+<script src="{PATH_TO_ROOT}/templates/__default__/plugins/wizard.js"></script>

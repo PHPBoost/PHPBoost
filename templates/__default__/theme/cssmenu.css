@@ -162,7 +162,7 @@
 */
 
 /* --- Small screens  ------------------------------------------------------- */
-/* change the viewport limit in /templates/@default/framework/menus/links.tpl on line 38 */
+/* change the viewport limit in /templates/__default__/framework/menus/links.tpl on line 38 */
 
 .small-screen,
 .small-screen ul,

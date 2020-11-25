@@ -6,9 +6,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 01
+ * @version     PHPBoost 6.0 - last update: 2020 11 25
  * @since       PHPBoost 3.0 - 2009 10 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UserAccountsConfig extends AbstractConfigData
@@ -85,8 +86,8 @@ class UserAccountsConfig extends AbstractConfigData
 	const MAIL_USER_ACCOUNTS_VALIDATION = '2';
 	const ADMINISTRATOR_USER_ACCOUNTS_VALIDATION = '3';
 
-	const NO_AVATAR_URL = '/templates/default/images/no_avatar.png';
-	
+	const NO_AVATAR_URL = '/templates/__default__/images/no_avatar.png';
+
 	/**
 	 * Tells how the member accounts are activated
 	 * @return int 0 if there is no activation, 1 if the member activates its account thanks to the
@@ -264,7 +265,7 @@ class UserAccountsConfig extends AbstractConfigData
 	{
 		$this->set_property(self::DEFAULT_AVATAR_URL_PROPERTY, $url);
 	}
-	
+
 	/**
 	 * Tells whether the default avatar is set or not
 	 * @return bool true if it is, false otherwise
@@ -273,7 +274,7 @@ class UserAccountsConfig extends AbstractConfigData
 	{
 		return !empty($this->get_default_avatar());
 	}
-	
+
 	/**
 	 * Returns the default avatar proper URL adapted to user template if exists
 	 * @return string The URL

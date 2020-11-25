@@ -1,6 +1,6 @@
 # IF C_FILTERS #
 	<div id="filters-{TABLE_ID}" class="html-table-filters">
-		<script src="{PATH_TO_ROOT}/templates/@default/plugins/UrlSerializedParameterEncoder.js"></script>
+		<script src="{PATH_TO_ROOT}/templates/__default__/plugins/UrlSerializedParameterEncoder.js"></script>
 		# INCLUDE filters #
 	</div>
 # ENDIF #
