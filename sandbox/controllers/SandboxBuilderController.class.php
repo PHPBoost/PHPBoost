@@ -435,13 +435,13 @@ class SandboxBuilderController extends ModuleController
 			$buttons->add_element(new FormButtonButton('.warning.bgc-full', '', 'bgc-full-warning-button', 'bgc-full warning'));
 
 			$buttons->add_field(new FormFieldSpacer('alternate_buttons', $this->lang['builder.button.link']));
-			$buttons->add_element(new FormButtonLink($this->lang['builder.button.picture'], 'https://www.phpboost.com', Url::to_rel('/templates/__default__/theme/images/logo.png'), '', ''));
+			$buttons->add_element(new FormButtonLink($this->lang['builder.button.picture'], 'https://www.phpboost.com', Url::to_rel('/templates/__default__/theme/images/logo_mini.png'), '', ''));
 			$buttons->add_element(new FormButtonLink($this->lang['builder.button.confirm'], 'https://www.phpboost.com', '', 'bgc-full question button', $this->lang['builder.button.confirm.alert']));
 			$buttons->add_element(new FormButtonLinkCssImg('Button', 'https://www.phpboost.com','fa fa-share', $this->lang['builder.button.icon']));
 
 			$buttons->add_field(new FormFieldSpacer('alternate_submit_buttons', $this->lang['builder.button.alternate.send']));
 			$buttons->add_element(new FormButtonSubmitCssImg($this->lang['builder.button.icon'], 'fa fa-check', 'Submit', ''));
-			$buttons->add_element(new FormButtonSubmitImg($this->lang['builder.button.picture'], Url::to_rel('/templates/__default__/theme/images/logo.png'), ''));
+			$buttons->add_element(new FormButtonSubmitImg($this->lang['builder.button.picture'], Url::to_rel('/templates/__default__/theme/images/logo_mini.png'), ''));
 
 		// SUBMIT BUTTONS
 		$buttons_fieldset = new FormFieldsetSubmit('button_submit');
