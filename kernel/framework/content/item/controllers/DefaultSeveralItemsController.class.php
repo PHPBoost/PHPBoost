@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 10 23
+ * @version     PHPBoost 6.0 - last update: 2020 11 28
  * @since       PHPBoost 6.0 - 2020 01 22
 */
 
@@ -30,27 +30,27 @@ class DefaultSeveralItemsController extends AbstractItemController
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init($request);
+		$this->init();
 		$this->check_authorizations();
-		$this->build_view($request);
+		$this->build_view();
 
 		return $this->generate_response();
 	}
 
-	protected function init(HTTPRequestCustom $request)
+	protected function init()
 	{
-		$requested_sort_field = $request->get_getstring('field', '');
-		$requested_sort_mode = $request->get_getstring('sort', '');
+		$requested_sort_field = $this->request->get_getstring('field', '');
+		$requested_sort_mode = $this->request->get_getstring('sort', '');
 		
 		$this->sort_field = (in_array($requested_sort_field, array_keys(Item::get_sorting_fields_list())) ? $requested_sort_field : $this->config->get_items_default_sort_field());
 		$this->sort_mode = (in_array(TextHelper::strtoupper($requested_sort_mode), array(Item::ASC, Item::DESC)) ? $requested_sort_mode : $this->config->get_items_default_sort_mode());
-		$this->page = $request->get_getint('page', 1);
-		$this->subcategories_page = $request->get_getint('subcategories_page', 1);
+		$this->page = $this->request->get_getint('page', 1);
+		$this->subcategories_page = $this->request->get_getint('subcategories_page', 1);
 
 		$now = new Date();
 		$this->sql_parameters['timestamp_now'] = $now->get_timestamp();
 		
-		if (TextHelper::strstr($request->get_current_url(), '/tag/'))
+		if (TextHelper::strstr($this->request->get_current_url(), '/tag/'))
 		{
 			if (self::get_module()->get_configuration()->has_categories())
 			{
@@ -74,7 +74,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 			$this->pagination_url = ItemsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), self::$module_id, $this->sort_field, $this->sort_mode, '%d');
 			$this->url_without_sorting_parameters = ItemsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), self::$module_id);
 		}
-		else if (TextHelper::strstr($request->get_current_url(), '/my_items/'))
+		else if (TextHelper::strstr($this->request->get_current_url(), '/my_items/'))
 		{
 			if (self::get_module()->get_configuration()->has_categories())
 			{
@@ -99,7 +99,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 			
 			$this->view->put('C_MEMBER_ITEMS', true);
 		}
-		else if (TextHelper::strstr($request->get_current_url(), '/pending/'))
+		else if (TextHelper::strstr($this->request->get_current_url(), '/pending/'))
 		{
 			if (self::get_module()->get_configuration()->has_categories())
 			{
@@ -166,7 +166,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 	{
 		if ($this->category === null)
 		{
-			$id = AppContext::get_request()->get_getstring('id_category', Category::ROOT_CATEGORY);
+			$id = $this->request->get_getstring('id_category', Category::ROOT_CATEGORY);
 			try {
 				$this->category = CategoriesService::get_categories_manager(self::get_module()->get_id())->get_categories_cache()->get_category($id);
 			} catch (CategoryNotFoundException $e) {
@@ -181,7 +181,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 		if ($this->keyword === null)
 		{
 			try {
-				$this->keyword = KeywordsService::get_keywords_manager()->get_keyword('WHERE rewrited_name=:rewrited_name', array('rewrited_name' => AppContext::get_request()->get_getstring('tag', '')));
+				$this->keyword = KeywordsService::get_keywords_manager()->get_keyword('WHERE rewrited_name=:rewrited_name', array('rewrited_name' => $this->request->get_getstring('tag', '')));
 			} catch (RowNotFoundException $e) {
 				$this->display_unexisting_page();
 			}
@@ -189,7 +189,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 		return $this->keyword;
 	}
 
-	protected function build_view(HTTPRequestCustom $request)
+	protected function build_view()
 	{
 		$pagination = $this->get_pagination();
 		$sorting_fields_list = Item::get_sorting_fields_list();
@@ -202,7 +202,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 			'C_PAGINATION'    => $pagination->has_several_pages(),
 			'PAGINATION'      => $pagination->display(),
 			'CATEGORY_NAME'   => $this->keyword !== null ? $this->get_keyword()->get_name() : ($this->category !== null ? $this->get_category()->get_name() : ''),
-			'SORTING_FORM'    => $this->build_sorting_form($request)
+			'SORTING_FORM'    => $this->build_sorting_form()
 		));
 		
 		foreach ($items as $item)
@@ -211,7 +211,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 		}
 	}
 
-	protected function build_sorting_form(HTTPRequestCustom $request)
+	protected function build_sorting_form()
 	{
 		$form = new HTMLForm(self::$module_id . '_sorting_form', '', false);
 		$form->set_css_class('options');
@@ -226,7 +226,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 
 		$item_class_name = self::get_module()->get_configuration()->get_item_name();
 		$fields_list = $item_class_name::get_sorting_field_options();
-		if (TextHelper::strstr($request->get_current_url(), '/my_items/'))
+		if (TextHelper::strstr($this->request->get_current_url(), '/my_items/'))
 			unset($fields_list['author']);
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_field', '', $this->sort_field, $fields_list,
@@ -392,7 +392,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 	{
 		$object = new self($module_id);
 		$object->check_authorizations();
-		$object->init(AppContext::get_request());
+		$object->init();
 		$object->build_view();
 		return $object->view;
 	}

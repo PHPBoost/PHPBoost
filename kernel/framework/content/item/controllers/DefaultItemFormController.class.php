@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 18
+ * @version     PHPBoost 6.0 - last update: 2020 11 28
  * @since       PHPBoost 6.0 - 2020 05 16
  * @contributor xela <xela@phpboost.com>
 */
@@ -20,10 +20,6 @@ class DefaultItemFormController extends AbstractItemController
 	 * @var FormButtonSubmit
 	 */
 	protected $submit_button;
-	/**
-	 * @var HTTPRequestCustom
-	 */
-	protected $request;
 
 	protected $item;
 	protected $item_class;
@@ -31,7 +27,7 @@ class DefaultItemFormController extends AbstractItemController
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init($request);
+		$this->init();
 		$this->check_authorizations();
 		$this->build_form();
 
@@ -46,9 +42,8 @@ class DefaultItemFormController extends AbstractItemController
 		return $this->generate_response();
 	}
 
-	protected function init(HTTPRequestCustom $request)
+	protected function init()
 	{
-		$this->request = $request;
 		$this->common_lang = LangLoader::get('common');
 		$this->get_item();
 		$this->item_class = self::get_module()->get_configuration()->get_item_name();
@@ -58,7 +53,7 @@ class DefaultItemFormController extends AbstractItemController
 	{
 		if ($this->item === null)
 		{
-			$id = AppContext::get_request()->get_getint('id', 0);
+			$id = $this->request->get_getint('id', 0);
 			if (!empty($id))
 			{
 				try {
@@ -72,7 +67,7 @@ class DefaultItemFormController extends AbstractItemController
 				$item_class = self::get_module()->get_configuration()->get_item_name();
 				$this->is_new_item = true;
 				$this->item = new $item_class(self::$module_id);
-				$this->item->init_default_properties(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY));
+				$this->item->init_default_properties($this->request->get_getint('id_category', Category::ROOT_CATEGORY));
 			}
 		}
 		return $this->item;

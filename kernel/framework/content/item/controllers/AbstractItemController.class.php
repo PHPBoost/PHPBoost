@@ -5,12 +5,17 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 08 22
+ * @version     PHPBoost 6.0 - last update: 2020 11 28
  * @since       PHPBoost 6.0 - 2019 12 20
 */
 
 abstract class AbstractItemController extends ModuleController
 {
+	/**
+	 * @var HTTPRequestCustom
+	 */
+	protected $request;
+	
 	protected $config;
 	protected $lang;
 	protected $items_lang;
@@ -20,6 +25,7 @@ abstract class AbstractItemController extends ModuleController
 	public function __construct($module_id = '')
 	{
 		parent::__construct($module_id);
+		$this->request = AppContext::get_request();
 		$this->config = self::get_module()->get_configuration()->get_configuration_parameters();
 		$this->lang = array_merge(LangLoader::get('common'), (LangLoader::filename_exists('common', self::get_module()->get_id()) ? LangLoader::get('common', self::get_module()->get_id()) : array()));
 		$this->items_lang = ItemsService::get_items_lang(self::get_module()->get_id());

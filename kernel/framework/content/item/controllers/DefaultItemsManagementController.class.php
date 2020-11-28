@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 24
+ * @version     PHPBoost 6.0 - last update: 2020 11 28
  * @since       PHPBoost 6.0 - 2020 01 16
 */
 
@@ -21,7 +21,7 @@ class DefaultItemsManagementController extends AbstractItemController
 
 		$current_page = $this->build_table();
 
-		$this->execute_multiple_delete_if_needed($request);
+		$this->execute_multiple_delete_if_needed();
 
 		return $this->generate_response($current_page);
 	}
@@ -112,13 +112,13 @@ class DefaultItemsManagementController extends AbstractItemController
 		return $table->get_page_number();
 	}
 
-	private function execute_multiple_delete_if_needed(HTTPRequestCustom $request)
+	private function execute_multiple_delete_if_needed()
 	{
-		if ($request->get_string('delete-selected-elements', false))
+		if ($this->request->get_string('delete-selected-elements', false))
 		{
 			for ($i = 1 ; $i <= $this->elements_number ; $i++)
 			{
-				if ($request->get_value('delete-checkbox-' . $i, 'off') == 'on')
+				if ($this->request->get_value('delete-checkbox-' . $i, 'off') == 'on')
 				{
 					if (isset($this->ids[$i]))
 					{

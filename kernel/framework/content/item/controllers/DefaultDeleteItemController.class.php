@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 02 12
+ * @version     PHPBoost 6.0 - last update: 2020 11 28
  * @since       PHPBoost 6.0 - 2019 12 20
 */
 
@@ -15,7 +15,7 @@ class DefaultDeleteItemController extends AbstractItemController
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->item = $this->get_item($request);
+		$this->item = $this->get_item();
 
 		if ($this->item !== null && $this->check_authorizations())
 		{
@@ -27,12 +27,12 @@ class DefaultDeleteItemController extends AbstractItemController
 		else
 			$this->display_user_not_authorized_page();
 		
-		$this->display_response($request);
+		$this->display_response();
 	}
 
-	protected function get_item(HTTPRequestCustom $request)
+	protected function get_item()
 	{
-		$id = $request->get_getint('id', 0);
+		$id = $this->request->get_getint('id', 0);
 		try {
 			return self::get_items_manager()->get_item($id);
 		} catch (RowNotFoundException $e) {
@@ -45,9 +45,9 @@ class DefaultDeleteItemController extends AbstractItemController
 		return ($this->item->is_authorized_to_manage() && !AppContext::get_current_user()->is_readonly());
 	}
 
-	protected function display_response(HTTPRequestCustom $request)
+	protected function display_response()
 	{
-		AppContext::get_response()->redirect(($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), $this->get_display_item_url()) ? $request->get_url_referrer() : ModulesUrlBuilder::home()), StringVars::replace_vars($this->items_lang['items.message.success.delete'], array('title' => $this->item->get_title())));
+		AppContext::get_response()->redirect(($this->request->get_url_referrer() && !TextHelper::strstr($this->request->get_url_referrer(), $this->get_display_item_url()) ? $this->request->get_url_referrer() : ModulesUrlBuilder::home()), StringVars::replace_vars($this->items_lang['items.message.success.delete'], array('title' => $this->item->get_title())));
 	}
 
 	/**

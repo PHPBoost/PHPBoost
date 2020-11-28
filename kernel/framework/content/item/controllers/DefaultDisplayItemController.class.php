@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 18
+ * @version     PHPBoost 6.0 - last update: 2020 11 28
  * @since       PHPBoost 6.0 - 2020 03 12
 */
 
@@ -16,15 +16,15 @@ class DefaultDisplayItemController extends AbstractItemController
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init($request);
+		$this->init();
 		$this->check_authorizations();
-		$this->update_views_number($request);
+		$this->update_views_number();
 		$this->build_view();
 
 		return $this->generate_response();
 	}
 
-	protected function init(HTTPRequestCustom $request)
+	protected function init()
 	{
 		$this->current_url = self::get_module()->get_configuration()->has_categories() ? ItemsUrlBuilder::display($this->get_item()->get_category()->get_id(), $this->get_item()->get_category()->get_rewrited_name(), $this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id) : ItemsUrlBuilder::display_item($this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id);
 	}
@@ -33,7 +33,7 @@ class DefaultDisplayItemController extends AbstractItemController
 	{
 		if ($this->item === null)
 		{
-			$id = AppContext::get_request()->get_getint('id', 0);
+			$id = $this->request->get_getint('id', 0);
 			try {
 				$this->item = self::get_items_manager()->get_item($id);
 			} catch (RowNotFoundException $e) {
@@ -43,7 +43,7 @@ class DefaultDisplayItemController extends AbstractItemController
 		return $this->item;
 	}
 
-	protected function update_views_number(HTTPRequestCustom $request)
+	protected function update_views_number()
 	{
 		if (!$this->get_item()->is_published())
 		{
@@ -51,7 +51,7 @@ class DefaultDisplayItemController extends AbstractItemController
 		}
 		else
 		{
-			if ($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), $this->current_url->rel()))
+			if ($this->request->get_url_referrer() && !TextHelper::strstr($this->request->get_url_referrer(), $this->current_url->rel()))
 			{
 				self::get_items_manager()->update_views_number($this->get_item());
 			}
