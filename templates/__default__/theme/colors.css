@@ -655,7 +655,7 @@ a[class*='lightcase-icon-']:hover {
 	border-color: transparent !important;
 }
 
-.new-content .cell-header { border-left-color: var(--member-tone); }
+.new-content .cell .cell-header { border-left-color: var(--member-tone); }
 
 .not-compatible .cell-header,
 .not-compatible .cell-body,
