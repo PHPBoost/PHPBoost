@@ -41,17 +41,15 @@ $lang['news.form.summary'] = 'Résumé de la news';
 $lang['news.form.summary.description'] = 'Pour que le résumé de la news soit affiché, veuillez activer l\'option dans la configuration du module';
 $lang['news.form.summary.enabled'] = 'Personnaliser le résumé de la news';
 $lang['news.form.summary.enabled.description'] = 'Si non coché, la news est automatiquement coupée à :number caractères et le formatage du texte supprimé.';
-$lang['news.form.top_list'] = 'Placer la news en tête de liste';
-$lang['news.form.contribution.explain'] = 'Vous n\'êtes pas autorisé à créer une news, cependant vous pouvez en proposer une.';
+$lang['news.form.top.list'] = 'Placer la news en tête de liste';
 
-
-//Administration
+// Administration
 $lang['config.news.suggestions.enabled'] = 'Activer l\'affichage des suggestions';
 
-//Feed name
+// Feed name
 $lang['feed.name'] = 'Actualités';
 
-//Messages
+// Messages
 $lang['news.message.success.add'] = 'La news <b>:title</b> a été ajoutée';
 $lang['news.message.success.edit'] = 'La news <b>:title</b> a été modifiée';
 $lang['news.message.success.delete'] = 'La news <b>:title</b> a été supprimée';

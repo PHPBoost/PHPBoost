@@ -14,16 +14,16 @@ define('PATH_TO_ROOT', '..');
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
-	//Admin
+	// Administration
 	new UrlControllerMapper('AdminNewsConfigController', '`^/admin(?:/config)?/?$`'),
 
-	//Categories
+	// Categories
 	new UrlControllerMapper('DefaultCategoriesManagementController', '`^/categories/?$`'),
 	new UrlControllerMapper('DefaultCategoriesFormController', '`^/categories/add/?([0-9]+)?/?$`', array('id_parent')),
 	new UrlControllerMapper('DefaultCategoriesFormController', '`^/categories/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('DefaultDeleteCategoryController', '`^/categories/([0-9]+)/delete/?$`', array('id')),
 
-	//Manage News
+	// Manage Items
 	new UrlControllerMapper('NewsItemsManagerController', '`^/manage/?$`'),
 	new UrlControllerMapper('NewsItemFormController', '`^/add/?([0-9]+)?/?$`', array('id_category')),
 	new UrlControllerMapper('NewsItemFormController', '`^/([0-9]+)/edit/?$`', array('id')),
@@ -35,6 +35,7 @@ $url_controller_mappers = array(
 
 	new UrlControllerMapper('NewsItemController', '`^/([0-9]+)-([a-z0-9-_]+)/([0-9]+)-([a-z0-9-_]+)/?$`', array('id_category', 'rewrited_name_category', 'id', 'rewrited_name')),
 
+	// Homepage
 	new UrlControllerMapper('NewsCategoryController', '`^(?:/([0-9]+)-([a-z0-9-_]+))?/?([0-9]+)?/?$`', array('id_category', 'rewrited_name', 'page')),
 );
 DispatchManager::dispatch($url_controller_mappers);

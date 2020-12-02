@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 18
+ * @version     PHPBoost 6.0 - last update: 2020 12 02
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -68,19 +68,25 @@ class NewsItemFormController extends ModuleController
 
 		if (CategoriesAuthorizationsService::check_authorizations($this->get_news()->get_id_category())->moderation())
 		{
-			$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_title', $this->common_lang['form.rewrited_name.personalize'], $this->get_news()->rewrited_title_is_personalized(), array(
-			'events' => array('click' => '
-			if (HTMLForms.getField("personalize_rewrited_title").getValue()) {
-				HTMLForms.getField("rewrited_title").enable();
-			} else {
-				HTMLForms.getField("rewrited_title").disable();
-			}'
-			))));
+			$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_title', $this->common_lang['form.rewrited_name.personalize'], $this->get_news()->rewrited_title_is_personalized(),
+				array(
+					'events' => array('click' => '
+						if (HTMLForms.getField("personalize_rewrited_title").getValue()) {
+							HTMLForms.getField("rewrited_title").enable();
+						} else {
+							HTMLForms.getField("rewrited_title").disable();
+						}'
+					)
+				)
+			));
 
-			$fieldset->add_field(new FormFieldTextEditor('rewrited_title', $this->common_lang['form.rewrited_name'], $this->get_news()->get_rewrited_title(), array(
-				'description' => $this->common_lang['form.rewrited_name.description'],
-				'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_personalize_rewrited_title', false) : !$this->get_news()->rewrited_title_is_personalized())
-			), array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu'))));
+			$fieldset->add_field(new FormFieldTextEditor('rewrited_title', $this->common_lang['form.rewrited_name'], $this->get_news()->get_rewrited_title(),
+				array(
+					'description' => $this->common_lang['form.rewrited_name.description'],
+					'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_personalize_rewrited_title', false) : !$this->get_news()->rewrited_title_is_personalized())
+				),
+				array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu'))
+			));
 		}
 
 		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
@@ -94,33 +100,42 @@ class NewsItemFormController extends ModuleController
 		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->common_lang['form.contents'], $this->get_news()->get_contents(), array('rows' => 15, 'required' => true)));
 
 		$fieldset->add_field(new FormFieldCheckbox('enable_summary', $this->lang['news.form.summary.enabled'], $this->get_news()->get_summary_enabled(),
-			array('description' => StringVars::replace_vars($this->lang['news.form.summary.enabled.description'], array('number' => NewsConfig::load()->get_characters_number_to_cut())), 'events' => array('click' => '
-			if (HTMLForms.getField("enable_summary").getValue()) {
-				HTMLForms.getField("summary").enable();
-			} else {
-				HTMLForms.getField("summary").disable();
-			}'))
+			array(
+				'description' => StringVars::replace_vars($this->lang['news.form.summary.enabled.description'], array('number' => NewsConfig::load()->get_characters_number_to_cut())),
+				'events' => array('click' => '
+					if (HTMLForms.getField("enable_summary").getValue()) {
+						HTMLForms.getField("summary").enable();
+					} else {
+						HTMLForms.getField("summary").disable();
+					}'
+				)
+			)
 		));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->lang['news.form.summary'], $this->get_news()->get_summary(), array(
-			'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_summary_enabled', false) : !$this->get_news()->get_summary_enabled()),
-			'description' => !NewsConfig::load()->get_full_item_display() ? '<span class="error">' . $this->lang['news.form.summary.description'] . '</span>' : ''
-		)));
+		$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->lang['news.form.summary'], $this->get_news()->get_summary(),
+			array(
+				'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_summary_enabled', false) : !$this->get_news()->get_summary_enabled()),
+				'description' => !NewsConfig::load()->get_full_item_display() ? '<span class="error">' . $this->lang['news.form.summary.description'] . '</span>' : ''
+			)
+		));
 
 		if ($this->config->get_author_displayed() == true)
 		{
 			$fieldset->add_field(new FormFieldCheckbox('author_custom_name_enabled', $this->common_lang['form.author_custom_name_enabled'], $this->get_news()->is_author_custom_name_enabled(),
-				array('events' => array('click' => '
-				if (HTMLForms.getField("author_custom_name_enabled").getValue()) {
-					HTMLForms.getField("author_custom_name").enable();
-				} else {
-					HTMLForms.getField("author_custom_name").disable();
-				}'))
+				array(
+					'events' => array('click' => '
+						if (HTMLForms.getField("author_custom_name_enabled").getValue()) {
+							HTMLForms.getField("author_custom_name").enable();
+						} else {
+							HTMLForms.getField("author_custom_name").disable();
+						}'
+					)
+				)
 			));
 
-			$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->common_lang['form.author_custom_name'], $this->get_news()->get_author_custom_name(), array(
-				'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_author_custom_name_enabled', false) : !$this->get_news()->is_author_custom_name_enabled())
-			)));
+			$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->common_lang['form.author_custom_name'], $this->get_news()->get_author_custom_name(),
+				array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_author_custom_name_enabled', false) : !$this->get_news()->is_author_custom_name_enabled()))
+			));
 		}
 
 		$options_fieldset = new FormFieldsetHTML('options', $this->common_lang['form.options']);
@@ -196,7 +211,7 @@ class NewsItemFormController extends ModuleController
 
 			$end_date->add_form_constraint(new FormConstraintFieldsDifferenceSuperior($start_date, $end_date));
 
-			$publication_fieldset->add_field(new FormFieldCheckbox('top_list', $this->lang['news.form.top_list'], $this->get_news()->top_list_enabled()));
+			$publication_fieldset->add_field(new FormFieldCheckbox('top_list', $this->lang['news.form.top.list'], $this->get_news()->top_list_enabled()));
 		}
 
 		$this->build_contribution_fieldset($form);
@@ -319,13 +334,9 @@ class NewsItemFormController extends ModuleController
 		else
 		{
 			if ($this->form->get_value('update_creation_date'))
-			{
 				$this->item->set_creation_date(new Date());
-			}
 			else
-			{
 				$this->item->set_creation_date($this->form->get_value('creation_date'));
-			}
 
 			$rewrited_title = $this->form->get_value('rewrited_title', '');
 			$rewrited_title = $this->form->get_value('personalize_rewrited_title') && !empty($rewrited_title) ? $rewrited_title : Url::encode_rewrite($this->item->get_title());
@@ -366,17 +377,13 @@ class NewsItemFormController extends ModuleController
 						$deferred_operations[] = $end_date->get_timestamp();
 				}
 				else
-				{
 					$this->item->clean_end_date();
-				}
 
 				$config->set_deferred_operations($deferred_operations);
 				NewsConfig::save();
 			}
 			else
-			{
 				$this->item->clean_start_and_end_date();
-			}
 		}
 
 		if ($this->item->get_id() === null)

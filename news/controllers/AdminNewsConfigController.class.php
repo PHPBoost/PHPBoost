@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 13
+ * @version     PHPBoost 6.0 - last update: 2020 12 02
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -130,8 +130,6 @@ class AdminNewsConfigController extends AdminModuleController
 			)
 		));
 
-		// $fieldset->add_field(new FormFieldSpacer('full_item', ''));
-
 		$fieldset->add_field(new FormFieldNumberEditor('characters_number_to_cut', $this->admin_common_lang['config.characters.number.to.cut'], $this->config->get_characters_number_to_cut(),
 			array(
 				'min' => 20, 'max' => 1000, 'required' => true,
@@ -140,7 +138,7 @@ class AdminNewsConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(20, 1000)
 		)));
 
-                $fieldset->add_field(new FormFieldRichTextEditor('default_contents', $this->admin_common_lang['config.item.default.content'], $this->config->get_default_contents(),
+        $fieldset->add_field(new FormFieldRichTextEditor('default_contents', $this->admin_common_lang['config.item.default.content'], $this->config->get_default_contents(),
 			array('rows' => 8, 'cols' => 47)
 		));
 
@@ -172,13 +170,9 @@ class AdminNewsConfigController extends AdminModuleController
 		if ($this->config->get_full_item_display())
 		{
 			if ($this->form->get_value('summary_display_to_guests'))
-			{
 				$this->config->display_summary_to_guests();
-			}
 			else
-			{
 				$this->config->hide_summary_to_guests();
-			}
 		}
 
 		$this->config->set_characters_number_to_cut($this->form->get_value('characters_number_to_cut', $this->config->get_characters_number_to_cut()));
