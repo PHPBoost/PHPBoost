@@ -120,12 +120,12 @@ class CalendarMemberItemsController extends ModuleController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['items.mine'], $this->lang['calendar.module.title'], $page);
+		$graphical_environment->set_page_title($this->lang['items.mine'], $this->lang['module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['calendar.seo.description.pending'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::display_member_items($page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['calendar.module.title'], CalendarUrlBuilder::home());
+		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::home());
 		$breadcrumb->add($this->lang['items.mine'], CalendarUrlBuilder::display_member_items($page));
 
 		return $response;

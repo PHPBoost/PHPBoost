@@ -553,11 +553,11 @@ class CalendarFormController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['calendar.module.title'], CalendarUrlBuilder::home());
+		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::home());
 
 		if ($event->get_id() === null)
 		{
-			$graphical_environment->set_page_title($this->lang['calendar.event.add'], $this->lang['calendar.module.title']);
+			$graphical_environment->set_page_title($this->lang['calendar.event.add'], $this->lang['module.title']);
 			$breadcrumb->add($this->lang['calendar.event.add'], CalendarUrlBuilder::add_event());
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['calendar.event.add']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::add_event());
@@ -567,7 +567,7 @@ class CalendarFormController extends ModuleController
 			if (!AppContext::get_session()->location_id_already_exists($location_id))
 				$graphical_environment->set_location_id($location_id);
 
-			$graphical_environment->set_page_title($this->lang['calendar.event.edit'], $this->lang['calendar.module.title']);
+			$graphical_environment->set_page_title($this->lang['calendar.event.edit'], $this->lang['module.title']);
 
 			$category = $event->get_content()->get_category();
 			$breadcrumb->add($event->get_content()->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()));

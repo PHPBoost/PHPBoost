@@ -16,7 +16,7 @@
 ####################################################
 
 // Module titles
-$lang['calendar.module.title'] = 'Calendar';
+$lang['module.title'] = 'Calendar';
 
 $lang['items'] = 'events';
 $lang['item'] = 'event';

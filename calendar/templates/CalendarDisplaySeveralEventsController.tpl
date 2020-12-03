@@ -12,7 +12,7 @@
 				# IF C_MEMBER_ITEMS #
 					{@items.mine}
 				# ELSE #
-					{@calendar.module.title}
+					{@module.title}
 				# ENDIF #
 			# ENDIF #
 		</h1>
