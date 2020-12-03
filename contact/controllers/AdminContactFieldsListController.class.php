@@ -42,7 +42,7 @@ class AdminContactFieldsListController extends AdminModuleController
 			'C_MORE_THAN_ONE_FIELD' => $fields_number > 1
 		));
 
-		return new AdminContactDisplayResponse($this->view, LangLoader::get_message('admin.fields.manage.page_title', 'common', 'contact'));
+		return new AdminContactDisplayResponse($this->view, LangLoader::get_message('contact.fields.management.title', 'common', 'contact'));
 	}
 
 	private function init()

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 01
+ * @version     PHPBoost 6.0 - last update: 2020 12 03
  * @since       PHPBoost 4.0 - 2013 08 01
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -12,66 +12,65 @@
 #                      English                     #
 ####################################################
 
-//Title
-$lang['module_title'] = 'Contact';
-$lang['module_config_title'] = 'Contact module configuration';
+// Module title
+$lang['module.title'] = 'Contact';
+$lang['module.config.title'] = 'Contact module configuration';
 
-//Contact form
+// Form
 $lang['contact.form.message'] = 'Message';
-$lang['contact.send_another_mail'] = 'Send another mail';
-$lang['contact.tracking_number'] = 'tracking number';
-$lang['contact.acknowledgment_title'] = 'Confirmation';
+$lang['contact.send.another.mail'] = 'Send another mail';
+$lang['contact.tracking.number'] = 'tracking number';
+$lang['contact.acknowledgment.title'] = 'Confirmation';
 $lang['contact.acknowledgment'] = 'Your message has been successfully sent.';
 
-//Admin
-$lang['admin.config.title'] = 'Form title';
-$lang['admin.config.informations_bloc'] = 'Informations bloc';
-$lang['admin.config.informations_enabled'] = 'Display the informations bloc';
-$lang['admin.config.informations_content'] = 'Informations bloc content';
-$lang['admin.config.informations.explain'] = 'This bloc permits to display informations (i.e. a contact phone number) on the left, top, right or bottom the contact form.';
-$lang['admin.config.informations_position'] = 'Informations bloc position';
-$lang['admin.config.informations.position_left'] = 'Left';
-$lang['admin.config.informations.position_top'] = 'Top';
-$lang['admin.config.informations.position_right'] = 'Right';
-$lang['admin.config.informations.position_bottom'] = 'Bottom';
-$lang['admin.config.tracking_number_enabled'] = 'Generate a tracking number for each email sent';
-$lang['admin.config.date_in_date_in_tracking_number_enabled'] = 'Display day date in the tracking number';
-$lang['admin.config.date_in_date_in_tracking_number_enabled.explain'] = 'Allows to generate a tracking number like <b>yyyymmdd-number</b>';
-$lang['admin.config.sender_acknowledgment_enabled'] = 'Send a copy of the email to the sender';
-$lang['admin.authorizations.read']  = 'Permission to display the contact form';
-$lang['admin.authorizations.display_field']  = 'Permission to display the field';
+// Configuration
+$lang['contact.form.title'] = 'Form title';
+$lang['contact.informations.enabled'] = 'Display the informations bloc';
+$lang['contact.informations.description'] = 'This bloc permits to display informations (i.e. a contact phone number) on the left, top, right or bottom the contact form.';
+$lang['contact.informations.content'] = 'Informations bloc content';
+$lang['contact.informations.position'] = 'Informations bloc position';
+$lang['contact.informations.position.left'] = 'Left';
+$lang['contact.informations.position.top'] = 'Top';
+$lang['contact.informations.position.right'] = 'Right';
+$lang['contact.informations.position.bottom'] = 'Bottom';
+$lang['contact.tracking.number.enabled'] = 'Generate a tracking number for each email sent';
+$lang['contact.date.in.tracking.number.enabled'] = 'Display day date in the tracking number';
+$lang['contact.date.in.tracking.number.description'] = 'Allows to generate a tracking number like <b>yyyymmdd-number</b>';
+$lang['contact.sender.acknowledgment.enabled'] = 'Send a copy of the email to the sender';
+$lang['contact.authorizations.read']  = 'Permission to display the contact form';
+$lang['contact.authorizations.display.field']  = 'Permission to display the field';
 
-//Map
-$lang['admin.config.map'] = 'Location on a map';
-$lang['admin.config.map_enabled'] = 'Display the map';
-$lang['admin.config.map_position'] = 'Position of the map';
-$lang['admin.config.map.position_top'] = 'Above the form';
-$lang['admin.config.map.position_bottom'] = 'Below the form';
-$lang['admin.config.map.markers'] = 'Address(es)';
+// Map
+$lang['contact.map.location'] = 'Location on a map';
+$lang['contact.map.enabled'] = 'Display the map';
+$lang['contact.map.position'] = 'Position of the map';
+$lang['contact.map.position.top'] = 'Above the form';
+$lang['contact.map.position.bottom'] = 'Below the form';
+$lang['contact.map.markers'] = 'Marker(s)';
 
-//Fields
-$lang['admin.fields.manage'] = 'Fields management';
-$lang['admin.fields.manage.page_title'] = 'Contact module form fields management';
-$lang['admin.fields.title.add_field'] = 'Add a new field';
-$lang['admin.fields.title.add_field.page_title'] = 'Add a new field in the contact form';
-$lang['admin.fields.title.edit_field'] = 'Field edition';
-$lang['admin.fields.title.edit_field.page_title'] = 'Field edition in the contact form';
+// Fields
+$lang['contact.fields.management'] = 'Fields management';
+$lang['contact.fields.management.title'] = 'Contact module form fields management';
+$lang['contact.fields.add.field'] = 'Add a new field';
+$lang['contact.fields.add.field.title'] = 'Add a new field in the contact form';
+$lang['contact.fields.edit.field'] = 'Field edition';
+$lang['contact.fields.edit.field.title'] = 'Field edition in the contact form';
 
-//Field
-$lang['field.possible_values.email'] = 'Mail address(es)';
-$lang['field.possible_values.email.explain'] = 'It is possible to put more than one mail address separated by a comma';
-$lang['field.possible_values.subject'] = 'Subject';
-$lang['field.possible_values.recipient'] = 'Recipient(s)';
-$lang['field.possible_values.recipient.explain'] = 'The mail will ve sent to the selected recipient(s) if the recipients field is not displayed';
+// Field
+$lang['contact.field.possible.values.email'] = 'Mail address(es)';
+$lang['contact.field.possible.values.email.explain'] = 'It is possible to put more than one mail address separated by a comma';
+$lang['contact.field.possible.values.subject'] = 'Subject';
+$lang['contact.field.possible.values.recipient'] = 'Recipient(s)';
+$lang['contact.field.possible.values.recipient.explain'] = 'The mail will ve sent to the selected recipient(s) if the recipients field is not displayed';
 
-//SEO
+// SEO
 $lang['contact.seo.description'] = ':site\'s contact form.';
 
-//Messages
-$lang['message.success.add'] = 'The field <b>:name</b> has been added';
-$lang['message.success.edit'] = 'The field <b>:name</b> has been modified';
-$lang['message.field_name_already_used'] = 'The entered field name is already used!';
-$lang['message.success_mail'] = 'Thank you, your e-mail has been sent successfully.';
-$lang['message.acknowledgment'] = 'You should receive a confirmation email in a few minutes.';
-$lang['message.error_mail'] = 'Sorry, your e-mail couldn\'t be sent.';
+// Alert messages
+$lang['contact.message.success.add'] = 'The field <b>:name</b> has been added';
+$lang['contact.message.success.edit'] = 'The field <b>:name</b> has been modified';
+$lang['contact.message.field.name.already.used'] = 'The entered field name is already used!';
+$lang['contact.message.success.mail'] = 'Thank you, your e-mail has been sent successfully.';
+$lang['contact.message.acknowledgment'] = 'You should receive a confirmation email in a few minutes.';
+$lang['contact.message.error.mail'] = 'Sorry, your e-mail couldn\'t be sent.';
 ?>

@@ -1,6 +1,6 @@
 <section id="module-contact">
 	<header>
-		<h1>{@module_title}</h1>
+		<h1>{@module.title}</h1>
 	</header>
 	<div class="content">
 		# INCLUDE MSG #
@@ -62,7 +62,7 @@
 			
 		# ELSE #
 			<div class="spacer"></div>
-			<div class="align-center"><a href="#">{@contact.send_another_mail}</a></div>
+			<div class="align-center"><a href="#">{@contact.send.another.mail}</a></div>
 		# ENDIF #
 	</div>
 	<footer></footer>

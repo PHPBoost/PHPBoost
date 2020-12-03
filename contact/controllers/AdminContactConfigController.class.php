@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 02 27
+ * @version     PHPBoost 6.0 - last update: 2020 12 03
  * @since       PHPBoost 4.0 - 2013 03 01
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -51,7 +51,7 @@ class AdminContactConfigController extends AdminModuleController
 
 		$tpl->put('FORM', $this->form->display());
 
-		return new AdminContactDisplayResponse($tpl, $this->lang['module_config_title']);
+		return new AdminContactDisplayResponse($tpl, $this->lang['module.config.title']);
 	}
 
 	private function init()
@@ -67,15 +67,15 @@ class AdminContactConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTMLHeading('configuration', LangLoader::get_message('configuration', 'admin-common'));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['admin.config.title'], $this->config->get_title(),
+		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['contact.form.title'], $this->config->get_title(),
 			array('maxlength' => 255, 'required' => true)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('sender_acknowledgment_enabled', $this->lang['admin.config.sender_acknowledgment_enabled'], $this->config->is_sender_acknowledgment_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('sender_acknowledgment_enabled', $this->lang['contact.sender.acknowledgment.enabled'], $this->config->is_sender_acknowledgment_enabled(),
 			array('class' => 'custom-checkbox')
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('tracking_number_enabled', $this->lang['admin.config.tracking_number_enabled'], $this->config->is_tracking_number_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('tracking_number_enabled', $this->lang['contact.tracking.number.enabled'], $this->config->is_tracking_number_enabled(),
 			array(
 				'class' => 'custom-checkbox',
 				'events' => array('click' => '
@@ -88,20 +88,20 @@ class AdminContactConfigController extends AdminModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('date_in_tracking_number_enabled', $this->lang['admin.config.date_in_date_in_tracking_number_enabled'], $this->config->is_date_in_tracking_number_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('date_in_tracking_number_enabled', $this->lang['contact.date.in.tracking.number.enabled'], $this->config->is_date_in_tracking_number_enabled(),
 			array(
 				'class' => 'custom-checkbox',
-				'description' => $this->lang['admin.config.date_in_date_in_tracking_number_enabled.explain'],
+				'description' => $this->lang['contact.date.in.tracking.number.description'],
 				'hidden' => !$this->config->is_tracking_number_enabled()
 			)
 		));
 
 		$fieldset->add_field(new FormFieldSpacer('1_separator', ''));
 
-		$fieldset->add_field(new FormFieldCheckbox('informations_enabled', $this->lang['admin.config.informations_enabled'], $this->config->are_informations_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('informations_enabled', $this->lang['contact.informations.enabled'], $this->config->are_informations_enabled(),
 			array(
 				'class' => 'custom-checkbox',
-				'description' => $this->lang['admin.config.informations.explain'],
+				'description' => $this->lang['contact.informations.description'],
 				'events' => array('click' => '
 					if (HTMLForms.getField("informations_enabled").getValue()) {
 						HTMLForms.getField("informations_position").enable();
@@ -114,27 +114,30 @@ class AdminContactConfigController extends AdminModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('informations_position', $this->lang['admin.config.informations_position'], $this->config->get_informations_position(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('informations_position', $this->lang['contact.informations.position'], $this->config->get_informations_position(),
 			array(
-				new FormFieldSelectChoiceOption($this->lang['admin.config.informations.position_left'], ContactConfig::LEFT),
-				new FormFieldSelectChoiceOption($this->lang['admin.config.informations.position_top'], ContactConfig::TOP),
-				new FormFieldSelectChoiceOption($this->lang['admin.config.informations.position_right'], ContactConfig::RIGHT),
-				new FormFieldSelectChoiceOption($this->lang['admin.config.informations.position_bottom'], ContactConfig::BOTTOM),
+				new FormFieldSelectChoiceOption($this->lang['contact.informations.position.left'], ContactConfig::LEFT),
+				new FormFieldSelectChoiceOption($this->lang['contact.informations.position.top'], ContactConfig::TOP),
+				new FormFieldSelectChoiceOption($this->lang['contact.informations.position.right'], ContactConfig::RIGHT),
+				new FormFieldSelectChoiceOption($this->lang['contact.informations.position.bottom'], ContactConfig::BOTTOM),
 				),
 			array('hidden' => !$this->config->are_informations_enabled())
 		));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('informations', $this->lang['admin.config.informations_content'],
+		$fieldset->add_field(new FormFieldRichTextEditor('informations', $this->lang['contact.informations.content'],
 			FormatingHelper::unparse($this->config->get_informations()),
-			array('rows' => 8, 'cols' => 47, 'hidden' => !$this->config->are_informations_enabled())
+			array(
+				'rows' => 8, 'cols' => 47,
+				'hidden' => !$this->config->are_informations_enabled()
+			)
 		));
 
 		if ($this->config->is_googlemaps_available())
 		{
-			$map_fieldset = new FormFieldsetHTML('map', $this->lang['admin.config.map'], array('disabled' => !$this->config->is_googlemaps_available()));
+			$map_fieldset = new FormFieldsetHTML('map', $this->lang['contact.map.location'], array('disabled' => !$this->config->is_googlemaps_available()));
 			$form->add_fieldset($map_fieldset);
 
-			$map_fieldset->add_field(new FormFieldCheckbox('map_enabled', $this->lang['admin.config.map_enabled'], $this->config->is_map_enabled(),
+			$map_fieldset->add_field(new FormFieldCheckbox('map_enabled', $this->lang['contact.map.enabled'], $this->config->is_map_enabled(),
 				array(
 					'class' => 'top-field custom-checkbox',
 					'hidden' => !$this->config->is_googlemaps_available(),
@@ -150,15 +153,18 @@ class AdminContactConfigController extends AdminModuleController
 				)
 			));
 
-			$map_fieldset->add_field(new FormFieldSimpleSelectChoice('map_position', $this->lang['admin.config.map_position'], $this->config->get_map_position(),
+			$map_fieldset->add_field(new FormFieldSimpleSelectChoice('map_position', $this->lang['contact.map.position'], $this->config->get_map_position(),
 				array(
-					new FormFieldSelectChoiceOption($this->lang['admin.config.map.position_top'], ContactConfig::MAP_TOP),
-					new FormFieldSelectChoiceOption($this->lang['admin.config.map.position_bottom'], ContactConfig::MAP_BOTTOM),
+					new FormFieldSelectChoiceOption($this->lang['contact.map.position.top'], ContactConfig::MAP_TOP),
+					new FormFieldSelectChoiceOption($this->lang['contact.map.position.bottom'], ContactConfig::MAP_BOTTOM),
 					),
-				array('class' => 'top-field', 'hidden' => !$this->config->is_map_enabled())
+				array(
+					'class' => 'top-field',
+					'hidden' => !$this->config->is_map_enabled()
+				)
 			));
 
-			$map_fieldset->add_field(new GoogleMapsFormFieldMultipleMarkers('map_markers', $this->lang['admin.config.map.markers'], $this->config->get_map_markers(),
+			$map_fieldset->add_field(new GoogleMapsFormFieldMultipleMarkers('map_markers', $this->lang['contact.map.markers'], $this->config->get_map_markers(),
 				array(
 					'class' => 'full-field',
 					'hidden' => !$this->config->is_map_enabled()
@@ -170,7 +176,7 @@ class AdminContactConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset_authorizations);
 
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($this->lang['admin.authorizations.read'], ContactAuthorizationsService::READ_AUTHORIZATIONS),
+			new ActionAuthorization($this->lang['contact.authorizations.read'], ContactAuthorizationsService::READ_AUTHORIZATIONS),
 		));
 
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());

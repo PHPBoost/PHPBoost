@@ -13,7 +13,7 @@ define('PATH_TO_ROOT', '..');
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
-	//Fields
+	// Fields
 	new UrlControllerMapper('AdminContactFieldsListController', '`^/admin/fields(?:/list)?/?$`'),
 	new UrlControllerMapper('AdminContactFieldFormController', '`^/admin/fields/add/?$`'),
 	new UrlControllerMapper('AdminContactFieldFormController', '`^/admin/fields/([0-9]+)/edit/?$`', array('id')),
@@ -21,10 +21,10 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('ContactAjaxChangeFieldDisplayController', '`^/admin/fields/change_display/?$`'),
 	new UrlControllerMapper('ContactAjaxCheckFieldNameController', '`^/admin/fields/check_name/?$`'),
 
-	//Config
+	// Configuration
 	new UrlControllerMapper('AdminContactConfigController', '`^/admin(?:/config)?/?([a-z]+)?/?$`', array('message')),
 
-	//Contact form
+	// Homepage
 	new UrlControllerMapper('ContactController')
 );
 

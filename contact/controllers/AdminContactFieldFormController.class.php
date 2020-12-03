@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 10 18
+ * @version     PHPBoost 6.0 - last update: 2020 12 03
  * @since       PHPBoost 4.0 - 2013 08 04
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -42,9 +42,9 @@ class AdminContactFieldFormController extends AdminModuleController
 		{
 			$this->save();
 			if ($this->is_new_field)
-				AppContext::get_response()->redirect(ContactUrlBuilder::manage_fields(), StringVars::replace_vars($this->lang['message.success.add'], array('name' => $this->get_field()->get_name())));
+				AppContext::get_response()->redirect(ContactUrlBuilder::manage_fields(), StringVars::replace_vars($this->lang['contact.message.success.add'], array('name' => $this->get_field()->get_name())));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ContactUrlBuilder::manage_fields()), StringVars::replace_vars($this->lang['message.success.edit'], array('name' => $this->get_field()->get_name())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ContactUrlBuilder::manage_fields()), StringVars::replace_vars($this->lang['contact.message.success.edit'], array('name' => $this->get_field()->get_name())));
 		}
 
 		$this->tpl->put('FORM', $this->form->display());
@@ -52,7 +52,7 @@ class AdminContactFieldFormController extends AdminModuleController
 		if (!$this->get_field()->is_readonly())
 			$this->tpl->put('JS_EVENT_SELECT_TYPE', $this->get_events_select_type());
 
-		return new AdminContactDisplayResponse($this->tpl, !empty($this->id) ? $this->lang['admin.fields.title.edit_field.page_title'] : $this->lang['admin.fields.title.add_field.page_title']);
+		return new AdminContactDisplayResponse($this->tpl, !empty($this->id) ? $this->lang['contact.fields.edit.field.title'] : $this->lang['contact.fields.add.field.title']);
 	}
 
 	private function init(HTTPRequestCustom $request)
@@ -72,7 +72,7 @@ class AdminContactFieldFormController extends AdminModuleController
 
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('field', !empty($this->id) ? $this->lang['admin.fields.title.edit_field'] : $this->lang['admin.fields.title.add_field']);
+		$fieldset = new FormFieldsetHTMLHeading('field', !empty($this->id) ? $this->lang['contact.fields.edit.field'] : $this->lang['contact.fields.add.field']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->admin_user_common_lang['field.name'], $field->get_name(),
@@ -105,13 +105,18 @@ class AdminContactFieldFormController extends AdminModuleController
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('regex_type', $this->admin_user_common_lang['field.regex'], $regex_type,
 			$this->get_array_select_regex(),
-			array('disabled' => $field->is_readonly(), 'description' => $this->admin_user_common_lang['field.regex-explain'], 'events' => array('change' => '
-				if (HTMLForms.getField("regex_type").getValue() == 6) {
-					HTMLForms.getField("regex").enable();
-					jQuery("#' . __CLASS__ . '_regex").focus();
-				} else {
-					HTMLForms.getField("regex").disable();
-				}'))
+			array(
+				'disabled' => $field->is_readonly(),
+				'description' => $this->admin_user_common_lang['field.regex-explain'],
+				'events' => array('change' => '
+					if (HTMLForms.getField("regex_type").getValue() == 6) {
+						HTMLForms.getField("regex").enable();
+						jQuery("#' . __CLASS__ . '_regex").focus();
+					} else {
+						HTMLForms.getField("regex").disable();
+					}'
+				)
+			)
 		));
 
 		$fieldset->add_field(new FormFieldTextEditor('regex', $this->admin_user_common_lang['regex.personnal-regex'], $regex,
@@ -121,13 +126,19 @@ class AdminContactFieldFormController extends AdminModuleController
 		if ($field->get_field_name() == 'f_recipients')
 		{
 			$fieldset->add_field(new ContactFormFieldRecipientsPossibleValues('possible_values', $this->admin_user_common_lang['field.possible-values'], $field->get_possible_values(),
-				array('class' => 'top-field half-field', 'description' => $this->lang['field.possible_values.email.explain'])
+				array(
+					'class' => 'top-field half-field',
+					'description' => $this->lang['contact.field.possible.values.email.explain']
+				)
 			));
 		}
 		else if ($field->get_field_name() == 'f_subject')
 		{
 			$fieldset->add_field(new ContactFormFieldObjectPossibleValues('possible_values', $this->admin_user_common_lang['field.possible-values'], $field->get_possible_values(),
-				array('class' => 'top-field half-field', 'description' => $this->lang['field.possible_values.recipient.explain'])
+				array(
+					'class' => 'top-field half-field',
+					'description' => $this->lang['contact.field.possible.values.recipient.explain']
+				)
 			));
 		}
 		else
@@ -146,7 +157,7 @@ class AdminContactFieldFormController extends AdminModuleController
 		));
 
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($this->lang['admin.authorizations.display_field'], ContactField::DISPLAY_FIELD_AUTHORIZATION)
+			new ActionAuthorization($this->lang['contact.authorizations.display.field'], ContactField::DISPLAY_FIELD_AUTHORIZATION)
 		));
 		$auth_settings->build_from_auth_array($field->get_authorization());
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings, array('hidden' => $field->is_readonly()));

@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2017 04 13
+ * @version     PHPBoost 6.0 - last update: 2020 12 03
  * @since       PHPBoost 3.0 - 2010 05 02
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ContactConfig extends AbstractConfigData
@@ -248,9 +249,9 @@ class ContactConfig extends AbstractConfigData
 		$lang = LangLoader::get('config', 'contact');
 
 		$field = new ContactField();
-		$field->set_name($lang['mail_address']);
+		$field->set_name($lang['contact.mail.address']);
 		$field->set_field_name('f_sender_mail');
-		$field->set_description($lang['mail_address_explain']);
+		$field->set_description($lang['contact.mail.address.description']);
 		$field->set_field_type('ContactShortTextField');
 		$field->set_regex(4);
 		$field->readonly();
@@ -260,26 +261,26 @@ class ContactConfig extends AbstractConfigData
 		$fields[1] = $field->get_properties();
 
 		$field = new ContactField();
-		$field->set_name($lang['contact_subject']);
+		$field->set_name($lang['contact.subject']);
 		$field->set_field_name('f_subject');
-		$field->set_description($lang['contact_subject_explain']);
+		$field->set_description($lang['contact.subject.description']);
 		$field->set_field_type('ContactShortTextField');
 		$field->not_deletable();
 
 		$fields[2] = $field->get_properties();
 
 		$field = new ContactField();
-		$field->set_name($lang['contact_recipients']);
+		$field->set_name($lang['contact.recipients']);
 		$field->set_field_name('f_recipients');
 		$field->set_field_type('ContactSimpleSelectField');
-		$field->set_possible_values(array('admins' => array('is_default' => true, 'title' => $lang['contact_recipients_admins'], 'email' => '')));
+		$field->set_possible_values(array('admins' => array('is_default' => true, 'title' => $lang['contact.recipients.admins'], 'email' => '')));
 		$field->not_deletable();
 		$field->not_displayed();
 
 		$fields[3] = $field->get_properties();
 
 		$field = new ContactField();
-		$field->set_name($lang['message']);
+		$field->set_name($lang['contact.message']);
 		$field->set_field_name('f_message');
 		$field->set_field_type('ContactHalfLongTextField');
 		$field->readonly();
@@ -297,7 +298,7 @@ class ContactConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::TITLE => LangLoader::get_message('contact_fieldset_title', 'config', 'contact'),
+			self::TITLE => LangLoader::get_message('contact.fieldset.title', 'config', 'contact'),
 			self::INFORMATIONS_ENABLED => false,
 			self::INFORMATIONS => '',
 			self::INFORMATIONS_POSITION => self::TOP,

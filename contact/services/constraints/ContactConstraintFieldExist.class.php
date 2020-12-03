@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 02 11
+ * @version     PHPBoost 6.0 - last update: 2020 12 03
  * @since       PHPBoost 4.0 - 2013 08 04
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ContactConstraintFieldExist extends AbstractFormFieldConstraint
@@ -21,7 +22,7 @@ class ContactConstraintFieldExist extends AbstractFormFieldConstraint
 
 		if (empty($error_message))
 		{
-			$error_message = LangLoader::get_message('message.field_name_already_used', 'common', 'contact');
+			$error_message = LangLoader::get_message('contact.message.field.name.already.used', 'common', 'contact');
 		}
 		$this->set_validation_error_message($error_message);
 		$this->error_message = TextHelper::to_js_string($error_message);
