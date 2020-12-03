@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 30
+ * @version     PHPBoost 6.0 - last update: 2020 12 03
  * @since       PHPBoost 3.0 - 2011 08 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -26,12 +26,11 @@ class AdminCustomizeFaviconController extends AdminModuleController
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->load_lang();
-		$this->load_config();
+		$this->init();
 		$this->build_form();
 
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$view = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+		$view->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -46,27 +45,23 @@ class AdminCustomizeFaviconController extends AdminModuleController
 					$favicon_file = new File(PATH_TO_ROOT . $this->config->get_favicon_path());
 					$picture = '<img src="' . Url::to_rel($favicon_file->get_path()) . '" alt="' . $this->lang['customization.favicon.current'] . '" />';
 					$this->form->get_field_by_id('current_favicon')->set_value($picture);
-					$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+					$view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 				}
 				else
 				{
-					$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('form.invalid_picture', 'status-messages-common'), MessageHelper::ERROR, 4));
+					$view->put('MSG', MessageHelper::display(LangLoader::get_message('form.invalid_picture', 'status-messages-common'), MessageHelper::ERROR, 4));
 				}
 			}
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$view->put('FORM', $this->form->display());
 
-		return new AdminCustomizationDisplayResponse($tpl, $this->lang['customization.interface']);
+		return new AdminCustomizationDisplayResponse($view, $this->lang['customization.interface.title']);
 	}
 
-	private function load_lang()
+	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'customization');
-	}
-
-	private function load_config()
-	{
 		$this->config = CustomizationConfig::load();
 	}
 
@@ -74,7 +69,7 @@ class AdminCustomizeFaviconController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('customize-favicon', $this->lang['customization.favicon']);
+		$fieldset = new FormFieldsetHTMLHeading('customize-favicon', $this->lang['customization.favicon.title']);
 		$form->add_fieldset($fieldset);
 
 		if ($this->config->get_favicon_path() == null || $this->config->get_favicon_path() == '')

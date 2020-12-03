@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 30
+ * @version     PHPBoost 6.0 - last update: 2020 12 03
  * @since       PHPBoost 3.0 - 2011 09 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -26,8 +26,7 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->load_lang();
-		$this->load_config();
+		$this->init();
 
 		$theme = $request->get_value('theme', 'all');
 
@@ -38,8 +37,8 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 
 		$this->build_form($theme);
 
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$view = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+		$view->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -55,11 +54,11 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 					$header_logo_file = new File(PATH_TO_ROOT . $header_logo_path);
 					$picture = '<img src="' . Url::to_rel($header_logo_file->get_path()) . '" alt="' . $this->lang['customization.interface.logo.current'] . '" />';
 					$this->form->get_field_by_id('current_logo')->set_value($picture);
-					$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+					$view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 				}
 				else
 				{
-					$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('form.invalid_picture', 'status-messages-common'), MessageHelper::ERROR, 4));
+					$view->put('MSG', MessageHelper::display(LangLoader::get_message('form.invalid_picture', 'status-messages-common'), MessageHelper::ERROR, 4));
 				}
 			}
 			elseif ($this->form->get_value('use_default_logo'))
@@ -67,22 +66,18 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 				$this->delete_pictures_saved($theme);
 				$this->form->get_field_by_id('current_logo')->set_value($this->lang['customization.interface.logo.current.null']);
 				$this->form->get_field_by_id('use_default_logo')->set_value(FormFieldCheckbox::UNCHECKED);
-				$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+				$view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 			}
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$view->put('FORM', $this->form->display());
 
-		return new AdminCustomizationDisplayResponse($tpl, $this->lang['customization.interface']);
+		return new AdminCustomizationDisplayResponse($view, $this->lang['customization.interface.title']);
 	}
 
-	private function load_lang()
+	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'customization');
-	}
-
-	private function load_config()
-	{
 		$this->config = CustomizationConfig::load();
 	}
 
@@ -90,17 +85,19 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$theme_choise_fieldset = new FormFieldsetHTML('theme-choice', $this->lang['customization.interface.theme-choice']);
+		$theme_choise_fieldset = new FormFieldsetHTML('theme-choice', $this->lang['customization.interface.theme.choice']);
 		$form->add_fieldset($theme_choise_fieldset);
 
 		$theme_choise_fieldset->add_field(
-			new FormFieldSimpleSelectChoice('select_theme', $this->lang['customization.interface.select-theme'], $theme_selected,
-				$this->list_themes(),
-				array('class' => 'top-field third-field', 'events' => array('change' => 'document.location.href = "' . AdminCustomizeUrlBuilder::customize_interface()->rel() . '" + HTMLForms.getField(\'select_theme\').getValue()'))
+			new FormFieldSimpleSelectChoice('select_theme', $this->lang['customization.interface.select.theme'], $theme_selected, $this->list_themes(),
+				array(
+					'class' => 'top-field third-field',
+					'events' => array('change' => 'document.location.href = "' . AdminCustomizeUrlBuilder::customize_interface()->rel() . '" + HTMLForms.getField(\'select_theme\').getValue()')
+				)
 			)
 		);
 
-		$customize_interface_fieldset = new FormFieldsetHTML('customize_interface', $this->lang['customization.interface']);
+		$customize_interface_fieldset = new FormFieldsetHTML('customize_interface', $this->lang['customization.interface.title']);
 		$form->add_fieldset($customize_interface_fieldset);
 
 		$header_logo_path = $this->get_header_logo_path($theme_selected);
@@ -130,11 +127,14 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 		}
 
 		$customize_interface_fieldset->add_field(new FormFieldFilePicker('header_logo', $this->lang['customization.interface.logo.current.change'],
-			array('class' => 'top-field third-field', 'description' => $this->lang['customization.interface.logo.current.change-explain']),
+			array(
+				'class' => 'top-field third-field',
+				'description' => $this->lang['customization.interface.logo.current.change.description']
+			),
 			array(new FormFieldConstraintPictureFile())
 		));
 
-		$customize_interface_fieldset->add_field(new FormFieldCheckbox('use_default_logo', $this->lang['customization.interface.logo.use-default'], FormFieldCheckbox::UNCHECKED,
+		$customize_interface_fieldset->add_field(new FormFieldCheckbox('use_default_logo', $this->lang['customization.interface.logo.use.default'], FormFieldCheckbox::UNCHECKED,
 			array('class' => 'top-field third-field custom-checkbox')
 		));
 
@@ -206,7 +206,7 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 	private function list_themes()
 	{
 		$choices_list = array();
-		$choices_list[] = new FormFieldSelectChoiceOption($this->lang['customization.interface.all-themes'], 'all');
+		$choices_list[] = new FormFieldSelectChoiceOption($this->lang['customization.interface.all.themes'], 'all');
 		foreach (ThemesManager::get_activated_themes_map() as $id => $value)
 		{
 			$choices_list[] = new FormFieldSelectChoiceOption($value->get_configuration()->get_name(), $id);
