@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 10 29
+ * @version     PHPBoost 6.0 - last update: 2020 12 03
  * @since       PHPBoost 4.1 - 2015 09 30
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -20,7 +20,6 @@ class AdminDatabaseConfigController extends AdminModuleController
 	private $submit_button;
 
 	private $lang;
-	private $admin_common_lang;
 
 	/**
 	 * @var DatabaseConfig
@@ -45,26 +44,25 @@ class AdminDatabaseConfigController extends AdminModuleController
 
 		$tpl->put('FORM', $this->form->display());
 
-		return new AdminDatabaseDisplayResponse($tpl, $this->lang['module_config_title']);
+		return new AdminDatabaseDisplayResponse($tpl, $this->lang['module.config.title']);
 	}
 
 	private function init()
 	{
 		$this->config = DatabaseConfig::load();
 		$this->lang = LangLoader::get('common', 'database');
-		$this->admin_common_lang = LangLoader::get('admin-common');
 	}
 
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('config', $this->admin_common_lang['configuration']);
+		$fieldset = new FormFieldsetHTMLHeading('config', $this->lang['module.config.title']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldCheckbox('database_tables_optimization_enabled', $this->lang['config.database-tables-optimization-enabled'], $this->config->is_database_tables_optimization_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('database_tables_optimization_enabled', $this->lang['database.config.tables.optimization.enabled'], $this->config->is_database_tables_optimization_enabled(),
 			array(
-				'class' => 'half-field custom-checkbox', 
+				'class' => 'half-field top-field custom-checkbox',
 				'events' => array('change' => '
 					if (HTMLForms.getField("database_tables_optimization_enabled").getValue()) {
 						HTMLForms.getField("database_tables_optimization_day").enable();
@@ -76,7 +74,7 @@ class AdminDatabaseConfigController extends AdminModuleController
 		));
 
 		$date_lang = LangLoader::get('date-common');
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('database_tables_optimization_day', $this->lang['config.database-tables-optimization-day'], $this->config->get_database_tables_optimization_day(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('database_tables_optimization_day', $this->lang['database.config.tables.optimization.day'], $this->config->get_database_tables_optimization_day(),
 			array(
 				new FormFieldSelectChoiceOption($date_lang['sunday'], 0),
 				new FormFieldSelectChoiceOption($date_lang['monday'], 1),
@@ -87,7 +85,10 @@ class AdminDatabaseConfigController extends AdminModuleController
 				new FormFieldSelectChoiceOption($date_lang['saturday'], 6),
 				new FormFieldSelectChoiceOption($date_lang['every_month'], 7)
 			),
-			array('description' => $this->lang['config.database-tables-optimization-day.explain'], 'hidden' => !$this->config->is_database_tables_optimization_enabled())
+			array(
+				'description' => $this->lang['database.config.tables.optimization.day.description'],
+				'hidden' => !$this->config->is_database_tables_optimization_enabled()
+			)
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();

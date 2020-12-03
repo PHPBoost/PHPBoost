@@ -1,13 +1,13 @@
 <nav id="admin-quick-menu">
 	<a href="#" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;">
-		<i class="fa fa-bars" aria-hidden="true"></i> {L_DATABASE_MANAGEMENT}
+		<i class="fa fa-bars" aria-hidden="true"></i> {@database.management}
 	</a>
 	<ul>
 		<li>
-			<a href="admin_database.php" class="quick-link">{L_DB_TOOLS}</a>
+			<a href="admin_database.php" class="quick-link">{@database.management}</a>
 		</li>
 		<li>
-			<a href="admin_database.php?query=1" class="quick-link">{L_QUERY}</a>
+			<a href="admin_database.php?query=1" class="quick-link">{@database.query.execute}</a>
 		</li>
 		<li>
 			<a href="${relative_url(DatabaseUrlBuilder::configuration())}" class="quick-link">${LangLoader::get_message('configuration', 'admin-common')}</a>
@@ -21,35 +21,35 @@
 <div id="admin-contents">
 	# IF C_DATABASE_INDEX #
 
-		# INCLUDE message_helper #
+		# INCLUDE MESSAGE_HELPER #
 
 		<form method="post" action="admin_database.php?action=restore&amp;token={TOKEN}" enctype="multipart/form-data" name="upload_file">
 
 			<fieldset>
-				<legend><h1>{L_DATABASE_MANAGEMENT}</h1></legend>
+				<legend><h1>{@database.management}</h1></legend>
 				<div class="fieldset-inset cell-flex cell-columns-2">
 					<div class="cell">
 						<div class="cell-body">
-							<div class="cell-content">{L_EXPLAIN_ACTIONS}</div>
+							<div class="cell-content">{@H|database.management.description}</div>
 						</div>
 					</div>
 					<div class="cell">
 						<div class="cell-body">
 							<div class="cell-content">
-								<div class="message-helper bgc question">{L_EXPLAIN_ACTIONS_QUESTION}</div>
+								<div class="message-helper bgc question">{@H|database.management.question}</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</fieldset>
 			<fieldset>
-				<legend>{L_DB_RESTORE}</legend>
+				<legend>{@database.restore}</legend>
 				<div class="fieldset-inset cell-flex cell-columns-2">
 					<div class="db-restore cell">
 						<div class="cell-body">
-							<div class="cell-content">{L_RESTORE_FROM_SERVER}</div>
+							<div class="cell-content">{@database.restore.from.server}</div>
 							<p class="align-center">
-								<a class="button" href="admin_database.php?action=restore"><i class="fa fa-server" aria-hidden="true"></i> {L_FILE_LIST}</a>
+								<a class="button" href="admin_database.php?action=restore"><i class="fa fa-server" aria-hidden="true"></i> {@H|database.view.file.list}</a>
 							</p>
 						</div>
 					</div>
@@ -89,7 +89,7 @@
 						</div>
 						<div class="cell-body">
 							<div class="cell-content align-center">
-								<button type="submit" id="submit-file-to-restore" name="submit-file-to-restore" value="true" class="button submit">{L_RESTORE_NOW}</button>
+								<button type="submit" id="submit-file-to-restore" name="submit-file-to-restore" value="true" class="button submit">{@database.restore}</button>
 								<input type="hidden" name="token" value="{TOKEN}">
 							</div>
 						</div>
@@ -100,41 +100,27 @@
 
 		<form action="{TARGET}" method="post">
 			<table class="table">
-				<caption>{L_TABLE_LIST}</caption>
+				<caption>{@database.table.list}</caption>
 				<thead>
 					<tr>
-						<th>
-							<span class="text-strong">{L_SELECTED_TABLES}</span>
-						</th>
-						<th>
-							<span class="text-strong">{L_TABLE_NAME}</span>
-						</th>
-						<th class="td70">
-							<span class="text-strong">{L_TABLE_ROWS}</span>
-						</th>
-						<th class="td100">
-							<span class="text-strong">{L_TABLE_ENGINE}</span>
-						</th>
-						<th class="td150">
-							<span class="text-strong">{L_TABLE_COLLATION}</span>
-						</th>
-						<th class="td70">
-							<span class="text-strong">{L_TABLE_DATA}</span>
-						</th>
-						<th class="td70">
-							<span class="text-strong">{L_TABLE_FREE}</span>
-						</th>
+						<th>{@database.select}</th>
+						<th>{@database.table.name}</th>
+						<th class="td70">{@database.table.rows}</th>
+						<th class="td100">{@database.table.engine}</th>
+						<th class="td150">{@database.table.collation}</th>
+						<th class="td70">{@database.table.data}</th>
+						<th class="td70">{@database.table.free}</th>
 					</tr>
 				</thead>
 				<tbody>
 					# START table_list #
-						<tr class="align-center">
+						<tr>
 							<td class="mini-checkbox">
 								<div class="form-field-checkbox">
 									<label class="checkbox" for="id{table_list.I}">
 										<input type="checkbox" id="id{table_list.I}" name="table_{table_list.TABLE_NAME}" />
 										<span>&nbsp;</span>
-										<span class="sr-only">{L_SELECTED_TABLES}</span>
+										<span class="sr-only">{@database.select}</span>
 									</label>
 								</div>
 							</td>
@@ -153,43 +139,43 @@
 							<div class="form-field-checkbox">
 								<label class="checkbox" for="check-all">
 									<input type="checkbox" id="check-all" onclick="check_all(this.checked, 'id');" class="valign-middle">
-									<span class="valign-bottom">{L_ALL}</span>
+									<span> {@database.select.all}</span>
 								</label>
 							</div>
 						</td>
-						<td><strong>{NBR_TABLES}</strong></td>
-						<td><strong>{NBR_ROWS}</strong></td>
+						<td class="notice"><strong>{NBR_TABLES}</strong></td>
+						<td class="notice"><strong>{NBR_ROWS}</strong></td>
 						<td>--</td>
 						<td>--</td>
-						<td><strong>{NBR_DATA}</strong></td>
-						<td><strong>{NBR_FREE}</strong></td>
+						<td class="notice"><strong>{NBR_DATA}</strong></td>
+						<td class="notice"><strong>{NBR_FREE}</strong></td>
 					</tr>
 				</tbody>
 			</table>
 
 			<fieldset>
-				<legend>{ACTION_FOR_SELECTION}</legend>
+				<legend>{@database.action.for.selected.tables}</legend>
 				<div class="fieldset-inset">
 					<input type="hidden" name="token" value="{TOKEN}">
 					<div class="cell-flex cell-columns-3 no-style">
 						<div class="cell">
-							<button type="submit" name="optimize" value="true" class="button submit bigger">
+							<button type="submit" name="optimize" value="true" class="button submit biggest">
 								<i class="fa fa-chart-bar fa-fw" aria-hidden="true"></i>
-								{L_OPTIMIZE}
+								{@database.optimize}
 							</button>
 						</div>
 						<div class="cell">
 
-							<button type="submit" name="repair" value="true" class="button submit bigger">
+							<button type="submit" name="repair" value="true" class="button submit biggest">
 								<i class="fa fa-cogs fa-fw" aria-hidden="true"></i>
-								{L_REPAIR}
+								{@database.repair}
 							</button>
 						</div>
 						<div class="cell">
 
-							<button type="submit" name="backup" value="true" class="button submit bigger">
+							<button type="submit" name="backup" value="true" class="button submit biggest">
 								<i class="fa fa-save fa-fw" aria-hidden="true"></i>
-								{L_BACKUP}
+								{@database.backup}
 							</button>
 						</div>
 					</div>
@@ -197,7 +183,6 @@
 			</fieldset>
 
 			<script>
-				<!--
 				$('#submit-file-to-restore').on('click', function() {
 					if ($('#select-file-to-restore')[0].files[0].size > {RESTORE_UPLOADED_FILE_MAX_SIZE})
 					{
@@ -213,7 +198,6 @@
 					for(i = 0; i < {NBR_TABLES}; i++)
 						document.getElementById(id + i).checked = status;
 				}
-				-->
 			</script>
 		</form>
 	# ENDIF #
@@ -225,7 +209,7 @@
 				<ol itemscope itemtype="https://schema.org/BreadcrumbList">
 					<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
 						<a href="admin_database.php#tables" itemprop="item">
-							<span itemprop="name">{L_DATABASE_MANAGEMENT}</span>
+							<span itemprop="name">{@database.management}</span>
     						<meta itemprop="position" content="1" />
 						</a>
 					</li>
@@ -241,12 +225,12 @@
 				<ul>
 					<li>
 						<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">
-							<i class="fa fa-fw fa-code-branch" aria-hidden="true"></i> <span>{L_TABLE_STRUCTURE}</span>
+							<i class="fa fa-fw fa-code-branch" aria-hidden="true"></i> <span>{@database.table.structure}</span>
 						</a>
 					</li>
 					<li>
 						<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=data">
-							<i class="fa fa-fw fa-laptop" aria-hidden="true"></i> <span>{L_TABLE_DISPLAY}</span>
+							<i class="fa fa-fw fa-laptop" aria-hidden="true"></i> <span>${LangLoader::get_message('display', 'common')}</span>
 						</a>
 					</li>
 					<li>
@@ -256,22 +240,22 @@
 					</li>
 					<li>
 						<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=insert">
-							<i class="fa fa-fw fa-plus" aria-hidden="true"></i> <span>{L_INSERT}</span>
+							<i class="fa fa-fw fa-plus" aria-hidden="true"></i> <span>{@database.insert}</span>
 						</a>
 					</li>
 					<li>
 						<a class="cssmenu-title" href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table">
-							<i class="fa fa-fw fa-save" aria-hidden="true"></i> <span>{L_BACKUP}</span>
+							<i class="fa fa-fw fa-save" aria-hidden="true"></i> <span>{@database.backup}</span>
 						</a>
 					</li>
 					<li>
-						<a class="cssmenu-title" style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate&amp;token={TOKEN}" data-confirmation="{L_CONFIRM_TRUNCATE_TABLE}">
-							<i class="fa fa-fw fa-share-square" aria-hidden="true"></i> <span>{L_TRUNCATE}</span>
+						<a class="cssmenu-title error" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate&amp;token={TOKEN}" data-confirmation="{@database.confirm.empty.table}">
+							<i class="fa fa-fw fa-share-square" aria-hidden="true"></i> <span>${LangLoader::get_message('empty', 'main')}</span>
 						</a>
 					</li>
 					<li>
-						<a class="cssmenu-title" style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp;token={TOKEN}" data-confirmation="delete-element">
-							<i class="far fa-fw fa-trash-alt" aria-hidden="true"></i> <span>{L_DELETE}</span>
+						<a class="cssmenu-title error" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp;token={TOKEN}" data-confirmation="delete-element">
+							<i class="far fa-fw fa-trash-alt" aria-hidden="true"></i> <span>${LangLoader::get_message('delete', 'common')}</span>
 						</a>
 					</li>
 				</ul>
@@ -299,12 +283,12 @@
 				}
 			</script>
 			<fieldset>
-				<legend>{L_BACKUP_DATABASE}</legend>
+				<legend>{@database.backup.database}</legend>
 
 				<div class="fieldset-inset">
-					<div class="form-element full-field">{L_EXPLAIN_BACKUP}</div>
+					<div class="form-element full-field">{@database.backup.description}</div>
 					<div class="form-element third-field">
-						<label for="table_list[]">${LangLoader::get_message('db_table_list', 'common', 'database')}</label>
+						<label for="table_list[]">{@database.table.list}</label>
 						<div class="form-field form-field-select">
 							<select id="table_list[]" name="table_list[]" size="8" multiple="multiple">
 								# START table_list #
@@ -313,34 +297,36 @@
 							</select>
 						</div>
 						<p class="align-center">
-							<a href="javascript:check_select_all_tables(true);">{SELECT_ALL}</a> / <a href="javascript:check_select_all_tables(false);">{SELECT_NONE}</a>
+							<a href="javascript:check_select_all_tables(true);">${LangLoader::get_message('select_all', 'main')}</a>
+							 /
+							<a href="javascript:check_select_all_tables(false);">${LangLoader::get_message('select_none', 'main')}</a>
 						</p>
 					</div>
 					<div class="form-element third-field top-field align-center custom-radio">
-						<label for="">{L_SELECTION}</label>
+						<label for="">{@database.select}</label>
 						<div class="form-field form-field-radio-button">
 							<div class="form-field-radio">
 								<label class="radio" for="backup_all">
 									<input type="radio" id="backup_all" name="backup_type" checked="checked" value="all"/>
-									<span>{L_BACKUP_ALL}</span>
+									<span>{@database.backup.all}</span>
 								</label>
 							</div>
 							<div class="form-field-radio">
 								<label class="radio" for="backup_struct">
 									<input type="radio" id="backup_struct" name="backup_type" value="struct">
-									<span>{L_BACKUP_STRUCT}</span>
+									<span>{@database.backup.structure}</span>
 								</label>
 							</div>
 							<div class="form-field-radio">
 								<label class="radio" for="backup_data">
 									<input type="radio" id="backup_data" name="backup_type" value="data"/>
-									<span>{L_BACKUP_DATA}</span>
+									<span>{@database.backup.datas}</span>
 								</label>
 							</div>
 						</div>
 					</div>
 					<div class="form-element third-field top-field custom-checkbox">
-						<label for="compress_file">{L_COMPRESS_FILE}</label>
+						<label for="compress_file">{@database.compress.file}</label>
 						<div class="form-field">
 							<div class="form-field-checkbox">
 								<label class="checkbox" for="compress_file">
@@ -353,9 +339,9 @@
 				</div>
 			</fieldset>
 			<fieldset class="fieldset-submit">
-				<legend>{L_UPDATE}</legend>
+				<legend>{@database.backup}</legend>
 				<div class="fieldset-inset">
-					<button type="submit" name="" value="true" class="button submit">{L_BACKUP}</button>
+					<button type="submit" name="" value="true" class="button submit">{@database.backup}</button>
 					<input type="hidden" name="token" value="{TOKEN}">
 				</div>
 			</fieldset>
@@ -364,7 +350,6 @@
 
 	# IF C_DATABASE_QUERY #
 		<script>
-			<!--
 			function check_form(){
 				var query = document.getElementById('query').value;
 				var query_lowercase = query.toLowerCase();
@@ -372,11 +357,11 @@
 				var keyword = new Array('delete', 'drop', 'truncate');
 
 				if( query == "" ) {
-					alert("{L_REQUIRE}");
+					alert("${LangLoader::get_message('form.explain_required_fields', 'status-messages-common')}");
 					return false;
 				}
 
-				//Verification de la requete => alerte si elle contient un des mots cles DELETE, DROP ou TRUNCATE.
+				// Query check => Alert if it's contain keywords DELETE, DROP or TRUNCATE.
 				for(i = 0; i < keyword.length; i++)
 				{
 					if( typeof(strpos(query_lowercase, keyword[i])) != 'boolean' )
@@ -386,30 +371,28 @@
 					}
 				}
 				if( check_query )
-				{
-					return confirm("{L_CONFIRM_QUERY}\n" + query);
-				}
+					return confirm("{@database.confirm.query}\n" + query);
+
 				return true;
 			}
-			-->
 		</script>
 
 		<form action="admin_database.php?query=1&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
 			<fieldset>
-				<legend>{L_QUERY}</legend>
+				<legend>{@database.query.execute}</legend>
 				<div class="fieldset-inset">
 					<div class="content">
 						<article>
 							<header></header>
 							<div class="content">
 								<span id="errorh"></span>
-								<div class="message-helper bgc warning">{L_EXPLAIN_QUERY}</div>
+								<div class="message-helper bgc warning">{@database.query.description}</div>
 								<fieldset>
-									<label for="query">* {L_EXECUTED_QUERY}</label>
+									<label for="query">* {@database.executed.query}</label>
 									<textarea rows="12" id="query" name="query">{QUERY}</textarea>
 								</fieldset>
 								<fieldset class="fieldset-submit">
-									<button type="submit" name="submit" value="true" class="button submit">{L_EXECUTE}</button>
+									<button type="submit" name="submit" value="true" class="button submit">{@database.submit.query}</button>
 									<input type="hidden" name="token" value="{TOKEN}">
 								</fieldset>
 							</div>
@@ -422,11 +405,11 @@
 
 		# IF C_QUERY_RESULT #
 			<fieldset>
-				<legend>{L_RESULT}</legend>
+				<legend>{@database.query.result}</legend>
 				<div class="fieldset-inset">
 					<div class="content" id="executed_query">
 						<article class="block">
-							<header>{L_EXECUTED_QUERY}</header>
+							<header>{@database.executed.query}</header>
 							<div class="content">
 								<fieldset class="db-executed-query">
 									<p>{QUERY_HIGHLIGHT}</p>
@@ -435,29 +418,26 @@
 								<div class="responsive-table">
 									<table class="table large-table">
 										# IF C_HEAD #
-										<thead>
-											<tr>
-												# START head #
-												<th>{head.FIELD_NAME}</th>
-												# END head #
-											</tr>
-										</thead>
+											<thead>
+												<tr>
+													# START head #
+														<th>{head.FIELD_NAME}</th>
+													# END head #
+												</tr>
+											</thead>
 										# ENDIF #
 										<tbody>
 											# START line #
-											<tr>
-												# START line.field #
-												<td>
-													{line.field.FIELD_NAME}
-												</td>
-												# END line.field #
-											</tr>
+												<tr>
+													# START line.field #
+														<td>{line.field.FIELD_NAME}</td>
+													# END line.field #
+												</tr>
 											# END line #
 										</tbody>
 									</table>
 								</div>
 							</div>
-							<footer></footer>
 						</article>
 					</div>
 				</div>
@@ -466,27 +446,27 @@
 	# ENDIF #
 
 	# IF C_DATABASE_FILES #
-		# INCLUDE message_helper #
+		# INCLUDE MESSAGE_HELPER #
 		<table class="table">
-			<caption>{L_LIST_FILES}</caption>
+			<caption>{@database.file.list}</caption>
 			<thead>
 				<tr>
-					<th>{L_NAME}</th>
-					<th>{L_WEIGHT}</th>
-					<th>{L_DATE}</th>
+					<th>{@database.file.name}</th>
+					<th>{@database.file.weight}</th>
+					<th>${LangLoader::get_message('date', 'date-common')}</th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
 					<td colspan="4">
-						# IF C_FILES #{L_INFO}# ELSE #${LangLoader::get_message('no_item_now', 'common')}# ENDIF #
+						# IF C_FILES #{@database.restore.file.description}# ELSE #{@database.empty.directory}# ENDIF #
 					</td>
 				</tr>
 				# START file #
 					<tr>
 						<td>
-							<a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" aria-label="{L_RESTORE} {file.FILE_NAME}" data-confirmation="{L_CONFIRM_RESTORE}">
+							<a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" aria-label="{@database.restore} {file.FILE_NAME}" data-confirmation="{@database.confirm.restoration}">
 								<i class="fa fa-server" aria-hidden="true"></i>
 								{file.FILE_NAME}
 							</a>
@@ -494,8 +474,8 @@
 						<td>{file.WEIGHT}</td>
 						<td>{file.FILE_DATE}</td>
 						<td>
-							<a href="admin_database.php?read_file={file.FILE_NAME}&amp;token={TOKEN}" aria-label="{L_DOWNLOAD}"><i class="fa fa-fw fa-download" aria-hidden="true"></i></a>
-							<a href="admin_database.php?action=restore&amp;del={file.FILE_NAME}&amp;token={TOKEN}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+							<a href="admin_database.php?read_file={file.FILE_NAME}&amp;token={TOKEN}" aria-label="{@database.download}"><i class="fa fa-fw fa-download" aria-hidden="true"></i></a>
+							<a href="admin_database.php?action=restore&amp;del={file.FILE_NAME}&amp;token={TOKEN}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 						</td>
 					</tr>
 				# END file #
