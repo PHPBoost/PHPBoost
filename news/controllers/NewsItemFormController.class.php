@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 02
+ * @version     PHPBoost 6.0 - last update: 2020 12 04
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -478,9 +478,9 @@ class NewsItemFormController extends ModuleController
 
 		if ($this->get_news()->get_id() === null)
 		{
-			$graphical_environment->set_page_title($this->lang['news.add'], $this->lang['module.title']);
-			$breadcrumb->add($this->lang['news.add'], NewsUrlBuilder::add_item($this->item->get_id_category()));
-			$graphical_environment->get_seo_meta_data()->set_description($this->lang['news.add']);
+			$graphical_environment->set_page_title($this->lang['news.add.item'], $this->lang['module.title']);
+			$breadcrumb->add($this->lang['news.add.item'], NewsUrlBuilder::add_item($this->item->get_id_category()));
+			$graphical_environment->get_seo_meta_data()->set_description($this->lang['news.add.item']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::add_item($this->item->get_id_category()));
 		}
 		else
@@ -488,8 +488,8 @@ class NewsItemFormController extends ModuleController
 			if (!AppContext::get_session()->location_id_already_exists($location_id))
 				$graphical_environment->set_location_id($location_id);
 
-			$graphical_environment->set_page_title($this->lang['news.edit'], $this->lang['module.title']);
-			$graphical_environment->get_seo_meta_data()->set_description($this->lang['news.edit']);
+			$graphical_environment->set_page_title($this->lang['news.edit.item'], $this->lang['module.title']);
+			$graphical_environment->get_seo_meta_data()->set_description($this->lang['news.edit.item']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::edit_item($this->item->get_id()));
 
 			$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->item->get_id_category(), true));
@@ -500,7 +500,7 @@ class NewsItemFormController extends ModuleController
 			}
 			$category = $this->item->get_category();
 			$breadcrumb->add($this->item->get_title(), NewsUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title()));
-			$breadcrumb->add($this->lang['news.edit'], NewsUrlBuilder::edit_item($this->item->get_id()));
+			$breadcrumb->add($this->lang['news.edit.item'], NewsUrlBuilder::edit_item($this->item->get_id()));
 		}
 
 		return $response;

@@ -15,6 +15,7 @@
 #                     English                      #
 ####################################################
 
+// Module titles
 $lang['module.title'] = 'News';
 
 $lang['items'] = 'news';
@@ -24,32 +25,31 @@ $lang['an.item'] = 'an news';
 $lang['the.item'] = 'the news';
 $lang['my.items'] = 'My news';
 
-$lang['news.add'] = 'Add news';
-$lang['news.edit'] = 'Edit news';
-$lang['news.pending'] = 'Pending news';
+$lang['news.add.item'] = 'Add news';
+$lang['news.edit.item'] = 'Edit news';
+$lang['news.pending.items'] = 'Pending news';
 $lang['news.manage'] = 'Manage news';
 $lang['news.management'] = 'News management';
 
-$lang['news.seo.description.root'] = 'All website :site news.';
-$lang['news.seo.description.tag'] = 'All news on :subject.';
-$lang['news.seo.description.pending'] = 'All pending news.';
-
-$lang['news.view'] = 'view';
-$lang['news.views'] = 'views';
-
+// Form
 $lang['news.form.summary'] = 'News summary';
 $lang['news.form.summary.description'] = 'For the summary of the news is displayed, please activate the option in the module configuration';
 $lang['news.form.summary.enabled'] = 'Personalize news summary';
 $lang['news.form.summary.enabled.description'] = 'If unchecked, the news is automatically cut to :number characters and formatting of the text deleted.';
 $lang['news.form.top.list'] = 'Put the news on the top of the list';
 
-// Administration
-$lang['config.news.suggestions.enabled'] = 'Enable suggestions display';
+// Configuration
+$lang['news.config.suggestions.enabled'] = 'Enable suggestions display';
 
 // Feed name
 $lang['feed.name'] = 'News';
 
-// Messages
+// SEO
+$lang['news.seo.description.root'] = 'All website :site news.';
+$lang['news.seo.description.tag'] = 'All news on :subject.';
+$lang['news.seo.description.pending'] = 'All pending news.';
+
+// Messages helper
 $lang['news.message.success.add'] = 'The news <b>:title</b> has been added';
 $lang['news.message.success.edit'] = 'The news <b>:title</b> has been modified';
 $lang['news.message.success.delete'] = 'The news <b>:title</b> has been deleted';

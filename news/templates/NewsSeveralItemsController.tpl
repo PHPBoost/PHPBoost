@@ -5,8 +5,8 @@
 			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF ## ENDIF #
 		</div>
 		<h1>
-			# IF C_PENDING_NEWS #
-				{@news.pending}
+			# IF C_PENDING_ITEMS #
+				{@news.pending.items}
 			# ELSE #
 				# IF C_MEMBER_ITEMS #
 			 		{@my.items}
@@ -67,7 +67,7 @@
 									</span>
 								# ENDIF #
 								# IF items.C_VIEWS_NUMBER #
-									<span class="pinned" role="contentinfo" aria-label="{items.VIEWS_NUMBER} # IF items.C_SEVERAL_VIEWS #{@news.views}# ELSE #{@news.view}# ENDIF #"><i class="far fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span>
+									<span class="pinned" role="contentinfo" aria-label="{items.VIEWS_NUMBER} # IF items.C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #"><i class="far fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span>
 								# ENDIF #
 							</div>
 							# IF items.C_CONTROLS #

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 13
+ * @version     PHPBoost 6.0 - last update: 2020 12 04
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -64,7 +64,7 @@ class NewsPendingItemsController extends ModuleController
 		)));
 
 		$this->view->put_all(array(
-			'C_PENDING_NEWS' => true,
+			'C_PENDING_ITEMS' => true,
 			'C_GRID_VIEW' => $this->config->get_display_type() == NewsConfig::GRID_VIEW,
 			'C_LIST_VIEW' => $this->config->get_display_type() == NewsConfig::LIST_VIEW,
 			'C_FULL_ITEM_DISPLAY' => $this->config->get_full_item_display(),
@@ -123,13 +123,13 @@ class NewsPendingItemsController extends ModuleController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['news.pending'], $this->lang['module.title'], $page);
+		$graphical_environment->set_page_title($this->lang['news.pending.items'], $this->lang['module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['news.seo.description.pending'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::display_pending_items($page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], NewsUrlBuilder::home());
-		$breadcrumb->add($this->lang['news.pending'], NewsUrlBuilder::display_pending_items($page));
+		$breadcrumb->add($this->lang['news.pending.items'], NewsUrlBuilder::display_pending_items($page));
 
 		return $response;
 	}

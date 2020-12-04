@@ -15,6 +15,7 @@
 #                     French                       #
 ####################################################
 
+// Module title
 $lang['module.title'] = 'News';
 
 $lang['items'] = 'news';
@@ -24,32 +25,31 @@ $lang['an.item'] = 'une news';
 $lang['the.item'] = 'la news';
 $lang['my.items'] = 'Mes news';
 
-$lang['news.add'] = 'Ajouter une news';
-$lang['news.edit'] = 'Modifier une news';
-$lang['news.pending'] = 'News en attente';
+$lang['news.add.item'] = 'Ajouter une news';
+$lang['news.edit.item'] = 'Modifier une news';
+$lang['news.pending.items'] = 'News en attente';
 $lang['news.manage'] = 'Gérer les news';
 $lang['news.management'] = 'Gestion des news';
 
-$lang['news.seo.description.root'] = 'Toutes les news du site :site.';
-$lang['news.seo.description.tag'] = 'Toutes les news sur le sujet :subject.';
-$lang['news.seo.description.pending'] = 'Toutes les news en attente.';
-
-$lang['news.view'] = 'vue';
-$lang['news.views'] = 'vues';
-
+// Form
 $lang['news.form.summary'] = 'Résumé de la news';
 $lang['news.form.summary.description'] = 'Pour que le résumé de la news soit affiché, veuillez activer l\'option dans la configuration du module';
 $lang['news.form.summary.enabled'] = 'Personnaliser le résumé de la news';
 $lang['news.form.summary.enabled.description'] = 'Si non coché, la news est automatiquement coupée à :number caractères et le formatage du texte supprimé.';
 $lang['news.form.top.list'] = 'Placer la news en tête de liste';
 
-// Administration
-$lang['config.news.suggestions.enabled'] = 'Activer l\'affichage des suggestions';
+// Configuration
+$lang['news.config.suggestions.enabled'] = 'Activer l\'affichage des suggestions';
 
 // Feed name
 $lang['feed.name'] = 'Actualités';
 
-// Messages
+// SEO
+$lang['news.seo.description.root'] = 'Toutes les news du site :site.';
+$lang['news.seo.description.tag'] = 'Toutes les news sur le sujet :subject.';
+$lang['news.seo.description.pending'] = 'Toutes les news en attente.';
+
+// Messages helper
 $lang['news.message.success.add'] = 'La news <b>:title</b> a été ajoutée';
 $lang['news.message.success.edit'] = 'La news <b>:title</b> a été modifiée';
 $lang['news.message.success.delete'] = 'La news <b>:title</b> a été supprimée';

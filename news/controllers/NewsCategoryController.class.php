@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 10 19
+ * @version     PHPBoost 6.0 - last update: 2020 12 04
  * @since       PHPBoost 4.0 - 2013 02 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -31,9 +31,11 @@ class NewsCategoryController extends ModuleController
 
 	private function init()
 	{
+		$common_lang = LangLoader::get('common');
 		$this->lang = LangLoader::get('common', 'news');
 		$this->view = new FileTemplate('news/NewsSeveralItemsController.tpl');
 		$this->view->add_lang($this->lang);
+		$this->view->add_lang($common_lang);
 		$this->config = NewsConfig::load();
 	}
 
