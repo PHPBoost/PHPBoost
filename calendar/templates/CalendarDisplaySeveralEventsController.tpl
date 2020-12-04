@@ -10,7 +10,7 @@
 				{@calendar.pending.events}
 			# ELSE #
 				# IF C_MEMBER_ITEMS #
-					{@items.mine}
+					{@my.items}
 				# ELSE #
 					{@module.title}
 				# ENDIF #

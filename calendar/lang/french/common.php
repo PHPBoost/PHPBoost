@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 08 28
+ * @version     PHPBoost 6.0 - last update: 2020 12 04
  * @since       PHPBoost 4.0 - 2013 08 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -23,7 +23,7 @@ $lang['item'] = 'événement';
 
 $lang['an.item'] = 'un événement';
 $lang['the.item'] = 'l\'événement';
-$lang['items.mine'] = 'Mes événements';
+$lang['my.items'] = 'Mes événements';
 
 // Configuration
 $lang['calendar.default.contents'] = 'Contenu par défaut d\'un événement';

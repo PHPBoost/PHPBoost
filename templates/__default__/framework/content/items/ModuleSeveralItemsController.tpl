@@ -9,7 +9,7 @@
 				{@items.pending}
 			# ELSE #
 				# IF C_MEMBER_ITEMS #
-					{@items.mine}
+					{@my.items}
 				# ELSE #
 					{MODULE_NAME}# IF C_CATEGORY ## IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF #
 				# ENDIF #

@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 28
+ * @version     PHPBoost 6.0 - last update: 2020 12 04
  * @since       PHPBoost 6.0 - 2020 01 22
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DefaultSeveralItemsController extends AbstractItemController
@@ -41,7 +42,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 	{
 		$requested_sort_field = $this->request->get_getstring('field', '');
 		$requested_sort_mode = $this->request->get_getstring('sort', '');
-		
+
 		$this->sort_field = (in_array($requested_sort_field, array_keys(Item::get_sorting_fields_list())) ? $requested_sort_field : $this->config->get_items_default_sort_field());
 		$this->sort_mode = (in_array(TextHelper::strtoupper($requested_sort_mode), array(Item::ASC, Item::DESC)) ? $requested_sort_mode : $this->config->get_items_default_sort_mode());
 		$this->page = $this->request->get_getint('page', 1);
@@ -49,7 +50,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 
 		$now = new Date();
 		$this->sql_parameters['timestamp_now'] = $now->get_timestamp();
-		
+
 		if (TextHelper::strstr($this->request->get_current_url(), '/tag/'))
 		{
 			if (self::get_module()->get_configuration()->has_categories())
@@ -57,7 +58,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 				$this->sql_condition = 'WHERE keywords_relations.id_keyword = :id_keyword
 				AND id_category IN :authorized_categories
 				AND (published = ' . Item::PUBLISHED . (self::get_module()->get_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))' : '') . ')';
-				
+
 				$this->sql_parameters['authorized_categories'] = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $this->config->get_summary_displayed_to_guests());
 			}
 			else
@@ -65,9 +66,9 @@ class DefaultSeveralItemsController extends AbstractItemController
 				$this->sql_condition = 'WHERE keywords_relations.id_keyword = :id_keyword
 				AND (published = ' . Item::PUBLISHED . (self::get_module()->get_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))' : '') . ')';
 			}
-			
+
 			$this->sql_parameters['id_keyword'] = $this->get_keyword()->get_id();
-			
+
 			$this->page_title = $this->get_keyword()->get_name();
 			$this->page_description = StringVars::replace_vars($this->items_lang['items.seo.description.tag'], array('subject' => $this->get_keyword()->get_name()));
 			$this->current_url = ItemsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
@@ -81,7 +82,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 				$this->sql_condition = 'WHERE id_category IN :authorized_categories
 				AND author_user_id = :user_id
 				AND (published = ' . Item::PUBLISHED . (self::get_module()->get_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))' : '') . ')';
-				
+
 				$this->sql_parameters['authorized_categories'] = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $this->config->get_summary_displayed_to_guests());
 			}
 			else
@@ -89,14 +90,14 @@ class DefaultSeveralItemsController extends AbstractItemController
 				$this->sql_condition = 'WHERE author_user_id = :user_id
 				AND (published = ' . Item::PUBLISHED . (self::get_module()->get_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))' : '') . ')';
 			}
-			
+
 			$this->sql_parameters['user_id'] = AppContext::get_current_user()->get_id();
-			
-			$this->page_title = $this->items_lang['items.mine'];
+
+			$this->page_title = $this->items_lang['my.items'];
 			$this->current_url = ItemsUrlBuilder::display_member_items(self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
 			$this->pagination_url = ItemsUrlBuilder::display_member_items(self::$module_id, $this->sort_field, $this->sort_mode, '%d');
 			$this->url_without_sorting_parameters = ItemsUrlBuilder::display_member_items(self::$module_id);
-			
+
 			$this->view->put('C_MEMBER_ITEMS', true);
 		}
 		else if (TextHelper::strstr($this->request->get_current_url(), '/pending/'))
@@ -106,7 +107,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 				$this->sql_condition = 'WHERE id_category IN :authorized_categories
 				' . (!CategoriesAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
 				AND (published = ' . Item::NOT_PUBLISHED . (self::get_module()->get_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND (publishing_start_date > :timestamp_now OR (publishing_end_date != 0 AND publishing_end_date < :timestamp_now)))' : '') . ')';
-				
+
 				$this->sql_parameters['authorized_categories'] = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $this->config->get_summary_displayed_to_guests());
 			}
 			else
@@ -114,15 +115,15 @@ class DefaultSeveralItemsController extends AbstractItemController
 				$this->sql_condition = 'WHERE ' . (!ItemsAuthorizationsService::check_authorizations()->moderation() ? 'author_user_id = :user_id AND ' : '') . '
 				(published = ' . Item::NOT_PUBLISHED . (self::get_module()->get_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND (publishing_start_date > :timestamp_now OR (publishing_end_date != 0 AND publishing_end_date < :timestamp_now)))' : '') . ')';
 			}
-			
+
 			$this->sql_parameters['user_id'] = AppContext::get_current_user()->get_id();
-			
+
 			$this->page_title = $this->items_lang['items.pending'];
 			$this->page_description = $this->items_lang['items.seo.description.pending'];
 			$this->current_url = ItemsUrlBuilder::display_pending(self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
 			$this->pagination_url = ItemsUrlBuilder::display_pending(self::$module_id, $this->sort_field, $this->sort_mode, '%d');
 			$this->url_without_sorting_parameters = ItemsUrlBuilder::display_pending(self::$module_id);
-			
+
 			$this->view->put('C_PENDING', true);
 		}
 		else
@@ -131,9 +132,9 @@ class DefaultSeveralItemsController extends AbstractItemController
 			{
 				$this->sql_condition = 'WHERE id_category = :id_category
 				AND (published = ' . Item::PUBLISHED . (self::get_module()->get_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))' : '') . ')';
-				
+
 				$this->sql_parameters['id_category'] = $this->get_category()->get_id();
-				
+
 				$this->page_title = $this->category->get_id() != Category::ROOT_CATEGORY ? $this->category->get_name() : self::get_module()->get_configuration()->get_name();
 				$this->page_description = method_exists($this->category, 'get_description') ? $this->category->get_description() : '';
 				if (!$this->page_description)
@@ -141,18 +142,18 @@ class DefaultSeveralItemsController extends AbstractItemController
 				$this->current_url = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
 				$this->pagination_url = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id, $this->sort_field, $this->sort_mode, '%d', $this->subcategories_page);
 				$this->url_without_sorting_parameters = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id);
-				
+
 				$this->view->put_all(array(
 					'C_SYNDICATION' => true,
 					'U_SYNDICATION' => SyndicationUrlBuilder::rss(self::$module_id, $this->get_category()->get_id())->rel()
 				));
-				
+
 				$this->build_categories_listing_view();
 			}
 			else
 			{
 				$this->sql_condition = 'WHERE (published = ' . Item::PUBLISHED . (self::get_module()->get_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))' : '') . ')';
-				
+
 				$this->page_title = self::get_module()->get_configuration()->get_name();
 				$this->page_description = StringVars::replace_vars($this->items_lang['items.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name()));
 				$this->current_url = ItemsUrlBuilder::display_category(Category::ROOT_CATEGORY, 'root', self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
@@ -195,7 +196,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 		$sorting_fields_list = Item::get_sorting_fields_list();
 		$sort_field = $sorting_fields_list[$this->sort_field];
 		$items = self::get_items_manager()->get_items($this->sql_condition, $this->sql_parameters, $pagination->get_number_items_per_page(), $pagination->get_display_from(), $sort_field['database_field'], TextHelper::strtoupper($this->sort_mode), $this->keyword !== null);
-		
+
 		$this->view->put_all(array(
 			'C_ITEMS'         => !empty($items),
 			'C_SEVERAL_ITEMS' => count($items) > 1,
@@ -204,7 +205,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 			'CATEGORY_NAME'   => $this->keyword !== null ? $this->get_keyword()->get_name() : ($this->category !== null ? $this->get_category()->get_name() : ''),
 			'SORTING_FORM'    => $this->build_sorting_form()
 		));
-		
+
 		foreach ($items as $item)
 		{
 			$this->view->assign_block_vars('items', $item->get_template_vars());
@@ -228,17 +229,17 @@ class DefaultSeveralItemsController extends AbstractItemController
 		$fields_list = $item_class_name::get_sorting_field_options();
 		if (TextHelper::strstr($this->request->get_current_url(), '/my_items/'))
 			unset($fields_list['author']);
-		
+
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_field', '', $this->sort_field, $fields_list,
 			array(
-				'select_to_list' => true, 
+				'select_to_list' => true,
 				'events'         => array('change' => 'document.location = "' . $this->url_without_sorting_parameters->rel() . '" + HTMLForms.getField("sort_field").getValue() + "/' . $this->sort_mode . '"' . ($this->page > 1 ? ' + "/' . $this->page . '"' : '') . ';')
 			)
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $this->sort_mode, $item_class_name::get_sorting_mode_options(),
 			array(
-				'select_to_list' => true, 
+				'select_to_list' => true,
 				'events'         => array('change' => 'document.location = "' . $this->url_without_sorting_parameters->rel() . '" + HTMLForms.getField("sort_field").getValue() + "/" + HTMLForms.getField("sort_mode").getValue()' . ($this->page > 1 ? ' + "/' . $this->page . '"' : '') . ';')
 			)
 		));
@@ -287,7 +288,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 				'CATEGORY_DESCRIPTION'   => $category_description
 			));
 		}
-		
+
 		if (method_exists($this->get_category(), 'get_thumbnail'))
 		{
 			$category_thumbnail = $this->get_category()->get_thumbnail()->rel();
@@ -319,7 +320,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 		}
 		else
 			$items_number = self::get_items_manager()->count($this->sql_condition, $this->sql_parameters);
-		
+
 		$pagination = new ModulePagination($this->page, $items_number, $this->config->get_items_per_page());
 		$pagination->set_url($this->pagination_url);
 
@@ -348,7 +349,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 	protected function check_authorizations()
 	{
 		$authorizations = self::get_module()->get_configuration()->has_categories() ? CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id(), self::$module_id) : ItemsAuthorizationsService::check_authorizations(self::$module_id);
-		
+
 		if ($this->category !== null)
 			return ((AppContext::get_current_user()->is_guest() && $this->config->get_summary_displayed_to_guests() && Authorizations::check_auth(RANK_TYPE, User::MEMBER_LEVEL, $this->get_category()->get_authorizations(), Category::READ_AUTHORIZATIONS)) || $authorizations->read()) ? true : $this->display_user_not_authorized_page();
 		else if ($this->keyword !== null)
@@ -374,7 +375,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 		{
 			$sort_field = ($this->sort_field != $this->config->get_items_default_sort_field() || $this->sort_mode != $this->config->get_items_default_sort_mode()) ? $this->sort_field : '';
 			$sort_mode = $this->sort_mode != $this->config->get_items_default_sort_mode() ? $this->sort_mode : '';
-			
+
 			$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->category->get_id(), true));
 			foreach ($categories as $id => $category)
 			{

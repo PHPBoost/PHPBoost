@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 13
+ * @version     PHPBoost 6.0 - last update: 2020 12 04
  * @since       PHPBoost 4.0 - 2013 02 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -22,7 +22,7 @@ $lang['item'] = 'news';
 
 $lang['an.item'] = 'an news';
 $lang['the.item'] = 'the news';
-$lang['items.mine'] = 'My news';
+$lang['my.items'] = 'My news';
 
 $lang['news.add'] = 'Add news';
 $lang['news.edit'] = 'Edit news';
