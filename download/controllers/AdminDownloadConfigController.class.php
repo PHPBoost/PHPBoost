@@ -91,7 +91,7 @@ class AdminDownloadConfigController extends AdminModuleController
 			array('class' => 'custom-checkbox')
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('nb_view_enabled', $this->lang['admin.config.download_views_number_enabled'], $this->config->get_enabled_views_number(),
+		$fieldset->add_field(new FormFieldCheckbox('nb_view_enabled', $this->lang['download.config.views.number.enabled'], $this->config->get_enabled_views_number(),
 			array('class' => 'custom-checkbox')
 		));$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->admin_common_lang['config.root_category_description'], $this->config->get_root_category_description(),
 			array('rows' => 8, 'cols' => 47)
@@ -163,11 +163,11 @@ class AdminDownloadConfigController extends AdminModuleController
 			)
 		));
 
-        $fieldset->add_field(new FormFieldRichTextEditor('default_contents', $this->lang['download.default.contents'], $this->config->get_default_contents(),
+        $fieldset->add_field(new FormFieldRichTextEditor('default_contents', $this->lang['download.config.default.contents'], $this->config->get_default_contents(),
 			array('rows' => 8, 'cols' => 47)
 		));
 
-		$fieldset = new FormFieldsetHTML('menu', $this->lang['config.downloaded.files.menu']);
+		$fieldset = new FormFieldsetHTML('menu', $this->lang['download.config.mini.module']);
 		$form->add_fieldset($fieldset);
 
 		$sort_options = array(
@@ -185,16 +185,16 @@ class AdminDownloadConfigController extends AdminModuleController
 		if ($this->content_management_config->module_notation_is_enabled('download'))
 			$sort_options[] = new FormFieldSelectChoiceOption($this->common_lang['sort_by.best.note'], DownloadFile::SORT_NOTATION, array('data_option_icon' => 'far fa-star'));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_type', $this->lang['config.sort_type'], $this->config->get_sort_type(), $sort_options,
-			array('select_to_list' => true, 'description' => $this->lang['config.sort_type.explain'])
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_type', $this->lang['download.config.sort.type'], $this->config->get_sort_type(), $sort_options,
+			array('select_to_list' => true, 'description' => $this->lang['download.config.sort.type.description'])
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('files_number_in_menu', $this->lang['config.files_number_in_menu'], $this->config->get_files_number_in_menu(),
+		$fieldset->add_field(new FormFieldNumberEditor('files_number_in_menu', $this->lang['download.config.items.number'], $this->config->get_files_number_in_menu(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('limit_oldest_file_day_in_menu', $this->lang['config.limit_oldest_file_day_in_menu'], $this->config->is_limit_oldest_file_day_in_menu_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('limit_oldest_file_day_in_menu', $this->lang['download.config.limit.items.age'], $this->config->is_limit_oldest_file_day_in_menu_enabled(),
 			array(
 				'class' => 'custom-checkbox',
 				'events' => array('click' => '
@@ -207,7 +207,7 @@ class AdminDownloadConfigController extends AdminModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('oldest_file_day_in_menu', $this->lang['config.oldest_file_day_in_menu'], $this->config->get_oldest_file_day_in_menu(),
+		$fieldset->add_field(new FormFieldNumberEditor('oldest_file_day_in_menu', $this->lang['download.config.max.items.age'], $this->config->get_oldest_file_day_in_menu(),
 			array('min' => 1, 'max' => 365, 'required' => true, 'hidden' => !$this->config->is_limit_oldest_file_day_in_menu_enabled()),
 			array(new FormFieldConstraintIntegerRange(1, 365))
 		));
@@ -218,7 +218,7 @@ class AdminDownloadConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset_authorizations);
 
 		$auth_settings = new AuthorizationsSettings(array_merge(RootCategory::get_authorizations_settings(), array(
-			new ActionAuthorization($this->lang['authorizations.display_download_link'], DownloadAuthorizationsService::DISPLAY_DOWNLOAD_LINK_AUTHORIZATIONS)
+			new ActionAuthorization($this->lang['download.config.download.link'], DownloadAuthorizationsService::DISPLAY_DOWNLOAD_LINK_AUTHORIZATIONS)
 		)));
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());
 		$fieldset_authorizations->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));

@@ -199,13 +199,13 @@ class DownloadDisplayPendingDownloadFilesController extends ModuleController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['download.pending'], $this->lang['module.title'], $page);
+		$graphical_environment->set_page_title($this->lang['download.pending.items'], $this->lang['module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['download.seo.description.pending'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::display_pending($sort_field, $sort_mode, $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], DownloadUrlBuilder::home());
-		$breadcrumb->add($this->lang['download.pending'], DownloadUrlBuilder::display_pending($sort_field, $sort_mode, $page));
+		$breadcrumb->add($this->lang['download.pending.items'], DownloadUrlBuilder::display_pending($sort_field, $sort_mode, $page));
 
 		return $response;
 	}

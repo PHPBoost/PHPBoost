@@ -22,7 +22,7 @@ class DownloadModuleMiniMenu extends ModuleMiniMenu
 
 	public function get_menu_title()
 	{
-		return DownloadConfig::load()->is_sort_type_date() ? LangLoader::get_message('last.download.files', 'common', 'download') : LangLoader::get_message('most.downloaded.files', 'common', 'download');
+		return DownloadConfig::load()->is_sort_type_date() ? LangLoader::get_message('download.last.items', 'common', 'download') : LangLoader::get_message('download.most.downloaded.items', 'common', 'download');
 	}
 
 	public function is_displayed()

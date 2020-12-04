@@ -5,7 +5,7 @@
 			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF ## ENDIF #
 		</div>
 		<h1>
-			# IF C_PENDING #{@download.pending}# ELSE #{@module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF #
+			# IF C_PENDING #{@download.pending.items}# ELSE #{@module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF #
 		</h1>
 	</header>
 
@@ -178,7 +178,7 @@
 										<span></span>
 										<span>
 											<a href="{items.U_DOWNLOAD}" class="button submit small">
-												<i class="fa fa-download" aria-hidden="true"></i> {@download}
+												<i class="fa fa-download" aria-hidden="true"></i> {@download.download}
 											</a>
 											# IF IS_USER_CONNECTED #
 												<a href="{items.U_DEADLINK}" data-confirmation="${LangLoader::get_message('deadlink.confirmation', 'common')}" class="button bgc-full warning small" aria-label="${LangLoader::get_message('deadlink', 'common')}">

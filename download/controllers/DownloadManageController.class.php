@@ -55,7 +55,7 @@ class DownloadManageController extends AdminModuleController
 
 		$table_model = new SQLHTMLTableModel(DownloadSetup::$download_table, 'table', $columns, new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
 
-		$table_model->set_caption($this->lang['download.management']);
+		$table_model->set_caption($this->lang['download.items.management']);
 
 		$table = new HTMLTable($table_model);
 
@@ -138,13 +138,13 @@ class DownloadManageController extends AdminModuleController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['download.management'], $this->lang['module.title'], $page);
+		$graphical_environment->set_page_title($this->lang['download.items.management'], $this->lang['module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::manage());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], DownloadUrlBuilder::home());
 
-		$breadcrumb->add($this->lang['download.management'], DownloadUrlBuilder::manage());
+		$breadcrumb->add($this->lang['download.items.management'], DownloadUrlBuilder::manage());
 
 		return $response;
 	}

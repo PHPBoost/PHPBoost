@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 23
+ * @version     PHPBoost 6.0 - last update: 2020 12 04
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -108,7 +108,7 @@ class DownloadSetup extends DefaultModuleSetup
 			'rewrited_name' => Url::encode_rewrite($this->messages['default.cat.name']),
 			'name' => $this->messages['default.cat.name'],
 			'description' => $this->messages['default.cat.description'],
-			'thumbnail' => '/templates/default/images/default_category_thumbnail.png'
+			'thumbnail' => '/templates/__default__/images/default_category_thumbnail.png'
 		));
 	}
 
@@ -133,7 +133,7 @@ class DownloadSetup extends DefaultModuleSetup
 			'downloads_number' => 0,
 			'views_number' => 0,
 			'sources' => TextHelper::serialize(array()),
-			'picture_url' => '/templates/default/images/default_item_thumbnail.png'
+			'picture_url' => '/templates/__default__/images/default_item_thumbnail.png'
 		));
 	}
 }

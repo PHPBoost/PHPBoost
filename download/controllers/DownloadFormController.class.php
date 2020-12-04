@@ -64,7 +64,7 @@ class DownloadFormController extends ModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('download', $this->get_downloadfile()->get_id() === null ? $this->lang['download.add'] : $this->lang['download.edit']);
+		$fieldset = new FormFieldsetHTMLHeading('download', $this->get_downloadfile()->get_id() === null ? $this->lang['download.add.item'] : $this->lang['download.edit.item']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('title', $this->common_lang['form.name'], $this->get_downloadfile()->get_title(), array('required' => true)));
@@ -79,7 +79,7 @@ class DownloadFormController extends ModuleController
 
 		$fieldset->add_field(new FormFieldUploadFile('url', $this->common_lang['form.url'], $this->get_downloadfile()->get_url()->relative(), array('required' => true)));
 
-		$fieldset->add_field(new FormFieldCheckbox('determine_file_size_automatically_enabled', $this->lang['download.form.determine.file.size.automatically'], $this->is_file_size_automatic(),
+		$fieldset->add_field(new FormFieldCheckbox('determine_file_size_automatically_enabled', $this->lang['download.form.file.size.auto'], $this->is_file_size_automatic(),
 			array(
 				'events' => array('click' => '
 					if (HTMLForms.getField("determine_file_size_automatically_enabled").getValue()) {
@@ -170,7 +170,7 @@ class DownloadFormController extends ModuleController
 
 		$options_fieldset->add_field(new FormFieldUploadPictureFile('thumbnail', $this->common_lang['form.picture'], $this->get_downloadfile()->get_thumbnail()->relative()));
 
-		$options_fieldset->add_field(new FormFieldTextEditor('software_version', $this->lang['software.version'], $this->get_downloadfile()->get_software_version()));
+		$options_fieldset->add_field(new FormFieldTextEditor('software_version', $this->lang['download.version'], $this->get_downloadfile()->get_software_version()));
 
 		$options_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_downloadfile()->get_id(), 'keywords', $this->common_lang['form.keywords'],
 			array('description' => $this->common_lang['form.keywords.description'])
@@ -498,16 +498,16 @@ class DownloadFormController extends ModuleController
 		elseif ($item->is_visible())
 		{
 			if ($this->is_new_item)
-				AppContext::get_response()->redirect(DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()), StringVars::replace_vars($this->lang['download.message.success.add'], array('name' => $item->get_title())));
+				AppContext::get_response()->redirect(DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()), StringVars::replace_vars($this->lang['download.message.success.add'], array('title' => $item->get_title())));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title())), StringVars::replace_vars($this->lang['download.message.success.edit'], array('name' => $item->get_title())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title())), StringVars::replace_vars($this->lang['download.message.success.edit'], array('title' => $item->get_title())));
 		}
 		else
 		{
 			if ($this->is_new_item)
-				AppContext::get_response()->redirect(DownloadUrlBuilder::display_pending(), StringVars::replace_vars($this->lang['download.message.success.add'], array('name' => $item->get_title())));
+				AppContext::get_response()->redirect(DownloadUrlBuilder::display_pending(), StringVars::replace_vars($this->lang['download.message.success.add'], array('title' => $item->get_title())));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : DownloadUrlBuilder::display_pending()), StringVars::replace_vars($this->lang['download.message.success.edit'], array('name' => $item->get_title())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : DownloadUrlBuilder::display_pending()), StringVars::replace_vars($this->lang['download.message.success.edit'], array('title' => $item->get_title())));
 		}
 	}
 
@@ -525,9 +525,9 @@ class DownloadFormController extends ModuleController
 
 		if ($item->get_id() === null)
 		{
-			$graphical_environment->set_page_title($this->lang['download.add'], $this->lang['module.title']);
-			$breadcrumb->add($this->lang['download.add'], DownloadUrlBuilder::add($item->get_id_category()));
-			$graphical_environment->get_seo_meta_data()->set_description($this->lang['download.add']);
+			$graphical_environment->set_page_title($this->lang['download.add.item'], $this->lang['module.title']);
+			$breadcrumb->add($this->lang['download.add.item'], DownloadUrlBuilder::add($item->get_id_category()));
+			$graphical_environment->get_seo_meta_data()->set_description($this->lang['download.add.item']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::add($item->get_id_category()));
 		}
 		else
@@ -535,8 +535,8 @@ class DownloadFormController extends ModuleController
 			if (!AppContext::get_session()->location_id_already_exists($location_id))
 				$graphical_environment->set_location_id($location_id);
 
-			$graphical_environment->set_page_title($this->lang['download.edit'], $this->lang['module.title']);
-			$graphical_environment->get_seo_meta_data()->set_description($this->lang['download.edit']);
+			$graphical_environment->set_page_title($this->lang['download.edit.item'], $this->lang['module.title']);
+			$graphical_environment->get_seo_meta_data()->set_description($this->lang['download.edit.item']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::edit($item->get_id()));
 
 			$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($item->get_id_category(), true));
@@ -547,7 +547,7 @@ class DownloadFormController extends ModuleController
 			}
 			$category = $item->get_category();
 			$breadcrumb->add($item->get_title(), DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()));
-			$breadcrumb->add($this->lang['download.edit'], DownloadUrlBuilder::edit($item->get_id()));
+			$breadcrumb->add($this->lang['download.edit.item'], DownloadUrlBuilder::edit($item->get_id()));
 		}
 
 		return $response;

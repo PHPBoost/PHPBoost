@@ -21,7 +21,7 @@
 		<div class="content cell-tile">
 			<div class="cell cell-options">
 				<div class="cell-header">
-					<h6 class="cell-name">{@file.infos}</h6>
+					<h6 class="cell-name">{@download.item.infos}</h6>
 				</div>
 				# IF C_HAS_THUMBNAIL #
 					<div class="cell-body">
@@ -36,7 +36,7 @@
 							# IF C_DISPLAY_DOWNLOAD_LINK #
 								<li class="li-stretch">
 									<a href="{U_DOWNLOAD}" class="button submit">
-										<i class="fa fa-download" aria-hidden="true"></i> {@download}
+										<i class="fa fa-download" aria-hidden="true"></i> {@download.download}
 									</a>
 									# IF IS_USER_CONNECTED #
 										<a href="{U_DEADLINK}" data-confirmation="${LangLoader::get_message('deadlink.confirmation', 'common')}" class="button bgc-full warning" aria-label="${LangLoader::get_message('deadlink', 'common')}">
@@ -48,7 +48,7 @@
 								<li># INCLUDE UNAUTHORIZED_TO_DOWNLOAD_MESSAGE #</li>
 							# ENDIF #
 						# ENDIF #
-						# IF C_SOFTWARE_VERSION #<li class="li-stretch"><span class="text-strong">{@software.version} : </span><span>{SOFTWARE_VERSION}</span></li># ENDIF #
+						# IF C_SOFTWARE_VERSION #<li class="li-stretch"><span class="text-strong">{@download.version} : </span><span>{SOFTWARE_VERSION}</span></li># ENDIF #
 						<li class="li-stretch"><span class="text-strong">${LangLoader::get_message('size', 'common')} : </span><span># IF C_SIZE #{SIZE}# ELSE #${LangLoader::get_message('unknown_size', 'common')}# ENDIF #</span></li>
 						<li class="li-stretch"><span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} : </span><time datetime="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT C_DIFFERED #{DATE}# ELSE #{DIFFERED_START_DATE}# ENDIF #</time></li>
 						# IF C_UPDATED_DATE #<li class="li-stretch"><span class="text-strong">${LangLoader::get_message('form.date.update', 'common')} : </span><time datetime="{UPDATED_DATE_ISO8601}" itemprop="dateModified">{UPDATED_DATE}</time></li># ENDIF #
