@@ -3,18 +3,18 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 02 11
+ * @version     PHPBoost 6.0 - last update: 2020 12 04
  * @since       PHPBoost 4.0 - 2014 08 24
 */
 
 class DownloadCommentsTopic extends CommentsTopic
 {
-	private $downloadfile;
+	private $item;
 
-	public function __construct(DownloadFile $downloadfile = null)
+	public function __construct(DownloadFile $item = null)
 	{
 		parent::__construct('download');
-		$this->downloadfile = $downloadfile;
+		$this->item = $item;
 	}
 
 	public function get_authorizations()
@@ -31,11 +31,11 @@ class DownloadCommentsTopic extends CommentsTopic
 
 	private function get_downloadfile()
 	{
-		if ($this->downloadfile === null)
+		if ($this->item === null)
 		{
-			$this->downloadfile = DownloadService::get_downloadfile('WHERE download.id=:id', array('id' => $this->get_id_in_module()));
+			$this->item = DownloadService::get_downloadfile('WHERE download.id=:id', array('id' => $this->get_id_in_module()));
 		}
-		return $this->downloadfile;
+		return $this->item;
 	}
 }
 ?>

@@ -16,25 +16,25 @@
 			</tr>
 		</thead>
 		<tbody>
-			# IF C_FILES #
-				# START downloadfiles #
-					<tr class="category-{downloadfiles.CATEGORY_ID}">
-						<td># IF C_SORT_BY_DATE #<time datetime="{downloadfiles.DATE_ISO8601}">{downloadfiles.DATE_DAY_MONTH}</time># ELSE #{downloadfiles.DISPLAYED_POSITION}# ENDIF #</td>
+			# IF C_ITEMS #
+				# START items #
+					<tr class="category-{items.CATEGORY_ID}">
+						<td># IF C_SORT_BY_DATE #<time datetime="{items.DATE_ISO8601}">{items.DATE_DAY_MONTH}</time># ELSE #{items.DISPLAYED_POSITION}# ENDIF #</td>
 						<td# IF C_SORT_BY_NOTATION # class="mini-download-table-name"# ENDIF #>
-							<a href="{downloadfiles.U_ITEM}">
-								{downloadfiles.TITLE}
+							<a href="{items.U_ITEM}">
+								{items.TITLE}
 							</a>
 							<p class="align-right small">
-								<a href="{downloadfiles.U_CATEGORY}">
-									<i class="far fa-folder"></i> {downloadfiles.CATEGORY_NAME}
+								<a href="{items.U_CATEGORY}">
+									<i class="far fa-folder"></i> {items.CATEGORY_NAME}
 								</a>
 							</p>
 						</td>
 						# IF NOT C_SORT_BY_DATE #
-							<td># IF C_SORT_BY_DOWNLOADS_NUMBER #{downloadfiles.DOWNLOADS_NUMBER}# ELSE #{downloadfiles.STATIC_NOTATION}# ENDIF #</td>
+							<td># IF C_SORT_BY_DOWNLOADS_NUMBER #{items.DOWNLOADS_NUMBER}# ELSE #{items.STATIC_NOTATION}# ENDIF #</td>
 						# ENDIF #
 					</tr>
-				# END downloadfiles #
+				# END items #
 			# ELSE #
 				<tr>
 					<td colspan="# IF C_SORT_BY_DATE #2# ELSE #3# ENDIF #">${LangLoader::get_message('no_item_now', 'common')}</td>

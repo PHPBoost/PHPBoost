@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 10 31
+ * @version     PHPBoost 6.0 - last update: 2020 12 04
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -39,8 +39,8 @@ class AdminDownloadConfigController extends AdminModuleController
 
 		$this->build_form();
 
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$view = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+		$view->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -50,12 +50,12 @@ class AdminDownloadConfigController extends AdminModuleController
 			$this->form->get_field_by_id('full_item_display')->set_hidden($this->config->get_display_type() !== DownloadConfig::LIST_VIEW);
 			$this->form->get_field_by_id('items_per_row')->set_hidden($this->config->get_display_type() !== DownloadConfig::GRID_VIEW);
 			$this->form->get_field_by_id('oldest_file_day_in_menu')->set_hidden(!$this->config->is_limit_oldest_file_day_in_menu_enabled());
-			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+			$view->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$view->put('FORM', $this->form->display());
 
-		return new DefaultAdminDisplayResponse($tpl);
+		return new DefaultAdminDisplayResponse($view);
 	}
 
 	private function init()

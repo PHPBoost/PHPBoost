@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 045 08
+ * @version     PHPBoost 6.0 - last update: 2020 12 04
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -69,26 +69,26 @@ class DownloadManageController extends AdminModuleController
 		);
 		foreach ($result as $row)
 		{
-			$downloadfile = new DownloadFile();
-			$downloadfile->set_properties($row);
-			$category = $downloadfile->get_category();
-			$user = $downloadfile->get_author_user();
+			$item = new DownloadFile();
+			$item->set_properties($row);
+			$category = $item->get_category();
+			$user = $item->get_author_user();
 
 			$this->elements_number++;
-			$this->ids[$this->elements_number] = $downloadfile->get_id();
+			$this->ids[$this->elements_number] = $item->get_id();
 
-			$edit_link = new EditLinkHTMLElement(DownloadUrlBuilder::edit($downloadfile->get_id()));
-			$delete_link = new DeleteLinkHTMLElement(DownloadUrlBuilder::delete($downloadfile->get_id()));
+			$edit_link = new EditLinkHTMLElement(DownloadUrlBuilder::edit($item->get_id()));
+			$delete_link = new DeleteLinkHTMLElement(DownloadUrlBuilder::delete($item->get_id()));
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
 
 			$row = array(
-				new HTMLTableRowCell(new LinkHTMLElement(DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $downloadfile->get_id(), $downloadfile->get_rewrited_title()), $downloadfile->get_title()), 'left'),
+				new HTMLTableRowCell(new LinkHTMLElement(DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()), $item->get_title()), 'left'),
 				new HTMLTableRowCell(new LinkHTMLElement(DownloadUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), ($category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('none_e', 'common') : $category->get_name()))),
 				new HTMLTableRowCell($author),
-				new HTMLTableRowCell($downloadfile->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
-				new HTMLTableRowCell($downloadfile->get_status()),
+				new HTMLTableRowCell($item->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
+				new HTMLTableRowCell($item->get_status()),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display(), 'controls')
 			);
 

@@ -3,20 +3,20 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 02 11
+ * @version     PHPBoost 6.0 - last update: 2020 12 04
  * @since       PHPBoost 4.0 - 2014 08 24
 */
 
 class DownloadCache implements CacheData
 {
-	private $downloadfiles = array();
+	private $items = array();
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{
-		$this->downloadfiles = array();
+		$this->items = array();
 
 		$now = new Date();
 		$config = DownloadConfig::load();
@@ -37,33 +37,33 @@ class DownloadCache implements CacheData
 
 		while ($row = $result->fetch())
 		{
-			$this->downloadfiles[$row['id']] = $row;
+			$this->items[$row['id']] = $row;
 		}
 		$result->dispose();
 	}
 
 	public function get_downloadfiles()
 	{
-		return $this->downloadfiles;
+		return $this->items;
 	}
 
 	public function downloadfile_exists($id)
 	{
-		return array_key_exists($id, $this->downloadfiles);
+		return array_key_exists($id, $this->items);
 	}
 
 	public function get_downloadfile_item($id)
 	{
 		if ($this->downloadfile_exists($id))
 		{
-			return $this->downloadfiles[$id];
+			return $this->items[$id];
 		}
 		return null;
 	}
 
 	public function get_number_downloadfiles()
 	{
-		return count($this->downloadfiles);
+		return count($this->items);
 	}
 
 	/**

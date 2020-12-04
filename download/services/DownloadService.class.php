@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 23
+ * @version     PHPBoost 6.0 - last update: 2020 12 04
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -29,36 +29,36 @@ class DownloadService
 
 	 /**
 	 * @desc Create a new entry in the database table.
-	 * @param string[] $downloadfile : new DownloadFile
+	 * @param string[] $item : new DownloadFile
 	 */
-	public static function add(DownloadFile $downloadfile)
+	public static function add(DownloadFile $item)
 	{
-		$result = self::$db_querier->insert(DownloadSetup::$download_table, $downloadfile->get_properties());
+		$result = self::$db_querier->insert(DownloadSetup::$download_table, $item->get_properties());
 
 		return $result->get_last_inserted_id();
 	}
 
 	 /**
 	 * @desc Update an entry.
-	 * @param string[] $downloadfile : DownloadFile to update
+	 * @param string[] $item : DownloadFile to update
 	 */
-	public static function update(DownloadFile $downloadfile)
+	public static function update(DownloadFile $item)
 	{
-		self::$db_querier->update(DownloadSetup::$download_table, $downloadfile->get_properties(), 'WHERE id=:id', array('id' => $downloadfile->get_id()));
+		self::$db_querier->update(DownloadSetup::$download_table, $item->get_properties(), 'WHERE id=:id', array('id' => $item->get_id()));
 	}
 
 	 /**
 	 * @desc Update the number of downloads of a file.
-	 * @param string[] $downloadfile : DownloadFile to update
+	 * @param string[] $item : DownloadFile to update
 	 */
-	public static function update_downloads_number(DownloadFile $downloadfile)
+	public static function update_downloads_number(DownloadFile $item)
 	{
-		self::$db_querier->update(DownloadSetup::$download_table, array('downloads_number' => $downloadfile->get_downloads_number()), 'WHERE id=:id', array('id' => $downloadfile->get_id()));
+		self::$db_querier->update(DownloadSetup::$download_table, array('downloads_number' => $item->get_downloads_number()), 'WHERE id=:id', array('id' => $item->get_id()));
 	}
 
-	public static function update_views_number(DownloadFile $downloadfile)
+	public static function update_views_number(DownloadFile $item)
 	{
-		self::$db_querier->update(DownloadSetup::$download_table, array('views_number' => $downloadfile->get_views_number()), 'WHERE id=:id', array('id' => $downloadfile->get_id()));
+		self::$db_querier->update(DownloadSetup::$download_table, array('views_number' => $item->get_views_number()), 'WHERE id=:id', array('id' => $item->get_id()));
 	}
 
 	 /**
@@ -83,7 +83,7 @@ class DownloadService
 	}
 
 	 /**
-	 * @desc Return the properties of a downloadfile.
+	 * @desc Return the properties of an item.
 	 * @param string $condition : Restriction to apply to the list
 	 * @param string[] $parameters : Parameters of the condition
 	 */
@@ -96,9 +96,9 @@ class DownloadService
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = download.id AND note.module_name = \'download\' AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
 		' . $condition, $parameters);
 
-		$downloadfile = new DownloadFile();
-		$downloadfile->set_properties($row);
-		return $downloadfile;
+		$item = new DownloadFile();
+		$item->set_properties($row);
+		return $item;
 	}
 
 	public static function clear_cache()

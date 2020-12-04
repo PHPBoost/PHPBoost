@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 23
+ * @version     PHPBoost 6.0 - last update: 2020 12 04
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -12,7 +12,7 @@
 
 class DownloadDisplayDownloadFileTagController extends ModuleController
 {
-	private $tpl;
+	private $view;
 	private $lang;
 
 	private $keyword;
@@ -35,8 +35,8 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 	public function init()
 	{
 		$this->lang = LangLoader::get('common', 'download');
-		$this->tpl = new FileTemplate('download/DownloadDisplaySeveralDownloadFilesController.tpl');
-		$this->tpl->add_lang($this->lang);
+		$this->view = new FileTemplate('download/DownloadDisplaySeveralDownloadFilesController.tpl');
+		$this->view->add_lang($this->lang);
 		$this->config = DownloadConfig::load();
 		$this->comments_config = CommentsConfig::load();
 		$this->content_management_config = ContentManagementConfig::load();
@@ -85,8 +85,8 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 			'display_from' => $pagination->get_display_from()
 		)));
 
-		$this->tpl->put_all(array(
-			'C_FILES' => $result->get_rows_count() > 0,
+		$this->view->put_all(array(
+			'C_ITEMS' => $result->get_rows_count() > 0,
 			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
 			'C_GRID_VIEW' => $this->config->get_display_type() == DownloadConfig::GRID_VIEW,
 			'C_LIST_VIEW' => $this->config->get_display_type() == DownloadConfig::LIST_VIEW,
@@ -106,22 +106,22 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 
 		while ($row = $result->fetch())
 		{
-			$downloadfile = new DownloadFile();
-			$downloadfile->set_properties($row);
+			$item = new DownloadFile();
+			$item->set_properties($row);
 
-			$keywords = $downloadfile->get_keywords();
+			$keywords = $item->get_keywords();
 			$has_keywords = count($keywords) > 0;
 
-			$this->tpl->assign_block_vars('downloadfiles', array_merge($downloadfile->get_array_tpl_vars(), array(
+			$this->view->assign_block_vars('items', array_merge($item->get_array_view_vars(), array(
 				'C_KEYWORDS' => $has_keywords
 			)));
 
 			if ($has_keywords)
 				$this->build_keywords_view($keywords);
 
-			foreach ($downloadfile->get_sources() as $name => $url)
+			foreach ($item->get_sources() as $name => $url)
 			{
-				$this->tpl->assign_block_vars('downloadfiles.sources', $downloadfile->get_array_tpl_source_vars($name));
+				$this->view->assign_block_vars('items.sources', $item->get_array_view_source_vars($name));
 			}
 		}
 		$result->dispose();
@@ -165,7 +165,7 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 			array('events' => array('change' => 'document.location = "' . DownloadUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 
-		$this->tpl->put('SORT_FORM', $form->display());
+		$this->view->put('SORT_FORM', $form->display());
 	}
 
 	private function get_keyword()
@@ -193,12 +193,12 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 
 	private function get_pagination($condition, $parameters, $field, $mode, $page)
 	{
-		$result = PersistenceContext::get_querier()->select_single_row_query('SELECT COUNT(*) AS downloadfiles_number
+		$result = PersistenceContext::get_querier()->select_single_row_query('SELECT COUNT(*) AS items_number
 		FROM '. DownloadSetup::$download_table .' download
 		LEFT JOIN '. DB_TABLE_KEYWORDS_RELATIONS .' relation ON relation.module_id = \'download\' AND relation.id_in_module = download.id
 		' . $condition, $parameters);
 
-		$pagination = new ModulePagination($page, $result['downloadfiles_number'], (int)DownloadConfig::load()->get_items_per_page());
+		$pagination = new ModulePagination($page, $result['items_number'], (int)DownloadConfig::load()->get_items_per_page());
 		$pagination->set_url(DownloadUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $field, $mode, '%d'));
 
 		if ($pagination->current_page_is_empty() && $page > 1)
@@ -217,7 +217,7 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 		$i = 1;
 		foreach ($keywords as $keyword)
 		{
-			$this->tpl->assign_block_vars('downloadfiles.keywords', array(
+			$this->view->assign_block_vars('items.keywords', array(
 				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME' => $keyword->get_name(),
 				'URL' => DownloadUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
@@ -240,7 +240,7 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 		$sort_field = $request->get_getstring('field', DownloadFile::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
 		$sort_mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
 		$page = $request->get_getint('page', 1);
-		$response = new SiteDisplayResponse($this->tpl);
+		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->get_keyword()->get_name(), $this->lang['module.title'], $page);

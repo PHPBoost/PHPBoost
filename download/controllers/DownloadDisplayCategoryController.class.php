@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 10 19
+ * @version     PHPBoost 6.0 - last update: 2020 12 04
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -13,7 +13,7 @@
 class DownloadDisplayCategoryController extends ModuleController
 {
 	private $lang;
-	private $tpl;
+	private $view;
 	private $config;
 	private $comments_config;
 	private $content_management_config;
@@ -34,8 +34,8 @@ class DownloadDisplayCategoryController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'download');
-		$this->tpl = new FileTemplate('download/DownloadDisplaySeveralDownloadFilesController.tpl');
-		$this->tpl->add_lang($this->lang);
+		$this->view = new FileTemplate('download/DownloadDisplaySeveralDownloadFilesController.tpl');
+		$this->view->add_lang($this->lang);
 		$this->config = DownloadConfig::load();
 
 		$this->comments_config = CommentsConfig::load();
@@ -62,20 +62,17 @@ class DownloadDisplayCategoryController extends ModuleController
 			{
 				$category_thumbnail = $category->get_thumbnail()->rel();
 
-				$this->tpl->assign_block_vars('sub_categories_list', array(
+				$this->view->assign_block_vars('sub_categories_list', array(
 					'C_CATEGORY_THUMBNAIL' => !empty($category_thumbnail),
 					'C_SEVERAL_ITEMS' => $category->get_elements_number() > 1,
 					'CATEGORY_ID' => $category->get_id(),
 					'CATEGORY_NAME' => $category->get_name(),
 					'U_CATEGORY_THUMBNAIL' => $category_thumbnail,
-					'DOWNLOADFILES_NUMBER' => $category->get_elements_number(),
+					'ITEMS_NUMBER' => $category->get_elements_number(),
 					'U_CATEGORY' => DownloadUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel()
 				));
 			}
 		}
-
-		$number_columns_cats_display_per_line_cats = ($nbr_cat_displayed > $this->config->get_categories_per_row()) ? $this->config->get_categories_per_row() : $nbr_cat_displayed;
-		$number_columns_cats_display_per_line_cats = !empty($number_columns_cats_display_per_line_cats) ? $number_columns_cats_display_per_line_cats : 1;
 
 		$condition = 'WHERE id_category = :id_category
 		AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))';
@@ -110,8 +107,8 @@ class DownloadDisplayCategoryController extends ModuleController
 
 		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
 
-		$this->tpl->put_all(array(
-			'C_FILES' => $result->get_rows_count() > 0,
+		$this->view->put_all(array(
+			'C_ITEMS' => $result->get_rows_count() > 0,
 			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
 			'C_GRID_VIEW' => $this->config->get_display_type() == DownloadConfig::GRID_VIEW,
 			'C_LIST_VIEW' => $this->config->get_display_type() == DownloadConfig::LIST_VIEW,
@@ -144,22 +141,22 @@ class DownloadDisplayCategoryController extends ModuleController
 
 		while ($row = $result->fetch())
 		{
-			$downloadfile = new DownloadFile();
-			$downloadfile->set_properties($row);
+			$item = new DownloadFile();
+			$item->set_properties($row);
 
-			$keywords = $downloadfile->get_keywords();
+			$keywords = $item->get_keywords();
 			$has_keywords = count($keywords) > 0;
 
-			$this->tpl->assign_block_vars('downloadfiles', array_merge($downloadfile->get_array_tpl_vars(), array(
+			$this->view->assign_block_vars('items', array_merge($item->get_array_tpl_vars(), array(
 				'C_KEYWORDS' => $has_keywords
 			)));
 
 			if ($has_keywords)
 				$this->build_keywords_view($keywords);
 
-			foreach ($downloadfile->get_sources() as $name => $url)
+			foreach ($item->get_sources() as $name => $url)
 			{
-				$this->tpl->assign_block_vars('downloadfiles.sources', $downloadfile->get_array_tpl_source_vars($name));
+				$this->view->assign_block_vars('items.sources', $item->get_array_tpl_source_vars($name));
 			}
 		}
 		$result->dispose();
@@ -204,14 +201,14 @@ class DownloadDisplayCategoryController extends ModuleController
 			array('select_to_list' => true, 'events' => array('change' => 'document.location = "' . DownloadUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 
-		$this->tpl->put('SORT_FORM', $form->display());
+		$this->view->put('SORT_FORM', $form->display());
 	}
 
 	private function get_pagination($condition, $parameters, $field, $mode, $page, $subcategories_page)
 	{
-		$downloadfiles_number = DownloadService::count($condition, $parameters);
+		$items_number = DownloadService::count($condition, $parameters);
 
-		$pagination = new ModulePagination($page, $downloadfiles_number, (int)DownloadConfig::load()->get_items_per_page());
+		$pagination = new ModulePagination($page, $items_number, (int)DownloadConfig::load()->get_items_per_page());
 		$pagination->set_url(DownloadUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $field, $mode, '%d', $subcategories_page));
 
 		if ($pagination->current_page_is_empty() && $page > 1)
@@ -266,7 +263,7 @@ class DownloadDisplayCategoryController extends ModuleController
 		$i = 1;
 		foreach ($keywords as $keyword)
 		{
-			$this->tpl->assign_block_vars('downloadfiles.keywords', array(
+			$this->view->assign_block_vars('items.keywords', array(
 				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME' => $keyword->get_name(),
 				'URL' => DownloadUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
@@ -300,7 +297,7 @@ class DownloadDisplayCategoryController extends ModuleController
 		$sort_field = $request->get_getstring('field', DownloadFile::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
 		$sort_mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
 		$page = $request->get_getint('page', 1);
-		$response = new SiteDisplayResponse($this->tpl);
+		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
 
@@ -334,7 +331,7 @@ class DownloadDisplayCategoryController extends ModuleController
 		$object->init();
 		$object->check_authorizations();
 		$object->build_view(AppContext::get_request());
-		return $object->tpl;
+		return $object->view;
 	}
 }
 ?>

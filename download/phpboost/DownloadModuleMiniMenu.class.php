@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 23
+ * @version     PHPBoost 6.0 - last update: 2020 12 04
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -32,28 +32,28 @@ class DownloadModuleMiniMenu extends ModuleMiniMenu
 
 	public function get_menu_content()
 	{
-		//Create file template
-		$tpl = new FileTemplate('download/DownloadModuleMiniMenu.tpl');
+		// Create file template
+		$view = new FileTemplate('download/DownloadModuleMiniMenu.tpl');
 
-		//Assign the lang file to the tpl
-		$tpl->add_lang(LangLoader::get('common', 'download'));
+		// Assign the lang file to the tpl
+		$view->add_lang(LangLoader::get('common', 'download'));
 
-		//Assign common menu variables to the tpl
-		MenuService::assign_positions_conditions($tpl, $this->get_block());
+		// Assign common menu variables to the tpl
+		MenuService::assign_positions_conditions($view, $this->get_block());
 
-		//Load module config
+		// Load module config
 		$config = DownloadConfig::load();
 
-		//Load module cache
+		// Load module cache
 		$download_cache = DownloadCache::load();
 
-		//Load categories cache
+		// Load categories cache
 		$categories_cache = CategoriesService::get_categories_manager('download')->get_categories_cache();
 
-		$downloadfiles = $download_cache->get_downloadfiles();
+		$items = $download_cache->get_downloadfiles();
 
-		$tpl->put_all(array(
-			'C_FILES' => !empty($downloadfiles),
+		$view->put_all(array(
+			'C_ITEMS' => !empty($items),
 			'C_SORT_BY_DATE' => $config->is_sort_type_date(),
 			'C_SORT_BY_NOTATION' => $config->is_sort_type_notation(),
 			'C_SORT_BY_DOWNLOADS_NUMBER' => $config->is_sort_type_downloads_number(),
@@ -61,19 +61,19 @@ class DownloadModuleMiniMenu extends ModuleMiniMenu
 		));
 
 		$displayed_position = 1;
-		foreach ($downloadfiles as $file)
+		foreach ($items as $file)
 		{
-			$downloadfile = new DownloadFile();
-			$downloadfile->set_properties($file);
+			$item = new DownloadFile();
+			$item->set_properties($file);
 
-			$tpl->assign_block_vars('downloadfiles', array_merge($downloadfile->get_array_tpl_vars(), array(
+			$view->assign_block_vars('items', array_merge($item->get_array_tpl_vars(), array(
 				'DISPLAYED_POSITION' => $displayed_position
 			)));
 
 			$displayed_position++;
 		}
 
-		return $tpl->render();
+		return $view->render();
 	}
 }
 ?>

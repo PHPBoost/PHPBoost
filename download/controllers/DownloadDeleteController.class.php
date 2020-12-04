@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 12
+ * @version     PHPBoost 6.0 - last update: 2020 12 04
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -12,25 +12,25 @@
 
 class DownloadDeleteController extends ModuleController
 {
-	private $downloadfile;
+	private $item;
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		AppContext::get_session()->csrf_get_protect();
 
-		$downloadfile = $this->get_downloadfile($request);
+		$item = $this->get_downloadfile($request);
 
-		if (!$downloadfile->is_authorized_to_delete())
+		if (!$item->is_authorized_to_delete())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
 
-		DownloadService::delete($downloadfile->get_id());
+		DownloadService::delete($item->get_id());
 
 		DownloadService::clear_cache();
 
-		AppContext::get_response()->redirect(($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), DownloadUrlBuilder::display($downloadfile->get_category()->get_id(), $downloadfile->get_category()->get_rewrited_name(), $downloadfile->get_id(), $downloadfile->get_rewrited_title())->rel()) ? $request->get_url_referrer() : DownloadUrlBuilder::home()), StringVars::replace_vars(LangLoader::get_message('download.message.success.delete', 'common', 'download'), array('name' => $downloadfile->get_title())));
+		AppContext::get_response()->redirect(($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), DownloadUrlBuilder::display($item->get_category()->get_id(), $item->get_category()->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title())->rel()) ? $request->get_url_referrer() : DownloadUrlBuilder::home()), StringVars::replace_vars(LangLoader::get_message('download.message.success.delete', 'common', 'download'), array('name' => $item->get_title())));
 	}
 
 	private function get_downloadfile(HTTPRequestCustom $request)

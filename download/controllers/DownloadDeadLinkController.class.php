@@ -3,14 +3,14 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 12
+ * @version     PHPBoost 6.0 - last update: 2020 12 04
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DownloadDeadLinkController extends AbstractController
 {
-	private $downloadfile;
+	private $item;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -19,33 +19,33 @@ class DownloadDeadLinkController extends AbstractController
 		if (!empty($id) && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 		{
 			try {
-				$this->downloadfile = DownloadService::get_downloadfile('WHERE download.id = :id', array('id' => $id));
+				$this->item = DownloadService::get_downloadfile('WHERE download.id = :id', array('id' => $id));
 			} catch (RowNotFoundException $e) {
 				$error_controller = PHPBoostErrors::unexisting_page();
 				DispatchManager::redirect($error_controller);
 			}
 		}
 
-		if ($this->downloadfile !== null && (!DownloadAuthorizationsService::check_authorizations($this->downloadfile->get_id_category())->read() || !DownloadAuthorizationsService::check_authorizations()->display_download_link()))
+		if ($this->item !== null && (!DownloadAuthorizationsService::check_authorizations($this->item->get_id_category())->read() || !DownloadAuthorizationsService::check_authorizations()->display_download_link()))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
-		else if ($this->downloadfile !== null && $this->downloadfile->is_visible())
+		else if ($this->item !== null && $this->item->is_visible())
 		{
-			if (!PersistenceContext::get_querier()->row_exists(PREFIX . 'events', 'WHERE id_in_module=:id_in_module AND module=\'download\' AND current_status = 0', array('id_in_module' => $this->downloadfile->get_id())))
+			if (!PersistenceContext::get_querier()->row_exists(PREFIX . 'events', 'WHERE id_in_module=:id_in_module AND module=\'download\' AND current_status = 0', array('id_in_module' => $this->item->get_id())))
 			{
 				$contribution = new Contribution();
-				$contribution->set_id_in_module($this->downloadfile->get_id());
-				$contribution->set_entitled(StringVars::replace_vars(LangLoader::get_message('contribution.deadlink', 'common'), array('link_name' => $this->downloadfile->get_title())));
-				$contribution->set_fixing_url(DownloadUrlBuilder::edit($this->downloadfile->get_id())->relative());
+				$contribution->set_id_in_module($this->item->get_id());
+				$contribution->set_entitled(StringVars::replace_vars(LangLoader::get_message('contribution.deadlink', 'common'), array('link_name' => $this->item->get_title())));
+				$contribution->set_fixing_url(DownloadUrlBuilder::edit($this->item->get_id())->relative());
 				$contribution->set_description(LangLoader::get_message('contribution.deadlink_explain', 'common'));
 				$contribution->set_poster_id(AppContext::get_current_user()->get_id());
 				$contribution->set_module('download');
 				$contribution->set_type('alert');
 				$contribution->set_auth(
 					Authorizations::capture_and_shift_bit_auth(
-						CategoriesService::get_categories_manager()->get_heritated_authorizations($this->downloadfile->get_id_category(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
+						CategoriesService::get_categories_manager()->get_heritated_authorizations($this->item->get_id_category(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
 						Category::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
 					)
 				);
