@@ -38,7 +38,6 @@ $lang['config.default.content'] = 'Set default content';
 // Form
 $lang['pages.add'] = 'New page';
 $lang['pages.edit'] = 'Edition of the page: ';
-$lang['author.display.explain'] = 'Hide/display author name on page';
 
 // SEO
 $lang['pages.seo.description.root'] = 'All :site\'s pages.';

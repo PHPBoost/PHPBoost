@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 18
+ * @version     PHPBoost 6.0 - last update: 2020 12 04
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
@@ -67,19 +67,24 @@ class PagesItemFormController extends ModuleController
 		if (CategoriesAuthorizationsService::check_authorizations($this->get_page()->get_id_category())->moderation())
 		{
 			$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_title', $this->common_lang['form.rewrited_name.personalize'], $this->get_page()->rewrited_title_is_personalized(),
-			array(
-				'events' => array('click' => '
-				if (HTMLForms.getField("personalize_rewrited_title").getValue()) {
-					HTMLForms.getField("rewrited_title").enable();
-				} else {
-					HTMLForms.getField("rewrited_title").disable();
-				}'
-			))));
+				array(
+					'events' => array('click' => '
+						if (HTMLForms.getField("personalize_rewrited_title").getValue()) {
+							HTMLForms.getField("rewrited_title").enable();
+						} else {
+							HTMLForms.getField("rewrited_title").disable();
+						}'
+					)
+				)
+			));
 
-			$fieldset->add_field(new FormFieldTextEditor('rewrited_title', $this->common_lang['form.rewrited_name'], $this->get_page()->get_rewrited_title(), array(
-				'description' => $this->common_lang['form.rewrited_name.description'],
-				'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_personalize_rewrited_title', false) : !$this->get_page()->rewrited_title_is_personalized())
-			), array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu'))));
+			$fieldset->add_field(new FormFieldTextEditor('rewrited_title', $this->common_lang['form.rewrited_name'], $this->get_page()->get_rewrited_title(),
+				array(
+					'description' => $this->common_lang['form.rewrited_name.description'],
+					'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_personalize_rewrited_title', false) : !$this->get_page()->rewrited_title_is_personalized())
+				),
+				array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu'))
+			));
 		}
 
 		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
@@ -95,7 +100,7 @@ class PagesItemFormController extends ModuleController
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('author_display', LangLoader::get_message('config.author.displayed', 'admin-common'), $this->get_page()->get_author_display(),
-			array('description' => $this->lang['author.display.explain'],
+			array(
 				'events' => array('click' => '
 					if (HTMLForms.getField("author_display").getValue()) {
 						HTMLForms.getField("author_custom_name_enabled").enable();
@@ -105,7 +110,8 @@ class PagesItemFormController extends ModuleController
 					} else {
 						HTMLForms.getField("author_custom_name_enabled").disable();
 						HTMLForms.getField("author_custom_name").disable();
-					}')
+					}'
+				)
 			)
 		));
 
@@ -117,20 +123,23 @@ class PagesItemFormController extends ModuleController
 						HTMLForms.getField("author_custom_name").enable();
 					} else {
 						HTMLForms.getField("author_custom_name").disable();
-					}')
+					}'
+				)
 			)
 		));
 
-		$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->common_lang['form.author_custom_name'], $this->get_page()->get_author_custom_name(), array(
-			'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_author_custom_name_enabled', false) : !$this->get_page()->is_author_custom_name_enabled() || !$this->get_page()->get_author_display())
-		)));
+		$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->common_lang['form.author_custom_name'], $this->get_page()->get_author_custom_name(),
+			array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_author_custom_name_enabled', false) : !$this->get_page()->is_author_custom_name_enabled() || !$this->get_page()->get_author_display()))
+		));
 
 		$options_fieldset = new FormFieldsetHTML('options', $this->common_lang['form.options']);
 		$form->add_fieldset($options_fieldset);
 
 		$options_fieldset->add_field(new FormFieldUploadPictureFile('thumbnail', $this->common_lang['form.picture'], $this->get_page()->get_thumbnail()->relative()));
 
-		$options_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_page()->get_id(), 'keywords', $this->common_lang['form.keywords'], array('description' => $this->common_lang['form.keywords.description'])));
+		$options_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_page()->get_id(), 'keywords', $this->common_lang['form.keywords'],
+			array('description' => $this->common_lang['form.keywords.description'])
+		));
 
 		$options_fieldset->add_field(new FormFieldSelectSources('sources', $this->common_lang['form.sources'], $this->get_page()->get_sources()));
 
@@ -318,15 +327,10 @@ class PagesItemFormController extends ModuleController
 		}
 		else
 		{
-
 			if ($this->form->get_value('update_creation_date'))
-			{
 				$item->set_creation_date(new Date());
-			}
 			else
-			{
 				$item->set_creation_date($this->form->get_value('creation_date'));
-			}
 
 			$item->set_publication($this->form->get_value('approbation_type')->get_raw_value());
 			if ($item->get_publication() == Page::APPROVAL_DATE)
@@ -362,23 +366,17 @@ class PagesItemFormController extends ModuleController
 						$deferred_operations[] = $end_date->get_timestamp();
 				}
 				else
-				{
 					$item->clean_end_date();
-				}
 
 				$this->config->set_deferred_operations($deferred_operations);
 				PagesConfig::save();
 			}
 			else
-			{
 				$item->clean_start_and_end_date();
-			}
 		}
 
 		if ($this->is_new_item)
-		{
 			$id = PagesService::add($item);
-		}
 		else
 		{
 			$item->set_updated_date(new Date());

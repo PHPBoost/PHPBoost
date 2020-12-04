@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 10 23
+ * @version     PHPBoost 6.0 - last update: 2020 12 04
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
@@ -24,7 +24,6 @@ class PagesUrlBuilder
 	 */
 	public static function display_category($id, $rewrited_name)
 	{
-		$config = PagesConfig::load();
 		$category = $id > 0 ? $id . '-' . $rewrited_name . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/' . $category);
 	}
@@ -34,7 +33,6 @@ class PagesUrlBuilder
 	 */
 	public static function display_tag($rewrited_name)
 	{
-		$config = PagesConfig::load();
 		return DispatchManager::get_url(self::$dispatcher, '/tag/' . $rewrited_name);
 	}
 
@@ -43,7 +41,6 @@ class PagesUrlBuilder
 	 */
 	public static function display_pending()
 	{
-		$config = PagesConfig::load();
 		return DispatchManager::get_url(self::$dispatcher, '/pending/');
 	}
 
