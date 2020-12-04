@@ -112,7 +112,7 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 			$keywords = $item->get_keywords();
 			$has_keywords = count($keywords) > 0;
 
-			$this->view->assign_block_vars('items', array_merge($item->get_array_view_vars(), array(
+			$this->view->assign_block_vars('items', array_merge($item->get_array_tpl_vars(), array(
 				'C_KEYWORDS' => $has_keywords
 			)));
 
@@ -121,7 +121,7 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 
 			foreach ($item->get_sources() as $name => $url)
 			{
-				$this->view->assign_block_vars('items.sources', $item->get_array_view_source_vars($name));
+				$this->view->assign_block_vars('items.sources', $item->get_array_tpl_source_vars($name));
 			}
 		}
 		$result->dispose();

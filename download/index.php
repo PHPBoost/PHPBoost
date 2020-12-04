@@ -32,6 +32,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('DownloadDisplayDownloadFileTagController', '`^/tag/([a-z0-9-_]+)?/?([a-z_]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('tag', 'field', 'sort', 'page')),
 
 	new UrlControllerMapper('DownloadDisplayPendingDownloadFilesController', '`^/pending(?:/([a-z_]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
+	new UrlControllerMapper('DownloadMemberItemsController', '`^/my_items(?:/([a-z_]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
 
 	new UrlControllerMapper('DownloadFileController', '`^/file/([0-9]+)/?$`', array('id')),
 	new UrlControllerMapper('DownloadDeadLinkController', '`^/dead_link/([0-9]+)/?$`', array('id')),

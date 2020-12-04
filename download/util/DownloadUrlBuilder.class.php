@@ -69,6 +69,18 @@ class DownloadUrlBuilder
 	/**
 	 * @return Url
 	 */
+	public static function display_member_items($sort_field = '', $sort_mode = '', $page = 1)
+	{
+		$config = DownloadConfig::load();
+		$page = $page !== 1 ? $page . '/' : '';
+		$sort_field = $sort_field !== $config->get_items_default_sort_field() ? $sort_field . '/' : '';
+		$sort_mode = $sort_mode !== $config->get_items_default_sort_mode() ? $sort_mode . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/my_items/' . $sort_field . $sort_mode . $page);
+	}
+
+	/**
+	 * @return Url
+	 */
 	public static function add($id_category = null)
 	{
 		$id_category = !empty($id_category) ? $id_category . '/' : '';

@@ -21,7 +21,7 @@ $lang['item'] = 'fichier';
 
 $lang['an.item'] = 'un fichier';
 $lang['the.item'] = 'le fichier';
-$lang['items.mine'] = 'Mes fichiers';
+$lang['my.items'] = 'Mes fichiers';
 
 $lang['download.add.item'] = 'Ajouter un fichier';
 $lang['download.edit.item'] = 'Modifier un fichier';

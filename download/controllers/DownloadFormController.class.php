@@ -254,13 +254,24 @@ class DownloadFormController extends ModuleController
 
 	private function build_contribution_fieldset($form)
 	{
-		if ($this->is_contributor_member())
+		$user_common = LangLoader::get('user-common');
+		if ($this->get_downloadfile()->get_id() === null && $this->is_contributor_member())
 		{
-			$fieldset = new FormFieldsetHTML('contribution', LangLoader::get_message('contribution', 'user-common'));
-			$fieldset->set_description(MessageHelper::display($this->lang['download.form.contribution.explain'] . ' ' . LangLoader::get_message('contribution.explain', 'user-common'), MessageHelper::WARNING)->render());
+			$fieldset = new FormFieldsetHTML('contribution', $user_common['contribution']);
+			$fieldset->set_description(MessageHelper::display($user_common['contribution.extended.explain'], MessageHelper::WARNING)->render());
 			$form->add_fieldset($fieldset);
 
-			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', LangLoader::get_message('contribution.description', 'user-common'), '', array('description' => LangLoader::get_message('contribution.description.explain', 'user-common'))));
+			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $user_common['contribution.description'], '', array('description' => LangLoader::get_message('contribution.description.explain', 'user-common'))));
+		}
+		elseif ($this->get_downloadfile()->is_visible() && $this->get_downloadfile()->is_authorized_to_edit() && !AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
+		{
+			$fieldset = new FormFieldsetHTML('member_edition', $user_common['contribution.member.edition']);
+			$fieldset->set_description(MessageHelper::display($user_common['contribution.member.edition.explain'], MessageHelper::WARNING)->render());
+			$form->add_fieldset($fieldset);
+
+			$fieldset->add_field(new FormFieldRichTextEditor('edition_description', $user_common['contribution.member.edition.description'], '',
+				array('description' => $user_common['contribution.member.edition.description.desc'])
+			));
 		}
 	}
 
@@ -376,13 +387,9 @@ class DownloadFormController extends ModuleController
 		{
 
 			if ($this->form->get_value('update_creation_date'))
-			{
 				$item->set_creation_date(new Date());
-			}
 			else
-			{
 				$item->set_creation_date($this->form->get_value('creation_date'));
-			}
 
 			$item->set_approbation_type($this->form->get_value('approbation_type')->get_raw_value());
 			if ($item->get_approbation_type() == DownloadFile::APPROVAL_DATE)
@@ -418,17 +425,13 @@ class DownloadFormController extends ModuleController
 						$deferred_operations[] = $end_date->get_timestamp();
 				}
 				else
-				{
 					$item->clean_end_date();
-				}
 
 				$this->config->set_deferred_operations($deferred_operations);
 				DownloadConfig::save();
 			}
 			else
-			{
 				$item->clean_start_and_end_date();
-			}
 		}
 
 		if ($this->is_new_item)
@@ -451,13 +454,15 @@ class DownloadFormController extends ModuleController
 
 	private function contribution_actions(DownloadFile $item, $id)
 	{
-		if ($item->get_id() === null)
-		{
 			if ($this->is_contributor_member())
 			{
 				$contribution = new Contribution();
 				$contribution->set_id_in_module($id);
-				$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
+				if ($item->get_id() === null)
+					$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
+				else
+					$contribution->set_description(stripslashes($this->form->get_value('edition_description')));
+					
 				$contribution->set_entitled($item->get_title());
 				$contribution->set_fixing_url(DownloadUrlBuilder::edit($id)->relative());
 				$contribution->set_poster_id(AppContext::get_current_user()->get_id());
@@ -470,7 +475,6 @@ class DownloadFormController extends ModuleController
 				);
 				ContributionService::save_contribution($contribution);
 			}
-		}
 		else
 		{
 			$corresponding_contributions = ContributionService::find_by_criteria('download', $id);

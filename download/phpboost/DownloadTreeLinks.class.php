@@ -1,0 +1,22 @@
+<?php
+/**
+ * @copyright   &copy; 2005-2020 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version     PHPBoost 6.0 - last update: 2020 12 04
+ * @since   	PHPBoost 4.0 - 2014 08 24
+ * @contributor xela <xela@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+*/
+
+class DownloadTreeLinks extends DefaultTreeLinks
+{
+	protected function get_module_additional_actions_tree_links(&$tree)
+	{
+		$module_id = 'download';
+
+		$tree->add_link(new ModuleLink(LangLoader::get_message('my.items', 'common', 'download'), DownloadUrlBuilder::display_member_items(), DownloadAuthorizationsService::check_authorizations()->write() || DownloadAuthorizationsService::check_authorizations()->contribution() || DownloadAuthorizationsService::check_authorizations()->moderation()));
+
+	}
+}
+?>
