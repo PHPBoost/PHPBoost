@@ -3,22 +3,12 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-.cell .upload-help {
-	margin: 0.618em !important;
-}
+.cell .upload-help { margin: 0.618em !important; }
 
-.db-restore {
-	padding: 5px;
-}
+.db-restore { padding: 5px; }
 
-#breadcrumb {
-	font-size: 1em;
-}
+#breadcrumb { font-size: 1em; }
 
-.db-executed-query {
-	margin: 0;
-}
+.db-executed-query { margin: 0; }
 
-.db-executed-query p {
-	font-size: 1em;
-}
+.db-executed-query p { font-size: 1em; }
