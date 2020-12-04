@@ -395,7 +395,7 @@
                                                 # IF IS_ADMIN #
                                                 	<p><strong>${LangLoader::get_message('max.file.size', 'upload-common')} :</strong> {MAX_FILE_SIZE_TEXT}</p>
                                                 # ELSE #
-                                                	<p><strong>${LangLoader::get_message('max.files.size', 'main')} :</strong> {SIZE_LIMIT}</p>
+                                                	<p><strong>${LangLoader::get_message('max.files.size', 'upload-common')} :</strong> {SIZE_LIMIT}</p>
                                                 # ENDIF #
                                             	<p><strong>${LangLoader::get_message('allowed.extensions', 'upload-common')} :</strong> "{ALLOWED_EXTENSIONS}"</p>
                                             </div>
