@@ -15,7 +15,7 @@ class DownloadTreeLinks extends DefaultTreeLinks
 	{
 		$module_id = 'download';
 
-		$tree->add_link(new ModuleLink(LangLoader::get_message('my.items', 'common', 'download'), DownloadUrlBuilder::display_member_items(), DownloadAuthorizationsService::check_authorizations()->write() || DownloadAuthorizationsService::check_authorizations()->contribution() || DownloadAuthorizationsService::check_authorizations()->moderation()));
+		$tree->add_link(new ModuleLink(LangLoader::get_message('my.items', 'common', $module_id), DownloadUrlBuilder::display_member_items(), DownloadAuthorizationsService::check_authorizations()->write() || DownloadAuthorizationsService::check_authorizations()->contribution() || DownloadAuthorizationsService::check_authorizations()->moderation()));
 
 	}
 }
