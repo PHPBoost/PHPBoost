@@ -5,18 +5,19 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 04
+ * @version     PHPBoost 6.0 - last update: 2020 12 04
  * @since       PHPBoost 4.0 - 2013 02 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class AbstractCategoriesManagementController extends ModuleController
 {
 	protected $lang;
 	protected $tpl;
-	
+
 	protected static $categories_manager;
 
 	public function execute(HTTPRequestCustom $request)
@@ -36,9 +37,9 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 	{
 		$class_name = get_called_class();
 		self::$categories_manager = $class_name::get_categories_manager();
-		
+
 		$this->lang = LangLoader::get('categories-common');
-		$this->tpl = new FileTemplate('default/framework/content/categories/manage.tpl');
+		$this->tpl = new FileTemplate('__default__/framework/content/categories/manage.tpl');
 		$this->tpl->add_lang($this->lang);
 	}
 
@@ -70,14 +71,14 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 					$description = FormatingHelper::second_parse($category->get_description());
 					$description = TextHelper::strlen($description) > 250 ? TextHelper::cut_string(@strip_tags($description, '<br><br/>'), 250) . '...' : $description;
 				}
-				
+
 				$color = '';
 				if (method_exists($category, 'get_color'))
 				{
 					$color = $category->get_color();
 				}
 
-				$category_view = new FileTemplate('default/framework/content/categories/category.tpl');
+				$category_view = new FileTemplate('__default__/framework/content/categories/category.tpl');
 				$category_view->add_lang($this->lang);
 				$category_view->put_all(array(
 					'C_DESCRIPTION'               => !empty($description),
