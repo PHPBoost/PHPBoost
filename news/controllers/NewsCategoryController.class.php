@@ -34,8 +34,7 @@ class NewsCategoryController extends ModuleController
 		$common_lang = LangLoader::get('common');
 		$this->lang = LangLoader::get('common', 'news');
 		$this->view = new FileTemplate('news/NewsSeveralItemsController.tpl');
-		$this->view->add_lang($this->lang);
-		$this->view->add_lang($common_lang);
+		$this->view->add_lang(array_merge($this->lang, $common_lang));
 		$this->config = NewsConfig::load();
 	}
 
