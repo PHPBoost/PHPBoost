@@ -98,6 +98,8 @@
 	width: 100%;
 }
 
+.cell-row .cell-body .cell-content { width: 100%; }
+
 @media (min-width: 769px) {
 	.cell-row .cell-thumbnail {
 		width: 30%;

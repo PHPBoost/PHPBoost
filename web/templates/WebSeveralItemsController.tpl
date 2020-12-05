@@ -151,18 +151,18 @@
 								<div class="cell-infos">
 									<span></span>
 									# IF weblinks.C_VISIBLE #
-									<span>
-										<a href="{weblinks.U_VISIT}" class="button submit small">
-											<i class="fa fa-globe" aria-hidden="true"></i> {@visit}
-										</a>
-										# IF IS_USER_CONNECTED #
-										<a href="{weblinks.U_DEADLINK}" data-confirmation="${LangLoader::get_message('deadlink.confirmation', 'common')}" class="button bgc-full warning small" aria-label="${LangLoader::get_message('deadlink', 'common')}">
-											<i class="fa fa-unlink" aria-hidden="true"></i>
-										</a>
-										# ENDIF #
-									</span>
+										<span>
+											<a href="{weblinks.U_VISIT}" class="button submit small">
+												<i class="fa fa-globe" aria-hidden="true"></i> {@visit}
+											</a>
+											# IF IS_USER_CONNECTED #
+												<a href="{weblinks.U_DEADLINK}" data-confirmation="${LangLoader::get_message('deadlink.confirmation', 'common')}" class="button bgc-full warning small" aria-label="${LangLoader::get_message('deadlink', 'common')}">
+													<i class="fa fa-unlink" aria-hidden="true"></i>
+												</a>
+											# ENDIF #
+										</span>
 									# ELSE #
-										# IF C_PENDING #
+										# IF C_PENDING_ITEMS #
 											<a href="{weblinks.U_VISIT}" class="button submit small">
 												<i class="fa fa-globe" aria-hidden="true"></i> {@visit}
 											</a>

@@ -221,7 +221,7 @@ class WebFormController extends ModuleController
 				array('description' => $user_common['contribution.description.explain'])
 			));
 		}
-		elseif ($this->get_page()->is_visible() && $this->get_page()->is_authorized_to_edit() && !AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
+		elseif ($this->get_weblink()->is_visible() && $this->get_weblink()->is_authorized_to_edit() && !AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 		{
 			$fieldset = new FormFieldsetHTML('member_edition', $user_common['contribution.member.edition']);
 			$fieldset->set_description(MessageHelper::display($user_common['contribution.member.edition.explain'], MessageHelper::WARNING)->render());
