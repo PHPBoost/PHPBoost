@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 18
+ * @version     PHPBoost 6.0 - last update: 2020 12 05
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -125,7 +125,8 @@ class WebFormController extends ModuleController
 
 		$options_fieldset->add_field(new FormFieldCheckbox('privileged_partner', $this->lang['web.form.privileged_partner'], $this->get_weblink()->is_privileged_partner(),
 			array(
-				'description' => $this->lang['web.form.privileged_partner.explain'], 'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_partner', false) : !$this->get_weblink()->is_partner())
+				'description' => $this->lang['web.form.privileged_partner.explain'],
+				'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_partner', false) : !$this->get_weblink()->is_partner())
 			))
 		);
 
@@ -192,7 +193,7 @@ class WebFormController extends ModuleController
 			$publication_fieldset->add_field($end_date = new FormFieldDateTime('end_date', $this->common_lang['form.date.end'], ($this->get_weblink()->get_end_date() === null ? new Date() : $this->get_weblink()->get_end_date()),
 				array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_end_date_enabled', false) : !$this->get_weblink()->is_end_date_enabled()))
 			));
-			
+
 			$end_date->add_form_constraint(new FormConstraintFieldsDifferenceSuperior($start_date, $end_date));
 		}
 
@@ -209,13 +210,26 @@ class WebFormController extends ModuleController
 
 	private function build_contribution_fieldset($form)
 	{
+		$user_common = LangLoader::get('user-common');
 		if ($this->get_weblink()->get_id() === null && $this->is_contributor_member())
 		{
-			$fieldset = new FormFieldsetHTML('contribution', LangLoader::get_message('contribution', 'user-common'));
-			$fieldset->set_description(MessageHelper::display($this->lang['web.form.contribution.explain'] . ' ' . LangLoader::get_message('contribution.explain', 'user-common'), MessageHelper::WARNING)->render());
+			$fieldset = new FormFieldsetHTML('contribution', $user_common['contribution']);
+			$fieldset->set_description(MessageHelper::display($user_common['contribution.extended.explain'], MessageHelper::WARNING)->render());
 			$form->add_fieldset($fieldset);
 
-			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', LangLoader::get_message('contribution.description', 'user-common'), '', array('description' => LangLoader::get_message('contribution.description.explain', 'user-common'))));
+			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $user_common['contribution.description'], '',
+				array('description' => $user_common['contribution.description.explain'])
+			));
+		}
+		elseif ($this->get_page()->is_visible() && $this->get_page()->is_authorized_to_edit() && !AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
+		{
+			$fieldset = new FormFieldsetHTML('member_edition', $user_common['contribution.member.edition']);
+			$fieldset->set_description(MessageHelper::display($user_common['contribution.member.edition.explain'], MessageHelper::WARNING)->render());
+			$form->add_fieldset($fieldset);
+
+			$fieldset->add_field(new FormFieldRichTextEditor('edition_description', $user_common['contribution.member.edition.description'], '',
+				array('description' => $user_common['contribution.member.edition.description.desc'])
+			));
 		}
 	}
 
@@ -383,13 +397,15 @@ class WebFormController extends ModuleController
 
 	private function contribution_actions(WebLink $weblink, $id)
 	{
-		if ($weblink->get_id() === null)
-		{
 			if ($this->is_contributor_member())
 			{
 				$contribution = new Contribution();
 				$contribution->set_id_in_module($id);
-				$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
+				if ($weblink->get_id() === null)
+					$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
+				else
+					$contribution->set_description(stripslashes($this->form->get_value('edition_description')));
+
 				$contribution->set_entitled($weblink->get_title());
 				$contribution->set_fixing_url(WebUrlBuilder::edit($id)->relative());
 				$contribution->set_poster_id(AppContext::get_current_user()->get_id());
@@ -402,7 +418,6 @@ class WebFormController extends ModuleController
 				);
 				ContributionService::save_contribution($contribution);
 			}
-		}
 		else
 		{
 			$corresponding_contributions = ContributionService::find_by_criteria('web', $id);

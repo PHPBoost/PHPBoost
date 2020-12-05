@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 13
+ * @version     PHPBoost 6.0 - last update: 2020 12 05
  * @since       PHPBoost 4.0 - 2014 05 22
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class WebModuleUpdateVersion extends ModuleUpdateVersion
@@ -22,7 +23,6 @@ class WebModuleUpdateVersion extends ModuleUpdateVersion
 			'/phpboost/WebNewContent.class.php',
 			'/phpboost/WebNotation.class.php',
 			'/phpboost/WebSitemapExtensionPoint.class.php',
-			'/phpboost/WebTreeLinks.class.php',
 			'/services/WebAuthorizationsService.class.php',
 			'/services/WebKeywordsCache.class.php',
 			'/templates/WebDisplaySeveralWebLinksController.tpl',
@@ -32,7 +32,7 @@ class WebModuleUpdateVersion extends ModuleUpdateVersion
 		self::$delete_old_folders_list = array(
 			'/controllers/categories'
 		);
-		
+
 		$this->database_columns_to_modify = array(
 			array(
 				'table_name' => PREFIX . 'web_cats',

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 10
+ * @version     PHPBoost 6.0 - last update: 2020 12 05
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -19,6 +19,7 @@ $lang['items'] = 'links';
 $lang['item'] = 'link';
 
 $lang['an.item'] = 'a link';
+$lang['my.items'] = 'My links';
 
 $lang['web.actions.add'] = 'Add link';
 $lang['web.add'] = 'New link';
@@ -48,6 +49,7 @@ $lang['web.default.contents'] = 'Web Links default content';
 $lang['web.seo.description.root'] = 'All :site\'s links.';
 $lang['web.seo.description.tag'] = 'All links on :subject.';
 $lang['web.seo.description.pending'] = 'All pending links.';
+$lang['web.seo.description.pending'] = 'All links of the member: :author.';
 
 //contribution
 $lang['web.form.contribution.explain'] = 'You are not authorized to create a new link, however you can contribute by submitting one.';

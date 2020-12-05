@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 03 07
+ * @version     PHPBoost 6.0 - last update: 2020 12 05
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -80,7 +80,7 @@ class WebDisplayPendingWebLinksController extends ModuleController
 		$this->tpl->put_all(array(
 			'C_ITEMS' => $result->get_rows_count() > 0,
 			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
-			'C_PENDING' => true,
+			'C_PENDING_ITEMS' => true,
 			'C_GRID_VIEW' => $this->config->get_display_type() == WebConfig::GRID_VIEW,
 			'C_LIST_VIEW' => $this->config->get_display_type() == WebConfig::LIST_VIEW,
 			'C_TABLE_VIEW' => $this->config->get_display_type() == WebConfig::TABLE_VIEW,

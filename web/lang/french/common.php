@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 10
+ * @version     PHPBoost 6.0 - last update: 2020 12 05
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Mipel <mipel@phpboost.com>
 */
@@ -17,6 +17,7 @@ $lang['module_title'] = 'Liens Web';
 
 $lang['items'] = 'liens';
 $lang['item'] = 'lien';
+$lang['my.items'] = 'Mes liens';
 
 $lang['web.actions.add'] = 'Ajouter un lien';
 $lang['web.add'] = 'Ajout d\'un lien';
@@ -46,6 +47,7 @@ $lang['web.default.contents'] = 'Contenu par défaut d\'un lien Web';
 $lang['web.seo.description.root'] = 'Tous les liens du site :site.';
 $lang['web.seo.description.tag'] = 'Tous les liens sur le sujet :subject.';
 $lang['web.seo.description.pending'] = 'Tous les liens en attente.';
+$lang['web.seo.description.member'] = 'Tous les liens du membre: :author.';
 
 //contribution
 $lang['web.form.contribution.explain'] = 'Vous n\'êtes pas autorisé à ajouter un lien, cependant vous pouvez en proposer un.';

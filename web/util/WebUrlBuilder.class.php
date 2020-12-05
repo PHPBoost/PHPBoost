@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 11 09
+ * @version     PHPBoost 6.0 - last update: 2020 12 05
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -64,6 +64,18 @@ class WebUrlBuilder
 		$sort_field = $sort_field !== $config->get_items_default_sort_field() ? $sort_field . '/' : '';
 		$sort_mode = $sort_mode !== $config->get_items_default_sort_mode() ? $sort_mode . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/pending/' . $sort_field . $sort_mode . $page);
+	}
+
+	/**
+	 * @return Url
+	 */
+	public static function display_member_items($sort_field = '', $sort_mode = '', $page = 1)
+	{
+		$config = WebConfig::load();
+		$page = $page !== 1 ? $page . '/' : '';
+		$sort_field = $sort_field !== $config->get_items_default_sort_field() ? $sort_field . '/' : '';
+		$sort_mode = $sort_mode !== $config->get_items_default_sort_mode() ? $sort_mode . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/my_items/' . $sort_field . $sort_mode . $page);
 	}
 
 	/**
