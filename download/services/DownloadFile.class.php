@@ -516,7 +516,7 @@ class DownloadFile
 		$sources = $this->get_sources();
 		$nbr_sources = count($sources);
 		$config = DownloadConfig::load();
-Debug::dump($real_summary);
+		
 		return array_merge(
 			Date::get_array_tpl_vars($this->creation_date, 'date'),
 			Date::get_array_tpl_vars($this->updated_date, 'updated_date'),
