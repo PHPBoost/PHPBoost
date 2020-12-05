@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 04
+ * @version     PHPBoost 6.0 - last update: 2020 12 05
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -295,6 +295,7 @@ class AdminDownloadConfigController extends AdminModuleController
 		else
 			$this->config->hide_author();
 
+		$this->config->set_characters_number_to_cut($this->form->get_value('characters_number_to_cut', $this->config->get_characters_number_to_cut()));
 		$this->config->set_enabled_views_number($this->form->get_value('nb_view_enabled'));
 		$this->config->set_root_category_description($this->form->get_value('root_category_description'));
 		$this->config->set_sort_type($this->form->get_value('sort_type')->get_raw_value());

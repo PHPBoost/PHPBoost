@@ -149,7 +149,7 @@ class WebLink
 		{
 			return FormatingHelper::second_parse($this->summary);
 		}
-		return TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>'), (int)WebConfig::CHARACTERS_NUMBER_TO_CUT);
+		return TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>'), (int)WebConfig::load()->get_characters_number_to_cut());
 	}
 
 	public function get_approbation_type()
@@ -264,7 +264,7 @@ class WebLink
 		if ($file->exists())
 			return new Url('/templates/' . AppContext::get_current_user()->get_theme() . '/images/default_item_thumbnail.png');
 		else
-			return new Url('/templates/default/images/default_item_thumbnail.png');
+			return new Url('/templates/__default__/images/default_item_thumbnail.png');
 	}
 
 	public function is_partner()
@@ -442,6 +442,7 @@ class WebLink
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		$comments_number = CommentsService::get_comments_number('web', $this->id);
+		$config = WebConfig::load();
 
 		return array_merge(
 			Date::get_array_tpl_vars($this->creation_date, 'date'),
@@ -452,7 +453,7 @@ class WebLink
 				'C_CONTROLS'              => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
 				'C_EDIT'                  => $this->is_authorized_to_edit(),
 				'C_DELETE'                => $this->is_authorized_to_delete(),
-				'C_READ_MORE'             => !$this->is_summary_enabled() && TextHelper::strlen($contents) > WebConfig::CHARACTERS_NUMBER_TO_CUT && $real_summary != @strip_tags($contents, '<br><br/>'),
+				'C_READ_MORE'             => !$this->is_summary_enabled() && TextHelper::strlen($contents) > $config->get_characters_number_to_cut() && $real_summary != @strip_tags($contents, '<br><br/>'),
 				'C_USER_GROUP_COLOR'      => !empty($user_group_color),
 				'C_IS_ADORNED'            => $this->has_thumbnail() || $this->has_partner_thumbnail(),
 				'C_HAS_THUMBNAIL'         => $this->has_thumbnail(),
