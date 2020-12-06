@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 04
+ * @version     PHPBoost 6.0 - last update: 2020 12 06
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -236,7 +236,7 @@ class NewsItemFormController extends ModuleController
 
 			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $user_common['contribution.description'], '', array('description' => $user_common['contribution.description.explain'])));
 		}
-		elseif ($this->get_news()->is_visible() && $this->get_news()->is_authorized_to_edit() && !AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
+		elseif ($this->get_news()->is_published() && $this->get_news()->is_authorized_to_edit() && !AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 		{
 			$fieldset = new FormFieldsetHTML('member_edition', $user_common['contribution.member.edition']);
 			$fieldset->set_description(MessageHelper::display($user_common['contribution.member.edition.explain'], MessageHelper::WARNING)->render());
@@ -446,11 +446,11 @@ class NewsItemFormController extends ModuleController
 	{
 		$category = $this->item->get_category();
 
-		if ($this->is_new_item && $this->is_contributor_member() && !$this->item->is_visible())
+		if ($this->is_new_item && $this->is_contributor_member() && !$this->item->is_published())
 		{
 			DispatchManager::redirect(new UserContributionSuccessController());
 		}
-		elseif ($this->item->is_visible())
+		elseif ($this->item->is_published())
 		{
 			if ($this->is_new_item)
 				AppContext::get_response()->redirect(NewsUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title()), StringVars::replace_vars($this->lang['news.message.success.add'], array('title' => $this->item->get_title())));

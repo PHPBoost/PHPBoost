@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 04
+ * @version     PHPBoost 6.0 - last update: 2020 12 06
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -187,7 +187,7 @@ class DownloadFormController extends ModuleController
 				array('required' => true)
 			));
 
-			if (!$this->get_downloadfile()->is_visible())
+			if (!$this->get_downloadfile()->is_published())
 			{
 				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->common_lang['form.update.date.creation'], false,
 					array('hidden' => $this->get_downloadfile()->get_status() != DownloadFile::NOT_APPROVAL)
@@ -263,7 +263,7 @@ class DownloadFormController extends ModuleController
 
 			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $user_common['contribution.description'], '', array('description' => LangLoader::get_message('contribution.description.explain', 'user-common'))));
 		}
-		elseif ($this->get_downloadfile()->is_visible() && $this->get_downloadfile()->is_authorized_to_edit() && !AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
+		elseif ($this->get_downloadfile()->is_published() && $this->get_downloadfile()->is_authorized_to_edit() && !AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 		{
 			$fieldset = new FormFieldsetHTML('member_edition', $user_common['contribution.member.edition']);
 			$fieldset->set_description(MessageHelper::display($user_common['contribution.member.edition.explain'], MessageHelper::WARNING)->render());
@@ -462,7 +462,7 @@ class DownloadFormController extends ModuleController
 					$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
 				else
 					$contribution->set_description(stripslashes($this->form->get_value('edition_description')));
-					
+
 				$contribution->set_entitled($item->get_title());
 				$contribution->set_fixing_url(DownloadUrlBuilder::edit($id)->relative());
 				$contribution->set_poster_id(AppContext::get_current_user()->get_id());
@@ -495,11 +495,11 @@ class DownloadFormController extends ModuleController
 		$item = $this->get_downloadfile();
 		$category = $item->get_category();
 
-		if ($this->is_new_item && $this->is_contributor_member() && !$item->is_visible())
+		if ($this->is_new_item && $this->is_contributor_member() && !$item->is_published())
 		{
 			DispatchManager::redirect(new UserContributionSuccessController());
 		}
-		elseif ($item->is_visible())
+		elseif ($item->is_published())
 		{
 			if ($this->is_new_item)
 				AppContext::get_response()->redirect(DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()), StringVars::replace_vars($this->lang['download.message.success.add'], array('title' => $item->get_title())));

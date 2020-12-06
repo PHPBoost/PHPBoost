@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 05
+ * @version     PHPBoost 6.0 - last update: 2020 12 06
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -143,7 +143,7 @@ class WebFormController extends ModuleController
 				array('required' => true)
 			));
 
-			if (!$this->get_weblink()->is_visible())
+			if (!$this->get_weblink()->is_published())
 			{
 				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->common_lang['form.update.date.creation'], false,
 					array('hidden' => $this->get_weblink()->get_status() != WebLink::NOT_APPROVAL)
@@ -221,7 +221,7 @@ class WebFormController extends ModuleController
 				array('description' => $user_common['contribution.description.explain'])
 			));
 		}
-		elseif ($this->get_weblink()->is_visible() && $this->get_weblink()->is_authorized_to_edit() && !AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
+		elseif ($this->get_weblink()->is_published() && $this->get_weblink()->is_authorized_to_edit() && !AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 		{
 			$fieldset = new FormFieldsetHTML('member_edition', $user_common['contribution.member.edition']);
 			$fieldset->set_description(MessageHelper::display($user_common['contribution.member.edition.explain'], MessageHelper::WARNING)->render());
@@ -438,11 +438,11 @@ class WebFormController extends ModuleController
 		$weblink = $this->get_weblink();
 		$category = $weblink->get_category();
 
-		if ($this->is_new_weblink && $this->is_contributor_member() && !$weblink->is_visible())
+		if ($this->is_new_weblink && $this->is_contributor_member() && !$weblink->is_published())
 		{
 			DispatchManager::redirect(new UserContributionSuccessController());
 		}
-		elseif ($weblink->is_visible())
+		elseif ($weblink->is_published())
 		{
 			if ($this->is_new_weblink)
 				AppContext::get_response()->redirect(WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_title()), StringVars::replace_vars($this->lang['web.message.success.add'], array('name' => $weblink->get_title())));

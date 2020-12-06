@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 23
+ * @version     PHPBoost 6.0 - last update: 2020 12 06
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -59,7 +59,7 @@ class DownloadDisplayDownloadFileController extends ModuleController
 
 	private function count_views_number(HTTPRequestCustom $request)
 	{
-		if (!$this->downloadfile->is_visible())
+		if (!$this->downloadfile->is_published())
 		{
 			$this->tpl->put('NOT_VISIBLE_MESSAGE', MessageHelper::display(LangLoader::get_message('element.not_visible', 'status-messages-common'), MessageHelper::WARNING));
 		}
@@ -151,7 +151,7 @@ class DownloadDisplayDownloadFileController extends ModuleController
 				}
 			break;
 			case DownloadFile::APPROVAL_DATE:
-				if (!$downloadfile->is_visible() && ($not_authorized || ($current_user->get_id() == User::VISITOR_LEVEL)))
+				if (!$downloadfile->is_published() && ($not_authorized || ($current_user->get_id() == User::VISITOR_LEVEL)))
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 					DispatchManager::redirect($error_controller);

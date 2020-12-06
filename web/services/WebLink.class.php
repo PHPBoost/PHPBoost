@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 05
+ * @version     PHPBoost 6.0 - last update: 2020 12 06
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -162,7 +162,7 @@ class WebLink
 		$this->approbation_type = $approbation_type;
 	}
 
-	public function is_visible()
+	public function is_published()
 	{
 		$now = new Date();
 		return CategoriesAuthorizationsService::check_authorizations($this->id_category)->read() && ($this->get_approbation_type() == self::APPROVAL_NOW || ($this->get_approbation_type() == self::APPROVAL_DATE && $this->get_start_date()->is_anterior_to($now) && ($this->end_date_enabled ? $this->get_end_date()->is_posterior_to($now) : true)));
@@ -342,7 +342,7 @@ class WebLink
 
 	public function is_authorized_to_delete()
 	{
-		return CategoriesAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((CategoriesAuthorizationsService::check_authorizations($this->id_category)->write() || (CategoriesAuthorizationsService::check_authorizations($this->id_category)->contribution() && !$this->is_visible())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
+		return CategoriesAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((CategoriesAuthorizationsService::check_authorizations($this->id_category)->write() || (CategoriesAuthorizationsService::check_authorizations($this->id_category)->contribution() && !$this->is_published())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 
 	public function get_properties()
@@ -449,7 +449,7 @@ class WebLink
 			Date::get_array_tpl_vars($this->start_date, 'differed_start_date'),
 			array(
 				// Conditions
-				'C_VISIBLE'               => $this->is_visible(),
+				'C_VISIBLE'               => $this->is_published(),
 				'C_CONTROLS'              => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
 				'C_EDIT'                  => $this->is_authorized_to_edit(),
 				'C_DELETE'                => $this->is_authorized_to_delete(),
@@ -461,7 +461,7 @@ class WebLink
 				'C_HAS_PARTNER_THUMBNAIL' => $this->has_partner_thumbnail(),
 				'C_IS_PRIVILEGED_PARTNER' => $this->is_privileged_partner(),
 				'C_DIFFERED'              => $this->approbation_type == self::APPROVAL_DATE,
-				'C_NEW_CONTENT'           => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('web', $this->get_start_date() != null ? $this->get_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_visible(),
+				'C_NEW_CONTENT'           => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('web', $this->get_start_date() != null ? $this->get_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_published(),
 
 				// Item
 				'ID'               => $this->id,

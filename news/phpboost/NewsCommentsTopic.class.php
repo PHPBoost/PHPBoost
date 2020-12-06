@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 13
+ * @version     PHPBoost 6.0 - last update: 2020 12 06
  * @since       PHPBoost 4.0 - 2013 05 30
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -27,7 +27,7 @@ class NewsCommentsTopic extends CommentsTopic
 
 	public function is_display()
 	{
-		return $this->get_news()->is_visible();
+		return $this->get_news()->is_published();
 	}
 
 	private function get_news()

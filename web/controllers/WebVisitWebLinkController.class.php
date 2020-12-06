@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 31
+ * @version     PHPBoost 6.0 - last update: 2020 12 06
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -31,7 +31,7 @@ class WebVisitWebLinkController extends AbstractController
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
-		else if ($this->weblink !== null && $this->weblink->is_visible())
+		else if ($this->weblink !== null && $this->weblink->is_published())
 		{
 			$this->weblink->set_views_number($this->weblink->get_views_number() + 1);
 			WebService::update_views_number($this->weblink);
