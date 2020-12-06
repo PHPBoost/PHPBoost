@@ -59,7 +59,7 @@ class WebFormController extends ModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('web', $this->get_weblink()->get_id() === null ? $this->lang['web.add'] : $this->lang['web.edit']);
+		$fieldset = new FormFieldsetHTMLHeading('web', $this->get_weblink()->get_id() === null ? $this->lang['web.add.item'] : $this->lang['web.edit.item']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('title', $this->common_lang['form.name'], $this->get_weblink()->get_title(),
@@ -119,13 +119,13 @@ class WebFormController extends ModuleController
 			)
 		)));
 
-		$options_fieldset->add_field(new FormFieldUploadPictureFile('partner_thumbnail', $this->lang['web.form.partner_thumbnail'], $this->get_weblink()->get_partner_thumbnail()->relative(),
+		$options_fieldset->add_field(new FormFieldUploadPictureFile('partner_thumbnail', $this->lang['web.form.partner.thumbnail'], $this->get_weblink()->get_partner_thumbnail()->relative(),
 			array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_partner', false) : !$this->get_weblink()->is_partner()))
 		));
 
-		$options_fieldset->add_field(new FormFieldCheckbox('privileged_partner', $this->lang['web.form.privileged_partner'], $this->get_weblink()->is_privileged_partner(),
+		$options_fieldset->add_field(new FormFieldCheckbox('privileged_partner', $this->lang['web.form.privileged.partner'], $this->get_weblink()->is_privileged_partner(),
 			array(
-				'description' => $this->lang['web.form.privileged_partner.explain'],
+				'description' => $this->lang['web.form.privileged.partner.description'],
 				'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_partner', false) : !$this->get_weblink()->is_partner())
 			))
 		);
@@ -445,16 +445,16 @@ class WebFormController extends ModuleController
 		elseif ($weblink->is_published())
 		{
 			if ($this->is_new_weblink)
-				AppContext::get_response()->redirect(WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_title()), StringVars::replace_vars($this->lang['web.message.success.add'], array('name' => $weblink->get_title())));
+				AppContext::get_response()->redirect(WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_title()), StringVars::replace_vars($this->lang['web.message.success.add'], array('title' => $weblink->get_title())));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_title())), StringVars::replace_vars($this->lang['web.message.success.edit'], array('name' => $weblink->get_title())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_title())), StringVars::replace_vars($this->lang['web.message.success.edit'], array('title' => $weblink->get_title())));
 		}
 		else
 		{
 			if ($this->is_new_weblink)
-				AppContext::get_response()->redirect(WebUrlBuilder::display_pending(), StringVars::replace_vars($this->lang['web.message.success.add'], array('name' => $weblink->get_title())));
+				AppContext::get_response()->redirect(WebUrlBuilder::display_pending(), StringVars::replace_vars($this->lang['web.message.success.add'], array('title' => $weblink->get_title())));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : WebUrlBuilder::display_pending()), StringVars::replace_vars($this->lang['web.message.success.edit'], array('name' => $weblink->get_title())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : WebUrlBuilder::display_pending()), StringVars::replace_vars($this->lang['web.message.success.edit'], array('title' => $weblink->get_title())));
 		}
 	}
 
@@ -468,13 +468,13 @@ class WebFormController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], WebUrlBuilder::home());
+		$breadcrumb->add($this->lang['module.title'], WebUrlBuilder::home());
 
 		if ($weblink->get_id() === null)
 		{
-			$graphical_environment->set_page_title($this->lang['web.add']);
-			$breadcrumb->add($this->lang['web.add'], WebUrlBuilder::add($weblink->get_id_category()));
-			$graphical_environment->get_seo_meta_data()->set_description($this->lang['web.add'], $this->lang['module_title']);
+			$graphical_environment->set_page_title($this->lang['web.add.item']);
+			$breadcrumb->add($this->lang['web.add.item'], WebUrlBuilder::add($weblink->get_id_category()));
+			$graphical_environment->get_seo_meta_data()->set_description($this->lang['web.add.item'], $this->lang['module.title']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::add($weblink->get_id_category()));
 		}
 		else
@@ -482,8 +482,8 @@ class WebFormController extends ModuleController
 			if (!AppContext::get_session()->location_id_already_exists($location_id))
 				$graphical_environment->set_location_id($location_id);
 
-			$graphical_environment->set_page_title($this->lang['web.edit']);
-			$graphical_environment->get_seo_meta_data()->set_description($this->lang['web.edit'], $this->lang['module_title']);
+			$graphical_environment->set_page_title($this->lang['web.edit.item']);
+			$graphical_environment->get_seo_meta_data()->set_description($this->lang['web.edit.item'], $this->lang['module.title']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::edit($weblink->get_id()));
 
 			$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($weblink->get_id_category(), true));
@@ -494,7 +494,7 @@ class WebFormController extends ModuleController
 			}
 			$category = $weblink->get_category();
 			$breadcrumb->add($weblink->get_title(), WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_title()));
-			$breadcrumb->add($this->lang['web.edit'], WebUrlBuilder::edit($weblink->get_id()));
+			$breadcrumb->add($this->lang['web.edit.item'], WebUrlBuilder::edit($weblink->get_id()));
 		}
 
 		return $response;

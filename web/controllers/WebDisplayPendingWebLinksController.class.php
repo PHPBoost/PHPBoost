@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 05
+ * @version     PHPBoost 6.0 - last update: 2020 12 06
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -191,13 +191,13 @@ class WebDisplayPendingWebLinksController extends ModuleController
 		$response = new SiteDisplayResponse($this->tpl);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['web.pending'], $this->lang['module_title'], $page);
+		$graphical_environment->set_page_title($this->lang['web.pending.items'], $this->lang['module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['web.seo.description.pending'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::display_pending($sort_field, $sort_mode, $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], WebUrlBuilder::home());
-		$breadcrumb->add($this->lang['web.pending'], WebUrlBuilder::display_pending($sort_field, $sort_mode, $page));
+		$breadcrumb->add($this->lang['module.title'], WebUrlBuilder::home());
+		$breadcrumb->add($this->lang['web.pending.items'], WebUrlBuilder::display_pending($sort_field, $sort_mode, $page));
 
 		return $response;
 	}

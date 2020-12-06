@@ -2,7 +2,7 @@
 	<header>
 		<div class="align-right controls">
 			<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
-			{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
+			{@module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
 			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1><span id="name" itemprop="name">{TITLE}</span></h1>
@@ -21,7 +21,7 @@
 		<div class="content cell-tile">
 			<div class="cell cell-options">
 				<div class="cell-header">
-					<h6 class="cell-name">{@link_infos}</h6>
+					<h6 class="cell-name">{@web.item.infos}</h6>
 				</div>
 				# IF C_IS_ADORNED #
 					<div class="cell-body">
@@ -46,7 +46,7 @@
 					<ul>
 						<li class="li-stretch">
 							<a href="{U_VISIT}" class="button submit">
-								<i class="fa fa-globe" aria-hidden="true"></i> {@visit}
+								<i class="fa fa-globe" aria-hidden="true"></i> {@web.visit}
 							</a>
 							# IF C_VISIBLE #
 								# IF IS_USER_CONNECTED #
@@ -57,7 +57,7 @@
 							# ENDIF #
 						</li>
 						<li class="li-stretch">
-							<span class="text-strong">{@visits_number} : </span>
+							<span class="text-strong">{@web.visits.number} : </span>
 							<span>{VIEWS_NUMBER}</span>
 						</li>
 						<li class="li-stretch">

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 05
+ * @version     PHPBoost 6.0 - last update: 2020 12 06
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -92,7 +92,7 @@ class AdminWebConfigController extends AdminModuleController
 
         $fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort', $this->admin_common_lang['config.items_default_sort'], $this->config->get_items_default_sort_field() . '-' . $this->config->get_items_default_sort_mode(), $this->get_sort_options()));
 
-		$fieldset->add_field(new FormFieldCheckbox('display_descriptions_to_guests', $this->lang['config.display_descriptions_to_guests'], $this->config->are_descriptions_displayed_to_guests(),
+		$fieldset->add_field(new FormFieldCheckbox('display_descriptions_to_guests', $this->admin_common_lang['config.display.summary.to.guests'], $this->config->are_descriptions_displayed_to_guests(),
 			array('class' => 'custom-checkbox')
 		));
 
@@ -154,14 +154,14 @@ class AdminWebConfigController extends AdminModuleController
 			array('rows' => 8, 'cols' => 47)
 		));
 
-		$fieldset = new FormFieldsetHTML('menu', $this->lang['config.partners_menu']);
+		$fieldset = new FormFieldsetHTML('menu', $this->lang['web.config.partners.menu']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('partners_sort', $this->lang['config.partners_sort'], $this->config->get_partners_sort_field() . '-' . $this->config->get_partners_sort_mode(), $this->get_sort_options(),
-			array('description' => $this->lang['config.partners_sort.explain'])
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('partners_sort', $this->lang['web.config.partners.sort'], $this->config->get_partners_sort_field() . '-' . $this->config->get_partners_sort_mode(), $this->get_sort_options(),
+			array('description' => $this->lang['web.config.partners.sort.description'])
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('partners_number_in_menu', $this->lang['config.partners_number_in_menu'], $this->config->get_partners_number_in_menu(),
+		$fieldset->add_field(new FormFieldNumberEditor('partners_number_in_menu', $this->lang['web.config.partners.number'], $this->config->get_partners_number_in_menu(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
@@ -191,8 +191,8 @@ class AdminWebConfigController extends AdminModuleController
 			new FormFieldSelectChoiceOption($common_lang['form.date.creation'] . ' - ' . $common_lang['sort.desc'], WebLink::SORT_DATE . '-' . WebLink::DESC),
 			new FormFieldSelectChoiceOption($common_lang['sort_by.alphabetic'] . ' - ' . $common_lang['sort.asc'], WebLink::SORT_ALPHABETIC . '-' . WebLink::ASC),
 			new FormFieldSelectChoiceOption($common_lang['sort_by.alphabetic'] . ' - ' . $common_lang['sort.desc'], WebLink::SORT_ALPHABETIC . '-' . WebLink::DESC),
-			new FormFieldSelectChoiceOption($this->lang['config.sort_type.visits'] . ' - ' . $common_lang['sort.asc'], WebLink::SORT_NUMBER_VISITS . '-' . WebLink::ASC),
-			new FormFieldSelectChoiceOption($this->lang['config.sort_type.visits'] . ' - ' . $common_lang['sort.desc'], WebLink::SORT_NUMBER_VISITS . '-' . WebLink::DESC)
+			new FormFieldSelectChoiceOption($this->lang['web.config.sort.type.visits'] . ' - ' . $common_lang['sort.asc'], WebLink::SORT_NUMBER_VISITS . '-' . WebLink::ASC),
+			new FormFieldSelectChoiceOption($this->lang['web.config.sort.type.visits'] . ' - ' . $common_lang['sort.desc'], WebLink::SORT_NUMBER_VISITS . '-' . WebLink::DESC)
 		);
 
 		if ($this->comments_config->module_comments_is_enabled('web'))

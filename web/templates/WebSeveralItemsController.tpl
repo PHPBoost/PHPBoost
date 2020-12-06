@@ -7,12 +7,12 @@
 		<h1>
 
 			# IF C_PENDING_ITEMS #
-				{@web.pending}
+				{@web.pending.items}
 			# ELSE #
 				# IF C_MEMBER_ITEMS #
 					{@my.items}
 				# ELSE #
-					{@module_title}# IF C_CATEGORIES # - {CATEGORY_NAME}# ENDIF #
+					{@module.title}# IF C_CATEGORIES # - {CATEGORY_NAME}# ENDIF #
 				# ENDIF #
 			# ENDIF #
 		</h1>
@@ -29,7 +29,7 @@
 				<div class="cell category-{sub_categories_list.CATEGORY_ID}" itemscope>
 					<div class="cell-header">
 						<h5 class="cell-name" itemprop="about"><a href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
-						<span class="small pinned notice" role="contentinfo" aria-label="{sub_categories_list.ITEMS_NUMBER} # IF sub_categories_list.C_SEVERAL_ITEMS #${TextHelper::lcfirst(LangLoader::get_message('links', 'common', 'web'))}# ELSE #${TextHelper::lcfirst(LangLoader::get_message('link', 'common', 'web'))}# ENDIF #">
+						<span class="small pinned notice" role="contentinfo" aria-label="{sub_categories_list.ITEMS_NUMBER} # IF sub_categories_list.C_SEVERAL_ITEMS #${TextHelper::lcfirst(LangLoader::get_message('items', 'common', 'web'))}# ELSE #${TextHelper::lcfirst(LangLoader::get_message('item', 'common', 'web'))}# ENDIF #">
 							{sub_categories_list.ITEMS_NUMBER}
 						</span>
 					</div>
@@ -59,7 +59,7 @@
 				<thead>
 					<tr>
 						<th>${LangLoader::get_message('form.name', 'common')} <span class="small more">(${LangLoader::get_message('see.details', 'common')})</span></th>
-						<th class="col-small">{@visits_number}</th>
+						<th class="col-small">{@web.visits.number}</th>
 						# IF C_ENABLED_NOTATION #<th>${LangLoader::get_message('note', 'common')}</th># ENDIF #
 						# IF C_ENABLED_COMMENTS #<th class="col-small">${LangLoader::get_message('comments', 'comments-common')}</th># ENDIF #
 						# IF C_MODERATE #<th class="col-smaller"></th># ENDIF #
@@ -153,7 +153,7 @@
 									# IF weblinks.C_VISIBLE #
 										<span>
 											<a href="{weblinks.U_VISIT}" class="button submit small">
-												<i class="fa fa-globe" aria-hidden="true"></i> {@visit}
+												<i class="fa fa-globe" aria-hidden="true"></i> {@web.visit}
 											</a>
 											# IF IS_USER_CONNECTED #
 												<a href="{weblinks.U_DEADLINK}" data-confirmation="${LangLoader::get_message('deadlink.confirmation', 'common')}" class="button bgc-full warning small" aria-label="${LangLoader::get_message('deadlink', 'common')}">
@@ -164,7 +164,7 @@
 									# ELSE #
 										# IF C_PENDING_ITEMS #
 											<a href="{weblinks.U_VISIT}" class="button submit small">
-												<i class="fa fa-globe" aria-hidden="true"></i> {@visit}
+												<i class="fa fa-globe" aria-hidden="true"></i> {@web.visit}
 											</a>
 										# ENDIF #
 									# ENDIF #

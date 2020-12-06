@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 10 19
+ * @version     PHPBoost 6.0 - last update: 2020 12 06
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -167,7 +167,7 @@ class WebDisplayCategoryController extends ModuleController
 		$sort_options = array(
 			new FormFieldSelectChoiceOption($common_lang['form.date.creation'], WebLink::SORT_FIELDS_URL_VALUES[WebLink::SORT_DATE], array('data_option_icon' => 'far fa-calendar-alt')),
 			new FormFieldSelectChoiceOption($common_lang['form.name'], WebLink::SORT_FIELDS_URL_VALUES[WebLink::SORT_ALPHABETIC], array('data_option_icon' => 'fa fa-sort-alpha-up')),
-			new FormFieldSelectChoiceOption($this->lang['config.sort_type.visits'], WebLink::SORT_FIELDS_URL_VALUES[WebLink::SORT_NUMBER_VISITS], array('data_option_icon' => 'fa fa-street-view'))
+			new FormFieldSelectChoiceOption($this->lang['web.config.sort.type.visits'], WebLink::SORT_FIELDS_URL_VALUES[WebLink::SORT_NUMBER_VISITS], array('data_option_icon' => 'fa fa-street-view'))
 		);
 
 		if ($this->comments_config->module_comments_is_enabled('web'))
@@ -289,9 +289,9 @@ class WebDisplayCategoryController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 
 		if ($this->get_category()->get_id() != Category::ROOT_CATEGORY)
-			$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['module_title'], $page);
+			$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['module.title'], $page);
 		else
-			$graphical_environment->set_page_title($this->lang['module_title'], '', $page);
+			$graphical_environment->set_page_title($this->lang['module.title'], '', $page);
 
 		$description = $this->get_category()->get_description();
 		if (empty($description))
@@ -300,7 +300,7 @@ class WebDisplayCategoryController extends ModuleController
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $sort_field, $sort_mode, $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], WebUrlBuilder::home());
+		$breadcrumb->add($this->lang['module.title'], WebUrlBuilder::home());
 
 		$categories = array_reverse(CategoriesService::get_categories_manager('web')->get_parents($this->get_category()->get_id(), true));
 		foreach ($categories as $id => $category)

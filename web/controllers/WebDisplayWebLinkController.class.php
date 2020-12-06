@@ -145,7 +145,7 @@ class WebDisplayWebLinkController extends ModuleController
 		$response = new SiteDisplayResponse($this->tpl);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($weblink->get_title(), ($category->get_id() != Category::ROOT_CATEGORY ? $category->get_name() . ' - ' : '') . $this->lang['module_title']);
+		$graphical_environment->set_page_title($weblink->get_title(), ($category->get_id() != Category::ROOT_CATEGORY ? $category->get_name() . ' - ' : '') . $this->lang['module.title']);
 		$graphical_environment->get_seo_meta_data()->set_description($weblink->get_real_summary());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_title()));
 
@@ -153,7 +153,7 @@ class WebDisplayWebLinkController extends ModuleController
 			$graphical_environment->get_seo_meta_data()->set_picture_url($weblink->get_thumbnail());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'],WebUrlBuilder::home());
+		$breadcrumb->add($this->lang['module.title'],WebUrlBuilder::home());
 
 		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($weblink->get_id_category(), true));
 		foreach ($categories as $id => $category)

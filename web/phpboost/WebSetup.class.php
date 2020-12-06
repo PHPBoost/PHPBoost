@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 30
+ * @version     PHPBoost 6.0 - last update: 2020 12 06
  * @since       PHPBoost 4.1 - 2014 08 21
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class WebSetup extends DefaultModuleSetup
@@ -74,7 +75,7 @@ class WebSetup extends DefaultModuleSetup
 			'primary' => array('id'),
 			'indexes' => array(
 				'id_category' => array('type' => 'key', 'fields' => 'id_category'),
-				'title' => array('type' => 'fulltext', 'fields' => 'name'),
+				'name' => array('type' => 'fulltext', 'fields' => 'name'),
 				'contents' => array('type' => 'fulltext', 'fields' => 'contents'),
 				'short_contents' => array('type' => 'fulltext', 'fields' => 'short_contents')
 			)

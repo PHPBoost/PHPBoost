@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 05
+ * @version     PHPBoost 6.0 - last update: 2020 12 06
  * @since       PHPBoost 5.2 - 2020 12 05
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class WebMemberItemsController extends ModuleController
@@ -188,12 +189,12 @@ class WebMemberItemsController extends ModuleController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['my.items'], $this->lang['module_title'], $page);
+		$graphical_environment->set_page_title($this->lang['my.items'], $this->lang['module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['web.seo.description.member'], array('author' => AppContext::get_current_user()->get_display_name())), $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::display_member_items($sort_field, $sort_mode, $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], WebUrlBuilder::home());
+		$breadcrumb->add($this->lang['module.title'], WebUrlBuilder::home());
 		$breadcrumb->add($this->lang['my.items'], WebUrlBuilder::display_member_items($sort_field, $sort_mode, $page));
 
 		return $response;

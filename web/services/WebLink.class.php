@@ -475,7 +475,6 @@ class WebLink
 				'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 				'USER_GROUP_COLOR' => $user_group_color,
 				'VIEWS_NUMBER'     => $this->views_number,
-				'L_VISITED_TIMES'  => StringVars::replace_vars(LangLoader::get_message('visited_times', 'common', 'web'), array('number_visits' => $this->views_number)),
 				'STATIC_NOTATION'  => NotationService::display_static_image($this->get_notation()),
 				'NOTATION'         => NotationService::display_active_image($this->get_notation()),
 				'C_COMMENTS'       => !empty($comments_number),

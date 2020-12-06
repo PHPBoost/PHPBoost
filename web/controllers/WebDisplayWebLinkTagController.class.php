@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 03 07
+ * @version     PHPBoost 6.0 - last update: 2020 12 06
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -134,7 +134,7 @@ class WebDisplayWebLinkTagController extends ModuleController
 		$sort_options = array(
 			new FormFieldSelectChoiceOption($common_lang['form.date.creation'], WebLink::SORT_FIELDS_URL_VALUES[WebLink::SORT_DATE]),
 			new FormFieldSelectChoiceOption($common_lang['form.name'], WebLink::SORT_FIELDS_URL_VALUES[WebLink::SORT_ALPHABETIC]),
-			new FormFieldSelectChoiceOption($this->lang['config.sort_type.visits'], WebLink::SORT_FIELDS_URL_VALUES[WebLink::SORT_NUMBER_VISITS])
+			new FormFieldSelectChoiceOption($this->lang['web.config.sort.type.visits'], WebLink::SORT_FIELDS_URL_VALUES[WebLink::SORT_NUMBER_VISITS])
 		);
 
 		if ($this->comments_config->module_comments_is_enabled('web'))
@@ -233,12 +233,12 @@ class WebDisplayWebLinkTagController extends ModuleController
 		$response = new SiteDisplayResponse($this->tpl);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->get_keyword()->get_name(), $this->lang['module_title'], $page);
+		$graphical_environment->set_page_title($this->get_keyword()->get_name(), $this->lang['module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['web.seo.description.tag'], array('subject' => $this->get_keyword()->get_name())), $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $sort_field, $sort_mode, $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], WebUrlBuilder::home());
+		$breadcrumb->add($this->lang['module.title'], WebUrlBuilder::home());
 		$breadcrumb->add($this->get_keyword()->get_name(), WebUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $sort_field, $sort_mode, $page));
 
 		return $response;
