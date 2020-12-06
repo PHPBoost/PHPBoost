@@ -260,8 +260,16 @@ class WebLink
 
 	public function get_default_thumbnail()
 	{
-		$file = new File(PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/default_item_thumbnail.png');
-		if ($file->exists())
+		$module_id = 'web';
+		$module_file = new File(PATH_TO_ROOT . '/' . $module_id . '/templates/images/default_item_thumbnail.png');
+		$module_theme_file = new File(PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/modules/' . $module_id . '/images/default_item_thumbnail.png');
+		$theme_file = new File(PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/default_item_thumbnail.png');
+
+		if ($module_file->exists())
+			return new Url('/' . $module_id . '/templates/images/default_item_thumbnail.png');
+		elseif ($module_theme_file->exists())
+			return new Url('/templates/' . AppContext::get_current_user()->get_theme() . '/modules/' . $module_id . '/images/default_item_thumbnail.png');
+		elseif ($theme_file->exists())
 			return new Url('/templates/' . AppContext::get_current_user()->get_theme() . '/images/default_item_thumbnail.png');
 		else
 			return new Url('/templates/__default__/images/default_item_thumbnail.png');

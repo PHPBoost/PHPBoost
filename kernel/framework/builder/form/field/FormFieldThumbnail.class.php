@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 06
+ * @version     PHPBoost 6.0 - last update: 2020 12 06
  * @since       PHPBoost 6.0 - 2020 02 27
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldThumbnail extends AbstractFormField
@@ -58,8 +59,19 @@ class FormFieldThumbnail extends AbstractFormField
 	public static function get_default_thumbnail_url($thumbnail_url)
 	{
 		$file_name = basename($thumbnail_url);
-		$file = new File(PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/' . $file_name);
-		if ($file_name && $file->exists())
+		$module_id = Environment::get_running_module_name();
+
+		$module_url = PATH_TO_ROOT . '/' . $module_id . '/templates/images/' . $file_name;
+		$module_file = new File($module_url);
+		$module_theme_url = PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/modules/' . $module_id . '/images/' . $file_name;
+		$module_theme_file = new File($module_theme_url);
+		$theme_file = new File(PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/' . $file_name);
+
+		if ($file_name && $module_file->exists())
+			return $module_url;
+		if ($file_name && $module_theme_file->exists())
+			return $module_theme_url;
+		elseif ($file_name && $theme_file->exists())
 			return '/templates/' . AppContext::get_current_user()->get_theme() . '/images/' . $file_name;
 		else
 			return $thumbnail_url;
