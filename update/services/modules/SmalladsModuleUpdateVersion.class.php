@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 27
+ * @version     PHPBoost 6.0 - last update: 2020 12 06
  * @since       PHPBoost 5.1 - 2018 09 20
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -19,6 +19,12 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 		self::$delete_old_files_list = array(
 			'/controllers/AdminSmalladsConfigController.class.php',
 			'/controllers/SmalladsHomeController.class.php',
+			'/controllers/SmalladsDisplayCategoryController.class.php',
+			'/controllers/SmalladsDisplayItemController.class.php',
+			'/controllers/SmalladsDisplayMemberItemsController.class.php',
+			'/controllers/SmalladsDisplayPendingItemsController.class.php',
+			'/controllers/SmalladsDisplayTagController.class.php',
+			'/controllers/SmalladsDisplayUsageTermsController.class.php',
 			'/fields/SmalladsFormFieldSelectSources.class.php',
 			'/lang/english/smallads_english.php',
 			'/lang/english/smallads_french.php',
