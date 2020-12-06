@@ -10,7 +10,7 @@
 
 class WebVisitWebLinkController extends AbstractController
 {
-	private $weblink;
+	private $item;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -19,25 +19,25 @@ class WebVisitWebLinkController extends AbstractController
 		if (!empty($id))
 		{
 			try {
-				$this->weblink = WebService::get_weblink('WHERE web.id = :id', array('id' => $id));
+				$this->item = WebService::get_weblink('WHERE web.id = :id', array('id' => $id));
 			} catch (RowNotFoundException $e) {
 				$error_controller = PHPBoostErrors::unexisting_page();
 				DispatchManager::redirect($error_controller);
 			}
 		}
 
-		if ($this->weblink !== null && !CategoriesAuthorizationsService::check_authorizations($this->weblink->get_id_category())->read())
+		if ($this->item !== null && !CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->read())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
-		else if ($this->weblink !== null && $this->weblink->is_published())
+		else if ($this->item !== null && $this->item->is_published())
 		{
-			$this->weblink->set_views_number($this->weblink->get_views_number() + 1);
-			WebService::update_views_number($this->weblink);
+			$this->item->set_views_number($this->item->get_views_number() + 1);
+			WebService::update_views_number($this->item);
 			WebCache::invalidate();
 
-			AppContext::get_response()->redirect($this->weblink->get_url()->absolute());
+			AppContext::get_response()->redirect($this->item->get_url()->absolute());
 		}
 		else
 		{

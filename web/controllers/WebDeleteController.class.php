@@ -12,25 +12,25 @@
 
 class WebDeleteController extends ModuleController
 {
-	private $weblink;
+	private $item;
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		AppContext::get_session()->csrf_get_protect();
 
-		$weblink = $this->get_weblink($request);
+		$item = $this->get_weblink($request);
 
-		if (!$weblink->is_authorized_to_delete())
+		if (!$item->is_authorized_to_delete())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
 
-		WebService::delete($weblink->get_id());
+		WebService::delete($item->get_id());
 
 		WebService::clear_cache();
 
-		AppContext::get_response()->redirect(($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), WebUrlBuilder::display($weblink->get_category()->get_id(), $weblink->get_category()->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_title())->rel()) ? $request->get_url_referrer() : WebUrlBuilder::home()), StringVars::replace_vars(LangLoader::get_message('web.message.success.delete', 'common', 'web'), array('title' => $weblink->get_title())));
+		AppContext::get_response()->redirect(($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), WebUrlBuilder::display($item->get_category()->get_id(), $item->get_category()->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title())->rel()) ? $request->get_url_referrer() : WebUrlBuilder::home()), StringVars::replace_vars(LangLoader::get_message('web.message.success.delete', 'common', 'web'), array('title' => $item->get_title())));
 	}
 
 	private function get_weblink(HTTPRequestCustom $request)

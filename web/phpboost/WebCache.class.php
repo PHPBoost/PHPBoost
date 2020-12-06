@@ -3,20 +3,21 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 01 25
+ * @version     PHPBoost 6.0 - last update: 2020 12 06
  * @since       PHPBoost 4.1 - 2014 08 21
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class WebCache implements CacheData
 {
-	private $partners_weblinks = array();
+	private $partners_items = array();
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{
-		$this->partners_weblinks = array();
+		$this->partners_items = array();
 
 		$now = new Date();
 		$config = WebConfig::load();
@@ -35,33 +36,33 @@ class WebCache implements CacheData
 
 		while ($row = $result->fetch())
 		{
-			$this->partners_weblinks[$row['id']] = $row;
+			$this->partners_items[$row['id']] = $row;
 		}
 		$result->dispose();
 	}
 
 	public function get_partners_weblinks()
 	{
-		return $this->partners_weblinks;
+		return $this->partners_items;
 	}
 
 	public function partner_weblink_exists($id)
 	{
-		return array_key_exists($id, $this->partners_weblinks);
+		return array_key_exists($id, $this->partners_items);
 	}
 
 	public function get_partner_weblink_item($id)
 	{
 		if ($this->partner_weblink_exists($id))
 		{
-			return $this->partners_weblinks[$id];
+			return $this->partners_items[$id];
 		}
 		return null;
 	}
 
 	public function get_number_partners_weblinks()
 	{
-		return count($this->partners_weblinks);
+		return count($this->partners_items);
 	}
 
 	/**

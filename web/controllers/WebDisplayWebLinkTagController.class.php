@@ -12,7 +12,7 @@
 
 class WebDisplayWebLinkTagController extends ModuleController
 {
-	private $tpl;
+	private $view;
 	private $lang;
 
 	private $keyword;
@@ -35,8 +35,8 @@ class WebDisplayWebLinkTagController extends ModuleController
 	public function init()
 	{
 		$this->lang = LangLoader::get('common', 'web');
-		$this->tpl = new FileTemplate('web/WebSeveralItemsController.tpl');
-		$this->tpl->add_lang($this->lang);
+		$this->view = new FileTemplate('web/WebSeveralItemsController.tpl');
+		$this->view->add_lang($this->lang);
 		$this->config = WebConfig::load();
 		$this->comments_config = CommentsConfig::load();
 		$this->content_management_config = ContentManagementConfig::load();
@@ -85,7 +85,7 @@ class WebDisplayWebLinkTagController extends ModuleController
 			'display_from' => $pagination->get_display_from()
 		)));
 
-		$this->tpl->put_all(array(
+		$this->view->put_all(array(
 			'C_ITEMS' => $result->get_rows_count() > 0,
 			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
 			'C_GRID_VIEW' => $this->config->get_display_type() == WebConfig::GRID_VIEW,
@@ -104,13 +104,13 @@ class WebDisplayWebLinkTagController extends ModuleController
 
 		while ($row = $result->fetch())
 		{
-			$weblink = new WebLink();
-			$weblink->set_properties($row);
+			$item = new WebLink();
+			$item->set_properties($row);
 
-			$keywords = $weblink->get_keywords();
+			$keywords = $item->get_keywords();
 			$has_keywords = count($keywords) > 0;
 
-			$this->tpl->assign_block_vars('weblinks', array_merge($weblink->get_array_tpl_vars(), array(
+			$this->view->assign_block_vars('items', array_merge($item->get_array_tpl_vars(), array(
 				'C_KEYWORDS' => $has_keywords
 			)));
 
@@ -155,7 +155,7 @@ class WebDisplayWebLinkTagController extends ModuleController
 			array('events' => array('change' => 'document.location = "' . WebUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 
-		$this->tpl->put('SORT_FORM', $form->display());
+		$this->view->put('SORT_FORM', $form->display());
 	}
 
 	private function get_keyword()
@@ -183,12 +183,12 @@ class WebDisplayWebLinkTagController extends ModuleController
 
 	private function get_pagination($condition, $parameters, $field, $mode, $page)
 	{
-		$result = PersistenceContext::get_querier()->select_single_row_query('SELECT COUNT(*) AS weblinks_number
+		$result = PersistenceContext::get_querier()->select_single_row_query('SELECT COUNT(*) AS items_number
 		FROM '. WebSetup::$web_table .' web
 		LEFT JOIN '. DB_TABLE_KEYWORDS_RELATIONS .' relation ON relation.module_id = \'web\' AND relation.id_in_module = web.id
 		' . $condition, $parameters);
 
-		$pagination = new ModulePagination($page, $result['weblinks_number'], (int)WebConfig::load()->get_items_per_page());
+		$pagination = new ModulePagination($page, $result['items_number'], (int)WebConfig::load()->get_items_per_page());
 		$pagination->set_url(WebUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $field, $mode, '%d'));
 
 		if ($pagination->current_page_is_empty() && $page > 1)
@@ -207,7 +207,7 @@ class WebDisplayWebLinkTagController extends ModuleController
 		$i = 1;
 		foreach ($keywords as $keyword)
 		{
-			$this->tpl->assign_block_vars('weblinks.keywords', array(
+			$this->view->assign_block_vars('items.keywords', array(
 				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME' => $keyword->get_name(),
 				'URL' => WebUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
@@ -230,7 +230,7 @@ class WebDisplayWebLinkTagController extends ModuleController
 		$sort_field = $request->get_getstring('field', WebLink::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
 		$sort_mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
 		$page = $request->get_getint('page', 1);
-		$response = new SiteDisplayResponse($this->tpl);
+		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->get_keyword()->get_name(), $this->lang['module.title'], $page);

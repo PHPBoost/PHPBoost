@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 31
+ * @version     PHPBoost 6.0 - last update: 2020 12 06
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -29,31 +29,31 @@ class WebService
 
 	 /**
 	 * @desc Create a new entry in the database table.
-	 * @param string[] $weblink : new WebLink
+	 * @param string[] $item : new WebLink
 	 */
-	public static function add(WebLink $weblink)
+	public static function add(WebLink $item)
 	{
-		$result = self::$db_querier->insert(WebSetup::$web_table, $weblink->get_properties());
+		$result = self::$db_querier->insert(WebSetup::$web_table, $item->get_properties());
 
 		return $result->get_last_inserted_id();
 	}
 
 	 /**
 	 * @desc Update an entry.
-	 * @param string[] $weblink : WebLink to update
+	 * @param string[] $item : WebLink to update
 	 */
-	public static function update(WebLink $weblink)
+	public static function update(WebLink $item)
 	{
-		self::$db_querier->update(WebSetup::$web_table, $weblink->get_properties(), 'WHERE id=:id', array('id' => $weblink->get_id()));
+		self::$db_querier->update(WebSetup::$web_table, $item->get_properties(), 'WHERE id=:id', array('id' => $item->get_id()));
 	}
 
 	 /**
 	 * @desc Update the number of views of a link.
-	 * @param string[] $weblink : WebLink to update
+	 * @param string[] $item : WebLink to update
 	 */
-	public static function update_views_number(WebLink $weblink)
+	public static function update_views_number(WebLink $item)
 	{
-		self::$db_querier->update(WebSetup::$web_table, array('number_views' => $weblink->get_views_number()), 'WHERE id=:id', array('id' => $weblink->get_id()));
+		self::$db_querier->update(WebSetup::$web_table, array('number_views' => $item->get_views_number()), 'WHERE id=:id', array('id' => $item->get_id()));
 	}
 
 	 /**
@@ -78,7 +78,7 @@ class WebService
 	}
 
 	 /**
-	 * @desc Return the properties of a weblink.
+	 * @desc Return the properties of an item.
 	 * @param string $condition : Restriction to apply to the list
 	 * @param string[] $parameters : Parameters of the condition
 	 */
@@ -91,9 +91,9 @@ class WebService
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = web.id AND note.module_name = \'web\' AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
 		' . $condition, $parameters);
 
-		$weblink = new WebLink();
-		$weblink->set_properties($row);
-		return $weblink;
+		$item = new WebLink();
+		$item->set_properties($row);
+		return $item;
 	}
 
 	public static function clear_cache()

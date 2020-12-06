@@ -5,16 +5,17 @@
   * @author      Julien BRISWALTER <j1.seth@phpboost.com>
   * @version     PHPBoost 6.0 - last update: 2020 12 06
   * @since       PHPBoost 4.1 - 2014 08 21
+  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  */
 
 class WebCommentsTopic extends CommentsTopic
 {
-	private $weblink;
+	private $item;
 
-	public function __construct(WebLink $weblink = null)
+	public function __construct(WebLink $item = null)
 	{
 		parent::__construct('web');
-		$this->weblink = $weblink;
+		$this->item = $item;
 	}
 
 	public function get_authorizations()
@@ -31,11 +32,11 @@ class WebCommentsTopic extends CommentsTopic
 
 	private function get_weblink()
 	{
-		if ($this->weblink === null)
+		if ($this->item === null)
 		{
-			$this->weblink = WebService::get_weblink('WHERE web.id=:id', array('id' => $this->get_id_in_module()));
+			$this->item = WebService::get_weblink('WHERE web.id=:id', array('id' => $this->get_id_in_module()));
 		}
-		return $this->weblink;
+		return $this->item;
 	}
 }
 ?>

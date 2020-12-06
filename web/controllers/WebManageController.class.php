@@ -69,27 +69,27 @@ class WebManageController extends AdminModuleController
 		);
 		foreach ($result as $row)
 		{
-			$weblink = new WebLink();
-			$weblink->set_properties($row);
-			$category = $weblink->get_category();
-			$user = $weblink->get_author_user();
+			$item = new WebLink();
+			$item->set_properties($row);
+			$category = $item->get_category();
+			$user = $item->get_author_user();
 
 			$this->elements_number++;
-			$this->ids[$this->elements_number] = $weblink->get_id();
+			$this->ids[$this->elements_number] = $item->get_id();
 
-			$edit_link = new EditLinkHTMLElement(WebUrlBuilder::edit($weblink->get_id()));
-			$delete_link = new DeleteLinkHTMLElement(WebUrlBuilder::delete($weblink->get_id()));
+			$edit_item = new EditLinkHTMLElement(WebUrlBuilder::edit($item->get_id()));
+			$delete_item = new DeleteLinkHTMLElement(WebUrlBuilder::delete($item->get_id()));
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
 
 			$row = array(
-				new HTMLTableRowCell(new LinkHTMLElement(WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_title()), $weblink->get_title()), 'left'),
+				new HTMLTableRowCell(new LinkHTMLElement(WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()), $item->get_title()), 'left'),
 				new HTMLTableRowCell(new LinkHTMLElement(WebUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), ($category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('none_e', 'common') : $category->get_name()))),
 				new HTMLTableRowCell($author),
-				new HTMLTableRowCell($weblink->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
-				new HTMLTableRowCell($weblink->get_status()),
-				new HTMLTableRowCell($edit_link->display() . $delete_link->display(), 'controls')
+				new HTMLTableRowCell($item->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
+				new HTMLTableRowCell($item->get_status()),
+				new HTMLTableRowCell($edit_item->display() . $delete_item->display(), 'controls')
 			);
 
 			if (!$display_categories)

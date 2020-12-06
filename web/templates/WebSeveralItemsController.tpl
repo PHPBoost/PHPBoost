@@ -66,82 +66,82 @@
 					</tr>
 				</thead>
 				<tbody>
-					# START weblinks #
-						<tr class="category-{weblinks.CATEGORY_ID}">
+					# START items #
+						<tr class="category-{items.CATEGORY_ID}">
 							<td>
-								<a href="{weblinks.U_ITEM}" itemprop="name"# IF weblinks.C_NEW_CONTENT # class="new-content"# ENDIF#>{weblinks.TITLE}</a>
+								<a href="{items.U_ITEM}" itemprop="name"# IF items.C_NEW_CONTENT # class="new-content"# ENDIF#>{items.TITLE}</a>
 							</td>
 							<td>
-								{weblinks.VIEWS_NUMBER}
+								{items.VIEWS_NUMBER}
 							</td>
 							# IF C_ENABLED_NOTATION #
 								<td>
-									{weblinks.STATIC_NOTATION}
+									{items.STATIC_NOTATION}
 								</td>
 							# ENDIF #
 							# IF C_ENABLED_COMMENTS #
 								<td>
-									# IF weblinks.C_COMMENTS # {weblinks.COMENTS_NUMBER} # ENDIF # {weblinks.L_COMMENTS}
+									# IF items.C_COMMENTS # {items.COMENTS_NUMBER} # ENDIF # {items.L_COMMENTS}
 								</td>
 							# ENDIF #
-							# IF weblinks.C_CONTROLS #
+							# IF items.C_CONTROLS #
 								<td class="controls">
-									# IF weblinks.C_EDIT #
-										<a href="{weblinks.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+									# IF items.C_EDIT #
+										<a href="{items.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 									# ENDIF #
-									# IF weblinks.C_DELETE #
-										<a href="{weblinks.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+									# IF items.C_DELETE #
+										<a href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 									# ENDIF #
 								</td>
 							# ENDIF #
 						</tr>
-					# END weblinks #
+					# END items #
 				</tbody>
 			</table>
 		# ELSE #
 			<div class="# IF C_GRID_VIEW #cell-flex cell-columns-{ITEMS_PER_ROW}# ELSE #cell-row# ENDIF #">
-				# START weblinks #
-					<article id="web-item-{weblinks.ID}" class="web-item several-items category-{weblinks.CATEGORY_ID} cell# IF weblinks.C_IS_PARTNER # content-friends# ENDIF ## IF weblinks.C_IS_PRIVILEGED_PARTNER # content-privileged-friends# ENDIF ## IF weblinks.C_NEW_CONTENT # new-content# ENDIF#" itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
+				# START items #
+					<article id="web-item-{items.ID}" class="web-item several-items category-{items.CATEGORY_ID} cell# IF items.C_IS_PARTNER # content-friends# ENDIF ## IF items.C_IS_PRIVILEGED_PARTNER # content-privileged-friends# ENDIF ## IF items.C_NEW_CONTENT # new-content# ENDIF#" itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 						<header class="cell-header">
-							<h2 class="cell-name"><a href="{weblinks.U_ITEM}" itemprop="name">{weblinks.TITLE}</a></h2>
+							<h2 class="cell-name"><a href="{items.U_ITEM}" itemprop="name">{items.TITLE}</a></h2>
 						</header>
 						<div class="cell-body">
 							<div class="cell-infos">
 								<div class="more">
-									<span class="pinned"><i class="fa fa-eye" aria-hidden="true"></i> {weblinks.VIEWS_NUMBER}</span>
+									<span class="pinned"><i class="fa fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span>
 									# IF C_ENABLED_COMMENTS #
 										<span class="pinned">
 											<i class="fa fa-comments" aria-hidden="true"></i>
-											# IF weblinks.C_COMMENTS # {weblinks.COMMENTS_NUMBER} # ENDIF # {weblinks.L_COMMENTS}
+											# IF items.C_COMMENTS # {items.COMMENTS_NUMBER} # ENDIF # {items.L_COMMENTS}
 										</span>
 									# ENDIF #
 									# IF C_ENABLED_NOTATION #
-										<div class="pinned">{weblinks.STATIC_NOTATION}</div>
+										<div class="pinned">{items.STATIC_NOTATION}</div>
 									# ENDIF #
 								</div>
-								# IF weblinks.C_CONTROLS #
+								# IF items.C_CONTROLS #
 									<span class="controls align-right">
-										# IF weblinks.C_EDIT #<a href="{weblinks.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
-										# IF weblinks.C_DELETE #<a href="{weblinks.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
+										# IF items.C_EDIT #<a href="{items.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
+										# IF items.C_DELETE #<a href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
 									</span>
 								# ENDIF #
 							</div>
 
 							# IF NOT C_FULL_ITEM_DISPLAY #
-								# IF weblinks.C_IS_ADORNED #
+								# IF items.C_IS_ADORNED #
 									<div class="cell-thumbnail cell-landscape cell-center">
-										# IF weblinks.C_IS_PARTNER #
-											# IF weblinks.C_HAS_PARTNER_THUMBNAIL #
-												<img src="{weblinks.U_PARTNER_THUMBNAIL}" alt="{weblinks.TITLE}" itemprop="image" />
+										# IF items.C_IS_PARTNER #
+											# IF items.C_HAS_PARTNER_THUMBNAIL #
+												<img src="{items.U_PARTNER_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
 											# ELSE #
-												<img src="{weblinks.U_THUMBNAIL}" alt="{weblinks.TITLE}" itemprop="image" />
+												<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
 											# ENDIF #
 										# ELSE #
-											# IF weblinks.C_HAS_THUMBNAIL #
-												<img src="{weblinks.U_THUMBNAIL}" alt="{weblinks.TITLE}" itemprop="image" />
+											# IF items.C_HAS_THUMBNAIL #
+												<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
 											# ENDIF #
 										# ENDIF #
-										<a class="cell-thumbnail-caption" href="{weblinks.U_ITEM}">
+										<a class="cell-thumbnail-caption" href="{items.U_ITEM}">
 											${LangLoader::get_message('see.details', 'common')}
 										</a>
 									</div>
@@ -150,58 +150,58 @@
 							<div class="cell-content">
 								<div class="cell-infos">
 									<span></span>
-									# IF weblinks.C_VISIBLE #
+									# IF items.C_VISIBLE #
 										<span>
-											<a href="{weblinks.U_VISIT}" class="button submit small">
+											<a href="{items.U_VISIT}" class="button submit small">
 												<i class="fa fa-globe" aria-hidden="true"></i> {@web.visit}
 											</a>
 											# IF IS_USER_CONNECTED #
-												<a href="{weblinks.U_DEADLINK}" data-confirmation="${LangLoader::get_message('deadlink.confirmation', 'common')}" class="button bgc-full warning small" aria-label="${LangLoader::get_message('deadlink', 'common')}">
+												<a href="{items.U_DEADLINK}" data-confirmation="${LangLoader::get_message('deadlink.confirmation', 'common')}" class="button bgc-full warning small" aria-label="${LangLoader::get_message('deadlink', 'common')}">
 													<i class="fa fa-unlink" aria-hidden="true"></i>
 												</a>
 											# ENDIF #
 										</span>
 									# ELSE #
 										# IF C_PENDING_ITEMS #
-											<a href="{weblinks.U_VISIT}" class="button submit small">
+											<a href="{items.U_VISIT}" class="button submit small">
 												<i class="fa fa-globe" aria-hidden="true"></i> {@web.visit}
 											</a>
 										# ENDIF #
 									# ENDIF #
 								</div>
 								# IF C_FULL_ITEM_DISPLAY #
-									# IF weblinks.C_IS_ADORNED #
-										<a class="item-thumbnail" href="{weblinks.U_ITEM}">
-											# IF weblinks.C_IS_PARTNER #
-												# IF weblinks.C_HAS_PARTNER_THUMBNAIL #
-													<img src="{weblinks.U_PARTNER_THUMBNAIL}" alt="{weblinks.TITLE}" itemprop="image" />
+									# IF items.C_IS_ADORNED #
+										<a class="item-thumbnail" href="{items.U_ITEM}">
+											# IF items.C_IS_PARTNER #
+												# IF items.C_HAS_PARTNER_THUMBNAIL #
+													<img src="{items.U_PARTNER_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
 												# ELSE #
-													<img src="{weblinks.U_THUMBNAIL}" alt="{weblinks.TITLE}" itemprop="image" />
+													<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
 												# ENDIF #
 											# ELSE #
-												# IF weblinks.C_HAS_THUMBNAIL #
-													<img src="{weblinks.U_THUMBNAIL}" alt="{weblinks.TITLE}" itemprop="image" />
+												# IF items.C_HAS_THUMBNAIL #
+													<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
 												# ENDIF #
 											# ENDIF #
 										</a>
 									# ENDIF #
-									<div itemprop="text">{weblinks.CONTENTS}</div>
+									<div itemprop="text">{items.CONTENTS}</div>
 								# ELSE #
-									{weblinks.SUMMARY}# IF weblinks.C_READ_MORE # <a href="{weblinks.U_ITEM}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
+									{items.SUMMARY}# IF items.C_READ_MORE # <a href="{items.U_ITEM}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
 								# ENDIF #
 							</div>
 						</div>
 
 						<footer>
-							<meta itemprop="url" content="{weblinks.U_ITEM}">
-							<meta itemprop="description" content="${escape(weblinks.SHORT_CONTENTS)}"/>
+							<meta itemprop="url" content="{items.U_ITEM}">
+							<meta itemprop="description" content="${escape(items.SHORT_CONTENTS)}"/>
 							# IF C_ENABLED_COMMENTS #
-								<meta itemprop="discussionUrl" content="{weblinks.U_COMMENTS}">
-								<meta itemprop="interactionCount" content="{weblinks.COMMENTS_NUMBER} UserComments">
+								<meta itemprop="discussionUrl" content="{items.U_COMMENTS}">
+								<meta itemprop="interactionCount" content="{items.COMMENTS_NUMBER} UserComments">
 							# ENDIF #
 						</footer>
 					</article>
-				# END weblinks #
+				# END items #
 			</div>
 		# ENDIF #
 

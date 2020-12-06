@@ -94,13 +94,13 @@ class WebMemberItemsController extends ModuleController
 
 		while ($row = $result->fetch())
 		{
-			$weblink = new WebLink();
-			$weblink->set_properties($row);
+			$item = new WebLink();
+			$item->set_properties($row);
 
-			$keywords = $weblink->get_keywords();
+			$keywords = $item->get_keywords();
 			$has_keywords = count($keywords) > 0;
 
-			$this->view->assign_block_vars('weblinks', array_merge($weblink->get_array_tpl_vars(), array(
+			$this->view->assign_block_vars('items', array_merge($item->get_array_tpl_vars(), array(
 				'C_KEYWORDS' => $has_keywords
 			)));
 
@@ -142,9 +142,9 @@ class WebMemberItemsController extends ModuleController
 
 	private function get_pagination($condition, $parameters, $field, $mode, $page)
 	{
-		$weblinks_number = WebService::count($condition, $parameters);
+		$items_number = WebService::count($condition, $parameters);
 
-		$pagination = new ModulePagination($page, $weblinks_number, (int)WebConfig::load()->get_items_per_page());
+		$pagination = new ModulePagination($page, $items_number, (int)WebConfig::load()->get_items_per_page());
 		$pagination->set_url(WebUrlBuilder::display_pending($field, $mode, '%d'));
 
 		if ($pagination->current_page_is_empty() && $page > 1)
@@ -163,7 +163,7 @@ class WebMemberItemsController extends ModuleController
 		$i = 1;
 		foreach ($keywords as $keyword)
 		{
-			$this->view->assign_block_vars('weblinks.keywords', array(
+			$this->view->assign_block_vars('items.keywords', array(
 				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME' => $keyword->get_name(),
 				'URL' => WebUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),

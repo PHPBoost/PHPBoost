@@ -24,8 +24,8 @@ class WebFormController extends ModuleController
 	private $lang;
 	private $common_lang;
 
-	private $weblink;
-	private $is_new_weblink;
+	private $item;
+	private $is_new_item;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -35,8 +35,8 @@ class WebFormController extends ModuleController
 
 		$this->build_form($request);
 
-		$tpl = new StringTemplate('# INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$view = new StringTemplate('# INCLUDE FORM #');
+		$view->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -44,9 +44,9 @@ class WebFormController extends ModuleController
 			$this->redirect();
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$view->put('FORM', $this->form->display());
 
-		return $this->generate_response($tpl);
+		return $this->generate_response($view);
 	}
 
 	private function init()
@@ -240,13 +240,13 @@ class WebFormController extends ModuleController
 
 	private function get_weblink()
 	{
-		if ($this->weblink === null)
+		if ($this->item === null)
 		{
 			$id = AppContext::get_request()->get_getint('id', 0);
 			if (!empty($id))
 			{
 				try {
-					$this->weblink = WebService::get_weblink('WHERE web.id=:id', array('id' => $id));
+					$this->item = WebService::get_weblink('WHERE web.id=:id', array('id' => $id));
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
 					DispatchManager::redirect($error_controller);
@@ -254,21 +254,21 @@ class WebFormController extends ModuleController
 			}
 			else
 			{
-				$this->is_new_weblink = true;
-				$this->weblink = new WebLink();
-				$this->weblink->init_default_properties(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY));
+				$this->is_new_item = true;
+				$this->item = new WebLink();
+				$this->item->init_default_properties(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY));
 			}
 		}
-		return $this->weblink;
+		return $this->item;
 	}
 
 	private function check_authorizations()
 	{
-		$weblink = $this->get_weblink();
+		$item = $this->get_weblink();
 
-		if ($weblink->get_id() === null)
+		if ($item->get_id() === null)
 		{
-			if (!$weblink->is_authorized_to_add())
+			if (!$item->is_authorized_to_add())
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -276,7 +276,7 @@ class WebFormController extends ModuleController
 		}
 		else
 		{
-			if (!$weblink->is_authorized_to_edit())
+			if (!$item->is_authorized_to_edit())
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -291,54 +291,54 @@ class WebFormController extends ModuleController
 
 	private function save()
 	{
-		$weblink = $this->get_weblink();
+		$item = $this->get_weblink();
 
-		$weblink->set_title($this->form->get_value('title'));
-		$weblink->set_rewrited_title(Url::encode_rewrite($weblink->get_title()));
+		$item->set_title($this->form->get_value('title'));
+		$item->set_rewrited_title(Url::encode_rewrite($item->get_title()));
 
 		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
-			$weblink->set_id_category($this->form->get_value('id_category')->get_raw_value());
+			$item->set_id_category($this->form->get_value('id_category')->get_raw_value());
 
-		$weblink->set_url(new Url($this->form->get_value('url')));
-		$weblink->set_contents($this->form->get_value('contents'));
-		$weblink->set_summary(($this->form->get_value('summary_enabled') ? $this->form->get_value('summary') : ''));
-		$weblink->set_picture(new Url($this->form->get_value('picture')));
+		$item->set_url(new Url($this->form->get_value('url')));
+		$item->set_contents($this->form->get_value('contents'));
+		$item->set_summary(($this->form->get_value('summary_enabled') ? $this->form->get_value('summary') : ''));
+		$item->set_picture(new Url($this->form->get_value('picture')));
 
-		$weblink->set_partner($this->form->get_value('partner'));
+		$item->set_partner($this->form->get_value('partner'));
 		if ($this->form->get_value('partner'))
 		{
-			$weblink->set_partner_thumbnail(new Url($this->form->get_value('partner_thumbnail')));
-			$weblink->set_privileged_partner($this->form->get_value('privileged_partner'));
+			$item->set_partner_thumbnail(new Url($this->form->get_value('partner_thumbnail')));
+			$item->set_privileged_partner($this->form->get_value('privileged_partner'));
 		}
 
-		if (!CategoriesAuthorizationsService::check_authorizations($weblink->get_id_category())->moderation())
+		if (!CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->moderation())
 		{
-			if ($weblink->get_id() === null )
-				$weblink->set_creation_date(new Date());
+			if ($item->get_id() === null )
+				$item->set_creation_date(new Date());
 
-			$weblink->clean_start_and_end_date();
+			$item->clean_start_and_end_date();
 
-			if (CategoriesAuthorizationsService::check_authorizations($weblink->get_id_category())->contribution() && !CategoriesAuthorizationsService::check_authorizations($weblink->get_id_category())->write())
-				$weblink->set_approbation_type(WebLink::NOT_APPROVAL);
+			if (CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->contribution() && !CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->write())
+				$item->set_approbation_type(WebLink::NOT_APPROVAL);
 		}
 		else
 		{
 			if ($this->form->get_value('update_creation_date'))
 			{
-				$weblink->set_creation_date(new Date());
+				$item->set_creation_date(new Date());
 			}
 			else
 			{
-				$weblink->set_creation_date($this->form->get_value('creation_date'));
+				$item->set_creation_date($this->form->get_value('creation_date'));
 			}
-			$weblink->set_approbation_type($this->form->get_value('approbation_type')->get_raw_value());
-			if ($weblink->get_approbation_type() == WebLink::APPROVAL_DATE)
+			$item->set_approbation_type($this->form->get_value('approbation_type')->get_raw_value());
+			if ($item->get_approbation_type() == WebLink::APPROVAL_DATE)
 			{
 				$deferred_operations = $this->config->get_deferred_operations();
 
-				$old_start_date = $weblink->get_start_date();
+				$old_start_date = $item->get_start_date();
 				$start_date = $this->form->get_value('start_date');
-				$weblink->set_start_date($start_date);
+				$item->set_start_date($start_date);
 
 				if ($old_start_date !== null && $old_start_date->get_timestamp() != $start_date->get_timestamp() && in_array($old_start_date->get_timestamp(), $deferred_operations))
 				{
@@ -351,9 +351,9 @@ class WebFormController extends ModuleController
 
 				if ($this->form->get_value('end_date_enabled'))
 				{
-					$old_end_date = $weblink->get_end_date();
+					$old_end_date = $item->get_end_date();
 					$end_date = $this->form->get_value('end_date');
-					$weblink->set_end_date($end_date);
+					$item->set_end_date($end_date);
 
 					if ($old_end_date !== null && $old_end_date->get_timestamp() != $end_date->get_timestamp() && in_array($old_end_date->get_timestamp(), $deferred_operations))
 					{
@@ -366,7 +366,7 @@ class WebFormController extends ModuleController
 				}
 				else
 				{
-					$weblink->clean_end_date();
+					$item->clean_end_date();
 				}
 
 				$this->config->set_deferred_operations($deferred_operations);
@@ -374,45 +374,45 @@ class WebFormController extends ModuleController
 			}
 			else
 			{
-				$weblink->clean_start_and_end_date();
+				$item->clean_start_and_end_date();
 			}
 		}
 
-		if ($weblink->get_id() === null)
+		if ($item->get_id() === null)
 		{
-			$id = WebService::add($weblink);
+			$id = WebService::add($item);
 		}
 		else
 		{
-			$id = $weblink->get_id();
-			WebService::update($weblink);
+			$id = $item->get_id();
+			WebService::update($item);
 		}
 
-		$this->contribution_actions($weblink, $id);
+		$this->contribution_actions($item, $id);
 
 		KeywordsService::get_keywords_manager()->put_relations($id, $this->form->get_value('keywords'));
 
 		WebService::clear_cache();
 	}
 
-	private function contribution_actions(WebLink $weblink, $id)
+	private function contribution_actions(WebLink $item, $id)
 	{
 			if ($this->is_contributor_member())
 			{
 				$contribution = new Contribution();
 				$contribution->set_id_in_module($id);
-				if ($weblink->get_id() === null)
+				if ($item->get_id() === null)
 					$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
 				else
 					$contribution->set_description(stripslashes($this->form->get_value('edition_description')));
 
-				$contribution->set_entitled($weblink->get_title());
+				$contribution->set_entitled($item->get_title());
 				$contribution->set_fixing_url(WebUrlBuilder::edit($id)->relative());
 				$contribution->set_poster_id(AppContext::get_current_user()->get_id());
 				$contribution->set_module('web');
 				$contribution->set_auth(
 					Authorizations::capture_and_shift_bit_auth(
-						CategoriesService::get_categories_manager()->get_heritated_authorizations($weblink->get_id_category(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
+						CategoriesService::get_categories_manager()->get_heritated_authorizations($item->get_id_category(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
 						Category::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
 					)
 				);
@@ -430,52 +430,52 @@ class WebFormController extends ModuleController
 				}
 			}
 		}
-		$weblink->set_id($id);
+		$item->set_id($id);
 	}
 
 	private function redirect()
 	{
-		$weblink = $this->get_weblink();
-		$category = $weblink->get_category();
+		$item = $this->get_weblink();
+		$category = $item->get_category();
 
-		if ($this->is_new_weblink && $this->is_contributor_member() && !$weblink->is_published())
+		if ($this->is_new_item && $this->is_contributor_member() && !$item->is_published())
 		{
 			DispatchManager::redirect(new UserContributionSuccessController());
 		}
-		elseif ($weblink->is_published())
+		elseif ($item->is_published())
 		{
-			if ($this->is_new_weblink)
-				AppContext::get_response()->redirect(WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_title()), StringVars::replace_vars($this->lang['web.message.success.add'], array('title' => $weblink->get_title())));
+			if ($this->is_new_item)
+				AppContext::get_response()->redirect(WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()), StringVars::replace_vars($this->lang['web.message.success.add'], array('title' => $item->get_title())));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_title())), StringVars::replace_vars($this->lang['web.message.success.edit'], array('title' => $weblink->get_title())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title())), StringVars::replace_vars($this->lang['web.message.success.edit'], array('title' => $item->get_title())));
 		}
 		else
 		{
-			if ($this->is_new_weblink)
-				AppContext::get_response()->redirect(WebUrlBuilder::display_pending(), StringVars::replace_vars($this->lang['web.message.success.add'], array('title' => $weblink->get_title())));
+			if ($this->is_new_item)
+				AppContext::get_response()->redirect(WebUrlBuilder::display_pending(), StringVars::replace_vars($this->lang['web.message.success.add'], array('title' => $item->get_title())));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : WebUrlBuilder::display_pending()), StringVars::replace_vars($this->lang['web.message.success.edit'], array('title' => $weblink->get_title())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : WebUrlBuilder::display_pending()), StringVars::replace_vars($this->lang['web.message.success.edit'], array('title' => $item->get_title())));
 		}
 	}
 
-	private function generate_response(View $tpl)
+	private function generate_response(View $view)
 	{
-		$weblink = $this->get_weblink();
+		$item = $this->get_weblink();
 
-		$location_id = $weblink->get_id() ? 'web-edit-'. $weblink->get_id() : '';
+		$location_id = $item->get_id() ? 'web-edit-'. $item->get_id() : '';
 
-		$response = new SiteDisplayResponse($tpl, $location_id);
+		$response = new SiteDisplayResponse($view, $location_id);
 		$graphical_environment = $response->get_graphical_environment();
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], WebUrlBuilder::home());
 
-		if ($weblink->get_id() === null)
+		if ($item->get_id() === null)
 		{
 			$graphical_environment->set_page_title($this->lang['web.add.item']);
-			$breadcrumb->add($this->lang['web.add.item'], WebUrlBuilder::add($weblink->get_id_category()));
+			$breadcrumb->add($this->lang['web.add.item'], WebUrlBuilder::add($item->get_id_category()));
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['web.add.item'], $this->lang['module.title']);
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::add($weblink->get_id_category()));
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::add($item->get_id_category()));
 		}
 		else
 		{
@@ -484,17 +484,17 @@ class WebFormController extends ModuleController
 
 			$graphical_environment->set_page_title($this->lang['web.edit.item']);
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['web.edit.item'], $this->lang['module.title']);
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::edit($weblink->get_id()));
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::edit($item->get_id()));
 
-			$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($weblink->get_id_category(), true));
+			$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($item->get_id_category(), true));
 			foreach ($categories as $id => $category)
 			{
 				if ($category->get_id() != Category::ROOT_CATEGORY)
 					$breadcrumb->add($category->get_name(), WebUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
 			}
-			$category = $weblink->get_category();
-			$breadcrumb->add($weblink->get_title(), WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_title()));
-			$breadcrumb->add($this->lang['web.edit.item'], WebUrlBuilder::edit($weblink->get_id()));
+			$category = $item->get_category();
+			$breadcrumb->add($item->get_title(), WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()));
+			$breadcrumb->add($this->lang['web.edit.item'], WebUrlBuilder::edit($item->get_id()));
 		}
 
 		return $response;

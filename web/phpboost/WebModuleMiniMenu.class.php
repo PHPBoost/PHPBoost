@@ -33,27 +33,27 @@ class WebModuleMiniMenu extends ModuleMiniMenu
 	public function get_menu_content()
 	{
 		//Create file template
-		$tpl = new FileTemplate('web/WebModuleMiniMenu.tpl');
+		$view = new FileTemplate('web/WebModuleMiniMenu.tpl');
 
-		//Assign the lang file to the tpl
-		$tpl->add_lang(LangLoader::get('common', 'web'));
+		//Assign the lang file to the template
+		$view->add_lang(LangLoader::get('common', 'web'));
 
-		//Assign common menu variables to the tpl
-		MenuService::assign_positions_conditions($tpl, $this->get_block());
+		//Assign common menu variables to the template
+		MenuService::assign_positions_conditions($view, $this->get_block());
 
 		//Load module cache
 		$web_cache = WebCache::load();
 
-		$partners_weblinks = $web_cache->get_partners_weblinks();
+		$partners_items = $web_cache->get_partners_weblinks();
 
-		$tpl->put('C_PARTNERS', !empty($partners_weblinks));
+		$view->put('C_PARTNERS', !empty($partners_items));
 
-		foreach ($partners_weblinks as $partner)
+		foreach ($partners_items as $partner)
 		{
 			$partner_thumbnail = new Url($partner['partner_picture']);
 			$thumbnail = $partner_thumbnail->rel();
 
-			$tpl->assign_block_vars('partners', array(
+			$view->assign_block_vars('items', array(
 				'C_HAS_PARTNER_THUMBNAIL' => !empty($thumbnail),
 				'NAME' => $partner['name'],
 				'U_PARTNER_THUMBNAIL' => $thumbnail,
@@ -61,7 +61,7 @@ class WebModuleMiniMenu extends ModuleMiniMenu
 			));
 		}
 
-		return $tpl->render();
+		return $view->render();
 	}
 }
 ?>
