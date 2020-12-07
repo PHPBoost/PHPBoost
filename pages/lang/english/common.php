@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 04
+ * @version     PHPBoost 6.0 - last update: 2020 12 07
  * @since       PHPBoost 1.6 - 2007 08 18
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -43,6 +43,7 @@ $lang['pages.edit'] = 'Edition of the page: ';
 $lang['pages.seo.description.root'] = 'All :site\'s pages.';
 $lang['pages.seo.description.tag'] = 'All pages on :subject.';
 $lang['pages.seo.description.pending'] = 'All pending pages.';
+$lang['pages.seo.description.member'] = 'All pages of the member: :author.';
 
 // Messages helper
 $lang['pages.message.success.add'] = 'The page <b>:name</b> has been added';
