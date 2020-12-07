@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 08
+ * @version     PHPBoost 6.0 - last update: 2020 12 07
  * @since       PHPBoost 4.0 - 2013 10 29
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -126,11 +126,19 @@ class CalendarEventContent
 
 	public function get_default_thumbnail()
 	{
-		$file = new File(PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/default_item_thumbnail.png');
-		if ($file->exists())
+		$module_id = 'calendar';
+		$module_file = new File(PATH_TO_ROOT . '/' . $module_id . '/templates/images/default_item_thumbnail.png');
+		$module_theme_file = new File(PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/modules/' . $module_id . '/images/default_item_thumbnail.png');
+		$theme_file = new File(PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/default_item_thumbnail.png');
+
+		if ($module_file->exists())
+			return new Url('/' . $module_id . '/templates/images/default_item_thumbnail.png');
+		elseif ($module_theme_file->exists())
+			return new Url('/templates/' . AppContext::get_current_user()->get_theme() . '/modules/' . $module_id . '/images/default_item_thumbnail.png');
+		elseif ($theme_file->exists())
 			return new Url('/templates/' . AppContext::get_current_user()->get_theme() . '/images/default_item_thumbnail.png');
 		else
-			return new Url('/templates/default/images/default_item_thumbnail.png');
+			return new Url('/templates/__default__/images/default_item_thumbnail.png');
 	}
 
 	public function set_location($location)
