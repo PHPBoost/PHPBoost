@@ -52,7 +52,7 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 				'columns' => array(
 					'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 					'rewrited_title' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-					'description' => array('type' => 'text', 'length' => 65000),
+					'summary' => array('type' => 'text', 'length' => 65000),
 					'brand' => array('type' => 'string', 'length' => 255),
 					'completed' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 					'location' => array('type' => 'text', 'length' => 65000),
@@ -65,8 +65,8 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 					'custom_author_name' => array('type' => 'string', 'length' => 255, 'default' => "''"),
 					'displayed_author_phone' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 					'author_phone' => array('type' => 'string', 'length' => 25, 'default' => "''"),
-					'publication_start_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-					'publication_end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+					'publishing_start_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+					'publishing_end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 					'sources' => array('type' => 'text', 'length' => 65000),
 					'carousel' => array('type' => 'text', 'length' => 65000)
 				)
@@ -84,9 +84,9 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 			array(
 				'table_name' => PREFIX . 'smallads',
 				'keys' => array(
-					'title' => true,
-					'contents' => true,
-					'description' => true,
+					'title'       => true,
+					'content'     => true,
+					'summary'     => true,
 					'id_category' => true
 				)
 			)
@@ -96,12 +96,17 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 			array(
 				'table_name' => PREFIX . 'smallads',
 				'columns' => array(
-					'picture' => 'thumbnail_url VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 0',
-					'type' => 'smallad_type VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL',
-					'id_created' => 'author_user_id INT(11) NOT NULL DEFAULT 0',
-					'approved' => 'published INT(11) NOT NULL DEFAULT 0',
+					'contents'     => 'content MEDIUMTEXT',
+					'description'  => 'summary TEXT',
+					'picture'      => 'thumbnail_url VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 0',
+					'type'         => 'smallad_type VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL',
+					'id_created'   => 'author_user_id INT(11) NOT NULL DEFAULT 0',
+					'approved'     => 'published INT(11) NOT NULL DEFAULT 0',
 					'date_created' => 'creation_date INT(11) NOT NULL DEFAULT 0',
-					'date_updated' => 'updated_date INT(11) NOT NULL DEFAULT 0'
+					'publication_start_date' => 'publishing_start_date INT(11) NOT NULL DEFAULT 0',
+					'publication_end_date' => 'publishing_end_date INT(11) NOT NULL DEFAULT 0',
+					'date_updated' => 'update_date INT(11) NOT NULL DEFAULT 0',
+					'updated_date' => 'update_date INT(11) NOT NULL DEFAULT 0'
 				)
 			),
 			array(
