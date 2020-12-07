@@ -25,8 +25,8 @@
 	// Hide/show content
 	function bb_hide(idcode, show, event)
 	{
-		var idcode = (typeof idcode !== 'undefined') ? idcode : 0;
-		var show = (typeof show !== 'undefined') ? show : 0;
+		idcode = (typeof idcode !== 'undefined') ? idcode : 0;
+		show = (typeof show !== 'undefined') ? show : 0;
 
 		event.stopPropagation();
 		jQuery('#formatter-hide-container-' + idcode).toggleClass('formatter-show');
@@ -125,7 +125,7 @@
 //
 function copy_to_clipboard(tocopy)
 {
-	var dummy = $('<input>').val(tocopy).appendTo('body').select()
+	var dummy = jQuery('<input>').val(tocopy).appendTo('body').select()
 
 	try {
 		var successful = document.execCommand('copy');
@@ -154,8 +154,8 @@ function copy_to_clipboard(tocopy)
 	//
 	function open_submenu(myid, myclass, closeother)
 	{
-		var myclass = (typeof myclass !== 'undefined') ? myclass : "opened";
-		var closeother = (typeof closeother !== 'undefined') ? closeother : false;
+		myclass = (typeof myclass !== 'undefined') ? myclass : "opened";
+		closeother = (typeof closeother !== 'undefined') ? closeother : false;
 
 		if (closeother == false)
 			jQuery('#' + myid).toggleClass(myclass);
@@ -191,7 +191,7 @@ function copy_to_clipboard(tocopy)
 	//
 	(function($) {
 		$.fn.opensubmenu = function( options ) {
-			var defaults = $(this), params = $.extend({
+			var defaults = jQuery(this), params = jQuery.extend({
 				osmCloseExcept: '',
 				osmCloseButton: 'a.close-button',
 				osmTarget: '',
@@ -199,19 +199,19 @@ function copy_to_clipboard(tocopy)
 			}, options);
 
 			return this.each(function() {
-				$(this).on('click', function(event) {
+				jQuery(this).on('click', function(event) {
 					event.preventDefault();
-					if ($(this).closest(params.osmTarget).hasClass(params.osmClass))
-						$(document).find(params.osmTarget).removeClass(params.osmClass);
+					if (jQuery(this).closest(params.osmTarget).hasClass(params.osmClass))
+						jQuery(document).find(params.osmTarget).removeClass(params.osmClass);
 					else {
-						$(document).find(params.osmTarget).removeClass(params.osmClass);
-						$(this).closest(params.osmTarget).addClass(params.osmClass);
+						jQuery(document).find(params.osmTarget).removeClass(params.osmClass);
+						jQuery(this).closest(params.osmTarget).addClass(params.osmClass);
 					}
 					event.stopPropagation();
 				});
-				$(document).on('click',function(event) {
-					if (($(event.target).is(params.osmCloseExcept) === false || $(event.target).is(params.osmCloseButton) === true)) {
-						$(document).find(params.osmTarget).removeClass(params.osmClass);
+				jQuery(document).on('click',function(event) {
+					if ((jQuery(event.target).is(params.osmCloseExcept) === false || jQuery(event.target).is(params.osmCloseButton) === true)) {
+						jQuery(document).find(params.osmTarget).removeClass(params.osmClass);
 					}
 				});
 			});
@@ -233,19 +233,23 @@ function copy_to_clipboard(tocopy)
 	//
 	// Comments :
 	//
-	function multiple_checkbox_check(status, elements_number, except_element, delete_button_control = true)
+	function multiple_checkbox_check(status, elements_number, except_element, delete_button_control)
 	{
+		delete_button_control = true
+		except_element = (typeof except_element !== 'undefined') ? except_element : 0;
 		var i;
-		var except_element = (typeof except_element !== 'undefined') ? except_element : 0;
+
 		for (i = 1; i <= elements_number; i++)
 		{
-			if ($('#multiple-checkbox-' + i)[0] && i != except_element)
-				$('#multiple-checkbox-' + i)[0].checked = status;
+			if (jQuery('#multiple-checkbox-' + i)[0] && i != except_element)
+				jQuery('#multiple-checkbox-' + i)[0].checked = status;
 		}
+
 		try {
-			$('.check-all')[0].checked = status;
+			jQuery('.check-all')[0].checked = status;
 		}
 		catch (err) {}
+
 		if (delete_button_control)
 			delete_button_display(elements_number);
 	}
@@ -268,24 +272,24 @@ function copy_to_clipboard(tocopy)
 		var checked_elements_number = 0;
 		for (i = 1; i <= elements_number; i++)
 		{
-			if ($('#multiple-checkbox-' + i)[0] && $('#multiple-checkbox-' + i)[0].checked == true)
+			if (jQuery('#multiple-checkbox-' + i)[0] && jQuery('#multiple-checkbox-' + i)[0].checked == true)
 				checked_elements_number++;
 		}
 
 		try {
 			if (checked_elements_number > 0) {
-				$('#delete-all-button').attr("disabled", false);
+				jQuery('#delete-all-button').attr("disabled", false);
 				if (checked_elements_number > 1)
-					$('#delete-all-button').attr("data-confirmation", "delete-elements");
+					jQuery('#delete-all-button').attr("data-confirmation", "delete-elements");
 				else
-					$('#delete-all-button').attr("data-confirmation", "delete-element");
+					jQuery('#delete-all-button').attr("data-confirmation", "delete-element");
 			} else {
-				$('#delete-all-button').attr("disabled", true);
+				jQuery('#delete-all-button').attr("disabled", true);
 			}
 			if (checked_elements_number < elements_number)
-				$('.check-all')[0].checked = false;
+				jQuery('.check-all')[0].checked = false;
 			else if (checked_elements_number == elements_number)
-				$('.check-all')[0].checked = true;
+				jQuery('.check-all')[0].checked = true;
 			update_data_confirmations();
 		}
 		catch (err) {}
@@ -444,7 +448,7 @@ function copy_to_clipboard(tocopy)
 			jQuery('#cookie-bar-container').removeClass('fixed');
 		}
 
-		if ( position > 800 || ($(document).height() == $(window.top).height())) {
+		if ( position > 800 || (jQuery(document).height() == jQuery(window.top).height())) {
 			jQuery('#scroll-to-bottom').fadeOut();
 		} else {
 			jQuery('#scroll-to-bottom').fadeIn();
@@ -452,10 +456,10 @@ function copy_to_clipboard(tocopy)
 	}
 
 	jQuery(document).ready(function(){
-		scroll_to($(this).scrollTop());
+		scroll_to(jQuery(this).scrollTop());
 
 		jQuery(window.top).scroll(function(){
-			scroll_to($(this).scrollTop());
+			scroll_to(jQuery(this).scrollTop());
 		});
 
 		// Scroll to Top or Bottom
@@ -464,7 +468,7 @@ function copy_to_clipboard(tocopy)
 			return false;
 		});
 		jQuery('#scroll-to-bottom').on('click',function(){
-			jQuery('html, body').animate({scrollTop: $(document).height()-$(window.top).height()},1200);
+			jQuery('html, body').animate({scrollTop: jQuery(document).height()-jQuery(window.top).height()},1200);
 			return false;
 		});
 	});
@@ -526,7 +530,7 @@ function copy_to_clipboard(tocopy)
 			var targetId = jQuery(this).attr("href"),
 				hash = targetId.substring(targetId.indexOf('#'));
 			if(hash != null || hash != targetId) {
-				if (parseInt($(window).width()) < 769)
+				if (parseInt(jQuery(window).width()) < 769)
 					menuOffset = jQuery('.sticky-menu > .cssmenu > ul > li > .cssmenu-title').innerHeight();
 				else
 					menuOffset = jQuery('.sticky-menu > .cssmenu').innerHeight();
