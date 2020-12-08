@@ -14,7 +14,7 @@
 
 	$.fn.menumaker = function(options) {
 
-		var cssmenu = $(this), settings = $.extend({
+		var cssmenu = jQuery(this), settings = $.extend({
 			title: "Menu",
 			format: "dropdown", // dropdown || multitoggle
 			breakpoint: 768,
@@ -26,14 +26,14 @@
 		var regtitle = new RegExp('[^A-Za-z0-9]', 'gi');
 
 		return this.each(function() {
-			menu_title = settings.title.replace(regtitle,'').toLowerCase();
+			var menu_title = settings.title.replace(regtitle,'').toLowerCase();
 			cssmenu.find('li ul').parent().addClass('has-sub');
 			cssmenu.prepend('<div id="menu-button-' + menu_title + '" class="menu-button">' + settings.title + '</div>');
-			$(this).find(".cssmenu-img").prependTo(this);
-			$(this).find(".cssmenu-img").clone().prependTo( "#menu-button-" + menu_title );
-			$(this).find('#menu-button-' + menu_title).on('click', function(){
-				$(this).toggleClass('menu-opened');
-				var mainmenu = $(this).next('ul');
+			jQuery(this).find(".cssmenu-img").prependTo(this);
+			jQuery(this).find(".cssmenu-img").clone().prependTo( "#menu-button-" + menu_title );
+			jQuery(this).find('#menu-button-' + menu_title).on('click', function(){
+				jQuery(this).toggleClass('menu-opened');
+				var mainmenu = jQuery(this).next('ul');
 				if (mainmenu.hasClass('open')) {
 					mainmenu.addClass('close').removeClass('open');
 				}
@@ -42,23 +42,23 @@
 				}
 			});
 
-			multiTg = function() {
+			var multiTg = function() {
 				cssmenu.find('.has-sub').prepend('<span class="submenu-button"></span>');
 				cssmenu.find('.submenu-button').on('click', function() {
-					$(this).toggleClass('submenu-opened');
-					if ($(this).siblings('ul').hasClass('open')) {
-						$(this).siblings('ul').addClass('close').removeClass('open');
+					jQuery(this).toggleClass('submenu-opened');
+					if (jQuery(this).siblings('ul').hasClass('open')) {
+						jQuery(this).siblings('ul').addClass('close').removeClass('open');
 					}
 					else {
-						$(this).siblings('ul').addClass('open').removeClass('close');
+						jQuery(this).siblings('ul').addClass('open').removeClass('close');
 					}
 				});
 			};
 
 			multiTg();
 
-			resizeFix = function() {
-				$smallscreen = window.matchMedia('(max-width: ' + settings.breakpoint + 'px)').matches;
+			var resizeFix = function() {
+				var $smallscreen = window.matchMedia('(max-width: ' + settings.breakpoint + 'px)').matches;
 
 				if (!$smallscreen) {
 					cssmenu.find('ul').removeClass('close');
@@ -91,7 +91,7 @@
 			};
 
 			resizeFix();
-			return $(window).on('resize', resizeFix);
+			return jQuery(window).on('resize', resizeFix);
 		});
 	};
 })(jQuery);
@@ -118,7 +118,7 @@ jQuery(document).ready(function(){
 		}
 	});
 
-// Current li - send class .current to an item from the admin menu and it's parents if the item href correspond to the page url
+	// Current li - send class .current to an item from the admin menu and it's parents if the item href correspond to the page url
 	jQuery('.modal-menu a').each(function(){
 		var link = jQuery(this).attr('href');
 		if(window.location.href.indexOf(link) > -1) { // if page url contains href of one of the cssmenu items

@@ -5,10 +5,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2017 05 31
+ * @version     PHPBoost 6.0 - last update: 2020 12 08
  * @since       PHPBoost 3.0 - 2009 10 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironment
@@ -106,7 +107,8 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 		$js_top_tpl = new FileTemplate('js_top.tpl');
 		$js_top_tpl->put_all(array(
-			'C_COOKIEBAR_ENABLED'     => false
+			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
+			'C_COOKIEBAR_ENABLED' => false
 		));
 
 		$js_bottom_tpl = new FileTemplate('js_bottom.tpl');

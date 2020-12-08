@@ -35,7 +35,8 @@
 				alert(${escapejs(LangLoader::get_message('require_text', 'main'))});
 		}
 	</script>
-	<script src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode.js"></script>
+
+	<script src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 # ENDIF #
 
 <div id="loading-preview-{FIELD}" class="loading-preview-container" style="display: none;">

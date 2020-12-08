@@ -5,11 +5,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 02 16
+ * @version     PHPBoost 6.0 - last update: 2020 12 08
  * @since       PHPBoost 3.0 - 2009 10 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Kevin MASSY <reidlos@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironment
@@ -107,6 +108,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 		$js_top_tpl = new FileTemplate('js_top.tpl');
 		$js_top_tpl->put_all(array(
+			'C_CSS_CACHE_ENABLED'     => CSSCacheConfig::load()->is_enabled(),
 			'C_COOKIEBAR_ENABLED'     => $cookiebar_config->is_cookiebar_enabled() && !$maintenance_config->is_under_maintenance(),
 			'COOKIEBAR_DURATION'      => $cookiebar_config->get_cookiebar_duration(),
 			'COOKIEBAR_TRACKING_MODE' => $cookiebar_config->get_cookiebar_tracking_mode(),
@@ -333,7 +335,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 				'L_SEC'                   => $date_lang['seconds']
 			));
 		}
-		
+
 		if ($maintenance_config->is_under_maintenance() && AppContext::get_current_user()->is_admin())
 		{
 			$form = new HTMLForm('disable_maintenance_form', '', false);
@@ -350,7 +352,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			else
 				$template->put('DISABLE_MAINTENANCE', $form->display());
 		}
-		
+
 		return $template;
 	}
 

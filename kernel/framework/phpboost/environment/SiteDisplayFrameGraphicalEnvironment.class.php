@@ -5,10 +5,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 11 08
+ * @version     PHPBoost 6.0 - last update: 2020 12 08
  * @since       PHPBoost 4.0 - 2014 06 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class SiteDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvironment
@@ -33,6 +34,7 @@ class SiteDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvir
 
 		$js_top_tpl = new FileTemplate('js_top.tpl');
 		$js_top_tpl->put_all(array(
+			'C_CSS_CACHE_ENABLED' 	  => CSSCacheConfig::load()->is_enabled(),
 			'C_COOKIEBAR_ENABLED'     => $cookiebar_config->is_cookiebar_enabled() && !$maintenance_config->is_under_maintenance(),
 			'COOKIEBAR_DURATION'      => $cookiebar_config->get_cookiebar_duration(),
 			'COOKIEBAR_TRACKING_MODE' => $cookiebar_config->get_cookiebar_tracking_mode(),

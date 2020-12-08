@@ -98,7 +98,9 @@
 		});
 	}
 </script>
-# IF C_DISPLAY_SHOUT_BBCODE #<script src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode.js"></script># ENDIF #
+# IF C_DISPLAY_SHOUT_BBCODE #
+	<script src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>	
+# ENDIF #
 
 <div class="cell-body# IF C_HORIZONTAL # shout-horizontal# ENDIF #">
 	<div id="shoutbox-messages-container" class="cell-content">

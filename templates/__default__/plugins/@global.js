@@ -477,7 +477,7 @@ function copy_to_clipboard(tocopy)
 	// Send cookie to client
 	function sendCookie(name, value, delay)
 	{
-		var delay = (typeof delay !== 'undefined') ? delay : 1; // Default validity: 1 month
+		delay = (typeof delay !== 'undefined') ? delay : 1; // Default validity: 1 month
 		var date = new Date();
 		date.setMonth(date.getMonth() + delay);
 		document.cookie = name + '=' + value + '; Expires=' + date.toGMTString() + '; Path=/';
