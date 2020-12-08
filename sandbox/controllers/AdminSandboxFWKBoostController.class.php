@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 27
+ * @version     PHPBoost 6.0 - last update: 2020 12 08
  * @since       PHPBoost 3.0 - 2012 05 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -69,8 +69,7 @@ class AdminSandboxFWKBoostController extends AdminModuleController
 	private function build_markup($tpl)
 	{
 		$view = new FileTemplate($tpl);
-		$view->add_lang($this->component_lang);
-		$view->add_lang($this->common_lang);
+		$view->add_lang(array_merge($this->component_lang, $this->common_lang));
 
 		$pagination_full = new ModulePagination(2, 15, 5);
 		$pagination_full->set_url(new Url('#%d'));

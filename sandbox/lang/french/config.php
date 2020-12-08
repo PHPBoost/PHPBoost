@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 02 05
+ * @version     PHPBoost 6.0 - last update: 2020 12 08
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -14,8 +14,8 @@
 #                    French                        #
 ####################################################
 
-// --- Module mini
-$lang['mini.config.title'] = 'Configuration du mini-module bac à sable';
+// Module mini
+$lang['mini.config.title'] = 'Configuration du mini-module Bac à sable';
 $lang['mini.superadmin.enabled'] = 'Limiter l\'accès au menu à un seul administrateur';
 $lang['mini.superadmin.id'] = 'Choix de l\'administrateur';
 $lang['mini.open.menu'] = 'Ouvrir le menu sur le bord :';

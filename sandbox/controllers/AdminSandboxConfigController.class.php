@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 02 08
+ * @version     PHPBoost 6.0 - last update: 2020 12 08
  * @since       PHPBoost 5.1 - 2017 09 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -33,9 +33,8 @@ class AdminSandboxConfigController extends AdminModuleController
 
 		$this->build_form();
 
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
-		$tpl->add_lang($this->admin_lang);
+		$view = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+		$view->add_lang(array_merge($this->lang, $this->admin_lang));
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -43,12 +42,12 @@ class AdminSandboxConfigController extends AdminModuleController
 
 			$this->form->get_field_by_id('superadmin_name')->set_hidden(!$this->config->get_superadmin_enabled());
 
-			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+			$view->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$view->put('FORM', $this->form->display());
 
-		return new AdminSandboxDisplayResponse($tpl, $this->lang['mini.config.title']);
+		return new AdminSandboxDisplayResponse($view, $this->lang['mini.config.title']);
 	}
 
 	private function init()

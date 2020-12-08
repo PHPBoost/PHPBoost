@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 21
+ * @version     PHPBoost 6.0 - last update: 2020 12 08
  * @since       PHPBoost 3.0 - 2012 05 05
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -30,8 +30,7 @@ class SandboxBBCodeController extends ModuleController
 		$this->common_lang = LangLoader::get('common', 'sandbox');
 		$this->lang = LangLoader::get('bbcode', 'sandbox');
 		$this->view = new FileTemplate('sandbox/SandboxBBCodeController.tpl');
-		$this->view->add_lang($this->common_lang);
-		$this->view->add_lang($this->lang);
+		$this->view->add_lang(array_merge($this->lang, $this->common_lang));
 	}
 
 	private function build_view()

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 24
+ * @version     PHPBoost 6.0 - last update: 2020 12 08
  * @since       PHPBoost 6.0 - 2020 03 04
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -30,8 +30,7 @@ class SandboxLayoutController extends ModuleController
 		$this->common_lang = LangLoader::get('common', 'sandbox');
 		$this->lang = LangLoader::get('layout', 'sandbox');
 		$this->view = new FileTemplate('sandbox/SandboxLayoutController.tpl');
-		$this->view->add_lang($this->common_lang);
-		$this->view->add_lang($this->lang);
+		$this->view->add_lang(array_merge($this->lang, $this->common_lang));
 	}
 
 	private function build_view()
@@ -48,8 +47,7 @@ class SandboxLayoutController extends ModuleController
 	private function build_markup($tpl)
 	{
 		$view = new FileTemplate($tpl);
-		$view->add_lang($this->lang);
-		$view->add_lang($this->common_lang);
+		$view->add_lang(array_merge($this->lang, $this->common_lang));
 
 		$date = new Date();
 		$view->put_all(array(

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 05
+ * @version     PHPBoost 6.0 - last update: 2020 12 08
  * @since       PHPBoost 5.1 - 2017 09 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -41,13 +41,12 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 	public function get_menu_content()
 	{
 		$this->mini_lang = LangLoader::get('module-mini', 'sandbox');
-		$tpl = new FileTemplate('sandbox/SandboxModuleMiniMenu.tpl');
-		$tpl->add_lang(LangLoader::get('common', 'sandbox'));
-		$tpl->add_lang($this->mini_lang);
-		$tpl->add_lang(LangLoader::get('module-mini', 'sandbox'));
+		$common_lang = LangLoader::get('common', 'sandbox');
+		$view = new FileTemplate('sandbox/SandboxModuleMiniMenu.tpl');
+		$view->add_lang(array_merge($this->mini_lang, $common_lang));
 		$config = SandboxConfig::load();
 
-		MenuService::assign_positions_conditions($tpl, $this->get_block());
+		MenuService::assign_positions_conditions($view, $this->get_block());
 		$menus_status = ThemesManager::get_theme(AppContext::get_current_user()->get_theme())->get_columns_disabled();
 
 		$user = AppContext::get_current_user();
@@ -119,18 +118,18 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 			AppContext::get_response()->redirect(trim(HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : '')));
 		}
 
-		MenuService::assign_positions_conditions($tpl, $this->get_block());
+		MenuService::assign_positions_conditions($view, $this->get_block());
 
 		foreach (ThemesManager::get_activated_and_authorized_themes_map_sorted_by_localized_name() as $theme)
 		{
-			$tpl->assign_block_vars('themes', array(
+			$view->assign_block_vars('themes', array(
 				'C_SELECTED' => $user->get_theme() == $theme->get_id(),
 				'NAME' => $theme->get_configuration()->get_name(),
 				'IDNAME' => $theme->get_id()
 			));
 		}
 
-		$tpl->put_all(array(
+		$view->put_all(array(
 			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
 			'C_LEFT_ENABLED'      => !$menus_status->left_columns_is_disabled(),
 			'C_RIGHT_ENABLED'     => !$menus_status->right_columns_is_disabled(),
@@ -165,7 +164,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 			'DEFAULT_THEME'     => UserAccountsConfig::load()->get_default_theme()
 		));
 
-		return $tpl->render();
+		return $view->render();
 	}
 
 	private function get_logged_errors_nb()

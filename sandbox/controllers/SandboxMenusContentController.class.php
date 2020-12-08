@@ -3,14 +3,14 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 27
+ * @version     PHPBoost 6.0 - last update: 2020 12 08
  * @since       PHPBoost 5.2 - 2019 07 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class SandboxMenusContentController extends ModuleController
 {
-	private $tpl;
+	private $view;
 
 	/**
 	 * @var HTMLForm
@@ -42,16 +42,15 @@ class SandboxMenusContentController extends ModuleController
 	{
 		$this->common_lang = LangLoader::get('common', 'sandbox');
 		$this->lang = LangLoader::get('menu', 'sandbox');
-		$this->tpl = new FileTemplate('sandbox/SandboxMenusContentController.tpl');
-		$this->tpl->add_lang($this->common_lang);
-		$this->tpl->add_lang($this->lang);
+		$this->view = new FileTemplate('sandbox/SandboxMenusContentController.tpl');
+		$this->view->add_lang(array_merge($this->lang, $this->common_lang));
 	}
 
 	private function build_view()
 	{
 		$this->build_wizard_form();
 
-		$this->tpl->put_all(array(
+		$this->view->put_all(array(
 			'BASIC'           => self::build_basic_markup(),
 			'ACCORDION'       => self::build_accordion_markup(),
 			'TABS'            => self::build_tabs_markup(),
@@ -64,8 +63,7 @@ class SandboxMenusContentController extends ModuleController
 	private function build_basic_markup()
 	{
 		$basic_tpl = new FileTemplate('sandbox/pagecontent/menus/basic.tpl');
-		$basic_tpl->add_lang($this->lang);
-		$basic_tpl->add_lang($this->common_lang);
+		$basic_tpl->add_lang(array_merge($this->lang, $this->common_lang));
 		$basic_tpl->put('BASIC_FORM', $this->build_basic_form()->display());
 		return $basic_tpl;
 	}
@@ -93,8 +91,7 @@ class SandboxMenusContentController extends ModuleController
 	private function build_accordion_markup()
 	{
 		$accordion_tpl = new FileTemplate('sandbox/pagecontent/menus/accordion.tpl');
-		$accordion_tpl->add_lang($this->lang);
-		$accordion_tpl->add_lang($this->common_lang);
+		$accordion_tpl->add_lang(array_merge($this->lang, $this->common_lang));
 		$accordion_tpl->put('ACCORDION_FORM', $this->build_accordion_form()->display());
 		return $accordion_tpl;
 	}
@@ -154,8 +151,7 @@ class SandboxMenusContentController extends ModuleController
 	private function build_tabs_markup()
 	{
 		$tabs_tpl = new FileTemplate('sandbox/pagecontent/menus/tabs.tpl');
-		$tabs_tpl->add_lang($this->lang);
-		$tabs_tpl->add_lang($this->common_lang);
+		$tabs_tpl->add_lang(array_merge($this->lang, $this->common_lang));
 		$tabs_tpl->put('TABS_FORM', $this->build_tabs_form()->display());
 		return $tabs_tpl;
 	}
@@ -211,11 +207,10 @@ class SandboxMenusContentController extends ModuleController
 
 	private function build_wizard_markup()
 	{
-		$tpl = new FileTemplate('sandbox/pagecontent/menus/wizard.tpl');
-		$tpl->add_lang($this->lang);
-		$tpl->add_lang($this->common_lang);
-		$tpl->put('WIZARD_FORM', $this->build_wizard_form()->display());
-		return $tpl;
+		$wizard_tpl = new FileTemplate('sandbox/pagecontent/menus/wizard.tpl');
+		$wizard_tpl->add_lang(array_merge($this->lang, $this->common_lang));
+		$wizard_tpl->put('WIZARD_FORM', $this->build_wizard_form()->display());
+		return $wizard_tpl;
 	}
 
 	private function build_wizard_form()
@@ -277,7 +272,7 @@ class SandboxMenusContentController extends ModuleController
 
 	private function generate_response()
 	{
-		$response = new SiteDisplayResponse($this->tpl);
+		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->common_lang['title.menu.content'], $this->common_lang['sandbox.module.title']);
 
