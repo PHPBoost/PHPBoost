@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 04
+ * @version     PHPBoost 6.0 - last update: 2020 12 08
  * @since       PHPBoost 6.0 - 2020 01 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -25,6 +25,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 	protected $current_url;
 	protected $pagination_url;
 	protected $url_without_sorting_parameters;
+	protected $display_published_items_list = false;
 
 	protected $category;
 	protected $keyword;
@@ -128,6 +129,8 @@ class DefaultSeveralItemsController extends AbstractItemController
 		}
 		else
 		{
+			$this->display_published_items_list = true;
+			
 			if (self::get_module()->get_configuration()->has_categories())
 			{
 				$this->sql_condition = 'WHERE id_category = :id_category
@@ -383,7 +386,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 					$breadcrumb->add($category->get_name(), ItemsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), self::$module_id, $sort_field, $sort_mode, ($category->get_id() == $this->category->get_id() ? $this->page : 1)));
 			}
 		}
-		else
+		else if (!$this->display_published_items_list)
 			$breadcrumb->add($this->page_title, $this->current_url);
 
 		return $response;
