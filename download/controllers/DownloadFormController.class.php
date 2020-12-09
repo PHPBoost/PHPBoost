@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 06
+ * @version     PHPBoost 6.0 - last update: 2020 12 09
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -168,7 +168,7 @@ class DownloadFormController extends ModuleController
 		$options_fieldset = new FormFieldsetHTML('options', $this->common_lang['form.options']);
 		$form->add_fieldset($options_fieldset);
 
-		$options_fieldset->add_field(new FormFieldUploadPictureFile('thumbnail', $this->common_lang['form.picture'], $this->get_downloadfile()->get_thumbnail()->relative()));
+		$options_fieldset->add_field(new FormFieldThumbnail('thumbnail', $this->common_lang['form.picture'], $this->get_downloadfile()->get_thumbnail()->relative(), DownloadFile::THUMBNAIL_URL));
 
 		$options_fieldset->add_field(new FormFieldTextEditor('software_version', $this->lang['download.version'], $this->get_downloadfile()->get_software_version()));
 
@@ -349,7 +349,7 @@ class DownloadFormController extends ModuleController
 		$item->set_url(new Url($this->form->get_value('url')));
 		$item->set_contents($this->form->get_value('contents'));
 		$item->set_summary(($this->form->get_value('summary_enabled') ? $this->form->get_value('summary') : ''));
-		$item->set_thumbnail(new Url($this->form->get_value('thumbnail')));
+		$item->set_thumbnail($this->form->get_value('thumbnail'));
 		$item->set_software_version($this->form->get_value('software_version'));
 
 		if ($this->config->is_author_displayed())
@@ -529,8 +529,8 @@ class DownloadFormController extends ModuleController
 
 		if ($item->get_id() === null)
 		{
-			$graphical_environment->set_page_title($this->lang['download.add.item'], $this->lang['module.title']);
 			$breadcrumb->add($this->lang['download.add.item'], DownloadUrlBuilder::add($item->get_id_category()));
+			$graphical_environment->set_page_title($this->lang['download.add.item'], $this->lang['module.title']);
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['download.add.item']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::add($item->get_id_category()));
 		}

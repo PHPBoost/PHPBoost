@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 06
+ * @version     PHPBoost 6.0 - last update: 2020 12 09
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -52,6 +52,8 @@ class WebLink
 		self::SORT_NUMBER_VISITS => 'visits',
 		self::SORT_NUMBER_COMMENTS => 'comments'
 	);
+	
+	const THUMBNAIL_URL = '/templates/__default__/images/default_item_thumbnail.png';
 
 	const ASC = 'ASC';
 	const DESC = 'DESC';
@@ -238,41 +240,24 @@ class WebLink
 	{
 		$this->views_number = $views_number;
 	}
-
+	
 	public function get_thumbnail()
 	{
 		if (!$this->thumbnail_url instanceof Url)
-			return $this->get_default_thumbnail();
+			return new Url($this->thumbnail_url == FormFieldThumbnail::DEFAULT_VALUE ? FormFieldThumbnail::get_default_thumbnail_url(self::THUMBNAIL_URL) : $this->thumbnail_url);
 
 		return $this->thumbnail_url;
 	}
 
-	public function set_picture(Url $picture)
+	public function set_thumbnail($thumbnail)
 	{
-		$this->thumbnail_url = $picture;
+		$this->thumbnail_url = $thumbnail;
 	}
 
 	public function has_thumbnail()
 	{
-		$picture = $this->thumbnail_url->rel();
-		return !empty($picture);
-	}
-
-	public function get_default_thumbnail()
-	{
-		$module_id = 'web';
-		$module_file = new File(PATH_TO_ROOT . '/' . $module_id . '/templates/images/default_item_thumbnail.png');
-		$module_theme_file = new File(PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/modules/' . $module_id . '/images/default_item_thumbnail.png');
-		$theme_file = new File(PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/default_item_thumbnail.png');
-
-		if ($module_file->exists())
-			return new Url('/' . $module_id . '/templates/images/default_item_thumbnail.png');
-		elseif ($module_theme_file->exists())
-			return new Url('/templates/' . AppContext::get_current_user()->get_theme() . '/modules/' . $module_id . '/images/default_item_thumbnail.png');
-		elseif ($theme_file->exists())
-			return new Url('/templates/' . AppContext::get_current_user()->get_theme() . '/images/default_item_thumbnail.png');
-		else
-			return new Url('/templates/__default__/images/default_item_thumbnail.png');
+		$thumbnail = ($this->thumbnail_url instanceof Url) ? $this->thumbnail_url->rel() : $this->thumbnail_url;
+		return !empty($thumbnail);
 	}
 
 	public function is_partner()
@@ -391,7 +376,7 @@ class WebLink
 		$this->end_date_enabled = !empty($properties['end_date']);
 		$this->creation_date = new Date($properties['creation_date'], Timezone::SERVER_TIMEZONE);
 		$this->views_number = $properties['number_views'];
-		$this->thumbnail_url = new Url($properties['picture_url']);
+		$this->thumbnail_url = $properties['picture_url'];
 		$this->partner = (bool)$properties['partner'];
 		$this->partner_thumbnail = new Url($properties['partner_picture']);
 		$this->privileged_partner = (bool)$properties['privileged_partner'];
@@ -423,7 +408,7 @@ class WebLink
 		$this->end_date = new Date();
 		$this->creation_date = new Date();
 		$this->views_number = 0;
-		$this->thumbnail_url = self::get_default_thumbnail();
+		$this->thumbnail_url = FormFieldThumbnail::DEFAULT_VALUE;
 		$this->url = new Url('');
 		$this->partner_thumbnail = new Url('');
 		$this->end_date_enabled = false;

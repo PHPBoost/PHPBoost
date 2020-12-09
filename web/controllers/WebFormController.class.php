@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 06
+ * @version     PHPBoost 6.0 - last update: 2020 12 09
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -102,7 +102,7 @@ class WebFormController extends ModuleController
 		$options_fieldset = new FormFieldsetHTML('options', $this->common_lang['form.options']);
 		$form->add_fieldset($options_fieldset);
 
-		$options_fieldset->add_field(new FormFieldUploadPictureFile('picture', $this->common_lang['form.picture'], $this->get_weblink()->get_thumbnail()->relative()));
+		$options_fieldset->add_field(new FormFieldThumbnail('thumbnail', $this->common_lang['form.picture'], $this->get_weblink()->get_thumbnail()->relative(), WebLink::THUMBNAIL_URL));
 
 		$options_fieldset->add_field(new FormFieldCheckbox('partner', $this->lang['web.form.partner'], $this->get_weblink()->is_partner(), array(
 			'events' => array('click' => '
@@ -302,7 +302,7 @@ class WebFormController extends ModuleController
 		$item->set_url(new Url($this->form->get_value('url')));
 		$item->set_contents($this->form->get_value('contents'));
 		$item->set_summary(($this->form->get_value('summary_enabled') ? $this->form->get_value('summary') : ''));
-		$item->set_picture(new Url($this->form->get_value('picture')));
+		$item->set_thumbnail($this->form->get_value('thumbnail'));
 
 		$item->set_partner($this->form->get_value('partner'));
 		if ($this->form->get_value('partner'))
@@ -472,8 +472,8 @@ class WebFormController extends ModuleController
 
 		if ($item->get_id() === null)
 		{
-			$graphical_environment->set_page_title($this->lang['web.add.item']);
 			$breadcrumb->add($this->lang['web.add.item'], WebUrlBuilder::add($item->get_id_category()));
+			$graphical_environment->set_page_title($this->lang['web.add.item']);
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['web.add.item'], $this->lang['module.title']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::add($item->get_id_category()));
 		}
