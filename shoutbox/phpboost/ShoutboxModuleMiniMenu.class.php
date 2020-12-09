@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 08
+ * @version     PHPBoost 6.0 - last update: 2020 12 09
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -72,7 +72,6 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 			'C_DISPLAY_FORM' => ShoutboxAuthorizationsService::check_authorizations()->write() && !AppContext::get_current_user()->is_readonly(),
 			'C_VALIDATE_ONKEYPRESS_ENTER' => $config->is_validation_onkeypress_enter_enabled(),
 			'C_DISPLAY_SHOUT_BBCODE' => ModulesManager::is_module_installed('BBCode') && ModulesManager::is_module_activated('BBCode') && $config->is_shout_bbcode_enabled(),
-			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
 			'C_BOLD_DISABLED' => isset($forbidden_tags['b']),
 			'C_ITALIC_DISABLED' => isset($forbidden_tags['i']),
 			'C_UNDERLINE_DISABLED' => isset($forbidden_tags['u']),

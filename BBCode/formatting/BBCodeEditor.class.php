@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 08
+ * @version     PHPBoost 6.0 - last update: 2020 12 09
  * @since       PHPBoost 2.0 - 2008 07 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -64,7 +64,6 @@ class BBCodeEditor extends ContentEditor
 		$template->add_lang($bbcode_lang);
 
 		$template->put_all(array(
-			'C_CSS_CACHE_ENABLED' 			=> CSSCacheConfig::load()->is_enabled(),
 			'PAGE_PATH'                     => $_SERVER['PHP_SELF'],
 			'C_EDITOR_NOT_ALREADY_INCLUDED' => !self::$editor_already_included,
 			'FIELD'                         => $this->identifier,
