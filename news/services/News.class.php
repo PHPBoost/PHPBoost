@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 06
+ * @version     PHPBoost 6.0 - last update: 2020 12 09
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -41,6 +41,8 @@ class News
 	const NOT_APPROVAL = 0;
 	const APPROVAL_NOW = 1;
 	const APPROVAL_DATE = 2;
+
+	const THUMBNAIL_URL = '/templates/__default__/images/default_item_thumbnail.png';
 
 	public function set_id($id)
 	{
@@ -253,7 +255,7 @@ class News
 		return $this->views_number;
 	}
 
-	public function set_thumbnail(Url $thumbnail)
+	public function set_thumbnail($thumbnail)
 	{
 		$this->thumbnail_url = $thumbnail;
 	}
@@ -261,32 +263,15 @@ class News
 	public function get_thumbnail()
 	{
 		if (!$this->thumbnail_url instanceof Url)
-			return $this->get_default_thumbnail();
+			return new Url($this->thumbnail_url == FormFieldThumbnail::DEFAULT_VALUE ? FormFieldThumbnail::get_default_thumbnail_url(self::THUMBNAIL_URL) : $this->thumbnail_url);
 
 		return $this->thumbnail_url;
 	}
 
 	public function has_thumbnail()
 	{
-		$thumbnail = $this->thumbnail_url->rel();
+		$thumbnail = ($this->thumbnail_url instanceof Url) ? $this->thumbnail_url->rel() : $this->thumbnail_url;
 		return !empty($thumbnail);
-	}
-
-	public function get_default_thumbnail()
-	{
-		$module_id = 'news';
-		$module_file = new File(PATH_TO_ROOT . '/' . $module_id . '/templates/images/default_item_thumbnail.png');
-		$module_theme_file = new File(PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/modules/' . $module_id . '/images/default_item_thumbnail.png');
-		$theme_file = new File(PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/default_item_thumbnail.png');
-
-		if ($module_file->exists())
-			return new Url('/' . $module_id . '/templates/images/default_item_thumbnail.png');
-		elseif ($module_theme_file->exists())
-			return new Url('/templates/' . AppContext::get_current_user()->get_theme() . '/modules/' . $module_id . '/images/default_item_thumbnail.png');
-		elseif ($theme_file->exists())
-			return new Url('/templates/' . AppContext::get_current_user()->get_theme() . '/images/default_item_thumbnail.png');
-		else
-			return new Url('/templates/__default__/images/default_item_thumbnail.png');
 	}
 
 	public function add_source($source)
@@ -372,7 +357,7 @@ class News
 		$this->top_list_enabled = (bool)$properties['top_list_enabled'];
 		$this->creation_date = new Date($properties['creation_date'], Timezone::SERVER_TIMEZONE);
 		$this->updated_date = !empty($properties['updated_date']) ? new Date($properties['updated_date'], Timezone::SERVER_TIMEZONE) : null;
-		$this->thumbnail_url = new Url($properties['thumbnail_url']);
+		$this->thumbnail_url = $properties['thumbnail_url'];
 		$this->sources = !empty($properties['sources']) ? TextHelper::unserialize($properties['sources']) : array();
 
 		$user = new User();
@@ -397,7 +382,7 @@ class News
 		$this->end_date = new Date();
 		$this->creation_date = new Date();
 		$this->sources = array();
-		$this->thumbnail_url = self::get_default_thumbnail();
+		$this->thumbnail_url = FormFieldThumbnail::DEFAULT_VALUE;
 		$this->end_date_enabled = false;
 		$this->views_number = 0;
 		$this->author_custom_name = $this->author_user->get_display_name();

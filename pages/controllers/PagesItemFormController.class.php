@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 04
+ * @version     PHPBoost 6.0 - last update: 2020 12 09
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
@@ -135,7 +135,7 @@ class PagesItemFormController extends ModuleController
 		$options_fieldset = new FormFieldsetHTML('options', $this->common_lang['form.options']);
 		$form->add_fieldset($options_fieldset);
 
-		$options_fieldset->add_field(new FormFieldUploadPictureFile('thumbnail', $this->common_lang['form.picture'], $this->get_page()->get_thumbnail()->relative()));
+		$options_fieldset->add_field(new FormFieldThumbnail('thumbnail', $this->common_lang['form.picture'], $this->get_page()->get_thumbnail()->relative(), Page::THUMBNAIL_URL));
 
 		$options_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_page()->get_id(), 'keywords', $this->common_lang['form.keywords'],
 			array('description' => $this->common_lang['form.keywords.description'])
@@ -310,7 +310,7 @@ class PagesItemFormController extends ModuleController
 			$item->set_id_category($this->form->get_value('id_category')->get_raw_value());
 
 		$item->set_content($this->form->get_value('content'));
-		$item->set_thumbnail(new Url($this->form->get_value('thumbnail')));
+		$item->set_thumbnail($this->form->get_value('thumbnail'));
 
 		$item->set_author_display($this->form->get_value('author_display'));
 		if($this->form->get_value('author_display'))

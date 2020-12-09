@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 06
+ * @version     PHPBoost 6.0 - last update: 2020 12 09
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -141,7 +141,7 @@ class NewsItemFormController extends ModuleController
 		$options_fieldset = new FormFieldsetHTML('options', $this->common_lang['form.options']);
 		$form->add_fieldset($options_fieldset);
 
-		$options_fieldset->add_field(new FormFieldUploadFile('thumbnail', $this->common_lang['form.picture'], $this->get_news()->get_thumbnail()->relative()));
+		$options_fieldset->add_field(new FormFieldThumbnail('thumbnail', $this->common_lang['form.picture'], $this->get_news()->get_thumbnail()->relative(), News::THUMBNAIL_URL));
 
 		$options_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_news()->get_id(), 'keywords', $this->common_lang['form.keywords'],
 			array('description' => $this->common_lang['form.keywords.description'])
@@ -313,7 +313,7 @@ class NewsItemFormController extends ModuleController
 
 		$this->item->set_contents($this->form->get_value('contents'));
 		$this->item->set_summary(($this->form->get_value('enable_summary') ? $this->form->get_value('summary') : ''));
-		$this->item->set_thumbnail(new Url($this->form->get_value('thumbnail')));
+		$this->item->set_thumbnail($this->form->get_value('thumbnail'));
 
 		if ($this->config->get_author_displayed() == true)
 			$this->item->set_author_custom_name(($this->form->get_value('author_custom_name') && $this->form->get_value('author_custom_name') !== $this->item->get_author_user()->get_display_name() ? $this->form->get_value('author_custom_name') : ''));
