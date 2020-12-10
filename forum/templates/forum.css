@@ -23,9 +23,9 @@
 	background-color: transparent;
 }
 
-.forum-links .cssmenu-title img + span,
-.forum-links .cssmenu-title i + span,
-.forum-links .cssmenu-title span + span { margin-left: 0; }
+.forum-links:not(.forum-message-options) .cssmenu-title img + span,
+.forum-links:not(.forum-message-options) .cssmenu-title i + span,
+.forum-links:not(.forum-message-options) .cssmenu-title span + span { margin-left: 0; }
 
 .forum-links .cssmenu.cssmenu-group > ul > li > .cssmenu-title { padding: 0.309em; }
 
