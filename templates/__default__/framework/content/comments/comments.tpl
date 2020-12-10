@@ -23,19 +23,9 @@
 
 <section>
 	<header>
-		<h2>${LangLoader::get_message('comments', 'comments-common')}</h2>
-	</header>
-	<div class="content">
-		# IF C_DISPLAY_FORM #
-			<div id="comment-form">
-				# INCLUDE COMMENT_FORM #
-			</div>
-		# ENDIF #
-
-		# INCLUDE KEEP_MESSAGE #
-
+		<h2>{@comments}</h2>
 		# IF C_MODERATE #
-			<div class="message-moderate">
+			<div class="controls align-right">
 				# IF C_IS_LOCKED #
 					<a href="{U_UNLOCK}" class="user-locked"><i class="fa fa-user-lock" aria-hidden="true"></i> {@unlock}</a>
 				# ELSE #
@@ -43,25 +33,55 @@
 				# ENDIF #
 			</div>
 		# ENDIF #
+	</header>
+	<div class="content">
 
-		# IF C_DISPLAY_DELETE_FORM #
-			<div class="spacer"></div>
-			<form action="{FORM_URL}" method="post" class="fieldset-content">
-		# ENDIF #
-		<div id="comments-list">
-			# INCLUDE COMMENTS_LIST #
+		# INCLUDE KEEP_MESSAGE #
+		<div class="tabs-container">
+		    # IF C_DISPLAY_FORM #
+				<nav class="tabs-nav">
+			        <ul class="flex-between">
+			            <li><a href="#" data-tabs="" data-target="comments-list">{@comments}</a></li>
+			            <li><a class="pinned question" href="#" data-tabs="" data-target="add-comment">{@comment.add}</a></li>
+			        </ul>
+			    </nav>
+			# ENDIF #
+		    <div id="comments-list" class="first-tab tabs tabs-animation">
+		        <div class="content-panel">
+					# IF C_DISPLAY_DELETE_FORM #
+						<div class="spacer"></div>
+						<form action="{FORM_URL}" method="post" class="fieldset-content">
+					# ENDIF #
+					<div id="comments-list">
+						# INCLUDE COMMENTS_LIST #
+					</div>
+					# IF C_DISPLAY_DELETE_FORM #
+							# IF C_DISPLAY_DELETE_BUTTON #
+								<label for="delete-all-checkbox" class="checkbox" aria-label="${LangLoader::get_message('select.all.elements', 'common')}">
+									<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {COMMENTS_NUMBER});">
+									<span>&nbsp;</span>
+								</label>
+								<input type="hidden" name="token" value="{TOKEN}" />
+								<button type="submit" id="delete-all-button" name="delete-selected-comments" value="true" class="button submit" data-confirmation="delete-element" disabled="disabled">${LangLoader::get_message('delete', 'common')}</button>
+							# ENDIF #
+						</form>
+					# ENDIF #
+				</div>
+		    </div>
+        	# IF C_DISPLAY_FORM #
+			    <div id="add-comment" class="tabs tabs-animation">
+			        <div class="content-panel">
+							<div id="comment-form">
+								# INCLUDE COMMENT_FORM #
+							</div>
+			        </div>
+			    </div>
+			# ENDIF #
 		</div>
-		# IF C_DISPLAY_DELETE_FORM #
-				# IF C_DISPLAY_DELETE_BUTTON #
-					<label for="delete-all-checkbox" class="checkbox" aria-label="${LangLoader::get_message('select.all.elements', 'common')}">
-						<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {COMMENTS_NUMBER});">
-						<span>&nbsp;</span>
-					</label>
-					<input type="hidden" name="token" value="{TOKEN}" />
-					<button type="submit" id="delete-all-button" name="delete-selected-comments" value="true" class="button submit" data-confirmation="delete-element" disabled="disabled">${LangLoader::get_message('delete', 'common')}</button>
-				# ENDIF #
-			</form>
-		# ENDIF #
+
+
+
+
 	</div>
 	<footer></footer>
 </section>
