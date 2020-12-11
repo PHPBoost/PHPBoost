@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 05
+ * @version     PHPBoost 6.0 - last update: 2020 12 11
  * @since       PHPBoost 3.0 - 2012 11 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CalendarDeleteController extends ModuleController
@@ -21,7 +22,7 @@ class CalendarDeleteController extends ModuleController
 
 	private $lang;
 
-	private $event;
+	private $item;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -33,21 +34,21 @@ class CalendarDeleteController extends ModuleController
 
 		$this->check_authorizations();
 
-		$tpl = new StringTemplate('# INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$view = new StringTemplate('# INCLUDE FORM #');
+		$view->add_lang($this->lang);
 
-		if ($this->event->belongs_to_a_serie())
+		if ($this->item->belongs_to_a_serie())
 			$this->build_form($request);
 
-		if (($this->event->belongs_to_a_serie() && $this->submit_button->has_been_submited() && $this->form->validate()) || !$this->event->belongs_to_a_serie())
+		if (($this->item->belongs_to_a_serie() && $this->submit_button->has_been_submited() && $this->form->validate()) || !$this->item->belongs_to_a_serie())
 		{
-			$this->delete_event($this->event->belongs_to_a_serie() ? $this->form->get_value('delete_serie')->get_raw_value() : false);
+			$this->delete_event($this->item->belongs_to_a_serie() ? $this->form->get_value('delete_serie')->get_raw_value() : false);
 			$this->redirect($request);
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$view->put('FORM', $this->form->display());
 
-		return $this->generate_response($tpl);
+		return $this->generate_response($view);
 	}
 
 	private function init()
@@ -84,7 +85,7 @@ class CalendarDeleteController extends ModuleController
 		if (!empty($id))
 		{
 			try {
-				$this->event = CalendarService::get_event('WHERE id_event = :id', array('id' => $id));
+				$this->item = CalendarService::get_event('WHERE id_event = :id', array('id' => $id));
 			} catch (RowNotFoundException $e) {
 				$error_controller = PHPBoostErrors::unexisting_page();
 				DispatchManager::redirect($error_controller);
@@ -92,33 +93,33 @@ class CalendarDeleteController extends ModuleController
 		}
 	}
 
-	private function delete_event($delete_all_serie_events = false)
+	private function delete_event($delete_all_serie_items = false)
 	{
-		$events_list = CalendarService::get_serie_events($this->event->get_content()->get_id());
+		$items_list = CalendarService::get_serie_events($this->item->get_content()->get_id());
 
-		if ($delete_all_serie_events)
+		if ($delete_all_serie_items)
 		{
-			foreach ($events_list as $event)
+			foreach ($items_list as $item)
 			{
-				//Delete event comments
-				CommentsService::delete_comments_topic_module('calendar', $event->get_id());
+				// Delete item comments
+				CommentsService::delete_comments_topic_module('calendar', $item->get_id());
 
-				//Delete participants
-				CalendarService::delete_all_participants($event->get_id());
+				// Delete participants
+				CalendarService::delete_all_participants($item->get_id());
 			}
 
-			CalendarService::delete_all_serie_events($this->event->get_content()->get_id());
-			PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module = :module AND id_in_module = :id', array('module' => 'calendar', 'id' => !$this->event->get_parent_id() ? $this->event->get_id() : $this->event->get_parent_id()));
+			CalendarService::delete_all_serie_events($this->item->get_content()->get_id());
+			PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module = :module AND id_in_module = :id', array('module' => 'calendar', 'id' => !$this->item->get_parent_id() ? $this->item->get_id() : $this->item->get_parent_id()));
 		}
 		else
 		{
-			if (!$this->event->belongs_to_a_serie() || count($events_list) == 1)
+			if (!$this->item->belongs_to_a_serie() || count($items_list) == 1)
 			{
-				CalendarService::delete_event_content('WHERE id = :id', array('id' => $this->event->get_id()));
+				CalendarService::delete_event_content('WHERE id = :id', array('id' => $this->item->get_id()));
 			}
-			
-			//Delete event
-			CalendarService::delete_event($this->event->get_id(), $this->event->get_parent_id());
+
+			// Delete item
+			CalendarService::delete_event($this->item->get_id(), $this->item->get_parent_id());
 		}
 
 		CalendarService::clear_cache();
@@ -126,7 +127,7 @@ class CalendarDeleteController extends ModuleController
 
 	private function check_authorizations()
 	{
-		if (!$this->event->is_authorized_to_delete())
+		if (!$this->item->is_authorized_to_delete())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
@@ -140,28 +141,28 @@ class CalendarDeleteController extends ModuleController
 
 	private function redirect(HTTPRequestCustom $request)
 	{
-		if ($this->event->belongs_to_a_serie())
-			AppContext::get_response()->redirect(($this->form->get_value('referrer') && !TextHelper::strstr($request->get_url_referrer(), CalendarUrlBuilder::display_event($this->event->get_content()->get_category()->get_id(), $this->event->get_content()->get_category()->get_rewrited_name(), $this->event->get_id(), $this->event->get_content()->get_rewrited_title())->rel()) ? $this->form->get_value('referrer') : CalendarUrlBuilder::home($this->event->get_start_date()->get_year(), $this->event->get_start_date()->get_month())), StringVars::replace_vars($this->lang['calendar.message.success.delete'], array('title' => $this->event->get_content()->get_title())));
+		if ($this->item->belongs_to_a_serie())
+			AppContext::get_response()->redirect(($this->form->get_value('referrer') && !TextHelper::strstr($request->get_url_referrer(), CalendarUrlBuilder::display_event($this->item->get_content()->get_category()->get_id(), $this->item->get_content()->get_category()->get_rewrited_name(), $this->item->get_id(), $this->item->get_content()->get_rewrited_title())->rel()) ? $this->form->get_value('referrer') : CalendarUrlBuilder::home($this->item->get_start_date()->get_year(), $this->item->get_start_date()->get_month())), StringVars::replace_vars($this->lang['calendar.message.success.delete'], array('title' => $this->item->get_content()->get_title())));
 		else
-			AppContext::get_response()->redirect(($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), CalendarUrlBuilder::display_event($this->event->get_content()->get_category()->get_id(), $this->event->get_content()->get_category()->get_rewrited_name(), $this->event->get_id(), $this->event->get_content()->get_rewrited_title())->rel()) ? $request->get_url_referrer() : CalendarUrlBuilder::home($this->event->get_start_date()->get_year(), $this->event->get_start_date()->get_month())), StringVars::replace_vars($this->lang['calendar.message.success.delete'], array('title' => $this->event->get_content()->get_title())));
+			AppContext::get_response()->redirect(($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), CalendarUrlBuilder::display_event($this->item->get_content()->get_category()->get_id(), $this->item->get_content()->get_category()->get_rewrited_name(), $this->item->get_id(), $this->item->get_content()->get_rewrited_title())->rel()) ? $request->get_url_referrer() : CalendarUrlBuilder::home($this->item->get_start_date()->get_year(), $this->item->get_start_date()->get_month())), StringVars::replace_vars($this->lang['calendar.message.success.delete'], array('title' => $this->item->get_content()->get_title())));
 	}
 
-	private function generate_response(View $tpl)
+	private function generate_response(View $view)
 	{
-		$response = new SiteDisplayResponse($tpl);
+		$response = new SiteDisplayResponse($view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['calendar.event.delete'], $this->lang['module.title']);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::home());
 
-		$event_content = $this->event->get_content();
+		$item_content = $this->item->get_content();
 
-		$category = $event_content->get_category();
-		$breadcrumb->add($event_content->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event_content->get_id(), $event_content->get_rewrited_title()));
+		$category = $item_content->get_category();
+		$breadcrumb->add($item_content->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $item_content->get_id(), $item_content->get_rewrited_title()));
 
-		$breadcrumb->add($this->lang['calendar.event.delete'], CalendarUrlBuilder::delete_event($this->event->get_id()));
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::delete_event($this->event->get_id()));
+		$breadcrumb->add($this->lang['calendar.event.delete'], CalendarUrlBuilder::delete_event($this->item->get_id()));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::delete_event($this->item->get_id()));
 
 		return $response;
 	}

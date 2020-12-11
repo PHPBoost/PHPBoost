@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 01
+ * @version     PHPBoost 6.0 - last update: 2020 12 11
  * @since       PHPBoost 4.0 - 2014 03 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -45,7 +45,7 @@ class CalendarAjaxEventsController extends AbstractController
 		$db_querier = PersistenceContext::get_querier();
 
 		$date_lang = LangLoader::get('date-common');
-		$events_list = $participants = array();
+		$items_list = $participants = array();
 
 		$config = CalendarConfig::load();
 		$comments_config = CommentsConfig::load();
@@ -55,7 +55,7 @@ class CalendarAjaxEventsController extends AbstractController
 		$day = $this->day ? $this->day : $request->get_int('calendar_ajax_day', 1);
 
 		$array_l_month = array($date_lang['january'], $date_lang['february'], $date_lang['march'], $date_lang['april'], $date_lang['may'], $date_lang['june'], $date_lang['july'], $date_lang['august'], $date_lang['september'], $date_lang['october'], $date_lang['november'], $date_lang['december']);
-		$events_number = 0;
+		$items_number = 0;
 
 		$result = $db_querier->select("SELECT *
 		FROM " . CalendarSetup::$calendar_events_table . " event
@@ -71,31 +71,31 @@ class CalendarAjaxEventsController extends AbstractController
 
 		while ($row = $result->fetch())
 		{
-			$event = new CalendarEvent();
-			$event->set_properties($row);
+			$item = new CalendarEvent();
+			$item->set_properties($row);
 
-			if (CategoriesAuthorizationsService::check_authorizations($event->get_content()->get_category_id(), 'calendar')->read())
+			if (CategoriesAuthorizationsService::check_authorizations($item->get_content()->get_id_category(), 'calendar')->read())
 			{
-				$events_list[$event->get_id()] = $event;
-				$events_number++;
+				$items_list[$item->get_id()] = $item;
+				$items_number++;
 			}
 		}
 		$result->dispose();
 
 		$this->view->put_all(array(
 			'C_COMMENTS_ENABLED' => $comments_config->module_comments_is_enabled('calendar'),
-			'C_EVENTS' => $events_number > 0,
+			'C_ITEMS' => $items_number > 0,
 			'DATE' => $day . ' ' . $array_l_month[$month - 1] . ' ' . $year,
-			'L_EVENTS_NUMBER' => $events_number > 1 ? StringVars::replace_vars($this->lang['calendar.labels.events.number'], array('events_number' => $events_number)) : $this->lang['calendar.labels.one.event'],
+			'L_ITEMS_NUMBER' => $items_number > 1 ? StringVars::replace_vars($this->lang['calendar.labels.events.number'], array('items_number' => $items_number)) : $this->lang['calendar.labels.one.event'],
 		));
 
-		if (!empty($events_list))
+		if (!empty($items_list))
 		{
 			$result = $db_querier->select('SELECT event_id, member.user_id, display_name, level, user_groups
 			FROM ' . CalendarSetup::$calendar_users_relation_table . ' participants
 			LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = participants.user_id
 			WHERE event_id IN :events_list', array(
-				'events_list' => array_keys($events_list)
+				'events_list' => array_keys($items_list)
 			));
 
 			while($row = $result->fetch())
@@ -109,19 +109,19 @@ class CalendarAjaxEventsController extends AbstractController
 			}
 			$result->dispose();
 
-			foreach ($events_list as $event)
+			foreach ($items_list as $item)
 			{
-				if (isset($participants[$event->get_id()]))
-					$event->set_participants($participants[$event->get_id()]);
+				if (isset($participants[$item->get_id()]))
+					$item->set_participants($participants[$item->get_id()]);
 
-				$this->view->assign_block_vars('event', $event->get_array_tpl_vars());
+				$this->view->assign_block_vars('items', $item->get_array_tpl_vars());
 
-				$participants_number = count($event->get_participants());
+				$participants_number = count($item->get_participants());
 				$i = 0;
-				foreach ($event->get_participants() as $participant)
+				foreach ($item->get_participants() as $participant)
 				{
 					$i++;
-					$this->view->assign_block_vars('event.participant', array_merge($participant->get_array_tpl_vars(), array(
+					$this->view->assign_block_vars('items.participant', array_merge($participant->get_array_tpl_vars(), array(
 						'C_LAST_PARTICIPANT' => $i == $participants_number
 					)));
 				}

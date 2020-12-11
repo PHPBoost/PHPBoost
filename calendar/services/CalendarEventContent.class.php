@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 07
+ * @version     PHPBoost 6.0 - last update: 2020 12 11
  * @since       PHPBoost 4.0 - 2013 10 29
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -55,12 +55,12 @@ class CalendarEventContent
 		return $this->id;
 	}
 
-	public function set_category_id($category_id)
+	public function set_id_category($category_id)
 	{
 		$this->category_id = $category_id;
 	}
 
-	public function get_category_id()
+	public function get_id_category()
 	{
 		return $this->category_id;
 	}
@@ -315,7 +315,7 @@ class CalendarEventContent
 	{
 		return array(
 			'id' => $this->get_id(),
-			'id_category' => $this->get_category_id(),
+			'id_category' => $this->get_id_category(),
 			'title' => $this->get_title(),
 			'rewrited_title' => $this->get_rewrited_title(),
 			'contents' => $this->get_contents(),

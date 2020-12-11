@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 08 28
+ * @version     PHPBoost 6.0 - last update: 2020 12 11
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -95,17 +95,17 @@ class CalendarEvent
 
 	public function is_authorized_to_add()
 	{
-		return CategoriesAuthorizationsService::check_authorizations($this->content->get_category_id())->write() || CategoriesAuthorizationsService::check_authorizations($this->content->get_category_id())->contribution();
+		return CategoriesAuthorizationsService::check_authorizations($this->content->get_id_category())->write() || CategoriesAuthorizationsService::check_authorizations($this->content->get_id_category())->contribution();
 	}
 
 	public function is_authorized_to_edit()
 	{
-		return CategoriesAuthorizationsService::check_authorizations($this->content->get_category_id())->moderation() || ((CategoriesAuthorizationsService::check_authorizations($this->content->get_category_id())->write() || (CategoriesAuthorizationsService::check_authorizations($this->content->get_category_id())->contribution())) && $this->content->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
+		return CategoriesAuthorizationsService::check_authorizations($this->content->get_id_category())->moderation() || ((CategoriesAuthorizationsService::check_authorizations($this->content->get_id_category())->write() || (CategoriesAuthorizationsService::check_authorizations($this->content->get_id_category())->contribution())) && $this->content->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 
 	public function is_authorized_to_delete()
 	{
-		return CategoriesAuthorizationsService::check_authorizations($this->content->get_category_id())->moderation() || ((CategoriesAuthorizationsService::check_authorizations($this->content->get_category_id())->write() || (CategoriesAuthorizationsService::check_authorizations($this->content->get_category_id())->contribution() && !$this->content->is_approved())) && $this->content->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
+		return CategoriesAuthorizationsService::check_authorizations($this->content->get_id_category())->moderation() || ((CategoriesAuthorizationsService::check_authorizations($this->content->get_id_category())->write() || (CategoriesAuthorizationsService::check_authorizations($this->content->get_id_category())->contribution() && !$this->content->is_approved())) && $this->content->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 
 	public function get_properties()

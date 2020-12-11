@@ -3,14 +3,15 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 11 11
+ * @version     PHPBoost 6.0 - last update: 2020 12 11
  * @since       PHPBoost 4.0 - 2013 09 29
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CalendarDisplayPendingEventsController extends ModuleController
 {
-	private $tpl;
-	private $events_view;
+	private $view;
+	private $items_view;
 	private $lang;
 
 	public function execute(HTTPRequestCustom $request)
@@ -27,10 +28,10 @@ class CalendarDisplayPendingEventsController extends ModuleController
 	public function init()
 	{
 		$this->lang = LangLoader::get('common', 'calendar');
-		$this->tpl = new FileTemplate('calendar/CalendarDisplaySeveralEventsController.tpl');
-		$this->tpl->add_lang($this->lang);
-		$this->events_view = new FileTemplate('calendar/CalendarAjaxEventsController.tpl');
-		$this->events_view->add_lang($this->lang);
+		$this->view = new FileTemplate('calendar/CalendarDisplaySeveralEventsController.tpl');
+		$this->view->add_lang($this->lang);
+		$this->items_view = new FileTemplate('calendar/CalendarAjaxEventsController.tpl');
+		$this->items_view->add_lang($this->lang);
 	}
 
 	public function build_view(HTTPRequestCustom $request)
@@ -61,28 +62,28 @@ class CalendarDisplayPendingEventsController extends ModuleController
 			'display_from' => $pagination->get_display_from()
 		)));
 
-		$this->events_view->put_all(array(
+		$this->items_view->put_all(array(
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_EVENTS' => $result->get_rows_count() > 0,
-			'C_PENDING_PAGE' => true,
+			'C_PENDING_ITEMS' => true,
 			'PAGINATION' => $pagination->display()
 		));
 
 		while ($row = $result->fetch())
 		{
-			$event = new CalendarEvent();
-			$event->set_properties($row);
+			$item = new CalendarEvent();
+			$item->set_properties($row);
 
-			$this->events_view->assign_block_vars('event', $event->get_array_tpl_vars());
+			$this->items_view->assign_block_vars('items', $item->get_array_tpl_vars());
 		}
 		$result->dispose();
 
-		$this->tpl->put_all(array(
-			'EVENTS' => $this->events_view,
-			'C_PENDING_PAGE' => true
+		$this->view->put_all(array(
+			'EVENTS' => $this->items_view,
+			'C_PENDING_ITEMS' => true
 		));
 
-		return $this->tpl;
+		return $this->view;
 	}
 
 	private function check_authorizations()
@@ -117,7 +118,7 @@ class CalendarDisplayPendingEventsController extends ModuleController
 	{
 		$page = AppContext::get_request()->get_getint('page', 1);
 
-		$response = new SiteDisplayResponse($this->tpl);
+		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['calendar.pending.events'], $this->lang['module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['calendar.seo.description.pending'], $page);

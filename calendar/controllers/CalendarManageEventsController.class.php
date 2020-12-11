@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 08 28
+ * @version     PHPBoost 6.0 - last update: 2020 12 11
  * @since       PHPBoost 4.0 - 2013 07 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -14,7 +14,7 @@ class CalendarManageEventsController extends AdminModuleController
 	private $lang;
 	private $view;
 
-	private $elements_number = 0;
+	private $items_number = 0;
 	private $ids = array();
 
 	public function execute(HTTPRequestCustom $request)
@@ -68,16 +68,16 @@ class CalendarManageEventsController extends AdminModuleController
 		);
 		foreach ($result as $row)
 		{
-			$event = new CalendarEvent();
-			$event->set_properties($row);
-			$category = $event->get_content()->get_category();
-			$user = $event->get_content()->get_author_user();
+			$item = new CalendarEvent();
+			$item->set_properties($row);
+			$category = $item->get_content()->get_category();
+			$user = $item->get_content()->get_author_user();
 
-			$this->elements_number++;
-			$this->ids[$this->elements_number] = $event->get_id();
+			$this->items_number++;
+			$this->ids[$this->items_number] = $item->get_id();
 
-			$edit_link = new EditLinkHTMLElement(CalendarUrlBuilder::edit_event(!$event->get_parent_id() ? $event->get_id() : $event->get_parent_id()));
-			$delete_link = new DeleteLinkHTMLElement(CalendarUrlBuilder::delete_event($event->get_id()), '', array('data-confirmation' => !$event->belongs_to_a_serie() ? 'delete-element' : ''));
+			$edit_link = new EditLinkHTMLElement(CalendarUrlBuilder::edit_event(!$item->get_parent_id() ? $item->get_id() : $item->get_parent_id()));
+			$delete_link = new DeleteLinkHTMLElement(CalendarUrlBuilder::delete_event($item->get_id()), '', array('data-confirmation' => !$item->belongs_to_a_serie() ? 'delete-element' : ''));
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
@@ -85,12 +85,12 @@ class CalendarManageEventsController extends AdminModuleController
 			$br = new BrHTMLElement();
 
 			$row = array(
-				new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()), $event->get_content()->get_title()), 'left'),
+				new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()), $item->get_content()->get_title()), 'left'),
 				new HTMLTableRowCell(new SpanHTMLElement(($category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('none_e', 'common') : $category->get_name()), array('data-color-surround' => $category->get_id() != Category::ROOT_CATEGORY && $category->get_color() ? $category->get_color() : ($category->get_id() == Category::ROOT_CATEGORY ? $config->get_event_color() : '')), 'pinned')),
 				new HTMLTableRowCell($author),
-				new HTMLTableRowCell(LangLoader::get_message('from_date', 'main') . ' ' . $event->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . $br->display() . LangLoader::get_message('to_date', 'main') . ' ' . $event->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
-				new HTMLTableRowCell($event->belongs_to_a_serie() ? $this->get_repeat_type_label($event) . ' - ' . $event->get_content()->get_repeat_number() . ' ' . $this->lang['calendar.labels.repeat.times'] : LangLoader::get_message('no', 'common')),
-				new HTMLTableRowCell($event->get_content()->is_approved() ? LangLoader::get_message('yes', 'common') : LangLoader::get_message('no', 'common')),
+				new HTMLTableRowCell(LangLoader::get_message('from_date', 'main') . ' ' . $item->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . $br->display() . LangLoader::get_message('to_date', 'main') . ' ' . $item->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
+				new HTMLTableRowCell($item->belongs_to_a_serie() ? $this->get_repeat_type_label($item) . ' - ' . $item->get_content()->get_repeat_number() . ' ' . $this->lang['calendar.labels.repeat.times'] : LangLoader::get_message('no', 'common')),
+				new HTMLTableRowCell($item->get_content()->is_approved() ? LangLoader::get_message('yes', 'common') : LangLoader::get_message('no', 'common')),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display(), 'controls')
 			);
 
@@ -110,26 +110,26 @@ class CalendarManageEventsController extends AdminModuleController
 	{
 		if ($request->get_string('delete-selected-elements', false))
 		{
-			for ($i = 1 ; $i <= $this->elements_number ; $i++)
+			for ($i = 1 ; $i <= $this->items_number ; $i++)
 			{
 				if ($request->get_value('delete-checkbox-' . $i, 'off') == 'on')
 				{
 					if (isset($this->ids[$i]))
 					{
 						try {
-							$event = CalendarService::get_event('WHERE id_event = :id', array('id' => $this->ids[$i]));
+							$item = CalendarService::get_event('WHERE id_event = :id', array('id' => $this->ids[$i]));
 						} catch (RowNotFoundException $e) {}
 
-						if ($event)
+						if ($item)
 						{
-							$events_list = CalendarService::get_serie_events($event->get_content()->get_id());
+							$items_list = CalendarService::get_serie_events($item->get_content()->get_id());
 
 							//Delete event
-							CalendarService::delete_event($event->get_id(), $event->get_parent_id());
+							CalendarService::delete_event($item->get_id(), $item->get_parent_id());
 
-							if (!$event->belongs_to_a_serie() || count($events_list) == 1)
+							if (!$item->belongs_to_a_serie() || count($items_list) == 1)
 							{
-								CalendarService::delete_event_content('WHERE id = :id', array('id' => $event->get_id()));
+								CalendarService::delete_event_content('WHERE id = :id', array('id' => $item->get_id()));
 							}
 						}
 					}
@@ -142,11 +142,11 @@ class CalendarManageEventsController extends AdminModuleController
 		}
 	}
 
-	private function get_repeat_type_label(CalendarEvent $event)
+	private function get_repeat_type_label(CalendarEvent $item)
 	{
 		$label = CalendarEventContent::NEVER;
 
-		switch ($event->get_content()->get_repeat_type())
+		switch ($item->get_content()->get_repeat_type())
 		{
 			case CalendarEventContent::DAILY :
 				$label = LangLoader::get_message('every_day', 'date-common');

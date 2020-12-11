@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 10 19
+ * @version     PHPBoost 6.0 - last update: 2020 12 11
  * @since       PHPBoost 4.0 - 2013 08 21
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -11,7 +11,7 @@
 class CalendarDisplayCategoryController extends ModuleController
 {
 	private $lang;
-	private $tpl;
+	private $view;
 
 	private $category;
 
@@ -29,8 +29,8 @@ class CalendarDisplayCategoryController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'calendar');
-		$this->tpl = new FileTemplate('calendar/CalendarDisplaySeveralEventsController.tpl');
-		$this->tpl->add_lang($this->lang);
+		$this->view = new FileTemplate('calendar/CalendarDisplaySeveralEventsController.tpl');
+		$this->view->add_lang($this->lang);
 	}
 
 	private function build_view(HTTPRequestCustom $request)
@@ -41,19 +41,19 @@ class CalendarDisplayCategoryController extends ModuleController
 
 		if (!checkdate($month, $day, $year))
 		{
-			$this->tpl->put('MSG', MessageHelper::display($this->lang['calendar.error.invalid.date'], MessageHelper::ERROR));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['calendar.error.invalid.date'], MessageHelper::ERROR));
 
 			$year = date('Y');
 			$month = date('n');
 			$day = date('j');
 		}
 
-		$this->tpl->put_all(array(
+		$this->view->put_all(array(
 			'CALENDAR' => CalendarAjaxCalendarController::get_view(false, $year, $month),
 			'EVENTS' => CalendarAjaxEventsController::get_view($year, $month, $day)
 		));
 
-		return $this->tpl;
+		return $this->view;
 	}
 
 	private function check_authorizations()
@@ -90,7 +90,7 @@ class CalendarDisplayCategoryController extends ModuleController
 
 	private function generate_response()
 	{
-		$response = new SiteDisplayResponse($this->tpl);
+		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
 
 		if ($this->get_category()->get_id() != Category::ROOT_CATEGORY)
@@ -113,7 +113,7 @@ class CalendarDisplayCategoryController extends ModuleController
 		$object->init();
 		$object->check_authorizations();
 		$object->build_view(AppContext::get_request());
-		return $object->tpl;
+		return $object->view;
 	}
 }
 ?>

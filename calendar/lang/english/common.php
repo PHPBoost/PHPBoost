@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 07
+ * @version     PHPBoost 6.0 - last update: 2020 12 11
  * @since       PHPBoost 4.0 - 2013 08 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -67,7 +67,7 @@ $lang['calendar.labels.repeat.type'] = 'Repeat';
 $lang['calendar.labels.repeat.number'] = 'Repeat number';
 $lang['calendar.labels.repeat.times'] = 'times';
 $lang['calendar.labels.repeat.never'] = 'Never';
-$lang['calendar.labels.events.number'] = ':events_number events';
+$lang['calendar.labels.events.number'] = ':items_number events';
 $lang['calendar.labels.one.event'] = '1 event';
 $lang['calendar.labels.start.date'] = 'Start date';
 $lang['calendar.labels.end.date'] = 'End date';

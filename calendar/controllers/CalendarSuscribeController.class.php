@@ -3,34 +3,35 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 16
+ * @version     PHPBoost 6.0 - last update: 2020 12 11
  * @since       PHPBoost 4.0 - 2013 11 08
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CalendarSuscribeController extends ModuleController
 {
-	private $event;
+	private $item;
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$event_id = $request->get_getint('event_id', 0);
+		$item_id = $request->get_getint('event_id', 0);
 		$current_user_id = AppContext::get_current_user()->get_id();
 
-		if (!empty($event_id))
+		if (!empty($item_id))
 		{
-			$this->get_event($event_id);
+			$this->get_event($item_id);
 
 			$this->check_authorizations();
 
-			if (!in_array($current_user_id, array_keys($this->event->get_participants())))
+			if (!in_array($current_user_id, array_keys($this->item->get_participants())))
 			{
-				CalendarService::add_participant($event_id, $current_user_id);
+				CalendarService::add_participant($item_id, $current_user_id);
 				CalendarService::clear_cache();
 			}
 
-			$category = $this->event->get_content()->get_category();
+			$category = $this->item->get_content()->get_category();
 
-			AppContext::get_response()->redirect($request->get_url_referrer() ? $request->get_url_referrer() : CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event_id, $this->event->get_content()->get_rewrited_title()));
+			AppContext::get_response()->redirect($request->get_url_referrer() ? $request->get_url_referrer() : CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $item_id, $this->item->get_content()->get_rewrited_title()));
 		}
 		else
 		{
@@ -39,10 +40,10 @@ class CalendarSuscribeController extends ModuleController
 		}
 	}
 
-	private function get_event($event_id)
+	private function get_event($item_id)
 	{
 		try {
-			$this->event = CalendarService::get_event('WHERE id_event = :id', array('id' => $event_id));
+			$this->item = CalendarService::get_event('WHERE id_event = :id', array('id' => $item_id));
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
@@ -51,12 +52,12 @@ class CalendarSuscribeController extends ModuleController
 
 	private function check_authorizations()
 	{
-		if (!$this->event->get_content()->is_registration_authorized() || !$this->event->get_content()->is_authorized_to_register() || ($this->event->get_content()->is_registration_authorized() && $this->event->get_content()->get_max_registered_members() && $this->event->get_registered_members_number() == $this->event->get_content()->get_max_registered_members()))
+		if (!$this->item->get_content()->is_registration_authorized() || !$this->item->get_content()->is_authorized_to_register() || ($this->item->get_content()->is_registration_authorized() && $this->item->get_content()->get_max_registered_members() && $this->item->get_registered_members_number() == $this->item->get_content()->get_max_registered_members()))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
-		if (time() > $this->event->get_start_date()->get_timestamp())
+		if (time() > $this->item->get_start_date()->get_timestamp())
 		{
 			$error_controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('calendar.suscribe.notice.expired.event.date', 'common', 'calendar'));
 			DispatchManager::redirect($error_controller);

@@ -3,14 +3,14 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 07
+ * @version     PHPBoost 6.0 - last update: 2020 12 11
  * @since       PHPBoost 5.2 - 2020 08 28
 */
 
 class CalendarMemberItemsController extends ModuleController
 {
 	private $view;
-	private $events_view;
+	private $items_view;
 	private $lang;
 
 	public function execute(HTTPRequestCustom $request)
@@ -29,8 +29,8 @@ class CalendarMemberItemsController extends ModuleController
 		$this->lang = LangLoader::get('common', 'calendar');
 		$this->view = new FileTemplate('calendar/CalendarDisplaySeveralEventsController.tpl');
 		$this->view->add_lang($this->lang);
-		$this->events_view = new FileTemplate('calendar/CalendarAjaxEventsController.tpl');
-		$this->events_view->add_lang($this->lang);
+		$this->items_view = new FileTemplate('calendar/CalendarAjaxEventsController.tpl');
+		$this->items_view->add_lang($this->lang);
 	}
 
 	public function build_view(HTTPRequestCustom $request)
@@ -62,7 +62,7 @@ class CalendarMemberItemsController extends ModuleController
 			'display_from' => $pagination->get_display_from()
 		)));
 
-		$this->events_view->put_all(array(
+		$this->items_view->put_all(array(
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_EVENTS' => $result->get_rows_count() > 0,
 			'C_MEMBER_ITEMS' => true,
@@ -71,15 +71,15 @@ class CalendarMemberItemsController extends ModuleController
 
 		while ($row = $result->fetch())
 		{
-			$event = new CalendarEvent();
-			$event->set_properties($row);
+			$item = new CalendarEvent();
+			$item->set_properties($row);
 
-			$this->events_view->assign_block_vars('event', $event->get_array_tpl_vars());
+			$this->items_view->assign_block_vars('items', $item->get_array_tpl_vars());
 		}
 		$result->dispose();
 
 		$this->view->put_all(array(
-			'EVENTS' => $this->events_view,
+			'EVENTS' => $this->items_view,
 			'C_MEMBER_ITEMS' => true
 		));
 

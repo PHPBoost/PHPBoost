@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 08 28
+ * @version     PHPBoost 6.0 - last update: 2020 12 11
  * @since       PHPBoost 3.0 - 2012 11 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -39,8 +39,7 @@ class AdminCalendarConfigController extends AdminModuleController
 		$this->build_form();
 
 		$view = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$view->add_lang($this->lang);
-		$view->add_lang($this->admin_common_lang);
+		$view->add_lang(array_merge($this->lang, $this->admin_common_lang));
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
