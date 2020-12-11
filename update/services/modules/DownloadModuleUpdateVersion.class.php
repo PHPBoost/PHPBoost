@@ -32,6 +32,7 @@ class DownloadModuleUpdateVersion extends ModuleUpdateVersion
 			'/phpboost/DownloadNotation.class.php',
 			'/phpboost/DownloadSitemapExtensionPoint.class.php',
 			'/services/DownloadKeywordsCache.class.php',
+			'/services/DownloadFile.class.php',
 			'/templates/DownloadDisplayDownloadFileController.tpl',
 			'/templates/DownloadDisplaySeveralDownloadFilesController.tpl',
 			'/util/AdminDownloadDisplayResponse.class.php'
