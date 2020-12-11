@@ -42,7 +42,7 @@ class DownloadPendingItemsController extends ModuleController
 		$content_management_config = ContentManagementConfig::load();
 		$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $this->config->is_summary_displayed_to_guests());
 		$mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
-		$field = $request->get_getstring('field', DownloadFile::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
+		$field = $request->get_getstring('field', DownloadItem::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
 
 		$condition = 'WHERE id_category IN :authorized_categories
 		' . (!DownloadAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
@@ -57,12 +57,12 @@ class DownloadPendingItemsController extends ModuleController
 		$pagination = $this->get_pagination($condition, $parameters, $field, TextHelper::strtolower($mode), $page);
 
 		$sort_mode = TextHelper::strtoupper($mode);
-		$sort_mode = (in_array($sort_mode, array(DownloadFile::ASC, DownloadFile::DESC)) ? $sort_mode : $this->config->get_items_default_sort_mode());
+		$sort_mode = (in_array($sort_mode, array(DownloadItem::ASC, DownloadItem::DESC)) ? $sort_mode : $this->config->get_items_default_sort_mode());
 
-		if (in_array($field, array(DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_ALPHABETIC], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_AUTHOR], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_DATE])))
-			$sort_field = array_search($field, DownloadFile::SORT_FIELDS_URL_VALUES);
+		if (in_array($field, array(DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_ALPHABETIC], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_AUTHOR], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_DATE])))
+			$sort_field = array_search($field, DownloadItem::SORT_FIELDS_URL_VALUES);
 		else
-			$sort_field = DownloadFile::SORT_DATE;
+			$sort_field = DownloadItem::SORT_DATE;
 
 		$result = PersistenceContext::get_querier()->select('SELECT download.*, member.*, com.number_comments, notes.average_notes, notes.number_notes, note.note
 		FROM '. DownloadSetup::$download_table .' download
@@ -98,7 +98,7 @@ class DownloadPendingItemsController extends ModuleController
 
 		while ($row = $result->fetch())
 		{
-			$item = new DownloadFile();
+			$item = new DownloadItem();
 			$item->set_properties($row);
 
 			$keywords = $item->get_keywords();
@@ -132,9 +132,9 @@ class DownloadPendingItemsController extends ModuleController
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field,
 			array(
-				new FormFieldSelectChoiceOption($common_lang['form.date.creation'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_DATE]),
-				new FormFieldSelectChoiceOption($common_lang['form.name'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_ALPHABETIC]),
-				new FormFieldSelectChoiceOption($common_lang['author'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_AUTHOR])
+				new FormFieldSelectChoiceOption($common_lang['form.date.creation'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_DATE]),
+				new FormFieldSelectChoiceOption($common_lang['form.name'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_ALPHABETIC]),
+				new FormFieldSelectChoiceOption($common_lang['author'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_AUTHOR])
 			),
 			array('events' => array('change' => 'document.location = "'. DownloadUrlBuilder::display_pending()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
@@ -193,7 +193,7 @@ class DownloadPendingItemsController extends ModuleController
 
 	private function generate_response(HTTPRequestCustom $request)
 	{
-		$sort_field = $request->get_getstring('field', DownloadFile::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
+		$sort_field = $request->get_getstring('field', DownloadItem::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
 		$sort_mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
 		$page = $request->get_getint('page', 1);
 		$response = new SiteDisplayResponse($this->view);

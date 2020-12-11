@@ -198,22 +198,22 @@ class DownloadConfig extends AbstractConfigData
 
 	public function is_sort_type_date()
 	{
-		return $this->get_property(self::SORT_TYPE) == DownloadFile::SORT_DATE || $this->get_property(self::SORT_TYPE) == DownloadFile::SORT_UPDATED_DATE;
+		return $this->get_property(self::SORT_TYPE) == DownloadItem::SORT_DATE || $this->get_property(self::SORT_TYPE) == DownloadItem::SORT_UPDATED_DATE;
 	}
 
 	public function is_sort_type_downloads_number()
 	{
-		return $this->get_property(self::SORT_TYPE) == DownloadFile::SORT_DOWNLOADS_NUMBER;
+		return $this->get_property(self::SORT_TYPE) == DownloadItem::SORT_DOWNLOADS_NUMBER;
 	}
 
 	public function is_sort_type_views_numbers()
 	{
-		return $this->get_property(self::SORT_TYPE) == DownloadFile::SORT_VIEWS_NUMBERS;
+		return $this->get_property(self::SORT_TYPE) == DownloadItem::SORT_VIEWS_NUMBERS;
 	}
 
 	public function is_sort_type_notation()
 	{
-		return $this->get_property(self::SORT_TYPE) == DownloadFile::SORT_NOTATION;
+		return $this->get_property(self::SORT_TYPE) == DownloadItem::SORT_NOTATION;
 	}
 
 	public function get_files_number_in_menu()
@@ -293,14 +293,14 @@ class DownloadConfig extends AbstractConfigData
 			self::ITEMS_PER_ROW => 2,
 			self::FULL_ITEM_DISPLAY => false,
 			self::DISPLAY_TYPE => self::GRID_VIEW,
-			self::ITEMS_DEFAULT_SORT_FIELD => DownloadFile::SORT_UPDATED_DATE,
-			self::ITEMS_DEFAULT_SORT_MODE => DownloadFile::DESC,
+			self::ITEMS_DEFAULT_SORT_FIELD => DownloadItem::SORT_UPDATED_DATE,
+			self::ITEMS_DEFAULT_SORT_MODE => DownloadItem::DESC,
 			self::DEFAULT_CONTENTS => '',
 			self::SUMMARY_DISPLAYED_TO_GUESTS => false,
 			self::AUTHOR_DISPLAYED => true,
 			self::NB_VIEW_ENABLED => false,
 			self::ROOT_CATEGORY_DESCRIPTION => CategoriesService::get_default_root_category_description('download'),
-			self::SORT_TYPE => DownloadFile::SORT_DOWNLOADS_NUMBER,
+			self::SORT_TYPE => DownloadItem::SORT_DOWNLOADS_NUMBER,
 			self::FILES_NUMBER_IN_MENU => 5,
 			self::LIMIT_OLDEST_FILE_DAY_IN_MENU_ENABLED => false,
 			self::OLDEST_FILE_DAY_IN_MENU => 30,

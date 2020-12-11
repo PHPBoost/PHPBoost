@@ -9,7 +9,7 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class DownloadFileController extends AbstractController
+class DownloadItemController extends AbstractController
 {
 	private $item;
 

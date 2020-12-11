@@ -168,7 +168,7 @@ class DownloadItemFormController extends ModuleController
 		$options_fieldset = new FormFieldsetHTML('options', $this->common_lang['form.options']);
 		$form->add_fieldset($options_fieldset);
 
-		$options_fieldset->add_field(new FormFieldThumbnail('thumbnail', $this->common_lang['form.picture'], $this->get_downloadfile()->get_thumbnail()->relative(), DownloadFile::THUMBNAIL_URL));
+		$options_fieldset->add_field(new FormFieldThumbnail('thumbnail', $this->common_lang['form.picture'], $this->get_downloadfile()->get_thumbnail()->relative(), DownloadItem::THUMBNAIL_URL));
 
 		$options_fieldset->add_field(new FormFieldTextEditor('software_version', $this->lang['download.version'], $this->get_downloadfile()->get_software_version()));
 
@@ -190,15 +190,15 @@ class DownloadItemFormController extends ModuleController
 			if (!$this->get_downloadfile()->is_published())
 			{
 				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->common_lang['form.update.date.creation'], false,
-					array('hidden' => $this->get_downloadfile()->get_status() != DownloadFile::NOT_APPROVAL)
+					array('hidden' => $this->get_downloadfile()->get_status() != DownloadItem::NOT_APPROVAL)
 				));
 			}
 
 			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('approbation_type', $this->common_lang['form.approbation'], $this->get_downloadfile()->get_approbation_type(),
 				array(
-					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.not'], DownloadFile::NOT_APPROVAL),
-					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.now'], DownloadFile::APPROVAL_NOW),
-					new FormFieldSelectChoiceOption($this->common_lang['status.approved.date'], DownloadFile::APPROVAL_DATE),
+					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.not'], DownloadItem::NOT_APPROVAL),
+					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.now'], DownloadItem::APPROVAL_NOW),
+					new FormFieldSelectChoiceOption($this->common_lang['status.approved.date'], DownloadItem::APPROVAL_DATE),
 				),
 				array(
 					'events' => array('change' => '
@@ -218,12 +218,12 @@ class DownloadItemFormController extends ModuleController
 			));
 
 			$publication_fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->common_lang['form.date.start'], ($this->get_downloadfile()->get_start_date() === null ? new Date() : $this->get_downloadfile()->get_start_date()),
-				array('hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_approbation_type', 0) != DownloadFile::APPROVAL_DATE) : ($this->get_downloadfile()->get_approbation_type() != DownloadFile::APPROVAL_DATE)))
+				array('hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_approbation_type', 0) != DownloadItem::APPROVAL_DATE) : ($this->get_downloadfile()->get_approbation_type() != DownloadItem::APPROVAL_DATE)))
 			));
 
 			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->common_lang['form.date.end.enable'], $this->get_downloadfile()->is_end_date_enabled(),
 				array(
-					'hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_approbation_type', 0) != DownloadFile::APPROVAL_DATE) : ($this->get_downloadfile()->get_approbation_type() != DownloadFile::APPROVAL_DATE)),
+					'hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_approbation_type', 0) != DownloadItem::APPROVAL_DATE) : ($this->get_downloadfile()->get_approbation_type() != DownloadItem::APPROVAL_DATE)),
 					'events' => array('click' => '
 						if (HTMLForms.getField("end_date_enabled").getValue()) {
 							HTMLForms.getField("end_date").enable();
@@ -302,7 +302,7 @@ class DownloadItemFormController extends ModuleController
 			else
 			{
 				$this->is_new_item = true;
-				$this->item = new DownloadFile();
+				$this->item = new DownloadItem();
 				$this->item->init_default_properties(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY));
 			}
 		}
@@ -381,7 +381,7 @@ class DownloadItemFormController extends ModuleController
 			$item->clean_start_and_end_date();
 
 			if (DownloadAuthorizationsService::check_authorizations($item->get_id_category())->contribution() && !DownloadAuthorizationsService::check_authorizations($item->get_id_category())->write())
-				$item->set_approbation_type(DownloadFile::NOT_APPROVAL);
+				$item->set_approbation_type(DownloadItem::NOT_APPROVAL);
 		}
 		else
 		{
@@ -392,7 +392,7 @@ class DownloadItemFormController extends ModuleController
 				$item->set_creation_date($this->form->get_value('creation_date'));
 
 			$item->set_approbation_type($this->form->get_value('approbation_type')->get_raw_value());
-			if ($item->get_approbation_type() == DownloadFile::APPROVAL_DATE)
+			if ($item->get_approbation_type() == DownloadItem::APPROVAL_DATE)
 			{
 				$deferred_operations = $this->config->get_deferred_operations();
 
@@ -452,7 +452,7 @@ class DownloadItemFormController extends ModuleController
 		DownloadService::clear_cache();
 	}
 
-	private function contribution_actions(DownloadFile $item, $id)
+	private function contribution_actions(DownloadItem $item, $id)
 	{
 			if ($this->is_contributor_member())
 			{

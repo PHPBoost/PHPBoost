@@ -29,9 +29,9 @@ class DownloadService
 
 	 /**
 	 * @desc Create a new entry in the database table.
-	 * @param string[] $item : new DownloadFile
+	 * @param string[] $item : new DownloadItem
 	 */
-	public static function add(DownloadFile $item)
+	public static function add(DownloadItem $item)
 	{
 		$result = self::$db_querier->insert(DownloadSetup::$download_table, $item->get_properties());
 
@@ -40,23 +40,23 @@ class DownloadService
 
 	 /**
 	 * @desc Update an entry.
-	 * @param string[] $item : DownloadFile to update
+	 * @param string[] $item : DownloadItem to update
 	 */
-	public static function update(DownloadFile $item)
+	public static function update(DownloadItem $item)
 	{
 		self::$db_querier->update(DownloadSetup::$download_table, $item->get_properties(), 'WHERE id=:id', array('id' => $item->get_id()));
 	}
 
 	 /**
 	 * @desc Update the number of downloads of a file.
-	 * @param string[] $item : DownloadFile to update
+	 * @param string[] $item : DownloadItem to update
 	 */
-	public static function update_downloads_number(DownloadFile $item)
+	public static function update_downloads_number(DownloadItem $item)
 	{
 		self::$db_querier->update(DownloadSetup::$download_table, array('downloads_number' => $item->get_downloads_number()), 'WHERE id=:id', array('id' => $item->get_id()));
 	}
 
-	public static function update_views_number(DownloadFile $item)
+	public static function update_views_number(DownloadItem $item)
 	{
 		self::$db_querier->update(DownloadSetup::$download_table, array('views_number' => $item->get_views_number()), 'WHERE id=:id', array('id' => $item->get_id()));
 	}
@@ -96,7 +96,7 @@ class DownloadService
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = download.id AND note.module_name = \'download\' AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
 		' . $condition, $parameters);
 
-		$item = new DownloadFile();
+		$item = new DownloadItem();
 		$item->set_properties($row);
 		return $item;
 	}

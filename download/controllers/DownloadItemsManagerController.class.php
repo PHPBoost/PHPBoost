@@ -69,7 +69,7 @@ class DownloadItemsManagerController extends AdminModuleController
 		);
 		foreach ($result as $row)
 		{
-			$item = new DownloadFile();
+			$item = new DownloadItem();
 			$item->set_properties($row);
 			$category = $item->get_category();
 			$user = $item->get_author_user();

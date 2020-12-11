@@ -46,7 +46,7 @@ class DownloadCategoryController extends ModuleController
 	{
 		$now = new Date();
 		$mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
-		$field = $request->get_getstring('field', DownloadFile::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
+		$field = $request->get_getstring('field', DownloadItem::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
 		$page = $request->get_getint('page', 1);
 		$subcategories_page = $request->get_getint('subcategories_page', 1);
 
@@ -84,10 +84,10 @@ class DownloadCategoryController extends ModuleController
 		$pagination = $this->get_pagination($condition, $parameters, $field, TextHelper::strtolower($mode), $page, $subcategories_page);
 
 		$sort_mode = TextHelper::strtoupper($mode);
-		$sort_mode = (in_array($sort_mode, array(DownloadFile::ASC, DownloadFile::DESC)) ? $sort_mode : $this->config->get_items_default_sort_mode());
+		$sort_mode = (in_array($sort_mode, array(DownloadItem::ASC, DownloadItem::DESC)) ? $sort_mode : $this->config->get_items_default_sort_mode());
 
-		if (in_array($field, DownloadFile::SORT_FIELDS_URL_VALUES))
-			$sort_field = array_search($field, DownloadFile::SORT_FIELDS_URL_VALUES);
+		if (in_array($field, DownloadItem::SORT_FIELDS_URL_VALUES))
+			$sort_field = array_search($field, DownloadItem::SORT_FIELDS_URL_VALUES);
 		else
 			$sort_field = $this->config->get_items_default_sort_field();
 
@@ -141,7 +141,7 @@ class DownloadCategoryController extends ModuleController
 
 		while ($row = $result->fetch())
 		{
-			$item = new DownloadFile();
+			$item = new DownloadItem();
 			$item->set_properties($row);
 
 			$keywords = $item->get_keywords();
@@ -175,19 +175,19 @@ class DownloadCategoryController extends ModuleController
 		$form->add_fieldset($fieldset);
 
 		$sort_options = array(
-			new FormFieldSelectChoiceOption($common_lang['form.date.update'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_UPDATED_DATE], array('data_option_icon' => 'far fa-calendar-plus')),
-			new FormFieldSelectChoiceOption($common_lang['form.date.creation'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_DATE], array('data_option_icon' => 'far fa-calendar-alt')),
-			new FormFieldSelectChoiceOption($common_lang['form.name'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_ALPHABETIC], array('data_option_icon' => 'fa fa-sort-alpha-up')),
-			new FormFieldSelectChoiceOption($common_lang['author'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_AUTHOR], array('data_option_icon' => 'fa fa-user')),
-			new FormFieldSelectChoiceOption($this->lang['downloads.number'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_DOWNLOADS_NUMBER], array('data_option_icon' => 'fa fa-download')),
-			new FormFieldSelectChoiceOption($common_lang['sort_by.views.number'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_VIEWS_NUMBERS], array('data_option_icon' => 'far fa-eye'))
+			new FormFieldSelectChoiceOption($common_lang['form.date.update'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_UPDATED_DATE], array('data_option_icon' => 'far fa-calendar-plus')),
+			new FormFieldSelectChoiceOption($common_lang['form.date.creation'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_DATE], array('data_option_icon' => 'far fa-calendar-alt')),
+			new FormFieldSelectChoiceOption($common_lang['form.name'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_ALPHABETIC], array('data_option_icon' => 'fa fa-sort-alpha-up')),
+			new FormFieldSelectChoiceOption($common_lang['author'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_AUTHOR], array('data_option_icon' => 'fa fa-user')),
+			new FormFieldSelectChoiceOption($this->lang['downloads.number'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_DOWNLOADS_NUMBER], array('data_option_icon' => 'fa fa-download')),
+			new FormFieldSelectChoiceOption($common_lang['sort_by.views.number'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_VIEWS_NUMBERS], array('data_option_icon' => 'far fa-eye'))
 		);
 
 		if ($this->comments_config->module_comments_is_enabled('download'))
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.comments.number'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_NUMBER_COMMENTS], array('data_option_icon' => 'far fa-comments'));
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.comments.number'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_NUMBER_COMMENTS], array('data_option_icon' => 'far fa-comments'));
 
 		if ($this->content_management_config->module_notation_is_enabled('download'))
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best.note'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_NOTATION], array('data_option_icon' => 'far fa-star'));
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best.note'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_NOTATION], array('data_option_icon' => 'far fa-star'));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_options,
 			array('select_to_list' => true, 'events' => array('change' => 'document.location = "'. DownloadUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->rel() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
@@ -294,7 +294,7 @@ class DownloadCategoryController extends ModuleController
 
 	private function generate_response(HTTPRequestCustom $request)
 	{
-		$sort_field = $request->get_getstring('field', DownloadFile::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
+		$sort_field = $request->get_getstring('field', DownloadItem::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
 		$sort_mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
 		$page = $request->get_getint('page', 1);
 		$response = new SiteDisplayResponse($this->view);

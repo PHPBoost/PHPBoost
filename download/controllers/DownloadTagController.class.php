@@ -10,7 +10,7 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class DownloadDisplayDownloadFileTagController extends ModuleController
+class DownloadDisplayDownloadItemTagController extends ModuleController
 {
 	private $view;
 	private $lang;
@@ -48,7 +48,7 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 
 		$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $this->config->is_summary_displayed_to_guests());
 		$mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
-		$field = $request->get_getstring('field', DownloadFile::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
+		$field = $request->get_getstring('field', DownloadItem::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
 
 		$condition = 'WHERE relation.id_keyword = :id_keyword
 		AND id_category IN :authorized_categories
@@ -63,10 +63,10 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 		$pagination = $this->get_pagination($condition, $parameters, $field, TextHelper::strtolower($mode), $page);
 
 		$sort_mode = TextHelper::strtoupper($mode);
-		$sort_mode = (in_array($sort_mode, array(DownloadFile::ASC, DownloadFile::DESC)) ? $sort_mode : $this->config->get_items_default_sort_mode());
+		$sort_mode = (in_array($sort_mode, array(DownloadItem::ASC, DownloadItem::DESC)) ? $sort_mode : $this->config->get_items_default_sort_mode());
 
-		if (in_array($field, DownloadFile::SORT_FIELDS_URL_VALUES))
-			$sort_field = array_search($field, DownloadFile::SORT_FIELDS_URL_VALUES);
+		if (in_array($field, DownloadItem::SORT_FIELDS_URL_VALUES))
+			$sort_field = array_search($field, DownloadItem::SORT_FIELDS_URL_VALUES);
 		else
 			$sort_field = $this->config->get_items_default_sort_field();
 
@@ -106,7 +106,7 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 
 		while ($row = $result->fetch())
 		{
-			$item = new DownloadFile();
+			$item = new DownloadItem();
 			$item->set_properties($row);
 
 			$keywords = $item->get_keywords();
@@ -139,19 +139,19 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 		$form->add_fieldset($fieldset);
 
 		$sort_options = array(
-			new FormFieldSelectChoiceOption($common_lang['form.date.update'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_UPDATED_DATE]),
-			new FormFieldSelectChoiceOption($common_lang['form.date.creation'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_DATE]),
-			new FormFieldSelectChoiceOption($common_lang['form.name'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_ALPHABETIC]),
-			new FormFieldSelectChoiceOption($common_lang['author'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_AUTHOR]),
-			new FormFieldSelectChoiceOption($this->lang['downloads.number'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_DOWNLOADS_NUMBER]),
-			new FormFieldSelectChoiceOption($common_lang['sort_by.views.number'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_VIEWS_NUMBERS])
+			new FormFieldSelectChoiceOption($common_lang['form.date.update'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_UPDATED_DATE]),
+			new FormFieldSelectChoiceOption($common_lang['form.date.creation'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_DATE]),
+			new FormFieldSelectChoiceOption($common_lang['form.name'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_ALPHABETIC]),
+			new FormFieldSelectChoiceOption($common_lang['author'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_AUTHOR]),
+			new FormFieldSelectChoiceOption($this->lang['downloads.number'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_DOWNLOADS_NUMBER]),
+			new FormFieldSelectChoiceOption($common_lang['sort_by.views.number'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_VIEWS_NUMBERS])
 		);
 
 		if ($this->comments_config->module_comments_is_enabled('download'))
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.comments.number'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_NUMBER_COMMENTS]);
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.comments.number'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_NUMBER_COMMENTS]);
 
 		if ($this->content_management_config->module_notation_is_enabled('download'))
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best.note'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_NOTATION]);
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best.note'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_NOTATION]);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_options,
 			array('events' => array('change' => 'document.location = "'. DownloadUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
@@ -237,7 +237,7 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 
 	private function generate_response(HTTPRequestCustom $request)
 	{
-		$sort_field = $request->get_getstring('field', DownloadFile::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
+		$sort_field = $request->get_getstring('field', DownloadItem::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
 		$sort_mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
 		$page = $request->get_getint('page', 1);
 		$response = new SiteDisplayResponse($this->view);

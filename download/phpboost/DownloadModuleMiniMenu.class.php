@@ -63,7 +63,7 @@ class DownloadModuleMiniMenu extends ModuleMiniMenu
 		$displayed_position = 1;
 		foreach ($items as $file)
 		{
-			$item = new DownloadFile();
+			$item = new DownloadItem();
 			$item->set_properties($file);
 
 			$view->assign_block_vars('items', array_merge($item->get_array_tpl_vars(), array(

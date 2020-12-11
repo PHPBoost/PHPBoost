@@ -11,7 +11,7 @@ class DownloadCommentsTopic extends CommentsTopic
 {
 	private $item;
 
-	public function __construct(DownloadFile $item = null)
+	public function __construct(DownloadItem $item = null)
 	{
 		parent::__construct('download');
 		$this->item = $item;

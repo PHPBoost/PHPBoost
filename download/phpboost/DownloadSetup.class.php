@@ -123,7 +123,7 @@ class DownloadSetup extends DefaultModuleSetup
 			'size' => 1430,
 			'contents' => $this->messages['default.downloadfile.content'],
 			'short_contents' => '',
-			'approbation_type' => DownloadFile::APPROVAL_NOW,
+			'approbation_type' => DownloadItem::APPROVAL_NOW,
 			'start_date' => 0,
 			'end_date' => 0,
 			'creation_date' => time(),

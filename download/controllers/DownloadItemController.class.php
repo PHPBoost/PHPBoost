@@ -52,7 +52,7 @@ class DownloadItemController extends ModuleController
 				}
 			}
 			else
-				$this->downloadfile = new DownloadFile();
+				$this->downloadfile = new DownloadItem();
 		}
 		return $this->downloadfile;
 	}
@@ -136,21 +136,21 @@ class DownloadItemController extends ModuleController
 		$not_authorized = !DownloadAuthorizationsService::check_authorizations($downloadfile->get_id_category())->moderation() && !DownloadAuthorizationsService::check_authorizations($downloadfile->get_id_category())->write() && (!DownloadAuthorizationsService::check_authorizations($downloadfile->get_id_category())->contribution() || $downloadfile->get_author_user()->get_id() != $current_user->get_id());
 
 		switch ($downloadfile->get_approbation_type()) {
-			case DownloadFile::APPROVAL_NOW:
+			case DownloadItem::APPROVAL_NOW:
 				if (!DownloadAuthorizationsService::check_authorizations($downloadfile->get_id_category())->read())
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 					DispatchManager::redirect($error_controller);
 				}
 			break;
-			case DownloadFile::NOT_APPROVAL:
+			case DownloadItem::NOT_APPROVAL:
 				if ($not_authorized || ($current_user->get_id() == User::VISITOR_LEVEL))
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 					DispatchManager::redirect($error_controller);
 				}
 			break;
-			case DownloadFile::APPROVAL_DATE:
+			case DownloadItem::APPROVAL_DATE:
 				if (!$downloadfile->is_published() && ($not_authorized || ($current_user->get_id() == User::VISITOR_LEVEL)))
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();

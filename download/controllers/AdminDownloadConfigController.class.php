@@ -171,19 +171,19 @@ class AdminDownloadConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 
 		$sort_options = array(
-			new FormFieldSelectChoiceOption($this->common_lang['form.date.update'], DownloadFile::SORT_UPDATED_DATE, array('data_option_icon' => 'far fa-calendar-plus')),
-			new FormFieldSelectChoiceOption($this->common_lang['form.date.creation'], DownloadFile::SORT_DATE, array('data_option_icon' => 'far fa-calendar-alt')),
-			new FormFieldSelectChoiceOption($this->common_lang['form.name'], DownloadFile::SORT_ALPHABETIC, array('data_option_icon' => 'fa fa-sort-alpha-up')),
-			new FormFieldSelectChoiceOption($this->common_lang['author'], DownloadFile::SORT_AUTHOR, array('data_option_icon' => 'far fa-user')),
-			new FormFieldSelectChoiceOption($this->lang['downloads.number'], DownloadFile::SORT_DOWNLOADS_NUMBER, array('data_option_icon' => 'fa fa-download')),
-			new FormFieldSelectChoiceOption($this->common_lang['sort_by.views.number'], DownloadFile::SORT_VIEWS_NUMBERS, array('data_option_icon' => 'fa fa-eye')),
+			new FormFieldSelectChoiceOption($this->common_lang['form.date.update'], DownloadItem::SORT_UPDATED_DATE, array('data_option_icon' => 'far fa-calendar-plus')),
+			new FormFieldSelectChoiceOption($this->common_lang['form.date.creation'], DownloadItem::SORT_DATE, array('data_option_icon' => 'far fa-calendar-alt')),
+			new FormFieldSelectChoiceOption($this->common_lang['form.name'], DownloadItem::SORT_ALPHABETIC, array('data_option_icon' => 'fa fa-sort-alpha-up')),
+			new FormFieldSelectChoiceOption($this->common_lang['author'], DownloadItem::SORT_AUTHOR, array('data_option_icon' => 'far fa-user')),
+			new FormFieldSelectChoiceOption($this->lang['downloads.number'], DownloadItem::SORT_DOWNLOADS_NUMBER, array('data_option_icon' => 'fa fa-download')),
+			new FormFieldSelectChoiceOption($this->common_lang['sort_by.views.number'], DownloadItem::SORT_VIEWS_NUMBERS, array('data_option_icon' => 'fa fa-eye')),
 		);
 
 		if ($this->comments_config->module_comments_is_enabled('download'))
-			$sort_options[] = new FormFieldSelectChoiceOption($this->common_lang['sort_by.comments.number'], DownloadFile::SORT_NUMBER_COMMENTS, array('data_option_icon' => 'far fa-comments'));
+			$sort_options[] = new FormFieldSelectChoiceOption($this->common_lang['sort_by.comments.number'], DownloadItem::SORT_NUMBER_COMMENTS, array('data_option_icon' => 'far fa-comments'));
 
 		if ($this->content_management_config->module_notation_is_enabled('download'))
-			$sort_options[] = new FormFieldSelectChoiceOption($this->common_lang['sort_by.best.note'], DownloadFile::SORT_NOTATION, array('data_option_icon' => 'far fa-star'));
+			$sort_options[] = new FormFieldSelectChoiceOption($this->common_lang['sort_by.best.note'], DownloadItem::SORT_NOTATION, array('data_option_icon' => 'far fa-star'));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_type', $this->lang['download.config.sort.type'], $this->config->get_sort_type(), $sort_options,
 			array('select_to_list' => true, 'description' => $this->lang['download.config.sort.type.description'])
@@ -233,30 +233,30 @@ class AdminDownloadConfigController extends AdminModuleController
 	private function get_sort_options()
 	{
 		$sort_options = array(
-			new FormFieldSelectChoiceOption($this->common_lang['form.date.update'] . ' - ' . $this->common_lang['sort.asc'], DownloadFile::SORT_UPDATED_DATE . '-' . DownloadFile::ASC),
-			new FormFieldSelectChoiceOption($this->common_lang['form.date.update'] . ' - ' . $this->common_lang['sort.desc'], DownloadFile::SORT_UPDATED_DATE . '-' . DownloadFile::DESC),
-			new FormFieldSelectChoiceOption($this->common_lang['form.date.creation'] . ' - ' . $this->common_lang['sort.asc'], DownloadFile::SORT_DATE . '-' . DownloadFile::ASC),
-			new FormFieldSelectChoiceOption($this->common_lang['form.date.creation'] . ' - ' . $this->common_lang['sort.desc'], DownloadFile::SORT_DATE . '-' . DownloadFile::DESC),
-			new FormFieldSelectChoiceOption($this->common_lang['sort_by.alphabetic'] . ' - ' . $this->common_lang['sort.asc'], DownloadFile::SORT_ALPHABETIC . '-' . DownloadFile::ASC),
-			new FormFieldSelectChoiceOption($this->common_lang['sort_by.alphabetic'] . ' - ' . $this->common_lang['sort.desc'], DownloadFile::SORT_ALPHABETIC . '-' . DownloadFile::DESC),
-			new FormFieldSelectChoiceOption($this->common_lang['author'] . ' - ' . $this->common_lang['sort.asc'], DownloadFile::SORT_AUTHOR . '-' . DownloadFile::ASC),
-			new FormFieldSelectChoiceOption($this->common_lang['author'] . ' - ' . $this->common_lang['sort.desc'], DownloadFile::SORT_AUTHOR . '-' . DownloadFile::DESC),
-			new FormFieldSelectChoiceOption($this->lang['downloads.number'] . ' - ' . $this->common_lang['sort.asc'], DownloadFile::SORT_DOWNLOADS_NUMBER . '-' . DownloadFile::ASC),
-			new FormFieldSelectChoiceOption($this->lang['downloads.number'] . ' - ' . $this->common_lang['sort.desc'], DownloadFile::SORT_DOWNLOADS_NUMBER . '-' . DownloadFile::DESC),
-			new FormFieldSelectChoiceOption($this->common_lang['sort_by.views.number'] . ' - ' . $this->common_lang['sort.asc'], DownloadFile::SORT_VIEWS_NUMBERS . '-' . DownloadFile::ASC),
-			new FormFieldSelectChoiceOption($this->common_lang['sort_by.views.number'] . ' - ' . $this->common_lang['sort.desc'], DownloadFile::SORT_VIEWS_NUMBERS . '-' . DownloadFile::DESC)
+			new FormFieldSelectChoiceOption($this->common_lang['form.date.update'] . ' - ' . $this->common_lang['sort.asc'], DownloadItem::SORT_UPDATED_DATE . '-' . DownloadItem::ASC),
+			new FormFieldSelectChoiceOption($this->common_lang['form.date.update'] . ' - ' . $this->common_lang['sort.desc'], DownloadItem::SORT_UPDATED_DATE . '-' . DownloadItem::DESC),
+			new FormFieldSelectChoiceOption($this->common_lang['form.date.creation'] . ' - ' . $this->common_lang['sort.asc'], DownloadItem::SORT_DATE . '-' . DownloadItem::ASC),
+			new FormFieldSelectChoiceOption($this->common_lang['form.date.creation'] . ' - ' . $this->common_lang['sort.desc'], DownloadItem::SORT_DATE . '-' . DownloadItem::DESC),
+			new FormFieldSelectChoiceOption($this->common_lang['sort_by.alphabetic'] . ' - ' . $this->common_lang['sort.asc'], DownloadItem::SORT_ALPHABETIC . '-' . DownloadItem::ASC),
+			new FormFieldSelectChoiceOption($this->common_lang['sort_by.alphabetic'] . ' - ' . $this->common_lang['sort.desc'], DownloadItem::SORT_ALPHABETIC . '-' . DownloadItem::DESC),
+			new FormFieldSelectChoiceOption($this->common_lang['author'] . ' - ' . $this->common_lang['sort.asc'], DownloadItem::SORT_AUTHOR . '-' . DownloadItem::ASC),
+			new FormFieldSelectChoiceOption($this->common_lang['author'] . ' - ' . $this->common_lang['sort.desc'], DownloadItem::SORT_AUTHOR . '-' . DownloadItem::DESC),
+			new FormFieldSelectChoiceOption($this->lang['downloads.number'] . ' - ' . $this->common_lang['sort.asc'], DownloadItem::SORT_DOWNLOADS_NUMBER . '-' . DownloadItem::ASC),
+			new FormFieldSelectChoiceOption($this->lang['downloads.number'] . ' - ' . $this->common_lang['sort.desc'], DownloadItem::SORT_DOWNLOADS_NUMBER . '-' . DownloadItem::DESC),
+			new FormFieldSelectChoiceOption($this->common_lang['sort_by.views.number'] . ' - ' . $this->common_lang['sort.asc'], DownloadItem::SORT_VIEWS_NUMBERS . '-' . DownloadItem::ASC),
+			new FormFieldSelectChoiceOption($this->common_lang['sort_by.views.number'] . ' - ' . $this->common_lang['sort.desc'], DownloadItem::SORT_VIEWS_NUMBERS . '-' . DownloadItem::DESC)
 		);
 
 		if ($this->comments_config->module_comments_is_enabled('download'))
 		{
-			$sort_options[] = new FormFieldSelectChoiceOption($this->common_lang['sort_by.comments.number'] . ' - ' . $this->common_lang['sort.asc'], DownloadFile::SORT_NUMBER_COMMENTS . '-' . DownloadFile::ASC);
-			$sort_options[] = new FormFieldSelectChoiceOption($this->common_lang['sort_by.comments.number'] . ' - ' . $this->common_lang['sort.desc'], DownloadFile::SORT_NUMBER_COMMENTS . '-' . DownloadFile::DESC);
+			$sort_options[] = new FormFieldSelectChoiceOption($this->common_lang['sort_by.comments.number'] . ' - ' . $this->common_lang['sort.asc'], DownloadItem::SORT_NUMBER_COMMENTS . '-' . DownloadItem::ASC);
+			$sort_options[] = new FormFieldSelectChoiceOption($this->common_lang['sort_by.comments.number'] . ' - ' . $this->common_lang['sort.desc'], DownloadItem::SORT_NUMBER_COMMENTS . '-' . DownloadItem::DESC);
 		}
 
 		if ($this->content_management_config->module_notation_is_enabled('download'))
 		{
-			$sort_options[] = new FormFieldSelectChoiceOption($this->common_lang['sort_by.best.note'] . ' - ' . $this->common_lang['sort.asc'], DownloadFile::SORT_NOTATION . '-' . DownloadFile::ASC);
-			$sort_options[] = new FormFieldSelectChoiceOption($this->common_lang['sort_by.best.note'] . ' - ' . $this->common_lang['sort.desc'], DownloadFile::SORT_NOTATION . '-' . DownloadFile::DESC);
+			$sort_options[] = new FormFieldSelectChoiceOption($this->common_lang['sort_by.best.note'] . ' - ' . $this->common_lang['sort.asc'], DownloadItem::SORT_NOTATION . '-' . DownloadItem::ASC);
+			$sort_options[] = new FormFieldSelectChoiceOption($this->common_lang['sort_by.best.note'] . ' - ' . $this->common_lang['sort.desc'], DownloadItem::SORT_NOTATION . '-' . DownloadItem::DESC);
 		}
 
 		return $sort_options;
