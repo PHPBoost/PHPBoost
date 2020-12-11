@@ -58,7 +58,7 @@
 									<time class="text-strong" datetime="{items.START_DATE_ISO8601}" itemprop="startDate">{items.START_DATE}</time>
 									- <time class="text-strong" datetime="{items.END_DATE_ISO8601}" itemprop="endDate">{items.END_DATE}</time>
 								</span>
-								<span class="pinned" data-color-surround="{items.CATEGORY_COLOR}"><i class="far fa-fw fa-folder"></i> {items.CATEGORY_NAME}</span>
+								# IF NOT items.C_ROOT_CATEGORY #<span class="pinned" data-color-surround="{items.CATEGORY_COLOR}"><i class="far fa-fw fa-folder"></i> {items.CATEGORY_NAME}</span># ENDIF #
 								# IF items.C_PARTICIPATION_ENABLED #
 									# IF items.C_DISPLAY_PARTICIPANTS #
 										<span class="pinned">

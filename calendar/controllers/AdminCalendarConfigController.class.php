@@ -45,7 +45,7 @@ class AdminCalendarConfigController extends AdminModuleController
 		{
 			$this->save();
 			if ($this->user_born_field['display'])
-			$this->form->get_field_by_id('birthday_color')->set_hidden(!$this->config->is_members_birthday_enabled());
+				$this->form->get_field_by_id('birthday_color')->set_hidden(!$this->config->is_members_birthday_enabled());
 			$view->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 
@@ -76,7 +76,7 @@ class AdminCalendarConfigController extends AdminModuleController
 
 		$fieldset->add_field(new FormFieldNumberEditor('characters_number_to_cut', $this->admin_common_lang['config.characters.number.to.cut'], $this->config->get_characters_number_to_cut(),
 			array(
-				'class' => 'third-field', 'min' => 0, 'max' => 1000, 
+				'class' => 'third-field', 'min' => 0, 'max' => 1000,
 				'description' => $this->lang['calendar.config.set.to.zero']
 			),
 			array(new FormFieldConstraintIntegerRange(0, 1000)
