@@ -118,7 +118,7 @@ class CalendarItemController extends ModuleController
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($item->get_content()->get_title(), ($category->get_id() != Category::ROOT_CATEGORY ? $category->get_name() . ' - ' : '') . $this->lang['module.title']);
-		$graphical_environment->get_seo_meta_data()->set_description($item->get_content()->get_real_short_contents());
+		$graphical_environment->get_seo_meta_data()->set_description($item->get_content()->get_contents());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();

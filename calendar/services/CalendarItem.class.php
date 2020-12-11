@@ -196,12 +196,14 @@ class CalendarItem
 				'C_AUTHOR_GROUP_COLOR' => !empty($author_group_color),
 				'C_AUTHOR_EXIST' => $author->get_id() !== User::VISITOR_LEVEL,
 				'C_CANCELLED' => $this->content->is_cancelled(),
+				'C_SUMMARY' => CalendarConfig::load()->get_characters_number_to_cut() > 0,
 
 				//Event
 				'ID' => $this->id,
 				'CONTENT_ID' => $this->content->get_id(),
 				'TITLE' => $this->content->get_title(),
-				'CONTENTS' => FormatingHelper::second_parse($this->content->get_contents()),
+				'CONTENT' => FormatingHelper::second_parse($this->content->get_contents()),
+				'SUMMARY' => FormatingHelper::second_parse($this->content->get_summary()),
 				'LOCATION' => $location,
 				'LOCATION_MAP' => $location_map,
 				'COMMENTS_NUMBER' => CommentsService::get_comments_number('calendar', $this->id),

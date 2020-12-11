@@ -94,7 +94,13 @@
 								# ENDIF #
 							</div>
 
-							<div itemprop="text">{items.CONTENTS}</div>
+							<div itemprop="text">
+								# IF items.C_SUMMARY #
+									{items.SUMMARY}
+								# ELSE #
+									{items.CONTENT}
+								# ENDIF #
+							</div>
 
 						</div>
 					</div>

@@ -100,9 +100,9 @@ class CalendarItemContent
 		return $this->contents;
 	}
 
-	public function get_real_short_contents()
+	public function get_summary()
 	{
-		return TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>'), (int)CalendarConfig::CHARACTERS_NUMBER_TO_CUT);
+			return TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>'), CalendarConfig::load()->get_characters_number_to_cut());
 	}
 
 	public function set_picture(Url $picture)
@@ -387,7 +387,7 @@ class CalendarItemContent
 	public function init_default_properties($category_id = Category::ROOT_CATEGORY)
 	{
 		$this->category_id = $category_id;
-                $this->contents = CalendarConfig::load()->get_default_contents();
+        $this->contents = CalendarConfig::load()->get_default_contents();
 		$this->author_user = AppContext::get_current_user();
 		$this->creation_date = new Date();
 		$this->picture_url = self::get_default_thumbnail();

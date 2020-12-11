@@ -113,7 +113,7 @@
 				</div>
 			</div>
 
-			<div itemprop="text">{CONTENTS}</div>
+			<div itemprop="text">{CONTENT}</div>
 		</div>
 
 		<aside>

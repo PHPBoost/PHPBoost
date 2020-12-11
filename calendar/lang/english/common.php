@@ -80,8 +80,9 @@ $lang['calendar.labels.suscribe'] = 'Suscribe';
 $lang['calendar.labels.unsuscribe'] = 'Unsuscribe';
 $lang['calendar.labels.cancel'] = 'Cancel the event';
 
-// Administration
+// Configuration
 $lang['calendar.config.events.management'] = 'Events management';
+$lang['calendar.config.set.to.zero'] = 'Set to zero to disable';
 $lang['calendar.config.category.color'] = 'Color';
 $lang['calendar.config.items.number.per.page'] = 'Events number per page';
 $lang['calendar.config.event.color'] = 'Events color';

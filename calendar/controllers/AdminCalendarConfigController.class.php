@@ -45,7 +45,7 @@ class AdminCalendarConfigController extends AdminModuleController
 		{
 			$this->save();
 			if ($this->user_born_field['display'])
-				$this->form->get_field_by_id('birthday_color')->set_hidden(!$this->config->is_members_birthday_enabled());
+			$this->form->get_field_by_id('birthday_color')->set_hidden(!$this->config->is_members_birthday_enabled());
 			$view->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 
@@ -75,8 +75,11 @@ class AdminCalendarConfigController extends AdminModuleController
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('characters_number_to_cut', $this->admin_common_lang['config.characters.number.to.cut'], $this->config->get_characters_number_to_cut(),
-			array('class' => 'third-field', 'min' => 20, 'max' => 1000, 'required' => true),
-			array(new FormFieldConstraintIntegerRange(20, 1000)
+			array(
+				'class' => 'third-field', 'min' => 0, 'max' => 1000, 
+				'description' => $this->lang['calendar.config.set.to.zero']
+			),
+			array(new FormFieldConstraintIntegerRange(0, 1000)
 		)));
 
 		$fieldset->add_field(new FormFieldColorPicker('event_color', $this->lang['calendar.config.event.color'], $this->config->get_event_color(),
@@ -134,9 +137,8 @@ class AdminCalendarConfigController extends AdminModuleController
 	private function save()
 	{
 		$this->config->set_items_number_per_page($this->form->get_value('items_number_per_page'));
-
 		$this->config->set_event_color($this->form->get_value('event_color'));
-
+		$this->config->set_characters_number_to_cut($this->form->get_value('characters_number_to_cut', $this->config->get_characters_number_to_cut()));
 		if ($this->form->get_value('members_birthday_enabled'))
 		{
 			$this->config->enable_members_birthday();
