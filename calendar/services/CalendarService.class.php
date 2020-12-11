@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 01
+ * @version     PHPBoost 6.0 - last update: 2020 12 11
  * @since       PHPBoost 3.0 - 2012 11 20
  * @contributor Mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -22,7 +22,7 @@ class CalendarService
 	 * @desc Create a new event.
 	 * @param string[] $item new CalendarEvent
 	 */
-	public static function add_event(CalendarEvent $item)
+	public static function add_event(CalendarItem $item)
 	{
 		$result = self::$db_querier->insert(CalendarSetup::$calendar_events_table, $item->get_properties());
 
@@ -31,9 +31,9 @@ class CalendarService
 
 	 /**
 	 * @desc Create a new event content.
-	 * @param string[] $item_content new CalendarEventContent
+	 * @param string[] $item_content new CalendarItemContent
 	 */
-	public static function add_event_content(CalendarEventContent $item_content)
+	public static function add_event_content(CalendarItemContent $item_content)
 	{
 		$result = self::$db_querier->insert(CalendarSetup::$calendar_events_content_table, $item_content->get_properties());
 
@@ -57,7 +57,7 @@ class CalendarService
 	 * @desc Update an event.
 	 * @param string[] $item CalendarEvent to update
 	 */
-	public static function update_event(CalendarEvent $item)
+	public static function update_event(CalendarItem $item)
 	{
 		self::$db_querier->update(CalendarSetup::$calendar_events_table, $item->get_properties(), 'WHERE id_event = :id', array(
 			'id' => $item->get_id()
@@ -68,9 +68,9 @@ class CalendarService
 
 	 /**
 	 * @desc Update the content of an event.
-	 * @param string[] $item_content CalendarEventContent to update
+	 * @param string[] $item_content CalendarItemContent to update
 	 */
-	public static function update_event_content(CalendarEventContent $item_content)
+	public static function update_event_content(CalendarItemContent $item_content)
 	{
 		self::$db_querier->update(CalendarSetup::$calendar_events_content_table, $item_content->get_properties(), 'WHERE id = :id', array(
 			'id' => $item_content->get_id()
@@ -163,7 +163,7 @@ class CalendarService
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' author ON author.user_id = event_content.author_id
 		' . $condition, $parameters);
 
-		$item = new CalendarEvent();
+		$item = new CalendarItem();
 		$item->set_properties($row);
 		$item->set_participants(self::get_event_participants($item->get_id()));
 
@@ -217,7 +217,7 @@ class CalendarService
 
 		while($row = $result->fetch())
 		{
-			$item = new CalendarEvent();
+			$item = new CalendarItem();
 			$item->set_properties($row);
 			$items[$item->get_id()] = $item;
 		}
@@ -246,7 +246,7 @@ class CalendarService
 		$authorized_categories = CategoriesService::get_authorized_categories($id_category);
 
 		return self::$db_querier->select((CalendarConfig::load()->is_members_birthday_enabled() ? "
-		(SELECT member_extended_fields.user_born AS start_date, member_extended_fields.user_born AS end_date, display_name AS title, 'BIRTHDAY' AS type, 0 AS id_category, '" . CalendarEventContent::YEARLY . "' AS repeat_type, 100 AS repeat_number
+		(SELECT member_extended_fields.user_born AS start_date, member_extended_fields.user_born AS end_date, display_name AS title, 'BIRTHDAY' AS type, 0 AS id_category, '" . CalendarItemContent::YEARLY . "' AS repeat_type, 100 AS repeat_number
 		FROM " . DB_TABLE_MEMBER . " member
 		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " member_extended_fields ON member_extended_fields.user_id = member.user_id
 		WHERE member_extended_fields.user_born <> '' AND IF(member_extended_fields.user_born < 0, MONTH(DATE_ADD(FROM_UNIXTIME(0), INTERVAL member_extended_fields.user_born second)), MONTH(FROM_UNIXTIME(member_extended_fields.user_born))) = :month AND :year > IF(member_extended_fields.user_born < 0, YEAR(DATE_ADD(FROM_UNIXTIME(0), INTERVAL member_extended_fields.user_born second)), YEAR(FROM_UNIXTIME(member_extended_fields.user_born))))

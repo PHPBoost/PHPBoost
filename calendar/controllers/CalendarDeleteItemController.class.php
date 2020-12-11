@@ -9,7 +9,7 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class CalendarDeleteController extends ModuleController
+class CalendarDeleteItemController extends ModuleController
 {
 	/**
 	 * @var HTMLForm

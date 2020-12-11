@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 10 23
+ * @version     PHPBoost 6.0 - last update: 2020 12 11
  * @since       PHPBoost 3.0 - 2012 11 20
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CalendarUrlBuilder
@@ -127,7 +128,7 @@ class CalendarUrlBuilder
 	{
 		$now = new Date();
 		$date = ($year !== null && $month !== null && $day !== null ? (sprintf("%04d", $year) . '-' . sprintf("%02d", $month) . '-' . sprintf("%02d", $day)) : ($now->get_year() . '-' . sprintf("%02d", $now->get_month()) . '-' . sprintf("%02d", $now->get_day())));
-		return DispatchManager::get_url(self::$dispatcher, '/events_list/?table=,filters:{filter1:' . $date . '}');
+		return DispatchManager::get_url(self::$dispatcher, '/items_list/?table=,filters:{filter1:' . $date . '}');
 	}
 
 	/**

@@ -71,7 +71,7 @@ class CalendarAjaxEventsController extends AbstractController
 
 		while ($row = $result->fetch())
 		{
-			$item = new CalendarEvent();
+			$item = new CalendarItem();
 			$item->set_properties($row);
 
 			if (CategoriesAuthorizationsService::check_authorizations($item->get_content()->get_id_category(), 'calendar')->read())

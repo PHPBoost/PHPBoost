@@ -2,12 +2,13 @@
 /**
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
- * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.0 - last update: 2020 12 11
- * @since       PHPBoost 5.2 - 2020 08 28
+ * @since       PHPBoost 4.0 - 2013 09 29
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class CalendarMemberItemsController extends ModuleController
+class CalendaryPendingItemsController extends ModuleController
 {
 	private $view;
 	private $items_view;
@@ -37,8 +38,7 @@ class CalendarMemberItemsController extends ModuleController
 	{
 		$authorized_categories = CategoriesService::get_authorized_categories();
 
-		$condition = 'WHERE approved = 1
-		AND author_id = :user_id
+		$condition = 'WHERE approved = 0
 		AND parent_id = 0
 		AND id_category IN :authorized_categories
 		' . (!CategoriesAuthorizationsService::check_authorizations()->moderation() ? ' AND event_content.author_id = :user_id' : '');
@@ -65,7 +65,7 @@ class CalendarMemberItemsController extends ModuleController
 		$this->items_view->put_all(array(
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_EVENTS' => $result->get_rows_count() > 0,
-			'C_MEMBER_ITEMS' => true,
+			'C_PENDING_ITEMS' => true,
 			'PAGINATION' => $pagination->display()
 		));
 
@@ -80,7 +80,7 @@ class CalendarMemberItemsController extends ModuleController
 
 		$this->view->put_all(array(
 			'EVENTS' => $this->items_view,
-			'C_MEMBER_ITEMS' => true
+			'C_PENDING_ITEMS' => true
 		));
 
 		return $this->view;
@@ -117,16 +117,16 @@ class CalendarMemberItemsController extends ModuleController
 	private function generate_response()
 	{
 		$page = AppContext::get_request()->get_getint('page', 1);
-		$response = new SiteDisplayResponse($this->view);
 
+		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['my.items'], $this->lang['module.title'], $page);
-		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['calendar.seo.description.member'], array('author' => AppContext::get_current_user()->get_display_name())), $page);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::display_member_items($page));
+		$graphical_environment->set_page_title($this->lang['calendar.pending.events'], $this->lang['module.title'], $page);
+		$graphical_environment->get_seo_meta_data()->set_description($this->lang['calendar.seo.description.pending'], $page);
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::display_pending_events($page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::home());
-		$breadcrumb->add($this->lang['my.items'], CalendarUrlBuilder::display_member_items($page));
+		$breadcrumb->add($this->lang['calendar.pending.events'], CalendarUrlBuilder::display_pending_events($page));
 
 		return $response;
 	}

@@ -49,7 +49,7 @@
 						# ENDIF #
 						<div class="cell-content" itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 							# IF items.C_CANCELLED #
-							<span class="message-helper bgc error">{@calendar.cancelled.items}</span>
+							<span class="message-helper bgc error">{@calendar.cancelled.event}</span>
 							# ENDIF #
 
 							<div class="more">

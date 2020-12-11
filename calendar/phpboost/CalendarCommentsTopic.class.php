@@ -12,7 +12,7 @@ class CalendarCommentsTopic extends CommentsTopic
 {
 	private $item;
 
-	public function __construct(CalendarEvent $item = null)
+	public function __construct(CalendarItem $item = null)
 	{
 		parent::__construct('calendar');
 		$this->item = $item;

@@ -57,7 +57,7 @@ class CalendarFeedProvider implements FeedProvider
 
 			while ($row = $result->fetch())
 			{
-				$item = new CalendarEvent();
+				$item = new CalendarItem();
 				$item->set_properties($row);
 
 				if (!$item->get_content()->is_cancelled())

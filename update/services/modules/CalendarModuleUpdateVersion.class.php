@@ -14,12 +14,19 @@ class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 	public function __construct()
 	{
 		parent::__construct('calendar');
-		
+
 		$this->content_tables = array(PREFIX . 'calendar_events_content');
 		self::$delete_old_files_list = array(
 			'/controllers/categories/CalendarCategoriesFormController.class.php',
 			'/controllers/categories/CalendarCategoriesManageController.class.php',
 			'/controllers/categories/CalendarDeleteCategoryController.class.php',
+			'/controllers/CalendarDeleteController.class.php',
+			'/controllers/CalendarDisplayCategoryController.class.php',
+			'/controllers/CalendarDisplayEventController.class.php',
+			'/controllers/CalendarDisplayPendingEventsController.class.php',
+			'/controllers/CalendarEventsListController.class.php',
+			'/controllers/CalendarFormController.class.php',
+			'/controllers/CalendarManageEventsController.class.php',
 			'/phpboost/CalendarComments.class.php',
 			'/phpboost/CalendarCurrentMonthEventsCache.class.php',
 			'/phpboost/CalendarNewContent.class.php',
@@ -27,9 +34,13 @@ class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 			'/phpboost/CalendarHomePageExtensionPoint.class.php',
 			'/services/CalendarCategoriesCache.class.php',
 			'/services/CalendarAuthorizationsService.class.php',
+			'/services/CalendarEvent.class.php',
+			'/services/CalendarEventContent.class.php',
+			'/templates/CalendarDisplayEventController.tpl',
+			'/templates/CalendarDisplaySeveralEventsController.tpl',
 			'/util/AdminCalendarDisplayResponse.class.php'
 		);
-		
+
 		$this->database_columns_to_add = array(
 			array(
 				'table_name' => PREFIX . 'calendar_events_content',

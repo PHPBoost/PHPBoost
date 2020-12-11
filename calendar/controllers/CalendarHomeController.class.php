@@ -8,7 +8,7 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class CalendarDisplayCategoryController extends ModuleController
+class CalendarHomeController extends ModuleController
 {
 	private $lang;
 	private $view;
@@ -29,7 +29,7 @@ class CalendarDisplayCategoryController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'calendar');
-		$this->view = new FileTemplate('calendar/CalendarDisplaySeveralEventsController.tpl');
+		$this->view = new FileTemplate('calendar/CalendarSeveralItemsController.tpl');
 		$this->view->add_lang($this->lang);
 	}
 
