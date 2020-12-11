@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2020 02 12
+ * @version     PHPBoost 6.0 - last update: 2020 12 11
  * @since       PHPBoost 4.0 - 2013 06 03
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ArticlesPrintArticlesController extends AbstractItemController
@@ -61,19 +62,19 @@ class ArticlesPrintArticlesController extends AbstractItemController
 
 		switch ($article->get_publishing_state())
 		{
-			case Article::PUBLISHED:
+			case ArticlesItem::PUBLISHED:
 				if (!CategoriesAuthorizationsService::check_authorizations()->read() || $not_authorized)
 				{
 					$this->display_user_not_authorized_page();
 				}
 			break;
-			case Article::NOT_PUBLISHED:
+			case ArticlesItem::NOT_PUBLISHED:
 				if ($not_authorized)
 				{
 					$this->display_user_not_authorized_page();
 				}
 			break;
-			case Article::DEFERRED_PUBLICATION:
+			case ArticlesItem::DEFERRED_PUBLICATION:
 				if (!$article->is_published() && $not_authorized)
 				{
 					$this->display_user_not_authorized_page();
