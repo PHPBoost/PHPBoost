@@ -3,14 +3,15 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 02 11
+ * @version     PHPBoost 6.0 - last update: 2020 12 11
  * @since       PHPBoost 4.0 - 2014 02 21
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class BugtrackerConstraintStatusChanged extends AbstractFormFieldConstraint
 {
 	private $bug_id = 0;
-	private $bug_status = Bug::NEW_BUG;
+	private $bug_status = BugtrackerItem::NEW_BUG;
 	private $error_message;
 
 	public function __construct($bug_id = 0, $bug_status = '', $error_message = '')

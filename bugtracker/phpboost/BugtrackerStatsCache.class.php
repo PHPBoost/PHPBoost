@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 02 11
+ * @version     PHPBoost 6.0 - last update: 2020 12 11
  * @since       PHPBoost 4.0 - 2013 07 11
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class BugtrackerStatsCache implements CacheData
@@ -35,8 +36,8 @@ class BugtrackerStatsCache implements CacheData
 
 		$result = $db_querier->select("SELECT @fixed_in:=fixed_in AS fixed_in,
 		COUNT(*) as bugs_number,
-		(SELECT COUNT(*) FROM " . BugtrackerSetup::$bugtracker_table . " WHERE fixed_in = @fixed_in AND status = '" . Bug::FIXED . "') as fixed_bugs_number,
-		(SELECT COUNT(*) FROM " . BugtrackerSetup::$bugtracker_table . " WHERE fixed_in = @fixed_in AND (status = '" . Bug::IN_PROGRESS . "' OR status = '" . Bug::REOPEN . "')) as in_progress_bugs_number
+		(SELECT COUNT(*) FROM " . BugtrackerSetup::$bugtracker_table . " WHERE fixed_in = @fixed_in AND status = '" . BugtrackerItem::FIXED . "') as fixed_bugs_number,
+		(SELECT COUNT(*) FROM " . BugtrackerSetup::$bugtracker_table . " WHERE fixed_in = @fixed_in AND (status = '" . BugtrackerItem::IN_PROGRESS . "' OR status = '" . BugtrackerItem::REOPEN . "')) as in_progress_bugs_number
 		FROM " . BugtrackerSetup::$bugtracker_table . "
 		GROUP BY fixed_in
 		ORDER BY fixed_in ASC");
@@ -46,8 +47,8 @@ class BugtrackerStatsCache implements CacheData
 			if (!empty($row['fixed_in']) && isset($versions[$row['fixed_in']]))
 				$this->bugs_number_per_version[$row['fixed_in']] = array(
 					'all' => $row['bugs_number'],
-					Bug::FIXED => $row['fixed_bugs_number'],
-					Bug::IN_PROGRESS => $row['in_progress_bugs_number'],
+					BugtrackerItem::FIXED => $row['fixed_bugs_number'],
+					BugtrackerItem::IN_PROGRESS => $row['in_progress_bugs_number'],
 				);
 		}
 		$result->dispose();
@@ -55,7 +56,7 @@ class BugtrackerStatsCache implements CacheData
 		$result = $db_querier->select("SELECT member.*, COUNT(*) as bugs_number
 		FROM " . BugtrackerSetup::$bugtracker_table . " bugtracker
 		JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = bugtracker.author_id
-		WHERE status <> '" . Bug::REJECTED . "'
+		WHERE status <> '" . BugtrackerItem::REJECTED . "'
 		GROUP BY author_id
 		ORDER BY bugs_number DESC
 		LIMIT " . $config->get_stats_top_posters_number());

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 10 18
+ * @version     PHPBoost 6.0 - last update: 2020 12 11
  * @since       PHPBoost 3.0 - 2012 10 18
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -122,21 +122,21 @@ class AdminBugtrackerConfigController extends AdminModuleController
 				'class' => 'custom-checkbox',
 				'events' => array('click' => '
 					if (HTMLForms.getField("progress_bar_displayed").getValue()) {
-						HTMLForms.getField("' . Bug::NEW_BUG . '").enable();
-						HTMLForms.getField("' . Bug::PENDING . '").enable();
-						HTMLForms.getField("' . Bug::ASSIGNED . '").enable();
-						HTMLForms.getField("' . Bug::IN_PROGRESS . '").enable();
-						HTMLForms.getField("' . Bug::REJECTED . '").enable();
-						HTMLForms.getField("' . Bug::REOPEN . '").enable();
-						HTMLForms.getField("' . Bug::FIXED . '").enable();
+						HTMLForms.getField("' . BugtrackerItem::NEW_BUG . '").enable();
+						HTMLForms.getField("' . BugtrackerItem::PENDING . '").enable();
+						HTMLForms.getField("' . BugtrackerItem::ASSIGNED . '").enable();
+						HTMLForms.getField("' . BugtrackerItem::IN_PROGRESS . '").enable();
+						HTMLForms.getField("' . BugtrackerItem::REJECTED . '").enable();
+						HTMLForms.getField("' . BugtrackerItem::REOPEN . '").enable();
+						HTMLForms.getField("' . BugtrackerItem::FIXED . '").enable();
 					} else {
-						HTMLForms.getField("' . Bug::NEW_BUG . '").disable();
-						HTMLForms.getField("' . Bug::PENDING . '").disable();
-						HTMLForms.getField("' . Bug::ASSIGNED . '").disable();
-						HTMLForms.getField("' . Bug::IN_PROGRESS . '").disable();
-						HTMLForms.getField("' . Bug::REJECTED . '").disable();
-						HTMLForms.getField("' . Bug::REOPEN . '").disable();
-						HTMLForms.getField("' . Bug::FIXED . '").disable();
+						HTMLForms.getField("' . BugtrackerItem::NEW_BUG . '").disable();
+						HTMLForms.getField("' . BugtrackerItem::PENDING . '").disable();
+						HTMLForms.getField("' . BugtrackerItem::ASSIGNED . '").disable();
+						HTMLForms.getField("' . BugtrackerItem::IN_PROGRESS . '").disable();
+						HTMLForms.getField("' . BugtrackerItem::REJECTED . '").disable();
+						HTMLForms.getField("' . BugtrackerItem::REOPEN . '").disable();
+						HTMLForms.getField("' . BugtrackerItem::FIXED . '").disable();
 					}'
 				)
 			)

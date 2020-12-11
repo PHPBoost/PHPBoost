@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 07 25
+ * @version     PHPBoost 6.0 - last update: 2020 12 11
  * @since       PHPBoost 4.1 - 2014 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class BugtrackerChangeBugStatusController extends ModuleController
@@ -93,10 +94,10 @@ class BugtrackerChangeBugStatusController extends ModuleController
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('status', $this->lang['labels.fields.status'], $this->bug->get_status(), $this->generate_status_list_select(),
 			array('events' => array('change' => ($versions_number ? '
-			if (HTMLForms.getField("status").getValue() == "' . Bug::FIXED . '" || HTMLForms.getField("status").getValue() == "' . Bug::IN_PROGRESS . '") {
+			if (HTMLForms.getField("status").getValue() == "' . BugtrackerItem::FIXED . '" || HTMLForms.getField("status").getValue() == "' . BugtrackerItem::IN_PROGRESS . '") {
 				HTMLForms.getField("fixed_in").enable();
 				HTMLForms.getField("assigned_to").disable();
-			} else ' : '') . 'if (HTMLForms.getField("status").getValue() == "' . Bug::ASSIGNED . '") {
+			} else ' : '') . 'if (HTMLForms.getField("status").getValue() == "' . BugtrackerItem::ASSIGNED . '") {
 				HTMLForms.getField("assigned_to").enable();
 				' . ($versions_number ? 'HTMLForms.getField("fixed_in").disable();
 				' : '') . '} else {
@@ -143,13 +144,13 @@ class BugtrackerChangeBugStatusController extends ModuleController
 	private function generate_status_list_select()
 	{
 		$options = array();
-		$options[] = new FormFieldSelectChoiceOption($this->lang['status.new'], Bug::NEW_BUG);
-		$options[] = new FormFieldSelectChoiceOption($this->lang['status.pending'], Bug::PENDING);
-		$options[] = new FormFieldSelectChoiceOption($this->lang['status.assigned'], Bug::ASSIGNED);
-		$options[] = new FormFieldSelectChoiceOption($this->lang['status.in_progress'], Bug::IN_PROGRESS);
-		$options[] = new FormFieldSelectChoiceOption($this->lang['status.rejected'], Bug::REJECTED);
-		$options[] = new FormFieldSelectChoiceOption($this->lang['status.reopen'], Bug::REOPEN);
-		$options[] = new FormFieldSelectChoiceOption($this->lang['status.fixed'], Bug::FIXED);
+		$options[] = new FormFieldSelectChoiceOption($this->lang['status.new'], BugtrackerItem::NEW_BUG);
+		$options[] = new FormFieldSelectChoiceOption($this->lang['status.pending'], BugtrackerItem::PENDING);
+		$options[] = new FormFieldSelectChoiceOption($this->lang['status.assigned'], BugtrackerItem::ASSIGNED);
+		$options[] = new FormFieldSelectChoiceOption($this->lang['status.in_progress'], BugtrackerItem::IN_PROGRESS);
+		$options[] = new FormFieldSelectChoiceOption($this->lang['status.rejected'], BugtrackerItem::REJECTED);
+		$options[] = new FormFieldSelectChoiceOption($this->lang['status.reopen'], BugtrackerItem::REOPEN);
+		$options[] = new FormFieldSelectChoiceOption($this->lang['status.fixed'], BugtrackerItem::FIXED);
 
 		return $options;
 	}
@@ -184,7 +185,7 @@ class BugtrackerChangeBugStatusController extends ModuleController
 					$this->bug->set_fixed_in($fixed_in);
 				}
 			}
-			else if (in_array($status, array(Bug::NEW_BUG, Bug::REJECTED)))
+			else if (in_array($status, array(BugtrackerItem::NEW_BUG, BugtrackerItem::REJECTED)))
 				$this->bug->set_fixed_in(0);
 		}
 
@@ -253,22 +254,22 @@ class BugtrackerChangeBugStatusController extends ModuleController
 
 		switch ($status)
 		{
-			case Bug::IN_PROGRESS:
+			case BugtrackerItem::IN_PROGRESS:
 				$is_pm_enabled = $this->config->are_pm_in_progress_enabled();
 				break;
-			case Bug::PENDING:
+			case BugtrackerItem::PENDING:
 				$is_pm_enabled = $this->config->are_pm_pending_enabled();
 				break;
-			case Bug::ASSIGNED:
+			case BugtrackerItem::ASSIGNED:
 				$is_pm_enabled = $this->config->are_pm_assign_enabled();
 				break;
-			case Bug::FIXED:
+			case BugtrackerItem::FIXED:
 				$is_pm_enabled = $this->config->are_pm_fix_enabled();
 				break;
-			case Bug::REOPEN:
+			case BugtrackerItem::REOPEN:
 				$is_pm_enabled = $this->config->are_pm_reopen_enabled();
 				break;
-			case Bug::REJECTED:
+			case BugtrackerItem::REJECTED:
 				$is_pm_enabled = $this->config->are_pm_reject_enabled();
 				break;
 			default :
@@ -298,7 +299,7 @@ class BugtrackerChangeBugStatusController extends ModuleController
 		if (!$this->bug->is_new() && $this->config->are_pm_enabled() && $is_pm_enabled && $send_pm)
 			BugtrackerPMService::send_PM_to_updaters($status, $this->bug->get_id(), $comment, $pm_recipients_list);
 
-		if (in_array($status, array(Bug::NEW_BUG, Bug::REOPEN, Bug::REJECTED, Bug::FIXED)) && $this->config->are_admin_alerts_enabled() && in_array($this->bug->get_severity(), $this->config->get_admin_alerts_levels()))
+		if (in_array($status, array(BugtrackerItem::NEW_BUG, BugtrackerItem::REOPEN, BugtrackerItem::REJECTED, BugtrackerItem::FIXED)) && $this->config->are_admin_alerts_enabled() && in_array($this->bug->get_severity(), $this->config->get_admin_alerts_levels()))
 		{
 			$alerts = AdministratorAlertService::find_by_criteria($this->bug->get_id(), 'bugtracker');
 			if (!empty($alerts))

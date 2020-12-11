@@ -3,8 +3,8 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 02 11
- * @since       PHPBoost 3.0 - 2012 04 16
+ * @version     PHPBoost 6.0 - last update: 2020 12 11
+ * @since       PHPBoost 3.0 - 2012 04 16Bug
 */
 
 class BugtrackerSetup extends DefaultModuleSetup
@@ -121,7 +121,7 @@ class BugtrackerSetup extends DefaultModuleSetup
 			'author_id' => 1,
 			'submit_date' => time(),
 			'fix_date' => 0,
-			'status' => Bug::NEW_BUG,
+			'status' => BugtrackerItem::NEW_BUG,
 			'severity' => 1,
 			'priority' => 3,
 			'type' => 1,
@@ -140,7 +140,7 @@ class BugtrackerSetup extends DefaultModuleSetup
 			'author_id' => 1,
 			'submit_date' => time() - 1000,
 			'fix_date' => time(),
-			'status' => Bug::FIXED,
+			'status' => BugtrackerItem::FIXED,
 			'severity' => 2,
 			'priority' => 4,
 			'type' => 1,
@@ -159,7 +159,7 @@ class BugtrackerSetup extends DefaultModuleSetup
 			'author_id' => 1,
 			'submit_date' => time(),
 			'fix_date' => 0,
-			'status' => Bug::REOPEN,
+			'status' => BugtrackerItem::REOPEN,
 			'severity' => 3,
 			'priority' => 5,
 			'type' => 1,

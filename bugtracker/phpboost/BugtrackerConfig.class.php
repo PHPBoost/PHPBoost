@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 05
+ * @version     PHPBoost 6.0 - last update: 2020 12 11
  * @since       PHPBoost 3.0 - 2012 09 06
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class BugtrackerConfig extends AbstractConfigData
@@ -848,7 +849,7 @@ class BugtrackerConfig extends AbstractConfigData
 			self::DISPLAY_PRIORITY_COLUMN => false,
 			self::DISPLAY_DETECTED_IN_COLUMN => false,
 			self::AUTHORIZATIONS => array('r0' => 3, 'r1' => 15),
-			self::STATUS_LIST => array(Bug::NEW_BUG => 0, Bug::PENDING => 0, Bug::ASSIGNED => 20, Bug::IN_PROGRESS => 50, Bug::REJECTED => 0, Bug::REOPEN => 30, Bug::FIXED => 100)
+			self::STATUS_LIST => array(BugtrackerItem::NEW_BUG => 0, BugtrackerItem::PENDING => 0, BugtrackerItem::ASSIGNED => 20, BugtrackerItem::IN_PROGRESS => 50, BugtrackerItem::REJECTED => 0, BugtrackerItem::REOPEN => 30, BugtrackerItem::FIXED => 100)
 		);
 	}
 

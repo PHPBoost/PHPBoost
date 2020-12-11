@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 05
+ * @version     PHPBoost 6.0 - last update: 2020 12 11
  * @since       PHPBoost 3.0 - 2012 11 13
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class BugtrackerSolvedListController extends ModuleController
@@ -77,14 +78,14 @@ class BugtrackerSolvedListController extends ModuleController
 		}
 
 		$stats_cache = BugtrackerStatsCache::load();
-		$bugs_number = BugtrackerService::count("WHERE (status = '" . Bug::FIXED . "' OR status = '" . Bug::REJECTED . "')" . $select_filters);
+		$bugs_number = BugtrackerService::count("WHERE (status = '" . BugtrackerItem::FIXED . "' OR status = '" . BugtrackerItem::REJECTED . "')" . $select_filters);
 
 		$pagination = $this->get_pagination($bugs_number, $current_page, $field, $sort, $filter, $filter_id);
 
 		$result = PersistenceContext::get_querier()->select("SELECT b.*, member.*
 		FROM " . BugtrackerSetup::$bugtracker_table . " b
 		LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = b.author_id
-		WHERE (status = '" . Bug::FIXED . "' OR status = '" . Bug::REJECTED . "')" .
+		WHERE (status = '" . BugtrackerItem::FIXED . "' OR status = '" . BugtrackerItem::REJECTED . "')" .
 		($config->is_restrict_display_to_own_elements_enabled() && !BugtrackerAuthorizationsService::check_authorizations()->moderation() ? "AND b.author_id = :user_id " : "") .
 		$select_filters . "
 		ORDER BY " . $field_bdd . " " . $mode . "
@@ -100,7 +101,7 @@ class BugtrackerSolvedListController extends ModuleController
 
 		while ($row = $result->fetch())
 		{
-			$bug = new Bug();
+			$bug = new BugtrackerItem();
 			$bug->set_properties($row);
 
 			if (!in_array($bug->get_status(), $displayed_status)) $displayed_status[] = $bug->get_status();

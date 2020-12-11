@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 02 11
+ * @version     PHPBoost 6.0 - last update: 2020 12 11
  * @since       PHPBoost 3.0 - 2012 10 19
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class BugtrackerService
@@ -38,7 +39,7 @@ class BugtrackerService
 	 * @desc Create a new bug.
 	 * @param string[] $bug new Bug
 	 */
-	public static function add(Bug $bug)
+	public static function add(BugtrackerItem $bug)
 	{
 		$result = self::$db_querier->insert(BugtrackerSetup::$bugtracker_table, $bug->get_properties());
 
@@ -91,7 +92,7 @@ class BugtrackerService
 	 * @desc Update a bug.
 	 * @param string[] $bug Bug to update
 	 */
-	public static function update(Bug $bug)
+	public static function update(BugtrackerItem $bug)
 	{
 		self::$db_querier->update(BugtrackerSetup::$bugtracker_table, $bug->get_properties(), 'WHERE id=:id', array('id' => $bug->get_id()));
 	}
@@ -138,7 +139,7 @@ class BugtrackerService
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' author ON author.user_id = bugtracker.author_id
 		' . $condition, $parameters);
 
-		$bug = new Bug();
+		$bug = new BugtrackerItem();
 		$bug->set_properties($row);
 		return $bug;
 	}

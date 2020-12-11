@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 02 11
+ * @version     PHPBoost 6.0 - last update: 2020 12 11
  * @since       PHPBoost 4.0 - 2014 01 21
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class BugtrackerFeedProvider implements FeedProvider
@@ -52,12 +53,12 @@ class BugtrackerFeedProvider implements FeedProvider
 		$results = $querier->select("SELECT bugtracker.*, author.*
 		FROM " . BugtrackerSetup::$bugtracker_table . " bugtracker
 		LEFT JOIN " . DB_TABLE_MEMBER . " author ON author.user_id = bugtracker.author_id
-		WHERE " . ($idcat == 1 ? "(status = '" . Bug::FIXED . "' OR status = '" . Bug::REJECTED . "')" : "status <> '" . Bug::FIXED . "' AND status <> '" . Bug::REJECTED . "'") . "
+		WHERE " . ($idcat == 1 ? "(status = '" . BugtrackerItem::FIXED . "' OR status = '" . BugtrackerItem::REJECTED . "')" : "status <> '" . BugtrackerItem::FIXED . "' AND status <> '" . BugtrackerItem::REJECTED . "'") . "
 		ORDER BY " . ($idcat == 1 ? "fix_date" : "submit_date") . " DESC");
 
 		foreach ($results as $row)
 		{
-			$bug = new Bug();
+			$bug = new BugtrackerItem();
 			$bug->set_properties($row);
 
 			$link = BugtrackerUrlBuilder::detail($bug->get_id() . '-' . $bug->get_rewrited_title());

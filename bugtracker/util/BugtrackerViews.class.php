@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2017 03 15
+ * @version     PHPBoost 6.0 - last update: 2020 12 11
  * @since       PHPBoost 3.0 - 2013 04 29
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class BugtrackerViews
@@ -343,7 +344,7 @@ class BugtrackerViews
 		$array_status[] = new FormFieldSelectChoiceOption(' ', '');
 		foreach ($status_list as $status => $progress)
 		{
-			if (($current_page == 'unsolved' && !in_array($status, array(Bug::FIXED, Bug::REJECTED))) || ($current_page == 'solved' && in_array($status, array(Bug::FIXED, Bug::REJECTED))))
+			if (($current_page == 'unsolved' && !in_array($status, array(BugtrackerItem::FIXED, BugtrackerItem::REJECTED))) || ($current_page == 'solved' && in_array($status, array(BugtrackerItem::FIXED, BugtrackerItem::REJECTED))))
 				$array_status[] = new FormFieldSelectChoiceOption($lang['status.' . $status], $status);
 		}
 		return $array_status;

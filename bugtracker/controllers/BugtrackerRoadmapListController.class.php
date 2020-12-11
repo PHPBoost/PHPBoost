@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 05
+ * @version     PHPBoost 6.0 - last update: 2020 12 11
  * @since       PHPBoost 3.0 - 2012 11 13
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class BugtrackerRoadmapListController extends ModuleController
@@ -64,7 +65,7 @@ class BugtrackerRoadmapListController extends ModuleController
 			$roadmap_version_name = $request->get_value('version', '');
 			$roadmap_status = $request->get_value('status', 'all');
 
-			if ($roadmap_status !== 'all' && $roadmap_status !== Bug::FIXED && $roadmap_status !== Bug::IN_PROGRESS)
+			if ($roadmap_status !== 'all' && $roadmap_status !== BugtrackerItem::FIXED && $roadmap_status !== BugtrackerItem::IN_PROGRESS)
 			{
 				$error_controller = PHPBoostErrors::unexisting_page();
 				DispatchManager::redirect($error_controller);
@@ -115,7 +116,7 @@ class BugtrackerRoadmapListController extends ModuleController
 			FROM " . BugtrackerSetup::$bugtracker_table . " b
 			LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = b.author_id
 			WHERE fixed_in = " . $roadmap_version . "
-			" . ($roadmap_status != 'all' ? ($roadmap_status == Bug::IN_PROGRESS ? "AND (b.status = '" . Bug::IN_PROGRESS . "' OR b.status = '" . Bug::REOPEN . "')" : "AND b.status = '" . Bug::FIXED . "'") : "") . "
+			" . ($roadmap_status != 'all' ? ($roadmap_status == BugtrackerItem::IN_PROGRESS ? "AND (b.status = '" . BugtrackerItem::IN_PROGRESS . "' OR b.status = '" . BugtrackerItem::REOPEN . "')" : "AND b.status = '" . BugtrackerItem::FIXED . "'") : "") . "
 			ORDER BY " . $field_bdd . " " . $mode . "
 			LIMIT :number_items_per_page OFFSET :display_from",
 				array(
@@ -128,7 +129,7 @@ class BugtrackerRoadmapListController extends ModuleController
 
 			while ($row = $result->fetch())
 			{
-				$bug = new Bug();
+				$bug = new BugtrackerItem();
 				$bug->set_properties($row);
 
 				if (!in_array($bug->get_severity(), $displayed_severities)) $displayed_severities[] = $bug->get_severity();
@@ -149,7 +150,7 @@ class BugtrackerRoadmapListController extends ModuleController
 			$this->view->put_all(array(
 				'C_VERSIONS_AVAILABLE'			=> true,
 				'C_BUGS'						=> $bugs_number[$roadmap_status],
-				'C_STATUS_IN_PROGRESS'			=> $roadmap_status == Bug::IN_PROGRESS,
+				'C_STATUS_IN_PROGRESS'			=> $roadmap_status == BugtrackerItem::IN_PROGRESS,
 				'C_DISPLAY_TYPE_COLUMN'			=> $this->config->is_type_column_displayed(),
 				'C_DISPLAY_CATEGORY_COLUMN'		=> $this->config->is_category_column_displayed(),
 				'C_DISPLAY_PRIORITY_COLUMN'		=> $this->config->is_priority_column_displayed(),
@@ -197,7 +198,7 @@ class BugtrackerRoadmapListController extends ModuleController
 
 		$fieldset->add_field(new FormFieldHTML('informations_date', !empty($release_date) ? $this->lang['labels.fields.version_release_date'] . ': ' . $release_date->format(Date::FORMAT_DAY_MONTH_YEAR) : ''));
 
-		$fieldset->add_field(new FormFieldHTML('informations_fixed_number', ($requested_status == Bug::IN_PROGRESS ? $this->lang['labels.number_in_progress'] : $this->lang['labels.number_fixed']) . ': ' . $nbr_bugs));
+		$fieldset->add_field(new FormFieldHTML('informations_fixed_number', ($requested_status == BugtrackerItem::IN_PROGRESS ? $this->lang['labels.number_in_progress'] : $this->lang['labels.number_fixed']) . ': ' . $nbr_bugs));
 
 		return $form;
 	}
@@ -217,9 +218,9 @@ class BugtrackerRoadmapListController extends ModuleController
 
 	private function build_select_status()
 	{
-		$array_status[] = new FormFieldSelectChoiceOption($this->lang['status.' . Bug::FIXED] . ' / ' . $this->lang['status.' . Bug::IN_PROGRESS], 'all');
-		$array_status[] = new FormFieldSelectChoiceOption($this->lang['status.' . Bug::FIXED], Bug::FIXED);
-		$array_status[] = new FormFieldSelectChoiceOption($this->lang['status.' . Bug::IN_PROGRESS], Bug::IN_PROGRESS);
+		$array_status[] = new FormFieldSelectChoiceOption($this->lang['status.' . BugtrackerItem::FIXED] . ' / ' . $this->lang['status.' . BugtrackerItem::IN_PROGRESS], 'all');
+		$array_status[] = new FormFieldSelectChoiceOption($this->lang['status.' . BugtrackerItem::FIXED], BugtrackerItem::FIXED);
+		$array_status[] = new FormFieldSelectChoiceOption($this->lang['status.' . BugtrackerItem::IN_PROGRESS], BugtrackerItem::IN_PROGRESS);
 
 		return $array_status;
 	}
