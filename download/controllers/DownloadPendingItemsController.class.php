@@ -10,7 +10,7 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class DownloadMemberItemsController extends ModuleController
+class DownloadPendingItemsController extends ModuleController
 {
 	private $view;
 	private $lang;
@@ -45,8 +45,8 @@ class DownloadMemberItemsController extends ModuleController
 		$field = $request->get_getstring('field', DownloadFile::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
 
 		$condition = 'WHERE id_category IN :authorized_categories
-		AND author_user_id = :user_id
-		AND (approbation_type = 1 OR (approbation_type = 2 AND (start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now))))';
+		' . (!DownloadAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
+		AND (approbation_type = 0 OR (approbation_type = 2 AND (start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now))))';
 		$parameters = array(
 			'user_id' => AppContext::get_current_user()->get_id(),
 			'authorized_categories' => $authorized_categories,
@@ -78,7 +78,7 @@ class DownloadMemberItemsController extends ModuleController
 		)));
 
 		$this->view->put_all(array(
-			'C_MEMBER_ITEMS' => true,
+			'C_PENDING' => true,
 			'C_ITEMS' => $result->get_rows_count() > 0,
 			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
 			'C_GRID_VIEW' => $this->config->get_display_type() == DownloadConfig::GRID_VIEW,
@@ -199,13 +199,13 @@ class DownloadMemberItemsController extends ModuleController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['my.items'], $this->lang['module.title'], $page);
-		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['download.seo.description.member'], array('author' => AppContext::get_current_user()->get_display_name())), $page);
+		$graphical_environment->set_page_title($this->lang['download.pending.items'], $this->lang['module.title'], $page);
+		$graphical_environment->get_seo_meta_data()->set_description($this->lang['download.seo.description.pending'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::display_pending($sort_field, $sort_mode, $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], DownloadUrlBuilder::home());
-		$breadcrumb->add($this->lang['my.items'], DownloadUrlBuilder::display_pending($sort_field, $sort_mode, $page));
+		$breadcrumb->add($this->lang['download.pending.items'], DownloadUrlBuilder::display_pending($sort_field, $sort_mode, $page));
 
 		return $response;
 	}

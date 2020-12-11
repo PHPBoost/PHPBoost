@@ -62,7 +62,7 @@ class DownloadFile
 		self::SORT_NOTATION => 'notes',
 		self::SORT_NUMBER_COMMENTS => 'comments'
 	);
-	
+
 	const THUMBNAIL_URL = '/templates/__default__/images/default_item_thumbnail.png';
 
 	const ASC  = 'ASC';
@@ -300,7 +300,7 @@ class DownloadFile
 	{
 		return $this->views_number;
 	}
-	
+
 	public function get_thumbnail()
 	{
 		if (!$this->thumbnail_url instanceof Url)

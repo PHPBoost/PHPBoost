@@ -12,7 +12,7 @@ define('PATH_TO_ROOT', '..');
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
-	//Config
+	// Configuration
 	new UrlControllerMapper('AdminDownloadConfigController', '`^/admin(?:/config)?/?$`'),
 
 	//Categories
@@ -21,22 +21,22 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('DefaultCategoriesFormController', '`^/categories/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('DefaultDeleteCategoryController', '`^/categories/([0-9]+)/delete/?$`', array('id')),
 
-	//Management
-	new UrlControllerMapper('DownloadManageController', '`^/manage/?$`'),
-	new UrlControllerMapper('DownloadFormController', '`^/add/?([0-9]+)?/?$`', array('id_category')),
-	new UrlControllerMapper('DownloadFormController', '`^/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('DownloadDeleteController', '`^/([0-9]+)/delete/?$`', array('id')),
-	new UrlControllerMapper('DownloadDisplayDownloadFileController', '`^/([0-9]+)-([a-z0-9-_]+)/([0-9]+)-([a-z0-9-_]+)?/?$`', array('id_category', 'rewrited_name_category', 'id', 'rewrited_name')),
+	// Items Management
+	new UrlControllerMapper('DownloadItemsManagerController', '`^/manage/?$`'),
+	new UrlControllerMapper('DownloadItemFormController', '`^/add/?([0-9]+)?/?$`', array('id_category')),
+	new UrlControllerMapper('DownloadItemFormController', '`^/([0-9]+)/edit/?$`', array('id')),
+	new UrlControllerMapper('DownloadDeleteItemController', '`^/([0-9]+)/delete/?$`', array('id')),
+	new UrlControllerMapper('DownloadItemController', '`^/([0-9]+)-([a-z0-9-_]+)/([0-9]+)-([a-z0-9-_]+)?/?$`', array('id_category', 'rewrited_name_category', 'id', 'rewrited_name')),
 
-	//Keywords
-	new UrlControllerMapper('DownloadDisplayDownloadFileTagController', '`^/tag/([a-z0-9-_]+)?/?([a-z_]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('tag', 'field', 'sort', 'page')),
+	// Keywords
+	new UrlControllerMapper('DownloadTagController', '`^/tag/([a-z0-9-_]+)?/?([a-z_]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('tag', 'field', 'sort', 'page')),
 
-	new UrlControllerMapper('DownloadDisplayPendingDownloadFilesController', '`^/pending(?:/([a-z_]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
+	new UrlControllerMapper('DownloadPendingItemsController', '`^/pending(?:/([a-z_]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
 	new UrlControllerMapper('DownloadMemberItemsController', '`^/my_items(?:/([a-z_]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
 
 	new UrlControllerMapper('DownloadFileController', '`^/file/([0-9]+)/?$`', array('id')),
 	new UrlControllerMapper('DownloadDeadLinkController', '`^/dead_link/([0-9]+)/?$`', array('id')),
-	new UrlControllerMapper('DownloadDisplayCategoryController', '`^(?:/([0-9]+)-([a-z0-9-_]+))?/?([a-z_]+)?/?([a-z]+)?/?([0-9]+)?/?([0-9]+)?/?$`', array('id_category', 'rewrited_name', 'field', 'sort', 'page', 'subcategories_page'))
+	new UrlControllerMapper('DownloadCategoryController', '`^(?:/([0-9]+)-([a-z0-9-_]+))?/?([a-z_]+)?/?([a-z]+)?/?([0-9]+)?/?([0-9]+)?/?$`', array('id_category', 'rewrited_name', 'field', 'sort', 'page', 'subcategories_page'))
 );
 DispatchManager::dispatch($url_controller_mappers);
 ?>

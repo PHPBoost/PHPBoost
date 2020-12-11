@@ -10,11 +10,16 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class DownloadMemberItemsController extends ModuleController
+class DownloadDisplayDownloadFileTagController extends ModuleController
 {
 	private $view;
 	private $lang;
+
+	private $keyword;
+
 	private $config;
+	private $comments_config;
+	private $content_management_config;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -33,22 +38,23 @@ class DownloadMemberItemsController extends ModuleController
 		$this->view = new FileTemplate('download/DownloadSeveralItemsController.tpl');
 		$this->view->add_lang($this->lang);
 		$this->config = DownloadConfig::load();
+		$this->comments_config = CommentsConfig::load();
+		$this->content_management_config = ContentManagementConfig::load();
 	}
 
 	public function build_view(HTTPRequestCustom $request)
 	{
 		$now = new Date();
-		$comments_config = CommentsConfig::load();
-		$content_management_config = ContentManagementConfig::load();
+
 		$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $this->config->is_summary_displayed_to_guests());
 		$mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
 		$field = $request->get_getstring('field', DownloadFile::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
 
-		$condition = 'WHERE id_category IN :authorized_categories
-		AND author_user_id = :user_id
-		AND (approbation_type = 1 OR (approbation_type = 2 AND (start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now))))';
+		$condition = 'WHERE relation.id_keyword = :id_keyword
+		AND id_category IN :authorized_categories
+		AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))';
 		$parameters = array(
-			'user_id' => AppContext::get_current_user()->get_id(),
+			'id_keyword' => $this->get_keyword()->get_id(),
 			'authorized_categories' => $authorized_categories,
 			'timestamp_now' => $now->get_timestamp()
 		);
@@ -59,26 +65,27 @@ class DownloadMemberItemsController extends ModuleController
 		$sort_mode = TextHelper::strtoupper($mode);
 		$sort_mode = (in_array($sort_mode, array(DownloadFile::ASC, DownloadFile::DESC)) ? $sort_mode : $this->config->get_items_default_sort_mode());
 
-		if (in_array($field, array(DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_ALPHABETIC], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_AUTHOR], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_DATE])))
+		if (in_array($field, DownloadFile::SORT_FIELDS_URL_VALUES))
 			$sort_field = array_search($field, DownloadFile::SORT_FIELDS_URL_VALUES);
 		else
-			$sort_field = DownloadFile::SORT_DATE;
+			$sort_field = $this->config->get_items_default_sort_field();
 
 		$result = PersistenceContext::get_querier()->select('SELECT download.*, member.*, com.number_comments, notes.average_notes, notes.number_notes, note.note
-		FROM '. DownloadSetup::$download_table .' download
-		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = download.author_user_id
+		FROM ' . DownloadSetup::$download_table . ' download
+		LEFT JOIN ' . DB_TABLE_KEYWORDS_RELATIONS . ' relation ON relation.module_id = \'download\' AND relation.id_in_module = download.id
+		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = download.author_user_id
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = download.id AND com.module_id = \'download\'
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = download.id AND notes.module_name = \'download\'
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = download.id AND note.module_name = \'download\' AND note.user_id = :user_id
 		' . $condition . '
 		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
 		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
+			'user_id' => AppContext::get_current_user()->get_id(),
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
 		)));
 
 		$this->view->put_all(array(
-			'C_MEMBER_ITEMS' => true,
 			'C_ITEMS' => $result->get_rows_count() > 0,
 			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
 			'C_GRID_VIEW' => $this->config->get_display_type() == DownloadConfig::GRID_VIEW,
@@ -88,12 +95,13 @@ class DownloadMemberItemsController extends ModuleController
 			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
 			'CATEGORIES_PER_ROW' => $this->config->get_categories_per_row(),
 			'ITEMS_PER_ROW' => $this->config->get_items_per_row(),
-			'C_ENABLED_COMMENTS' => $comments_config->module_comments_is_enabled('download'),
-			'C_ENABLED_NOTATION' => $content_management_config->module_notation_is_enabled('download'),
+			'C_ENABLED_COMMENTS' => $this->comments_config->module_comments_is_enabled('download'),
+			'C_ENABLED_NOTATION' => $this->content_management_config->module_notation_is_enabled('download'),
 			'C_AUTHOR_DISPLAYED' => $this->config->is_author_displayed(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
-			'TABLE_COLSPAN' => 4 + (int)$comments_config->module_comments_is_enabled('download') + (int)$content_management_config->module_notation_is_enabled('download')
+			'TABLE_COLSPAN' => 4 + (int)$this->comments_config->module_comments_is_enabled('download') + (int)$this->content_management_config->module_notation_is_enabled('download'),
+			'CATEGORY_NAME' => $this->get_keyword()->get_name()
 		));
 
 		while ($row = $result->fetch())
@@ -130,13 +138,23 @@ class DownloadMemberItemsController extends ModuleController
 		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $common_lang['sort_by']));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field,
-			array(
-				new FormFieldSelectChoiceOption($common_lang['form.date.creation'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_DATE]),
-				new FormFieldSelectChoiceOption($common_lang['form.name'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_ALPHABETIC]),
-				new FormFieldSelectChoiceOption($common_lang['author'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_AUTHOR])
-			),
-			array('events' => array('change' => 'document.location = "'. DownloadUrlBuilder::display_pending()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+		$sort_options = array(
+			new FormFieldSelectChoiceOption($common_lang['form.date.update'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_UPDATED_DATE]),
+			new FormFieldSelectChoiceOption($common_lang['form.date.creation'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_DATE]),
+			new FormFieldSelectChoiceOption($common_lang['form.name'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_ALPHABETIC]),
+			new FormFieldSelectChoiceOption($common_lang['author'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_AUTHOR]),
+			new FormFieldSelectChoiceOption($this->lang['downloads.number'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_DOWNLOADS_NUMBER]),
+			new FormFieldSelectChoiceOption($common_lang['sort_by.views.number'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_VIEWS_NUMBERS])
+		);
+
+		if ($this->comments_config->module_comments_is_enabled('download'))
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.comments.number'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_NUMBER_COMMENTS]);
+
+		if ($this->content_management_config->module_notation_is_enabled('download'))
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best.note'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_NOTATION]);
+
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_options,
+			array('events' => array('change' => 'document.location = "'. DownloadUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
@@ -144,18 +162,44 @@ class DownloadMemberItemsController extends ModuleController
 				new FormFieldSelectChoiceOption($common_lang['sort.asc'], 'asc'),
 				new FormFieldSelectChoiceOption($common_lang['sort.desc'], 'desc')
 			),
-			array('events' => array('change' => 'document.location = "' . DownloadUrlBuilder::display_pending()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			array('events' => array('change' => 'document.location = "' . DownloadUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 
 		$this->view->put('SORT_FORM', $form->display());
 	}
 
+	private function get_keyword()
+	{
+		if ($this->keyword === null)
+		{
+			$rewrited_name = AppContext::get_request()->get_getstring('tag', '');
+			if (!empty($rewrited_name))
+			{
+				try {
+					$this->keyword = KeywordsService::get_keywords_manager()->get_keyword('WHERE rewrited_name=:rewrited_name', array('rewrited_name' => $rewrited_name));
+				} catch (RowNotFoundException $e) {
+					$error_controller = PHPBoostErrors::unexisting_page();
+   					DispatchManager::redirect($error_controller);
+				}
+			}
+			else
+			{
+				$error_controller = PHPBoostErrors::unexisting_page();
+   				DispatchManager::redirect($error_controller);
+			}
+		}
+		return $this->keyword;
+	}
+
 	private function get_pagination($condition, $parameters, $field, $mode, $page)
 	{
-		$items_number = DownloadService::count($condition, $parameters);
+		$result = PersistenceContext::get_querier()->select_single_row_query('SELECT COUNT(*) AS items_number
+		FROM '. DownloadSetup::$download_table .' download
+		LEFT JOIN '. DB_TABLE_KEYWORDS_RELATIONS .' relation ON relation.module_id = \'download\' AND relation.id_in_module = download.id
+		' . $condition, $parameters);
 
-		$pagination = new ModulePagination($page, $items_number, (int)DownloadConfig::load()->get_items_per_page());
-		$pagination->set_url(DownloadUrlBuilder::display_pending($field, $mode, '%d'));
+		$pagination = new ModulePagination($page, $result['items_number'], (int)DownloadConfig::load()->get_items_per_page());
+		$pagination->set_url(DownloadUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $field, $mode, '%d'));
 
 		if ($pagination->current_page_is_empty() && $page > 1)
 		{
@@ -184,7 +228,7 @@ class DownloadMemberItemsController extends ModuleController
 
 	private function check_authorizations()
 	{
-		if (!(DownloadAuthorizationsService::check_authorizations()->write() || DownloadAuthorizationsService::check_authorizations()->contribution() || DownloadAuthorizationsService::check_authorizations()->moderation()))
+		if (!DownloadAuthorizationsService::check_authorizations()->read())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
@@ -199,13 +243,13 @@ class DownloadMemberItemsController extends ModuleController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['my.items'], $this->lang['module.title'], $page);
-		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['download.seo.description.member'], array('author' => AppContext::get_current_user()->get_display_name())), $page);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::display_pending($sort_field, $sort_mode, $page));
+		$graphical_environment->set_page_title($this->get_keyword()->get_name(), $this->lang['module.title'], $page);
+		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['download.seo.description.tag'], array('subject' => $this->get_keyword()->get_name())), $page);
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $sort_field, $sort_mode, $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], DownloadUrlBuilder::home());
-		$breadcrumb->add($this->lang['my.items'], DownloadUrlBuilder::display_pending($sort_field, $sort_mode, $page));
+		$breadcrumb->add($this->get_keyword()->get_name(), DownloadUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $sort_field, $sort_mode, $page));
 
 		return $response;
 	}
