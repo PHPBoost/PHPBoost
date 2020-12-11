@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2020 04 10
+ * @version     PHPBoost 6.0 - last update: 2020 11 16
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -31,7 +31,7 @@ $add = (int)retrieve(GET, 'add', 0, TINTEGER);
 $edit = (int)retrieve(GET, 'edit', 0, TINTEGER);
 $delete = (int)retrieve(GET, 'del', 0, TINTEGER);
 
-// Modification du statut du fichier.
+// File status modification
 if ($unvisible > 0)
 {
 	AppContext::get_session()->csrf_get_protect();
@@ -43,7 +43,7 @@ if ($unvisible > 0)
 		DispatchManager::redirect($error_controller);
 	}
 
-	// Gestion des erreurs.
+	// Errors management
 	if (empty($media))
 	{
 		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_unexist_media']);
@@ -67,7 +67,7 @@ if ($unvisible > 0)
 
 	AppContext::get_response()->redirect('media' . url('.php?cat=' . $media['id_category'], '-0-' . $media['id_category'] . '.php'));
 }
-// Suppression d'un fichier.
+// Delete a file
 elseif ($delete > 0)
 {
 	AppContext::get_session()->csrf_get_protect();
@@ -110,7 +110,7 @@ elseif ($delete > 0)
 
 	AppContext::get_response()->redirect('media' . url('.php?cat=' . $media['id_category'], '-0-' . $media['id_category'] . '.php'));
 }
-// Formulaire d'ajout ou d'édition.
+// Add/edit form
 elseif ($add >= 0 && !$submit || $edit > 0)
 {
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
@@ -140,15 +140,13 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 		'L_SUBMIT' => $edit > 0 ? $LANG['update'] : $LANG['submit']
 	));
 
-	// Construction du tableau des catégories musicales.
+	// Build of the musical categories table
 	$categories = CategoriesService::get_categories_manager()->get_categories_cache()->get_categories();
 	$js_id_music = array();
 	foreach ($categories as $cat)
 	{
 		if ($cat->get_content_type() == MediaConfig::CONTENT_TYPE_MUSIC)
-		{
 			$js_id_music[] = $cat->get_id();
-		}
 	}
 
 	$search_category_children_options = new SearchCategoryChildrensOptions();
@@ -157,7 +155,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 
 	$media = '';
 
-	// Édition.
+	// Edit
 	if ($edit > 0)
 	{
 		try {
@@ -205,7 +203,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 
 		$location_id = 'media-edit-'. $edit;
 	}
-	// Ajout.
+	// Add
 	elseif (($write = CategoriesAuthorizationsService::check_authorizations()->write()) || CategoriesAuthorizationsService::check_authorizations()->contribution())
 	{
 		bread_crumb($add);
@@ -262,7 +260,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 
 	require_once('../kernel/header.php');
 }
-// Traitement du formulaire.
+// Processing the form
 elseif ($submit)
 {
 	AppContext::get_session()->csrf_get_protect();
@@ -386,7 +384,7 @@ elseif ($submit)
 		DispatchManager::redirect($controller);
 	}
 
-	// Édition
+	// Edit
 	if ($media['idedit'] && CategoriesAuthorizationsService::check_authorizations($media['id_category'])->moderation())
 	{
 		PersistenceContext::get_querier()->update(PREFIX . "media", array('id_category' => $media['id_category'], 'name' => $media['name'], 'url' => $media['url']->relative(), 'poster' => $media['poster']->relative(), 'mime_type' => $media['mime_type'], 'contents' => $media['contents'], 'infos' => (CategoriesAuthorizationsService::check_authorizations($media['id_category'])->write() ? MEDIA_STATUS_APROBED : 0), 'width' => $media['width'], 'height' => $media['height']), 'WHERE id = :id', array('id' => $media['idedit']));
@@ -412,7 +410,7 @@ elseif ($submit)
 
 		AppContext::get_response()->redirect('media' . url('.php?id=' . $media['idedit']));
 	}
-	// Ajout
+	// Add
 	elseif (!$media['idedit'] && (($auth_write = CategoriesAuthorizationsService::check_authorizations($media['id_category'])->write()) || CategoriesAuthorizationsService::check_authorizations($media['id_category'])->contribution()))
 	{
 		$result = PersistenceContext::get_querier()->insert(PREFIX . "media", array('id_category' => $media['id_category'], 'iduser' => AppContext::get_current_user()->get_id(), 'timestamp' => time(), 'name' => $media['name'], 'contents' => $media['contents'], 'url' => $media['url']->relative(), 'poster' => $media['poster']->relative(), 'mime_type' => $media['mime_type'], 'infos' => (CategoriesAuthorizationsService::check_authorizations($media['id_category'])->write() ? MEDIA_STATUS_APROBED : 0), 'width' => $media['width'], 'height' => $media['height']));

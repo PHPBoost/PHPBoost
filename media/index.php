@@ -12,10 +12,10 @@ define('PATH_TO_ROOT', '..');
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
-	//Config
+	// Configuration
 	new UrlControllerMapper('AdminMediaConfigController', '`^/admin(?:/config)?/?$`'),
 
-	//Categories
+	// Categories
 	new UrlControllerMapper('DefaultCategoriesManagementController', '`^/categories/?$`'),
 	new UrlControllerMapper('DefaultCategoriesFormController', '`^/categories/add/?$`'),
 	new UrlControllerMapper('DefaultCategoriesFormController', '`^/categories/([0-9]+)/edit/?$`', array('id')),

@@ -1,4 +1,4 @@
-<div class="media-content" style="width:{WIDTH}px;height:{HEIGHT}px;">
+<div class="media-content media-swf" style="width:{WIDTH}px;height:{HEIGHT}px;">
 	<object type="{MIME}" data="{URL}">
 		<param name="allowScriptAccess" value="samedomain" />
 		<param name="allowFullScreen" value="true">

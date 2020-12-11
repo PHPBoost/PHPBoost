@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 02
+ * @version     PHPBoost 6.0 - last update: 2020 11 16
  * @since       PHPBoost 4.1 - 2015 02 03
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -110,18 +110,21 @@ class AdminMediaConfigController extends AdminModuleController
 				new FormFieldSelectChoiceOption($this->config_lang['config.display.type.grid'], MediaConfig::GRID_VIEW),
 				new FormFieldSelectChoiceOption($this->config_lang['config.display.type.list'], MediaConfig::LIST_VIEW),
 			),
-			array('events' => array('change' => '
-				if (HTMLForms.getField("display_type").getValue() == \'' . MediaConfig::GRID_VIEW . '\') {
-					HTMLForms.getField("items_number_per_row").enable();
-				} else {
-					HTMLForms.getField("items_number_per_row").disable();
-				}'
-			))
+			array(
+				'events' => array('change' => '
+					if (HTMLForms.getField("display_type").getValue() == \'' . MediaConfig::GRID_VIEW . '\') {
+						HTMLForms.getField("items_number_per_row").enable();
+					} else {
+						HTMLForms.getField("items_number_per_row").disable();
+					}'
+				)
+			)
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_number_per_row', $this->config_lang['config.items.per.row'], $this->config->get_items_number_per_row(),
 			array(
-				'min' => 1, 'max' => 4, 'required' => true, 'hidden' => $this->config->get_display_type() !== MediaConfig::GRID_VIEW
+				'min' => 1, 'max' => 4, 'required' => true,
+				'hidden' => $this->config->get_display_type() !== MediaConfig::GRID_VIEW
 			),
 			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
