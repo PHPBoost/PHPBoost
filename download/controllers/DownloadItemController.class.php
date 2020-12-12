@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 11
+ * @version     PHPBoost 6.0 - last update: 2020 12 12
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -13,19 +13,18 @@
 class DownloadItemController extends ModuleController
 {
 	private $lang;
-	private $tpl;
+	private $view;
 
-	private $downloadfile;
+	private $item;
+
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->check_authorizations();
 
 		$this->init();
-
-		$this->count_views_number($request);
-
 		$this->build_view();
+		$this->count_views_number($request);
+		$this->check_authorizations();
 
 		return $this->generate_response();
 	}
@@ -33,42 +32,42 @@ class DownloadItemController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'download');
-		$this->tpl = new FileTemplate('download/DownloadItemController.tpl');
-		$this->tpl->add_lang($this->lang);
+		$this->view = new FileTemplate('download/DownloadItemController.tpl');
+		$this->view->add_lang($this->lang);
 	}
 
-	private function get_downloadfile()
+	private function get_item()
 	{
-		if ($this->downloadfile === null)
+		if ($this->item === null)
 		{
 			$id = AppContext::get_request()->get_getint('id', 0);
 			if (!empty($id))
 			{
 				try {
-					$this->downloadfile = DownloadService::get_downloadfile('WHERE download.id = :id', array('id' => $id));
+					$this->item = DownloadService::get_item('WHERE download.id = :id', array('id' => $id));
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
 					DispatchManager::redirect($error_controller);
 				}
 			}
 			else
-				$this->downloadfile = new DownloadItem();
+				$this->item = new DownloadItem();
 		}
-		return $this->downloadfile;
+		return $this->item;
 	}
 
 	private function count_views_number(HTTPRequestCustom $request)
 	{
-		if (!$this->downloadfile->is_published())
+		if (!$this->item->is_published())
 		{
-			$this->tpl->put('NOT_VISIBLE_MESSAGE', MessageHelper::display(LangLoader::get_message('element.not_visible', 'status-messages-common'), MessageHelper::WARNING));
+			$this->view->put('NOT_VISIBLE_MESSAGE', MessageHelper::display(LangLoader::get_message('element.not_visible', 'status-messages-common'), MessageHelper::WARNING));
 		}
 		else
 		{
-			if ($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), DownloadUrlBuilder::display($this->downloadfile->get_category()->get_id(), $this->downloadfile->get_category()->get_rewrited_name(), $this->downloadfile->get_id(), $this->downloadfile->get_rewrited_title())->rel()))
+			if ($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), DownloadUrlBuilder::display($this->item->get_category()->get_id(), $this->item->get_category()->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title())->rel()))
 			{
-				$this->downloadfile->set_views_number($this->downloadfile->get_views_number() + 1);
-				DownloadService::update_views_number($this->downloadfile);
+				$this->item->set_views_number($this->item->get_views_number() + 1);
+				DownloadService::update_views_number($this->item);
 			}
 		}
 	}
@@ -78,13 +77,13 @@ class DownloadItemController extends ModuleController
 		$config = DownloadConfig::load();
 		$comments_config = CommentsConfig::load();
 		$content_management_config = ContentManagementConfig::load();
-		$downloadfile = $this->get_downloadfile();
-		$category = $downloadfile->get_category();
+		$item = $this->get_item();
+		$category = $item->get_category();
 
-		$keywords = $downloadfile->get_keywords();
+		$keywords = $item->get_keywords();
 		$has_keywords = count($keywords) > 0;
 
-		$this->tpl->put_all(array_merge($downloadfile->get_array_tpl_vars(), array(
+		$this->view->put_all(array_merge($item->get_array_tpl_vars(), array(
 			'C_AUTHOR_DISPLAYED' => $config->is_author_displayed(),
 			'C_ENABLED_COMMENTS' => $comments_config->module_comments_is_enabled('download'),
 			'C_ENABLED_NOTATION' => $content_management_config->module_notation_is_enabled('download'),
@@ -96,19 +95,19 @@ class DownloadItemController extends ModuleController
 
 		if ($comments_config->module_comments_is_enabled('download'))
 		{
-			$comments_topic = new DownloadCommentsTopic($downloadfile);
-			$comments_topic->set_id_in_module($downloadfile->get_id());
-			$comments_topic->set_url(DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $downloadfile->get_id(), $downloadfile->get_rewrited_title()));
+			$comments_topic = new DownloadCommentsTopic($item);
+			$comments_topic->set_id_in_module($item->get_id());
+			$comments_topic->set_url(DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()));
 
-			$this->tpl->put('COMMENTS', $comments_topic->display());
+			$this->view->put('COMMENTS', $comments_topic->display());
 		}
 
 		if ($has_keywords)
 			$this->build_keywords_view($keywords);
 
-		foreach ($downloadfile->get_sources() as $name => $url)
+		foreach ($item->get_sources() as $name => $url)
 		{
-			$this->tpl->assign_block_vars('sources', $downloadfile->get_array_tpl_source_vars($name));
+			$this->view->assign_block_vars('sources', $item->get_array_tpl_source_vars($name));
 		}
 	}
 
@@ -119,7 +118,7 @@ class DownloadItemController extends ModuleController
 		$i = 1;
 		foreach ($keywords as $keyword)
 		{
-			$this->tpl->assign_block_vars('keywords', array(
+			$this->view->assign_block_vars('keywords', array(
 				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME' => $keyword->get_name(),
 				'URL' => DownloadUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
@@ -130,28 +129,28 @@ class DownloadItemController extends ModuleController
 
 	private function check_authorizations()
 	{
-		$downloadfile = $this->get_downloadfile();
+		$item = $this->get_item();
 
 		$current_user = AppContext::get_current_user();
-		$not_authorized = !DownloadAuthorizationsService::check_authorizations($downloadfile->get_id_category())->moderation() && !DownloadAuthorizationsService::check_authorizations($downloadfile->get_id_category())->write() && (!DownloadAuthorizationsService::check_authorizations($downloadfile->get_id_category())->contribution() || $downloadfile->get_author_user()->get_id() != $current_user->get_id());
+		$not_authorized = !DownloadAuthorizationsService::check_authorizations($item->get_id_category())->moderation() && !DownloadAuthorizationsService::check_authorizations($item->get_id_category())->write() && (!DownloadAuthorizationsService::check_authorizations($item->get_id_category())->contribution() || $item->get_author_user()->get_id() != $current_user->get_id());
 
-		switch ($downloadfile->get_approbation_type()) {
-			case DownloadItem::APPROVAL_NOW:
-				if (!DownloadAuthorizationsService::check_authorizations($downloadfile->get_id_category())->read())
+		switch ($item->get_publishing_state()) {
+			case DownloadItem::PUBLISHED:
+				if (!DownloadAuthorizationsService::check_authorizations($item->get_id_category())->read())
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 					DispatchManager::redirect($error_controller);
 				}
 			break;
-			case DownloadItem::NOT_APPROVAL:
+			case DownloadItem::NOT_PUBLISHED:
 				if ($not_authorized || ($current_user->get_id() == User::VISITOR_LEVEL))
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 					DispatchManager::redirect($error_controller);
 				}
 			break;
-			case DownloadItem::APPROVAL_DATE:
-				if (!$downloadfile->is_published() && ($not_authorized || ($current_user->get_id() == User::VISITOR_LEVEL)))
+			case DownloadItem::DEFERRED_PUBLICATION:
+				if (!$item->is_published() && ($not_authorized || ($current_user->get_id() == User::VISITOR_LEVEL)))
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 					DispatchManager::redirect($error_controller);
@@ -166,28 +165,28 @@ class DownloadItemController extends ModuleController
 
 	private function generate_response()
 	{
-		$downloadfile = $this->get_downloadfile();
-		$category = $downloadfile->get_category();
-		$response = new SiteDisplayResponse($this->tpl);
+		$item = $this->get_item();
+		$category = $item->get_category();
+		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($downloadfile->get_title(), ($category->get_id() != Category::ROOT_CATEGORY ? $category->get_name() . ' - ' : '') . $this->lang['module.title']);
-		$graphical_environment->get_seo_meta_data()->set_description($downloadfile->get_real_summary());
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $downloadfile->get_id(), $downloadfile->get_rewrited_title()));
+		$graphical_environment->set_page_title($item->get_title(), ($category->get_id() != Category::ROOT_CATEGORY ? $category->get_name() . ' - ' : '') . $this->lang['module.title']);
+		$graphical_environment->get_seo_meta_data()->set_description($item->get_real_summary());
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()));
 
-		if ($downloadfile->has_thumbnail())
-			$graphical_environment->get_seo_meta_data()->set_picture_url($downloadfile->get_thumbnail());
+		if ($item->has_thumbnail())
+			$graphical_environment->get_seo_meta_data()->set_picture_url($item->get_thumbnail());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'],DownloadUrlBuilder::home());
 
-		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($downloadfile->get_id_category(), true));
+		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($item->get_id_category(), true));
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id() != Category::ROOT_CATEGORY)
 				$breadcrumb->add($category->get_name(), DownloadUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
 		}
-		$breadcrumb->add($downloadfile->get_title(), DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $downloadfile->get_id(), $downloadfile->get_rewrited_title()));
+		$breadcrumb->add($item->get_title(), DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()));
 
 		return $response;
 	}

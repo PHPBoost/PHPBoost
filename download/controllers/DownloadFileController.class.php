@@ -3,13 +3,13 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 06
+ * @version     PHPBoost 6.0 - last update: 2020 12 12
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor janus57 <janus57@janus57.fr>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class DownloadItemController extends AbstractController
+class DownloadFileController extends AbstractController
 {
 	private $item;
 
@@ -20,7 +20,7 @@ class DownloadItemController extends AbstractController
 		if (!empty($id))
 		{
 			try {
-				$this->item = DownloadService::get_downloadfile('WHERE download.id = :id', array('id' => $id));
+				$this->item = DownloadService::get_item('WHERE download.id = :id', array('id' => $id));
 			} catch (RowNotFoundException $e) {
 				$error_controller = PHPBoostErrors::unexisting_page();
 				DispatchManager::redirect($error_controller);
