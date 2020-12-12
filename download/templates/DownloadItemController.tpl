@@ -48,7 +48,7 @@
 								<li># INCLUDE UNAUTHORIZED_TO_DOWNLOAD_MESSAGE #</li>
 							# ENDIF #
 						# ENDIF #
-						# IF C_VERSION_NUMBER #<li class="li-stretch"><span class="text-strong">{@download.version} : </span><span>{SOFTWARE_VERSION}</span></li># ENDIF #
+						# IF C_VERSION_NUMBER #<li class="li-stretch"><span class="text-strong">{@download.version} : </span><span>{VERSION_NUMBER}</span></li># ENDIF #
 						<li class="li-stretch"><span class="text-strong">${LangLoader::get_message('size', 'common')} : </span><span># IF C_SIZE #{SIZE}# ELSE #${LangLoader::get_message('unknown_size', 'common')}# ENDIF #</span></li>
 						<li class="li-stretch"><span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} : </span><time datetime="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT C_DIFFERED #{DATE}# ELSE #{DIFFERED_START_DATE}# ENDIF #</time></li>
 						# IF C_UPDATE_DATE #<li class="li-stretch"><span class="text-strong">${LangLoader::get_message('form.date.update', 'common')} : </span><time datetime="{UPDATED_DATE_ISO8601}" itemprop="dateModified">{UPDATED_DATE}</time></li># ENDIF #

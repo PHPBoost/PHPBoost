@@ -38,13 +38,13 @@ class DownloadFileController extends AbstractController
 			DownloadService::update_downloads_number($this->item);
 			DownloadCache::invalidate();
 
-			if (Url::check_url_validity($this->item->get_url()->absolute()) || Url::check_url_validity($this->item->get_url()->relative()))
+			if (Url::check_url_validity($this->item->get_file_url()->absolute()) || Url::check_url_validity($this->item->get_file_url()->relative()))
 			{
 				header('Content-Description: File Transfer');
 				header('Content-Transfer-Encoding: binary');
 				header('Accept-Ranges: bytes');
 				header('Content-Type: application/force-download');
-				header('Location: ' . $this->item->get_url()->absolute());
+				header('Location: ' . $this->item->get_file_url()->absolute());
 
 				return $this->generate_response();
 			}

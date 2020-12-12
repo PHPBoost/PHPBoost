@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 11
+ * @version     PHPBoost 6.0 - last update: 2020 12 12
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -18,7 +18,7 @@ class DownloadItem
 	private $id_category;
 	private $title;
 	private $rewrited_title;
-	private $url;
+	private $file_url;
 	private $size;
 	private $formated_size;
 	private $content;
@@ -117,17 +117,17 @@ class DownloadItem
 		$this->rewrited_title = $rewrited_title;
 	}
 
-	public function get_url()
+	public function get_file_url()
 	{
-		if (!$this->url instanceof Url)
+		if (!$this->file_url instanceof Url)
 			return new Url('');
 
-		return $this->url;
+		return $this->file_url;
 	}
 
-	public function set_url(Url $url)
+	public function set_file_url(Url $file_url)
 	{
-		$this->url = $url;
+		$this->file_url = $file_url;
 	}
 
 	public function get_size()
@@ -401,7 +401,7 @@ class DownloadItem
 			'id_category' => $this->get_id_category(),
 			'title' => $this->get_title(),
 			'rewrited_title' => $this->get_rewrited_title(),
-			'url' => $this->get_url()->relative(),
+			'file_url' => $this->get_file_url()->relative(),
 			'size' => $this->get_size(),
 			'content' => $this->get_content(),
 			'summary' => $this->get_summary(),
@@ -414,7 +414,7 @@ class DownloadItem
 			'author_user_id' => $this->get_author_user()->get_id(),
 			'downloads_number' => $this->get_downloads_number(),
 			'views_number' => $this->get_views_number(),
-			'thumbnail_url' => $this->get_thumbnail()->relative(),
+			'thumbnail' => $this->get_thumbnail()->relative(),
 			'version_number' => $this->get_version_number(),
 			'sources' => TextHelper::serialize($this->get_sources())
 		);
@@ -426,7 +426,7 @@ class DownloadItem
 		$this->id_category = $properties['id_category'];
 		$this->title = $properties['title'];
 		$this->rewrited_title = $properties['rewrited_title'];
-		$this->url = new Url($properties['url']);
+		$this->file_url = new Url($properties['file_url']);
 		$this->size = $properties['size'];
 		$this->content = $properties['content'];
 		$this->summary = $properties['summary'];
@@ -438,7 +438,7 @@ class DownloadItem
 		$this->creation_date = new Date($properties['creation_date'], Timezone::SERVER_TIMEZONE);
 		$this->update_date = !empty($properties['update_date']) ? new Date($properties['update_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->downloads_number = $properties['downloads_number'];
-		$this->thumbnail_url = $properties['thumbnail_url'];
+		$this->thumbnail_url = $properties['thumbnail'];
 		$this->version_number = $properties['version_number'];
 		$this->sources = !empty($properties['sources']) ? TextHelper::unserialize($properties['sources']) : array();
 
@@ -468,7 +468,7 @@ class DownloadItem
 	{
 		$this->id_category = $id_category;
         $this->content = DownloadConfig::load()->get_default_content();
-		$this->url = new Url('');
+		$this->file_url = new Url('');
 		$this->size = 0;
 		$this->published = self::PUBLISHED;
 		$this->author_user = AppContext::get_current_user();
@@ -544,7 +544,7 @@ class DownloadItem
 				'PSEUDO'             => $user->get_display_name(),
 				'USER_LEVEL_CLASS'   => UserService::get_level_class($user->get_level()),
 				'USER_GROUP_COLOR'   => $user_group_color,
-				'SOFTWARE_VERSION'   => $this->version_number,
+				'VERSION_NUMBER'     => $this->version_number,
 				'DOWNLOADS_NUMBER'   => $this->downloads_number,
 				'VIEWS_NUMBER'       => $this->get_views_number(),
 				'L_DOWNLOADED_TIMES' => StringVars::replace_vars(LangLoader::get_message('download.times', 'common', 'download'), array('downloads_number' => $this->downloads_number)),

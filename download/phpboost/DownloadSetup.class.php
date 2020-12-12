@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 04
+ * @version     PHPBoost 6.0 - last update: 2020 12 12
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -55,23 +55,24 @@ class DownloadSetup extends DefaultModuleSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'thumbnail' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'title' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'rewrited_title' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'url' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'size' => array('type' => 'bigint', 'length' => 18, 'notnull' => 1, 'default' => 0),
 			'content' => array('type' => 'text', 'length' => 65000),
 			'summary' => array('type' => 'text', 'length' => 65000),
+			'views_number' => array('type' => 'integer', 'length' => 11, 'default' => 0),
+			'author_custom_name' => array('type' =>  'string', 'length' => 255, 'default' => "''"),
+			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'published' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'publishing_start_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'publishing_end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'views_number' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'update_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'author_custom_name' => array('type' =>  'string', 'length' => 255, 'default' => "''"),
-			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'downloads_number' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'thumbnail_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'sources' => array('type' => 'text', 'length' => 65000),
+
+			'file_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'size' => array('type' => 'bigint', 'length' => 18, 'notnull' => 1, 'default' => 0),
+			'downloads_number' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'version_number' => array('type' => 'string', 'length' => 30, 'notnull' => 1, 'default' => "''")
 		);
 		$options = array(
@@ -119,7 +120,7 @@ class DownloadSetup extends DefaultModuleSetup
 			'id_category' => 1,
 			'title' => $this->messages['default.downloadfile.name'],
 			'rewrited_title' => Url::encode_rewrite($this->messages['default.downloadfile.name']),
-			'url' => '/download/download.png',
+			'file_url' => '/download/download.png',
 			'size' => 1430,
 			'content' => $this->messages['default.downloadfile.content'],
 			'summary' => '',
@@ -133,7 +134,7 @@ class DownloadSetup extends DefaultModuleSetup
 			'downloads_number' => 0,
 			'views_number' => 0,
 			'sources' => TextHelper::serialize(array()),
-			'thumbnail_url' => '/templates/__default__/images/default_item_thumbnail.png'
+			'thumbnail' => '/templates/__default__/images/default_item_thumbnail.png'
 		));
 	}
 }

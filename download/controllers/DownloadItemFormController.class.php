@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 11
+ * @version     PHPBoost 6.0 - last update: 2020 12 12
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -77,7 +77,7 @@ class DownloadItemFormController extends ModuleController
 			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], $this->get_item()->get_id_category(), $search_category_children_options));
 		}
 
-		$fieldset->add_field(new FormFieldUploadFile('url', $this->common_lang['form.url'], $this->get_item()->get_url()->relative(), array('required' => true)));
+		$fieldset->add_field(new FormFieldUploadFile('file_url', $this->common_lang['form.url'], $this->get_item()->get_file_url()->relative(), array('required' => true)));
 
 		$fieldset->add_field(new FormFieldCheckbox('determine_file_size_automatically_enabled', $this->lang['download.form.file.size.auto'], $this->is_file_size_automatic(),
 			array(
@@ -282,7 +282,7 @@ class DownloadItemFormController extends ModuleController
 
 	private function is_file_size_automatic()
 	{
-		return $this->get_item()->get_id() === null || $this->get_item()->get_size() == 0 || ($this->get_item()->get_size() ==  Url::get_url_file_size($this->get_item()->get_url()));
+		return $this->get_item()->get_id() === null || $this->get_item()->get_size() == 0 || ($this->get_item()->get_size() ==  Url::get_url_file_size($this->get_item()->get_file_url()));
 	}
 
 	private function get_item()
@@ -346,7 +346,7 @@ class DownloadItemFormController extends ModuleController
 		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
 			$item->set_id_category($this->form->get_value('id_category')->get_raw_value());
 
-		$item->set_url(new Url($this->form->get_value('url')));
+		$item->set_file_url(new Url($this->form->get_value('file_url')));
 		$item->set_content($this->form->get_value('contents'));
 		$item->set_summary(($this->form->get_value('summary_enabled') ? $this->form->get_value('summary') : ''));
 		$item->set_thumbnail($this->form->get_value('thumbnail'));
@@ -357,7 +357,7 @@ class DownloadItemFormController extends ModuleController
 
 		if ($this->form->get_value('determine_file_size_automatically_enabled'))
 		{
-			$file_size = Url::get_url_file_size($item->get_url());
+			$file_size = Url::get_url_file_size($item->get_file_url());
 			$file_size = (empty($file_size) && $item->get_size()) ? $item->get_size() : $file_size;
 		}
 		else
