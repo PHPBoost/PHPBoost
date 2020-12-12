@@ -87,7 +87,7 @@ class DownloadService
 	 * @param string $condition : Restriction to apply to the list
 	 * @param string[] $parameters : Parameters of the condition
 	 */
-	public static function get_downloadfile($condition, array $parameters)
+	public static function get_item($condition, array $parameters)
 	{
 		$row = self::$db_querier->select_single_row_query('SELECT download.*, member.*, notes.average_notes, notes.number_notes, note.note
 		FROM ' . DownloadSetup::$download_table . ' download

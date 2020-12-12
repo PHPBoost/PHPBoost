@@ -19,7 +19,7 @@ class DownloadDeadLinkController extends AbstractController
 		if (!empty($id) && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 		{
 			try {
-				$this->item = DownloadService::get_downloadfile('WHERE download.id = :id', array('id' => $id));
+				$this->item = DownloadService::get_item('WHERE download.id = :id', array('id' => $id));
 			} catch (RowNotFoundException $e) {
 				$error_controller = PHPBoostErrors::unexisting_page();
 				DispatchManager::redirect($error_controller);

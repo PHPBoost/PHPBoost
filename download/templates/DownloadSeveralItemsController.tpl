@@ -203,7 +203,7 @@
 												<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
 											</a>
 										# ENDIF #
-										{items.CONTENTS}
+										{items.CONTENT}
 									# ELSE #
 										{items.SUMMARY}# IF items.C_READ_MORE # <a href="{items.U_ITEM}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
 									# ENDIF #

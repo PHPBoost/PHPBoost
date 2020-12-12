@@ -42,11 +42,11 @@ class DownloadItemsManagerController extends AdminModuleController
 		$display_categories = CategoriesService::get_categories_manager()->get_categories_cache()->has_categories();
 
 		$columns = array(
-			new HTMLTableColumn(LangLoader::get_message('form.name', 'common'), 'name'),
+			new HTMLTableColumn(LangLoader::get_message('form.name', 'common'), 'title'),
 			new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category'),
 			new HTMLTableColumn(LangLoader::get_message('author', 'common'), 'display_name'),
 			new HTMLTableColumn(LangLoader::get_message('form.date.creation', 'common'), 'creation_date'),
-			new HTMLTableColumn(LangLoader::get_message('status', 'common'), 'approbation_type'),
+			new HTMLTableColumn(LangLoader::get_message('status', 'common'), 'published'),
 			new HTMLTableColumn(LangLoader::get_message('actions', 'admin-common'), '', array('sr-only' => true))
 		);
 
@@ -88,7 +88,7 @@ class DownloadItemsManagerController extends AdminModuleController
 				new HTMLTableRowCell(new LinkHTMLElement(DownloadUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), ($category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('none_e', 'common') : $category->get_name()))),
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell($item->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
-				new HTMLTableRowCell($item->get_status()),
+				new HTMLTableRowCell($item->get_publishing_state()),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display(), 'controls')
 			);
 

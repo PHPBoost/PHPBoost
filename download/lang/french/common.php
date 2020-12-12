@@ -53,7 +53,7 @@ $lang['download.config.items.number'] = 'Nombre maximum d\'éléments affichés'
 $lang['download.config.limit.items.age'] = 'Limiter l\'âge des éléments dans le menu';
 $lang['download.config.max.items.age'] = 'Age maximum (en jours)';
 $lang['download.config.views.number.enabled'] = 'Activer l\'affichage du nombre de vues';
-$lang['download.config.default.contents'] = 'Contenu par défaut du Téléchargement';
+$lang['download.config.default.content'] = 'Contenu par défaut du Téléchargement';
 
 // Authorizations
 $lang['download.config.download.link'] = 'Autorisation d\'afficher le lien de téléchargement';

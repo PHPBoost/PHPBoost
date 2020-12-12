@@ -26,8 +26,8 @@ class DownloadCache implements CacheData
 			SELECT download.*, notes.average_notes, notes.number_notes
 			FROM ' . DownloadSetup::$download_table . ' download
 			LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = download.id AND notes.module_name = \'download\'
-			WHERE (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))
-			' . ($config->is_limit_oldest_file_day_in_menu_enabled() ? 'AND updated_date > :oldest_file_date' : '') . '
+			WHERE (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
+			' . ($config->is_limit_oldest_file_day_in_menu_enabled() ? 'AND update_date > :oldest_file_date' : '') . '
 			ORDER BY ' . $config->get_sort_type() . ' DESC
 			LIMIT :files_number_in_menu OFFSET 0', array(
 				'timestamp_now' => $now->get_timestamp(),
@@ -42,7 +42,7 @@ class DownloadCache implements CacheData
 		$result->dispose();
 	}
 
-	public function get_downloadfiles()
+	public function get_items()
 	{
 		return $this->items;
 	}
@@ -52,7 +52,7 @@ class DownloadCache implements CacheData
 		return array_key_exists($id, $this->items);
 	}
 
-	public function get_downloadfile_item($id)
+	public function get_item_item($id)
 	{
 		if ($this->downloadfile_exists($id))
 		{

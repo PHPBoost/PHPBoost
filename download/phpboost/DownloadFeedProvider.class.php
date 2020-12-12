@@ -40,11 +40,11 @@ class DownloadFeedProvider implements FeedProvider
 			$ids_categories = array_keys($categories);
 
 			$now = new Date();
-			$results = $querier->select('SELECT download.id, download.id_category, download.name, download.rewrited_name, download.contents, download.short_contents, download.creation_date, download.picture_url, cat.rewrited_name AS rewrited_name_cat
+			$results = $querier->select('SELECT download.id, download.id_category, download.title, download.rewrited_title, download.content, download.summary, download.creation_date, download.thumbnail_url, cat.rewrited_name AS rewrited_name_cat
 				FROM ' . DownloadSetup::$download_table . ' download
 				LEFT JOIN '. DownloadSetup::$download_cats_table .' cat ON cat.id = download.id_category
 				WHERE download.id_category IN :ids_categories
-				AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))
+				AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
 				ORDER BY download.creation_date DESC', array(
 					'ids_categories' => $ids_categories,
 					'timestamp_now' => $now->get_timestamp()
@@ -59,9 +59,9 @@ class DownloadFeedProvider implements FeedProvider
 				$item->set_title($row['name']);
 				$item->set_link($link);
 				$item->set_guid($link);
-				$item->set_desc(FormatingHelper::second_parse($row['contents']));
+				$item->set_desc(FormatingHelper::second_parse($row['content']));
 				$item->set_date(new Date($row['creation_date'], Timezone::SERVER_TIMEZONE));
-				$item->set_image_url($row['picture_url']);
+				$item->set_image_url($row['thumbnail_url']);
 				$item->set_auth(CategoriesService::get_categories_manager($module_id)->get_heritated_authorizations($row['id_category'], Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
 				$data->add_item($item);
 			}

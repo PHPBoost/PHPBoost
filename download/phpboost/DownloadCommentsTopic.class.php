@@ -20,20 +20,20 @@ class DownloadCommentsTopic extends CommentsTopic
 	public function get_authorizations()
 	{
 		$authorizations = new CommentsAuthorizations();
-		$authorizations->set_authorized_access_module(DownloadAuthorizationsService::check_authorizations($this->get_downloadfile()->get_id_category())->read());
+		$authorizations->set_authorized_access_module(DownloadAuthorizationsService::check_authorizations($this->get_item()->get_id_category())->read());
 		return $authorizations;
 	}
 
 	public function is_display()
 	{
-		return $this->get_downloadfile()->is_published();
+		return $this->get_item()->is_published();
 	}
 
-	private function get_downloadfile()
+	private function get_item()
 	{
 		if ($this->item === null)
 		{
-			$this->item = DownloadService::get_downloadfile('WHERE download.id=:id', array('id' => $this->get_id_in_module()));
+			$this->item = DownloadService::get_item('WHERE download.id=:id', array('id' => $this->get_id_in_module()));
 		}
 		return $this->item;
 	}

@@ -18,7 +18,7 @@ class DownloadDeleteItemController extends ModuleController
 	{
 		AppContext::get_session()->csrf_get_protect();
 
-		$item = $this->get_downloadfile($request);
+		$item = $this->get_item($request);
 
 		if (!$item->is_authorized_to_delete())
 		{
@@ -33,13 +33,13 @@ class DownloadDeleteItemController extends ModuleController
 		AppContext::get_response()->redirect(($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), DownloadUrlBuilder::display($item->get_category()->get_id(), $item->get_category()->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title())->rel()) ? $request->get_url_referrer() : DownloadUrlBuilder::home()), StringVars::replace_vars(LangLoader::get_message('download.message.success.delete', 'common', 'download'), array('title' => $item->get_title())));
 	}
 
-	private function get_downloadfile(HTTPRequestCustom $request)
+	private function get_item(HTTPRequestCustom $request)
 	{
 		$id = $request->get_getint('id', 0);
 		if (!empty($id))
 		{
 			try {
-				return DownloadService::get_downloadfile('WHERE download.id=:id', array('id' => $id));
+				return DownloadService::get_item('WHERE download.id=:id', array('id' => $id));
 			} catch (RowNotFoundException $e) {
 				$error_controller = PHPBoostErrors::unexisting_page();
 				DispatchManager::redirect($error_controller);

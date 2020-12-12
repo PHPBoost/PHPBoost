@@ -46,7 +46,7 @@ class DownloadModuleUpdateVersion extends ModuleUpdateVersion
 				'table_name' => PREFIX . 'download',
 				'columns' => array(
 					'sources' => array('type' => 'text', 'length' => 65000),
-					'software_version' => array('type' => 'string', 'length' => 30, 'notnull' => 1, 'default' => "''")
+					'version_number' => array('type' => 'string', 'length' => 30, 'notnull' => 1, 'default' => "''")
 				)
 			)
 		);
@@ -55,8 +55,19 @@ class DownloadModuleUpdateVersion extends ModuleUpdateVersion
 			array(
 				'table_name' => PREFIX . 'download',
 				'columns' => array(
-					'number_view'  => 'views_number INT(11) NOT NULL DEFAULT 0',
-					'number_downloads'  => 'downloads_number INT(11) NOT NULL DEFAULT 0'
+					'name'             => 'title TEXT',
+					'rewrited_name'    => 'rewrited_title TEXT',
+					'url'              => 'file_url TEXT',
+					'software_version' => 'version_number TEXT',
+					'contents'         => 'content MEDIUMTEXT',
+					'short_contents'   => 'summary TEXT',
+					'approbation_type' => 'published INT(11) NOT NULL DEFAULT 0',
+					'start_date'       => 'publishing_start_date INT(11) NOT NULL DEFAULT 0',
+					'end_date'         => 'publishing_end_date INT(11) NOT NULL DEFAULT 0',
+					'updated_date'     => 'update_date INT(11) NOT NULL DEFAULT 0',
+					'picture_url'      => 'thumbnail_url VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 0',
+					'number_view'      => 'views_number INT(11) NOT NULL DEFAULT 0',
+					'number_downloads' => 'downloads_number INT(11) NOT NULL DEFAULT 0'
 				)
 			),
 			array(

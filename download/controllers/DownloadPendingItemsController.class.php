@@ -46,7 +46,7 @@ class DownloadPendingItemsController extends ModuleController
 
 		$condition = 'WHERE id_category IN :authorized_categories
 		' . (!DownloadAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
-		AND (approbation_type = 0 OR (approbation_type = 2 AND (start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now))))';
+		AND (published = 0 OR (published = 2 AND (publishing_start_date > :timestamp_now OR (publishing_end_date != 0 AND publishing_end_date < :timestamp_now))))';
 		$parameters = array(
 			'user_id' => AppContext::get_current_user()->get_id(),
 			'authorized_categories' => $authorized_categories,

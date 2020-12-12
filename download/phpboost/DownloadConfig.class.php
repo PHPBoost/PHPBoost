@@ -19,7 +19,7 @@ class DownloadConfig extends AbstractConfigData
 	const ITEMS_DEFAULT_SORT_FIELD = 'items_default_sort_field';
 	const ITEMS_DEFAULT_SORT_MODE = 'items_default_sort_mode';
 
-	const DEFAULT_CONTENTS = 'default_contents';
+	const DEFAULT_CONTENT = 'default_content';
 
 	const FULL_ITEM_DISPLAY = 'full_item_display';
 	const SUMMARY_DISPLAYED_TO_GUESTS = 'summary_displayed_to_guests';
@@ -126,14 +126,14 @@ class DownloadConfig extends AbstractConfigData
 		$this->set_property(self::ITEMS_DEFAULT_SORT_MODE, $value);
 	}
 
-	public function get_default_contents()
+	public function get_default_content()
 	{
-		return $this->get_property(self::DEFAULT_CONTENTS);
+		return $this->get_property(self::DEFAULT_CONTENT);
 	}
 
-	public function set_default_contents($value)
+	public function set_default_content($value)
 	{
-		$this->set_property(self::DEFAULT_CONTENTS, $value);
+		$this->set_property(self::DEFAULT_CONTENT, $value);
 	}
 
 	public function display_summary_to_guests()
@@ -198,7 +198,7 @@ class DownloadConfig extends AbstractConfigData
 
 	public function is_sort_type_date()
 	{
-		return $this->get_property(self::SORT_TYPE) == DownloadItem::SORT_DATE || $this->get_property(self::SORT_TYPE) == DownloadItem::SORT_UPDATED_DATE;
+		return $this->get_property(self::SORT_TYPE) == DownloadItem::SORT_DATE || $this->get_property(self::SORT_TYPE) == DownloadItem::SORT_UPDATE_DATE;
 	}
 
 	public function is_sort_type_downloads_number()
@@ -293,9 +293,9 @@ class DownloadConfig extends AbstractConfigData
 			self::ITEMS_PER_ROW => 2,
 			self::FULL_ITEM_DISPLAY => false,
 			self::DISPLAY_TYPE => self::GRID_VIEW,
-			self::ITEMS_DEFAULT_SORT_FIELD => DownloadItem::SORT_UPDATED_DATE,
+			self::ITEMS_DEFAULT_SORT_FIELD => DownloadItem::SORT_UPDATE_DATE,
 			self::ITEMS_DEFAULT_SORT_MODE => DownloadItem::DESC,
-			self::DEFAULT_CONTENTS => '',
+			self::DEFAULT_CONTENT => '',
 			self::SUMMARY_DISPLAYED_TO_GUESTS => false,
 			self::AUTHOR_DISPLAYED => true,
 			self::NB_VIEW_ENABLED => false,

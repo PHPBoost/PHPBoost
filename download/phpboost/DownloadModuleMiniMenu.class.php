@@ -50,7 +50,7 @@ class DownloadModuleMiniMenu extends ModuleMiniMenu
 		// Load categories cache
 		$categories_cache = CategoriesService::get_categories_manager('download')->get_categories_cache();
 
-		$items = $download_cache->get_downloadfiles();
+		$items = $download_cache->get_items();
 
 		$view->put_all(array(
 			'C_ITEMS' => !empty($items),

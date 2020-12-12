@@ -163,7 +163,7 @@ class AdminDownloadConfigController extends AdminModuleController
 			)
 		));
 
-        $fieldset->add_field(new FormFieldRichTextEditor('default_contents', $this->lang['download.config.default.contents'], $this->config->get_default_contents(),
+        $fieldset->add_field(new FormFieldRichTextEditor('default_content', $this->lang['download.config.default.content'], $this->config->get_default_content(),
 			array('rows' => 8, 'cols' => 47)
 		));
 
@@ -171,7 +171,7 @@ class AdminDownloadConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 
 		$sort_options = array(
-			new FormFieldSelectChoiceOption($this->common_lang['form.date.update'], DownloadItem::SORT_UPDATED_DATE, array('data_option_icon' => 'far fa-calendar-plus')),
+			new FormFieldSelectChoiceOption($this->common_lang['form.date.update'], DownloadItem::SORT_UPDATE_DATE, array('data_option_icon' => 'far fa-calendar-plus')),
 			new FormFieldSelectChoiceOption($this->common_lang['form.date.creation'], DownloadItem::SORT_DATE, array('data_option_icon' => 'far fa-calendar-alt')),
 			new FormFieldSelectChoiceOption($this->common_lang['form.name'], DownloadItem::SORT_ALPHABETIC, array('data_option_icon' => 'fa fa-sort-alpha-up')),
 			new FormFieldSelectChoiceOption($this->common_lang['author'], DownloadItem::SORT_AUTHOR, array('data_option_icon' => 'far fa-user')),
@@ -233,8 +233,8 @@ class AdminDownloadConfigController extends AdminModuleController
 	private function get_sort_options()
 	{
 		$sort_options = array(
-			new FormFieldSelectChoiceOption($this->common_lang['form.date.update'] . ' - ' . $this->common_lang['sort.asc'], DownloadItem::SORT_UPDATED_DATE . '-' . DownloadItem::ASC),
-			new FormFieldSelectChoiceOption($this->common_lang['form.date.update'] . ' - ' . $this->common_lang['sort.desc'], DownloadItem::SORT_UPDATED_DATE . '-' . DownloadItem::DESC),
+			new FormFieldSelectChoiceOption($this->common_lang['form.date.update'] . ' - ' . $this->common_lang['sort.asc'], DownloadItem::SORT_UPDATE_DATE . '-' . DownloadItem::ASC),
+			new FormFieldSelectChoiceOption($this->common_lang['form.date.update'] . ' - ' . $this->common_lang['sort.desc'], DownloadItem::SORT_UPDATE_DATE . '-' . DownloadItem::DESC),
 			new FormFieldSelectChoiceOption($this->common_lang['form.date.creation'] . ' - ' . $this->common_lang['sort.asc'], DownloadItem::SORT_DATE . '-' . DownloadItem::ASC),
 			new FormFieldSelectChoiceOption($this->common_lang['form.date.creation'] . ' - ' . $this->common_lang['sort.desc'], DownloadItem::SORT_DATE . '-' . DownloadItem::DESC),
 			new FormFieldSelectChoiceOption($this->common_lang['sort_by.alphabetic'] . ' - ' . $this->common_lang['sort.asc'], DownloadItem::SORT_ALPHABETIC . '-' . DownloadItem::ASC),
@@ -309,7 +309,7 @@ class AdminDownloadConfigController extends AdminModuleController
 		else
 			$this->config->disable_limit_oldest_file_day_in_menu();
 
-		$this->config->set_default_contents($this->form->get_value('default_contents'));
+		$this->config->set_default_content($this->form->get_value('default_content'));
         $this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 
 		DownloadConfig::save();

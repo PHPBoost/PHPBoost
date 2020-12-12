@@ -53,12 +53,12 @@ class DownloadCategoryController extends ModuleController
 		$subcategories = CategoriesService::get_categories_manager('download')->get_categories_cache()->get_children($this->get_category()->get_id(), CategoriesService::get_authorized_categories($this->get_category()->get_id(), $this->config->is_summary_displayed_to_guests(), 'download'));
 		$subcategories_pagination = $this->get_subcategories_pagination(count($subcategories), $this->config->get_categories_per_page(), $field, $mode, $page, $subcategories_page);
 
-		$nbr_cat_displayed = 0;
+		$categories_number_displayed = 0;
 		foreach ($subcategories as $id => $category)
 		{
-			$nbr_cat_displayed++;
+			$categories_number_displayed++;
 
-			if ($nbr_cat_displayed > $subcategories_pagination->get_display_from() && $nbr_cat_displayed <= ($subcategories_pagination->get_display_from() + $subcategories_pagination->get_number_items_per_page()))
+			if ($categories_number_displayed > $subcategories_pagination->get_display_from() && $categories_number_displayed <= ($subcategories_pagination->get_display_from() + $subcategories_pagination->get_number_items_per_page()))
 			{
 				$category_thumbnail = $category->get_thumbnail()->rel();
 
@@ -75,7 +75,7 @@ class DownloadCategoryController extends ModuleController
 		}
 
 		$condition = 'WHERE id_category = :id_category
-		AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))';
+		AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))';
 		$parameters = array(
 			'id_category' => $this->get_category()->get_id(),
 			'timestamp_now' => $now->get_timestamp()
@@ -108,35 +108,35 @@ class DownloadCategoryController extends ModuleController
 		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
 
 		$this->view->put_all(array(
-			'C_ITEMS' => $result->get_rows_count() > 0,
-			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
-			'C_GRID_VIEW' => $this->config->get_display_type() == DownloadConfig::GRID_VIEW,
-			'C_LIST_VIEW' => $this->config->get_display_type() == DownloadConfig::LIST_VIEW,
-			'C_TABLE_VIEW' => $this->config->get_display_type() == DownloadConfig::TABLE_VIEW,
-			'C_FULL_ITEM_DISPLAY' => $this->config->is_full_item_displayed(),
-			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
-			'C_AUTHOR_DISPLAYED' => $this->config->is_author_displayed(),
-			'C_ENABLED_COMMENTS' => $this->comments_config->module_comments_is_enabled('download'),
-			'C_ENABLED_NOTATION' => $this->content_management_config->module_notation_is_enabled('download'),
-			'C_ENABLED_VIEWS_NUMBER' => $this->config->get_enabled_views_number(),
-			'C_MODERATION' => DownloadAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
-			'C_PAGINATION' => $pagination->has_several_pages(),
-			'C_CATEGORY' => true,
-			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
-			'C_HIDE_NO_ITEM_MESSAGE' => $this->get_category()->get_id() == Category::ROOT_CATEGORY && ($nbr_cat_displayed != 0 || !empty($category_description)),
-			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
+			'C_ITEMS'                    => $result->get_rows_count() > 0,
+			'C_SEVERAL_ITEMS'            => $result->get_rows_count() > 1,
+			'C_GRID_VIEW'                => $this->config->get_display_type() == DownloadConfig::GRID_VIEW,
+			'C_LIST_VIEW'                => $this->config->get_display_type() == DownloadConfig::LIST_VIEW,
+			'C_TABLE_VIEW'               => $this->config->get_display_type() == DownloadConfig::TABLE_VIEW,
+			'C_FULL_ITEM_DISPLAY'        => $this->config->is_full_item_displayed(),
+			'C_CATEGORY_DESCRIPTION'     => !empty($category_description),
+			'C_AUTHOR_DISPLAYED'         => $this->config->is_author_displayed(),
+			'C_ENABLED_COMMENTS'         => $this->comments_config->module_comments_is_enabled('download'),
+			'C_ENABLED_NOTATION'         => $this->content_management_config->module_notation_is_enabled('download'),
+			'C_ENABLED_VIEWS_NUMBER'     => $this->config->get_enabled_views_number(),
+			'C_MODERATION'               => DownloadAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
+			'C_PAGINATION'               => $pagination->has_several_pages(),
+			'C_CATEGORY'                 => true,
+			'C_ROOT_CATEGORY'            => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
+			'C_HIDE_NO_ITEM_MESSAGE'     => $this->get_category()->get_id() == Category::ROOT_CATEGORY && ($categories_number_displayed != 0 || !empty($category_description)),
+			'C_SUB_CATEGORIES'           => $categories_number_displayed > 0,
 			'C_SUBCATEGORIES_PAGINATION' => $subcategories_pagination->has_several_pages(),
 
-			'CATEGORIES_PER_ROW' => $this->config->get_categories_per_row(),
-			'ITEMS_PER_ROW' => $this->config->get_items_per_row(),
+			'CATEGORIES_PER_ROW'       => $this->config->get_categories_per_row(),
+			'ITEMS_PER_ROW'            => $this->config->get_items_per_row(),
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
-			'PAGINATION' => $pagination->display(),
-			'TABLE_COLSPAN' => 4 + (int)$this->comments_config->module_comments_is_enabled('download') + (int)$this->content_management_config->module_notation_is_enabled('download'),
-			'ID_CAT' => $this->get_category()->get_id(),
-			'CATEGORY_NAME' => $this->get_category()->get_name(),
-			'U_CATEGORY_THUMBNAIL' => $this->get_category()->get_thumbnail()->rel(),
-			'CATEGORY_DESCRIPTION' => $category_description,
-			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? DownloadUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id())->rel()
+			'PAGINATION'               => $pagination->display(),
+			'TABLE_COLSPAN'            => 4 + (int)$this->comments_config->module_comments_is_enabled('download') + (int)$this->content_management_config->module_notation_is_enabled('download'),
+			'ID_CAT'                   => $this->get_category()->get_id(),
+			'CATEGORY_NAME'            => $this->get_category()->get_name(),
+			'U_CATEGORY_THUMBNAIL'     => $this->get_category()->get_thumbnail()->rel(),
+			'CATEGORY_DESCRIPTION'     => $category_description,
+			'U_EDIT_CATEGORY'          => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? DownloadUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id())->rel()
 		));
 
 		while ($row = $result->fetch())
@@ -175,7 +175,7 @@ class DownloadCategoryController extends ModuleController
 		$form->add_fieldset($fieldset);
 
 		$sort_options = array(
-			new FormFieldSelectChoiceOption($common_lang['form.date.update'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_UPDATED_DATE], array('data_option_icon' => 'far fa-calendar-plus')),
+			new FormFieldSelectChoiceOption($common_lang['form.date.update'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_UPDATE_DATE], array('data_option_icon' => 'far fa-calendar-plus')),
 			new FormFieldSelectChoiceOption($common_lang['form.date.creation'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_DATE], array('data_option_icon' => 'far fa-calendar-alt')),
 			new FormFieldSelectChoiceOption($common_lang['form.name'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_ALPHABETIC], array('data_option_icon' => 'fa fa-sort-alpha-up')),
 			new FormFieldSelectChoiceOption($common_lang['author'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_AUTHOR], array('data_option_icon' => 'fa fa-user')),

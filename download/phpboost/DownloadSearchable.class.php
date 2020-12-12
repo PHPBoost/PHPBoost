@@ -21,18 +21,18 @@ class DownloadSearchable extends DefaultSearchable
 
 		$this->use_keywords = true;
 
-		$this->field_title = 'name';
-		$this->field_rewrited_title = 'rewrited_name';
-		$this->field_content = 'contents';
+		$this->field_title = 'title';
+		$this->field_rewrited_title = 'rewrited_title';
+		$this->field_content = 'content';
 
 		$this->has_summary = true;
-		$this->field_summary = 'short_contents';
+		$this->field_summary = 'summary';
 
-		$this->field_published = 'approbation_type';
+		$this->field_published = 'published';
 
 		$this->has_validation_period = true;
-		$this->field_validation_start_date = 'start_date';
-		$this->field_validation_end_date = 'end_date';
+		$this->field_validation_start_date = 'publishing_start_date';
+		$this->field_validation_end_date = 'publishing_end_date';
 	}
 }
 ?>

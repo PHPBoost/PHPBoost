@@ -106,17 +106,17 @@ class DownloadUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function display($id_category, $rewrited_name_category, $id, $rewrited_name)
+	public static function display($id_category, $rewrited_name_category, $id, $rewrited_title)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id . '-' . $rewrited_name . '/');
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id . '-' . $rewrited_title . '/');
 	}
 
 	/**
 	 * @return Url
 	 */
-	public static function display_comments($id_category, $rewrited_name_category, $id, $rewrited_name)
+	public static function display_comments($id_category, $rewrited_name_category, $id, $rewrited_title)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id . '-' . $rewrited_name . '/#comments-list');
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id . '-' . $rewrited_title . '/#comments-list');
 	}
 
 	/**
