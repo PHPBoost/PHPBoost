@@ -62,7 +62,7 @@
 						<th class="col-small">{@web.visits.number}</th>
 						# IF C_ENABLED_NOTATION #<th>${LangLoader::get_message('note', 'common')}</th># ENDIF #
 						# IF C_ENABLED_COMMENTS #<th class="col-small">${LangLoader::get_message('comments', 'comments-common')}</th># ENDIF #
-						# IF C_MODERATE #<th class="col-smaller"></th># ENDIF #
+						# IF C_CONTROLS #<th class="col-smaller"></th># ENDIF #
 					</tr>
 				</thead>
 				<tbody>

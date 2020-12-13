@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 06
+ * @version     PHPBoost 6.0 - last update: 2020 12 13
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -119,7 +119,7 @@ class WebDisplayCategoryController extends ModuleController
 			'ITEMS_PER_ROW' => $this->config->get_items_per_row(),
 			'C_ENABLED_COMMENTS' => $this->comments_config->module_comments_is_enabled('web'),
 			'C_ENABLED_NOTATION' => $this->content_management_config->module_notation_is_enabled('web'),
-			'C_MODERATE' => CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
+			'C_CONTROLS' => CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_CATEGORY' => true,
 			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
