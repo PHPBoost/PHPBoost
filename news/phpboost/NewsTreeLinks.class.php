@@ -24,10 +24,10 @@ class NewsTreeLinks implements ModuleTreeLinksExtensionPoint
 		$manage_categories_link->add_sub_link(new ModuleLink(LangLoader::get_message('category.add', 'categories-common'), CategoriesUrlBuilder::add_category(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY), $module_id), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->manage_categories()));
 		$tree->add_link($manage_categories_link);
 
-		$manage_news_link = new ModuleLink($lang['news.manage'], NewsUrlBuilder::manage_items(), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation());
-		$manage_news_link->add_sub_link(new ModuleLink($lang['news.manage'], NewsUrlBuilder::manage_items(), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation()));
-		$manage_news_link->add_sub_link(new ModuleLink($lang['news.add.item'], NewsUrlBuilder::add_item(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY)), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation()));
-		$tree->add_link($manage_news_link);
+		$manage_item_link = new ModuleLink($lang['news.manage'], NewsUrlBuilder::manage_items(), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation());
+		$manage_item_link->add_sub_link(new ModuleLink($lang['news.manage'], NewsUrlBuilder::manage_items(), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation()));
+		$manage_item_link->add_sub_link(new ModuleLink($lang['news.add.item'], NewsUrlBuilder::add_item(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY)), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation()));
+		$tree->add_link($manage_item_link);
 
 		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin-common'), NewsUrlBuilder::configuration()));
 

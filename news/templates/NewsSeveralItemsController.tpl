@@ -96,7 +96,7 @@
 								# IF items.C_HAS_THUMBNAIL #
 									<img class="item-thumbnail" itemprop="thumbnailUrl" src="{items.U_THUMBNAIL}" alt="{items.TITLE}" />
 								# ENDIF #
-								{items.CONTENTS}
+								{items.CONTENT}
 							# ELSE #
 								{items.SUMMARY}# IF items.C_READ_MORE # <a href="{items.U_ITEM}">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
 							# ENDIF #

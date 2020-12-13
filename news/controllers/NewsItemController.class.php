@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 06
+ * @version     PHPBoost 6.0 - last update: 2020 12 13
  * @since       PHPBoost 4.0 - 2013 02 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -38,7 +38,7 @@ class NewsItemController extends ModuleController
 		$this->view->add_lang(array_merge($this->lang, $common_lang));
 	}
 
-	private function get_news()
+	private function get_item()
 	{
 		if ($this->item === null)
 		{
@@ -46,14 +46,14 @@ class NewsItemController extends ModuleController
 			if (!empty($id))
 			{
 				try {
-					$this->item = NewsService::get_news('WHERE id=:id', array('id' => $id));
+					$this->item = NewsService::get_item('WHERE id=:id', array('id' => $id));
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
 					DispatchManager::redirect($error_controller);
 				}
 			}
 			else
-				$this->item = new News();
+				$this->item = new NewsItem();
 		}
 		return $this->item;
 	}
@@ -101,7 +101,7 @@ class NewsItemController extends ModuleController
 		}
 
 		$this->build_keywords_view($this->item);
-		$this->build_suggested_news($this->item);
+		$this->build_suggested_item($this->item);
 		$this->build_navigation_links($this->item);
 	}
 
@@ -123,23 +123,23 @@ class NewsItemController extends ModuleController
 		}
 	}
 
-	private function build_suggested_news()
+	private function build_suggested_item()
 	{
 		$now = new Date();
 
 		$result = PersistenceContext::get_querier()->select('SELECT
-			id, title, id_category, rewrited_title, thumbnail_url,
+			id, title, id_category, rewrited_title, thumbnail,
 			(2 * FT_SEARCH_RELEVANCE(title, :search_content) + FT_SEARCH_RELEVANCE(content, :search_content) / 3) AS relevance
 		FROM ' . NewsSetup::$news_table . '
 		WHERE (FT_SEARCH(title, :search_content) OR FT_SEARCH(content, :search_content)) AND id <> :excluded_id
-		AND (publication = 1 OR (publication = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))
+		AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
 		ORDER BY relevance DESC LIMIT 0, 10', array(
 			'excluded_id' => $this->item->get_id(),
-			'search_content' => $this->item->get_title() .','. $this->item->get_contents(),
+			'search_content' => $this->item->get_title() .','. $this->item->get_content(),
 			'timestamp_now' => $now->get_timestamp()
 		));
 
-		$this->view->put('C_SUGGESTED_NEWS', ($result->get_rows_count() > 0 && NewsConfig::load()->get_news_suggestions_enabled()));
+		$this->view->put('C_SUGGESTED_NEWS', ($result->get_rows_count() > 0 && NewsConfig::load()->get_item_suggestions_enabled()));
 
 		while ($row = $result->fetch())
 		{
@@ -148,7 +148,7 @@ class NewsItemController extends ModuleController
 				'U_CATEGORY' =>  NewsUrlBuilder::display_category($row['id_category'], CategoriesService::get_categories_manager()->get_categories_cache()->get_category($row['id_category'])->get_rewrited_name())->rel(),
 				'TITLE' => $row['title'],
 				'U_ITEM' => NewsUrlBuilder::display_item($row['id_category'], CategoriesService::get_categories_manager()->get_categories_cache()->get_category($row['id_category'])->get_rewrited_name(), $row['id'], $row['rewrited_title'])->rel(),
-				'U_THUMBNAIL' => !empty($row['thumbnail_url']) ? Url::to_rel($row['thumbnail_url']) : $this->item->get_default_thumbnail()->rel()
+				'U_THUMBNAIL' => !empty($row['thumbnail']) ? Url::to_rel($row['thumbnail']) : $this->item->get_default_thumbnail()->rel()
 			));
 		}
 		$result->dispose();
@@ -157,19 +157,19 @@ class NewsItemController extends ModuleController
 	private function build_navigation_links()
 	{
 		$now = new Date();
-		$timestamp_news = $this->item->get_creation_date()->get_timestamp();
+		$timestamp = $this->item->get_creation_date()->get_timestamp();
 
 		$result = PersistenceContext::get_querier()->select('
-		(SELECT id, title, id_category, rewrited_title, thumbnail_url, \'PREVIOUS\' as type
+		(SELECT id, title, id_category, rewrited_title, thumbnail, \'PREVIOUS\' as type
 		FROM '. NewsSetup::$news_table .'
-		WHERE (publication = 1 OR (publication = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND creation_date < :timestamp_news AND id_category IN :authorized_categories ORDER BY creation_date DESC LIMIT 1 OFFSET 0)
+		WHERE (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))) AND creation_date < :timestamp AND id_category IN :authorized_categories ORDER BY creation_date DESC LIMIT 1 OFFSET 0)
 		UNION
-		(SELECT id, title, id_category, rewrited_title, thumbnail_url, \'NEXT\' as type
+		(SELECT id, title, id_category, rewrited_title, thumbnail, \'NEXT\' as type
 		FROM '. NewsSetup::$news_table .'
-		WHERE (publication = 1 OR (publication = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND creation_date > :timestamp_news AND id_category IN :authorized_categories ORDER BY creation_date ASC LIMIT 1 OFFSET 0)
+		WHERE (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))) AND creation_date > :timestamp AND id_category IN :authorized_categories ORDER BY creation_date ASC LIMIT 1 OFFSET 0)
 		', array(
 			'timestamp_now' => $now->get_timestamp(),
-			'timestamp_news' => $timestamp_news,
+			'timestamp' => $timestamp,
 			'authorized_categories' => array($this->item->get_id_category())
 		));
 
@@ -180,7 +180,7 @@ class NewsItemController extends ModuleController
 				'C_'. $row['type'] .'_ITEM' => true,
 				$row['type'] . '_ITEM' => $row['title'],
 				'U_'. $row['type'] .'_ITEM' => NewsUrlBuilder::display_item($row['id_category'], CategoriesService::get_categories_manager()->get_categories_cache()->get_category($row['id_category'])->get_rewrited_name(), $row['id'], $row['rewrited_title'])->rel(),
-				'U_'. $row['type'] .'_THUMBNAIL' => !empty($row['thumbnail_url']) ? Url::to_rel($row['thumbnail_url']) : $this->item->get_default_thumbnail()->rel()
+				'U_'. $row['type'] .'_THUMBNAIL' => !empty($row['thumbnail']) ? Url::to_rel($row['thumbnail']) : $this->item->get_default_thumbnail()->rel()
 			));
 		}
 		$result->dispose();
@@ -188,26 +188,26 @@ class NewsItemController extends ModuleController
 
 	private function check_authorizations()
 	{
-		$item = $this->get_news();
+		$item = $this->get_item();
 		$current_user = AppContext::get_current_user();
 		$not_authorized = !CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->moderation() && !CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->write() && (!CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->contribution() || $this->item->get_author_user()->get_id() != $current_user->get_id());
 
-		switch ($this->item->get_publication()) {
-			case News::APPROVAL_NOW:
+		switch ($this->item->get_published()) {
+			case NewsItem::PUBLISHED:
 				if (!CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->read())
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 					DispatchManager::redirect($error_controller);
 				}
 			break;
-			case News::NOT_APPROVAL:
+			case NewsItem::NOT_PUBLISHED:
 				if ($not_authorized || ($current_user->get_id() == User::VISITOR_LEVEL))
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 					DispatchManager::redirect($error_controller);
 				}
 			break;
-			case News::APPROVAL_DATE:
+			case NewsItem::DEFERRED_PUBLICATION:
 				if (!$this->item->is_published() && ($not_authorized || ($current_user->get_id() == User::VISITOR_LEVEL)))
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
@@ -223,27 +223,27 @@ class NewsItemController extends ModuleController
 
 	private function generate_response()
 	{
-		$category = $this->get_news()->get_category();
+		$category = $this->get_item()->get_category();
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->get_news()->get_title(), ($category->get_id() != Category::ROOT_CATEGORY ? $category->get_name() . ' - ' : '') . $this->lang['module.title']);
-		$graphical_environment->get_seo_meta_data()->set_description($this->get_news()->get_real_summary());
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $this->get_news()->get_id(), $this->get_news()->get_rewrited_title()));
+		$graphical_environment->set_page_title($this->get_item()->get_title(), ($category->get_id() != Category::ROOT_CATEGORY ? $category->get_name() . ' - ' : '') . $this->lang['module.title']);
+		$graphical_environment->get_seo_meta_data()->set_description($this->get_item()->get_real_summary());
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $this->get_item()->get_id(), $this->get_item()->get_rewrited_title()));
 
-		if ($this->get_news()->has_thumbnail())
-			$graphical_environment->get_seo_meta_data()->set_picture_url($this->get_news()->get_thumbnail());
+		if ($this->get_item()->has_thumbnail())
+			$graphical_environment->get_seo_meta_data()->set_picture_url($this->get_item()->get_thumbnail());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], NewsUrlBuilder::home());
 
-		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->get_news()->get_id_category(), true));
+		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->get_item()->get_id_category(), true));
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id() != Category::ROOT_CATEGORY)
 				$breadcrumb->add($category->get_name(), NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
 		}
-		$breadcrumb->add($this->get_news()->get_title(), NewsUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $this->get_news()->get_id(), $this->get_news()->get_rewrited_title()));
+		$breadcrumb->add($this->get_item()->get_title(), NewsUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $this->get_item()->get_id(), $this->get_item()->get_rewrited_title()));
 
 		return $response;
 	}

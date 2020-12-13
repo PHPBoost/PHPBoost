@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 04
+ * @version     PHPBoost 6.0 - last update: 2020 12 13
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -43,7 +43,7 @@ class NewsPendingItemsController extends ModuleController
 
 		$condition = 'WHERE id_category IN :authorized_categories
 		' . (!CategoriesAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
-		AND (publication = 0 OR (publication = 2 AND (start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now))))';
+		AND (published = 0 OR (published = 2 AND (publishing_start_date > :timestamp_now OR (publishing_end_date != 0 AND publishing_end_date < :timestamp_now))))';
 		$parameters = array(
 			'authorized_categories' => $authorized_categories,
 			'user_id' => AppContext::get_current_user()->get_id(),
@@ -79,7 +79,7 @@ class NewsPendingItemsController extends ModuleController
 
 		while ($row = $result->fetch())
 		{
-			$item = new News();
+			$item = new NewsItem();
 			$item->set_properties($row);
 
 			$this->view->assign_block_vars('items', $item->get_array_tpl_vars());
@@ -94,9 +94,9 @@ class NewsPendingItemsController extends ModuleController
 
 	private function get_pagination($condition, $parameters, $page)
 	{
-		$number_news = NewsService::count($condition, $parameters);
+		$items_number = NewsService::count($condition, $parameters);
 
-		$pagination = new ModulePagination($page, $number_news, (int)NewsConfig::load()->get_items_per_page());
+		$pagination = new ModulePagination($page, $items_number, (int)NewsConfig::load()->get_items_per_page());
 		$pagination->set_url(NewsUrlBuilder::display_pending_items('%d'));
 
 		if ($pagination->current_page_is_empty() && $page > 1)

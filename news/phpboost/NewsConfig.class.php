@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 03 09
+ * @version     PHPBoost 6.0 - last update: 2020 12 13
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -20,11 +20,11 @@ class NewsConfig extends AbstractConfigData
 	const DISPLAY_SUMMARY_TO_GUESTS = 'display_summary_to_guests';
 	const CHARACTERS_NUMBER_TO_CUT = 'characters_number_to_cut';
 
-	const NEWS_SUGGESTIONS_ENABLED = 'news_suggestions_enabled';
+	const ITEMS_SUGGESTIONS_ENABLED = 'item_suggestions_enabled';
 	const AUTHOR_DISPLAYED = 'author_displayed';
 	const VIEWS_NUMBER = 'views_number';
 
-	const DEFAULT_CONTENTS = 'default_contents';
+	const DEFAULT_CONTENT = 'default_content';
 
 	const DISPLAY_TYPE = 'display_type';
 	const GRID_VIEW = 'grid_view';
@@ -89,14 +89,14 @@ class NewsConfig extends AbstractConfigData
 		$this->set_property(self::CHARACTERS_NUMBER_TO_CUT, $number);
 	}
 
-	public function get_news_suggestions_enabled()
+	public function get_item_suggestions_enabled()
 	{
-		return $this->get_property(self::NEWS_SUGGESTIONS_ENABLED);
+		return $this->get_property(self::ITEMS_SUGGESTIONS_ENABLED);
 	}
 
-	public function set_news_suggestions_enabled($news_suggestions_enabled)
+	public function set_item_suggestions_enabled($item_suggestions_enabled)
 	{
-		$this->set_property(self::NEWS_SUGGESTIONS_ENABLED, $news_suggestions_enabled);
+		$this->set_property(self::ITEMS_SUGGESTIONS_ENABLED, $item_suggestions_enabled);
 	}
 
 	public function get_author_displayed()
@@ -129,14 +129,14 @@ class NewsConfig extends AbstractConfigData
 		$this->set_property(self::DISPLAY_TYPE, $display_type);
 	}
 
-	public function get_default_contents()
+	public function get_default_content()
 	{
-		return $this->get_property(self::DEFAULT_CONTENTS);
+		return $this->get_property(self::DEFAULT_CONTENT);
 	}
 
-	public function set_default_contents($value)
+	public function set_default_content($value)
 	{
-		$this->set_property(self::DEFAULT_CONTENTS, $value);
+		$this->set_property(self::DEFAULT_CONTENT, $value);
 	}
 
 	public function get_authorizations()
@@ -169,10 +169,10 @@ class NewsConfig extends AbstractConfigData
 			self::ITEMS_PER_ROW => 1,
 			self::DISPLAY_SUMMARY_TO_GUESTS => false,
 			self::CHARACTERS_NUMBER_TO_CUT => 150,
-			self::NEWS_SUGGESTIONS_ENABLED => true,
+			self::ITEMS_SUGGESTIONS_ENABLED => true,
 			self::AUTHOR_DISPLAYED => true,
 			self::VIEWS_NUMBER => true,
-			self::DEFAULT_CONTENTS => '',
+			self::DEFAULT_CONTENT => '',
 			self::DISPLAY_TYPE => self::LIST_VIEW,
 			self::FULL_ITEM_DISPLAY => true,
 			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13),

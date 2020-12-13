@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 04
+ * @version     PHPBoost 6.0 - last update: 2020 12 13
  * @since       PHPBoost 4.0 - 2013 02 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -46,7 +46,7 @@ class NewsCategoryController extends ModuleController
 		$comments_config = CommentsConfig::load();
 
 		$condition = 'WHERE id_category IN :authorized_categories
-		AND (publication = 1 OR (publication = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))';
+		AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))';
 		$parameters = array(
 			'authorized_categories' => $authorized_categories,
 			'timestamp_now' => $now->get_timestamp()
@@ -85,7 +85,7 @@ class NewsCategoryController extends ModuleController
 
 		while ($row = $result->fetch())
 		{
-			$item = new News();
+			$item = new NewsItem();
 			$item->set_properties($row);
 
 			$this->view->assign_block_vars('items', $item->get_array_tpl_vars());
@@ -100,9 +100,9 @@ class NewsCategoryController extends ModuleController
 
 	private function get_pagination($condition, $parameters, $page)
 	{
-		$news_number = NewsService::count($condition, $parameters);
+		$items_number = NewsService::count($condition, $parameters);
 
-		$pagination = new ModulePagination($page, $news_number, (int)$this->config->get_items_per_page());
+		$pagination = new ModulePagination($page, $items_number, (int)$this->config->get_items_per_page());
 		$pagination->set_url(NewsUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), '%d'));
 
 		if ($pagination->current_page_is_empty() && $page > 1)

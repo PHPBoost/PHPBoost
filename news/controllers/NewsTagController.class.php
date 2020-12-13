@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 03 09
+ * @version     PHPBoost 6.0 - last update: 2020 12 13
  * @since       PHPBoost 4.0 - 2013 02 16
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -47,7 +47,7 @@ class NewsTagController extends ModuleController
 
 		$condition = 'WHERE relation.id_keyword = :id_keyword
 		AND id_category IN :authorized_categories
-		AND (publication = 1 OR (publication = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))';
+		AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))';
 		$parameters = array(
 			'id_keyword' => $this->get_keyword()->get_id(),
 			'authorized_categories' => $authorized_categories,
@@ -84,7 +84,7 @@ class NewsTagController extends ModuleController
 
 		while ($row = $result->fetch())
 		{
-			$item = new News();
+			$item = new NewsItem();
 			$item->set_properties($row);
 
 			$this->view->assign_block_vars('items', array_merge($item->get_array_tpl_vars(), array(
@@ -125,12 +125,12 @@ class NewsTagController extends ModuleController
 
 	private function get_pagination($condition, $parameters, $page)
 	{
-		$result = PersistenceContext::get_querier()->select_single_row_query('SELECT COUNT(*) AS news_number
+		$result = PersistenceContext::get_querier()->select_single_row_query('SELECT COUNT(*) AS items_number
 		FROM '. NewsSetup::$news_table .' news
 		LEFT JOIN '. DB_TABLE_KEYWORDS_RELATIONS .' relation ON relation.module_id = \'news\' AND relation.id_in_module = news.id
 		' . $condition, $parameters);
 
-		$pagination = new ModulePagination($page, $result['news_number'], (int)NewsConfig::load()->get_items_per_page());
+		$pagination = new ModulePagination($page, $result['items_number'], (int)NewsConfig::load()->get_items_per_page());
 		$pagination->set_url(NewsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), '%d'));
 
 		if ($pagination->current_page_is_empty() && $page > 1)

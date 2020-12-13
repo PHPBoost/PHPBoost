@@ -30,6 +30,7 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 			'/phpboost/NewsHomePageExtensionPoint.class.php',
 			'/services/NewsAuthorizationsService.class.php',
 			'/services/NewsKeywordsCache.class.php',
+			'/services/News.class.php',
 			'/templates/NewsFormFieldSelectSources.tpl',
 			'/templates/NewsDisplayNewsController.tpl',
 			'/templates/NewsDisplaySeveralNewsController.tpl',
@@ -48,9 +49,15 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 					'rewrited_name'    => 'rewrited_title VARCHAR(255) NOT NULL DEFAULT ""',
 					'contents'         => 'content MEDIUMTEXT',
 					'short_contents'   => 'summary TEXT',
-					'picture_url'      => 'thumbnail_url VARCHAR(255) NOT NULL DEFAULT ""',
-					'approbation_type' => 'publication INT(1) NOT NULL DEFAULT 0',
+					'picture_url'      => 'thumbnail VARCHAR(255) NOT NULL DEFAULT ""',
+					'start_date'       => 'publishing_start_date INT(11) NOT NULL DEFAULT 0',
+					'updated_date'     => 'update_date INT(11) NOT NULL DEFAULT 0',
+					'end_date'         => 'publishing_end_date INT(11) NOT NULL DEFAULT 0',
+					'approbation_type' => 'published INT(1) NOT NULL DEFAULT 0',
 					'number_view'      => 'views_number INT(11) NOT NULL DEFAULT 0',
+					// 6.0.b1
+					'publication'   => 'published INT(1) NOT NULL DEFAULT 0',
+					'thumbnail_url' => 'thumbnail VARCHAR(255) NOT NULL DEFAULT ""',
 				)
 			),
 			array(

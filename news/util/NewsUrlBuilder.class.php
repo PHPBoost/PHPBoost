@@ -51,14 +51,14 @@ class NewsUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/my_items/' . $page);
 	}
 
-	public static function display_item($id_category, $rewrited_name_category, $id_news, $rewrited_title)
+	public static function display_item($id_category, $rewrited_name_category, $item_id, $rewrited_title)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id_news . '-' . $rewrited_title . '/');
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $item_id . '-' . $rewrited_title . '/');
 	}
 
-	public static function display_item_comments($id_category, $rewrited_name_category, $id_news, $rewrited_title)
+	public static function display_item_comments($id_category, $rewrited_name_category, $item_id, $rewrited_title)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id_news . '-' . $rewrited_title . '/#comments-list');
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $item_id . '-' . $rewrited_title . '/#comments-list');
 	}
 
 	public static function add_item($id_category = null)

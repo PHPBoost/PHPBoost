@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 02
+ * @version     PHPBoost 6.0 - last update: 2020 12 13
  * @since       PHPBoost 4.0 - 2013 06 24
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -47,7 +47,7 @@ class NewsItemsManagerController extends AdminModuleController
 			new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category'),
 			new HTMLTableColumn(LangLoader::get_message('author', 'common'), 'display_name'),
 			new HTMLTableColumn(LangLoader::get_message('form.date.creation', 'common'), 'creation_date'),
-			new HTMLTableColumn(LangLoader::get_message('status', 'common'), 'publication'),
+			new HTMLTableColumn(LangLoader::get_message('status', 'common'), 'published'),
 			new HTMLTableColumn(LangLoader::get_message('actions', 'admin-common'), '', array('sr-only' => true))
 		);
 
@@ -64,26 +64,26 @@ class NewsItemsManagerController extends AdminModuleController
 		$result = $table_model->get_sql_results('news LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = news.author_user_id');
 		foreach ($result as $row)
 		{
-			$news = new News();
-			$news->set_properties($row);
-			$category = $news->get_category();
-			$user = $news->get_author_user();
+			$item = new NewsItem();
+			$item->set_properties($row);
+			$category = $item->get_category();
+			$user = $item->get_author_user();
 
 			$this->elements_number++;
-			$this->ids[$this->elements_number] = $news->get_id();
+			$this->ids[$this->elements_number] = $item->get_id();
 
-			$edit_link = new EditLinkHTMLElement(NewsUrlBuilder::edit_item($news->get_id()));
-			$delete_link = new DeleteLinkHTMLElement(NewsUrlBuilder::delete_item($news->get_id()));
+			$edit_link = new EditLinkHTMLElement(NewsUrlBuilder::edit_item($item->get_id()));
+			$delete_link = new DeleteLinkHTMLElement(NewsUrlBuilder::delete_item($item->get_id()));
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
 
 			$row = array(
-				new HTMLTableRowCell(new LinkHTMLElement(NewsUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_title()), $news->get_title()), 'left'),
+				new HTMLTableRowCell(new LinkHTMLElement(NewsUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()), $item->get_title()), 'left'),
 				new HTMLTableRowCell(new LinkHTMLElement(NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), ($category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('none_e', 'common') : $category->get_name()))),
 				new HTMLTableRowCell($author),
-				new HTMLTableRowCell($news->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
-				new HTMLTableRowCell($news->get_status()),
+				new HTMLTableRowCell($item->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
+				new HTMLTableRowCell($item->get_status()),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display(), 'controls')
 			);
 

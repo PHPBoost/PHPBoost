@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 30
+ * @version     PHPBoost 6.0 - last update: 2020 12 13
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -56,18 +56,18 @@ class NewsSetup extends DefaultModuleSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'thumbnail' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'title' => array('type' => 'string', 'length' => 250, 'notnull' => 1, 'default' => "''"),
 			'rewrited_title' => array('type' => 'string', 'length' => 250, 'default' => "''"),
 			'content' => array('type' => 'text', 'length' => 16777215),
 			'summary' => array('type' => 'text', 'length' => 65000),
 			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'updated_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'publication' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'start_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'update_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'published' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
+			'publishing_start_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'publishing_end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'views_number' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'top_list_enabled' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'thumbnail_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'author_custom_name' => array('type' =>  'string', 'length' => 255, 'default' => "''"),
 			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'sources' => array('type' => 'text', 'length' => 65000),
@@ -79,7 +79,8 @@ class NewsSetup extends DefaultModuleSetup
 				'title' => array('type' => 'fulltext', 'fields' => 'title'),
 				'content' => array('type' => 'fulltext', 'fields' => 'content'),
 				'summary' => array('type' => 'fulltext', 'fields' => 'summary')
-		));
+			)
+		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$news_table, $fields, $options);
 	}
 
@@ -105,7 +106,7 @@ class NewsSetup extends DefaultModuleSetup
 			'rewrited_name' => Url::encode_rewrite($this->messages['cat.name']),
 			'name' => $this->messages['cat.name'],
 			'description' => $this->messages['cat.description'],
-			'thumbnail' => '/templates/default/images/default_category_thumbnail.png'
+			'thumbnail' => FormFieldThumbnail::DEFAULT_VALUE
 		));
 	}
 
@@ -119,13 +120,13 @@ class NewsSetup extends DefaultModuleSetup
 			'content' => $this->messages['news.content'],
 			'summary' => '',
 			'creation_date' => time(),
-			'updated_date' => 0,
-			'publication' => News::APPROVAL_NOW,
-			'start_date' => 0,
-			'end_date' => 0,
+			'update_date' => 0,
+			'published' => NewsItem::PUBLISHED,
+			'publishing_start_date' => 0,
+			'publishing_end_date' => 0,
 			'views_number' => 0,
 			'top_list_enabled' => 0,
-			'thumbnail_url' => '/templates/default/images/default_item_thumbnail.png',
+			'thumbnail' => FormFieldThumbnail::DEFAULT_VALUE,
 			'author_custom_name' => '',
 			'author_user_id' => 1,
 			'sources' => TextHelper::serialize(array())

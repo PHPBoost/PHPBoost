@@ -49,7 +49,7 @@
 		<div class="content">
 			# IF C_HAS_THUMBNAIL #<img src="{U_THUMBNAIL}" alt="{TITLE}" class="item-thumbnail" itemprop="thumbnailUrl" /># ENDIF #
 
-			<div itemprop="text">{CONTENTS}</div>
+			<div itemprop="text">{CONTENT}</div>
 		</div>
 
 		# IF C_AUTHOR_DISPLAYED #

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 13
+ * @version     PHPBoost 6.0 - last update: 2020 12 13
  * @since       PHPBoost 4.0 - 2013 02 22
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -29,11 +29,11 @@ class NewsSearchable extends DefaultSearchable
 		$this->has_summary = true;
 		$this->field_summary = 'summary';
 
-		$this->field_published = 'publication';
+		$this->field_published = 'published';
 
 		$this->has_validation_period = true;
-		$this->field_validation_start_date = 'start_date';
-		$this->field_validation_end_date = 'end_date';
+		$this->field_validation_publishing_start_date = 'publishing_start_date';
+		$this->field_validation_publishing_end_date = 'publishing_end_date';
 	}
 }
 ?>
