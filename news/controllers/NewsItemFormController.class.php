@@ -386,6 +386,10 @@ class NewsItemFormController extends ModuleController
 				$this->item->clean_start_and_publishing_end_date();
 		}
 
+		$now = new Date();
+		if(($this->item->get_id() !== null) && ($this->item->get_creation_date()->get_timestamp() < $now->get_timestamp()))
+			$this->item->set_update_date(new Date());
+
 		if ($this->item->get_id() === null)
 		{
 			$this->item->set_author_user(AppContext::get_current_user());

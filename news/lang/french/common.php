@@ -30,6 +30,7 @@ $lang['news.edit.item'] = 'Modifier une news';
 $lang['news.pending.items'] = 'News en attente';
 $lang['news.manage'] = 'Gérer les news';
 $lang['news.management'] = 'Gestion des news';
+$lang['news.last.update'] = 'Dernière mise à jour le ';
 
 // Form
 $lang['news.form.summary'] = 'Résumé de la news';

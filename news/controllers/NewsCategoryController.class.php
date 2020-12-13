@@ -59,7 +59,7 @@ class NewsCategoryController extends ModuleController
 		FROM '. NewsSetup::$news_table .' news
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = news.author_user_id
 		' . $condition . '
-		ORDER BY top_list_enabled DESC, news.creation_date DESC
+		ORDER BY news.top_list_enabled DESC, news.update_date DESC, news.creation_date DESC
 		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()

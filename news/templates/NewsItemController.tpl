@@ -51,6 +51,7 @@
 
 			<div itemprop="text">{CONTENT}</div>
 		</div>
+		# IF C_HAS_UPDATE #<span class="pinned notice small text-italic modified-date">{@news.last.update} <time datetime="{UPDATE_DATE_ISO8601}" itemprop="dateModified">{UPDATE_DATE_FULL}</time></span># ENDIF #
 
 		# IF C_AUTHOR_DISPLAYED #
 			# IF NOT C_AUTHOR_CUSTOM_NAME #

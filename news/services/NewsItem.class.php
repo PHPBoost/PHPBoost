@@ -416,6 +416,7 @@ class NewsItem
 
 		return array_merge(
 			Date::get_array_tpl_vars($this->creation_date,'date'),
+			Date::get_array_tpl_vars($this->update_date,'update_date'),
 			Date::get_array_tpl_vars($this->publishing_start_date,'differed_publishing_start_date'),
 			array(
 				// Conditions
@@ -424,6 +425,7 @@ class NewsItem
 				'C_EDIT'               => $this->is_authorized_to_edit(),
 				'C_DELETE'             => $this->is_authorized_to_delete(),
 				'C_HAS_THUMBNAIL'      => $this->has_thumbnail(),
+				'C_HAS_UPDATE'         => $this->has_update_date(),
 				'C_AUTHOR_GROUP_COLOR' => !empty($user_group_color),
 				'C_AUTHOR_DISPLAYED'   => $config->get_author_displayed(),
 				'C_AUTHOR_CUSTOM_NAME' => $this->is_author_custom_name_enabled(),
