@@ -61,7 +61,7 @@ class NewsItemFormController extends ModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('news', $this->lang['module.title']);
+		$fieldset = new FormFieldsetHTMLHeading('news', $this->get_item()->get_id() === null ? $this->lang['news.add.item'] : $this->lang['news.edit.item']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('title', $this->common_lang['form.name'], $this->get_item()->get_title(), array('required' => true)));
