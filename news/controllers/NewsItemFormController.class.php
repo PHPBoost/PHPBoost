@@ -388,7 +388,7 @@ class NewsItemFormController extends ModuleController
 
 		$now = new Date();
 		if(($this->item->get_id() !== null) && ($this->item->get_creation_date()->get_timestamp() < $now->get_timestamp()))
-			$this->item->set_update_date(new Date());
+			$this->item->set_update_date($now);
 
 		if ($this->item->get_id() === null)
 		{
