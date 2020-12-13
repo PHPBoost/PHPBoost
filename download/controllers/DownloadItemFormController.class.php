@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 12
+ * @version     PHPBoost 6.0 - last update: 2020 12 13
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -204,13 +204,13 @@ class DownloadItemFormController extends ModuleController
 					'events' => array('change' => '
 						if (HTMLForms.getField("published").getValue() == 2) {
 							jQuery("#' . __CLASS__ . '_publishing_start_date_field").show();
-							HTMLForms.getField("publishing_end_date_enabled").enable();
-							if (HTMLForms.getField("publishing_end_date_enabled").getValue()) {
+							HTMLForms.getField("end_date_enabled").enable();
+							if (HTMLForms.getField("end_date_enabled").getValue()) {
 								HTMLForms.getField("publishing_end_date").enable();
 							}
 						} else {
 							jQuery("#' . __CLASS__ . '_publishing_start_date_field").hide();
-							HTMLForms.getField("publishing_end_date_enabled").disable();
+							HTMLForms.getField("end_date_enabled").disable();
 							HTMLForms.getField("publishing_end_date").disable();
 						}'
 					)
@@ -221,11 +221,11 @@ class DownloadItemFormController extends ModuleController
 				array('hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_published', 0) != DownloadItem::DEFERRED_PUBLICATION) : ($this->get_item()->get_publishing_state() != DownloadItem::DEFERRED_PUBLICATION)))
 			));
 
-			$publication_fieldset->add_field(new FormFieldCheckbox('publishing_end_date_enabled', $this->common_lang['form.date.end.enable'], $this->get_item()->is_publishing_end_date_enabled(),
+			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->common_lang['form.date.end.enable'], $this->get_item()->is_end_date_enabled(),
 				array(
 					'hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_published', 0) != DownloadItem::DEFERRED_PUBLICATION) : ($this->get_item()->get_publishing_state() != DownloadItem::DEFERRED_PUBLICATION)),
 					'events' => array('click' => '
-						if (HTMLForms.getField("publishing_end_date_enabled").getValue()) {
+						if (HTMLForms.getField("end_date_enabled").getValue()) {
 							HTMLForms.getField("publishing_end_date").enable();
 						} else {
 							HTMLForms.getField("publishing_end_date").disable();
@@ -235,7 +235,7 @@ class DownloadItemFormController extends ModuleController
 			));
 
 			$publication_fieldset->add_field($publishing_end_date = new FormFieldDateTime('publishing_end_date', $this->common_lang['form.date.end'], ($this->get_item()->get_publishing_end_date() === null ? new Date() : $this->get_item()->get_publishing_end_date()),
-				array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_publishing_end_date_enabled', false) : !$this->get_item()->is_publishing_end_date_enabled()))
+				array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_end_date_enabled', false) : !$this->get_item()->is_end_date_enabled()))
 			));
 
 			$publishing_end_date->add_form_constraint(new FormConstraintFieldsDifferenceSuperior($publishing_start_date, $publishing_end_date));
@@ -409,7 +409,7 @@ class DownloadItemFormController extends ModuleController
 				if (!in_array($publishing_start_date->get_timestamp(), $deferred_operations))
 					$deferred_operations[] = $publishing_start_date->get_timestamp();
 
-				if ($this->form->get_value('publishing_end_date_enabled'))
+				if ($this->form->get_value('end_date_enabled'))
 				{
 					$old_publishing_end_date = $item->get_publishing_end_date();
 					$publishing_end_date = $this->form->get_value('publishing_end_date');

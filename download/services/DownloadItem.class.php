@@ -1,9 +1,9 @@
-<?php
+end_date_enabled<?php
 /**
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 12
+ * @version     PHPBoost 6.0 - last update: 2020 12 13
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -27,7 +27,7 @@ class DownloadItem
 	private $published;
 	private $publishing_start_date;
 	private $publishing_end_date;
-	private $publishing_end_date_enabled;
+	private $end_date_enabled;
 
 	private $creation_date;
 	private $update_date;
@@ -197,7 +197,7 @@ class DownloadItem
 	public function is_published()
 	{
 		$now = new Date();
-		return DownloadAuthorizationsService::check_authorizations($this->id_category)->read() && ($this->get_publishing_state() == self::PUBLISHED || ($this->get_publishing_state() == self::DEFERRED_PUBLICATION && $this->get_publishing_start_date()->is_anterior_to($now) && ($this->publishing_end_date_enabled ? $this->get_publishing_end_date()->is_posterior_to($now) : true)));
+		return DownloadAuthorizationsService::check_authorizations($this->id_category)->read() && ($this->get_publishing_state() == self::PUBLISHED || ($this->get_publishing_state() == self::DEFERRED_PUBLICATION && $this->get_publishing_start_date()->is_anterior_to($now) && ($this->end_date_enabled ? $this->get_publishing_end_date()->is_posterior_to($now) : true)));
 	}
 
 	public function get_status()
@@ -233,12 +233,12 @@ class DownloadItem
 	public function set_publishing_end_date(Date $publishing_end_date)
 	{
 		$this->publishing_end_date = $publishing_end_date;
-		$this->publishing_end_date_enabled = true;
+		$this->end_date_enabled = true;
 	}
 
-	public function is_publishing_end_date_enabled()
+	public function is_end_date_enabled()
 	{
-		return $this->publishing_end_date_enabled;
+		return $this->end_date_enabled;
 	}
 
 	public function get_creation_date()
@@ -434,7 +434,7 @@ class DownloadItem
 		$this->published = $properties['published'];
 		$this->publishing_start_date = !empty($properties['publishing_start_date']) ? new Date($properties['publishing_start_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->publishing_end_date = !empty($properties['publishing_end_date']) ? new Date($properties['publishing_end_date'], Timezone::SERVER_TIMEZONE) : null;
-		$this->publishing_end_date_enabled = !empty($properties['publishing_end_date']);
+		$this->end_date_enabled = !empty($properties['publishing_end_date']);
 		$this->creation_date = new Date($properties['creation_date'], Timezone::SERVER_TIMEZONE);
 		$this->update_date = !empty($properties['update_date']) ? new Date($properties['update_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->downloads_number = $properties['downloads_number'];
@@ -480,7 +480,7 @@ class DownloadItem
 		$this->thumbnail_url = FormFieldThumbnail::DEFAULT_VALUE;
 		$this->version_number = '';
 		$this->sources = array();
-		$this->publishing_end_date_enabled = false;
+		$this->end_date_enabled = false;
 		$this->author_custom_name = $this->author_user->get_display_name();
 		$this->author_custom_name_enabled = false;
 	}
@@ -489,13 +489,13 @@ class DownloadItem
 	{
 		$this->publishing_start_date = null;
 		$this->publishing_end_date = null;
-		$this->publishing_end_date_enabled = false;
+		$this->end_date_enabled = false;
 	}
 
 	public function clean_publishing_end_date()
 	{
 		$this->publishing_end_date = null;
-		$this->publishing_end_date_enabled = false;
+		$this->end_date_enabled = false;
 	}
 
 	public function get_array_tpl_vars()
