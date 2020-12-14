@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 30
+ * @version     PHPBoost 6.0 - last update: 2020 12 14
  * @since       PHPBoost 1.6 - 2006 10 09
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -93,7 +93,9 @@ require_once('../wiki/wiki_bread_crumb.php');
 
 $page_title = (!empty($article_infos['title']) ? stripslashes($article_infos['title']) . ' - ' : '') . ($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']);
 define('TITLE', $page_title);
-define('DESCRIPTION', TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse(wiki_no_rewrite($article_infos['content'])), '<br><br/>'), 150));
+
+if ($article_infos['content'])
+	define('DESCRIPTION', TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse(wiki_no_rewrite($article_infos['content'])), '<br><br/>'), 150));
 
 require_once('../kernel/header.php');
 
