@@ -6,9 +6,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 24
+ * @version     PHPBoost 6.0 - last update: 2020 12 14
  * @since       PHPBoost 3.0 - 2011 09 25
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CommentsManager
@@ -20,7 +21,7 @@ class CommentsManager
 		self::$user = AppContext::get_current_user();
 	}
 
-	public static function add_comment($module_id, $id_in_module, $topic_identifier, $topic_path, $message, $pseudo = '')
+	public static function add_comment($module_id, $id_in_module, $topic_identifier, $topic_path, $message, $pseudo = '', $email = '')
 	{
 		if (!CommentsTopicDAO::topic_exists($module_id, $id_in_module, $topic_identifier))
 		{
@@ -33,11 +34,14 @@ class CommentsManager
 
 		if (self::$user->check_level(User::MEMBER_LEVEL))
 		{
-			$id_comment = CommentsDAO::add_comment($id_topic, $message, self::$user->get_id(), self::$user->get_display_name(), AppContext::get_request()->get_ip_address());
+			$id_comment = CommentsDAO::add_comment($id_topic, $message, self::$user->get_id(), self::$user->get_display_name(), self::$user->get_email(), AppContext::get_request()->get_ip_address());
 		}
 		else
 		{
-			$id_comment = CommentsDAO::add_comment($id_topic, $message, self::$user->get_id(), $pseudo, AppContext::get_request()->get_ip_address());
+			if(CommentsConfig::load()->is_visitor_email_enabled())
+				$id_comment = CommentsDAO::add_comment($id_topic, $message, self::$user->get_id(), $pseudo, AppContext::get_request()->get_ip_address(), $email);
+			else
+				$id_comment = CommentsDAO::add_comment($id_topic, $message, self::$user->get_id(), $pseudo, '', AppContext::get_request()->get_ip_address());
 		}
 
 		CommentsTopicDAO::incremente_number_comments_topic($id_topic);

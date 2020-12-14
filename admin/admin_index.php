@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 01
+ * @version     PHPBoost 6.0 - last update: 2020 12 14
  * @since       PHPBoost 1.2 - 2005 06 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -44,21 +44,24 @@ while ($row = $result->fetch())
 	$comments_number++;
 	$ids[$comments_number] = $row['id'];
 	$group_color = User::get_group_color($row['user_groups'], $row['level']);
+	$visitor_email_enabled = CommentsConfig::load()->is_visitor_email_enabled();
 
 	$tpl->assign_block_vars('comments_list', array_merge(
 		Date::get_array_tpl_vars(new Date($row['comment_timestamp'], Timezone::SERVER_TIMEZONE), 'date'),
 		array(
-		'C_VISITOR'      => $row['level'] == User::VISITOR_LEVEL || empty($row['user_id']),
-		'C_GROUP_COLOR'  => !empty($group_color),
-		'COMMENT_NUMBER' => $comments_number,
-		'CONTENT'        => FormatingHelper::second_parse($row['message']),
-		'PSEUDO'         => ($row['level'] != User::VISITOR_LEVEL) && !empty($row['display_name']) ? $row['display_name'] : (!empty($row['pseudo']) ? $row['pseudo'] : $LANG['guest']),
-		'LEVEL_CLASS'    => UserService::get_level_class($row['level']),
-		'GROUP_COLOR'    => $group_color,
-		'U_PROFILE'      => UserUrlBuilder::profile($row['user_id'])->rel(),
-		'U_DELETE'       => CommentsUrlBuilder::delete($row['path'], $row['id'], REWRITED_SCRIPT)->rel(),
-		'MODULE_NAME'    => ModulesManager::get_module($row['module_id'])->get_configuration()->get_name(),
-		'U_LINK'         => Url::to_rel($row['path']) . '#com' . $row['id']
+		'C_VISITOR'       => $row['level'] == User::VISITOR_LEVEL || empty($row['user_id']),
+		'C_VISITOR_EMAIL' => $visitor_email_enabled,
+		'C_GROUP_COLOR'   => !empty($group_color),
+		'COMMENT_NUMBER'  => $comments_number,
+		'CONTENT'         => FormatingHelper::second_parse($row['message']),
+		'PSEUDO'          => ($row['level'] != User::VISITOR_LEVEL) && !empty($row['display_name']) ? $row['display_name'] : (!empty($row['pseudo']) ? $row['pseudo'] : $LANG['guest']),
+		'VISITOR_EMAIL'   => $row['visitor_email'],
+		'LEVEL_CLASS'     => UserService::get_level_class($row['level']),
+		'GROUP_COLOR'     => $group_color,
+		'U_PROFILE'       => UserUrlBuilder::profile($row['user_id'])->rel(),
+		'U_DELETE'        => CommentsUrlBuilder::delete($row['path'], $row['id'], REWRITED_SCRIPT)->rel(),
+		'MODULE_NAME'     => ModulesManager::get_module($row['module_id'])->get_configuration()->get_name(),
+		'U_LINK'          => Url::to_rel($row['path']) . '#com' . $row['id']
 		)
 	));
 }

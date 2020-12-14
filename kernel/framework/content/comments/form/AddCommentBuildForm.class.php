@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 09
+ * @version     PHPBoost 6.0 - last update: 2018 12 14
  * @since       PHPBoost 3.0 - 2011 09 25
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AddCommentBuildForm extends AbstractCommentsBuildForm
@@ -49,6 +50,7 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 		$this->common_lang = LangLoader::get('common');
 		$this->comments_lang = LangLoader::get('comments-common');
 		$this->comments_configuration = CommentsConfig::load();
+
 	}
 
 	protected function create_form()
@@ -59,7 +61,14 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 
 		if (!$this->user->check_level(User::MEMBER_LEVEL))
 		{
-			$fieldset->add_field(new FormFieldTextEditor('name', $this->common_lang['form.name'], LangLoader::get_message('visitor', 'user-common'), array('maxlength' => 25)));
+			$fieldset->add_field(new FormFieldTextEditor('name', $this->common_lang['form.name'], $this->comments_lang['comments.form.visitor.name'],
+				array('maxlength' => 25)
+			));
+
+			if($this->comments_configuration->is_visitor_email_enabled())
+				$fieldset->add_field(new FormFieldMailEditor('visitor_email', $this->lang['mail'], $this->comments_lang['comments.form.visitor.email'],
+				 	array('maxlength' => 25, 'description' => $this->comments_lang['comments.form.visitor.email.desc'], 'required' => true)
+			 	));
 		}
 
 		$fieldset->add_field(new FormFieldRichTextEditor('message', $this->lang['message'], '', array(
@@ -84,11 +93,17 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 		$form = $this->get_form();
 		if ($form->has_field('name'))
 		{
-			$id_comment = CommentsManager::add_comment($this->module_id, $this->id_in_module, $this->topic_identifier, $this->topic_path, $form->get_value('message'), $form->get_value('name'));
+			if($this->comments_configuration->is_visitor_email_enabled())
+				$id_comment = CommentsManager::add_comment($this->module_id, $this->id_in_module, $this->topic_identifier, $this->topic_path, $form->get_value('message'), $form->get_value('name'), $form->get_value('visitor_email'));
+			else
+				$id_comment = CommentsManager::add_comment($this->module_id, $this->id_in_module, $this->topic_identifier, $this->topic_path, $form->get_value('message'), $form->get_value('name'));
 		}
 		else
 		{
-			$id_comment = CommentsManager::add_comment($this->module_id, $this->id_in_module, $this->topic_identifier, $this->topic_path, $form->get_value('message'));
+			if($this->comments_configuration->is_visitor_email_enabled())
+				$id_comment = CommentsManager::add_comment($this->module_id, $this->id_in_module, $this->topic_identifier, $this->topic_path, $form->get_value('message'), $form->get_value('visitor_email'));
+			else
+				$id_comment = CommentsManager::add_comment($this->module_id, $this->id_in_module, $this->topic_identifier, $this->topic_path, $form->get_value('message'));
 		}
 
 		$this->comments_topic->get_events()->execute_add_comment_event();

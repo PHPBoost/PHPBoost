@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 24
+ * @version     PHPBoost 6.0 - last update: 2020 12 14
  * @since       PHPBoost 3.0 - 2011 09 25
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CommentsDAO
@@ -85,11 +86,12 @@ class CommentsDAO
 		return self::$comments_cache->comment_exists($comment_id);
 	}
 
-	public static function add_comment($id_topic, $message, $user_id, $pseudo, $user_ip)
+	public static function add_comment($id_topic, $message, $user_id, $pseudo, $user_ip, $visitor_email)
 	{
 		$columns = array(
 			'id_topic' => $id_topic,
 			'user_id' => $user_id,
+			'visitor_email' => TextHelper::htmlspecialchars($visitor_email),
 			'pseudo' => TextHelper::htmlspecialchars($pseudo),
 			'user_ip' => TextHelper::htmlspecialchars($user_ip),
 			'timestamp' => time(),

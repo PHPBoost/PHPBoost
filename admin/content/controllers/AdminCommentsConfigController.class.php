@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 25
+ * @version     PHPBoost 6.0 - last update: 2020 12 14
  * @since       PHPBoost 3.0 - 2011 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -32,13 +32,14 @@ class AdminCommentsConfigController extends AdminController
 		$this->build_form();
 
 		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$tpl->add_lang($this->content_lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
 			$this->regenerate_cache();
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+			$this->form->get_field_by_id('visitor_email_enabled')->set_hidden(!$this->configuration->are_comments_enabled());
 			$this->form->get_field_by_id('number_comments_display')->set_hidden(!$this->configuration->are_comments_enabled());
 			$this->form->get_field_by_id('max_links_comment')->set_hidden(!$this->configuration->are_comments_enabled());
 			$this->form->get_field_by_id('order_display_comments')->set_hidden(!$this->configuration->are_comments_enabled());
@@ -50,12 +51,13 @@ class AdminCommentsConfigController extends AdminController
 
 		$tpl->put('FORM', $this->form->display());
 
-		return new AdminCommentsDisplayResponse($tpl, $this->lang['comments.config']);
+		return new AdminCommentsDisplayResponse($tpl, $this->content_lang['comments.config']);
 	}
 
 	private function init()
 	{
-		$this->lang              = LangLoader::get('admin-contents-common');
+		$this->lang              = LangLoader::get('comments-common');
+		$this->content_lang      = LangLoader::get('admin-contents-common');
 		$this->admin_common_lang = LangLoader::get('admin-common');
 		$this->configuration     = CommentsConfig::load();
 	}
@@ -64,20 +66,22 @@ class AdminCommentsConfigController extends AdminController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('comments-config', $this->lang['comments.config']);
+		$fieldset = new FormFieldsetHTMLHeading('comments-config', $this->content_lang['comments.config']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->lang['comments.config.enabled'], $this->configuration->are_comments_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->content_lang['comments.config.enabled'], $this->configuration->are_comments_enabled(),
 			array(
 				'class' => 'custom-checkbox',
 				'events' => array('click' => '
 					if (HTMLForms.getField("comments_enabled").getValue()) {
+						HTMLForms.getField("visitor_email_enabled").enable();
 						HTMLForms.getField("number_comments_display").enable();
 						HTMLForms.getField("max_links_comment").enable();
 						HTMLForms.getField("order_display_comments").enable();
 						HTMLForms.getField("forbidden_tags").enable();
 						HTMLForms.getField("comments_unauthorized_modules").enable();
 					} else {
+						HTMLForms.getField("visitor_email_enabled").disable();
 						HTMLForms.getField("number_comments_display").disable();
 						HTMLForms.getField("max_links_comment").disable();
 						HTMLForms.getField("order_display_comments").disable();
@@ -88,7 +92,14 @@ class AdminCommentsConfigController extends AdminController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('number_comments_display', $this->lang['comments.config.number-comments-display'], $this->configuration->get_number_comments_display(),
+		$fieldset->add_field(new FormFieldCheckbox('visitor_email_enabled', $this->lang['comments.config.visitor.email'], $this->configuration->is_visitor_email_enabled(),
+			array(
+				'class' => 'custom-checkbox',
+				'description' => $this->lang['comments.config.visitor.email.desc']
+			)
+		));
+
+		$fieldset->add_field(new FormFieldNumberEditor('number_comments_display', $this->content_lang['comments.config.number-comments-display'], $this->configuration->get_number_comments_display(),
 			array(
 				'required' => true,
 				'hidden' => !$this->configuration->are_comments_enabled()
@@ -96,7 +107,7 @@ class AdminCommentsConfigController extends AdminController
 			array(new FormFieldConstraintRegex('`^([0-9]+)$`iu', '', LangLoader::get_message('form.doesnt_match_number_regex', 'status-messages-common')))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('max_links_comment', $this->lang['comments.config.max-links-comment'], $this->configuration->get_max_links_comment(),
+		$fieldset->add_field(new FormFieldNumberEditor('max_links_comment', $this->content_lang['comments.config.max-links-comment'], $this->configuration->get_max_links_comment(),
 			array(
 				'required' => true,
 				'hidden' => !$this->configuration->are_comments_enabled()
@@ -104,15 +115,17 @@ class AdminCommentsConfigController extends AdminController
 			array(new FormFieldConstraintRegex('`^([0-9]+)$`iu', '', LangLoader::get_message('form.doesnt_match_number_regex', 'status-messages-common')))
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('order_display_comments', $this->lang['comments.config.order-display-comments'], $this->configuration->get_order_display_comments(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('order_display_comments', $this->content_lang['comments.config.order-display-comments'], $this->configuration->get_order_display_comments(),
 			array(
-				new FormFieldSelectChoiceOption($this->lang['comments.config.order-display-comments.asc'], CommentsConfig::ASC_ORDER),
-				new FormFieldSelectChoiceOption($this->lang['comments.config.order-display-comments.desc'], CommentsConfig::DESC_ORDER)
+				new FormFieldSelectChoiceOption($this->content_lang['comments.config.order-display-comments.asc'], CommentsConfig::ASC_ORDER),
+				new FormFieldSelectChoiceOption($this->content_lang['comments.config.order-display-comments.desc'], CommentsConfig::DESC_ORDER)
 			),
 			array('hidden' => !$this->configuration->are_comments_enabled())
 		));
 
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->lang['comments.config.forbidden-tags'], $this->configuration->get_forbidden_tags(), $this->generate_forbidden_tags_option(),
+		$fieldset->add_field(new FormFieldSpacer('format', ''));
+
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->content_lang['comments.config.forbidden-tags'], $this->configuration->get_forbidden_tags(), $this->generate_forbidden_tags_option(),
 			array(
 				'size' => 12,
 				'hidden' => !$this->configuration->are_comments_enabled()
@@ -127,13 +140,13 @@ class AdminCommentsConfigController extends AdminController
 			)
 		));
 
-		$fieldset = new FormFieldsetHTML('authorization', $this->lang['comments.config.authorization']);
+		$fieldset = new FormFieldsetHTML('authorization', $this->content_lang['comments.config.authorization']);
 		$form->add_fieldset($fieldset);
 
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($this->lang['comments.config.authorization-read'], CommentsAuthorizations::READ_AUTHORIZATIONS),
-			new ActionAuthorization($this->lang['comments.config.authorization-post'], CommentsAuthorizations::POST_AUTHORIZATIONS),
-			new MemberDisabledActionAuthorization($this->lang['comments.config.authorization-moderation'], CommentsAuthorizations::MODERATE_AUTHORIZATIONS)
+			new ActionAuthorization($this->content_lang['comments.config.authorization-read'], CommentsAuthorizations::READ_AUTHORIZATIONS),
+			new ActionAuthorization($this->content_lang['comments.config.authorization-post'], CommentsAuthorizations::POST_AUTHORIZATIONS),
+			new MemberDisabledActionAuthorization($this->content_lang['comments.config.authorization-moderation'], CommentsAuthorizations::MODERATE_AUTHORIZATIONS)
 		));
 		$auth_settings->build_from_auth_array($this->configuration->get_authorizations());
 		$fieldset->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
@@ -150,6 +163,7 @@ class AdminCommentsConfigController extends AdminController
 		if ($this->form->get_value('comments_enabled'))
 		{
 			$this->configuration->set_comments_enabled(true);
+			$this->configuration->set_visitor_email_enabled($this->form->get_value('visitor_email_enabled'));
 
 			$this->configuration->set_number_comments_display($this->form->get_value('number_comments_display'));
 

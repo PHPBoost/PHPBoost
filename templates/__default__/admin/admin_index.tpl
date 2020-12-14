@@ -178,7 +178,18 @@
 												<i class="far fa-fw fa-hand-point-right" aria-hidden="true"></i> {comments_list.MODULE_NAME}
 											</a>
 										</span>
-										<span # IF IS_MOBILE_DEVICE #class="d-block flex-between"# ENDIF #> <span>{L_BY} # IF comments_list.C_VISITOR #{comments_list.PSEUDO}# ELSE #<a href="{comments_list.U_PROFILE}" class="{comments_list.LEVEL_CLASS}" # IF comments_list.C_GROUP_COLOR # style="color:{comments_list.GROUP_COLOR}" # ENDIF #>{comments_list.PSEUDO}</a># ENDIF #,</span> <span>{comments_list.DATE_DIFF_NOW} :</span> </span>
+										<span # IF IS_MOBILE_DEVICE #class="d-block flex-between"# ENDIF #>
+											<span>{L_BY}
+												# IF comments_list.C_VISITOR #
+													# IF comments_list.C_VISITOR_EMAIL #
+														<a class="visitor" href="mailto:{comments_list.VISITOR_EMAIL}"><i class="fa iboost fa-iboost-email" aria-hidden="true"></i> {comments_list.PSEUDO}</a>
+													# ELSE #
+														<span class="visitor">{comments_list.PSEUDO}</span>
+													# ENDIF #
+												# ELSE #
+													<a href="{comments_list.U_PROFILE}" class="{comments_list.LEVEL_CLASS}" # IF comments_list.C_GROUP_COLOR # style="color:{comments_list.GROUP_COLOR}" # ENDIF #>{comments_list.PSEUDO}</a>
+												# ENDIF #,
+											</span> <span>{comments_list.DATE_DIFF_NOW} :</span> </span>
 										<p>{comments_list.CONTENT}</p>
 									</li>
 								# END comments_list #
