@@ -9,11 +9,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 04 19
+ * @version     PHPBoost 6.0 - last update: 2020 12 14
  * @since       PHPBoost 4.1 - 2014 11 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
+session_destroy();
 session_start();
 
 require_once PATH_TO_ROOT . '/SocialNetworks/lib/google/Google_Client.php';
