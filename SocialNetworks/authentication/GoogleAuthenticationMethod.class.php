@@ -14,8 +14,8 @@
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
-session_destroy();
-session_start();
+if (session_status() == PHP_SESSION_NONE)
+    session_start();
 
 require_once PATH_TO_ROOT . '/SocialNetworks/lib/google/Google_Client.php';
 require_once PATH_TO_ROOT . '/SocialNetworks/lib/google/contrib/Google_Oauth2Service.php';

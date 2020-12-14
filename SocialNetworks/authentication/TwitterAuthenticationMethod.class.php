@@ -12,8 +12,8 @@
  * @since       PHPBoost 5.1 - 2018 04 10
 */
 
-session_destroy();
-session_start();
+if (session_status() == PHP_SESSION_NONE)
+    session_start();
 
 require_once PATH_TO_ROOT . '/SocialNetworks/lib/twitter/autoload.php';
 use Twitter\TwitterOAuth;
