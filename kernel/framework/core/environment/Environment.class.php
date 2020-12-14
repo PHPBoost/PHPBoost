@@ -96,7 +96,7 @@ class Environment
 
 	public static function fit_to_php_configuration()
 	{
-		defined('ERROR_REPORTING') or (define('ERROR_REPORTING', E_ALL | E_NOTICE | E_STRICT);
+		defined('ERROR_REPORTING') or define('ERROR_REPORTING', E_ALL | E_NOTICE | E_STRICT);
 		@ini_set('display_errors', 'on');
 		@ini_set('display_startup_errors', 'on');
 		@error_reporting(ERROR_REPORTING);
