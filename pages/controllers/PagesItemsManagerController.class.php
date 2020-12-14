@@ -64,26 +64,26 @@ class PagesItemsManagerController extends AdminModuleController
 		);
 		foreach ($result as $row)
 		{
-			$page = new Page();
-			$page->set_properties($row);
-			$category = $page->get_category();
-			$user = $page->get_author_user();
+			$item = new PagesItem();
+			$item->set_properties($row);
+			$category = $item->get_category();
+			$user = $item->get_author_user();
 
 			$this->elements_number++;
-			$this->ids[$this->elements_number] = $page->get_id();
+			$this->ids[$this->elements_number] = $item->get_id();
 
-			$edit_link = new EditLinkHTMLElement(PagesUrlBuilder::edit_item($page->get_id()));
-			$delete_link = new DeleteLinkHTMLElement(PagesUrlBuilder::delete_item($page->get_id()));
+			$edit_link = new EditLinkHTMLElement(PagesUrlBuilder::edit_item($item->get_id()));
+			$delete_link = new DeleteLinkHTMLElement(PagesUrlBuilder::delete_item($item->get_id()));
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
 
 			$row = array(
-				new HTMLTableRowCell(new LinkHTMLElement(PagesUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $page->get_id(), $page->get_rewrited_title()), $page->get_title()), 'align-left'),
+				new HTMLTableRowCell(new LinkHTMLElement(PagesUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()), $item->get_title()), 'align-left'),
 				new HTMLTableRowCell(new LinkHTMLElement(PagesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), ($category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('none_e', 'common') : $category->get_name()))),
 				new HTMLTableRowCell($author),
-				new HTMLTableRowCell($page->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
-				new HTMLTableRowCell($page->get_status()),
+				new HTMLTableRowCell($item->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
+				new HTMLTableRowCell($item->get_status()),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display(), 'controls')
 			);
 

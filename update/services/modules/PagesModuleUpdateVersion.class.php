@@ -51,6 +51,11 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 					'user_id'       => 'author_user_id INT(11) NOT NULL DEFAULT 0',
 					'timestamp'     => 'creation_date INT(11) NOT NULL DEFAULT 0',
 					'hits'          => 'views_number INT(11) NOT NULL DEFAULT 0',
+					// 6.0.b1
+					'thumbnail_url' => 'thumbnail VARCHAR(255) NOT NULL DEFAULT ""',
+					'updated_date'  => 'update_date INT(11) NOT NULL DEFAULT 0',
+					'start_date'    => 'publishing_start_date INT(11) NOT NULL DEFAULT 0',
+					'end_date'      => 'publishing_end_date INT(11) NOT NULL DEFAULT 0',
 				)
 			)
 		);
@@ -59,15 +64,15 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 			array(
 				'table_name' => PREFIX . 'pages',
 				'columns' => array(
-					'i_order'            => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-					'author_display'     => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-					'author_custom_name' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-					'publication'        => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
-					'start_date'         => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-					'end_date'           => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-					'updated_date'       => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-					'thumbnail_url'      => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-					'sources'            => array('type' => 'text', 'length' => 65000)
+					'i_order'               => array('type' => 'integer', 'length'  => 11, 'notnull'  => 1, 'default' => 0),
+					'author_display'        => array('type' => 'boolean', 'notnull' => 1, 'default'   => 0),
+					'author_custom_name'    => array('type' => 'string', 'length'   => 255, 'default' => "''"),
+					'publication'           => array('type' => 'integer', 'length'  => 1, 'notnull'   => 1, 'default' => 0),
+					'publishing_start_date' => array('type' => 'integer', 'length'  => 11, 'notnull'  => 1, 'default' => 0),
+					'publishing_end_date'   => array('type' => 'integer', 'length'  => 11, 'notnull'  => 1, 'default' => 0),
+					'update_date'           => array('type' => 'integer', 'length'  => 11, 'notnull'  => 1, 'default' => 0),
+					'thumbnail'             => array('type' => 'string', 'length'   => 255, 'notnull' => 1, 'default' => "''"),
+					'sources'               => array('type' => 'text', 'length'     => 65000)
 				)
 			),
 			array(

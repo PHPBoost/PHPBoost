@@ -7,7 +7,7 @@
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
-class Page
+class PagesItem
 {
 	private $id;
 	private $id_category;
@@ -16,12 +16,12 @@ class Page
 	private $content;
 
 	private $publication;
-	private $start_date;
-	private $end_date;
+	private $publishing_start_date;
+	private $publishing_end_date;
 	private $end_date_enabled;
 
 	private $creation_date;
-	private $updated_date;
+	private $update_date;
 	private $views_number;
 	private $author_user;
 	private $author_display;
@@ -32,9 +32,9 @@ class Page
 	private $keywords;
 	private $sources;
 
-	const NOT_APPROVAL = 0;
-	const APPROVAL_NOW = 1;
-	const APPROVAL_DATE = 2;
+	const NOT_PUBLISHED = 0;
+	const PUBLISHED = 1;
+	const DEFERRED_PUBLICATION = 2;
 
 	const THUMBNAIL_URL = '/templates/__default__/images/default_item_thumbnail.png';
 
@@ -111,42 +111,42 @@ class Page
 	public function is_published()
 	{
 		$now = new Date();
-		return CategoriesAuthorizationsService::check_authorizations($this->id_category)->read() && ($this->get_publication() == self::APPROVAL_NOW || ($this->get_publication() == self::APPROVAL_DATE && $this->get_start_date()->is_anterior_to($now) && ($this->end_date_enabled ? $this->get_end_date()->is_posterior_to($now) : true)));
+		return CategoriesAuthorizationsService::check_authorizations($this->id_category)->read() && ($this->get_publication() == self::PUBLISHED || ($this->get_publication() == self::DEFERRED_PUBLICATION && $this->get_publishing_start_date()->is_anterior_to($now) && ($this->end_date_enabled ? $this->get_publishing_end_date()->is_posterior_to($now) : true)));
 	}
 
 	public function get_status()
 	{
 		switch ($this->publication) {
-			case self::APPROVAL_NOW:
+			case self::PUBLISHED:
 				return LangLoader::get_message('status.approved.now', 'common');
 			break;
-			case self::APPROVAL_DATE:
+			case self::DEFERRED_PUBLICATION:
 				return LangLoader::get_message('status.approved.date', 'common');
 			break;
-			case self::NOT_APPROVAL:
+			case self::NOT_PUBLISHED:
 				return LangLoader::get_message('status.approved.not', 'common');
 			break;
 		}
 	}
 
-	public function get_start_date()
+	public function get_publishing_start_date()
 	{
-		return $this->start_date;
+		return $this->publishing_start_date;
 	}
 
-	public function set_start_date(Date $start_date)
+	public function set_publishing_start_date(Date $publishing_start_date)
 	{
-		$this->start_date = $start_date;
+		$this->publishing_start_date = $publishing_start_date;
 	}
 
-	public function get_end_date()
+	public function get_publishing_end_date()
 	{
-		return $this->end_date;
+		return $this->publishing_end_date;
 	}
 
-	public function set_end_date(Date $end_date)
+	public function set_publishing_end_date(Date $publishing_end_date)
 	{
-		$this->end_date = $end_date;
+		$this->publishing_end_date = $publishing_end_date;
 		$this->end_date_enabled = true;
 	}
 
@@ -165,19 +165,19 @@ class Page
 		$this->creation_date = $creation_date;
 	}
 
-	public function get_updated_date()
+	public function get_update_date()
 	{
-		return $this->updated_date;
+		return $this->update_date;
 	}
 
-	public function set_updated_date(Date $updated_date)
+	public function set_update_date(Date $update_date)
 	{
-		$this->updated_date = $updated_date;
+		$this->update_date = $update_date;
 	}
 
-	public function has_updated_date()
+	public function has_update_date()
 	{
-		return $this->updated_date !== null && $this->updated_date->get_timestamp() !== $this->creation_date->get_timestamp();
+		return $this->update_date !== null && $this->update_date->get_timestamp() !== $this->creation_date->get_timestamp();
 	}
 
 	public function get_author_user()
@@ -303,15 +303,15 @@ class Page
 			'rewrited_title' => $this->get_rewrited_title(),
 			'content' => $this->get_content(),
 			'publication' => $this->get_publication(),
-			'start_date' => $this->get_start_date() !== null ? $this->get_start_date()->get_timestamp() : 0,
-			'end_date' => $this->get_end_date() !== null ? $this->get_end_date()->get_timestamp() : 0,
+			'publishing_start_date' => $this->get_publishing_start_date() !== null ? $this->get_publishing_start_date()->get_timestamp() : 0,
+			'publishing_end_date' => $this->get_publishing_end_date() !== null ? $this->get_publishing_end_date()->get_timestamp() : 0,
 			'creation_date' => $this->get_creation_date()->get_timestamp(),
-			'updated_date' => $this->get_updated_date() !== null ? $this->get_updated_date()->get_timestamp() : $this->get_creation_date()->get_timestamp(),
+			'update_date' => $this->get_update_date() !== null ? $this->get_update_date()->get_timestamp() : $this->get_creation_date()->get_timestamp(),
 			'author_display' => $this->get_author_display(),
 			'author_custom_name' => $this->get_author_custom_name(),
 			'author_user_id' => $this->get_author_user()->get_id(),
 			'views_number' => $this->get_views_number(),
-			'thumbnail_url' => $this->get_thumbnail()->relative(),
+			'thumbnail' => $this->get_thumbnail()->relative(),
 			'sources' => TextHelper::serialize($this->get_sources())
 		);
 	}
@@ -326,12 +326,12 @@ class Page
 		$this->views_number = $properties['views_number'];
 		$this->author_display = $properties['author_display'];
 		$this->publication = $properties['publication'];
-		$this->start_date = !empty($properties['start_date']) ? new Date($properties['start_date'], Timezone::SERVER_TIMEZONE) : null;
-		$this->end_date = !empty($properties['end_date']) ? new Date($properties['end_date'], Timezone::SERVER_TIMEZONE) : null;
-		$this->end_date_enabled = !empty($properties['end_date']);
+		$this->publishing_start_date = !empty($properties['publishing_start_date']) ? new Date($properties['publishing_start_date'], Timezone::SERVER_TIMEZONE) : null;
+		$this->publishing_end_date = !empty($properties['publishing_end_date']) ? new Date($properties['publishing_end_date'], Timezone::SERVER_TIMEZONE) : null;
+		$this->end_date_enabled = !empty($properties['publishing_end_date']);
 		$this->creation_date = new Date($properties['creation_date'], Timezone::SERVER_TIMEZONE);
-		$this->updated_date = !empty($properties['updated_date']) ? new Date($properties['updated_date'], Timezone::SERVER_TIMEZONE) : null;
-		$this->thumbnail_url = $properties['thumbnail_url'];
+		$this->update_date = !empty($properties['update_date']) ? new Date($properties['update_date'], Timezone::SERVER_TIMEZONE) : null;
+		$this->thumbnail_url = $properties['thumbnail'];
 		$this->sources = !empty($properties['sources']) ? TextHelper::unserialize($properties['sources']) : array();
 
 		$user = new User();
@@ -350,11 +350,11 @@ class Page
 	{
 		$this->id_category = $id_category;
         $this->content = PagesConfig::load()->get_default_content();
-		$this->publication = self::APPROVAL_NOW;
+		$this->publication = self::PUBLISHED;
 		$this->author_display = false;
 		$this->author_user = AppContext::get_current_user();
-		$this->start_date = new Date();
-		$this->end_date = new Date();
+		$this->publishing_start_date = new Date();
+		$this->publishing_end_date = new Date();
 		$this->creation_date = new Date();
 		$this->views_number = 0;
 		$this->thumbnail_url = FormFieldThumbnail::DEFAULT_VALUE;
@@ -364,16 +364,16 @@ class Page
 		$this->author_custom_name_enabled = false;
 	}
 
-	public function clean_start_and_end_date()
+	public function clean_publishing_start_and_end_date()
 	{
-		$this->start_date = null;
-		$this->end_date = null;
+		$this->publishing_start_date = null;
+		$this->publishing_end_date = null;
 		$this->end_date_enabled = false;
 	}
 
-	public function clean_end_date()
+	public function clean_publishing_end_date()
 	{
-		$this->end_date = null;
+		$this->publishing_end_date = null;
 		$this->end_date_enabled = false;
 	}
 
@@ -390,8 +390,8 @@ class Page
 
 		return array_merge(
 			Date::get_array_tpl_vars($this->creation_date, 'date'),
-			Date::get_array_tpl_vars($this->updated_date, 'updated_date'),
-			Date::get_array_tpl_vars($this->start_date, 'differed_start_date'),
+			Date::get_array_tpl_vars($this->update_date, 'update_date'),
+			Date::get_array_tpl_vars($this->publishing_start_date, 'differed_publishing_start_date'),
 			array(
 				// Conditions
 	 			'C_VISIBLE'              => $this->is_published(),
@@ -403,10 +403,10 @@ class Page
 				'C_AUTHOR_CUSTOM_NAME'   => $this->is_author_custom_name_enabled(),
 				'C_USER_GROUP_COLOR'     => !empty($user_group_color),
 				'C_SEVERAL_VIEWS'		 => $this->get_views_number() > 1,
-				'C_UPDATED_DATE'         => $this->has_updated_date(),
+				'C_UPDATED_DATE'         => $this->has_update_date(),
 				'C_SOURCES'              => $nbr_sources > 0,
-				'C_DIFFERED'             => $this->publication == self::APPROVAL_DATE,
-				'C_NEW_CONTENT'          => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('pages', $this->get_start_date() != null ? $this->get_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_published(),
+				'C_DIFFERED'             => $this->publication == self::DEFERRED_PUBLICATION,
+				'C_NEW_CONTENT'          => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('pages', $this->get_publishing_start_date() != null ? $this->get_publishing_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_published(),
 
 				// Item
 				'ID'                 => $this->id,

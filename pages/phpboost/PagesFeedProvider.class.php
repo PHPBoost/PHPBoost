@@ -42,12 +42,12 @@ class PagesFeedProvider implements FeedProvider
 			$ids_categories = array_keys($categories);
 
 			$now = new Date();
-			$results = $querier->select('SELECT pages.id, pages.id_category, pages.title, pages.rewrited_title, pages.content, pages.creation_date, pages.thumbnail_url, cat.rewrited_name AS rewrited_name_cat
+			$results = $querier->select('SELECT pages.id, pages.id_category, pages.title, pages.rewrited_title, pages.content, pages.creation_date, pages.update_date, pages.thumbnail, cat.rewrited_name AS rewrited_name_cat
 				FROM ' . PagesSetup::$pages_table . ' pages
 				LEFT JOIN '. PagesSetup::$pages_cats_table .' cat ON cat.id = pages.id_category
 				WHERE pages.id_category IN :ids_categories
-				AND (publication = 1 OR (publication = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))
-				ORDER BY pages.creation_date DESC', array(
+				AND (publication = 1 OR (publication = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
+				ORDER BY pages.update_date DESC', array(
 					'ids_categories' => $ids_categories,
 					'timestamp_now' => $now->get_timestamp()
 			));
@@ -63,7 +63,7 @@ class PagesFeedProvider implements FeedProvider
 				$item->set_guid($link);
 				$item->set_desc(FormatingHelper::second_parse($row['content']));
 				$item->set_date(new Date($row['creation_date'], Timezone::SERVER_TIMEZONE));
-				$item->set_image_url($row['thumbnail_url']);
+				$item->set_image_url($row['thumbnail']);
 				$item->set_auth(CategoriesService::get_categories_manager($module_id)->get_heritated_authorizations($row['id_category'], Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
 				$data->add_item($item);
 			}

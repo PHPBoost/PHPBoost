@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 30
+ * @version     PHPBoost 6.0 - last update: 2020 12 13
  * @since       PHPBoost 3.0 - 2010 01 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -65,12 +65,12 @@ class PagesSetup extends DefaultModuleSetup
 			'author_custom_name' => array('type' =>  'string', 'length' => 255, 'default' => "''"),
 			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'update_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'publication' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'start_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'updated_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'publishing_start_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'publishing_end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 
-			'thumbnail_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'thumbnail' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'views_number' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'sources' => array('type' => 'text', 'length' => 65000)
 		);
@@ -107,7 +107,7 @@ class PagesSetup extends DefaultModuleSetup
 			'name' => $this->messages['default.cat.name'],
 			'rewrited_name' => Url::encode_rewrite($this->messages['default.cat.name']),
 			'description' => $this->messages['default.cat.description'],
-			'thumbnail' => '/templates/default/images/default_category_thumbnail.png'
+			'thumbnail' => FormFieldThumbnail::DEFAULT_VALUE
 		));
 	}
 
@@ -120,16 +120,16 @@ class PagesSetup extends DefaultModuleSetup
 			'title' => $this->messages['default.page.name'],
 			'rewrited_title' => Url::encode_rewrite($this->messages['default.page.name']),
 			'content' => $this->messages['default.page.content'],
-			'publication' => Page::APPROVAL_NOW,
-			'start_date' => 0,
-			'end_date' => 0,
+			'publication' => PagesItem::PUBLISHED,
+			'publishing_start_date' => 0,
+			'publishing_end_date' => 0,
 			'creation_date' => time(),
-			'updated_date' => time(),
+			'update_date' => time(),
 			'author_display' => 1,
 			'author_custom_name' => '',
 			'author_user_id' => 1,
 
-			'thumbnail_url' => '/templates/default/images/default_item_thumbnail.png',
+			'thumbnail' => FormFieldThumbnail::DEFAULT_VALUE,
 			'views_number' => 0,
 			'sources' => TextHelper::serialize(array()),
 		));

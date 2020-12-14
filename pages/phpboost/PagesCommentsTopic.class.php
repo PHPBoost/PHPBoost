@@ -10,33 +10,33 @@
 
 class PagesCommentsTopic extends CommentsTopic
 {
-	private $page;
+	private $item;
 
-	public function __construct(Page $page = null)
+	public function __construct(PagesItem $item = null)
 	{
 		parent::__construct('pages');
-		$this->page = $page;
+		$this->item = $item;
 	}
 
 	public function get_authorizations()
 	{
 		$authorizations = new CommentsAuthorizations();
-		$authorizations->set_authorized_access_module(CategoriesAuthorizationsService::check_authorizations($this->get_page()->get_id_category())->read());
+		$authorizations->set_authorized_access_module(CategoriesAuthorizationsService::check_authorizations($this->get_item()->get_id_category())->read());
 		return $authorizations;
 	}
 
 	public function is_display()
 	{
-		return $this->get_page()->is_published();
+		return $this->get_item()->is_published();
 	}
 
-	private function get_page()
+	private function get_item()
 	{
-		if ($this->page === null)
+		if ($this->item === null)
 		{
-			$this->page = PagesService::get_page('WHERE pages.id=:id', array('id' => $this->get_id_in_module()));
+			$this->item = PagesService::get_item('WHERE pages.id=:id', array('id' => $this->get_id_in_module()));
 		}
-		return $this->page;
+		return $this->item;
 	}
 }
 ?>

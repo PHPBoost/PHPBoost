@@ -1,0 +1,55 @@
+enabling maintenance Ok ! 
+module sandbox Ok ! 
+module sitemap Ok ! 
+table phpboost_bugtracker : 0 contents updated
+table phpboost_bugtracker : 0 contents updated
+table phpboost_bugtracker_history : 0 contents updated
+table phpboost_bugtracker_history : 0 contents updated
+module bugtracker Ok ! 
+module stats Ok ! 
+module birthday Ok ! 
+table phpboost_articles : 0 contents updated
+module articles Ok ! 
+table phpboost_calendar_events_content : 0 contents updated
+module calendar Ok ! 
+table phpboost_quotes : 0 contents updated
+module quotes Ok ! 
+module countdown Ok ! 
+module contact Ok ! 
+module lastcoms Ok ! 
+module dictionary Ok ! 
+table phpboost_shoutbox : 0 contents updated
+module shoutbox Ok ! 
+module online Ok ! 
+table phpboost_faq : 0 contents updated
+module faq Ok ! 
+table phpboost_forum_alerts : 0 contents updated
+table phpboost_forum_msg : 0 contents updated
+table phpboost_member_extended_fields : 0 contents updated
+module forum Ok ! 
+module gallery Ok ! 
+module GoogleAnalytics Ok ! 
+table phpboost_web : 0 contents updated
+module web Ok ! 
+table phpboost_guestbook : 0 contents updated
+module guestbook Ok ! 
+table phpboost_media : 0 contents updated
+module media Ok ! 
+table phpboost_news : 0 contents updated
+module news Ok ! 
+module newscat Ok ! 
+table phpboost_newsletter_archives : 0 contents updated
+module newsletter Ok ! 
+module HomeLanding Ok ! 
+table phpboost_pages : 0 contents updated
+module pages Ok ! 
+module teamspeak Ok ! 
+table phpboost_wiki_contents : 0 contents updated
+table phpboost_wiki_contents : 0 contents titles updated
+module wiki Ok ! 
+table phpboost_smallads : 0 contents updated
+module smallads Ok ! 
+table phpboost_download : 0 contents updated
+module download Ok ! 
+table phpboost_comments : 0 contents updated
+table phpboost_pm_msg : 0 contents updated

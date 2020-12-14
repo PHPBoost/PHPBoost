@@ -33,8 +33,8 @@ class PagesSearchable extends DefaultSearchable
 		$this->field_published = 'publication';
 
 		$this->has_validation_period = true;
-		$this->field_validation_start_date = 'start_date';
-		$this->field_validation_end_date = 'end_date';
+		$this->field_validation_publishing_start_date = 'publishing_start_date';
+		$this->field_validation_publishing_end_date = 'publishing_end_date';
 	}
 }
 ?>

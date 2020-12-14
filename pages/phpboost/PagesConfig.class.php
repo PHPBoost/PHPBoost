@@ -115,7 +115,7 @@ class PagesConfig extends AbstractConfigData
 	}
 
 	/**
-	 * Saves the configuration in the database. Has it become persistent.
+	 * Saves the configuration in the database.
 	 */
 	public static function save()
 	{

@@ -47,7 +47,7 @@ class PagesCategoryController extends ModuleController
 	private function build_items_listing_view(Date $now)
 	{
 		$condition = 'WHERE id_category = :id_category
-		AND (publication = 1 OR (publication = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))';
+		AND (publication = 1 OR (publication = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))';
 		$parameters = array(
 			'id_category' => $this->get_category()->get_id(),
 			'timestamp_now' => $now->get_timestamp()
@@ -75,7 +75,7 @@ class PagesCategoryController extends ModuleController
 
 		while($row = $result->fetch())
 		{
-			$item = new Page();
+			$item = new PagesItem();
 			$item->set_properties($row);
 
 			$this->view->assign_block_vars('items', $item->get_array_tpl_vars());

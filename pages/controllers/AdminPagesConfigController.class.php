@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 02
+ * @version     PHPBoost 6.0 - last update: 2020 12 14
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
@@ -66,11 +66,11 @@ class AdminPagesConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTMLHeading('configuration', StringVars::replace_vars($this->admin_common_lang['configuration.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldCheckbox('left_column', $this->lang['config.left.column'], $this->config->is_left_column_disabled(),
+		$fieldset->add_field(new FormFieldCheckbox('left_column', $this->lang['pages.config.left.column'], $this->config->is_left_column_disabled(),
 			array('class' => 'custom-checkbox')
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('right_column', $this->lang['config.right.column'], $this->config->is_right_column_disabled(),
+		$fieldset->add_field(new FormFieldCheckbox('right_column', $this->lang['pages.config.right.column'], $this->config->is_right_column_disabled(),
 			array('class' => 'custom-checkbox')
 		));
 
@@ -82,7 +82,7 @@ class AdminPagesConfigController extends AdminModuleController
 			array('rows' => 8, 'cols' => 47)
 		));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('default_content', $this->lang['config.default.content'], $this->config->get_default_content(),
+		$fieldset->add_field(new FormFieldRichTextEditor('default_content', $this->lang['pages.config.default.content'], $this->config->get_default_content(),
 			array('rows' => 8, 'cols' => 47)
 		));
 

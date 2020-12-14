@@ -42,7 +42,7 @@ class PagesPendingItemsController extends ModuleController
 
 		$condition = 'WHERE id_category IN :authorized_categories
 		' . (!CategoriesAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
-		AND (publication = 0 OR (publication = 2 AND (start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now))))';
+		AND (publication = 0 OR (publication = 2 AND (publishing_start_date > :timestamp_now OR (publishing_end_date != 0 AND publishing_end_date < :timestamp_now))))';
 		$parameters = array(
 			'user_id' => AppContext::get_current_user()->get_id(),
 			'authorized_categories' => $authorized_categories,
@@ -54,7 +54,7 @@ class PagesPendingItemsController extends ModuleController
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = pages.author_user_id
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = pages.id AND com.module_id = \'pages\'
 		' . $condition . '
-		ORDER BY creation_date', array_merge($parameters, array(
+		ORDER BY update_date', array_merge($parameters, array(
 		)));
 
 		$this->view->put_all(array(
@@ -67,7 +67,7 @@ class PagesPendingItemsController extends ModuleController
 
 		while ($row = $result->fetch())
 		{
-			$item = new Page();
+			$item = new PagesItem();
 			$item->set_properties($row);
 
 			$keywords = $item->get_keywords();

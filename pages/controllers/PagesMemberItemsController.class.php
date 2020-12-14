@@ -46,7 +46,7 @@ class PagesMemberItemsController extends ModuleController
 
 		$condition = 'WHERE id_category IN :authorized_categories
 		AND pages.author_user_id = :user_id
-		AND (publication = 1 OR (publication = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))';
+		AND (publication = 1 OR (publication = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))';
 		$parameters = array(
 			'authorized_categories' => $authorized_categories,
 			'timestamp_now' => $now->get_timestamp(),
@@ -58,7 +58,7 @@ class PagesMemberItemsController extends ModuleController
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = pages.author_user_id
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = pages.id AND com.module_id = \'pages\'
 		' . $condition . '
-		ORDER BY pages.updated_date DESC
+		ORDER BY pages.update_date DESC
 		', array_merge($parameters, array(
 			'user_id' => AppContext::get_current_user()->get_id()
 		)));
@@ -77,7 +77,7 @@ class PagesMemberItemsController extends ModuleController
 
 		while($row = $result->fetch())
 		{
-			$item = new Page();
+			$item = new PagesItem();
 			$item->set_properties($row);
 
 			$this->view->assign_block_vars('items', $item->get_array_tpl_vars());
@@ -87,7 +87,7 @@ class PagesMemberItemsController extends ModuleController
 		$result->dispose();
 	}
 
-	private function build_sources_view(Page $item)
+	private function build_sources_view(PagesItem $item)
 	{
 		$sources = $item->get_sources();
 		$nbr_sources = count($sources);
@@ -130,7 +130,7 @@ class PagesMemberItemsController extends ModuleController
 		return $this->category;
 	}
 
-	private function build_keywords_view(Page $item)
+	private function build_keywords_view(PagesItem $item)
 	{
 		$keywords = $item->get_keywords();
 		$keywords_number = count($keywords);

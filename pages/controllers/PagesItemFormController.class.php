@@ -59,14 +59,14 @@ class PagesItemFormController extends ModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('pages',  $this->get_page()->get_id() === null ? $this->lang['pages.add'] : $this->lang['pages.edit'] . $this->get_page()->get_title());
+		$fieldset = new FormFieldsetHTMLHeading('pages',  $this->get_item()->get_id() === null ? $this->lang['pages.add'] : $this->lang['pages.edit'] . $this->get_item()->get_title());
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('title', $this->common_lang['form.name'], $this->get_page()->get_title(), array('required' => true)));
+		$fieldset->add_field(new FormFieldTextEditor('title', $this->common_lang['form.name'], $this->get_item()->get_title(), array('required' => true)));
 
-		if (CategoriesAuthorizationsService::check_authorizations($this->get_page()->get_id_category())->moderation())
+		if (CategoriesAuthorizationsService::check_authorizations($this->get_item()->get_id_category())->moderation())
 		{
-			$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_title', $this->common_lang['form.rewrited_name.personalize'], $this->get_page()->rewrited_title_is_personalized(),
+			$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_title', $this->common_lang['form.rewrited_name.personalize'], $this->get_item()->rewrited_title_is_personalized(),
 				array(
 					'events' => array('click' => '
 						if (HTMLForms.getField("personalize_rewrited_title").getValue()) {
@@ -78,10 +78,10 @@ class PagesItemFormController extends ModuleController
 				)
 			));
 
-			$fieldset->add_field(new FormFieldTextEditor('rewrited_title', $this->common_lang['form.rewrited_name'], $this->get_page()->get_rewrited_title(),
+			$fieldset->add_field(new FormFieldTextEditor('rewrited_title', $this->common_lang['form.rewrited_name'], $this->get_item()->get_rewrited_title(),
 				array(
 					'description' => $this->common_lang['form.rewrited_name.description'],
-					'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_personalize_rewrited_title', false) : !$this->get_page()->rewrited_title_is_personalized())
+					'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_personalize_rewrited_title', false) : !$this->get_item()->rewrited_title_is_personalized())
 				),
 				array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu'))
 			));
@@ -92,14 +92,14 @@ class PagesItemFormController extends ModuleController
 			$search_category_children_options = new SearchCategoryChildrensOptions();
 			$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
 			$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], $this->get_page()->get_id_category(), $search_category_children_options));
+			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], $this->get_item()->get_id_category(), $search_category_children_options));
 		}
 
-		$fieldset->add_field(new FormFieldRichTextEditor('content', $this->common_lang['form.description'], $this->get_page()->get_content(),
+		$fieldset->add_field(new FormFieldRichTextEditor('content', $this->common_lang['form.description'], $this->get_item()->get_content(),
 			array('rows' => 15, 'required' => true)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('author_display', LangLoader::get_message('config.author.displayed', 'admin-common'), $this->get_page()->get_author_display(),
+		$fieldset->add_field(new FormFieldCheckbox('author_display', LangLoader::get_message('config.author.displayed', 'admin-common'), $this->get_item()->get_author_display(),
 			array(
 				'events' => array('click' => '
 					if (HTMLForms.getField("author_display").getValue()) {
@@ -115,9 +115,9 @@ class PagesItemFormController extends ModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('author_custom_name_enabled', $this->common_lang['form.author_custom_name_enabled'], $this->get_page()->is_author_custom_name_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('author_custom_name_enabled', $this->common_lang['form.author_custom_name_enabled'], $this->get_item()->is_author_custom_name_enabled(),
 			array(
-				'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_author_display', false) : !$this->get_page()->get_author_display()),
+				'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_author_display', false) : !$this->get_item()->get_author_display()),
 				'events' => array('click' => '
 					if (HTMLForms.getField("author_custom_name_enabled").getValue()) {
 						HTMLForms.getField("author_custom_name").enable();
@@ -128,82 +128,82 @@ class PagesItemFormController extends ModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->common_lang['form.author_custom_name'], $this->get_page()->get_author_custom_name(),
-			array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_author_custom_name_enabled', false) : !$this->get_page()->is_author_custom_name_enabled() || !$this->get_page()->get_author_display()))
+		$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->common_lang['form.author_custom_name'], $this->get_item()->get_author_custom_name(),
+			array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_author_custom_name_enabled', false) : !$this->get_item()->is_author_custom_name_enabled() || !$this->get_item()->get_author_display()))
 		));
 
 		$options_fieldset = new FormFieldsetHTML('options', $this->common_lang['form.options']);
 		$form->add_fieldset($options_fieldset);
 
-		$options_fieldset->add_field(new FormFieldThumbnail('thumbnail', $this->common_lang['form.picture'], $this->get_page()->get_thumbnail()->relative(), Page::THUMBNAIL_URL));
+		$options_fieldset->add_field(new FormFieldThumbnail('thumbnail', $this->common_lang['form.picture'], $this->get_item()->get_thumbnail()->relative(), PagesItem::THUMBNAIL_URL));
 
-		$options_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_page()->get_id(), 'keywords', $this->common_lang['form.keywords'],
+		$options_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_item()->get_id(), 'keywords', $this->common_lang['form.keywords'],
 			array('description' => $this->common_lang['form.keywords.description'])
 		));
 
-		$options_fieldset->add_field(new FormFieldSelectSources('sources', $this->common_lang['form.sources'], $this->get_page()->get_sources()));
+		$options_fieldset->add_field(new FormFieldSelectSources('sources', $this->common_lang['form.sources'], $this->get_item()->get_sources()));
 
-		if (CategoriesAuthorizationsService::check_authorizations($this->get_page()->get_id_category())->moderation())
+		if (CategoriesAuthorizationsService::check_authorizations($this->get_item()->get_id_category())->moderation())
 		{
 			$publication_fieldset = new FormFieldsetHTML('publication', $this->common_lang['form.approbation']);
 			$form->add_fieldset($publication_fieldset);
 
-			$publication_fieldset->add_field(new FormFieldDateTime('creation_date', $this->common_lang['form.date.creation'], $this->get_page()->get_creation_date(),
+			$publication_fieldset->add_field(new FormFieldDateTime('creation_date', $this->common_lang['form.date.creation'], $this->get_item()->get_creation_date(),
 				array('required' => true)
 			));
 
-			if (!$this->get_page()->is_published())
+			if (!$this->get_item()->is_published())
 			{
 				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->common_lang['form.update.date.creation'], false,
-					array('hidden' => $this->get_page()->get_status() != Page::NOT_APPROVAL)
+					array('hidden' => $this->get_item()->get_status() != PagesItem::NOT_PUBLISHED)
 				));
 			}
 
-			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('approbation_type', $this->common_lang['form.approbation'], $this->get_page()->get_publication(),
+			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('approbation_type', $this->common_lang['form.approbation'], $this->get_item()->get_publication(),
 				array(
-					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.not'], Page::NOT_APPROVAL),
-					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.now'], Page::APPROVAL_NOW),
-					new FormFieldSelectChoiceOption($this->common_lang['status.approved.date'], Page::APPROVAL_DATE),
+					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.not'], PagesItem::NOT_PUBLISHED),
+					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.now'], PagesItem::PUBLISHED),
+					new FormFieldSelectChoiceOption($this->common_lang['status.approved.date'], PagesItem::DEFERRED_PUBLICATION),
 				),
 				array(
 					'events' => array('change' => '
 						if (HTMLForms.getField("approbation_type").getValue() == 2) {
-							jQuery("#' . __CLASS__ . '_start_date_field").show();
+							jQuery("#' . __CLASS__ . '_publishing_start_date_field").show();
 							HTMLForms.getField("end_date_enabled").enable();
 							if (HTMLForms.getField("end_date_enabled").getValue()) {
-								HTMLForms.getField("end_date").enable();
+								HTMLForms.getField("publishing_end_date").enable();
 							}
 						} else {
-							jQuery("#' . __CLASS__ . '_start_date_field").hide();
+							jQuery("#' . __CLASS__ . '_publishing_start_date_field").hide();
 							HTMLForms.getField("end_date_enabled").disable();
-							HTMLForms.getField("end_date").disable();
+							HTMLForms.getField("publishing_end_date").disable();
 						}'
 					)
 				)
 			));
 
-			$publication_fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->common_lang['form.date.start'], ($this->get_page()->get_start_date() === null ? new Date() : $this->get_page()->get_start_date()),
-				array('hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_approbation_type', 0) != Page::APPROVAL_DATE) : $this->get_page()->get_publication() != Page::APPROVAL_DATE))
+			$publication_fieldset->add_field($publishing_start_date = new FormFieldDateTime('publishing_start_date', $this->common_lang['form.date.start'], ($this->get_item()->get_publishing_start_date() === null ? new Date() : $this->get_item()->get_publishing_start_date()),
+				array('hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_approbation_type', 0) != PagesItem::DEFERRED_PUBLICATION) : $this->get_item()->get_publication() != PagesItem::DEFERRED_PUBLICATION))
 			));
 
-			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->common_lang['form.date.end.enable'], $this->get_page()->is_end_date_enabled(),
+			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->common_lang['form.date.end.enable'], $this->get_item()->is_end_date_enabled(),
 				array(
-					'hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_approbation_type', 0) != Page::APPROVAL_DATE) : ($this->get_page()->get_publication() != Page::APPROVAL_DATE)),
+					'hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_approbation_type', 0) != PagesItem::DEFERRED_PUBLICATION) : ($this->get_item()->get_publication() != PagesItem::DEFERRED_PUBLICATION)),
 					'events' => array('click' => '
 						if (HTMLForms.getField("end_date_enabled").getValue()) {
-							HTMLForms.getField("end_date").enable();
+							HTMLForms.getField("publishing_end_date").enable();
 						} else {
-							HTMLForms.getField("end_date").disable();
+							HTMLForms.getField("publishing_end_date").disable();
 						}'
 					)
 				)
 			));
 
-			$publication_fieldset->add_field($end_date = new FormFieldDateTime('end_date', $this->common_lang['form.date.end'], ($this->get_page()->get_end_date() === null ? new Date() : $this->get_page()->get_end_date()),
-				array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_end_date_enabled', false) : !$this->get_page()->is_end_date_enabled()))
+			$publication_fieldset->add_field($publishing_end_date = new FormFieldDateTime('publishing_end_date', $this->common_lang['form.date.end'], ($this->get_item()->get_publishing_end_date() === null ? new Date() : $this->get_item()->get_publishing_end_date()),
+				array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_end_date_enabled', false) : !$this->get_item()->is_end_date_enabled()))
 			));
 
-			$end_date->add_form_constraint(new FormConstraintFieldsDifferenceSuperior($start_date, $end_date));
+			$publishing_end_date->add_form_constraint(new FormConstraintFieldsDifferenceSuperior($publishing_start_date, $publishing_end_date));
 		}
 
 		$this->build_contribution_fieldset($form);
@@ -220,7 +220,7 @@ class PagesItemFormController extends ModuleController
 	private function build_contribution_fieldset($form)
 	{
 		$user_common = LangLoader::get('user-common');
-		if ($this->get_page()->get_id() === null && $this->is_contributor_member())
+		if ($this->get_item()->get_id() === null && $this->is_contributor_member())
 		{
 			$fieldset = new FormFieldsetHTML('contribution', $user_common['contribution']);
 			$fieldset->set_description(MessageHelper::display($user_common['contribution.extended.explain'], MessageHelper::WARNING)->render());
@@ -228,7 +228,7 @@ class PagesItemFormController extends ModuleController
 
 			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $user_common['contribution.description'], '', array('description' => LangLoader::get_message('contribution.description.explain', 'user-common'))));
 		}
-		elseif ($this->get_page()->is_published() && $this->get_page()->is_authorized_to_edit() && !AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
+		elseif ($this->get_item()->is_published() && $this->get_item()->is_authorized_to_edit() && !AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 		{
 			$fieldset = new FormFieldsetHTML('member_edition', $user_common['contribution.member.edition']);
 			$fieldset->set_description(MessageHelper::display($user_common['contribution.member.edition.explain'], MessageHelper::WARNING)->render());
@@ -245,7 +245,7 @@ class PagesItemFormController extends ModuleController
 		return (!CategoriesAuthorizationsService::check_authorizations()->write() && CategoriesAuthorizationsService::check_authorizations()->contribution());
 	}
 
-	private function get_page()
+	private function get_item()
 	{
 		if ($this->item === null)
 		{
@@ -253,7 +253,7 @@ class PagesItemFormController extends ModuleController
 			if (!empty($id))
 			{
 				try {
-					$this->item = PagesService::get_page('WHERE pages.id=:id', array('id' => $id));
+					$this->item = PagesService::get_item('WHERE pages.id=:id', array('id' => $id));
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
 					DispatchManager::redirect($error_controller);
@@ -262,7 +262,7 @@ class PagesItemFormController extends ModuleController
 			else
 			{
 				$this->is_new_item = true;
-				$this->item = new Page();
+				$this->item = new PagesItem();
 				$this->item->init_default_properties(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY));
 			}
 		}
@@ -271,7 +271,7 @@ class PagesItemFormController extends ModuleController
 
 	private function check_authorizations()
 	{
-		$item = $this->get_page();
+		$item = $this->get_item();
 
 		if ($item->get_id() === null)
 		{
@@ -298,7 +298,7 @@ class PagesItemFormController extends ModuleController
 
 	private function save()
 	{
-		$item = $this->get_page();
+		$item = $this->get_item();
 
 		$item->set_title($this->form->get_value('title'));
 
@@ -320,10 +320,10 @@ class PagesItemFormController extends ModuleController
 
 		if (!CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->moderation())
 		{
-			$item->clean_start_and_end_date();
+			$item->clean_publishing_start_and_end_date();
 
 			if (CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->contribution() && !CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->write())
-				$item->set_publication(Page::NOT_APPROVAL);
+				$item->set_publication(PagesItem::NOT_PUBLISHED);
 		}
 		else
 		{
@@ -333,53 +333,53 @@ class PagesItemFormController extends ModuleController
 				$item->set_creation_date($this->form->get_value('creation_date'));
 
 			$item->set_publication($this->form->get_value('approbation_type')->get_raw_value());
-			if ($item->get_publication() == Page::APPROVAL_DATE)
+			if ($item->get_publication() == PagesItem::DEFERRED_PUBLICATION)
 			{
 				$deferred_operations = $this->config->get_deferred_operations();
 
-				$old_start_date = $item->get_start_date();
-				$start_date = $this->form->get_value('start_date');
-				$item->set_start_date($start_date);
+				$old_publishing_start_date = $item->get_publishing_start_date();
+				$publishing_start_date = $this->form->get_value('publishing_start_date');
+				$item->set_publishing_start_date($publishing_start_date);
 
-				if ($old_start_date !== null && $old_start_date->get_timestamp() != $start_date->get_timestamp() && in_array($old_start_date->get_timestamp(), $deferred_operations))
+				if ($old_publishing_start_date !== null && $old_publishing_start_date->get_timestamp() != $publishing_start_date->get_timestamp() && in_array($old_publishing_start_date->get_timestamp(), $deferred_operations))
 				{
-					$key = array_search($old_start_date->get_timestamp(), $deferred_operations);
+					$key = array_search($old_publishing_start_date->get_timestamp(), $deferred_operations);
 					unset($deferred_operations[$key]);
 				}
 
-				if (!in_array($start_date->get_timestamp(), $deferred_operations))
-					$deferred_operations[] = $start_date->get_timestamp();
+				if (!in_array($publishing_start_date->get_timestamp(), $deferred_operations))
+					$deferred_operations[] = $publishing_start_date->get_timestamp();
 
 				if ($this->form->get_value('end_date_enabled'))
 				{
-					$old_end_date = $item->get_end_date();
-					$end_date = $this->form->get_value('end_date');
-					$item->set_end_date($end_date);
+					$old_publishing_end_date = $item->get_publishing_end_date();
+					$publishing_end_date = $this->form->get_value('publishing_end_date');
+					$item->set_publishing_end_date($publishing_end_date);
 
-					if ($old_end_date !== null && $old_end_date->get_timestamp() != $end_date->get_timestamp() && in_array($old_end_date->get_timestamp(), $deferred_operations))
+					if ($old_publishing_end_date !== null && $old_publishing_end_date->get_timestamp() != $publishing_end_date->get_timestamp() && in_array($old_publishing_end_date->get_timestamp(), $deferred_operations))
 					{
-						$key = array_search($old_end_date->get_timestamp(), $deferred_operations);
+						$key = array_search($old_publishing_end_date->get_timestamp(), $deferred_operations);
 						unset($deferred_operations[$key]);
 					}
 
-					if (!in_array($end_date->get_timestamp(), $deferred_operations))
-						$deferred_operations[] = $end_date->get_timestamp();
+					if (!in_array($publishing_end_date->get_timestamp(), $deferred_operations))
+						$deferred_operations[] = $publishing_end_date->get_timestamp();
 				}
 				else
-					$item->clean_end_date();
+					$item->clean_publishing_end_date();
 
 				$this->config->set_deferred_operations($deferred_operations);
 				PagesConfig::save();
 			}
 			else
-				$item->clean_start_and_end_date();
+				$item->clean_publishing_start_and_end_date();
 		}
 
 		if ($this->is_new_item)
 			$id = PagesService::add($item);
 		else
 		{
-			$item->set_updated_date(new Date());
+			$item->set_update_date(new Date());
 			$id = $item->get_id();
 			PagesService::update($item);
 		}
@@ -390,7 +390,7 @@ class PagesItemFormController extends ModuleController
 
 	}
 
-	private function contribution_actions(Page $item, $id)
+	private function contribution_actions(PagesItem $item, $id)
 	{
 		if ($this->is_contributor_member())
 		{
@@ -430,7 +430,7 @@ class PagesItemFormController extends ModuleController
 
 	private function redirect()
 	{
-		$item = $this->get_page();
+		$item = $this->get_item();
 		$category = $item->get_category();
 
 		if ($this->is_new_item && $this->is_contributor_member() && !$item->is_published())
@@ -455,9 +455,9 @@ class PagesItemFormController extends ModuleController
 
 	private function generate_response(View $view)
 	{
-		$item = $this->get_page();
+		$item = $this->get_item();
 
-		$location_id = $item->get_id() ? 'pages-edit-'. $item->get_id() : '';
+		$location_id = $item->get_id() ? 'item-edit-'. $item->get_id() : '';
 
 		$response = new SiteDisplayResponse($view, $location_id);
 		$graphical_environment = $response->get_graphical_environment();

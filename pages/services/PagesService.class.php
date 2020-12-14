@@ -29,7 +29,7 @@ class PagesService
 	 * @desc Create a new entry in the database table.
 	 * @param string[] $item : new Page
 	 */
-	public static function add(Page $item)
+	public static function add(PagesItem $item)
 	{
 		$result = self::$db_querier->insert(PagesSetup::$pages_table, $item->get_properties());
 
@@ -37,31 +37,31 @@ class PagesService
 	}
 
 	 /**
-	 * @desc Update an entry.
+	 * @desc Update an item.
 	 * @param string[] $item : Page to update
 	 */
-	public static function update(Page $item)
+	public static function update(PagesItem $item)
 	{
 		self::$db_querier->update(PagesSetup::$pages_table, $item->get_properties(), 'WHERE id=:id', array('id' => $item->get_id()));
 	}
 
 	 /**
-	 * @desc Update the position of a page.
-	 * @param string[] $id_page : id of the page to update
-	 * @param string[] $position : new page position
+	 * @desc Update the position of an item.
+	 * @param string[] $id_item : id of the item to update
+	 * @param string[] $position : new item position
 	 */
-	public static function update_position($id_page, $position)
+	public static function update_position($id_item, $position)
 	{
-		self::$db_querier->update(PagesSetup::$pages_table, array('i_order' => $position), 'WHERE id=:id', array('id' => $id_page));
+		self::$db_querier->update(PagesSetup::$pages_table, array('i_order' => $position), 'WHERE id=:id', array('id' => $id_item));
 	}
 
-	public static function update_views_number(Page $item)
+	public static function update_views_number(PagesItem $item)
 	{
 		self::$db_querier->update(PagesSetup::$pages_table, array('views_number' => $item->get_views_number()), 'WHERE id=:id', array('id' => $item->get_id()));
 	}
 
 	 /**
-	 * @desc Delete an entry.
+	 * @desc Delete an item.
 	 * @param string $condition : Restriction to apply to the list
 	 * @param string[] $parameters : Parameters of the condition
 	 */
@@ -81,18 +81,18 @@ class PagesService
 	}
 
 	 /**
-	 * @desc Return the properties of a page.
+	 * @desc Return the properties of an item.
 	 * @param string $condition : Restriction to apply to the list
 	 * @param string[] $parameters : Parameters of the condition
 	 */
-	public static function get_page($condition, array $parameters)
+	public static function get_item($condition, array $parameters)
 	{
 		$row = self::$db_querier->select_single_row_query('SELECT pages.*, member.*
 		FROM ' . PagesSetup::$pages_table . ' pages
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = pages.author_user_id
 		' . $condition, $parameters);
 
-		$item = new Page();
+		$item = new PagesItem();
 		$item->set_properties($row);
 		return $item;
 	}

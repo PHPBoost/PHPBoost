@@ -28,7 +28,7 @@ class PagesCategoriesCache extends DefaultRichCategoriesCache
 	protected function get_category_elements_number($id_category)
 	{
 		$now = new Date();
-		return PagesService::count('WHERE id_category = :id_category AND (publication = 1 OR (publication = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))',
+		return PagesService::count('WHERE id_category = :id_category AND (publication = 1 OR (publication = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))',
 			array(
 				'timestamp_now' => $now->get_timestamp(),
 				'id_category' => $id_category

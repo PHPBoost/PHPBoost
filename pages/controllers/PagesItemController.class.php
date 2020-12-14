@@ -34,7 +34,7 @@ class PagesItemController extends ModuleController
 		$this->view->add_lang($this->lang);
 	}
 
-	private function get_page()
+	private function get_item()
 	{
 		if ($this->item === null)
 		{
@@ -42,14 +42,14 @@ class PagesItemController extends ModuleController
 			if (!empty($id))
 			{
 				try {
-					$this->item = PagesService::get_page('WHERE pages.id = :id', array('id' => $id));
+					$this->item = PagesService::get_item('WHERE pages.id = :id', array('id' => $id));
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
 					DispatchManager::redirect($error_controller);
 				}
 			}
 			else
-				$this->item = new Page();
+				$this->item = new PagesItem();
 		}
 		return $this->item;
 	}
@@ -122,27 +122,27 @@ class PagesItemController extends ModuleController
 
 	private function check_authorizations()
 	{
-		$item = $this->get_page();
+		$item = $this->get_item();
 
 		$current_user = AppContext::get_current_user();
 		$not_authorized = !CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->moderation() && !CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->write() && (!CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->contribution() || $item->get_author_user()->get_id() != $current_user->get_id());
 
 		switch ($item->get_publication()) {
-			case Page::APPROVAL_NOW:
+			case PagesItem::PUBLISHED:
 				if (!CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->read())
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 					DispatchManager::redirect($error_controller);
 				}
 			break;
-			case Page::NOT_APPROVAL:
+			case PagesItem::NOT_PUBLISHED:
 				if ($not_authorized || ($current_user->get_id() == User::VISITOR_LEVEL))
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 					DispatchManager::redirect($error_controller);
 				}
 			break;
-			case Page::APPROVAL_DATE:
+			case PagesItem::DEFERRED_PUBLICATION:
 				if (!$item->is_published() && ($not_authorized || ($current_user->get_id() == User::VISITOR_LEVEL)))
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();

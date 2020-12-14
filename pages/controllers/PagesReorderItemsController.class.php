@@ -50,7 +50,7 @@ class PagesReorderItemsController extends ModuleController
 		FROM '. PagesSetup::$pages_table .' pages
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = pages.author_user_id
 		WHERE id_category = :id_category
-		AND (publication = 1 OR (publication = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))
+		AND (publication = 1 OR (publication = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
 		ORDER BY i_order ASC', array(
 			'id_category' => $this->get_category()->get_id(),
 			'timestamp_now' => $now->get_timestamp()
@@ -71,7 +71,7 @@ class PagesReorderItemsController extends ModuleController
 
 		while ($row = $result->fetch())
 		{
-			$item = new Page();
+			$item = new PagesItem();
 			$item->set_properties($row);
 
 			$this->view->assign_block_vars('items', $item->get_array_tpl_vars());
