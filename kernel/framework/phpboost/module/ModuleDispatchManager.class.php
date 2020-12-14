@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 10 22
+ * @version     PHPBoost 6.0 - last update: 2020 12 14
  * @since       PHPBoost 6.0 - 2020 02 07
 */
 
@@ -15,7 +15,7 @@ class ModuleDispatchManager extends DispatchManager
 	 * Redirect the request to the right controller using the url controller mappes list
 	 * @param UrlControllerMapper[] $url_controller_mappers the url controllers mapper list
 	 */
-	public static function dispatch(array $url_controller_mappers = array())
+	public static function dispatch($url_controller_mappers = array())
 	{
 		$module_configuration = ModulesManager::get_module(Environment::get_running_module_name())->get_configuration();
 		
