@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 06
+ * @version     PHPBoost 6.0 - last update: 2020 12 15
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -50,12 +50,12 @@ class WebModuleMiniMenu extends ModuleMiniMenu
 
 		foreach ($partners_items as $partner)
 		{
-			$partner_thumbnail = new Url($partner['partner_picture']);
+			$partner_thumbnail = new Url($partner['partner_thumbnail']);
 			$thumbnail = $partner_thumbnail->rel();
 
 			$view->assign_block_vars('items', array(
 				'C_HAS_PARTNER_THUMBNAIL' => !empty($thumbnail),
-				'NAME' => $partner['name'],
+				'NAME' => $partner['title'],
 				'U_PARTNER_THUMBNAIL' => $thumbnail,
 				'U_VISIT' => WebUrlBuilder::visit($partner['id'])->rel()
 			));

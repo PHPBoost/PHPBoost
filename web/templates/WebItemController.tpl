@@ -79,7 +79,7 @@
 					</ul>
 				</div>
 			</div>
-			<div itemprop="text">{CONTENTS}</div>
+			<div itemprop="text">{CONTENT}</div>
 		</div>
 		<aside>
 			${ContentSharingActionsMenuService::display()}
@@ -101,7 +101,7 @@
 		# ENDIF #
 		<footer>
 			<meta itemprop="url" content="{U_ITEM}">
-			<meta itemprop="description" content="${escape(SHORT_CONTENTS)}" />
+			<meta itemprop="description" content="${escape(SHORT_CONTENT)}" />
 			# IF C_ENABLED_COMMENTS #
 				<meta itemprop="discussionUrl" content="{U_COMMENTS}">
 				<meta itemprop="interactionCount" content="{COMMENTS_NUMBER} UserComments">

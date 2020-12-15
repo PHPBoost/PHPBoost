@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 06
+ * @version     PHPBoost 6.0 - last update: 2020 12 15
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -55,29 +55,30 @@ class WebSetup extends DefaultModuleSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'rewrited_name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'url' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'contents' => array('type' => 'text', 'length' => 65000),
-			'short_contents' => array('type' => 'text', 'length' => 65000),
-			'approbation_type' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'start_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'title' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'rewrited_title' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'website_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'content' => array('type' => 'text', 'length' => 65000),
+			'summary' => array('type' => 'text', 'length' => 65000),
+			'published' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
+			'publishing_start_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'publishing_end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'update_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'number_views' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'picture_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'views_number' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'thumbnail' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'partner' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'partner_picture' => array('type' => 'string', 'length' => 255, 'default' => "''"),
+			'partner_thumbnail' => array('type' => 'string', 'length' => 255, 'default' => "''"),
 			'privileged_partner' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(
 			'primary' => array('id'),
 			'indexes' => array(
 				'id_category' => array('type' => 'key', 'fields' => 'id_category'),
-				'name' => array('type' => 'fulltext', 'fields' => 'name'),
-				'contents' => array('type' => 'fulltext', 'fields' => 'contents'),
-				'short_contents' => array('type' => 'fulltext', 'fields' => 'short_contents')
+				'title' => array('type' => 'fulltext', 'fields' => 'title'),
+				'content' => array('type' => 'fulltext', 'fields' => 'content'),
+				'summary' => array('type' => 'fulltext', 'fields' => 'summary')
 			)
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$web_table, $fields, $options);
@@ -114,19 +115,20 @@ class WebSetup extends DefaultModuleSetup
 		PersistenceContext::get_querier()->insert(self::$web_table, array(
 			'id' => 1,
 			'id_category' => 1,
-			'name' => $this->messages['default.weblink.name'],
-			'rewrited_name' => Url::encode_rewrite($this->messages['default.weblink.name']),
-			'url' => 'https://www.phpboost.com',
-			'contents' => $this->messages['default.weblink.content'],
-			'short_contents' => '',
-			'approbation_type' => WebLink::APPROVAL_NOW,
-			'start_date' => 0,
-			'end_date' => 0,
+			'title' => $this->messages['default.weblink.name'],
+			'rewrited_title' => Url::encode_rewrite($this->messages['default.weblink.name']),
+			'website_url' => 'https://www.phpboost.com',
+			'content' => $this->messages['default.weblink.content'],
+			'summary' => '',
+			'published' => WebLink::APPROVAL_NOW,
+			'publishing_start_date' => 0,
+			'publishing_end_date' => 0,
 			'creation_date' => time(),
+			'update_date' => time(),
 			'author_user_id' => 1,
-			'number_views' => 0,
+			'views_number' => 0,
 			'partner' => 1,
-			'partner_picture' => '/web/templates/images/phpboost_banner.png'
+			'partner_thumbnail' => '/web/templates/images/phpboost_banner.png'
 		));
 	}
 }

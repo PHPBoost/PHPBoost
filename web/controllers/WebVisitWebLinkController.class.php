@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 06
+ * @version     PHPBoost 6.0 - last update: 2020 12 15
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -37,7 +37,7 @@ class WebVisitWebLinkController extends AbstractController
 			WebService::update_views_number($this->item);
 			WebCache::invalidate();
 
-			AppContext::get_response()->redirect($this->item->get_url()->absolute());
+			AppContext::get_response()->redirect($this->item->get_website_url()->absolute());
 		}
 		else
 		{

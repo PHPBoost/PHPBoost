@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 13
+ * @version     PHPBoost 6.0 - last update: 2020 12 15
  * @since       PHPBoost 5.2 - 2020 12 05
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -44,7 +44,7 @@ class WebMemberItemsController extends ModuleController
 
 		$condition = 'WHERE id_category IN :authorized_categories
 		AND author_user_id = :user_id
-		AND (approbation_type = 1 OR (approbation_type = 2 AND (start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now))))';
+		AND (published = 1 OR (published = 2 AND (publishing_start_date > :timestamp_now OR (publishing_end_date != 0 AND publishing_end_date < :timestamp_now))))';
 		$parameters = array(
 			'user_id' => AppContext::get_current_user()->get_id(),
 			'authorized_categories' => $authorized_categories,

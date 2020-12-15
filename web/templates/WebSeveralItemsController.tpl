@@ -185,7 +185,7 @@
 											# ENDIF #
 										</a>
 									# ENDIF #
-									<div itemprop="text">{items.CONTENTS}</div>
+									<div itemprop="text">{items.CONTENT}</div>
 								# ELSE #
 									{items.SUMMARY}# IF items.C_READ_MORE # <a href="{items.U_ITEM}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
 								# ENDIF #
@@ -194,7 +194,7 @@
 
 						<footer>
 							<meta itemprop="url" content="{items.U_ITEM}">
-							<meta itemprop="description" content="${escape(items.SHORT_CONTENTS)}"/>
+							<meta itemprop="description" content="${escape(items.SHORT_CONTENT)}"/>
 							# IF C_ENABLED_COMMENTS #
 								<meta itemprop="discussionUrl" content="{items.U_COMMENTS}">
 								<meta itemprop="interactionCount" content="{items.COMMENTS_NUMBER} UserComments">

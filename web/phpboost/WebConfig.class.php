@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 08 09
+ * @version     PHPBoost 6.0 - last update: 2020 12 15
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -18,7 +18,7 @@ class WebConfig extends AbstractConfigData
 	const ITEMS_PER_ROW = 'items_per_row';
 	const ITEMS_DEFAULT_SORT_FIELD = 'items_default_sort_field';
 	const ITEMS_DEFAULT_SORT_MODE = 'items_default_sort_mode';
-	const DEFAULT_CONTENTS = 'default_contents';
+	const DEFAULT_CONTENT = 'default_content';
 	const FULL_ITEM_DISPLAY = 'full_item_display';
 	const DESCRIPTIONS_DISPLAYED_TO_GUESTS = 'descriptions_displayed_to_guests';
 	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
@@ -121,14 +121,14 @@ class WebConfig extends AbstractConfigData
 		$this->set_property(self::ITEMS_DEFAULT_SORT_MODE, $value);
 	}
 
-	public function get_default_contents()
+	public function get_default_content()
 	{
-		return $this->get_property(self::DEFAULT_CONTENTS);
+		return $this->get_property(self::DEFAULT_CONTENT);
 	}
 
-	public function set_default_contents($value)
+	public function set_default_content($value)
 	{
-		$this->set_property(self::DEFAULT_CONTENTS, $value);
+		$this->set_property(self::DEFAULT_CONTENT, $value);
 	}
 
 	public function display_descriptions_to_guests()
@@ -230,7 +230,7 @@ class WebConfig extends AbstractConfigData
 			self::DISPLAY_TYPE => self::GRID_VIEW,
 			self::ITEMS_DEFAULT_SORT_FIELD => WebLink::SORT_ALPHABETIC,
 			self::ITEMS_DEFAULT_SORT_MODE => WebLink::ASC,
-			self::DEFAULT_CONTENTS => '',
+			self::DEFAULT_CONTENT => '',
 			self::DESCRIPTIONS_DISPLAYED_TO_GUESTS => false,
 			self::ROOT_CATEGORY_DESCRIPTION => CategoriesService::get_default_root_category_description('web'),
 			self::CHARACTERS_NUMBER_TO_CUT => 128,

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 06
+ * @version     PHPBoost 6.0 - last update: 2020 12 15
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -109,7 +109,7 @@ class WebDisplayWebLinkController extends ModuleController
 		$current_user = AppContext::get_current_user();
 		$not_authorized = !CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->moderation() && !CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->write() && (!CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->contribution() || $item->get_author_user()->get_id() != $current_user->get_id());
 
-		switch ($item->get_approbation_type()) {
+		switch ($item->get_publishing_state()) {
 			case WebLink::APPROVAL_NOW:
 				if (!CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->read())
 				{
@@ -150,7 +150,7 @@ class WebDisplayWebLinkController extends ModuleController
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()));
 
 		if ($item->has_thumbnail())
-			$graphical_environment->get_seo_meta_data()->set_picture_url($item->get_thumbnail());
+			$graphical_environment->get_seo_meta_data()->set_thumbnail($item->get_thumbnail());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'],WebUrlBuilder::home());

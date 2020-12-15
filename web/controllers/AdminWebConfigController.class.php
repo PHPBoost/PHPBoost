@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 06
+ * @version     PHPBoost 6.0 - last update: 2020 12 15
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -150,7 +150,7 @@ class AdminWebConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(20, 1000)
 		)));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('default_contents', $this->lang['web.default.contents'], $this->config->get_default_contents(),
+		$fieldset->add_field(new FormFieldRichTextEditor('default_content', $this->lang['web.default.content'], $this->config->get_default_content(),
 			array('rows' => 8, 'cols' => 47)
 		));
 
@@ -244,7 +244,7 @@ class AdminWebConfigController extends AdminModuleController
 		$this->config->set_partners_sort_field($partners_sort[0]);
 		$this->config->set_partners_sort_mode($partners_sort[1]);
 		$this->config->set_partners_number_in_menu($this->form->get_value('partners_number_in_menu'));
-                $this->config->set_default_contents($this->form->get_value('default_contents'));
+                $this->config->set_default_content($this->form->get_value('default_content'));
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 
 		WebConfig::save();

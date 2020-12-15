@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 09
+ * @version     PHPBoost 6.0 - last update: 2020 12 15
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -74,11 +74,11 @@ class WebFormController extends ModuleController
 			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], $this->get_weblink()->get_id_category(), $search_category_children_options));
 		}
 
-		$fieldset->add_field(new FormFieldUrlEditor('url', $this->common_lang['form.url'], $this->get_weblink()->get_url()->absolute(),
+		$fieldset->add_field(new FormFieldUrlEditor('website_url', $this->common_lang['form.url'], $this->get_weblink()->get_website_url()->absolute(),
 			array('required' => true)
 		));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->common_lang['form.description'], $this->get_weblink()->get_contents(),
+		$fieldset->add_field(new FormFieldRichTextEditor('content', $this->common_lang['form.description'], $this->get_weblink()->get_content(),
 			array('rows' => 15, 'required' => true)
 		));
 
@@ -150,7 +150,7 @@ class WebFormController extends ModuleController
 				));
 			}
 
-			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('approbation_type', $this->common_lang['form.approbation'], $this->get_weblink()->get_approbation_type(),
+			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('published', $this->common_lang['form.approbation'], $this->get_weblink()->get_publishing_state(),
 				array(
 					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.not'], WebLink::NOT_APPROVAL),
 					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.now'], WebLink::APPROVAL_NOW),
@@ -158,43 +158,43 @@ class WebFormController extends ModuleController
 				),
 				array(
 					'events' => array('change' => '
-						if (HTMLForms.getField("approbation_type").getValue() == 2) {
-							jQuery("#' . __CLASS__ . '_start_date_field").show();
+						if (HTMLForms.getField("published").getValue() == 2) {
+							jQuery("#' . __CLASS__ . '_publishing_start_date_field").show();
 							HTMLForms.getField("end_date_enabled").enable();
 							if (HTMLForms.getField("end_date_enabled").getValue()) {
-								HTMLForms.getField("end_date").enable();
+								HTMLForms.getField("publishing_end_date").enable();
 							}
 						} else {
-							jQuery("#' . __CLASS__ . '_start_date_field").hide();
+							jQuery("#' . __CLASS__ . '_publishing_start_date_field").hide();
 							HTMLForms.getField("end_date_enabled").disable();
-							HTMLForms.getField("end_date").disable();
+							HTMLForms.getField("publishing_end_date").disable();
 						}'
 					)
 				)
 			));
 
-			$publication_fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->common_lang['form.date.start'], ($this->get_weblink()->get_start_date() === null ? new Date() : $this->get_weblink()->get_start_date()),
-				array('hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_approbation_type', 0) != WebLink::APPROVAL_DATE) : ($this->get_weblink()->get_approbation_type() != WebLink::APPROVAL_DATE)))
+			$publication_fieldset->add_field($publishing_start_date = new FormFieldDateTime('publishing_start_date', $this->common_lang['form.date.start'], ($this->get_weblink()->get_publishing_start_date() === null ? new Date() : $this->get_weblink()->get_publishing_start_date()),
+				array('hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_published', 0) != WebLink::APPROVAL_DATE) : ($this->get_weblink()->get_publishing_state() != WebLink::APPROVAL_DATE)))
 			));
 
 			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->common_lang['form.date.end.enable'], $this->get_weblink()->is_end_date_enabled(),
 				array(
-					'hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_approbation_type', 0) != WebLink::APPROVAL_DATE) : ($this->get_weblink()->get_approbation_type() != WebLink::APPROVAL_DATE)),
+					'hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_published', 0) != WebLink::APPROVAL_DATE) : ($this->get_weblink()->get_publishing_state() != WebLink::APPROVAL_DATE)),
 					'events' => array('click' => '
 						if (HTMLForms.getField("end_date_enabled").getValue()) {
-							HTMLForms.getField("end_date").enable();
+							HTMLForms.getField("publishing_end_date").enable();
 						} else {
-							HTMLForms.getField("end_date").disable();
+							HTMLForms.getField("publishing_end_date").disable();
 						}'
 					)
 				)
 			));
 
-			$publication_fieldset->add_field($end_date = new FormFieldDateTime('end_date', $this->common_lang['form.date.end'], ($this->get_weblink()->get_end_date() === null ? new Date() : $this->get_weblink()->get_end_date()),
+			$publication_fieldset->add_field($publishing_end_date = new FormFieldDateTime('publishing_end_date', $this->common_lang['form.date.end'], ($this->get_weblink()->get_publishing_end_date() === null ? new Date() : $this->get_weblink()->get_publishing_end_date()),
 				array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_end_date_enabled', false) : !$this->get_weblink()->is_end_date_enabled()))
 			));
 
-			$end_date->add_form_constraint(new FormConstraintFieldsDifferenceSuperior($start_date, $end_date));
+			$publishing_end_date->add_form_constraint(new FormConstraintFieldsDifferenceSuperior($publishing_start_date, $publishing_end_date));
 		}
 
 		$this->build_contribution_fieldset($form);
@@ -299,8 +299,8 @@ class WebFormController extends ModuleController
 		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
 			$item->set_id_category($this->form->get_value('id_category')->get_raw_value());
 
-		$item->set_url(new Url($this->form->get_value('url')));
-		$item->set_contents($this->form->get_value('contents'));
+		$item->set_website_url(new Url($this->form->get_value('website_url')));
+		$item->set_content($this->form->get_value('content'));
 		$item->set_summary(($this->form->get_value('summary_enabled') ? $this->form->get_value('summary') : ''));
 		$item->set_thumbnail($this->form->get_value('thumbnail'));
 
@@ -316,10 +316,10 @@ class WebFormController extends ModuleController
 			if ($item->get_id() === null )
 				$item->set_creation_date(new Date());
 
-			$item->clean_start_and_end_date();
+			$item->clean_publishing_start_and_end_date();
 
 			if (CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->contribution() && !CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->write())
-				$item->set_approbation_type(WebLink::NOT_APPROVAL);
+				$item->set_publishing_state(WebLink::NOT_APPROVAL);
 		}
 		else
 		{
@@ -331,42 +331,42 @@ class WebFormController extends ModuleController
 			{
 				$item->set_creation_date($this->form->get_value('creation_date'));
 			}
-			$item->set_approbation_type($this->form->get_value('approbation_type')->get_raw_value());
-			if ($item->get_approbation_type() == WebLink::APPROVAL_DATE)
+			$item->set_publishing_state($this->form->get_value('published')->get_raw_value());
+			if ($item->get_publishing_state() == WebLink::APPROVAL_DATE)
 			{
 				$deferred_operations = $this->config->get_deferred_operations();
 
-				$old_start_date = $item->get_start_date();
-				$start_date = $this->form->get_value('start_date');
-				$item->set_start_date($start_date);
+				$old_publishing_start_date = $item->get_publishing_start_date();
+				$publishing_start_date = $this->form->get_value('publishing_start_date');
+				$item->set_publishing_start_date($publishing_start_date);
 
-				if ($old_start_date !== null && $old_start_date->get_timestamp() != $start_date->get_timestamp() && in_array($old_start_date->get_timestamp(), $deferred_operations))
+				if ($old_publishing_start_date !== null && $old_publishing_start_date->get_timestamp() != $publishing_start_date->get_timestamp() && in_array($old_publishing_start_date->get_timestamp(), $deferred_operations))
 				{
-					$key = array_search($old_start_date->get_timestamp(), $deferred_operations);
+					$key = array_search($old_publishing_start_date->get_timestamp(), $deferred_operations);
 					unset($deferred_operations[$key]);
 				}
 
-				if (!in_array($start_date->get_timestamp(), $deferred_operations))
-					$deferred_operations[] = $start_date->get_timestamp();
+				if (!in_array($publishing_start_date->get_timestamp(), $deferred_operations))
+					$deferred_operations[] = $publishing_start_date->get_timestamp();
 
 				if ($this->form->get_value('end_date_enabled'))
 				{
-					$old_end_date = $item->get_end_date();
-					$end_date = $this->form->get_value('end_date');
-					$item->set_end_date($end_date);
+					$old_publishing_end_date = $item->get_publishing_end_date();
+					$publishing_end_date = $this->form->get_value('publishing_end_date');
+					$item->set_publishing_end_date($publishing_end_date);
 
-					if ($old_end_date !== null && $old_end_date->get_timestamp() != $end_date->get_timestamp() && in_array($old_end_date->get_timestamp(), $deferred_operations))
+					if ($old_publishing_end_date !== null && $old_publishing_end_date->get_timestamp() != $publishing_end_date->get_timestamp() && in_array($old_publishing_end_date->get_timestamp(), $deferred_operations))
 					{
-						$key = array_search($old_end_date->get_timestamp(), $deferred_operations);
+						$key = array_search($old_publishing_end_date->get_timestamp(), $deferred_operations);
 						unset($deferred_operations[$key]);
 					}
 
-					if (!in_array($end_date->get_timestamp(), $deferred_operations))
-						$deferred_operations[] = $end_date->get_timestamp();
+					if (!in_array($publishing_end_date->get_timestamp(), $deferred_operations))
+						$deferred_operations[] = $publishing_end_date->get_timestamp();
 				}
 				else
 				{
-					$item->clean_end_date();
+					$item->clean_publishing_end_date();
 				}
 
 				$this->config->set_deferred_operations($deferred_operations);
@@ -374,7 +374,7 @@ class WebFormController extends ModuleController
 			}
 			else
 			{
-				$item->clean_start_and_end_date();
+				$item->clean_publishing_start_and_end_date();
 			}
 		}
 

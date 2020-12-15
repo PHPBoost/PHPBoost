@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 06
+ * @version     PHPBoost 6.0 - last update: 2020 12 15
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -40,11 +40,11 @@ class WebFeedProvider implements FeedProvider
 			$ids_categories = array_keys($categories);
 
 			$now = new Date();
-			$results = $querier->select('SELECT web.id, web.id_category, web.name, web.rewrited_name, web.contents, web.short_contents, web.creation_date, web.partner_thumbnail, cat.rewrited_name AS rewrited_name_cat
+			$results = $querier->select('SELECT web.id, web.id_category, web.title, web.rewrited_title, web.content, web.summary, web.creation_date, web.partner_thumbnail, cat.rewrited_name AS rewrited_name_cat
 				FROM ' . WebSetup::$web_table . ' web
 				LEFT JOIN '. WebSetup::$web_cats_table .' cat ON cat.id = web.id_category
 				WHERE web.id_category IN :ids_categories
-				AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))
+				AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
 				ORDER BY web.creation_date DESC', array(
 					'ids_categories' => $ids_categories,
 					'timestamp_now' => $now->get_timestamp()
@@ -54,14 +54,15 @@ class WebFeedProvider implements FeedProvider
 			{
 				$row['rewrited_name_cat'] = !empty($row['id_category']) ? $row['rewrited_name_cat'] : 'root';
 				$link = WebUrlBuilder::display($row['id_category'], $row['rewrited_name_cat'], $row['id'], $row['rewrited_name']);
+				$thumbnail = !empty($row['partner_thumbnail']) ? $row['partner_thumbnail'] : $row['thumbnail'];
 
 				$item = new FeedItem();
-				$item->set_title($row['name']);
+				$item->set_title($row['title']);
 				$item->set_link($link);
 				$item->set_guid($link);
-				$item->set_desc(FormatingHelper::second_parse($row['contents']));
+				$item->set_desc(FormatingHelper::second_parse($row['content']));
 				$item->set_date(new Date($row['creation_date'], Timezone::SERVER_TIMEZONE));
-				$item->set_image_url($row['partner_thumbnail']);
+				$item->set_image_url($thumbnail);
 				$item->set_auth(CategoriesService::get_categories_manager($module_id)->get_heritated_authorizations($row['id_category'], Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
 				$data->add_item($item);
 			}
