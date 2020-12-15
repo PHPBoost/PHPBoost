@@ -66,7 +66,7 @@ class PagesSetup extends DefaultModuleSetup
 			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'update_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'publication' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
+			'published' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'publishing_start_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'publishing_end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 
@@ -120,7 +120,7 @@ class PagesSetup extends DefaultModuleSetup
 			'title' => $this->messages['default.page.name'],
 			'rewrited_title' => Url::encode_rewrite($this->messages['default.page.name']),
 			'content' => $this->messages['default.page.content'],
-			'publication' => PagesItem::PUBLISHED,
+			'published' => PagesItem::PUBLISHED,
 			'publishing_start_date' => 0,
 			'publishing_end_date' => 0,
 			'creation_date' => time(),

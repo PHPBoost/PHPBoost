@@ -47,7 +47,7 @@ class PagesTagController extends ModuleController
 
 		$condition = 'WHERE relation.id_keyword = :id_keyword
 		AND id_category IN :authorized_categories
-		AND (publication = 1 OR (publication = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))';
+		AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))';
 		$parameters = array(
 			'id_keyword' => $this->get_keyword()->get_id(),
 			'authorized_categories' => $authorized_categories,

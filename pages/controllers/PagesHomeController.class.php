@@ -51,7 +51,7 @@ class PagesHomeController extends ModuleController
 		$root_result = PersistenceContext::get_querier()->select('SELECT *
 			FROM '. PagesSetup::$pages_table .' pages
 			WHERE pages.id_category = 0
-			AND (publication = 1 OR (publication = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
+			AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
 			ORDER BY pages.i_order', array(
 				'timestamp_now' => $now->get_timestamp()
 		));
@@ -72,7 +72,7 @@ class PagesHomeController extends ModuleController
 				$result = PersistenceContext::get_querier()->select('SELECT *
 					FROM '. PagesSetup::$pages_table .' pages
 					WHERE id_category = :id_cat
-					AND (publication = 1 OR (publication = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
+					AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
 					ORDER BY i_order', array(
 						'id_cat' => $category->get_id(),
 						'timestamp_now' => $now->get_timestamp()

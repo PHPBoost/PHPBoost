@@ -159,7 +159,7 @@ class PagesItemFormController extends ModuleController
 				));
 			}
 
-			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('approbation_type', $this->common_lang['form.approbation'], $this->get_item()->get_publication(),
+			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('approbation_type', $this->common_lang['form.approbation'], $this->get_item()->get_publishing_state(),
 				array(
 					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.not'], PagesItem::NOT_PUBLISHED),
 					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.now'], PagesItem::PUBLISHED),
@@ -183,12 +183,12 @@ class PagesItemFormController extends ModuleController
 			));
 
 			$publication_fieldset->add_field($publishing_start_date = new FormFieldDateTime('publishing_start_date', $this->common_lang['form.date.start'], ($this->get_item()->get_publishing_start_date() === null ? new Date() : $this->get_item()->get_publishing_start_date()),
-				array('hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_approbation_type', 0) != PagesItem::DEFERRED_PUBLICATION) : $this->get_item()->get_publication() != PagesItem::DEFERRED_PUBLICATION))
+				array('hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_approbation_type', 0) != PagesItem::DEFERRED_PUBLICATION) : $this->get_item()->get_publishing_state() != PagesItem::DEFERRED_PUBLICATION))
 			));
 
 			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->common_lang['form.date.end.enable'], $this->get_item()->is_end_date_enabled(),
 				array(
-					'hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_approbation_type', 0) != PagesItem::DEFERRED_PUBLICATION) : ($this->get_item()->get_publication() != PagesItem::DEFERRED_PUBLICATION)),
+					'hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_approbation_type', 0) != PagesItem::DEFERRED_PUBLICATION) : ($this->get_item()->get_publishing_state() != PagesItem::DEFERRED_PUBLICATION)),
 					'events' => array('click' => '
 						if (HTMLForms.getField("end_date_enabled").getValue()) {
 							HTMLForms.getField("publishing_end_date").enable();
@@ -323,7 +323,7 @@ class PagesItemFormController extends ModuleController
 			$this->item->clean_publishing_start_and_end_date();
 
 			if (CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->contribution() && !CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->write())
-				$this->item->set_publication(PagesItem::NOT_PUBLISHED);
+				$this->item->set_publishing_state(PagesItem::NOT_PUBLISHED);
 		}
 		else
 		{
@@ -332,8 +332,8 @@ class PagesItemFormController extends ModuleController
 			else
 				$this->item->set_creation_date($this->form->get_value('creation_date'));
 
-			$this->item->set_publication($this->form->get_value('approbation_type')->get_raw_value());
-			if ($this->item->get_publication() == PagesItem::DEFERRED_PUBLICATION)
+			$this->item->set_publishing_state($this->form->get_value('approbation_type')->get_raw_value());
+			if ($this->item->get_publishing_state() == PagesItem::DEFERRED_PUBLICATION)
 			{
 				$deferred_operations = $this->config->get_deferred_operations();
 

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 21
+ * @version     PHPBoost 6.0 - last update: 2020 12 15
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
@@ -15,7 +15,7 @@ class PagesItem
 	private $rewrited_title;
 	private $content;
 
-	private $publication;
+	private $published;
 	private $publishing_start_date;
 	private $publishing_end_date;
 	private $end_date_enabled;
@@ -98,25 +98,25 @@ class PagesItem
 		$this->content = $content;
 	}
 
-	public function get_publication()
+	public function get_publishing_state()
 	{
-		return $this->publication;
+		return $this->published;
 	}
 
-	public function set_publication($publication)
+	public function set_publishing_state($published)
 	{
-		$this->publication = $publication;
+		$this->published = $published;
 	}
 
 	public function is_published()
 	{
 		$now = new Date();
-		return CategoriesAuthorizationsService::check_authorizations($this->id_category)->read() && ($this->get_publication() == self::PUBLISHED || ($this->get_publication() == self::DEFERRED_PUBLICATION && $this->get_publishing_start_date()->is_anterior_to($now) && ($this->end_date_enabled ? $this->get_publishing_end_date()->is_posterior_to($now) : true)));
+		return CategoriesAuthorizationsService::check_authorizations($this->id_category)->read() && ($this->get_publishing_state() == self::PUBLISHED || ($this->get_publishing_state() == self::DEFERRED_PUBLICATION && $this->get_publishing_start_date()->is_anterior_to($now) && ($this->end_date_enabled ? $this->get_publishing_end_date()->is_posterior_to($now) : true)));
 	}
 
 	public function get_status()
 	{
-		switch ($this->publication) {
+		switch ($this->published) {
 			case self::PUBLISHED:
 				return LangLoader::get_message('status.approved.now', 'common');
 			break;
@@ -302,7 +302,7 @@ class PagesItem
 			'title' => $this->get_title(),
 			'rewrited_title' => $this->get_rewrited_title(),
 			'content' => $this->get_content(),
-			'publication' => $this->get_publication(),
+			'published' => $this->get_publishing_state(),
 			'publishing_start_date' => $this->get_publishing_start_date() !== null ? $this->get_publishing_start_date()->get_timestamp() : 0,
 			'publishing_end_date' => $this->get_publishing_end_date() !== null ? $this->get_publishing_end_date()->get_timestamp() : 0,
 			'creation_date' => $this->get_creation_date()->get_timestamp(),
@@ -325,7 +325,7 @@ class PagesItem
 		$this->content = $properties['content'];
 		$this->views_number = $properties['views_number'];
 		$this->author_display = $properties['author_display'];
-		$this->publication = $properties['publication'];
+		$this->published = $properties['published'];
 		$this->publishing_start_date = !empty($properties['publishing_start_date']) ? new Date($properties['publishing_start_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->publishing_end_date = !empty($properties['publishing_end_date']) ? new Date($properties['publishing_end_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->end_date_enabled = !empty($properties['publishing_end_date']);
@@ -350,7 +350,7 @@ class PagesItem
 	{
 		$this->id_category = $id_category;
         $this->content = PagesConfig::load()->get_default_content();
-		$this->publication = self::PUBLISHED;
+		$this->published = self::PUBLISHED;
 		$this->author_display = false;
 		$this->author_user = AppContext::get_current_user();
 		$this->publishing_start_date = new Date();
@@ -405,7 +405,7 @@ class PagesItem
 				'C_SEVERAL_VIEWS'		 => $this->get_views_number() > 1,
 				'C_HAS_UPDATE_DATE'      => $this->has_update_date(),
 				'C_SOURCES'              => $nbr_sources > 0,
-				'C_DIFFERED'             => $this->publication == self::DEFERRED_PUBLICATION,
+				'C_DIFFERED'             => $this->published == self::DEFERRED_PUBLICATION,
 				'C_NEW_CONTENT'          => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('pages', $this->get_publishing_start_date() != null ? $this->get_publishing_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_published(),
 
 				// Item

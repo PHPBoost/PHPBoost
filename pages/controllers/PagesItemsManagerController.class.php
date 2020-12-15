@@ -43,7 +43,7 @@ class PagesItemsManagerController extends AdminModuleController
 			new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category'),
 			new HTMLTableColumn(LangLoader::get_message('author', 'common'), 'display_name'),
 			new HTMLTableColumn(LangLoader::get_message('form.date.creation', 'common'), 'creation_date'),
-			new HTMLTableColumn(LangLoader::get_message('status', 'common'), 'publication'),
+			new HTMLTableColumn(LangLoader::get_message('status', 'common'), 'published'),
 			new HTMLTableColumn(LangLoader::get_message('actions', 'admin-common'), '', array('sr-only' => true))
 		);
 

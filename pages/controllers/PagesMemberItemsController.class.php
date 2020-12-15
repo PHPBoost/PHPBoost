@@ -46,7 +46,7 @@ class PagesMemberItemsController extends ModuleController
 
 		$condition = 'WHERE id_category IN :authorized_categories
 		AND pages.author_user_id = :user_id
-		AND (publication = 1 OR (publication = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))';
+		AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))';
 		$parameters = array(
 			'authorized_categories' => $authorized_categories,
 			'timestamp_now' => $now->get_timestamp(),

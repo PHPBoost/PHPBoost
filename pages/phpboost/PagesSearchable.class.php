@@ -30,7 +30,7 @@ class PagesSearchable extends DefaultSearchable
 		$this->has_summary = false;
 		$this->field_summary = '';
 
-		$this->field_published = 'publication';
+		$this->field_published = 'published';
 
 		$this->has_validation_period = true;
 		$this->field_validation_publishing_start_date = 'publishing_start_date';
