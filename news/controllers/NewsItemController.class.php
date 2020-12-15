@@ -192,7 +192,7 @@ class NewsItemController extends ModuleController
 		$current_user = AppContext::get_current_user();
 		$not_authorized = !CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->moderation() && !CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->write() && (!CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->contribution() || $this->item->get_author_user()->get_id() != $current_user->get_id());
 
-		switch ($this->item->get_published()) {
+		switch ($this->item->get_publishing_state()) {
 			case NewsItem::PUBLISHED:
 				if (!CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->read())
 				{

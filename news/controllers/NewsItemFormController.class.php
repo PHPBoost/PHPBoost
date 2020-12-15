@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 13
+ * @version     PHPBoost 6.0 - last update: 2020 12 15
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -161,11 +161,11 @@ class NewsItemFormController extends ModuleController
 			if (!$this->is_new_item)
 			{
 				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->common_lang['form.update.date.creation'], false,
-					array('hidden' => $this->get_item()->get_published() != NewsItem::NOT_PUBLISHED)
+					array('hidden' => $this->get_item()->get_publishing_state() != NewsItem::NOT_PUBLISHED)
 				));
 			}
 
-			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('approbation_type', $this->common_lang['form.approbation'], $this->get_item()->get_published(),
+			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('approbation_type', $this->common_lang['form.approbation'], $this->get_item()->get_publishing_state(),
 				array(
 					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.not'], NewsItem::NOT_PUBLISHED),
 					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.now'], NewsItem::PUBLISHED),
@@ -189,12 +189,12 @@ class NewsItemFormController extends ModuleController
 			));
 
 			$publication_fieldset->add_field($publishing_start_date = new FormFieldDateTime('publishing_start_date', $this->common_lang['form.date.start'], ($this->get_item()->get_publishing_start_date() === null ? new Date() : $this->get_item()->get_publishing_start_date()),
-				array('hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_approbation_type', 0) != NewsItem::DEFERRED_PUBLICATION) : ($this->get_item()->get_published() != NewsItem::DEFERRED_PUBLICATION)))
+				array('hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_published', 0) != NewsItem::DEFERRED_PUBLICATION) : ($this->get_item()->get_publishing_state() != NewsItem::DEFERRED_PUBLICATION)))
 			));
 
 			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->common_lang['form.date.end.enable'], $this->get_item()->end_date_enabled(),
 				array(
-					'hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_approbation_type', 0) != NewsItem::DEFERRED_PUBLICATION) : ($this->get_item()->get_published() != NewsItem::DEFERRED_PUBLICATION)),
+					'hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_published', 0) != NewsItem::DEFERRED_PUBLICATION) : ($this->get_item()->get_publishing_state() != NewsItem::DEFERRED_PUBLICATION)),
 					'events' => array('click' => '
 						if (HTMLForms.getField("end_date_enabled").getValue()) {
 							HTMLForms.getField("publishing_end_date").enable();
@@ -329,7 +329,7 @@ class NewsItemFormController extends ModuleController
 			$this->item->clean_start_and_publishing_end_date();
 
 			if (CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->contribution() && !CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->write())
-				$this->item->set_published(NewsItem::NOT_PUBLISHED);
+				$this->item->set_publishing_state(NewsItem::NOT_PUBLISHED);
 		}
 		else
 		{
@@ -342,8 +342,8 @@ class NewsItemFormController extends ModuleController
 			$rewrited_title = $this->form->get_value('personalize_rewrited_title') && !empty($rewrited_title) ? $rewrited_title : Url::encode_rewrite($this->item->get_title());
 			$this->item->set_rewrited_title($rewrited_title);
 			$this->item->set_top_list_enabled($this->form->get_value('top_list'));
-			$this->item->set_published($this->form->get_value('approbation_type')->get_raw_value());
-			if ($this->item->get_published() == NewsItem::DEFERRED_PUBLICATION)
+			$this->item->set_publishing_state($this->form->get_value('approbation_type')->get_raw_value());
+			if ($this->item->get_publishing_state() == NewsItem::DEFERRED_PUBLICATION)
 			{
 				$config = NewsConfig::load();
 				$deferred_operations = $config->get_deferred_operations();
