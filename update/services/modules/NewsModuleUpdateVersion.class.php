@@ -68,5 +68,19 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 			)
 		);
 	}
+
+	protected function execute_module_specific_changes()
+	{
+		// Set update_date to creation_date if update_date = 0
+		$new_date = $this->querier->select('SELECT news.id, news.update_date, news.creation_date
+			FROM ' . PREFIX . 'news news'
+		);
+
+		while ($row = $new_date->fetch())
+		{
+			$this->querier->update(PREFIX . 'news', array('update_date' => $row['creation_date']), 'WHERE update_date = 0 AND id=:id', array('id' => $row['id']));
+		}
+		$new_date->dispose();
+	}
 }
 ?>
