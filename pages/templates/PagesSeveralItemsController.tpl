@@ -47,7 +47,7 @@
 						<td aria-label="${LangLoader::get_message('form.date.creation', 'common')}"><i class="far fa-calendar-plus" aria-hidden="true"></i> <time datetime="# IF NOT items.C_DIFFERED #{items.DATE_ISO8601}# ELSE #{items.DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT items.C_DIFFERED #{items.DATE}# ELSE #{items.DIFFERED_START_DATE}# ENDIF #</time></td>
 						<td aria-label="${LangLoader::get_message('form.date.update', 'common')}">
 							<i class="far fa-calendar-check" aria-hidden="true"></i>
-							# IF items.C_UPDATED_DATE #
+							# IF items.C_HAS_UPDATE_DATE #
 								<time datetime="{items.UPDATED_DATE_ISO8601}" itemprop="datePublished">{items.UPDATED_DATE}</time>
 							# ELSE #
 								<span>--</span>

@@ -403,7 +403,7 @@ class PagesItem
 				'C_AUTHOR_CUSTOM_NAME'   => $this->is_author_custom_name_enabled(),
 				'C_USER_GROUP_COLOR'     => !empty($user_group_color),
 				'C_SEVERAL_VIEWS'		 => $this->get_views_number() > 1,
-				'C_UPDATED_DATE'         => $this->has_update_date(),
+				'C_HAS_UPDATE_DATE'      => $this->has_update_date(),
 				'C_SOURCES'              => $nbr_sources > 0,
 				'C_DIFFERED'             => $this->publication == self::DEFERRED_PUBLICATION,
 				'C_NEW_CONTENT'          => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('pages', $this->get_publishing_start_date() != null ? $this->get_publishing_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_published(),

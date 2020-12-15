@@ -51,7 +51,7 @@
 
 		<aside>${ContentSharingActionsMenuService::display()}</aside>
 
-		# IF C_UPDATED_DATE #
+		# IF C_HAS_UPDATE_DATE #
 			<aside class="updated-date">
 				<span class="text-strong">${LangLoader::get_message('form.date.update', 'common')} : </span>
 				<time datetime="{UPDATED_DATE_ISO8601}" itemprop="dateModified">{UPDATED_DATE_FULL}</time>
