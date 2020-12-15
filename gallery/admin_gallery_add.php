@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 29
+ * @version     PHPBoost 6.0 - last update: 2020 12 15
  * @since       PHPBoost 1.2 - 2005 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -230,7 +230,7 @@ if (is_dir($dir)) //Si le dossier existe
 			if (function_exists('getimagesize')) //On verifie l'existence de la fonction getimagesize.
 			{
 				// On recupère la hauteur et la largeur de l'image.
-				list($width_source, $height_source) = @getimagesize($rep . $pics);
+				list($width_source, $height_source) = @getimagesize($dir . $pics);
 
 				$height_max = 150;
 				$width_max = 150;
