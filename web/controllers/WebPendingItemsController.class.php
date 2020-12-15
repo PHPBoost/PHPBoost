@@ -2,13 +2,15 @@
 /**
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
- * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.0 - last update: 2020 12 15
- * @since       PHPBoost 5.2 - 2020 12 05
+ * @since       PHPBoost 4.1 - 2014 08 21
+ * @contributor Kevin MASSY <reidlos@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class WebMemberItemsController extends ModuleController
+class WebPendingItemsController extends ModuleController
 {
 	private $view;
 	private $lang;
@@ -43,8 +45,8 @@ class WebMemberItemsController extends ModuleController
 		$field = $request->get_getstring('field', WebItem::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
 
 		$condition = 'WHERE id_category IN :authorized_categories
-		AND author_user_id = :user_id
-		AND (published = 1 OR (published = 2 AND (publishing_start_date > :timestamp_now OR (publishing_end_date != 0 AND publishing_end_date < :timestamp_now))))';
+		' . (!CategoriesAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
+		AND (published = 0 OR (published = 2 AND (publishing_start_date > :timestamp_now OR (publishing_end_date != 0 AND publishing_end_date < :timestamp_now))))';
 		$parameters = array(
 			'user_id' => AppContext::get_current_user()->get_id(),
 			'authorized_categories' => $authorized_categories,
@@ -78,7 +80,7 @@ class WebMemberItemsController extends ModuleController
 		$this->view->put_all(array(
 			'C_ITEMS' => $result->get_rows_count() > 0,
 			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
-			'C_MEMBER_ITEMS' => true,
+			'C_PENDING_ITEMS' => true,
 			'C_GRID_VIEW' => $this->config->get_display_type() == WebConfig::GRID_VIEW,
 			'C_LIST_VIEW' => $this->config->get_display_type() == WebConfig::LIST_VIEW,
 			'C_TABLE_VIEW' => $this->config->get_display_type() == WebConfig::TABLE_VIEW,
@@ -189,13 +191,13 @@ class WebMemberItemsController extends ModuleController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['my.items'], $this->lang['module.title'], $page);
-		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['web.seo.description.member'], array('author' => AppContext::get_current_user()->get_display_name())), $page);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::display_member_items($sort_field, $sort_mode, $page));
+		$graphical_environment->set_page_title($this->lang['web.pending.items'], $this->lang['module.title'], $page);
+		$graphical_environment->get_seo_meta_data()->set_description($this->lang['web.seo.description.pending'], $page);
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::display_pending($sort_field, $sort_mode, $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], WebUrlBuilder::home());
-		$breadcrumb->add($this->lang['my.items'], WebUrlBuilder::display_member_items($sort_field, $sort_mode, $page));
+		$breadcrumb->add($this->lang['web.pending.items'], WebUrlBuilder::display_pending($sort_field, $sort_mode, $page));
 
 		return $response;
 	}

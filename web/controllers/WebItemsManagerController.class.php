@@ -10,7 +10,7 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class WebManageController extends AdminModuleController
+class WebItemsManagerController extends AdminModuleController
 {
 	private $lang;
 	private $view;
@@ -69,7 +69,7 @@ class WebManageController extends AdminModuleController
 		);
 		foreach ($result as $row)
 		{
-			$item = new WebLink();
+			$item = new WebItem();
 			$item->set_properties($row);
 			$category = $item->get_category();
 			$user = $item->get_author_user();

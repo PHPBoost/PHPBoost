@@ -120,7 +120,7 @@ class WebSetup extends DefaultModuleSetup
 			'website_url' => 'https://www.phpboost.com',
 			'content' => $this->messages['default.weblink.content'],
 			'summary' => '',
-			'published' => WebLink::APPROVAL_NOW,
+			'published' => WebItem::APPROVAL_NOW,
 			'publishing_start_date' => 0,
 			'publishing_end_date' => 0,
 			'creation_date' => time(),

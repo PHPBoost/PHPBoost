@@ -16,6 +16,13 @@ class WebModuleUpdateVersion extends ModuleUpdateVersion
 
 		$this->content_tables = array(PREFIX . 'web');
 		self::$delete_old_files_list = array(
+			'/controllers/WebDeleteController.class.php',
+			'/controllers/WebDisplayCategoryController.class.php',
+			'/controllers/WebDisplayPendingWebLinksController.class.php',
+			'/controllers/WebDisplayWebLinkController.class.php',
+			'/controllers/WebDisplayWebLinkTagController.class.php',
+			'/controllers/WebFormController.class.php',
+			'/controllers/WebManageController.class.php',
 			'/lang/english/config.php',
 			'/lang/french/config.php',
 			'/phpboost/WebComments.class.php',
@@ -25,6 +32,7 @@ class WebModuleUpdateVersion extends ModuleUpdateVersion
 			'/phpboost/WebSitemapExtensionPoint.class.php',
 			'/services/WebAuthorizationsService.class.php',
 			'/services/WebKeywordsCache.class.php',
+			'/services/WebLink.class.php',
 			'/templates/WebDisplaySeveralWebLinksController.tpl',
 			'/templates/WebDisplayWebLinkController.tpl',
 			'/util/AdminWebDisplayResponse.class.php'

@@ -31,7 +31,7 @@ class WebService
 	 * @desc Create a new entry in the database table.
 	 * @param string[] $item : new WebLink
 	 */
-	public static function add(WebLink $item)
+	public static function add(WebItem $item)
 	{
 		$result = self::$db_querier->insert(WebSetup::$web_table, $item->get_properties());
 
@@ -42,7 +42,7 @@ class WebService
 	 * @desc Update an entry.
 	 * @param string[] $item : WebLink to update
 	 */
-	public static function update(WebLink $item)
+	public static function update(WebItem $item)
 	{
 		self::$db_querier->update(WebSetup::$web_table, $item->get_properties(), 'WHERE id=:id', array('id' => $item->get_id()));
 	}
@@ -51,7 +51,7 @@ class WebService
 	 * @desc Update the number of views of a link.
 	 * @param string[] $item : WebLink to update
 	 */
-	public static function update_views_number(WebLink $item)
+	public static function update_views_number(WebItem $item)
 	{
 		self::$db_querier->update(WebSetup::$web_table, array('views_number' => $item->get_views_number()), 'WHERE id=:id', array('id' => $item->get_id()));
 	}
@@ -91,7 +91,7 @@ class WebService
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = web.id AND note.module_name = \'web\' AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
 		' . $condition, $parameters);
 
-		$item = new WebLink();
+		$item = new WebItem();
 		$item->set_properties($row);
 		return $item;
 	}

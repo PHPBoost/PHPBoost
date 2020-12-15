@@ -8,7 +8,7 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class WebVisitWebLinkController extends AbstractController
+class WebVisitItemController extends AbstractController
 {
 	private $item;
 
