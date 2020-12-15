@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 09
+ * @version     PHPBoost 6.0 - last update: 2020 12 15
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
@@ -271,11 +271,11 @@ class PagesItemFormController extends ModuleController
 
 	private function check_authorizations()
 	{
-		$item = $this->get_item();
+		$this->item = $this->get_item();
 
-		if ($item->get_id() === null)
+		if ($this->item->get_id() === null)
 		{
-			if (!$item->is_authorized_to_add())
+			if (!$this->item->is_authorized_to_add())
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -283,7 +283,7 @@ class PagesItemFormController extends ModuleController
 		}
 		else
 		{
-			if (!$item->is_authorized_to_edit())
+			if (!$this->item->is_authorized_to_edit())
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -298,48 +298,48 @@ class PagesItemFormController extends ModuleController
 
 	private function save()
 	{
-		$item = $this->get_item();
+		$this->item = $this->get_item();
 
-		$item->set_title($this->form->get_value('title'));
+		$this->item->set_title($this->form->get_value('title'));
 
 		$rewrited_title = $this->form->get_value('rewrited_title', '');
-		$rewrited_title = $this->form->get_value('personalize_rewrited_title') && !empty($rewrited_title) ? $rewrited_title : Url::encode_rewrite($item->get_title());
-		$item->set_rewrited_title($rewrited_title);
+		$rewrited_title = $this->form->get_value('personalize_rewrited_title') && !empty($rewrited_title) ? $rewrited_title : Url::encode_rewrite($this->item->get_title());
+		$this->item->set_rewrited_title($rewrited_title);
 
 		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
-			$item->set_id_category($this->form->get_value('id_category')->get_raw_value());
+			$this->item->set_id_category($this->form->get_value('id_category')->get_raw_value());
 
-		$item->set_content($this->form->get_value('content'));
-		$item->set_thumbnail($this->form->get_value('thumbnail'));
+		$this->item->set_content($this->form->get_value('content'));
+		$this->item->set_thumbnail($this->form->get_value('thumbnail'));
 
-		$item->set_author_display($this->form->get_value('author_display'));
+		$this->item->set_author_display($this->form->get_value('author_display'));
 		if($this->form->get_value('author_display'))
-			$item->set_author_custom_name(($this->form->get_value('author_custom_name') && $this->form->get_value('author_custom_name') !== $item->get_author_user()->get_display_name() ? $this->form->get_value('author_custom_name') : ''));
+			$this->item->set_author_custom_name(($this->form->get_value('author_custom_name') && $this->form->get_value('author_custom_name') !== $this->item->get_author_user()->get_display_name() ? $this->form->get_value('author_custom_name') : ''));
 
-		$item->set_sources($this->form->get_value('sources'));
+		$this->item->set_sources($this->form->get_value('sources'));
 
-		if (!CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->moderation())
+		if (!CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->moderation())
 		{
-			$item->clean_publishing_start_and_end_date();
+			$this->item->clean_publishing_start_and_end_date();
 
-			if (CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->contribution() && !CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->write())
-				$item->set_publication(PagesItem::NOT_PUBLISHED);
+			if (CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->contribution() && !CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->write())
+				$this->item->set_publication(PagesItem::NOT_PUBLISHED);
 		}
 		else
 		{
 			if ($this->form->get_value('update_creation_date'))
-				$item->set_creation_date(new Date());
+				$this->item->set_creation_date(new Date());
 			else
-				$item->set_creation_date($this->form->get_value('creation_date'));
+				$this->item->set_creation_date($this->form->get_value('creation_date'));
 
-			$item->set_publication($this->form->get_value('approbation_type')->get_raw_value());
-			if ($item->get_publication() == PagesItem::DEFERRED_PUBLICATION)
+			$this->item->set_publication($this->form->get_value('approbation_type')->get_raw_value());
+			if ($this->item->get_publication() == PagesItem::DEFERRED_PUBLICATION)
 			{
 				$deferred_operations = $this->config->get_deferred_operations();
 
-				$old_publishing_start_date = $item->get_publishing_start_date();
+				$old_publishing_start_date = $this->item->get_publishing_start_date();
 				$publishing_start_date = $this->form->get_value('publishing_start_date');
-				$item->set_publishing_start_date($publishing_start_date);
+				$this->item->set_publishing_start_date($publishing_start_date);
 
 				if ($old_publishing_start_date !== null && $old_publishing_start_date->get_timestamp() != $publishing_start_date->get_timestamp() && in_array($old_publishing_start_date->get_timestamp(), $deferred_operations))
 				{
@@ -352,9 +352,9 @@ class PagesItemFormController extends ModuleController
 
 				if ($this->form->get_value('end_date_enabled'))
 				{
-					$old_publishing_end_date = $item->get_publishing_end_date();
+					$old_publishing_end_date = $this->item->get_publishing_end_date();
 					$publishing_end_date = $this->form->get_value('publishing_end_date');
-					$item->set_publishing_end_date($publishing_end_date);
+					$this->item->set_publishing_end_date($publishing_end_date);
 
 					if ($old_publishing_end_date !== null && $old_publishing_end_date->get_timestamp() != $publishing_end_date->get_timestamp() && in_array($old_publishing_end_date->get_timestamp(), $deferred_operations))
 					{
@@ -366,25 +366,25 @@ class PagesItemFormController extends ModuleController
 						$deferred_operations[] = $publishing_end_date->get_timestamp();
 				}
 				else
-					$item->clean_publishing_end_date();
+					$this->item->clean_publishing_end_date();
 
 				$this->config->set_deferred_operations($deferred_operations);
 				PagesConfig::save();
 			}
 			else
-				$item->clean_publishing_start_and_end_date();
+				$this->item->clean_publishing_start_and_end_date();
 		}
 
 		if ($this->is_new_item)
-			$id = PagesService::add($item);
+			$id = PagesService::add($this->item);
 		else
 		{
-			$item->set_update_date(new Date());
-			$id = $item->get_id();
-			PagesService::update($item);
+			$this->item->set_update_date(new Date());
+			$id = $this->item->get_id();
+			PagesService::update($this->item);
 		}
 
-		$this->contribution_actions($item, $id);
+		$this->contribution_actions($this->item, $id);
 
 		KeywordsService::get_keywords_manager()->put_relations($id, $this->form->get_value('keywords'));
 
@@ -430,34 +430,31 @@ class PagesItemFormController extends ModuleController
 
 	private function redirect()
 	{
-		$item = $this->get_item();
-		$category = $item->get_category();
+		$category = $this->item->get_category();
 
-		if ($this->is_new_item && $this->is_contributor_member() && !$item->is_published())
+		if ($this->is_new_item && $this->is_contributor_member() && !$this->item->is_published())
 		{
 			DispatchManager::redirect(new UserContributionSuccessController());
 		}
-		elseif ($item->is_published())
+		elseif ($this->item->is_published())
 		{
 			if ($this->is_new_item)
-				AppContext::get_response()->redirect(PagesUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()), StringVars::replace_vars($this->lang['pages.message.success.add'], array('title' => $item->get_title())));
+				AppContext::get_response()->redirect(PagesUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title()), StringVars::replace_vars($this->lang['pages.message.success.add'], array('title' => $this->item->get_title())));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : PagesUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title())), StringVars::replace_vars($this->lang['pages.message.success.edit'], array('title' => $item->get_title())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : PagesUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title())), StringVars::replace_vars($this->lang['pages.message.success.edit'], array('title' => $this->item->get_title())));
 		}
 		else
 		{
 			if ($this->is_new_item)
-				AppContext::get_response()->redirect(PagesUrlBuilder::display_pending(), StringVars::replace_vars($this->lang['pages.message.success.add'], array('title' => $item->get_title())));
+				AppContext::get_response()->redirect(PagesUrlBuilder::display_pending(), StringVars::replace_vars($this->lang['pages.message.success.add'], array('title' => $this->item->get_title())));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : PagesUrlBuilder::display_pending()), StringVars::replace_vars($this->lang['pages.message.success.edit'], array('title' => $item->get_title())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : PagesUrlBuilder::display_pending()), StringVars::replace_vars($this->lang['pages.message.success.edit'], array('title' => $this->item->get_title())));
 		}
 	}
 
 	private function generate_response(View $view)
 	{
-		$item = $this->get_item();
-
-		$location_id = $item->get_id() ? 'item-edit-'. $item->get_id() : '';
+		$location_id = $this->item->get_id() ? 'item-edit-'. $this->item->get_id() : '';
 
 		$response = new SiteDisplayResponse($view, $location_id);
 		$graphical_environment = $response->get_graphical_environment();
@@ -465,12 +462,12 @@ class PagesItemFormController extends ModuleController
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], PagesUrlBuilder::home());
 
-		if ($item->get_id() === null)
+		if ($this->item->get_id() === null)
 		{
 			$graphical_environment->set_page_title($this->lang['pages.add'], $this->lang['module.title']);
-			$breadcrumb->add($this->lang['pages.add'], PagesUrlBuilder::add_item($item->get_id_category()));
+			$breadcrumb->add($this->lang['pages.add'], PagesUrlBuilder::add_item($this->item->get_id_category()));
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['pages.add']);
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(PagesUrlBuilder::add_item($item->get_id_category()));
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(PagesUrlBuilder::add_item($this->item->get_id_category()));
 		}
 		else
 		{
@@ -479,17 +476,17 @@ class PagesItemFormController extends ModuleController
 
 			$graphical_environment->set_page_title($this->lang['pages.edit'], $this->lang['module.title']);
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['pages.edit']);
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(PagesUrlBuilder::edit_item($item->get_id()));
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(PagesUrlBuilder::edit_item($this->item->get_id()));
 
-			$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($item->get_id_category(), true));
+			$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->item->get_id_category(), true));
 			foreach ($categories as $id => $category)
 			{
 				if ($category->get_id() != Category::ROOT_CATEGORY)
 					$breadcrumb->add($category->get_name(), PagesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
 			}
-			$category = $item->get_category();
-			$breadcrumb->add($item->get_title(), PagesUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()));
-			$breadcrumb->add($this->lang['pages.edit'], PagesUrlBuilder::edit_item($item->get_id()));
+			$category = $this->item->get_category();
+			$breadcrumb->add($this->item->get_title(), PagesUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title()));
+			$breadcrumb->add($this->lang['pages.edit'], PagesUrlBuilder::edit_item($this->item->get_id()));
 		}
 
 		return $response;

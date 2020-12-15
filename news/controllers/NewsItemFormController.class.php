@@ -279,11 +279,11 @@ class NewsItemFormController extends ModuleController
 
 	private function check_authorizations()
 	{
-		$item = $this->get_item();
+		$this->item = $this->get_item();
 
-		if ($item->get_id() === null)
+		if ($this->item->get_id() === null)
 		{
-			if (!$item->is_authorized_to_add())
+			if (!$this->item->is_authorized_to_add())
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -291,7 +291,7 @@ class NewsItemFormController extends ModuleController
 		}
 		else
 		{
-			if (!$item->is_authorized_to_edit())
+			if (!$this->item->is_authorized_to_edit())
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -389,35 +389,35 @@ class NewsItemFormController extends ModuleController
 		if ($this->item->get_id() === null)
 		{
 			$this->item->set_author_user(AppContext::get_current_user());
-			$item_id = NewsService::add($this->item);
+			$id = NewsService::add($this->item);
 		}
 		else
 		{
 			$this->item->set_update_date(new Date());
-			$item_id = $this->item->get_id();
+			$id = $this->item->get_id();
 			NewsService::update($this->item);
 		}
 
-		$this->contribution_actions($this->item, $item_id);
+		$this->contribution_actions($this->item, $id);
 
-		KeywordsService::get_keywords_manager()->put_relations($item_id, $this->form->get_value('keywords'));
+		KeywordsService::get_keywords_manager()->put_relations($id, $this->form->get_value('keywords'));
 
 		NewsService::clear_cache();
 	}
 
-	private function contribution_actions(NewsItem $item, $item_id)
+	private function contribution_actions(NewsItem $item, $id)
 	{
 		if ($this->is_contributor_member())
 		{
 			$contribution = new Contribution();
-			$contribution->set_id_in_module($item_id);
+			$contribution->set_id_in_module($id);
 			if ($item->get_id() === null)
 				$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
 			else
 				$contribution->set_description(stripslashes($this->form->get_value('edition_description')));
 
 			$contribution->set_entitled($item->get_title());
-			$contribution->set_fixing_url(NewsUrlBuilder::edit_item($item_id)->relative());
+			$contribution->set_fixing_url(NewsUrlBuilder::edit_item($id)->relative());
 			$contribution->set_poster_id(AppContext::get_current_user()->get_id());
 			$contribution->set_module('news');
 			$contribution->set_auth(
@@ -430,7 +430,7 @@ class NewsItemFormController extends ModuleController
 		}
 		else
 		{
-			$corresponding_contributions = ContributionService::find_by_criteria('news', $item_id);
+			$corresponding_contributions = ContributionService::find_by_criteria('news', $id);
 			if (count($corresponding_contributions) > 0)
 			{
 				foreach ($corresponding_contributions as $contribution)
@@ -440,7 +440,7 @@ class NewsItemFormController extends ModuleController
 				}
 			}
 		}
-		$item->set_id($item_id);
+		$item->set_id($id);
 	}
 
 	private function redirect()
