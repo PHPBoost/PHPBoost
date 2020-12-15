@@ -61,14 +61,14 @@ class NewsItemFormController extends ModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('news', $this->get_item()->get_id() === null ? $this->lang['news.add.item'] : $this->lang['news.edit.item']);
+		$fieldset = new FormFieldsetHTMLHeading('news', $this->item->get_id() === null ? $this->lang['news.add.item'] : $this->lang['news.edit.item']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('title', $this->common_lang['form.name'], $this->get_item()->get_title(), array('required' => true)));
+		$fieldset->add_field(new FormFieldTextEditor('title', $this->common_lang['form.name'], $this->item->get_title(), array('required' => true)));
 
-		if (CategoriesAuthorizationsService::check_authorizations($this->get_item()->get_id_category())->moderation())
+		if (CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->moderation())
 		{
-			$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_title', $this->common_lang['form.rewrited_name.personalize'], $this->get_item()->rewrited_title_is_personalized(),
+			$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_title', $this->common_lang['form.rewrited_name.personalize'], $this->item->rewrited_title_is_personalized(),
 				array(
 					'events' => array('click' => '
 						if (HTMLForms.getField("personalize_rewrited_title").getValue()) {
@@ -80,10 +80,10 @@ class NewsItemFormController extends ModuleController
 				)
 			));
 
-			$fieldset->add_field(new FormFieldTextEditor('rewrited_title', $this->common_lang['form.rewrited_name'], $this->get_item()->get_rewrited_title(),
+			$fieldset->add_field(new FormFieldTextEditor('rewrited_title', $this->common_lang['form.rewrited_name'], $this->item->get_rewrited_title(),
 				array(
 					'description' => $this->common_lang['form.rewrited_name.description'],
-					'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_personalize_rewrited_title', false) : !$this->get_item()->rewrited_title_is_personalized())
+					'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_personalize_rewrited_title', false) : !$this->item->rewrited_title_is_personalized())
 				),
 				array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu'))
 			));
@@ -94,12 +94,12 @@ class NewsItemFormController extends ModuleController
 			$search_category_children_options = new SearchCategoryChildrensOptions();
 			$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
 			$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_cat', $this->common_lang['form.category'], $this->get_item()->get_id_category(), $search_category_children_options));
+			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_cat', $this->common_lang['form.category'], $this->item->get_id_category(), $search_category_children_options));
 		}
 
-		$fieldset->add_field(new FormFieldRichTextEditor('content', $this->common_lang['form.content'], $this->get_item()->get_content(), array('rows' => 15, 'required' => true)));
+		$fieldset->add_field(new FormFieldRichTextEditor('content', $this->common_lang['form.content'], $this->item->get_content(), array('rows' => 15, 'required' => true)));
 
-		$fieldset->add_field(new FormFieldCheckbox('enable_summary', $this->lang['news.form.summary.enabled'], $this->get_item()->get_summary_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('enable_summary', $this->lang['news.form.summary.enabled'], $this->item->get_summary_enabled(),
 			array(
 				'description' => StringVars::replace_vars($this->lang['news.form.summary.enabled.description'], array('number' => NewsConfig::load()->get_characters_number_to_cut())),
 				'events' => array('click' => '
@@ -112,16 +112,16 @@ class NewsItemFormController extends ModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->lang['news.form.summary'], $this->get_item()->get_summary(),
+		$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->lang['news.form.summary'], $this->item->get_summary(),
 			array(
-				'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_summary_enabled', false) : !$this->get_item()->get_summary_enabled()),
+				'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_summary_enabled', false) : !$this->item->get_summary_enabled()),
 				'description' => !NewsConfig::load()->get_full_item_display() ? '<span class="error">' . $this->lang['news.form.summary.description'] . '</span>' : ''
 			)
 		));
 
 		if ($this->config->get_author_displayed() == true)
 		{
-			$fieldset->add_field(new FormFieldCheckbox('author_custom_name_enabled', $this->common_lang['form.author_custom_name_enabled'], $this->get_item()->is_author_custom_name_enabled(),
+			$fieldset->add_field(new FormFieldCheckbox('author_custom_name_enabled', $this->common_lang['form.author_custom_name_enabled'], $this->item->is_author_custom_name_enabled(),
 				array(
 					'events' => array('click' => '
 						if (HTMLForms.getField("author_custom_name_enabled").getValue()) {
@@ -133,39 +133,39 @@ class NewsItemFormController extends ModuleController
 				)
 			));
 
-			$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->common_lang['form.author_custom_name'], $this->get_item()->get_author_custom_name(),
-				array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_author_custom_name_enabled', false) : !$this->get_item()->is_author_custom_name_enabled()))
+			$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->common_lang['form.author_custom_name'], $this->item->get_author_custom_name(),
+				array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_author_custom_name_enabled', false) : !$this->item->is_author_custom_name_enabled()))
 			));
 		}
 
 		$options_fieldset = new FormFieldsetHTML('options', $this->common_lang['form.options']);
 		$form->add_fieldset($options_fieldset);
 
-		$options_fieldset->add_field(new FormFieldThumbnail('thumbnail', $this->common_lang['form.picture'], $this->get_item()->get_thumbnail()->relative(), NewsItem::THUMBNAIL_URL));
+		$options_fieldset->add_field(new FormFieldThumbnail('thumbnail', $this->common_lang['form.picture'], $this->item->get_thumbnail()->relative(), NewsItem::THUMBNAIL_URL));
 
-		$options_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_item()->get_id(), 'keywords', $this->common_lang['form.keywords'],
+		$options_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->item->get_id(), 'keywords', $this->common_lang['form.keywords'],
 			array('description' => $this->common_lang['form.keywords.description'])
 		));
 
-		$options_fieldset->add_field(new FormFieldSelectSources('sources', $this->common_lang['form.sources'], $this->get_item()->get_sources()));
+		$options_fieldset->add_field(new FormFieldSelectSources('sources', $this->common_lang['form.sources'], $this->item->get_sources()));
 
-		if (CategoriesAuthorizationsService::check_authorizations($this->get_item()->get_id_category())->moderation())
+		if (CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->moderation())
 		{
 			$publication_fieldset = new FormFieldsetHTML('published', $this->common_lang['form.approbation']);
 			$form->add_fieldset($publication_fieldset);
 
-			$publication_fieldset->add_field(new FormFieldDateTime('creation_date', $this->common_lang['form.date.creation'], $this->get_item()->get_creation_date(),
+			$publication_fieldset->add_field(new FormFieldDateTime('creation_date', $this->common_lang['form.date.creation'], $this->item->get_creation_date(),
 				array('required' => true)
 			));
 
 			if (!$this->is_new_item)
 			{
 				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->common_lang['form.update.date.creation'], false,
-					array('hidden' => $this->get_item()->get_publishing_state() != NewsItem::NOT_PUBLISHED)
+					array('hidden' => $this->item->get_publishing_state() != NewsItem::NOT_PUBLISHED)
 				));
 			}
 
-			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('approbation_type', $this->common_lang['form.approbation'], $this->get_item()->get_publishing_state(),
+			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('approbation_type', $this->common_lang['form.approbation'], $this->item->get_publishing_state(),
 				array(
 					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.not'], NewsItem::NOT_PUBLISHED),
 					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.now'], NewsItem::PUBLISHED),
@@ -188,13 +188,13 @@ class NewsItemFormController extends ModuleController
 				)
 			));
 
-			$publication_fieldset->add_field($publishing_start_date = new FormFieldDateTime('publishing_start_date', $this->common_lang['form.date.start'], ($this->get_item()->get_publishing_start_date() === null ? new Date() : $this->get_item()->get_publishing_start_date()),
-				array('hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_published', 0) != NewsItem::DEFERRED_PUBLICATION) : ($this->get_item()->get_publishing_state() != NewsItem::DEFERRED_PUBLICATION)))
+			$publication_fieldset->add_field($publishing_start_date = new FormFieldDateTime('publishing_start_date', $this->common_lang['form.date.start'], ($this->item->get_publishing_start_date() === null ? new Date() : $this->item->get_publishing_start_date()),
+				array('hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_published', 0) != NewsItem::DEFERRED_PUBLICATION) : ($this->item->get_publishing_state() != NewsItem::DEFERRED_PUBLICATION)))
 			));
 
-			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->common_lang['form.date.end.enable'], $this->get_item()->end_date_enabled(),
+			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->common_lang['form.date.end.enable'], $this->item->end_date_enabled(),
 				array(
-					'hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_published', 0) != NewsItem::DEFERRED_PUBLICATION) : ($this->get_item()->get_publishing_state() != NewsItem::DEFERRED_PUBLICATION)),
+					'hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_published', 0) != NewsItem::DEFERRED_PUBLICATION) : ($this->item->get_publishing_state() != NewsItem::DEFERRED_PUBLICATION)),
 					'events' => array('click' => '
 						if (HTMLForms.getField("end_date_enabled").getValue()) {
 							HTMLForms.getField("publishing_end_date").enable();
@@ -205,13 +205,13 @@ class NewsItemFormController extends ModuleController
 				)
 			));
 
-			$publication_fieldset->add_field($publishing_end_date = new FormFieldDateTime('publishing_end_date', $this->common_lang['form.date.end'], ($this->get_item()->get_publishing_end_date() === null ? new Date() : $this->get_item()->get_publishing_end_date()),
-				array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_end_date_enabled', false) : !$this->get_item()->end_date_enabled()))
+			$publication_fieldset->add_field($publishing_end_date = new FormFieldDateTime('publishing_end_date', $this->common_lang['form.date.end'], ($this->item->get_publishing_end_date() === null ? new Date() : $this->item->get_publishing_end_date()),
+				array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_end_date_enabled', false) : !$this->item->end_date_enabled()))
 			));
 
 			$publishing_end_date->add_form_constraint(new FormConstraintFieldsDifferenceSuperior($publishing_start_date, $publishing_end_date));
 
-			$publication_fieldset->add_field(new FormFieldCheckbox('top_list', $this->lang['news.form.top.list'], $this->get_item()->top_list_enabled()));
+			$publication_fieldset->add_field(new FormFieldCheckbox('top_list', $this->lang['news.form.top.list'], $this->item->top_list_enabled()));
 		}
 
 		$this->build_contribution_fieldset($form);
@@ -228,7 +228,7 @@ class NewsItemFormController extends ModuleController
 	private function build_contribution_fieldset($form)
 	{
 		$user_common = LangLoader::get('user-common');
-		if ($this->get_item()->get_id() === null && $this->is_contributor_member())
+		if ($this->item->get_id() === null && $this->is_contributor_member())
 		{
 			$fieldset = new FormFieldsetHTML('contribution', $user_common['contribution']);
 			$fieldset->set_description(MessageHelper::display($user_common['contribution.extended.explain'], MessageHelper::WARNING)->render());
@@ -236,7 +236,7 @@ class NewsItemFormController extends ModuleController
 
 			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $user_common['contribution.description'], '', array('description' => $user_common['contribution.description.explain'])));
 		}
-		elseif ($this->get_item()->is_published() && $this->get_item()->is_authorized_to_edit() && !AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
+		elseif ($this->item->is_published() && $this->item->is_authorized_to_edit() && !AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 		{
 			$fieldset = new FormFieldsetHTML('member_edition', $user_common['contribution.member.edition']);
 			$fieldset->set_description(MessageHelper::display($user_common['contribution.member.edition.explain'], MessageHelper::WARNING)->render());
@@ -469,7 +469,7 @@ class NewsItemFormController extends ModuleController
 
 	private function generate_response(View $view)
 	{
-		$location_id = $this->get_item()->get_id() ? 'item-edit-'. $this->get_item()->get_id() : '';
+		$location_id = $this->item->get_id() ? 'item-edit-'. $this->item->get_id() : '';
 
 		$response = new SiteDisplayResponse($view, $location_id);
 		$graphical_environment = $response->get_graphical_environment();
@@ -477,7 +477,7 @@ class NewsItemFormController extends ModuleController
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], NewsUrlBuilder::home());
 
-		if ($this->get_item()->get_id() === null)
+		if ($this->item->get_id() === null)
 		{
 			$graphical_environment->set_page_title($this->lang['news.add.item'], $this->lang['module.title']);
 			$breadcrumb->add($this->lang['news.add.item'], NewsUrlBuilder::add_item($this->item->get_id_category()));

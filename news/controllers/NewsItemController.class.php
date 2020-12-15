@@ -188,13 +188,13 @@ class NewsItemController extends ModuleController
 
 	private function check_authorizations()
 	{
-		$item = $this->get_item();
+		$this->item = $this->get_item();
 		$current_user = AppContext::get_current_user();
-		$not_authorized = !CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->moderation() && !CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->write() && (!CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->contribution() || $this->item->get_author_user()->get_id() != $current_user->get_id());
+		$not_authorized = !CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->moderation() && !CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->write() && (!CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->contribution() || $this->item->get_author_user()->get_id() != $current_user->get_id());
 
 		switch ($this->item->get_publishing_state()) {
 			case NewsItem::PUBLISHED:
-				if (!CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->read())
+				if (!CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->read())
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 					DispatchManager::redirect($error_controller);
@@ -223,27 +223,27 @@ class NewsItemController extends ModuleController
 
 	private function generate_response()
 	{
-		$category = $this->get_item()->get_category();
+		$category = $this->item->get_category();
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->get_item()->get_title(), ($category->get_id() != Category::ROOT_CATEGORY ? $category->get_name() . ' - ' : '') . $this->lang['module.title']);
-		$graphical_environment->get_seo_meta_data()->set_description($this->get_item()->get_real_summary());
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $this->get_item()->get_id(), $this->get_item()->get_rewrited_title()));
+		$graphical_environment->set_page_title($this->item->get_title(), ($category->get_id() != Category::ROOT_CATEGORY ? $category->get_name() . ' - ' : '') . $this->lang['module.title']);
+		$graphical_environment->get_seo_meta_data()->set_description($this->item->get_real_summary());
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title()));
 
-		if ($this->get_item()->has_thumbnail())
-			$graphical_environment->get_seo_meta_data()->set_picture_url($this->get_item()->get_thumbnail());
+		if ($this->item->has_thumbnail())
+			$graphical_environment->get_seo_meta_data()->set_picture_url($this->item->get_thumbnail());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], NewsUrlBuilder::home());
 
-		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->get_item()->get_id_category(), true));
+		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->item->get_id_category(), true));
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id() != Category::ROOT_CATEGORY)
 				$breadcrumb->add($category->get_name(), NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
 		}
-		$breadcrumb->add($this->get_item()->get_title(), NewsUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $this->get_item()->get_id(), $this->get_item()->get_rewrited_title()));
+		$breadcrumb->add($this->item->get_title(), NewsUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title()));
 
 		return $response;
 	}
