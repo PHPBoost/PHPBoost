@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 10 23
+ * @version     PHPBoost 6.0 - last update: 2020 12 15
  * @since       PHPBoost 4.0 - 2014 05 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -38,7 +38,10 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 			'/pages_functions.php',
 			'/post.php',
 			'/print.php',
-			'/xmlhttprequest.php'
+			'/xmlhttprequest.php',
+			// 6.0.b1
+			'/service/Page.class.php',
+
 		);
 
 		$this->database_columns_to_modify = array(
@@ -54,6 +57,7 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 					// 6.0.b1
 					'thumbnail_url' => 'thumbnail VARCHAR(255) NOT NULL DEFAULT ""',
 					'updated_date'  => 'update_date INT(11) NOT NULL DEFAULT 0',
+					'publication'   => 'published INT(11) NOT NULL DEFAULT 0',
 					'start_date'    => 'publishing_start_date INT(11) NOT NULL DEFAULT 0',
 					'end_date'      => 'publishing_end_date INT(11) NOT NULL DEFAULT 0',
 				)
@@ -67,7 +71,7 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 					'i_order'               => array('type' => 'integer', 'length'  => 11, 'notnull'  => 1, 'default' => 0),
 					'author_display'        => array('type' => 'boolean', 'notnull' => 1, 'default'   => 0),
 					'author_custom_name'    => array('type' => 'string', 'length'   => 255, 'default' => "''"),
-					'publication'           => array('type' => 'integer', 'length'  => 1, 'notnull'   => 1, 'default' => 0),
+					'published'             => array('type' => 'integer', 'length'  => 1, 'notnull'   => 1, 'default' => 0),
 					'publishing_start_date' => array('type' => 'integer', 'length'  => 11, 'notnull'  => 1, 'default' => 0),
 					'publishing_end_date'   => array('type' => 'integer', 'length'  => 11, 'notnull'  => 1, 'default' => 0),
 					'update_date'           => array('type' => 'integer', 'length'  => 11, 'notnull'  => 1, 'default' => 0),
