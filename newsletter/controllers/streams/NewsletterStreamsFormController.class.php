@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 04 01
+ * @version     PHPBoost 6.0 - last update: 2020 12 15
  * @since       PHPBoost 4.0 - 2014 05 21
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -63,7 +63,7 @@ class NewsletterStreamsFormController extends AbstractCategoriesFormController
 	/**
 	 * @return AuthorizationsSettings
 	 */
-	public static function get_authorizations_settings()
+	public static function get_authorizations_settings($module_id = 'newsletter')
 	{
 		$lang = LangLoader::get('common', 'newsletter');
 
