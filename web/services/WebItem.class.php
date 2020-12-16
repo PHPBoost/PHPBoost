@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 15
+ * @version     PHPBoost 6.0 - last update: 2020 12 16
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -222,6 +222,21 @@ class WebItem
 		$this->creation_date = $creation_date;
 	}
 
+	public function set_update_date(Date $update_date)
+	{
+		$this->update_date = $update_date;
+	}
+
+	public function get_update_date()
+	{
+		return $this->update_date;
+	}
+
+	public function has_update_date()
+	{
+		return ($this->update_date !== null) && ($this->update_date > $this->creation_date);
+	}
+
 	public function get_author_user()
 	{
 		return $this->author_user;
@@ -353,6 +368,7 @@ class WebItem
 			'publishing_start_date' => $this->get_publishing_start_date() !== null ? $this->get_publishing_start_date()->get_timestamp() : 0,
 			'publishing_end_date' => $this->get_publishing_end_date() !== null ? $this->get_publishing_end_date()->get_timestamp() : 0,
 			'creation_date' => $this->get_creation_date()->get_timestamp(),
+			'update_date' => $this->get_update_date() !== null ? $this->get_update_date()->get_timestamp() : $this->get_creation_date()->get_timestamp(),
 			'author_user_id' => $this->get_author_user()->get_id(),
 			'views_number' => $this->get_views_number(),
 			'thumbnail' => $this->get_thumbnail()->relative(),
@@ -376,6 +392,7 @@ class WebItem
 		$this->publishing_end_date = !empty($properties['publishing_end_date']) ? new Date($properties['publishing_end_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->end_date_enabled = !empty($properties['publishing_end_date']);
 		$this->creation_date = new Date($properties['creation_date'], Timezone::SERVER_TIMEZONE);
+		$this->update_date = !empty($properties['update_date']) ? new Date($properties['update_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->views_number = $properties['views_number'];
 		$this->thumbnail_url = $properties['thumbnail'];
 		$this->partner = (bool)$properties['partner'];
@@ -440,6 +457,7 @@ class WebItem
 
 		return array_merge(
 			Date::get_array_tpl_vars($this->creation_date, 'date'),
+			Date::get_array_tpl_vars($this->update_date,'update_date'),
 			Date::get_array_tpl_vars($this->publishing_start_date, 'differed_publishing_start_date'),
 			array(
 				// Conditions
@@ -451,6 +469,7 @@ class WebItem
 				'C_USER_GROUP_COLOR'      => !empty($user_group_color),
 				'C_IS_ADORNED'            => $this->has_thumbnail() || $this->has_partner_thumbnail(),
 				'C_HAS_THUMBNAIL'         => $this->has_thumbnail(),
+				'C_HAS_UPDATE_DATE'       => $this->has_update_date(),
 				'C_IS_PARTNER'            => $this->is_partner(),
 				'C_HAS_PARTNER_THUMBNAIL' => $this->has_partner_thumbnail(),
 				'C_IS_PRIVILEGED_PARTNER' => $this->is_privileged_partner(),
