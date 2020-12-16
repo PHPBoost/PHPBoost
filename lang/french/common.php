@@ -119,6 +119,7 @@ $lang['status.unapproved'] = 'Non approuvé';
 $lang['status.approved.not'] = 'Brouillon';
 $lang['status.approved.now'] = 'Publié';
 $lang['status.approved.date'] = 'Publication différée';
+$lang['status.last.update'] = 'Dernière mise à jour le ';
 
 //Form
 $lang['form.name'] = 'Nom';

@@ -119,6 +119,7 @@ $lang['status.unapproved'] = 'Unapproved';
 $lang['status.approved.not'] = 'Draft';
 $lang['status.approved.now'] = 'Published';
 $lang['status.approved.date'] = 'Differed publication';
+$lang['status.last.update'] = 'Last updated on ';
 
 //Form
 $lang['form.name'] = 'Name';
