@@ -161,6 +161,17 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 			// update publication and special_authorizations
 			$this->querier->update(PREFIX . 'pages', array('publication' => 1), 'WHERE publication = 0');
 			$this->querier->update(PREFIX . 'pages_cats', array('special_authorizations' => 1), 'WHERE auth != ""');
+
+			// Set update_date to creation_date if update_date = 0
+			$new_date = $this->querier->select('SELECT news.id, news.update_date, news.creation_date
+				FROM ' . PREFIX . 'news news'
+			);
+
+			while ($row = $new_date->fetch())
+			{
+				$this->querier->update(PREFIX . 'news', array('update_date' => $row['creation_date']), 'WHERE update_date = 0 AND id=:id', array('id' => $row['id']));
+			}
+			$new_date->dispose();
 		}
 	}
 

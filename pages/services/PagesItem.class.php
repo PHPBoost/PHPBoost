@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 15
+ * @version     PHPBoost 6.0 - last update: 2020 12 16
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
@@ -177,7 +177,7 @@ class PagesItem
 
 	public function has_update_date()
 	{
-		return $this->update_date !== null && $this->update_date->get_timestamp() !== $this->creation_date->get_timestamp();
+		return $this->update_date !== null && $this->update_date > $this->creation_date;
 	}
 
 	public function get_author_user()
