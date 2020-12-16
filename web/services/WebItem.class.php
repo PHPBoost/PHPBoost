@@ -59,9 +59,9 @@ class WebItem
 	const ASC = 'ASC';
 	const DESC = 'DESC';
 
-	const NOT_APPROVAL = 0;
-	const APPROVAL_NOW = 1;
-	const APPROVAL_DATE = 2;
+	const NOT_PUBLISHED = 0;
+	const PUBLISHED = 1;
+	const DEFERRED_PUBLICATION = 2;
 
 	public function get_id()
 	{
@@ -168,19 +168,19 @@ class WebItem
 	public function is_published()
 	{
 		$now = new Date();
-		return CategoriesAuthorizationsService::check_authorizations($this->id_category)->read() && ($this->get_publishing_state() == self::APPROVAL_NOW || ($this->get_publishing_state() == self::APPROVAL_DATE && $this->get_publishing_start_date()->is_anterior_to($now) && ($this->end_date_enabled ? $this->get_publishing_end_date()->is_posterior_to($now) : true)));
+		return CategoriesAuthorizationsService::check_authorizations($this->id_category)->read() && ($this->get_publishing_state() == self::PUBLISHED || ($this->get_publishing_state() == self::DEFERRED_PUBLICATION && $this->get_publishing_start_date()->is_anterior_to($now) && ($this->end_date_enabled ? $this->get_publishing_end_date()->is_posterior_to($now) : true)));
 	}
 
 	public function get_status()
 	{
 		switch ($this->published) {
-			case self::APPROVAL_NOW:
+			case self::PUBLISHED:
 				return LangLoader::get_message('status.approved.now', 'common');
 			break;
-			case self::APPROVAL_DATE:
+			case self::DEFERRED_PUBLICATION:
 				return LangLoader::get_message('status.approved.date', 'common');
 			break;
-			case self::NOT_APPROVAL:
+			case self::NOT_PUBLISHED:
 				return LangLoader::get_message('status.approved.not', 'common');
 			break;
 		}
@@ -420,7 +420,7 @@ class WebItem
 	{
 		$this->id_category = $id_category;
 		$this->content = WebConfig::load()->get_default_content();
-		$this->published = self::APPROVAL_NOW;
+		$this->published = self::PUBLISHED;
 		$this->author_user = AppContext::get_current_user();
 		$this->publishing_start_date = new Date();
 		$this->publishing_end_date = new Date();
@@ -473,7 +473,7 @@ class WebItem
 				'C_IS_PARTNER'            => $this->is_partner(),
 				'C_HAS_PARTNER_THUMBNAIL' => $this->has_partner_thumbnail(),
 				'C_IS_PRIVILEGED_PARTNER' => $this->is_privileged_partner(),
-				'C_DIFFERED'              => $this->published == self::APPROVAL_DATE,
+				'C_DIFFERED'              => $this->published == self::DEFERRED_PUBLICATION,
 				'C_NEW_CONTENT'           => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('web', $this->get_publishing_start_date() != null ? $this->get_publishing_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_published(),
 
 				// Item

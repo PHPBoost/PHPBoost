@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 15
+ * @version     PHPBoost 6.0 - last update: 2020 12 16
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
@@ -183,12 +183,12 @@ class PagesItemFormController extends ModuleController
 			));
 
 			$publication_fieldset->add_field($publishing_start_date = new FormFieldDateTime('publishing_start_date', $this->common_lang['form.date.start'], ($this->get_item()->get_publishing_start_date() === null ? new Date() : $this->get_item()->get_publishing_start_date()),
-				array('hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_approbation_type', 0) != PagesItem::DEFERRED_PUBLICATION) : $this->get_item()->get_publishing_state() != PagesItem::DEFERRED_PUBLICATION))
+				array('hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_publication_state', 0) != PagesItem::DEFERRED_PUBLICATION) : $this->get_item()->get_publishing_state() != PagesItem::DEFERRED_PUBLICATION))
 			));
 
 			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->common_lang['form.date.end.enable'], $this->get_item()->is_end_date_enabled(),
 				array(
-					'hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_approbation_type', 0) != PagesItem::DEFERRED_PUBLICATION) : ($this->get_item()->get_publishing_state() != PagesItem::DEFERRED_PUBLICATION)),
+					'hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_publication_state', 0) != PagesItem::DEFERRED_PUBLICATION) : ($this->get_item()->get_publishing_state() != PagesItem::DEFERRED_PUBLICATION)),
 					'events' => array('click' => '
 						if (HTMLForms.getField("end_date_enabled").getValue()) {
 							HTMLForms.getField("publishing_end_date").enable();

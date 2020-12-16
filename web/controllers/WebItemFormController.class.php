@@ -146,15 +146,15 @@ class WebItemFormController extends ModuleController
 			if (!$this->item->is_published())
 			{
 				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->common_lang['form.update.date.creation'], false,
-					array('hidden' => $this->item->get_status() != WebItem::NOT_APPROVAL)
+					array('hidden' => $this->item->get_status() != WebItem::NOT_PUBLISHED)
 				));
 			}
 
 			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('published', $this->common_lang['form.approbation'], $this->item->get_publishing_state(),
 				array(
-					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.not'], WebItem::NOT_APPROVAL),
-					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.now'], WebItem::APPROVAL_NOW),
-					new FormFieldSelectChoiceOption($this->common_lang['status.approved.date'], WebItem::APPROVAL_DATE),
+					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.not'], WebItem::NOT_PUBLISHED),
+					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.now'], WebItem::PUBLISHED),
+					new FormFieldSelectChoiceOption($this->common_lang['status.approved.date'], WebItem::DEFERRED_PUBLICATION),
 				),
 				array(
 					'events' => array('change' => '
@@ -174,12 +174,12 @@ class WebItemFormController extends ModuleController
 			));
 
 			$publication_fieldset->add_field($publishing_start_date = new FormFieldDateTime('publishing_start_date', $this->common_lang['form.date.start'], ($this->item->get_publishing_start_date() === null ? new Date() : $this->item->get_publishing_start_date()),
-				array('hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_published', 0) != WebItem::APPROVAL_DATE) : ($this->item->get_publishing_state() != WebItem::APPROVAL_DATE)))
+				array('hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_publication_state', 0) != WebItem::DEFERRED_PUBLICATION) : ($this->item->get_publishing_state() != WebItem::DEFERRED_PUBLICATION)))
 			));
 
 			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->common_lang['form.date.end.enable'], $this->item->is_end_date_enabled(),
 				array(
-					'hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_published', 0) != WebItem::APPROVAL_DATE) : ($this->item->get_publishing_state() != WebItem::APPROVAL_DATE)),
+					'hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_publication_state', 0) != WebItem::DEFERRED_PUBLICATION) : ($this->item->get_publishing_state() != WebItem::DEFERRED_PUBLICATION)),
 					'events' => array('click' => '
 						if (HTMLForms.getField("end_date_enabled").getValue()) {
 							HTMLForms.getField("publishing_end_date").enable();
@@ -265,7 +265,7 @@ class WebItemFormController extends ModuleController
 	private function check_authorizations()
 	{
 		$this->item = $this->get_item();
-		
+
 		if ($this->item->get_id() === null)
 		{
 			if (!$this->item->is_authorized_to_add())
@@ -317,7 +317,7 @@ class WebItemFormController extends ModuleController
 			$this->item->clean_publishing_start_and_end_date();
 
 			if (CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->contribution() && !CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->write())
-				$this->item->set_publishing_state(WebItem::NOT_APPROVAL);
+				$this->item->set_publishing_state(WebItem::NOT_PUBLISHED);
 		}
 		else
 		{
@@ -330,7 +330,7 @@ class WebItemFormController extends ModuleController
 				$this->item->set_creation_date($this->form->get_value('creation_date'));
 			}
 			$this->item->set_publishing_state($this->form->get_value('published')->get_raw_value());
-			if ($this->item->get_publishing_state() == WebItem::APPROVAL_DATE)
+			if ($this->item->get_publishing_state() == WebItem::DEFERRED_PUBLICATION)
 			{
 				$deferred_operations = $this->config->get_deferred_operations();
 

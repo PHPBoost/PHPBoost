@@ -110,21 +110,21 @@ class WebItemController extends ModuleController
 		$not_authorized = !CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->moderation() && !CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->write() && (!CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->contribution() || $this->item->get_author_user()->get_id() != $current_user->get_id());
 
 		switch ($this->item->get_publishing_state()) {
-			case WebItem::APPROVAL_NOW:
+			case WebItem::PUBLISHED:
 				if (!CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->read())
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 					DispatchManager::redirect($error_controller);
 				}
 			break;
-			case WebItem::NOT_APPROVAL:
+			case WebItem::NOT_PUBLISHED:
 				if ($not_authorized || ($current_user->get_id() == User::VISITOR_LEVEL))
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 					DispatchManager::redirect($error_controller);
 				}
 			break;
-			case WebItem::APPROVAL_DATE:
+			case WebItem::DEFERRED_PUBLICATION:
 				if (!$this->item->is_published() && ($not_authorized || ($current_user->get_id() == User::VISITOR_LEVEL)))
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();

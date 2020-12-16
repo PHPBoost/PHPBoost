@@ -189,12 +189,12 @@ class NewsItemFormController extends ModuleController
 			));
 
 			$publication_fieldset->add_field($publishing_start_date = new FormFieldDateTime('publishing_start_date', $this->common_lang['form.date.start'], ($this->item->get_publishing_start_date() === null ? new Date() : $this->item->get_publishing_start_date()),
-				array('hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_published', 0) != NewsItem::DEFERRED_PUBLICATION) : ($this->item->get_publishing_state() != NewsItem::DEFERRED_PUBLICATION)))
+				array('hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_publication_state', 0) != NewsItem::DEFERRED_PUBLICATION) : ($this->item->get_publishing_state() != NewsItem::DEFERRED_PUBLICATION)))
 			));
 
 			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->common_lang['form.date.end.enable'], $this->item->end_date_enabled(),
 				array(
-					'hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_published', 0) != NewsItem::DEFERRED_PUBLICATION) : ($this->item->get_publishing_state() != NewsItem::DEFERRED_PUBLICATION)),
+					'hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_publication_state', 0) != NewsItem::DEFERRED_PUBLICATION) : ($this->item->get_publishing_state() != NewsItem::DEFERRED_PUBLICATION)),
 					'events' => array('click' => '
 						if (HTMLForms.getField("end_date_enabled").getValue()) {
 							HTMLForms.getField("publishing_end_date").enable();
