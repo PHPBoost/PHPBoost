@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Alain091 <alain091@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 02
+ * @version     PHPBoost 6.0 - last update: 2020 12 16
  * @since       PHPBoost 3.0 - 2011 08 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -62,8 +62,8 @@ class PagesFeedProvider implements FeedProvider
 				$item->set_link($link);
 				$item->set_guid($link);
 				$item->set_desc(FormatingHelper::second_parse($row['content']));
-				$item->set_date(new Date($row['creation_date'], Timezone::SERVER_TIMEZONE));
-				$item->set_image_url($row['thumbnail']);
+				$item->set_date(new Date($row['update_date'], Timezone::SERVER_TIMEZONE));
+				$item->set_image_url(Url::to_rel($row['thumbnail']));
 				$item->set_auth(CategoriesService::get_categories_manager($module_id)->get_heritated_authorizations($row['id_category'], Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
 				$data->add_item($item);
 			}
