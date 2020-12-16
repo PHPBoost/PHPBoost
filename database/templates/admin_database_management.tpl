@@ -386,7 +386,7 @@
 							<header></header>
 							<div class="content">
 								<span id="errorh"></span>
-								<div class="message-helper bgc warning">{@database.query.description}</div>
+								<div class="message-helper bgc warning">{@H|database.query.description}</div>
 								<fieldset>
 									<label for="query">* {@database.executed.query}</label>
 									<textarea rows="12" id="query" name="query">{QUERY}</textarea>
