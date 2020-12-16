@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 15
+ * @version     PHPBoost 6.0 - last update: 2020 12 16
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -326,7 +326,7 @@ class NewsItemFormController extends ModuleController
 				$this->item->set_creation_date(new Date());
 
 			$this->item->set_rewrited_title(Url::encode_rewrite($this->item->get_title()));
-			$this->item->clean_start_and_publishing_end_date();
+			$this->item->clean_publishing_start_and_end_date();
 
 			if (CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->contribution() && !CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->write())
 				$this->item->set_publishing_state(NewsItem::NOT_PUBLISHED);
@@ -383,7 +383,7 @@ class NewsItemFormController extends ModuleController
 				NewsConfig::save();
 			}
 			else
-				$this->item->clean_start_and_publishing_end_date();
+				$this->item->clean_publishing_start_and_end_date();
 		}
 
 		if ($this->item->get_id() === null)
