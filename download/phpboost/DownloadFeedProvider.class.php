@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 12
+ * @version     PHPBoost 6.0 - last update: 2020 12 16
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -40,12 +40,12 @@ class DownloadFeedProvider implements FeedProvider
 			$ids_categories = array_keys($categories);
 
 			$now = new Date();
-			$results = $querier->select('SELECT download.id, download.id_category, download.title, download.rewrited_title, download.content, download.summary, download.creation_date, download.thumbnail, cat.rewrited_name AS rewrited_name_cat
+			$results = $querier->select('SELECT download.id, download.id_category, download.title, download.rewrited_title, download.content, download.update_date, download.thumbnail, cat.rewrited_name AS rewrited_name_cat
 				FROM ' . DownloadSetup::$download_table . ' download
 				LEFT JOIN '. DownloadSetup::$download_cats_table .' cat ON cat.id = download.id_category
 				WHERE download.id_category IN :ids_categories
 				AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
-				ORDER BY download.creation_date DESC', array(
+				ORDER BY download.update_date DESC', array(
 					'ids_categories' => $ids_categories,
 					'timestamp_now' => $now->get_timestamp()
 			));
@@ -53,15 +53,15 @@ class DownloadFeedProvider implements FeedProvider
 			foreach ($results as $row)
 			{
 				$row['rewrited_name_cat'] = !empty($row['id_category']) ? $row['rewrited_name_cat'] : 'root';
-				$link = DownloadUrlBuilder::display($row['id_category'], $row['rewrited_name_cat'], $row['id'], $row['rewrited_name']);
+				$link = DownloadUrlBuilder::display($row['id_category'], $row['rewrited_name_cat'], $row['id'], $row['rewrited_title']);
 
 				$item = new FeedItem();
-				$item->set_title($row['name']);
+				$item->set_title($row['title']);
 				$item->set_link($link);
 				$item->set_guid($link);
 				$item->set_desc(FormatingHelper::second_parse($row['content']));
-				$item->set_date(new Date($row['creation_date'], Timezone::SERVER_TIMEZONE));
-				$item->set_image_url($row['thumbnail']);
+				$item->set_date(new Date($row['update_date'], Timezone::SERVER_TIMEZONE));
+				$item->set_image_url(Url::to_rel($row['thumbnail']));
 				$item->set_auth(CategoriesService::get_categories_manager($module_id)->get_heritated_authorizations($row['id_category'], Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
 				$data->add_item($item);
 			}
