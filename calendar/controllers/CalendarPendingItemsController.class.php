@@ -64,7 +64,7 @@ class CalendarPendingItemsController extends ModuleController
 
 		$this->items_view->put_all(array(
 			'C_PAGINATION' => $pagination->has_several_pages(),
-			'C_EVENTS' => $result->get_rows_count() > 0,
+			'C_ITEMS' => $result->get_rows_count() > 0,
 			'C_PENDING_ITEMS' => true,
 			'PAGINATION' => $pagination->display()
 		));

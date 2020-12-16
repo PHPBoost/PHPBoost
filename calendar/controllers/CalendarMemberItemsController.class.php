@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 11
+ * @version     PHPBoost 6.0 - last update: 2020 12 16
  * @since       PHPBoost 5.2 - 2020 08 28
 */
 
@@ -64,7 +64,7 @@ class CalendarMemberItemsController extends ModuleController
 
 		$this->items_view->put_all(array(
 			'C_PAGINATION' => $pagination->has_several_pages(),
-			'C_EVENTS' => $result->get_rows_count() > 0,
+			'C_ITEMS' => $result->get_rows_count() > 0,
 			'C_MEMBER_ITEMS' => true,
 			'PAGINATION' => $pagination->display()
 		));
