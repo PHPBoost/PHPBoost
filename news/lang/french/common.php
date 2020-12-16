@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 07
+ * @version     PHPBoost 6.0 - last update: 2020 12 16
  * @since       PHPBoost 4.0 - 2013 02 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -30,7 +30,6 @@ $lang['news.edit.item'] = 'Modifier une news';
 $lang['news.pending.items'] = 'News en attente';
 $lang['news.manage'] = 'Gérer les news';
 $lang['news.management'] = 'Gestion des news';
-$lang['news.last.update'] = 'Dernière mise à jour le ';
 
 // Form
 $lang['news.form.summary'] = 'Résumé de la news';

@@ -217,7 +217,7 @@ class NewsItem
 
 	public function has_update_date()
 	{
-		return $this->update_date !== null;
+		return ($this->update_date !== null) && ($this->update_date > $this->creation_date);
 	}
 
 	public function set_author_user(User $user)

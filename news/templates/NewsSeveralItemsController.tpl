@@ -104,7 +104,7 @@
 					</div>
 
 					<footer class="cell-footer">
-						# IF items.C_HAS_UPDATE_DATE #<span class="pinned notice small text-italic modified-date">{@news.last.update} <time datetime="{items.UPDATE_DATE_ISO8601}" itemprop="dateModified">{items.UPDATE_DATE_FULL}</time></span># ENDIF #
+						# IF items.C_HAS_UPDATE_DATE #<span class="pinned notice small text-italic modified-date">${LangLoader::get_message('status.last.update', 'common')} <time datetime="{items.UPDATE_DATE_ISO8601}" itemprop="dateModified">{items.UPDATE_DATE_FULL}</time></span># ENDIF #
 						# IF items.C_SOURCES #
 							<div class="sources-container">
 								<span class="text-strong">${LangLoader::get_message('form.sources', 'common')}</span> :
