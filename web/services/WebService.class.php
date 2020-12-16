@@ -82,7 +82,7 @@ class WebService
 	 * @param string $condition : Restriction to apply to the list
 	 * @param string[] $parameters : Parameters of the condition
 	 */
-	public static function get_weblink($condition, array $parameters)
+	public static function get_item($condition, array $parameters)
 	{
 		$row = self::$db_querier->select_single_row_query('SELECT web.*, member.*, notes.average_notes, notes.number_notes, note.note
 		FROM ' . WebSetup::$web_table . ' web
