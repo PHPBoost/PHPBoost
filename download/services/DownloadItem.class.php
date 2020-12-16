@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 13
+ * @version     PHPBoost 6.0 - last update: 2020 12 16
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -263,7 +263,7 @@ class DownloadItem
 
 	public function has_update_date()
 	{
-		return $this->update_date !== null && $this->update_date->get_timestamp() !== $this->creation_date->get_timestamp();
+		return $this->update_date !== null && $this->update_date > $this->creation_date;
 	}
 
 	public function get_author_user()
@@ -527,7 +527,7 @@ class DownloadItem
 				'C_AUTHOR_CUSTOM_NAME'   => $this->is_author_custom_name_enabled(),
 				'C_ENABLED_VIEWS_NUMBER' => $config->get_enabled_views_number(),
 				'C_USER_GROUP_COLOR'     => !empty($user_group_color),
-				'C_UPDATE_DATE'          => $this->has_update_date(),
+				'C_HAS_UPDATE_DATE'      => $this->has_update_date(),
 				'C_SOURCES'              => $nbr_sources > 0,
 				'C_DIFFERED'             => $this->published == self::DEFERRED_PUBLICATION,
 				'C_NEW_CONTENT'          => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('download', $this->get_publishing_start_date() != null ? $this->get_publishing_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_published(),

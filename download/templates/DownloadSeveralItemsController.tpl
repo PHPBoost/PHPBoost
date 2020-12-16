@@ -64,9 +64,9 @@
 							<i class="far fa-fw fa-calendar-plus hidden-small-screens" aria-hidden="true"></i>
 							<span class="hidden-large-screens">${LangLoader::get_message('form.date.creation', 'common')}</span>
 						</th>
-						<th class="col-small" aria-label="${LangLoader::get_message('form.date.update', 'common')}">
+						<th class="col-small" aria-label="${LangLoader::get_message('status.last.update', 'common')}">
 							<i class="far fa-fw fa-calendar-check hidden-small-screens" aria-hidden="true"></i>
-							<span class="hidden-large-screens">${LangLoader::get_message('form.date.update', 'common')}</span>
+							<span class="hidden-large-screens">${LangLoader::get_message('status.last.update', 'common')}</span>
 						</th>
 						<th class="col-small" aria-label="{@downloads.number}">
 							<i class="fa fa-fw fa-download hidden-small-screens" aria-hidden="true"></i>
@@ -108,7 +108,11 @@
 								<time datetime="# IF NOT items.C_DIFFERED #{items.DATE_ISO8601}# ELSE #{items.DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT items.C_DIFFERED #{items.DATE}# ELSE #{items.DIFFERED_START_DATE}# ENDIF #</time>
 							</td>
 							<td>
-								<time datetime="{items.UPDATED_DATE_ISO8601}" itemprop="datePublished">{items.UPDATED_DATE}</time>
+								# IF items.C_HAS_UPDATE_DATE #
+									<time datetime="{items.UPDATE_DATE_ISO8601}" itemprop="datePublished">{items.UPDATE_DATE}</time>
+								# ELSE #
+									--
+								# ENDIF #
 							</td>
 							<td>
 								{items.DOWNLOADS_NUMBER}
@@ -209,6 +213,11 @@
 									# ENDIF #
 								</div>
 							</div>
+							# IF items.C_HAS_UPDATE_DATE #
+								<div class="cell-footer">
+									<span class="pinned notice small text-italic modified-date">${LangLoader::get_message('status.last.update', 'common')} <time datetime="{items.UPDATE_DATE_ISO8601}" itemprop="dateModified">{items.UPDATE_DATE_FULL}</time></span>
+								</div>
+							# ENDIF #
 						</div>
 
 						<footer>
