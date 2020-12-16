@@ -7,7 +7,7 @@
 		<div class="cell-list">
 			<ul>
 				# START item #
-					<li><span class="pinned question smaller">{item.DATE}</span> <a href="{item.U_LINK}">{item.RAW_TITLE}</a></li>
+					<li><span class="pinned question smaller">{item.DATE}</span> # IF item.C_IMG #<img src="{item.U_IMG}" alt="{item.RAW_TITLE}"/># ENDIF #<a href="{item.U_LINK}">{item.RAW_TITLE}</a></li>
 				# END item #
 			</ul>
 		</div>
