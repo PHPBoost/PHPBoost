@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 11
+ * @version     PHPBoost 6.0 - last update: 2020 12 19
  * @since       PHPBoost 4.0 - 2013 08 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -26,7 +26,7 @@ $lang['the.item'] = 'the event';
 $lang['my.items'] = 'My events';
 
 // Configuration
-$lang['calendar.default.contents'] = 'Event default content';
+$lang['calendar.default.content'] = 'Event default content';
 
 // Messages
 $lang['calendar.notice.no.event'] = 'No events scheduled for this date';
@@ -51,7 +51,7 @@ $lang['calendar.cancelled.event'] = 'This event has been canceled';
 // Labels
 $lang['calendar.labels.location'] = 'Location';
 $lang['calendar.labels.map.displayed'] = 'Display address on a map';
-$lang['calendar.labels.picture'] = 'Add a picture';
+$lang['calendar.labels.thumbnail'] = 'Add a thumbnail';
 $lang['calendar.labels.registration.authorized'] = 'Active members registration for the event';
 $lang['calendar.labels.remaining.place'] = 'Only one place left!';
 $lang['calendar.labels.remaining.places'] = 'Only :missing_number places left!';

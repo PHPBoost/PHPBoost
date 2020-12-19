@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 11
+ * @version     PHPBoost 6.0 - last update: 2020 12 19
  * @since       PHPBoost 4.0 - 2013 07 29
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -118,7 +118,7 @@ class CalendarItemController extends ModuleController
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($item->get_content()->get_title(), ($category->get_id() != Category::ROOT_CATEGORY ? $category->get_name() . ' - ' : '') . $this->lang['module.title']);
-		$graphical_environment->get_seo_meta_data()->set_description($item->get_content()->get_contents());
+		$graphical_environment->get_seo_meta_data()->set_description($item->get_content()->get_content());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
@@ -132,8 +132,8 @@ class CalendarItemController extends ModuleController
 		}
 		$breadcrumb->add($item->get_content()->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()));
 
-		if ($item->get_content()->has_picture())
-			$graphical_environment->get_seo_meta_data()->set_picture_url($item->get_content()->get_picture());
+		if ($item->get_content()->has_thumbnail())
+			$graphical_environment->get_seo_meta_data()->set_picture_url($item->get_content()->get_thumbnail());
 
 		return $response;
 	}

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 11
+ * @version     PHPBoost 6.0 - last update: 2020 12 19
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -70,9 +70,9 @@ class CalendarFeedProvider implements FeedProvider
 					$feed_item->set_title($item->get_content()->get_title());
 					$feed_item->set_link($link);
 					$feed_item->set_guid($link);
-					$feed_item->set_desc(FormatingHelper::second_parse($item->get_content()->get_contents()) . ($item->get_content()->get_location() ? '<br />' . $lang['calendar.labels.location'] . ' : ' . $item->get_content()->get_location() . '<br />' : '') . '<br />' . $lang['calendar.labels.start.date'] . ' : ' . $item->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br />' . $lang['calendar.labels.end.date'] . ' : ' . $item->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE));
+					$feed_item->set_desc(FormatingHelper::second_parse($item->get_content()->get_content()) . ($item->get_content()->get_location() ? '<br />' . $lang['calendar.labels.location'] . ' : ' . $item->get_content()->get_location() . '<br />' : '') . '<br />' . $lang['calendar.labels.start.date'] . ' : ' . $item->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br />' . $lang['calendar.labels.end.date'] . ' : ' . $item->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE));
 					$feed_item->set_date($item->get_start_date());
-					$feed_item->set_image_url($item->get_content()->get_picture()->rel());
+					$feed_item->set_image_url($item->get_content()->get_thumbnail()->rel());
 					$feed_item->set_auth(CategoriesService::get_categories_manager($module_id)->get_heritated_authorizations($category->get_id(), Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
 					$data->add_item($feed_item);
 				}

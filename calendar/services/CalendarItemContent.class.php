@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 11
+ * @version     PHPBoost 6.0 - last update: 2020 12 19
  * @since       PHPBoost 4.0 - 2013 10 29
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -15,8 +15,8 @@ class CalendarItemContent
 	private $category_id;
 	private $title;
 	private $rewrited_title;
-	private $contents;
-	private $picture_url;
+	private $content;
+	private $thumbnail_url;
 
 	private $location;
 	private $map_displayed;
@@ -90,38 +90,38 @@ class CalendarItemContent
 		return $this->rewrited_title;
 	}
 
-	public function set_contents($contents)
+	public function set_content($content)
 	{
-		$this->contents = $contents;
+		$this->content = $content;
 	}
 
-	public function get_contents()
+	public function get_content()
 	{
-		return $this->contents;
+		return $this->content;
 	}
 
 	public function get_summary()
 	{
-			return TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>'), CalendarConfig::load()->get_characters_number_to_cut());
+			return TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($this->content), '<br><br/>'), CalendarConfig::load()->get_characters_number_to_cut());
 	}
 
-	public function set_picture(Url $picture)
+	public function set_thumbnail(Url $thumbnail)
 	{
-		$this->picture_url = $picture;
+		$this->thumbnail_url = $thumbnail;
 	}
 
-	public function get_picture()
+	public function get_thumbnail()
 	{
-		if (!$this->picture_url instanceof Url)
+		if (!$this->thumbnail_url instanceof Url)
 			return $this->get_default_thumbnail();
 
-		return $this->picture_url;
+		return $this->thumbnail_url;
 	}
 
-	public function has_picture()
+	public function has_thumbnail()
 	{
-		$picture = $this->picture_url->rel();
-		return !empty($picture);
+		$thumbnail = $this->thumbnail_url->rel();
+		return !empty($thumbnail);
 	}
 
 	public function get_default_thumbnail()
@@ -318,8 +318,8 @@ class CalendarItemContent
 			'id_category' => $this->get_id_category(),
 			'title' => $this->get_title(),
 			'rewrited_title' => $this->get_rewrited_title(),
-			'contents' => $this->get_contents(),
-			'picture_url' => $this->get_picture()->relative(),
+			'content' => $this->get_content(),
+			'thumbnail' => $this->get_thumbnail()->relative(),
 			'location' => $this->get_location(),
 			'cancelled' => (int)$this->is_cancelled(),
 			'approved' => (int)$this->is_approved(),
@@ -341,8 +341,8 @@ class CalendarItemContent
 		$this->category_id = $properties['id_category'];
 		$this->title = $properties['title'];
 		$this->rewrited_title = $properties['rewrited_title'];
-		$this->contents = $properties['contents'];
-		$this->set_picture(new Url($properties['picture_url']));
+		$this->content = $properties['content'];
+		$this->set_thumbnail(new Url($properties['thumbnail']));
 		$this->location = $properties['location'];
 
 		if ($properties['map_displayed'])
@@ -387,10 +387,10 @@ class CalendarItemContent
 	public function init_default_properties($category_id = Category::ROOT_CATEGORY)
 	{
 		$this->category_id = $category_id;
-        $this->contents = CalendarConfig::load()->get_default_contents();
+        $this->content = CalendarConfig::load()->get_default_content();
 		$this->author_user = AppContext::get_current_user();
 		$this->creation_date = new Date();
-		$this->picture_url = self::get_default_thumbnail();
+		$this->thumbnail_url = self::get_default_thumbnail();
 
 		$this->registration_authorized = false;
 		$this->max_registered_members = 0;

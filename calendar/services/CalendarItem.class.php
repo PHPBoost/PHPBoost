@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 11
+ * @version     PHPBoost 6.0 - last update: 2020 12 19
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -179,7 +179,7 @@ class CalendarItem
 				'C_CONTROLS' => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
 				'C_EDIT' => $this->is_authorized_to_edit(),
 				'C_DELETE' => $this->is_authorized_to_delete(),
-				'C_HAS_THUMBNAIL' => $this->content->has_picture(),
+				'C_HAS_THUMBNAIL' => $this->content->has_thumbnail(),
 				'C_LOCATION' => !empty($location),
 				'C_LOCATION_MAP' => $has_location_map,
 				'C_BELONGS_TO_A_SERIE' => $this->belongs_to_a_serie(),
@@ -202,7 +202,7 @@ class CalendarItem
 				'ID' => $this->id,
 				'CONTENT_ID' => $this->content->get_id(),
 				'TITLE' => $this->content->get_title(),
-				'CONTENT' => FormatingHelper::second_parse($this->content->get_contents()),
+				'CONTENT' => FormatingHelper::second_parse($this->content->get_content()),
 				'SUMMARY' => FormatingHelper::second_parse($this->content->get_summary()),
 				'LOCATION' => $location,
 				'LOCATION_MAP' => $location_map,
@@ -228,7 +228,7 @@ class CalendarItem
 				'U_ITEM' => CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $this->id, $this->content->get_rewrited_title())->rel(),
 				'U_EDIT' => CalendarUrlBuilder::edit_event(!$this->parent_id ? $this->id : $this->parent_id)->rel(),
 				'U_DELETE' => CalendarUrlBuilder::delete_event($this->id)->rel(),
-				'U_THUMBNAIL' => $this->content->get_picture()->rel(),
+				'U_THUMBNAIL' => $this->content->get_thumbnail()->rel(),
 				'U_SUSCRIBE' => CalendarUrlBuilder::suscribe_event($this->id)->rel(),
 				'U_UNSUSCRIBE' => CalendarUrlBuilder::unsuscribe_event($this->id)->rel(),
 				'U_COMMENTS' => CalendarUrlBuilder::display_event_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->content->get_rewrited_title())->rel()

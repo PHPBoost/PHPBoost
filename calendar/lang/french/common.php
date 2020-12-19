@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 11
+ * @version     PHPBoost 6.0 - last update: 2020 12 19
  * @since       PHPBoost 4.0 - 2013 08 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -26,7 +26,7 @@ $lang['the.item'] = 'l\'événement';
 $lang['my.items'] = 'Mes événements';
 
 // Configuration
-$lang['calendar.default.contents'] = 'Contenu par défaut d\'un événement';
+$lang['calendar.default.content'] = 'Contenu par défaut d\'un événement';
 
 // Messages
 $lang['calendar.notice.no.event'] = 'Aucun événement pour cette date';
@@ -51,7 +51,7 @@ $lang['calendar.cancelled.event'] = 'Cet événement a été annulé';
 // Labels
 $lang['calendar.labels.location'] = 'Adresse';
 $lang['calendar.labels.map.displayed'] = 'Afficher l\'adresse sur une carte';
-$lang['calendar.labels.picture'] = 'Ajouter une image';
+$lang['calendar.labels.thumbnail'] = 'Ajouter une image';
 $lang['calendar.labels.registration.authorized'] = 'Activer l\'inscription des membres à l\'événement';
 $lang['calendar.labels.remaining.place'] = 'Plus qu\'une place disponible !';
 $lang['calendar.labels.remaining.places'] = 'Il ne reste que :missing_number places !';

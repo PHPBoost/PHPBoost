@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 11
+ * @version     PHPBoost 6.0 - last update: 2020 12 19
  * @since       PHPBoost 3.0 - 2012 11 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -114,7 +114,7 @@ class AdminCalendarConfigController extends AdminModuleController
 			));
 		}
 
-        $fieldset->add_field(new FormFieldRichTextEditor('default_contents', $this->lang['calendar.default.contents'], $this->config->get_default_contents(),
+        $fieldset->add_field(new FormFieldRichTextEditor('default_content', $this->lang['calendar.default.content'], $this->config->get_default_content(),
 			array('rows' => 8, 'cols' => 47)
 		));
 
@@ -147,7 +147,7 @@ class AdminCalendarConfigController extends AdminModuleController
 		else
 			$this->config->disable_members_birthday();
 
-		$this->config->set_default_contents($this->form->get_value('default_contents'));
+		$this->config->set_default_content($this->form->get_value('default_content'));
         $this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 
 		CalendarConfig::save();

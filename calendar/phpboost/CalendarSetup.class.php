@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 11
+ * @version     PHPBoost 6.0 - last update: 2020 12 19
  * @since       PHPBoost 3.0 - 2010 01 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -73,10 +73,10 @@ class CalendarSetup extends DefaultModuleSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'picture_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'thumbnail' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'title' => array('type' => 'string', 'length' => 150, 'notnull' => 1, 'default' => "''"),
 			'rewrited_title' => array('type' => 'string', 'length' => 250, 'default' => "''"),
-			'contents' => array('type' => 'text', 'length' => 65000),
+			'content' => array('type' => 'text', 'length' => 65000),
 			'location' => array('type' => 'text', 'length' => 65000),
 			'map_displayed' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
@@ -95,7 +95,7 @@ class CalendarSetup extends DefaultModuleSetup
 			'indexes' => array(
 				'id_category' => array('type' => 'key', 'fields' => 'id_category'),
 				'title' => array('type' => 'fulltext', 'fields' => 'title'),
-				'contents' => array('type' => 'fulltext', 'fields' => 'contents')
+				'content' => array('type' => 'fulltext', 'fields' => 'content')
 			)
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$calendar_events_content_table, $fields, $options);

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 11
+ * @version     PHPBoost 6.0 - last update: 2020 12 19
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -76,9 +76,9 @@ class CalendarItemFormController extends ModuleController
 			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('category_id', LangLoader::get_message('category', 'categories-common'), $item_content->get_id_category(), $search_category_children_options));
 		}
 
-		$fieldset->add_field(new FormFieldRichTextEditor('contents', $common_lang['form.contents'], $item_content->get_contents(), array('rows' => 15, 'required' => true)));
+		$fieldset->add_field(new FormFieldRichTextEditor('content', $common_lang['form.content'], $item_content->get_content(), array('rows' => 15, 'required' => true)));
 
-		$fieldset->add_field(new FormFieldUploadPictureFile('picture', $this->lang['calendar.labels.picture'], $item_content->get_picture()->relative()));
+		$fieldset->add_field(new FormFieldUploadPictureFile('thumbnail', $this->lang['calendar.labels.thumbnail'], $item_content->get_thumbnail()->relative()));
 
 		$fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->lang['calendar.labels.start.date'], $this->get_event()->get_start_date(), array('required' => true, 'five_minutes_step' => true)));
 
@@ -288,8 +288,8 @@ class CalendarItemFormController extends ModuleController
 		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
 			$item_content->set_id_category($this->form->get_value('category_id')->get_raw_value());
 
-		$item_content->set_contents($this->form->get_value('contents'));
-		$item_content->set_picture(new Url($this->form->get_value('picture')));
+		$item_content->set_content($this->form->get_value('content'));
+		$item_content->set_thumbnail(new Url($this->form->get_value('thumbnail')));
 		$item_content->set_location($this->form->get_value('location'));
 
 		if ($this->config->is_googlemaps_available())
