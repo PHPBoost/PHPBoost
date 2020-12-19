@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 04
+ * @version     PHPBoost 6.0 - last update: 2020 12 19
  * @since       PHPBoost 4.0 - 2014 08 24
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DownloadCache implements CacheData
@@ -47,21 +48,21 @@ class DownloadCache implements CacheData
 		return $this->items;
 	}
 
-	public function downloadfile_exists($id)
+	public function item_exists($id)
 	{
 		return array_key_exists($id, $this->items);
 	}
 
-	public function get_item_item($id)
+	public function get_item($id)
 	{
-		if ($this->downloadfile_exists($id))
+		if ($this->item_exists($id))
 		{
 			return $this->items[$id];
 		}
 		return null;
 	}
 
-	public function get_number_downloadfiles()
+	public function get_items_number()
 	{
 		return count($this->items);
 	}
