@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 08
+ * @version     PHPBoost 6.0 - last update: 2020 12 19
  * @since       PHPBoost 3.0 - 2012 02 22
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -30,7 +30,7 @@ class LangsSwitcherModuleMiniMenu extends ModuleMiniMenu
 
 	public function get_menu_title()
 	{
-		return LangLoader::get_message('switch.lang', 'langswitcher_common', 'LangsSwitcher');
+		return LangLoader::get_message('switch.lang', 'common', 'LangsSwitcher');
 	}
 
 	public function is_displayed()
@@ -42,49 +42,49 @@ class LangsSwitcherModuleMiniMenu extends ModuleMiniMenu
 	{
 		$user = AppContext::get_current_user();
 
-		$lang_id = AppContext::get_request()->get_string('switchlang', '');
+		$item_id = AppContext::get_request()->get_string('switchlang', '');
 		$query_string = preg_replace('`switchlang=[^&]+`u', '', QUERY_STRING);
-		if (!empty($lang_id))
+		if (!empty($item_id))
 		{
-			$lang = LangsManager::get_lang($lang_id);
-			if ($lang !== null)
+			$item = LangsManager::get_lang($item_id);
+			if ($item !== null)
 			{
-				if ($lang->is_activated() && $lang->check_auth())
+				if ($item->is_activated() && $item->check_auth())
 				{
-					$user->update_lang($lang->get_id());
+					$user->update_lang($item->get_id());
 				}
 			}
 			AppContext::get_response()->redirect(trim(HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : '')));
 		}
 		else
-			$lang = LangsManager::get_lang($user->get_locale());
+			$item = LangsManager::get_lang($user->get_locale());
 
-		$tpl = new FileTemplate('LangsSwitcher/langswitcher.tpl');
-		$tpl->add_lang(LangLoader::get('langswitcher_common', 'LangsSwitcher'));
-		MenuService::assign_positions_conditions($tpl, $this->get_block());
-		Menu::assign_common_template_variables($tpl);
+		$view = new FileTemplate('LangsSwitcher/LangsSwitcherModuleMiniMenu.tpl');
+		$view->add_lang(LangLoader::get('common', 'LangsSwitcher'));
+		MenuService::assign_positions_conditions($view, $this->get_block());
+		Menu::assign_common_template_variables($view);
 
 		$current_url = AppContext::get_request()->get_site_url() . $_SERVER['SCRIPT_NAME'] . '?' . rtrim($query_string, '&');
 
-		$tpl->put_all(array(
-			'C_HAS_PICTURE' => $lang->get_configuration()->has_picture(),
+		$view->put_all(array(
+			'C_HAS_PICTURE' => $item->get_configuration()->has_picture(),
 			'DEFAULT_LANG' => UserAccountsConfig::load()->get_default_lang(),
-			'LANG_NAME' => $lang->get_configuration()->get_name(),
-			'LANG_PICTURE_URL' => $lang->get_configuration()->get_picture_url()->rel(),
+			'LANG_NAME' => $item->get_configuration()->get_name(),
+			'U_LANG_PICTURE' => $item->get_configuration()->get_picture_url()->rel(),
 			'URL' => $current_url . (strstr($current_url, '?') ? '&' : '?') . 'switchlang='
 		));
 
-		foreach(LangsManager::get_activated_and_authorized_langs_map_sorted_by_localized_name() as $lang)
+		foreach(LangsManager::get_activated_and_authorized_langs_map_sorted_by_localized_name() as $item)
 		{
-			$tpl->assign_block_vars('langs', array(
-				'C_SELECTED' => $user->get_locale() == $lang->get_id(),
-				'NAME' => $lang->get_configuration()->get_name(),
-				'LANG_PICTURE_URL' => $lang->get_configuration()->get_picture_url()->rel(),
-				'IDNAME' => $lang->get_id()
+			$view->assign_block_vars('items', array(
+				'C_SELECTED' => $user->get_locale() == $item->get_id(),
+				'NAME' => $item->get_configuration()->get_name(),
+				'U_LANG_PICTURE' => $item->get_configuration()->get_picture_url()->rel(),
+				'IDNAME' => $item->get_id()
 			));
 		}
 
-		return $tpl->render();
+		return $view->render();
 	}
 
 	public function display()
