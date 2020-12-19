@@ -17,6 +17,7 @@ class QuotesModuleUpdateVersion extends ModuleUpdateVersion
 
 		$this->content_tables = array(array('name' => PREFIX . 'quotes', 'content_field' => 'quote'));
 		self::$delete_old_files_list = array(
+			'/controllers/ajax/AjaxQuoteAuthorAutoCompleteController.class.php',
 			'/controllers/AdminQuotesManageController.class.php',
 			'/controllers/QuotesDeleteController.class.php',
 			'/controllers/QuotesDisplayAuthorQuotesController.class.php',
@@ -39,6 +40,14 @@ class QuotesModuleUpdateVersion extends ModuleUpdateVersion
 		);
 
 		$this->database_columns_to_modify = array(
+			array(
+				'table_name' => PREFIX . 'quotes',
+				'columns' => array(
+					'author'          => 'writer TEXT',
+					'rewrited_author' => 'rewrited_writer TEXT',
+					'quote'           => 'content MEDIUMTEXT',
+				)
+			),
 			array(
 				'table_name' => PREFIX . 'quotes_cats',
 				'columns' => array(
