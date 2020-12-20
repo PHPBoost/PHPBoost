@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 16
+ * @version     PHPBoost 6.0 - last update: 2020 12 20
  * @since       PHPBoost 5.2 - 2020 08 28
 */
 
@@ -103,7 +103,7 @@ class CalendarMemberItemsController extends ModuleController
 		' . $condition, $parameters);
 
 		$pagination = new ModulePagination($page, $row['events_number'], (int)CalendarConfig::load()->get_items_number_per_page());
-		$pagination->set_url(CalendarUrlBuilder::display_pending_events('%d'));
+		$pagination->set_url(CalendarUrlBuilder::display_member_items('%d'));
 
 		if ($pagination->current_page_is_empty() && $page > 1)
 		{

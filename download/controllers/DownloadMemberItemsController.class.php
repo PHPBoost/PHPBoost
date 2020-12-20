@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 11
+ * @version     PHPBoost 6.0 - last update: 2020 12 20
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -136,7 +136,7 @@ class DownloadMemberItemsController extends ModuleController
 				new FormFieldSelectChoiceOption($common_lang['form.name'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_ALPHABETIC]),
 				new FormFieldSelectChoiceOption($common_lang['author'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_AUTHOR])
 			),
-			array('events' => array('change' => 'document.location = "'. DownloadUrlBuilder::display_pending()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			array('events' => array('change' => 'document.location = "'. DownloadUrlBuilder::display_member_items()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
@@ -144,7 +144,7 @@ class DownloadMemberItemsController extends ModuleController
 				new FormFieldSelectChoiceOption($common_lang['sort.asc'], 'asc'),
 				new FormFieldSelectChoiceOption($common_lang['sort.desc'], 'desc')
 			),
-			array('events' => array('change' => 'document.location = "' . DownloadUrlBuilder::display_pending()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			array('events' => array('change' => 'document.location = "' . DownloadUrlBuilder::display_member_items()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 
 		$this->view->put('SORT_FORM', $form->display());
@@ -155,7 +155,7 @@ class DownloadMemberItemsController extends ModuleController
 		$items_number = DownloadService::count($condition, $parameters);
 
 		$pagination = new ModulePagination($page, $items_number, (int)DownloadConfig::load()->get_items_per_page());
-		$pagination->set_url(DownloadUrlBuilder::display_pending($field, $mode, '%d'));
+		$pagination->set_url(DownloadUrlBuilder::display_member_items($field, $mode, '%d'));
 
 		if ($pagination->current_page_is_empty() && $page > 1)
 		{
@@ -201,11 +201,11 @@ class DownloadMemberItemsController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['my.items'], $this->lang['module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['download.seo.description.member'], array('author' => AppContext::get_current_user()->get_display_name())), $page);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::display_pending($sort_field, $sort_mode, $page));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::display_member_items($sort_field, $sort_mode, $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], DownloadUrlBuilder::home());
-		$breadcrumb->add($this->lang['my.items'], DownloadUrlBuilder::display_pending($sort_field, $sort_mode, $page));
+		$breadcrumb->add($this->lang['my.items'], DownloadUrlBuilder::display_member_items($sort_field, $sort_mode, $page));
 
 		return $response;
 	}

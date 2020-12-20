@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 15
+ * @version     PHPBoost 6.0 - last update: 2020 12 20
  * @since       PHPBoost 5.2 - 2013 06 14
 */
 
@@ -95,7 +95,7 @@ class NewsMemberItemsController extends ModuleController
 		$items_number = NewsService::count($condition, $parameters);
 
 		$pagination = new ModulePagination($page, $items_number, (int)NewsConfig::load()->get_items_per_page());
-		$pagination->set_url(NewsUrlBuilder::display_pending_items('%d'));
+		$pagination->set_url(NewsUrlBuilder::display_member_items('%d'));
 
 		if ($pagination->current_page_is_empty() && $page > 1)
 		{
@@ -123,7 +123,7 @@ class NewsMemberItemsController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['my.items'], $this->lang['module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['news.seo.description.member'], array('author' => AppContext::get_current_user()->get_display_name())), $page);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::display_pending_items($page));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::display_member_items($page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], NewsUrlBuilder::home());
