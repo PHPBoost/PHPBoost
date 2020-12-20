@@ -15,7 +15,7 @@ class QuotesModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('quotes');
 
-		$this->content_tables = array(array('name' => PREFIX . 'quotes', 'content_field' => 'quote'));
+		$this->content_tables = array(array('name' => PREFIX . 'quotes', 'content_field' => 'content'));
 		self::$delete_old_files_list = array(
 			'/controllers/ajax/AjaxQuoteAuthorAutoCompleteController.class.php',
 			'/controllers/AdminQuotesManageController.class.php',
