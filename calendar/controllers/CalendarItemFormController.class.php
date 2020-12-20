@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 19
+ * @version     PHPBoost 6.0 - last update: 2020 12 20
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -35,8 +35,8 @@ class CalendarItemFormController extends ModuleController
 
 		$this->build_form($request);
 
-		$tpl = new StringTemplate('# INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$view = new StringTemplate('# INCLUDE FORM #');
+		$view->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -44,9 +44,9 @@ class CalendarItemFormController extends ModuleController
 			$this->redirect();
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$view->put('FORM', $this->form->display());
 
-		return $this->generate_response($tpl);
+		return $this->generate_response($view);
 	}
 
 	private function init()
@@ -59,7 +59,7 @@ class CalendarItemFormController extends ModuleController
 	{
 		$common_lang = LangLoader::get('common');
 		$date_lang = LangLoader::get('date-common');
-		$item_content = $this->get_event()->get_content();
+		$item_content = $this->get_item()->get_content();
 
 		$form = new HTMLForm(__CLASS__);
 
@@ -80,9 +80,9 @@ class CalendarItemFormController extends ModuleController
 
 		$fieldset->add_field(new FormFieldUploadPictureFile('thumbnail', $this->lang['calendar.labels.thumbnail'], $item_content->get_thumbnail()->relative()));
 
-		$fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->lang['calendar.labels.start.date'], $this->get_event()->get_start_date(), array('required' => true, 'five_minutes_step' => true)));
+		$fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->lang['calendar.labels.start.date'], $this->get_item()->get_start_date(), array('required' => true, 'five_minutes_step' => true)));
 
-		$fieldset->add_field($end_date = new FormFieldDateTime('end_date', $this->lang['calendar.labels.end.date'], $this->get_event()->get_end_date(), array('required' => true, 'five_minutes_step' => true)));
+		$fieldset->add_field($end_date = new FormFieldDateTime('end_date', $this->lang['calendar.labels.end.date'], $this->get_item()->get_end_date(), array('required' => true, 'five_minutes_step' => true)));
 
 		$end_date->add_form_constraint(new FormConstraintFieldsDifferenceSuperior($start_date, $end_date));
 
@@ -175,8 +175,8 @@ class CalendarItemFormController extends ModuleController
 		$auth_setter = new FormFieldAuthorizationsSetter('register_authorizations', $auth_settings, array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_registration_authorized', false) : !$item_content->is_registration_authorized())));
 		$fieldset->add_field($auth_setter);
 
-		if ($this->get_event()->get_id() !== null)
-			$fieldset->add_field(new FormFieldCheckbox('cancelled', $this->lang['calendar.labels.cancel'], $this->get_event()->get_content()->is_cancelled()));
+		if ($this->get_item()->get_id() !== null)
+			$fieldset->add_field(new FormFieldCheckbox('cancelled', $this->lang['calendar.labels.cancel'], $this->get_item()->get_content()->is_cancelled()));
 
 		if (CategoriesAuthorizationsService::check_authorizations($item_content->get_id_category())->moderation())
 			$fieldset->add_field(new FormFieldCheckbox('approved', $common_lang['form.approve'], $item_content->is_approved()));
@@ -195,7 +195,7 @@ class CalendarItemFormController extends ModuleController
 	private function build_contribution_fieldset($form)
 	{
 		$user_common = LangLoader::get('user-common');
-		if ($this->get_event()->get_id() === null && $this->is_contributor_member())
+		if ($this->get_item()->get_id() === null && $this->is_contributor_member())
 		{
 			$fieldset = new FormFieldsetHTML('contribution', $user_common['contribution']);
 			$fieldset->set_description(MessageHelper::display($user_common['contribution.extended.explain'], MessageHelper::WARNING)->render());
@@ -203,7 +203,7 @@ class CalendarItemFormController extends ModuleController
 
 			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $user_common['contribution.description'], '', array('description' => $user_common['contribution.description.explain'])));
 		}
-		elseif ($this->get_event()->is_authorized_to_edit() && !AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
+		elseif ($this->get_item()->is_authorized_to_edit() && !AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 		{
 			$fieldset = new FormFieldsetHTML('member_edition', $user_common['contribution.member.edition']);
 			$fieldset->set_description(MessageHelper::display($user_common['contribution.member.edition.explain'], MessageHelper::WARNING)->render());
@@ -220,7 +220,7 @@ class CalendarItemFormController extends ModuleController
 		return (!CategoriesAuthorizationsService::check_authorizations()->write() && CategoriesAuthorizationsService::check_authorizations()->contribution());
 	}
 
-	private function get_event()
+	private function get_item()
 	{
 		if ($this->item === null)
 		{
@@ -229,7 +229,7 @@ class CalendarItemFormController extends ModuleController
 			if (!empty($id))
 			{
 				try {
-					$this->item = CalendarService::get_event('WHERE id_event = :id', array('id' => $id));
+					$this->item = CalendarService::get_item('WHERE id_event = :id', array('id' => $id));
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
 					DispatchManager::redirect($error_controller);
@@ -237,7 +237,7 @@ class CalendarItemFormController extends ModuleController
 			}
 			else
 			{
-				$this->is_new_event = true;
+				$this->is_new_item = true;
 				$this->item = new CalendarItem();
 				$this->item->init_default_properties($request->get_getint('year', date('Y')), $request->get_getint('month', date('n')), $request->get_getint('day', date('j')));
 
@@ -252,7 +252,7 @@ class CalendarItemFormController extends ModuleController
 
 	private function check_authorizations()
 	{
-		$item = $this->get_event();
+		$item = $this->get_item();
 
 		if ($item->get_id() === null)
 		{
@@ -279,7 +279,7 @@ class CalendarItemFormController extends ModuleController
 
 	private function save()
 	{
-		$item = $this->get_event();
+		$item = $this->get_item();
 		$item_content = $item->get_content();
 
 		$item_content->set_title($this->form->get_value('title'));
@@ -346,12 +346,12 @@ class CalendarItemFormController extends ModuleController
 
 		if ($item->get_id() === null)
 		{
-			$id_content = CalendarService::add_event_content($item_content);
+			$id_content = CalendarService::add_item_content($item_content);
 			$item_content->set_id($id_content);
 
 			$item->set_content($item_content);
 
-			$id_event = CalendarService::add_event($item);
+			$item_id = CalendarService::add_item($item);
 
 			if ($item->get_content()->is_repeatable())
 			{
@@ -362,11 +362,11 @@ class CalendarItemFormController extends ModuleController
 				{
 					$e = new CalendarItem();
 					$e->set_content($item->get_content());
-					$e->set_parent_id($id_event);
+					$e->set_parent_id($item_id);
 
 					$e = $this->set_event_start_and_end_date($e, $new_start_date, $new_end_date);
 
-					CalendarService::add_event($e);
+					CalendarService::add_item($e);
 
 					$new_start_date = $e->get_start_date();
 					$new_end_date = $e->get_end_date();
@@ -375,12 +375,12 @@ class CalendarItemFormController extends ModuleController
 		}
 		else
 		{
-			CalendarService::update_event_content($item_content);
-			$id_event = CalendarService::update_event($item);
+			CalendarService::update_item_content($item_content);
+			$item_id = CalendarService::update_item($item);
 
 			if ($item->get_content()->is_repeatable() || $item_content->is_repeatable() && ($item->get_content()->get_repeat_number() != $item_content->get_repeat_number() || $item->get_content()->get_repeat_type() != $item_content->get_repeat_type()))
 			{
-				$items_list = CalendarService::get_serie_events($item_content->get_id());
+				$items_list = CalendarService::get_serie_items($item_content->get_id());
 
 				$new_start_date = $item->get_start_date();
 				$new_end_date = $item->get_end_date();
@@ -388,16 +388,16 @@ class CalendarItemFormController extends ModuleController
 				$i = 0;
 				foreach ($items_list as $id => $e)
 				{
-					if ($id != $id_event)
+					if ($id != $item_id)
 					{
 						$e->set_content($item_content);
 
 						$e = $this->set_event_start_and_end_date($e, $new_start_date, $new_end_date);
 
 						if ($i <= $item_content->get_repeat_number())
-							CalendarService::update_event($e);
+							CalendarService::update_item($e);
 						else
-							CalendarService::delete_event('WHERE id_event = :id', array('id' => $e->get_id()));
+							CalendarService::delete_item('WHERE id_event = :id', array('id' => $e->get_id()));
 
 						$new_start_date = $e->get_start_date();
 						$new_end_date = $e->get_end_date();
@@ -411,11 +411,11 @@ class CalendarItemFormController extends ModuleController
 					{
 						$e = new CalendarItem();
 						$e->set_content($item_content);
-						$e->set_parent_id($id_event);
+						$e->set_parent_id($item_id);
 
 						$e = $this->set_event_start_and_end_date($e, $new_start_date, $new_end_date);
 
-						CalendarService::add_event($e);
+						CalendarService::add_item($e);
 
 						$new_start_date = $e->get_start_date();
 						$new_end_date = $e->get_end_date();
@@ -424,7 +424,7 @@ class CalendarItemFormController extends ModuleController
 			}
 		}
 
-		$this->contribution_actions($item, $id_event);
+		$this->contribution_actions($item, $item_id);
 
 		CalendarService::clear_cache();
 	}
@@ -480,19 +480,19 @@ class CalendarItemFormController extends ModuleController
 		return $item;
 	}
 
-	private function contribution_actions(CalendarItem $item, $id_event)
+	private function contribution_actions(CalendarItem $item, $item_id)
 	{
 		if($this->is_contributor_member())
 		{
 			$contribution = new Contribution();
-			$contribution->set_id_in_module($id_event);
+			$contribution->set_id_in_module($item_id);
 			if ($item->get_id() === null)
 				$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
 			else
 				$contribution->set_description(stripslashes($this->form->get_value('edition_description')));
 
 			$contribution->set_entitled($item->get_content()->get_title());
-			$contribution->set_fixing_url(CalendarUrlBuilder::edit_event($id_event)->relative());
+			$contribution->set_fixing_url(CalendarUrlBuilder::edit_event($item_id)->relative());
 			$contribution->set_poster_id(AppContext::get_current_user()->get_id());
 			$contribution->set_module('calendar');
 			$contribution->set_auth(
@@ -505,7 +505,7 @@ class CalendarItemFormController extends ModuleController
 		}
 		else
 		{
-			$corresponding_contributions = ContributionService::find_by_criteria('calendar', $id_event);
+			$corresponding_contributions = ContributionService::find_by_criteria('calendar', $item_id);
 			if (count($corresponding_contributions) > 0)
 			{
 				foreach ($corresponding_contributions as $contribution)
@@ -515,41 +515,41 @@ class CalendarItemFormController extends ModuleController
 				}
 			}
 		}
-		$item->set_id($id_event);
+		$item->set_id($item_id);
 	}
 
 	private function redirect()
 	{
-		$item = $this->get_event();
+		$item = $this->get_item();
 		$category = $item->get_content()->get_category();
 
-		if ($this->is_new_event && $this->is_contributor_member() && !$item->get_content()->is_approved())
+		if ($this->is_new_item && $this->is_contributor_member() && !$item->get_content()->is_approved())
 		{
 			DispatchManager::redirect(new UserContributionSuccessController());
 		}
 		elseif ($item->get_content()->is_approved())
 		{
-			if ($this->is_new_event)
+			if ($this->is_new_item)
 				AppContext::get_response()->redirect(CalendarUrlBuilder::home($item->get_start_date()->get_year(), $item->get_start_date()->get_month(), $item->get_start_date()->get_day() , true), StringVars::replace_vars($this->lang['calendar.message.success.add'], array('title' => $item->get_content()->get_title())));
 			else
 				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : CalendarUrlBuilder::home($item->get_start_date()->get_year(), $item->get_start_date()->get_month(), $item->get_start_date()->get_day() , true)), StringVars::replace_vars($this->lang['calendar.message.success.edit'], array('title' => $item->get_content()->get_title())));
 		}
 		else
 		{
-			if ($this->is_new_event)
+			if ($this->is_new_item)
 				AppContext::get_response()->redirect(CalendarUrlBuilder::display_pending_events(), StringVars::replace_vars($this->lang['calendar.message.success.add'], array('title' => $item->get_content()->get_title())));
 			else
 				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : CalendarUrlBuilder::display_pending_events()), StringVars::replace_vars($this->lang['calendar.message.success.edit'], array('title' => $item->get_content()->get_title())));
 		}
 	}
 
-	private function generate_response(View $tpl)
+	private function generate_response(View $view)
 	{
-		$item = $this->get_event();
+		$item = $this->get_item();
 
-		$location_id = $item->get_id() ? 'calendar-edit-'. $item->get_id() : '';
+		$location_id = $item->get_id() ? 'item-edit-'. $item->get_id() : '';
 
-		$response = new SiteDisplayResponse($tpl, $location_id);
+		$response = new SiteDisplayResponse($view, $location_id);
 		$graphical_environment = $response->get_graphical_environment();
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();

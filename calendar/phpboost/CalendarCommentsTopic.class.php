@@ -21,7 +21,7 @@ class CalendarCommentsTopic extends CommentsTopic
 	public function get_authorizations()
 	{
 		$authorizations = new CommentsAuthorizations();
-		$authorizations->set_authorized_access_module(CategoriesAuthorizationsService::check_authorizations($this->get_event()->get_content()->get_id_category(), 'calendar')->read());
+		$authorizations->set_authorized_access_module(CategoriesAuthorizationsService::check_authorizations($this->get_item()->get_content()->get_id_category(), 'calendar')->read());
 		return $authorizations;
 	}
 
@@ -30,11 +30,11 @@ class CalendarCommentsTopic extends CommentsTopic
 		return true;
 	}
 
-	private function get_event()
+	private function get_item()
 	{
 		if ($this->item === null)
 		{
-			$this->item = CalendarService::get_event('WHERE id=:id', array('id' => $this->get_id_in_module()));
+			$this->item = CalendarService::get_item('WHERE id=:id', array('id' => $this->get_id_in_module()));
 		}
 		return $this->item;
 	}

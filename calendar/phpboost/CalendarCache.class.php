@@ -20,20 +20,20 @@ class CalendarCache implements CacheData
 		$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
 		$month_days = $array_month[$month - 1];
 
-		$result = CalendarService::get_all_current_month_events($month, $year, $month_days);
+		$result = CalendarService::get_all_current_month_items($month, $year, $month_days);
 		while ($row = $result->fetch())
 		{
 			$this->items[] = $row;
 		}
 	}
 
-	public function get_events()
+	public function get_items()
 	{
 		return $this->items;
 	}
 
 	/**
-	 * Loads and returns current month events cached data.
+	 * Loads and returns current month items cached data.
 	 * @return CalendarCurrentMonthEventsCache The cached data
 	 */
 	public static function load()
@@ -42,7 +42,7 @@ class CalendarCache implements CacheData
 	}
 
 	/**
-	 * Invalidates the current Calendar month events cached data.
+	 * Invalidates the current Calendar month items cached data.
 	 */
 	public static function invalidate()
 	{

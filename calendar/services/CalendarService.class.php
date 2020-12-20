@@ -19,10 +19,10 @@ class CalendarService
 	}
 
 	 /**
-	 * @desc Create a new event.
-	 * @param string[] $item new CalendarEvent
+	 * @desc Create a new item.
+	 * @param string[] $item new CalendarItem
 	 */
-	public static function add_event(CalendarItem $item)
+	public static function add_item(CalendarItem $item)
 	{
 		$result = self::$db_querier->insert(CalendarSetup::$calendar_events_table, $item->get_properties());
 
@@ -30,10 +30,10 @@ class CalendarService
 	}
 
 	 /**
-	 * @desc Create a new event content.
+	 * @desc Create a new item content.
 	 * @param string[] $item_content new CalendarItemContent
 	 */
-	public static function add_event_content(CalendarItemContent $item_content)
+	public static function add_item_content(CalendarItemContent $item_content)
 	{
 		$result = self::$db_querier->insert(CalendarSetup::$calendar_events_content_table, $item_content->get_properties());
 
@@ -41,8 +41,8 @@ class CalendarService
 	}
 
 	 /**
-	 * @desc Add a participant of an event.
-	 * @param int $item_id id of the event
+	 * @desc Add a participant of an item.
+	 * @param int $item_id id of the item
 	 * @param int $user_id id of the participant to add
 	 */
 	public static function add_participant($item_id, $user_id)
@@ -54,10 +54,10 @@ class CalendarService
 	}
 
 	 /**
-	 * @desc Update an event.
-	 * @param string[] $item CalendarEvent to update
+	 * @desc Update an item.
+	 * @param string[] $item CalendarItem to update
 	 */
-	public static function update_event(CalendarItem $item)
+	public static function update_item(CalendarItem $item)
 	{
 		self::$db_querier->update(CalendarSetup::$calendar_events_table, $item->get_properties(), 'WHERE id_event = :id', array(
 			'id' => $item->get_id()
@@ -67,10 +67,10 @@ class CalendarService
 	}
 
 	 /**
-	 * @desc Update the content of an event.
+	 * @desc Update the content of an item.
 	 * @param string[] $item_content CalendarItemContent to update
 	 */
-	public static function update_event_content(CalendarItemContent $item_content)
+	public static function update_item_content(CalendarItemContent $item_content)
 	{
 		self::$db_querier->update(CalendarSetup::$calendar_events_content_table, $item_content->get_properties(), 'WHERE id = :id', array(
 			'id' => $item_content->get_id()
@@ -78,11 +78,11 @@ class CalendarService
 	}
 
 	 /**
-	 * @desc Delete an event.
-	 * @param string $condition Restriction to apply to the list of events
+	 * @desc Delete an item.
+	 * @param string $condition Restriction to apply to the list of items
 	 * @param string[] $parameters Parameters of the condition
 	 */
-	public static function delete_event(int $id, bool $has_parent)
+	public static function delete_item(int $id, bool $has_parent)
 	{
 		if (AppContext::get_current_user()->is_readonly())
 		{
@@ -102,33 +102,33 @@ class CalendarService
 	}
 
 	 /**
-	 * @desc Delete the content of an event.
-	 * @param string $condition Restriction to apply to the list of events content
+	 * @desc Delete the content of an item.
+	 * @param string $condition Restriction to apply to the list of items content
 	 * @param string[] $parameters Parameters of the condition
 	 */
-	public static function delete_event_content($condition, array $parameters)
+	public static function delete_item_content($condition, array $parameters)
 	{
 		self::$db_querier->delete(CalendarSetup::$calendar_events_content_table, $condition, $parameters);
 	}
 
 	 /**
-	 * @desc Delete a serie of events.
-	 * @param int $content_id id of the content of the event
+	 * @desc Delete a serie of items.
+	 * @param int $content_id id of the content of the item
 	 */
-	public static function delete_all_serie_events($content_id)
+	public static function delete_all_serie_items($content_id)
 	{
-		self::delete_event_content('WHERE id = :id', array(
+		self::delete_item_content('WHERE id = :id', array(
 			'id' => $content_id
 		));
 
-		self::delete_event('WHERE content_id = :id', array(
+		self::delete_item('WHERE content_id = :id', array(
 			'id' => $content_id
 		));
 	}
 
 	 /**
-	 * @desc Delete the participants of an event.
-	 * @param int $item_id id of the event
+	 * @desc Delete the participants of an item.
+	 * @param int $item_id id of the item
 	 */
 	public static function delete_all_participants($item_id)
 	{
@@ -138,8 +138,8 @@ class CalendarService
 	}
 
 	 /**
-	 * @desc Delete a participant of an event.
-	 * @param int $item_id id of the event
+	 * @desc Delete a participant of an item.
+	 * @param int $item_id id of the item
 	 * @param int $user_id id of the participant to delete
 	 */
 	public static function delete_participant($item_id, $user_id)
@@ -151,11 +151,11 @@ class CalendarService
 	}
 
 	 /**
-	 * @desc Return the content of an event.
-	 * @param string $condition Restriction to apply to the list of events
+	 * @desc Return the content of an item.
+	 * @param string $condition Restriction to apply to the list of items
 	 * @param string[] $parameters Parameters of the condition
 	 */
-	public static function get_event($condition, array $parameters)
+	public static function get_item($condition, array $parameters)
 	{
 		$row = self::$db_querier->select_single_row_query('SELECT *
 		FROM ' . CalendarSetup::$calendar_events_table . ' event
@@ -165,16 +165,16 @@ class CalendarService
 
 		$item = new CalendarItem();
 		$item->set_properties($row);
-		$item->set_participants(self::get_event_participants($item->get_id()));
+		$item->set_participants(self::get_item_participants($item->get_id()));
 
 		return $item;
 	}
 
 	 /**
-	 * @desc Return the participants of an event.
-	 * @param int $item_id id of the event
+	 * @desc Return the participants of an item.
+	 * @param int $item_id id of the item
 	 */
-	public static function get_event_participants($item_id)
+	public static function get_item_participants($item_id)
 	{
 		$participants = array();
 
@@ -200,10 +200,10 @@ class CalendarService
 	}
 
 	 /**
-	 * @desc Return the events of a serie.
-	 * @param int $content_id id of the content of the event
+	 * @desc Return the items of a serie.
+	 * @param int $content_id id of the content of the item
 	 */
-	public static function get_serie_events($content_id)
+	public static function get_serie_items($content_id)
 	{
 		$items = array();
 
@@ -236,12 +236,12 @@ class CalendarService
 	}
 
 	 /**
-	 * @desc Return all the events of the requested month.
+	 * @desc Return all the items of the requested month.
 	 * @param int $month Month of the request
 	 * @param int $year Year of the request
 	 * @param int $month_days Number of days in the requested month
 	 */
-	public static function get_all_current_month_events($month, $year, $month_days, $id_category = Category::ROOT_CATEGORY)
+	public static function get_all_current_month_items($month, $year, $month_days, $id_category = Category::ROOT_CATEGORY)
 	{
 		$authorized_categories = CategoriesService::get_authorized_categories($id_category);
 

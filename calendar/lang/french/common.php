@@ -28,7 +28,7 @@ $lang['my.items'] = 'Mes événements';
 // Configuration
 $lang['calendar.default.content'] = 'Contenu par défaut d\'un événement';
 
-// Messages
+// Notice messages
 $lang['calendar.notice.no.event'] = 'Aucun événement pour cette date';
 $lang['calendar.notice.no.pending.event'] = 'Aucun événement en attente';
 $lang['calendar.suscribe.notice.expired.event.date'] = 'L\'événement est en cours ou terminé, vous ne pouvez pas vous inscrire.';

@@ -35,7 +35,7 @@ class CalendarItemController extends ModuleController
 		$this->view->add_lang($this->lang);
 	}
 
-	private function get_event()
+	private function get_item()
 	{
 		if ($this->item === null)
 		{
@@ -43,7 +43,7 @@ class CalendarItemController extends ModuleController
 			if (!empty($id))
 			{
 				try {
-					$this->item = CalendarService::get_event('WHERE id_event = :id', array('id' => $id));
+					$this->item = CalendarService::get_item('WHERE id_event = :id', array('id' => $id));
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
    					DispatchManager::redirect($error_controller);
@@ -57,7 +57,7 @@ class CalendarItemController extends ModuleController
 
 	private function build_view()
 	{
-		$item = $this->get_event();
+		$item = $this->get_item();
 		$category = $item->get_content()->get_category();
 
 		$this->view->put_all(array_merge($item->get_array_tpl_vars(), array(
@@ -90,7 +90,7 @@ class CalendarItemController extends ModuleController
 
 	private function check_authorizations()
 	{
-		$item = $this->get_event();
+		$item = $this->get_item();
 
 		if (!$item->get_content()->is_approved())
 		{
@@ -113,7 +113,7 @@ class CalendarItemController extends ModuleController
 
 	private function generate_response()
 	{
-		$item = $this->get_event();
+		$item = $this->get_item();
 		$category = $item->get_content()->get_category();
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();

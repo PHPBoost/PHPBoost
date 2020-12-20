@@ -19,7 +19,7 @@ class CalendarUnsuscribeController extends ModuleController
 
 		if (!empty($item_id))
 		{
-			$this->get_event($item_id);
+			$this->get_item($item_id);
 
 			$this->check_authorizations();
 
@@ -40,10 +40,10 @@ class CalendarUnsuscribeController extends ModuleController
 		}
 	}
 
-	private function get_event($item_id)
+	private function get_item($item_id)
 	{
 		try {
-			$this->item = CalendarService::get_event('WHERE id_event = :id', array('id' => $item_id));
+			$this->item = CalendarService::get_item('WHERE id_event = :id', array('id' => $item_id));
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);

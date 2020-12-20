@@ -83,7 +83,7 @@ class CalendarAjaxCalendarController extends AbstractController
 		}
 
 		// Retrieve all the items of the selected month
-		$items = $month == date('n') && $year == date('Y') ? CalendarCache::load()->get_events() : CalendarService::get_all_current_month_events($month, $year, $month_days);
+		$items = $month == date('n') && $year == date('Y') ? CalendarCache::load()->get_items() : CalendarService::get_all_current_month_items($month, $year, $month_days);
 
 		$items_legend_list = array();
 

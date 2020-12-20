@@ -39,7 +39,7 @@ class CalendarItemsListController extends ModuleController
 			AppContext::get_response()->redirect(CalendarUrlBuilder::events_list());
 
 		$this->lang = LangLoader::get('common', 'calendar');
-		$this->view = new StringTemplate('# INCLUDE table #');
+		$this->view = new StringTemplate('# INCLUDE TABLE #');
 	}
 
 	private function build_table()
@@ -136,7 +136,7 @@ class CalendarItemsListController extends ModuleController
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 
-		$this->view->put('table', $table->display());
+		$this->view->put('TABLE', $table->display());
 
 		return $table->get_page_number();
 	}
@@ -152,20 +152,20 @@ class CalendarItemsListController extends ModuleController
 					if (isset($this->ids[$i]) && !in_array($this->ids[$i], $this->hide_delete_input))
 					{
 						try {
-							$item = CalendarService::get_event('WHERE id_event = :id', array('id' => $this->ids[$i]));
+							$item = CalendarService::get_item('WHERE id_event = :id', array('id' => $this->ids[$i]));
 						} catch (RowNotFoundException $e) {}
 
 						if ($item)
 						{
-							$items_list = CalendarService::get_serie_events($item->get_content()->get_id());
+							$items_list = CalendarService::get_serie_items($item->get_content()->get_id());
 
 							if (!$item->belongs_to_a_serie() || count($items_list) == 1)
 							{
-								CalendarService::delete_event_content('WHERE id = :id', array('id' => $item->get_id()));
+								CalendarService::delete_item_content('WHERE id = :id', array('id' => $item->get_id()));
 							}
 
 							// Delete item
-							CalendarService::delete_event('WHERE id_event = :id', array('id' => $item->get_id()));
+							CalendarService::delete_item('WHERE id_event = :id', array('id' => $item->get_id()));
 
 							if (!$this->item->get_parent_id())
 								PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'calendar', 'id' => $item->get_id()));

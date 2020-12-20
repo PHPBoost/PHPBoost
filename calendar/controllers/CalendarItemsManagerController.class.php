@@ -117,19 +117,19 @@ class CalendarItemsManagerController extends AdminModuleController
 					if (isset($this->ids[$i]))
 					{
 						try {
-							$item = CalendarService::get_event('WHERE id_event = :id', array('id' => $this->ids[$i]));
+							$item = CalendarService::get_item('WHERE id_event = :id', array('id' => $this->ids[$i]));
 						} catch (RowNotFoundException $e) {}
 
 						if ($item)
 						{
-							$items_list = CalendarService::get_serie_events($item->get_content()->get_id());
+							$items_list = CalendarService::get_serie_items($item->get_content()->get_id());
 
-							//Delete event
-							CalendarService::delete_event($item->get_id(), $item->get_parent_id());
+							//Delete item
+							CalendarService::delete_item($item->get_id(), $item->get_parent_id());
 
 							if (!$item->belongs_to_a_serie() || count($items_list) == 1)
 							{
-								CalendarService::delete_event_content('WHERE id = :id', array('id' => $item->get_id()));
+								CalendarService::delete_item_content('WHERE id = :id', array('id' => $item->get_id()));
 							}
 						}
 					}
@@ -138,7 +138,7 @@ class CalendarItemsManagerController extends AdminModuleController
 
 			CalendarService::clear_cache();
 
-			AppContext::get_response()->redirect(CalendarUrlBuilder::manage_events(), LangLoader::get_message('process.success', 'status-messages-common'));
+			AppContext::get_response()->redirect(CalendarUrlBuilder::manage_items(), LangLoader::get_message('process.success', 'status-messages-common'));
 		}
 	}
 
@@ -183,12 +183,12 @@ class CalendarItemsManagerController extends AdminModuleController
 
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['calendar.config.events.management'], $this->lang['module.title'], $page);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::manage_events());
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::manage_items());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::home());
 
-		$breadcrumb->add($this->lang['calendar.config.events.management'], CalendarUrlBuilder::manage_events());
+		$breadcrumb->add($this->lang['calendar.config.events.management'], CalendarUrlBuilder::manage_items());
 
 		return $response;
 	}

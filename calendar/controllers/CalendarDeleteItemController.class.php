@@ -30,7 +30,7 @@ class CalendarDeleteItemController extends ModuleController
 
 		$this->init();
 
-		$this->get_event($request);
+		$this->get_item($request);
 
 		$this->check_authorizations();
 
@@ -42,7 +42,7 @@ class CalendarDeleteItemController extends ModuleController
 
 		if (($this->item->belongs_to_a_serie() && $this->submit_button->has_been_submited() && $this->form->validate()) || !$this->item->belongs_to_a_serie())
 		{
-			$this->delete_event($this->item->belongs_to_a_serie() ? $this->form->get_value('delete_serie')->get_raw_value() : false);
+			$this->delete_item($this->item->belongs_to_a_serie() ? $this->form->get_value('delete_serie')->get_raw_value() : false);
 			$this->redirect($request);
 		}
 
@@ -78,14 +78,14 @@ class CalendarDeleteItemController extends ModuleController
 		$this->form = $form;
 	}
 
-	private function get_event(HTTPRequestCustom $request)
+	private function get_item(HTTPRequestCustom $request)
 	{
 		$id = $request->get_getint('id', 0);
 
 		if (!empty($id))
 		{
 			try {
-				$this->item = CalendarService::get_event('WHERE id_event = :id', array('id' => $id));
+				$this->item = CalendarService::get_item('WHERE id_event = :id', array('id' => $id));
 			} catch (RowNotFoundException $e) {
 				$error_controller = PHPBoostErrors::unexisting_page();
 				DispatchManager::redirect($error_controller);
@@ -93,9 +93,9 @@ class CalendarDeleteItemController extends ModuleController
 		}
 	}
 
-	private function delete_event($delete_all_serie_items = false)
+	private function delete_item($delete_all_serie_items = false)
 	{
-		$items_list = CalendarService::get_serie_events($this->item->get_content()->get_id());
+		$items_list = CalendarService::get_serie_items($this->item->get_content()->get_id());
 
 		if ($delete_all_serie_items)
 		{
@@ -108,18 +108,18 @@ class CalendarDeleteItemController extends ModuleController
 				CalendarService::delete_all_participants($item->get_id());
 			}
 
-			CalendarService::delete_all_serie_events($this->item->get_content()->get_id());
+			CalendarService::delete_all_serie_items($this->item->get_content()->get_id());
 			PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module = :module AND id_in_module = :id', array('module' => 'calendar', 'id' => !$this->item->get_parent_id() ? $this->item->get_id() : $this->item->get_parent_id()));
 		}
 		else
 		{
 			if (!$this->item->belongs_to_a_serie() || count($items_list) == 1)
 			{
-				CalendarService::delete_event_content('WHERE id = :id', array('id' => $this->item->get_id()));
+				CalendarService::delete_item_content('WHERE id = :id', array('id' => $this->item->get_id()));
 			}
 
 			// Delete item
-			CalendarService::delete_event($this->item->get_id(), $this->item->get_parent_id());
+			CalendarService::delete_item($this->item->get_id(), $this->item->get_parent_id());
 		}
 
 		CalendarService::clear_cache();
