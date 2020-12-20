@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 08 02
+ * @version     PHPBoost 6.0 - last update: 2020 12 20
  * @since       PHPBoost 4.0 - 2014 05 09
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -12,16 +12,13 @@
 #                    French                         #
 #####################################################
 
-$lang['form.questions'] = 'Questions';
-$lang['form.questions.explain'] = 'Séparez les réponses par le symbole ; quand plusieurs réponses sont possibles';
-$lang['form.question'] = 'Question';
-$lang['form.answers'] = 'Réponse(s)';
-$lang['form.change_question'] = 'Changer la question';
-$lang['config.title'] = 'Configuration des questions';
+$lang['questioncaptcha.config.label'] = 'Questions';
+$lang['questioncaptcha.config.label.description'] = 'Séparez les réponses par le symbole ; quand plusieurs réponses sont possibles';
+$lang['questioncaptcha.config.label.placeholder'] = 'Question';
+$lang['questioncaptcha.config.answers.placeholder'] = 'Réponse(s)';
+$lang['questioncaptcha.config.delete'] = 'Supprimer la question';
+$lang['questioncaptcha.config.add'] = 'Ajouter une question';
 
-$lang['config.delete'] = 'Supprimer la question';
-$lang['config.add'] = 'Ajouter une question';
-
-$lang['advises.QuestionCaptcha_questions_number'] = 'Le captcha QuestionCaptcha est utilisé pour sécuriser les formulaires, pensez à <a href="'.QuestionCaptchaUrlBuilder::configuration()-> rel().'">Ajouter des questions </a>pour renforcer la sécurité.';
+$lang['advices.questioncaptcha.items.number'] = 'Le captcha QuestionCaptcha est utilisé pour sécuriser les formulaires, pensez à <a href="'.QuestionCaptchaUrlBuilder::configuration()-> rel().'">Ajouter des questions </a>pour renforcer la sécurité.';
 
 ?>

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 30
+ * @version     PHPBoost 6.0 - last update: 2020 12 20
  * @since       PHPBoost 4.0 - 2014 05 09
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -32,18 +32,18 @@ class AdminQuestionCaptchaConfig extends AdminModuleController
 
 		$this->build_form();
 
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
+		$view->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$view->put('FORM', $this->form->display());
 
-		return $this->build_response($tpl);
+		return $this->build_response($view);
 	}
 
 	private function init()
@@ -56,7 +56,7 @@ class AdminQuestionCaptchaConfig extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('config', $this->lang['config.title']);
+		$fieldset = new FormFieldsetHTMLHeading('configuration', StringVars::replace_vars(LangLoader::get_message('configuration.module.title', 'admin-common'), array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
 		$this->display_fields($fieldset);
@@ -70,25 +70,25 @@ class AdminQuestionCaptchaConfig extends AdminModuleController
 
 	private function display_fields(FormFieldset $fieldset)
 	{
-		$fieldset->add_field(new QuestionCaptchaFormFieldQuestions('questions', $this->lang['form.questions'], $this->config->get_questions(), array(
-			'description' => $this->lang['form.questions.explain'], 'class' => 'full-field'
-		)));
+		$fieldset->add_field(new QuestionCaptchaFormFieldQuestions('items', $this->lang['questioncaptcha.config.label'], $this->config->get_items(),
+			array('description' => $this->lang['questioncaptcha.config.label.description'], 'class' => 'full-field')
+		));
 	}
 
 	private function save()
 	{
-		$this->config->set_questions($this->form->get_value('questions'));
+		$this->config->set_items($this->form->get_value('items'));
 
 		QuestionCaptchaConfig::save();
 	}
 
-	private function build_response(View $tpl)
+	private function build_response(View $view)
 	{
 		$title = LangLoader::get_message('configuration', 'admin');
 
-		$response = new AdminMenuDisplayResponse($tpl);
+		$response = new AdminMenuDisplayResponse($view);
 		$response->set_title($title);
-		$response->add_link($this->lang['config.title'], QuestionCaptchaUrlBuilder::configuration());
+		$response->add_link($title, QuestionCaptchaUrlBuilder::configuration());
 		$env = $response->get_graphical_environment();
 		$env->set_page_title($title);
 

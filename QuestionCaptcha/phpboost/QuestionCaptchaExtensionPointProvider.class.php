@@ -22,7 +22,7 @@ class QuestionCaptchaExtensionPointProvider extends ExtensionPointProvider
 	public function css_files()
 	{
 		$module_css_files = new ModuleCssFiles();
-		$module_css_files->adding_running_module_displayed_file('QuestionCaptcha.css');
+		$module_css_files->adding_running_module_displayed_file('questioncaptcha.css');
 		return $module_css_files;
 	}
 

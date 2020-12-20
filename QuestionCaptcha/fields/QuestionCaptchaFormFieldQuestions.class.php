@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 09 18
+ * @version     PHPBoost 6.0 - last update: 2020 12 20
  * @since       PHPBoost 4.0 - 2014 05 09
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class QuestionCaptchaFormFieldQuestions extends AbstractFormField
@@ -21,15 +22,15 @@ class QuestionCaptchaFormFieldQuestions extends AbstractFormField
 	{
 		$template = $this->get_template_to_use();
 
-		$tpl = new FileTemplate('QuestionCaptcha/QuestionCaptchaFormFieldQuestions.tpl');
-		$tpl->add_lang(LangLoader::get('common', 'QuestionCaptcha'));
+		$view = new FileTemplate('QuestionCaptcha/QuestionCaptchaFormFieldQuestions.tpl');
+		$view->add_lang(LangLoader::get('common', 'QuestionCaptcha'));
 
 		$this->assign_common_template_variables($template);
 
 		$i = 1;
 		foreach ($this->get_value() as $id => $options)
 		{
-			$tpl->assign_block_vars('fieldelements', array(
+			$view->assign_block_vars('fieldelements', array(
 				'ID' => $i,
 				'LABEL' => $options['label'],
 				'ANSWERS' => $options['answers'],
@@ -38,16 +39,16 @@ class QuestionCaptchaFormFieldQuestions extends AbstractFormField
 			$i++;
 		}
 
-		$tpl->put_all(array(
+		$view->put_all(array(
 			'NAME' => $this->get_html_id(),
 			'HTML_ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->is_disabled(),
 			'MAX_INPUT' => $this->max_input,
-			'NBR_QUESTIONS' => $i,
+			'ITEMS_NUMBER' => $i,
 		));
 
 		$template->assign_block_vars('fieldelements', array(
-			'ELEMENT' => $tpl->render()
+			'ELEMENT' => $view->render()
 		));
 
 		return $template;

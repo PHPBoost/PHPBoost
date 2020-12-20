@@ -3,49 +3,50 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2017 03 29
+ * @version     PHPBoost 6.0 - last update: 2020 12 20
  * @since       PHPBoost 4.0 - 2014 05 09
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class QuestionCaptchaConfig extends AbstractConfigData
 {
-	const QUESTIONS = 'questions';
+	const ITEMS = 'items';
 
-	public function get_questions()
+	public function get_items()
 	{
-		return $this->get_property(self::QUESTIONS);
+		return $this->get_property(self::ITEMS);
 	}
 
-	public function set_questions(Array $array)
+	public function set_items(Array $array)
 	{
-		$this->set_property(self::QUESTIONS, $array);
+		$this->set_property(self::ITEMS, $array);
 	}
 
-	public function count_questions()
+	public function count_items()
 	{
-		return count($this->get_questions());
+		return count($this->get_items());
 	}
 
-	private function init_questions_array()
+	private function init_items_array()
 	{
-		$questions = array();
+		$items = array();
 
 		$lang = LangLoader::get('install', 'QuestionCaptcha');
 
-		$question = new QuestionCaptchaQuestion();
-		$question->set_label($lang['question1_label']);
-		$question->set_answers(explode(';', $lang['question1_answers']));
+		$item = new QuestionCaptchaItem();
+		$item->set_label($lang['item.1.label']);
+		$item->set_answers(explode(';', $lang['item.1.answers']));
 
-		$questions[1] = $question->get_properties();
+		$items[1] = $item->get_properties();
 
-		$question = new QuestionCaptchaQuestion();
-		$question->set_label($lang['question2_label']);
-		$question->set_answers(explode(';', $lang['question2_answers']));
+		$item = new QuestionCaptchaItem();
+		$item->set_label($lang['item.2.label']);
+		$item->set_answers(explode(';', $lang['item.2.answers']));
 
-		$questions[2] = $question->get_properties();
+		$items[2] = $item->get_properties();
 
-		return $questions;
+		return $items;
 	}
 
 	/**
@@ -54,7 +55,7 @@ class QuestionCaptchaConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::QUESTIONS => self::init_questions_array()
+			self::ITEMS => self::init_items_array()
 		);
 	}
 
@@ -68,7 +69,7 @@ class QuestionCaptchaConfig extends AbstractConfigData
 	}
 
 	/**
-	 * Saves the configuration in the database. Has it become persistent.
+	 * Saves the configuration in the database.
 	 */
 	public static function save()
 	{
