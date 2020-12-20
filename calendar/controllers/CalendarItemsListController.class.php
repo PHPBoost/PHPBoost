@@ -36,7 +36,7 @@ class CalendarItemsListController extends ModuleController
 	private function init(HTTPRequestCustom $request)
 	{
 		if ($request->get_value('display_current_day_events', 0))
-			AppContext::get_response()->redirect(CalendarUrlBuilder::events_list());
+			AppContext::get_response()->redirect(CalendarUrlBuilder::u_items_list());
 
 		$this->lang = LangLoader::get('common', 'calendar');
 		$this->view = new StringTemplate('# INCLUDE TABLE #');
@@ -105,10 +105,10 @@ class CalendarItemsListController extends ModuleController
 			$category = $item->get_content()->get_category();
 			$user = $item->get_content()->get_author_user();
 
-			$edit_link = new EditLinkHTMLElement(CalendarUrlBuilder::edit_event(!$item->get_parent_id() ? $item->get_id() : $item->get_parent_id()));
+			$edit_link = new EditLinkHTMLElement(CalendarUrlBuilder::u_edit_item(!$item->get_parent_id() ? $item->get_id() : $item->get_parent_id()));
 			$edit_link = $item->is_authorized_to_edit() ? $edit_link->display() : '';
 
-			$delete_link = new DeleteLinkHTMLElement(CalendarUrlBuilder::delete_event($item->get_id()), '', array('data-confirmation' => !$item->belongs_to_a_serie() ? 'delete-element' : ''));
+			$delete_link = new DeleteLinkHTMLElement(CalendarUrlBuilder::u_delete_item($item->get_id()), '', array('data-confirmation' => !$item->belongs_to_a_serie() ? 'delete-element' : ''));
 			$delete_link = $item->is_authorized_to_delete() ? $delete_link->display() : '';
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
@@ -117,7 +117,7 @@ class CalendarItemsListController extends ModuleController
 			$br = new BrHTMLElement();
 
 			$row = array(
-				new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()), $item->get_content()->get_title()), 'left'),
+				new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::u_item($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()), $item->get_content()->get_title()), 'left'),
 				new HTMLTableRowCell(new SpanHTMLElement(($category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('none_e', 'common') : $category->get_name()), array('data-color-surround' => $category->get_id() != Category::ROOT_CATEGORY && $category->get_color() ? $category->get_color() : ($category->get_id() == Category::ROOT_CATEGORY ? $config->get_event_color() : '')), 'pinned')),
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell(LangLoader::get_message('from_date', 'main') . ' ' . $item->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . $br->display() . LangLoader::get_message('to_date', 'main') . ' ' . $item->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
@@ -181,7 +181,7 @@ class CalendarItemsListController extends ModuleController
 			}
 
 			CalendarService::clear_cache();
-			AppContext::get_response()->redirect(CalendarUrlBuilder::events_list(), LangLoader::get_message('process.success', 'status-messages-common'));
+			AppContext::get_response()->redirect(CalendarUrlBuilder::u_items_list(), LangLoader::get_message('process.success', 'status-messages-common'));
 		}
 	}
 
@@ -226,11 +226,11 @@ class CalendarItemsListController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['calendar.events.list'], $this->lang['module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['calendar.seo.description.events.list'], array('site' => GeneralConfig::load()->get_site_name())));
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::events_list());
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::u_items_list());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::home());
-		$breadcrumb->add($this->lang['calendar.events.list'], CalendarUrlBuilder::events_list());
+		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::u_home());
+		$breadcrumb->add($this->lang['calendar.events.list'], CalendarUrlBuilder::u_items_list());
 
 		return $response;
 	}

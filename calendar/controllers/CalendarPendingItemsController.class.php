@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 16
+ * @version     PHPBoost 6.0 - last update: 2020 12 20
  * @since       PHPBoost 4.0 - 2013 09 29
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -103,7 +103,7 @@ class CalendarPendingItemsController extends ModuleController
 		' . $condition, $parameters);
 
 		$pagination = new ModulePagination($page, $row['events_number'], (int)CalendarConfig::load()->get_items_number_per_page());
-		$pagination->set_url(CalendarUrlBuilder::display_pending_events('%d'));
+		$pagination->set_url(CalendarUrlBuilder::u_pending_events('%d'));
 
 		if ($pagination->current_page_is_empty() && $page > 1)
 		{
@@ -122,11 +122,11 @@ class CalendarPendingItemsController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['calendar.pending.events'], $this->lang['module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['calendar.seo.description.pending'], $page);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::display_pending_events($page));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::u_pending_events($page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::home());
-		$breadcrumb->add($this->lang['calendar.pending.events'], CalendarUrlBuilder::display_pending_events($page));
+		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::u_home());
+		$breadcrumb->add($this->lang['calendar.pending.events'], CalendarUrlBuilder::u_pending_events($page));
 
 		return $response;
 	}

@@ -31,7 +31,7 @@ class CalendarSuscribeController extends ModuleController
 
 			$category = $this->item->get_content()->get_category();
 
-			AppContext::get_response()->redirect($request->get_url_referrer() ? $request->get_url_referrer() : CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $item_id, $this->item->get_content()->get_rewrited_title()));
+			AppContext::get_response()->redirect($request->get_url_referrer() ? $request->get_url_referrer() : CalendarUrlBuilder::u_item($category->get_id(), $category->get_rewrited_name(), $item_id, $this->item->get_content()->get_rewrited_title()));
 		}
 		else
 		{

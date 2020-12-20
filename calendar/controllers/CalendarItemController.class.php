@@ -79,7 +79,7 @@ class CalendarItemController extends ModuleController
 		{
 			$comments_topic = new CalendarCommentsTopic($item);
 			$comments_topic->set_id_in_module($item->get_id());
-			$comments_topic->set_url(CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()));
+			$comments_topic->set_url(CalendarUrlBuilder::u_item($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()));
 
 			$this->view->put_all(array(
 				'C_COMMENTS_ENABLED' => true,
@@ -119,18 +119,18 @@ class CalendarItemController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($item->get_content()->get_title(), ($category->get_id() != Category::ROOT_CATEGORY ? $category->get_name() . ' - ' : '') . $this->lang['module.title']);
 		$graphical_environment->get_seo_meta_data()->set_description($item->get_content()->get_content());
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::u_item($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::home());
+		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::u_home());
 
 		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($item->get_content()->get_id_category(), true));
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id() != Category::ROOT_CATEGORY)
-				$breadcrumb->add($category->get_name(), CalendarUrlBuilder::home());
+				$breadcrumb->add($category->get_name(), CalendarUrlBuilder::u_home());
 		}
-		$breadcrumb->add($item->get_content()->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()));
+		$breadcrumb->add($item->get_content()->get_title(), CalendarUrlBuilder::u_item($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()));
 
 		if ($item->get_content()->has_thumbnail())
 			$graphical_environment->get_seo_meta_data()->set_picture_url($item->get_content()->get_thumbnail());

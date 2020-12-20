@@ -492,7 +492,7 @@ class CalendarItemFormController extends ModuleController
 				$contribution->set_description(stripslashes($this->form->get_value('edition_description')));
 
 			$contribution->set_entitled($item->get_content()->get_title());
-			$contribution->set_fixing_url(CalendarUrlBuilder::edit_event($item_id)->relative());
+			$contribution->set_fixing_url(CalendarUrlBuilder::u_edit_item($item_id)->relative());
 			$contribution->set_poster_id(AppContext::get_current_user()->get_id());
 			$contribution->set_module('calendar');
 			$contribution->set_auth(
@@ -530,16 +530,16 @@ class CalendarItemFormController extends ModuleController
 		elseif ($item->get_content()->is_approved())
 		{
 			if ($this->is_new_item)
-				AppContext::get_response()->redirect(CalendarUrlBuilder::home($item->get_start_date()->get_year(), $item->get_start_date()->get_month(), $item->get_start_date()->get_day() , true), StringVars::replace_vars($this->lang['calendar.message.success.add'], array('title' => $item->get_content()->get_title())));
+				AppContext::get_response()->redirect(CalendarUrlBuilder::u_home($item->get_start_date()->get_year(), $item->get_start_date()->get_month(), $item->get_start_date()->get_day() , true), StringVars::replace_vars($this->lang['calendar.message.success.add'], array('title' => $item->get_content()->get_title())));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : CalendarUrlBuilder::home($item->get_start_date()->get_year(), $item->get_start_date()->get_month(), $item->get_start_date()->get_day() , true)), StringVars::replace_vars($this->lang['calendar.message.success.edit'], array('title' => $item->get_content()->get_title())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : CalendarUrlBuilder::u_home($item->get_start_date()->get_year(), $item->get_start_date()->get_month(), $item->get_start_date()->get_day() , true)), StringVars::replace_vars($this->lang['calendar.message.success.edit'], array('title' => $item->get_content()->get_title())));
 		}
 		else
 		{
 			if ($this->is_new_item)
-				AppContext::get_response()->redirect(CalendarUrlBuilder::display_pending_events(), StringVars::replace_vars($this->lang['calendar.message.success.add'], array('title' => $item->get_content()->get_title())));
+				AppContext::get_response()->redirect(CalendarUrlBuilder::u_pending_items(), StringVars::replace_vars($this->lang['calendar.message.success.add'], array('title' => $item->get_content()->get_title())));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : CalendarUrlBuilder::display_pending_events()), StringVars::replace_vars($this->lang['calendar.message.success.edit'], array('title' => $item->get_content()->get_title())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : CalendarUrlBuilder::u_pending_items()), StringVars::replace_vars($this->lang['calendar.message.success.edit'], array('title' => $item->get_content()->get_title())));
 		}
 	}
 
@@ -553,14 +553,14 @@ class CalendarItemFormController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::home());
+		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::u_home());
 
 		if ($item->get_id() === null)
 		{
 			$graphical_environment->set_page_title($this->lang['calendar.event.add'], $this->lang['module.title']);
-			$breadcrumb->add($this->lang['calendar.event.add'], CalendarUrlBuilder::add_event());
+			$breadcrumb->add($this->lang['calendar.event.add'], CalendarUrlBuilder::u_add_item());
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['calendar.event.add']);
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::add_event());
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::u_add_item());
 		}
 		else
 		{
@@ -570,11 +570,11 @@ class CalendarItemFormController extends ModuleController
 			$graphical_environment->set_page_title($this->lang['calendar.event.edit'], $this->lang['module.title']);
 
 			$category = $item->get_content()->get_category();
-			$breadcrumb->add($item->get_content()->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()));
+			$breadcrumb->add($item->get_content()->get_title(), CalendarUrlBuilder::u_item($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()));
 
-			$breadcrumb->add($this->lang['calendar.event.edit'], CalendarUrlBuilder::edit_event($item->get_id()));
+			$breadcrumb->add($this->lang['calendar.event.edit'], CalendarUrlBuilder::u_edit_item($item->get_id()));
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['calendar.event.edit']);
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::edit_event($item->get_id()));
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::u_edit_item($item->get_id()));
 		}
 
 		return $response;

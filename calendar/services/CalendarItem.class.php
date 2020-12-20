@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 19
+ * @version     PHPBoost 6.0 - last update: 2020 12 20
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -221,17 +221,17 @@ class CalendarItem
 				'CATEGORY_ID' => $category->get_id(),
 				'CATEGORY_NAME' => $category->get_name(),
 				'CATEGORY_COLOR' => $category->get_id() != Category::ROOT_CATEGORY ? $category->get_color() : '',
-				'U_EDIT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY ? CalendarUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($category->get_id())->rel(),
+				'U_EDIT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY ? CalendarUrlBuilder::u_configuration()->rel() : CategoriesUrlBuilder::edit_category($category->get_id())->rel(),
 
 				'U_SYNDICATION' => SyndicationUrlBuilder::rss('calendar', $category->get_id())->rel(),
 				'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($author->get_id())->rel(),
-				'U_ITEM' => CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $this->id, $this->content->get_rewrited_title())->rel(),
-				'U_EDIT' => CalendarUrlBuilder::edit_event(!$this->parent_id ? $this->id : $this->parent_id)->rel(),
-				'U_DELETE' => CalendarUrlBuilder::delete_event($this->id)->rel(),
+				'U_ITEM' => CalendarUrlBuilder::u_item($category->get_id(), $category->get_rewrited_name(), $this->id, $this->content->get_rewrited_title())->rel(),
+				'U_EDIT' => CalendarUrlBuilder::u_edit_item(!$this->parent_id ? $this->id : $this->parent_id)->rel(),
+				'U_DELETE' => CalendarUrlBuilder::u_delete_item($this->id)->rel(),
 				'U_THUMBNAIL' => $this->content->get_thumbnail()->rel(),
-				'U_SUSCRIBE' => CalendarUrlBuilder::suscribe_event($this->id)->rel(),
-				'U_UNSUSCRIBE' => CalendarUrlBuilder::unsuscribe_event($this->id)->rel(),
-				'U_COMMENTS' => CalendarUrlBuilder::display_event_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->content->get_rewrited_title())->rel()
+				'U_SUSCRIBE' => CalendarUrlBuilder::u_suscribe_event($this->id)->rel(),
+				'U_UNSUSCRIBE' => CalendarUrlBuilder::u_unsuscribe_event($this->id)->rel(),
+				'U_COMMENTS' => CalendarUrlBuilder::u_item_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->content->get_rewrited_title())->rel()
 			)
 		);
 	}

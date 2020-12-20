@@ -142,9 +142,9 @@ class CalendarDeleteItemController extends ModuleController
 	private function redirect(HTTPRequestCustom $request)
 	{
 		if ($this->item->belongs_to_a_serie())
-			AppContext::get_response()->redirect(($this->form->get_value('referrer') && !TextHelper::strstr($request->get_url_referrer(), CalendarUrlBuilder::display_event($this->item->get_content()->get_category()->get_id(), $this->item->get_content()->get_category()->get_rewrited_name(), $this->item->get_id(), $this->item->get_content()->get_rewrited_title())->rel()) ? $this->form->get_value('referrer') : CalendarUrlBuilder::home($this->item->get_start_date()->get_year(), $this->item->get_start_date()->get_month())), StringVars::replace_vars($this->lang['calendar.message.success.delete'], array('title' => $this->item->get_content()->get_title())));
+			AppContext::get_response()->redirect(($this->form->get_value('referrer') && !TextHelper::strstr($request->get_url_referrer(), CalendarUrlBuilder::u_item($this->item->get_content()->get_category()->get_id(), $this->item->get_content()->get_category()->get_rewrited_name(), $this->item->get_id(), $this->item->get_content()->get_rewrited_title())->rel()) ? $this->form->get_value('referrer') : CalendarUrlBuilder::u_home($this->item->get_start_date()->get_year(), $this->item->get_start_date()->get_month())), StringVars::replace_vars($this->lang['calendar.message.success.delete'], array('title' => $this->item->get_content()->get_title())));
 		else
-			AppContext::get_response()->redirect(($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), CalendarUrlBuilder::display_event($this->item->get_content()->get_category()->get_id(), $this->item->get_content()->get_category()->get_rewrited_name(), $this->item->get_id(), $this->item->get_content()->get_rewrited_title())->rel()) ? $request->get_url_referrer() : CalendarUrlBuilder::home($this->item->get_start_date()->get_year(), $this->item->get_start_date()->get_month())), StringVars::replace_vars($this->lang['calendar.message.success.delete'], array('title' => $this->item->get_content()->get_title())));
+			AppContext::get_response()->redirect(($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), CalendarUrlBuilder::u_item($this->item->get_content()->get_category()->get_id(), $this->item->get_content()->get_category()->get_rewrited_name(), $this->item->get_id(), $this->item->get_content()->get_rewrited_title())->rel()) ? $request->get_url_referrer() : CalendarUrlBuilder::u_home($this->item->get_start_date()->get_year(), $this->item->get_start_date()->get_month())), StringVars::replace_vars($this->lang['calendar.message.success.delete'], array('title' => $this->item->get_content()->get_title())));
 	}
 
 	private function generate_response(View $view)
@@ -154,15 +154,15 @@ class CalendarDeleteItemController extends ModuleController
 		$graphical_environment->set_page_title($this->lang['calendar.event.delete'], $this->lang['module.title']);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::home());
+		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::u_home());
 
 		$item_content = $this->item->get_content();
 
 		$category = $item_content->get_category();
-		$breadcrumb->add($item_content->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $item_content->get_id(), $item_content->get_rewrited_title()));
+		$breadcrumb->add($item_content->get_title(), CalendarUrlBuilder::u_item($category->get_id(), $category->get_rewrited_name(), $item_content->get_id(), $item_content->get_rewrited_title()));
 
-		$breadcrumb->add($this->lang['calendar.event.delete'], CalendarUrlBuilder::delete_event($this->item->get_id()));
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::delete_event($this->item->get_id()));
+		$breadcrumb->add($this->lang['calendar.event.delete'], CalendarUrlBuilder::u_delete_item($this->item->get_id()));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::u_delete_item($this->item->get_id()));
 
 		return $response;
 	}
