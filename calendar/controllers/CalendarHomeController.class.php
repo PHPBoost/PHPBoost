@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 20
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 4.0 - 2013 08 21
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -99,10 +99,10 @@ class CalendarHomeController extends ModuleController
 			$graphical_environment->set_page_title($this->lang['module.title']);
 
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['calendar.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name())));
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::u_home());
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::home());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::u_home());
+		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::home());
 
 		return $response;
 	}

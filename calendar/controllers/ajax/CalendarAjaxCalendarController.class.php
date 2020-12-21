@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 20
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 3.0 - 2012 11 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -169,8 +169,8 @@ class CalendarAjaxCalendarController extends AbstractController
 			'NEXT_YEAR' => $next_year,
 			'NEXT_MONTH' => $next_month,
 			'LEGEND' => self::build_legend($items_legend_list),
-			'U_AJAX_CALENDAR' => CalendarUrlBuilder::u_ajax_month_calendar()->rel(),
-			'U_AJAX_EVENTS' => CalendarUrlBuilder::u_ajax_month_events()->rel()
+			'U_AJAX_CALENDAR' => CalendarUrlBuilder::ajax_month_calendar()->rel(),
+			'U_AJAX_EVENTS' => CalendarUrlBuilder::ajax_month_events()->rel()
 		));
 
 		// First day of the month
@@ -235,7 +235,7 @@ class CalendarAjaxCalendarController extends AbstractController
 				'COLOR' => $color,
 				'CLASS' => $class,
 				'CHANGE_LINE' => (($i % 8) == 0 && $i != 56),
-				'U_DAY_EVENTS' => CalendarUrlBuilder::u_home($year, $month, $today, true)->rel()
+				'U_DAY_EVENTS' => CalendarUrlBuilder::home($year, $month, $today, true)->rel()
 			));
 		}
 	}

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 20
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 4.0 - 2013 07 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -76,8 +76,8 @@ class CalendarItemsManagerController extends AdminModuleController
 			$this->items_number++;
 			$this->ids[$this->items_number] = $item->get_id();
 
-			$edit_link = new EditLinkHTMLElement(CalendarUrlBuilder::u_edit_item(!$item->get_parent_id() ? $item->get_id() : $item->get_parent_id()));
-			$delete_link = new DeleteLinkHTMLElement(CalendarUrlBuilder::u_delete_item($item->get_id()), '', array('data-confirmation' => !$item->belongs_to_a_serie() ? 'delete-element' : ''));
+			$edit_link = new EditLinkHTMLElement(CalendarUrlBuilder::edit_item(!$item->get_parent_id() ? $item->get_id() : $item->get_parent_id()));
+			$delete_link = new DeleteLinkHTMLElement(CalendarUrlBuilder::delete_item($item->get_id()), '', array('data-confirmation' => !$item->belongs_to_a_serie() ? 'delete-element' : ''));
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
@@ -85,7 +85,7 @@ class CalendarItemsManagerController extends AdminModuleController
 			$br = new BrHTMLElement();
 
 			$row = array(
-				new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::u_item($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()), $item->get_content()->get_title()), 'left'),
+				new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()), $item->get_content()->get_title()), 'left'),
 				new HTMLTableRowCell(new SpanHTMLElement(($category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('none_e', 'common') : $category->get_name()), array('data-color-surround' => $category->get_id() != Category::ROOT_CATEGORY && $category->get_color() ? $category->get_color() : ($category->get_id() == Category::ROOT_CATEGORY ? $config->get_event_color() : '')), 'pinned')),
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell(LangLoader::get_message('from_date', 'main') . ' ' . $item->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . $br->display() . LangLoader::get_message('to_date', 'main') . ' ' . $item->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
@@ -138,7 +138,7 @@ class CalendarItemsManagerController extends AdminModuleController
 
 			CalendarService::clear_cache();
 
-			AppContext::get_response()->redirect(CalendarUrlBuilder::u_manage_items(), LangLoader::get_message('process.success', 'status-messages-common'));
+			AppContext::get_response()->redirect(CalendarUrlBuilder::manage_items(), LangLoader::get_message('process.success', 'status-messages-common'));
 		}
 	}
 
@@ -183,12 +183,12 @@ class CalendarItemsManagerController extends AdminModuleController
 
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['calendar.config.events.management'], $this->lang['module.title'], $page);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::u_manage_items());
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::manage_items());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::u_home());
+		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::home());
 
-		$breadcrumb->add($this->lang['calendar.config.events.management'], CalendarUrlBuilder::u_manage_items());
+		$breadcrumb->add($this->lang['calendar.config.events.management'], CalendarUrlBuilder::manage_items());
 
 		return $response;
 	}

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 20
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 4.0 - 2013 11 08
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -31,7 +31,7 @@ class CalendarSuscribeController extends ModuleController
 
 			$category = $this->item->get_content()->get_category();
 
-			AppContext::get_response()->redirect($request->get_url_referrer() ? $request->get_url_referrer() : CalendarUrlBuilder::u_item($category->get_id(), $category->get_rewrited_name(), $item_id, $this->item->get_content()->get_rewrited_title()));
+			AppContext::get_response()->redirect($request->get_url_referrer() ? $request->get_url_referrer() : CalendarUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $item_id, $this->item->get_content()->get_rewrited_title()));
 		}
 		else
 		{

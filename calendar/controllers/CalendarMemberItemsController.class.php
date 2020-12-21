@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 20
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 5.2 - 2020 08 28
 */
 
@@ -103,7 +103,7 @@ class CalendarMemberItemsController extends ModuleController
 		' . $condition, $parameters);
 
 		$pagination = new ModulePagination($page, $row['events_number'], (int)CalendarConfig::load()->get_items_number_per_page());
-		$pagination->set_url(CalendarUrlBuilder::u_member_items('%d'));
+		$pagination->set_url(CalendarUrlBuilder::display_member_items('%d'));
 
 		if ($pagination->current_page_is_empty() && $page > 1)
 		{
@@ -122,11 +122,11 @@ class CalendarMemberItemsController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['my.items'], $this->lang['module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['calendar.seo.description.member'], array('author' => AppContext::get_current_user()->get_display_name())), $page);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::u_member_items($page));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::display_member_items($page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::u_home());
-		$breadcrumb->add($this->lang['my.items'], CalendarUrlBuilder::u_member_items($page));
+		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::home());
+		$breadcrumb->add($this->lang['my.items'], CalendarUrlBuilder::display_member_items($page));
 
 		return $response;
 	}
