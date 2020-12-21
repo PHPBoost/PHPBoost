@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 01
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 1.6 - 2007 04 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -73,7 +73,7 @@ if (!empty($view_msg)) // Display all user's messages
 		));
 
 		$result = PersistenceContext::get_querier()->select("SELECT
-			msg.id, msg.user_id, msg.idtopic, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, msg.contents,
+			msg.id, msg.user_id, msg.idtopic, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, msg.content,
 			m2.display_name AS login_edit,
 			m.user_groups, m.display_name, m.level, m.email, m.show_email, m.registration_date AS registered, m.posted_msg, m.warning_percentage, m.delay_banned,
 			t.title, t.status, t.id_category, t.nbr_msg,
@@ -182,7 +182,7 @@ if (!empty($view_msg)) // Display all user's messages
 				Date::get_array_tpl_vars($topic_date,'TOPIC_DATE'),
 				Date::get_array_tpl_vars($user_registered_date,'USER_REGISTERED_DATE'), array(
 
-				'CONTENTS'         => FormatingHelper::second_parse(stripslashes($row['contents'])),
+				'CONTENT'         => FormatingHelper::second_parse(stripslashes($row['content'])),
 				'ID'               => $row['id'],
 				'C_USER_RANK'      => ($row['warning_percentage'] < '100' || (time() - $row['delay_banned']) < 0),
 				'USER_RANK'        => $user_rank,

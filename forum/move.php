@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 29
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 1.2 - 2005 10 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once('../kernel/begin.php');
@@ -154,7 +155,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	$idm = !empty($id_get_msg) ? $id_get_msg : $id_post_msg;
 
 	try {
-		$msg = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_msg', array('idtopic', 'contents'), 'WHERE id=:id', array('id' => $idm));
+		$msg = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_msg', array('idtopic', 'content'), 'WHERE id=:id', array('id' => $idm));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
@@ -220,7 +221,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	}
 
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
-	$editor->set_identifier('contents');
+	$editor->set_identifier('content');
 
 	$vars_tpl = array(
 		'C_FORUM_CUT_CAT'  => true,
@@ -266,7 +267,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		$tpl->put_all(array(
 			'TITLE'             => '',
 			'DESC'              => '',
-			'CONTENTS'          => FormatingHelper::unparse(stripslashes($msg['contents'])),
+			'CONTENT'          => FormatingHelper::unparse(stripslashes($msg['content'])),
 			'IDM'               => $id_get_msg,
 			'CHECKED_NORMAL'    => 'checked="checked"',
 			'SELECTED_SIMPLE'   => 'checked="checked"',
@@ -314,7 +315,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 {
 	try {
-		$msg = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_msg', array('idtopic', 'user_id', 'timestamp', 'contents'), 'WHERE id=:id', array('id' => $id_post_msg));
+		$msg = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_msg', array('idtopic', 'user_id', 'timestamp', 'content'), 'WHERE id=:id', array('id' => $id_post_msg));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
@@ -349,16 +350,16 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 	{
 		$title = retrieve(POST, 'title', '');
 		$subtitle = retrieve(POST, 'desc', '');
-		$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+		$content = retrieve(POST, 'content', '', TSTRING_PARSE);
 		$type = (int)retrieve(POST, 'type', 0);
 
 		//Requête de "scindage" du topic.
-		if (!empty($to) && !empty($contents) && !empty($title))
+		if (!empty($to) && !empty($content) && !empty($title))
 		{
 			//Instanciation de la class du forum.
 			$Forumfct = new Forum();
 
-			$last_topic_id = $Forumfct->Cut_topic($id_post_msg, $msg['idtopic'], $topic['id_category'], $to, $title, $subtitle, $contents, $type, $msg['user_id'], $topic['last_user_id'], $topic['last_msg_id']); //Scindement du topic
+			$last_topic_id = $Forumfct->Cut_topic($id_post_msg, $msg['idtopic'], $topic['id_category'], $to, $title, $subtitle, $content, $type, $msg['user_id'], $topic['last_user_id'], $topic['last_msg_id']); //Scindement du topic
 
 			//Ajout d'un sondage en plus du topic.
 			$question = retrieve(POST, 'question', '');

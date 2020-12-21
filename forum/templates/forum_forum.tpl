@@ -8,7 +8,7 @@
 		# END error_auth_write #
 
 		# IF C_FORUM_SUB_CATS #
-			<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-subforum" class="forum-contents">
+			<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-subforum" class="forum-content">
 				<header class="flex-between">
 					<h2>{L_SUBFORUMS}</h2>
 					<div class="controls">
@@ -90,7 +90,7 @@
 			</article>
 		# ENDIF #
 
-		<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-forum" class="forum-contents">
+		<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-forum" class="forum-content">
 			<header>
 				<div class="align-right controls">
 					# IF C_POST_NEW_SUBJECT #

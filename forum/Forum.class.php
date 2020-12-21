@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 20
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 2.0 - 2007 12 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -18,13 +18,13 @@ define('FORUM_PM_TRACKING', 2);
 class Forum
 {
 	//Ajout d'un message.
-	function Add_msg($idtopic, $id_category, $contents, $title, $last_page, $last_page_rewrite, $new_topic = false)
+	function Add_msg($idtopic, $id_category, $content, $title, $last_page, $last_page_rewrite, $new_topic = false)
 	{
 		global $LANG;
 
 		##### Insertion message #####
 		$last_timestamp = time();
-		$result = PersistenceContext::get_querier()->insert(PREFIX . 'forum_msg', array('idtopic' => $idtopic, 'user_id' => AppContext::get_current_user()->get_id(), 'contents' => FormatingHelper::strparse($contents),
+		$result = PersistenceContext::get_querier()->insert(PREFIX . 'forum_msg', array('idtopic' => $idtopic, 'user_id' => AppContext::get_current_user()->get_id(), 'content' => FormatingHelper::strparse($content),
 			'timestamp' => $last_timestamp, 'timestamp_edit' => 0, 'user_id_edit' => 0, 'user_ip' => AppContext::get_request()->get_ip_address()));
 		$last_msg_id = $result->get_last_inserted_id();
 
@@ -70,10 +70,10 @@ class Forum
 
 			$content_manager = AppContext::get_content_formatting_service()->get_default_factory();
 			$parser = $content_manager->get_parser();
-			$parser->set_content($contents);
+			$parser->set_content($content);
 			$parser->parse();
 
-			$preview_contents = $parser->get_content();
+			$preview_content = $parser->get_content();
 
 			//Récupération des membres suivant le sujet.
 			$max_time = time() - SessionsConfig::load()->get_active_session_duration();
@@ -90,18 +90,18 @@ class Forum
 				//Envoi un Mail à ceux dont le last_view_id est le message précedent.
 				if ($row['last_view_id'] == $previous_msg_id && $row['mail'] == '1')
 				{
-					$mail_contents = FormatingHelper::second_parse($preview_contents);
+					$mail_content = FormatingHelper::second_parse($preview_content);
 					AppContext::get_mail_service()->send_from_properties(
 						$row['email'],
 						$LANG['forum_mail_title_new_post'],
-						nl2br(sprintf($LANG['forum_mail_new_post'], $row['display_name'], $title_subject, AppContext::get_current_user()->get_display_name(), $mail_contents, '<a href="' . HOST . DIR . $next_msg_link . '">' . $next_msg_link . '</a>', '<a href="' . HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=1">' . HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=1</a>', 1))
+						nl2br(sprintf($LANG['forum_mail_new_post'], $row['display_name'], $title_subject, AppContext::get_current_user()->get_display_name(), $mail_content, '<a href="' . HOST . DIR . $next_msg_link . '">' . $next_msg_link . '</a>', '<a href="' . HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=1">' . HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=1</a>', 1))
 					);
 				}
 
 				//Envoi un MP à ceux dont le last_view_id est le message précedent.
 				if ($row['last_view_id'] == $previous_msg_id && $row['pm'] == '1')
 				{
-					$content = sprintf($LANG['forum_mail_new_post'], $row['display_name'], $title_subject_pm, AppContext::get_current_user()->get_display_name(), $preview_contents, '<a href="' . $next_msg_link . '">' . $next_msg_link . '</a>', '<a href="/forum/action.php?ut=' . $idtopic . '&trt=2">/forum/action.php?ut=' . $idtopic . '&trt=2</a>');
+					$content = sprintf($LANG['forum_mail_new_post'], $row['display_name'], $title_subject_pm, AppContext::get_current_user()->get_display_name(), $preview_content, '<a href="' . $next_msg_link . '">' . $next_msg_link . '</a>', '<a href="/forum/action.php?ut=' . $idtopic . '&trt=2">/forum/action.php?ut=' . $idtopic . '&trt=2</a>');
 
 					PrivateMsg::start_conversation(
 						$row['user_id'],
@@ -122,12 +122,12 @@ class Forum
 	}
 
 	//Ajout d'un sujet.
-	function Add_topic($id_category, $title, $subtitle, $contents, $type)
+	function Add_topic($id_category, $title, $subtitle, $content, $type)
 	{
 		$result = PersistenceContext::get_querier()->insert(PREFIX . "forum_topics", array('id_category' => $id_category, 'title' => $title, 'subtitle' => $subtitle, 'user_id' => AppContext::get_current_user()->get_id(), 'nbr_msg' => 1, 'nbr_views' => 0, 'last_user_id' => AppContext::get_current_user()->get_id(), 'last_msg_id' => 0, 'last_timestamp' => time(), 'first_msg_id' => 0, 'type' => $type, 'status' => 1, 'aprob' => 0, 'display_msg' => 0));
 		$last_topic_id = $result->get_last_inserted_id(); //Dernier topic inseré
 
-		$last_msg_id = $this->Add_msg($last_topic_id, $id_category, $contents, $title, 0, 0, true); //Insertion du message.
+		$last_msg_id = $this->Add_msg($last_topic_id, $id_category, $content, $title, 0, 0, true); //Insertion du message.
 		PersistenceContext::get_querier()->update(PREFIX . 'forum_topics', array('first_msg_id' => $last_msg_id), 'WHERE id=:id', array('id' => $last_topic_id));
 
 		forum_generate_feeds(); //Regénération des flux flux
@@ -137,13 +137,13 @@ class Forum
 	}
 
 	//Edition d'un message.
-	function Update_msg($idtopic, $idmsg, $contents, $user_id_msg, $history = true)
+	function Update_msg($idtopic, $idmsg, $content, $user_id_msg, $history = true)
 	{
 		$config = ForumConfig::load();
 
 		//Marqueur d'édition du message?
 		$edit_mark = (!ForumAuthorizationsService::check_authorizations()->hide_edition_mark()) ? ", timestamp_edit = '" . time() . "', user_id_edit = '" . AppContext::get_current_user()->get_id() . "'" : '';
-		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_msg SET contents = '" . FormatingHelper::strparse($contents) . "'" . $edit_mark . " WHERE id = '" . $idmsg . "'");
+		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_msg SET content = '" . FormatingHelper::strparse($content) . "'" . $edit_mark . " WHERE id = '" . $idmsg . "'");
 
 		$last_timestamp = time();
 		//Mise à jour de la date du dernier message du topic pour marquer le message comme non lu chez les autres membres
@@ -154,7 +154,7 @@ class Forum
 		try {
 			$topic_id_category = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'id_category', 'WHERE id=:id', array('id' => $idtopic));
 		} catch (RowNotFoundException $e) {}
-		
+
 		//On met à jour le last_topic_id dans la catégorie dans le lequel le message a été posté et ses parents
 		$categories = array_keys(CategoriesService::get_categories_manager()->get_parents($topic_id_category, true));
 		PersistenceContext::get_querier()->update(ForumSetup::$forum_cats_table, array('last_topic_id' => $idtopic), 'WHERE id IN :categories_id', array('categories_id' => $categories));
@@ -164,7 +164,7 @@ class Forum
 
 		//On marque le topic comme lu pour le posteur
 		mark_topic_as_read($idtopic, $idmsg, $last_timestamp);
-		
+
 		$nbr_msg_before = PersistenceContext::get_querier()->count(PREFIX . "forum_msg", 'WHERE idtopic = :idtopic AND id < :id', array('idtopic' => $idtopic, 'id' => $idmsg));
 
 		//Calcul de la page sur laquelle se situe le message.
@@ -180,12 +180,12 @@ class Forum
 	}
 
 	//Edition d'un sujet.
-	function Update_topic($idtopic, $idmsg, $title, $subtitle, $contents, $type, $user_id_msg)
+	function Update_topic($idtopic, $idmsg, $title, $subtitle, $content, $type, $user_id_msg)
 	{
 		//Mise à jour du sujet.
 		PersistenceContext::get_querier()->update(PREFIX . 'forum_topics', array('title' => $title, 'subtitle' => $subtitle, 'type' => $type), 'WHERE id=:id', array('id' => $idtopic));
 		//Mise à jour du contenu du premier message du sujet.
-		$this->Update_msg($idtopic, $idmsg, $contents, $user_id_msg, NO_HISTORY);
+		$this->Update_msg($idtopic, $idmsg, $content, $user_id_msg, NO_HISTORY);
 
 		//Insertion de l'action dans l'historique.
 		if (AppContext::get_current_user()->get_id() != $user_id_msg)
@@ -445,7 +445,7 @@ class Forum
 	}
 
 	//Déplacement d'un sujet
-	function Cut_topic($id_msg_cut, $idtopic, $id_category, $id_category_dest, $title, $subtitle, $contents, $type, $msg_user_id, $last_user_id, $last_msg_id)
+	function Cut_topic($id_msg_cut, $idtopic, $id_category, $id_category_dest, $title, $subtitle, $content, $type, $msg_user_id, $last_user_id, $last_msg_id)
 	{
 		$now = new Date();
 		//Calcul du nombre de messages déplacés.
@@ -457,7 +457,7 @@ class Forum
 		$last_topic_id = $result->get_last_inserted_id(); //Dernier topic inseré
 
 		//Mise à jour du message.
-		PersistenceContext::get_querier()->update(PREFIX . "forum_msg", array('contents' => $contents), 'WHERE id = :id', array('id' => $id_msg_cut));
+		PersistenceContext::get_querier()->update(PREFIX . "forum_msg", array('content' => $content), 'WHERE id = :id', array('id' => $id_msg_cut));
 
 		//Déplacement des messages.
 		$messages_to_move = array();
@@ -503,7 +503,7 @@ class Forum
 	}
 
 	//Ajoute une alerte sur un sujet.
-	function Alert_topic($alert_post, $alert_title, $alert_contents)
+	function Alert_topic($alert_post, $alert_title, $alert_content)
 	{
 		global $LANG;
 
@@ -514,7 +514,7 @@ class Forum
 			DispatchManager::redirect($error_controller);
 		}
 
-		$result = PersistenceContext::get_querier()->insert(PREFIX . "forum_alerts", array('id_category' => $topic_infos['id_category'], 'idtopic' => $alert_post, 'title' => $alert_title, 'contents' => $alert_contents, 'user_id' => AppContext::get_current_user()->get_id(), 'status' => 0, 'idmodo' => 0, 'timestamp' => time()));
+		$result = PersistenceContext::get_querier()->insert(PREFIX . "forum_alerts", array('id_category' => $topic_infos['id_category'], 'idtopic' => $alert_post, 'title' => $alert_title, 'content' => $alert_content, 'user_id' => AppContext::get_current_user()->get_id(), 'status' => 0, 'idmodo' => 0, 'timestamp' => time()));
 
 		$alert_id = $result->get_last_inserted_id();
 
@@ -527,7 +527,7 @@ class Forum
 		//The URL where a validator can treat the contribution (in the file edition panel)
 		$contribution->set_fixing_url('/forum/moderation_forum.php?action=alert&id=' . $alert_id);
 		//Description
-		$contribution->set_description(stripslashes($alert_contents));
+		$contribution->set_description(stripslashes($alert_content));
 		//Who is the contributor?
 		$contribution->set_poster_id(AppContext::get_current_user()->get_id());
 		//The module

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 23
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 1.6 - 2006 11 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -88,7 +88,7 @@ $LANG['alert_modo_explain'] = 'Vous êtes sur le point d\'alerter les modérateu
 
 Vous désirez alerter les modérateurs d\'un problème sur le sujet suivant';
 $LANG['alert_title'] = 'Brève description';
-$LANG['alert_contents'] = 'Merci de détailler davantage le problème afin d\'aider l\'équipe modératrice';
+$LANG['alert_content'] = 'Merci de détailler davantage le problème afin d\'aider l\'équipe modératrice';
 $LANG['alert_success'] = 'Vous avez signalé avec succès la non-conformité du sujet <em>%title</em>, l\'équipe modératrice vous remercie de l\'avoir aidée.';
 $LANG['alert_topic_already_done'] = 'Nous vous remercions d\'avoir pris l\'initiative d\'aider l\'équipe modératrice, mais un membre a déjà signalé une non-conformité de ce sujet.';
 $LANG['alert_back'] = 'Retour au sujet';

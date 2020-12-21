@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 02
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 1.5 - 2006 08 08
  * @contributor Regis VIARRE <crowkait@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -196,7 +196,7 @@ if ($action == 'alert') //Gestion des alertes
 		$authorized_categories = CategoriesService::get_authorized_categories();
 
 		$result = PersistenceContext::get_querier()->select("SELECT
-			ta.id, ta.title, ta.timestamp, ta.status, ta.user_id, ta.idtopic, ta.idmodo, ta.contents,
+			ta.id, ta.title, ta.timestamp, ta.status, ta.user_id, ta.idtopic, ta.idmodo, ta.content,
 			m2.display_name AS login_modo, m2.level AS modo_level, m2.user_groups AS modo_groups,
 			m.display_name, m.level AS user_level, m.user_groups,
 			t.title AS topic_title, t.id_category,
@@ -235,7 +235,7 @@ if ($action == 'alert') //Gestion des alertes
 				'TITLE'              => stripslashes($row['title']),
 				'TOPIC'              => $row['topic_title'],
 				'U_TOPIC'            => 'topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '+' . Url::encode_rewrite($row['topic_title']) . '.php'),
-				'CONTENTS'           => FormatingHelper::second_parse($row['contents']),
+				'CONTENT'           => FormatingHelper::second_parse($row['content']),
 				'C_STATUS'           => $row['status'] != 0,
 				'L_ALERT_SOLVED'     => $LANG['alert_solved'],
 				'L_ALERT_NOTSOLVED'  => $LANG['alert_not_solved'],
@@ -257,7 +257,7 @@ if ($action == 'alert') //Gestion des alertes
 				'L_CHANGE_STATUS'    => ($row['status'] == '0') ? $LANG['change_status_to_1'] : $LANG['change_status_to_0'],
 				'L_TITLE'            => $LANG['alert_title'],
 				'L_TOPIC'            => $LANG['alert_concerned_topic'],
-				'L_CONTENTS'         => $LANG['alert_msg'],
+				'L_CONTENT'         => $LANG['alert_msg'],
 				'L_LOGIN'            => $LANG['alert_login'],
 				'L_TIME'             => LangLoader::get_message('date', 'date-common'),
 				'L_STATUS'           => $LANG['status'],
@@ -278,7 +278,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 {
 	$readonly = (int)retrieve(POST, 'new_info', 0);
 	$readonly = $readonly > 0 ? (time() + $readonly) : 0;
-	$readonly_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
+	$readonly_content = retrieve(POST, 'action_content', '', TSTRING_UNCHANGE);
 	if (!empty($id_get) && retrieve(POST, 'valid_user', false)) //On met à  jour le niveau d'avertissement
 	{
 		try {
@@ -296,10 +296,10 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
 			if ($info_mbr['user_id'] != AppContext::get_current_user()->get_id())
 			{
-				if (!empty($readonly_contents) && !empty($readonly))
+				if (!empty($readonly_content) && !empty($readonly))
 				{
 					//Envoi du message.
-					PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($LANG['read_only_title']), nl2br(str_replace('%date', Date::to_format($readonly, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE), $readonly_contents)), '-1', PrivateMsg::SYSTEM_PM);
+					PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($LANG['read_only_title']), nl2br(str_replace('%date', Date::to_format($readonly, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE), $readonly_content)), '-1', PrivateMsg::SYSTEM_PM);
 				}
 			}
 
@@ -426,7 +426,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		array_pop($array_sanction);
 
 		$editor = AppContext::get_content_formatting_service()->get_default_editor();
-		$editor->set_identifier('action_contents');
+		$editor->set_identifier('action_content');
 
 		$group_color = User::get_group_color($member['user_groups'], $member['level']);
 
@@ -456,10 +456,10 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			}' . "\n" .
 			'if (replace_value != \'' . addslashes(LangLoader::get_message('no', 'common')) . '\')' . "\n" .
 			'{' . "\n" .
-				'contents = contents.replace(regex, replace_value);' . "\n" .
-				'document.getElementById(\'action_contents\').disabled = \'\'' . "\n" .
+				'content = content.replace(regex, replace_value);' . "\n" .
+				'document.getElementById(\'action_content\').disabled = \'\'' . "\n" .
 			'} else' . "\n" .
-			'	document.getElementById(\'action_contents\').disabled = \'disabled\';' . "\n" .
+			'	document.getElementById(\'action_content\').disabled = \'disabled\';' . "\n" .
 			'document.getElementById(\'action_info\').innerHTML = replace_value;}',
 			'REGEX'            => '/[0-9]+ [a-zA-Z]+/',
 			'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],
@@ -476,7 +476,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 elseif ($action == 'warning') //Gestion des utilisateurs
 {
 	$new_warning_level = (int)retrieve(POST, 'new_info', 0);
-	$warning_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
+	$warning_content = retrieve(POST, 'action_content', '', TSTRING_UNCHANGE);
 	if ($new_warning_level >= 0 && $new_warning_level <= 100 && !empty($id_get) && (bool)retrieve(POST, 'valid_user', false)) //On met à  jour le niveau d'avertissement
 	{
 		try {
@@ -496,10 +496,10 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 				//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
 				if ($info_mbr['user_id'] != AppContext::get_current_user()->get_id())
 				{
-					if (!empty($warning_contents))
+					if (!empty($warning_content))
 					{
 						//Envoi du message.
-						PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($LANG['warning_title']), nl2br($warning_contents), '-1', PrivateMsg::SYSTEM_PM);
+						PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($LANG['warning_title']), nl2br($warning_content), '-1', PrivateMsg::SYSTEM_PM);
 					}
 				}
 
@@ -614,7 +614,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		}
 
 		$editor = AppContext::get_content_formatting_service()->get_default_editor();
-		$editor->set_identifier('action_contents');
+		$editor->set_identifier('action_content');
 
 		$group_color = User::get_group_color($member['user_groups'], $member['level']);
 
@@ -629,7 +629,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			'LOGIN_USER'         => $member['display_name'],
 			'INFO'              => $LANG['user_warning_level'] . ': ' . $member['warning_percentage'] . '%',
 			'SELECT'            => $select,
-			'REPLACE_VALUE'     => 'contents = contents.replace(regex, \' \' + replace_value + \'%\');' . "\n" . 'document.getElementById(\'action_info\').innerHTML = \'' . addslashes($LANG['user_warning_level']) . ': \' + replace_value + \'%\';',
+			'REPLACE_VALUE'     => 'content = content.replace(regex, \' \' + replace_value + \'%\');' . "\n" . 'document.getElementById(\'action_info\').innerHTML = \'' . addslashes($LANG['user_warning_level']) . ': \' + replace_value + \'%\';',
 			'REGEX'             => '/ [0-9]+%/',
 			'U_ACTION_INFO'     => url('.php?action=warning&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
 			'U_PM'              => url('.php?pm='. $id_get, '-' . $id_get . '.php'),

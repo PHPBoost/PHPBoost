@@ -3,7 +3,7 @@
 		<script>
 		<!--
 		function check_form_post(){
-			if(document.getElementById('contents').value == "") {
+			if(document.getElementById('content').value == "") {
 				alert("{L_REQUIRE_TEXT}");
 				return false;
 		    }
@@ -68,7 +68,7 @@
 		}
 		-->
 		</script>
-		<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-post" class="forum-contents">
+		<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-post" class="forum-content">
 			<header>
 				<h2>
 					<a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_TITLE_T}">{L_NEW_SUBJECT}</a> <span class="small"><em>{DESC}</em></span>
@@ -102,10 +102,10 @@
 								<div class="form-field"><input type="text" id="desc" name="desc" value="{DESC}"></div>
 							</div>
 							<div class="form-element form-element-textarea">
-								<label for="contents">* {L_MESSAGE}</label>
+								<label for="content">* {L_MESSAGE}</label>
 								{KERNEL_EDITOR}
 								<div class="form-field-textarea">
-									<textarea rows="25" id="contents" name="contents">{CONTENTS}</textarea>
+									<textarea rows="25" id="content" name="content">{CONTENT}</textarea>
 								</div>
 							</div>
 							# IF C_FORUM_POST_TYPE #

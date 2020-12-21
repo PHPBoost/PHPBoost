@@ -32,14 +32,14 @@
         </div>
         <div class="form-field-radio">
             <label clas="radio">
-                <input type="radio" name="ForumWhere" value="contents" {IS_CONTENTS_CHECKED}/>
-                <span>{L_CONTENTS}</span>
+                <input type="radio" name="ForumWhere" value="content" {IS_CONTENT_CHECKED}/>
+                <span>{L_CONTENT}</span>
             </label>
         </div>
         <div class="form-field-radio">
             <label clas="radio">
                 <input type="radio" name="ForumWhere" value="all" {IS_ALL_CHECKED}/>
-                <span>{L_TITLE} / {L_CONTENTS}</span>
+                <span>{L_TITLE} / {L_CONTENT}</span>
             </label>
         </div>
     </div>

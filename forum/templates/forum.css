@@ -90,9 +90,9 @@ article footer ul.pagination { display: inline; }
 
 
 /* --- Page content header --- */
-.forum-contents header { margin: 0; }
+.forum-content header { margin: 0; }
 
-.forum-contents header h2 {
+.forum-content header h2 {
 	border: none;
 	font-weight: 300;
 	font-size: 1.382em;
@@ -100,7 +100,7 @@ article footer ul.pagination { display: inline; }
 
 .footer-forum { padding: 0 0.618em; }
 
-.forum-contents table { margin-top: 0; }
+.forum-content table { margin-top: 0; }
 
 ul.pagination a { padding: 0.309em; }
 
@@ -112,7 +112,7 @@ ul.pagination a { padding: 0.309em; }
 
 /* --- Page content --- */
 @media (min-width: 769px) {
-	.forum-contents { padding: 0 0.809em; }
+	.forum-content { padding: 0 0.809em; }
 }
 
 .content {

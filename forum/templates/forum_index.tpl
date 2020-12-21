@@ -21,7 +21,7 @@
 			jQuery('#table-{forums_list.cats.IDCAT}').basictable();
 		</script>
 
-		<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-{forums_list.cats.IDCAT}" class="forum-contents">
+		<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-{forums_list.cats.IDCAT}" class="forum-content">
 			<header class="flex-between">
 				<h2>
 					<a href="{forums_list.cats.U_FORUM_VARS}" class="forum-link-cat">{forums_list.cats.NAME}</a>

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 02
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -209,7 +209,7 @@ $quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur un
 $i = 0;
 $j = 0;
 $result = PersistenceContext::get_querier()->select("SELECT
-	msg.id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, msg.contents,
+	msg.id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, msg.content,
 	m.user_id, m.delay_readonly, m.delay_banned, m.display_name as login, m.level, m.user_groups, m.email, m.show_email, m.registration_date AS registered, m.posted_msg,
 	p.question, p.answers, p.voter_id, p.votes, p.type,
 	ext_field.user_avatar,
@@ -379,7 +379,7 @@ while ( $row = $result->fetch() )
 		'ID'                          => $row['id'],
 		'CLASS_COLOR'                 => ($j%2 == 0) ? '' : 2,
 		'FORUM_USER_LOGIN'            => $row['login'],
-		'FORUM_MSG_CONTENTS'          => FormatingHelper::second_parse(stripslashes($row['contents'])),
+		'FORUM_MSG_CONTENT'          => FormatingHelper::second_parse(stripslashes($row['content'])),
 		'FORUM_USER_EDITOR_LOGIN'     => $row['login_edit'],
 		'FORUM_USER_LEVEL'            => UserService::get_level_class($row['level']),
 		'C_FORUM_USER_GROUP_COLOR'    => !empty($user_group_color),
@@ -580,11 +580,11 @@ $vars_tpl = array_merge($vars_tpl, array(
 ));
 
 //Récupération du message quoté.
-$contents = '';
+$content = '';
 if (!empty($quote_get))
 {
 	try {
-		$quote_msg = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_msg', array('user_id', 'contents'), 'WHERE id=:id', array('id' => $quote_get));
+		$quote_msg = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_msg', array('user_id', 'content'), 'WHERE id=:id', array('id' => $quote_get));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
@@ -595,7 +595,7 @@ if (!empty($quote_get))
 		$pseudo = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id=:id', array('id' => $quote_msg['user_id']));
 	} catch (RowNotFoundException $e) {}
 
-	$contents = '[quote' . (!empty($pseudo) ? '=' . $pseudo : '') . ']' . FormatingHelper::unparse(stripslashes($quote_msg['contents'])) . '[/quote]';
+	$content = '[quote' . (!empty($pseudo) ? '=' . $pseudo : '') . ']' . FormatingHelper::unparse(stripslashes($quote_msg['content'])) . '[/quote]';
 }
 
 //Formulaire de réponse, non présent si verrouillé.
@@ -620,11 +620,11 @@ else
 	$img_track_mail_display = $track_mail ? 'at error' : 'at success';
 
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
-	$editor->set_identifier('contents');
+	$editor->set_identifier('content');
 
 	$vars_tpl = array_merge($vars_tpl, array(
 		'C_AUTH_POST'         => true,
-		'CONTENTS'            => $contents,
+		'CONTENT'            => $content,
 		'KERNEL_EDITOR'       => $editor->display(),
 		'ICON_TRACK'          => $img_track_display,
 		'ICON_SUBSCRIBE_PM'   => $img_track_pm_display,

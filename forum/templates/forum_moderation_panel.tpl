@@ -1,6 +1,6 @@
 # INCLUDE forum_top #
 
-<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-moderation-panel" class="forum-contents">
+<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-moderation-panel" class="forum-content">
 	<header>
 		<h2>
 			<a href="index.php">{FORUM_NAME}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
@@ -213,8 +213,8 @@
 						<td><a href="{U_CAT}">{CAT_NAME}</a></td>
 					</tr>
 					<tr>
-						<td>{L_CONTENTS}</td>
-						<td>{CONTENTS}</td>
+						<td>{L_CONTENT}</td>
+						<td>{CONTENT}</td>
 					</tr>
 					<tr>
 						<td>{L_STATUS}</td>
@@ -366,11 +366,11 @@
 			<script>
 				function change_textarea_level(replace_value, regex)
 				{
-					var contents = document.getElementById('action_contents').value;
+					var content = document.getElementById('action_content').value;
 					{REPLACE_VALUE}
-					document.getElementById('action_contents').value = contents;
+					document.getElementById('action_content').value = content;
 
-					# IF C_TINYMCE_EDITOR # setTinyMceContent(contents); # ENDIF #
+					# IF C_TINYMCE_EDITOR # setTinyMceContent(content); # ENDIF #
 				}
 			</script>
 			<form action="moderation_forum{U_ACTION_INFO}" method="post">
@@ -408,7 +408,7 @@
 							</td>
 							<td>
 								{KERNEL_EDITOR}
-								<textarea class="forum-textarea" name="action_contents" id="action_contents">{ALTERNATIVE_PM}</textarea>
+								<textarea class="forum-textarea" name="action_content" id="action_content">{ALTERNATIVE_PM}</textarea>
 							</td>
 						</tr>
 						<tr>

@@ -46,7 +46,7 @@
 			</ul>
 		</nav>
 
-		<div id="admin-contents">
+		<div id="admin-content">
 
 			# INCLUDE message_helper #
 

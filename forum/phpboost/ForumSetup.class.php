@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 29
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 3.0 - 2010 05 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -97,7 +97,7 @@ class ForumSetup extends DefaultModuleSetup
 			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'idtopic' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'title' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'contents' => array('type' => 'text', 'length' => 65000),
+			'content' => array('type' => 'text', 'length' => 65000),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'status' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'idmodo' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
@@ -138,7 +138,7 @@ class ForumSetup extends DefaultModuleSetup
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'idtopic' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'contents' => array('type' => 'text', 'length' => 65000),
+			'content' => array('type' => 'text', 'length' => 65000),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'timestamp_edit' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'user_id_edit' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
@@ -148,7 +148,7 @@ class ForumSetup extends DefaultModuleSetup
 			'primary' => array('id'),
 			'indexes' => array(
 				'idtopic' => array('type' => 'key', 'fields' => 'idtopic'),
-				'contents' => array('type' => 'fulltext', 'fields' => 'contents')
+				'content' => array('type' => 'fulltext', 'fields' => 'content')
 		));
 		PersistenceContext::get_dbms_utils()->create_table(self::$forum_message_table, $fields, $options);
 	}
@@ -369,7 +369,7 @@ class ForumSetup extends DefaultModuleSetup
 			'id' => 1,
 		 	'idtopic' => 1,
 			'user_id' => 1,
-			'contents' => $this->messages['sample.thread.message.content'],
+			'content' => $this->messages['sample.thread.message.content'],
 			'timestamp' => time(),
 			'timestamp_edit' => 0,
 			'user_id_edit' => 0,

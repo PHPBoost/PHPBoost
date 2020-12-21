@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 29
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 1.5 - 2006 08 07
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -57,14 +57,14 @@ if (!empty($alert) && empty($alert_post))
 	if (empty($nbr_alert)) //On affiche le formulaire
 	{
 		$editor = AppContext::get_content_formatting_service()->get_default_editor();
-		$editor->set_identifier('contents');
+		$editor->set_identifier('content');
 
 		$tpl->put_all(array(
 			'KERNEL_EDITOR'    => $editor->display(),
 			'L_ALERT'          => $LANG['alert_topic'],
 			'L_ALERT_EXPLAIN'  => $LANG['alert_modo_explain'],
 			'L_ALERT_TITLE'    => $LANG['alert_title'],
-			'L_ALERT_CONTENTS' => $LANG['alert_contents'],
+			'L_ALERT_CONTENT' => $LANG['alert_content'],
 			'L_REQUIRE'        => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 			'L_REQUIRE_TEXT'   => $LANG['require_text'],
 			'L_REQUIRE_TITLE'  => $LANG['require_title']
@@ -104,12 +104,12 @@ if (!empty($alert_post))
 	if (empty($nbr_alert)) //On enregistre
 	{
 		$alert_title = $request->get_poststring('title', '');
-		$alert_contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+		$alert_content = retrieve(POST, 'content', '', TSTRING_PARSE);
 
 		//Instanciation de la class du forum.
 		$Forumfct = new Forum;
 
-		$Forumfct->Alert_topic($alert_post, $alert_title, $alert_contents);
+		$Forumfct->Alert_topic($alert_post, $alert_title, $alert_content);
 
 		$tpl->assign_block_vars('alert_confirm', array(
 			'MSG' => str_replace('%title', $topic_name, $LANG['alert_success'])

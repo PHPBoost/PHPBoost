@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 19
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 1.6 - 2006 11 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -87,7 +87,7 @@ $LANG['alert_modo_explain'] = 'You are about to alert the moderators. You are he
 
 You wish to alert the moderators about a problem on the following thread';
 $LANG['alert_title'] = 'Short description';
-$LANG['alert_contents'] = 'Thanks for detailing the problem more in order to help the moderating team';
+$LANG['alert_content'] = 'Thanks for detailing the problem more in order to help the moderating team';
 $LANG['alert_success'] = 'You announced successfully the nonconformity of the thread <em>%title</em>, the moderating team thanks you for helping it.';
 $LANG['alert_topic_already_done'] = 'We thank you for taking the initiative to help the moderating team, but a member already announced a nonconformity of this thread.';
 $LANG['alert_back'] = 'Back to thread';

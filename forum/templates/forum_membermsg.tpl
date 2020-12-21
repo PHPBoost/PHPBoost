@@ -2,7 +2,7 @@
 
 		# INCLUDE forum_top #
 
-		<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-membermsg" class="forum-contents">
+		<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-membermsg" class="forum-content">
 			<header class="flex-between">
 				<h2>
 					{L_VIEW_MSG_USER}
@@ -36,7 +36,7 @@
 							</div>
 						</header>
 						<div class="message-content" >
-							{list.CONTENTS}
+							{list.CONTENT}
 						</div>
 						<div class="message-user-sign# IF list.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
 							# IF list.C_USER_SIGN #{list.USER_SIGN}# ENDIF #

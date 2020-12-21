@@ -17,7 +17,7 @@
 
 		<div class="message-message">
 			<div class="message-content">
-				{CONTENTS}
+				{CONTENT}
 			</div>
 		</div>
 

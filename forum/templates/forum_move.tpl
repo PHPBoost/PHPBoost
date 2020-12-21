@@ -12,7 +12,7 @@
 		-->
 		</script>
 
-		<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-move" class="forum-contents">
+		<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-move" class="forum-content">
 			<header>
 				<h2><a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_TITLE_T}">{TITLE_T}</a></h2>
 			</header>

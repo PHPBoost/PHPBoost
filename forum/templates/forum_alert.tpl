@@ -1,6 +1,6 @@
 		# INCLUDE forum_top #
 
-		<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-moderation" class="forum-contents">
+		<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-moderation" class="forum-content">
 			<header>
 				<h2><a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_TITLE_T}">{TITLE_T}</a> <span><em>{DESC}</em></span> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="#">{L_ALERT}</a></h2>
 			</header>
@@ -8,7 +8,7 @@
 			# START alert_form #
 				<script>
 					function check_form_alert(){
-						if(document.getElementById('contents').value == "") {
+						if(document.getElementById('content').value == "") {
 							alert("{L_REQUIRE_TEXT}");
 							return false;
 						}
@@ -32,9 +32,9 @@
 							</div>
 						</div>
 						<div class="form-element form-element-textarea">
-							<label for="contents">* {L_ALERT_CONTENTS}</label>
+							<label for="content">* {L_ALERT_CONTENT}</label>
 							{KERNEL_EDITOR}
-							<textarea rows="15" cols="40" id="contents" name="contents"></textarea>
+							<textarea rows="15" cols="40" id="content" name="content"></textarea>
 							<input type="hidden" name="id" value="{alert_form.ID_ALERT}">
 						</div>
 					</fieldset>

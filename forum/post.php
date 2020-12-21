@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 20
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 1.2 - 2005 10 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -58,7 +58,7 @@ $error_get = retrieve(GET, 'error', '');
 $post_topic = (bool)retrieve(POST, 'post_topic', false);
 
 $editor = AppContext::get_content_formatting_service()->get_default_editor();
-$editor->set_identifier('contents');
+$editor->set_identifier('content');
 
 //Niveau d'autorisation de la catégorie
 if (ForumAuthorizationsService::check_authorizations($id_get)->read())
@@ -106,7 +106,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			if ($is_modo)
 				$check_status = ForumCategory::STATUS_UNLOCKED;
 
-			$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+			$content = retrieve(POST, 'content', '', TSTRING_UNCHANGE);
 			$title = retrieve(POST, 'title', '');
 			$subtitle = retrieve(POST, 'desc', '');
 
@@ -123,9 +123,9 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
 			if ($check_status == ForumCategory::STATUS_UNLOCKED)
 			{
-				if (!empty($contents) && !empty($title)) //Insertion nouveau topic.
+				if (!empty($content) && !empty($title)) //Insertion nouveau topic.
 				{
-					list($last_topic_id, $last_msg_id) = $Forumfct->Add_topic($id_get, $title, $subtitle, $contents, $type); //Insertion nouveau topic.
+					list($last_topic_id, $last_msg_id) = $Forumfct->Add_topic($id_get, $title, $subtitle, $content, $type); //Insertion nouveau topic.
 
 					//Ajout d'un sondage en plus du topic.
 					$question = retrieve(POST, 'question', '');
@@ -266,19 +266,19 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				AppContext::get_response()->redirect( url(HOST . SCRIPT . '?error=flood&id=' . $id_get . '&idt=' . $idt_get, '', '&') . '#message_helper');
 		}
 
-		$contents = retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED);
+		$content = retrieve(POST, 'content', '', TSTRING_AS_RECEIVED);
 
 		//Si le topic n'est pas vérrouilé on ajoute le message.
 		if ($topic['status'] != 0 || $is_modo)
 		{
-			if (!empty($contents) && !empty($idt_get) && empty($update)) //Nouveau message.
+			if (!empty($content) && !empty($idt_get) && empty($update)) //Nouveau message.
 			{
 				$last_page = ceil( ($topic['nbr_msg'] + 1) / $config->get_number_messages_per_page() );
 				$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 				$last_page = ($last_page > 1) ? '&pt=' . $last_page : '';
 
 				if ($config->are_multiple_posts_allowed() || ForumAuthorizationsService::check_authorizations()->multiple_posts() || $topic['last_user_id'] != AppContext::get_current_user()->get_id())
-					$last_msg_id = $Forumfct->Add_msg($idt_get, $topic['id_category'], $contents, $topic['title'], $last_page, $last_page_rewrite);
+					$last_msg_id = $Forumfct->Add_msg($idt_get, $topic['id_category'], $content, $topic['title'], $last_page, $last_page_rewrite);
 				else
 				{
 					$last_page = ceil( $topic['nbr_msg'] / $config->get_number_messages_per_page() );
@@ -287,14 +287,14 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
 					$message_content = '';
 					try {
-						$message_content = FormatingHelper::unparse(PersistenceContext::get_querier()->get_column_value(PREFIX . 'forum_msg', 'contents', 'WHERE id = :id', array('id' => $topic['last_msg_id'])));
+						$message_content = FormatingHelper::unparse(PersistenceContext::get_querier()->get_column_value(PREFIX . 'forum_msg', 'content', 'WHERE id = :id', array('id' => $topic['last_msg_id'])));
 					} catch (RowNotFoundException $e) {}
 
 					$now = new Date();
 
 					if (AppContext::get_current_user()->get_editor() == 'TinyMCE')
 					{
-						$message_content .= '<br /><br />-------------------------------------------<br /><em>' . $LANG['edit_on'] . ' ' . $now->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) . '</em><br /><br />' . $contents;
+						$message_content .= '<br /><br />-------------------------------------------<br /><em>' . $LANG['edit_on'] . ' ' . $now->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) . '</em><br /><br />' . $content;
 					}
 					else
 					{
@@ -303,7 +303,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 -------------------------------------------
 [i]' . $LANG['edit_on'] . ' ' . $now->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) . '[/i]
 
-' . $contents;
+' . $content;
 					}
 
 					$Forumfct->Update_msg($idt_get, $topic['last_msg_id'], $message_content, $topic['last_user_id']); //Mise à jour du message.
@@ -371,12 +371,12 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			{
 				$title = retrieve(POST, 'title', '');
 				$subtitle = retrieve(POST, 'desc', '');
-				$contents = retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED);
+				$content = retrieve(POST, 'content', '', TSTRING_AS_RECEIVED);
 				$type = $is_modo ? (int)retrieve(POST, 'type', 0) : 0;
 
-				if (!empty($title) && !empty($contents))
+				if (!empty($title) && !empty($content))
 				{
-					$Forumfct->Update_topic($idt_get, $id_m, $title, $subtitle, addslashes($contents), $type, $user_id_msg); //Mise à jour du topic.
+					$Forumfct->Update_topic($idt_get, $id_m, $title, $subtitle, addslashes($content), $type, $user_id_msg); //Mise à jour du topic.
 
 					//Mise à jour du sondage en plus du topic.
 					$del_poll = (bool)retrieve(POST, 'del_poll', false);
@@ -419,9 +419,9 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			{
 				$tpl = new FileTemplate('forum/forum_post.tpl');
 
-				$contents = '';
+				$content = '';
 				try {
-					$contents = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'contents', 'WHERE id = :id', array('id' => $id_first));
+					$content = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'content', 'WHERE id = :id', array('id' => $id_first));
 				} catch (RowNotFoundException $e) {}
 
 				//Gestion des erreurs à l'édition.
@@ -506,7 +506,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					'FORUM_NAME'           => $config->get_forum_name(),
 					'TITLE'                => stripslashes($topic['title']),
 					'DESC'                 => stripslashes($topic['subtitle']),
-					'CONTENTS'             => FormatingHelper::unparse($contents),
+					'CONTENT'             => FormatingHelper::unparse($content),
 					'POLL_QUESTION'        => !empty($poll['question']) ? stripslashes($poll['question']) : '',
 					'SELECTED_SIMPLE'      => 'checked="ckecked"',
 					'MODULE_DATA_PATH'     => $module_data_path,
@@ -587,10 +587,10 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
 			if ($update && (bool)retrieve(POST, 'edit_msg', false))
 			{
-				$contents = retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED);
-				if (!empty($contents))
+				$content = retrieve(POST, 'content', '', TSTRING_AS_RECEIVED);
+				if (!empty($content))
 				{
-					$nbr_msg_before = $Forumfct->Update_msg($idt_get, $id_m, addslashes($contents), $user_id_msg);
+					$nbr_msg_before = $Forumfct->Update_msg($idt_get, $id_m, addslashes($content), $user_id_msg);
 
 					//Calcul de la page sur laquelle se situe le message.
 					$msg_page = ceil( ($nbr_msg_before + 1) / $config->get_number_messages_per_page() );
@@ -607,9 +607,9 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			{
 				$tpl = new FileTemplate('forum/forum_edit_msg.tpl');
 
-				$contents = '';
+				$content = '';
 				try {
-					$contents = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'contents', 'WHERE id = :id', array('id' => $id_m));
+					$content = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'content', 'WHERE id = :id', array('id' => $id_m));
 				} catch (RowNotFoundException $e) {}
 
 				//Gestion des erreurs à l'édition.
@@ -621,7 +621,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					'P_UPDATE'       => url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
 					'FORUM_NAME'     => $config->get_forum_name(),
 					'DESC'           => stripslashes($topic['subtitle']),
-					'CONTENTS'       => FormatingHelper::unparse($contents),
+					'CONTENT'       => FormatingHelper::unparse($content),
 					'KERNEL_EDITOR'  => $editor->display(),
 					'U_ACTION'       => 'post.php' . url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m . '&amp;token=' . AppContext::get_session()->get_token()),
 					'U_FORUM_CAT'    => 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php'),

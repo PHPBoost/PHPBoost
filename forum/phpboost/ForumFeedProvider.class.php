@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 29
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 3.0 - 2010 02 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -36,7 +36,7 @@ class ForumFeedProvider implements FeedProvider
 			$categories = CategoriesService::get_categories_manager($module_id)->get_children($id_category, new SearchCategoryChildrensOptions(), true);
 			$ids_categories = array_keys($categories);
 
-			$results = PersistenceContext::get_querier()->select('SELECT t.id, t.id_category, t.title, t.last_timestamp, t.last_msg_id, t.display_msg, t.nbr_msg AS t_nbr_msg, msg.id mid, msg.contents
+			$results = PersistenceContext::get_querier()->select('SELECT t.id, t.id_category, t.title, t.last_timestamp, t.last_msg_id, t.display_msg, t.nbr_msg AS t_nbr_msg, msg.id mid, msg.content
 				FROM ' . PREFIX . 'forum_topics t
 				LEFT JOIN ' . PREFIX . 'forum_msg msg ON msg.id = t.last_msg_id
 				WHERE t.id_category IN :ids_categories
@@ -66,7 +66,7 @@ class ForumFeedProvider implements FeedProvider
 				);
 				$item->set_link($link);
 				$item->set_guid($link);
-				$item->set_desc(FormatingHelper::second_parse(stripslashes($row['contents'])));
+				$item->set_desc(FormatingHelper::second_parse(stripslashes($row['content'])));
 				$item->set_date(new Date($row['last_timestamp'], Timezone::SERVER_TIMEZONE));
 				$item->set_auth(CategoriesService::get_categories_manager($module_id)->get_heritated_authorizations($row['id_category'], Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
 

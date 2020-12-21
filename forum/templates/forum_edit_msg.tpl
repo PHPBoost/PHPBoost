@@ -3,7 +3,7 @@
 		<script>
 		<!--
 		function check_form_post(){
-			if(document.getElementById('contents').value == "") {
+			if(document.getElementById('content').value == "") {
 				alert("{L_REQUIRE_TEXT}");
 				return false;
 			}
@@ -11,7 +11,7 @@
 		-->
 		</script>
 
-		<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-edit-message" class="forum-contents">
+		<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-edit-message" class="forum-content">
 			<header>
 				<h2>
 					<a href="index.php">{L_FORUM_INDEX}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
@@ -28,10 +28,10 @@
 						<fieldset>
 							<legend>{L_EDIT_MESSAGE}</legend>
 							<div class="form-element form-element-textarea">
-								<label for="contents">* {L_MESSAGE}</label>
+								<label for="content">* {L_MESSAGE}</label>
 								{KERNEL_EDITOR}
 								<div class="form-field-textarea">
-									<textarea rows="25" cols="66" id="contents" name="contents">{CONTENTS}</textarea>
+									<textarea rows="25" cols="66" id="content" name="content">{CONTENT}</textarea>
 								</div>
 							</div>
 						</fieldset>

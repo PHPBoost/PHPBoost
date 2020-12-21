@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 02
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 1.6 - 2007 02 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -35,7 +35,7 @@ if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 		//Vérification des autorisations.
 		$authorized_categories = CategoriesService::get_authorized_categories();
 
-		$contents = '';
+		$content = '';
 		//Requête pour compter le nombre de messages non lus.
 		$nbr_msg_not_read = 0;
 		$result = PersistenceContext::get_querier()->select("SELECT t.id AS tid, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.display_name as login, m.level as user_level, m.user_groups, v.last_view_id
@@ -69,7 +69,7 @@ if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 			$row['login'] = !empty($row['login']) ? $row['login'] : $LANG['guest'];
 			$group_color = User::get_group_color($row['user_groups'], $row['user_level']);
 
-			$contents .= '<tr><td class="forum-notread" style="width:100%"><a href="topic' . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . addslashes(Url::encode_rewrite($row['title']))  . '.php') . '#m' .  $last_msg_id . '"><i class="fa fa-hand-point-right" aria-hidden="true"></i></a> <a href="topic' . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . addslashes(Url::encode_rewrite($row['title']))  . '.php') . '" class="small">' . $last_topic_title . '</a></td><td class="forum-notread" style="white-space:nowrap">' . ($row['last_user_id'] != '-1' ? '<a href="'. UserUrlBuilder::profile($row['last_user_id'])->rel() .'" class="small '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . addslashes($row['login']) . '</a>' : '<em>' . addslashes($LANG['guest']) . '</em>') . '</td><td class="forum-notread" style="white-space:nowrap">' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '</td></tr>';
+			$content .= '<tr><td class="forum-notread" style="width:100%"><a href="topic' . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . addslashes(Url::encode_rewrite($row['title']))  . '.php') . '#m' .  $last_msg_id . '"><i class="fa fa-hand-point-right" aria-hidden="true"></i></a> <a href="topic' . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . addslashes(Url::encode_rewrite($row['title']))  . '.php') . '" class="small">' . $last_topic_title . '</a></td><td class="forum-notread" style="white-space:nowrap">' . ($row['last_user_id'] != '-1' ? '<a href="'. UserUrlBuilder::profile($row['last_user_id'])->rel() .'" class="small '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . addslashes($row['login']) . '</a>' : '<em>' . addslashes($LANG['guest']) . '</em>') . '</td><td class="forum-notread" style="white-space:nowrap">' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '</td></tr>';
 			$nbr_msg_not_read++;
 		}
 		$result->dispose();
@@ -79,7 +79,7 @@ if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 
 		echo "array_unread_topics[0] = '" . $nbr_msg_not_read . "';\n";
 		echo "array_unread_topics[1] = '" . '<a class="small" href="' . PATH_TO_ROOT . '/forum/unread.php">' . addslashes($LANG['show_not_reads']) . (AppContext::get_current_user()->get_id() !== -1 ? ' (' . $nbr_msg_not_read . ')' : '') . '</a>' . "';\n";
-		echo "array_unread_topics[2] = '" . '<div style="width:438px;height:' . max($height_visible_topics, 65) . 'px;overflow:auto;padding:0px;" onmouseover="forum_hide_block(\\\'forum_unread\\\', 1);" onmouseout="forum_hide_block(\\\'forum_unread\\\', 0);"><table class="module-table" style="margin:2px;width:99%">' . $contents . "</table></div>';";
+		echo "array_unread_topics[2] = '" . '<div style="width:438px;height:' . max($height_visible_topics, 65) . 'px;overflow:auto;padding:0px;" onmouseover="forum_hide_block(\\\'forum_unread\\\', 1);" onmouseout="forum_hide_block(\\\'forum_unread\\\', 0);"><table class="module-table" style="margin:2px;width:99%">' . $content . "</table></div>';";
 	}
 	else
 		echo '';

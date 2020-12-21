@@ -4,7 +4,7 @@
 
 <script>
 	function check_form_msg(){
-		if(document.getElementById('contents').value == "") {
+		if(document.getElementById('content').value == "") {
 			alert("{L_REQUIRE_MESSAGE}");
 			return false;
 		}
@@ -114,12 +114,12 @@
 
 	# IF C_FOCUS_CONTENT #
 	jQuery(document).ready(function() {
-		document.getElementById('contents').focus();
+		document.getElementById('content').focus();
 	});
 	# ENDIF #
 </script>
 
-<article id="article-forum-{ID}" class="forum-contents category-{IDCAT}" itemscope="itemscope" itemtype="https://schema.org/Creativework">
+<article id="article-forum-{ID}" class="forum-content category-{IDCAT}" itemscope="itemscope" itemtype="https://schema.org/Creativework">
 	<header>
 		# IF C_PAGINATION #<span class="float-left"># INCLUDE PAGINATION #</span># ENDIF #
 		# IF C_FORUM_MODERATOR #
@@ -267,7 +267,7 @@
 			<div class="message-content" >
 				# IF msg.L_FORUM_QUOTE_LAST_MSG # <p class="text-strong">{msg.L_FORUM_QUOTE_LAST_MSG}</p> # ENDIF #
 
-				{msg.FORUM_MSG_CONTENTS}
+				{msg.FORUM_MSG_CONTENT}
 
 				# IF msg.C_FORUM_USER_EDITOR #
 					<p class="message-edition">
@@ -338,10 +338,10 @@
 		<div class="forum-post-form">
 			<form action="post{U_FORUM_ACTION_POST}" method="post" onsubmit="return check_form_msg();">
 				<div class="form-element form-element-textarea">
-					<label for="contents">{L_RESPOND}</label>
+					<label for="content">{L_RESPOND}</label>
 					{KERNEL_EDITOR}
 					<div class="form-field-textarea">
-						<textarea id="contents" name="contents" rows="15" cols="40">{CONTENTS}</textarea>
+						<textarea id="content" name="content" rows="15" cols="40">{CONTENT}</textarea>
 					</div>
 				</div>
 
