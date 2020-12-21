@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 16
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -127,7 +127,7 @@ class DownloadItemFormController extends ModuleController
 			$fieldset->add_field(new FormFieldCheckbox('reset_downloads_number', $this->lang['download.form.reset.downloads.number']));
 		}
 
-		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->common_lang['form.description'], $this->get_item()->get_content(), array('rows' => 15, 'required' => true)));
+		$fieldset->add_field(new FormFieldRichTextEditor('content', $this->common_lang['form.description'], $this->get_item()->get_content(), array('rows' => 15, 'required' => true)));
 
 		$fieldset->add_field(new FormFieldCheckbox('summary_enabled', $this->common_lang['form.short_contents.enabled'], $this->get_item()->is_summary_enabled(),
 			array(
@@ -347,7 +347,7 @@ class DownloadItemFormController extends ModuleController
 			$item->set_id_category($this->form->get_value('id_category')->get_raw_value());
 
 		$item->set_file_url(new Url($this->form->get_value('file_url')));
-		$item->set_content($this->form->get_value('contents'));
+		$item->set_content($this->form->get_value('content'));
 		$item->set_summary(($this->form->get_value('summary_enabled') ? $this->form->get_value('summary') : ''));
 		$item->set_thumbnail($this->form->get_value('thumbnail'));
 		$item->set_version_number($this->form->get_value('version_number'));
