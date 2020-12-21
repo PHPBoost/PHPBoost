@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 30
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 4.0 - 2014 09 02
 */
 
@@ -65,7 +65,7 @@ class FaqSetup extends DefaultModuleSetup
 			'indexes' => array(
 				'id_category' => array('type' => 'key', 'fields' => 'id_category'),
 				'title' => array('type' => 'fulltext', 'fields' => 'question'),
-				'contents' => array('type' => 'fulltext', 'fields' => 'answer')
+				'content' => array('type' => 'fulltext', 'fields' => 'answer')
 			)
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$faq_table, $fields, $options);
