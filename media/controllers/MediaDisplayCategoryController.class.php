@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 10 29
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -176,7 +176,7 @@ class MediaDisplayCategoryController extends ModuleController
 		}
 
 		$result = PersistenceContext::get_querier()->select("SELECT
-			v.id, v.iduser, v.name, v.timestamp, v.counter, v.infos, v.poster, v.contents,
+			v.id, v.iduser, v.name, v.timestamp, v.counter, v.infos, v.poster, v.content,
 			mb.display_name, mb.user_groups, mb.level,
 			notes.number_notes, notes.average_notes,
 			com.number_comments
@@ -237,8 +237,8 @@ class MediaDisplayCategoryController extends ModuleController
 				'NAME'          => $row['name'],
 				'IMG_NAME'      => str_replace('"', '\"', $row['name']),
 				'C_NEW_CONTENT' => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('media', $row['timestamp']),
-				'C_DESCRIPTION' => !empty($row['contents']),
-				'DESCRIPTION'   => FormatingHelper::second_parse(stripslashes($row['contents'])),
+				'C_DESCRIPTION' => !empty($row['content']),
+				'DESCRIPTION'   => FormatingHelper::second_parse(stripslashes($row['content'])),
 				'AUTHOR'        => $MEDIA_LANG['media_added_by'] . ' : ' . !empty($row['display_name']) ? '<a href="' . UserUrlBuilder::profile($row['iduser'])->rel() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>' : $LANG['guest'],
 				'COUNT'         => $row['counter'],
 				'NOTE'          => NotationService::display_static_image($notation),

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 03
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 3.0 - 2010 01 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -58,7 +58,7 @@ class MediaSetup extends DefaultModuleSetup
 			'iduser' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => -1),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'name' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
-			'contents' => array('type' => 'text', 'length' => 65000),
+			'content' => array('type' => 'text', 'length' => 65000),
 			'url' => array('type' => 'text', 'length' => 2048),
 			'mime_type' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => 0),
 			'infos' => array('type' => 'integer', 'length' => 6, 'notnull' => 1, 'default' => 0),
@@ -72,7 +72,7 @@ class MediaSetup extends DefaultModuleSetup
 			'indexes' => array(
 				'id_category' => array('type' => 'key', 'fields' => 'id_category'),
 				'name' => array('type' => 'fulltext', 'fields' => 'name'),
-				'contents' => array('type' => 'fulltext', 'fields' => 'contents')
+				'content' => array('type' => 'fulltext', 'fields' => 'content')
 		));
 		PersistenceContext::get_dbms_utils()->create_table(self::$media_table, $fields, $options);
 	}
@@ -112,7 +112,7 @@ class MediaSetup extends DefaultModuleSetup
 			'iduser' => 1,
 			'timestamp' => time(),
 			'name' => $this->messages['media.name'],
-			'contents' => $this->messages['media.content'],
+			'content' => $this->messages['media.content'],
 			'url' => $this->messages['media.url'],
 			'mime_type' => 'video/host',
 			'infos' => 2,

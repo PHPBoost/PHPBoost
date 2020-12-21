@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 13
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 5.0 - 2017 03 09
  * @contributor xela <xela@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MediaModuleUpdateVersion extends ModuleUpdateVersion
@@ -13,7 +14,7 @@ class MediaModuleUpdateVersion extends ModuleUpdateVersion
 	public function __construct()
 	{
 		parent::__construct('media');
-		
+
 		$this->content_tables = array(PREFIX . 'media');
 		self::$delete_old_files_list = array(
 			'/lang/english/config.php',
@@ -29,12 +30,13 @@ class MediaModuleUpdateVersion extends ModuleUpdateVersion
 		self::$delete_old_folders_list = array(
 			'/controllers/categories'
 		);
-		
+
 		$this->database_columns_to_modify = array(
 			array(
 				'table_name' => PREFIX . 'media',
 				'columns' => array(
-					'idcat' => 'id_category INT(11) NOT NULL DEFAULT 0'
+					'idcat' => 'id_category INT(11) NOT NULL DEFAULT 0',
+					'contents' => 'content MEDIUMTEXT'
 				)
 			),
 			array(

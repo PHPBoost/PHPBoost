@@ -108,10 +108,10 @@
 						</div>
 					</div>
 					<div class="form-element form-element-textarea">
-						<label for="contents" id="preview_content">{L_CONTENTS}</label>
+						<label for="content" id="preview_content">{L_CONTENT}</label>
 						{KERNEL_EDITOR}
 						<div class="form-field-textarea">
-							<textarea rows="10" cols="90" id="contents" name="contents">{DESCRIPTION}</textarea>
+							<textarea rows="10" cols="90" id="content" name="content">{DESCRIPTION}</textarea>
 						</div>
 					</div>
 					# IF C_APROB #

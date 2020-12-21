@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 16
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -114,7 +114,7 @@ elseif ($delete > 0)
 elseif ($add >= 0 && !$submit || $edit > 0)
 {
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
-	$editor->set_identifier('contents');
+	$editor->set_identifier('content');
 
 	$tpl->put_all(array(
 		'C_ADD_MEDIA' => true,
@@ -125,7 +125,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 		'L_HEIGHT' => $MEDIA_LANG['media_height'],
 		'L_U_MEDIA' => $MEDIA_LANG['media_url'],
 		'L_POSTER' => $MEDIA_LANG['media_poster'],
-		'L_CONTENTS' => $MEDIA_LANG['media_description'],
+		'L_CONTENT' => $MEDIA_LANG['media_description'],
 		'KERNEL_EDITOR' => $editor->display(),
 		'L_APPROVED' => $MEDIA_LANG['media_approved'],
 		'L_CONTRIBUTION_LEGEND' => $LANG['contribution'],
@@ -194,7 +194,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 			'HEIGHT' => $media['height'],
 			'U_MEDIA' => $media['url'],
 			'POSTER' => $media['poster'],
-			'DESCRIPTION' => FormatingHelper::unparse(stripslashes($media['contents'])),
+			'DESCRIPTION' => FormatingHelper::unparse(stripslashes($media['content'])),
 			'APPROVED' => ($media['infos'] & MEDIA_STATUS_APROBED) !== 0 ? ' checked="checked"' : '',
 			'C_APROB' => ($media['infos'] & MEDIA_STATUS_APROBED) === 0,
 			'JS_ID_MUSIC' => '"' . implode('", "', $js_id_music) . '"',
@@ -273,7 +273,7 @@ elseif ($submit)
 		'height' => min(retrieve(POST, 'height', $config->get_max_video_height(), TINTEGER), $config->get_max_video_height()),
 		'url' => new Url(retrieve(POST, 'u_media', '', TSTRING)),
 		'poster' => new Url(retrieve(POST, 'poster', '', TSTRING)),
-		'contents' => retrieve(POST, 'contents', '', TSTRING_PARSE),
+		'content' => retrieve(POST, 'content', '', TSTRING_PARSE),
 		'approved' => (bool)retrieve(POST, 'approved', false, TBOOL),
 		'contrib' => (bool)retrieve(POST, 'contrib', false, TBOOL),
 		'counterpart' => retrieve(POST, 'counterpart', '', TSTRING_PARSE)
@@ -387,7 +387,7 @@ elseif ($submit)
 	// Edit
 	if ($media['idedit'] && CategoriesAuthorizationsService::check_authorizations($media['id_category'])->moderation())
 	{
-		PersistenceContext::get_querier()->update(PREFIX . "media", array('id_category' => $media['id_category'], 'name' => $media['name'], 'url' => $media['url']->relative(), 'poster' => $media['poster']->relative(), 'mime_type' => $media['mime_type'], 'contents' => $media['contents'], 'infos' => (CategoriesAuthorizationsService::check_authorizations($media['id_category'])->write() ? MEDIA_STATUS_APROBED : 0), 'width' => $media['width'], 'height' => $media['height']), 'WHERE id = :id', array('id' => $media['idedit']));
+		PersistenceContext::get_querier()->update(PREFIX . "media", array('id_category' => $media['id_category'], 'name' => $media['name'], 'url' => $media['url']->relative(), 'poster' => $media['poster']->relative(), 'mime_type' => $media['mime_type'], 'content' => $media['content'], 'infos' => (CategoriesAuthorizationsService::check_authorizations($media['id_category'])->write() ? MEDIA_STATUS_APROBED : 0), 'width' => $media['width'], 'height' => $media['height']), 'WHERE id = :id', array('id' => $media['idedit']));
 
 		if ($media['approved'])
 		{
@@ -413,7 +413,7 @@ elseif ($submit)
 	// Add
 	elseif (!$media['idedit'] && (($auth_write = CategoriesAuthorizationsService::check_authorizations($media['id_category'])->write()) || CategoriesAuthorizationsService::check_authorizations($media['id_category'])->contribution()))
 	{
-		$result = PersistenceContext::get_querier()->insert(PREFIX . "media", array('id_category' => $media['id_category'], 'iduser' => AppContext::get_current_user()->get_id(), 'timestamp' => time(), 'name' => $media['name'], 'contents' => $media['contents'], 'url' => $media['url']->relative(), 'poster' => $media['poster']->relative(), 'mime_type' => $media['mime_type'], 'infos' => (CategoriesAuthorizationsService::check_authorizations($media['id_category'])->write() ? MEDIA_STATUS_APROBED : 0), 'width' => $media['width'], 'height' => $media['height']));
+		$result = PersistenceContext::get_querier()->insert(PREFIX . "media", array('id_category' => $media['id_category'], 'iduser' => AppContext::get_current_user()->get_id(), 'timestamp' => time(), 'name' => $media['name'], 'content' => $media['content'], 'url' => $media['url']->relative(), 'poster' => $media['poster']->relative(), 'mime_type' => $media['mime_type'], 'infos' => (CategoriesAuthorizationsService::check_authorizations($media['id_category'])->write() ? MEDIA_STATUS_APROBED : 0), 'width' => $media['width'], 'height' => $media['height']));
 
 		$new_id_media = $result->get_last_inserted_id();
 		// Feeds Regeneration

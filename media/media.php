@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 02
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -72,7 +72,7 @@ elseif ($id_media > 0)
 	$Bread_crumb->add($media['name'], url('media.php?id=' . $id_media, 'media-' . $id_media . '-' . $media['id_category'] . '+' . Url::encode_rewrite($media['name']) . '.php'));
 
 	define('TITLE', $media['name']);
-	define('DESCRIPTION', TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse(stripslashes($media['contents'])), '<br><br/>'), 150));
+	define('DESCRIPTION', TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse(stripslashes($media['content'])), '<br><br/>'), 150));
 	require_once('../kernel/header.php');
 
 	// Update counter
@@ -100,9 +100,8 @@ elseif ($id_media > 0)
 			'C_DISPLAY_NOTATION' => $content_management_config->module_notation_is_enabled('media'),
 			'C_DISPLAY_COMMENTS' => $comments_config->module_comments_is_enabled('media'),
 			'C_NEW_CONTENT' => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('media', $media['timestamp']),
-			'ID_MEDIA' => $id_media,
 			'NAME' => $media['name'],
-			'CONTENTS' => FormatingHelper::second_parse(stripslashes($media['contents'])),
+			'CONTENT' => FormatingHelper::second_parse(stripslashes($media['content'])),
 			'COUNT' => $media['counter'],
 			'KERNEL_NOTATION' => NotationService::display_active_image($notation),
 			'HITS' => ((int)$media['counter']+1) > 1 ? sprintf($MEDIA_LANG['n_times'], ((int)$media['counter']+1)) : sprintf($MEDIA_LANG['n_time'], ((int)$media['counter']+1)),

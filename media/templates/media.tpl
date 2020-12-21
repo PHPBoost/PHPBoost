@@ -167,7 +167,7 @@
 				# ENDIF #
 			</div>
 			<div class="content" itemprop="text">
-				{CONTENTS}
+				{CONTENT}
 				# INCLUDE media_format #
 			</div>
 			<aside>${ContentSharingActionsMenuService::display()}</aside>
