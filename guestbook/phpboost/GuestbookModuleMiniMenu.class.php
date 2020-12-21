@@ -59,10 +59,10 @@ class GuestbookModuleMiniMenu extends ModuleMiniMenu
 				$tpl->put_all(array(
 					'C_ANY_MESSAGE_GUESTBOOK' => true,
 					'C_USER_GROUP_COLOR' => !empty($user_group_color),
-					'C_MORE_CONTENTS' => TextHelper::strlen($random_message['contents']) >= 200,
+					'C_MORE_CONTENT' => TextHelper::strlen($random_message['content']) >= 200,
 					'C_VISITOR' => empty($random_message['user_id']),
-					'CONTENTS' => $random_message['contents'],
-					'SHORT_CONTENTS' => nl2br(TextHelper::substr_html($random_message['contents'], 0, 200)),
+					'CONTENT' => $random_message['content'],
+					'SHORT_CONTENT' => nl2br(TextHelper::substr_html($random_message['content'], 0, 200)),
 					'USER_PSEUDO' => $random_message['login'],
 					'USER_LEVEL_CLASS' => UserService::get_level_class($random_message['level']),
 					'USER_GROUP_COLOR' => $user_group_color,

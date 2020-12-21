@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 02
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 3.0 - 2011 02 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -35,10 +35,10 @@ class GuestbookCache implements CacheData
 		}
 		$result->dispose();
 
-		$result = PersistenceContext::get_querier()->select("SELECT g.id, g.login, g.contents, g.timestamp, m.user_id, m.display_name, m.level, m.user_groups
+		$result = PersistenceContext::get_querier()->select("SELECT g.id, g.login, g.content, g.timestamp, m.user_id, m.display_name, m.level, m.user_groups
 		FROM " . GuestbookSetup::$guestbook_table . " g
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
-		GROUP BY g.id, g.login, g.contents, g.timestamp, m.user_id, m.display_name, m.level, m.user_groups
+		GROUP BY g.id, g.login, g.content, g.timestamp, m.user_id, m.display_name, m.level, m.user_groups
 		ORDER BY RAND()
 		LIMIT 50");
 
@@ -46,7 +46,7 @@ class GuestbookCache implements CacheData
 		{
 			$this->messages[$row['id']] = array(
 				'id' => $row['id'],
-				'contents' => strip_tags(FormatingHelper::second_parse($row['contents'])),
+				'content' => strip_tags(FormatingHelper::second_parse($row['content'])),
 				'user_id' => $row['user_id'],
 				'login' => $row['display_name'] ? $row['display_name'] : $row['login'],
 				'level' => $row['level'],

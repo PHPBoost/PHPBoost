@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 14
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 5.0 - 2017 03 09
  * @contributor xela <xela@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class GuestbookModuleUpdateVersion extends ModuleUpdateVersion
@@ -22,6 +23,14 @@ class GuestbookModuleUpdateVersion extends ModuleUpdateVersion
 		);
 
 		$this->content_tables = array(PREFIX . 'guestbook');
+		$this->database_columns_to_modify = array(
+			array(
+				'table_name' => PREFIX . 'guestbook',
+				'columns' => array(
+					'contents' => 'content MEDIUMTEXT',
+				)
+			)
+		);
 	}
 }
 ?>

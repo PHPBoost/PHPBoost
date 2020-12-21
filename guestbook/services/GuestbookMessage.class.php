@@ -3,15 +3,16 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 11 28
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 4.0 - 2013 06 27
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class GuestbookMessage
 {
 	private $id;
-	private $contents;
+	private $content;
 	private $login;
 	private $user_id;
 	private $creation_date;
@@ -26,14 +27,14 @@ class GuestbookMessage
 		return $this->id;
 	}
 
-	public function set_contents($value)
+	public function set_content($value)
 	{
-		$this->contents = $value;
+		$this->content = $value;
 	}
 
-	public function get_contents()
+	public function get_content()
 	{
-		return $this->contents;
+		return $this->content;
 	}
 
 	public function set_login($value)
@@ -90,7 +91,7 @@ class GuestbookMessage
 	{
 		return array(
 			'id' => $this->get_id(),
-			'contents' => $this->get_contents(),
+			'content' => $this->get_content(),
 			'login' => $this->get_login(),
 			'user_id' => $this->get_author_user()->get_id(),
 			'timestamp' => $this->get_creation_date()->get_timestamp()
@@ -100,7 +101,7 @@ class GuestbookMessage
 	public function set_properties(array $properties)
 	{
 		$this->id = $properties['id'];
-		$this->contents = $properties['contents'];
+		$this->content = $properties['content'];
 		$this->login = $properties['glogin'];
 		$this->creation_date = new Date($properties['timestamp'], Timezone::SERVER_TIMEZONE);
 
@@ -139,7 +140,7 @@ class GuestbookMessage
 
 			//Message
 			'ID' => $this->id,
-			'CONTENTS' => FormatingHelper::second_parse($this->contents),
+			'CONTENT' => FormatingHelper::second_parse($this->content),
 			'PSEUDO' => $this->login ? $this->login : $user->get_display_name(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR' => $user_group_color,

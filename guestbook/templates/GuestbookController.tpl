@@ -51,7 +51,7 @@
 						</div>
 					</header>
 					<div class="message-content# IF messages.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
-						{messages.CONTENTS}
+						{messages.CONTENT}
 					</div>
 					# IF messages.C_USER_GROUPS #
 						<footer class="message-footer-container# IF messages.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
