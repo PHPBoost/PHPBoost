@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 08
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 3.0 - 2012 02 22
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -24,7 +24,7 @@ class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
 
 	public function get_menu_id()
 	{
-		return 'module-mini-themeswitcher';
+		return 'module-mini-themesswitcher';
 	}
 
 	public function get_menu_title()
@@ -41,43 +41,43 @@ class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
 	{
 		$user = AppContext::get_current_user();
 
-		$theme_id = AppContext::get_request()->get_string('switchtheme', '');
+		$item_id = AppContext::get_request()->get_string('switchtheme', '');
 		$query_string = preg_replace('`switchtheme=[^&]+`u', '', QUERY_STRING);
-		if (!empty($theme_id))
+		if (!empty($item_id))
 		{
-			$theme = ThemesManager::get_theme($theme_id);
-			if ($theme !== null)
+			$item = ThemesManager::get_theme($item_id);
+			if ($item !== null)
 			{
-				if ($theme->is_activated() && $theme->check_auth())
+				if ($item->is_activated() && $item->check_auth())
 				{
-					$user->update_theme($theme->get_id());
+					$user->update_theme($item->get_id());
 				}
 			}
 			AppContext::get_response()->redirect(trim(HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : '')));
 		}
 
-		$tpl = new FileTemplate('ThemesSwitcher/themeswitcher.tpl');
-		$tpl->add_lang(LangLoader::get('themeswitcher_common', 'ThemesSwitcher'));
-		MenuService::assign_positions_conditions($tpl, $this->get_block());
-		Menu::assign_common_template_variables($tpl);
+		$view = new FileTemplate('ThemesSwitcher/ThemesSwitcherModuleMiniMenu.tpl');
+		$view->add_lang(LangLoader::get('common', 'ThemesSwitcher'));
+		MenuService::assign_positions_conditions($view, $this->get_block());
+		Menu::assign_common_template_variables($view);
 
-		foreach (ThemesManager::get_activated_and_authorized_themes_map_sorted_by_localized_name() as $theme)
+		foreach (ThemesManager::get_activated_and_authorized_themes_map_sorted_by_localized_name() as $item)
 		{
-			$tpl->assign_block_vars('themes', array(
-				'C_SELECTED' => $user->get_theme() == $theme->get_id(),
-				'NAME' => $theme->get_configuration()->get_name(),
-				'IDNAME' => $theme->get_id()
+			$view->assign_block_vars('items', array(
+				'C_SELECTED' => $user->get_theme() == $item->get_id(),
+				'ITEM_NAME' => $item->get_configuration()->get_name(),
+				'ITEM_ID' => $item->get_id()
 			));
 		}
 
 		$current_url = AppContext::get_request()->get_site_url() . $_SERVER['SCRIPT_NAME'] . '?' . rtrim($query_string, '&');
 
-		$tpl->put_all(array(
-			'DEFAULT_THEME' => UserAccountsConfig::load()->get_default_theme(),
-			'URL' => $current_url . (strstr($current_url, '?') ? '&' : '?') . 'switchtheme='
+		$view->put_all(array(
+			'DEFAULT_ITEM' => UserAccountsConfig::load()->get_default_theme(),
+			'U_ITEM' => $current_url . (strstr($current_url, '?') ? '&' : '?') . 'switchtheme='
 		));
 
-		return $tpl->render();
+		return $view->render();
 	}
 
 	public function display()

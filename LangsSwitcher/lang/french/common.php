@@ -11,6 +11,6 @@
 #                    French                        #
 ####################################################
 
-$LANG['switch.lang'] = 'Changer de langue';
-$LANG['default.lang'] = 'Langue par défaut';
+$lang['switch.lang'] = 'Changer de langue';
+$lang['default.lang'] = 'Langue par défaut';
 ?>

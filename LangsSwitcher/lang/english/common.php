@@ -11,6 +11,6 @@
 #                    English                       #
 ####################################################
 
-$LANG['switch.lang'] = 'Switch language';
-$LANG['default.lang'] = 'Default language';
+$lang['switch.lang'] = 'Switch language';
+$lang['default.lang'] = 'Default language';
 ?>

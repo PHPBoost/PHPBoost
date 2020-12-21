@@ -12,14 +12,14 @@
 							id="switchlang"
 							class="flag-selector select-to-list"
 							name="switchlang"
-							onchange="document.location = '{URL}' + this.options[this.selectedIndex].value;">
+							onchange="document.location = '{U_ITEM}' + this.options[this.selectedIndex].value;">
 							# START items #
-								<option data-option-img="# IF C_HAS_PICTURE #{items.U_LANG_PICTURE}# ENDIF #" value="{items.IDNAME}"# IF items.C_SELECTED # selected="selected"# ENDIF #>{items.NAME}</option>
+								<option data-option-img="# IF C_HAS_PICTURE #{items.U_ITEM_PICTURE}# ENDIF #" value="{items.ITEM_ID}"# IF items.C_SELECTED # selected="selected"# ENDIF #>{items.ITEM_NAME}</option>
 							# END items #
 						</select>
 					</div>
 
-					# IF C_HORIZONTAL #<a class="grouped-element" href="{URL}{DEFAULT_LANG}">{@default.lang}</a># ENDIF #
+					# IF C_HORIZONTAL #<a class="grouped-element" href="{U_ITEM}{DEFAULT_ITEM}">{@default.lang}</a># ENDIF #
 				</div>
 			</form>
 		</div>

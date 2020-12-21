@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 19
+ * @version     PHPBoost 6.0 - last update: 2020 12 21
  * @since       PHPBoost 3.0 - 2012 02 22
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -25,7 +25,7 @@ class LangsSwitcherModuleMiniMenu extends ModuleMiniMenu
 
 	public function get_menu_id()
 	{
-		return 'module-mini-langswitcher';
+		return 'module-mini-langsswitcher';
 	}
 
 	public function get_menu_title()
@@ -68,19 +68,19 @@ class LangsSwitcherModuleMiniMenu extends ModuleMiniMenu
 
 		$view->put_all(array(
 			'C_HAS_PICTURE' => $item->get_configuration()->has_picture(),
-			'DEFAULT_LANG' => UserAccountsConfig::load()->get_default_lang(),
-			'LANG_NAME' => $item->get_configuration()->get_name(),
-			'U_LANG_PICTURE' => $item->get_configuration()->get_picture_url()->rel(),
-			'URL' => $current_url . (strstr($current_url, '?') ? '&' : '?') . 'switchlang='
+			'DEFAULT_ITEM' => UserAccountsConfig::load()->get_default_lang(),
+			'ITEM_NAME' => $item->get_configuration()->get_name(),
+			'U_ITEM_PICTURE' => $item->get_configuration()->get_picture_url()->rel(),
+			'U_ITEM' => $current_url . (strstr($current_url, '?') ? '&' : '?') . 'switchlang='
 		));
 
 		foreach(LangsManager::get_activated_and_authorized_langs_map_sorted_by_localized_name() as $item)
 		{
 			$view->assign_block_vars('items', array(
 				'C_SELECTED' => $user->get_locale() == $item->get_id(),
-				'NAME' => $item->get_configuration()->get_name(),
-				'U_LANG_PICTURE' => $item->get_configuration()->get_picture_url()->rel(),
-				'IDNAME' => $item->get_id()
+				'ITEM_NAME' => $item->get_configuration()->get_name(),
+				'U_ITEM_PICTURE' => $item->get_configuration()->get_picture_url()->rel(),
+				'ITEM_ID' => $item->get_id()
 			));
 		}
 
