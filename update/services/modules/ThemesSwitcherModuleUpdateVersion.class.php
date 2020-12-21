@@ -4,7 +4,7 @@
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @version     PHPBoost 6.0 - last update: 20120 12 21
- * @since       PHPBoost 5.2 - 2020 12 19
+ * @since       PHPBoost 5.2 - 2020 12 21
 */
 
 class ThemesSwitcherModuleUpdateVersion extends ModuleUpdateVersion
