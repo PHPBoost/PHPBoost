@@ -41,7 +41,7 @@ ${resources('update/update')}
 									id="change_lang"
 									class="lang-selector"
 									name="new_language"
-									onchange="document.location='index.php?lang=' + document.getElementById('change_lang').value;"
+									onchange="document.location='index.php?lang=' + document.getElementById('change_lang').value;">
 									# START lang #
 										<option value="{lang.LANG}" {lang.SELECTED} data-option-img="{PATH_TO_ROOT}/images/stats/countries/{LANG_IDENTIFIER}.png">
 											{lang.LANG_NAME}
