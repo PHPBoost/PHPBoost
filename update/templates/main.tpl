@@ -16,9 +16,9 @@ ${resources('update/update')}
 			var THEME = "{THEME}";
 		</script>
 		<script src="{PATH_TO_ROOT}/kernel/lib/js/jquery/jquery.js"></script>
-		<script src="{PATH_TO_ROOT}/templates/default/plugins/@global.js"></script>
-		<script src="{PATH_TO_ROOT}/templates/default/plugins/selectimg.js"></script>
-		<script src="{PATH_TO_ROOT}/templates/default/plugins/tooltip.js"></script>
+		<script src="{PATH_TO_ROOT}/templates/__default__/plugins/@global.js"></script>
+		<script src="{PATH_TO_ROOT}/templates/__default__/plugins/selectimg.js"></script>
+		<script src="{PATH_TO_ROOT}/templates/__default__/plugins/tooltip.js"></script>
 		<link rel="shortcut icon" href="{PATH_TO_ROOT}/favicon.ico" type="image/x-icon" />
 	</head>
 	<body>
