@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 11
+ * @version     PHPBoost 6.0 - last update: 2020 12 24
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -14,7 +14,7 @@ class BugtrackerItem
 	private $id;
 	private $title;
 	private $rewrited_title;
-	private $contents;
+	private $content;
 
 	private $author_user;
 
@@ -74,19 +74,19 @@ class BugtrackerItem
 		return $this->rewrited_title;
 	}
 
-	public function set_contents($contents)
+	public function set_content($content)
 	{
-		$this->contents = $contents;
+		$this->content = $content;
 	}
 
-	public function get_contents()
+	public function get_content()
 	{
-		return $this->contents;
+		return $this->content;
 	}
 
-	public function get_real_short_contents()
+	public function get_real_short_content()
 	{
-		return TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>'), (int)BugtrackerConfig::NUMBER_CARACTERS_BEFORE_CUT);
+		return TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($this->content), '<br><br/>'), (int)BugtrackerConfig::NUMBER_CARACTERS_BEFORE_CUT);
 	}
 
 	public function set_author_user(User $user)
@@ -279,7 +279,7 @@ class BugtrackerItem
 		return array(
 			'id' => $this->get_id(),
 			'title' => $this->get_title(),
-			'contents' => $this->get_contents(),
+			'content' => $this->get_content(),
 			'author_id' => $this->get_author_user()->get_id(),
 			'submit_date' => $this->get_submit_date() ? $this->get_submit_date()->get_timestamp() : '',
 			'fix_date' => $this->get_fix_date() ? $this->get_fix_date()->get_timestamp() : '',
@@ -301,7 +301,7 @@ class BugtrackerItem
 		$this->id = $properties['id'];
 		$this->title = $properties['title'];
 		$this->rewrited_title = Url::encode_rewrite($properties['title']);
-		$this->contents = $properties['contents'];
+		$this->content = $properties['content'];
 		$this->submit_date = !empty($properties['submit_date']) ? new Date( $properties['submit_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->fix_date = !empty($properties['fix_date']) ? new Date($properties['fix_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->status = $properties['status'];
@@ -332,7 +332,7 @@ class BugtrackerItem
 		$this->fix_date = new Date();
 		$this->status = BugtrackerItem::NEW_BUG;
 		$this->author_user = AppContext::get_current_user();
-		$this->contents = $config->get_contents_value();
+		$this->content = $config->get_content_value();
 		$this->type = $config->get_default_type();
 		$this->category = $config->get_default_category();
 		$this->severity = $config->get_default_severity();
@@ -382,7 +382,7 @@ class BugtrackerItem
 			//Bug
 			'ID' => $this->id,
 			'TITLE' => $this->title,
-			'CONTENTS' => FormatingHelper::second_parse($this->contents),
+			'CONTENT' => FormatingHelper::second_parse($this->content),
 			'TYPE' => (isset($types[$this->type])) ? stripslashes($types[$this->type]) : $lang['notice.none'],
 			'CATEGORY' => (isset($categories[$this->category])) ? stripslashes($categories[$this->category]) : $lang['notice.none_e'],
 			'SEVERITY' => (isset($severities[$this->severity])) ? stripslashes($severities[$this->severity]['name']) : $lang['notice.none'],

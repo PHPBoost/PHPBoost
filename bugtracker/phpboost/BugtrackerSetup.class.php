@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 11
- * @since       PHPBoost 3.0 - 2012 04 16Bug
+ * @version     PHPBoost 6.0 - last update: 2020 12 24
+ * @since       PHPBoost 3.0 - 2012 04 16
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class BugtrackerSetup extends DefaultModuleSetup
@@ -50,7 +51,7 @@ class BugtrackerSetup extends DefaultModuleSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'title' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'contents' => array('type' => 'text', 'length' => 65000),
+			'content' => array('type' => 'text', 'length' => 65000),
 			'author_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'submit_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'fix_date' => array('type' => 'integer', 'length' => 11, 'default' => 0),
@@ -69,7 +70,7 @@ class BugtrackerSetup extends DefaultModuleSetup
 			'primary' => array('id'),
 			'indexes' => array(
 				'title' => array('type' => 'fulltext', 'fields' => 'title'),
-				'contents' => array('type' => 'fulltext', 'fields' => 'contents')
+				'content' => array('type' => 'fulltext', 'fields' => 'content')
 			)
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$bugtracker_table, $fields, $options);
@@ -117,7 +118,7 @@ class BugtrackerSetup extends DefaultModuleSetup
 		PersistenceContext::get_querier()->insert(self::$bugtracker_table, array(
 			'id' => 1,
 			'title' => $lang['bug.1.title'],
-			'contents' => $lang['bug.1.contents'],
+			'content' => $lang['bug.1.content'],
 			'author_id' => 1,
 			'submit_date' => time(),
 			'fix_date' => 0,
@@ -136,7 +137,7 @@ class BugtrackerSetup extends DefaultModuleSetup
 		PersistenceContext::get_querier()->insert(self::$bugtracker_table, array(
 			'id' => 2,
 			'title' => $lang['bug.2.title'],
-			'contents' => $lang['bug.2.contents'],
+			'content' => $lang['bug.2.content'],
 			'author_id' => 1,
 			'submit_date' => time() - 1000,
 			'fix_date' => time(),
@@ -155,7 +156,7 @@ class BugtrackerSetup extends DefaultModuleSetup
 		PersistenceContext::get_querier()->insert(self::$bugtracker_table, array(
 			'id' => 3,
 			'title' => $lang['bug.3.title'],
-			'contents' => $lang['bug.3.contents'],
+			'content' => $lang['bug.3.content'],
 			'author_id' => 1,
 			'submit_date' => time(),
 			'fix_date' => 0,

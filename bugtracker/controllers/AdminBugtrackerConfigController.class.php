@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 11
+ * @version     PHPBoost 6.0 - last update: 2020 12 24
  * @since       PHPBoost 3.0 - 2012 10 18
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -318,11 +318,11 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			)
 		));
 
-		$fieldset = new FormFieldsetHTML('contents-value', $this->lang['titles.contents_value_title']);
-		$fieldset->set_description($this->lang['explain.contents_value']);
+		$fieldset = new FormFieldsetHTML('content-value', $this->lang['titles.content_value_title']);
+		$fieldset->set_description($this->lang['explain.content_value']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldRichTextEditor('contents_value', $this->lang['titles.contents_value'], $this->config->get_contents_value(),
+		$fieldset->add_field(new FormFieldRichTextEditor('content_value', $this->lang['titles.content_value'], $this->config->get_content_value(),
 			array('rows' => 8, 'cols' => 47)
 		));
 
@@ -771,7 +771,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		else
 			$this->config->disable_pm();
 
-		$this->config->set_contents_value($this->form->get_value('contents_value'));
+		$this->config->set_content_value($this->form->get_value('content_value'));
 
 		if ($this->form->get_value('type_mandatory'))
 			$this->config->type_mandatory();

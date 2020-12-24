@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 14
+ * @version     PHPBoost 6.0 - last update: 2020 12 24
  * @since       PHPBoost 3.0 - 2012 11 11
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class BugtrackerDetailController extends ModuleController
@@ -101,7 +102,7 @@ class BugtrackerDetailController extends ModuleController
 		$response = new SiteDisplayResponse($body_view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['titles.detail'] . ' #' . $this->bug->get_id(), $this->lang['bugtracker.module.title']);
-		$graphical_environment->get_seo_meta_data()->set_description($this->bug->get_real_short_contents());
+		$graphical_environment->get_seo_meta_data()->set_description($this->bug->get_real_short_content());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::detail($this->bug->get_id() . '-' . $this->bug->get_rewrited_title()));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();

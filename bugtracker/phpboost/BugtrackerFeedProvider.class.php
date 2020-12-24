@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 11
+ * @version     PHPBoost 6.0 - last update: 2020 12 24
  * @since       PHPBoost 4.0 - 2014 01 21
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -63,7 +63,7 @@ class BugtrackerFeedProvider implements FeedProvider
 
 			$link = BugtrackerUrlBuilder::detail($bug->get_id() . '-' . $bug->get_rewrited_title());
 
-			$description = FormatingHelper::second_parse($bug->get_contents());
+			$description = FormatingHelper::second_parse($bug->get_content());
 			$description .= '<br /><br />' . $lang['labels.fields.reproductible'] . ' : ' . ($bug->is_reproductible() ? LangLoader::get_message('yes', 'common') : LangLoader::get_message('no', 'common'));
 
 			if ($bug->is_reproductible())

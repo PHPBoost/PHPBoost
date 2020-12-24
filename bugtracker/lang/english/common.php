@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 19
+ * @version     PHPBoost 6.0 - last update: 2020 12 24
  * @since       PHPBoost 3.0 - 2012 11 09
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -28,7 +28,7 @@ $lang['notice.no_bug_matching_filter'] = 'No ticket matching the selected filter
 $lang['notice.no_bug_matching_filters'] = 'No ticket matching the selected filters';
 $lang['notice.no_version_roadmap'] = 'Please add at least one version in the configuration to display the roadmap.';
 $lang['notice.no_history'] = 'This ticket has no history';
-$lang['notice.contents_update'] = 'Contents update';
+$lang['notice.content_update'] = 'Contents update';
 $lang['notice.new_comment'] = 'New comment';
 $lang['notice.reproduction_method_update'] = 'Reproduction method update';
 $lang['notice.not_defined'] = 'Not defined';
@@ -72,8 +72,8 @@ $lang['titles.admin.module_authorizations'] = 'Bugtracker module authorizations 
 $lang['titles.choose_version'] = 'Version to display';
 $lang['titles.solved'] = 'Processed tickets';
 $lang['titles.unsolved'] = 'In progress tickets';
-$lang['titles.contents_value_title'] = 'Request default description';
-$lang['titles.contents_value'] = 'Default description';
+$lang['titles.content_value_title'] = 'Request default description';
+$lang['titles.content_value'] = 'Default description';
 $lang['titles.filter'] = 'Filter';
 $lang['titles.filters'] = 'Filters';
 $lang['titles.informations'] = 'Informations';
@@ -89,7 +89,7 @@ $lang['seo.unsolved'] = 'All tickets in progress.';
 //Labels
 $lang['labels.fields.id'] = 'ID';
 $lang['labels.fields.title'] = 'Title';
-$lang['labels.fields.contents'] = 'Description';
+$lang['labels.fields.content'] = 'Description';
 $lang['labels.fields.submit_date'] = 'Detected on';
 $lang['labels.fields.fix_date'] = 'Fixed on';
 $lang['labels.fields.status'] = 'Status';
@@ -147,7 +147,7 @@ $lang['status.reopen'] = 'Reopen';
 $lang['status.rejected'] = 'Rejected';
 
 //Explainations
-$lang['explain.contents'] = 'Useful details to treat the ticket';
+$lang['explain.content'] = 'Useful details to treat the ticket';
 $lang['explain.roadmap'] = 'Displays the fixed ticket list for each version. Displayed if there is at least one version in the list.';
 $lang['explain.type'] = 'Demands type. Examples : Anomaly, Evolution...';
 $lang['explain.category'] = 'Demands category. Examples : Kernel, Module...';
@@ -157,7 +157,7 @@ $lang['explain.version'] = 'Product version list.';
 $lang['explain.remarks'] = 'Remarks : <br />
 - If the table is empty, this option will not be visible on the post ticket page<br />
 - If the table contains only one value, this option will not be visible too and will automatically be assigned to the ticket<br /><br />';
-$lang['explain.contents_value'] = 'Enter the default description to display for a new ticket below. Leave empty if you don\'t want to fill the description.';
+$lang['explain.content_value'] = 'Enter the default description to display for a new ticket below. Leave empty if you don\'t want to fill the description.';
 $lang['explain.delete_comment'] = 'Optional. Permits to add a comment in the Private Message of ticket deleting.';
 $lang['explain.change_status_select_fix_version'] = 'You can select a version to put the ticket in the roadmap.';
 $lang['explain.change_status_comments_message'] = 'Optional. Permits to comment the ticket and add it in the Private Message if sending is enabled.';
@@ -175,31 +175,31 @@ $lang['pm.bug_link'] = '<br />
 <a href=":link">Bug link</a>';
 
 $lang['pm.assigned.title'] = '[Bugtracker] The ticket #:id has been assigned to you';
-$lang['pm.assigned.contents'] = ':author assigned you the ticket #:id.';
+$lang['pm.assigned.content'] = ':author assigned you the ticket #:id.';
 
 $lang['pm.comment.title'] = '[Bugtracker] A new comment has been posted for the ticket #:id';
-$lang['pm.comment.contents'] = ':author add a comment to the ticket #:id.';
+$lang['pm.comment.content'] = ':author add a comment to the ticket #:id.';
 
 $lang['pm.edit.title'] = '[Bugtracker] The ticket #:id has been updated';
-$lang['pm.edit.contents'] = ':author has updated the following fields in the ticket #:id :';
+$lang['pm.edit.content'] = ':author has updated the following fields in the ticket #:id :';
 
 $lang['pm.fixed.title'] = '[Bugtracker] The ticket #:id has been fixed';
-$lang['pm.fixed.contents'] = ':author has fixed the ticket #:id.';
+$lang['pm.fixed.content'] = ':author has fixed the ticket #:id.';
 
 $lang['pm.reopen.title'] = '[Bugtracker] The ticket #:id has been reopen';
-$lang['pm.reopen.contents'] = ':author has reopened the ticket #:id.';
+$lang['pm.reopen.content'] = ':author has reopened the ticket #:id.';
 
 $lang['pm.rejected.title'] = '[Bugtracker] The ticket #:id has been rejected';
-$lang['pm.rejected.contents'] = ':author has rejected the ticket #:id.';
+$lang['pm.rejected.content'] = ':author has rejected the ticket #:id.';
 
 $lang['pm.pending.title'] = '[Bugtracker] The ticket #:id has been put on hold';
-$lang['pm.pending.contents'] = ':author has put on hold the ticket #:id.';
+$lang['pm.pending.content'] = ':author has put on hold the ticket #:id.';
 
 $lang['pm.in_progress.title'] = '[Bugtracker] The ticket #:id is in progress';
-$lang['pm.in_progress.contents'] = ':author has put the ticket #:id in progress.';
+$lang['pm.in_progress.content'] = ':author has put the ticket #:id in progress.';
 
 $lang['pm.delete.title'] = '[Bugtracker] The ticket #:id has been deleted';
-$lang['pm.delete.contents'] = ':author delete the ticket #:id.';
+$lang['pm.delete.content'] = ':author delete the ticket #:id.';
 
 //Configuration
 $lang['config.rejected_bug_color_label'] = 'Rejected ticket line color';

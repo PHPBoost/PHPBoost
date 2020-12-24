@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 12 20
+ * @version     PHPBoost 6.0 - last update: 2020 12 24
  * @since       PHPBoost 3.0 - 2012 11 09
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -37,7 +37,7 @@ $lang['notice.no_bug_matching_filter'] = 'Aucun ticket ne correspond au filtre s
 $lang['notice.no_bug_matching_filters'] = 'Aucun ticket ne correspond aux filtres sélectionnés';
 $lang['notice.no_version_roadmap'] = 'Veuillez ajouter au moins une version dans la configuration pour afficher la feuille de route.';
 $lang['notice.no_history'] = 'Ce ticket n\'a aucun historique';
-$lang['notice.contents_update'] = 'Mise à jour du contenu';
+$lang['notice.content_update'] = 'Mise à jour du contenu';
 $lang['notice.reproduction_method_update'] = 'Mise à jour de la méthode de reproduction';
 $lang['notice.not_defined_e_date'] = 'Date non définie';
 
@@ -79,8 +79,8 @@ $lang['titles.admin.module_authorizations'] = 'Configuration des autorisations d
 $lang['titles.choose_version'] = 'Version à afficher';
 $lang['titles.solved'] = 'Tickets traités';
 $lang['titles.unsolved'] = 'Tickets en cours';
-$lang['titles.contents_value_title'] = 'Description par défaut du ticket';
-$lang['titles.contents_value'] = 'Description par défaut';
+$lang['titles.content_value_title'] = 'Description par défaut du ticket';
+$lang['titles.content_value'] = 'Description par défaut';
 $lang['titles.filter'] = 'Filtre';
 $lang['titles.filters'] = 'Filtres';
 $lang['titles.informations'] = 'Informations';
@@ -96,7 +96,7 @@ $lang['seo.unsolved'] = 'Tous les tickets en cours.';
 //Libellés
 $lang['labels.fields.id'] = 'ID';
 $lang['labels.fields.title'] = 'Titre';
-$lang['labels.fields.contents'] = 'Description';
+$lang['labels.fields.content'] = 'Description';
 $lang['labels.fields.submit_date'] = 'Détecté le';
 $lang['labels.fields.fix_date'] = 'Corrigé le';
 $lang['labels.fields.status'] = 'Etat';
@@ -154,7 +154,7 @@ $lang['status.reopen'] = 'Réouvert';
 $lang['status.rejected'] = 'Rejeté';
 
 //Explications
-$lang['explain.contents'] = 'Détails qui seront utiles pour la résolution du ticket';
+$lang['explain.content'] = 'Détails qui seront utiles pour la résolution du ticket';
 $lang['explain.roadmap'] = 'Permet d\'afficher la liste des tickets corrigés pour chaque version. Affichée s\'il y a au moins une version dans la liste.';
 $lang['explain.type'] = 'Type des demandes. Exemples : Anomalie, Demande d\'évolution...';
 $lang['explain.category'] = 'Catégorie des demandes. Exemples : Noyau, Module...';
@@ -164,7 +164,7 @@ $lang['explain.version'] = 'Liste des versions du produit.';
 $lang['explain.remarks'] = 'Remarques : <br />
 - Si la liste est vide, cette option ne sera pas visible lors de la signalisation d\'un ticket<br />
 - Si la liste ne contient qu\'une seule valeur, cette option ne sera pas non plus visible et sera attribuée par défaut au ticket<br /><br />';
-$lang['explain.contents_value'] = 'Entrez ci-dessous la description par défaut à afficher lors de l\'ouverture d\'un nouveau ticket. Laissez vide pour que la description ne soit pas pré-remplie.';
+$lang['explain.content_value'] = 'Entrez ci-dessous la description par défaut à afficher lors de l\'ouverture d\'un nouveau ticket. Laissez vide pour que la description ne soit pas pré-remplie.';
 $lang['explain.delete_comment'] = 'Facultatif. Permet d\'ajouter un commentaire dans le Message Privé de suppression du ticket.';
 $lang['explain.change_status_select_fix_version'] = 'Vous pouvez sélectionner une version pour que le ticket soit présent dans la feuille de route.';
 $lang['explain.change_status_comments_message'] = 'Facultatif. Permet de commenter le ticket et d\'ajouter ce commentaire dans le Message Privé si son envoi est activé.';
@@ -182,31 +182,31 @@ $lang['pm.bug_link'] = '<br />
 <a href=":link">Lien vers le ticket</a>';
 
 $lang['pm.assigned.title'] = '[Rapport de bugs] Le ticket #:id vous a été assigné';
-$lang['pm.assigned.contents'] = ':author vous a assigné le ticket #:id.';
+$lang['pm.assigned.content'] = ':author vous a assigné le ticket #:id.';
 
 $lang['pm.comment.title'] = '[Rapport de bugs] Le ticket #:id a été commenté';
-$lang['pm.comment.contents'] = ':author a ajouté un commentaire au ticket #:id.';
+$lang['pm.comment.content'] = ':author a ajouté un commentaire au ticket #:id.';
 
 $lang['pm.edit.title'] = '[Rapport de bugs] Le ticket #:id a été modifié';
-$lang['pm.edit.contents'] = ':author a modifié les champs suivants dans le ticket #:id :';
+$lang['pm.edit.content'] = ':author a modifié les champs suivants dans le ticket #:id :';
 
 $lang['pm.fixed.title'] = '[Rapport de bugs] Le ticket #:id a été corrigé';
-$lang['pm.fixed.contents'] = ':author a corrigé le ticket #:id.';
+$lang['pm.fixed.content'] = ':author a corrigé le ticket #:id.';
 
 $lang['pm.reopen.title'] = '[Rapport de bugs] Le ticket #:id a été réouvert';
-$lang['pm.reopen.contents'] = ':author a réouvert le ticket #:id.';
+$lang['pm.reopen.content'] = ':author a réouvert le ticket #:id.';
 
 $lang['pm.rejected.title'] = '[Rapport de bugs] Le ticket #:id a été rejeté';
-$lang['pm.rejected.contents'] = ':author a rejeté le ticket #:id.';
+$lang['pm.rejected.content'] = ':author a rejeté le ticket #:id.';
 
 $lang['pm.pending.title'] = '[Rapport de bugs] Le ticket #:id a été mis en attente';
-$lang['pm.pending.contents'] = ':author a mis en attente le ticket #:id.';
+$lang['pm.pending.content'] = ':author a mis en attente le ticket #:id.';
 
 $lang['pm.in_progress.title'] = '[Rapport de bugs] Le ticket #:id est en cours de correction';
-$lang['pm.in_progress.contents'] = ':author a mis le ticket #:id en cours de correction.';
+$lang['pm.in_progress.content'] = ':author a mis le ticket #:id en cours de correction.';
 
 $lang['pm.delete.title'] = '[Rapport de bugs] Le ticket #:id a été supprimé';
-$lang['pm.delete.contents'] = ':author a supprimé le ticket #:id.';
+$lang['pm.delete.content'] = ':author a supprimé le ticket #:id.';
 
 //Configuration
 $lang['config.rejected_bug_color_label'] = 'Couleur de la ligne d\'un ticket Rejeté';

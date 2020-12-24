@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 11
+ * @version     PHPBoost 6.0 - last update: 2020 12 24
  * @since       PHPBoost 3.0 - 2012 09 06
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -32,7 +32,7 @@ class BugtrackerConfig extends AbstractConfigData
 	const PM_REJECT_ENABLED = 'pm_reject_enabled';
 	const PM_REOPEN_ENABLED = 'pm_reopen_enabled';
 	const PM_DELETE_ENABLED = 'pm_delete_enabled';
-	const CONTENTS_VALUE = 'contents_value';
+	const CONTENT_VALUE = 'content_value';
 	const TYPES = 'types';
 	const CATEGORIES = 'categories';
 	const SEVERITIES = 'severities';
@@ -412,18 +412,18 @@ class BugtrackerConfig extends AbstractConfigData
 	 /**
 	 * @method Get the default content of a bug
 	 */
-	public function get_contents_value()
+	public function get_content_value()
 	{
-		return $this->get_property(self::CONTENTS_VALUE);
+		return $this->get_property(self::CONTENT_VALUE);
 	}
 
 	 /**
 	 * @method Set the default content of a bug
 	 * @params string $value Default content
 	 */
-	public function set_contents_value($value)
+	public function set_content_value($value)
 	{
-		$this->set_property(self::CONTENTS_VALUE, $value);
+		$this->set_property(self::CONTENT_VALUE, $value);
 	}
 
 	 /**
@@ -828,7 +828,7 @@ class BugtrackerConfig extends AbstractConfigData
 			self::PM_REJECT_ENABLED => true,
 			self::PM_REOPEN_ENABLED => true,
 			self::PM_DELETE_ENABLED => true,
-			self::CONTENTS_VALUE => '',
+			self::CONTENT_VALUE => '',
 			self::TYPES => array(1 => $lang['types.anomaly'], $lang['types.evolution']),
 			self::CATEGORIES => array(1 => $lang['categories.kernel'], $lang['categories.module'], $lang['categories.graphism'], $lang['categories.installation']),
 			self::SEVERITIES => array(1 => array('name' => $lang['severities.minor'], 'color' => '#e8ffa2'), array('name' => $lang['severities.major'], 'color' => '#feebbc'), array('name' => $lang['severities.critical'], 'color' => '#fdbbbb')),

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 11
+ * @version     PHPBoost 6.0 - last update: 2020 12 24
  * @since       PHPBoost 4.0 - 2014 01 29
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -85,8 +85,8 @@ class BugtrackerFormController extends ModuleController
 
 		$fieldset->add_field(new FormFieldTextEditor('title', $common_lang['form.title'], $bug->get_title(), array('required' => true)));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('contents', $common_lang['form.description'], $bug->get_contents(), array(
-			'description' => $this->lang['explain.contents'], 'rows' => 15, 'required' => true)
+		$fieldset->add_field(new FormFieldRichTextEditor('content', $common_lang['form.description'], $bug->get_content(), array(
+			'description' => $this->lang['explain.content'], 'rows' => 15, 'required' => true)
 		));
 
 		//Types
@@ -266,7 +266,7 @@ class BugtrackerFormController extends ModuleController
 
 			$bug->set_title($title);
 			$bug->set_rewrited_title(Url::encode_rewrite($title));
-			$bug->set_contents($this->form->get_value('contents'));
+			$bug->set_content($this->form->get_value('content'));
 			$bug->set_type($this->form->get_value('type') ? $this->form->get_value('type')->get_raw_value() : $this->config->get_default_type());
 			$bug->set_category($this->form->get_value('category') ? $this->form->get_value('category')->get_raw_value() : $this->config->get_default_category());
 			$bug->set_severity($this->form->get_value('severity') ? $this->form->get_value('severity')->get_raw_value() : $this->config->get_default_severity());
@@ -421,7 +421,7 @@ class BugtrackerFormController extends ModuleController
 
 			$bug->set_title($title);
 			$bug->set_rewrited_title(Url::encode_rewrite($title));
-			$bug->set_contents($this->form->get_value('contents', $old_values->get_contents()));
+			$bug->set_content($this->form->get_value('content', $old_values->get_content()));
 			$bug->set_type($this->form->get_value('type') ? $this->form->get_value('type')->get_raw_value() : $old_values->get_type());
 			$bug->set_category($this->form->get_value('category') ? $this->form->get_value('category')->get_raw_value() : $old_values->get_category());
 			$bug->set_severity($this->form->get_value('severity') ? $this->form->get_value('severity')->get_raw_value() : $old_values->get_severity());
@@ -438,7 +438,7 @@ class BugtrackerFormController extends ModuleController
 			$pm_comment = '';
 			$modification = false;
 
-			$fields = array('title', 'contents', 'type', 'category', 'severity', 'priority', 'detected_in', 'reproductible', 'reproduction_method');
+			$fields = array('title', 'content', 'type', 'category', 'severity', 'priority', 'detected_in', 'reproductible', 'reproduction_method');
 
 			$n_values = $bug->get_properties();
 			$o_values = $old_values->get_properties();
@@ -456,10 +456,10 @@ class BugtrackerFormController extends ModuleController
 							$comment = '';
 							break;
 
-						case 'contents' :
+						case 'content' :
 								$o_values[$field] = '';
 								$n_values[$field] = '';
-								$comment = $this->lang['notice.contents_update'];
+								$comment = $this->lang['notice.content_update'];
 								break;
 
 						case 'reproduction_method' :
@@ -500,7 +500,7 @@ class BugtrackerFormController extends ModuleController
 							$new_value = $n_values[$field];
 							$comment = '';
 					}
-					$pm_comment .= ($field != 'contents' && $field != 'reproduction_method') ? $this->lang['labels.fields.' . $field] . ' : ' . stripslashes($new_value) . '
+					$pm_comment .= ($field != 'content' && $field != 'reproduction_method') ? $this->lang['labels.fields.' . $field] . ' : ' . stripslashes($new_value) . '
 	' : '';
 					//Bug history update
 					BugtrackerService::add_history(array(
