@@ -10,7 +10,7 @@
 			# ELSE #
 				<span class="shoutbox-message-author visitor">{messages.PSEUDO}</span>
 			# ENDIF #
-			 : <span class="shoutbox-message-content">{messages.CONTENTS}</span>
+			 : <span class="shoutbox-message-content">{messages.CONTENT}</span>
 		</span>
 	</div>
 # END messages #

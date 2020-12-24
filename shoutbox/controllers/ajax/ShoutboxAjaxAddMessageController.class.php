@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 09 09
+ * @version     PHPBoost 6.0 - last update: 2020 12 24
  * @since       PHPBoost 4.1 - 2014 12 12
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ShoutboxAjaxAddMessageController extends AbstractController
@@ -14,9 +15,9 @@ class ShoutboxAjaxAddMessageController extends AbstractController
 		if ($this->check_authorizations())
 		{
 			$pseudo = $request->get_string('pseudo', '');
-			$contents = $request->get_string('contents', '');
+			$content = $request->get_string('content', '');
 
-			if ($pseudo && $contents)
+			if ($pseudo && $content)
 			{
 				//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
 				$check_time = (AppContext::get_current_user()->get_id() !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? PersistenceContext::get_querier()->get_column_value(PREFIX . "shoutbox", 'MAX(timestamp)', 'WHERE user_id = :id', array('id' => AppContext::get_current_user()->get_id())) : '';
@@ -28,15 +29,15 @@ class ShoutboxAjaxAddMessageController extends AbstractController
 
 				//Vérifie que le message ne contient pas du flood de lien.
 				$config_shoutbox = ShoutboxConfig::load();
-				$contents = FormatingHelper::strparse($contents, $config_shoutbox->get_forbidden_formatting_tags());
-				if (!TextHelper::check_nbr_links($contents, $config_shoutbox->get_max_links_number_per_message(), true)) //Nombre de liens max dans le message.
+				$content = FormatingHelper::strparse($content, $config_shoutbox->get_forbidden_formatting_tags());
+				if (!TextHelper::check_nbr_links($content, $config_shoutbox->get_max_links_number_per_message(), true)) //Nombre de liens max dans le message.
 					$code = -2;
 
 				$shoutbox_message = new ShoutboxMessage();
 				$shoutbox_message->init_default_properties();
 				$shoutbox_message->set_login($pseudo);
 				$shoutbox_message->set_user_id(AppContext::get_current_user()->get_id());
-				$shoutbox_message->set_contents(stripslashes($contents));
+				$shoutbox_message->set_content(stripslashes($content));
 				$shoutbox_message->set_creation_date(new Date());
 				$code = ShoutboxService::add($shoutbox_message);
 			}

@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 09
+ * @version     PHPBoost 6.0 - last update: 2020 12 24
  * @since       PHPBoost 4.1 - 2014 10 14
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ShoutboxFormController extends ModuleController
@@ -86,7 +87,7 @@ class ShoutboxFormController extends ModuleController
 			));
 		}
 
-		$fieldset->add_field(new FormFieldRichTextEditor('contents', LangLoader::get_message('message', 'main'), $this->get_message()->get_contents(),
+		$fieldset->add_field(new FormFieldRichTextEditor('content', LangLoader::get_message('message', 'main'), $this->get_message()->get_content(),
 			array('formatter' => $formatter, 'rows' => 10, 'cols' => 47, 'required' => true),
 			array(
 				(!$current_user->is_moderator() && !$current_user->is_admin() ? new FormFieldConstraintMaxLinks($config->get_max_links_number_per_message(), true) : ''),
@@ -160,7 +161,7 @@ class ShoutboxFormController extends ModuleController
 
 		if ($this->form->has_field('pseudo'))
 			$message->set_login($this->form->get_value('pseudo'));
-		$message->set_contents($this->form->get_value('contents'));
+		$message->set_content($this->form->get_value('content'));
 
 		if ($message->get_id() === null)
 		{

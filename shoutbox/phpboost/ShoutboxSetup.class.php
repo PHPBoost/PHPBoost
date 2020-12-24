@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2015 06 30
+ * @version     PHPBoost 6.0 - last update: 2020 12 24
  * @since       PHPBoost 3.0 - 2010 01 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ShoutboxSetup extends DefaultModuleSetup
@@ -55,7 +56,7 @@ class ShoutboxSetup extends DefaultModuleSetup
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'login' => array('type' => 'string', 'length' => 150, 'default' => "''"),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'contents' => array('type' => 'text', 'length' => 65000),
+			'content' => array('type' => 'text', 'length' => 65000),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(
@@ -79,7 +80,7 @@ class ShoutboxSetup extends DefaultModuleSetup
 			'id' => 1,
 			'login' => $this->messages['shoutbox_login'],
 			'user_id' => -1,
-			'contents' => $this->messages['shoutbox_contents'],
+			'content' => $this->messages['shoutbox_content'],
 			'timestamp' => time()
 		));
 	}
