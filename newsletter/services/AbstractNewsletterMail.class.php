@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 04 05
+ * @version     PHPBoost 6.0 - last update: 2020 12 24
  * @since       PHPBoost 3.0 - 2011 02 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class AbstractNewsletterMail implements NewsletterMailType
@@ -20,7 +21,7 @@ abstract class AbstractNewsletterMail implements NewsletterMailType
 	/**
 	 * {@inheritdoc}
 	 */
-	public function send_mail($subscribers, $sender, $subject, $contents)
+	public function send_mail($subscribers, $sender, $subject, $content)
 	{
 		foreach ($subscribers as $properties)
 		{
@@ -31,7 +32,7 @@ abstract class AbstractNewsletterMail implements NewsletterMailType
 				$mail = new Mail();
 				$mail->set_sender($sender);
 				$mail->set_subject($subject);
-				$mail->set_content(StringVars::replace_vars($contents, array('user_display_name' => $properties['display_name'])));
+				$mail->set_content(StringVars::replace_vars($content, array('user_display_name' => $properties['display_name'])));
 
 				$mail->add_recipient($mail_subscriber);
 
@@ -44,14 +45,14 @@ abstract class AbstractNewsletterMail implements NewsletterMailType
 	/**
 	 * {@inheritdoc}
 	 */
-	public function parse_contents($contents){}
+	public function parse_content($content){}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function display_mail($subject, $contents)
+	public function display_mail($subject, $content)
 	{
-		return $contents;
+		return $content;
 	}
 
 	/**

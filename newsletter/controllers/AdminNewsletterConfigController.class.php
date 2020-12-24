@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 04 01
+ * @version     PHPBoost 6.0 - last update: 2020 12 24
  * @since       PHPBoost 3.0 - 2011 02 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -68,8 +68,8 @@ class AdminNewsletterConfigController extends AdminModuleController
 			array('class' => 'third-field', 'min' => 1, 'max' => 50)
 		));
 
-		$fieldset_config->add_field(new FormFieldRichTextEditor('default_contents', $this->lang['admin.default-contents'], $this->config->get_default_contents(),
-			array('rows' => 8, 'cols' => 47, 'description' => $this->lang['newsletter.contents.explain'])
+		$fieldset_config->add_field(new FormFieldRichTextEditor('default_content', $this->lang['admin.default-content'], $this->config->get_default_content(),
+			array('rows' => 8, 'cols' => 47, 'description' => $this->lang['newsletter.content.explain'])
 		));
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['admin.newsletter-authorizations']);
@@ -102,7 +102,7 @@ class AdminNewsletterConfigController extends AdminModuleController
 		$this->config->set_mail_sender($this->form->get_value('mail_sender'));
 		$this->config->set_newsletter_name($this->form->get_value('newsletter_name'));
 		$this->config->set_streams_number_per_page($this->form->get_value('streams_number'));
-		$this->config->set_default_contents($this->form->get_value('default_contents'));
+		$this->config->set_default_content($this->form->get_value('default_content'));
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		NewsletterConfig::save();
 	}

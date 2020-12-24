@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 04 01
+ * @version     PHPBoost 6.0 - last update: 2020 12 24
  * @since       PHPBoost 3.0 - 2011 03 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -32,7 +32,7 @@ $lang['newsletter.unsubscribe_newsletters'] = 'Unsubscribe to a newsletter';
 $lang['stream.add'] = 'Add Feed';
 $lang['stream.edit'] = 'Edit Feed';
 $lang['stream.delete'] = 'Delete feed';
-$lang['stream.delete.description'] = 'You are about to delete the stream. Two solutions are available to you. You can either move all of its contents (newsletters and streams) in another stream or delete the whole stream. <strong>Note that this action is irreversible!</ strong>';
+$lang['stream.delete.description'] = 'You are about to delete the stream. Two solutions are available to you. You can either move all of its content (newsletters and streams) in another stream or delete the whole stream. <strong>Note that this action is irreversible!</ strong>';
 $lang['newsletter.list_newsletters'] = 'List of newsletters';
 
 //Admin
@@ -41,7 +41,7 @@ $lang['admin.mail-sender-explain'] = 'Valid email Address';
 $lang['admin.newsletter-name'] = 'Name of the newsletter';
 $lang['admin.streams.number.per.page'] = 'Feeds number per page';
 $lang['admin.newsletter-name-explain'] = 'Subject of email sent';
-$lang['admin.default-contents'] = 'Default content of a BBCode or HTML newsletter';
+$lang['admin.default-content'] = 'Default content of a BBCode or HTML newsletter';
 
 //Authorizations
 $lang['admin.newsletter-authorizations'] = 'Authorizations';
@@ -102,8 +102,8 @@ $lang['unsubscribe_newsletter'] = 'Unsubscribe to this newsletter';
 $lang['newsletter.view_archives'] = 'View Archives';
 $lang['newsletter.view_subscribers'] = 'View record';
 $lang['newsletter.title'] = 'Title of the newsletter';
-$lang['newsletter.contents'] = 'Content';
-$lang['newsletter.contents.explain'] = 'Use <b>:user_display_name</b> to display the member\'s nickname if needed (will be replaced by visitor for non-member members).';
+$lang['newsletter.content'] = 'Content';
+$lang['newsletter.content.explain'] = 'Use <b>:user_display_name</b> to display the member\'s nickname if needed (will be replaced by visitor for non-member members).';
 
 //Messages
 $lang['stream.message.success.add'] = 'The stream <b>:name</b> has been added';

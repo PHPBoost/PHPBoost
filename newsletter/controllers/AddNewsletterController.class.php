@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 10 31
+ * @version     PHPBoost 6.0 - last update: 2020 12 24
  * @since       PHPBoost 3.0 - 2011 02 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AddNewsletterController extends ModuleController
@@ -107,7 +108,7 @@ class AddNewsletterController extends ModuleController
 		NewsletterService::add_newsletter(
 			$streams,
 			$this->form->get_value('title'),
-			$this->form->get_value('contents'),
+			$this->form->get_value('content'),
 			$type
 		);
 	}
@@ -120,7 +121,7 @@ class AddNewsletterController extends ModuleController
 			$type,
 			$this->config->get_mail_sender(),
 			$this->form->get_value('title'),
-			$this->form->get_value('contents')
+			$this->form->get_value('content')
 		);
 	}
 
@@ -154,14 +155,14 @@ class AddNewsletterController extends ModuleController
 	{
 		if ($type == 'bbcode')
 		{
-			return new FormFieldRichTextEditor('contents', $this->lang['newsletter.contents'], $this->config->get_default_contents(), array(
-				'rows' => 10, 'cols' => 47, 'description' => $this->lang['newsletter.contents.explain'], 'required' => true)
+			return new FormFieldRichTextEditor('content', $this->lang['newsletter.content'], $this->config->get_default_content(), array(
+				'rows' => 10, 'cols' => 47, 'description' => $this->lang['newsletter.content.explain'], 'required' => true)
 			);
 		}
 		else
 		{
-			return new FormFieldMultiLineTextEditor('contents', $this->lang['newsletter.contents'], ($type == 'html' ? $this->config->get_default_contents() : ''), array(
-				'rows' => 10, 'cols' => 47, 'description' => $this->lang['newsletter.contents.explain'], 'required' => true)
+			return new FormFieldMultiLineTextEditor('content', $this->lang['newsletter.content'], ($type == 'html' ? $this->config->get_default_content() : ''), array(
+				'rows' => 10, 'cols' => 47, 'description' => $this->lang['newsletter.content.explain'], 'required' => true)
 			);
 		}
 	}

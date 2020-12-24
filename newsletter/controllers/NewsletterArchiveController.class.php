@@ -3,15 +3,16 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2014 12 22
+ * @version     PHPBoost 6.0 - last update: 2020 12 24
  * @since       PHPBoost 3.0 - 2011 03 21
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class NewsletterArchiveController extends ModuleController
 {
 	private $lang;
 	private $view;
-	private $contents;
+	private $content;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -36,14 +37,14 @@ class NewsletterArchiveController extends ModuleController
 			NewsletterAuthorizationsService::get_errors()->read_archives();
 		}
 
-		$this->contents = NewsletterService::display_newsletter($id);
+		$this->content = NewsletterService::display_newsletter($id);
 	}
 
 	private function init($request)
 	{
 		$this->lang = LangLoader::get('common', 'newsletter');
 		$this->build_form($request);
-		$this->view = new StringTemplate($this->contents);
+		$this->view = new StringTemplate($this->content);
 		$this->view->add_lang($this->lang);
 	}
 

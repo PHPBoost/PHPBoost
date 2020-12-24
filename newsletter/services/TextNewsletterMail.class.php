@@ -3,23 +3,24 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 06 03
+ * @version     PHPBoost 6.0 - last update: 2020 12 24
  * @since       PHPBoost 3.0 - 2011 02 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class TextNewsletterMail extends AbstractNewsletterMail
 {
-	public function send_mail($subscribers, $sender, $subject, $contents)
+	public function send_mail($subscribers, $sender, $subject, $content)
 	{
-		$contents = $this->parse_contents($contents) . $this->add_unsubscribe_link();
+		$content = $this->parse_content($content) . $this->add_unsubscribe_link();
 
-		parent::send_mail($subscribers, $sender, $subject, $contents);
+		parent::send_mail($subscribers, $sender, $subject, $content);
 	}
 
-	public function parse_contents($contents)
+	public function parse_content($content)
 	{
-		return nl2br($contents);
+		return nl2br($content);
 	}
 }
 ?>

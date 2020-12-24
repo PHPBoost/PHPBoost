@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 04 01
+ * @version     PHPBoost 6.0 - last update: 2020 12 24
  * @since       PHPBoost 3.0 - 2011 02 01 11
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -12,7 +12,7 @@ class NewsletterConfig extends AbstractConfigData
 {
 	const MAIL_SENDER             = 'mail_sender';
 	const NEWSLETTER_NAME         = 'newsletter_name';
-	const DEFAULT_CONTENTS        = 'default_contents';
+	const DEFAULT_CONTENT        = 'default_content';
 	const STREAMS_NUMBER_PER_PAGE = 'streams_number_per_page';
 	const AUTHORIZATIONS          = 'authorizations';
 
@@ -36,14 +36,14 @@ class NewsletterConfig extends AbstractConfigData
 		$this->set_property(self::NEWSLETTER_NAME, $name);
 	}
 
-	public function get_default_contents()
+	public function get_default_content()
 	{
-		return $this->get_property(self::DEFAULT_CONTENTS);
+		return $this->get_property(self::DEFAULT_CONTENT);
 	}
 
-	public function set_default_contents($value)
+	public function set_default_content($value)
 	{
-		$this->set_property(self::DEFAULT_CONTENTS, $value);
+		$this->set_property(self::DEFAULT_CONTENT, $value);
 	}
 
 	public function get_streams_number_per_page()
@@ -74,7 +74,7 @@ class NewsletterConfig extends AbstractConfigData
 		return array(
 			self::MAIL_SENDER => MailServiceConfig::load()->get_default_mail_sender(),
 			self::NEWSLETTER_NAME => '',
-			self::DEFAULT_CONTENTS => '',
+			self::DEFAULT_CONTENT => '',
 			self::STREAMS_NUMBER_PER_PAGE => 25,
 			self::AUTHORIZATIONS => array('r1' => 63, 'r0' => 35, 'r-1' => 35)
 		);

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 04 01
+ * @version     PHPBoost 6.0 - last update: 2020 12 24
  * @since       PHPBoost 3.0 - 2011 03 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -25,7 +25,7 @@ $lang['admin.mail-sender-explain'] = 'Adresse mail valide';
 $lang['admin.newsletter-name'] = 'Nom de la newsletter';
 $lang['admin.streams.number.per.page'] = 'Nombre de flux par page';
 $lang['admin.newsletter-name-explain'] = 'Objet du mail envoyé';
-$lang['admin.default-contents'] = 'Contenu par défaut d\'une newsletter de type BBCode ou HTML';
+$lang['admin.default-content'] = 'Contenu par défaut d\'une newsletter de type BBCode ou HTML';
 
 // Authorizations
 $lang['admin.newsletter-authorizations'] = 'Autorisations';
@@ -100,8 +100,8 @@ $lang['newsletter.types.next'] = 'Suivant';
 // Newsletter
 $lang['newsletter.no_newsletters'] = 'Aucune newsletter disponible';
 $lang['newsletter.title'] = 'Titre de la newsletter';
-$lang['newsletter.contents'] = 'Contenu';
-$lang['newsletter.contents.explain'] = 'Utilisez <b>:user_display_name</b> pour afficher le pseudo du membre si besoin (sera remplacé par visiteur pour les inscrits qui ne sont pas membres du site).';
+$lang['newsletter.content'] = 'Contenu';
+$lang['newsletter.content.explain'] = 'Utilisez <b>:user_display_name</b> pour afficher le pseudo du membre si besoin (sera remplacé par visiteur pour les inscrits qui ne sont pas membres du site).';
 
 // Messages
 $lang['stream.message.success.add'] = 'Le flux <b>:name</b> a été ajouté';

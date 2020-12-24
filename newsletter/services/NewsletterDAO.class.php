@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 04 26
+ * @version     PHPBoost 6.0 - last update: 2020 12 24
  * @since       PHPBoost 3.0 - 2011 02 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class NewsletterDAO
@@ -18,12 +19,12 @@ class NewsletterDAO
 		self::$db_querier = PersistenceContext::get_querier();
 	}
 
-	public static function add_archive($stream_id, $subject, $contents, $language_type)
+	public static function add_archive($stream_id, $subject, $content, $language_type)
 	{
 		$columns = array(
 			'stream_id' => $stream_id,
 			'subject' => $subject,
-			'contents' => $contents,
+			'content' => $content,
 			'timestamp' => time(),
 			'language_type' => $language_type,
 			'nbr_subscribers' => count(NewsletterService::list_subscribers_by_stream($stream_id))

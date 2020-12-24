@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 03 31
+ * @version     PHPBoost 6.0 - last update: 2020 12 24
  * @since       PHPBoost 3.0 - 2010 01 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class NewsletterSetup extends DefaultModuleSetup
@@ -82,7 +83,7 @@ class NewsletterSetup extends DefaultModuleSetup
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'stream_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1),
 			'subject' => array('type' => 'string', 'length' => 200, 'notnull' => 1, 'default' => "''"),
-			'contents' => array('type' => 'text', 'length' => 65000),
+			'content' => array('type' => 'text', 'length' => 65000),
 			'nbr_subscribers' => array('type' => 'integer', 'length' => 11, 'notnull' => 1),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'language_type' => array('type' => 'string', 'length' => 10, 'notnull' => 1, 'default' => "''")
