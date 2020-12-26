@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 18
+ * @version     PHPBoost 6.0 - last update: 2020 12 27
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor xela <xela@phpboost.com>
 */
@@ -460,7 +460,8 @@ class Item
 		
 		$author = new User();
 		if (!empty($properties['author_user_id']))
-			$author->set_properties($properties);
+			$author = UserService::get_user($properties['author_user_id']);
+		properties($properties);
 		else
 			$author->init_visitor_user();
 
