@@ -461,7 +461,6 @@ class Item
 		$author = new User();
 		if (!empty($properties['author_user_id']))
 			$author = UserService::get_user($properties['author_user_id']);
-		properties($properties);
 		else
 			$author->init_visitor_user();
 
