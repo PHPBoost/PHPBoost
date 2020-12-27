@@ -331,52 +331,74 @@
 
 				# IF C_GALLERY_PICS_MAX #
 					<p class="pics-max"><a href="{U_IMG_MAX}" data-lightbox="formatter"><img src="{U_IMG_MAX}" alt="{NAME}" /></a></p>
-					<div class="options">
-						<h6>{L_INFORMATIONS}</h6>
-						# IF C_TITLE_ENABLED #
-							<span><span class="text-strong">{L_NAME} : </span><span id="fi_{ID}">{NAME}</span> <span id="fi{ID}"></span></span>
-						# ENDIF #
-						# IF C_AUTHOR_DISPLAYED #
-							<span><span class="text-strong">{L_POSTOR} : </span># IF C_POSTOR_EXIST #<a class="{POSTOR_LEVEL_CLASS}"# IF C_POSTOR_GROUP_COLOR # style="color:{POSTOR_GROUP_COLOR}"# ENDIF # href="{U_POSTOR_PROFILE}">{POSTOR}</a># ELSE #<span class="visitor">${LangLoader::get_message('guest', 'main')}</span># ENDIF #</span>
-						# ENDIF #
-						# IF C_VIEWS_COUNTER_ENABLED #
-							<span><span class="text-strong">{L_VIEWS} : </span>{VIEWS}</span>
-						# ENDIF #
-						<span><span class="text-strong">{L_ADD_ON} : </span>{DATE}</span>
-						<span><span class="text-strong">{L_DIMENSION} : </span>{DIMENSION}</span>
-						<span><span class="text-strong">{L_SIZE} : </span>{SIZE} {L_KB}</span>
-						# IF C_COMMENTS_ENABLED #
-							<a href="{U_COMMENTS}">{L_COMMENTS}</a>
-						# ENDIF #
-						<div>
-							# IF C_NOTATION_ENABLED #
-								<div class="text-strong">{KERNEL_NOTATION}</div>
-							# ENDIF #
-							# IF C_GALLERY_PICS_MODO #
-								<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}','{RENAME}','{RENAME_CUT}');" aria-label="{L_EDIT}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a></span>
+					<div class="cell-tile">
+						<div class="cell cell-options">
+							<div class="cell-header">
+								<h6 class="cell-name">{L_INFORMATIONS}</h6>
+							</div>
+							<div class="cell-list">
+								<ul>
+									# IF C_TITLE_ENABLED #
+										<li class="li-stretch">
+											<span class="text-strong">{L_NAME} : </span>
+											<span><span id="fi_{ID}">{NAME}</span> <span id="fi{ID}"></span></span>
+										</li>
+									# ENDIF #
+									# IF C_AUTHOR_DISPLAYED #
+										<li class="li-stretch">
+											<span class="text-strong">{L_POSTOR} : </span>
+											<span>
+												# IF C_POSTOR_EXIST #
+													<a class="{POSTOR_LEVEL_CLASS}"# IF C_POSTOR_GROUP_COLOR # style="color:{POSTOR_GROUP_COLOR}"# ENDIF # href="{U_POSTOR_PROFILE}">{POSTOR}</a>
+												# ELSE #
+													<span class="visitor">${LangLoader::get_message('guest', 'main')}</span>
+												# ENDIF #
+											</span>
+										</li>
+									# ENDIF #
+									# IF C_VIEWS_COUNTER_ENABLED #
+										<li class="li-stretch"><span class="text-strong">{L_VIEWS} : </span><span>{VIEWS}</span></li>
+									# ENDIF #
+									<li class="li-stretch"><span class="text-strong">{L_ADD_ON} : </span><span>{DATE}</span></li>
+									<li class="li-stretch"><span class="text-strong">{L_DIMENSION} : </span><span>{DIMENSION}</span></li>
+									<li class="li-stretch"><span class="text-strong">{L_SIZE} : </span><span>{SIZE} {L_KB}</span></li>
+									# IF C_COMMENTS_ENABLED #
+										<li class="li-stretch"><span></span><a href="{U_COMMENTS}">{L_COMMENTS}</a></li>
+									# ENDIF #
+									# IF C_NOTATION_ENABLED #
+										<li class="align-center"><div class="text-strong">{KERNEL_NOTATION}</div></li>
+									# ENDIF #
+									# IF C_GALLERY_PICS_MODO #
+										<li id="img{ID}" class="li-stretch">
+											<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}','{RENAME}','{RENAME_CUT}');" aria-label="{L_EDIT}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a></span>
 
-								<a href="{U_DEL}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
-								<div id="move{ID}" class="modal-container cell-modal inline-block cell-tile">
-									<a data-modal data-target="gallery-pic-move-to" aria-label="{L_MOVETO}"><i class="fa fa-fw fa-fw fa-share" aria-hidden="true"></i></a>
-									<div id="gallery-pic-move-to" class="modal modal-animation">
-										<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
-										<div class="cell content-panel">
-											<div class="cell-header">
-												<div class="cell-name">{L_MOVETO} :</div>
+											<a href="{U_DEL}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+											<div id="move{ID}" class="modal-container cell-modal inline-block cell-tile">
+												<a data-modal data-target="gallery-pic-move-to" aria-label="{L_MOVETO}"><i class="fa fa-fw fa-fw fa-share" aria-hidden="true"></i></a>
+												<div id="gallery-pic-move-to" class="modal modal-animation">
+													<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+													<div class="cell content-panel">
+														<div class="cell-header">
+															<div class="cell-name">{L_MOVETO} :</div>
+														</div>
+														<div class="cell-input">
+															<select name="{ID}cat" onchange="document.location = '{U_MOVE}">
+																{CAT}
+															</select>
+														</div>
+													</div>
+												</div>
 											</div>
-											<div class="cell-input">
-												<select name="{ID}cat" onchange="document.location = '{U_MOVE}">
-													{CAT}
-												</select>
-											</div>
-										</div>
-									</div>
-								</div>
-								<a href="javascript:pics_aprob({ID});" aria-label="{L_APROB_IMG}"><i id="img_aprob{ID}" class="{IMG_APROB}" aria-hidden="true"></i></a>
-								<span id="img{ID}"></span>
-							# ENDIF #
+											<a href="javascript:pics_aprob({ID});" aria-label="{L_APROB_IMG}"><i id="img_aprob{ID}" class="{IMG_APROB}" aria-hidden="true"></i></a>
+										</li>
+									# ENDIF #
+
+
+								</ul>
+							</div>
 						</div>
 					</div>
+
 					<div class="link-to-other-pics-container">
 						<span class="float-left">&nbsp;&nbsp;&nbsp;<a href="{U_PREVIOUS}#pics_max" aria-label="${LangLoader::get_message('previous', 'main')}"><i class="fa fa-fw fa-arrow-left fa-2x" aria-hidden="true"></i></a></span>
 						<span class="float-right"><a href="{U_NEXT}#pics_max" aria-label="${LangLoader::get_message('next', 'main')}"> <i class="fa fa-fw fa-arrow-right fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;</span>
