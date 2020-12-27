@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 14
+ * @version     PHPBoost 6.0 - last update: 2020 12 27
  * @since       PHPBoost 3.0 - 2011 09 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -41,5 +41,5 @@ $lang['comments.user.read-only'] = 'You are currently read-only, you can not pos
 
 $lang['view-topic'] = 'View topic';
 
-$lang['no_comment'] = 'No comment';
+$lang['no.comment'] = 'There are no comments for the moment';
 ?>

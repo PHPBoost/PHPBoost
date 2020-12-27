@@ -48,23 +48,27 @@
 			# ENDIF #
 		    <div id="comments-list" class="first-tab tabs tabs-animation">
 		        <div class="content-panel">
-					# IF C_DISPLAY_DELETE_FORM #
-						<div class="spacer"></div>
-						<form action="{FORM_URL}" method="post" class="fieldset-content">
-					# ENDIF #
-					<div id="comments-list">
-						# INCLUDE COMMENTS_LIST #
-					</div>
-					# IF C_DISPLAY_DELETE_FORM #
-							# IF C_DISPLAY_DELETE_BUTTON #
-								<label for="delete-all-checkbox" class="checkbox" aria-label="${LangLoader::get_message('select.all.elements', 'common')}">
-									<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {COMMENTS_NUMBER});">
-									<span>&nbsp;</span>
-								</label>
-								<input type="hidden" name="token" value="{TOKEN}" />
-								<button type="submit" id="delete-all-button" name="delete-selected-comments" value="true" class="button submit" data-confirmation="delete-element" disabled="disabled">${LangLoader::get_message('delete', 'common')}</button>
-							# ENDIF #
-						</form>
+					# IF C_COMMENTS #
+						# IF C_DISPLAY_DELETE_FORM #
+							<div class="spacer"></div>
+							<form action="{FORM_URL}" method="post" class="fieldset-content">
+						# ENDIF #
+						<div id="comments-list">
+							# INCLUDE COMMENTS_LIST #
+						</div>
+						# IF C_DISPLAY_DELETE_FORM #
+								# IF C_DISPLAY_DELETE_BUTTON #
+									<label for="delete-all-checkbox" class="checkbox" aria-label="${LangLoader::get_message('select.all.elements', 'common')}">
+										<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {COMMENTS_NUMBER});">
+										<span>&nbsp;</span>
+									</label>
+									<input type="hidden" name="token" value="{TOKEN}" />
+									<button type="submit" id="delete-all-button" name="delete-selected-comments" value="true" class="button submit" data-confirmation="delete-element" disabled="disabled">${LangLoader::get_message('delete', 'common')}</button>
+								# ENDIF #
+							</form>
+						# ENDIF #
+					# ELSE #
+						<div class="message-helper bgc notice">{@no.comment}</div>
 					# ENDIF #
 				</div>
 		    </div>

@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 02
+ * @version     PHPBoost 6.0 - last update: 2020 12 27
  * @since       PHPBoost 3.0 - 2011 03 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -135,6 +135,7 @@ class CommentsService
 				'ID_IN_MODULE' => $id_in_module,
 				'COMMENTS_NUMBER' => $comments_number,
 				'TOPIC_IDENTIFIER' => $topic_identifier,
+				'C_COMMENTS' => $comments_number != 0,
 				'C_DISPLAY_VIEW_ALL_COMMENTS' => $comments_number > $comments_number_to_display,
 				'C_MODERATE' => $authorizations->is_authorized_moderation(),
 				'C_DISPLAY_DELETE_BUTTON' => $comments_number && ($authorizations->is_authorized_moderation() || self::$display_delete_button),
@@ -211,7 +212,7 @@ class CommentsService
 		$comments_number = CommentsManager::get_comments_number($module_id, $id_in_module, $topic_identifier);
 		$lang = $comments_number > 1 ? self::$comments_lang['comments'] : self::$comments_lang['comment'];
 
-		return !empty($comments_number) ? ' ' .$lang : self::$comments_lang['no_comment'];
+		return !empty($comments_number) ? ' ' .$lang : self::$comments_lang['no.comment'];
 	}
 
 	/**
