@@ -212,7 +212,7 @@ class CommentsService
 		$comments_number = CommentsManager::get_comments_number($module_id, $id_in_module, $topic_identifier);
 		$lang = $comments_number > 1 ? self::$comments_lang['comments'] : self::$comments_lang['comment'];
 
-		return !empty($comments_number) ? ' ' .$lang : self::$comments_lang['no.comment'];
+		return !empty($comments_number) ? ' ' .$lang : '0 '.$lang;
 	}
 
 	/**

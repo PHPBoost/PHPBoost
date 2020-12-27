@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 12
+ * @version     PHPBoost 6.0 - last update: 2020 12 27
  * @since       PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -177,7 +177,7 @@ $LANG['code_tag'] = 'Code :';
 $LANG['code_langage'] = 'Code %s :';
 $LANG['com'] = 'Commentaire';
 $LANG['com_s'] = 'Commentaires';
-$LANG['post_com'] = 'Poster commentaire';
+$LANG['post_com'] = 'Poster un commentaire';
 $LANG['category'] = 'Catégorie';
 $LANG['categories'] = 'Catégories';
 $LANG['refresh'] = 'Rafraichir';
