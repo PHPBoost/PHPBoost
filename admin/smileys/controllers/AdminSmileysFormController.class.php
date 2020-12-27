@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 25
+ * @version     PHPBoost 6.0 - last update: 2020 12 27
  * @since       PHPBoost 4.1 - 2015 05 22
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -210,7 +210,7 @@ class AdminSmileysFormController extends AdminController
 	{
 		$smileys_array = $options = array();
 		$folder_phpboost_smileys = new Folder($this->smileys_path);
-		foreach ($folder_phpboost_smileys->get_files('`\.(png|jpg|bmp|gif)$`iu') as $smileys)
+		foreach ($folder_phpboost_smileys->get_files('`\.(png|webp|jpg|bmp|gif)$`iu') as $smileys)
 			$smileys_array[] = $smileys->get_name();
 
 		if (!$this->smiley['idsmiley'])

@@ -3,11 +3,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 29
+ * @version     PHPBoost 6.0 - last update: 2020 12 27
  * @since       PHPBoost 1.2 - 2005 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once('../kernel/begin.php');
@@ -229,7 +230,7 @@ elseif ($g_add)
 		'CATEGORIES_TREE' => CategoriesService::get_categories_manager()->get_select_categories_form_field('cat', LangLoader::get_message('form.category', 'common'), $id_category, $search_category_children_options)->display()->render(),
 		'MAX_WIDTH' => $config->get_max_width(),
 		'MAX_HEIGHT' => $config->get_max_height(),
-		'ALLOWED_EXTENSIONS' => 'jpeg", "jpg", "png", "gif',
+		'ALLOWED_EXTENSIONS' => implode('", "',FileUploadConfig::load()->get_authorized_picture_extensions()),
 		'MAX_FILE_SIZE' => $config->get_max_weight() * 1024,
 		'MAX_FILE_SIZE_TEXT' => ($config->get_max_weight() / 1024) . ' ' . LangLoader::get_message('unit.megabytes', 'common'),
 		'IMG_FORMAT' => 'JPG, PNG, GIF',

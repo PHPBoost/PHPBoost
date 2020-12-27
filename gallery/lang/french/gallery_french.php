@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 10 03
+ * @version     PHPBoost 6.0 - last update: 2020 12 27
  * @since       PHPBoost 1.2 - 2005 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -123,7 +123,7 @@ $LANG['e_no_gd'] = 'Galerie -> Librairie GD non chargée';
 $LANG['e_unabled_create_pics'] = 'Galerie -> Echec création image';
 $LANG['e_no_graphic_support'] = 'Galerie -> Pas de support graphique avec PHP sur ce serveur';
 $LANG['e_no_getimagesize'] = 'Galerie -> Fonction getimagesize() non supportée, contactez votre hébergeur';
-$LANG['e_unsupported_format'] = 'Galerie -> Format image non supporté (jpg, gif, png uniquement)';
+$LANG['e_unsupported_format'] = 'Galerie -> Format image non supporté (jpg, gif, png, webp uniquement)';
 $LANG['e_unabled_incrust_logo'] = 'Galerie -> Incrustation du logo impossible, désactivez le dans la configuration de la galerie';
 $LANG['e_error_resize'] = 'Galerie -> Erreur redimensionnement';
 $LANG['e_unable_display_pics'] = 'Galerie -> Impossible d\'afficher l\'image !';
@@ -158,7 +158,7 @@ $LANG['alert_max_gallery'] = 'Le fichier image dépasse les largeurs et hauteurs
 $LANG['alert_error_gallery'] = 'Erreur d\'enregistrement !';
 $LANG['alert_noname_gallery'] = 'Aucun nom saisi !';
 $LANG['alert_weight_gallery'] = 'Trop gros fichier';
-$LANG['alert_type_gallery'] = 'Le fichier n\'est pas valide jpg, png, et gif seulement!';
+$LANG['alert_type_gallery'] = 'Le fichier n\'est pas valide jpg, png, webp et gif seulement!';
 $LANG['alert_upload_gallery'] = 'Vous avez dépassé le nombre de fichiers que vous pouvez uploader sur le serveur';
 
 ?>

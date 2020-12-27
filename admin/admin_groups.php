@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 01
+ * @version     PHPBoost 6.0 - last update: 2020 12 27
  * @since       PHPBoost 1.2 - 2005 06 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -203,7 +203,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 		//On recupère les dossier des images des groupes.
 		$img_groups = '<option value="">--</option>';
 		$image_folder_path = new Folder(PATH_TO_ROOT . '/images/group');
-		foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`iu') as $image)
+		foreach ($image_folder_path->get_files('`\.(png|webp|jpg|bmp|gif)$`iu') as $image)
 		{
 			$file = $image->get_name();
 			$selected = ($file == $group['img']) ? ' selected="selected"' : '';
@@ -316,7 +316,7 @@ elseif ($add) //Interface d'ajout du groupe.
 
 	$img_groups = '<option value="">--</option>';
 	$image_folder_path = new Folder(PATH_TO_ROOT . '/images/group');
-	foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`iu') as $image)
+	foreach ($image_folder_path->get_files('`\.(png|webp|jpg|bmp|gif)$`iu') as $image)
 	{
 		$file = $image->get_name();
 		$img_groups .= '<option value="' . $file . '">' . $file . '</option>';

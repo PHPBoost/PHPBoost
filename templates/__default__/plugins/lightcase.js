@@ -5,7 +5,7 @@
  * @author      Cornel Boppart <cornel@bopp-art.com>
  * @link        https://github.com/cbopp-art/lightcase/
  * @doc         https://cornel.bopp-art.com/lightcase/
- * @version     PHPBoost 6.0 - last update: 2019 07 23
+ * @version     PHPBoost 6.0 - last update: 2020 12 27
  * @since       PHPBoost 5.1 - 2017 09 17
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -126,7 +126,7 @@
 				href: null,
 				type: null,
 				typeMapping: {
-					'image': 'jpg,jpeg,gif,png,bmp',
+					'image': 'jpg,jpeg,gif,png,webp,bmp',
 					'flash': 'swf',
 					'video': 'mp4,mov,ogv,ogg,webm',
 					'iframe': 'html,php',

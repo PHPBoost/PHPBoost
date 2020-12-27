@@ -3,11 +3,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 29
+ * @version     PHPBoost 6.0 - last update: 2020 12 27
  * @since       PHPBoost 1.2 - 2005 08 16
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class Gallery
@@ -42,6 +43,9 @@ class Gallery
 					break;
 				case 'png':
 					$source = @imagecreatefrompng($path);
+					break;
+				case 'webp':
+					$source = @imagecreatefromwebp($path);
 					break;
 				default:
 					$this->error = 'e_unsupported_format';
@@ -115,6 +119,8 @@ class Gallery
 			imagejpeg($thumbnail, $path_mini, GalleryConfig::load()->get_quality());
 		elseif (function_exists('imagepng')  && $ext === 'png')
 			imagepng($thumbnail, $path_mini);
+		elseif (function_exists('imagewebp')  && $ext === 'webp')
+			imagewebp($thumbnail, $path_mini);
 		else
 			$this->error = 'e_no_graphic_support';
 
@@ -129,6 +135,9 @@ class Gallery
 				break;
 			case 'png':
 				@imagepng($source, $path);
+				break;
+			case 'webp':
+				@imagewebp($source, $path);
 				break;
 			default:
 				$this->error = 'e_no_graphic_support';
@@ -160,6 +169,9 @@ class Gallery
 					case 'png':
 						$source = @imagecreatefrompng($config->get_logo());
 						break;
+					case 'webp':
+						$source = @imagecreatefromwebp($config->get_logo());
+						break;
 					default:
 						$this->error = 'e_unsupported_format';
 						$source = false;
@@ -186,6 +198,9 @@ class Gallery
 						case 'png':
 							$destination = @imagecreatefrompng($path);
 							break;
+						case 'webp':
+							$destination = @imagecreatefromwebp($path);
+							break;
 						default:
 							$this->error = 'e_unsupported_format';
 					}
@@ -210,8 +225,8 @@ class Gallery
 					imagecopy($image_with_logo, $destination, 0, 0, 0, 0, $width, $height);
 
 					//On ajoute le logo sur l'image final
-					//Si le logo est au format png ou gif, la gestion de transparence est faite dans le logo lui meme. Sinon elle est fait selon la configuration du module.
-					if ($ext_s == 'png' || $ext_s == 'gif')
+					//Si le logo est au format png, webp ou gif, la gestion de transparence est faite dans le logo lui meme. Sinon elle est fait selon la configuration du module.
+					if ($ext_s == 'png' || $ext_s == 'gif' || $ext_s == 'webp')
 					{
 						if (@imagecopy($image_with_logo, $source, $destination_x, $destination_y, 0, 0, $width_s, $height_s) === false)
 							$this->error = 'e_unabled_incrust_logo';
@@ -233,6 +248,9 @@ class Gallery
 							break;
 						case 'png':
 							imagepng($image_with_logo);
+							break;
+						case 'webp':
+							imagewebp($image_with_logo);
 							break;
 						default:
 							$this->error = 'e_unabled_create_pics';
@@ -360,7 +378,7 @@ class Gallery
 			$weight = !empty($weight) ? $weight : 0;
 
 			//On prepare les valeurs de remplacement, pour détérminer le type de l'image.
-			$array_type = array( 1 => 'gif', 2 => 'jpg', 3 => 'png', 4 => 'jpeg');
+			$array_type = array( 1 => 'gif', 2 => 'jpg', 3 => 'png', 4 => 'jpeg', 5 => 'webp');
 			if (isset($array_type[$type]))
 				return array($width, $height, $weight, $array_type[$type]);
 			else
@@ -420,6 +438,9 @@ class Gallery
 			case 'png':
 				$header = header('Content-type: image/png');
 				break;
+			case 'webp':
+				$header = header('Content-type: image/webp');
+				break;
 			case 'gif':
 				$header = header('Content-type: image/gif');
 				break;
@@ -439,7 +460,7 @@ class Gallery
 	{
 		//On recupère les dossier des thèmes contenu dans le dossier images/smiley.
 		$thumb_folder_path = new Folder('./pics/thumbnails/');
-		foreach ($thumb_folder_path->get_files('`\.(png|jpg|jpeg|bmp|gif)$`iu') as $thumbs)
+		foreach ($thumb_folder_path->get_files('`\.(png|webp|jpg|jpeg|bmp|gif)$`iu') as $thumbs)
 			$this->delete_file('./pics/thumbnails/' . $thumbs->get_name());
 	}
 

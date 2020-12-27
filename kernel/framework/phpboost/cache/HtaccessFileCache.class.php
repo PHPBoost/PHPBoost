@@ -7,11 +7,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 10 27
+ * @version     PHPBoost 6.0 - last update: 2020 12 27
  * @since       PHPBoost 3.0 - 2009 10 22
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class HtaccessFileCache implements CacheData
@@ -47,7 +48,7 @@ class HtaccessFileCache implements CacheData
 
 			$this->add_bandwidth_protection();
 		}
-		
+
 		$this->set_default_charset();
 
 		$this->add_free_php56();
@@ -320,21 +321,21 @@ class HtaccessFileCache implements CacheData
 	private function force_redirection_if_available()
 	{
 		$domain = AppContext::get_request()->get_domain_name();
-		
+
 		if (!$this->server_environment_config->is_redirection_https_enabled() && $this->server_environment_config->is_redirection_www_enabled() && $this->server_environment_config->is_redirection_www_mode_with_www())
 		{
 			$this->add_section('Site redirection to www');
 			$this->add_line('RewriteCond %{HTTP_HOST} !^www\. [NC]');
 			$this->add_line('RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]');
 		}
-		
+
 		if (!$this->server_environment_config->is_redirection_https_enabled() && $this->server_environment_config->is_redirection_www_enabled() && !$this->server_environment_config->is_redirection_www_mode_with_www())
 		{
 			$this->add_section('Site redirection to NON-www');
 			$this->add_line('RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]');
 			$this->add_line('RewriteRule ^(.*)$ http://%1/$1 [R=301,L]');
 		}
-		
+
 		if ($this->server_environment_config->is_redirection_https_enabled() && $this->server_environment_config->is_redirection_www_enabled() && $this->server_environment_config->is_redirection_www_mode_with_www())
 		{
 			$this->add_section('Force to use HTTPS AND ...');
@@ -346,7 +347,7 @@ class HtaccessFileCache implements CacheData
 			$this->add_line('RewriteCond %{HTTP_HOST} !^www\. [NC]');
 			$this->add_line('RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]');
 		}
-		
+
 		if ($this->server_environment_config->is_redirection_https_enabled() && $this->server_environment_config->is_redirection_www_enabled() && !$this->server_environment_config->is_redirection_www_mode_with_www())
 		{
 			$this->add_section('Force to use HTTPS AND ...');
@@ -358,7 +359,7 @@ class HtaccessFileCache implements CacheData
 			$this->add_line('RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]');
 			$this->add_line('RewriteRule ^(.*)$ https://%1/$1 [R=301,L]');
 		}
-		
+
 		if ($this->server_environment_config->is_redirection_https_enabled() && !$this->server_environment_config->is_redirection_www_enabled())
 		{
 			$this->add_section('Force to use HTTPS WITH SUBDOMAIN');
@@ -381,7 +382,7 @@ class HtaccessFileCache implements CacheData
 			$this->add_section('Stop hotlinking');
 			$this->add_line('RewriteCond %{HTTP_REFERER} !^$');
 			$this->add_line('RewriteCond %{HTTP_REFERER} !^' . $this->general_config->get_site_url());
-			$this->add_line('RewriteRule \.(ico|css|js|bmp|gif|jpe?g|png|swf)$ - [F,L,NC]');
+			$this->add_line('RewriteRule \.(ico|css|js|bmp|gif|webp|jpe?g|png|swf)$ - [F,L,NC]');
 		}
 	}
 

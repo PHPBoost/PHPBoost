@@ -2,13 +2,14 @@
 /**
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
- * @author      ?? 
- * @version     PHPBoost 6.0 - last update: 2015 11 28
+ * @author      ??
+ * @version     PHPBoost 6.0 - last update: 2020 12 27
  * @since       PHPBoost 5.0 - 2016 01 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-$validMimeTypes = array("image/gif", "image/jpeg", "image/png");
+$validMimeTypes = array("image/gif", "image/jpeg", "image/png", "image/webp");
 
 if (!isset($_GET["url"]) || !trim($_GET["url"])) {
     header("HTTP/1.0 500 Url parameter missing or empty.");

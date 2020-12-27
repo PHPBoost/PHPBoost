@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 14
+ * @version     PHPBoost 6.0 - last update: 2020 12 27
  * @since       PHPBoost 3.0 - 2010 12 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -31,7 +31,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		if (UserAccountsConfig::load()->is_avatar_upload_enabled())
 		{
 			$fieldset->add_field(new FormFieldFilePicker('upload_avatar', $this->lang['extended-field.field.avatar.upload_avatar'],
-				array('description' => $this->lang['extended-field.field.avatar.upload_avatar-explain'], 'authorized_extensions' => 'png|gif|jpg|jpeg|tiff|ico|svg'),
+				array('description' => $this->lang['extended-field.field.avatar.upload_avatar-explain'], 'authorized_extensions' => 'png|webp|gif|jpg|jpeg|tiff|ico|svg'),
 				array(new FormFieldConstraintPictureFile())
 			));
 		}
@@ -51,7 +51,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		if (UserAccountsConfig::load()->is_avatar_upload_enabled())
 		{
 			$fieldset->add_field(new FormFieldFilePicker('upload_avatar', $this->lang['extended-field.field.avatar.upload_avatar'],
-				array('description' => $this->lang['extended-field.field.avatar.upload_avatar-explain'], 'authorized_extensions' => 'png|gif|jpg|jpeg|tiff|ico|svg'),
+				array('description' => $this->lang['extended-field.field.avatar.upload_avatar-explain'], 'authorized_extensions' => 'png|webp|gif|jpg|jpeg|tiff|ico|svg'),
 				array(new FormFieldConstraintPictureFile())
 			));
 		}

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 12 14
+ * @version     PHPBoost 6.0 - last update: 2020 12 27
  * @since       PHPBoost 3.0 - 2010 08 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -77,7 +77,7 @@ class FileUploadConfig extends AbstractConfigData
 
 	public function get_authorized_picture_extensions()
 	{
-		$pictures_extensions = array('jpg', 'jpeg', 'bmp', 'gif', 'png');
+		$pictures_extensions = array('jpg', 'jpeg', 'bmp', 'gif', 'png', 'webp');
 		$authorized_pictures_extensions = array();
 
 		foreach ($pictures_extensions as $extension)
@@ -97,7 +97,7 @@ class FileUploadConfig extends AbstractConfigData
 			self::ENABLE_BANDWIDTH_PROTECTION => true,
 			self::DISPLAY_FILE_THUMBNAIL => true,
 			self::AUTHORIZED_EXTENSIONS => array(
-				'jpg', 'jpeg', 'bmp', 'gif', 'png', 'tif', 'svg', 'ico', 'nef',
+				'jpg', 'jpeg', 'bmp', 'gif', 'png', 'webp', 'tif', 'svg', 'ico', 'nef',
 				'rar', 'zip', 'gz', '7z',
 				'txt', 'doc', 'docx', 'pdf', 'ppt', 'xls', 'odt', 'odp', 'ods', 'odg', 'odc', 'odf', 'odb', 'xcf', 'csv',
 				'flv', 'mp3','ogg', 'mpg', 'mov','swf', 'wav', 'wmv', 'midi', 'mng', 'qt', 'mp4', 'mkv',

@@ -72,7 +72,7 @@
 		var fileName = jQuery("#" + ${escapejs(HTML_ID)} + "_custom_file").val();
 		var extension = fileName.substring(fileName.lastIndexOf('.')+1);
 
-		if ((/^(png|gif|jpg|jpeg|tiff|ico|svg)$/i).test(extension)) {
+		if ((/^(png|webp|gif|jpg|jpeg|tiff|ico|svg)$/i).test(extension)) {
 			jQuery('#${escape(HTML_ID)}_preview').show();
 			jQuery.ajax({
 				url: PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/image/preview/',

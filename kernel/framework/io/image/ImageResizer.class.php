@@ -6,10 +6,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 10 28
+ * @version     PHPBoost 6.0 - last update: 2020 12 27
  * @since       PHPBoost 3.0 - 2010 07 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ImageResizer
@@ -79,6 +80,9 @@ class ImageResizer
 			case 'image/png':
 					return imagecreatefrompng($Image->get_path());
 				break;
+			case 'image/webp':
+					return imagecreatefromwebp($Image->get_path());
+				break;
 			case 'image/gif':
 					return imagecreatefromgif($Image->get_path());
 				break;
@@ -120,6 +124,9 @@ class ImageResizer
 					break;
 			case 'png':
 				return imagepng($create_picture, $directory);
+					break;
+			case 'webp':
+				return imagewebp($create_picture, $directory);
 					break;
 			case 'gif':
 				return imagegif($create_picture, $directory);

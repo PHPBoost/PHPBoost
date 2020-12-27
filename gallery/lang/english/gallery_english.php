@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 10 03
+ * @version     PHPBoost 6.0 - last update: 2020 12 27
  * @since       PHPBoost 1.2 - 2005 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -123,7 +123,7 @@ $LANG['e_no_gd'] = 'Gallery -> Gd Library not loaded';
 $LANG['e_unabled_create_pics'] = 'Gallery -> Error creating picture';
 $LANG['e_no_graphic_support'] = 'Gallery -> No graphic support on this server';
 $LANG['e_no_getimagesize'] = 'Gallery -> Function getimagesize() unsupported, please contact your internet provider';
-$LANG['e_unsupported_format'] = 'Gallery -> Unsupported format (jpg, gif, png only)';
+$LANG['e_unsupported_format'] = 'Gallery -> Unsupported format (jpg, gif, png, webp only)';
 $LANG['e_unabled_incrust_logo'] = 'Gallery -> Unable to inlay logo, deactivate it in the gallery configuration';
 $LANG['e_error_resize'] = 'Gallery -> Resizing error';
 $LANG['e_unable_display_pics'] = 'Gallery -> Unabled to display picture!';
@@ -158,7 +158,7 @@ $LANG['alert_max_gallery'] = 'The file exceeds the specified maximum width and h
 $LANG['alert_error_gallery'] = 'Uploading error!';
 $LANG['alert_noname_gallery'] = 'No name specified!';
 $LANG['alert_weight_gallery'] = 'File oversize!';
-$LANG['alert_type_gallery'] = 'Picture isn\'t valid: .jpg, .png, or .gif only!';
+$LANG['alert_type_gallery'] = 'Picture isn\'t valid: .jpg, .png, webp or .gif only!';
 $LANG['alert_upload_gallery'] = 'You exceeded the number of files you can upload on the server';
 
 ?>

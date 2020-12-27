@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 15
+ * @version     PHPBoost 6.0 - last update: 2020 12 27
  * @since       PHPBoost 1.2 - 2005 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -169,7 +169,7 @@ if (is_dir($dir)) //Si le dossier existe
 {
 	$array_pics = array();
 	$image_folder_path = new Folder('./pics/');
-	foreach ($image_folder_path->get_files('`.*\.(png|jpg|bmp|gif|jpeg|tiff)$`iu') as $image)
+	foreach ($image_folder_path->get_files('`.*\.(png|webp|jpg|bmp|gif|jpeg|tiff)$`iu') as $image)
 		$array_pics[] = $image->get_name();
 
 	if (is_array($array_pics))

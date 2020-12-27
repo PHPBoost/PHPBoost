@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost - 2019 babsolune
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 10 03
+ * @version     PHPBoost 6.0 - last update: 2020 12 27
  * @since       PHPBoost 6.0 - 2019 09 23
 */
 
@@ -20,7 +20,7 @@
                 maxFilesSize: '-1', // weight max for all files (-1 = unlimited)
                 maxWidth: '-1', // max width for pictures  (-1 = unlimited)
                 maxHeight: '-1', // max height for pictures (-1 = unlimited)
-                allowedExtensions: ['jpg', 'jpeg', 'png', 'gif', 'svg'], // allowed extensions
+                allowedExtensions: ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'], // allowed extensions
                 warningText: 'Upload have been disabled because of bad file:', // main warning text
                 warningExtension: 'bad extension <br />',
                 warningFileSize: 'Too large file <br />',

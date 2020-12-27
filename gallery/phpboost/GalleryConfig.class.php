@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 06 04
+ * @version     PHPBoost 6.0 - last update: 2020 12 27
  * @since       PHPBoost 4.0 - 2013 06 30
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -329,9 +329,9 @@ class GalleryConfig extends AbstractConfigData
 		return array(
 			self::MINI_MAX_WIDTH => 150,
 			self::MINI_MAX_HEIGHT => 150,
-			self::MAX_WIDTH => 800,
-			self::MAX_HEIGHT => 600,
-			self::MAX_WEIGHT => 1024,
+			self::MAX_WIDTH => 1920,
+			self::MAX_HEIGHT => 1080,
+			self::MAX_WEIGHT => 1536,
 			self::QUALITY => 80,
 			self::LOGO_ENABLED => true,
 			self::LOGO => 'protect.png',
