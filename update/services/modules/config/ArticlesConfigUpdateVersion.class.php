@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 29
+ * @version     PHPBoost 6.0 - last update: 2020 12 28
  * @since       PHPBoost 6.0 - 2020 05 03
 */
 
@@ -21,40 +21,59 @@ class ArticlesConfigUpdateVersion extends ConfigUpdateVersion
 		if (class_exists('ArticlesConfig') && !empty($old_config))
 		{
 			$config = ArticlesConfig::load();
-			switch ($old_config->get_items_default_sort_field())
-			{
-				case 'date_created':
-					$config->set_items_default_sort_field('date');
-				break;
-				case 'display_name':
-					$config->set_items_default_sort_field('author');
-				break;
-				case 'number_view':
-					$config->set_items_default_sort_field('views');
-				break;
-				case 'average_notes':
-					$config->set_items_default_sort_field('notes');
-				break;
-				case 'number_comments':
-					$config->set_items_default_sort_field('comments');
-				break;
-				default:
-					$config->set_items_default_sort_field($old_config->get_items_default_sort_field());
-				break;
-			}
-			$config->set_items_default_sort_mode(in_array(TextHelper::strtoupper($old_config->get_items_default_sort_field()), array(Item::ASC, Item::DESC)) ? TextHelper::strtolower($old_config->get_items_default_sort_field()) : TextHelper::strtolower(Item::DESC));
+			$items_default_sort_field = $items_default_sort_mode = $display_type = '';
 			
-			switch ($old_config->get_display_type())
+			try {
+				$items_default_sort_field = $old_config->get_property('items_default_sort_field');
+			} catch (PropertyNotFoundException $e) {}
+			if ($items_default_sort_field)
 			{
-				case 'mosaic':
-					$config->set_display_type('grid_view');
-				break;
-				case 'list':
-					$config->set_display_type('list_view');
-				break;
-				default:
-					$config->set_display_type($old_config->get_display_type());
-				break;
+				switch ($items_default_sort_field)
+				{
+					case 'date_created':
+						$config->set_items_default_sort_field('date');
+					break;
+					case 'display_name':
+						$config->set_items_default_sort_field('author');
+					break;
+					case 'number_view':
+						$config->set_items_default_sort_field('views');
+					break;
+					case 'average_notes':
+						$config->set_items_default_sort_field('notes');
+					break;
+					case 'number_comments':
+						$config->set_items_default_sort_field('comments');
+					break;
+					default:
+						$config->set_items_default_sort_field($items_default_sort_field);
+					break;
+				}
+			}
+			
+			try {
+				$items_default_sort_mode = $old_config->get_property('items_default_sort_mode');
+			} catch (PropertyNotFoundException $e) {}
+			if ($items_default_sort_mode)
+			$config->set_items_default_sort_mode(in_array(TextHelper::strtoupper($items_default_sort_mode), array(Item::ASC, Item::DESC)) ? TextHelper::strtolower($items_default_sort_mode) : TextHelper::strtolower(Item::DESC));
+			
+			try {
+				$display_type = $old_config->get_property('display_type');
+			} catch (PropertyNotFoundException $e) {}
+			if ($display_type)
+			{
+				switch ($display_type)
+				{
+					case 'mosaic':
+						$config->set_display_type('grid_view');
+					break;
+					case 'list':
+						$config->set_display_type('list_view');
+					break;
+					default:
+						$config->set_display_type($display_type);
+					break;
+				}
 			}
 			
 			ArticlesConfig::save();
