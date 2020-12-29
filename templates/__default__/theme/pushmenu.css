@@ -290,7 +290,7 @@ body.push-nav-open {
 
 .pushmenu li.nav-parent > .nav-item { padding-right: 3.618em; }
 
-.pushmenu li.nav-parent .nav-item:not(:last-child) { margin-right: 44px; }
+.pushmenu li.nav-parent .nav-item:not(:last-child) { margin-right: 2.809em; }
 
 .pushmenu li.nav-close span,
 .pushmenu li.nav-parent .nav-next,
