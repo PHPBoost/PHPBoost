@@ -178,14 +178,14 @@ label[for="delete-all-checkbox"] span {
 .form-field-thumbnail-choice + .form-field-thumbnail-preview .form-field-preview { margin-top: 1em; }
 
 /* --- Form from php in mini --- */
-.cell-mini .form-element.no-label,
-.cell-mini .form-element.full-label { margin: 0; }
+.cell-mini .form-mini fieldset:not(.fieldset-submit) .fieldset-inset { padding: 0; }
+.cell-mini .form-mini .required-fields-text { display: none; }
 
-.cell-mini .form-element.no-padding .fieldset-inset:not(:last-child) { padding: 0; }
+.cell-mini .form-mini .form-element.no-label,
+.cell-mini .form-mini .form-element.full-label { margin: 0; }
 
-.cell-mini .form-element.no-label .form-field { width: 100%; }
+.cell-mini .form-mini .form-element.full-label { flex-direction: column; }
 
-.cell-mini .form-element.full-label { flex-direction: column; }
-
-.cell-mini .form-element.full-label label,
-.cell-mini .form-element.full-label .form-field { width: 100%; }
+.cell-mini .form-mini .form-element.no-label .form-field,
+.cell-mini .form-mini .form-element.full-label label,
+.cell-mini .form-mini .form-element.full-label .form-field { width: 100%; }
