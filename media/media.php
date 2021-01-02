@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 21
+ * @version     PHPBoost 6.0 - last update: 2021 01 12
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -156,8 +156,11 @@ elseif ($id_media > 0)
 		{
 			// Youtube
 			$watch = 'watch?v=';
-		    if(strpos($media_id, $watch) !== false)
-		        $media_id = substr_replace($media_id, '', 0, 8);
+		    if(strpos($media_id, $watch) !== false) {
+				$media_id = substr_replace($media_id, '', 0, 8);
+				list($media_id) = explode('&', $media_id);
+			}
+
 
 			// Odysee
 			$odysee_player =  strpos($dirname, 'odysee') !== false;
