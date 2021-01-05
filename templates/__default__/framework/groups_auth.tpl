@@ -22,7 +22,7 @@
 				<div class="grouped-inputs">
 					<label for="login{IDSELECT}" class="sr-only">{L_ADD_USER}</label>
 					<input class="grouped-element" type="text" size="14" value="" id="login{IDSELECT}" name="login{IDSELECT}" placeholder="{L_ADD_USER}">
-					<button class="grouped-element button" onclick="XMLHttpRequest_search_members('{IDSELECT}', '{THEME}', 'add_member_auth', '{L_REQUIRE_PSEUDO}');" type="button" name="valid" aria-label="{L_SEARCH_MEMBER}">
+					<button class="grouped-element button bgc-full link-color" onclick="XMLHttpRequest_search_members('{IDSELECT}', '{THEME}', 'add_member_auth', '{L_REQUIRE_PSEUDO}');" type="button" name="valid" aria-label="{L_SEARCH_MEMBER}">
 						<i class="fa fa-search-plus" aria-hidden="true"></i>
 					</button>
 				</div>
