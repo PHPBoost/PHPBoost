@@ -1,49 +1,47 @@
 <script>
-<!--
-var FormFieldMultipleAutocompleter = function(){
-	this.integer = {NBR_FIELDS};
-	this.id_input = ${escapejs(HTML_ID)};
-	this.max_input = {MAX_INPUT};
-};
+	var FormFieldMultipleAutocompleter = function(){
+		this.integer = {NBR_FIELDS};
+		this.id_input = ${escapejs(HTML_ID)};
+		this.max_input = {MAX_INPUT};
+	};
 
-FormFieldMultipleAutocompleter.prototype.add_field = function () {
-	if (this.integer <= this.max_input) {
-		var id = this.id_input + '_' + this.integer;
+	FormFieldMultipleAutocompleter.prototype.add_field = function () {
+		if (this.integer <= this.max_input) {
+			var id = this.id_input + '_' + this.integer;
 
-		jQuery('<div/>', {'id': id, 'class': 'form-autocompleter-container grouped-inputs'}).appendTo('#input_fields_' + this.id_input);
+			jQuery('<div/>', {'id': id, 'class': 'form-autocompleter-container grouped-inputs'}).appendTo('#input_fields_' + this.id_input);
 
-		jQuery('<input/>', {'type': 'text', 'id': 'field_' + id, class : 'grouped-element', 'name': 'field_' + id, 'onfocus': 'javascript:FormFieldMultipleAutocompleter.load_autocompleter(\'' + id + '\');', 'autocomplete': 'off'}).attr('size', ${escapejs(SIZE)}).appendTo('#' + id);
-		jQuery('#' + id).append(' ');
+			jQuery('<input/>', {'type': 'text', 'id': 'field_' + id, class : 'grouped-element', 'name': 'field_' + id, 'onfocus': 'javascript:FormFieldMultipleAutocompleter.load_autocompleter(\'' + id + '\');', 'autocomplete': 'off'}).attr('size', ${escapejs(SIZE)}).appendTo('#' + id);
+			jQuery('#' + id).append(' ');
 
-		this.load_autocompleter('field_' + id);
+			this.load_autocompleter('field_' + id);
 
-		jQuery('<a/>', {href : 'javascript:FormFieldMultipleAutocompleter.delete_field('+ this.integer +');', class : 'grouped-element', 'aria-label' : ${escapejs(@delete)}}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#' + id);
+			jQuery('<a/>', {href : 'javascript:FormFieldMultipleAutocompleter.delete_field('+ this.integer +');', class : 'grouped-element bgc-full error', 'aria-label' : ${escapejs(@delete)}}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#' + id);
 
-		this.integer++;
-	}
-	if (this.integer == this.max_input) {
-		jQuery('#add-' + this.id_input).hide();
-	}
-};
+			this.integer++;
+		}
+		if (this.integer == this.max_input) {
+			jQuery('#add-' + this.id_input).hide();
+		}
+	};
 
-FormFieldMultipleAutocompleter.prototype.delete_field = function (id) {
-	var id = this.id_input + '_' + id;
-	jQuery('#' + id).remove();
-	this.integer--;
-	jQuery('#add-' + this.id_input).show();
-};
+	FormFieldMultipleAutocompleter.prototype.delete_field = function (id) {
+		var id = this.id_input + '_' + id;
+		jQuery('#' + id).remove();
+		this.integer--;
+		jQuery('#add-' + this.id_input).show();
+	};
 
-FormFieldMultipleAutocompleter.prototype.load_autocompleter = function (id) {
-	jQuery('#' + id).autocomplete({
-		serviceUrl: ${escapejs(FILE)},
-		paramName: ${escapejs(NAME_PARAMETER)},
-		params: {'token': ${escapejs(TOKEN)}},
-		minChars: 2
-	});
-};
+	FormFieldMultipleAutocompleter.prototype.load_autocompleter = function (id) {
+		jQuery('#' + id).autocomplete({
+			serviceUrl: ${escapejs(FILE)},
+			paramName: ${escapejs(NAME_PARAMETER)},
+			params: {'token': ${escapejs(TOKEN)}},
+			minChars: 2
+		});
+	};
 
-var FormFieldMultipleAutocompleter = new FormFieldMultipleAutocompleter();
--->
+	var FormFieldMultipleAutocompleter = new FormFieldMultipleAutocompleter();
 </script>
 
 <div id="input_fields_${escape(HTML_ID)}">
