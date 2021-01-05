@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 02
+ * @version     PHPBoost 6.0 - last update: 2021 01 05
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -22,19 +22,15 @@ $mime_type = array(
 		'ahost' => 'audio/host',
 	),
 	'video' => array(
-		'flv'   => 'video/x-flv',
 		'mp4'   => 'video/mp4',
 		'ogg'   => 'video/ogg',
 		'webm'  => 'video/webm',
-		'swf'   => 'application/x-shockwave-flash',
 		'vhost' => 'video/host',
 	)
 );
 
 // Tpl file depending on mime type.
 $mime_type_tpl = array(
-	'application/x-shockwave-flash' => 'format/media_swf.tpl',
-	'video/x-flv' => 'format/media_flv.tpl',
 	'video/mp4'   => 'format/media_html5_player.tpl',
 	'video/ogg'   => 'format/media_html5_player.tpl',
 	'video/webm'  => 'format/media_html5_player.tpl',
@@ -56,7 +52,6 @@ $host_ok = array(
 		'w.soundcloud.com',
 	),
 	'video' => array(
-		'www.arte.tv',
 		'www.dailymotion.com',
 		'www.netflix.com',
 		'www.primevideo.com',

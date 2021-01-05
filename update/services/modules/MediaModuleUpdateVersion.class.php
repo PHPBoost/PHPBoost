@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 21
+ * @version     PHPBoost 6.0 - last update: 2021 01 05
  * @since       PHPBoost 5.0 - 2017 03 09
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -25,6 +25,7 @@ class MediaModuleUpdateVersion extends ModuleUpdateVersion
 			'/phpboost/MediaSitemapExtensionPoint.class.php',
 			'/phpboost/MediaHomePageExtensionPoint.class.php',
 			'/services/MediaAuthorizationsService.class.php',
+			'/templates/format/media_flv.tpl',
 			'/util/AdminMediaDisplayResponse.class.php'
 		);
 		self::$delete_old_folders_list = array(

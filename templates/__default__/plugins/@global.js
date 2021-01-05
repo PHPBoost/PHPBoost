@@ -401,38 +401,6 @@ function copy_to_clipboard(tocopy)
 		}
 	}
 
-// FlowPlayer
-	// Display the video player with the right url, width and height
-	playerflowPlayerRequired = false;
-	function insertMoviePlayer(id)
-	{
-		if (!playerflowPlayerRequired)
-		{
-			include(PATH_TO_ROOT + '/kernel/lib/flash/flowplayer/flowplayer.js');
-			playerflowPlayerRequired = true;
-		}
-		flowPlayerDisplay(id);
-	}
-
-	// Build the player after javascript parsing
-	function flowPlayerDisplay(id)
-	{
-		// Build the flowplayer
-		// Wait for parsing if function doesn't exist
-		if (!functionExists('flowplayer'))
-		{
-			setTimeout('flowPlayerDisplay(\'' + id + '\')', 100);
-			return;
-		}
-		// Start flowplayer
-		flowplayer(id, PATH_TO_ROOT + '/kernel/lib/flash/flowplayer/flowplayer.swf', {
-			clip: {
-				url: jQuery('#' + id).attr('href'),
-				autoPlay: false
-			}
-		});
-	}
-
 // Scroll position management (scroll-to-top + cookie-bar)
 	function scroll_to( position ) {
 		if ( position > 800) {
