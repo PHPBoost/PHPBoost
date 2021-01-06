@@ -91,7 +91,7 @@ td.alert-priority { border-width: 0 0 1px 0; }
 .pushmenu.nav-position-right .nav-container { transform: translate3d(230px, 0, 0); }
 
 /* --- Debugger --- */
-@media (min-wodth: 769px) {
+@media (min-width: 769px) {
     .debugger { margin-left : 240px; }
 }
 
