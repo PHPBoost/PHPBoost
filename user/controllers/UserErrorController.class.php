@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 17
+ * @version     PHPBoost 6.0 - last update: 2021 01 08
  * @since       PHPBoost 3.0 - 2009 12 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -106,7 +106,7 @@ class UserErrorController extends AbstractController
 		if (file_exists(PATH_TO_ROOT . '/templates/' . $theme_id . '/images/error.png'))
 			$error_img = TPL_PATH_TO_ROOT . '/templates/' . $theme_id . '/images/error.png';
 		else
-			$error_img = TPL_PATH_TO_ROOT . '/templates/default/images/error.png';
+			$error_img = TPL_PATH_TO_ROOT . '/templates/__default__/images/error.png';
 
 		$this->view->put_all(array(
 			'ERROR_TYPE'  => $this->get_error_type(),
