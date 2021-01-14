@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @version     PHPBoost 5.2 - last update: 2021 01 14
  * @since       PHPBoost 3.0 - 2010 12 26
 */
 
@@ -65,7 +65,7 @@ class FormFieldMemberSanction extends FormFieldSimpleSelectChoice
 		}
 	}
 
-	private function get_sanctions_duration()
+	public function get_sanctions_duration()
 	{
 		return array(
 			'0' => LangLoader::get_message('no', 'common'),
@@ -80,7 +80,7 @@ class FormFieldMemberSanction extends FormFieldSimpleSelectChoice
 			'604800' => '1 ' . $this->lang['week'],
 			'1209600' => '2 ' . $this->lang['weeks'],
 			'2419200' => '1 ' . $this->lang['month'],
-			'4838400' => '2 ' . $this->lang['month'],
+			'5184000' => '2 ' . $this->lang['month'],
 			'326592000' => LangLoader::get_message('illimited', 'main')
 		);
 	}

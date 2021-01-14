@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 05 05
+ * @version   	PHPBoost 5.2 - last update: 2021 01 14
  * @since   	PHPBoost 1.6 - 2007 03 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -169,15 +169,15 @@ if ($action == 'punish')
 		$select = '';
 		//Durée de la sanction.
 		$date_lang = LangLoader::get('date-common');
-		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000);
-		$array_sanction = array(LangLoader::get_message('no', 'common'), '1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['days'], '1 ' . $date_lang['week'], '2 ' . $date_lang['weeks'], '1 ' . $date_lang['month'], '10 ' . TextHelper::strtolower($date_lang['years']));
+		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 5184000, 326592000);
+		$array_sanction = array(LangLoader::get_message('no', 'common'), '1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['days'], '1 ' . $date_lang['week'], '2 ' . $date_lang['weeks'], '1 ' . $date_lang['month'], '2 ' . $date_lang['month'], '10 ' . TextHelper::strtolower($date_lang['years']));
 
 		$diff = ($member['delay_readonly'] - time());
 		$key_sanction = 0;
 		if ($diff > 0)
 		{
 			//Retourne la sanction la plus proche correspondant au temp de bannissement.
-			for ($i = 11; $i > 0; $i--)
+			for ($i = 12; $i > 0; $i--)
 			{
 				$avg = ceil(($array_time[$i] + $array_time[$i-1])/2);
 				if (($diff - $array_time[$i]) > $avg)
@@ -209,7 +209,7 @@ if ($action == 'punish')
 			'array_time = new Array(' . (implode(', ', $array_time)) . ');' . "\n" .
 			'array_sanction = new Array(\'' . implode('\', \'', array_map('addslashes', $array_sanction)) . '\');'. "\n" .
 			'var i;
-			for (i = 0; i <= 12; i++)
+			for (i = 0; i <= ' . count($array_time) . '; i++)
 			{
 				if (array_time[i] == replace_value)
 				{
@@ -510,15 +510,15 @@ else
 
 		//Temps de bannissement.
 		$date_lang = LangLoader::get('date-common');
-		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000);
-		$array_sanction = array(LangLoader::get_message('no', 'common'), '1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['days'], '1 ' . $date_lang['week'], '2 ' . $date_lang['weeks'], '1 ' . $date_lang['month'], $LANG['illimited']);
+		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 5184000, 326592000);
+		$array_sanction = array(LangLoader::get_message('no', 'common'), '1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['days'], '1 ' . $date_lang['week'], '2 ' . $date_lang['weeks'], '1 ' . $date_lang['month'], '2 ' . $date_lang['month'], $LANG['illimited']);
 
 		$diff = ($member['delay_banned'] - time());
 		$key_sanction = 0;
 		if ($diff > 0)
 		{
 			//Retourne la sanction la plus proche correspondant au temp de bannissement.
-			for ($i = 11; $i >= 0; $i--)
+			for ($i = 12; $i >= 0; $i--)
 			{
 				$avg = ceil(($array_time[$i] + $array_time[$i-1])/2);
 				if (($diff - $array_time[$i]) > $avg)
@@ -529,7 +529,7 @@ else
 			}
 		}
 		if ($member['warning_percentage'] == 100)
-			$key_sanction = 12;
+			$key_sanction = count($array_time);
 
 		//Affichge des sanctions
 		foreach ($array_time as $key => $time)
