@@ -150,7 +150,7 @@
 							<div class="form-element">
 								<label>{L_INFO_EXPLAIN}</label>
 								<div class="form-field">
-									<span id="action_info">{INFO}</span>
+									<span id="action_info" class="hidden">{INFO}</span>
 									<select name="new_info" onchange="change_textarea_level(this.options[this.selectedIndex].value, {REGEX})">
 										{SELECT}
 									</select>

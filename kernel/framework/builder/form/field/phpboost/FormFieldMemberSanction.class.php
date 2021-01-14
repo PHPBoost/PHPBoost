@@ -65,7 +65,7 @@ class FormFieldMemberSanction extends FormFieldSimpleSelectChoice
 		}
 	}
 
-	private function get_sanctions_duration()
+	public function get_sanctions_duration()
 	{
 		return array(
 			'0' => LangLoader::get_message('no', 'common'),
@@ -80,7 +80,8 @@ class FormFieldMemberSanction extends FormFieldSimpleSelectChoice
 			'604800' => '1 ' . $this->lang['week'],
 			'1209600' => '2 ' . $this->lang['weeks'],
 			'2419200' => '1 ' . $this->lang['month'],
-			'4838400' => '2 ' . $this->lang['month'],
+			'5184000' => '2 ' . $this->lang['month'],
+			'31557600' => '1 ' . $this->lang['year'],
 			'326592000' => LangLoader::get_message('illimited', 'main')
 		);
 	}
