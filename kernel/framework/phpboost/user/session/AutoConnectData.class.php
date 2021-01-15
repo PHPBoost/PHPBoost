@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2020 01 06
+ * @version     PHPBoost 5.2 - last update: 2021 01 15
  * @since       PHPBoost 3.0 - 2010 11 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -25,7 +25,12 @@ class AutoConnectData
 
 	public static function get_user_id_from_cookie($cookie_content)
 	{
-		$autoconnect = TextHelper::unserialize($cookie_content);
+		$autoconnect = false;
+		if (preg_match('/user_id/', $cookie_content) && preg_match('/key/', $cookie_content) && !preg_match('/O:/', $cookie_content))
+		{
+			$autoconnect = TextHelper::unserialize($cookie_content);
+		}
+		
 		if ($autoconnect === false || empty($autoconnect['user_id']) || empty($autoconnect['key']))
 		{
 			throw new UnexpectedValueException('invalid autoconnect cookie content: "' . $cookie_content . '"');
