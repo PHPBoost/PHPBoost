@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 11 18
+ * @version     PHPBoost 6.0 - last update: 2021 01 15
  * @since       PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -292,7 +292,7 @@ class BBCodeParser extends ContentFormattingParser
 			//Image tag
 			if (!in_array('img', $this->forbidden_tags))
 			{
-				$this->content = preg_replace_callback('`\[img(?: alt="([^"]+)")?(?: style="([^"]+)")?(?: class="([^"]+)")?\]((?:[./]+|(?:https?|ftps?)://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)[^,\n\r\t\f]+\.(jpg|jpeg|bmp|gif|png|tiff|svg))\[/img\]`iuU', array($this, 'parse_img'), $this->content);
+				$this->content = preg_replace_callback('`\[img(?: alt="([^"]+)")?(?: style="([^"]+)")?(?: class="([^"]+)")?\]((?:[./]+|(?:https?|ftps?)://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)[^,\n\r\t\f]+\.(jpg|jpeg|bmp|webp|gif|png|tiff|svg))\[/img\]`iuU', array($this, 'parse_img'), $this->content);
 				$this->content = preg_replace_callback('`\[img(?: alt="([^"]+)")?(?: style="([^"]+)")?(?: class="([^"]+)")?\]data:(.+)\[/img\]`iuU', array($this, 'parse_img'), $this->content);
 			}
 
@@ -502,7 +502,7 @@ class BBCodeParser extends ContentFormattingParser
 		$alt = !empty($matches[1]) ? $matches[1] : $img_name;
 		$style = !empty($matches[2]) ? ' style="' . $matches[2] . '"' : '';
 		$class = !empty($matches[3]) ? ' class="' . $matches[3] . '"' : '';
-		if (preg_match('`^image/(jpg|jpeg|bmp|gif|png|tiff|svg);base`su', $matches[4]))
+		if (preg_match('`^image/(jpg|jpeg|bmp|webp|gif|png|tiff|svg);base`su', $matches[4]))
 			$matches[4] = 'data:' . $matches[4];
 
 		return '<img src="' . $matches[4] . '" alt="' . $alt . '"' . $class . $style .' />';
