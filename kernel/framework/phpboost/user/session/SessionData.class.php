@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 02
+ * @version     PHPBoost 6.0 - last update: 2021 01 15
  * @since       PHPBoost 3.0 - 2010 11 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -421,7 +421,12 @@ class SessionData
 	 */
 	public static function from_cookie($cookie_content)
 	{
-		$values = TextHelper::unserialize($cookie_content);
+		$values = false;
+		if (preg_match('/user_id/', $cookie_content) && preg_match('/session_id/', $cookie_content) && !preg_match('/O:/', $cookie_content))
+		{
+			$values = TextHelper::unserialize($cookie_content);
+		}
+		
 		if ($values === false || empty($values[self::$KEY_USER_ID]) || empty($values[self::$KEY_SESSION_ID]))
 		{
 			throw new UnexpectedValueException('invalid session data cookie content: "' . $cookie_content . '"');
