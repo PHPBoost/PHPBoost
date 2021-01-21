@@ -89,7 +89,10 @@
     clear: both;
 }
 
-.cell-row { flex-direction: column; }
+.cell-row {
+	display: flex;
+	flex-direction: column;
+}
 
 .cell-row .cell-body {
 	display: flex;
