@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 19
+ * @version     PHPBoost 6.0 - last update: 2021 01 21
  * @since       PHPBoost 4.0 - 2013 08 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -95,7 +95,7 @@ $lang['calendar.authorizations.register'] = 'Autorisation de s\'inscrire à l\'�
 // SEO
 $lang['calendar.seo.description.root'] = 'Tous les événements du site :site.';
 $lang['calendar.seo.description.pending'] = 'Tous les événements en attente.';
-$lang['calendar.seo.description.member'] = 'Tous les événements du membre: :autohr.';
+$lang['calendar.seo.description.member'] = 'Tous les événements du membre: :author.';
 $lang['calendar.seo.description.events.list'] = 'Liste des événements du site :site.';
 
 // Feed name
