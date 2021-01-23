@@ -43,6 +43,6 @@ $lang['admin.menu.content_message'] = 'Pour afficher les liens de partage sur le
 
 
 //Sign in label
-$lang['sign-in-label'] = 'Connexion :name';
+$lang['sign-in-label'] = 'Se connecter avec :name';
 
 ?>

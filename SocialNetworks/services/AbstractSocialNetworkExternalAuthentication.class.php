@@ -19,7 +19,7 @@ abstract class AbstractSocialNetworkExternalAuthentication implements ExternalAu
 	 */
 	public function get_authentication_name()
 	{
-		return StringVars::replace_vars(LangLoader::get_message('sign-in-label', 'common', 'SocialNetworks'), array('name' => $this->get_social_network()->get_name()));
+		return $this->get_social_network()->get_name();
 	}
 
 	/**
@@ -43,8 +43,9 @@ abstract class AbstractSocialNetworkExternalAuthentication implements ExternalAu
 		$tpl = new FileTemplate('SocialNetworks/auth_image_render.tpl');
 		$tpl->put_all(array(
 			'C_DISPLAY_NAME' => strpos(REWRITED_SCRIPT, 'user') !== false && strpos(REWRITED_SCRIPT, 'login') !== false,
-			'ICON_NAME' => $this->get_social_network()->get_icon_name(),
-			'NAME' => $this->get_authentication_name()
+			'ICON_NAME'      => $this->get_social_network()->get_icon_name(),
+			'NAME'           => $this->get_authentication_name(),
+			'TITLE'          => StringVars::replace_vars(LangLoader::get_message('sign-in-label', 'common', 'SocialNetworks'), array('name' => $this->get_authentication_name()))
 		));
 		return $tpl->render();
 	}
@@ -54,7 +55,7 @@ abstract class AbstractSocialNetworkExternalAuthentication implements ExternalAu
 	 */
 	public function get_css_class()
 	{
-		return 'social-connect ' . $this->get_social_network()->get_css_class();
+		return $this->get_social_network()->get_css_class();
 	}
 
 	/**
