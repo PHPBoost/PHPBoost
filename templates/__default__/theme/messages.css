@@ -10,8 +10,8 @@
     margin: 0.809em 0;
 }
 
-.message-user-avatar { max-width: 0; }
-.message-small .message-user-avatar { max-width: 80px; }
+.message-user-avatar,
+.message-small .message-user-avatar { max-height: 61px; }
 
 .message-header-container h3 { font-size: 1.618em; }
 
@@ -76,7 +76,8 @@
 }
 
 @media (min-width: 769px) {
-    .message-user-avatar { max-width: 120px; }
+    .message-user-avatar { max-height: 120px; }
+    .message-small .message-user-avatar { max-height: 80px; }
 
     .message-header-container h3 { font-size: 2em; }
 }
