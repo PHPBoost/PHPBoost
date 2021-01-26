@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 12 14
+ * @version     PHPBoost 6.0 - last update: 2021 01 26
  * @since       PHPBoost 3.0 - 2011 09 25
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -61,13 +61,19 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 
 		if (!$this->user->check_level(User::MEMBER_LEVEL))
 		{
-			$fieldset->add_field(new FormFieldTextEditor('name', $this->common_lang['form.name'], $this->comments_lang['comments.form.visitor.name'],
-				array('maxlength' => 25)
+			$fieldset->add_field(new FormFieldTextEditor('name', $this->common_lang['form.name'], '',
+				array(
+					'maxlength' => 25, 'required' => true,
+					'placeholder' => $this->comments_lang['comments.form.visitor.name']
+				)
 			));
 
 			if($this->comments_configuration->is_visitor_email_enabled())
-				$fieldset->add_field(new FormFieldMailEditor('visitor_email', $this->lang['mail'], $this->comments_lang['comments.form.visitor.email'],
-				 	array('maxlength' => 25, 'description' => $this->comments_lang['comments.form.visitor.email.desc'], 'required' => true)
+				$fieldset->add_field(new FormFieldMailEditor('visitor_email', $this->lang['mail'], '',
+				 	array(
+						'maxlength' => 25, 'required' => true,
+						'placeholder' => $this->comments_lang['comments.form.visitor.email'],
+						'description' => $this->comments_lang['comments.form.visitor.email.desc'])
 			 	));
 		}
 

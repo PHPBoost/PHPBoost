@@ -6,10 +6,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 10 25
+ * @version     PHPBoost 6.0 - last update: 2020 01 26
  * @since       PHPBoost 2.0 - 2009 04 28
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldMailEditor extends FormFieldTextEditor
@@ -64,7 +65,9 @@ class FormFieldMailEditor extends FormFieldTextEditor
 			'CLASS' => $this->get_css_class(),
 			'C_DISABLED' => $this->is_disabled(),
 			'C_READONLY' => $this->is_readonly(),
-			'C_MULTIPLE' => $this->is_multiple()
+			'C_MULTIPLE' => $this->is_multiple(),
+			'C_PLACEHOLDER' => $this->has_placeholder(),
+			'PLACEHOLDER' => $this->placeholder
 		));
 
 		$this->assign_common_template_variables($template);
