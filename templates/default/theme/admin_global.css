@@ -392,6 +392,8 @@ ul, ol {
 
 
 /* -- Les Icones specifiques PHPBoost de FontAwesome ==================================*/
+.fa-msg-display:before 			{ content: "\f00c"; color: #4CAE4C;} /* copy check */
+.fa-msg-not-display:before 		{ content: "\f00d"; color: #CE271A;} /* copy times */
 
 li.block .fa-stack {
 	height: 2.34em;
