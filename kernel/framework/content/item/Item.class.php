@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 27
+ * @version     PHPBoost 6.0 - last update: 2021 01 26
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor xela <xela@phpboost.com>
 */
@@ -458,11 +458,11 @@ class Item
 		if (self::$module->get_configuration()->has_categories())
 			$this->set_id_category($properties['id_category']);
 		
-		$author = new User();
-		if (!empty($properties['author_user_id']))
-			$author = UserService::get_user($properties['author_user_id']);
-		else
+		if (!($author = UserService::get_user($properties['author_user_id'])))
+		{
+			$author = new User();
 			$author->init_visitor_user();
+		}
 
 		$this->set_author_user($author);
 
