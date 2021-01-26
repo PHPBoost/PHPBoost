@@ -13,7 +13,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 01 22
+ * @version     PHPBoost 5.2 - last update: 2021 01 26
  * @since       PHPBoost 2.0 - 2009 01 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -34,7 +34,6 @@ class Url
 	const ARGS_REGEX = '(/([\w/_\.#-]*(\?)?(\S+)?[^\.\s])?)?';
 
 	const STATUS_OK = 200;
-	const STATUS_FOUND = 302;
 
 	private static $root = TPL_PATH_TO_ROOT;
 	private static $server = SERVER_URL;
@@ -251,10 +250,16 @@ class Url
 			{
 				$file_headers = @get_headers($url->absolute(), true);
 
-				if (isset($file_headers[0]))
+				if (is_array($file_headers))
 				{
-					if(preg_match('/^HTTP\/[12]\.[01] (\d\d\d)/u', $file_headers[0], $matches))
-						$status = (int)$matches[1];
+					$status_list = array();
+					foreach ($file_headers as $header)
+					{
+						if (!is_array($header) && preg_match('/^HTTP\/[12]\.[01] (\d\d\d)/u', $header, $matches))
+							$status_list[] = (int)$matches[1];
+					}
+					if ($status_list)
+						$status = end($status_list);
 				}
 				else
 					$status = self::STATUS_OK;
@@ -263,7 +268,7 @@ class Url
 				$status = self::STATUS_OK;
 		}
 
-		return in_array($status, array(self::STATUS_OK, self::STATUS_FOUND));
+		return $status == self::STATUS_OK;
 	}
 
 	/**
