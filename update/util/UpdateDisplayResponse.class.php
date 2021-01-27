@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2017 04 11
+ * @version     PHPBoost 6.0 - last update: 2021 01 27
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -71,17 +71,11 @@ class UpdateDisplayResponse extends AbstractResponse
 			if (!empty($info_lang['name']))
 			{
 				$langs[] = array(
-					'LANG' => $folder->get_name(),
-					'LANG_NAME' => $info_lang['name'],
-					'SELECTED' => $folder->get_name() == $lang ? 'selected="selected"' : ''
+					'LANG'				=> $folder->get_name(),
+					'LANG_NAME'			=> $info_lang['name'],
+					'LANG_IDENTIFIER'	=> $info_lang['identifier'],
+					'SELECTED'			=> $folder->get_name() == $lang ? 'selected="selected"' : ''
 				);
-				if ($folder->get_name() == $lang)
-				{
-					$this->full_view->put_all(array(
-						'LANG_IDENTIFIER' => $info_lang['identifier'],
-						'LANG_NAME' => $info_lang['name'])
-					);
-				}
 			}
 		}
 		$this->full_view->put('lang', $langs);
