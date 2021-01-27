@@ -24,8 +24,8 @@ class FileUploadConfigUpdateVersion extends ConfigUpdateVersion
 		
 		if (!in_array('webp', $authorized_extensions))
 		{
-			$config->set_property('authorized_extensions', array_merge($authorized_extensions, array('webp')));
-			$this->save_new_config('kernel-file-upload-config', $config);
+			$config->set_authorized_extensions(array_merge($authorized_extensions, array('webp')));
+			FileUploadConfig::save();
 		}
 
 		return true;
