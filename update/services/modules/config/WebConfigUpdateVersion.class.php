@@ -34,6 +34,9 @@ class WebConfigUpdateVersion extends ConfigUpdateVersion
 					case 'name':
 						$config->set_items_default_sort_field('title');
 					break;
+					case 'number_views':
+						$config->set_items_default_sort_field('views_number');
+					break;
 					default:
 						$config->set_items_default_sort_field($items_default_sort_field);
 					break;
