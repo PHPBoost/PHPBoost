@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 15
+ * @version     PHPBoost 6.0 - last update: 2021 01 28
  * @since       PHPBoost 4.0 - 2014 05 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -158,8 +158,8 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 			//Delete old is_cat pages
 			$this->querier->delete(PREFIX . 'pages', 'WHERE is_cat = 1');
 
-			// update publication and special_authorizations
-			$this->querier->update(PREFIX . 'pages', array('publication' => 1), 'WHERE publication = 0');
+			// update published and special_authorizations
+			$this->querier->update(PREFIX . 'pages', array('published' => 1), 'WHERE published = 0');
 			$this->querier->update(PREFIX . 'pages_cats', array('special_authorizations' => 1), 'WHERE auth != ""');
 
 			// Set update_date to creation_date if update_date = 0

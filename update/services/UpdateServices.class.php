@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 01 14
+ * @version     PHPBoost 6.0 - last update: 2021 01 28
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -244,17 +244,14 @@ class UpdateServices
 
 		if (!$maintenance_config->is_under_maintenance())
 		{
-			foreach ($this->get_class(PATH_TO_ROOT . self::$directory . '/kernel/config/', self::$configuration_pattern, 'config') as $class)
-			{
-				try {
-					$object = new $class['name']();
-					$object->execute();
-					$success = true;
-					$message = '';
-				} catch (Exception $e) {
-					$success = false;
-					$message = $e->getMessage();
-				}
+			try {
+				$object = new MaintenanceConfigUpdateVersion();
+				$object->execute();
+				$success = true;
+				$message = '';
+			} catch (Exception $e) {
+				$success = false;
+				$message = $e->getMessage();
 			}
 			$this->add_error_to_file('enabling maintenance', $success, $message);
 		}
@@ -312,9 +309,9 @@ class UpdateServices
 
 	private function update_configurations()
 	{
-		$configs_module_class = $this->get_class(PATH_TO_ROOT . self::$directory . '/modules/config/', self::$configuration_pattern, 'config');
+		$configs_class = array_merge($this->get_class(PATH_TO_ROOT . self::$directory . '/kernel/config/', self::$configuration_pattern, 'config'), $this->get_class(PATH_TO_ROOT . self::$directory . '/modules/config/', self::$configuration_pattern, 'config'));
 
-		foreach ($configs_module_class as $class)
+		foreach ($configs_class as $class)
 		{
 			try {
 				$object = new $class['name']();
