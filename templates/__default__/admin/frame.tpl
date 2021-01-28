@@ -23,7 +23,7 @@
 
 	</head>
 	<body>
-		<div id="push-container" class="body-wrapper">
+		<div id="push-container">
 			# INCLUDE BODY #
 		</div>
 		# INCLUDE JS_BOTTOM #

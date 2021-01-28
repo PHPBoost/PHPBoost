@@ -69,7 +69,7 @@
 	</div>
 </header>
 
-<div id="global">
+<div id="global" class="body-wrapper">
 
 	<div id="admin-main">
 		# INCLUDE KERNEL_MESSAGE #
