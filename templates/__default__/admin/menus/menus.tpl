@@ -1,5 +1,4 @@
 <script>
-<!--
 // Hide/reveal the block menu to add menus
 	var delay = 1200; // Delay to hide the block on mouseleave.
 	var timeout;
@@ -94,7 +93,6 @@
 			});
 		}
 	}
--->
 </script>
 
 <form id="form_menus" action="menus.php?action=save" method="post" onsubmit="build_menu_tree();">
@@ -138,7 +136,7 @@
 						</div>
 					</div>
 				</div>
-				<div id="mod_header">
+				<div id="mod_header" class="menus-block-list">
 					# START mod_header #
 						{mod_header.MENU}
 					# END mod_header #
@@ -172,7 +170,7 @@
 						</div>
 					</div>
 				</div>
-				<div id="mod_subheader">
+				<div id="mod_subheader" class="menus-block-list">
 					# START mod_subheader #
 						{mod_subheader.MENU}
 					# END mod_subheader #
@@ -206,7 +204,7 @@
 							<i class="fa fa-plus" aria-hidden="true"></i> {L_ADD_MENU}
 						</p>
 					</div>
-					<div id="mod_left">
+					<div id="mod_left" class="menus-block-list">
 						# START mod_left #
 							{mod_left.MENU}
 						# END mod_left #
@@ -241,7 +239,7 @@
 								</div>
 							</div>
 						</div>
-						<div id="mod_topcentral">
+						<div id="mod_topcentral" class="menus-block-list">
 							# START mod_topcentral #
 								{mod_topcentral.MENU}
 							# END mod_topcentral #
@@ -252,7 +250,7 @@
 							<p class="menu-block-libelle">{L_MENUS_AVAILABLE}</p>
 							<p class="menus-block-add"></p>
 						</div>
-						<div id="mod_central">
+						<div id="mod_central" class="menus-block-list">
 							# START mod_central #
 								{mod_central.MENU}
 							# END mod_central #
@@ -286,7 +284,7 @@
 								</div>
 							</div>
 						</div>
-						<div id="mod_bottomcentral">
+						<div id="mod_bottomcentral" class="menus-block-list">
 							# START mod_bottomcentral #
 								{mod_bottomcentral.MENU}
 							# END mod_bottomcentral #
@@ -323,7 +321,7 @@
 							</div>
 						</div>
 					</div>
-					<div id="mod_right">
+					<div id="mod_right" class="menus-block-list">
 						# START mod_right #
 							{mod_right.MENU}
 						# END mod_right #
@@ -358,7 +356,7 @@
 						</div>
 					</div>
 				</div>
-				<div id="mod_topfooter">
+				<div id="mod_topfooter" class="menus-block-list">
 					# START mod_topfooter #
 						{mod_topfooter.MENU}
 					# END mod_topfooter #
@@ -392,7 +390,7 @@
 						</div>
 					</div>
 				</div>
-				<div id="mod_footer">
+				<div id="mod_footer" class="menus-block-list">
 					# START mod_footer #
 						{mod_footer.MENU}
 					# END mod_footer #
