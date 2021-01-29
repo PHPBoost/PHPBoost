@@ -297,7 +297,7 @@ class UpdateServices
 		$columns = self::$db_utils->desc_table(PREFIX . 'member');
 
 		if (isset($columns['groups']))
-			self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member CHANGE groups user_groups TEXT');
+			self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member CHANGE `groups` user_groups TEXT');
 	}
 
 	private function update_kernel_version()
