@@ -32,7 +32,7 @@
 				</span>
 				# IF C_ENABLED_COMMENTS #
 					<span class="pinned">
-						<i class="far fa-comments" aria-hidden="true"></i> <a itemprop="discussionUrl" class="small" href="{U_COMMENTS}"> {L_COMMENTS}</a>
+						<a href="#comments-list"><i class="fa fa-comments" aria-hidden="true"></i> {COMMENTS_LABEL}</a>
 					</span>
 				# ENDIF #
 				# IF NOT C_ROOT_CATEGORY # 
