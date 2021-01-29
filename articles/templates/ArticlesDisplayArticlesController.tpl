@@ -35,9 +35,11 @@
 						<i class="far fa-comments" aria-hidden="true"></i> <a itemprop="discussionUrl" class="small" href="{U_COMMENTS}"> {L_COMMENTS}</a>
 					</span>
 				# ENDIF #
+				# IF NOT C_ROOT_CATEGORY # 
 				<span class="pinned">
 					<i class="far fa-folder" aria-hidden="true"></i> <a itemprop="about" class="small" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
 				</span>
+				# ENDIF #
 			</div>
 			<div class="controls align-right">
 				# IF C_CONTROLS #
