@@ -22,7 +22,7 @@ class StatsCache implements CacheData
 		$querier = PersistenceContext::get_querier();
 
 		$nbr_members = $querier->count(DB_TABLE_MEMBER);
-		$last_member = $querier->select_single_row(DB_TABLE_MEMBER, array('user_id', 'display_name', 'level', 'groups'), 'ORDER BY registration_date DESC LIMIT 1 OFFSET 0');
+		$last_member = $querier->select_single_row(DB_TABLE_MEMBER, array('user_id', 'display_name', 'level', '`groups`'), 'ORDER BY registration_date DESC LIMIT 1 OFFSET 0');
 
 		$this->stats = 	array(
 			'nbr_members' => $nbr_members,
