@@ -9,12 +9,13 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 04 19
+ * @version   	PHPBoost 5.2 - last update: 2021 01 30
  * @since   	PHPBoost 4.1 - 2014 11 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
-session_start();
+if (session_status() == PHP_SESSION_NONE)
+    session_start();
 
 require_once PATH_TO_ROOT . '/SocialNetworks/lib/google/Google_Client.php';
 require_once PATH_TO_ROOT . '/SocialNetworks/lib/google/contrib/Google_Oauth2Service.php';
