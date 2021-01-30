@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 10
+ * @version     PHPBoost 6.0 - last update: 2021 01 30
  * @since       PHPBoost 6.0 - 2020 02 11
  * @contributor xela <xela@phpboost.com>
 */
@@ -63,14 +63,17 @@ class DefaultConfigurationController extends AbstractAdminItemController
 				array('select_to_list' => true)
 			));
 
-			$fieldset->add_field(new FormFieldCheckbox('summary_displayed_to_guests', $this->items_lang['config.items.summary.displayed.to.guests'], $this->config->get_summary_displayed_to_guests(),
-				array('class' => 'custom-checkbox')
-			));
+			if ($this->module_item->content_field_enabled())
+			{
+				$fieldset->add_field(new FormFieldCheckbox('summary_displayed_to_guests', $this->items_lang['config.items.summary.displayed.to.guests'], $this->config->get_summary_displayed_to_guests(),
+					array('class' => 'custom-checkbox')
+				));
 
-			$fieldset->add_field(new FormFieldNumberEditor('auto_cut_characters_number', $this->items_lang['config.auto.cut.characters.number'], $this->config->get_auto_cut_characters_number(),
-				array('min' => 20, 'max' => 1000, 'description' => $this->items_lang['config.auto.cut.characters.number.explain'], 'required' => true),
-				array(new FormFieldConstraintIntegerRange(20, 1000))
-			));
+				$fieldset->add_field(new FormFieldNumberEditor('auto_cut_characters_number', $this->items_lang['config.auto.cut.characters.number'], $this->config->get_auto_cut_characters_number(),
+					array('min' => 20, 'max' => 1000, 'description' => $this->items_lang['config.auto.cut.characters.number.explain'], 'required' => true),
+					array(new FormFieldConstraintIntegerRange(20, 1000))
+				));
+			}
 
 			$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->lang['config.author.displayed'], $this->config->get_author_displayed(),
 				array('class' => 'custom-checkbox')
@@ -113,12 +116,15 @@ class DefaultConfigurationController extends AbstractAdminItemController
 
 			$this->add_additional_fields($fieldset);
 
-			$fieldset->add_field(new FormFieldRichTextEditor('default_content', $this->items_lang['config.item.default.content'], $this->config->get_default_content(),
-				array('rows' => 8, 'cols' => 47)
-			));
-			
+			if ($this->module_item->content_field_enabled())
+			{
+				$fieldset->add_field(new FormFieldRichTextEditor('default_content', $this->items_lang['config.item.default.content'], $this->config->get_default_content(),
+					array('rows' => 8, 'cols' => 47)
+				));
+			}
+
 			$this->add_additional_fieldsets($form);
-			
+
 			if (self::get_module()->get_configuration()->has_categories())
 			{
 				$fieldset_categories = new FormFieldsetHTML('categories', LangLoader::get_message('categories', 'categories-common'));
@@ -168,10 +174,15 @@ class DefaultConfigurationController extends AbstractAdminItemController
 		
 		if (self::get_module()->get_configuration()->has_rich_items())
 		{
+			if ($this->module_item->content_field_enabled())
+			{
+				$this->config->set_summary_displayed_to_guests($this->form->get_value('summary_displayed_to_guests'));
+				$this->config->set_auto_cut_characters_number($this->form->get_value('auto_cut_characters_number'));
+				$this->config->set_default_content($this->form->get_value('default_content'));
+			}
+			
 			$this->config->set_items_default_sort_field($this->form->get_value('items_default_sort_field')->get_raw_value());
 			$this->config->set_items_default_sort_mode($this->form->get_value('items_default_sort_mode')->get_raw_value());
-			$this->config->set_summary_displayed_to_guests($this->form->get_value('summary_displayed_to_guests'));
-			$this->config->set_auto_cut_characters_number($this->form->get_value('auto_cut_characters_number'));
 			$this->config->set_author_displayed($this->form->get_value('author_displayed'));
 			$this->config->set_date_displayed($this->form->get_value('date_displayed'));
 			$this->config->set_update_date_displayed($this->form->get_value('update_date_displayed'));
@@ -179,7 +190,6 @@ class DefaultConfigurationController extends AbstractAdminItemController
 			$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
 			if($this->config->get_display_type() == DefaultRichModuleConfig::GRID_VIEW)
 				$this->config->set_items_per_row($this->form->get_value('items_per_row'));
-			$this->config->set_default_content($this->form->get_value('default_content'));
 			
 			if (self::get_module()->get_configuration()->has_categories())
 			{

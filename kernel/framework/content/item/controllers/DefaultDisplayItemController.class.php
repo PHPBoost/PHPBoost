@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 28
+ * @version     PHPBoost 6.0 - last update: 2021 01 30
  * @since       PHPBoost 6.0 - 2020 03 12
 */
 
@@ -162,7 +162,7 @@ class DefaultDisplayItemController extends AbstractItemController
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->get_item()->get_title(), (self::get_module()->get_configuration()->has_categories() && $this->get_item()->get_category()->get_id() != Category::ROOT_CATEGORY ? $this->get_item()->get_category()->get_name() . ' - ' : '') . self::get_module()->get_configuration()->get_name());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url($this->current_url);
-		if (self::get_module()->get_configuration()->has_rich_items())
+		if (self::get_module()->get_configuration()->has_rich_items() && $this->module_item->content_field_enabled())
 			$graphical_environment->get_seo_meta_data()->set_description($this->get_item()->get_real_summary());
 
 		if (self::get_module()->get_configuration()->has_rich_items() && $this->get_item()->has_thumbnail())

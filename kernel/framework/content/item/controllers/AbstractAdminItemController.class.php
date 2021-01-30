@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 28
+ * @version     PHPBoost 6.0 - last update: 2021 01 30
  * @since       PHPBoost 6.0 - 2020 02 08
 */
 
@@ -20,6 +20,7 @@ abstract class AbstractAdminItemController extends AdminModuleController
 	protected $lang;
 	protected $items_lang;
 	protected $view;
+	protected $module_item;
 
 	public function __construct($module_id = '')
 	{
@@ -38,6 +39,9 @@ abstract class AbstractAdminItemController extends AdminModuleController
 		));
 		
 		$this->view->put_all($this->get_additional_view_parameters());
+		
+		$item_class_name = self::get_module()->get_configuration()->get_item_name();
+		$this->module_item = new $item_class_name(self::$module_id);
 	}
 
 	/**

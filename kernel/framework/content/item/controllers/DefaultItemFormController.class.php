@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 28
+ * @version     PHPBoost 6.0 - last update: 2021 01 30
  * @since       PHPBoost 6.0 - 2020 05 16
  * @contributor xela <xela@phpboost.com>
 */
@@ -226,19 +226,22 @@ class DefaultItemFormController extends AbstractItemController
 	{
 		if (self::get_module()->get_configuration()->has_rich_items())
 		{
-			$fieldset->add_field(new FormFieldCheckbox('summary_enabled', $this->common_lang['form.custom.summary.enabled'], $this->get_item()->is_summary_enabled(),
-				array('description' => StringVars::replace_vars($this->common_lang['form.custom.summary.enabled.description'], array('number' => $this->config->get_auto_cut_characters_number())), 'events' => array('click' => '
-				if (HTMLForms.getField("summary_enabled").getValue()) {
-					HTMLForms.getField("summary").enable();
-				} else {
-					HTMLForms.getField("summary").disable();
-				}'))
-			));
+			if ($this->module_item->content_field_enabled())
+			{
+				$fieldset->add_field(new FormFieldCheckbox('summary_enabled', $this->common_lang['form.custom.summary.enabled'], $this->get_item()->is_summary_enabled(),
+					array('description' => StringVars::replace_vars($this->common_lang['form.custom.summary.enabled.description'], array('number' => $this->config->get_auto_cut_characters_number())), 'events' => array('click' => '
+					if (HTMLForms.getField("summary_enabled").getValue()) {
+						HTMLForms.getField("summary").enable();
+					} else {
+						HTMLForms.getField("summary").disable();
+					}'))
+				));
 
-			$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->common_lang['form.summary'], $this->get_item()->get_summary(),
-				array('required' => true, 'hidden' => ($this->request->is_post_method() ? !$this->request->get_postbool(self::$module_id . '_form_summary_enabled', false) : !$this->get_item()->is_summary_enabled()))
-			));
-			
+				$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->common_lang['form.summary'], $this->get_item()->get_summary(),
+					array('required' => true, 'hidden' => ($this->request->is_post_method() ? !$this->request->get_postbool(self::$module_id . '_form_summary_enabled', false) : !$this->get_item()->is_summary_enabled()))
+				));
+			}
+
 			if ($this->config->get_author_displayed())
 			{
 				$fieldset->add_field(new FormFieldCheckbox('author_custom_name_enabled', $this->common_lang['form.author_custom_name_enabled'], $this->get_item()->is_author_custom_name_enabled(),
@@ -314,7 +317,8 @@ class DefaultItemFormController extends AbstractItemController
 
 		if (self::get_module()->get_configuration()->has_rich_items())
 		{
-			$this->get_item()->set_summary(($this->form->get_value('summary_enabled') ? $this->form->get_value('summary') : ''));
+			if ($this->module_item->content_field_enabled())
+				$this->get_item()->set_summary(($this->form->get_value('summary_enabled') ? $this->form->get_value('summary') : ''));
 			
 			if ($this->config->get_author_displayed())
 				$this->get_item()->set_author_custom_name(($this->form->get_value('author_custom_name') && $this->form->get_value('author_custom_name') !== $this->get_item()->get_author_user()->get_display_name() ? $this->form->get_value('author_custom_name') : ''));
