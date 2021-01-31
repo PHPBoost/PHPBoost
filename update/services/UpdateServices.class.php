@@ -795,34 +795,12 @@ class UpdateServices
 
 	private function delete_old_files_templates()
 	{
-		$file = new File(PATH_TO_ROOT . '/templates/default/framework/builder/form/FormFieldMultipleFilePicker.tpl');
-		$file->delete();
 
-		$file = new File(PATH_TO_ROOT . '/templates/default/theme/admin_colors.css');
-		$file->delete();
-
-		$file = new File(PATH_TO_ROOT . '/templates/default/theme/admin_content.css');
-		$file->delete();
-
-		$file = new File(PATH_TO_ROOT . '/templates/default/theme/admin_cssmenu.css');
-		$file->delete();
-
-		$file = new File(PATH_TO_ROOT . '/templates/default/theme/admin_design.css');
-		$file->delete();
-
-		$file = new File(PATH_TO_ROOT . '/templates/default/theme/admin_form.css');
-		$file->delete();
-
-		$file = new File(PATH_TO_ROOT . '/templates/default/theme/admin_global.css');
-		$file->delete();
-
-		$file = new File(PATH_TO_ROOT . '/templates/default/theme/admin_menus.css');
-		$file->delete();
-
-		$file = new File(PATH_TO_ROOT . '/templates/default/theme/admin_table.css');
-		$file->delete();
-
-		$file = new File(PATH_TO_ROOT . '/templates/base/theme/colors.css');
+	        $folder = new Folder(PATH_TO_ROOT . '/templates/default');
+		if ($folder->exists())
+		$folder->delete();
+                
+                $file = new File(PATH_TO_ROOT . '/templates/base/theme/colors.css');
 		$file->delete();
 
 		$file = new File(PATH_TO_ROOT . '/templates/base/theme/content.css');
