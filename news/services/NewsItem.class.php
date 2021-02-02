@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 16
+ * @version     PHPBoost 6.0 - last update: 2021 02 02
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -420,23 +420,23 @@ class NewsItem
 			Date::get_array_tpl_vars($this->publishing_start_date,'differed_publishing_start_date'),
 			array(
 				// Conditions
-				'C_VISIBLE'            => $this->is_published(),
-				'C_CONTROLS'		   => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
-				'C_EDIT'               => $this->is_authorized_to_edit(),
-				'C_DELETE'             => $this->is_authorized_to_delete(),
-				'C_HAS_THUMBNAIL'      => $this->has_thumbnail(),
-				'C_HAS_UPDATE_DATE'    => $this->has_update_date(),
-				'C_AUTHOR_GROUP_COLOR' => !empty($user_group_color),
-				'C_AUTHOR_DISPLAYED'   => $config->get_author_displayed(),
-				'C_AUTHOR_CUSTOM_NAME' => $this->is_author_custom_name_enabled(),
-				'C_VIEWS_NUMBER'       => $config->get_views_number(),
-				'C_SEVERAL_VIEWS'      => $this->get_views_number() > 1,
-				'C_READ_MORE'          => !$this->get_summary_enabled() && TextHelper::strlen($content) > $config->get_characters_number_to_cut() && $description != @strip_tags($content, '<br><br/>'),
-				'C_SOURCES'            => $nbr_sources > 0,
-				'C_DIFFERED'           => $this->published == self::DEFERRED_PUBLICATION,
-				'C_TOP_LIST'           => $this->top_list_enabled(),
-				'C_NEW_CONTENT'        => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('news', $this->get_publishing_start_date() != null ? $this->get_publishing_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_published(),
-				'C_ID_CARD'            => ContentManagementConfig::load()->module_id_card_is_enabled('news') && $this->is_published(),
+				'C_VISIBLE'              => $this->is_published(),
+				'C_CONTROLS'		     => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
+				'C_EDIT'                 => $this->is_authorized_to_edit(),
+				'C_DELETE'               => $this->is_authorized_to_delete(),
+				'C_HAS_THUMBNAIL'        => $this->has_thumbnail(),
+				'C_HAS_UPDATE_DATE'      => $this->has_update_date(),
+				'C_AUTHOR_GROUP_COLOR'   => !empty($user_group_color),
+				'C_AUTHOR_DISPLAYED'     => $config->get_author_displayed(),
+				'C_AUTHOR_CUSTOM_NAME'   => $this->is_author_custom_name_enabled(),
+				'C_VIEWS_NUMBER_ENABLED' => $config->get_views_number_enabled(),
+				'C_SEVERAL_VIEWS'        => $this->get_views_number() > 1,
+				'C_READ_MORE'            => !$this->get_summary_enabled() && TextHelper::strlen($content) > $config->get_characters_number_to_cut() && $description != @strip_tags($content, '<br><br/>'),
+				'C_SOURCES'              => $nbr_sources > 0,
+				'C_DIFFERED'             => $this->published == self::DEFERRED_PUBLICATION,
+				'C_TOP_LIST'             => $this->top_list_enabled(),
+				'C_NEW_CONTENT'          => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('news', $this->get_publishing_start_date() != null ? $this->get_publishing_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_published(),
+				'C_ID_CARD'              => ContentManagementConfig::load()->module_id_card_is_enabled('news') && $this->is_published(),
 
 				// Item
 				'ID'                  => $this->id,

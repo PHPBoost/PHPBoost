@@ -66,7 +66,7 @@
 										<i class="far fa-comments" aria-hidden="true"></i> # IF items.C_COMMENTS #{items.COMMENTS_NUMBER} # ENDIF # {items.L_COMMENTS}
 									</span>
 								# ENDIF #
-								# IF items.C_VIEWS_NUMBER #
+								# IF items.C_VIEWS_NUMBER_ENABLED #
 									<span class="pinned" role="contentinfo" aria-label="{items.VIEWS_NUMBER} # IF items.C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #"><i class="far fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span>
 								# ENDIF #
 							</div>
