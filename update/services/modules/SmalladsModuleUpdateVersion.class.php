@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 20
+ * @version     PHPBoost 6.0 - last update: 2021 02 02
  * @since       PHPBoost 5.1 - 2018 09 20
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -56,6 +56,7 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 					'summary' => array('type' => 'text', 'length' => 65000),
 					'brand' => array('type' => 'string', 'length' => 255),
 					'completed' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
+					'archived' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 					'location' => array('type' => 'text', 'length' => 65000),
 					'other_location' => array('type' => 'string', 'length' => 255),
 					'views_number' => array('type' => 'integer', 'length' => 11, 'default' => 0),
