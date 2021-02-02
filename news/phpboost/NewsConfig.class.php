@@ -116,7 +116,7 @@ class NewsConfig extends AbstractConfigData
 
 	public function set_views_number_enabled($views_number_enabled)
 	{
-		$this->set_property(self::VIEWS_NUMBER_ENABLED, $views_numbe_enabledr);
+		$this->set_property(self::VIEWS_NUMBER_ENABLED, $views_number_enabled);
 	}
 
 	public function get_display_type()
