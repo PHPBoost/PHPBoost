@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 13
+ * @version     PHPBoost 6.0 - last update: 2021 02 02
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -77,7 +77,7 @@ class AdminNewsConfigController extends AdminModuleController
 			array('class' => 'custom-checkbox')
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('views_number', $this->admin_common_lang['config.views.number.enabled'], $this->config->get_views_number(),
+		$fieldset->add_field(new FormFieldCheckbox('views_number_enabled', $this->admin_common_lang['config.views.number.enabled'], $this->config->get_views_number_enabled(),
 			array('class' => 'custom-checkbox')
 		));
 
@@ -178,7 +178,7 @@ class AdminNewsConfigController extends AdminModuleController
 		$this->config->set_characters_number_to_cut($this->form->get_value('characters_number_to_cut', $this->config->get_characters_number_to_cut()));
 		$this->config->set_item_suggestions_enabled($this->form->get_value('item_suggestions_enabled'));
 		$this->config->set_author_displayed($this->form->get_value('author_displayed'));
-		$this->config->set_views_number($this->form->get_value('views_number'));
+		$this->config->set_views_number_enabled($this->form->get_value('views_number_enabled'));
 		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
         $this->config->set_default_content($this->form->get_value('default_content'));
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
