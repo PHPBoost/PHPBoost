@@ -65,7 +65,7 @@ class NewsConfigUpdateVersion extends ConfigUpdateVersion
 				$nb_view_enabled = $old_config->get_property('nb_view_enabled');
 			} catch (PropertyNotFoundException $e) {}
 			if ($nb_view_enabled)
-				$config->set_views_number($nb_view_enabled);
+				$config->set_views_number_enabled($nb_view_enabled);
 				
 			try {
 				$display_type = $old_config->get_property('display_type');
