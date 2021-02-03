@@ -106,6 +106,7 @@ class Environment
 		//check (if function is enabled) and setup php for working with Unicode data
 		if (function_exists('mb_internal_encoding')) { mb_internal_encoding('UTF-8'); }
 		if (function_exists('mb_regex_encoding')) { mb_regex_encoding('UTF-8'); }
+                if (function_exists('mb_http_input')){mb_http_input('S');}
 		if (function_exists('mb_http_output')) { mb_http_output('UTF-8'); }
 		if (function_exists('mb_language')) { mb_language('uni'); }
 		ob_start('mb_output_handler');
