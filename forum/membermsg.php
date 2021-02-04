@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 21
+ * @version     PHPBoost 6.0 - last update: 2021 02 04
  * @since       PHPBoost 1.6 - 2007 04 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -20,6 +20,12 @@ define('TITLE', $LANG['title_forum']);
 define('DESCRIPTION', $LANG['member_msg_seo']);
 require_once('../kernel/header.php');
 $request = AppContext::get_request();
+
+if (!AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), UserAccountsConfig::AUTH_READ_MEMBERS_BIT))
+{
+	$error_controller = PHPBoostErrors::user_not_authorized();
+	DispatchManager::redirect($error_controller);
+}
 
 $view_msg = $request->get_getint('id', 0);
 if (!empty($view_msg)) // Display all user's messages
