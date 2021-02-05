@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 10 19
+ * @version     PHPBoost 6.0 - last update: 2021 02 05
  * @since       PHPBoost 5.2 - 2020 06 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -65,6 +65,7 @@ class PagesCategoryController extends ModuleController
 			'C_CONTROLS' => AppContext::get_current_user()->get_level() == User::ADMIN_LEVEL,
 			'C_NO_ITEM' => $result->get_rows_count() == 0,
 			'C_ITEMS' => $result->get_rows_count() > 0,
+			'C_CATEGORY_THUMBNAIL' => !empty($this->get_category()->get_thumbnail()->rel()),
 			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
 			'CATEGORY_ID' => $this->get_category()->get_id(),
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
