@@ -17,18 +17,20 @@
 
 # START preview #
 	<section>
-		<header>
+		<header class="section-header">
 			<h1>{L_PREVIEWING}: {preview.TITLE}</h1>
 		</header>
-		<div class="content" id="preview">
-			# START preview.menu #
-				<div class="wiki-summary">
-					<div class="wiki-summary-title">{L_TABLE_OF_CONTENTS}</div>
-					{preview.menu.MENU}
-				</div>
-			# END preview.menu #
-			<br /><br />
-			{preview.CONTENTS}
+		<div class="sub-section">
+			<div class="content" id="preview">
+				# START preview.menu #
+					<div class="wiki-summary">
+						<div class="wiki-summary-title">{L_TABLE_OF_CONTENTS}</div>
+						{preview.menu.MENU}
+					</div>
+				# END preview.menu #
+				<br /><br />
+				{preview.CONTENTS}
+			</div>			
 		</div>
 		<footer></footer>
 	</section>
