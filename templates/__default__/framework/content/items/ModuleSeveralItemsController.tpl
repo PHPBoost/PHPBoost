@@ -1,5 +1,5 @@
 <section id="module-{MODULE_ID}">
-	<header>
+	<header class="section-header">
 		<div class="align-right controls">
 			# IF C_SYNDICATION #<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a># ENDIF #
 			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF ## ENDIF #
@@ -17,13 +17,13 @@
 		</h1>
 	</header>
 	# IF C_CATEGORY_DESCRIPTION #
-		<div class="cat-description">
+		<div class="cat-description sub-section">
 			{CATEGORY_DESCRIPTION}
 		</div>
 	# ENDIF #
 
 	# IF C_SUB_CATEGORIES #
-		<div class="cell-flex cell-tile cell-columns-{CATEGORIES_PER_ROW}">
+		<div class="cell-flex cell-tile cell-columns-{CATEGORIES_PER_ROW} sub-section">
 			# START sub_categories_list #
 				<div class="cell category-{sub_categories_list.CATEGORY_ID}" itemscope>
 					<div class="cell-header">
@@ -50,102 +50,106 @@
 
 	# IF C_ITEMS #
 		# IF C_SEVERAL_ITEMS #
-			# INCLUDE SORTING_FORM #
-			<div class="spacer"></div>
+			<div class="sub-section">
+				# INCLUDE SORTING_FORM #
+				<div class="spacer"></div>
+			</div>
 		# ENDIF #
 		# IF C_TABLE_VIEW #
-			<table class="table">
-				<thead>
-					<tr>
-						<th>${TextHelper::ucfirst(@title)}</th>
-						# IF NOT C_MEMBER_ITEMS ## IF C_ENABLED_AUTHOR #<th class="col-small">${TextHelper::ucfirst(@author)}</th># ENDIF ## ENDIF #
-						# IF C_ENABLED_DATE #<th class="col-small">${TextHelper::ucfirst(@date)}</th># ENDIF #
-						# IF C_ENABLED_CATEGORY #<th class="col-small">${TextHelper::ucfirst(@category)}</th># ENDIF #
-						# IF C_ENABLED_VIEWS #<th class="col-small">${TextHelper::ucfirst(@views)}</th># ENDIF #
-						# IF C_ENABLED_VISITS #<th class="col-small">${TextHelper::ucfirst(@visits)}</th># ENDIF #
-						# IF C_ENABLED_DOWNLOADS #<th class="col-small">${TextHelper::ucfirst(@downloads)}</th># ENDIF #
-						# IF C_ENABLED_NOTATION #<th class="col-small">${TextHelper::ucfirst(@note)}</th># ENDIF #
-						# IF C_ENABLED_COMMENTS #<th class="col-small">${LangLoader::get_message('comments', 'comments-common')}</th># ENDIF #
-						# IF C_CONTROLS #<th class="col-smaller">${TextHelper::ucfirst(@controls)}</th># ENDIF #
-					</tr>
-				</thead>
-				<tbody>
-					# START items #
-						<tr class="category-{items.CATEGORY_ID}">
-							<td>
-								<a href="{items.U_ITEM}" itemprop="name"# IF items.C_NEW_CONTENT # class="new-content"# ENDIF#>{items.TITLE}</a>
-							</td>
-							# IF NOT C_MEMBER_ITEMS #
-								# IF C_AUTHOR_DISPLAYED #
-									<td>
-										<i class="far fa-user"></i>
-										# IF items.C_AUTHOR_CUSTOM_NAME #
-											<span class="pinned">{items.AUTHOR_CUSTOM_NAME}</span>
-										# ELSE #
-											# IF items.C_AUTHOR_EXIST #
-												<a itemprop="author" href="{items.U_AUTHOR}" class="pinned# IF C_AUTHOR_GROUP_COLOR # {items.AUTHOR_GROUP_COLOR}# ELSE # {items.AUTHOR_LEVEL_CLASS}# ENDIF #">
-													{items.AUTHOR_DISPLAY_NAME}
-												</a>
+			<div class="responsive-table sub-section">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>${TextHelper::ucfirst(@title)}</th>
+							# IF NOT C_MEMBER_ITEMS ## IF C_ENABLED_AUTHOR #<th class="col-small">${TextHelper::ucfirst(@author)}</th># ENDIF ## ENDIF #
+							# IF C_ENABLED_DATE #<th class="col-small">${TextHelper::ucfirst(@date)}</th># ENDIF #
+							# IF C_ENABLED_CATEGORY #<th class="col-small">${TextHelper::ucfirst(@category)}</th># ENDIF #
+							# IF C_ENABLED_VIEWS #<th class="col-small">${TextHelper::ucfirst(@views)}</th># ENDIF #
+							# IF C_ENABLED_VISITS #<th class="col-small">${TextHelper::ucfirst(@visits)}</th># ENDIF #
+							# IF C_ENABLED_DOWNLOADS #<th class="col-small">${TextHelper::ucfirst(@downloads)}</th># ENDIF #
+							# IF C_ENABLED_NOTATION #<th class="col-small">${TextHelper::ucfirst(@note)}</th># ENDIF #
+							# IF C_ENABLED_COMMENTS #<th class="col-small">${LangLoader::get_message('comments', 'comments-common')}</th># ENDIF #
+							# IF C_CONTROLS #<th class="col-smaller">${TextHelper::ucfirst(@controls)}</th># ENDIF #
+						</tr>
+					</thead>
+					<tbody>
+						# START items #
+							<tr class="category-{items.CATEGORY_ID}">
+								<td>
+									<a href="{items.U_ITEM}" itemprop="name"# IF items.C_NEW_CONTENT # class="new-content"# ENDIF#>{items.TITLE}</a>
+								</td>
+								# IF NOT C_MEMBER_ITEMS #
+									# IF C_AUTHOR_DISPLAYED #
+										<td>
+											<i class="far fa-user"></i>
+											# IF items.C_AUTHOR_CUSTOM_NAME #
+												<span class="pinned">{items.AUTHOR_CUSTOM_NAME}</span>
 											# ELSE #
-												<span class="pinned">{items.AUTHOR_DISPLAY_NAME}</span>
+												# IF items.C_AUTHOR_EXIST #
+													<a itemprop="author" href="{items.U_AUTHOR}" class="pinned# IF C_AUTHOR_GROUP_COLOR # {items.AUTHOR_GROUP_COLOR}# ELSE # {items.AUTHOR_LEVEL_CLASS}# ENDIF #">
+														{items.AUTHOR_DISPLAY_NAME}
+													</a>
+												# ELSE #
+													<span class="pinned">{items.AUTHOR_DISPLAY_NAME}</span>
+												# ENDIF #
 											# ENDIF #
-										# ENDIF #
+										</td>
+									# ENDIF #
+								# ENDIF #
+								# IF C_ENABLED_DATE #
+									<td>
+										<time datetime="# IF NOT items.C_DIFFERED #{items.DATE_ISO8601}# ELSE #{items.PUBLISHING_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished">
+											# IF NOT items.C_DIFFERED #
+												{items.DATE}
+											# ELSE #
+												{items.PUBLISHING_START_DATE}
+											# ENDIF #
+										</time>
 									</td>
 								# ENDIF #
-							# ENDIF #
-							# IF C_ENABLED_DATE #
-								<td>
-									<time datetime="# IF NOT items.C_DIFFERED #{items.DATE_ISO8601}# ELSE #{items.PUBLISHING_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished">
-										# IF NOT items.C_DIFFERED #
-											{items.DATE}
-										# ELSE #
-											{items.PUBLISHING_START_DATE}
-										# ENDIF #
-									</time>
-								</td>
-							# ENDIF #
-							# IF C_ENABLED_CATEGORY #
-								<td>
-									<a itemprop="about" href="{items.U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {items.CATEGORY_NAME}</a>
-								</td>
-							# ENDIF #
-							# IF C_ENABLED_VIEWS #
-								<td>
-									{items.VIEWS_NUMBER} # IF items.C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #
-								</td>
-							# ENDIF #
-							# IF C_ENABLED_VISITS #
-								<td class="col-small">
-									{items.VISITS_NUMBER} # IF items.C_SEVERAL_VISITS #{@visits}# ELSE #{@visit}# ENDIF #
-								</td>
-							# ENDIF #
-							# IF C_ENABLED_DOWNLOADS #
-								<td class="col-small">
-									{items.DOWNLOADS_NUMBER} # IF items.C_SEVERAL_DOWNLOADS #{@downloads}# ELSE #{@download}# ENDIF #
-								</td>
-							# ENDIF #
-							# IF C_ENABLED_NOTATION #
-								<td>
-									{items.STATIC_NOTATION}
-								</td>
-							# ENDIF #
-							# IF C_ENABLED_COMMENTS #
-								<td>
-									{items.COMMENTS_NUMBER} # IF items.C_SEVERAL_COMMENTS #${TextHelper::lcfirst(LangLoader::get_message('comments', 'comments-common'))}# ELSE #${TextHelper::lcfirst(LangLoader::get_message('comment', 'comments-common'))}# ENDIF #
-								</td>
-							# ENDIF #
-							# IF items.C_CONTROLS #
-								<td class="controls">
-									<a href="{items.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
-									<a href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
-								</td>
-							# ENDIF #
-						</tr>
-					# END items #
-				</tbody>
-			</table>
+								# IF C_ENABLED_CATEGORY #
+									<td>
+										<a itemprop="about" href="{items.U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {items.CATEGORY_NAME}</a>
+									</td>
+								# ENDIF #
+								# IF C_ENABLED_VIEWS #
+									<td>
+										{items.VIEWS_NUMBER} # IF items.C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #
+									</td>
+								# ENDIF #
+								# IF C_ENABLED_VISITS #
+									<td class="col-small">
+										{items.VISITS_NUMBER} # IF items.C_SEVERAL_VISITS #{@visits}# ELSE #{@visit}# ENDIF #
+									</td>
+								# ENDIF #
+								# IF C_ENABLED_DOWNLOADS #
+									<td class="col-small">
+										{items.DOWNLOADS_NUMBER} # IF items.C_SEVERAL_DOWNLOADS #{@downloads}# ELSE #{@download}# ENDIF #
+									</td>
+								# ENDIF #
+								# IF C_ENABLED_NOTATION #
+									<td>
+										{items.STATIC_NOTATION}
+									</td>
+								# ENDIF #
+								# IF C_ENABLED_COMMENTS #
+									<td>
+										{items.COMMENTS_NUMBER} # IF items.C_SEVERAL_COMMENTS #${TextHelper::lcfirst(LangLoader::get_message('comments', 'comments-common'))}# ELSE #${TextHelper::lcfirst(LangLoader::get_message('comment', 'comments-common'))}# ENDIF #
+									</td>
+								# ENDIF #
+								# IF items.C_CONTROLS #
+									<td class="controls">
+										<a href="{items.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+										<a href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+									</td>
+								# ENDIF #
+							</tr>
+						# END items #
+					</tbody>
+				</table>
+			</div>
 		# ELSE #
-			<div class="# IF C_GRID_VIEW #cell-flex cell-columns-{ITEMS_PER_ROW}# ELSE #cell-row# ENDIF #">
+			<div class="sub-section # IF C_GRID_VIEW #cell-flex cell-columns-{ITEMS_PER_ROW}# ELSE #cell-row# ENDIF #">
 				# START items #
 					<article id="{MODULE_ID}-item-{items.ID}" class="{MODULE_ID}-item several-items category-{items.CATEGORY_ID} cell# IF items.C_PRIME_ITEM # prime-item# ENDIF ## IF items.C_NEW_CONTENT # new-content# ENDIF#" itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 						<header class="cell-header">
@@ -289,13 +293,14 @@
 
 	# ELSE #
 		# IF NOT C_HIDE_NO_ITEM_MESSAGE #
-			<div class="content">
-				<div class="message-helper bgc notice align-center">
-					${LangLoader::get_message('no_item_now', 'common')}
+			<div class="sub-section">
+				<div class="content">
+					<div class="message-helper bgc notice align-center">
+						${LangLoader::get_message('no_item_now', 'common')}
+					</div>
 				</div>
 			</div>
 		# ENDIF #
 	# ENDIF #
-
 	<footer># IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #</footer>
 </section>
