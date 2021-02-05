@@ -1,9 +1,9 @@
 <section id="sandbox-home">
 	# INCLUDE SANDBOX_SUBMENU #
-	<header>
+	<header class="section-header">
 		<h1>{@sandbox.module.title}</h1>
 	</header>
-	<div class="content">
+	<div class="sub-section">
 		<article>
 		{WELCOME_MESSAGE}
 		</article>

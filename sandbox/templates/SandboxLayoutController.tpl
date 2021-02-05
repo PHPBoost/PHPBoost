@@ -1,15 +1,19 @@
 <section id="sandbox-layout">
 	# INCLUDE SANDBOX_SUBMENU #
-	<header>
+	<header class="section-header">
 		<h1>
 			{@sandbox.module.title} - {@layout.title.layouts}
 		</h1>
 	</header>
 
-	# INCLUDE GRID #
-	# INCLUDE CELL #
-	# INCLUDE MESSAGE #
-	# INCLUDE SORTABLE #
+	<div class="sub-section"><div class="content"># INCLUDE GRID #</div></div>
+
+	<div class="sub-section"><div class="content"># INCLUDE CELL #</div></div>
+
+	<div class="sub-section"><div class="content"># INCLUDE MESSAGE #</div></div>
+
+	<div class="sub-section"><div class="content"># INCLUDE SORTABLE #</div></div>
+
 
 
 	<footer></footer>

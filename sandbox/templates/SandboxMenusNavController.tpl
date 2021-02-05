@@ -1,21 +1,23 @@
 <section id="sandbox-nav-menus">
 	# INCLUDE SANDBOX_SUBMENU #
-	<header>
+	<header class="section-header">
 		<h1>{@cssmenu.h1}</h1>
 	</header>
-	<article>
-		<header>
-			<h2>{@cssmenu.h2}</h2>
-		</header>
-		<div class="content">
-			<div class="message-helper bgc warning">
-				{@H|cssmenu.warning}
+	<div class="sub-section">
+		<article>
+			<header>
+				<h2>{@cssmenu.h2}</h2>
+			</header>
+			<div class="content">
+				<div class="message-helper bgc warning">
+					{@H|cssmenu.warning}
+				</div>
+				<p>{@lorem.large.content}</p>
+				# INCLUDE MARKUP #
 			</div>
-			<p>{@lorem.large.content}</p>
-			# INCLUDE MARKUP #
-		</div>
-		<footer></footer>
-	</article>
+			<footer></footer>
+		</article>
+	</div>
 	<footer></footer>
 </section>
 

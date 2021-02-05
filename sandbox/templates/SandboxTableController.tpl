@@ -1,10 +1,12 @@
 <section id="sandbox-table">
 	# INCLUDE SANDBOX_SUBMENU #
-	<header>
+	<header class="section-header">
 		<h1>{@sandbox.module.title} - {@title.table}</h1>
 	</header>
-	<article class="content">
-			# INCLUDE TABLE #
-	</article>
+	<div class="sub-section">
+		<article>
+			<div class="content"># INCLUDE TABLE #</div>
+		</article>
+	</div>
 	<footer></footer>
 </section>

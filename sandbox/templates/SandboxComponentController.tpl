@@ -1,28 +1,34 @@
 <section id="sandbox-component">
 	# INCLUDE SANDBOX_SUBMENU #
-	<header>
+	<header class="section-header">
 		<h1>
 			{@sandbox.module.title} - {@title.component}
 		</h1>
 	</header>
 
-	# INCLUDE TYPOGRAPHY #
-	# INCLUDE COLOR #
-	# INCLUDE MEDIA #
-	# INCLUDE PROGRESSBAR #
-	# INCLUDE NOTATION #
+	<div class="sub-section"><div class="content"># INCLUDE TYPOGRAPHY #</div></div>
 
-	# INCLUDE MODAL #
+	<div class="sub-section"><div class="content"># INCLUDE COLOR #</div></div>
 
-	# INCLUDE LIST #
-	# INCLUDE EXPLORER #
-	# INCLUDE PAGINATION #
+	<div class="sub-section"><div class="content"># INCLUDE MEDIA #</div></div>
 
-	# INCLUDE TABLE #
+	<div class="sub-section"><div class="content"># INCLUDE PROGRESSBAR #</div></div>
 
-	# INCLUDE MESSAGE_HELPER #
+	<div class="sub-section"><div class="content"># INCLUDE NOTATION #</div></div>	
 
-	# INCLUDE TOOLTIP #
+	<div class="sub-section"><div class="content"># INCLUDE MODAL #</div></div>	
+
+	<div class="sub-section"><div class="content"># INCLUDE LIST #</div></div>
+
+	<div class="sub-section"><div class="content"># INCLUDE EXPLORER #</div></div>
+
+	<div class="sub-section"><div class="content"># INCLUDE PAGINATION #</div></div>	
+
+	<div class="sub-section"><div class="content"># INCLUDE TABLE #</div></div>	
+
+	<div class="sub-section"><div class="content"># INCLUDE MESSAGE_HELPER #</div></div>	
+
+	<div class="sub-section"><div class="content"># INCLUDE TOOLTIP #</div></div>	
 
 	<footer></footer>
 </section>

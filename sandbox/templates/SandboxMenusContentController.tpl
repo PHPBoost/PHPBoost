@@ -1,18 +1,18 @@
 <section id="sandbox-content-menus">
 	# INCLUDE SANDBOX_SUBMENU #
-	<header>
+	<header class="section-header">
 		<h1>
 			{@sandbox.module.title} - {@title.menu.content}
 		</h1>
 	</header>
 
-	# INCLUDE BASIC #
+	<div class="sub-section"><div class="content"># INCLUDE BASIC #</div></div>
 
-	# INCLUDE ACCORDION #
+	<div class="sub-section"><div class="content"># INCLUDE ACCORDION #</div></div>
 
-	# INCLUDE TABS #
+	<div class="sub-section"><div class="content"># INCLUDE TABS #</div></div>
 
-	# INCLUDE WIZARD #
+	<div class="sub-section"><div class="content"># INCLUDE WIZARD #</div></div>
 
 	<footer></footer>
 </section>
