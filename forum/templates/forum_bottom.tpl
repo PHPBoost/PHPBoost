@@ -76,11 +76,12 @@
 
 	<div class="forum-online">
 		# IF USERS_ONLINE #
-			<span class="float-left">
+		<div class="flex-between">
+			<div class="forum-online-users">
 				{TOTAL_ONLINE} {L_USER} {L_ONLINE} : {ADMIN} {L_ADMIN}, {MODO} {L_MODO}, {MEMBER} {L_MEMBER} {L_AND} {GUEST} {L_GUEST}
-				<span class="spacer"></span>
+				<div class="spacer"></div>
 				{L_USER} {L_ONLINE} : # IF C_NO_USER_ONLINE #<em>${LangLoader::get_message('no_member_online', 'main')}</em># ELSE #{USERS_ONLINE}# ENDIF #
-			</span>
+			</div>
 
 			<div class="forum-online-select-cat">
 				# IF SELECT_CAT #
@@ -112,7 +113,7 @@
 					</form>
 				# ENDIF #
 			</div>
-			<div class="spacer"></div>
+		</div>
 		# ENDIF #
 
 		# IF C_TOTAL_POST #
