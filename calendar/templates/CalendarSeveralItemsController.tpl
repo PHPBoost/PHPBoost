@@ -19,8 +19,10 @@
 	</header>
 	# IF NOT C_PENDING_ITEMS #
 		# IF NOT C_MEMBER_ITEMS #
-			<div id="calendar" class="sub-section content">
-				# INCLUDE CALENDAR #
+			<div id="calendar" class="sub-section">
+				<div class="content">
+					# INCLUDE CALENDAR #
+				</div>				
 			</div>
 		# ENDIF #
 	# ENDIF #
