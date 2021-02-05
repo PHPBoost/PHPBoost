@@ -8,7 +8,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2021 01 30
+ * @version     PHPBoost 5.2 - last update: 2021 02 05
  * @since       PHPBoost 3.0 - 2009 09 28
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -106,8 +106,6 @@ class Environment
 		//check (if function is enabled) and setup php for working with Unicode data
 		if (function_exists('mb_internal_encoding')) { mb_internal_encoding('UTF-8'); }
 		if (function_exists('mb_regex_encoding')) { mb_regex_encoding('UTF-8'); }
-		if (function_exists('mb_http_output')) { mb_http_output('UTF-8'); }
-		if (function_exists('mb_http_input')) { mb_http_input('S'); }
 		if (function_exists('mb_language')) { mb_language('uni'); }
 		ob_start('mb_output_handler');
 
