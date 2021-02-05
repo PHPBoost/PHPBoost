@@ -9,7 +9,9 @@
 	</header>
 	<div class="sub-section">
 		# IF NOT C_VISIBLE #
-			# INCLUDE NOT_VISIBLE_MESSAGE #
+			<div class="content">
+				# INCLUDE NOT_VISIBLE_MESSAGE #
+			</div>			
 		# ENDIF #
 		<article itemscope="itemscope" itemtype="https://schema.org/CreativeWork" id="download-item-{ID}" class="download-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #">
 			# IF C_CONTROLS #
