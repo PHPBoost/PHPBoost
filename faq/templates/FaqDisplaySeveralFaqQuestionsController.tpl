@@ -31,7 +31,7 @@
 # INCLUDE MSG #
 <section id="module-faq">
 	<header class="section-header">
-		<div class="align-right controls">
+		<div class="controls align-right">
 			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 			# IF C_CATEGORY #
 				# IF C_DISPLAY_REORDER_LINK #

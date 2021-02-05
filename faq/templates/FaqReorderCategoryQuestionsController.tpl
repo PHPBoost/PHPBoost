@@ -112,43 +112,43 @@
 					<fieldset id="questions-management">
 						<ul id="questions-list" class="sortable-block">
 							# START questions #
-							<li class="sortable-element# IF questions.C_NEW_CONTENT # new-content# ENDIF #" id="list-{questions.ID}" data-id="{questions.ID}">
-								<div class="sortable-selector" aria-label="${LangLoader::get_message('position.move', 'common')}"></div>
-								<div class="sortable-title">
-									<span class="question-title">{questions.QUESTION}</span>
-								</div>
-								<div class="sortable-actions">
-									# IF C_MORE_THAN_ONE_QUESTION #
-									<a href="#" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{questions.ID}" onclick="return false;"><i class="fa fa-fw fa-arrow-up" aria-hidden="true"></i></a>
-									<a href="#" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{questions.ID}" onclick="return false;"><i class="fa fa-fw fa-arrow-down" aria-hidden="true"></i></a>
-									# ENDIF #
-									<a href="{questions.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
-									<a href="#" onclick="return false;" aria-label="${LangLoader::get_message('delete', 'common')}" id="delete-{questions.ID}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
-								</div>
+								<li class="sortable-element# IF questions.C_NEW_CONTENT # new-content# ENDIF #" id="list-{questions.ID}" data-id="{questions.ID}">
+									<div class="sortable-selector" aria-label="${LangLoader::get_message('position.move', 'common')}"></div>
+									<div class="sortable-title">
+										<span class="question-title">{questions.QUESTION}</span>
+									</div>
+									<div class="sortable-actions">
+										# IF C_MORE_THAN_ONE_QUESTION #
+										<a href="#" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{questions.ID}" onclick="return false;"><i class="fa fa-fw fa-arrow-up" aria-hidden="true"></i></a>
+										<a href="#" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{questions.ID}" onclick="return false;"><i class="fa fa-fw fa-arrow-down" aria-hidden="true"></i></a>
+										# ENDIF #
+										<a href="{questions.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+										<a href="#" onclick="return false;" aria-label="${LangLoader::get_message('delete', 'common')}" id="delete-{questions.ID}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+									</div>
 
-								<script>
-									jQuery(document).ready(function() {
-										var faq_question = new FaqQuestion({questions.ID}, FaqQuestions);
+									<script>
+										jQuery(document).ready(function() {
+											var faq_question = new FaqQuestion({questions.ID}, FaqQuestions);
 
-										jQuery('#delete-{questions.ID}').on('click',function(){
-											faq_question.delete();
+											jQuery('#delete-{questions.ID}').on('click',function(){
+												faq_question.delete();
+											});
+
+											if (FaqQuestions.questions_number > 1) {
+												jQuery('#move-up-{questions.ID}').on('click',function(){
+													var li = jQuery(this).closest('li');
+													li.insertBefore( li.prev() );
+													FaqQuestions.change_reposition_pictures();
+												});
+												jQuery('#move-down-{questions.ID}').on('click',function(){
+													var li = jQuery(this).closest('li');
+													li.insertAfter( li.next() );
+													FaqQuestions.change_reposition_pictures();
+												});
+											}
 										});
-
-										if (FaqQuestions.questions_number > 1) {
-											jQuery('#move-up-{questions.ID}').on('click',function(){
-												var li = jQuery(this).closest('li');
-												li.insertBefore( li.prev() );
-												FaqQuestions.change_reposition_pictures();
-											});
-											jQuery('#move-down-{questions.ID}').on('click',function(){
-												var li = jQuery(this).closest('li');
-												li.insertAfter( li.next() );
-												FaqQuestions.change_reposition_pictures();
-											});
-										}
-									});
-								</script>
-							</li>
+									</script>
+								</li>
 							# END questions #
 						</ul>
 					</fieldset>
