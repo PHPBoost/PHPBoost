@@ -1,5 +1,5 @@
 <section id="module-download" class="category-{CATEGORY_ID}">
-	<header>
+	<header class="section-header">
 		<div class="controls align-right">
 			<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 			{@module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
@@ -10,7 +10,7 @@
 	# IF NOT C_VISIBLE #
 		# INCLUDE NOT_VISIBLE_MESSAGE #
 	# ENDIF #
-	<article itemscope="itemscope" itemtype="https://schema.org/CreativeWork" id="download-item-{ID}" class="download-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #">
+	<article itemscope="itemscope" itemtype="https://schema.org/CreativeWork" id="download-item-{ID}" class="sub-section download-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #">
 		# IF C_CONTROLS #
 			<div class="controls align-right">
 				# IF C_EDIT #<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
