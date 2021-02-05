@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 21
+ * @version     PHPBoost 6.0 - last update: 2021 02 05
  * @since       PHPBoost 3.0 - 2012 11 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -199,7 +199,10 @@ class CalendarAjaxCalendarController extends AbstractController
 					{
 						$birthday_day = $array_items[$day]['type'] == 'BIRTHDAY';
 						$color = $array_items[$day]['color'];
-						$class = 'calendar-event';
+						if ( (($i % 8) == 7) || (($i % 8) == 0))
+							$class = 'calendar-weekend calendar-event';
+						else
+							$class = 'calendar-other calendar-event';
 					}
 					else if (($day == date("j")) && ($month == date("m")) && ($year == date("Y")))
 						$class = 'calendar-today';

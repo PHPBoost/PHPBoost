@@ -19,7 +19,7 @@
 	}
 </script>
 
-<div id="date-select-form" # IF C_MINI_MODULE #class="cell-form"# ENDIF #>
+<div id="date-select-form"# IF C_MINI_MODULE # class="cell-form"# ENDIF #>
 	<form method="post">
 		<div class="grouped-inputs">
 			<a class="grouped-element bgc link-color" href="#" onclick="ChangeMonth(${escapejs(PREVIOUS_YEAR)}, ${escapejs(PREVIOUS_MONTH)});return false;" aria-label="{PREVIOUS_MONTH_TITLE}">

@@ -1,8 +1,8 @@
 # INCLUDE MESSAGE_HELPER #
 
 <section id="module-calendar">
-	<header>
-		<div class="align-right controls">
+	<header class="section-header">
+		<div class="controls align-right">
 			<a href="${relative_url(SyndicationUrlBuilder::rss('calendar'))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 		</div>
 		<h1>
@@ -17,15 +17,15 @@
 			# ENDIF #
 		</h1>
 	</header>
-	<div class="content">
-		<div id="calendar">
-			# INCLUDE CALENDAR #
-		</div>
-
-		<div id="events">
-			# INCLUDE EVENTS #
-		</div>
+	# IF NOT C_PENDING_ITEMS #
+		# IF NOT C_MEMBER_ITEMS #
+			<div id="calendar" class="sub-section content">
+				# INCLUDE CALENDAR #
+			</div>
+		# ENDIF #
+	# ENDIF #
+	<div id="events" class="sub-section">
+		# INCLUDE EVENTS #
 	</div>
-
 	<footer></footer>
 </section>

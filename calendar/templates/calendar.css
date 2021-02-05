@@ -3,6 +3,14 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
+#module-calendar .calendar-day {
+	word-wrap: normal;
+	overflow-wrap: normal;
+	hyphens: none;
+	text-align: center;
+	font-size: 2em;
+}
+
 #date-select-form .grouped-element { border-width: 0; }
 
 .location-map { margin: 0.618em 0; }

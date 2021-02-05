@@ -1,5 +1,5 @@
 <section id="module-calendar" class="category-{CATEGORY_ID}">
-	<header>
+	<header class="section-header">
 		<div class="controls align-right">
 			<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 			{@module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
@@ -8,7 +8,7 @@
 			<span itemprop="name">{TITLE}</span>
 		</h1>
 	</header>
-	<div itemscope="itemscope" itemtype="https://schema.org/Event" id="article-calendar-{ID}" class="calendar-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #">
+	<div itemscope="itemscope" itemtype="https://schema.org/Event" id="article-calendar-{ID}" class="sub-section calendar-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #">
 
 		<div class="flex-between">
 			<div class="more">
