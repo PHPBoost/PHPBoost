@@ -11,7 +11,7 @@
 		# IF NOT C_VISIBLE #
 			<div class="content">
 				# INCLUDE NOT_VISIBLE_MESSAGE #
-			</div>			
+			</div>
 		# ENDIF #
 		<article itemscope="itemscope" itemtype="https://schema.org/CreativeWork" id="download-item-{ID}" class="download-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #">
 			# IF C_CONTROLS #
@@ -108,15 +108,14 @@
 					# INCLUDE COMMENTS #
 				</aside>
 			# ENDIF #
-			<footer>
-				<meta itemprop="url" content="{U_ITEM}">
-				<meta itemprop="description" content="${escape(SUMMARY)}" />
-				# IF C_ENABLED_COMMENTS #
-				<meta itemprop="discussionUrl" content="{U_COMMENTS}">
-				<meta itemprop="interactionCount" content="{COMMENTS_NUMBER} UserComments">
-				# ENDIF #
-			</footer>
 		</article>
 	</div>
-	<footer></footer>
+	<footer>
+		<meta itemprop="url" content="{U_ITEM}">
+		<meta itemprop="description" content="${escape(SUMMARY)}" />
+		# IF C_ENABLED_COMMENTS #
+		<meta itemprop="discussionUrl" content="{U_COMMENTS}">
+		<meta itemprop="interactionCount" content="{COMMENTS_NUMBER} UserComments">
+		# ENDIF #
+	</footer>
 </section>
