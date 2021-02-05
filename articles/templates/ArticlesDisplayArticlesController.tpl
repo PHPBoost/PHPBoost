@@ -1,7 +1,7 @@
 <section id="module-articles" class="category-{CATEGORY_ID}">
 
-	<header>
-		<div class="align-right controls">
+	<header class="section-header">
+		<div class="controls align-right">
 			<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 			{MODULE_NAME}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"> <i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
@@ -10,7 +10,7 @@
 
 	# INCLUDE NOT_VISIBLE_MESSAGE #
 
-	<article id="article-articles-{ID}" class="articles-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="https://schema.org/Article">
+	<article id="article-articles-{ID}" class="sub-section articles-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="https://schema.org/Article">
 		<div class="flex-between">
 			<div class="more">
 				# IF C_AUTHOR_DISPLAYED #
@@ -35,7 +35,7 @@
 						<a href="#comments-list"><i class="fa fa-comments" aria-hidden="true"></i> {COMMENTS_LABEL}</a>
 					</span>
 				# ENDIF #
-				# IF NOT C_ROOT_CATEGORY # 
+				# IF NOT C_ROOT_CATEGORY #
 				<span class="pinned">
 					<i class="far fa-folder" aria-hidden="true"></i> <a itemprop="about" class="small" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
 				</span>
@@ -55,7 +55,7 @@
 		# ENDIF #
 
 		# IF PAGE_NAME #
-			<h2 class="title page_name">{PAGE_NAME}</h2>
+			<h2 class="page-title-name">{PAGE_NAME}</h2>
 		# ENDIF #
 
 		<div class="content" itemprop="text">

@@ -1,5 +1,4 @@
 <script>
-<!--
 	function bbcode_page()
 	{
 		var page = prompt('{@articles.add.page.title}', '');
@@ -27,8 +26,8 @@
 			# ENDIF #
 		}
 	}
-	
-	function page_to_edit(page) 
+
+	function page_to_edit(page)
 	{
 		var searchText = page;
 		var content_input = document.getElementById('articles_form_content');
@@ -46,10 +45,9 @@
 	function setPagePosition(page) {
 		page_to_edit(page);
 	}
-	
+
 	# IF C_PAGE #
 	window.onload = function(){setPagePosition({PAGE})};
 	# ENDIF #
--->
 </script>
 # INCLUDE MSG # # INCLUDE FORM #
