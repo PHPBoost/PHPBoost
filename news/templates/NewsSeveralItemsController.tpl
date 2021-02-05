@@ -1,6 +1,6 @@
 <section id="module-news">
 	<header class="section-header">
-		<div class="align-right controls">
+		<div class="controls align-right">
 			<a href="${relative_url(SyndicationUrlBuilder::rss('news', ID_CATEGORY))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-fw fa-rss warning" aria-hidden="true"></i></a>
 			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF ## ENDIF #
 		</div>
