@@ -1,6 +1,6 @@
 <section id="module-{MODULE_ID}" class="category-{CATEGORY_ID}">
 	<header class="section-header">
-		<div class="align-right controls">
+		<div class="controls align-right">
 			# IF C_SYNDICATION #<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a># ENDIF #
 			{MODULE_NAME}
 			# IF C_HAS_CATEGORIES #
