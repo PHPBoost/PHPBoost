@@ -30,7 +30,10 @@
     flex-direction: column;
 }
 
-.dashboard-writting-pad form textarea { flex: 1 1 auto; }
+.dashboard-writting-pad form textarea {
+    flex: 1 1 auto;
+    min-height: 180px;
+}
 
 /* --- Alerts --- */
 .alert-priority {
