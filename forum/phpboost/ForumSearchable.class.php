@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 21
+ * @version     PHPBoost 6.0 - last update: 2021 02 07
  * @since       PHPBoost 3.0 - 2012 02 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -175,18 +175,12 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		for ($i = 0; $i < $nb_results; $i++)
 		$ids[] = $results[$i]['id_content'];
 
-		$request = "
-		SELECT
-			t.id AS t_id,
-			msg.id AS msg_id,
-			msg.user_id AS user_id,
-			msg.idtopic AS topic_id,
-			msg.timestamp AS date,
-			t.title AS title,
+		$request = "SELECT
+			t.id AS t_id, t.title AS title,
+			msg.id AS msg_id, msg.user_id AS user_id, msg.idtopic AS topic_id, msg.timestamp AS date, msg.content AS content,
 			m.display_name,
 			ext_field.user_avatar AS avatar,
-			s.user_id AS connect,
-			msg.content AS content
+			s.user_id AS connect
 		FROM " . PREFIX . "forum_msg msg
 		LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.timestamp > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "' AND s.user_id != -1
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
@@ -231,16 +225,17 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 
 		$tpl->put_all(array_merge(
 			Date::get_array_tpl_vars($result_date, 'DATE'), array(
-			'C_USER_ONLINE'    => !empty($result_data['connect']) && $result_data['user_id'] !== -1,
-			'U_USER_PROFILE'   => !empty($result_data['user_id']) ? UserUrlBuilder::profile($result_data['user_id'])->rel() : '',
-			'C_USER_PSEUDO'    => !empty($result_data['display_name']),
-			'USER_PSEUDO'      => $result_data['display_name'],
-			'U_TOPIC'          => PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $result_data['topic_id'], '-' . $result_data['topic_id'] . $rewrited_title . '.php') . '#m' . $result_data['msg_id'],
-			'TITLE'            => stripslashes($result_data['title']),
-			'CONTENT'         => FormatingHelper::second_parse(stripslashes($result_data['content'])),
-			'C_USER_AVATAR'    => $user_accounts_config->is_default_avatar_enabled() || !empty($result_data['avatar']),
-			'U_USER_AVATAR'    => Url::to_rel($result_data['avatar']),
-			'U_DEFAULT_AVATAR' => $user_accounts_config->get_default_avatar()
+			'C_USER_ONLINE'     => !empty($result_data['connect']) && $result_data['user_id'] !== -1,
+			'U_USER_PROFILE'    => !empty($result_data['user_id']) ? UserUrlBuilder::profile($result_data['user_id'])->rel() : '',
+			'C_USER_PSEUDO'     => !empty($result_data['display_name']),
+			'USER_PSEUDO'       => $result_data['display_name'],
+			'U_TOPIC'           => PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $result_data['topic_id'], '-' . $result_data['topic_id'] . $rewrited_title . '.php') . '#m' . $result_data['msg_id'],
+			'TITLE'             => stripslashes($result_data['title']),
+			'CONTENT'           => FormatingHelper::second_parse(stripslashes($result_data['content'])),
+			'C_USER_AVATAR' 	=> $user_accounts_config->is_default_avatar_enabled() || !empty($result_data['avatar']),
+			'U_DEFAULT_AVATAR'  => $user_accounts_config->get_default_avatar(),
+			'C_USER_HAS_AVATAR' => !empty($result_data['avatar']),
+			'U_USER_AVATAR'     => Url::to_rel($result_data['avatar']),
 		)));
 
 		return $tpl->render();

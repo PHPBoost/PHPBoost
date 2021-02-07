@@ -260,7 +260,7 @@
 					</div>
 					<div class="message-infos">
 						<time datetime="{msg.TOPIC_DATE_FULL}" itemprop="datePublished">${LangLoader::get_message('on', 'main')} {msg.TOPIC_DATE_FULL}</time>
-						<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" class="hidden-small-screens" aria-label="${LangLoader::get_message('link.to.anchor', 'comments-common')}">\#{msg.ID}</i></a>
+						<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" aria-label="${LangLoader::get_message('link.to.anchor', 'comments-common')}">\#{msg.ID}</i></a>
 					</div>
 				</div>
 			</div>

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 04
+ * @version     PHPBoost 6.0 - last update: 2021 02 05
  * @since       PHPBoost 1.6 - 2007 04 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -81,11 +81,11 @@ if (!empty($view_msg)) // Display all user's messages
 		$result = PersistenceContext::get_querier()->select("SELECT
 			msg.id, msg.user_id, msg.idtopic, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, msg.content,
 			m2.display_name AS login_edit,
-			m.user_groups, m.display_name, m.level, m.email, m.show_email, m.registration_date AS registered, m.posted_msg, m.warning_percentage, m.delay_banned,
+			m.user_groups, m.display_name, m.level, m.email, m.show_email, m.registration_date AS registered, m.posted_msg, m.warning_percentage, m.delay_banned, m.posted_msg,
 			t.title, t.status, t.id_category, t.nbr_msg,
 			c.name,
 			s.user_id AS connect,
-			ext_field.user_avatar, m.posted_msg, ext_field.user_sign,
+			ext_field.user_avatar, ext_field.user_sign,
 			" . $extended_fields_to_recover_list . "m.warning_percentage, m.delay_readonly, m.delay_banned
 		FROM " . PREFIX . "forum_msg msg
 		LEFT JOIN " . PREFIX . "forum_topics t ON msg.idtopic = t.id

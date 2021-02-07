@@ -1,6 +1,7 @@
 
-	# INCLUDE forum_top #
+# INCLUDE forum_top #
 
+<div class="sub-section">
 	# START forums_list #
 		# START forums_list.endcats #
 					</tbody>
@@ -20,7 +21,6 @@
 		<script>
 			jQuery('#table-{forums_list.cats.IDCAT}').basictable();
 		</script>
-
 		<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-{forums_list.cats.IDCAT}" class="forum-content">
 			<header class="flex-between">
 				<h2>
@@ -98,5 +98,6 @@
 		# END forums_list.subcats #
 
 	# END forums_list #
+</div>
 
-	# INCLUDE forum_bottom #
+# INCLUDE forum_bottom #

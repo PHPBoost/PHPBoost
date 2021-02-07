@@ -151,5 +151,4 @@
 
 		<h1>{FORUM_NAME}</h1>
 
-			<div class="spacer"></div>
 	</header>
