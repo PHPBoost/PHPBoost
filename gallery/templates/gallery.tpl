@@ -238,7 +238,7 @@
 # INCLUDE message_helper #
 
 <section id="module-gallery">
-	<header>
+	<header class="section-header">
 		<div class="controls align-right">
 			<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-fw fa-rss warning" aria-hidden="true"></i></a>
 			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
@@ -249,8 +249,10 @@
 	</header>
 
 	# IF C_CATEGORY_DESCRIPTION #
-		<div class="cat-description">
-			{CATEGORY_DESCRIPTION}
+		<div class="sub-section">
+			<div class="cat-description">
+				{CATEGORY_DESCRIPTION}
+			</div>
 		</div>
 	# ENDIF #
 
@@ -298,225 +300,231 @@
 	</div>
 
 	# IF C_SUB_CATEGORIES #
-		<div class="cell-flex cell-columns-{COLUMNS_NUMBER} cell-tile">
-			# START sub_categories_list #
-				<div class="cell category-{sub_categories_list.CATEGORY_ID}" itemscope>
-					<div class="cell-header">
-						<h5 class="cell-name" itemprop="name"><a href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
-						<span class="small pinned notice" role="contentinfo" itemprop="items" aria-label="{sub_categories_list.PICTURES_NUMBER} # IF sub_categories_list.C_SEVERAL_PICTURES #{@gallery.items}# ELSE #{@gallery.item}# ENDIF #">{sub_categories_list.PICTURES_NUMBER}</span>
-					</div>
-					<div class="cell-body">
-						<div class="cell-thumbnail cell-landscape cell-center" itemprop="thumbnail">
-							# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
-								<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
-							# ENDIF #
-							<a class="cell-thumbnail-caption small" href="{sub_categories_list.U_CATEGORY}" aria-label="{sub_categories_list.CATEGORY_NAME}">
-								${LangLoader::get_message('see.category', 'categories-common')}
-							</a>
+		<div class="sub-section">
+			<div class="cell-flex cell-columns-{COLUMNS_NUMBER} cell-tile">
+				# START sub_categories_list #
+					<div class="cell category-{sub_categories_list.CATEGORY_ID}" itemscope>
+						<div class="cell-header">
+							<h5 class="cell-name" itemprop="name"><a href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
+							<span class="small pinned notice" role="contentinfo" itemprop="items" aria-label="{sub_categories_list.PICTURES_NUMBER} # IF sub_categories_list.C_SEVERAL_PICTURES #{@gallery.items}# ELSE #{@gallery.item}# ENDIF #">{sub_categories_list.PICTURES_NUMBER}</span>
+						</div>
+						<div class="cell-body">
+							<div class="cell-thumbnail cell-landscape cell-center" itemprop="thumbnail">
+								# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
+									<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
+								# ENDIF #
+								<a class="cell-thumbnail-caption small" href="{sub_categories_list.U_CATEGORY}" aria-label="{sub_categories_list.CATEGORY_NAME}">
+									${LangLoader::get_message('see.category', 'categories-common')}
+								</a>
+							</div>
 						</div>
 					</div>
-				</div>
-			# END sub_categories_list #
+				# END sub_categories_list #
+			</div>
+			# IF C_SUBCATEGORIES_PAGINATION #<span class="align-center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
+
 		</div>
-		# IF C_SUBCATEGORIES_PAGINATION #<span class="align-center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
 	# ENDIF #
 
 	# IF C_GALLERY_PICS #
-		<article id="article-gallery-{ID}" class="article-gallery several-items category-{CAT_ID}">
-			<header>
-				<h2>${LangLoader::get_message('image', 'main')}</h2>
-			</header>
-			<div class="content">
-				<p class="align-center" id="pics_max"></p>
+		<div class="sub-section">
+			<article id="article-gallery-{ID}" class="article-gallery several-items category-{CAT_ID}">
+				<header>
+					<h2>${LangLoader::get_message('image', 'main')}</h2>
+				</header>
+				<div class="content">
+					<p class="align-center" id="pics_max"></p>
 
-				# IF C_GALLERY_PICS_MAX #
-					<p class="pics-max"><a href="{U_IMG_MAX}" data-lightbox="formatter"><img src="{U_IMG_MAX}" alt="{NAME}" /></a></p>
-					<div class="cell-tile">
-						<div class="cell cell-options">
-							<div class="cell-header">
-								<h6 class="cell-name">{L_INFORMATIONS}</h6>
-							</div>
-							<div class="cell-list">
-								<ul>
-									# IF C_TITLE_ENABLED #
-										<li class="li-stretch">
-											<span class="text-strong">{L_NAME} : </span>
-											<span><span id="fi_{ID}">{NAME}</span> <span id="fi{ID}"></span></span>
-										</li>
-									# ENDIF #
-									# IF C_AUTHOR_DISPLAYED #
-										<li class="li-stretch">
-											<span class="text-strong">{L_POSTOR} : </span>
-											<span>
-												# IF C_POSTOR_EXIST #
-													<a class="{POSTOR_LEVEL_CLASS}"# IF C_POSTOR_GROUP_COLOR # style="color:{POSTOR_GROUP_COLOR}"# ENDIF # href="{U_POSTOR_PROFILE}">{POSTOR}</a>
-												# ELSE #
-													<span class="visitor">${LangLoader::get_message('guest', 'main')}</span>
-												# ENDIF #
-											</span>
-										</li>
-									# ENDIF #
-									# IF C_VIEWS_COUNTER_ENABLED #
-										<li class="li-stretch"><span class="text-strong">{L_VIEWS} : </span><span>{VIEWS}</span></li>
-									# ENDIF #
-									<li class="li-stretch"><span class="text-strong">{L_ADD_ON} : </span><span>{DATE}</span></li>
-									<li class="li-stretch"><span class="text-strong">{L_DIMENSION} : </span><span>{DIMENSION}</span></li>
-									<li class="li-stretch"><span class="text-strong">{L_SIZE} : </span><span>{SIZE} {L_KB}</span></li>
-									# IF C_COMMENTS_ENABLED #
-										<li class="li-stretch"><span></span><a href="{U_COMMENTS}">{L_COMMENTS}</a></li>
-									# ENDIF #
-									# IF C_NOTATION_ENABLED #
-										<li class="align-center"><div class="text-strong">{KERNEL_NOTATION}</div></li>
-									# ENDIF #
-									# IF C_GALLERY_PICS_MODO #
-										<li id="img{ID}" class="li-stretch">
-											<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}','{RENAME}','{RENAME_CUT}');" aria-label="{L_EDIT}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a></span>
-
-											<a href="{U_DEL}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
-											<div id="move{ID}" class="modal-container cell-modal inline-block cell-tile">
-												<a data-modal data-target="gallery-pic-move-to" aria-label="{L_MOVETO}"><i class="fa fa-fw fa-fw fa-share" aria-hidden="true"></i></a>
-												<div id="gallery-pic-move-to" class="modal modal-animation">
-													<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
-													<div class="cell content-panel">
-														<div class="cell-header">
-															<div class="cell-name">{L_MOVETO} :</div>
-														</div>
-														<div class="cell-input">
-															<select name="{ID}cat" onchange="document.location = '{U_MOVE}">
-																{CAT}
-															</select>
-														</div>
-													</div>
-												</div>
-											</div>
-											<a href="javascript:pics_aprob({ID});" aria-label="{L_APROB_IMG}"><i id="img_aprob{ID}" class="{IMG_APROB}" aria-hidden="true"></i></a>
-										</li>
-									# ENDIF #
-
-
-								</ul>
-							</div>
-						</div>
-					</div>
-
-					<div class="link-to-other-pics-container">
-						<span class="float-left">&nbsp;&nbsp;&nbsp;<a href="{U_PREVIOUS}#pics_max" aria-label="${LangLoader::get_message('previous', 'main')}"><i class="fa fa-fw fa-arrow-left fa-2x" aria-hidden="true"></i></a></span>
-						<span class="float-right"><a href="{U_NEXT}#pics_max" aria-label="${LangLoader::get_message('next', 'main')}"> <i class="fa fa-fw fa-arrow-right fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;</span>
-					</div>
-					<table class="pics-max-thumbnails">
-						<thead>
-							<tr>
-								<th colspan="{COLSPAN}">
-									{L_THUMBNAILS}
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>
-									<span id="display_left"># IF C_LEFT_THUMBNAILS #<a href="javascript:display_thumbnails('left')" aria-label="${LangLoader::get_message('previous', 'main')}"><i class="fa fa-fw fa-arrow-left fa-2x" aria-hidden="true"></i></a># ENDIF #</span>
-								</td>
-
-								# START list_preview_pics #
-									<td class="align-center" style="height:{list_preview_pics.HEIGHT}px"><span id="thumb{list_preview_pics.ID}"><a href="{list_preview_pics.URL}"><img src="pics/thumbnails/{list_preview_pics.PATH}" alt="{list_preview_pics.NAME}" /></a></span></td>
-								# END list_preview_pics #
-
-								<td>
-									<span id="display_right"># IF C_RIGHT_THUMBNAILS #<a href="javascript:display_thumbnails('right')" aria-label="${LangLoader::get_message('next', 'main')}"><i class="fa fa-fw fa-arrow-right fa-2x" aria-hidden="true"></i></a># ENDIF #</span>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					{COMMENTS}
-				# ENDIF #
-
-				<div class="cell-flex cell-columns-{COLUMNS_NUMBER} cell-tile">
-					# START pics_list #
-						<div class="cell small# IF pics_list.C_NEW_CONTENT # new-content# ENDIF #">
-							<div class="cell-header">
-								# IF C_PICTURE_NAME_DISPLAYED #
-									<div class="cell-name">
-										<a id="fi_{pics_list.ID}" class="ellipsis" href="{pics_list.U_PICTURE_LINK}">
-											{pics_list.NAME}
-										</a>
-									</div>
-								# ELSE #
-									<span id="fi_{pics_list.ID}"></span>
-								# ENDIF # <span id="fi{pics_list.ID}"></span>
-								<span id="img{pics_list.ID}"></span>
-								<!-- <a href="{PATH_TO_ROOT}/gallery/pics/{pics_list.PATH}" class="float-right" download=""><i class="fa fa-fw fa-download"></i></a> -->
-							</div>
-							<div class="cell-body">
-								<div class="cell-thumbnail cell-landscape cell-center">
-									<img src="{pics_list.U_PICTURE}" alt="{pics_list.NAME}" class="gallery-img" />
-									<a class="cell-thumbnail-caption small" aria-label="# IF C_PICTURE_NAME_DISPLAYED #{pics_list.NAME}# ENDIF #" href="{pics_list.U_DISPLAY}" onclick="{pics_list.ONCLICK}" # IF NOT pics_list.ONCLICK # data-lightbox="formatter"# ENDIF #>
-										${LangLoader::get_message('general-config.view_real_preview', 'admin-config-common')}
-									</a>
+					# IF C_GALLERY_PICS_MAX #
+						<p class="pics-max"><a href="{U_IMG_MAX}" data-lightbox="formatter"><img src="{U_IMG_MAX}" alt="{NAME}" /></a></p>
+						<div class="cell-tile">
+							<div class="cell cell-options">
+								<div class="cell-header">
+									<h6 class="cell-name">{L_INFORMATIONS}</h6>
 								</div>
-							</div>
-							<div class="cell-list">
-								<ul>
-									# IF C_AUTHOR_DISPLAYED #
-										<li>
-											# IF pics_list.C_POSTOR_EXIST #
-												<a class="{pics_list.POSTOR_LEVEL_CLASS}"# IF pics_list.C_POSTOR_GROUP_COLOR # style="color:{pics_list.POSTOR_GROUP_COLOR}"# ENDIF # href="{pics_list.U_POSTOR_PROFILE}">
-													{L_BY} {pics_list.POSTOR}
-												</a>
-											# ELSE #
-												{L_BY} ${LangLoader::get_message('guest', 'main')}
-											# ENDIF #
-										</li>
-									# ENDIF #
-									# IF C_VIEWS_COUNTER_ENABLED #
-										<li>
-											<span id="gv{pics_list.ID}">{pics_list.VIEWS}</span> <span id="gvl{pics_list.ID}">{pics_list.L_VIEWS}</span>
-										</li>
-									# ENDIF #
-									# IF C_COMMENTS_ENABLED #
-										<li>
-											<a href="{pics_list.U_COMMENTS}">{pics_list.L_COMMENTS}</a>
-										</li>
-									# ENDIF #
-									# IF C_NOTATION_ENABLED #
-										<li>
-											{pics_list.KERNEL_NOTATION}
-										</li>
-									# ENDIF #
-								</ul>
-							</div>
-							# IF C_GALLERY_MODO #
 								<div class="cell-list">
 									<ul>
-										<li class="li-stretch">
-											<a id="fihref{pics_list.ID}" href="javascript:display_rename_file('{pics_list.ID}','{pics_list.RENAME}','{pics_list.RENAME_CUT}');" aria-label="{L_EDIT}"><i class="far fa-edit"></i></a>
-											<a href="{pics_list.U_DEL}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="far fa-trash-alt"></i></a>
-											<div id="move{pics_list.ID}" class="modal-container cell-modal cell-tile">
-												<a data-modal data-target="gallery-pic-move-to" aria-label="{L_MOVETO}"><i class="fa fa-fw fa-share" aria-hidden="true"></i></a>
-												<div id="gallery-pic-move-to" class="modal modal-animation">
-													<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
-													<div class="cell content-panel">
-														<div class="cell-header">
-															<div class="cell-name">{L_MOVETO} :</div>
-														</div>
-														<div class="cell-input">
-															<select name="{pics_list.ID}cat" onchange="document.location = '{pics_list.U_MOVE}">
-																{pics_list.CAT}
-															</select>
+										# IF C_TITLE_ENABLED #
+											<li class="li-stretch">
+												<span class="text-strong">{L_NAME} : </span>
+												<span><span id="fi_{ID}">{NAME}</span> <span id="fi{ID}"></span></span>
+											</li>
+										# ENDIF #
+										# IF C_AUTHOR_DISPLAYED #
+											<li class="li-stretch">
+												<span class="text-strong">{L_POSTOR} : </span>
+												<span>
+													# IF C_POSTOR_EXIST #
+														<a class="{POSTOR_LEVEL_CLASS}"# IF C_POSTOR_GROUP_COLOR # style="color:{POSTOR_GROUP_COLOR}"# ENDIF # href="{U_POSTOR_PROFILE}">{POSTOR}</a>
+													# ELSE #
+														<span class="visitor">${LangLoader::get_message('guest', 'main')}</span>
+													# ENDIF #
+												</span>
+											</li>
+										# ENDIF #
+										# IF C_VIEWS_COUNTER_ENABLED #
+											<li class="li-stretch"><span class="text-strong">{L_VIEWS} : </span><span>{VIEWS}</span></li>
+										# ENDIF #
+										<li class="li-stretch"><span class="text-strong">{L_ADD_ON} : </span><span>{DATE}</span></li>
+										<li class="li-stretch"><span class="text-strong">{L_DIMENSION} : </span><span>{DIMENSION}</span></li>
+										<li class="li-stretch"><span class="text-strong">{L_SIZE} : </span><span>{SIZE} {L_KB}</span></li>
+										# IF C_COMMENTS_ENABLED #
+											<li class="li-stretch"><span></span><a href="{U_COMMENTS}">{L_COMMENTS}</a></li>
+										# ENDIF #
+										# IF C_NOTATION_ENABLED #
+											<li class="align-center"><div class="text-strong">{KERNEL_NOTATION}</div></li>
+										# ENDIF #
+										# IF C_GALLERY_PICS_MODO #
+											<li id="img{ID}" class="li-stretch">
+												<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}','{RENAME}','{RENAME_CUT}');" aria-label="{L_EDIT}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a></span>
+
+												<a href="{U_DEL}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+												<div id="move{ID}" class="modal-container cell-modal inline-block cell-tile">
+													<a data-modal data-target="gallery-pic-move-to" aria-label="{L_MOVETO}"><i class="fa fa-fw fa-fw fa-share" aria-hidden="true"></i></a>
+													<div id="gallery-pic-move-to" class="modal modal-animation">
+														<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+														<div class="cell content-panel">
+															<div class="cell-header">
+																<div class="cell-name">{L_MOVETO} :</div>
+															</div>
+															<div class="cell-input">
+																<select name="{ID}cat" onchange="document.location = '{U_MOVE}">
+																	{CAT}
+																</select>
+															</div>
 														</div>
 													</div>
 												</div>
-											</div>
-											<a id="img_aprob{pics_list.ID}" href="javascript:pics_aprob({pics_list.ID});" aria-label="{pics_list.L_APROB_IMG}"><i class="# IF pics_list.C_IMG_APROB #fa fa-fw fa-eye-slash# ELSE #fa fa-fw fa-eye# ENDIF #"></i></a>
-										</li>
+												<a href="javascript:pics_aprob({ID});" aria-label="{L_APROB_IMG}"><i id="img_aprob{ID}" class="{IMG_APROB}" aria-hidden="true"></i></a>
+											</li>
+										# ENDIF #
+
+
 									</ul>
 								</div>
-							# ENDIF #
+							</div>
 						</div>
-					# END pics_list #
+
+						<div class="link-to-other-pics-container">
+							<span class="float-left">&nbsp;&nbsp;&nbsp;<a href="{U_PREVIOUS}#pics_max" aria-label="${LangLoader::get_message('previous', 'main')}"><i class="fa fa-fw fa-arrow-left fa-2x" aria-hidden="true"></i></a></span>
+							<span class="float-right"><a href="{U_NEXT}#pics_max" aria-label="${LangLoader::get_message('next', 'main')}"> <i class="fa fa-fw fa-arrow-right fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;</span>
+						</div>
+						<table class="pics-max-thumbnails">
+							<thead>
+								<tr>
+									<th colspan="{COLSPAN}">
+										{L_THUMBNAILS}
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<span id="display_left"># IF C_LEFT_THUMBNAILS #<a href="javascript:display_thumbnails('left')" aria-label="${LangLoader::get_message('previous', 'main')}"><i class="fa fa-fw fa-arrow-left fa-2x" aria-hidden="true"></i></a># ENDIF #</span>
+									</td>
+
+									# START list_preview_pics #
+										<td class="align-center" style="height:{list_preview_pics.HEIGHT}px"><span id="thumb{list_preview_pics.ID}"><a href="{list_preview_pics.URL}"><img src="pics/thumbnails/{list_preview_pics.PATH}" alt="{list_preview_pics.NAME}" /></a></span></td>
+									# END list_preview_pics #
+
+									<td>
+										<span id="display_right"># IF C_RIGHT_THUMBNAILS #<a href="javascript:display_thumbnails('right')" aria-label="${LangLoader::get_message('next', 'main')}"><i class="fa fa-fw fa-arrow-right fa-2x" aria-hidden="true"></i></a># ENDIF #</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						{COMMENTS}
+					# ENDIF #
+
+					<div class="cell-flex cell-columns-{COLUMNS_NUMBER} cell-tile">
+						# START pics_list #
+							<div class="cell small# IF pics_list.C_NEW_CONTENT # new-content# ENDIF #">
+								<div class="cell-header">
+									# IF C_PICTURE_NAME_DISPLAYED #
+										<div class="cell-name">
+											<a id="fi_{pics_list.ID}" class="ellipsis" href="{pics_list.U_PICTURE_LINK}">
+												{pics_list.NAME}
+											</a>
+										</div>
+									# ELSE #
+										<span id="fi_{pics_list.ID}"></span>
+									# ENDIF # <span id="fi{pics_list.ID}"></span>
+									<span id="img{pics_list.ID}"></span>
+									<!-- <a href="{PATH_TO_ROOT}/gallery/pics/{pics_list.PATH}" class="float-right" download=""><i class="fa fa-fw fa-download"></i></a> -->
+								</div>
+								<div class="cell-body">
+									<div class="cell-thumbnail cell-landscape cell-center">
+										<img src="{pics_list.U_PICTURE}" alt="{pics_list.NAME}" class="gallery-img" />
+										<a class="cell-thumbnail-caption small" aria-label="# IF C_PICTURE_NAME_DISPLAYED #{pics_list.NAME}# ENDIF #" href="{pics_list.U_DISPLAY}" onclick="{pics_list.ONCLICK}" # IF NOT pics_list.ONCLICK # data-lightbox="formatter"# ENDIF #>
+											${LangLoader::get_message('general-config.view_real_preview', 'admin-config-common')}
+										</a>
+									</div>
+								</div>
+								<div class="cell-list">
+									<ul>
+										# IF C_AUTHOR_DISPLAYED #
+											<li>
+												# IF pics_list.C_POSTOR_EXIST #
+													<a class="{pics_list.POSTOR_LEVEL_CLASS}"# IF pics_list.C_POSTOR_GROUP_COLOR # style="color:{pics_list.POSTOR_GROUP_COLOR}"# ENDIF # href="{pics_list.U_POSTOR_PROFILE}">
+														{L_BY} {pics_list.POSTOR}
+													</a>
+												# ELSE #
+													{L_BY} ${LangLoader::get_message('guest', 'main')}
+												# ENDIF #
+											</li>
+										# ENDIF #
+										# IF C_VIEWS_COUNTER_ENABLED #
+											<li>
+												<span id="gv{pics_list.ID}">{pics_list.VIEWS}</span> <span id="gvl{pics_list.ID}">{pics_list.L_VIEWS}</span>
+											</li>
+										# ENDIF #
+										# IF C_COMMENTS_ENABLED #
+											<li>
+												<a href="{pics_list.U_COMMENTS}">{pics_list.L_COMMENTS}</a>
+											</li>
+										# ENDIF #
+										# IF C_NOTATION_ENABLED #
+											<li>
+												{pics_list.KERNEL_NOTATION}
+											</li>
+										# ENDIF #
+									</ul>
+								</div>
+								# IF C_GALLERY_MODO #
+									<div class="cell-list">
+										<ul>
+											<li class="li-stretch">
+												<a id="fihref{pics_list.ID}" href="javascript:display_rename_file('{pics_list.ID}','{pics_list.RENAME}','{pics_list.RENAME_CUT}');" aria-label="{L_EDIT}"><i class="far fa-edit"></i></a>
+												<a href="{pics_list.U_DEL}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="far fa-trash-alt"></i></a>
+												<div id="move{pics_list.ID}" class="modal-container cell-modal cell-tile">
+													<a data-modal data-target="gallery-pic-move-to" aria-label="{L_MOVETO}"><i class="fa fa-fw fa-share" aria-hidden="true"></i></a>
+													<div id="gallery-pic-move-to" class="modal modal-animation">
+														<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+														<div class="cell content-panel">
+															<div class="cell-header">
+																<div class="cell-name">{L_MOVETO} :</div>
+															</div>
+															<div class="cell-input">
+																<select name="{pics_list.ID}cat" onchange="document.location = '{pics_list.U_MOVE}">
+																	{pics_list.CAT}
+																</select>
+															</div>
+														</div>
+													</div>
+												</div>
+												<a id="img_aprob{pics_list.ID}" href="javascript:pics_aprob({pics_list.ID});" aria-label="{pics_list.L_APROB_IMG}"><i class="# IF pics_list.C_IMG_APROB #fa fa-fw fa-eye-slash# ELSE #fa fa-fw fa-eye# ENDIF #"></i></a>
+											</li>
+										</ul>
+									</div>
+								# ENDIF #
+							</div>
+						# END pics_list #
+					</div>
 				</div>
-			</div>
-			<footer># IF C_PAGINATION ## INCLUDE PAGINATION ## ENDIF #</footer>
-		</article>
+				<footer># IF C_PAGINATION ## INCLUDE PAGINATION ## ENDIF #</footer>
+			</article>
+
+		</div>
 	# ENDIF #
 	<footer>
 		<p class="nbr-total-pics">{L_TOTAL_IMG}</p>
