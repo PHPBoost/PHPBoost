@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 02 08
  * @since       PHPBoost 3.0 - 2009 10 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -327,6 +327,15 @@ class UserAccountsConfig extends AbstractConfigData
 	public function get_max_avatar_weight()
 	{
 		return $this->get_property(self::MAX_AVATAR_WEIGHT_PROPERTY);
+	}
+
+	/**
+	 * Returns the max weight of avatars to use in form fields (converted in kilobytes)
+	 * @return int The weight in kilobytes
+	 */
+	public function get_max_avatar_weight_in_kb()
+	{
+		return $this->get_property(self::MAX_AVATAR_WEIGHT_PROPERTY) * 1024;
 	}
 
 	/**

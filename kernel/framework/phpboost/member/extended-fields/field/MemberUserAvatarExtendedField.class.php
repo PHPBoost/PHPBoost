@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 27
+ * @version     PHPBoost 6.0 - last update: 2021 02 08
  * @since       PHPBoost 3.0 - 2010 12 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,6 +15,8 @@
 
 class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 {
+	private $user_accounts_config;
+	
 	public function __construct()
 	{
 		parent::__construct();
@@ -22,6 +24,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		$this->set_name(LangLoader::get_message('type.avatar','admin-user-common'));
 		$this->field_used_once = true;
 		$this->field_used_phpboost_config = true;
+		$this->user_accounts_config = UserAccountsConfig::load();
 	}
 
 	public function display_field_create(MemberExtendedField $member_extended_field)
@@ -31,7 +34,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		if (UserAccountsConfig::load()->is_avatar_upload_enabled())
 		{
 			$fieldset->add_field(new FormFieldFilePicker('upload_avatar', $this->lang['extended-field.field.avatar.upload_avatar'],
-				array('description' => $this->lang['extended-field.field.avatar.upload_avatar-explain'], 'authorized_extensions' => 'png|webp|gif|jpg|jpeg|tiff|ico|svg'),
+				array('description' => $this->lang['extended-field.field.avatar.upload_avatar-explain'], 'max_files_size' => $this->user_accounts_config->get_max_avatar_weight_in_kb(), 'authorized_extensions' => 'png|webp|gif|jpg|jpeg|tiff|ico|svg'),
 				array(new FormFieldConstraintPictureFile())
 			));
 		}
@@ -51,7 +54,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		if (UserAccountsConfig::load()->is_avatar_upload_enabled())
 		{
 			$fieldset->add_field(new FormFieldFilePicker('upload_avatar', $this->lang['extended-field.field.avatar.upload_avatar'],
-				array('description' => $this->lang['extended-field.field.avatar.upload_avatar-explain'], 'authorized_extensions' => 'png|webp|gif|jpg|jpeg|tiff|ico|svg'),
+				array('description' => $this->lang['extended-field.field.avatar.upload_avatar-explain'], 'max_files_size' => $this->user_accounts_config->get_max_avatar_weight_in_kb(), 'authorized_extensions' => 'png|webp|gif|jpg|jpeg|tiff|ico|svg'),
 				array(new FormFieldConstraintPictureFile())
 			));
 		}
@@ -64,11 +67,10 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 
 	public function display_field_profile(MemberExtendedField $member_extended_field)
 	{
-		$user_accounts_config = UserAccountsConfig::load();
 		$value = $member_extended_field->get_value();
-		if (empty($value) && $user_accounts_config->is_default_avatar_enabled())
+		if (empty($value) && $this->user_accounts_config->is_default_avatar_enabled())
 		{
-			$avatar = '<img src="' . $user_accounts_config->get_default_avatar() . '" alt="' . LangLoader::get_message('avatar', 'user-common') . '" />';
+			$avatar = '<img src="' . $this->user_accounts_config->get_default_avatar() . '" alt="' . LangLoader::get_message('avatar', 'user-common') . '" />';
 		}
 		elseif (!empty($value))
 		{
@@ -102,7 +104,6 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 	private function upload_avatar($form, $member_extended_field)
 	{
 		$avatar = $form->get_value('upload_avatar');
-		$user_accounts_config = UserAccountsConfig::load();
 		$authorized_pictures_extensions = FileUploadConfig::load()->get_authorized_picture_extensions();
 
 		if (empty($authorized_pictures_extensions))
@@ -116,14 +117,14 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 			{
 				$image = new Image($form->get_value('link_avatar'));
 
-				if ($image->get_width() > $user_accounts_config->get_max_avatar_width() || $image->get_height() > $user_accounts_config->get_max_avatar_height())
+				if ($image->get_width() > $this->user_accounts_config->get_max_avatar_width() || $image->get_height() > $this->user_accounts_config->get_max_avatar_height())
 				{
-					if ($user_accounts_config->is_avatar_auto_resizing_enabled())
+					if ($this->user_accounts_config->is_avatar_auto_resizing_enabled())
 					{
 						$directory = '/images/avatars/' . Url::encode_rewrite($image->get_name() . '_' . $this->key_hash()) . '.' . $image->get_extension();
 
 						$resizer = new ImageResizer();
-						$resizer->resize_with_max_values($image, $user_accounts_config->get_max_avatar_width(), $user_accounts_config->get_max_avatar_height(), PATH_TO_ROOT . $directory);
+						$resizer->resize_with_max_values($image, $this->user_accounts_configg->get_max_avatar_width(), $this->user_accounts_config->get_max_avatar_height(), PATH_TO_ROOT . $directory);
 						$this->delete_old_avatar($member_extended_field);
 						return $directory;
 					}
@@ -139,11 +140,11 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		}
 		elseif (!empty($avatar))
 		{
-			if (UserAccountsConfig::load()->is_avatar_upload_enabled())
+			if ($this->user_accounts_config->is_avatar_upload_enabled())
 			{
 				$dir = '/images/avatars/';
 
-				if ($user_accounts_config->is_avatar_auto_resizing_enabled())
+				if ($this->user_accounts_config->is_avatar_auto_resizing_enabled())
 				{
 					$image = new Image($avatar->get_temporary_filename());
 					$resizer = new ImageResizer();
@@ -160,7 +161,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 					$directory = $dir . Url::encode_rewrite($name . '_' . $this->key_hash()) . '.' . $extension;
 
 					try {
-						$resizer->resize_with_max_values($image, $user_accounts_config->get_max_avatar_width(), $user_accounts_config->get_max_avatar_height(), PATH_TO_ROOT . $directory);
+						$resizer->resize_with_max_values($image, $this->user_accounts_config->get_max_avatar_width(), $this->user_accounts_config->get_max_avatar_height(), PATH_TO_ROOT . $directory);
 						$this->delete_old_avatar($member_extended_field);
 						return $directory;
 					} catch (UnsupportedOperationException $e) {
@@ -171,13 +172,13 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 				{
 					$Upload = new Upload(PATH_TO_ROOT . $dir);
 
-					$Upload->file($form->get_html_id() . '_upload_avatar', '`\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`iu', Upload::UNIQ_NAME, $user_accounts_config->get_max_avatar_weight() * 1024);
+					$Upload->file($form->get_html_id() . '_upload_avatar', '`\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`iu', Upload::UNIQ_NAME, $this->user_accounts_config->get_max_avatar_weight_in_kb());
 					$upload_error = $Upload->get_error();
 
 					if (!empty($upload_error))
 						throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message($upload_error, 'errors'));
 
-					$error = $Upload->check_img($user_accounts_config->get_max_avatar_width(), $user_accounts_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
+					$error = $Upload->check_img($this->user_accounts_config->get_max_avatar_width(), $this->user_accounts_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
 					if (!empty($error))
 						throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message($error, 'errors'));
 					else
