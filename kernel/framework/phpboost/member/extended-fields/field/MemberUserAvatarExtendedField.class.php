@@ -34,7 +34,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		if (UserAccountsConfig::load()->is_avatar_upload_enabled())
 		{
 			$fieldset->add_field(new FormFieldFilePicker('upload_avatar', $this->lang['extended-field.field.avatar.upload_avatar'],
-				array('description' => $this->lang['extended-field.field.avatar.upload_avatar-explain'], 'max_files_size' => $this->user_accounts_config->get_max_avatar_weight_in_kb(), 'authorized_extensions' => 'png|webp|gif|jpg|jpeg|tiff|ico|svg'),
+				array('description' => $this->lang['extended-field.field.avatar.upload_avatar-explain'], 'max_file_size' => $this->user_accounts_config->get_max_avatar_weight_in_kb(), 'authorized_extensions' => 'png|webp|gif|jpg|jpeg|tiff|ico|svg'),
 				array(new FormFieldConstraintPictureFile())
 			));
 		}
@@ -54,7 +54,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		if (UserAccountsConfig::load()->is_avatar_upload_enabled())
 		{
 			$fieldset->add_field(new FormFieldFilePicker('upload_avatar', $this->lang['extended-field.field.avatar.upload_avatar'],
-				array('description' => $this->lang['extended-field.field.avatar.upload_avatar-explain'], 'max_files_size' => $this->user_accounts_config->get_max_avatar_weight_in_kb(), 'authorized_extensions' => 'png|webp|gif|jpg|jpeg|tiff|ico|svg'),
+				array('description' => $this->lang['extended-field.field.avatar.upload_avatar-explain'], 'max_file_size' => $this->user_accounts_config->get_max_avatar_weight_in_kb(), 'authorized_extensions' => 'png|webp|gif|jpg|jpeg|tiff|ico|svg'),
 				array(new FormFieldConstraintPictureFile())
 			));
 		}
