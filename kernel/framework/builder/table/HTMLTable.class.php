@@ -6,9 +6,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 02 25
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 3.0 - 2009 12 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class HTMLTable extends AbstractHTMLElement
@@ -157,6 +158,9 @@ class HTMLTable extends AbstractHTMLElement
 			'ID' => $this->model->get_id(),
 			'C_CAPTION' => $this->model->has_caption(),
 			'CAPTION' => $this->model->get_caption(),
+			'C_LAYOUT' => $this->model->has_layout_title(),
+			'LAYOUT_TITLE' => $this->model->get_layout_title(),
+			'MODULE_ID' => Environment::get_running_module_name(),
 			'U_TABLE_DEFAULT_OPIONS' => $this->parameters->get_default_table_url(),
 			'C_NB_ROWS_OPTIONS' => $has_nb_rows_options,
 			'C_HAS_ROWS' => !empty($this->rows),

@@ -6,9 +6,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2017 04 29
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 3.0 - 2010 02 25
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class HTMLTableModel
@@ -23,6 +24,7 @@ class HTMLTableModel
 
 	private $id;
 	private $caption = '';
+	private $layout_title = '';
 	private $rows_per_page;
 	private $nb_rows_options = array(10, 25, 100);
 	private $default_sorting_rule;
@@ -87,6 +89,22 @@ class HTMLTableModel
 	public function get_caption()
 	{
 		return $this->caption;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function has_layout_title()
+	{
+		return !empty($this->layout_title);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get_layout_title()
+	{
+		return $this->layout_title;
 	}
 
 	/**
@@ -204,6 +222,11 @@ class HTMLTableModel
 	public function set_caption($caption)
 	{
 		$this->caption = $caption;
+	}
+
+	public function set_layout_title($layout_title)
+	{
+		$this->layout_title = $layout_title;
 	}
 
 	public function hide_footer()

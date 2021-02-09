@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 28
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 6.0 - 2020 01 16
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DefaultItemsManagementController extends AbstractItemController
@@ -41,9 +42,9 @@ class DefaultItemsManagementController extends AbstractItemController
 		if ($display_categories)
 			array_splice($columns, 1, 0, array(new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category')));
 
-		$table_model = new SQLHTMLTableModel(self::get_module()->get_configuration()->get_items_table_name(), 'table', $columns, new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
+		$table_model = new SQLHTMLTableModel(self::get_module()->get_configuration()->get_items_table_name(), 'items-manager', $columns, new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
 
-		$table_model->set_caption($this->items_lang['items.management']);
+		$table_model->set_layout_title($this->items_lang['items.management']);
 
 		$table = new HTMLTable($table_model);
 
@@ -107,7 +108,7 @@ class DefaultItemsManagementController extends AbstractItemController
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 
-		$this->view->put('table', $table->display());
+		$this->view->put('TABLE', $table->display());
 
 		return $table->get_page_number();
 	}
@@ -135,7 +136,7 @@ class DefaultItemsManagementController extends AbstractItemController
 
 	protected function get_template_to_use()
 	{
-		return new StringTemplate('# INCLUDE table #');
+		return new StringTemplate('# INCLUDE TABLE #');
 	}
 
 	protected function check_authorizations()

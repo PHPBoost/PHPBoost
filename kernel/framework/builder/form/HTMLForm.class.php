@@ -10,10 +10,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 20
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 3.0 - 2009 04 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class HTMLForm implements HTMLElement
@@ -54,6 +55,10 @@ class HTMLForm implements HTMLElement
 	 * @var string
 	 */
 	private $css_class = self::NORMAL_CSS_CLASS;
+	/**
+	 * @var string
+	 */
+	private $layout_title = '';
 	/**
 	 * @var boolean
 	 */
@@ -232,6 +237,9 @@ class HTMLForm implements HTMLElement
 			'C_JS_NOT_ALREADY_INCLUDED' => !self::$js_already_included,
 			'C_HAS_REQUIRED_FIELDS' => (self::$instance_id == 1) ? $this->has_required_fields() : false,
 			'C_TARGET' => !empty($this->target),
+			'C_LAYOUT' => !empty($this->layout_title),
+			'LAYOUT_TITLE' => $this->layout_title,
+			'MODULE_ID' => Environment::get_running_module_name(),
 			'FORMCLASS' => $this->css_class,
 			'TARGET' => $this->target,
 			'HTML_ID' => $this->html_id,
@@ -382,6 +390,16 @@ class HTMLForm implements HTMLElement
 	public function set_css_class($css_class)
 	{
 		$this->css_class = $css_class;
+	}
+
+	/**
+	 * Sets the form's CSS class
+	 * @param string $css_class The CSS class (see the HTMLForm::SMALL_CSS_CLASS and
+	 * HTMLForm::NORMAL_CSS_CLASS constants)
+	 */
+	public function set_layout_title($layout_title)
+	{
+		$this->layout_title = $layout_title;
 	}
 
 	/**

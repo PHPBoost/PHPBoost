@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 14
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -152,6 +152,7 @@ $lang['form.date.update'] = 'Last update';
 $lang['form.date.end.enable'] = 'Define a publication end date';
 $lang['form.url'] = 'Address';
 $lang['form.other'] = 'Other';
+$lang['form.parameters'] = 'Parameters';
 $lang['form.options'] = 'Options';
 $lang['form.keywords'] = 'Keywords';
 $lang['form.keywords.description'] = 'Only one keyword per row';
