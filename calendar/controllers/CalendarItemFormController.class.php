@@ -62,7 +62,7 @@ class CalendarItemFormController extends ModuleController
 		$item_content = $this->get_item()->get_content();
 
 		$form = new HTMLForm(__CLASS__);
-		$form->set_layout_title($item_content === null ? $this->lang['calendar.event.add'] : ($this->lang['calendar.event.edit'] . ': ' . $item_content->get_title()));
+		$form->set_layout_title($item_content->get_id() === null ? $this->lang['calendar.event.add'] : ($this->lang['calendar.event.edit'] . ': ' . $item_content->get_title()));
 
 		$fieldset = new FormFieldsetHTML('event', $common_lang['form.parameters']);
 		$form->add_fieldset($fieldset);
