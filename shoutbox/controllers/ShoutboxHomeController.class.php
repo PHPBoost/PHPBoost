@@ -111,7 +111,10 @@ class ShoutboxHomeController extends ModuleController
 
 		if (ShoutboxAuthorizationsService::check_authorizations()->write() && !AppContext::get_current_user()->is_readonly())
 		{
-			$this->view->put('FORM', ShoutboxFormController::get_view());
+			$this->view->put_all(array(
+				'FORM' => ShoutboxFormController::get_view(),
+				'C_WRITE' => true
+			));
 		}
 		else
 		{

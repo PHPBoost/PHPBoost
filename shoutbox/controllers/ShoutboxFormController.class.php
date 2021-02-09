@@ -69,6 +69,7 @@ class ShoutboxFormController extends ModuleController
 
 	private function build_form(HTTPRequestCustom $request)
 	{
+		$common_lang = LangLoader::get('common');
 		$config = ShoutboxConfig::load();
 		$current_user = AppContext::get_current_user();
 
@@ -76,8 +77,9 @@ class ShoutboxFormController extends ModuleController
 		$formatter->set_forbidden_tags($config->get_forbidden_formatting_tags());
 
 		$form = new HTMLForm(__CLASS__);
+		$form->set_layout_title($this->is_new_message ? $this->lang['shoutbox.add'] : $this->lang['shoutbox.edit']);
 
-		$fieldset = new FormFieldsetHTML('message', $this->is_new_message ? $this->lang['shoutbox.add'] : $this->lang['shoutbox.edit']);
+		$fieldset = new FormFieldsetHTML('message', $common_lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
 		if (!$current_user->check_level(User::MEMBER_LEVEL))

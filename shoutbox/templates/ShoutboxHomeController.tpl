@@ -7,16 +7,17 @@
 			<div class="content align-center"># INCLUDE PAGINATION #</div>
 		# ENDIF #
 		# IF C_FORBIDDEN_TO_WRITE #
-			<div class="content"># INCLUDE MESSAGE_HELPER #</div>
+			# IF NOT C_WRITE #
+				<div class="content"># INCLUDE MESSAGE_HELPER #</div>
+			# ENDIF #
 		# ENDIF #
 		<div class="content tabs-container">
 			<nav class="tabs-nav">
 		        <ul class="flex-between">
-		            <li><a href="#" data-tabs="" data-target="message-list">{@shoutbox.messages}</a></li>
-		            # IF NOT C_FORBIDDEN_TO_WRITE #<li><a class="pinned question" href="#" data-tabs="" data-target="add-message">{@shoutbox.add}</a></li># ENDIF #
+		            <li><a data-tabs="" data-target="message-list">{@shoutbox.messages}</a></li>
+		            # IF C_WRITE #<li><a class="pinned question" data-tabs="" data-target="add-message">{@shoutbox.add}</a></li># ENDIF #
 		        </ul>
 		    </nav>
-
 			<div id="message-list" class="first-tab tabs tabs-animation">
 				<div class="content-panel">
 					# IF C_NO_MESSAGE #
@@ -90,7 +91,7 @@
 					# ENDIF #
 				</div>
 			</div>
-			# IF NOT C_FORBIDDEN_TO_WRITE #
+			# IF C_WRITE #
 			    <div id="add-message" class="tabs tabs-animation">
 			        <div class="content-panel">
 							<div id="comment-form">

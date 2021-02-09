@@ -109,11 +109,14 @@ class GuestbookController extends ModuleController
 
 		if (GuestbookAuthorizationsService::check_authorizations()->write() && !AppContext::get_current_user()->is_readonly())
 		{
-			$this->view->put('FORM', GuestbookFormController::get_view());
+			$this->view->put_all(array(
+				'FORM' => GuestbookFormController::get_view(),
+				'C_WRITE' => true
+			));
 		}
 		else
 		{
-			$this->view->put('MSG', MessageHelper::display($this->lang['guestbook.error.post.unauthorized'], MessageHelper::WARNING));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['guestbook.error.post.unauthorized'], MessageHelper::WARNING));
 		}
 
 		return $this->view;
