@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 25
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 3.0 - 2010 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -88,7 +88,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$regex_type = is_numeric($this->extended_field['regex']) ? $this->extended_field['regex'] : 6;
 		$regex = is_string($this->extended_field['regex']) ? $this->extended_field['regex'] : '';
 
-		$fieldset = new FormFieldsetHTMLHeading('edit_fields', $this->lang['extended-field-edit']);
+		$fieldset = new FormFieldsetHTML('edit_fields', $this->lang['extended-field-edit']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['field.name'], $this->extended_field['name'],

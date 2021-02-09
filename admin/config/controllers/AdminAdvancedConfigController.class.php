@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 19
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 3.0 - 2011 07 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -74,7 +74,7 @@ class AdminAdvancedConfigController extends AdminController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('advanced-config', $this->lang['advanced-config']);
+		$fieldset = new FormFieldsetHTML('advanced-config', $this->lang['advanced-config']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldUrlEditor('site_url', $this->lang['advanced-config.site_url'], $this->general_config->get_site_url(),
@@ -237,7 +237,7 @@ class AdminAdvancedConfigController extends AdminController
  		}
 
 		$protection_file_name = !preg_match('/apache/i', $_SERVER["SERVER_SOFTWARE"]) ? 'nginx' : 'htaccess';
-		
+
 		$protection_file_manual_content_fieldset = new FormFieldsetHTML('protection_file_manual_content', $this->lang['advanced-config.' . $protection_file_name . '-manual-content']);
 		$form->add_fieldset($protection_file_manual_content_fieldset);
 

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 20
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 4.1 - 2015 05 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -94,7 +94,7 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 
 		$this->get_advises($form);
 
-		$fieldset = new FormFieldsetHTMLHeading('server-report', $this->admin_lang['server']);
+		$fieldset = new FormFieldsetHTML('server-report', $this->admin_lang['server']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldFree('php_version', $this->admin_lang['php_version'], ServerConfiguration::get_phpversion()));
