@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 11
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -34,7 +34,7 @@ class DownloadItemsManagerController extends AdminModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'download');
-		$this->view = new StringTemplate('# INCLUDE table #');
+		$this->view = new StringTemplate('# INCLUDE TABLE #');
 	}
 
 	private function build_table()
@@ -53,9 +53,9 @@ class DownloadItemsManagerController extends AdminModuleController
 		if (!$display_categories)
 			unset($columns[1]);
 
-		$table_model = new SQLHTMLTableModel(DownloadSetup::$download_table, 'table', $columns, new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
+		$table_model = new SQLHTMLTableModel(DownloadSetup::$download_table, 'items-manager', $columns, new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
 
-		$table_model->set_caption($this->lang['download.items.management']);
+		$table_model->set_layout_title($this->lang['download.items.management']);
 
 		$table = new HTMLTable($table_model);
 
@@ -99,7 +99,7 @@ class DownloadItemsManagerController extends AdminModuleController
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 
-		$this->view->put('table', $table->display());
+		$this->view->put('TABLE', $table->display());
 
 		return $table->get_page_number();
 	}

@@ -325,6 +325,7 @@
 	</div>
 	<script>
 	    jQuery('#pushmenu-fwkboost').pushmenu({
+			width: 291,
 			customToggle: jQuery('.fwkboost-toggle'), // null
 			navTitle: '{@sandbox.module.title}', // null
 			pushContent: '{PUSHED_CONTENT}',

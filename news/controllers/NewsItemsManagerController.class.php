@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 13
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 4.0 - 2013 06 24
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -35,7 +35,7 @@ class NewsItemsManagerController extends AdminModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'news');
-		$this->view = new StringTemplate('# INCLUDE table #');
+		$this->view = new StringTemplate('# INCLUDE TABLE #');
 	}
 
 	private function build_table()
@@ -54,9 +54,9 @@ class NewsItemsManagerController extends AdminModuleController
 		if (!$display_categories)
 			unset($columns[1]);
 
-		$table_model = new SQLHTMLTableModel(NewsSetup::$news_table, 'table', $columns, new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
+		$table_model = new SQLHTMLTableModel(NewsSetup::$news_table, 'items-manager', $columns, new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
 
-		$table_model->set_caption($this->lang['news.management']);
+		$table_model->set_layout_title($this->lang['news.management']);
 
         $table = new HTMLTable($table_model);
 
@@ -94,7 +94,7 @@ class NewsItemsManagerController extends AdminModuleController
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 
-		$this->view->put('table', $table->display());
+		$this->view->put('TABLE', $table->display());
 
 		return $table->get_page_number();
 	}

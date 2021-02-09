@@ -34,7 +34,7 @@ class WebItemsManagerController extends AdminModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'web');
-		$this->view = new StringTemplate('# INCLUDE table #');
+		$this->view = new StringTemplate('# INCLUDE TABLE #');
 	}
 
 	private function build_table()
@@ -53,9 +53,9 @@ class WebItemsManagerController extends AdminModuleController
 		if (!$display_categories)
 			unset($columns[1]);
 
-		$table_model = new SQLHTMLTableModel(WebSetup::$web_table, 'table', $columns, new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
+		$table_model = new SQLHTMLTableModel(WebSetup::$web_table, 'items-manager', $columns, new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
 
-		$table_model->set_caption($this->lang['web.management']);
+		$table_model->set_layout_title($this->lang['web.management']);
 
 		$table = new HTMLTable($table_model);
 
@@ -99,7 +99,7 @@ class WebItemsManagerController extends AdminModuleController
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 
-		$this->view->put('table', $table->display());
+		$this->view->put('TABLE', $table->display());
 
 		return $table->get_page_number();
 	}

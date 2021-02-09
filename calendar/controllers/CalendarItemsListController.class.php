@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 21
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 4.1 - 2015 04 13
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -59,9 +59,9 @@ class CalendarItemsListController extends ModuleController
 		if (!$display_categories)
 			unset($columns[1]);
 
-		$table_model = new SQLHTMLTableModel(CalendarSetup::$calendar_events_table, 'table', $columns, new HTMLTableSortingRule('start_date', HTMLTableSortingRule::ASC));
+		$table_model = new SQLHTMLTableModel(CalendarSetup::$calendar_events_table, 'items-manager', $columns, new HTMLTableSortingRule('start_date', HTMLTableSortingRule::ASC));
 
-		$table_model->set_caption($this->lang['calendar.events.list']);
+		$table_model->set_layout_title($this->lang['calendar.events.list']);
 		$table_model->add_permanent_filter('parent_id = 0');
 
 		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('start_date', 'filter1', $this->lang['calendar.labels.start.date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('minimum', 'common'))));

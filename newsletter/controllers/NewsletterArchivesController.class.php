@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 02 25
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 3.0 - 2011 03 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -50,7 +50,7 @@ class NewsletterArchivesController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'newsletter');
-		$this->view = new StringTemplate('# INCLUDE table #');
+		$this->view = new StringTemplate('# INCLUDE TABLE #');
 	}
 
 	private function build_table()
@@ -70,7 +70,7 @@ class NewsletterArchivesController extends ModuleController
 		if ($moderation_authorization)
 			$columns[] = new HTMLTableColumn(LangLoader::get_message('actions', 'admin-common'), '', array('sr-only' => true));
 
-		$table_model = new SQLHTMLTableModel(NewsletterSetup::$newsletter_table_archives, 'table', $columns, new HTMLTableSortingRule('timestamp', HTMLTableSortingRule::DESC));
+		$table_model = new SQLHTMLTableModel(NewsletterSetup::$newsletter_table_archives, 'items-manager', $columns, new HTMLTableSortingRule('timestamp', HTMLTableSortingRule::DESC));
 
 		if ($this->stream->get_id())
 			$table_model->add_permanent_filter('stream_id = ' . $this->stream->get_id());
@@ -111,7 +111,7 @@ class NewsletterArchivesController extends ModuleController
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 
-		$this->view->put('table', $table->display());
+		$this->view->put('TABLE', $table->display());
 
 		return $table->get_page_number();
 	}
