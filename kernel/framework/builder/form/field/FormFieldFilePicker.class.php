@@ -10,7 +10,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 02 21
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 2.0 - 2009 04 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -72,22 +72,15 @@ class FormFieldFilePicker extends AbstractFormField
 
 	protected function get_max_file_size()
 	{
-		if ($this->max_file_size > 0)
-		{
-			return $this->max_file_size;
-		}
-		else
-		{
-			return ServerConfiguration::get_upload_max_filesize();
-		}
+		return ($this->max_file_size > 0) ?  $this->max_file_size : ServerConfiguration::get_upload_max_filesize();
 	}
 
 	protected function get_max_files_size()
 	{
-		if ($this->max_files_size > 0)
-		{
+		if ($this->is_multiple() && $this->max_files_size > 0)
 			return $this->max_files_size;
-		}
+		else if ($this->max_file_size > 0)
+			return $this->max_file_size;
 		else
 		{
 			if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
@@ -101,14 +94,7 @@ class FormFieldFilePicker extends AbstractFormField
 
 	protected function get_authorized_extensions()
 	{
-		if ($this->authorized_extensions)
-		{
-			return str_replace('|', '", "', $this->authorized_extensions);
-		}
-		else
-		{
-			return implode('", "',FileUploadConfig::load()->get_authorized_extensions());
-		}
+		return $this->authorized_extensions ? str_replace('|', '", "', $this->authorized_extensions) : implode('", "',FileUploadConfig::load()->get_authorized_extensions());
 	}
 
 	public function is_multiple()
@@ -161,14 +147,7 @@ class FormFieldFilePicker extends AbstractFormField
 		}
 		catch(Exception $ex)
 		{
-			if ($this->is_required())
-			{
-				return false;
-			}
-			else
-			{
-				return true;
-			}
+			return $this->is_required() ? false : true;
 		}
 	}
 
