@@ -23,8 +23,6 @@ legend,
 	font-size: 1.809em;
 }
 
-legend > h1 { font-size: inherit; }
-
 fieldset p {
 	margin: 0;
 	padding: 1em 0.618em;
@@ -51,7 +49,10 @@ fieldset p {
 
 .fieldset-submit .fieldset-inset { justify-content: center; }
 
-.fieldset-submit legend { display: none; }
+.fieldset-submit legend {
+	position: absolute;
+	left: -9000px;
+}
 
 fieldset[id*="_captcha_fieldset"],
 fieldset[id*="_captcha_fieldset"] .fieldset-inset {
