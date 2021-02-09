@@ -27,9 +27,9 @@
 	</nav>
 	<div class="header-admin-container">
 		<div id="top-header-admin">
-			<div id="site-name-container">
+			<h1 id="site-name-container">
 				<a id="site-name" href="{PATH_TO_ROOT}/">{SITE_NAME}</a>
-			</div>
+			</h1>
 		</div>
 		<div id="sub-header-admin">
 			<div id="admin-link">

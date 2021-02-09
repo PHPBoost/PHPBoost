@@ -19,16 +19,29 @@
 	});
 </script>
 
-<form id="${HTML_ID}" # IF C_TARGET #action="${TARGET}"# ENDIF # method="${METHOD}" onsubmit="return HTMLForms.get('${HTML_ID}').validate();" class="${FORMCLASS}">
-	# IF C_HAS_REQUIRED_FIELDS #
-		<p class="required-fields-text small text-italic">{L_REQUIRED_FIELDS}</p>
-	# ENDIF #
+# IF C_LAYOUT #
+	<section id="module-{MODULE_ID}">
+		<header class="section-header">
+			<h1>{LAYOUT_TITLE}</h1>
+		</header>
+		<article class="{MODULE_ID}-item several-items">
+			<div class="content">
+# ENDIF #
+				<form id="${HTML_ID}" # IF C_TARGET #action="${TARGET}"# ENDIF # method="${METHOD}" onsubmit="return HTMLForms.get('${HTML_ID}').validate();" class="${FORMCLASS}">
+					# IF C_HAS_REQUIRED_FIELDS #
+						<p class="required-fields-text small text-italic">{L_REQUIRED_FIELDS}</p>
+					# ENDIF #
+					# START fieldsets #
+						# INCLUDE fieldsets.FIELDSET #
+					# END fieldsets #
 
-	# START fieldsets #
-		# INCLUDE fieldsets.FIELDSET #
-	# END fieldsets #
-
-	<input type="hidden" id="${HTML_ID}_token" name="token" value="{TOKEN}">
-	<input type="hidden" id="${HTML_ID}_disabled_fields" name="${HTML_ID}_disabled_fields" value="">
-	<input type="hidden" id="${HTML_ID}_disabled_fieldsets" name="${HTML_ID}_disabled_fieldsets" value="">
-</form>
+					<input type="hidden" id="${HTML_ID}_token" name="token" value="{TOKEN}">
+					<input type="hidden" id="${HTML_ID}_disabled_fields" name="${HTML_ID}_disabled_fields" value="">
+					<input type="hidden" id="${HTML_ID}_disabled_fieldsets" name="${HTML_ID}_disabled_fieldsets" value="">
+				</form>
+# IF C_LAYOUT #
+			</div>
+		</article>
+		<footer></footer>
+	</section>
+# ENDIF #

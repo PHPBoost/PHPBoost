@@ -52,26 +52,35 @@
 	}
 </script>
 # INCLUDE MSG #
-<form action="{REWRITED_SCRIPT}" method="post" onsubmit="serialize_sortable();">
-	<fieldset>
-		<legend><h1>{FIELDSET_TITLE}</h1></legend>
-		<div class="fieldset-inset">
-			<ul id="categories" class="sortable-block">
-				# IF C_NO_CATEGORIES #
-					<div class="align-center">${LangLoader::get_message('no_item_now', 'common')}</div>
-				# ELSE #
-					# START children #
-						{children.child}
-					# END children #
+<section id="module-{MODULE_ID}">
+	<header class="section-header">
+		<h1>{FIELDSET_TITLE}</h1>
+	</header>
+	<article class="-item several-items">
+		<div class="content">
+			<form action="{REWRITED_SCRIPT}" method="post" onsubmit="serialize_sortable();">
+				<fieldset>
+					<legend>{FIELDSET_TITLE}: {MODULE_ID}</legend>
+					<div class="fieldset-inset">
+						<ul id="categories" class="sortable-block">
+							# IF C_NO_CATEGORIES #
+								<div class="align-center">${LangLoader::get_message('no_item_now', 'common')}</div>
+							# ELSE #
+								# START children #
+									{children.child}
+								# END children #
+							# ENDIF #
+						</ul>
+					</div>
+				</fieldset>
+				# IF C_MORE_THAN_ONE_CATEGORY #
+					<fieldset class="fieldset-submit">
+						<button type="submit" class="button submit" name="submit" value="true">${LangLoader::get_message('position.update', 'common')}</button>
+						<input type="hidden" name="token" value="{TOKEN}">
+						<input type="hidden" name="tree" id="tree" value="">
+					</fieldset>
 				# ENDIF #
-			</ul>
+			</form>			
 		</div>
-	</fieldset>
-	# IF C_MORE_THAN_ONE_CATEGORY #
-		<fieldset class="fieldset-submit">
-			<button type="submit" class="button submit" name="submit" value="true">${LangLoader::get_message('position.update', 'common')}</button>
-			<input type="hidden" name="token" value="{TOKEN}">
-			<input type="hidden" name="tree" id="tree" value="">
-		</fieldset>
-	# ENDIF #
-</form>
+	</article>
+</section>

@@ -32,10 +32,10 @@ body {
 #site-name-container {
 	padding: 1.618em 0.809em;
 	text-align: center;
+	font-size: 1.309em;
 }
 
 #site-name {
-	font-size: 1.309em;
 	letter-spacing: 1.1pt;
 	text-decoration: none;
 }
