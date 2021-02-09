@@ -100,10 +100,9 @@ class UserCommentsController extends AbstractController
 			LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' ext_field ON ext_field.user_id = comments.user_id
 			'. $this->build_where_request() .'
 			ORDER BY comments.timestamp DESC
-			LIMIT :number_items_per_page OFFSET :display_from'
-		, array(
-			'number_items_per_page' => $pagination->get_number_items_per_page(),
-			'display_from' => $pagination->get_display_from()
+			LIMIT :number_items_per_page OFFSET :display_from', array(
+				'number_items_per_page' => $pagination->get_number_items_per_page(),
+				'display_from' => $pagination->get_display_from()
 		));
 
 		$user_accounts_config = UserAccountsConfig::load();
@@ -160,7 +159,7 @@ class UserCommentsController extends AbstractController
 			));
 		}
 		$result->dispose();
-
+		
 		$this->tpl->put_all(array(
 			'C_COMMENTS'              => $this->comments_number > 0,
 			'C_DISPLAY_DELETE_BUTTON' => $this->comments_number && ($comments_authorizations->is_authorized_moderation() || $display_delete_button),

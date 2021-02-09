@@ -6,6 +6,34 @@
 		<div class="sub-section">
 			<article class="contribution-item several-items">
 				<header>
+					<h2>{L_CONTRIBUTE}</h2>
+				</header>
+				<div class="content">
+					# IF NOT C_NO_MODULE_IN_WHICH_CONTRIBUTE #
+						<p>{L_CONTRIBUTE_EXPLAIN}</p>
+
+						# START row #
+							<div class="cell-flex cell-tile cell-columns-{row.MODULES_PER_ROW}">
+								# START row.module #
+									<div class="cell">
+										<div class="cell-header">
+											<div class="cell-name"><a href="{row.module.U_MODULE_LINK}">{row.module.MODULE_NAME}</a></div>
+											<img src="{PATH_TO_ROOT}/{row.module.MODULE_ID}/{row.module.MODULE_ID}_mini.png" alt="{row.module.LINK_TITLE}" />
+										</div>
+									</div>
+								# END row.module #
+							</div>
+						# END row #
+					# ELSE #
+						<div class="message-helper bgc warning">{L_NO_MODULE_IN_WHICH_CONTRIBUTE}</div>
+					# ENDIF #
+				</div>
+			</article>
+		</div>
+		<hr />
+		<div class="sub-section">
+			<article class="contribution-item several-items">
+				<header>
 					<h2>{L_CONTRIBUTION_LIST}</h2>
 				</header>
 
@@ -172,34 +200,6 @@
 						</div>
 					</div>
 				# ENDIF #
-			</article>
-		</div>
-		<hr>
-		<div class="sub-section">
-			<article class="contribution-item several-items">
-				<header>
-					<h2>{L_CONTRIBUTE}</h2>
-				</header>
-				<div class="content">
-					# IF NOT C_NO_MODULE_IN_WHICH_CONTRIBUTE #
-						<p>{L_CONTRIBUTE_EXPLAIN}</p>
-
-						# START row #
-							<div class="cell-flex cell-tile cell-columns-{row.MODULES_PER_ROW}">
-								# START row.module #
-									<div class="cell">
-										<div class="cell-header">
-											<div class="cell-name"><a href="{row.module.U_MODULE_LINK}">{row.module.MODULE_NAME}</a></div>
-											<img src="{PATH_TO_ROOT}/{row.module.MODULE_ID}/{row.module.MODULE_ID}_mini.png" alt="{row.module.LINK_TITLE}" />
-										</div>
-									</div>
-								# END row.module #
-							</div>
-						# END row #
-					# ELSE #
-						<div class="message-helper bgc warning">{L_NO_MODULE_IN_WHICH_CONTRIBUTE}</div>
-					# ENDIF #
-				</div>
 			</article>
 		</div>
 		<footer></footer>

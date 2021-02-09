@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 04
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 1.5 - 2006 07 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -89,7 +89,7 @@ if ($read)
 	AppContext::get_response()->redirect(UserUrlBuilder::personnal_message());
 }
 
-if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
+if ($convers && empty($pm_edit) && empty($pm_del)) // Sending conversation.
 {
 	$title = retrieve(POST, 'title', '');
 	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
@@ -148,6 +148,8 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 }
 elseif (!empty($post) || (!empty($pm_get) && $pm_get != $current_user->get_id()) && $pm_get > '0') // Message form interface
 {
+	$Bread_crumb->add($LANG['post_new_convers'], '');
+
 	$tpl = new FileTemplate('user/pm.tpl');
 
 	$tpl->put_all(array(
@@ -593,6 +595,8 @@ elseif (!empty($pm_edit)) // Edit PM, if recipient hasn't read it yet
 				$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 				$title = retrieve(POST, 'title', '', TSTRING_UNCHANGE);
 
+				$Bread_crumb->add(LangLoader::get_message('edit', 'common'));
+
 				$tpl->assign_block_vars('edit_pm', array(
 					'CONTENTS' => ($prw_convers XOR $prw) ? $contents : FormatingHelper::unparse($pm['contents']),
 					'U_ACTION_EDIT' => url('.php?edit=' . $pm_edit . '&amp;token=' . AppContext::get_session()->get_token()),
@@ -650,6 +654,7 @@ elseif (!empty($pm_id_get)) // Messages associated with the conversation.
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
 	}
+	$Bread_crumb->add(stripslashes($convers['title']), '');
 
 	// Checking authorizations.
 	if (empty($convers['id']) || ($convers['user_id'] != $current_user->get_id() && $convers['user_id_dest'] != $current_user->get_id()))

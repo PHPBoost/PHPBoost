@@ -1,17 +1,19 @@
 <section id="module-user-home">
-	<header>
+	<header class="section-header">
 		<h1>{@dashboard}</h1>
 	</header>
-	<div class="content">
-		<p class="align-center text-strong">{@welcome} {PSEUDO}</p>
-		# IF C_AVATAR_IMG #
-			<p class="align-center">
-				<img src="{U_AVATAR_IMG}" alt="{@avatar}" />
-			</p>
-		# ENDIF #
+	<div class="sub-section">
+		<div class="content">
+			<p class="align-center text-strong">{@welcome} {PSEUDO}</p>
+			# IF C_AVATAR_IMG #
+				<p class="align-center">
+					<img src="{U_AVATAR_IMG}" alt="{@avatar}" />
+				</p>
+			# ENDIF #
+		</div>
 
 		<div id="profile-container" class="cell-flex cell-tile cell-columns-3">
-			<div class="cell">
+			<article class="dashboard-item several-items cell">
 				<div class="cell-body">
 					<div class="cell-content align-center">
 						<a href="{U_VIEW_PROFILE}">
@@ -20,8 +22,8 @@
 						</a>
 					</div>
 				</div>
-			</div>
-			<div class="cell">
+			</article>
+			<article class="dashboard-item several-items cell">
 				<div class="cell-body">
 					<div class="cell-content align-center">
 						<a href="{U_USER_PM}">
@@ -37,9 +39,9 @@
 						</a>
 					</div>
 				</div>
-			</div>
+			</article>
 			# IF C_USER_AUTH_FILES #
-				<div class="cell">
+				<article class="dashboard-item several-items cell">
 					<div class="cell-body">
 						<div class="cell-content align-center">
 							<a href="{U_UPLOAD}">
@@ -48,10 +50,10 @@
 							</a>
 						</div>
 					</div>
-				</div>
+				</article>
 			# ENDIF #
 			# IF IS_ADMIN #
-				<div class="cell">
+				<article class="dashboard-item several-items cell">
 					<div class="cell-body">
 						<div class="cell-content align-center">
 							<a href="{PATH_TO_ROOT}/admin/">
@@ -67,10 +69,10 @@
 							</a>
 						</div>
 					</div>
-				</div>
+				</article>
 			# ENDIF #
 			# IF C_IS_MODERATOR #
-				<div class="cell">
+				<article class="dashboard-item several-items cell">
 					<div class="cell-body">
 						<div class="cell-content align-center">
 							<a href="{U_MODERATION_PANEL}">
@@ -79,9 +81,9 @@
 							</a>
 						</div>
 					</div>
-				</div>
+				</article>
 			# ENDIF #
-			<div class="cell">
+			<article class="dashboard-item several-items cell">
 				<div class="cell-body">
 					<div class="cell-content align-center">
 						<a href="{U_CONTRIBUTION_PANEL}">
@@ -97,9 +99,9 @@
 						</a>
 					</div>
 				</div>
-			</div>
+			</article>
 			# START modules_messages #
-				<div class="cell">
+				<article class="dashboard-item several-items cell">
 					<div class="cell-body">
 						<div class="cell-content align-center">
 							<a href="{modules_messages.U_LINK_USER_MSG}">
@@ -108,9 +110,9 @@
 							</a>
 						</div>
 					</div>
-				</div>
+				</article>
 			# END modules_messages #
-			<div class="cell">
+			<article class="dashboard-item several-items cell">
 				<div class="cell-body">
 					<div class="cell-content align-center">
 						<a href="${relative_url(UserUrlBuilder::disconnect())}">
@@ -119,9 +121,12 @@
 						</a>
 					</div>
 				</div>
-			</div>
+			</article>
 		</div>
-		{MSG_MBR}
+		<div class="content">
+			{MSG_MBR}
+		</div>
+
 	</div>
 	<footer></footer>
 </section>

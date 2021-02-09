@@ -1,9 +1,11 @@
 <section id="module-user-aboutcookie">
-	<header>
+	<header class="section-header">
 		<h1>{ABOUTCOOKIE_TITLE}</h1>
 	</header>
-	<article class="content">
-		{ABOUTCOOKIE_CONTENT}
-	</article>
+	<div class="sub-section">
+		<article class="cookie-item single-item">
+			<div class="content">{ABOUTCOOKIE_CONTENT}</div>
+		</article>
+	</div>
 	<footer id="cookiebar-change-choice"></footer>
 </section>

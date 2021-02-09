@@ -1,15 +1,19 @@
 <section id="module-user-users-list">
-	<header>
+	<header class="section-header">
 		<h1>{@users}</h1>
 	</header>
-	<div class="content">
-		# INCLUDE FORM #
+	<div class="sub-section">
+		<article class="user-list several-items">
+			<div class="content">
+				# INCLUDE FORM #
 
-		# IF C_ARE_GROUPS #
-			# INCLUDE SELECT_GROUP #
-		# ENDIF #
-		<div class="spacer"></div>
-		# INCLUDE TABLE #
+				# IF C_ARE_GROUPS #
+					# INCLUDE SELECT_GROUP #
+				# ENDIF #
+				<div class="spacer"></div>
+				# INCLUDE TABLE #
+			</div>			
+		</article>
 	</div>
 	<footer></footer>
 </section>
