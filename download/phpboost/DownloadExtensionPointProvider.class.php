@@ -15,7 +15,7 @@ class DownloadExtensionPointProvider extends ItemsModuleExtensionPointProvider
 {
 	public function home_page()
 	{
-		return new DefaultHomePageDisplay($this->get_id(), DownloadDisplayCategoryController::get_view());
+		return new DefaultHomePageDisplay($this->get_id(), DownloadCategoryController::get_view());
 	}
 }
 ?>

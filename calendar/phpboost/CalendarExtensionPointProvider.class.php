@@ -8,13 +8,14 @@
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor xela <xela@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CalendarExtensionPointProvider extends ItemsModuleExtensionPointProvider
 {
 	public function home_page()
 	{
-		return new DefaultHomePageDisplay($this->get_id(), CalendarDisplayCategoryController::get_view());
+		return new DefaultHomePageDisplay($this->get_id(), CalendarHomeController::get_view());
 	}
 
 	public function sitemap()
