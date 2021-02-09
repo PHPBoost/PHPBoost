@@ -60,7 +60,6 @@
 		<div class="content">
 			<form action="{REWRITED_SCRIPT}" method="post" onsubmit="serialize_sortable();">
 				<fieldset>
-					<legend>{FIELDSET_TITLE}: {MODULE_ID}</legend>
 					<div class="fieldset-inset">
 						<ul id="categories" class="sortable-block">
 							# IF C_NO_CATEGORIES #
@@ -80,7 +79,7 @@
 						<input type="hidden" name="tree" id="tree" value="">
 					</fieldset>
 				# ENDIF #
-			</form>			
+			</form>
 		</div>
 	</article>
 </section>
