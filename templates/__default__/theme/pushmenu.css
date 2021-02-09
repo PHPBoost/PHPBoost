@@ -188,6 +188,12 @@ body.push-nav-open {
 
 .pushmenu.nav-levels-overlap ul li.nav-parent .nav-item-wrapper { position: relative; }
 
+.pushmenu.nav-levels-overlap ul li.nav-parent .nav-item-wrapper button,
+.pushmenu.nav-levels-overlap ul li.nav-parent .nav-item-wrapper .button {
+    margin: 0;
+    padding: 0.618em 1.618em;
+}
+
 .pushmenu.nav-levels-overlap ul li.level-open > .nav-wrapper {
     visibility: visible;
     transform: translate3d(0, 0, 0);
