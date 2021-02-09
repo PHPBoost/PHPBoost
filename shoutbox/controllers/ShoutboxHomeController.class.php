@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 02
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 4.1 - 2014 10 14
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -70,13 +70,13 @@ class ShoutboxHomeController extends ModuleController
 
 			$this->view->assign_block_vars('messages', array_merge($message->get_array_tpl_vars($page), array(
 				'C_CURRENT_USER_MESSAGE' => AppContext::get_current_user()->get_display_name() == $row['login'],
-				'C_AVATAR' => $row['user_avatar'] || $user_accounts_config->is_default_avatar_enabled(),
-				'C_USER_GROUPS' => array_filter($message->get_author_user()->get_groups()),
-				'MESSAGE_NUMBER' => $this->elements_number,
-				'U_AVATAR' => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : $user_accounts_config->get_default_avatar()
+				'C_AVATAR'               => $row['user_avatar'] || $user_accounts_config->is_default_avatar_enabled(),
+				'C_USER_GROUPS'          => array_filter($message->get_author_user()->get_groups()),
+				'MESSAGE_NUMBER'         => $this->elements_number,
+				'U_AVATAR'               => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : $user_accounts_config->get_default_avatar()
 			)));
 
-			//user's groups
+			// user's groups
 			if ($message->get_author_user()->get_groups())
 			{
 				$groups_cache = GroupsCache::load();
@@ -88,9 +88,9 @@ class ShoutboxHomeController extends ModuleController
 						$group = $groups_cache->get_group($user_group_id);
 						$this->view->assign_block_vars('messages.usergroups', array(
 							'C_GROUP_PICTURE' => !empty($group['img']),
-							'GROUP_PICTURE' => $group['img'],
-							'GROUP_NAME' => $group['name'],
-							'GROUP_ID' => $user_group_id
+							'GROUP_PICTURE'   => $group['img'],
+							'GROUP_NAME'      => $group['name'],
+							'GROUP_ID'        => $user_group_id
 						));
 					}
 				}
@@ -102,11 +102,11 @@ class ShoutboxHomeController extends ModuleController
 			$this->display_multiple_delete = false;
 
 		$this->view->put_all(array(
-			'C_NO_MESSAGE' => $result->get_rows_count() == 0,
+			'C_NO_MESSAGE'                => $result->get_rows_count() == 0,
 			'C_MULTIPLE_DELETE_DISPLAYED' => $this->display_multiple_delete,
-			'C_PAGINATION' => $messages_number > ShoutboxConfig::load()->get_items_number_per_page(),
-			'PAGINATION' => $pagination->display(),
-			'MESSAGES_NUMBER' => $this->elements_number
+			'C_PAGINATION'                => $messages_number > ShoutboxConfig::load()->get_items_number_per_page(),
+			'PAGINATION'                  => $pagination->display(),
+			'MESSAGES_NUMBER'             => $this->elements_number
 		));
 
 		if (ShoutboxAuthorizationsService::check_authorizations()->write() && !AppContext::get_current_user()->is_readonly())
@@ -115,8 +115,12 @@ class ShoutboxHomeController extends ModuleController
 		}
 		else
 		{
-			if (ShoutboxConfig::load()->is_no_write_authorization_message_displayed())
-				$this->view->put('MSG', MessageHelper::display($this->lang['error.post.unauthorized'], MessageHelper::WARNING));
+			$forbidden_to_write = ShoutboxConfig::load()->is_no_write_authorization_message_displayed();
+			if ($forbidden_to_write)
+				$this->view->put_all(array(
+					'C_FORBIDDEN_TO_WRITE' => $forbidden_to_write,
+					'MESSAGE_HELPER' => MessageHelper::display($this->lang['error.post.unauthorized'], MessageHelper::WARNING)
+				));
 		}
 
 		return $this->view;

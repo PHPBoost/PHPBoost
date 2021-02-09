@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 21
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 4.1 - 2014 11 28
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -19,6 +19,7 @@ $lang['archives'] = 'Archives';
 $lang['archives.link'] = 'Lien vers les archives du module discussion';
 $lang['shoutbox.add'] = 'Ajouter un message';
 $lang['shoutbox.edit'] = 'Edition d\'un message';
+$lang['shoutbox.messages'] = 'Messages';
 
 //Config
 $lang['config.items_number_per_page'] = 'Nombre d\'éléments affichés par page dans les archives';
