@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 16
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -60,8 +60,9 @@ class NewsItemFormController extends ModuleController
 	private function build_form(HTTPRequestCustom $request)
 	{
 		$form = new HTMLForm(__CLASS__);
+		$form->set_layout_title($this->item->get_id() === null ? $this->lang['news.add.item'] : ($this->lang['news.edit.item'] . ': ' . $this->item->get_title()));
 
-		$fieldset = new FormFieldsetHTMLHeading('news', $this->item->get_id() === null ? $this->lang['news.add.item'] : $this->lang['news.edit.item']);
+		$fieldset = new FormFieldsetHTML('news', $this->common_lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('title', $this->common_lang['form.name'], $this->item->get_title(), array('required' => true)));

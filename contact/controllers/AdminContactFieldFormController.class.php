@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 03
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 4.0 - 2013 08 04
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -72,7 +72,7 @@ class AdminContactFieldFormController extends AdminModuleController
 
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('field', !empty($this->id) ? $this->lang['contact.fields.edit.field'] : $this->lang['contact.fields.add.field']);
+		$fieldset = new FormFieldsetHTML('field', !empty($this->id) ? $this->lang['contact.fields.edit.field'] : $this->lang['contact.fields.add.field']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->admin_user_common_lang['field.name'], $field->get_name(),

@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 30
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 4.1 - 2015 09 18
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminReCaptchaConfig extends AdminModuleController
@@ -31,18 +32,18 @@ class AdminReCaptchaConfig extends AdminModuleController
 
 		$this->build_form();
 
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
+		$view->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$view->put('FORM', $this->form->display());
 
-		return $this->build_response($tpl);
+		return $this->build_response($view);
 	}
 
 	private function init()
@@ -55,7 +56,7 @@ class AdminReCaptchaConfig extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('config', $this->lang['config.title']);
+		$fieldset = new FormFieldsetHTML('config', $this->lang['config.title']);
 		$form->add_fieldset($fieldset);
 
 		$this->display_fields($fieldset);
@@ -101,11 +102,11 @@ class AdminReCaptchaConfig extends AdminModuleController
 		ReCaptchaConfig::save();
 	}
 
-	private function build_response(View $tpl)
+	private function build_response(View $view)
 	{
 		$title = LangLoader::get_message('configuration', 'admin');
 
-		$response = new AdminMenuDisplayResponse($tpl);
+		$response = new AdminMenuDisplayResponse($view);
 		$response->set_title($title);
 		$response->add_link($this->lang['config.title'], DispatchManager::get_url('/ReCaptcha', '/admin/config/'));
 		$env = $response->get_graphical_environment();

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 31
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 3.0 - 2011 03 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -52,9 +52,12 @@ class NewsletterUnsubscribeController extends ModuleController
 			$email = $mail_request;
 		}
 
-		$form = new HTMLForm(__CLASS__);
+		$common_lang = LangLoader::get('common');
 
-		$fieldset = new FormFieldsetHTMLHeading('unsubscribe.newsletter', $this->lang['unsubscribe.newsletter']);
+		$form = new HTMLForm(__CLASS__);
+		$form->set_layout_title($this->lang['unsubscribe.newsletter']);
+
+		$fieldset = new FormFieldsetHTML('unsubscribe.newsletter', $common_lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldMailEditor('mail', $this->lang['subscribe.mail'], $email,
@@ -62,13 +65,16 @@ class NewsletterUnsubscribeController extends ModuleController
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('delete_all_streams', $this->lang['newsletter.delete_all_streams'], FormFieldCheckbox::UNCHECKED,
-		array('events' => array('click' => '
-		if (HTMLForms.getField("delete_all_streams").getValue()) {
-			HTMLForms.getField("choice").disable();
-		} else {
-			HTMLForms.getField("choice").enable();
-		}')
-		)));
+			array(
+				'events' => array('click' => '
+					if (HTMLForms.getField("delete_all_streams").getValue()) {
+						HTMLForms.getField("choice").disable();
+					} else {
+						HTMLForms.getField("choice").enable();
+					}'
+				)
+			)
+		));
 
 		if ($this->current_user->check_level(User::MEMBER_LEVEL) && $email == $this->current_user->get_email())
 		{
@@ -83,7 +89,7 @@ class NewsletterUnsubscribeController extends ModuleController
 		}
 		else
 			$newsletter_subscribe = array();
-		
+
 		$fieldset->add_field(new FormFieldMultipleCheckbox('choice', $this->lang['unsubscribe.newsletter_choice'], $newsletter_subscribe, $this->get_streams()));
 
 		$this->submit_button = new FormButtonDefaultSubmit();

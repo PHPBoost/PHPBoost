@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 10 29
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 3.0 - 2009 12 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -47,7 +47,7 @@ class AdminSitemapController extends AdminModuleController
 	private function build_form()
 	{
 		$this->form = new HTMLForm('sitemap_global_config', SitemapUrlBuilder::get_general_config()->rel());
-		$fieldset = new FormFieldsetHTMLHeading('general_config', $this->lang['general_config']);
+		$fieldset = new FormFieldsetHTML('general_config', $this->lang['general_config']);
 		$this->form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('enable_sitemap_xml', $this->lang['auto_generate_xml_file'], SitemapXMLFileService::is_xml_file_generation_enabled() ? FormFieldCheckbox::CHECKED : FormFieldCheckbox::UNCHECKED,

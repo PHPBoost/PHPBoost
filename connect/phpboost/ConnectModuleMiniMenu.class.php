@@ -79,58 +79,57 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 				$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 
 				$tpl->put_all(array(
-					'C_ADMIN_AUTH'                          => $user->check_level(User::ADMIN_LEVEL),
-					'C_MODERATOR_AUTH'                      => $user->check_level(User::MODERATOR_LEVEL),
-					'C_UNREAD_CONTRIBUTION'                 => $contribution_number != 0,
+					'C_ADMIN_AUTH' => $user->check_level(User::ADMIN_LEVEL),
+					'C_MODERATOR_AUTH' => $user->check_level(User::MODERATOR_LEVEL),
+					'C_UNREAD_CONTRIBUTION' => $contribution_number != 0,
 					'C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION' => $contribution_number > 0,
-					'C_UNREAD_ALERT'                        => (bool)AdministratorAlertService::get_number_unread_alerts(),
-					'C_HAS_PM'                              => $user->get_unread_pm() > 0,
-					'C_USER_GROUP_COLOR'                    => !empty($user_group_color),
-					'C_AVATAR_IMG'                          => $user_avatar || $user_accounts_config->is_default_avatar_enabled(),
-					'NUMBER_UNREAD_CONTRIBUTIONS'           => $contribution_number,
-					'NUMBER_UNREAD_ALERTS'                  => AdministratorAlertService::get_number_unread_alerts(),
-					'NUMBER_PM'                             => $user->get_unread_pm(),
-					'NUMBER_TOTAL_ALERT'                    => $total_alert,
-					'PSEUDO'                                => $user->get_display_name(),
-					'USER_LEVEL_CLASS'                      => UserService::get_level_class($user->get_level()),
-					'USER_GROUP_COLOR'                      => $user_group_color,
-					'U_USER_PROFILE'                        => UserUrlBuilder::profile($user->get_id())->rel(),
-					'U_USER_PM'                             => UserUrlBuilder::personnal_message($user->get_id())->rel(),
-					'U_AVATAR_IMG'                          => $user_avatar ? Url::to_rel($user_avatar) : $user_accounts_config->get_default_avatar(),
-					'L_NBR_PM'                              => $user->get_unread_pm() > 0 ? ($user->get_unread_pm() . ' ' . ($user->get_unread_pm() > 1 ? $lang['message_s'] : $lang['message'])) : $lang['private_messaging'],
-					'L_MESSAGE'                             => $user->get_unread_pm() > 1 ? $lang['message_s'] : $lang['message'],
-					'L_PM_PANEL'                            => $lang['private_messaging'],
-					'L_ADMIN_PANEL'                         => $lang['admin_panel'],
-					'L_MODO_PANEL'                          => $lang['modo_panel'],
-					'L_PRIVATE_PROFIL'                      => $lang['my_private_profile'],
-					'L_CONTRIBUTION_PANEL'                  => $lang['contribution_panel']
+					'C_UNREAD_ALERT' => (bool)AdministratorAlertService::get_number_unread_alerts(),
+					'C_HAS_PM' => $user->get_unread_pm() > 0,
+					'C_USER_GROUP_COLOR' => !empty($user_group_color),
+					'C_AVATAR_IMG' => $user_avatar || $user_accounts_config->is_default_avatar_enabled(),
+					'NUMBER_UNREAD_CONTRIBUTIONS' => $contribution_number,
+					'NUMBER_UNREAD_ALERTS' => AdministratorAlertService::get_number_unread_alerts(),
+					'NUMBER_PM' => $user->get_unread_pm(),
+					'NUMBER_TOTAL_ALERT' => $total_alert,
+					'PSEUDO' => $user->get_display_name(),
+					'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
+					'USER_GROUP_COLOR' => $user_group_color,
+					'U_USER_PROFILE' => UserUrlBuilder::profile($user->get_id())->rel(),
+					'U_USER_PM' => UserUrlBuilder::personnal_message($user->get_id())->rel(),
+					'U_AVATAR_IMG' => $user_avatar ? Url::to_rel($user_avatar) : $user_accounts_config->get_default_avatar(),
+					'L_NBR_PM'  => $user->get_unread_pm() > 0 ? ($user->get_unread_pm() . ' ' . ($user->get_unread_pm() > 1 ? $lang['message_s'] : $lang['message'])) : $lang['private_messaging'],
+					'L_MESSAGE' => $user->get_unread_pm() > 1 ? $lang['message_s'] : $lang['message'],
+					'L_PM_PANEL' => $lang['private_messaging'],
+					'L_ADMIN_PANEL' => $lang['admin_panel'],
+					'L_MODO_PANEL' => $lang['modo_panel'],
+					'L_PRIVATE_PROFIL' => $lang['my_private_profile'],
+					'L_CONTRIBUTION_PANEL' => $lang['contribution_panel']
 				));
 			}
 			else
 			{
 				$external_authentication = 0;
-
+				
 				foreach (AuthenticationService::get_external_auths_activated() as $id => $authentication)
 				{
 					$tpl->assign_block_vars('external_auth', array(
-						'U_CONNECT'  => UserUrlBuilder::connect($id)->rel(),
-						'ID'         => $id,
-						'NAME'       => $authentication->get_authentication_name(),
-						'TITLE'      => StringVars::replace_vars(LangLoader::get_message('sign-in-label', 'common', 'SocialNetworks'), array('name' => $authentication->get_authentication_name())),
+						'U_CONNECT' => UserUrlBuilder::connect($id)->rel(),
+						'ID' => $id,
+						'NAME' => $authentication->get_authentication_name(),
 						'IMAGE_HTML' => $authentication->get_image_renderer_html(),
-						'CSS_CLASS'  => $authentication->get_css_class()
+						'CSS_CLASS' => $authentication->get_css_class()
 					));
 					$external_authentication++;
 				}
-
+				
 				$tpl->put_all(array(
-					'C_USER_NOTCONNECTED'          => true,
-					'C_USER_REGISTER'              => UserAccountsConfig::load()->is_registration_enabled(),
+					'C_USER_NOTCONNECTED' => true,
+					'C_USER_REGISTER' => UserAccountsConfig::load()->is_registration_enabled(),
 					'C_DISPLAY_REGISTER_CONTAINER' => $external_authentication || UserAccountsConfig::load()->is_registration_enabled(),
-					'L_REQUIRE_PSEUDO'             => $lang['require_pseudo'],
-					'L_REQUIRE_PASSWORD'           => $lang['require_password'],
-					'U_CONNECT'                    => UserUrlBuilder::connect()->rel(),
-					'SITE_REWRITED_SCRIPT'         => TextHelper::substr(REWRITED_SCRIPT, TextHelper::strlen(GeneralConfig::load()->get_site_path()))
+					'L_REQUIRE_PSEUDO' => $lang['require_pseudo'],
+					'L_REQUIRE_PASSWORD' => $lang['require_password'],
+					'U_CONNECT' => UserUrlBuilder::connect()->rel(),
+					'SITE_REWRITED_SCRIPT' => TextHelper::substr(REWRITED_SCRIPT, TextHelper::strlen(GeneralConfig::load()->get_site_path()))
 				));
 			}
 

@@ -1,7 +1,7 @@
 # IF C_ONE_GROUP #
 	<section id="module-user-group-list">
 		<header>
-			<div class="align-right controls">
+			<div class="controls align-right">
 				{@members_list} {@group.of_group}
 				# IF C_ADMIN #
 					<a href="{U_ADMIN_GROUPS}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a>

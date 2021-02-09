@@ -1,6 +1,6 @@
 # INCLUDE MSG #
 <section id="module-bugtracker">
-	<header>
+	<header class="section-header">
 		<h1> {TITLE} </h1>
 	</header>
 	<div class="content">

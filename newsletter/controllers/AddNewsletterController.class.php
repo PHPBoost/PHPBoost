@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 24
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 3.0 - 2011 02 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -64,8 +64,9 @@ class AddNewsletterController extends ModuleController
 	private function build_form($type)
 	{
 		$form = new HTMLForm(__CLASS__);
+		$form->set_layout_title($this->lang['newsletter-add']);
 
-		$fieldset = new FormFieldsetHTMLHeading('add-newsletter', $this->lang['newsletter-add']);
+		$fieldset = new FormFieldsetHTML('add-newsletter', $this->common_lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
 		if (NewsletterConfig::load()->get_mail_sender())

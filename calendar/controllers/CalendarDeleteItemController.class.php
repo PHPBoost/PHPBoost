@@ -58,9 +58,11 @@ class CalendarDeleteItemController extends ModuleController
 
 	private function build_form(HTTPRequestCustom $request)
 	{
+		$common_lang = LangLoader::get('common');
 		$form = new HTMLForm(__CLASS__);
+		$form->set_layout_title($this->lang['calendar.event.delete']);
 
-		$fieldset = new FormFieldsetHTMLHeading('delete_serie', $this->lang['calendar.event.delete']);
+		$fieldset = new FormFieldsetHTML('delete_serie', $common_lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldRadioChoice('delete_serie', LangLoader::get_message('delete', 'common'), 0,

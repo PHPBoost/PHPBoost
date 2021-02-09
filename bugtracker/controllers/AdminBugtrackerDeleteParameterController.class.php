@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 10 18
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 3.0 - 2012 10 22
 */
 
@@ -115,7 +115,7 @@ class AdminBugtrackerDeleteParameterController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('delete_' . $this->parameter, $this->lang['config.delete_parameter.' . $this->parameter]);
+		$fieldset = new FormFieldsetHTML('delete_' . $this->parameter, $this->lang['config.delete_parameter.' . $this->parameter]);
 		$fieldset->set_description($this->lang['config.delete_parameter.description.' . $this->parameter]);
 		$form->add_fieldset($fieldset);
 

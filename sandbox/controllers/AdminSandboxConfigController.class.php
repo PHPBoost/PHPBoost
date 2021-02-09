@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 08
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 5.1 - 2017 09 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -61,7 +61,7 @@ class AdminSandboxConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('config', $this->lang['mini.config.title']);
+		$fieldset = new FormFieldsetHTML('config', $this->lang['mini.config.title']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('menu_opening_type', $this->admin_lang['push.menu.opening.type'], $this->config->get_menu_opening_type(),

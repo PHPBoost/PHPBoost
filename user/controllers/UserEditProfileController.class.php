@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 04
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -115,7 +115,7 @@ class UserEditProfileController extends AbstractController
 		$form = new HTMLForm(__CLASS__);
 		$this->member_extended_fields_service = new MemberExtendedFieldsService($form);
 
-		$fieldset = new FormFieldsetHTMLHeading('edit_profile', $this->lang['profile.edit']);
+		$fieldset = new FormFieldsetHTML('edit_profile', $this->lang['profile.edit']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field($display_name = new FormFieldTextEditor('display_name', $this->lang['display_name'], $this->user->get_display_name(),

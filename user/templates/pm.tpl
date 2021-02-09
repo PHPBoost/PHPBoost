@@ -161,7 +161,7 @@
 
 # START pm #
 	<section id="module-user-pm">
-		<header>
+		<header class="section-header">
 			<h1>{pm.U_PM_BOX} : {pm.U_TITLE_CONVERS}</h1>
 		</header>
 
@@ -219,70 +219,74 @@
 	# INCLUDE message_helper #
 	<span id="quote"></span>
 	<form action="pm{post_pm.U_PM_ACTION_POST}" method="post" onsubmit="return check_form_msg();" class="post-pm">
-		<legend>{L_RESPOND}</legend>
-		<div class="form-element form-element-textarea">
-			{KERNEL_EDITOR}
-			<div class="form-field-textarea">
-				<textarea rows="25" cols="66" id="contents" name="contents">{post_pm.CONTENTS}</textarea>
+		<fieldset id="pm_message" class="sub-section">
+			<legend>{L_RESPOND}</legend>
+			<div class="fieldset-inset">
+				<div class="form-element form-element-textarea">
+					{KERNEL_EDITOR}
+					<div class="form-field-textarea">
+						<textarea rows="25" cols="66" id="contents" name="contents">{post_pm.CONTENTS}</textarea>
+					</div>
+				</div>
 			</div>
-		</div>
-		<div class="align-center">
-			<input type="hidden" name="token" value="{TOKEN}">
-			<button type="submit" class="button submit" name="pm" value="true">{L_SUBMIT}</button>
-			<button type="button" class="button preview-button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
-			<button type="reset" class="button reset-button" value="true">{L_RESET}</button>
-		</div>
+		</fieldset>
+		<fieldset id="pm_fbutton" class="sub-section fieldset-submit">
+			<div class="fieldset-inset">
+				<input type="hidden" name="token" value="{TOKEN}">
+				<button type="submit" class="button submit" name="pm" value="true">{L_SUBMIT}</button>
+				<button type="button" class="button preview-button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
+				<button type="reset" class="button reset-button" value="true">{L_RESET}</button>
+			</div>
+		</fieldset>
 	</form>
 # END post_pm #
 
 
 # START edit_pm #
-	<form action="pm{edit_pm.U_ACTION_EDIT}" method="post" onsubmit="return check_form_convers();">
+	<form action="pm{edit_pm.U_ACTION_EDIT}" method="post" onsubmit="return check_form_convers();" class="fieldset-content">
 		<section id="module-user-edit-pm">
-			<header>
+			<header class="section-header">
 				<h1>{edit_pm.U_PM_BOX}</h1>
 			</header>
-			<div class="content">
-				<div class="fieldset-content">
-					<p class="align-center">{L_REQUIRE}</p>
-					<fieldset>
-						<legend>{L_EDIT}</legend>
-						# START edit_pm.title #
-						<div class="form-element">
-							<label for="title">* {L_TITLE}</label>
-							<div class="form-field"><input type="text" id="title" name="title" value="{edit_pm.title.TITLE}"></div>
-						</div>
-						# END edit_pm.title #
-						<div class="form-element form-element-textarea">
-							<label for="contents">* {L_MESSAGE}</label>
-							{KERNEL_EDITOR}
-							<div class="form-field-textarea">
-								<textarea rows="25" id="contents" name="contents">{edit_pm.CONTENTS}</textarea>
-							</div>
-						</div>
-					</fieldset>
-
-					<div class="align-center">
-						<input type="hidden" name="token" value="{TOKEN}">
-						<button type="submit" class="button submit" name="{SUBMIT_NAME}" value="{L_SUBMIT}">{L_SUBMIT}</button>
-						<button type="button" class="button preview-button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
-						<button type="reset" class="button reset-button" value="true">{L_RESET}</button>
+			<div>
+				<p class="align-center small text-italic">{L_REQUIRE}</p>
+				<fieldset>
+					<legend>{L_EDIT}</legend>
+					# START edit_pm.title #
+					<div class="form-element">
+						<label for="title">* {L_TITLE}</label>
+						<div class="form-field"><input type="text" id="title" name="title" value="{edit_pm.title.TITLE}"></div>
 					</div>
-				</div>
+					# END edit_pm.title #
+					<div class="form-element form-element-textarea">
+						<label for="contents">* {L_MESSAGE}</label>
+						{KERNEL_EDITOR}
+						<div class="form-field-textarea">
+							<textarea rows="25" id="contents" name="contents">{edit_pm.CONTENTS}</textarea>
+						</div>
+					</div>
+				</fieldset>
+
+				<fieldset class="sub-section fieldset-submit">
+					<legend>{L_SUBMIT}</legend>
+					<input type="hidden" name="token" value="{TOKEN}">
+					<button type="submit" class="button submit" name="{SUBMIT_NAME}" value="{L_SUBMIT}">{L_SUBMIT}</button>
+					<button type="button" class="button preview-button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
+					<button type="reset" class="button reset-button" value="true">{L_RESET}</button>
+				</fieldset>
 			</div>
 			<footer></footer>
 		</section>
 	</form>
 # END edit_pm #
 
-
 # START post_convers #
 	<form action="pm.php" method="post" onsubmit="return check_form_convers();">
 		<section id="module-user-post-convers">
-			<header>
+			<header class="section-header">
 				<h1>{post_convers.U_PM_BOX}</h1>
 			</header>
-			<div class="content">
+			<div class="sub-section">
 				# INCLUDE message_helper #
 
 				<div class="fieldset-content">

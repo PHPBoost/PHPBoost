@@ -24,9 +24,10 @@
 		# INCLUDE MESSAGE_HELPER #
 
 		<form method="post" action="admin_database.php?action=restore&amp;token={TOKEN}" enctype="multipart/form-data" name="upload_file">
-
-			<fieldset>
-				<legend><h1>{@database.management}</h1></legend>
+			<header class="section-header">
+				<h1>{@database.management}</h1>
+			</header>
+			<fieldset class="sub-section">
 				<div class="fieldset-inset cell-flex cell-columns-2">
 					<div class="cell">
 						<div class="cell-body">
@@ -42,7 +43,7 @@
 					</div>
 				</div>
 			</fieldset>
-			<fieldset>
+			<fieldset class="sub-section">
 				<legend>{@database.restore}</legend>
 				<div class="fieldset-inset cell-flex cell-columns-2">
 					<div class="db-restore cell">
@@ -153,7 +154,7 @@
 				</tbody>
 			</table>
 
-			<fieldset>
+			<fieldset class="sub-section">
 				<legend>{@database.action.for.selected.tables}</legend>
 				<div class="fieldset-inset">
 					<input type="hidden" name="token" value="{TOKEN}">
@@ -282,7 +283,7 @@
 					}
 				}
 			</script>
-			<fieldset>
+			<fieldset class="sub-section">
 				<legend>{@database.backup.database}</legend>
 
 				<div class="fieldset-inset">
@@ -378,7 +379,7 @@
 		</script>
 
 		<form action="admin_database.php?query=1&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
-			<fieldset>
+			<fieldset class="sub-section">
 				<legend>{@database.query.execute}</legend>
 				<div class="fieldset-inset">
 					<div class="content">
@@ -404,7 +405,7 @@
 		</form>
 
 		# IF C_QUERY_RESULT #
-			<fieldset>
+			<fieldset class="sub-section">
 				<legend>{@database.query.result}</legend>
 				<div class="fieldset-inset">
 					<div class="content" id="executed_query">

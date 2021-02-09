@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 17
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -57,8 +57,9 @@ class FaqFormController extends ModuleController
 	private function build_form(HTTPRequestCustom $request)
 	{
 		$form = new HTMLForm(__CLASS__);
+		$form->set_layout_title($this->get_faq_question()->get_id() === null ? $this->lang['faq.add.item'] : ($this->lang['faq.edit.item'] . ': ' . $this->get_faq_question()->get_question()));
 
-		$fieldset = new FormFieldsetHTMLHeading('faq', $this->get_faq_question()->get_id() === null ? $this->lang['faq.question.add'] : $this->lang['faq.question.edit']);
+		$fieldset = new FormFieldsetHTML('faq', $this->common_lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('question', $this->lang['faq.form.question'], $this->get_faq_question()->get_question(), array('required' => true)));

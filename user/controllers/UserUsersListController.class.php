@@ -67,7 +67,7 @@ class UserUsersListController extends AbstractController
 		if (AppContext::get_current_user()->is_admin())
 			$sql_html_table_model[] = new HTMLTableColumn(LangLoader::get_message('actions', 'admin-common'), '', array('sr-only' => true));
 
-		$table_model = new SQLHTMLTableModel(DB_TABLE_MEMBER, 'table', $sql_html_table_model, new HTMLTableSortingRule('display_name', HTMLTableSortingRule::ASC));
+		$table_model = new SQLHTMLTableModel(DB_TABLE_MEMBER, 'users-list', $sql_html_table_model, new HTMLTableSortingRule('display_name', HTMLTableSortingRule::ASC));
 
 		$table = new HTMLTable($table_model);
 		if (!AppContext::get_current_user()->is_admin())

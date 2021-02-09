@@ -74,7 +74,7 @@
 							# ENDIF #
 							<li# IF C_VERTICAL # class="li-stretch"# ENDIF #>
 								# START external_auth #
-									<a class="social-connect {external_auth.CSS_CLASS}" href="{external_auth.U_CONNECT}" aria-label="{external_auth.TITLE}">{external_auth.IMAGE_HTML}</a>
+									<a class="{external_auth.CSS_CLASS}" href="{external_auth.U_CONNECT}" aria-label="{external_auth.NAME}">{external_auth.IMAGE_HTML}</a>
 								# END external_auth #
 							</li>
 						# ENDIF #

@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 01 30
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 6.0 - 2020 05 16
  * @contributor xela <xela@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DefaultItemFormController extends AbstractItemController
@@ -89,8 +90,9 @@ class DefaultItemFormController extends AbstractItemController
 	protected function build_form()
 	{
 		$form = new HTMLForm(self::$module_id . '_form');
+		$form->set_layout_title($this->is_new_item ? $this->items_lang['item.add'] : ($this->items_lang['item.edit'] . ': ' . $this->item_class::get_title_label()));
 
-		$fieldset = new FormFieldsetHTMLHeading(self::$module_id, $this->is_new_item ? $this->items_lang['item.add'] : $this->items_lang['item.edit']);
+		$fieldset = new FormFieldsetHTML(self::$module_id, $this->common_lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor($this->item_class::get_title_label(), $this->common_lang['form.' . $this->item_class::get_title_label()], $this->get_item()->get_title(),
@@ -192,12 +194,12 @@ class DefaultItemFormController extends AbstractItemController
 						)
 					)
 				));
-				
+
 				$publication_fieldset->add_field($publishing_end_date = new FormFieldDateTime('publishing_end_date', $this->common_lang['form.date.end'],
 					($this->get_item()->get_publishing_end_date() === null ? new date() : $this->get_item()->get_publishing_end_date()),
 					array('hidden' => ($this->request->is_post_method() ? !$this->request->get_postbool(self::$module_id . '_form_end_date_enabled', false) : !$this->get_item()->end_date_enabled()))
 				));
-				
+
 				$publishing_end_date->add_form_constraint(new FormConstraintFieldsDifferenceSuperior($publishing_start_date, $publishing_end_date));
 			}
 			else
@@ -288,12 +290,12 @@ class DefaultItemFormController extends AbstractItemController
 			{
 				$parameters = $attribute[$attribute_field];
 				$field_class = $parameters['field_class'];
-				
+
 				if (!$this->is_new_item)
 				{
 					$parameters['value'] = ($this->get_item()->get_additional_property($id) instanceof Url) ? $this->get_item()->get_additional_property($id)->relative() : $this->get_item()->get_additional_property($id);
 				}
-				
+
 				$ref_class = new ReflectionClass($field_class);
 				unset($parameters['field_class']);
 				array_unshift($parameters, $id);
@@ -319,11 +321,11 @@ class DefaultItemFormController extends AbstractItemController
 		{
 			if ($this->module_item->content_field_enabled())
 				$this->get_item()->set_summary(($this->form->get_value('summary_enabled') ? $this->form->get_value('summary') : ''));
-			
+
 			if ($this->config->get_author_displayed())
 				$this->get_item()->set_author_custom_name(($this->form->get_value('author_custom_name') && $this->form->get_value('author_custom_name') !== $this->get_item()->get_author_user()->get_display_name() ? $this->form->get_value('author_custom_name') : ''));
 		}
-		
+
 		foreach ($this->get_item()->get_additional_attributes_list() as $id => $attribute)
 		{
 			$has_value = false;
@@ -336,7 +338,7 @@ class DefaultItemFormController extends AbstractItemController
 					$has_value = true;
 				}
 			}
-			
+
 			if ($has_value)
 				$this->get_item()->set_additional_property($id, $value);
 		}
@@ -357,7 +359,7 @@ class DefaultItemFormController extends AbstractItemController
 			$rewrited_title = $this->form->get_value('rewrited_' . $this->item_class::get_title_label(), '');
 			$rewrited_title = $this->form->get_value('personalize_rewrited_' . $this->item_class::get_title_label()) && !empty($rewrited_title) ? $rewrited_title : Url::encode_rewrite($this->get_item()->get_title());
 			$this->get_item()->set_rewrited_title($rewrited_title);
-			
+
 			if (self::get_module()->get_configuration()->feature_is_enabled('deferred_publication'))
 			{
 				if (!$this->is_new_item && $this->form->get_value('update_creation_date'))
@@ -466,7 +468,7 @@ class DefaultItemFormController extends AbstractItemController
 				$contribution->set_fixing_url(ItemsUrlBuilder::edit($id)->relative());
 				$contribution->set_poster_id(AppContext::get_current_user()->get_id());
 				$contribution->set_module(self::$module_id);
-				
+
 				if (self::get_module()->get_configuration()->has_categories())
 				{
 					$contribution->set_auth(
@@ -485,7 +487,7 @@ class DefaultItemFormController extends AbstractItemController
 						)
 					);
 				}
-				
+
 				ContributionService::save_contribution($contribution);
 			}
 		}

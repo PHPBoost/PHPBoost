@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 01 30
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 6.0 - 2020 02 11
  * @contributor xela <xela@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DefaultConfigurationController extends AbstractAdminItemController
@@ -31,7 +32,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 			if (self::get_module()->get_configuration()->has_rich_items())
 				$this->form->get_field_by_id('items_per_row')->set_hidden($this->config->get_display_type() !== DefaultRichModuleConfig::GRID_VIEW);
 			$this->hide_fields();
-			
+
 			$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 		}
 
@@ -45,7 +46,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 		$item_class_name = self::get_module()->get_configuration()->get_item_name();
 		$form = new HTMLForm(self::$module_id . '_config_form');
 
-		$fieldset = new FormFieldsetHTMLHeading('configuration', StringVars::replace_vars($this->lang['configuration.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['configuration.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->items_lang['config.items.per.page'], $this->config->get_items_per_page(),
@@ -150,7 +151,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 			$this->add_additional_fields($fieldset);
 			$this->add_additional_fieldsets($form);
 		}
-		
+
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', LangLoader::get_message('authorizations', 'common'),
 			array('description' => $this->lang['config.authorizations.explain'])
 		);
@@ -171,7 +172,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 	private function save()
 	{
 		$this->config->set_items_per_page($this->form->get_value('items_per_page'));
-		
+
 		if (self::get_module()->get_configuration()->has_rich_items())
 		{
 			if ($this->module_item->content_field_enabled())
@@ -180,7 +181,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 				$this->config->set_auto_cut_characters_number($this->form->get_value('auto_cut_characters_number'));
 				$this->config->set_default_content($this->form->get_value('default_content'));
 			}
-			
+
 			$this->config->set_items_default_sort_field($this->form->get_value('items_default_sort_field')->get_raw_value());
 			$this->config->set_items_default_sort_mode($this->form->get_value('items_default_sort_mode')->get_raw_value());
 			$this->config->set_author_displayed($this->form->get_value('author_displayed'));
@@ -190,7 +191,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 			$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
 			if($this->config->get_display_type() == DefaultRichModuleConfig::GRID_VIEW)
 				$this->config->set_items_per_row($this->form->get_value('items_per_row'));
-			
+
 			if (self::get_module()->get_configuration()->has_categories())
 			{
 				$this->config->set_categories_per_page($this->form->get_value('categories_per_page'));
@@ -204,7 +205,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 
 		$configuration_class_name = self::get_module()->get_configuration()->get_configuration_name();
 		$configuration_class_name::save(self::$module_id);
-		
+
 		if (self::get_module()->get_configuration()->has_categories())
 			CategoriesService::get_categories_manager()->regenerate_cache();
 	}
@@ -214,9 +215,9 @@ class DefaultConfigurationController extends AbstractAdminItemController
 	protected function add_additional_fields(&$fieldset) {}
 
 	protected function save_additional_fields() {}
-	
+
 	protected function add_additional_fieldsets(&$form) {}
-	
+
 	protected function add_additional_actions_authorization() { return array(); }
 }
 ?>

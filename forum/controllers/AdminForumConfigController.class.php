@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 02 27
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 4.1 - 2015 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -63,7 +63,7 @@ class AdminForumConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('config', $this->config_lang['configuration'] . ': ' . $this->lang['forum.module.title']);
+		$fieldset = new FormFieldsetHTML('config', $this->config_lang['configuration'] . ': ' . $this->lang['forum.module.title']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('forum_name', $this->lang['config.forum.name'], $this->config->get_forum_name(),

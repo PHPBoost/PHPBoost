@@ -5,10 +5,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 02 18
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 4.0 - 2013 02 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class AbstractDeleteCategoryController extends ModuleController
@@ -23,7 +24,7 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 	private $submit_button;
 
 	private $lang;
-	
+
 	protected static $categories_manager;
 
 	public function execute(HTTPRequestCustom $request)
@@ -89,25 +90,31 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 	{
 		$class_name = get_called_class();
 		self::$categories_manager = $class_name::get_categories_manager();
-		
+
 		$this->lang = LangLoader::get('categories-common');
 	}
 
 	private function build_form()
 	{
+		$common_lang = LangLoader::get('common');
 		$form = new HTMLForm(__CLASS__);
+		$form->set_layout_title($this->get_title());
 
-		$fieldset = new FormFieldsetHTMLHeading('delete_category', $this->get_title());
+		$fieldset = new FormFieldsetHTML('delete_category', $common_lang['form.parameters']);
 		$fieldset->set_description($this->get_description());
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldCheckbox('delete_category_and_content', $this->lang['delete.category_and_content'], FormFieldCheckbox::UNCHECKED, array('events' => array('click' => '
-		if (HTMLForms.getField("delete_category_and_content").getValue()) {
-			HTMLForms.getField("move_in_other_cat").disable();
-		} else {
-			HTMLForms.getField("move_in_other_cat").enable();
-		}')
-		)));
+		$fieldset->add_field(new FormFieldCheckbox('delete_category_and_content', $this->lang['delete.category_and_content'], FormFieldCheckbox::UNCHECKED,
+			array(
+				'events' => array('click' => '
+					if (HTMLForms.getField("delete_category_and_content").getValue()) {
+						HTMLForms.getField("move_in_other_cat").disable();
+					} else {
+						HTMLForms.getField("move_in_other_cat").enable();
+					}')
+				)
+			)
+		);
 
 
 		$options = new SearchCategoryChildrensOptions();

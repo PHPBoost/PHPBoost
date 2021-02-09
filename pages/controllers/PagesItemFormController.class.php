@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 16
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
@@ -58,8 +58,9 @@ class PagesItemFormController extends ModuleController
 	private function build_form(HTTPRequestCustom $request)
 	{
 		$form = new HTMLForm(__CLASS__);
+		$form->set_layout_title($this->get_item()->get_id() === null ? $this->lang['pages.add'] : ($this->lang['pages.edit'] . $this->get_item()->get_title() . ': ' . $this->get_item()->get_title()));
 
-		$fieldset = new FormFieldsetHTMLHeading('pages',  $this->get_item()->get_id() === null ? $this->lang['pages.add'] : $this->lang['pages.edit'] . $this->get_item()->get_title());
+		$fieldset = new FormFieldsetHTML('pages', $this->common_lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('title', $this->common_lang['form.name'], $this->get_item()->get_title(), array('required' => true)));

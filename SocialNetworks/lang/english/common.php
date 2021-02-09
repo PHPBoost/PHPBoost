@@ -41,6 +41,6 @@ $lang['admin.menu.mini_module_message'] = 'To show share media links in mini-mod
 $lang['admin.menu.content_message'] = 'To show share media links in the content page only, enable this option  <b>Display sharing links on content pages</b> in <a href="' . AdminContentUrlBuilder::content_configuration()->rel() . '">Content configuration</a>.';
 
 //Sign in label
-$lang['sign-in-label'] = 'Connexion with :name';
+$lang['sign-in-label'] = 'Sign in with :name';
 
 ?>

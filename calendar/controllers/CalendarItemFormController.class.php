@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 21
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -62,8 +62,9 @@ class CalendarItemFormController extends ModuleController
 		$item_content = $this->get_item()->get_content();
 
 		$form = new HTMLForm(__CLASS__);
+		$form->set_layout_title($item_content === null ? $this->lang['calendar.event.add'] : ($this->lang['calendar.event.edit'] . ': ' . $item_content->get_title()));
 
-		$fieldset = new FormFieldsetHTMLHeading('event', $item_content === null ? $this->lang['calendar.event.add'] : $this->lang['calendar.event.edit']);
+		$fieldset = new FormFieldsetHTML('event', $common_lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('title', $common_lang['form.title'], $item_content->get_title(), array('required' => true)));

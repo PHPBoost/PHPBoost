@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 16
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 3.0 - 2012 11 11
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -79,7 +79,7 @@ class BugtrackerDeleteBugController extends ModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('delete_bug');
+		$fieldset = new FormFieldsetHTML('delete_bug');
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldRichTextEditor('comments_message', LangLoader::get_message('comment', 'comments-common'), '', array(
