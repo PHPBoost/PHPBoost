@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 20
+ * @version     PHPBoost 6.0 - last update: 2021 02 10
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UserMessagesController extends AbstractController
@@ -58,7 +59,8 @@ class UserMessagesController extends AbstractController
 				'NAME_USER_MSG'   => $module->get_messages_list_link_name(),
 				'IMG_USER_MSG'    => $img,
 				'C_IMG_USER_MSG'  => !empty($img),
-				'U_LINK_USER_MSG' => $module->get_messages_list_url($this->user->get_id())
+				'U_LINK_USER_MSG' => $module->get_messages_list_url($this->user->get_id()),
+				'MESSAGES_NUMBER' => $module->get_number_messages($this->user->get_id())
 			));
 		}
 

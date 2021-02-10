@@ -60,8 +60,8 @@
 table.announce-legend td { width: 33%; }
 
 .available-modules-msg {
-	margin-bottom: 1em;
-	text-align: center;
+	display: table;
+	margin: auto;
 }
 
 
