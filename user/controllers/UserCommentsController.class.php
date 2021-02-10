@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 10
+ * @version     PHPBoost 6.0 - last update: 2021 02 10
  * @since       PHPBoost 3.0 - 2012 02 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -16,7 +16,6 @@ class UserCommentsController extends AbstractController
 	private $tpl;
 	private $lang;
 	private $current_user;
-	private $comments_number_per_page;
 	private $comments_number;
 	private $ids = array();
 
@@ -56,7 +55,6 @@ class UserCommentsController extends AbstractController
 		$this->tpl = new FileTemplate('user/UserCommentsController.tpl');
 		$this->lang = LangLoader::get('comments-common');
 		$this->current_user = AppContext::get_current_user();
-		$this->comments_number_per_page = CommentsConfig::load()->get_number_comments_display();
 		$this->tpl->add_lang($this->lang);
 		$this->tpl->put('MODULE_CHOICE_FORM', $this->build_modules_choice_form()->display());
 		$this->tpl->put('COMMENTS', $this->build_view($request));
@@ -166,14 +164,7 @@ class UserCommentsController extends AbstractController
 			'COMMENTS_NUMBER'         => $this->comments_number
 		));
 
-		$comments_tpl = new FileTemplate('framework/content/comments/comments.tpl');
-		$comments_tpl->add_lang($this->lang);
-		$comments_tpl->put_all(array(
-			'COMMENTS_LIST'   => $template,
-			'COMMENTS_NUMBER' => $this->comments_number
-		));
-
-		return $comments_tpl;
+		return $template;
 	}
 
 	private function get_pagination($page)
@@ -186,7 +177,7 @@ class UserCommentsController extends AbstractController
 			LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' topic ON comments.id_topic = topic.id_topic
 			'. $this->build_where_request())->fetch();
 
-		$pagination = new ModulePagination($page, $row['nbr_comments'], $this->comments_number_per_page);
+		$pagination = new ModulePagination($page, $row['nbr_comments'], (int)CommentsConfig::load()->get_number_comments_display());
 		$pagination->set_url(UserUrlBuilder::comments($id_module, $user_id, '%d'));
 
 		if ($pagination->current_page_is_empty() && $page > 1)
