@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 19
+ * @version   	PHPBoost 5.2 - last update: 2021 02 10
  * @since   	PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -70,7 +70,7 @@ class UserViewProfileController extends AbstractController
 			'LEVEL' => UserService::get_level_lang($this->user_infos['level']),
 			'LEVEL_CLASS' => UserService::get_level_class($this->user_infos['level']),
 			'REGISTRATION_DATE' => $registration_date,
-			'MESSAGES_NUMBER' => $this->user_infos['posted_msg'],
+			'MESSAGES_NUMBER' => $this->user_infos['posted_msg'] + CommentsCache::load()->get_user_comments_number($user_id),
 			'LAST_CONNECTION_DATE' => $last_connection_date,
 			'EMAIL' => $this->user_infos['email'],
 			'U_EDIT_PROFILE' => UserUrlBuilder::edit_profile($user_id)->rel(),

@@ -5,13 +5,14 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @version     PHPBoost 5.2 - last update: 2021 01 10
  * @since       PHPBoost 3.0 - 2011 09 24
 */
 
 class CommentsCache implements CacheData
 {
 	private $comments = array();
+	private $users_comments_number = array();
 
 	/**
 	 * {@inheritdoc}
@@ -42,6 +43,7 @@ class CommentsCache implements CacheData
 				'path' => $row['path'],
 				'user_id' => $row['user_id']
 			);
+			$this->users_comments_number[$row['user_id']] = (isset($this->users_comments_number[$row['user_id']]) && is_int($this->users_comments_number[$row['user_id']])) ? $this->users_comments_number[$row['user_id']]++ : 1;
 		}
 	}
 
@@ -91,6 +93,11 @@ class CommentsCache implements CacheData
 	public function get_count_comments()
 	{
 		return count($this->comments);
+	}
+
+	public function get_user_comments_number($user_id)
+	{
+		return (isset($this->users_comments_number[$user_id]) && is_int($this->users_comments_number[$user_id])) ? $this->users_comments_number[$user_id] : 0;
 	}
 
 	/**
