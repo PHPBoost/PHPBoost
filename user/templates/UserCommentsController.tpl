@@ -1,6 +1,6 @@
 <section id="module-user-comments">
 	<header class="section-header">
-		<h1>{@comments}</h1>
+		<h1>{@comments.list}</h1>
 	</header>
 	<div class="sub-section">
 		<article class="message-item several-item">

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 27
+ * @version     PHPBoost 6.0 - last update: 2021 02 09
  * @since       PHPBoost 3.0 - 2011 09 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -17,6 +17,7 @@ $lang['comments'] = 'Commentaires';
 $lang['comment'] = 'Commentaire';
 $lang['comments.not-authorized.post'] = 'Vous n\'êtes pas autorisé à poster un commentaire';
 $lang['comments.not-authorized.read'] = 'Vous n\'êtes pas autorisé à voir les commentaires';
+$lang['comments.list'] = 'Liste des commentaires';
 
 $lang['comments.form.visitor.name'] = 'Visiteur';
 $lang['comments.form.visitor.email'] = 'visiteur@email.ext';
