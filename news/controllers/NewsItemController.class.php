@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 13
+ * @version     PHPBoost 6.0 - last update: 2021 02 11
  * @since       PHPBoost 4.0 - 2013 02 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -139,7 +139,7 @@ class NewsItemController extends ModuleController
 			'timestamp_now' => $now->get_timestamp()
 		));
 
-		$this->view->put('C_SUGGESTED_NEWS', ($result->get_rows_count() > 0 && NewsConfig::load()->get_item_suggestions_enabled()));
+		$this->view->put('C_SUGGESTED_NEWS', ($result->get_rows_count() > 0 && NewsConfig::load()->get_items_suggestions_enabled()));
 
 		while ($row = $result->fetch())
 		{
@@ -148,7 +148,7 @@ class NewsItemController extends ModuleController
 				'U_CATEGORY' =>  NewsUrlBuilder::display_category($row['id_category'], CategoriesService::get_categories_manager()->get_categories_cache()->get_category($row['id_category'])->get_rewrited_name())->rel(),
 				'TITLE' => $row['title'],
 				'U_ITEM' => NewsUrlBuilder::display_item($row['id_category'], CategoriesService::get_categories_manager()->get_categories_cache()->get_category($row['id_category'])->get_rewrited_name(), $row['id'], $row['rewrited_title'])->rel(),
-				'U_THUMBNAIL' => !empty($row['thumbnail']) ? Url::to_rel($row['thumbnail']) : $this->item->get_default_thumbnail()->rel()
+				'U_THUMBNAIL' => !empty($row['thumbnail']) ? Url::to_rel($row['thumbnail']) : Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(NewsItem::THUMBNAIL_URL))
 			));
 		}
 		$result->dispose();
@@ -176,11 +176,11 @@ class NewsItemController extends ModuleController
 		while ($row = $result->fetch())
 		{
 			$this->view->put_all(array(
-				'C_RELATED_LINKS' => true,
+				'C_RELATED_LINKS' => NewsConfig::load()->get_items_navigation_enabled(),
 				'C_'. $row['type'] .'_ITEM' => true,
 				$row['type'] . '_ITEM' => $row['title'],
 				'U_'. $row['type'] .'_ITEM' => NewsUrlBuilder::display_item($row['id_category'], CategoriesService::get_categories_manager()->get_categories_cache()->get_category($row['id_category'])->get_rewrited_name(), $row['id'], $row['rewrited_title'])->rel(),
-				'U_'. $row['type'] .'_THUMBNAIL' => !empty($row['thumbnail']) ? Url::to_rel($row['thumbnail']) : $this->item->get_default_thumbnail()->rel()
+				'U_'. $row['type'] .'_THUMBNAIL' => !empty($row['thumbnail']) ? Url::to_rel($row['thumbnail']) : Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(NewsItem::THUMBNAIL_URL))
 			));
 		}
 		$result->dispose();
