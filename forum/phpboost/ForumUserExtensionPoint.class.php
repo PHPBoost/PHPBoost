@@ -30,6 +30,14 @@ class ForumUserExtensionPoint implements UserExtensionPoint
 	/**
 	 * {@inheritDoc}
 	 */
+	public function get_module_id()
+	{
+		return 'forum';
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public function get_messages_list_link_img()
 	{
 		return 'fa fa-globe';

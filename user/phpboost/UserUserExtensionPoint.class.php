@@ -21,6 +21,11 @@ class UserUserExtensionPoint implements UserExtensionPoint
 		return LangLoader::get_message('comments', 'comments-common');
 	}
 
+	public function get_module_id()
+	{
+		return '';
+	}
+
 	public function get_messages_list_link_img()
 	{
 		return 'far fa-comments';

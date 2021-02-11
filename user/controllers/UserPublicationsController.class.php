@@ -54,13 +54,27 @@ class UserPublicationsController extends AbstractController
 		$modules = AppContext::get_extension_provider_service()->get_extension_point(UserExtensionPoint::EXTENSION_POINT);
 		foreach ($modules as $module)
 		{
-			$img = $module->get_messages_list_link_img();
+			$module_icon = new File(PATH_TO_ROOT . '/' . $module->get_module_id() . '/' . $module->get_module_id() . '_mini.png');
+			$icon_fa = $module->get_messages_list_link_img();
+			if($icon_fa != '') {
+				$thumbnail = $icon_fa;
+				$is_picture = false;
+			}
+			else if($module_icon->exists()) {
+				$thumbnail = Url::to_rel($module_icon->get_path());
+				$is_picture = true;
+			}
+			else {
+				$thumbnail = 'fa fa-cube';
+				$is_picture = false;
+			}
+
 			$this->tpl->assign_block_vars('user_publications', array(
-				'NAME_USER_MSG'   => $module->get_messages_list_link_name(),
-				'IMG_USER_MSG'    => $img,
-				'C_IMG_USER_MSG'  => !empty($img),
-				'U_LINK_USER_MSG' => $module->get_messages_list_url($this->user->get_id()),
-				'MESSAGES_NUMBER' => $module->get_number_messages($this->user->get_id())
+				'C_ICON_IS_PICTURE'   => $is_picture,
+				'MODULE_NAME'         => $module->get_messages_list_link_name(),
+				'MODULE_THUMBNAIL'    => $thumbnail,
+				'U_MODULE_LINK'       => $module->get_messages_list_url($this->user->get_id()),
+				'PUBLICATIONS_NUMBER' => $module->get_number_messages($this->user->get_id())
 			));
 		}
 	}

@@ -19,6 +19,11 @@ class NewsUserExtensionPoint implements UserExtensionPoint
 		return LangLoader::get_message('module.title', 'common', 'news');
 	}
 
+	public function get_module_id()
+	{
+		return 'news';
+	}
+
 	public function get_messages_list_link_img()
 	{
 		return 'far fa-newspaper';

@@ -25,6 +25,12 @@ interface UserExtensionPoint extends ExtensionPoint
 	function get_messages_list_link_name();
 
 	/**
+	 * @desc Returns the link name of the page on which user messages that will be displayed
+	 * @return the link name
+	 */
+	function get_module_id();
+
+	/**
 	 * @desc Returns the picture associated with the link of the page on which user messages will be displayed
 	 * @return the link picture
 	 */
