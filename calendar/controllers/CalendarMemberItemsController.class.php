@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 21
+ * @version     PHPBoost 6.0 - last update: 2021 02 11
  * @since       PHPBoost 5.2 - 2020 08 28
 */
 
@@ -12,6 +12,7 @@ class CalendarMemberItemsController extends ModuleController
 	private $view;
 	private $items_view;
 	private $lang;
+	private $user;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -19,7 +20,15 @@ class CalendarMemberItemsController extends ModuleController
 
 		$this->init();
 
-		$this->build_view($request);
+		$user_id = $request->get_getint('user_id', AppContext::get_current_user()->get_id());
+		try {
+			$this->user = PersistenceContext::get_querier()->select_single_row(PREFIX . 'member', array('*'), 'WHERE user_id=:user_id', array('user_id' => $user_id));
+		} catch (RowNotFoundException $e) {
+			$error_controller = PHPBoostErrors::unexisting_element();
+			DispatchManager::redirect($error_controller);
+		}
+
+		$this->build_view($request, $this->user['user_id']);
 
 		return $this->generate_response();
 	}
@@ -33,7 +42,7 @@ class CalendarMemberItemsController extends ModuleController
 		$this->items_view->add_lang($this->lang);
 	}
 
-	public function build_view(HTTPRequestCustom $request)
+	public function build_view(HTTPRequestCustom $request, $user_id)
 	{
 		$authorized_categories = CategoriesService::get_authorized_categories();
 
@@ -44,7 +53,7 @@ class CalendarMemberItemsController extends ModuleController
 		' . (!CategoriesAuthorizationsService::check_authorizations()->moderation() ? ' AND event_content.author_id = :user_id' : '');
 		$parameters = array(
 			'authorized_categories' => $authorized_categories,
-			'user_id' => AppContext::get_current_user()->get_id()
+			'user_id' => $this->user['user_id']
 		);
 
 		$page = $request->get_getint('page', 1);
@@ -80,7 +89,9 @@ class CalendarMemberItemsController extends ModuleController
 
 		$this->view->put_all(array(
 			'EVENTS' => $this->items_view,
-			'C_MEMBER_ITEMS' => true
+			'C_MEMBER_ITEMS' => true,
+			'C_MY_ITEMS' => $user_id == AppContext::get_current_user()->get_id(),
+			'MEMBER_NAME' => $this->user['display_name']
 		));
 
 		return $this->view;
@@ -120,13 +131,19 @@ class CalendarMemberItemsController extends ModuleController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['my.items'], $this->lang['module.title'], $page);
+		if($this->user['user_id'] == AppContext::get_current_user()->get_id())
+			$graphical_environment->set_page_title($this->lang['my.items'], $this->lang['module.title'], $page);
+		else
+			$graphical_environment->set_page_title($this->lang['member.items'] . ' ' . $this->user['display_name'], $this->lang['module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['calendar.seo.description.member'], array('author' => AppContext::get_current_user()->get_display_name())), $page);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::display_member_items($page));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::display_member_items($this->user['user_id'], $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::home());
-		$breadcrumb->add($this->lang['my.items'], CalendarUrlBuilder::display_member_items($page));
+		if($this->user['user_id'] == AppContext::get_current_user()->get_id())
+			$breadcrumb->add($this->lang['my.items'], NewsUrlBuilder::display_member_items($this->user['user_id'], $page));
+		else
+			$breadcrumb->add($this->lang['member.items'] . ' ' . $this->user['display_name'], NewsUrlBuilder::display_member_items($this->user['user_id'], $page));
 
 		return $response;
 	}

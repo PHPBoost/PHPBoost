@@ -10,7 +10,7 @@
 				{@calendar.pending.events}
 			# ELSE #
 				# IF C_MEMBER_ITEMS #
-					{@my.items}
+					# IF C_MY_ITEMS #{@my.items}# ELSE #{@member.items} : {MEMBER_NAME}# ENDIF #
 				# ELSE #
 					{@module.title}
 				# ENDIF #
@@ -22,7 +22,7 @@
 			<div id="calendar" class="sub-section">
 				<div class="content">
 					# INCLUDE CALENDAR #
-				</div>				
+				</div>
 			</div>
 		# ENDIF #
 	# ENDIF #
