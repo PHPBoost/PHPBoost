@@ -399,7 +399,7 @@ class UpdateServices
 						ModulesManager::update_module($module_id, false, false);
 						$this->add_information_to_file('module ' . $module_id, 'has been disabled because : incompatible with new version');
 
-						if ($home_page == $id)
+						if ($home_page == $module_id)
 							$default_module_changed = true;
 					}
 
