@@ -24,7 +24,7 @@ $lang['item'] = 'news';
 $lang['an.item'] = 'une news';
 $lang['the.item'] = 'la news';
 $lang['my.items'] = 'Mes news';
-$lang['member.items'] = 'News de';
+$lang['member.items'] = 'News publiées par';
 
 $lang['news.add.item'] = 'Ajouter une news';
 $lang['news.edit.item'] = 'Modifier une news';

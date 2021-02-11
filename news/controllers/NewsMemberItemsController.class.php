@@ -138,14 +138,14 @@ class NewsMemberItemsController extends ModuleController
 		else
 			$graphical_environment->set_page_title($this->lang['member.items'] . ' ' . $this->user['display_name'], $this->lang['module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['news.seo.description.member'], array('author' => AppContext::get_current_user()->get_display_name())), $page);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::display_member_items($page));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::display_member_items($this->user['user_id'], $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], NewsUrlBuilder::home());
 		if($this->user['user_id'] == AppContext::get_current_user()->get_id())
-			$breadcrumb->add($this->lang['my.items'], NewsUrlBuilder::display_member_items($page));
+			$breadcrumb->add($this->lang['my.items'], NewsUrlBuilder::display_member_items($this->user['user_id'], $page));
 		else
-			$breadcrumb->add($this->lang['member.items'] . ' ' . $this->user['display_name'], NewsUrlBuilder::display_member_items($page));
+			$breadcrumb->add($this->lang['member.items'] . ' ' . $this->user['display_name'], NewsUrlBuilder::display_member_items($this->user['user_id'], $page));
 
 		return $response;
 	}
