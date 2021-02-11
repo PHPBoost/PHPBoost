@@ -157,7 +157,7 @@ class UserCommentsController extends AbstractController
 			));
 		}
 		$result->dispose();
-		
+
 		$this->tpl->put_all(array(
 			'C_COMMENTS'              => $this->comments_number > 0,
 			'C_DISPLAY_DELETE_BUTTON' => $this->comments_number && ($comments_authorizations->is_authorized_moderation() || $display_delete_button),
@@ -259,7 +259,7 @@ class UserCommentsController extends AbstractController
 		if ($this->user !== null)
 		{
 			$breadcrumb->add($this->user->get_display_name(), UserUrlBuilder::profile($this->user->get_id())->rel());
-			$breadcrumb->add(LangLoader::get_message('messages', 'user-common'), UserUrlBuilder::messages($this->user->get_id())->rel());
+			$breadcrumb->add(LangLoader::get_message('user.publications', 'user-common'), UserUrlBuilder::publications($this->user->get_id())->rel());
 			$breadcrumb->add($this->lang['comments'], UserUrlBuilder::comments($module_id, $this->user->get_id(), $page)->rel());
 		}
 		else

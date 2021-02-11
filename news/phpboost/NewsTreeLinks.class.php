@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 04
+ * @version     PHPBoost 6.0 - last update: 2021 02 11
  * @since       PHPBoost 4.0 - 2013 11 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -15,6 +15,7 @@ class NewsTreeLinks implements ModuleTreeLinksExtensionPoint
 	public function get_actions_tree_links()
 	{
 		$module_id = 'news';
+		$current_user = AppContext::get_current_user()->get_id();
 
 		$lang = LangLoader::get('common', $module_id);
 		$tree = new ModuleTreeLinks();
@@ -36,7 +37,7 @@ class NewsTreeLinks implements ModuleTreeLinksExtensionPoint
 			$tree->add_link(new ModuleLink($lang['news.add.item'], NewsUrlBuilder::add_item(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY)), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->write() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->contribution()));
 		}
 
-		$tree->add_link(new ModuleLink($lang['my.items'], NewsUrlBuilder::display_member_items(), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->write() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->contribution() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation()));
+		$tree->add_link(new ModuleLink($lang['my.items'], NewsUrlBuilder::display_member_items($current_user), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->write() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->contribution() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation()));
 		$tree->add_link(new ModuleLink($lang['news.pending.items'], NewsUrlBuilder::display_pending_items(), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->write() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->contribution() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation()));
 
 		if (ModulesManager::get_module($module_id)->get_configuration()->get_documentation())

@@ -59,12 +59,6 @@
 
 table.announce-legend td { width: 33%; }
 
-.available-modules-msg {
-	display: table;
-	margin: auto;
-}
-
-
 /* --- Error 403/404 --- */
 #module-user-error-403 .content,
 #module-user-error-404 .content {

@@ -393,7 +393,7 @@ while ( $row = $result->fetch() )
 		'C_USER_GROUPS'               => $row['user_groups'],
 		'C_IS_USER'                   => !$is_guest,
 		'C_USER_MSG'                  => $row['posted_msg'] >= 1,
-		'U_USER_MSG'                  => UserUrlBuilder::messages($row['user_id'])->rel(),
+		'U_USER_MSG'                  => UserUrlBuilder::publications($row['user_id'])->rel(),
 		'U_USER_MEMBERMSG'            => PATH_TO_ROOT . '/forum/membermsg' . url('.php?id=' . $row['user_id'], ''),
 		'USER_MSG'                    => $row['posted_msg'],
 		'C_USER_MAIL'                 => (!empty($row['email']) && ($row['show_email'] == '1' ) ),

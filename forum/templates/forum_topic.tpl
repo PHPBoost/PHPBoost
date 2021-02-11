@@ -207,7 +207,7 @@
 							<i class="fa # IF msg.C_USER_ONLINE #fa-user-check success# ELSE #fa-user-times error# ENDIF #" aria-hidden="true"></i>
 							# IF msg.C_IS_USER #${LangLoader::get_message('registered_on', 'main')} : {msg.USER_REGISTERED_DATE_FULL}# ENDIF #
 							# IF msg.C_USER_MSG #
-								| <a href="{msg.U_USER_MSG}">${LangLoader::get_message('message_s', 'main')}</a>: {msg.USER_MSG}
+								| <a href="{msg.U_USER_MEMBERMSG}">${LangLoader::get_message('message_s', 'main')}</a>: {msg.USER_MSG}
 							# ELSE #
 								| # IF msg.C_IS_USER # <a href="{msg.U_USER_MEMBERMG}">${LangLoader::get_message('message', 'main')}</a> : 0# ELSE #${LangLoader::get_message('message', 'main')} : 0# ENDIF #
 							# ENDIF #

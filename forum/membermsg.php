@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 05
+ * @version     PHPBoost 6.0 - last update: 2021 02 11
  * @since       PHPBoost 1.6 - 2007 04 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -199,7 +199,7 @@ if (!empty($view_msg)) // Display all user's messages
 				'C_USER_GROUPS'    => !empty($row['user_groups']),
 				'C_IS_USER'        => !$is_guest,
 				'C_USER_MSG'       => $row['posted_msg'] >= 1,
-				'U_USER_MSG'       => UserUrlBuilder::messages($row['user_id'])->rel(),
+				'U_USER_MSG'       => UserUrlBuilder::publications($row['user_id'])->rel(),
 				'U_USER_MEMBERMSG' => PATH_TO_ROOT . '/forum/membermsg' . url('.php?id=' . $row['user_id'], ''),
 				'USER_MSG'         => $row['posted_msg'],
 				'C_USER_MAIL'      => (!empty($row['email']) && ($row['show_email'] == '1')),

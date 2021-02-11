@@ -9,7 +9,7 @@
 				{@news.pending.items}
 			# ELSE #
 				# IF C_MEMBER_ITEMS #
-			 		{@my.items}
+			 		# IF C_MY_ITEMS #{@my.items}# ELSE #{@member.items} : {MEMBER_NAME}# ENDIF #
 				# ELSE #
 					{@module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
 				# ENDIF #

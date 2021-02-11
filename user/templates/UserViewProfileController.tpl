@@ -41,8 +41,8 @@
 						<span>{REGISTRATION_DATE}</span>
 					</li>
 					<li class="li-stretch user-profile-nbr-msg">
-						<strong>{@number_messages}</strong>
-						<span><a href="{U_DISPLAY_USER_MESSAGES}">{MESSAGES_NUMBER} {@messages}</a></span>
+						<strong>{@user.publications}</strong>
+						<span><a href="{U_USER_PUBLICATIONS}">{PUBLICATIONS_NUMBER} {@publications.number}</a></span>
 					</li>
 					<li class="li-stretch user-profil-lastconnect">
 						<strong>{@last_connection}</strong>
@@ -51,13 +51,13 @@
 					# IF C_DISPLAY_MAIL_LINK #
 						<li class="li-stretch user-profil-email">
 							<strong>{@email}</strong>
-							<span><a href="mailto:{EMAIL}" class="button alt-button smaller">${LangLoader::get_message('mail', 'main')}</a></span>
+							<span><a href="mailto:{EMAIL}" class="button bgc visitor small" aria-label="${LangLoader::get_message('mail', 'main')}"><i class="fa iboost fa-iboost-email fa-lg" aria-hidden="true"></i></a></span>
 						</li>
 					# ENDIF #
 					# IF C_DISPLAY_PM_LINK #
 						<li class="li-stretch user-profil-private-msg">
 							<strong>{@private_message}</strong>
-							<span><a href="{U_DISPLAY_USER_PM}" class="button alt-button smaller">${LangLoader::get_message('pm', 'main')}</a></span>
+							<span><a href="{U_DISPLAY_USER_PM}" class="button bgc visitor small" aria-label="${LangLoader::get_message('pm', 'main')}"><i class="fa fa-people-arrows fa-lg" aria-hidden="true"></i></a></span>
 						</li>
 					# ENDIF #
 				</ul>

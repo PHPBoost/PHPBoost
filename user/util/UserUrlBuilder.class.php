@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 30
+ * @version     PHPBoost 6.0 - last update: 2021 02 11
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UserUrlBuilder
@@ -108,9 +109,9 @@ class UserUrlBuilder
 		return DispatchManager::get_url($dispatch, '/error/404/');
 	}
 
-	public static function messages($user_id)
+	public static function publications($user_id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/messages/'. $user_id);
+		return DispatchManager::get_url(self::$dispatcher, '/publications/'. $user_id);
 	}
 
 	public static function comments($module = '', $user_id = null, $page = 1)
@@ -118,9 +119,9 @@ class UserUrlBuilder
 		$page = $page !== 1 ? $page : '';
 		if (!empty($user_id))
 		{
-			return DispatchManager::get_url(self::$dispatcher, '/messages/'. $user_id . '/comments/' . (!empty($module) ? $module . '/' : '') . $page);
+			return DispatchManager::get_url(self::$dispatcher, '/publications/'. $user_id . '/comments/' . (!empty($module) ? $module . '/' : '') . $page);
 		}
-		return DispatchManager::get_url(self::$dispatcher, '/messages/comments/' . (!empty($module) ? $module . '/' : '')  . $page);
+		return DispatchManager::get_url(self::$dispatcher, '/publications/comments/' . (!empty($module) ? $module . '/' : '')  . $page);
 	}
 
 	public static function group($id)
