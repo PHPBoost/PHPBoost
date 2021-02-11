@@ -348,7 +348,7 @@ class UpdateServices
 			{
 				$module_id = $folder->get_name();
 				$module = ModulesManager::get_module($module_id);
-				
+
 				if (!ModulesManager::is_module_installed($module_id))
 				{
 					if (in_array($module_id, array_keys($update_modules_class)))
@@ -726,7 +726,7 @@ class UpdateServices
 		$folder = new Folder(PATH_TO_ROOT . '/TinyMCE/lib');
 		if ($folder->exists())
 			$folder->delete();
-                
+
                 $folder = new Folder(PATH_TO_ROOT . '/admin/controllers');
 		if ($folder->exists())
 			$folder->delete();
@@ -825,7 +825,7 @@ class UpdateServices
 	        $folder = new Folder(PATH_TO_ROOT . '/templates/default');
 		if ($folder->exists())
 		$folder->delete();
-                
+
                 $file = new File(PATH_TO_ROOT . '/templates/base/theme/colors.css');
 		$file->delete();
 
@@ -865,7 +865,11 @@ class UpdateServices
 
 	private function delete_old_files_user()
 	{
+		$file = new File(PATH_TO_ROOT . '/user/controllers/UserMessagesController.class.php');
+		$file->delete();
 
+		$file = new File(PATH_TO_ROOT . '/user/templates/UserMessagesController.tpl');
+		$file->delete();
 	}
 }
 ?>

@@ -5,7 +5,7 @@
 	<div class="sub-section">
 		<article class="messages-item several-items">
 			<div class="content">
-				<div class="cell-flex cell-tile cell-columns-4">
+				<div class="cell-flex cell-tile cell-columns-3">
 					# START user_publications #
 						<div class="cell">
 							<div class="cell-header">
