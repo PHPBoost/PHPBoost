@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 05
+ * @version     PHPBoost 6.0 - last update: 2021 02 11
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -341,49 +341,71 @@ class UpdateServices
 
 		$default_module_changed = false;
 
-		foreach (ModulesManager::get_installed_modules_map() as $id => $module)
+		$modules_folder = new Folder(PATH_TO_ROOT);
+		foreach ($modules_folder->get_folders() as $folder)
 		{
-			if ($module->get_configuration()->get_compatibility() == self::NEW_KERNEL_VERSION)
+			if ($folder->get_files('/config\.ini/'))
 			{
-				if (in_array($id, array_keys($update_modules_class)))
+				$module_id = $folder->get_name();
+				$module = ModulesManager::get_module($module_id);
+				
+				if (!ModulesManager::is_module_installed($module_id))
 				{
-					$module_update = new $update_modules_class[$id]();
-					try {
-						$module_update->execute();
-						$success = true;
-						$message = '';
-					} catch (Exception $e) {
-						$success = false;
-						$message = $e->getMessage();
+					if (in_array($module_id, array_keys($update_modules_class)))
+					{
+						$module_update = new $update_modules_class[$module_id]();
+						if (is_subclass_of($module_update, 'ModuleUpdateVersion'))
+						{
+							$module_update::delete_old_files();
+							$module_update::delete_old_folders();
+						}
 					}
-					$this->add_error_to_file($class['type'] . ' ' . $module_update->get_module_id(), $success, $message);
 				}
 				else
 				{
-					ModulesManager::upgrade_module($id, false);
-				}
-				$module->set_installed_version($module->get_configuration()->get_version());
-			}
-			else
-			{
-				if (in_array($id, array_keys($update_modules_class)))
-				{
-					$module_update = new $update_modules_class[$id]();
-					if (is_subclass_of($module_update, 'ModuleUpdateVersion'))
+					if ($module->get_configuration()->get_compatibility() == self::NEW_KERNEL_VERSION)
 					{
-						$module_update::delete_old_files();
-						$module_update::delete_old_folders();
+						if (in_array($module_id, array_keys($update_modules_class)))
+						{
+							$module_update = new $update_modules_class[$module_id]();
+							try {
+								$module_update->execute();
+								$success = true;
+								$message = '';
+							} catch (Exception $e) {
+								$success = false;
+								$message = $e->getMessage();
+							}
+							$this->add_error_to_file($class['type'] . ' ' . $module_update->get_module_id(), $success, $message);
+						}
+						else
+						{
+							ModulesManager::upgrade_module($module_id, false);
+						}
+						$module->set_installed_version($module->get_configuration()->get_version());
 					}
+					else
+					{
+						if (in_array($module_id, array_keys($update_modules_class)))
+						{
+							$module_update = new $update_modules_class[$module_id]();
+							if (is_subclass_of($module_update, 'ModuleUpdateVersion'))
+							{
+								$module_update::delete_old_files();
+								$module_update::delete_old_folders();
+							}
+						}
+
+						ModulesManager::update_module($module_id, false, false);
+						$this->add_information_to_file('module ' . $module_id, 'has been disabled because : incompatible with new version');
+
+						if ($home_page == $id)
+							$default_module_changed = true;
+					}
+
+					$modules_config->update($module);
 				}
-
-				ModulesManager::update_module($id, false, false);
-				$this->add_information_to_file('module ' . $id, 'has been disabled because : incompatible with new version');
-
-				if ($home_page == $id)
-					$default_module_changed = true;
 			}
-
-			$modules_config->update($module);
 		}
 		ModulesConfig::save();
 
