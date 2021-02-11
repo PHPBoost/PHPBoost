@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 02
+ * @version     PHPBoost 6.0 - last update: 2021 02 11
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -20,7 +20,8 @@ class NewsConfig extends AbstractConfigData
 	const DISPLAY_SUMMARY_TO_GUESTS = 'display_summary_to_guests';
 	const CHARACTERS_NUMBER_TO_CUT = 'characters_number_to_cut';
 
-	const ITEMS_SUGGESTIONS_ENABLED = 'item_suggestions';
+	const ITEMS_SUGGESTIONS_ENABLED = 'items_suggestions';
+	const ITEMS_NAVIGATION_ENABLED = 'items_navigation';
 	const AUTHOR_DISPLAYED = 'author_displayed';
 	const VIEWS_NUMBER_ENABLED = 'views_number_enabled';
 
@@ -89,14 +90,24 @@ class NewsConfig extends AbstractConfigData
 		$this->set_property(self::CHARACTERS_NUMBER_TO_CUT, $number);
 	}
 
-	public function get_item_suggestions_enabled()
+	public function get_items_suggestions_enabled()
 	{
 		return $this->get_property(self::ITEMS_SUGGESTIONS_ENABLED);
 	}
 
-	public function set_item_suggestions_enabled($item_suggestions_enabled)
+	public function set_items_suggestions_enabled($items_suggestions_enabled)
 	{
-		$this->set_property(self::ITEMS_SUGGESTIONS_ENABLED, $item_suggestions_enabled);
+		$this->set_property(self::ITEMS_SUGGESTIONS_ENABLED, $items_suggestions_enabled);
+	}
+
+	public function get_items_navigation_enabled()
+	{
+		return $this->get_property(self::ITEMS_NAVIGATION_ENABLED);
+	}
+
+	public function set_items_navigation_enabled($items_navigation_enabled)
+	{
+		$this->set_property(self::ITEMS_NAVIGATION_ENABLED, $items_navigation_enabled);
 	}
 
 	public function get_author_displayed()
@@ -170,6 +181,7 @@ class NewsConfig extends AbstractConfigData
 			self::DISPLAY_SUMMARY_TO_GUESTS => false,
 			self::CHARACTERS_NUMBER_TO_CUT => 150,
 			self::ITEMS_SUGGESTIONS_ENABLED => true,
+			self::ITEMS_NAVIGATION_ENABLED => true,
 			self::AUTHOR_DISPLAYED => true,
 			self::VIEWS_NUMBER_ENABLED => true,
 			self::DEFAULT_CONTENT => '',

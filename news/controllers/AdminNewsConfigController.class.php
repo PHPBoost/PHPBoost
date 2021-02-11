@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 02 11
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -81,13 +81,19 @@ class AdminNewsConfigController extends AdminModuleController
 			array('class' => 'custom-checkbox')
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('item_suggestions_enabled', $this->lang['news.config.suggestions.enabled'], $this->config->get_item_suggestions_enabled(),
-			array('class' => 'custom-checkbox')
-		));
-
 		$fieldset->add_field(new FormFieldCheckbox('summary_display_to_guests', $this->admin_common_lang['config.display.summary.to.guests'], $this->config->is_summary_displayed_to_guests(),
 			array('class' => 'custom-checkbox')
 		));
+
+		$fieldset->add_field(new FormFieldCheckbox('items_suggestions_enabled', $this->lang['news.config.suggestions.enabled'], $this->config->get_items_suggestions_enabled(),
+			array('class' => 'custom-checkbox')
+		));
+
+		$fieldset->add_field(new FormFieldCheckbox('items_navigation_enabled', $this->lang['news.config.navigation.enabled'], $this->config->get_items_navigation_enabled(),
+			array('class' => 'custom-checkbox')
+		));
+
+		$fieldset->add_field(new FormFieldSpacer('spacer', ''));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->admin_common_lang['config.display.type'], $this->config->get_display_type(),
 			array(
@@ -176,7 +182,8 @@ class AdminNewsConfigController extends AdminModuleController
 		}
 
 		$this->config->set_characters_number_to_cut($this->form->get_value('characters_number_to_cut', $this->config->get_characters_number_to_cut()));
-		$this->config->set_item_suggestions_enabled($this->form->get_value('item_suggestions_enabled'));
+		$this->config->set_items_suggestions_enabled($this->form->get_value('items_suggestions_enabled'));
+		$this->config->set_items_navigation_enabled($this->form->get_value('items_navigation_enabled'));
 		$this->config->set_author_displayed($this->form->get_value('author_displayed'));
 		$this->config->set_views_number_enabled($this->form->get_value('views_number_enabled'));
 		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());

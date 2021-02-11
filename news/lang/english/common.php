@@ -41,6 +41,7 @@ $lang['news.form.top.list'] = 'Put the news on the top of the list';
 
 // Configuration
 $lang['news.config.suggestions.enabled'] = 'Enable suggestions display';
+$lang['news.config.navigation.enabled'] = 'Enable navigation display';
 
 // Feed name
 $lang['feed.name'] = 'News';
