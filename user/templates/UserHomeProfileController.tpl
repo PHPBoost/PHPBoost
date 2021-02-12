@@ -123,7 +123,7 @@
 				<article class="dashboard-item several-items cell">
 					<div class="cell-body">
 						<div class="cell-content align-center">
-							<a href="{user_publications.U_LINK_USER_MSG}">
+							<a href="{user_publications.U_MODULE_VIEW}">
 								# IF user_publications.C_ICON_IS_PICTURE #
 									<img src="{user_publications.MODULE_THUMBNAIL}" alt="{user_publications.MODULE_NAME}">
 								# ELSE #

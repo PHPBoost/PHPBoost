@@ -73,7 +73,7 @@ class UserPublicationsController extends AbstractController
 				'C_ICON_IS_PICTURE'   => $is_picture,
 				'MODULE_NAME'         => $module->get_publications_module_name(),
 				'MODULE_THUMBNAIL'    => $thumbnail,
-				'U_MODULE_LINK'       => $module->get_publications_module_view($this->user->get_id()),
+				'U_MODULE_VIEW'       => $module->get_publications_module_view($this->user->get_id()),
 				'PUBLICATIONS_NUMBER' => (int)$module->get_publications_number($this->user->get_id())
 			));
 		}
