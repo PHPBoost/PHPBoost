@@ -100,18 +100,6 @@
 					</div>
 				</div>
 			</article>
-			# START modules_messages #
-				<article class="dashboard-item several-items cell">
-					<div class="cell-body">
-						<div class="cell-content align-center">
-							<a href="{modules_messages.U_LINK_USER_MSG}">
-								# IF modules_messages.C_IMG_USER_MSG #<i class="{modules_messages.IMG_USER_MSG} fa-2x" aria-hidden="true"></i># ENDIF #
-								<span class="d-block">{modules_messages.NAME_USER_MSG} : {modules_messages.NUMBER_MESSAGES}</span>
-							</a>
-						</div>
-					</div>
-				</article>
-			# END modules_messages #
 			<article class="dashboard-item several-items cell">
 				<div class="cell-body">
 					<div class="cell-content align-center">
@@ -125,6 +113,28 @@
 		</div>
 		<div class="content">
 			{MSG_MBR}
+		</div>
+		<hr />
+		<div class="content">
+			<h2>Mes publications</h2>
+		</div>
+		<div id="user-publications" class="cell-flex cell-tile cell-columns-3">
+			# START user_publications #
+				<article class="dashboard-item several-items cell">
+					<div class="cell-body">
+						<div class="cell-content align-center">
+							<a href="{user_publications.U_LINK_USER_MSG}">
+								# IF user_publications.C_ICON_IS_PICTURE #
+									<img src="{user_publications.MODULE_THUMBNAIL}" alt="{user_publications.MODULE_NAME}">
+								# ELSE #
+									<i class="{user_publications.MODULE_THUMBNAIL} fa-2x" aria-hidden="true"></i>
+								# ENDIF #
+								<span class="d-block">{user_publications.MODULE_NAME} : {user_publications.PUBLICATIONS_NUMBER}</span>
+							</a>
+						</div>
+					</div>
+				</article>
+			# END user_publications #
 		</div>
 
 	</div>

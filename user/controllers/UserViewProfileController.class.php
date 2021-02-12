@@ -64,7 +64,7 @@ class UserViewProfileController extends AbstractController
 		$contributions_number = 0;
 		foreach ($modules as $module)
 		{
-			$contributions_number += $module->get_number_messages($user_id);
+			$contributions_number += $module->get_publications_number($user_id);
 		}
 
 		$this->tpl->put_all(array(
