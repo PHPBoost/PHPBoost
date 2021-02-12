@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 04
+ * @version     PHPBoost 6.0 - last update: 2021 02 12
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -71,13 +71,29 @@ class UserHomeProfileController extends AbstractController
 		$modules = AppContext::get_extension_provider_service()->get_extension_point(UserExtensionPoint::EXTENSION_POINT);
 		foreach ($modules as $module)
 		{
-			$img = $module->get_messages_list_link_img();
-			$this->tpl->assign_block_vars('modules_messages', array(
-				'C_IMG_USER_MSG'  => !empty($img),
-				'IMG_USER_MSG'    => $img,
-				'NAME_USER_MSG'   => $module->get_messages_list_link_name(),
-				'NUMBER_MESSAGES' => (int)$module->get_number_messages($this->user->get_id()),
-				'U_LINK_USER_MSG' => $module->get_messages_list_url($this->user->get_id())
+			$module_icon = new File(PATH_TO_ROOT . '/' . $module->get_publications_module_id() . '/' . $module->get_publications_module_id() . '.png');
+			$icon_fa = $module->get_publications_module_icon();
+			if($icon_fa != '') {
+				$thumbnail = $icon_fa;
+				$is_picture = false;
+			}
+			else if($module_icon->exists()) {
+				$thumbnail = Url::to_rel($module_icon->get_path());
+				$is_picture = true;
+			}
+			else {
+				$thumbnail = 'fa fa-cube';
+				$is_picture = false;
+			}
+
+			$thumbnail = $module->get_publications_module_icon();
+			$is_picture = false;
+			$this->tpl->assign_block_vars('user_publications', array(
+				'C_ICON_IS_PICTURE'   => $is_picture,
+				'MODULE_NAME'         => $module->get_publications_module_name(),
+				'MODULE_THUMBNAIL'    => $thumbnail,
+				'U_MODULE_LINK'       => $module->get_publications_module_view($this->user->get_id()),
+				'PUBLICATIONS_NUMBER' => (int)$module->get_publications_number($this->user->get_id())
 			));
 		}
 	}

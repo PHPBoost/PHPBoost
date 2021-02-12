@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 11
+ * @version     PHPBoost 6.0 - last update: 2021 02 12
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -54,8 +54,8 @@ class UserPublicationsController extends AbstractController
 		$modules = AppContext::get_extension_provider_service()->get_extension_point(UserExtensionPoint::EXTENSION_POINT);
 		foreach ($modules as $module)
 		{
-			$module_icon = new File(PATH_TO_ROOT . '/' . $module->get_module_id() . '/' . $module->get_module_id() . '_mini.png');
-			$icon_fa = $module->get_messages_list_link_img();
+			$module_icon = new File(PATH_TO_ROOT . '/' . $module->get_publications_module_id() . '/' . $module->get_publications_module_id() . '_mini.png');
+			$icon_fa = $module->get_publications_module_icon();
 			if($icon_fa != '') {
 				$thumbnail = $icon_fa;
 				$is_picture = false;
@@ -71,10 +71,10 @@ class UserPublicationsController extends AbstractController
 
 			$this->tpl->assign_block_vars('user_publications', array(
 				'C_ICON_IS_PICTURE'   => $is_picture,
-				'MODULE_NAME'         => $module->get_messages_list_link_name(),
+				'MODULE_NAME'         => $module->get_publications_module_name(),
 				'MODULE_THUMBNAIL'    => $thumbnail,
-				'U_MODULE_LINK'       => $module->get_messages_list_url($this->user->get_id()),
-				'PUBLICATIONS_NUMBER' => $module->get_number_messages($this->user->get_id())
+				'U_MODULE_LINK'       => $module->get_publications_module_view($this->user->get_id()),
+				'PUBLICATIONS_NUMBER' => (int)$module->get_publications_number($this->user->get_id())
 			));
 		}
 	}

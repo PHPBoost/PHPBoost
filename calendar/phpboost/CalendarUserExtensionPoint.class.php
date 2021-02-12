@@ -9,27 +9,27 @@
 
 class CalendarUserExtensionPoint implements UserExtensionPoint
 {
-	public function get_messages_list_url($user_id)
+	public function get_publications_module_view($user_id)
 	{
 		return CalendarUrlBuilder::display_member_items($user_id)->rel();
 	}
 
-	public function get_messages_list_link_name()
+	public function get_publications_module_name()
 	{
 		return LangLoader::get_message('module.title', 'common', 'calendar');
 	}
 
-	public function get_module_id()
+	public function get_publications_module_id()
 	{
 		return 'calendar';
 	}
 
-	public function get_messages_list_link_img()
+	public function get_publications_module_icon()
 	{
-		return '';
+		return 'far fa-calendar-alt';
 	}
 
-	public function get_number_messages($user_id)
+	public function get_publications_number($user_id)
 	{
 		$parameters = array('user_id' => $user_id);
 		return PersistenceContext::get_querier()->count(PREFIX . 'calendar_events_content', 'WHERE author_id = :user_id', $parameters);
