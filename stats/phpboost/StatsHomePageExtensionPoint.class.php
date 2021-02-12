@@ -976,7 +976,6 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			$page = AppContext::get_request()->get_getint('p', 1);
 			$pagination = new ModulePagination($page, $nbr_referer, $_NBR_ELEMENTS_PER_PAGE);
 			$pagination->set_url(new Url('/stats/stats.php?referer=1&amp;p=%d'));
-Debug::dump($_NBR_ELEMENTS_PER_PAGE);
 
 			if ($pagination->current_page_is_empty() && $page > 1)
 			{

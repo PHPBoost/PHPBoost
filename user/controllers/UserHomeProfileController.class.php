@@ -72,7 +72,6 @@ class UserHomeProfileController extends AbstractController
 		foreach ($modules as $module)
 		{
 			$module_icon = new File(PATH_TO_ROOT . '/' . $module->get_publications_module_id() . '/' . $module->get_publications_module_id() . '.png');
-			Debug::dump($module_icon);
 			$icon_fa = $module->get_publications_module_icon();
 			if($icon_fa != '') {
 				$thumbnail = $icon_fa;
