@@ -97,6 +97,7 @@ $lang['approbation'] = 'Approbation';
 $lang['registration_date'] = 'Date d\'inscription';
 $lang['last_connection'] = 'Dernière connexion';
 $lang['user.publications'] = 'Publications de l\'utilisateur';
+$lang['my.publications'] = 'Mes publications';
 $lang['publications.number'] = 'publications';
 $lang['private_message'] = 'Message privé';
 $lang['delete-account'] = 'Supprimer le compte';

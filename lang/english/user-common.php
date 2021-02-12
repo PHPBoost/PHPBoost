@@ -66,7 +66,6 @@ Comment :<br />
 <br />
 <a href=":contribution_url">See the contribution</a>';
 
-
 //User fields
 $lang['display_name'] = 'Display name';
 $lang['display_name.explain'] = 'Display name on each item you add.';
@@ -98,6 +97,7 @@ $lang['approbation'] = 'Approbation';
 $lang['registration_date'] = 'Registration date';
 $lang['last_connection'] = 'Last connection';
 $lang['user.publications'] = 'User publications';
+$lang['my.publications'] = 'My publications';
 $lang['publications.number'] = 'publications';
 $lang['private_message'] = 'Private message';
 $lang['delete-account'] = 'Delete account';

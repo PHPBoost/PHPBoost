@@ -116,7 +116,7 @@
 		</div>
 		<hr />
 		<div class="content">
-			<h2>Mes publications</h2>
+			<h2>{@my.publications}</h2>
 		</div>
 		<div id="user-publications" class="cell-flex cell-tile cell-columns-3">
 			# START user_publications #
