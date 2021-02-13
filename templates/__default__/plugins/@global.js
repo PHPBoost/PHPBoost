@@ -494,7 +494,7 @@ function copy_to_clipboard(tocopy)
 
 // Scroll to anchor on .sticky-menu
 	jQuery('.sticky-menu').each(function(){
-		jQuery('.sticky-menu .cssmenu-title').click(function(){
+		jQuery('.sticky-menu .cssmenu-title').on('click',function(){
 			var targetId = jQuery(this).attr("href"),
 				hash = targetId.substring(targetId.indexOf('#'));
 			if(hash != null || hash != targetId) {
