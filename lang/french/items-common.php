@@ -27,7 +27,8 @@ $lang['items.manage'] = 'Gérer les :items';
 $lang['item.add'] = 'Ajouter :an_item';
 $lang['item.edit'] = 'Modifier :the_item';
 $lang['my.items'] = 'Mes :items';
-$lang['items.pending'] = ':Items en attente';
+$lang['member.items'] = ':Items de';
+$lang['pending.items'] = ':Items en attente';
 
 //Configuration
 $lang['config.items.per.page'] = ':Items_number par page';

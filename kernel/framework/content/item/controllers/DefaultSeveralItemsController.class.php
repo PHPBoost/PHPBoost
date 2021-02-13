@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 01 30
+ * @version     PHPBoost 6.0 - last update: 2021 02 13
  * @since       PHPBoost 6.0 - 2020 01 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -119,7 +119,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 
 			$this->sql_parameters['user_id'] = AppContext::get_current_user()->get_id();
 
-			$this->page_title = $this->items_lang['items.pending'];
+			$this->page_title = $this->items_lang['pending.items'];
 			$this->page_description = $this->items_lang['items.seo.description.pending'];
 			$this->current_url = ItemsUrlBuilder::display_pending(self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
 			$this->pagination_url = ItemsUrlBuilder::display_pending(self::$module_id, $this->sort_field, $this->sort_mode, '%d');
@@ -130,7 +130,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 		else
 		{
 			$this->display_published_items_list = true;
-			
+
 			if (self::get_module()->get_configuration()->has_categories())
 			{
 				$this->sql_condition = 'WHERE id_category = :id_category
