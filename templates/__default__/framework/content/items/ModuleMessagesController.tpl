@@ -3,7 +3,7 @@
 		<h1>{MODULE_NAME}</h1>
 	</header>
 	<div class="sub-section">
-		<div class="content">
+		<div class="content-container">
 			# INCLUDE MSG #
 
 			# INCLUDE FORM #
@@ -93,6 +93,13 @@
 			# ENDIF #
 		</div>
 	</div>
-
-	<footer># IF C_PAGINATION #<div class="align-center"># INCLUDE PAGINATION #</div># ENDIF #</footer>
+	<footer>
+		# IF C_PAGINATION #
+			<div class="sub-section">
+				<div class="content-container">
+					<div class="content align-center"># INCLUDE PAGINATION #</div>
+				</div>
+			</div>
+		# ENDIF #
+	</footer>
 </section>
