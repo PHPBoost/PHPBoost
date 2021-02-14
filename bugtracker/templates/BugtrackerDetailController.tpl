@@ -20,9 +20,7 @@
 	});
 </script>
 <fieldset>
-	<legend>
-		{@titles.bugs_treatment_state} :
-	</legend>
+	<legend>{@titles.bugs_treatment_state} :</legend>
 	<div class="fieldset-inset">
 		# IF C_PROGRESS #
 			<div class="form-element">
@@ -53,7 +51,7 @@
 </fieldset>
 
 <fieldset>
-	<legend><h1>{@labels.fields.title} : {TITLE}</h1></legend>
+	<legend class="text-strong">{@labels.fields.title} : {TITLE}</legend>
 	<div class="fieldset-inset">{CONTENT}</div>
 </fieldset>
 

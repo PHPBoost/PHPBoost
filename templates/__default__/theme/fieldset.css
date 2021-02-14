@@ -78,6 +78,6 @@ fieldset[id*="_captcha_fieldset"] .fieldset-inset {
 @media (min-width: 769px) {
 	.horizontal-fieldset { flex-direction: row; }
 
-	.horizontal-fieldset .horizontal-fieldset-element { align-self: auto; }
+	.horizontal-fieldset .horizontal-fieldset-element { align-self: start; }
 	.horizontal-fieldset .form-element { width: 100%; }
 }

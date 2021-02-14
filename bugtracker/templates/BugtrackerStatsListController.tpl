@@ -56,23 +56,23 @@
     			</thead>
     			<tbody>
     				# START fixed_version #
-    				<tr>
-    					<td>
-    						{fixed_version.NAME}
-    					</td>
-    					<td>
-    						{fixed_version.RELEASE_DATE}
-    					</td>
-    					<td>
-    						# IF C_ROADMAP_ENABLED #<a href="{fixed_version.LINK_VERSION_ROADMAP}">{fixed_version.NUMBER}</a># ELSE #{fixed_version.NUMBER}# ENDIF #
-    					</td>
-    				</tr>
+        				<tr>
+        					<td>
+        						{fixed_version.NAME}
+        					</td>
+        					<td>
+        						{fixed_version.RELEASE_DATE}
+        					</td>
+        					<td>
+        						# IF C_ROADMAP_ENABLED #<a href="{fixed_version.LINK_VERSION_ROADMAP}">{fixed_version.NUMBER}</a># ELSE #{fixed_version.NUMBER}# ENDIF #
+        					</td>
+        				</tr>
     				# END fixed_version #
     			</tbody>
     		</table>
-    		# ELSE #
-    		    <div class="message-helper bgc notice">{@notice.no_bug_solved}</div>
-    		# ENDIF #
+		# ELSE #
+		    <div class="message-helper bgc notice">{@notice.no_bug_solved}</div>
+		# ENDIF #
     </article>
 # ENDIF #
 

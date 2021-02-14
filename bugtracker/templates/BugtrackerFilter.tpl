@@ -21,89 +21,86 @@
 <div class="bugtracker-filter">
 	<a href="#" onclick="toggle_filters_table(); return false;" class="cssmenu-title"><i class="fa fa-filter" aria-hidden="true"></i> {L_FILTERS}</a>
 </div>
-<table id="table_filters" class="table table-form"# IF NOT C_HAS_SELECTED_FILTERS # style="display: none;"# ENDIF #>
-	<thead>
-		<tr>
-			# IF C_DISPLAY_TYPES #
-				<th>
-					{@labels.fields.type}
-				</th>
-			# ENDIF #
-			# IF C_DISPLAY_CATEGORIES #
-				<th>
-					{@labels.fields.category}
-				</th>
-			# ENDIF #
-			# IF C_DISPLAY_SEVERITIES #
-				<th>
-					{@labels.fields.severity}
-				</th>
-			# ENDIF #
-				<th>
-					{@labels.fields.status}
-				</th>
-			# IF C_DISPLAY_VERSIONS #
-				<th>
-					{@labels.fields.version}
-				</th>
-			# ENDIF #
-			# IF C_DISPLAY_SAVE_BUTTON #
-				<th>
-					<span aria-label="{@labels.save_filters}"><i class="fa fa-fw fa-save" aria-hidden="true"></i></span>
-				</th>
-			# ENDIF #
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			# IF C_DISPLAY_TYPES #
-				<td>
-					# INCLUDE SELECT_TYPE #
-				</td>
-			# ENDIF #
-			# IF C_DISPLAY_CATEGORIES #
-				<td>
-					# INCLUDE SELECT_CATEGORY #
-				</td>
-			# ENDIF #
-			# IF C_DISPLAY_SEVERITIES #
-				<td>
-					# INCLUDE SELECT_SEVERITY #
-				</td>
-			# ENDIF #
-				<td>
-					# INCLUDE SELECT_STATUS #
-				</td>
-			# IF C_DISPLAY_VERSIONS #
-				<td>
-					# INCLUDE SELECT_VERSION #
-				</td>
-			# ENDIF #
-			# IF C_DISPLAY_SAVE_BUTTON #
-				<td>
-					<a href="{LINK_FILTER_SAVE}" aria-label="{@labels.save_filters}"><i class="fa fa-fw fa-save" aria-hidden="true"></i></a>
-				</td>
-			# ENDIF #
-		</tr>
-		# IF C_SAVED_FILTERS #
-			# START filters #
-				<tr id="filter{filters.ID}">
-					<td colspan="{FILTERS_NUMBER}">
-						<a href="#" aria-label="${LangLoader::get_message('delete', 'common')}" onclick="delete_filter('{filters.ID}'); return false;"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
-						<a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
+<div class="responsive-table">
+	<table id="table_filters" class="table table-form"# IF NOT C_HAS_SELECTED_FILTERS # style="display: none;"# ENDIF #>
+		<thead>
+			<tr>
+				# IF C_DISPLAY_TYPES #
+					<th>
+						{@labels.fields.type}
+					</th>
+				# ENDIF #
+				# IF C_DISPLAY_CATEGORIES #
+					<th>
+						{@labels.fields.category}
+					</th>
+				# ENDIF #
+				# IF C_DISPLAY_SEVERITIES #
+					<th>
+						{@labels.fields.severity}
+					</th>
+				# ENDIF #
+					<th>
+						{@labels.fields.status}
+					</th>
+				# IF C_DISPLAY_VERSIONS #
+					<th>
+						{@labels.fields.version}
+					</th>
+				# ENDIF #
+				# IF C_DISPLAY_SAVE_BUTTON #
+					<th>
+						<span aria-label="{@labels.save_filters}"><i class="fa fa-fw fa-save" aria-hidden="true"></i></span>
+					</th>
+				# ENDIF #
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				# IF C_DISPLAY_TYPES #
+					<td>
+						# INCLUDE SELECT_TYPE #
 					</td>
-				</tr>
-			# END filters #
-		# ENDIF #
-	</tbody>
-	<tfoot>
-		<tr>
-			<td colspan="{FILTERS_NUMBER}">${LangLoader::get_message('items_number', 'common')} : {BUGS_NUMBER}</td>
-		</tr>
-	</tfoot>
-</table>
-
-<div class="spacer"></div>
-<script>
-	jQuery('#table_filters').basictable();
-</script>
+				# ENDIF #
+				# IF C_DISPLAY_CATEGORIES #
+					<td>
+						# INCLUDE SELECT_CATEGORY #
+					</td>
+				# ENDIF #
+				# IF C_DISPLAY_SEVERITIES #
+					<td>
+						# INCLUDE SELECT_SEVERITY #
+					</td>
+				# ENDIF #
+					<td>
+						# INCLUDE SELECT_STATUS #
+					</td>
+				# IF C_DISPLAY_VERSIONS #
+					<td>
+						# INCLUDE SELECT_VERSION #
+					</td>
+				# ENDIF #
+				# IF C_DISPLAY_SAVE_BUTTON #
+					<td>
+						<a href="{LINK_FILTER_SAVE}" aria-label="{@labels.save_filters}"><i class="fa fa-fw fa-save" aria-hidden="true"></i></a>
+					</td>
+				# ENDIF #
+			</tr>
+			# IF C_SAVED_FILTERS #
+				# START filters #
+					<tr id="filter{filters.ID}">
+						<td colspan="{FILTERS_NUMBER}">
+							<a href="#" aria-label="${LangLoader::get_message('delete', 'common')}" onclick="delete_filter('{filters.ID}'); return false;"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+							<a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
+						</td>
+					</tr>
+				# END filters #
+			# ENDIF #
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="{FILTERS_NUMBER}">${LangLoader::get_message('items_number', 'common')} : {BUGS_NUMBER}</td>
+			</tr>
+		</tfoot>
+	</table>
+</div>

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 11
+ * @version     PHPBoost 6.0 - last update: 2021 02 14
  * @since       PHPBoost 3.0 - 2013 04 29
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -203,12 +203,16 @@ class BugtrackerViews
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('filter_type', '', $requested_type, $this->build_select_types(),
-			array('events' => array('change' => 'if (HTMLForms.getField("filter_type").getValue() > 0) {
-				document.location = "'. ($current_page == 'unsolved' ? BugtrackerUrlBuilder::unsolved('name', 'desc', 1, (!empty($filter) ? $filter . '-' : '') . 'type', (!empty($filter_id) ? $filter_id . '-' : ''))->rel() : BugtrackerUrlBuilder::solved('name', 'desc', 1, (!empty($filter) ? $filter . '-' : '') . 'type', (!empty($filter_id) ? $filter_id . '-' : ''))->rel()) .'" + HTMLForms.getField("filter_type").getValue();
-			} else {
-				document.location = "'. ($current_page == 'unsolved' ? BugtrackerUrlBuilder::unsolved('name', 'desc', 1, $filter, $filter_id)->rel() : BugtrackerUrlBuilder::solved('name', 'desc', 1, $filter, $filter_id)->rel()) .'";
-			}')
-		)));
+			array(
+				'events' => array('change' => '
+					if (HTMLForms.getField("filter_type").getValue() > 0) {
+						document.location = "'. ($current_page == 'unsolved' ? BugtrackerUrlBuilder::unsolved('name', 'desc', 1, (!empty($filter) ? $filter . '-' : '') . 'type', (!empty($filter_id) ? $filter_id . '-' : ''))->rel() : BugtrackerUrlBuilder::solved('name', 'desc', 1, (!empty($filter) ? $filter . '-' : '') . 'type', (!empty($filter_id) ? $filter_id . '-' : ''))->rel()) .'" + HTMLForms.getField("filter_type").getValue();
+					} else {
+						document.location = "'. ($current_page == 'unsolved' ? BugtrackerUrlBuilder::unsolved('name', 'desc', 1, $filter, $filter_id)->rel() : BugtrackerUrlBuilder::solved('name', 'desc', 1, $filter, $filter_id)->rel()) .'";
+					}'
+				)
+			)
+		));
 
 		return $form;
 	}
@@ -218,7 +222,7 @@ class BugtrackerViews
 		$types = BugtrackerConfig::load()->get_types();
 
 		$array_types = array();
-		$array_types[] = new FormFieldSelectChoiceOption(' ', 0);
+		$array_types[] = new FormFieldSelectChoiceOption('&nbsp;', 0);
 		foreach ($types as $key => $type)
 		{
 			$array_types[] = new FormFieldSelectChoiceOption(stripslashes($type), $key);
@@ -259,7 +263,7 @@ class BugtrackerViews
 		$categories = BugtrackerConfig::load()->get_categories();
 
 		$array_categories = array();
-		$array_categories[] = new FormFieldSelectChoiceOption(' ', 0);
+		$array_categories[] = new FormFieldSelectChoiceOption('&nbsp;', 0);
 		foreach ($categories as $key => $category)
 		{
 			$array_categories[] = new FormFieldSelectChoiceOption(stripslashes($category), $key);
@@ -300,7 +304,7 @@ class BugtrackerViews
 		$severities = BugtrackerConfig::load()->get_severities();
 
 		$array_categories = array();
-		$array_severities[] = new FormFieldSelectChoiceOption(' ', 0);
+		$array_severities[] = new FormFieldSelectChoiceOption('&nbsp;', 0);
 		foreach ($severities as $key => $severity)
 		{
 			$array_severities[] = new FormFieldSelectChoiceOption(stripslashes($severity['name']), $key);
@@ -341,7 +345,7 @@ class BugtrackerViews
 		$status_list = BugtrackerConfig::load()->get_status_list();
 
 		$array_status = array();
-		$array_status[] = new FormFieldSelectChoiceOption(' ', '');
+		$array_status[] = new FormFieldSelectChoiceOption('&nbsp;', '');
 		foreach ($status_list as $status => $progress)
 		{
 			if (($current_page == 'unsolved' && !in_array($status, array(BugtrackerItem::FIXED, BugtrackerItem::REJECTED))) || ($current_page == 'solved' && in_array($status, array(BugtrackerItem::FIXED, BugtrackerItem::REJECTED))))
@@ -386,7 +390,7 @@ class BugtrackerViews
 		$versions = array_reverse($versions, true);
 
 		$array_versions = array();
-		$array_versions[] = new FormFieldSelectChoiceOption(' ', '');
+		$array_versions[] = new FormFieldSelectChoiceOption('&nbsp;', '');
 		foreach ($versions as $key => $version)
 		{
 			$array_versions[] = new FormFieldSelectChoiceOption(stripslashes($version['name']), $key);

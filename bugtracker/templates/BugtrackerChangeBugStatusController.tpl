@@ -1,7 +1,6 @@
 # INCLUDE MSG #
 # INCLUDE FORM #
 <script>
-<!--
 	function BugtrackerStatusChangedValidator(message, bug_id, bug_status)
 	{
 		var field = HTMLForms.getField('status');
@@ -26,5 +25,4 @@
 		}
 		return '';
 	}
--->
 </script>
