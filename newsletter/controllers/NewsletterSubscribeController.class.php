@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 02 15
  * @since       PHPBoost 3.0 - 2011 02 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -63,12 +63,12 @@ class NewslettersubscribeController extends ModuleController
 			$email = $mail_request;
 		}
 
-		$common_lang = LangLoader::get('common');
+		// $common_lang = LangLoader::get('common');
 
 		$form = new HTMLForm(__CLASS__);
-		$form->set_layout_title($this->lang['subscribe.newsletters']);
+		// $form->set_layout_title($this->lang['subscribe.newsletters']);
 
-		$fieldset = new FormFieldsetHTML('subscribe.newsletters', $common_lang['form.parameters']);
+		$fieldset = new FormFieldsetHTML('subscribe.newsletters', $this->lang['subscribe.newsletters']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldMailEditor('mail', $this->lang['subscribe.mail'], $email,

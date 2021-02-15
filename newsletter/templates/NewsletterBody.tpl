@@ -5,11 +5,11 @@
 		</h1>
 	</header>
 	<div class="sub-section">
-		<article class="newsletter-item several-items">
+		<div class="content-container">
 			<div class="content">
 				# INCLUDE TEMPLATE #
-			</div>			
-		</article>
+			</div>
+		</div>
 	</div>
 	<footer></footer>
 </section>
