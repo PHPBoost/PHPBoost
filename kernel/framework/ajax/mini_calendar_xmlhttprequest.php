@@ -4,10 +4,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2015 11 27
+ * @version     PHPBoost 6.0 - last update: 2021 02 15
  * @since       PHPBoost 1.6 - 2007 01 25
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '../../..');
@@ -78,7 +79,7 @@ if ($calendar_type == 'date')
 			'MONTH' => '<option value="' . $i . '" ' . $selected . '>' . TextHelper::htmlspecialchars($array_l_month[$i - 1]) . '</option>'
 		));
 	}
-	for ($i = 1900; $i <= 2037; $i++)
+	for ($i = 1900; $i <= 2521; $i++)
 	{
 		$selected = ($year == $i) ? 'selected="selected"' : '';
 		$tpl->assign_block_vars('year', array(

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 05
+ * @version     PHPBoost 6.0 - last update: 2021 02 15
  * @since       PHPBoost 3.0 - 2012 11 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -48,7 +48,7 @@ class CalendarAjaxCalendarController extends AbstractController
 		$config = CalendarConfig::load();
 		$categories = CategoriesService::get_categories_manager('calendar')->get_categories_cache()->get_categories();
 
-		$year = $this->year ? $this->year : min($request->get_int('calendar_ajax_year', date('Y')), 2037);
+		$year = $this->year ? $this->year : min($request->get_int('calendar_ajax_year', date('Y')), 2521);
 		$month = $this->month ? $this->month : min($request->get_int('calendar_ajax_month', date('n')), 12);
 		$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 
@@ -73,7 +73,7 @@ class CalendarAjaxCalendarController extends AbstractController
 		}
 
 		// Years
-		for ($i = 1970; $i <= 2037; $i++)
+		for ($i = 1970; $i <= 2521; $i++)
 		{
 			$this->view->assign_block_vars('years', array(
 				'VALUE' => $i,
