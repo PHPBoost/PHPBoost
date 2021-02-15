@@ -70,7 +70,7 @@
 
 	# IF C_ITEMS #
 		<div class="sub-section">
-			<article class="pages-item several-items">
+			<div class="content-container">
 				<div class="content">
 					<form action="{REWRITED_SCRIPT}" method="post" id="position-update-form" onsubmit="PagesItems.serialize_sortable();" class="pages-reorder-form">
 						<fieldset id="items-management">
@@ -121,20 +121,20 @@
 						# ENDIF #
 					</form>
 				</div>
-
-			</article>
+			</div>
 		</div>
 	# ELSE #
 		# IF NOT C_HIDE_NO_ITEM_MESSAGE #
 			<div class="sub-section">
-				<div class="content">
-					<div class="message-helper bgc notice align-center">
-						${LangLoader::get_message('no_item_now', 'common')}
+				<div class="content-container">
+					<div class="content">
+						<div class="message-helper bgc notice align-center">
+							${LangLoader::get_message('no_item_now', 'common')}
+						</div>
 					</div>
 				</div>
 			</div>
 		# ENDIF #
 	# ENDIF #
-
 	<footer></footer>
 </section>

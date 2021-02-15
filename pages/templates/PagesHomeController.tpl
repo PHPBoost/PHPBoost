@@ -11,78 +11,85 @@
 
 	# IF C_CATEGORY_DESCRIPTION #
 		<div class="sub-section">
-			<div class="cat-description">
-				{CATEGORY_DESCRIPTION}
+			<div class="content-container">
+				<div class="cat-description">
+					{CATEGORY_DESCRIPTION}
+				</div>
 			</div>
 		</div>
 	# ENDIF #
 
 	# IF C_NO_ITEM #
 		<div class="sub-section">
-			<div class="content">
-				<div class="message-helper bgc notice">
-					${LangLoader::get_message('no_item_now', 'common')}
+			<div class="content-container">
+				<div class="content">
+					<div class="message-helper bgc notice">
+						${LangLoader::get_message('no_item_now', 'common')}
+					</div>
 				</div>
 			</div>
 		</div>
 	# ELSE #
 		<div class="sub-section">
-			<article class="pages-item several-items">
-				<div class="content">
-					<ul>
-						# START root_items #
-							<li class="flex-between">
-								<a class="categories-item d-block" href="{root_items.U_ITEM}"><i class="fa fa-fw fa-file-alt"></i> {root_items.TITLE}</a>
-								# IF root_items.C_CONTROLS #
-									<div class="controls">
-										# IF root_items.C_EDIT #<a href="{root_items.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
-										# IF root_items.C_DELETE #<a href="{root_items.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}" id="delete-{root_items.ID}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
-									</div>
-								# ENDIF #
-							</li>
-						# END root_items #
-					</ul>
-
-				    <nav id="category-nav">
-				        <ul>
-							# START categories #
-				            	<li
-								data_id="{categories.CATEGORY_ID}"
-								data_p_id="{categories.CATEGORY_PARENT_ID}"
-								data_order_id="{categories.CATEGORY_SUB_ORDER}">
-									<div class="d-block flex-between toggle-menu-button-{categories.CATEGORY_ID}">
-										<div class="categories-item flex-between">
-											<span><i class="far fa-fw fa-folder" aria-hidden="true"></i> {categories.CATEGORY_NAME}</span>
-											<span class="small" aria-label="{@pages.number}">({categories.ITEMS_NUMBER})</span>
+			<div class="content-container">
+				<article class="pages-item several-items">
+					<div class="content">
+						<ul>
+							# START root_items #
+								<li class="flex-between">
+									<a class="categories-item d-block" href="{root_items.U_ITEM}"><i class="fa fa-fw fa-file-alt"></i> {root_items.TITLE}</a>
+									# IF root_items.C_CONTROLS #
+										<div class="controls">
+											# IF root_items.C_EDIT #<a href="{root_items.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
+											# IF root_items.C_DELETE #<a href="{root_items.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}" id="delete-{root_items.ID}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
 										</div>
-										<a href="{categories.U_CATEGORY}" aria-label="{categories.CATEGORY_NAME}"><i class="fa fa-fw fa-caret-right" aria-hidden="true"></i></a>
-									</div>
-									# IF categories.C_ITEMS #
-										<ul class="items-list-{categories.CATEGORY_ID}">
-											# IF C_CONTROLS #
-												# IF categories.C_SEVERAL_ITEMS #
-													<a class="reorder-items" href="{categories.U_REORDER_ITEMS}" aria-label="${LangLoader::get_message('reorder', 'common')}"><i class="fa fa-fw fa-exchange-alt"></i></a>
-												# ENDIF #
-											# ENDIF #
-											# START categories.items #
-												<li class="flex-between">
-													<a class="d-block categories-item" href="{categories.items.U_ITEM}"><i class="fa fa-fw fa-file-alt"></i> {categories.items.TITLE}</a>
-													# IF categories.items.C_CONTROLS #
-														<div class="controls">
-															# IF categories.items.C_EDIT #<a href="{categories.items.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
-															# IF categories.items.C_DELETE #<a href="{categories.items.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}" id="delete-{categories.items.ID}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
-														</div>
-													# ENDIF #
-												</li>
-											# END categories.items #
-										</ul>
 									# ENDIF #
 								</li>
-							# END categories #
-				        </ul>
-				    </nav>
-				</div>
-			</article>
+							# END root_items #
+						</ul>
+
+					    <nav id="category-nav">
+					        <ul>
+								# START categories #
+					            	<li
+									data_id="{categories.CATEGORY_ID}"
+									data_p_id="{categories.CATEGORY_PARENT_ID}"
+									data_order_id="{categories.CATEGORY_SUB_ORDER}">
+										<div class="d-block flex-between toggle-menu-button-{categories.CATEGORY_ID}">
+											<div class="categories-item flex-between">
+												<span><i class="far fa-fw fa-folder" aria-hidden="true"></i> {categories.CATEGORY_NAME}</span>
+												<span class="small" aria-label="{@pages.number}">({categories.ITEMS_NUMBER})</span>
+											</div>
+											<a href="{categories.U_CATEGORY}" aria-label="{categories.CATEGORY_NAME}"><i class="fa fa-fw fa-caret-right" aria-hidden="true"></i></a>
+										</div>
+										# IF categories.C_ITEMS #
+											<ul class="items-list-{categories.CATEGORY_ID}">
+												# IF C_CONTROLS #
+													# IF categories.C_SEVERAL_ITEMS #
+														<a class="reorder-items" href="{categories.U_REORDER_ITEMS}" aria-label="${LangLoader::get_message('reorder', 'common')}"><i class="fa fa-fw fa-exchange-alt"></i></a>
+													# ENDIF #
+												# ENDIF #
+												# START categories.items #
+													<li class="flex-between">
+														<a class="d-block categories-item" href="{categories.items.U_ITEM}"><i class="fa fa-fw fa-file-alt"></i> {categories.items.TITLE}</a>
+														# IF categories.items.C_CONTROLS #
+															<div class="controls">
+																# IF categories.items.C_EDIT #<a href="{categories.items.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
+																# IF categories.items.C_DELETE #<a href="{categories.items.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}" id="delete-{categories.items.ID}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
+															</div>
+														# ENDIF #
+													</li>
+												# END categories.items #
+											</ul>
+										# ENDIF #
+									</li>
+								# END categories #
+					        </ul>
+					    </nav>
+					</div>
+				</article>
+
+			</div>
 		</div>
 	# ENDIF #
 	<footer></footer>
