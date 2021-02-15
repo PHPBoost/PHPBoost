@@ -3,7 +3,7 @@
 		<h1>{@users}</h1>
 	</header>
 	<div class="sub-section">
-		<article class="user-list several-items">
+		<div class="content-container">
 			<div class="content">
 				# INCLUDE FORM #
 
@@ -12,8 +12,8 @@
 				# ENDIF #
 				<div class="spacer"></div>
 				# INCLUDE TABLE #
-			</div>			
-		</article>
+			</div>
+		</div>
 	</div>
 	<footer></footer>
 </section>

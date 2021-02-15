@@ -4,7 +4,7 @@
 <section id="module-user-error-404">
 	<header class="section-header"><h1>${escape(TITLE)}</h1></header>
 	<div class="sub-section">
-		<article class="error-item single-item">
+		<div class="content-container">
 			<div class="content">
 				<img src="{U_ERROR_IMG}" alt="404">
 
@@ -22,8 +22,8 @@
 						<strong><a href="{U_LINK}">${escape(LINK_NAME)}</a></strong>
 					</div>
 				# ENDIF #
-			</div>			
-		</article>
+			</div>
+		</div>
 	</div>
 	<footer></footer>
 </section>

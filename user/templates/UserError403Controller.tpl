@@ -4,7 +4,7 @@
 <section id="module-user-error-403">
 	<header class="section-header"><h1>${escape(TITLE)}</h1></header>
 	<div class="sub-section">
-		<article class="error-item single-item">
+		<div class="content-container">
 			<div class="content">
 				<i class="fa fa-minus-circle fa-4x error"></i>
 
@@ -23,7 +23,7 @@
 					</div>
 				# ENDIF #
 			</div>
-		</article>
+		</div>
 	</div>
 	<footer></footer>
 </section>

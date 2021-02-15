@@ -3,7 +3,7 @@
 		<h1>{L_MODERATION_PANEL}</h1>
 	</header>
 	<div class="sub-section">
-		<article class="moderation-item several-items">
+		<div class="content-container">
 			# IF C_MODO_PANEL_USER #
 				<div class="cell-flex cell-columns-3">
 					<div class="cell">
@@ -204,8 +204,7 @@
 					</form>
 				# ENDIF #
 			# ENDIF #
-
-		</article>
+		</div>
 	</div>
 	<footer></footer>
 </section>

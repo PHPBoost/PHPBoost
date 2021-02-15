@@ -3,7 +3,7 @@
 		<h1>{@user.publications}</h1>
 	</header>
 	<div class="sub-section">
-		<article class="messages-item several-items">
+		<div class="content-container">
 			<div class="cell-flex cell-tile cell-columns-3">
 				# START user_publications #
 					<div class="cell">
@@ -22,8 +22,8 @@
 						</div>
 					</div>
 				# END user_publications #
-			</div>
-		</article>
+			</div>			
+		</div>
 	</div>
 	<footer></footer>
 </section>
