@@ -19,7 +19,7 @@
 </nav>
 
 <div id="admin-contents">
-# INCLUDE MSG #
+	# INCLUDE MSG #
 	<form action="admin_wiki.php?token={TOKEN}" method="post" class="fieldset-content">
 		<fieldset>
 			<legend>{L_WHOLE_WIKI}</legend>
@@ -37,7 +37,7 @@
 				</div>
 				<div class="form-element">
 					<label for="wiki_name">{L_WIKI_NAME}</label>
-					<div class="form-field">
+					<div class="form-field form-field-text">
 						<input type="text" maxlength="255" id="wiki_name" name="wiki_name" value="{WIKI_NAME}" />
 					</div>
 				</div>
@@ -76,7 +76,9 @@
 				</div>
 				<div class="form-element">
 					<label for="number_articles_on_index">{L_NUMBER_ARTICLES_ON_INDEX} <span class="field-description">{L_NUMBER_ARTICLES_ON_INDEX_EXPLAIN}</span></label>
-					<div class="form-field"><input type="text" name="number_articles_on_index" id="number_articles_on_index" value="{NUMBER_ARTICLES_ON_INDEX}"></div>
+					<div class="form-field form-field-text">
+						<input type="text" name="number_articles_on_index" id="number_articles_on_index" value="{NUMBER_ARTICLES_ON_INDEX}">
+					</div>
 				</div>
 				<div class="form-element form-element-textarea">
 					<label for="contents">{L_DESCRIPTION}</label>

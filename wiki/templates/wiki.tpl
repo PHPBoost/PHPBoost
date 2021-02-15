@@ -7,7 +7,7 @@
 		<h1 itemprop="name">{TITLE}</h1>
 	</header>
 	<div class="sub-section">
-		<article id="article-wiki-{ID}" class="wiki-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #">
+		<div class="content-container">
 			<div class="cell-flex cell-columns-2 cell-tile">
 				# START cat #
 					# IF cat.list_cats #
@@ -49,49 +49,55 @@
 				# END cat #
 				<div class="spacer"></div>
 			</div>
+		</div>
+	</div>
+	<div class="sub-section">
+		<div class="content-container">
+			<article id="article-wiki-{ID}" class="wiki-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #">
 
-			# INCLUDE wiki_tools #
+				# INCLUDE wiki_tools #
 
-			<div class="content">
-				# START warning #
-				<div class="message-helper bgc warning">{warning.UPDATED_ARTICLE}</div>
-				# END warning #
+				<div class="content">
+					# START warning #
+					<div class="message-helper bgc warning">{warning.UPDATED_ARTICLE}</div>
+					# END warning #
 
-				# START redirect #
-					<div style="width:30%;">
-					{redirect.REDIRECTED}
-						# START redirect.remove_redirection #
-							<a href="{redirect.remove_redirection.U_REMOVE_REDIRECTION}" data-confirmation="{redirect.remove_redirection.L_ALERT_REMOVE_REDIRECTION}" aria-label="{redirect.remove_redirection.L_REMOVE_REDIRECTION}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
-						# END redirect.remove_redirection #
-					</div>
-					<div class="spacer"></div>
-				# END redirect #
-
-				# START status #
-					<div class="spacer"></div>
-					<div class="blockquote">{status.ARTICLE_STATUS}</div>
-					<div class="spacer"></div>
-				# END status #
-
-				# START menu #
-					# IF C_STICKY_MENU #
-						<span class="wiki-sticky-title blink">{L_TABLE_OF_CONTENTS}</span>
-						<div class="wiki-sticky">
-							{menu.MENU}
+					# START redirect #
+						<div style="width:30%;">
+						{redirect.REDIRECTED}
+							# START redirect.remove_redirection #
+								<a href="{redirect.remove_redirection.U_REMOVE_REDIRECTION}" data-confirmation="{redirect.remove_redirection.L_ALERT_REMOVE_REDIRECTION}" aria-label="{redirect.remove_redirection.L_REMOVE_REDIRECTION}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+							# END redirect.remove_redirection #
 						</div>
-					# ELSE #
-						<div class="wiki-summary">
-							<div class="wiki-summary-title">{L_TABLE_OF_CONTENTS}</div>
-							{menu.MENU}
-						</div>
-					# ENDIF #
-				# END menu #
+						<div class="spacer"></div>
+					# END redirect #
+
+					# START status #
+						<div class="spacer"></div>
+						<div class="blockquote">{status.ARTICLE_STATUS}</div>
+						<div class="spacer"></div>
+					# END status #
+
+					# START menu #
+						# IF C_STICKY_MENU #
+							<span class="wiki-sticky-title blink">{L_TABLE_OF_CONTENTS}</span>
+							<div class="wiki-sticky">
+								{menu.MENU}
+							</div>
+						# ELSE #
+							<div class="wiki-summary">
+								<div class="wiki-summary-title">{L_TABLE_OF_CONTENTS}</div>
+								{menu.MENU}
+							</div>
+						# ENDIF #
+					# END menu #
+					<div class="spacer"></div>
+					{CONTENTS}
+				</div>
 				<div class="spacer"></div>
-				{CONTENTS}
-			</div>
-			<div class="spacer"></div>
-			${ContentSharingActionsMenuService::display()}
-		</article>
+				${ContentSharingActionsMenuService::display()}
+			</article>
+		</div>
 	</div>
 	<footer><div class="wiki-hits">{HITS}</div></footer>
 </section>
