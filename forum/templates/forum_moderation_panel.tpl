@@ -416,7 +416,7 @@
 									<label for="new_info">{L_INFO_EXPLAIN}</label>
 								</td>
 								<td>
-									<span class="forum-display-block" id="action_info">{INFO}</span>
+									<span class="hidden" id="action_info">{INFO}</span>
 									<select name="new_info" id="new_info" onchange="change_textarea_level(this.options[this.selectedIndex].value, {REGEX})">
 										{SELECT}
 									</select>
