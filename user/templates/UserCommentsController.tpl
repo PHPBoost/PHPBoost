@@ -3,7 +3,7 @@
 		<h1>{@comments.list}</h1>
 	</header>
 	<div class="sub-section">
-		<article class="message-item several-item">
+		<div class="content-container">
 			<div class="content">
 				# INCLUDE MSG #
 				# INCLUDE MODULE_CHOICE_FORM #
@@ -34,7 +34,7 @@
 						${LangLoader::get_message('no_item_now', 'common')}
 					</div>
 				# ENDIF #
-			</div>
-		</article>
+			</div>			
+		</div>
 	</div>
 </section>

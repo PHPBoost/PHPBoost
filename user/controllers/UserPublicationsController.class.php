@@ -46,7 +46,7 @@ class UserPublicationsController extends AbstractController
 		$this->user = AppContext::get_current_user();
 		$this->tpl = new FileTemplate('user/UserPublicationsController.tpl');
 		$this->lang = LangLoader::get('user-common');
-		$this->tpl->add_lang($this->lang);
+		$this->tpl->add_lang($this->lang);		
 	}
 
 	private function build_view()

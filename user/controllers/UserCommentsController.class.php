@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 10
+ * @version     PHPBoost 6.0 - last update: 2021 02 15
  * @since       PHPBoost 3.0 - 2012 02 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -216,7 +216,7 @@ class UserCommentsController extends AbstractController
 		$selected = $this->module !== null ? $this->module->get_id() : '';
 		$user_id = $this->user !== null ? $this->user->get_id() : null;
 		$form = new HTMLForm('ModuleChoice', '', false);
-		$fieldset = new FormFieldsetHTML('ModuleChoice', $this->lang['comments']);
+		$fieldset = new FormFieldsetHTML('ModuleChoice', LangLoader::get_message('filters', 'common'));
 		$form->add_fieldset($fieldset);
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('module', LangLoader::get_message('sort', 'common') . ' : ', $selected, $this->build_select(),
 		array('events' => array('change' => 'document.location = "'. UserUrlBuilder::comments('', $user_id)->rel() .'" + HTMLForms.getField("module").getValue();'))));
