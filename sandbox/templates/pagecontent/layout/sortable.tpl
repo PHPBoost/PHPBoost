@@ -7,7 +7,7 @@
         <div class="content">
             <form action="/workspace/phpboost/pbt-53/trunk/news/categories/" method="post" onsubmit="serialize_sortable();">
                 <fieldset>
-                    <legend><h1>{@layout.sortables.legend}</h1></legend>
+                    <legend>{@layout.sortables.legend}</legend>
                     <div class="fieldset-inset">
                         <ul id="categories" class="sortable-block">
                             <li id="cat-1" class="sortable-element" data-id="1">

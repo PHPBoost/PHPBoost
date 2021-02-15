@@ -20,7 +20,7 @@
 
 <div id="admin-contents">
 	<fieldset>
-		<legend><h1>{L_WEBSITE_UPDATES}</h1></legend>
+		<legend>{L_WEBSITE_UPDATES}</legend>
 		<div class="fieldset-inset">
 		# IF C_INCOMPATIBLE_PHP_VERSION #
 			<div class="message-helper bgc warning message-helper-small">{L_INCOMPATIBLE_PHP_VERSION}</div>

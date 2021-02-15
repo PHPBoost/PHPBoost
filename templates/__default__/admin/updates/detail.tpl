@@ -20,7 +20,7 @@
 
 <div id="admin-contents">
 	<fieldset>
-		<legend><h1>{L_APP_UPDATE_MESSAGE}</h1></legend>
+		<legend>{L_APP_UPDATE_MESSAGE}</legend>
 		<div class="fieldset-inset">
 			# INCLUDE MSG #
 			# IF C_UNEXISTING_UPDATE #
