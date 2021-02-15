@@ -76,7 +76,7 @@
 	}
 </script>
 <section id="module-forum">
-	<header id="forum-top">
+	<header class="section-header" id="forum-top">
 
 		<div class="forum-links">
 			# IF C_USER_CONNECTED #
@@ -152,3 +152,6 @@
 		<h1>{FORUM_NAME}</h1>
 
 	</header>
+
+	<div class="sub-section">
+		<div class="content-container">

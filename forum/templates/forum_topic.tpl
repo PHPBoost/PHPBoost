@@ -1,5 +1,3 @@
-<span id="go-top"></span>
-
 # INCLUDE forum_top #
 
 <script>
@@ -119,7 +117,8 @@
 	# ENDIF #
 </script>
 
-<article id="article-forum-{ID}" class="forum-content category-{IDCAT}" itemscope="itemscope" itemtype="https://schema.org/Creativework">
+<span id="go-top"></span>
+<article id="article-forum-{ID}" class="forum-item forum-content category-{IDCAT}" itemscope="itemscope" itemtype="https://schema.org/Creativework">
 	<header>
 		# IF C_PAGINATION #<span class="float-left"># INCLUDE PAGINATION #</span># ENDIF #
 		# IF C_FORUM_MODERATOR #
@@ -356,13 +355,12 @@
 		</div>
 	# ENDIF #
 
-# IF C_ERROR_AUTH_WRITE #
-	<div class="error-auth-write-response">{L_RESPOND}</div>
-	<div class="forum-text-column error-auth-write">
-		{L_ERROR_AUTH_WRITE}
-	</div>
-# ENDIF #
+	# IF C_ERROR_AUTH_WRITE #
+		<div class="error-auth-write-response">{L_RESPOND}</div>
+		<div class="forum-text-column error-auth-write">
+			{L_ERROR_AUTH_WRITE}
+		</div>
+	# ENDIF #
 </article>
-
 
 # INCLUDE forum_bottom #

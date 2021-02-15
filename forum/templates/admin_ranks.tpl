@@ -26,59 +26,55 @@
 	</ul>
 </nav>
 
-<div id="admin-content">
+<div id="admin-contents">
 
 	# INCLUDE message_helper #
 
 	<form action="admin_ranks.php" method="post">
-		<fieldset>
-			<legend>{L_FORUM_RANKS_MANAGEMENT}</legend>
-			<div class="fieldset-inset">
-				<table class="table">
-					<thead>
-						<tr>
-							<th>
-								{L_RANK_NAME}
-							</th>
-							<th>
-								{L_NBR_MSG}
-							</th>
-							<th>
-								{L_IMG_ASSOC}
-							</th>
-							<th>
-								{L_DELETE}
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						# START rank #
-							<tr>
-								<td>
-									<input type="text" maxlength="30" name="{rank.ID}name" value="{rank.RANK}">
-								</td>
-								<td>
-									# IF rank.C_SPECIAL_RANK #<input type="number" min="0" name="{rank.ID}msg" value="{rank.MSG}"># ELSE #{rank.L_SPECIAL_RANK}# ENDIF #
-								</td>
-								<td>
-									<select name="{rank.ID}icon" onchange="img_change('icon{rank.ID}', '{rank.JS_PATH_RANKS}', this.options[selectedIndex].value)">
-										{rank.RANK_OPTIONS}
-									</select>
-									# IF rank.IMG_RANK #
-										<span class="field-description">
-											<img src="{rank.U_IMG_RANK}" id="icon{rank.ID}" alt="{rank.IMG_RANK}" />
-										</span>
-									# ENDIF #
-								</td>
-								<td>
-									# IF rank.C_SPECIAL_RANK #<a href="{rank.U_DELETE}" class="far fa-trash-alt" data-confirmation="delete-element"></a># ELSE #{rank.L_SPECIAL_RANK}# ENDIF #
-								</td>
-							</tr>
-						# END rank #
-					</tbody>
-				</table>
-			</div>
-		</fieldset>
+		<table class="table">
+			<caption>{L_FORUM_RANKS_MANAGEMENT}</caption>
+			<thead>
+				<tr>
+					<th>
+						{L_RANK_NAME}
+					</th>
+					<th>
+						{L_NBR_MSG}
+					</th>
+					<th>
+						{L_IMG_ASSOC}
+					</th>
+					<th>
+						{L_DELETE}
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				# START rank #
+					<tr>
+						<td>
+							<input type="text" maxlength="30" name="{rank.ID}name" value="{rank.RANK}">
+						</td>
+						<td>
+							# IF rank.C_SPECIAL_RANK #<input type="number" min="0" name="{rank.ID}msg" value="{rank.MSG}"># ELSE #{rank.L_SPECIAL_RANK}# ENDIF #
+						</td>
+						<td>
+							<select name="{rank.ID}icon" onchange="img_change('icon{rank.ID}', '{rank.JS_PATH_RANKS}', this.options[selectedIndex].value)">
+								{rank.RANK_OPTIONS}
+							</select>
+							# IF rank.IMG_RANK #
+								<span class="field-description">
+									<img src="{rank.U_IMG_RANK}" id="icon{rank.ID}" alt="{rank.IMG_RANK}" />
+								</span>
+							# ENDIF #
+						</td>
+						<td>
+							# IF rank.C_SPECIAL_RANK #<a href="{rank.U_DELETE}" class="far fa-trash-alt" data-confirmation="delete-element"></a># ELSE #{rank.L_SPECIAL_RANK}# ENDIF #
+						</td>
+					</tr>
+				# END rank #
+			</tbody>
+		</table>
 		<fieldset class="fieldset-submit">
 			<legend>{L_UPDATE}</legend>
 			<div class="fieldset-inset">

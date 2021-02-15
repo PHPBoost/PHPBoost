@@ -1,5 +1,4 @@
 		<script>
-		<!--
 			function check_form_rank_add()
 			{
 				if(document.getElementById('name').value == "") {
@@ -23,7 +22,6 @@
 				else
 					document.getElementById(id).style.display = 'none';
 			}
-		-->
 		</script>
 
 		<nav id="admin-quick-menu">
@@ -46,7 +44,7 @@
 			</ul>
 		</nav>
 
-		<div id="admin-content">
+		<div id="admin-contents">
 
 			# INCLUDE message_helper #
 
@@ -106,15 +104,15 @@
 						<div class="fieldset-inset">
 							<div class="form-element top-field">
 								<label for="name">* {L_RANK_NAME}</label>
-								<div class="form-field"><input type="text" id="name" name="name"></div>
+								<div class="form-field form-field-text"><input type="text" id="name" name="name"></div>
 							</div>
 							<div class="form-element top-field">
 								<label for="msg">* {L_NBR_MSG}</label>
-								<div class="form-field"><input type="number" min="0" id="msg" name="msg"></div>
+								<div class="form-field form-field-number"><input type="number" min="0" id="msg" name="msg"></div>
 							</div>
 							<div class="form-element">
 								<label for="icon">{L_IMG_ASSOC}</label>
-								<div class="form-field">
+								<div class="form-field form-field-select">
 									<select name="icon" id="icon" onchange="img_change('img_icon', '{PATH_TO_ROOT}/forum/templates/images/ranks/' + this.options[selectedIndex].value)">
 										{RANK_OPTIONS}
 									</select>
@@ -135,7 +133,7 @@
 				</fieldset>
 			</form>
 		</div>
-		<!--  -->
+		
 		<script>
 			jQuery('#inputfiles').dndfiles({
 				multiple: true,
