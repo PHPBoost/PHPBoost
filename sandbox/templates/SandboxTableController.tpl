@@ -4,9 +4,9 @@
 		<h1>{@sandbox.module.title} - {@title.table}</h1>
 	</header>
 	<div class="sub-section">
-		<article>
-			<div class="content"># INCLUDE TABLE #</div>
-		</article>
+		<div class="content-container">
+			<div class="content"># INCLUDE TABLE #</div>			
+		</div>
 	</div>
 	<footer></footer>
 </section>

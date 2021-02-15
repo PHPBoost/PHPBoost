@@ -4,16 +4,19 @@
 		<h1>{@sandbox.module.title} - {@title.email}</h1>
 	</header>
 	<div class="sub-section">
-		<div class="content">
-			# IF C_EMAIL_SENT #
-				# IF C_SUCCESS #
-					<div class="message-helper bgc success">{@email.success}</div>
-				# ELSE #
-					<div class="message-helper bgc error">{ERROR}</div>
+		<div class="content-container">
+			<div class="content">
+				# IF C_EMAIL_SENT #
+					# IF C_SUCCESS #
+						<div class="message-helper bgc success">{@email.success}</div>
+					# ELSE #
+						<div class="message-helper bgc error">{ERROR}</div>
+					# ENDIF #
 				# ENDIF #
-			# ENDIF #
 
-			# INCLUDE SMTP_FORM #
+				# INCLUDE SMTP_FORM #
+			</div>
 		</div>
 	</div>
+	<footer></footer>
 </section>

@@ -6,15 +6,13 @@
 		</h1>
 	</header>
 
-	<div class="sub-section"><div class="content"># INCLUDE GRID #</div></div>
+	<div class="sub-section"><div class="content-container"><div class="content"># INCLUDE GRID #</div></div></div>
 
-	<div class="sub-section"><div class="content"># INCLUDE CELL #</div></div>
+	<div class="sub-section"><div class="content-container"><div class="content"># INCLUDE CELL #</div></div></div>
 
-	<div class="sub-section"><div class="content"># INCLUDE MESSAGE #</div></div>
+	<div class="sub-section"><div class="content-container"><div class="content"># INCLUDE MESSAGE #</div></div></div>
 
-	<div class="sub-section"><div class="content"># INCLUDE SORTABLE #</div></div>
-
-
+	<div class="sub-section"><div class="content-container"><div class="content"># INCLUDE SORTABLE #</div></div></div>
 
 	<footer></footer>
 </section>

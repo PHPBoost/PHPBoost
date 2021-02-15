@@ -6,29 +6,29 @@
 		</h1>
 	</header>
 
-	<div class="sub-section"><div class="content"># INCLUDE TYPOGRAPHY #</div></div>
+	<div class="sub-section"><div class="content-container"><div class="content"># INCLUDE TYPOGRAPHY #</div></div></div>
 
-	<div class="sub-section"><div class="content"># INCLUDE COLOR #</div></div>
+	<div class="sub-section"><div class="content-container"><div class="content"># INCLUDE COLOR #</div></div></div>
 
-	<div class="sub-section"><div class="content"># INCLUDE MEDIA #</div></div>
+	<div class="sub-section"><div class="content-container"><div class="content"># INCLUDE MEDIA #</div></div></div>
 
-	<div class="sub-section"><div class="content"># INCLUDE PROGRESSBAR #</div></div>
+	<div class="sub-section"><div class="content-container"><div class="content"># INCLUDE PROGRESSBAR #</div></div></div>
 
-	<div class="sub-section"><div class="content"># INCLUDE NOTATION #</div></div>	
+	<div class="sub-section"><div class="content-container"><div class="content"># INCLUDE NOTATION #</div></div></div>
 
-	<div class="sub-section"><div class="content"># INCLUDE MODAL #</div></div>	
+	<div class="sub-section"><div class="content-container"><div class="content"># INCLUDE MODAL #</div></div></div>
 
-	<div class="sub-section"><div class="content"># INCLUDE LIST #</div></div>
+	<div class="sub-section"><div class="content-container"><div class="content"># INCLUDE LIST #</div></div></div>
 
-	<div class="sub-section"><div class="content"># INCLUDE EXPLORER #</div></div>
+	<div class="sub-section"><div class="content-container"><div class="content"># INCLUDE EXPLORER #</div></div></div>
 
-	<div class="sub-section"><div class="content"># INCLUDE PAGINATION #</div></div>	
+	<div class="sub-section"><div class="content-container"><div class="content"># INCLUDE PAGINATION #</div></div></div>
 
-	<div class="sub-section"><div class="content"># INCLUDE TABLE #</div></div>	
+	<div class="sub-section"><div class="content-container"><div class="content"># INCLUDE TABLE #</div></div></div>
 
-	<div class="sub-section"><div class="content"># INCLUDE MESSAGE_HELPER #</div></div>	
+	<div class="sub-section"><div class="content-container"><div class="content"># INCLUDE MESSAGE_HELPER #</div></div></div>
 
-	<div class="sub-section"><div class="content"># INCLUDE TOOLTIP #</div></div>	
+	<div class="sub-section"><div class="content-container"><div class="content"># INCLUDE TOOLTIP #</div></div></div>
 
 	<footer></footer>
 </section>

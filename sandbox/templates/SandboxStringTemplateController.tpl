@@ -4,11 +4,11 @@
 		<h1>{@sandbox.module.title} - {@title.template}</h1>
 	</header>
 	<div class="sub-section">
-		<article>
+		<div class="content-container">
 			<div class="pbt-box-largest content">
 				{RESULT}
-			</div>
-		</article>
+			</div>			
+		</div>
 	</div>
 	<footer></footer>
 </section>
