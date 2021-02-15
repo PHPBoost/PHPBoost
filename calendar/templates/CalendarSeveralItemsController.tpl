@@ -17,17 +17,21 @@
 			# ENDIF #
 		</h1>
 	</header>
-	# IF NOT C_PENDING_ITEMS #
-		# IF NOT C_MEMBER_ITEMS #
-			<div id="calendar" class="sub-section">
-				<div class="content">
-					# INCLUDE CALENDAR #
-				</div>
+	<div class="sub-section">
+		<div class="content-container">
+			<div class="content">
+				# IF NOT C_PENDING_ITEMS #
+					# IF NOT C_MEMBER_ITEMS #
+						<div id="calendar">
+							# INCLUDE CALENDAR #
+						</div>
+					# ENDIF #
+				# ENDIF #				
 			</div>
-		# ENDIF #
-	# ENDIF #
-	<div id="events" class="sub-section">
-		# INCLUDE EVENTS #
+			<div id="events">
+				# INCLUDE EVENTS #
+			</div>
+		</div>
 	</div>
 	<footer></footer>
 </section>
