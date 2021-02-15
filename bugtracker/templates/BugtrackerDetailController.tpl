@@ -106,4 +106,8 @@
 	${LangLoader::get_message('by', 'common')} # IF C_AUTHOR_EXIST #<a href="{U_AUTHOR_PROFILE}" class="{AUTHOR_LEVEL_CLASS}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR}</a># ELSE #{AUTHOR}# ENDIF #, ${TextHelper::lcfirst(LangLoader::get_message('the', 'common'))} {SUBMIT_DATE_FULL}
 </div>
 
-# INCLUDE COMMENTS #
+# IF C_ENABLED_COMMENTS #
+	<aside>
+		# INCLUDE COMMENTS #
+	</aside>
+# ENDIF #
