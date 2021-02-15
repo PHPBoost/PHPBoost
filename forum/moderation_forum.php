@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2020 02 14
+ * @version   	PHPBoost 5.2 - last update: 2021 02 15
  * @since   	PHPBoost 1.5 - 2006 08 08
  * @contributor Regis VIARRE <crowkait@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -388,18 +388,19 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		$date_lang = LangLoader::get('date-common');
 		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 5184000, 326592000);
 		$array_sanction = array(LangLoader::get_message('no', 'common'), '1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['days'], '1 ' . $date_lang['week'], '2 ' . $date_lang['weeks'], '1 ' . $date_lang['month'], '2 ' . $date_lang['month'], '10 ' . TextHelper::strtolower($date_lang['years']));
+		$sanctions_number = (count($array_time) - 1);
 
 		$diff = ($member['delay_readonly'] - time());
 		$key_sanction = 0;
 		if ($diff > 0)
 		{
 			//Retourne la sanction la plus proche correspondant au temp de bannissement.
-			for ($i = count($array_time); $i >= 0; $i--)
+			for ($i = $sanctions_number; $i >= 0; $i--)
 			{
 				$avg = ceil(($array_time[$i] + $array_time[$i-1])/2);
 				if (($diff - $array_time[$i]) > $avg)
 				{
-					$key_sanction = $i + 1;
+					$key_sanction = (($i == $sanctions_number) ? $i : ($i + 1));
 					break;
 				}
 			}
@@ -433,7 +434,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			'array_time = new Array(' . (implode(', ', $array_time)) . ');' . "\n" .
 			'array_sanction = new Array(\'' . implode('\', \'', array_map('addslashes', $array_sanction)) . '\');'. "\n" .
 			'var i;
-			for (i = 0; i <= 13; i++)
+			for (i = 0; i <= ' . $sanctions_number . '; i++)
 			{
 				if (array_time[i] == replace_value)
 				{
