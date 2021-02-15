@@ -9,6 +9,8 @@
 
 class NewsUserExtensionPoint implements UserExtensionPoint
 {
+	protected static $module_id;
+
 	public function get_publications_module_view($user_id)
 	{
 		return NewsUrlBuilder::display_member_items($user_id)->rel();
