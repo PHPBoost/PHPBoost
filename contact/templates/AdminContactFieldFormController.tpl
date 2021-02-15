@@ -1,19 +1,18 @@
 # INCLUDE FORM #
 <script>
-<!--
 	jQuery(document).ready(function() {
 		{JS_EVENT_SELECT_TYPE}
 	});
-	
+
 	function ContactFieldExistValidator(message, field_id)
 	{
 		var field = HTMLForms.getField('name');
 		var result = '';
-		
+
 		if (field)
 		{
 			var value = field.getValue();
-			
+
 			jQuery.ajax({
 				url: '${relative_url(ContactUrlBuilder::check_field_name())}',
 				type: "post",
@@ -28,5 +27,4 @@
 		}
 		return result;
 	}
--->
 </script>

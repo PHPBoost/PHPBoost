@@ -1,55 +1,53 @@
 <script>
-<!--
-var ContactFormFieldObjectPossibleValues = function(){
-	this.integer = {NBR_FIELDS};
-	this.id_input = ${escapejs(HTML_ID)};
-	this.max_input = {MAX_INPUT};
-};
+	var ContactFormFieldObjectPossibleValues = function(){
+		this.integer = {NBR_FIELDS};
+		this.id_input = ${escapejs(HTML_ID)};
+		this.max_input = {MAX_INPUT};
+	};
 
-ContactFormFieldObjectPossibleValues.prototype = {
-	add : function () {
-		if (this.integer <= this.max_input) {
-			var id = this.id_input + '_' + this.integer;
+	ContactFormFieldObjectPossibleValues.prototype = {
+		add : function () {
+			if (this.integer <= this.max_input) {
+				var id = this.id_input + '_' + this.integer;
 
-			jQuery('<div/>', {'id' : id, 'class' : 'possible-values'}).appendTo('#input_fields_' + this.id_input);
+				jQuery('<div/>', {'id' : id, 'class' : 'possible-values'}).appendTo('#input_fields_' + this.id_input);
 
-			jQuery('<div/>', {id : 'radio_' + this.integer, class: 'form-field-radio custom-radio'}).appendTo('#' + id);
-			jQuery('<label/>', {class : 'radio',for : 'field_is_default_' + id}).appendTo('#radio_' + this.integer);
-			jQuery('<input/>', {type : 'radio', id : 'field_is_default_' + id, name : 'field_is_default_' + this.id_input, value : this.integer}).appendTo('#radio_' + this.integer + ' label');
-			jQuery('<span/>').appendTo('#radio_' + this.integer + ' label');
-			jQuery('#radio_' + this.integer).after(' ');
+				jQuery('<div/>', {id : 'radio_' + this.integer, class: 'form-field-radio custom-radio'}).appendTo('#' + id);
+				jQuery('<label/>', {class : 'radio',for : 'field_is_default_' + id}).appendTo('#radio_' + this.integer);
+				jQuery('<input/>', {type : 'radio', id : 'field_is_default_' + id, name : 'field_is_default_' + this.id_input, value : this.integer}).appendTo('#radio_' + this.integer + ' label');
+				jQuery('<span/>').appendTo('#radio_' + this.integer + ' label');
+				jQuery('#radio_' + this.integer).after(' ');
 
-			jQuery('<div/>', {id : 'inputs_' + this.integer, class: 'grouped-inputs'}).appendTo('#' + id);
-			jQuery('<input/>', {class : 'grouped-element', type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, required : "required", placeholder : '{@contact.field.possible.values.subject}'}).appendTo('#inputs_' + this.integer);
-			jQuery('#' + id).append(' ');
+				jQuery('<div/>', {id : 'inputs_' + this.integer, class: 'grouped-inputs'}).appendTo('#' + id);
+				jQuery('<input/>', {class : 'grouped-element', type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, required : "required", placeholder : '{@contact.field.possible.values.subject}'}).appendTo('#inputs_' + this.integer);
+				jQuery('#' + id).append(' ');
 
-			jQuery('<select/>', {class : 'grouped-element', 'id' : 'field_recipient_' + id, 'name' : 'field_recipient_' + id}).appendTo('#inputs_' + this.integer);
-			jQuery('#' + id).append(' ');
+				jQuery('<select/>', {class : 'grouped-element', 'id' : 'field_recipient_' + id, 'name' : 'field_recipient_' + id}).appendTo('#inputs_' + this.integer);
+				jQuery('#' + id).append(' ');
 
-			# START recipients_list #
-			jQuery('<option/>', {'value' : ${escapejs(recipients_list.ID)}}).text(${escapejs(recipients_list.NAME)}).appendTo('#field_recipient_' + id);
-			# END recipients_list #
+				# START recipients_list #
+				jQuery('<option/>', {'value' : ${escapejs(recipients_list.ID)}}).text(${escapejs(recipients_list.NAME)}).appendTo('#field_recipient_' + id);
+				# END recipients_list #
 
-			jQuery('<a/>', {class : 'grouped-element', href : 'javascript:ContactFormFieldObjectPossibleValues.delete('+ this.integer +');', 'aria-label' : "${LangLoader::get_message('delete', 'common')}"}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#inputs_' + this.integer);
+				jQuery('<a/>', {class : 'grouped-element', href : 'javascript:ContactFormFieldObjectPossibleValues.delete('+ this.integer +');', 'aria-label' : "${LangLoader::get_message('delete', 'common')}"}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#inputs_' + this.integer);
 
-			jQuery('<script/>').html('jQuery("#field_is_default_' + id + '").on(\'click\',function(){ jQuery("#uncheck_default_${escape(HTML_ID)}").show(); });').appendTo('#' + id);
+				jQuery('<script/>').html('jQuery("#field_is_default_' + id + '").on(\'click\',function(){ jQuery("#uncheck_default_${escape(HTML_ID)}").show(); });').appendTo('#' + id);
 
-			this.integer++;
-		}
-		if (this.integer == this.max_input) {
-			jQuery('#add-' + this.id_input).hide();
-		}
-	},
-	delete : function (id) {
-		var id = this.id_input + '_' + id;
-		jQuery('#' + id).remove();
-		this.integer--;
-		jQuery('#add-' + this.id_input).show();
-	},
-};
+				this.integer++;
+			}
+			if (this.integer == this.max_input) {
+				jQuery('#add-' + this.id_input).hide();
+			}
+		},
+		delete : function (id) {
+			var id = this.id_input + '_' + id;
+			jQuery('#' + id).remove();
+			this.integer--;
+			jQuery('#add-' + this.id_input).show();
+		},
+	};
 
-var ContactFormFieldObjectPossibleValues = new ContactFormFieldObjectPossibleValues();
--->
+	var ContactFormFieldObjectPossibleValues = new ContactFormFieldObjectPossibleValues();
 </script>
 
 <div id="input_fields_${escape(HTML_ID)}">
@@ -59,29 +57,29 @@ var ContactFormFieldObjectPossibleValues = new ContactFormFieldObjectPossibleVal
 		<span class="title-possible-value title-desc">${LangLoader::get_message('field_possible.values.recipient', 'common', 'contact')}</span>
 	</div>
 	# START fieldelements #
-	<div id="${escape(HTML_ID)}_{fieldelements.ID}" class="possible-values custom-radio">
-		<div class="form-field-radio">
-			<label class="radio" for="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}">
-				<input type="radio" name="field_is_default_${escape(HTML_ID)}" id="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.ID}"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF #>
-				<span></span>
-			</label>
+		<div id="${escape(HTML_ID)}_{fieldelements.ID}" class="possible-values custom-radio">
+			<div class="form-field-radio">
+				<label class="radio" for="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}">
+					<input type="radio" name="field_is_default_${escape(HTML_ID)}" id="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.ID}"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF #>
+					<span></span>
+				</label>
+			</div>
+			<div class="grouped-inputs">
+				<input class="grouped-element" type="text" name="field_name_${escape(HTML_ID)}_{fieldelements.ID}" id="field_name_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@contact.field.possible.values.subject}">
+				<select class="grouped-element" id="field_recipient_${escape(HTML_ID)}_{fieldelements.ID}" name="field_recipient_${escape(HTML_ID)}_{fieldelements.ID}">
+					# START fieldelements.recipients_list #
+					<option value="{fieldelements.recipients_list.ID}" # IF fieldelements.recipients_list.C_RECIPIENT_SELECTED #selected="selected"# ENDIF #>{fieldelements.recipients_list.NAME}</option>
+					# END fieldelements.recipients_list #
+				</select>
+				<a class="grouped-element" href="javascript:ContactFormFieldObjectPossibleValues.delete({fieldelements.ID});" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+			</div>
+			<script>
+				jQuery("#field_is_default_${escape(HTML_ID)}_{fieldelements.ID}").on('click',function(){
+					jQuery("#uncheck_default_${escape(HTML_ID)}").show();
+				});
+			</script>
 		</div>
-		<div class="grouped-inputs">
-			<input class="grouped-element" type="text" name="field_name_${escape(HTML_ID)}_{fieldelements.ID}" id="field_name_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@contact.field.possible.values.subject}">
-			<select class="grouped-element" id="field_recipient_${escape(HTML_ID)}_{fieldelements.ID}" name="field_recipient_${escape(HTML_ID)}_{fieldelements.ID}">
-				# START fieldelements.recipients_list #
-				<option value="{fieldelements.recipients_list.ID}" # IF fieldelements.recipients_list.C_RECIPIENT_SELECTED #selected="selected"# ENDIF #>{fieldelements.recipients_list.NAME}</option>
-				# END fieldelements.recipients_list #
-			</select>
-			<a class="grouped-element" href="javascript:ContactFormFieldObjectPossibleValues.delete({fieldelements.ID});" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
-		</div>
-		<script>
-			jQuery("#field_is_default_${escape(HTML_ID)}_{fieldelements.ID}").on('click',function(){
-				jQuery("#uncheck_default_${escape(HTML_ID)}").show();
-			});
-		</script>
-	</div>
-# END fieldelements #
+	# END fieldelements #
 </div>
 <div class="flex-between">
 	<a href="javascript:ContactFormFieldObjectPossibleValues.add();" id="add-${escape(HTML_ID)}" class="form-field-more-values" aria-label="${LangLoader::get_message('add', 'common')}"><i class="far fa-lg fa-plus-square" aria-hidden="true"></i></a>
