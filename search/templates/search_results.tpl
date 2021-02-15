@@ -192,7 +192,7 @@
 		# ENDIF #
 	</header>
 	<div class="sub-section">
-		<article class="search-item several-items">
+		<div class="content-container">
 			<div class="content">
 				<div id="results_{SEARCH_IN}" class="results">
 					<span id="results_title_{SEARCH_IN}" class="title">{L_TITLE_ALL_RESULTS}</span><br />
@@ -228,10 +228,16 @@
 						</div>
 					# END results #
 				# ENDIF #
-			</div>			
-		</article>
+			</div>
+		</div>
 	</div>
-	<footer>{L_HITS}</footer>
+	<footer>
+		<div class="sub-section">
+			<div class="content-container">
+				<div class="content">{L_HITS}</div>
+			</div>
+		</div>
+	</footer>
 </section>
 <script>
 	ChangePagination(0, Math.ceil(nbResults['{SEARCH_IN}'] / NB_RESULTS_PER_PAGE), PAGINATION_RESULTS + '{SEARCH_IN}', 'results_{SEARCH_IN}');

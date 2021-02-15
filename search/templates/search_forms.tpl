@@ -1,43 +1,45 @@
-		<script>
-			const FORM = 'form-';
-			const SPECIALIZED_FORM_LINK = 'specialize-form-link-';
-			var LastSpecializedFormUsed = '{SEARCH_MODE_MODULE}';
+<script>
+	const FORM = 'form-';
+	const SPECIALIZED_FORM_LINK = 'specialize-form-link-';
+	var LastSpecializedFormUsed = '{SEARCH_MODE_MODULE}';
 
-			function ChangeForm(module)
-			// Limit the search to a single module
-			{
-				jQuery('#' + FORM + LastSpecializedFormUsed).fadeOut();
-				jQuery('#' + FORM + module).fadeIn();
+	function ChangeForm(module)
+	// Limit the search to a single module
+	{
+		jQuery('#' + FORM + LastSpecializedFormUsed).fadeOut();
+		jQuery('#' + FORM + module).fadeIn();
 
-				document.getElementById(SPECIALIZED_FORM_LINK + LastSpecializedFormUsed).className = '';
+		document.getElementById(SPECIALIZED_FORM_LINK + LastSpecializedFormUsed).className = '';
 
-				LastSpecializedFormUsed = module;
-				document.getElementById('search-in').value = module;
+		LastSpecializedFormUsed = module;
+		document.getElementById('search-in').value = module;
 
-				document.getElementById(SPECIALIZED_FORM_LINK + module).className = 'current';
-			}
+		document.getElementById(SPECIALIZED_FORM_LINK + module).className = 'current';
+	}
 
-			function check_search_form_post()
-			// Check the form validity
-			{
-				var textSearched = document.getElementById("TxTsearched").value;
-				if ( textSearched.length >= 3 && textSearched != '{L_SEARCH}')
-				{
-					textSearched = escape_xmlhttprequest(textSearched);
-					return true;
-				}
-				else
-				{
-					alert({L_WARNING_LENGTH_STRING_SEARCH});
-					return false;
-				}
-			}
-		</script>
+	function check_search_form_post()
+	// Check the form validity
+	{
+		var textSearched = document.getElementById("TxTsearched").value;
+		if ( textSearched.length >= 3 && textSearched != '{L_SEARCH}')
+		{
+			textSearched = escape_xmlhttprequest(textSearched);
+			return true;
+		}
+		else
+		{
+			alert({L_WARNING_LENGTH_STRING_SEARCH});
+			return false;
+		}
+	}
+</script>
 
-	   <section id="module-search">
-		   <header>
-				<h1>{L_TITLE_SEARCH}</h1>
-			</header>
+<section id="module-search">
+   <header>
+		<h1>{L_TITLE_SEARCH}</h1>
+	</header>
+	<div class="sub-section">
+		<div class="content-container">
 			<div class="content">
 				<form action="{U_FORM_VALID}" onsubmit="return check_search_form_post();" method="post">
 					<div id="forms-selection" class="cell-tile">
@@ -94,8 +96,11 @@
 					</fieldset>
 				</form>
 			</div>
-			 <footer></footer>
-		</section>
-		<script>
-			ChangeForm('{SEARCH_MODE_MODULE}');
-		</script>
+
+		</div>
+	</div>
+	 <footer></footer>
+</section>
+<script>
+	ChangeForm('{SEARCH_MODE_MODULE}');
+</script>
