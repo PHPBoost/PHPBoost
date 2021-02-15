@@ -24,10 +24,8 @@
 		# INCLUDE MESSAGE_HELPER #
 
 		<form method="post" action="admin_database.php?action=restore&amp;token={TOKEN}" enctype="multipart/form-data" name="upload_file">
-			<header class="section-header">
-				<h1>{@database.management}</h1>
-			</header>
-			<fieldset class="sub-section">
+			<fieldset id="database-restore">
+				<legend>{@database.management}</legend>
 				<div class="fieldset-inset cell-flex cell-columns-2">
 					<div class="cell">
 						<div class="cell-body">
@@ -43,7 +41,7 @@
 					</div>
 				</div>
 			</fieldset>
-			<fieldset class="sub-section">
+			<fieldset>
 				<legend>{@database.restore}</legend>
 				<div class="fieldset-inset cell-flex cell-columns-2">
 					<div class="db-restore cell">
@@ -88,6 +86,17 @@
 							</div>
 							<ul class="ulist"></ul>
 						</div>
+						<script>
+							jQuery('#select-file-to-restore').dndfiles({
+								multiple: true,
+								maxFileSize: '{MAX_FILE_SIZE}',
+								allowedExtensions: ["{ALLOWED_EXTENSIONS}"],
+								warningText: ${escapejs(LangLoader::get_message('warning.upload.disabled', 'upload-common'))},
+								warningExtension: ${escapejs(LangLoader::get_message('warning.upload.extension', 'upload-common'))},
+								warningFileSize: ${escapejs(LangLoader::get_message('warning.upload.file.size', 'upload-common'))},
+								warningFilesNbr: ${escapejs(LangLoader::get_message('warning.upload.files.number', 'upload-common'))},
+							});
+						</script>
 						<div class="cell-body">
 							<div class="cell-content align-center">
 								<button type="submit" id="submit-file-to-restore" name="submit-file-to-restore" value="true" class="button submit">{@database.restore}</button>
@@ -205,71 +214,71 @@
 
 	# IF C_DATABASE_BACKUP #
 		# IF TABLE_NAME #
-		<div>
-			<nav id="breadcrumb" itemprop="breadcrumb">
-				<ol itemscope itemtype="https://schema.org/BreadcrumbList">
-					<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-						<a href="admin_database.php#tables" itemprop="item">
-							<span itemprop="name">{@database.management}</span>
-    						<meta itemprop="position" content="1" />
-						</a>
-					</li>
-					<li class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-						<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure" itemprop="item">
-							<span itemprop="name">{TABLE_NAME}</span>
-    						<meta itemprop="position" content="2" />
-						</a>
-					</li>
-				</ol>
-			</nav>
-			<nav id="cssmenu-database-backup" class="cssmenu cssmenu-group">
-				<ul>
-					<li>
-						<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">
-							<i class="fa fa-fw fa-code-branch" aria-hidden="true"></i> <span>{@database.table.structure}</span>
-						</a>
-					</li>
-					<li>
-						<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=data">
-							<i class="fa fa-fw fa-laptop" aria-hidden="true"></i> <span>${LangLoader::get_message('display', 'common')}</span>
-						</a>
-					</li>
-					<li>
-						<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=query">
-							<i class="fa fa-fw fa-wrench" aria-hidden="true"></i> <span>SQL</span>
-						</a>
-					</li>
-					<li>
-						<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=insert">
-							<i class="fa fa-fw fa-plus" aria-hidden="true"></i> <span>{@database.insert}</span>
-						</a>
-					</li>
-					<li>
-						<a class="cssmenu-title" href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table">
-							<i class="fa fa-fw fa-save" aria-hidden="true"></i> <span>{@database.backup}</span>
-						</a>
-					</li>
-					<li>
-						<a class="cssmenu-title error" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate&amp;token={TOKEN}" data-confirmation="{@database.confirm.empty.table}">
-							<i class="fa fa-fw fa-share-square" aria-hidden="true"></i> <span>${LangLoader::get_message('empty', 'main')}</span>
-						</a>
-					</li>
-					<li>
-						<a class="cssmenu-title error" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp;token={TOKEN}" data-confirmation="delete-element">
-							<i class="far fa-fw fa-trash-alt" aria-hidden="true"></i> <span>${LangLoader::get_message('delete', 'common')}</span>
-						</a>
-					</li>
-				</ul>
-			</nav>
-			<script type="text/javascript">
-				$("#cssmenu-database-backup").menumaker({
-					title: "&nbsp;  ",
-					format: "multitoggle",
-					breakpoint: 768
-				});
-			</script>
-		</div>
-		<div class="spacer"></div>
+			<div>
+				<nav id="breadcrumb" itemprop="breadcrumb">
+					<ol itemscope itemtype="https://schema.org/BreadcrumbList">
+						<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+							<a href="admin_database.php#tables" itemprop="item">
+								<span itemprop="name">{@database.management}</span>
+	    						<meta itemprop="position" content="1" />
+							</a>
+						</li>
+						<li class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure" itemprop="item">
+								<span itemprop="name">{TABLE_NAME}</span>
+	    						<meta itemprop="position" content="2" />
+							</a>
+						</li>
+					</ol>
+				</nav>
+				<nav id="cssmenu-database-backup" class="cssmenu cssmenu-group">
+					<ul>
+						<li>
+							<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">
+								<i class="fa fa-fw fa-code-branch" aria-hidden="true"></i> <span>{@database.table.structure}</span>
+							</a>
+						</li>
+						<li>
+							<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=data">
+								<i class="fa fa-fw fa-laptop" aria-hidden="true"></i> <span>${LangLoader::get_message('display', 'common')}</span>
+							</a>
+						</li>
+						<li>
+							<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=query">
+								<i class="fa fa-fw fa-wrench" aria-hidden="true"></i> <span>SQL</span>
+							</a>
+						</li>
+						<li>
+							<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=insert">
+								<i class="fa fa-fw fa-plus" aria-hidden="true"></i> <span>{@database.insert}</span>
+							</a>
+						</li>
+						<li>
+							<a class="cssmenu-title" href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table">
+								<i class="fa fa-fw fa-save" aria-hidden="true"></i> <span>{@database.backup}</span>
+							</a>
+						</li>
+						<li>
+							<a class="cssmenu-title error" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate&amp;token={TOKEN}" data-confirmation="{@database.confirm.empty.table}">
+								<i class="fa fa-fw fa-share-square" aria-hidden="true"></i> <span>${LangLoader::get_message('empty', 'main')}</span>
+							</a>
+						</li>
+						<li>
+							<a class="cssmenu-title error" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp;token={TOKEN}" data-confirmation="delete-element">
+								<i class="far fa-fw fa-trash-alt" aria-hidden="true"></i> <span>${LangLoader::get_message('delete', 'common')}</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+				<script type="text/javascript">
+					$("#cssmenu-database-backup").menumaker({
+						title: "&nbsp;  ",
+						format: "multitoggle",
+						breakpoint: 768
+					});
+				</script>
+			</div>
+			<div class="spacer"></div>
 		# ENDIF #
 
 		<form action="admin_database.php?action=backup" method="post" name="table_list" class="fieldset-content">
@@ -283,9 +292,8 @@
 					}
 				}
 			</script>
-			<fieldset class="sub-section">
+			<fieldset id="databse-backup">
 				<legend>{@database.backup.database}</legend>
-
 				<div class="fieldset-inset">
 					<div class="form-element full-field">{@database.backup.description}</div>
 					<div class="form-element third-field">
@@ -379,67 +387,51 @@
 		</script>
 
 		<form action="admin_database.php?query=1&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
-			<fieldset class="sub-section">
+			<div class="message-helper bgc warning">{@H|database.query.description}</div>
+			<fieldset id="database-query">
 				<legend>{@database.query.execute}</legend>
 				<div class="fieldset-inset">
-					<div class="content">
-						<article>
-							<header></header>
-							<div class="content">
-								<span id="errorh"></span>
-								<div class="message-helper bgc warning">{@H|database.query.description}</div>
-								<fieldset>
-									<label for="query">* {@database.executed.query}</label>
-									<textarea rows="12" id="query" name="query">{QUERY}</textarea>
-								</fieldset>
-								<fieldset class="fieldset-submit">
-									<button type="submit" name="submit" value="true" class="button submit">{@database.submit.query}</button>
-									<input type="hidden" name="token" value="{TOKEN}">
-								</fieldset>
-							</div>
-							<footer></footer>
-						</article>
-					</div>
+					<span id="errorh"></span>
+					<div class="form-element form-element-textarea">
+						<label for="query">* {@database.executed.query}</label>
+						<div class="form-field form-field-textarea">
+							<textarea rows="12" id="query" name="query">{QUERY}</textarea>
+						</div>
+					</div>					
 				</div>
+			</fieldset>
+			<fieldset class="fieldset-submit">
+				<legend>{@database.submit.query}</legend>
+				<button type="submit" name="submit" value="true" class="button submit">{@database.submit.query}</button>
+				<input type="hidden" name="token" value="{TOKEN}">
 			</fieldset>
 		</form>
 
 		# IF C_QUERY_RESULT #
-			<fieldset class="sub-section">
+			<fieldset id="executed_query">
 				<legend>{@database.query.result}</legend>
 				<div class="fieldset-inset">
-					<div class="content" id="executed_query">
-						<article class="block">
-							<header>{@database.executed.query}</header>
-							<div class="content">
-								<fieldset class="db-executed-query">
-									<p>{QUERY_HIGHLIGHT}</p>
-								</fieldset>
-
-								<div class="responsive-table">
-									<table class="table large-table">
-										# IF C_HEAD #
-											<thead>
-												<tr>
-													# START head #
-														<th>{head.FIELD_NAME}</th>
-													# END head #
-												</tr>
-											</thead>
-										# ENDIF #
-										<tbody>
-											# START line #
-												<tr>
-													# START line.field #
-														<td>{line.field.FIELD_NAME}</td>
-													# END line.field #
-												</tr>
-											# END line #
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</article>
+					<div class="responsive-table">
+						<table class="table large-table">
+							# IF C_HEAD #
+								<thead>
+									<tr>
+										# START head #
+											<th>{head.FIELD_NAME}</th>
+										# END head #
+									</tr>
+								</thead>
+							# ENDIF #
+							<tbody>
+								# START line #
+									<tr>
+										# START line.field #
+											<td>{line.field.FIELD_NAME}</td>
+										# END line.field #
+									</tr>
+								# END line #
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</fieldset>
@@ -484,14 +476,3 @@
 		</table>
 	# ENDIF #
 </div>
-<script>
-	jQuery('#select-file-to-restore').dndfiles({
-		multiple: true,
-		maxFileSize: '{MAX_FILE_SIZE}',
-		allowedExtensions: ["{ALLOWED_EXTENSIONS}"],
-		warningText: ${escapejs(LangLoader::get_message('warning.upload.disabled', 'upload-common'))},
-		warningExtension: ${escapejs(LangLoader::get_message('warning.upload.extension', 'upload-common'))},
-		warningFileSize: ${escapejs(LangLoader::get_message('warning.upload.file.size', 'upload-common'))},
-		warningFilesNbr: ${escapejs(LangLoader::get_message('warning.upload.files.number', 'upload-common'))},
-	});
-</script>

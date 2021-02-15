@@ -82,158 +82,148 @@
 	</div>
 
 	# IF C_DATABASE_TABLE_STRUCTURE #
-		<section>
-			<header>
-				<h1>{@database.table.structure}</h1>
-			</header>
-			<article>
-				<table class="table">
-					<caption>{TABLE_NAME}</caption>
-					<thead>
-						<tr>
-							<th>{@database.table.field}</th>
-							<th>${LangLoader::get_message('type', 'main')}</th>
-							<th>{@database.table.attribute}</th>
-							<th>{@database.table.null}</th>
-							<th>${LangLoader::get_message('default', 'main')}</th>
-							<th>{@database.table.extra}</th>
-						</tr>
-					</thead>
-					<tbody>
-						# START field #
-							<tr>
-								<td>{field.FIELD_NAME}</td>
-								<td>{field.FIELD_TYPE}</td>
-								<td>{field.FIELD_ATTRIBUTE}</td>
-								<td>{field.FIELD_NULL}</td>
-								<td>{field.FIELD_DEFAULT}</td>
-								<td>{field.FIELD_EXTRA}</td>
-							</tr>
-						# END field #
-					</tbody>
-				</table>
+		<table class="table">
+			<caption>{@database.table.structure}: <strong>{TABLE_NAME}</strong></caption>
+			<thead>
+				<tr>
+					<th>{@database.table.field}</th>
+					<th>${LangLoader::get_message('type', 'main')}</th>
+					<th>{@database.table.attribute}</th>
+					<th>{@database.table.null}</th>
+					<th>${LangLoader::get_message('default', 'main')}</th>
+					<th>{@database.table.extra}</th>
+				</tr>
+			</thead>
+			<tbody>
+				# START field #
+					<tr>
+						<td>{field.FIELD_NAME}</td>
+						<td>{field.FIELD_TYPE}</td>
+						<td>{field.FIELD_ATTRIBUTE}</td>
+						<td>{field.FIELD_NULL}</td>
+						<td>{field.FIELD_DEFAULT}</td>
+						<td>{field.FIELD_EXTRA}</td>
+					</tr>
+				# END field #
+			</tbody>
+		</table>
 
-				<table class="table">
-					<caption>{@database.table.index}</caption>
-					<thead>
-						<tr>
-							<th>${LangLoader::get_message('name', 'main')}</th>
-							<th>${LangLoader::get_message('type', 'main')}</th>
-							<th>{@database.table.field}</th>
-						</tr>
-					</thead>
-					<tbody>
-						# START index #
-							<tr>
-								<td>{index.INDEX_NAME}</td>
-								<td>{index.INDEX_TYPE}</td>
-								<td>{index.INDEX_FIELDS}</td>
-							</tr>
-						# END index #
-					</tbody>
-				</table>
+		<table class="table">
+			<caption>{@database.table.index}</caption>
+			<thead>
+				<tr>
+					<th>${LangLoader::get_message('name', 'main')}</th>
+					<th>${LangLoader::get_message('type', 'main')}</th>
+					<th>{@database.table.field}</th>
+				</tr>
+			</thead>
+			<tbody>
+				# START index #
+					<tr>
+						<td>{index.INDEX_NAME}</td>
+						<td>{index.INDEX_TYPE}</td>
+						<td>{index.INDEX_FIELDS}</td>
+					</tr>
+				# END index #
+			</tbody>
+		</table>
 
-				<table class="table">
-					<caption>${LangLoader::get_message('size', 'main')}</caption>
-					<thead>
-						<tr>
-							<th>{@database.table.data}</th>
-							<th>{@database.table.index}</th>
-							<th>{@database.table.free}</th>
-							<th>${LangLoader::get_message('total', 'main')}</th>
-							# IF TABLE_FREE #
-								<th></th>
-							# ENDIF #
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>{TABLE_DATA}</td>
-							<td>{TABLE_INDEX}</td>
-							<td>{TABLE_FREE}</td>
-							<td>{TABLE_TOTAL_SIZE}</td>
-							# IF TABLE_FREE #
-								<td>
-									<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=optimize">
-										<i class="fa fa-chart-bar" aria-hidden="true"></i> {@database.optimize}
-									</a>
-							    </td>
-							# ENDIF #
-						</tr>
-					</tbody>
-				</table>
+		<table class="table">
+			<caption>${LangLoader::get_message('size', 'main')}</caption>
+			<thead>
+				<tr>
+					<th>{@database.table.data}</th>
+					<th>{@database.table.index}</th>
+					<th>{@database.table.free}</th>
+					<th>${LangLoader::get_message('total', 'main')}</th>
+					# IF TABLE_FREE #
+						<th></th>
+					# ENDIF #
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{TABLE_DATA}</td>
+					<td>{TABLE_INDEX}</td>
+					<td>{TABLE_FREE}</td>
+					<td>{TABLE_TOTAL_SIZE}</td>
+					# IF TABLE_FREE #
+						<td>
+							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=optimize">
+								<i class="fa fa-chart-bar" aria-hidden="true"></i> {@database.optimize}
+							</a>
+					    </td>
+					# ENDIF #
+				</tr>
+			</tbody>
+		</table>
 
-				<table class="table">
-					<caption>${LangLoader::get_message('stats', 'admin')}</caption>
-					<thead>
-						<tr>
-							<th>{@database.table.rows.format}</th>
-							<th>{@database.table.rows}</th>
-							<th>{@database.table.engine}</th>
-							<th>{@database.table.collation}</th>
-							<th>${LangLoader::get_message('size', 'main')}</th>
-							# IF C_AUTOINDEX #
-								<th>{@database.autoincrement}</th>
-							# ENDIF #
-							<th>{@database.creation.date}</th>
-							<th>${LangLoader::get_message('last_update', 'admin')}</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>{TABLE_ROW_FORMAT}</td>
-							<td>{TABLE_ROWS}</td>
-							<td>{TABLE_ENGINE}</td>
-							<td>{TABLE_COLLATION}</td>
-							<td>{TABLE_TOTAL_SIZE}</td>
-							# IF C_AUTOINDEX #
-								<td>{TABLE_AUTOINCREMENT}</td>
-							# ENDIF #
-							<td>{TABLE_CREATION_DATE}</td>
-							<td>{TABLE_LAST_UPDATE}</td>
-						</tr>
-					</tbody>
-				</table>
-			</article>
-			<footer></footer>
-		</section>
+		<div class="responsive-table">
+			<table class="table">
+				<caption>${LangLoader::get_message('stats', 'admin')}</caption>
+				<thead>
+					<tr>
+						<th>{@database.table.rows.format}</th>
+						<th>{@database.table.rows}</th>
+						<th>{@database.table.engine}</th>
+						<th>{@database.table.collation}</th>
+						<th>${LangLoader::get_message('size', 'main')}</th>
+						# IF C_AUTOINDEX #
+							<th>{@database.autoincrement}</th>
+						# ENDIF #
+						<th>{@database.creation.date}</th>
+						<th>${LangLoader::get_message('last_update', 'admin')}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{TABLE_ROW_FORMAT}</td>
+						<td>{TABLE_ROWS}</td>
+						<td>{TABLE_ENGINE}</td>
+						<td>{TABLE_COLLATION}</td>
+						<td>{TABLE_TOTAL_SIZE}</td>
+						# IF C_AUTOINDEX #
+							<td>{TABLE_AUTOINCREMENT}</td>
+						# ENDIF #
+						<td>{TABLE_CREATION_DATE}</td>
+						<td>{TABLE_LAST_UPDATE}</td>
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
 	# ENDIF #
 
 	# IF C_DATABASE_TABLE_DATA #
-		<section>
-			<header><h1>${LangLoader::get_message('display', 'common')}</h1></header>
-			<article id="executed_query">
-				<header>{@database.executed.query}</header>
-				<fieldset class="db-executed-query">
-					<p>{QUERY_HIGHLIGHT}</p>
-				</fieldset>
+		<fieldset id="executed_query">
+			<legend>{@database.executed.query}</legend>
+			<p class="db-executed-query">{QUERY_HIGHLIGHT}</p>
+		</fieldset>
 
-				# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
-				<div class="responsive-table">
-					<table class="table large-table">
-						<thead>
-							<tr>
-								<th>&nbsp;</th>
-								# START head #
-									<th>{head.FIELD_NAME}</th>
-								# END head #
-							</tr>
-						</thead>
-						<tbody>
-							# START line #
-								<tr>
-									# START line.field #
-										<td>{line.field.FIELD_NAME}</td>
-									# END line.field #
-								</tr>
-							# END line #
-						</tbody>
-					</table>
-				</div>
-				<footer># IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #</footer>
-			</article>
-			<footer></footer>
-		</section>
+		# IF C_PAGINATION # <div class="align-center"># INCLUDE PAGINATION #</div> # ENDIF #
+		<div class="responsive-table">
+			<table class="table large-table">
+				<caption>${LangLoader::get_message('display', 'common')}</caption>
+				<thead>
+					<tr>
+						<th>&nbsp;</th>
+						# START head #
+							<th>{head.FIELD_NAME}</th>
+						# END head #
+					</tr>
+				</thead>
+				<tbody>
+					# START line #
+						<tr>
+							# START line.field #
+								<td>{line.field.FIELD_NAME}</td>
+							# END line.field #
+						</tr>
+					# END line #
+				</tbody>
+			</table>
+		</div>
+		# IF C_PAGINATION # <div class="align-center"># INCLUDE PAGINATION #</div> # ENDIF #
 	# ENDIF #
 
 	# IF C_DATABASE_TABLE_QUERY #
@@ -264,78 +254,59 @@
 				return true;
 			}
 		</script>
-
-
-		<section>
-			<header>
-				<h1>SQL</h1>
-			</header>
-			<article>
-				<form action="admin_database_tools.php?table={TABLE_NAME}&action=query&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
-					<fieldset>
-						<legend>{@database.query.execute}</legend>
-						<div class="fieldset-inset">
-							<div class="content">
-								<span id="errorh"></span>
-								<div class="message-helper bgc warning">{@H|database.query.description}</div>
-								<fieldset>
-									<label for="query">* {@database.executed.query}</label>
-									<textarea rows="12" id="query" name="query">{QUERY}</textarea>
-								</fieldset>
-								<fieldset class="fieldset-submit" style="margin:0">
-									<button type="submit" name="submit" value="true" class="button submit">{@database.submit.query}</button>
-									<input type="hidden" name="token" value="{TOKEN}">
-								</fieldset>
-							</div>
+		<form action="admin_database_tools.php?table={TABLE_NAME}&action=query&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
+			<div class="message-helper bgc warning">{@H|database.query.description}</div>
+			<fieldset>
+				<legend>{@database.query.execute}</legend>
+				<div class="fieldset-inset">
+					<span id="errorh"></span>
+					<div class="form-element form-element-textarea">
+						<label for="query">* {@database.executed.query}</label>
+						<div class="form-field form-field-textarea">
+							<textarea rows="12" id="query" name="query">{QUERY}</textarea>
 						</div>
-					</fieldset>
-				</form>
+					</div>
+				</div>
+			</fieldset>
+			<fieldset class="fieldset-submit">
+				<legend>{@database.submit.query}</legend>
+				<button type="submit" name="submit" value="true" class="button submit">{@database.submit.query}</button>
+				<input type="hidden" name="token" value="{TOKEN}">
+			</fieldset>
+		</form>
 
-				# IF C_QUERY_RESULT #
-					<fieldset>
-						<legend>{@database.query.result}</legend>
-						<div id="executed_query" class="fieldset-inset">
-							<fieldset class="db-executed-query">
-								<p>{QUERY_HIGHLIGHT}</p>
-							</fieldset>
-
-							<div class="responsive-table">
-								<table class="table">
-									<thead>
-										<tr>
-											# START head #
-												<th>{head.FIELD_NAME}</th>
-											# END head #
-										</tr>
-									</thead>
-									<tbody>
-										# START line #
-											<tr>
-												# START line.field #
-													<td style="{line.field.STYLE}">
-														{line.field.FIELD_NAME}
-													</td>
-												# END line.field #
-											</tr>
-										# END line #
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</fieldset>
-				# ENDIF #
-			</article>
-			<footer></footer>
-		</section>
+		# IF C_QUERY_RESULT #
+			<div id="executed_query" class="responsive-table">
+				<table class="table large-table">
+					<caption>{@database.query.result}</caption>
+					<thead>
+						<tr>
+							# START head #
+								<th>{head.FIELD_NAME}</th>
+							# END head #
+						</tr>
+					</thead>
+					<tbody>
+						# START line #
+							<tr>
+								# START line.field #
+									<td style="{line.field.STYLE}">
+										{line.field.FIELD_NAME}
+									</td>
+								# END line.field #
+							</tr>
+						# END line #
+					</tbody>
+				</table>
+			</div>
+		# ENDIF #
 	# ENDIF #
 
 	# IF C_DATABASE_UPDATE_FORM #
-		<section>
-			<header>
-				<h1>{@database.insert}</h1>
-			</header>
-			<article><form action="admin_database_tools.php?table={TABLE_NAME}&amp;field={FIELD_NAME}&amp;value={FIELD_VALUE}&amp;action={ACTION}&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
-				<table class="table">
+		<form action="admin_database_tools.php?table={TABLE_NAME}&amp;field={FIELD_NAME}&amp;value={FIELD_VALUE}&amp;action={ACTION}&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
+			<div class="responsive-table">
+				<table class="table large-table">
+					<caption>{@database.insert}</caption>
 					<thead>
 						<tr>
 							<th>{@database.table.field}</th>
@@ -361,13 +332,12 @@
 						# END fields #
 					</tbody>
 				</table>
-				<fieldset class="fieldset-submit">
-					<legend>{@database.submit.query}</legend>
-					<button type="submit" name="submit" value="true" class="button submit">{@database.submit.query}</button>
-					<input type="hidden" name="token" value="{TOKEN}">
-				</fieldset>
-			</form></article>
-			<footer></footer>
-		</section>
+			</div>
+			<fieldset class="fieldset-submit">
+				<legend>{@database.submit.query}</legend>
+				<button type="submit" name="submit" value="true" class="button submit">{@database.submit.query}</button>
+				<input type="hidden" name="token" value="{TOKEN}">
+			</fieldset>
+		</form>
 	# ENDIF #
 </div>
