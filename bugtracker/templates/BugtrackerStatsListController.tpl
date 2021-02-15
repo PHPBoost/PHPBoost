@@ -21,7 +21,7 @@
     }
 </script>
 
-<article>
+<article class="bugtracker-item several-items">
 	<header>
 		<h2>{@labels.fields.status}</h2>
 	</header>
@@ -35,7 +35,7 @@
 </article>
 
 # IF C_DISPLAY_VERSIONS #
-    <article>
+    <article class="bugtracker-item several-items">
     	<header>
     		<h2>{@labels.fix_bugs_per_version}</h2>
     	</header>
@@ -77,7 +77,7 @@
 # ENDIF #
 
 # IF C_DISPLAY_TOP_POSTERS #
-    <article>
+    <article class="bugtracker-item several-items">
     	<header>
     		<h2>{@labels.top_posters}</h2>
     	</header>
