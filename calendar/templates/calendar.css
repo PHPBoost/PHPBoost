@@ -3,7 +3,7 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-#module-calendar .calendar-day {
+#module-calendar .calendar-event-day {
 	word-wrap: normal;
 	overflow-wrap: normal;
 	hyphens: none;
