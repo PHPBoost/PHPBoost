@@ -3,9 +3,11 @@
 		<h1>{@sitemap}</h1>
 	</header>
 	<div class="sub-section">
-		<div class="cell-flex cell-tile cell-columns-3">
-			# INCLUDE SITEMAP #
-		</div>		
+		<div class="content-container">
+			<div class="cell-flex cell-tile cell-columns-3">
+				# INCLUDE SITEMAP #
+			</div>			
+		</div>
 	</div>
 	<footer></footer>
 </section>
