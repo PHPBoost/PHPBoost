@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 21
+ * @version     PHPBoost 6.0 - last update: 2021 02 16
  * @since       PHPBoost 4.0 - 2013 09 29
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -63,10 +63,8 @@ class CalendarPendingItemsController extends ModuleController
 		)));
 
 		$this->items_view->put_all(array(
-			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_ITEMS' => $result->get_rows_count() > 0,
 			'C_PENDING_ITEMS' => true,
-			'PAGINATION' => $pagination->display()
 		));
 
 		while ($row = $result->fetch())
@@ -80,7 +78,9 @@ class CalendarPendingItemsController extends ModuleController
 
 		$this->view->put_all(array(
 			'EVENTS' => $this->items_view,
-			'C_PENDING_ITEMS' => true
+			'C_PENDING_ITEMS' => true,
+			'C_PAGINATION' => $pagination->has_several_pages(),
+			'PAGINATION' => $pagination->display()
 		));
 
 		return $this->view;

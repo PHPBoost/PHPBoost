@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 11
+ * @version     PHPBoost 6.0 - last update: 2021 02 16
  * @since       PHPBoost 5.2 - 2020 08 28
 */
 
@@ -57,7 +57,7 @@ class CalendarMemberItemsController extends ModuleController
 		);
 
 		$page = $request->get_getint('page', 1);
-		$pagination = $this->get_pagination($condition, $parameters, $page);
+		$pagination = $this->get_pagination($condition, $parameters, $user_id, $page);
 
 		$result = PersistenceContext::get_querier()->select('SELECT *
 		FROM ' . CalendarSetup::$calendar_events_table . ' event
@@ -72,10 +72,8 @@ class CalendarMemberItemsController extends ModuleController
 		)));
 
 		$this->items_view->put_all(array(
-			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_ITEMS' => $result->get_rows_count() > 0,
 			'C_MEMBER_ITEMS' => true,
-			'PAGINATION' => $pagination->display()
 		));
 
 		while ($row = $result->fetch())
@@ -91,7 +89,9 @@ class CalendarMemberItemsController extends ModuleController
 			'EVENTS' => $this->items_view,
 			'C_MEMBER_ITEMS' => true,
 			'C_MY_ITEMS' => $user_id == AppContext::get_current_user()->get_id(),
-			'MEMBER_NAME' => $this->user['display_name']
+			'MEMBER_NAME' => $this->user['display_name'],
+			'C_PAGINATION' => $pagination->has_several_pages(),
+			'PAGINATION' => $pagination->display()
 		));
 
 		return $this->view;
@@ -106,7 +106,7 @@ class CalendarMemberItemsController extends ModuleController
 		}
 	}
 
-	private function get_pagination($condition, $parameters, $page)
+	private function get_pagination($condition, $parameters, $user_id, $page)
 	{
 		$row = PersistenceContext::get_querier()->select_single_row_query('SELECT COUNT(*) AS events_number
 		FROM ' . CalendarSetup::$calendar_events_table . ' event
@@ -114,7 +114,7 @@ class CalendarMemberItemsController extends ModuleController
 		' . $condition, $parameters);
 
 		$pagination = new ModulePagination($page, $row['events_number'], (int)CalendarConfig::load()->get_items_number_per_page());
-		$pagination->set_url(CalendarUrlBuilder::display_member_items('%d'));
+		$pagination->set_url(CalendarUrlBuilder::display_member_items($user_id, '%d'));
 
 		if ($pagination->current_page_is_empty() && $page > 1)
 		{

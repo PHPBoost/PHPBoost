@@ -26,12 +26,12 @@
 							# INCLUDE CALENDAR #
 						</div>
 					# ENDIF #
-				# ENDIF #				
+				# ENDIF #
 			</div>
 			<div id="events">
 				# INCLUDE EVENTS #
 			</div>
 		</div>
 	</div>
-	<footer></footer>
+	<footer># IF C_PAGINATION # <div class="sub-section"><div class="content-container"># INCLUDE PAGINATION #</div></div># ENDIF #</footer>
 </section>
