@@ -5,6 +5,7 @@
 			url: ${escapejs(U_AJAX_CALENDAR)} + year + '/' + month + '/' + {MINI_MODULE},
 			success: function(returnData){
 				jQuery('#calendar').html(returnData);
+				jQuery('[data-color-surround]').colorSurround();
 			}
 		});
 
@@ -61,10 +62,17 @@
 		<tbody>
 			<tr>
 				# START day #
-				<td class="{day.CLASS}">
-					# IF day.C_MONTH_DAY #<a href="{day.U_DAY_EVENTS}">{day.DAY}# IF day.C_COLOR # <span class="event-spot" style="background-color: {day.COLOR}"></span># ENDIF #</a># ENDIF #
-					# IF day.C_WEEK_LABEL #{day.DAY}# ENDIF #
-				</td>
+					<td class="{day.CLASS}">
+						# IF day.C_MONTH_DAY #
+							<a href="{day.U_DAY_EVENTS}">
+								{day.DAY}
+								# IF day.C_COLOR #
+									<span class="event-spot" style="background-color: {day.COLOR}"></span>
+								# ENDIF #
+							</a>
+						# ENDIF #
+						# IF day.C_WEEK_LABEL #{day.DAY}# ENDIF #
+					</td>
 				# IF day.CHANGE_LINE #
 			</tr>
 			<tr>
