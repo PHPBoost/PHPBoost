@@ -57,7 +57,7 @@ class FaqFormController extends ModuleController
 	private function build_form(HTTPRequestCustom $request)
 	{
 		$form = new HTMLForm(__CLASS__);
-		$form->set_layout_title($this->get_faq_question()->get_id() === null ? $this->lang['faq.add.item'] : ($this->lang['faq.edit.item'] . ': ' . $this->get_faq_question()->get_question()));
+		$form->set_layout_title($this->get_faq_question()->get_id() === null ? $this->lang['faq.question.add'] : ($this->lang['faq.question.edit'] . ': ' . $this->get_faq_question()->get_question()));
 
 		$fieldset = new FormFieldsetHTML('faq', $this->common_lang['form.parameters']);
 		$form->add_fieldset($fieldset);
