@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 07
+ * @version     PHPBoost 6.0 - last update: 2021 02 16
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -22,6 +22,7 @@ $lang['item'] = 'file';
 $lang['an.item'] = 'a file';
 $lang['the.item'] = 'the file';
 $lang['my.items'] = 'My files';
+$lang['my.items'] = 'Files published by';
 
 $lang['download.add.item'] = 'Add new file';
 $lang['download.edit.item'] = 'Edit file';

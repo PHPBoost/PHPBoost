@@ -9,7 +9,7 @@
 				{@download.pending.items}
 			# ELSE #
 				# IF C_MEMBER_ITEMS #
-					{@my.items}
+					# IF C_MY_ITEMS #{@my.items}# ELSE #{@member.items}: {MEMBER_NAME}# ENDIF #
 				# ELSE #
 					{@module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
 				# ENDIF #
@@ -56,12 +56,14 @@
 	# ENDIF #
 
 	# IF C_SEVERAL_ITEMS #
-		<div class="sub-section">
-			<div class="content-container">
-				# INCLUDE SORT_FORM #
-				<div class="spacer"></div>
+		# IF NOT C_MEMBER_ITEMS #
+			<div class="sub-section">
+				<div class="content-container">
+					# INCLUDE SORT_FORM #
+					<div class="spacer"></div>
+				</div>
 			</div>
-		</div>
+		# ENDIF #
 	# ENDIF #
 
 	# IF C_ITEMS #
