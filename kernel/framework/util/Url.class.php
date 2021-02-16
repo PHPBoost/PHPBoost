@@ -13,7 +13,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2021 01 26
+ * @version     PHPBoost 5.2 - last update: 2021 02 16
  * @since       PHPBoost 2.0 - 2009 01 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -227,22 +227,26 @@ class Url
 
 		if (!($url instanceof Url))
 		{
+			// Remove all illegal characters from a url
+			$url = filter_var($url, FILTER_SANITIZE_URL);
+		
 			if ($url[0] == '/' && file_exists(PATH_TO_ROOT . $url))
 				return true;
-
+			
 			$url = new Url($url);
 		}
 
 		$file = new File($url->relative());
-		if ($file->exists())
-			return true;
-
 		$folder = new Folder($url->relative());
-		if ($folder->exists())
+		if ($file->exists() || $folder->exists())
 			return true;
 
 		if ($url->absolute())
 		{
+			// Validate URI
+			if (filter_var($url->absolute(), FILTER_VALIDATE_URL) === FALSE	|| !in_array(strtolower(parse_url($url->absolute(), PHP_URL_SCHEME)), ['http','https'], true )) // check only for http/https schemes.
+				return false;
+
 			if (function_exists('stream_context_set_default'))
 				stream_context_set_default(array('http' => array('method' => 'HEAD', 'timeout' => 1)));
 
@@ -267,8 +271,8 @@ class Url
 			else
 				$status = self::STATUS_OK;
 		}
-
-		return $status == self::STATUS_OK;
+		
+		return $status == self::STATUS_OK || ($status > 200 && $status < 400) || $status == 429; // 429 status code for Youtube video sometimes
 	}
 
 	/**
