@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 11
+ * @version     PHPBoost 6.0 - last update: 2021 02 16
  * @since       PHPBoost 5.2 - 2013 06 14
 */
 
@@ -58,7 +58,7 @@ class NewsMemberItemsController extends ModuleController
 		);
 
 		$page = AppContext::get_request()->get_getint('page', 1);
-		$pagination = $this->get_pagination($condition, $parameters, $page);
+		$pagination = $this->get_pagination($condition, $parameters, $user_id, $page);
 
 		$result = PersistenceContext::get_querier()->select('SELECT news.*, member.*
 		FROM '. NewsSetup::$news_table .' news
@@ -102,12 +102,12 @@ class NewsMemberItemsController extends ModuleController
 		$result->dispose();
 	}
 
-	private function get_pagination($condition, $parameters, $page)
+	private function get_pagination($condition, $parameters, $user_id, $page)
 	{
 		$items_number = NewsService::count($condition, $parameters);
 
 		$pagination = new ModulePagination($page, $items_number, (int)NewsConfig::load()->get_items_per_page());
-		$pagination->set_url(NewsUrlBuilder::display_member_items('%d'));
+		$pagination->set_url(NewsUrlBuilder::display_member_items($user_id, '%d'));
 
 		if ($pagination->current_page_is_empty() && $page > 1)
 		{
