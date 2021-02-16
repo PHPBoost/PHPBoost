@@ -39,3 +39,5 @@ td[class*="calendar-"]:last-child {
 	right: 25%;
 	border-radius: 50%;
 }
+
+#module-calendar .html-table-filters * { margin: 0 !important;}
