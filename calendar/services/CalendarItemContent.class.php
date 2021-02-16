@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 19
+ * @version     PHPBoost 6.0 - last update: 2021 02 16
  * @since       PHPBoost 4.0 - 2013 10 29
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -44,6 +44,8 @@ class CalendarItemContent
 
 	const DISPLAY_REGISTERED_USERS_AUTHORIZATION = 1;
 	const REGISTER_AUTHORIZATION = 2;
+
+	const THUMBNAIL_URL = '/templates/__default__/images/default_item_thumbnail.png';
 
 	public function set_id($id)
 	{
@@ -105,7 +107,7 @@ class CalendarItemContent
 			return TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($this->content), '<br><br/>'), CalendarConfig::load()->get_characters_number_to_cut());
 	}
 
-	public function set_thumbnail(Url $thumbnail)
+	public function set_thumbnail($thumbnail)
 	{
 		$this->thumbnail_url = $thumbnail;
 	}
@@ -113,32 +115,15 @@ class CalendarItemContent
 	public function get_thumbnail()
 	{
 		if (!$this->thumbnail_url instanceof Url)
-			return $this->get_default_thumbnail();
+			return new Url($this->thumbnail_url == FormFieldThumbnail::DEFAULT_VALUE ? FormFieldThumbnail::get_default_thumbnail_url(self::THUMBNAIL_URL) : $this->thumbnail_url);
 
 		return $this->thumbnail_url;
 	}
 
 	public function has_thumbnail()
 	{
-		$thumbnail = $this->thumbnail_url->rel();
+		$thumbnail = ($this->thumbnail_url instanceof Url) ? $this->thumbnail_url->rel() : $this->thumbnail_url;
 		return !empty($thumbnail);
-	}
-
-	public function get_default_thumbnail()
-	{
-		$module_id = 'calendar';
-		$module_file = new File(PATH_TO_ROOT . '/' . $module_id . '/templates/images/default_item_thumbnail.png');
-		$module_theme_file = new File(PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/modules/' . $module_id . '/images/default_item_thumbnail.png');
-		$theme_file = new File(PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/default_item_thumbnail.png');
-
-		if ($module_file->exists())
-			return new Url('/' . $module_id . '/templates/images/default_item_thumbnail.png');
-		elseif ($module_theme_file->exists())
-			return new Url('/templates/' . AppContext::get_current_user()->get_theme() . '/modules/' . $module_id . '/images/default_item_thumbnail.png');
-		elseif ($theme_file->exists())
-			return new Url('/templates/' . AppContext::get_current_user()->get_theme() . '/images/default_item_thumbnail.png');
-		else
-			return new Url('/templates/__default__/images/default_item_thumbnail.png');
 	}
 
 	public function set_location($location)
@@ -342,7 +327,7 @@ class CalendarItemContent
 		$this->title = $properties['title'];
 		$this->rewrited_title = $properties['rewrited_title'];
 		$this->content = $properties['content'];
-		$this->set_thumbnail(new Url($properties['thumbnail']));
+		$this->thumbnail_url = $properties['thumbnail'];
 		$this->location = $properties['location'];
 
 		if ($properties['map_displayed'])
@@ -390,7 +375,7 @@ class CalendarItemContent
         $this->content = CalendarConfig::load()->get_default_content();
 		$this->author_user = AppContext::get_current_user();
 		$this->creation_date = new Date();
-		$this->thumbnail_url = self::get_default_thumbnail();
+		$this->thumbnail_url = FormFieldThumbnail::DEFAULT_VALUE;
 
 		$this->registration_authorized = false;
 		$this->max_registered_members = 0;
