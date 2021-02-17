@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 13
+ * @version     PHPBoost 6.0 - last update: 2021 02 17
  * @since       PHPBoost 6.0 - 2020 01 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -29,6 +29,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 
 	protected $category;
 	protected $keyword;
+	protected $member;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -76,7 +77,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 			$this->pagination_url = ItemsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), self::$module_id, $this->sort_field, $this->sort_mode, '%d');
 			$this->url_without_sorting_parameters = ItemsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), self::$module_id);
 		}
-		else if (TextHelper::strstr($this->request->get_current_url(), '/my_items/'))
+		else if (TextHelper::strstr($this->request->get_current_url(), '/member/'))
 		{
 			if (self::get_module()->get_configuration()->has_categories())
 			{
@@ -92,14 +93,18 @@ class DefaultSeveralItemsController extends AbstractItemController
 				AND (published = ' . Item::PUBLISHED . (self::get_module()->get_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))' : '') . ')';
 			}
 
-			$this->sql_parameters['user_id'] = AppContext::get_current_user()->get_id();
+			$this->sql_parameters['user_id'] = $this->get_member()->get_id();
 
-			$this->page_title = $this->items_lang['my.items'];
-			$this->current_url = ItemsUrlBuilder::display_member_items(self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
-			$this->pagination_url = ItemsUrlBuilder::display_member_items(self::$module_id, $this->sort_field, $this->sort_mode, '%d');
-			$this->url_without_sorting_parameters = ItemsUrlBuilder::display_member_items(self::$module_id);
+			$this->page_title = $this->is_current_member_displayed() ? $this->items_lang['my.items'] : StringVars::replace_vars($this->items_lang['member.items'], array('member' => $this->get_member()->get_display_name()));
+			$this->current_url = ItemsUrlBuilder::display_member_items($this->get_member()->get_id(), self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
+			$this->pagination_url = ItemsUrlBuilder::display_member_items($this->get_member()->get_id(), self::$module_id, $this->sort_field, $this->sort_mode, '%d');
+			$this->url_without_sorting_parameters = ItemsUrlBuilder::display_member_items($this->get_member()->get_id(), self::$module_id);
 
-			$this->view->put('C_MEMBER_ITEMS', true);
+			$this->view->put_all(array(
+				'C_MEMBER_ITEMS' => true,
+				'C_MY_ITEMS'     => $this->is_current_member_displayed(),
+				'MEMBER_NAME'    => $this->get_member()->get_display_name()
+			));
 		}
 		else if (TextHelper::strstr($this->request->get_current_url(), '/pending/'))
 		{
@@ -193,6 +198,22 @@ class DefaultSeveralItemsController extends AbstractItemController
 		return $this->keyword;
 	}
 
+	protected function get_member()
+	{
+		if ($this->member === null)
+		{
+			$this->member = UserService::get_user($this->request->get_getint('user_id', AppContext::get_current_user()->get_id()));
+			if (!$this->member)
+				$this->display_unexisting_page();
+		}
+		return $this->member;
+	}
+
+	protected function is_current_member_displayed()
+	{
+		return $this->member && $this->member->get_id() == AppContext::get_current_user()->get_id();
+	}
+
 	protected function build_view()
 	{
 		$pagination = $this->get_pagination();
@@ -230,7 +251,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 
 		$item_class_name = self::get_module()->get_configuration()->get_item_name();
 		$fields_list = $item_class_name::get_sorting_field_options();
-		if (TextHelper::strstr($this->request->get_current_url(), '/my_items/'))
+		if (TextHelper::strstr($this->request->get_current_url(), '/member/'))
 			unset($fields_list['author']);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_field', '', $this->sort_field, $fields_list,

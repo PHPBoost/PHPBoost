@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 12
+ * @version     PHPBoost 6.0 - last update: 2021 02 17
  * @since       PHPBoost 6.0 - 2020 05 10
 */
 
@@ -38,6 +38,14 @@ class ItemsModuleExtensionPointProvider extends ModuleExtensionPointProvider
 			return $class;
 		else
 			return $this->module && $this->module->get_configuration()->has_categories() ? new DefaultSitemapCategoriesModule($this->get_id()) : new DefaultSitemapModule($this->get_id());
+	}
+
+	public function user()
+	{
+		if ($class = $this->get_class('User', 'UserExtensionPoint'))
+			return $class;
+		else
+			return new DefaultUserModule($this->get_id());
 	}
 }
 ?>

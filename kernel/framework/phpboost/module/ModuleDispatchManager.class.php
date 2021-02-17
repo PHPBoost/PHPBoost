@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 14
+ * @version     PHPBoost 6.0 - last update: 2021 02 17
  * @since       PHPBoost 6.0 - 2020 02 07
 */
 
@@ -49,7 +49,7 @@ class ModuleDispatchManager extends DispatchManager
 				$url_controller_mappers[] = new UrlControllerMapper('DefaultDisplayItemController', '`^(?:/([0-9]+)-([a-z0-9-_]+))/?$`', array('id', 'rewrited_title'));
 			
 			//Items display
-			$url_controller_mappers[] = new UrlControllerMapper('DefaultSeveralItemsController', '`^/my_items/?([a-z_]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page'));
+			$url_controller_mappers[] = new UrlControllerMapper('DefaultSeveralItemsController', '`^/member/([0-9]+)/?([a-z_]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('user_id', 'field', 'sort', 'page'));
 			$url_controller_mappers[] = new UrlControllerMapper('DefaultSeveralItemsController', '`^/pending/?([a-z_]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page'));
 			if ($module_configuration->feature_is_enabled('keywords'))
 				$url_controller_mappers[] = new UrlControllerMapper('DefaultSeveralItemsController', '`^/tag/([a-z0-9-_]+)/?([a-z_]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('tag', 'field', 'sort', 'page'));

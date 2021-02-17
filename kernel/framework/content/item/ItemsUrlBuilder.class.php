@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 10 20
+ * @version     PHPBoost 6.0 - last update: 2021 02 17
  * @since       PHPBoost 6.0 - 2019 12 20
 */
 
@@ -128,12 +128,12 @@ class ItemsUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function display_member_items($module_id = '', $sort_field = '', $sort_mode = '', $page = 1)
+	public static function display_member_items($user_id, $module_id = '', $sort_field = '', $sort_mode = '', $page = 1)
 	{
 		$sort_field = $sort_field !== '' ? $sort_field . '/' : '';
 		$sort_mode = $sort_mode !== '' ? $sort_mode . '/' : '';
 		$page = $page !== 1 ? $page . '/' : '';
-		return DispatchManager::get_url(self::get_dispatcher($module_id), '/my_items/' . $sort_field . $sort_mode . $page);
+		return DispatchManager::get_url(self::get_dispatcher($module_id), '/member/' . $user_id . '/' . $sort_field . $sort_mode . $page);
 	}
 }
 ?>
