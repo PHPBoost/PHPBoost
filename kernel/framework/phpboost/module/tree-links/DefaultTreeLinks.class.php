@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 13
+ * @version     PHPBoost 6.0 - last update: 2021 02 17
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -93,7 +93,7 @@ class DefaultTreeLinks implements ModuleTreeLinksExtensionPoint
 			$this->get_module_additional_items_actions_tree_links($tree);
 
 			if (ModulesManager::get_module($this->module_id)->get_configuration()->has_items())
-				$tree->add_link(new ModuleLink($lang['my.items'], ItemsUrlBuilder::display_member_items($this->module_id), $this->check_write_authorization() || $this->authorizations->moderation()));
+				$tree->add_link(new ModuleLink($lang['my.items'], ItemsUrlBuilder::display_member_items(AppContext::get_current_user()->get_id(), $this->module_id), $this->check_write_authorization() || $this->authorizations->moderation()));
 
 			$tree->add_link(new ModuleLink($lang['pending.items'], ItemsUrlBuilder::display_pending($this->module_id), $this->check_write_authorization() || $this->authorizations->moderation()));
 		}
