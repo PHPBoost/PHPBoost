@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 17
+ * @version     PHPBoost 6.0 - last update: 2021 02 18
  * @since       PHPBoost 6.0 - 2020 01 08
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -44,6 +44,7 @@ $lang['config.item.default.content'] = 'Contenu par défaut d\':an_item';
 $lang['items.seo.description.root'] = ':All_items du site :site.';
 $lang['items.seo.description.tag'] = ':All_items sur le sujet :subject.';
 $lang['items.seo.description.pending'] = ':All_items en attente.';
+$lang['items.seo.description.member'] = ':All_items de :author.';
 
 //Messages
 $lang['items.message.success.add'] = ':The_item <b>:title</b> a été ajouté';

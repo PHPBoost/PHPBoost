@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 17
+ * @version     PHPBoost 6.0 - last update: 2021 02 18
  * @since       PHPBoost 6.0 - 2020 01 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -96,6 +96,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 			$this->sql_parameters['user_id'] = $this->get_member()->get_id();
 
 			$this->page_title = $this->is_current_member_displayed() ? $this->items_lang['my.items'] : StringVars::replace_vars($this->items_lang['member.items'], array('member' => $this->get_member()->get_display_name()));
+			$this->page_description = StringVars::replace_vars($this->items_lang['items.seo.description.member'], array('author' => $this->get_member()->get_display_name()));
 			$this->current_url = ItemsUrlBuilder::display_member_items($this->get_member()->get_id(), self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
 			$this->pagination_url = ItemsUrlBuilder::display_member_items($this->get_member()->get_id(), self::$module_id, $this->sort_field, $this->sort_mode, '%d');
 			$this->url_without_sorting_parameters = ItemsUrlBuilder::display_member_items($this->get_member()->get_id(), self::$module_id);
