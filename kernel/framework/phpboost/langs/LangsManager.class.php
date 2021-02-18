@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 01 21
+ * @version     PHPBoost 6.0 - last update: 2021 02 18
  * @since       PHPBoost 3.0 - 2012 01 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -28,7 +28,7 @@ class LangsManager
 	{
 		$langs = self::get_installed_langs_map();
 		try {
-			usort($langs, array(__CLASS__, 'callback_sort_langs_by_name'));
+			uasort($langs, array(__CLASS__, 'callback_sort_langs_by_name'));
 		} catch (IOException $ex) {
 		}
 		return $langs;
@@ -53,7 +53,7 @@ class LangsManager
 	{
 		$langs = self::get_activated_langs_map();
 		try {
-			usort($langs, array(__CLASS__, 'callback_sort_langs_by_name'));
+			uasort($langs, array(__CLASS__, 'callback_sort_langs_by_name'));
 		} catch (IOException $ex) {
 		}
 		return $langs;
@@ -78,7 +78,7 @@ class LangsManager
 	{
 		$langs = self::get_activated_and_authorized_langs_map();
 		try {
-			usort($langs, array(__CLASS__, 'callback_sort_langs_by_name'));
+			uasort($langs, array(__CLASS__, 'callback_sort_langs_by_name'));
 		} catch (IOException $ex) {
 		}
 		return $langs;

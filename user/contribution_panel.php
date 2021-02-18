@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 17
+ * @version     PHPBoost 6.0 - last update: 2021 02 18
  * @since       PHPBoost 2.0 - 2008 07 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -260,10 +260,6 @@ else
 	// Listing contributions
 	foreach (ContributionService::get_all_contributions($criteria, $order) as $this_contribution)
 	{
-		// Temporary variable for php4.
-		$creation_date = $this_contribution->get_creation_date();
-		$fixing_date = $this_contribution->get_fixing_date();
-
 		// Display of contribution member
 		if (AppContext::get_current_user()->check_auth($this_contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT) || AppContext::get_current_user()->get_id() == $this_contribution->get_poster_id())
 		{
@@ -279,8 +275,8 @@ else
 					'ENTITLED' => $this_contribution->get_entitled(),
 					'MODULE' => $this_contribution->get_module_name(),
 					'STATUS' => $this_contribution->get_status_name(),
-					'CREATION_DATE' => $creation_date->format(Date::FORMAT_DAY_MONTH_YEAR),
-					'FIXING_DATE' => $fixing_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
+					'CREATION_DATE' => $this_contribution->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR),
+					'FIXING_DATE' => $this_contribution->get_fixing_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 					'POSTER' => $this_contribution->get_poster_login(),
 					'POSTER_LEVEL_CLASS' => UserService::get_level_class($this_contribution->get_poster_level()),
 					'POSTER_GROUP_COLOR' => $poster_group_color,
@@ -323,8 +319,7 @@ else
 	// List of modules with contribution
 	define('NUMBER_OF_MODULES_PER_LINE', 4);
 	$i_module = 0;
-    $modules = ModulesManager::get_activated_modules_map_sorted_by_localized_name();
-	foreach ($modules as $name => $module)
+	foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $name => $module)
 	{
 		$contribution_interface = $module->get_configuration()->get_contribution_interface();
 

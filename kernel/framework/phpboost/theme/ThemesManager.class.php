@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2017 05 03
+ * @version     PHPBoost 6.0 - last update: 2021 02 18
  * @since       PHPBoost 3.0 - 2011 04 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -33,7 +33,7 @@ class ThemesManager
 	{
 		$themes = self::get_installed_themes_map();
 		try {
-			usort($themes, array(__CLASS__, 'callback_sort_themes_by_name'));
+			uasort($themes, array(__CLASS__, 'callback_sort_themes_by_name'));
 		} catch (IOException $ex) {
 		}
 		return $themes;
@@ -59,7 +59,7 @@ class ThemesManager
 	{
 		$themes = self::get_activated_themes_map();
 		try {
-			usort($themes, array(__CLASS__, 'callback_sort_themes_by_name'));
+			uasort($themes, array(__CLASS__, 'callback_sort_themes_by_name'));
 		} catch (IOException $ex) {
 		}
 		return $themes;
@@ -85,7 +85,7 @@ class ThemesManager
 	{
 		$themes = self::get_activated_and_authorized_themes_map();
 		try {
-			usort($themes, array(__CLASS__, 'callback_sort_themes_by_name'));
+			uasort($themes, array(__CLASS__, 'callback_sort_themes_by_name'));
 		} catch (IOException $ex) {
 		}
 		return $themes;

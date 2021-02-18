@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 09
+ * @version     PHPBoost 6.0 - last update: 2021 02 18
  * @since       PHPBoost 2.0 - 2008 10 12
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -68,7 +68,7 @@ class ModulesManager
 	{
 		$modules = self::get_installed_modules_map();
 		try {
-			usort($modules, array(__CLASS__, 'callback_sort_modules_by_name'));
+			uasort($modules, array(__CLASS__, 'callback_sort_modules_by_name'));
 		} catch (IOException $ex) {
 		}
 		return $modules;
@@ -82,7 +82,7 @@ class ModulesManager
 	{
 		$modules = self::get_activated_modules_map();
 		try {
-			usort($modules, array(__CLASS__, 'callback_sort_modules_by_name'));
+			uasort($modules, array(__CLASS__, 'callback_sort_modules_by_name'));
 		} catch (IOException $ex) {
 		}
 		return $modules;
