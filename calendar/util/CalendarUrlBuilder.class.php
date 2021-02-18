@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 16
+ * @version     PHPBoost 6.0 - last update: 2021 02 18
  * @since       PHPBoost 3.0 - 2012 11 20
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -56,10 +56,10 @@ class CalendarUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/pending/' . $page);
 	}
 
-	public static function display_member_items($member, $page = 1)
+	public static function display_member_items($user_id, $page = 1)
 	{
 		$page = $page !== 1 ? $page . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/member/' . $member . '/'  . $page);
+		return DispatchManager::get_url(self::$dispatcher, '/member/' . $user_id . '/'  . $page);
 	}
 
 	/**

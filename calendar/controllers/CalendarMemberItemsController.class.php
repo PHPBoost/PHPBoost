@@ -12,7 +12,7 @@ class CalendarMemberItemsController extends ModuleController
 	private $view;
 	private $items_view;
 	private $lang;
-	private $user;
+	private $member;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -20,15 +20,7 @@ class CalendarMemberItemsController extends ModuleController
 
 		$this->init();
 
-		$user_id = $request->get_getint('user_id', AppContext::get_current_user()->get_id());
-		try {
-			$this->user = PersistenceContext::get_querier()->select_single_row(PREFIX . 'member', array('*'), 'WHERE user_id=:user_id', array('user_id' => $user_id));
-		} catch (RowNotFoundException $e) {
-			$error_controller = PHPBoostErrors::unexisting_element();
-			DispatchManager::redirect($error_controller);
-		}
-
-		$this->build_view($request, $this->user['user_id']);
+		$this->build_view($request);
 
 		return $this->generate_response();
 	}
@@ -42,7 +34,7 @@ class CalendarMemberItemsController extends ModuleController
 		$this->items_view->add_lang($this->lang);
 	}
 
-	public function build_view(HTTPRequestCustom $request, $user_id)
+	public function build_view(HTTPRequestCustom $request)
 	{
 		$authorized_categories = CategoriesService::get_authorized_categories();
 
@@ -53,11 +45,11 @@ class CalendarMemberItemsController extends ModuleController
 		' . (!CategoriesAuthorizationsService::check_authorizations()->moderation() ? ' AND event_content.author_user_id = :user_id' : '');
 		$parameters = array(
 			'authorized_categories' => $authorized_categories,
-			'user_id' => $this->user['user_id']
+			'user_id' => $this->get_member()->get_id()
 		);
 
 		$page = $request->get_getint('page', 1);
-		$pagination = $this->get_pagination($condition, $parameters, $user_id, $page);
+		$pagination = $this->get_pagination($condition, $parameters, $page);
 
 		$result = PersistenceContext::get_querier()->select('SELECT *
 		FROM ' . CalendarSetup::$calendar_events_table . ' event
@@ -88,13 +80,29 @@ class CalendarMemberItemsController extends ModuleController
 		$this->view->put_all(array(
 			'EVENTS' => $this->items_view,
 			'C_MEMBER_ITEMS' => true,
-			'C_MY_ITEMS' => $user_id == AppContext::get_current_user()->get_id(),
-			'MEMBER_NAME' => $this->user['display_name'],
+			'C_MY_ITEMS' => $this->is_current_member_displayed(),
+			'MEMBER_NAME' => $this->get_member()->get_display_name(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display()
 		));
 
 		return $this->view;
+	}
+
+	protected function get_member()
+	{
+		if ($this->member === null)
+		{
+			$this->member = UserService::get_user(AppContext::get_request()->get_getint('user_id', AppContext::get_current_user()->get_id()));
+			if (!$this->member)
+				DispatchManager::redirect(PHPBoostErrors::unexisting_element());
+		}
+		return $this->member;
+	}
+
+	protected function is_current_member_displayed()
+	{
+		return $this->member && $this->member->get_id() == AppContext::get_current_user()->get_id();
 	}
 
 	private function check_authorizations()
@@ -106,7 +114,7 @@ class CalendarMemberItemsController extends ModuleController
 		}
 	}
 
-	private function get_pagination($condition, $parameters, $user_id, $page)
+	private function get_pagination($condition, $parameters, $page)
 	{
 		$row = PersistenceContext::get_querier()->select_single_row_query('SELECT COUNT(*) AS events_number
 		FROM ' . CalendarSetup::$calendar_events_table . ' event
@@ -114,7 +122,7 @@ class CalendarMemberItemsController extends ModuleController
 		' . $condition, $parameters);
 
 		$pagination = new ModulePagination($page, $row['events_number'], (int)CalendarConfig::load()->get_items_number_per_page());
-		$pagination->set_url(CalendarUrlBuilder::display_member_items($user_id, '%d'));
+		$pagination->set_url(CalendarUrlBuilder::display_member_items($this->get_member()->get_id(), '%d'));
 
 		if ($pagination->current_page_is_empty() && $page > 1)
 		{
@@ -128,22 +136,17 @@ class CalendarMemberItemsController extends ModuleController
 	private function generate_response()
 	{
 		$page = AppContext::get_request()->get_getint('page', 1);
+		$page_title = $this->is_current_member_displayed() ? $this->lang['my.items'] : $this->lang['member.items'] . ' ' . $this->get_member()->get_display_name();
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		if($this->user['user_id'] == AppContext::get_current_user()->get_id())
-			$graphical_environment->set_page_title($this->lang['my.items'], $this->lang['module.title'], $page);
-		else
-			$graphical_environment->set_page_title($this->lang['member.items'] . ' ' . $this->user['display_name'], $this->lang['module.title'], $page);
+		$graphical_environment->set_page_title($page_title, $this->lang['module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['calendar.seo.description.member'], array('author' => AppContext::get_current_user()->get_display_name())), $page);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::display_member_items($this->user['user_id'], $page));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::display_member_items($this->get_member()->get_id(), $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::home());
-		if($this->user['user_id'] == AppContext::get_current_user()->get_id())
-			$breadcrumb->add($this->lang['my.items'], NewsUrlBuilder::display_member_items($this->user['user_id'], $page));
-		else
-			$breadcrumb->add($this->lang['member.items'] . ' ' . $this->user['display_name'], NewsUrlBuilder::display_member_items($this->user['user_id'], $page));
+		$breadcrumb->add($this->lang['my.items'], NewsUrlBuilder::display_member_items($this->get_member()->get_id(), $page));
 
 		return $response;
 	}
