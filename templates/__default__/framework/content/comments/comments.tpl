@@ -27,12 +27,12 @@
     # IF C_DISPLAY_FORM #
 		<nav class="tabs-nav">
 	        <ul class="flex-between">
-	            <li><a href="#" data-tabs="" data-target="comment-list"><h5>{@comments}</h5></a></li>
+	            <li><a href="#" data-tabs="" data-target="comments-list"><h5>{@comments}</h5></a></li>
 	            # IF NOT C_IS_LOCKED #<li><a class="pinned question" href="#" data-tabs="" data-target="add-comment">{@comment.add}</a></li># ENDIF #
 	        </ul>
 	    </nav>
 	# ENDIF #
-    <div id="comment-list" class="first-tab tabs tabs-animation">
+    <div id="comments-list" class="first-tab tabs tabs-animation">
         <div class="content-panel">
 			# IF C_COMMENTS #
 				# IF C_DISPLAY_DELETE_FORM #
