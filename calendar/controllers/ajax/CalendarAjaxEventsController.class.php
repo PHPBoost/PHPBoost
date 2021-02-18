@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 20
+ * @version     PHPBoost 6.0 - last update: 2021 02 18
  * @since       PHPBoost 4.0 - 2014 03 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -60,7 +60,7 @@ class CalendarAjaxEventsController extends AbstractController
 		$result = $db_querier->select("SELECT *
 		FROM " . CalendarSetup::$calendar_events_table . " event
 		LEFT JOIN " . CalendarSetup::$calendar_events_content_table . " event_content ON event_content.id = event.content_id
-		LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = event_content.author_id
+		LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = event_content.author_user_id
 		LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = event.id_event AND com.module_id = 'calendar'
 		WHERE approved = 1
 		AND ((start_date BETWEEN :first_day_hour AND :last_day_hour) OR (end_date BETWEEN :first_day_hour AND :last_day_hour) OR (:first_day_hour BETWEEN start_date AND end_date))

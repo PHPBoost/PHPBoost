@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 16
+ * @version     PHPBoost 6.0 - last update: 2021 02 18
  * @since       PHPBoost 5.2 - 2020 08 28
 */
 
@@ -47,10 +47,10 @@ class CalendarMemberItemsController extends ModuleController
 		$authorized_categories = CategoriesService::get_authorized_categories();
 
 		$condition = 'WHERE approved = 1
-		AND author_id = :user_id
+		AND author_user_id = :user_id
 		AND parent_id = 0
 		AND id_category IN :authorized_categories
-		' . (!CategoriesAuthorizationsService::check_authorizations()->moderation() ? ' AND event_content.author_id = :user_id' : '');
+		' . (!CategoriesAuthorizationsService::check_authorizations()->moderation() ? ' AND event_content.author_user_id = :user_id' : '');
 		$parameters = array(
 			'authorized_categories' => $authorized_categories,
 			'user_id' => $this->user['user_id']
@@ -62,7 +62,7 @@ class CalendarMemberItemsController extends ModuleController
 		$result = PersistenceContext::get_querier()->select('SELECT *
 		FROM ' . CalendarSetup::$calendar_events_table . ' event
 		LEFT JOIN ' . CalendarSetup::$calendar_events_content_table . ' event_content ON event_content.id = event.content_id
-		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = event_content.author_id
+		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = event_content.author_user_id
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = event.id_event AND com.module_id = \'calendar\'
 		' . $condition . '
 		ORDER BY start_date DESC

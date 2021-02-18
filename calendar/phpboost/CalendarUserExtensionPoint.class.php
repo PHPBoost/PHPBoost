@@ -32,7 +32,7 @@ class CalendarUserExtensionPoint implements UserExtensionPoint
 	public function get_publications_number($user_id)
 	{
 		$parameters = array('user_id' => $user_id);
-		return PersistenceContext::get_querier()->count(PREFIX . 'calendar_events_content', 'WHERE author_id = :user_id', $parameters);
+		return PersistenceContext::get_querier()->count(PREFIX . 'calendar_events_content', 'WHERE author_user_id = :user_id', $parameters);
 	}
 }
 ?>

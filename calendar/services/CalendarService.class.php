@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 20
+ * @version     PHPBoost 6.0 - last update: 2021 02 18
  * @since       PHPBoost 3.0 - 2012 11 20
  * @contributor Mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -160,7 +160,7 @@ class CalendarService
 		$row = self::$db_querier->select_single_row_query('SELECT *
 		FROM ' . CalendarSetup::$calendar_events_table . ' event
 		LEFT JOIN ' . CalendarSetup::$calendar_events_content_table . ' event_content ON event_content.id = event.content_id
-		LEFT JOIN ' . DB_TABLE_MEMBER . ' author ON author.user_id = event_content.author_id
+		LEFT JOIN ' . DB_TABLE_MEMBER . ' author ON author.user_id = event_content.author_user_id
 		' . $condition, $parameters);
 
 		$item = new CalendarItem();
@@ -210,7 +210,7 @@ class CalendarService
 		$result = self::$db_querier->select('SELECT *
 		FROM ' . CalendarSetup::$calendar_events_table . ' event
 		LEFT JOIN ' . CalendarSetup::$calendar_events_content_table . ' event_content ON event_content.id = event.content_id
-		LEFT JOIN ' . DB_TABLE_MEMBER . ' author ON author.user_id = event_content.author_id
+		LEFT JOIN ' . DB_TABLE_MEMBER . ' author ON author.user_id = event_content.author_user_id
 		WHERE content_id = :id', array(
 			'id' => $content_id
 		));
