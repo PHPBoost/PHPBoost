@@ -14,8 +14,9 @@ class PagesTreeLinks extends DefaultTreeLinks
 	protected function get_module_additional_actions_tree_links(&$tree)
 	{
 		$module_id = 'pages';
+		$current_user = AppContext::get_current_user()->get_id();
 
-		$tree->add_link(new ModuleLink(LangLoader::get_message('my.items', 'common', $module_id), PagesUrlBuilder::display_member_items(), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->write() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->contribution() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation()));
+		$tree->add_link(new ModuleLink(LangLoader::get_message('my.items', 'common', $module_id), PagesUrlBuilder::display_member_items($current_user), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->write() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->contribution() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation()));
 
 	}
 }

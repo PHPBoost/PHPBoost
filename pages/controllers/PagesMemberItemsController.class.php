@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 07
+ * @version     PHPBoost 6.0 - last update: 2021 02 19
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
@@ -15,6 +15,7 @@ class PagesMemberItemsController extends ModuleController
 	private $config;
 	private $comments_config;
 	private $content_management_config;
+	private $member;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -50,7 +51,7 @@ class PagesMemberItemsController extends ModuleController
 		$parameters = array(
 			'authorized_categories' => $authorized_categories,
 			'timestamp_now' => $now->get_timestamp(),
-			'user_id' => AppContext::get_current_user()->get_id()
+			'user_id' => $this->get_member()->get_id()
 		);
 
 		$result = PersistenceContext::get_querier()->select('SELECT pages.*, member.*, com.number_comments
@@ -60,19 +61,21 @@ class PagesMemberItemsController extends ModuleController
 		' . $condition . '
 		ORDER BY pages.update_date DESC
 		', array_merge($parameters, array(
-			'user_id' => AppContext::get_current_user()->get_id()
+			'user_id' => $this->get_member()->get_id()
 		)));
 
 		$this->view->put_all(array(
 			'C_NO_ITEM'       => $result->get_rows_count() == 0,
 			'C_ITEMS'         => $result->get_rows_count() > 0,
 			'C_MEMBER_ITEMS'  => true,
+			'C_MY_ITEMS'      => $this->is_current_member_displayed(),
 			'C_ITEMS'         => $result->get_rows_count() > 0,
 			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
 			'C_VIEWS_NUMBER'  => $this->config->get_views_number(),
 
 			'ID_CATEGORY'     => $this->get_category()->get_id(),
 			'CATEGORY_NAME'   => $this->get_category()->get_name(),
+			'MEMBER_NAME'     => $this->get_member()->get_display_name()
 		));
 
 		while($row = $result->fetch())
@@ -85,6 +88,22 @@ class PagesMemberItemsController extends ModuleController
 			$this->build_keywords_view($item);
 		}
 		$result->dispose();
+	}
+
+	protected function get_member()
+	{
+		if ($this->member === null)
+		{
+			$this->member = UserService::get_user(AppContext::get_request()->get_getint('user_id', AppContext::get_current_user()->get_id()));
+			if (!$this->member)
+				DispatchManager::redirect(PHPBoostErrors::unexisting_element());
+		}
+		return $this->member;
+	}
+
+	protected function is_current_member_displayed()
+	{
+		return $this->member && $this->member->get_id() == AppContext::get_current_user()->get_id();
 	}
 
 	private function build_sources_view(PagesItem $item)
@@ -170,16 +189,17 @@ class PagesMemberItemsController extends ModuleController
 
 	private function generate_response(HTTPRequestCustom $request)
 	{
+		$page_title = $this->is_current_member_displayed() ? $this->lang['my.items'] : $this->lang['member.items'] . ' ' . $this->get_member()->get_display_name();
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['my.items'], $this->lang['module.title']);
+		$graphical_environment->set_page_title($page_title, $this->lang['my.items'], $this->lang['module.title']);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['pages.seo.description.member'], array('author' => AppContext::get_current_user()->get_display_name())));
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(PagesUrlBuilder::display_member_items());
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(PagesUrlBuilder::display_member_items($this->get_member()->get_id()));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], PagesUrlBuilder::home());
-		$breadcrumb->add($this->lang['my.items'], PagesUrlBuilder::display_member_items());
+		$breadcrumb->add($page_title, PagesUrlBuilder::display_member_items($this->get_member()->get_id()));
 
 		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->category->get_id(), true));
 		foreach ($categories as $id => $category)

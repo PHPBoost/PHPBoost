@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 04
+ * @version     PHPBoost 6.0 - last update: 2021 02 19
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
@@ -47,9 +47,9 @@ class PagesUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function display_member_items()
+	public static function display_member_items($user_id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/my_items/');
+		return DispatchManager::get_url(self::$dispatcher, '/member/' . $user_id);
 	}
 
 	/**

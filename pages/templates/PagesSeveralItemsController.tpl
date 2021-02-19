@@ -9,7 +9,7 @@
 				{@pending.items}
 			# ELSE #
 				# IF C_MEMBER_ITEMS #
-					{@my.items}
+					# IF C_MY_ITEMS #{@my.items}# ELSE #{@member.items} {MEMBER_NAME}# ENDIF #
 				# ELSE #
 					{@items}# IF C_CATEGORIES # - {CATEGORY_NAME}# ENDIF #
 				# ENDIF #
@@ -61,7 +61,7 @@
 									<td aria-label="${LangLoader::get_message('form.date.update', 'common')}">
 										<i class="far fa-calendar-check" aria-hidden="true"></i>
 										# IF items.C_HAS_UPDATE_DATE #
-											<time datetime="{items.UPDATED_DATE_ISO8601}" itemprop="datePublished">{items.UPDATED_DATE}</time>
+											<time datetime="{items.UPDATED_DATE_ISO8601}" itemprop="datePublished">{items.UPDATE_DATE}</time>
 										# ELSE #
 											<span>--</span>
 										# ENDIF #

@@ -36,7 +36,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('PagesDeleteItemController', '`^/([0-9]+)/delete/?$`', array('id')),
 	new UrlControllerMapper('PagesItemController', '`^/([0-9]+)-([a-z0-9-_]+)/([0-9]+)-([a-z0-9-_]+)?/?$`', array('id_category', 'rewrited_name_category', 'id', 'rewrited_name')),
 
-	new UrlControllerMapper('PagesMemberItemsController', '`^/my_items/?$`'),
+	new UrlControllerMapper('PagesMemberItemsController', '`^/member/?([0-9]+)?/?$`', array('user_id')),
 	new UrlControllerMapper('PagesTagController', '`^/tag/([a-z0-9-_]+)?/?([a-z_]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('tag', 'field', 'sort', 'page')),
 	new UrlControllerMapper('PagesPendingItemsController', '`^/pending(?:/([a-z_]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
 	new UrlControllerMapper('PagesReorderItemsController', '`^/reorder/([0-9]+)-?([a-z0-9-_]+)?/?$`', array('id_category', 'rewrited_name')),
