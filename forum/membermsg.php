@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 11
+ * @version     PHPBoost 6.0 - last update: 2021 02 19
  * @since       PHPBoost 1.6 - 2007 04 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -40,6 +40,8 @@ if (!empty($view_msg)) // Display all user's messages
 		$extended_fields_to_recover_list .= 'ext_field.' . $field_type . ', ';
 	}
 
+	$Bread_crumb->add($LANG['member_msg_seo'], 'membermsg.php?id=' . $view_msg);
+
 	$tpl = new FileTemplate('forum/forum_membermsg.tpl');
 
 	$authorized_categories = CategoriesService::get_authorized_categories();
@@ -73,7 +75,7 @@ if (!empty($view_msg)) // Display all user's messages
 			'FORUM_NAME'       => $config->get_forum_name(),
 			'PAGINATION'       => $pagination->display(),
 			'L_BACK'           => $LANG['back'],
-			'L_VIEW_MSG_USER'  => $LANG['show_member_msg'],
+			'L_VIEW_MSG_USER'  => $LANG['member_msg_seo'],
 			'L_FORUM_INDEX'    => $LANG['forum_index'],
 			'U_FORUM_VIEW_MSG' => url('.php?id=' . $view_msg)
 		));
