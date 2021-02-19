@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 03
+ * @version     PHPBoost 6.0 - last update: 2021 02 19
  * @since       PHPBoost 1.5 - 2006 08 06
  * @contributor Regis VIARRE <crowkait@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -345,7 +345,7 @@ elseif ($action == 'restore')
 				$view->put('MESSAGE_HELPER', MessageHelper::display($lang['database.backup.wrong.version'], MessageHelper::WARNING));
 				break;
 			case 'unlink_success' :
-				$view->put('MESSAGE_HELPER', MessageHelper::display($lang['database.unlink.success'], MessageHelper::NOTICE));
+				$view->put('MESSAGE_HELPER', MessageHelper::display($lang['database.unlink.success'], MessageHelper::SUCCESS));
 				break;
 			case 'unlink_failure' :
 				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $lang['database.unlink.error'], UserErrorController::FATAL);
