@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 15
+ * @version     PHPBoost 6.0 - last update: 2021 02 19
  * @since       PHPBoost 5.2 - 2020 12 05
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -13,6 +13,7 @@ class WebMemberItemsController extends ModuleController
 	private $view;
 	private $lang;
 	private $config;
+	private $member;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -39,28 +40,18 @@ class WebMemberItemsController extends ModuleController
 		$comments_config = CommentsConfig::load();
 		$content_management_config = ContentManagementConfig::load();
 		$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $this->config->are_descriptions_displayed_to_guests());
-		$mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
-		$field = $request->get_getstring('field', WebItem::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
 
 		$condition = 'WHERE id_category IN :authorized_categories
 		AND author_user_id = :user_id
 		AND (published = 1 OR (published = 2 AND (publishing_start_date > :timestamp_now OR (publishing_end_date != 0 AND publishing_end_date < :timestamp_now))))';
 		$parameters = array(
-			'user_id' => AppContext::get_current_user()->get_id(),
+			'user_id' => $this->get_member()->get_id(),
 			'authorized_categories' => $authorized_categories,
 			'timestamp_now' => $now->get_timestamp()
 		);
 
 		$page = $request->get_getint('page', 1);
-		$pagination = $this->get_pagination($condition, $parameters, $field, TextHelper::strtolower($mode), $page);
-
-		$sort_mode = TextHelper::strtoupper($mode);
-		$sort_mode = (in_array($sort_mode, array(WebItem::ASC, WebItem::DESC)) ? $sort_mode : $this->config->get_items_default_sort_mode());
-
-		if (in_array($field, array(WebItem::SORT_FIELDS_URL_VALUES[WebItem::SORT_ALPHABETIC], WebItem::SORT_FIELDS_URL_VALUES[WebItem::SORT_DATE])))
-			$sort_field = array_search($field, WebItem::SORT_FIELDS_URL_VALUES);
-		else
-			$sort_field = WebItem::SORT_DATE;
+		$pagination = $this->get_pagination($condition, $parameters, $page);
 
 		$result = PersistenceContext::get_querier()->select('SELECT web.*, member.*, com.number_comments, notes.average_notes, notes.number_notes, note.note
 		FROM '. WebSetup::$web_table .' web
@@ -69,27 +60,30 @@ class WebMemberItemsController extends ModuleController
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = web.id AND notes.module_name = \'web\'
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = web.id AND note.module_name = \'web\' AND note.user_id = :user_id
 		' . $condition . '
-		ORDER BY web.privileged_partner DESC, ' . $sort_field . ' ' . $sort_mode . '
+		ORDER BY web.privileged_partner DESC, web.update_date
 		LIMIT :items_per_page OFFSET :display_from', array_merge($parameters, array(
 			'items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
 		)));
 
 		$this->view->put_all(array(
-			'C_ITEMS' => $result->get_rows_count() > 0,
-			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
-			'C_MEMBER_ITEMS' => true,
-			'C_GRID_VIEW' => $this->config->get_display_type() == WebConfig::GRID_VIEW,
-			'C_LIST_VIEW' => $this->config->get_display_type() == WebConfig::LIST_VIEW,
-			'C_TABLE_VIEW' => $this->config->get_display_type() == WebConfig::TABLE_VIEW,
-			'C_CONTROLS' => CategoriesAuthorizationsService::check_authorizations()->moderation(),
+			'C_ITEMS'             => $result->get_rows_count() > 0,
+			'C_SEVERAL_ITEMS'     => $result->get_rows_count() > 1,
+			'C_MEMBER_ITEMS'      => true,
+			'C_MY_ITEMS'          => $this->is_current_member_displayed(),
+			'C_GRID_VIEW'         => $this->config->get_display_type() == WebConfig::GRID_VIEW,
+			'C_LIST_VIEW'         => $this->config->get_display_type() == WebConfig::LIST_VIEW,
+			'C_TABLE_VIEW'        => $this->config->get_display_type() == WebConfig::TABLE_VIEW,
+			'C_CONTROLS'          => CategoriesAuthorizationsService::check_authorizations()->moderation(),
 			'C_FULL_ITEM_DISPLAY' => $this->config->is_full_item_displayed(),
-			'CATEGORIES_PER_ROW' => $this->config->get_categories_per_row(),
-			'ITEMS_PER_ROW' => $this->config->get_items_per_row(),
-			'C_ENABLED_COMMENTS' => $comments_config->module_comments_is_enabled('web'),
-			'C_ENABLED_NOTATION' => $content_management_config->module_notation_is_enabled('web'),
-			'C_PAGINATION' => $pagination->has_several_pages(),
-			'PAGINATION' => $pagination->display(),
+			'C_ENABLED_COMMENTS'  => $comments_config->module_comments_is_enabled('web'),
+			'C_ENABLED_NOTATION'  => $content_management_config->module_notation_is_enabled('web'),
+			'C_PAGINATION'        => $pagination->has_several_pages(),
+
+			'CATEGORIES_PER_ROW'  => $this->config->get_categories_per_row(),
+			'ITEMS_PER_ROW'       => $this->config->get_items_per_row(),
+			'PAGINATION'          => $pagination->display(),
+			'MEMBER_NAME' => $this->get_member()->get_display_name()
 		));
 
 		while ($row = $result->fetch())
@@ -108,44 +102,30 @@ class WebMemberItemsController extends ModuleController
 				$this->build_keywords_view($keywords);
 		}
 		$result->dispose();
-		$this->build_sorting_form($field, TextHelper::strtolower($sort_mode));
 	}
 
-	private function build_sorting_form($field, $mode)
+	protected function get_member()
 	{
-		$common_lang = LangLoader::get('common');
-
-		$form = new HTMLForm(__CLASS__, '', false);
-		$form->set_css_class('options');
-
-		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $common_lang['sort_by']));
-		$form->add_fieldset($fieldset);
-
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field,
-			array(
-				new FormFieldSelectChoiceOption($common_lang['form.date.creation'], WebItem::SORT_FIELDS_URL_VALUES[WebItem::SORT_DATE]),
-				new FormFieldSelectChoiceOption($common_lang['form.name'], WebItem::SORT_FIELDS_URL_VALUES[WebItem::SORT_ALPHABETIC])
-			),
-			array('events' => array('change' => 'document.location = "'. WebUrlBuilder::display_pending()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
-		));
-
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
-			array(
-				new FormFieldSelectChoiceOption($common_lang['sort.asc'], 'asc'),
-				new FormFieldSelectChoiceOption($common_lang['sort.desc'], 'desc')
-			),
-			array('events' => array('change' => 'document.location = "' . WebUrlBuilder::display_pending()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
-		));
-
-		$this->view->put('SORT_FORM', $form->display());
+		if ($this->member === null)
+		{
+			$this->member = UserService::get_user(AppContext::get_request()->get_getint('user_id', AppContext::get_current_user()->get_id()));
+			if (!$this->member)
+				DispatchManager::redirect(PHPBoostErrors::unexisting_element());
+		}
+		return $this->member;
 	}
 
-	private function get_pagination($condition, $parameters, $field, $mode, $page)
+	protected function is_current_member_displayed()
+	{
+		return $this->member && $this->member->get_id() == AppContext::get_current_user()->get_id();
+	}
+
+	private function get_pagination($condition, $parameters, $page)
 	{
 		$items_number = WebService::count($condition, $parameters);
 
 		$pagination = new ModulePagination($page, $items_number, (int)WebConfig::load()->get_items_per_page());
-		$pagination->set_url(WebUrlBuilder::display_pending($field, $mode, '%d'));
+		$pagination->set_url(WebUrlBuilder::display_member_items($this->get_member()->get_id(), '%d'));
 
 		if ($pagination->current_page_is_empty() && $page > 1)
 		{
@@ -183,19 +163,18 @@ class WebMemberItemsController extends ModuleController
 
 	private function generate_response(HTTPRequestCustom $request)
 	{
-		$sort_field = $request->get_getstring('field', WebItem::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
-		$sort_mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
 		$page = $request->get_getint('page', 1);
+		$page_title = $this->is_current_member_displayed() ? $this->lang['my.items'] : $this->lang['member.items'] . ' ' . $this->get_member()->get_display_name();
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['my.items'], $this->lang['module.title'], $page);
+		$graphical_environment->set_page_title($page_title, $this->lang['module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['web.seo.description.member'], array('author' => AppContext::get_current_user()->get_display_name())), $page);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::display_member_items($sort_field, $sort_mode, $page));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::display_member_items($this->get_member()->get_id(), $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], WebUrlBuilder::home());
-		$breadcrumb->add($this->lang['my.items'], WebUrlBuilder::display_member_items($sort_field, $sort_mode, $page));
+		$breadcrumb->add($this->lang['my.items'], WebUrlBuilder::display_member_items($this->get_member()->get_id(), $page));
 
 		return $response;
 	}

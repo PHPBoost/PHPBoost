@@ -6,7 +6,7 @@
 		</div>
 		<h1>
 			# IF C_PENDING_ITEMS #
-				{@web.pending.items}
+				# IF C_MY_ITEMS #{@my.items}# ELSE #{@member.items} {MEMBER_NAME}# ENDIF #
 			# ELSE #
 				# IF C_MEMBER_ITEMS #
 					{@my.items}
@@ -229,7 +229,7 @@
 						<div class="message-helper bgc notice align-center">
 							${LangLoader::get_message('no_item_now', 'common')}
 						</div>
-					</div>					
+					</div>
 				</div>
 			</div>
 		# ENDIF #
