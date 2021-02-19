@@ -27,7 +27,7 @@ $lang['items.manage'] = 'Manage :items';
 $lang['item.add'] = 'Add :an_item';
 $lang['item.edit'] = 'Edit :the_item';
 $lang['my.items'] = 'My :items';
-$lang['member.items'] = ':member\'s :items';
+$lang['member.items'] = ':Items published by';
 $lang['pending.items'] = 'Pending :items';
 
 //Configuration
