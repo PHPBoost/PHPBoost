@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 19
+ * @version     PHPBoost 6.0 - last update: 2021 02 20
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -52,7 +52,7 @@ $lang['web.form.privileged.partner.description'] = 'Affiché en tête de liste';
 $lang['web.seo.description.root'] = 'Tous les liens du site :site.';
 $lang['web.seo.description.tag'] = 'Tous les liens sur le sujet :subject.';
 $lang['web.seo.description.pending'] = 'Tous les liens en attente.';
-$lang['web.seo.description.member'] = 'Tous les liens du membre: :author.';
+$lang['web.seo.description.member'] = 'Tous les liens de :author.';
 
 // Messages helper
 $lang['web.message.success.add'] = 'Le lien <b>:title</b> a été ajouté';

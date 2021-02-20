@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 11
+ * @version     PHPBoost 6.0 - last update: 2021 02 20
  * @since       PHPBoost 4.0 - 2013 02 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -50,7 +50,7 @@ $lang['feed.name'] = 'News';
 $lang['news.seo.description.root'] = 'All website :site news.';
 $lang['news.seo.description.tag'] = 'All news on :subject.';
 $lang['news.seo.description.pending'] = 'All pending news.';
-$lang['news.seo.description.member'] = 'All news from the member: :author.';
+$lang['news.seo.description.member'] = 'All :author\'s news.';
 
 // Messages helper
 $lang['news.message.success.add'] = 'The news <b>:title</b> has been added';

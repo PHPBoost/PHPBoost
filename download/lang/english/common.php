@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 16
+ * @version     PHPBoost 6.0 - last update: 2021 02 20
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -63,7 +63,7 @@ $lang['download.config.download.link'] = 'Display download link permission';
 $lang['download.seo.description.root'] = 'All :site\'s download files.';
 $lang['download.seo.description.tag'] = 'All downloads on :subject.';
 $lang['download.seo.description.pending'] = 'All pending downloads.';
-$lang['download.seo.description.member'] = 'All downloads from the member: :author .';
+$lang['download.seo.description.member'] = 'All :author\'s downloads.';
 
 // Contribution
 $lang['download.form.contribution.explain'] = 'You are not authorized to post a new file, however you can contribute by submitting one.';

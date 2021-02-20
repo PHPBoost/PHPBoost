@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 16
+ * @version     PHPBoost 6.0 - last update: 2021 02 20
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -63,7 +63,7 @@ $lang['download.config.download.link'] = 'Autorisation d\'afficher le lien de t�
 $lang['download.seo.description.root'] = 'Tous les fichiers en téléchargement du site :site.';
 $lang['download.seo.description.tag'] = 'Tous les fichiers sur le sujet :subject.';
 $lang['download.seo.description.pending'] = 'Tous les fichiers en attente.';
-$lang['download.seo.description.member'] = 'Tous les fichiers du membre: :author.';
+$lang['download.seo.description.member'] = 'Tous les fichiers de :author.';
 
 // Contribution
 $lang['download.form.contribution.explain'] = 'Vous n\'êtes pas autorisé à ajouter un fichier, cependant vous pouvez en proposer un.';
