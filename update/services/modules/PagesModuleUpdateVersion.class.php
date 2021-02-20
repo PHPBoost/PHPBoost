@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 20
+ * @version     PHPBoost 6.0 - last update: 2021 02 21
  * @since       PHPBoost 4.0 - 2014 05 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -23,6 +23,7 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 			'/phpboost/PagesHomePageExtensionPoint.class.php',
 			'/phpboost/PagesSearchable.class.php',
 			'/phpboost/PagesSitemapExtensionPoint.class.php',
+			'/phpboost/PagesTreeLinks.class.php',
 			'/templates/action.tpl',
 			'/templates/admin_pages.tpl',
 			'/templates/com.tpl',
