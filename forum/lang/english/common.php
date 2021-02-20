@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 10
+ * @version     PHPBoost 6.0 - last update: 2021 02 20
  * @since       PHPBoost 4.1 - 2015 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -27,6 +27,8 @@ $lang['forum.connected.mbr.no'] = 'Not connected member';
 $lang['forum.links'] = 'Links';
 $lang['forum.message.options'] = 'Message options';
 $lang['forum.messages'] = 'Forum messages';
+$lang['my.items'] = 'My messages';
+$lang['member.items'] = 'Messages published by';
 
 //config
 $lang['config.forum.name'] = 'Forum name';

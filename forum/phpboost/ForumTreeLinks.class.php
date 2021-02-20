@@ -29,6 +29,8 @@ class ForumTreeLinks implements ModuleTreeLinksExtensionPoint
 		$manage_ranks_link->add_sub_link(new AdminModuleLink($lang['forum.rank.add'], ForumUrlBuilder::add_rank()));
 		$tree->add_link($manage_ranks_link);
 
+		$tree->add_link(new ModuleLink($lang['my.items'], ForumUrlBuilder::display_member_items(), ForumAuthorizationsService::check_authorizations()->write() || ForumAuthorizationsService::check_authorizations()->moderation()));
+
 		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin-common'), ForumUrlBuilder::configuration()));
 
 		$tree->add_link(new ModuleLink(LangLoader::get_message('moderation_panel', 'main'), ForumUrlBuilder::moderation_panel(), ForumAuthorizationsService::check_authorizations()->moderation()));

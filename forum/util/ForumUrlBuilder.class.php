@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 11 11
+ * @version     PHPBoost 6.0 - last update: 2021 02 20
  * @since       PHPBoost 4.1 - 2015 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -58,6 +58,14 @@ class ForumUrlBuilder
 	public static function moderation_panel()
 	{
 		return new Url('/forum/moderation_forum.php');
+	}
+
+	/**
+	 * @return Url
+	 */
+	public static function display_member_items()
+	{
+		return new Url('/forum/membermsg.php');
 	}
 
 	/**

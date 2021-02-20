@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 21
+ * @version     PHPBoost 6.0 - last update: 2021 02 20
  * @since       PHPBoost 1.6 - 2006 11 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -209,7 +209,7 @@ $LANG['require_rank_name'] = 'Please enter a name for the rank !';
 $LANG['require_nbr_msg_rank'] = 'Please enter a number of message for the rank !';
 
 //SEO
-$LANG['member_msg_seo'] = 'All member\'s forum messages';
+$LANG['member_msg_seo'] = 'All :author\'s messages.';
 $LANG['root_description_seo'] = 'All site\'s :site forum catégories.';
 $LANG['show_no_answer_seo'] = 'Messages without answer list';
 $LANG['stats_seo'] = 'All forum statistics';
