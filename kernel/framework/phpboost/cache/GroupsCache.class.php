@@ -6,10 +6,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2017 05 28
+ * @version     PHPBoost 6.0 - last update: 2021 02 20
  * @since       PHPBoost 3.0 - 2009 09 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class GroupsCache implements CacheData
@@ -88,7 +89,7 @@ class GroupsCache implements CacheData
 	 */
 	public static function load()
 	{
-		return CacheManager::load(__CLASS__, 'kernel', 'groups');
+		return CacheManager::load(__CLASS__, 'kernel', 'user_groups');
 	}
 
 	/**
@@ -96,7 +97,7 @@ class GroupsCache implements CacheData
 	 */
 	public static function invalidate()
 	{
-		CacheManager::invalidate('kernel', 'groups');
+		CacheManager::invalidate('kernel', 'user_groups');
 	}
 }
 ?>
