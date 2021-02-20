@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 20
+ * @version     PHPBoost 6.0 - last update: 2021 02 21
  * @since       PHPBoost 6.0 - 2019 11 11
 */
 
@@ -36,7 +36,8 @@ class CategoriesService
 			
 			$module = ModulesManager::get_module($module_id);
 			
-			$categories_cache_class = ClassLoader::is_class_registered_and_valid(ucfirst($module_id) . 'CategoriesCache') ? ucfirst($module_id) . 'CategoriesCache' : ClassLoader::get_module_subclass_of($module_id, 'CategoriesCache');
+			$module_categories_cache_class_name = TextHelper::ucfirst(ucfirst($module_id) . 'CategoriesCache';
+			$categories_cache_class = ClassLoader::is_class_registered_and_valid($module_categories_cache_class_name) ? $module_categories_cache_class_name : ClassLoader::get_module_subclass_of($module_id, 'CategoriesCache');
 			if ($categories_cache_class)
 				$categories_cache = !empty($requested_module_id) ? call_user_func_array($categories_cache_class . '::load', array($requested_module_id)) : call_user_func($categories_cache_class . '::load');
 			else if ($module->get_configuration()->feature_is_enabled('rich_categories'))
