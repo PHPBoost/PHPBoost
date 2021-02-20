@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 01 26
+ * @version     PHPBoost 6.0 - last update: 2021 02 20
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor xela <xela@phpboost.com>
 */
@@ -184,6 +184,11 @@ class Item
 	public function set_update_date(Date $date)
 	{
 		$this->update_date = $date;
+	}
+
+	public function has_update_date()
+	{
+		return $this->update_date !== null && $this->update_date > $this->creation_date;
 	}
 
 	public function get_notation()
