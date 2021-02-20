@@ -36,7 +36,7 @@ class CategoriesService
 			
 			$module = ModulesManager::get_module($module_id);
 			
-			$module_categories_cache_class_name = TextHelper::ucfirst(ucfirst($module_id) . 'CategoriesCache';
+			$module_categories_cache_class_name = TextHelper::ucfirst($module_id) . 'CategoriesCache';
 			$categories_cache_class = ClassLoader::is_class_registered_and_valid($module_categories_cache_class_name) ? $module_categories_cache_class_name : ClassLoader::get_module_subclass_of($module_id, 'CategoriesCache');
 			if ($categories_cache_class)
 				$categories_cache = !empty($requested_module_id) ? call_user_func_array($categories_cache_class . '::load', array($requested_module_id)) : call_user_func($categories_cache_class . '::load');
