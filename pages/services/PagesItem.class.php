@@ -3,191 +3,29 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 16
+ * @version     PHPBoost 6.0 - last update: 2021 02 20
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
-class PagesItem
+class PagesItem extends Item
 {
-	private $id;
-	private $id_category;
-	private $title;
-	private $rewrited_title;
-	private $content;
+	protected $author_display;
+	protected $author_custom_name;
+	protected $author_custom_name_enabled;
+	protected $views_number;
 
-	private $published;
-	private $publishing_start_date;
-	private $publishing_end_date;
-	private $end_date_enabled;
-
-	private $creation_date;
-	private $update_date;
-	private $views_number;
-	private $author_user;
-	private $author_display;
-	private $author_custom_name;
-	private $author_custom_name_enabled;
-
-	private $thumbnail_url;
-	private $keywords;
-	private $sources;
-
-	const NOT_PUBLISHED = 0;
-	const PUBLISHED = 1;
-	const DEFERRED_PUBLICATION = 2;
-
+	protected $thumbnail_url;
+	
 	const THUMBNAIL_URL = '/templates/__default__/images/default_item_thumbnail.png';
 
-	public function get_id()
+	public function __construct()
 	{
-		return $this->id;
+		parent::__construct('pages');
 	}
-
-	public function set_id($id)
-	{
-		$this->id = $id;
-	}
-
-	public function get_id_category()
-	{
-		return $this->id_category;
-	}
-
-	public function set_id_category($id_category)
-	{
-		$this->id_category = $id_category;
-	}
-
+	
 	public function get_category()
 	{
 		return CategoriesService::get_categories_manager('pages')->get_categories_cache()->get_category($this->id_category);
-	}
-
-	public function get_title()
-	{
-		return $this->title;
-	}
-
-	public function set_title($title)
-	{
-		$this->title = $title;
-	}
-
-	public function get_rewrited_title()
-	{
-		return $this->rewrited_title;
-	}
-
-	public function set_rewrited_title($rewrited_title)
-	{
-		$this->rewrited_title = $rewrited_title;
-	}
-
-	public function rewrited_title_is_personalized()
-	{
-		return $this->rewrited_title != Url::encode_rewrite($this->title);
-	}
-
-	public function get_content()
-	{
-		return $this->content;
-	}
-
-	public function set_content($content)
-	{
-		$this->content = $content;
-	}
-
-	public function get_publishing_state()
-	{
-		return $this->published;
-	}
-
-	public function set_publishing_state($published)
-	{
-		$this->published = $published;
-	}
-
-	public function is_published()
-	{
-		$now = new Date();
-		return CategoriesAuthorizationsService::check_authorizations($this->id_category)->read() && ($this->get_publishing_state() == self::PUBLISHED || ($this->get_publishing_state() == self::DEFERRED_PUBLICATION && $this->get_publishing_start_date()->is_anterior_to($now) && ($this->end_date_enabled ? $this->get_publishing_end_date()->is_posterior_to($now) : true)));
-	}
-
-	public function get_status()
-	{
-		switch ($this->published) {
-			case self::PUBLISHED:
-				return LangLoader::get_message('status.approved.now', 'common');
-			break;
-			case self::DEFERRED_PUBLICATION:
-				return LangLoader::get_message('status.approved.date', 'common');
-			break;
-			case self::NOT_PUBLISHED:
-				return LangLoader::get_message('status.approved.not', 'common');
-			break;
-		}
-	}
-
-	public function get_publishing_start_date()
-	{
-		return $this->publishing_start_date;
-	}
-
-	public function set_publishing_start_date(Date $publishing_start_date)
-	{
-		$this->publishing_start_date = $publishing_start_date;
-	}
-
-	public function get_publishing_end_date()
-	{
-		return $this->publishing_end_date;
-	}
-
-	public function set_publishing_end_date(Date $publishing_end_date)
-	{
-		$this->publishing_end_date = $publishing_end_date;
-		$this->end_date_enabled = true;
-	}
-
-	public function is_end_date_enabled()
-	{
-		return $this->end_date_enabled;
-	}
-
-	public function get_creation_date()
-	{
-		return $this->creation_date;
-	}
-
-	public function set_creation_date(Date $creation_date)
-	{
-		$this->creation_date = $creation_date;
-	}
-
-	public function get_update_date()
-	{
-		return $this->update_date;
-	}
-
-	public function set_update_date(Date $update_date)
-	{
-		$this->update_date = $update_date;
-	}
-
-	public function has_update_date()
-	{
-		return $this->update_date !== null && $this->update_date > $this->creation_date;
-	}
-
-	public function get_author_user()
-	{
-		return $this->author_user;
-	}
-
-	public function set_author_user(User $user)
-	{
-		$this->author_user = $user;
 	}
 
 	public function get_author_display()
@@ -220,7 +58,6 @@ class PagesItem
 		return $this->author_custom_name_enabled;
 	}
 
-
 	public function set_views_number($views_number)
 	{
 		$this->views_number = $views_number;
@@ -248,40 +85,6 @@ class PagesItem
 	{
 		$thumbnail = ($this->thumbnail_url instanceof Url) ? $this->thumbnail_url->rel() : $this->thumbnail_url;
 		return !empty($thumbnail);
-	}
-
-	public function get_keywords()
-	{
-		if ($this->keywords === null)
-		{
-			$this->keywords = KeywordsService::get_keywords_manager()->get_keywords($this->id);
-		}
-		return $this->keywords;
-	}
-
-	public function get_keywords_name()
-	{
-		return array_keys($this->get_keywords());
-	}
-
-	public function add_source($source)
-	{
-		$this->sources[] = $source;
-	}
-
-	public function set_sources($sources)
-	{
-		$this->sources = $sources;
-	}
-
-	public function get_sources()
-	{
-		return $this->sources;
-	}
-
-	public function is_authorized_to_add()
-	{
-		return CategoriesAuthorizationsService::check_authorizations($this->id_category)->write() || CategoriesAuthorizationsService::check_authorizations($this->id_category)->contribution();
 	}
 
 	public function is_authorized_to_edit()
@@ -346,35 +149,15 @@ class PagesItem
 		$this->author_custom_name_enabled = !empty($properties['author_custom_name']);
 	}
 
-	public function init_default_properties($id_category = Category::ROOT_CATEGORY)
+	public function default_properties()
 	{
-		$this->id_category = $id_category;
         $this->content = PagesConfig::load()->get_default_content();
-		$this->published = self::PUBLISHED;
 		$this->author_display = false;
-		$this->author_user = AppContext::get_current_user();
-		$this->publishing_start_date = new Date();
-		$this->publishing_end_date = new Date();
-		$this->creation_date = new Date();
 		$this->views_number = 0;
 		$this->thumbnail_url = FormFieldThumbnail::DEFAULT_VALUE;
-		$this->sources = array();
 		$this->end_date_enabled = false;
 		$this->author_custom_name = $this->author_user->get_display_name();
 		$this->author_custom_name_enabled = false;
-	}
-
-	public function clean_publishing_start_and_end_date()
-	{
-		$this->publishing_start_date = null;
-		$this->publishing_end_date = null;
-		$this->end_date_enabled = false;
-	}
-
-	public function clean_publishing_end_date()
-	{
-		$this->publishing_end_date = null;
-		$this->end_date_enabled = false;
 	}
 
 	public function get_array_tpl_vars()
@@ -444,23 +227,6 @@ class PagesItem
 				'U_COMMENTS'       => PagesUrlBuilder::display_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_title)->rel()
 			)
 		);
-	}
-
-	public function get_array_tpl_source_vars($source_name)
-	{
-		$vars = array();
-		$sources = $this->get_sources();
-
-		if (isset($sources[$source_name]))
-		{
-			$vars = array(
-				'C_SEPARATOR' => array_search($source_name, array_keys($sources)) < count($sources) - 1,
-				'NAME' => $source_name,
-				'URL' => $sources[$source_name]
-			);
-		}
-
-		return $vars;
 	}
 }
 ?>

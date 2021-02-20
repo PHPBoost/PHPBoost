@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 30
+ * @version     PHPBoost 6.0 - last update: 2021 02 20
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
@@ -88,7 +88,7 @@ class PagesItemController extends ModuleController
 
 		if ($comments_config->module_comments_is_enabled('pages'))
 		{
-			$comments_topic = new PagesCommentsTopic($this->item);
+			$comments_topic = new DefaultCommentsTopic('pages', $this->item);
 			$comments_topic->set_id_in_module($this->item->get_id());
 			$comments_topic->set_url(PagesUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title()));
 
@@ -100,7 +100,7 @@ class PagesItemController extends ModuleController
 
 		foreach ($this->item->get_sources() as $name => $url)
 		{
-			$this->view->assign_block_vars('sources', $this->item->get_array_tpl_source_vars($name));
+			$this->view->assign_block_vars('sources', $this->item->get_template_source_vars($name));
 		}
 	}
 

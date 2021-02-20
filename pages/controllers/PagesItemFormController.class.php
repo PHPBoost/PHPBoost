@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 02 20
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
@@ -58,7 +58,7 @@ class PagesItemFormController extends ModuleController
 	private function build_form(HTTPRequestCustom $request)
 	{
 		$form = new HTMLForm(__CLASS__);
-		$form->set_layout_title($this->get_item()->get_id() === null ? $this->lang['pages.add'] : ($this->lang['pages.edit'] . $this->get_item()->get_title() . ': ' . $this->get_item()->get_title()));
+		$form->set_layout_title($this->get_item()->get_id() === null ? $this->lang['pages.add'] : ($this->lang['pages.edit'] . $this->get_item()->get_title()));
 
 		$fieldset = new FormFieldsetHTML('pages', $this->common_lang['form.parameters']);
 		$form->add_fieldset($fieldset);
@@ -187,7 +187,7 @@ class PagesItemFormController extends ModuleController
 				array('hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_publication_state', 0) != PagesItem::DEFERRED_PUBLICATION) : $this->get_item()->get_publishing_state() != PagesItem::DEFERRED_PUBLICATION))
 			));
 
-			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->common_lang['form.date.end.enable'], $this->get_item()->is_end_date_enabled(),
+			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->common_lang['form.date.end.enable'], $this->get_item()->end_date_enabled(),
 				array(
 					'hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_publication_state', 0) != PagesItem::DEFERRED_PUBLICATION) : ($this->get_item()->get_publishing_state() != PagesItem::DEFERRED_PUBLICATION)),
 					'events' => array('click' => '
@@ -201,7 +201,7 @@ class PagesItemFormController extends ModuleController
 			));
 
 			$publication_fieldset->add_field($publishing_end_date = new FormFieldDateTime('publishing_end_date', $this->common_lang['form.date.end'], ($this->get_item()->get_publishing_end_date() === null ? new Date() : $this->get_item()->get_publishing_end_date()),
-				array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_end_date_enabled', false) : !$this->get_item()->is_end_date_enabled()))
+				array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_end_date_enabled', false) : !$this->get_item()->end_date_enabled()))
 			));
 
 			$publishing_end_date->add_form_constraint(new FormConstraintFieldsDifferenceSuperior($publishing_start_date, $publishing_end_date));
@@ -487,7 +487,7 @@ class PagesItemFormController extends ModuleController
 			}
 			$category = $this->item->get_category();
 			$breadcrumb->add($this->item->get_title(), PagesUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title()));
-			$breadcrumb->add($this->lang['pages.edit'], PagesUrlBuilder::edit_item($this->item->get_id()));
+			$breadcrumb->add($this->lang['pages.edit'] . $this->get_item()->get_title(), PagesUrlBuilder::edit_item($this->item->get_id()));
 		}
 
 		return $response;

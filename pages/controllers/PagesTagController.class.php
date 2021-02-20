@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 30
+ * @version     PHPBoost 6.0 - last update: 2021 02 20
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
@@ -90,7 +90,7 @@ class PagesTagController extends ModuleController
 
 			foreach ($item->get_sources() as $name => $url)
 			{
-				$this->view->assign_block_vars('items.sources', $item->get_array_tpl_source_vars($name));
+				$this->view->assign_block_vars('items.sources', $item->get_template_source_vars($name));
 			}
 		}
 		$result->dispose();
