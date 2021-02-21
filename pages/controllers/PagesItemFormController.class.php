@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 21
+ * @version     PHPBoost 6.0 - last update: 2021 02 22
  * @since       PHPBoost 5.2 - 2020 06 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -390,6 +390,7 @@ class PagesItemFormController extends ModuleController
 
 		KeywordsService::get_keywords_manager()->put_relations($id, $this->form->get_value('keywords'));
 
+		ItemsService::get_items_manager('news')->clear_cache();
 	}
 
 	private function contribution_actions(PagesItem $item, $id)
