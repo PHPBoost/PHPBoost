@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 04
+ * @version     PHPBoost 6.0 - last update: 2021 02 21
  * @since       PHPBoost 4.0 - 2013 02 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -51,11 +51,11 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 		$number_categories = count($categories);
 
 		$this->tpl->put_all(array(
-			'C_NO_CATEGORIES'          => $number_categories <= 1,
+			'C_NO_CATEGORY'            => $number_categories <= 1,
 			'C_MORE_THAN_ONE_CATEGORY' => $number_categories > 2, // Root category is not displayed, but taken into account in the calculation
-			'FIELDSET_TITLE'           => $this->get_title()
+			'FIELDSET_TITLE'           => $this->get_title(),
+			'MODULE_ID'				   => Environment::get_running_module_name(),
 		));
-
 		$this->build_children_view($this->tpl, $categories, Category::ROOT_CATEGORY);
 	}
 

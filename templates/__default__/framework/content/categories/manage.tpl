@@ -1,15 +1,17 @@
 <script>
 	jQuery(document).ready(function() {
-		jQuery('ul#categories').sortable({
-			handle: '.sortable-selector',
-			placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>',
-			onDrop: function ($item, container, _super, event) {
-				change_reposition_pictures();
-				$item.removeClass(container.group.options.draggedClass).removeAttr("style");
-				$("body").removeClass(container.group.options.bodyClass);
-			}
-		});
-		change_reposition_pictures();
+		if (jQuery('ul#categories')[0]) {
+			jQuery('ul#categories').sortable({
+				handle: '.sortable-selector',
+				placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>',
+				onDrop: function ($item, container, _super, event) {
+					change_reposition_pictures();
+					$item.removeClass(container.group.options.draggedClass).removeAttr("style");
+					$("body").removeClass(container.group.options.bodyClass);
+				}
+			});
+			change_reposition_pictures();
+		}
 	});
 
 	function serialize_sortable()
@@ -59,29 +61,29 @@
 	<div class="sub-section">
 		<div class="content-container">
 			<div class="content">
-				<form action="{REWRITED_SCRIPT}" method="post" onsubmit="serialize_sortable();">
-					<fieldset>
-						<div class="fieldset-inset">
-							<ul id="categories" class="sortable-block">
-								# IF C_NO_CATEGORIES #
-									<div class="align-center">${LangLoader::get_message('no_item_now', 'common')}</div>
-								# ELSE #
+				# IF C_NO_CATEGORY #
+					<div class="message-helper bgc notice">${LangLoader::get_message('no_item_now', 'common')}</div>
+				# ELSE #
+					<form action="{REWRITED_SCRIPT}" method="post" onsubmit="serialize_sortable();">
+						<fieldset>
+							<div class="fieldset-inset">
+								<ul id="categories" class="sortable-block">
 									# START children #
 										{children.child}
 									# END children #
-								# ENDIF #
-							</ul>
-						</div>
-					</fieldset>
-					# IF C_MORE_THAN_ONE_CATEGORY #
-						<fieldset class="fieldset-submit">
-							<button type="submit" class="button submit" name="submit" value="true">${LangLoader::get_message('position.update', 'common')}</button>
-							<input type="hidden" name="token" value="{TOKEN}">
-							<input type="hidden" name="tree" id="tree" value="">
+								</ul>
+							</div>
 						</fieldset>
-					# ENDIF #
-				</form>
-			</div>			
+						# IF C_MORE_THAN_ONE_CATEGORY #
+							<fieldset class="fieldset-submit">
+								<button type="submit" class="button submit" name="submit" value="true">${LangLoader::get_message('position.update', 'common')}</button>
+								<input type="hidden" name="token" value="{TOKEN}">
+								<input type="hidden" name="tree" id="tree" value="">
+							</fieldset>
+						# ENDIF #
+					</form>
+				# ENDIF #
+			</div>
 		</div>
 	</div>
 </section>

@@ -5,11 +5,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 12
+ * @version     PHPBoost 6.0 - last update: 2021 02 21
  * @since       PHPBoost 4.0 - 2013 02 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class AbstractCategoriesFormController extends ModuleController
@@ -43,7 +44,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 	{
 		$class_name = get_called_class();
 		self::$categories_manager = $class_name::get_categories_manager();
-		
+
 		$this->check_authorizations();
 		$this->build_form($request);
 
@@ -68,8 +69,9 @@ abstract class AbstractCategoriesFormController extends ModuleController
 	protected function build_form(HTTPRequestCustom $request)
 	{
 		$form = new HTMLForm(__CLASS__);
+		$form->set_layout_title($this->get_title());
 
-		$fieldset = new FormFieldsetHTML('category', $this->get_title());
+		$fieldset = new FormFieldsetHTML('category', LangLoader::get_message('form.parameters', 'common'));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('name', self::$common_lang['form.name'], $this->get_category()->get_name(), array('required' => true)));
@@ -146,19 +148,19 @@ abstract class AbstractCategoriesFormController extends ModuleController
 				$change_authorizations = true;
 			}
 		}
-		
+
 		if (!$change_authorizations)
 		{
 			$this->get_category()->set_authorizations(array());
 			$this->get_category()->set_special_authorizations(false);
 		}
-		
+
 		foreach ($this->get_category()->get_additional_attributes_list() as $id => $attribute)
 		{
 			$value = (isset($attribute['attribute_field_parameters']) && preg_match('/Choice/', $attribute['attribute_field_parameters']['field_class'])) ? $this->form->get_value($id)->get_raw_value() : $this->form->get_value($id);
 			if ($attribute['is_url'])
 				$value = new Url($value);
-			
+
 			$this->get_category()->set_additional_property($id, $value);
 		}
 	}
@@ -182,12 +184,12 @@ abstract class AbstractCategoriesFormController extends ModuleController
 				$parameters = $attribute['attribute_field_parameters'];
 				$field_class = $parameters['field_class'];
 				$options = isset($parameters['options']) ? $parameters['options'] : array();
-				
+
 				if ($this->is_new_category)
 					$value = isset($parameters['default_value']) ? $parameters['default_value'] : '';
 				else
 					$value = ($this->get_category()->get_additional_property($id) instanceof Url) ? $this->get_category()->get_additional_property($id)->relative() : $this->get_category()->get_additional_property($id);
-				
+
 				if ($field_class == 'FormFieldThumbnail')
 					$fieldset->add_field(new $field_class($id, $parameters['label'], $value, isset($parameters['default_picture']) ? $parameters['default_picture'] : '', $options));
 				else
@@ -243,20 +245,20 @@ abstract class AbstractCategoriesFormController extends ModuleController
 	public static function get_authorizations_settings($module_id = '')
 	{
 		$module = $module_id ? ModulesManager::get_module($module_id) : self::get_module();
-		
+
 		$authorizations = array(
 			new ActionAuthorization(self::$common_lang['authorizations.read'], Category::READ_AUTHORIZATIONS),
 			new VisitorDisabledActionAuthorization(self::$common_lang['authorizations.write'], Category::WRITE_AUTHORIZATIONS),
 			new VisitorDisabledActionAuthorization(self::$common_lang['authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
 			new MemberDisabledActionAuthorization(self::$common_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS)
 		);
-		
+
 		if ($module && !$module->get_configuration()->has_contribution())
 		{
 			unset($authorizations[2]);
 			$authorizations = array_values($authorizations);
 		}
-		
+
 		return $authorizations;
 	}
 
