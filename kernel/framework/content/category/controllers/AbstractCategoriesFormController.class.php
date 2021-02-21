@@ -76,19 +76,25 @@ abstract class AbstractCategoriesFormController extends ModuleController
 
 		$fieldset->add_field(new FormFieldTextEditor('name', self::$common_lang['form.name'], $this->get_category()->get_name(), array('required' => true)));
 
-		$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_name', self::$common_lang['form.rewrited_name.personalize'], $this->get_category()->rewrited_name_is_personalized(), array(
-		'events' => array('click' => '
-		if (HTMLForms.getField("personalize_rewrited_name").getValue()) {
-			HTMLForms.getField("rewrited_name").enable();
-		} else {
-			HTMLForms.getField("rewrited_name").disable();
-		}'
-		))));
+		$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_name', self::$common_lang['form.rewrited_name.personalize'], $this->get_category()->rewrited_name_is_personalized(),
+			array(
+				'events' => array('click' => '
+					if (HTMLForms.getField("personalize_rewrited_name").getValue()) {
+						HTMLForms.getField("rewrited_name").enable();
+					} else {
+						HTMLForms.getField("rewrited_name").disable();
+					}'
+				)
+			)
+		));
 
-		$fieldset->add_field(new FormFieldTextEditor('rewrited_name', self::$common_lang['form.rewrited_name'], $this->get_category()->get_rewrited_name(), array(
-			'description' => self::$common_lang['form.rewrited_name.description'],
-			'hidden' => !$this->get_category()->rewrited_name_is_personalized()
-		), array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu'))));
+		$fieldset->add_field(new FormFieldTextEditor('rewrited_name', self::$common_lang['form.rewrited_name'], $this->get_category()->get_rewrited_name(),
+			array(
+				'description' => self::$common_lang['form.rewrited_name.description'],
+				'hidden' => !$this->get_category()->rewrited_name_is_personalized()
+			),
+			array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu'))
+		));
 
 		if ($this->get_category()->is_allowed_to_have_childs())
 		{
@@ -106,13 +112,17 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		$form->add_fieldset($fieldset_authorizations);
 
 		$fieldset_authorizations->add_field(new FormFieldCheckbox('special_authorizations', self::$common_lang['authorizations'], $this->get_category()->has_special_authorizations(),
-		array('description' => self::$lang['category.form.authorizations.description'], 'events' => array('click' => '
-		if (HTMLForms.getField("special_authorizations").getValue()) {
-			jQuery("#' . __CLASS__ . '_authorizations").show();
-		} else {
-			jQuery("#' . __CLASS__ . '_authorizations").hide();
-		}')
-		)));
+			array(
+				'description' => self::$lang['category.form.authorizations.description'],
+				'events' => array('click' => '
+					if (HTMLForms.getField("special_authorizations").getValue()) {
+						jQuery("#' . __CLASS__ . '_authorizations").show();
+					} else {
+						jQuery("#' . __CLASS__ . '_authorizations").hide();
+					}'
+				)
+			)
+		));
 
 		$auth_settings = new AuthorizationsSettings(self::get_authorizations_settings());
 		$auth_settings->build_from_auth_array($this->get_category()->has_special_authorizations() ? $this->get_category()->get_authorizations() : self::$categories_manager->get_categories_cache()->get_category($this->get_category()->get_id_parent())->get_authorizations());

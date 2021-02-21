@@ -51,10 +51,10 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 		$number_categories = count($categories);
 
 		$this->tpl->put_all(array(
-			'C_NO_CATEGORY'            => $number_categories <= 1,
-			'C_MORE_THAN_ONE_CATEGORY' => $number_categories > 2, // Root category is not displayed, but taken into account in the calculation
-			'FIELDSET_TITLE'           => $this->get_title(),
-			'MODULE_ID'				   => Environment::get_running_module_name(),
+			'C_NO_CATEGORY'        => $number_categories > 0,
+			'C_SEVERAL_CATEGORIES' => $number_categories > 2, // Root category is not displayed, but taken into account in the calculation
+			'FIELDSET_TITLE'       => $this->get_title(),
+			'MODULE_ID'			   => Environment::get_running_module_name(),
 		));
 		$this->build_children_view($this->tpl, $categories, Category::ROOT_CATEGORY);
 	}

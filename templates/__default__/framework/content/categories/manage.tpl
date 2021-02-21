@@ -74,7 +74,7 @@
 								</ul>
 							</div>
 						</fieldset>
-						# IF C_MORE_THAN_ONE_CATEGORY #
+						# IF C_SEVERAL_CATEGORIES #
 							<fieldset class="fieldset-submit">
 								<button type="submit" class="button submit" name="submit" value="true">${LangLoader::get_message('position.update', 'common')}</button>
 								<input type="hidden" name="token" value="{TOKEN}">
