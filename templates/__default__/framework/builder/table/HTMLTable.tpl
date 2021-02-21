@@ -3,8 +3,9 @@
 		<header class="section-header">
 			<h1>{LAYOUT_TITLE}</h1>
 		</header>
-		<article class="{MODULE_ID}-item several-items">
-			<div class="content">
+		<div class="sub-section">
+			<div class="content-container">
+				<div class="content">
 # ENDIF #
 				# IF C_FILTERS #
 					<div id="filters-{TABLE_ID}" class="html-table-filters">
@@ -163,8 +164,9 @@
 					</script>
 				# ENDIF #
 # IF C_LAYOUT #
+				</div>
 			</div>
-		</article>
+		</div>
 		<footer></footer>
 	</section>
 # ENDIF #
