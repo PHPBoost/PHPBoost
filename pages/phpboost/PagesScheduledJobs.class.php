@@ -12,7 +12,7 @@ class PagesScheduledJobs extends AbstractScheduledJobExtensionPoint
 {
 	public function on_changepage()
 	{
-		$config = PagesConfig::load();
+		$config = PagesConfig::load('pages');
 		$deferred_operations = $config->get_deferred_operations();
 
 		if (!empty($deferred_operations))
