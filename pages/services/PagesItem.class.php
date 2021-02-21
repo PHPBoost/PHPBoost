@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 20
+ * @version     PHPBoost 6.0 - last update: 2021 02 22
  * @since       PHPBoost 5.2 - 2020 06 15
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class PagesItem extends Item
@@ -150,14 +151,9 @@ class PagesItem extends Item
 				'C_AUTHOR_CUSTOM_NAME'   => $this->is_author_custom_name_enabled(),
 				'C_USER_GROUP_COLOR'     => !empty($user_group_color),
 				'C_SEVERAL_VIEWS'		 => $this->get_views_number() > 1,
-				'C_HAS_UPDATE_DATE'      => $this->has_update_date(),
 				'C_DIFFERED'             => $this->published == self::DEFERRED_PUBLICATION,
-				'C_NEW_CONTENT'          => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('pages', $this->get_publishing_start_date() != null ? $this->get_publishing_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_published(),
-
+				
 				// Item
-				'ID'                 => $this->id,
-				'TITLE'              => $this->title,
-				'CONTENT'            => $content,
 				'STATUS'             => $this->get_status(),
 				'AUTHOR_CUSTOM_NAME' => $this->author_custom_name,
 				'C_AUTHOR_EXIST'     => $user->get_id() !== User::VISITOR_LEVEL,

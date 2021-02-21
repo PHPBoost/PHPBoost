@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 20
+ * @version     PHPBoost 6.0 - last update: 2021 02 22
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor xela <xela@phpboost.com>
 */
@@ -672,6 +672,7 @@ class Item
 			'C_CONTROLS'           => $this->is_authorized_to_manage(),
 			'C_AUTHOR_EXIST'       => $author->get_id() !== User::VISITOR_LEVEL,
 			'C_AUTHOR_GROUP_COLOR' => !empty($author_group_color),
+			'C_HAS_UPDATE_DATE'    => $this->has_update_date(),
 
 			// Item parameters
 			'ID'                                              => $this->get_id(),
