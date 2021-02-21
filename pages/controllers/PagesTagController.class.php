@@ -82,7 +82,7 @@ class PagesTagController extends ModuleController
 			$keywords = $item->get_keywords();
 			$has_keywords = count($keywords) > 0;
 
-			$this->view->assign_block_vars('items', array_merge($item->get_array_tpl_vars(), array(
+			$this->view->assign_block_vars('items', array_merge($item->get_template_vars(), array(
 				'C_KEYWORDS' => $has_keywords
 			)));
 

@@ -81,7 +81,7 @@ class PagesItemController extends ModuleController
 		$keywords = $this->item->get_keywords();
 		$has_keywords = count($keywords) > 0;
 
-		$this->view->put_all(array_merge($this->item->get_array_tpl_vars(), array(
+		$this->view->put_all(array_merge($this->item->get_template_vars(), array(
 			'C_ENABLED_COMMENTS' => $comments_config->module_comments_is_enabled('pages'),
 			'C_KEYWORDS' => $has_keywords,
 			'NOT_VISIBLE_MESSAGE' => MessageHelper::display(LangLoader::get_message('element.not_visible', 'status-messages-common'), MessageHelper::WARNING)

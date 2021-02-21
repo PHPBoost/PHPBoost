@@ -99,82 +99,46 @@ class PagesItem extends Item
 
 	public function get_properties()
 	{
-		return array(
-			'id' => $this->get_id(),
-			'id_category' => $this->get_id_category(),
-			'title' => $this->get_title(),
-			'rewrited_title' => $this->get_rewrited_title(),
-			'content' => $this->get_content(),
-			'published' => $this->get_publishing_state(),
-			'publishing_start_date' => $this->get_publishing_start_date() !== null ? $this->get_publishing_start_date()->get_timestamp() : 0,
-			'publishing_end_date' => $this->get_publishing_end_date() !== null ? $this->get_publishing_end_date()->get_timestamp() : 0,
-			'creation_date' => $this->get_creation_date()->get_timestamp(),
-			'update_date' => $this->get_update_date() !== null ? $this->get_update_date()->get_timestamp() : $this->get_creation_date()->get_timestamp(),
+		return array_merge(parent::get_properties(), array(
 			'author_display' => $this->get_author_display(),
 			'author_custom_name' => $this->get_author_custom_name(),
 			'author_user_id' => $this->get_author_user()->get_id(),
 			'views_number' => $this->get_views_number(),
-			'thumbnail' => $this->get_thumbnail()->relative(),
-			'sources' => TextHelper::serialize($this->get_sources())
-		);
+			'thumbnail' => $this->get_thumbnail()->relative()
+		));
 	}
 
 	public function set_properties(array $properties)
 	{
-		$this->id = $properties['id'];
-		$this->id_category = $properties['id_category'];
-		$this->title = $properties['title'];
-		$this->rewrited_title = $properties['rewrited_title'];
-		$this->content = $properties['content'];
+		parent::set_properties($properties);
 		$this->views_number = $properties['views_number'];
 		$this->author_display = $properties['author_display'];
-		$this->published = $properties['published'];
-		$this->publishing_start_date = !empty($properties['publishing_start_date']) ? new Date($properties['publishing_start_date'], Timezone::SERVER_TIMEZONE) : null;
-		$this->publishing_end_date = !empty($properties['publishing_end_date']) ? new Date($properties['publishing_end_date'], Timezone::SERVER_TIMEZONE) : null;
-		$this->end_date_enabled = !empty($properties['publishing_end_date']);
-		$this->creation_date = new Date($properties['creation_date'], Timezone::SERVER_TIMEZONE);
-		$this->update_date = !empty($properties['update_date']) ? new Date($properties['update_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->thumbnail_url = $properties['thumbnail'];
-		$this->sources = !empty($properties['sources']) ? TextHelper::unserialize($properties['sources']) : array();
-
-		$user = new User();
-		if (!empty($properties['user_id']))
-			$user->set_properties($properties);
-		else
-			$user->init_visitor_user();
-
-		$this->set_author_user($user);
-
 		$this->author_custom_name = !empty($properties['author_custom_name']) ? $properties['author_custom_name'] : $this->author_user->get_display_name();
 		$this->author_custom_name_enabled = !empty($properties['author_custom_name']);
 	}
 
 	public function default_properties()
 	{
-        $this->content = PagesConfig::load()->get_default_content();
+		$this->content = PagesConfig::load()->get_default_content();
 		$this->author_display = false;
 		$this->views_number = 0;
 		$this->thumbnail_url = FormFieldThumbnail::DEFAULT_VALUE;
-		$this->end_date_enabled = false;
 		$this->author_custom_name = $this->author_user->get_display_name();
 		$this->author_custom_name_enabled = false;
 	}
 
-	public function get_array_tpl_vars()
+	public function get_template_vars()
 	{
 		$category = $this->get_category();
 		$content = FormatingHelper::second_parse($this->content);
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		$comments_number = CommentsService::get_comments_number('pages', $this->id);
-		$sources = $this->get_sources();
-		$nbr_sources = count($sources);
 		$config = PagesConfig::load();
 
 		return array_merge(
-			Date::get_array_tpl_vars($this->creation_date, 'date'),
-			Date::get_array_tpl_vars($this->update_date, 'update_date'),
-			Date::get_array_tpl_vars($this->publishing_start_date, 'differed_publishing_start_date'),
+			parent::get_template_vars(),
 			array(
 				// Conditions
 	 			'C_VISIBLE'              => $this->is_published(),
@@ -187,7 +151,6 @@ class PagesItem extends Item
 				'C_USER_GROUP_COLOR'     => !empty($user_group_color),
 				'C_SEVERAL_VIEWS'		 => $this->get_views_number() > 1,
 				'C_HAS_UPDATE_DATE'      => $this->has_update_date(),
-				'C_SOURCES'              => $nbr_sources > 0,
 				'C_DIFFERED'             => $this->published == self::DEFERRED_PUBLICATION,
 				'C_NEW_CONTENT'          => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('pages', $this->get_publishing_start_date() != null ? $this->get_publishing_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_published(),
 
@@ -208,17 +171,7 @@ class PagesItem extends Item
 				'L_COMMENTS'      => CommentsService::get_lang_comments('pages', $this->id),
 				'COMMENTS_NUMBER' => $comments_number,
 
-				// Category
-				'C_ROOT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY,
-				'CATEGORY_ID'          => $category->get_id(),
-				'CATEGORY_NAME'        => $category->get_name(),
-				'CATEGORY_DESCRIPTION' => $category->get_description(),
-				'U_CATEGORY'           => PagesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
-				'U_CATEGORY_THUMBNAIL' => $category->get_thumbnail()->rel(),
-				'U_EDIT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY ? PagesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($category->get_id())->rel(),
-
 				// Links
-				'U_SYNDICATION'    => SyndicationUrlBuilder::rss('pages', $this->id_category)->rel(),
 				'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
 				'U_ITEM'           => PagesUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_title)->rel(),
 				'U_EDIT'           => PagesUrlBuilder::edit_item($this->id)->rel(),

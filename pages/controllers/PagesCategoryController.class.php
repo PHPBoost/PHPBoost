@@ -79,7 +79,7 @@ class PagesCategoryController extends ModuleController
 			$item = new PagesItem();
 			$item->set_properties($row);
 
-			$this->view->assign_block_vars('items', $item->get_array_tpl_vars());
+			$this->view->assign_block_vars('items', $item->get_template_vars());
 		}
 		$result->dispose();
 	}

@@ -60,14 +60,14 @@ class PagesReorderItemsController extends ModuleController
 		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
 
 		$this->view->put_all(array(
-			'C_ITEMS' => $result->get_rows_count() > 0,
-			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
-			'ID_CAT' => $this->get_category()->get_id(),
-			'CATEGORY_NAME' => $this->get_category()->get_name(),
-			'U_CATEGORY_THUMBNAIL' => $this->get_category()->get_thumbnail()->rel(),
-			'CATEGORY_DESCRIPTION' => $category_description,
-			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? PagesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id())->rel(),
-			'ITEMS_NUMBER' => $result->get_rows_count()
+			'C_ITEMS'				=> $result->get_rows_count() > 0,
+			'C_SEVERAL_ITEMS'		=> $result->get_rows_count() > 1,
+			'CATEGORY_ID'			=> $this->get_category()->get_id(),
+			'CATEGORY_NAME'			=> $this->get_category()->get_name(),
+			'U_CATEGORY_THUMBNAIL'	=> $this->get_category()->get_thumbnail()->rel(),
+			'CATEGORY_DESCRIPTION'	=> $category_description,
+			'U_EDIT_CATEGORY'		=> $this->get_category()->get_id() == Category::ROOT_CATEGORY ? PagesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id())->rel(),
+			'ITEMS_NUMBER'			=> $result->get_rows_count()
 		));
 
 		while ($row = $result->fetch())
@@ -75,7 +75,7 @@ class PagesReorderItemsController extends ModuleController
 			$item = new PagesItem();
 			$item->set_properties($row);
 
-			$this->view->assign_block_vars('items', $item->get_array_tpl_vars());
+			$this->view->assign_block_vars('items', $item->get_template_vars());
 		}
 		$result->dispose();
 	}

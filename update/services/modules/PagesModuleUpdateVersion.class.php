@@ -20,6 +20,7 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 			'/lang/french/pages_french.php',
 			'/phpboost/PagesCategoriesCache.class.php',
 			'/phpboost/PagesCommentsTopic.class.php',
+			'/phpboost/PagesFeedProvider.class.php',
 			'/phpboost/PagesHomePageExtensionPoint.class.php',
 			'/phpboost/PagesSearchable.class.php',
 			'/phpboost/PagesSitemapExtensionPoint.class.php',

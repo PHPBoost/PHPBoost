@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 19
+ * @version     PHPBoost 6.0 - last update: 2021 02 21
  * @since       PHPBoost 5.2 - 2020 06 15
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class PagesMemberItemsController extends ModuleController
@@ -73,7 +74,7 @@ class PagesMemberItemsController extends ModuleController
 			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
 			'C_VIEWS_NUMBER'  => $this->config->get_views_number(),
 
-			'ID_CATEGORY'     => $this->get_category()->get_id(),
+			'CATEGORY_ID'     => $this->get_category()->get_id(),
 			'CATEGORY_NAME'   => $this->get_category()->get_name(),
 			'MEMBER_NAME'     => $this->get_member()->get_display_name()
 		));
@@ -83,7 +84,7 @@ class PagesMemberItemsController extends ModuleController
 			$item = new PagesItem();
 			$item->set_properties($row);
 
-			$this->view->assign_block_vars('items', $item->get_array_tpl_vars());
+			$this->view->assign_block_vars('items', $item->get_template_vars());
 			$this->build_sources_view($item);
 			$this->build_keywords_view($item);
 		}

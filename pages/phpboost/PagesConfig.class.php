@@ -7,7 +7,6 @@
  * @since       PHPBoost 3.0 - 2012 03 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class PagesConfig extends DefaultModuleConfig
