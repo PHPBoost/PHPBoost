@@ -60,6 +60,7 @@ class PagesPendingItemsController extends ModuleController
 
 		$this->view->put_all(array(
 			'C_PENDING_ITEMS' => true,
+			'C_NO_ITEM' => $result->get_rows_count() == 0,
 			'C_ITEMS' => $result->get_rows_count() > 0,
 			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
 			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
