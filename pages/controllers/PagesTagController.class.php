@@ -5,6 +5,7 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @version     PHPBoost 6.0 - last update: 2021 02 20
  * @since       PHPBoost 5.2 - 2020 06 15
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class PagesTagController extends ModuleController

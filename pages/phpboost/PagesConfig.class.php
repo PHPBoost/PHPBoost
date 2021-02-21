@@ -3,17 +3,17 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 02
+ * @version     PHPBoost 6.0 - last update: 2021 02 21
  * @since       PHPBoost 3.0 - 2012 03 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
-class PagesConfig extends AbstractConfigData
+class PagesConfig extends DefaultModuleConfig
 {
 	const DEFAULT_CONTENT           = 'default_content';
 	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
-	const AUTHORIZATIONS            = 'authorizations';
 	const DEFERRED_OPERATIONS       = 'deferred_operations';
 	const LEFT_COLUMN_DISABLED      = 'left_column_disabled';
 	const RIGHT_COLUMN_DISABLED     = 'right_column_disabled';
@@ -37,16 +37,6 @@ class PagesConfig extends AbstractConfigData
 	public function set_root_category_description($value)
 	{
 		$this->set_property(self::ROOT_CATEGORY_DESCRIPTION, $value);
-	}
-
-	public function get_authorizations()
-	{
-		return $this->get_property(self::AUTHORIZATIONS);
-	}
-
-	public function set_authorizations(Array $authorizations)
-	{
-		$this->set_property(self::AUTHORIZATIONS, $authorizations);
 	}
 
 	public function get_deferred_operations()
@@ -103,23 +93,6 @@ class PagesConfig extends AbstractConfigData
 			self::RIGHT_COLUMN_DISABLED => false,
 			self::VIEWS_NUMBER => true,
 		);
-	}
-
-	/**
-	 * Returns the configuration.
-	 * @return PagesConfig
-	 */
-	public static function load()
-	{
-		return ConfigManager::load(__CLASS__, 'pages', 'config');
-	}
-
-	/**
-	 * Saves the configuration in the database.
-	 */
-	public static function save()
-	{
-		ConfigManager::save('pages', self::load(), 'config');
 	}
 }
 ?>

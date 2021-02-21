@@ -43,7 +43,10 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 			'/print.php',
 			'/xmlhttprequest.php',
 			// 6.0.b1
-			'/service/Page.class.php',
+			'/controllers/PagesDeleteItemController.class.php',
+			'/controllers/PagesItemsManagerController.class.php',
+			'/services/Page.class.php',
+			'/services/PagesService.class.php',
 
 		);
 

@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 20
+ * @version     PHPBoost 6.0 - last update: 2021 02 21
  * @since       PHPBoost 5.2 - 2020 06 15
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class PagesItemController extends ModuleController
@@ -42,7 +43,7 @@ class PagesItemController extends ModuleController
 			if (!empty($id))
 			{
 				try {
-					$this->item = PagesService::get_item('WHERE pages.id = :id', array('id' => $id));
+					$this->item = ItemsService::get_items_manager('pages')->get_item($id);
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
 					DispatchManager::redirect($error_controller);
@@ -65,7 +66,7 @@ class PagesItemController extends ModuleController
 			if ($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), PagesUrlBuilder::display_item($this->item->get_category()->get_id(), $this->item->get_category()->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title())->rel()))
 			{
 				$this->item->set_views_number($this->item->get_views_number() + 1);
-				PagesService::update_views_number($this->item);
+				ItemsService::get_items_manager('pages')->update_views_number($this->item);
 			}
 		}
 	}
