@@ -54,13 +54,6 @@
 
 				<aside>${ContentSharingActionsMenuService::display()}</aside>
 
-				# IF C_HAS_UPDATE_DATE #
-					<aside class="updated-date">
-						<span class="text-strong">${LangLoader::get_message('form.date.update', 'common')} : </span>
-						<time datetime="{UPDATED_DATE_ISO8601}" itemprop="dateModified">{UPDATED_DATE_FULL}</time>
-					</aside>
-				# ENDIF #
-
 				# IF C_SOURCES #
 					<aside class="sources-container">
 						<span class="text-strong"><i class="fa fa-map-signs" aria-hidden="true"></i> ${LangLoader::get_message('form.sources', 'common')}</span> :
