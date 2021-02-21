@@ -89,7 +89,7 @@
 
 // Display the page only when it's loaded
 	jQuery(window).ready(function() {
-  		jQuery('.body-wrapper').animate({opacity: 1}, 300);
+  		jQuery('.content-preloader').animate({opacity: 1}, 300);
 	});
 
 // Autoresize Textareas
