@@ -1,6 +1,6 @@
-<section id="sandbox-layout">
-	# INCLUDE SANDBOX_SUBMENU #
+<section id="module-sandbox-layout">
 	<header class="section-header">
+		# INCLUDE SANDBOX_SUBMENU #
 		<h1>
 			{@sandbox.module.title} - {@layout.title.layouts}
 		</h1>

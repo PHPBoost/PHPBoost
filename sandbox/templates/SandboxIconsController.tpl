@@ -3,9 +3,9 @@
 	.fa:before {margin-right: 3px}
 </style>
 
-<section id="sandbox-icons">
-	# INCLUDE SANDBOX_SUBMENU #
+<section id="module-sandbox-icons">
 	<header class="section-header">
+		# INCLUDE SANDBOX_SUBMENU #
 		<h1>{@sandbox.module.title} - {@title.icons}</h1>
 	</header>
 

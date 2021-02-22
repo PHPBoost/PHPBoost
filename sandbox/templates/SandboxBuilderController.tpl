@@ -1,6 +1,6 @@
-<section id="sandbox-builder">
-	# INCLUDE SANDBOX_SUBMENU #
+<section id="module-sandbox-builder">
 	<header class="section-header">
+		# INCLUDE SANDBOX_SUBMENU #
 		<h1>
 			{@sandbox.module.title} - {@title.builder}
 		</h1>
@@ -53,12 +53,16 @@
 					<strong>FILE :</strong> {FILE}
 					<div class="spacer"></div>
 					<strong>HIDDEN TEXT AREA TEXT FIELD :</strong> {H_T_TEXT_FIELD}
-				</div>				
+				</div>
 			</div>
 		</div>
 	# ENDIF #
 
-	# INCLUDE FORM #
+	<div class="sub-section">
+		<div class="content-container">
+			# INCLUDE FORM #
+		</div>
+	</div>
 
 	<div class="sub-section">
 		<div class="content-container">

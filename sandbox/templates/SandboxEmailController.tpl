@@ -1,6 +1,6 @@
-<section id="sandbox-email">
-	# INCLUDE SANDBOX_SUBMENU #
+<section id="module-sandbox-email">
 	<header class="section-header">
+		# INCLUDE SANDBOX_SUBMENU #
 		<h1>{@sandbox.module.title} - {@title.email}</h1>
 	</header>
 	<div class="sub-section">

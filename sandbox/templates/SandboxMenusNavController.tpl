@@ -1,6 +1,6 @@
-<section id="sandbox-nav-menus">
-	# INCLUDE SANDBOX_SUBMENU #
+<section id="module-sandbox-nav-menus">
 	<header class="section-header">
+		# INCLUDE SANDBOX_SUBMENU #
 		<h1>{@cssmenu.h1}</h1>
 	</header>
 	<div class="sub-section">
@@ -17,7 +17,7 @@
 					# INCLUDE MARKUP #
 				</div>
 				<footer></footer>
-			</article>			
+			</article>
 		</div>
 	</div>
 	<footer></footer>
