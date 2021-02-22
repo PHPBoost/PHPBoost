@@ -390,7 +390,7 @@ class PagesItemFormController extends ModuleController
 
 		KeywordsService::get_keywords_manager()->put_relations($id, $this->form->get_value('keywords'));
 
-		ItemsService::get_items_manager('news')->clear_cache();
+		ItemsService::get_items_manager('pages')->clear_cache();
 	}
 
 	private function contribution_actions(PagesItem $item, $id)
