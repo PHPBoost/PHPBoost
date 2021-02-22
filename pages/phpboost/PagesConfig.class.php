@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 21
+ * @version     PHPBoost 6.0 - last update: 2021 02 22
  * @since       PHPBoost 3.0 - 2012 03 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -17,6 +17,11 @@ class PagesConfig extends DefaultModuleConfig
 	const LEFT_COLUMN_DISABLED      = 'left_column_disabled';
 	const RIGHT_COLUMN_DISABLED     = 'right_column_disabled';
 	const VIEWS_NUMBER 				= 'views_number';
+
+	public static function __static()
+	{
+		self::$module_id = 'pages';
+	}
 
 	public function get_default_content()
 	{
