@@ -74,7 +74,17 @@
     clear: both;
 }
 
-aside:not(#menu-left):not(#menu-right) { padding: 0.809em; }
+aside:not(#menu-left):not(#menu-right) {
+	padding: 0.809em;
+	margin-bottom: 1.618em;
+}
+
+aside:not(#menu-left):not(#menu-right)::before,
+aside:not(#menu-left):not(#menu-right)::after {
+    content: '';
+    display: block;
+    clear: both;
+}
 
 .content img,
 .cell-content img { vertical-align: bottom; }
