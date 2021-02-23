@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 01 30
+ * @version     PHPBoost 6.0 - last update: 2021 02 23
  * @since       PHPBoost 6.0 - 2020 02 08
 */
 
@@ -26,7 +26,7 @@ abstract class AbstractAdminItemController extends AdminModuleController
 	{
 		parent::__construct($module_id);
 		$this->request = AppContext::get_request();
-		$this->config = self::get_module()->get_configuration()->get_configuration_parameters();
+		$this->config = self::get_module_configuration()->get_configuration_parameters();
 		$this->lang = array_merge(LangLoader::get('admin-common'), (LangLoader::filename_exists('common', self::get_module()->get_id()) ? LangLoader::get('common', self::get_module()->get_id()) : array()));
 		$this->items_lang = ItemsService::get_items_lang(self::get_module()->get_id());
 		$this->view = $this->get_template_to_use();
@@ -35,12 +35,12 @@ abstract class AbstractAdminItemController extends AdminModuleController
 		
 		$this->view->put_all(array(
 			'MODULE_ID'   => self::get_module()->get_id(),
-			'MODULE_NAME' => self::get_module()->get_configuration()->get_name()
+			'MODULE_NAME' => self::get_module_configuration()->get_name()
 		));
 		
 		$this->view->put_all($this->get_additional_view_parameters());
 		
-		$item_class_name = self::get_module()->get_configuration()->get_item_name();
+		$item_class_name = self::get_module_configuration()->get_item_name();
 		$this->module_item = new $item_class_name(self::$module_id);
 	}
 

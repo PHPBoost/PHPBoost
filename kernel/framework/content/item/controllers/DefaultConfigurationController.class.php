@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 02 23
  * @since       PHPBoost 6.0 - 2020 02 11
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -29,7 +29,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			if (self::get_module()->get_configuration()->has_rich_items())
+			if (self::get_module_configuration()->has_rich_items())
 				$this->form->get_field_by_id('items_per_row')->set_hidden($this->config->get_display_type() !== DefaultRichModuleConfig::GRID_VIEW);
 			$this->hide_fields();
 
@@ -43,10 +43,10 @@ class DefaultConfigurationController extends AbstractAdminItemController
 
 	private function build_form()
 	{
-		$item_class_name = self::get_module()->get_configuration()->get_item_name();
+		$item_class_name = self::get_module_configuration()->get_item_name();
 		$form = new HTMLForm(self::$module_id . '_config_form');
 
-		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['configuration.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['configuration.module.title'], array('module_name' => self::get_module_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->items_lang['config.items.per.page'], $this->config->get_items_per_page(),
@@ -54,7 +54,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-		if (self::get_module()->get_configuration()->has_rich_items())
+		if (self::get_module_configuration()->has_rich_items())
 		{
 			$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort_field', $this->items_lang['config.items.default.sort.field'], $this->config->get_items_default_sort_field(), $item_class_name::get_sorting_field_options(),
 				array('select_to_list' => true)
@@ -126,7 +126,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 
 			$this->add_additional_fieldsets($form);
 
-			if (self::get_module()->get_configuration()->has_categories())
+			if (self::get_module_configuration()->has_categories())
 			{
 				$fieldset_categories = new FormFieldsetHTML('categories', LangLoader::get_message('categories', 'categories-common'));
 				$form->add_fieldset($fieldset_categories);
@@ -173,7 +173,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 	{
 		$this->config->set_items_per_page($this->form->get_value('items_per_page'));
 
-		if (self::get_module()->get_configuration()->has_rich_items())
+		if (self::get_module_configuration()->has_rich_items())
 		{
 			if ($this->module_item->content_field_enabled())
 			{
@@ -192,7 +192,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 			if($this->config->get_display_type() == DefaultRichModuleConfig::GRID_VIEW)
 				$this->config->set_items_per_row($this->form->get_value('items_per_row'));
 
-			if (self::get_module()->get_configuration()->has_categories())
+			if (self::get_module_configuration()->has_categories())
 			{
 				$this->config->set_categories_per_page($this->form->get_value('categories_per_page'));
 				$this->config->set_categories_per_row($this->form->get_value('categories_per_row'));
@@ -203,10 +203,10 @@ class DefaultConfigurationController extends AbstractAdminItemController
 
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 
-		$configuration_class_name = self::get_module()->get_configuration()->get_configuration_name();
+		$configuration_class_name = self::get_module_configuration()->get_configuration_name();
 		$configuration_class_name::save(self::$module_id);
 
-		if (self::get_module()->get_configuration()->has_categories())
+		if (self::get_module_configuration()->has_categories())
 			CategoriesService::get_categories_manager()->regenerate_cache();
 	}
 

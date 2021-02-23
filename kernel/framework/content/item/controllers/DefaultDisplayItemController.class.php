@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 01 30
+ * @version     PHPBoost 6.0 - last update: 2021 02 23
  * @since       PHPBoost 6.0 - 2020 03 12
 */
 
@@ -26,7 +26,7 @@ class DefaultDisplayItemController extends AbstractItemController
 
 	protected function init()
 	{
-		$this->current_url = self::get_module()->get_configuration()->has_categories() ? ItemsUrlBuilder::display($this->get_item()->get_category()->get_id(), $this->get_item()->get_category()->get_rewrited_name(), $this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id) : ItemsUrlBuilder::display_item($this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id);
+		$this->current_url = self::get_module_configuration()->has_categories() ? ItemsUrlBuilder::display($this->get_item()->get_category()->get_id(), $this->get_item()->get_category()->get_rewrited_name(), $this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id) : ItemsUrlBuilder::display_item($this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id);
 	}
 
 	protected function get_item()
@@ -69,7 +69,7 @@ class DefaultDisplayItemController extends AbstractItemController
 			$this->view->put('COMMENTS', $comments_topic->display());
 		}
 
-		if (self::get_module()->get_configuration()->feature_is_enabled('keywords'))
+		if (self::get_module_configuration()->feature_is_enabled('keywords'))
 		{
 			$keywords = $this->get_item()->get_keywords();
 			$this->view->put('C_KEYWORDS', !empty($keywords));
@@ -96,7 +96,7 @@ class DefaultDisplayItemController extends AbstractItemController
 			$this->view->put('NOTATION', NotationService::display_active_image($this->get_item()->get_notation()));
 		}
 
-		if (self::get_module()->get_configuration()->feature_is_enabled('sources'))
+		if (self::get_module_configuration()->feature_is_enabled('sources'))
 		{
 			foreach ($this->get_item()->get_sources() as $name => $url)
 			{
@@ -114,7 +114,7 @@ class DefaultDisplayItemController extends AbstractItemController
 
 	protected function check_authorizations()
 	{
-		$authorizations = self::get_module()->get_configuration()->has_categories() ? CategoriesAuthorizationsService::check_authorizations($this->get_item()->get_category()->get_id(), self::$module_id) : ItemsAuthorizationsService::check_authorizations(self::$module_id);
+		$authorizations = self::get_module_configuration()->has_categories() ? CategoriesAuthorizationsService::check_authorizations($this->get_item()->get_category()->get_id(), self::$module_id) : ItemsAuthorizationsService::check_authorizations(self::$module_id);
 		
 		$current_user = AppContext::get_current_user();
 		$not_authorized = !$authorizations->moderation() && !$authorizations->write() && (!$authorizations->contribution() || $this->get_item()->get_author_user()->get_id() != $current_user->get_id());
@@ -160,12 +160,12 @@ class DefaultDisplayItemController extends AbstractItemController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->get_item()->get_title(), (self::get_module()->get_configuration()->has_categories() && $this->get_item()->get_category()->get_id() != Category::ROOT_CATEGORY ? $this->get_item()->get_category()->get_name() . ' - ' : '') . self::get_module()->get_configuration()->get_name());
+		$graphical_environment->set_page_title($this->get_item()->get_title(), (self::get_module_configuration()->has_categories() && $this->get_item()->get_category()->get_id() != Category::ROOT_CATEGORY ? $this->get_item()->get_category()->get_name() . ' - ' : '') . self::get_module_configuration()->get_name());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url($this->current_url);
-		if (self::get_module()->get_configuration()->has_rich_items() && $this->module_item->content_field_enabled())
+		if (self::get_module_configuration()->has_rich_items() && $this->module_item->content_field_enabled())
 			$graphical_environment->get_seo_meta_data()->set_description($this->get_item()->get_real_summary());
 
-		if (self::get_module()->get_configuration()->has_rich_items() && $this->get_item()->has_thumbnail())
+		if (self::get_module_configuration()->has_rich_items() && $this->get_item()->has_thumbnail())
 			$graphical_environment->get_seo_meta_data()->set_picture_url($this->get_item()->get_thumbnail());
 		
 		if ($seo_page_type = $this->get_seo_page_type())
@@ -174,9 +174,9 @@ class DefaultDisplayItemController extends AbstractItemController
 		$graphical_environment->get_seo_meta_data()->set_additionnal_properties($this->get_additionnal_seo_properties());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add(self::get_module()->get_configuration()->get_name(), ModulesUrlBuilder::home());
+		$breadcrumb->add(self::get_module_configuration()->get_name(), ModulesUrlBuilder::home());
 
-		if (self::get_module()->get_configuration()->has_categories())
+		if (self::get_module_configuration()->has_categories())
 		{
 			$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->get_item()->get_category()->get_id(), true));
 			foreach ($categories as $id => $category)

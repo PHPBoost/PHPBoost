@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 02 23
  * @since       PHPBoost 6.0 - 2020 01 16
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -29,7 +29,7 @@ class DefaultItemsManagementController extends AbstractItemController
 
 	private function build_table()
 	{
-		$display_categories = self::get_module()->get_configuration()->has_categories() && CategoriesService::get_categories_manager()->get_categories_cache()->has_categories();
+		$display_categories = self::get_module_configuration()->has_categories() && CategoriesService::get_categories_manager()->get_categories_cache()->has_categories();
 
 		$columns = array(
 			new HTMLTableColumn(LangLoader::get_message('form.title', 'common'), 'title'),
@@ -42,7 +42,7 @@ class DefaultItemsManagementController extends AbstractItemController
 		if ($display_categories)
 			array_splice($columns, 1, 0, array(new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category')));
 
-		$table_model = new SQLHTMLTableModel(self::get_module()->get_configuration()->get_items_table_name(), 'items-manager', $columns, new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
+		$table_model = new SQLHTMLTableModel(self::get_module_configuration()->get_items_table_name(), 'items-manager', $columns, new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
 
 		$table_model->set_layout_title($this->items_lang['items.management']);
 
@@ -94,7 +94,7 @@ class DefaultItemsManagementController extends AbstractItemController
 			$status = new SpanHTMLElement($item->get_status(), array(), 'publication-status ' . $item->get_status_class());
 
 			$row = array(
-				new HTMLTableRowCell(new LinkHTMLElement(self::get_module()->get_configuration()->has_categories() ? ItemsUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()) : ItemsUrlBuilder::display_item($item->get_id(), $item->get_rewrited_title()), $item->get_title()), 'left'),
+				new HTMLTableRowCell(new LinkHTMLElement(self::get_module_configuration()->has_categories() ? ItemsUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()) : ItemsUrlBuilder::display_item($item->get_id(), $item->get_rewrited_title()), $item->get_title()), 'left'),
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell($item->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
 				new HTMLTableRowCell($status->display() . $br->display() . ($dates ? $start_and_end_dates->display() : '')),
@@ -141,7 +141,7 @@ class DefaultItemsManagementController extends AbstractItemController
 
 	protected function check_authorizations()
 	{
-		return self::get_module()->get_configuration()->has_categories() ? CategoriesAuthorizationsService::check_authorizations()->moderation() : ItemsAuthorizationsService::check_authorizations()->moderation();
+		return self::get_module_configuration()->has_categories() ? CategoriesAuthorizationsService::check_authorizations()->moderation() : ItemsAuthorizationsService::check_authorizations()->moderation();
 	}
 
 	private function generate_response($page = 1)
@@ -149,11 +149,11 @@ class DefaultItemsManagementController extends AbstractItemController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->items_lang['items.management'], self::get_module()->get_configuration()->get_name(), $page);
+		$graphical_environment->set_page_title($this->items_lang['items.management'], self::get_module_configuration()->get_name(), $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(ItemsUrlBuilder::manage());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add(self::get_module()->get_configuration()->get_name(), ModulesUrlBuilder::home());
+		$breadcrumb->add(self::get_module_configuration()->get_name(), ModulesUrlBuilder::home());
 		$breadcrumb->add($this->items_lang['items.management'], ItemsUrlBuilder::manage());
 
 		return $response;

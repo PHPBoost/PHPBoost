@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 28
+ * @version     PHPBoost 6.0 - last update: 2021 02 23
  * @since       PHPBoost 6.0 - 2019 12 20
 */
 
@@ -55,7 +55,7 @@ class DefaultDeleteItemController extends AbstractItemController
 	 */
 	protected function get_display_item_url()
 	{
-		return self::get_module()->get_configuration()->has_categories() ? ItemsUrlBuilder::display($this->item->get_category()->get_id(), $this->item->get_category()->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title())->rel() : ItemsUrlBuilder::display_item($this->item->get_id(), $this->item->get_rewrited_title())->rel();
+		return self::get_module_configuration()->has_categories() ? ItemsUrlBuilder::display($this->item->get_category()->get_id(), $this->item->get_category()->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title())->rel() : ItemsUrlBuilder::display_item($this->item->get_id(), $this->item->get_rewrited_title())->rel();
 	}
 }
 ?>
