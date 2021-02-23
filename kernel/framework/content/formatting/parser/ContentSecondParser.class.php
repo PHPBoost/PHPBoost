@@ -10,7 +10,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 11 14
+ * @version     PHPBoost 6.0 - last update: 2021 02 23
  * @since       PHPBoost 2.0 - 2008 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -322,14 +322,14 @@ class ContentSecondParser extends AbstractParser
 		if (pathinfo($matches[1], PATHINFO_EXTENSION) == 'flv')
 		{
 			$id = 'movie_' . AppContext::get_uid();
-			return '<div class="media-content"><a class="video-player" href="' . Url::to_rel($matches[1]) . '" style="display:block;margin:auto;width:' . $matches[2] . 'px;height:' . $matches[3] . 'px;" id="' . $id .  '"></a></div><br />' .
+			return '<div class="media-content" style="width:' . $matches[2] . 'px;height:' . $matches[3] . 'px;"><a class="video-player" href="' . Url::to_rel($matches[1]) . '" id="' . $id .  '"></a></div><br />' .
 			'<script><!--' . "\n" .
 			'insertMoviePlayer(\'' . $id . '\');' .
 			"\n" . '--></script>';
 		}
 		else
 		{
-			return "<div class=\"media-content\"><object type=\"application/x-shockwave-flash\" data=\"" . $matches[1] . "\" width=\"" . $matches[2] . "\" height=\"" . $matches[3] . "\">" .
+			return "<div class=\"media-content\" style=\"width: " . $matches[2] . "px; height: " . $matches[3] . "px\"><object type=\"application/x-shockwave-flash\" data=\"" . $matches[1] . "\">" .
 			"<param name=\"allowScriptAccess\" value=\"never\" />" .
 			"<param name=\"play\" value=\"true\" />" .
 			"<param name=\"movie\" value=\"" . Url::to_rel($matches[1]) . "\" />" .
@@ -355,7 +355,7 @@ class ContentSecondParser extends AbstractParser
 		if (pathinfo($video_files[0], PATHINFO_EXTENSION) == 'flv')
 		{
 			$id = 'movie_' . AppContext::get_uid();
-			return '<div class="media-content"><a class="video-player" href="' . Url::to_rel($matches[1]) . '" style="display:block;margin:auto;width:' . $matches[2] . 'px;height:' . $matches[3] . 'px;" id="' . $id .  '"></a></div><br />' .
+			return '<div class="media-content" style="width:' . $matches[2] . 'px;height:' . $matches[3] . 'px;"><a class="video-player" href="' . Url::to_rel($matches[1]) . '" id="' . $id .  '"></a></div><br />' .
 			'<script><!--' . "\n" .
 			'insertMoviePlayer(\'' . $id . '\');' .
 			"\n" . '--></script>';
@@ -377,7 +377,7 @@ class ContentSecondParser extends AbstractParser
 					$sources .= '<source src="' . Url::to_rel($video) . '" type="video/' . pathinfo($video, PATHINFO_EXTENSION) . '" />';
 			}
 
-			return '<div class="media-content"><video class="video-player" width="' . $matches[2] . '" height="' . $matches[3] . '"' . $poster . ' controls>' . $sources . '</video></div>';
+			return '<div class="media-content" style="width: ' . $matches[2] . 'px; height: ' . $matches[3] . 'px;"><video class="video-player"' . $poster . ' controls>' . $sources . '</video></div>';
 		}
 	}
 
@@ -395,21 +395,21 @@ class ContentSecondParser extends AbstractParser
 	{
 		preg_match('#(?<=docid=)[a-zA-Z0-9-]+(?=&)|(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=e\/)[^&\n]+(?=\?)|(?<=embed/)[^&\n]+|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#', $matches[1], $url_matches);
 		$video_id = isset($url_matches[0]) ? $url_matches[0] : '';
-		return $video_id ? '<div class="media-content"><iframe class="youtube-player" type="text/html" width="' . $matches[2] . '" height="' . $matches[3] . '" src="https://www.youtube.com/embed/' . $video_id . '" frameborder="0" allowfullscreen></iframe></div>' : '';
+		return $video_id ? '<div class="media-content" style="width: ' . $matches[2] . 'px; height: ' . $matches[3] . 'px;"><iframe class="youtube-player" type="text/html"  src="https://www.youtube.com/embed/' . $video_id . '" frameborder="0" allowfullscreen></iframe></div>' : '';
 	}
 
 	private static function process_dailymotion_tag($matches)
 	{
 		preg_match('#(?<=embed/video/)[^&\n]+|(?<=video/)[^&\n]+#', $matches[1], $url_matches);
 		$video_id = isset($url_matches[0]) ? $url_matches[0] : '';
-		return $video_id ? '<div class="media-content"><iframe class="dailymotion-player" type="text/html" width="' . $matches[2] . '" height="' . $matches[3] . '" src="https://www.dailymotion.com/embed/video/' . $video_id . '" frameborder="0" allowfullscreen></iframe></div>' : '';
+		return $video_id ? '<div class="media-content" style="width: ' . $matches[2] . 'px; height: ' . $matches[3] . 'px;"><iframe class="dailymotion-player" type="text/html" src="https://www.dailymotion.com/embed/video/' . $video_id . '" frameborder="0" allowfullscreen></iframe></div>' : '';
 	}
 
 	private static function process_vimeo_tag($matches)
 	{
 		preg_match('#(?<=vimeo.com/)(?<=video/)?[^&\n]+#', $matches[1], $url_matches);
 		$video_id = isset($url_matches[0]) ? $url_matches[0] : '';
-		return $video_id ? '<div class="media-content"><iframe class="vimeo-player" type="text/html" width="' . $matches[2] . '" height="' . $matches[3] . '" src="https://player.vimeo.com/' . (!preg_match('#video/#', $video_id) ? 'video/' : '') . $video_id . '" frameborder="0" allowfullscreen></iframe></div>' : '';
+		return $video_id ? '<div class="media-content" style="width: ' . $matches[2] . 'px; height: ' . $matches[3] . 'px;"><iframe class="vimeo-player" type="text/html" src="https://player.vimeo.com/' . (!preg_match('#video/#', $video_id) ? 'video/' : '') . $video_id . '" frameborder="0" allowfullscreen></iframe></div>' : '';
 	}
 
 	private function parse_feed_tag()
