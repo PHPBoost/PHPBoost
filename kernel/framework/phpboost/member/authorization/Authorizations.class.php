@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 02 25
+ * @version     PHPBoost 6.0 - last update: 2021 02 23
  * @since       PHPBoost 2.0 - 2008 07 26
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -241,17 +241,17 @@ class Authorizations
 		{
 			case RANK_TYPE:
 				if ($value <= 2 && $value >= -1)
-					return @$array_auth['r' . $value] & $bit;
+					return isset($array_auth['r' . $value]) && $array_auth['r' . $value] & $bit;
 				else
 					return false;
 			case GROUP_TYPE:
 				if ($value >= 1)
-					return !empty($array_auth[$value]) ? $array_auth[$value] & $bit : false;
+					return isset($array_auth[$value]) && !empty($array_auth[$value]) ? $array_auth[$value] & $bit : false;
 				else
 					return false;
 			case USER_TYPE:
 				if ($value >= 1)
-					return !empty($array_auth['m' . $value]) ? $array_auth['m' . $value] & $bit : false;
+					return isset($array_auth['m' . $value]) && !empty($array_auth['m' . $value]) ? $array_auth['m' . $value] & $bit : false;
 				else
 					return false;
 			default:
