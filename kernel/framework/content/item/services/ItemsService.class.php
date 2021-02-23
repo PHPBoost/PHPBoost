@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 09
+ * @version     PHPBoost 6.0 - last update: 2021 02 24
  * @since       PHPBoost 6.0 - 2020 01 08
 */
 
@@ -39,8 +39,16 @@ class ItemsService
 		
 		foreach (array_keys($items_lang) as $element)
 		{
-			$parameters_list[str_replace('.', '_', TextHelper::ucfirst($element))] = isset($module_lang[$element]) ? TextHelper::ucfirst($module_lang[$element]) : TextHelper::ucfirst($items_lang[$element]);
-			$parameters_list[str_replace('.', '_', TextHelper::lcfirst($element))] = isset($module_lang[$element]) ? TextHelper::lcfirst($module_lang[$element]) : TextHelper::lcfirst($items_lang[$element]);
+			if (isset($module_lang['the.item']) && substr(strtolower($module_lang['the.item']), 0, 2) == 'la' && isset($items_lang[$element . '.alt']))
+				$items_lang[$element] = $items_lang[$element . '.alt'];
+			
+			if (substr($element, -4) != '.alt')
+			{
+				$parameters_list[str_replace('.', '_', TextHelper::ucfirst($element))] = isset($module_lang[$element]) ? TextHelper::ucfirst($module_lang[$element]) : TextHelper::ucfirst($items_lang[$element]);
+				$parameters_list[str_replace('.', '_', TextHelper::lcfirst($element))] = isset($module_lang[$element]) ? TextHelper::lcfirst($module_lang[$element]) : TextHelper::lcfirst($items_lang[$element]);
+			}
+			else
+				unset($items_lang[$element]);
 		}
 		
 		foreach ($parameters_list as $id => $value)
