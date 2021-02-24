@@ -3,12 +3,12 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 23
+ * @version   	PHPBoost 5.2 - last update: 2021 02 24
  * @since   	PHPBoost 4.0 - 2014 09 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
 
-class FaqManageController extends AdminModuleController
+class FaqManageController extends ModuleController
 {
 	private $lang;
 	private $view;

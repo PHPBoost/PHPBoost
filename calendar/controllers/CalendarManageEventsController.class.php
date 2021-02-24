@@ -3,12 +3,12 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2020 07 19
+ * @version   	PHPBoost 5.2 - last update: 2021 02 24
  * @since   	PHPBoost 4.0 - 2013 07 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
 
-class CalendarManageEventsController extends AdminModuleController
+class CalendarManageEventsController extends ModuleController
 {
 	private $lang;
 	private $view;

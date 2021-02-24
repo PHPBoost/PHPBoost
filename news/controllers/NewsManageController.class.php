@@ -3,13 +3,13 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 23
+ * @version   	PHPBoost 5.2 - last update: 2021 02 24
  * @since   	PHPBoost 4.0 - 2013 06 24
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
 
-class NewsManageController extends AdminModuleController
+class NewsManageController extends ModuleController
 {
 	private $lang;
 	private $view;
