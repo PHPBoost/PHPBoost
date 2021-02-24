@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 24
+ * @version     PHPBoost 6.0 - last update: 2021 02 25
  * @since       PHPBoost 6.0 - 2020 02 11
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -20,7 +20,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 	/**
 	 * @var FormButtonSubmit
 	 */
-	private $submit_button;
+	protected $submit_button;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -41,7 +41,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 		return new DefaultAdminDisplayResponse($this->view);
 	}
 
-	private function build_form()
+	protected function build_form()
 	{
 		$item_class_name = self::get_module_configuration()->get_item_name();
 		$form = new HTMLForm(self::$module_id . '_config_form');
@@ -169,7 +169,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 		$this->form = $form;
 	}
 
-	private function save()
+	protected function save()
 	{
 		$this->config->set_items_per_page($this->form->get_value('items_per_page'));
 

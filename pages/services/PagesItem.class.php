@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 22
+ * @version     PHPBoost 6.0 - last update: 2021 02 25
  * @since       PHPBoost 5.2 - 2020 06 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -160,7 +160,7 @@ class PagesItem extends Item
 				'PSEUDO'             => $user->get_display_name(),
 				'USER_LEVEL_CLASS'   => UserService::get_level_class($user->get_level()),
 				'USER_GROUP_COLOR'   => $user_group_color,
-				'C_VIEWS_NUMBER'     => $config->get_views_number(),
+				'C_VIEWS_NUMBER'     => $config->get_views_number_enabled(),
 				'VIEWS_NUMBER'       => $this->get_views_number(),
 
 				'C_COMMENTS'      => !empty($comments_number),

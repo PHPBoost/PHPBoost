@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 21
+ * @version     PHPBoost 6.0 - last update: 2021 02 25
  * @since       PHPBoost 5.2 - 2020 06 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -72,7 +72,7 @@ class PagesMemberItemsController extends ModuleController
 			'C_MY_ITEMS'      => $this->is_current_member_displayed(),
 			'C_ITEMS'         => $result->get_rows_count() > 0,
 			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
-			'C_VIEWS_NUMBER'  => $this->config->get_views_number(),
+			'C_VIEWS_NUMBER'  => $this->config->get_views_number_enabled(),
 
 			'CATEGORY_ID'     => $this->get_category()->get_id(),
 			'CATEGORY_NAME'   => $this->get_category()->get_name(),
