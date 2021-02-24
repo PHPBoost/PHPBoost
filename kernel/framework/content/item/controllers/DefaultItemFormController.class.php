@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 23
+ * @version     PHPBoost 6.0 - last update: 2021 02 24
  * @since       PHPBoost 6.0 - 2020 05 16
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -21,8 +21,11 @@ class DefaultItemFormController extends AbstractItemController
 	 * @var FormButtonSubmit
 	 */
 	protected $submit_button;
-
+	/**
+	 * @var Item
+	 */
 	protected $item;
+	
 	protected $item_class;
 	protected $is_new_item;
 
@@ -90,7 +93,7 @@ class DefaultItemFormController extends AbstractItemController
 	protected function build_form()
 	{
 		$form = new HTMLForm(self::$module_id . '_form');
-		$form->set_layout_title($this->is_new_item ? $this->items_lang['item.add'] : ($this->items_lang['item.edit'] . ': ' . $this->item_class::get_title_label()));
+		$form->set_layout_title($this->is_new_item ? $this->lang['item.add'] : ($this->lang['item.edit'] . ': ' . $this->item_class::get_title_label()));
 
 		$fieldset = new FormFieldsetHTML(self::$module_id, $this->common_lang['form.parameters']);
 		$form->add_fieldset($fieldset);
@@ -517,24 +520,24 @@ class DefaultItemFormController extends AbstractItemController
 			if ($this->is_new_item)
 			{
 				if (self::get_module_configuration()->has_categories())
-					AppContext::get_response()->redirect(ItemsUrlBuilder::display($this->get_item()->get_category()->get_id(), $this->get_item()->get_category()->get_rewrited_name(), $this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id), StringVars::replace_vars($this->items_lang['items.message.success.add'], array('title' => $this->get_item()->get_title())));
+					AppContext::get_response()->redirect(ItemsUrlBuilder::display($this->get_item()->get_category()->get_id(), $this->get_item()->get_category()->get_rewrited_name(), $this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id), StringVars::replace_vars($this->lang['items.message.success.add'], array('title' => $this->get_item()->get_title())));
 				else
-					AppContext::get_response()->redirect(ItemsUrlBuilder::display_item($this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id), StringVars::replace_vars($this->items_lang['items.message.success.add'], array('title' => $this->get_item()->get_title())));
+					AppContext::get_response()->redirect(ItemsUrlBuilder::display_item($this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id), StringVars::replace_vars($this->lang['items.message.success.add'], array('title' => $this->get_item()->get_title())));
 			}
 			else
 			{
 				if (self::get_module_configuration()->has_categories())
-					AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ItemsUrlBuilder::display($this->get_item()->get_category()->get_id(), $this->get_item()->get_category()->get_rewrited_name(), $this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id)), StringVars::replace_vars($this->items_lang['items.message.success.edit'], array('title' => $this->get_item()->get_title())));
+					AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ItemsUrlBuilder::display($this->get_item()->get_category()->get_id(), $this->get_item()->get_category()->get_rewrited_name(), $this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id)), StringVars::replace_vars($this->lang['items.message.success.edit'], array('title' => $this->get_item()->get_title())));
 				else
-					AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ItemsUrlBuilder::display_item($this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id)), StringVars::replace_vars($this->items_lang['items.message.success.edit'], array('title' => $this->get_item()->get_title())));
+					AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ItemsUrlBuilder::display_item($this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id)), StringVars::replace_vars($this->lang['items.message.success.edit'], array('title' => $this->get_item()->get_title())));
 			}
 		}
 		else
 		{
 			if ($this->is_new_item)
-				AppContext::get_response()->redirect(ItemsUrlBuilder::display_pending(self::$module_id), StringVars::replace_vars($this->items_lang['items.message.success.add'], array('title' => $this->get_item()->get_title())));
+				AppContext::get_response()->redirect(ItemsUrlBuilder::display_pending(self::$module_id), StringVars::replace_vars($this->lang['items.message.success.add'], array('title' => $this->get_item()->get_title())));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ItemsUrlBuilder::display_pending(self::$module_id)), StringVars::replace_vars($this->items_lang['items.message.success.edit'], array('title' => $this->get_item()->get_title())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ItemsUrlBuilder::display_pending(self::$module_id)), StringVars::replace_vars($this->lang['items.message.success.edit'], array('title' => $this->get_item()->get_title())));
 		}
 	}
 
@@ -553,9 +556,9 @@ class DefaultItemFormController extends AbstractItemController
 
 		if ($this->get_item()->get_id() === null)
 		{
-			$breadcrumb->add($this->items_lang['item.add'], ItemsUrlBuilder::add(self::get_module_configuration()->has_categories() ? $this->get_item()->get_id_category() : Category::ROOT_CATEGORY));
-			$graphical_environment->set_page_title($this->items_lang['item.add'], self::get_module_configuration()->get_name());
-			$graphical_environment->get_seo_meta_data()->set_description($this->items_lang['item.add']);
+			$breadcrumb->add($this->lang['item.add'], ItemsUrlBuilder::add(self::get_module_configuration()->has_categories() ? $this->get_item()->get_id_category() : Category::ROOT_CATEGORY));
+			$graphical_environment->set_page_title($this->lang['item.add'], self::get_module_configuration()->get_name());
+			$graphical_environment->get_seo_meta_data()->set_description($this->lang['item.add']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(ItemsUrlBuilder::add(self::get_module_configuration()->has_categories() ? $this->get_item()->get_id_category() : Category::ROOT_CATEGORY, self::$module_id));
 		}
 		else
@@ -573,13 +576,13 @@ class DefaultItemFormController extends AbstractItemController
 			else
 				$breadcrumb->add($this->get_item()->get_title(), ItemsUrlBuilder::display_item($this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id));
 
-			$breadcrumb->add($this->items_lang['item.edit'], ItemsUrlBuilder::edit($this->get_item()->get_id(), self::$module_id));
+			$breadcrumb->add($this->lang['item.edit'], ItemsUrlBuilder::edit($this->get_item()->get_id(), self::$module_id));
 
 			if (!AppContext::get_session()->location_id_already_exists($location_id))
 				$graphical_environment->set_location_id($location_id);
 
-			$graphical_environment->set_page_title($this->items_lang['item.edit'], self::get_module_configuration()->get_name());
-			$graphical_environment->get_seo_meta_data()->set_description($this->items_lang['item.edit']);
+			$graphical_environment->set_page_title($this->lang['item.edit'], self::get_module_configuration()->get_name());
+			$graphical_environment->get_seo_meta_data()->set_description($this->lang['item.edit']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(ItemsUrlBuilder::edit($this->get_item()->get_id(), self::$module_id));
 		}
 

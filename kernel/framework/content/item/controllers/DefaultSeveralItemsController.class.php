@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 23
+ * @version     PHPBoost 6.0 - last update: 2021 02 24
  * @since       PHPBoost 6.0 - 2020 01 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -72,7 +72,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 			$this->sql_parameters['id_keyword'] = $this->get_keyword()->get_id();
 
 			$this->page_title = $this->get_keyword()->get_name();
-			$this->page_description = StringVars::replace_vars($this->items_lang['items.seo.description.tag'], array('subject' => $this->get_keyword()->get_name()));
+			$this->page_description = StringVars::replace_vars($this->lang['items.seo.description.tag'], array('subject' => $this->get_keyword()->get_name()));
 			$this->current_url = ItemsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
 			$this->pagination_url = ItemsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), self::$module_id, $this->sort_field, $this->sort_mode, '%d');
 			$this->url_without_sorting_parameters = ItemsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), self::$module_id);
@@ -95,8 +95,8 @@ class DefaultSeveralItemsController extends AbstractItemController
 
 			$this->sql_parameters['user_id'] = $this->get_member()->get_id();
 
-			$this->page_title = $this->is_current_member_displayed() ? $this->items_lang['my.items'] : StringVars::replace_vars($this->items_lang['member.items'], array('member' => $this->get_member()->get_display_name()));
-			$this->page_description = StringVars::replace_vars($this->items_lang['items.seo.description.member'], array('author' => $this->get_member()->get_display_name()));
+			$this->page_title = $this->is_current_member_displayed() ? $this->lang['my.items'] : StringVars::replace_vars($this->lang['member.items'], array('member' => $this->get_member()->get_display_name()));
+			$this->page_description = StringVars::replace_vars($this->lang['items.seo.description.member'], array('author' => $this->get_member()->get_display_name()));
 			$this->current_url = ItemsUrlBuilder::display_member_items($this->get_member()->get_id(), self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
 			$this->pagination_url = ItemsUrlBuilder::display_member_items($this->get_member()->get_id(), self::$module_id, $this->sort_field, $this->sort_mode, '%d');
 			$this->url_without_sorting_parameters = ItemsUrlBuilder::display_member_items($this->get_member()->get_id(), self::$module_id);
@@ -125,8 +125,8 @@ class DefaultSeveralItemsController extends AbstractItemController
 
 			$this->sql_parameters['user_id'] = AppContext::get_current_user()->get_id();
 
-			$this->page_title = $this->items_lang['pending.items'];
-			$this->page_description = $this->items_lang['items.seo.description.pending'];
+			$this->page_title = $this->lang['pending.items'];
+			$this->page_description = $this->lang['items.seo.description.pending'];
 			$this->current_url = ItemsUrlBuilder::display_pending(self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
 			$this->pagination_url = ItemsUrlBuilder::display_pending(self::$module_id, $this->sort_field, $this->sort_mode, '%d');
 			$this->url_without_sorting_parameters = ItemsUrlBuilder::display_pending(self::$module_id);
@@ -147,7 +147,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 				$this->page_title = $this->category->get_id() != Category::ROOT_CATEGORY ? $this->category->get_name() : self::get_module_configuration()->get_name();
 				$this->page_description = method_exists($this->category, 'get_description') ? $this->category->get_description() : '';
 				if (!$this->page_description)
-					$this->page_description = StringVars::replace_vars($this->items_lang['items.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->category->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category', 'categories-common') . ' ' . $this->category->get_name() : '');
+					$this->page_description = StringVars::replace_vars($this->lang['items.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->category->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category', 'categories-common') . ' ' . $this->category->get_name() : '');
 				$this->current_url = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
 				$this->pagination_url = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id, $this->sort_field, $this->sort_mode, '%d', $this->subcategories_page);
 				$this->url_without_sorting_parameters = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id);
@@ -164,7 +164,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 				$this->sql_condition = 'WHERE (published = ' . Item::PUBLISHED . (self::get_module_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))' : '') . ')';
 
 				$this->page_title = self::get_module_configuration()->get_name();
-				$this->page_description = StringVars::replace_vars($this->items_lang['items.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name()));
+				$this->page_description = StringVars::replace_vars($this->lang['items.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name()));
 				$this->current_url = ItemsUrlBuilder::display_category(Category::ROOT_CATEGORY, 'root', self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
 				$this->pagination_url = ItemsUrlBuilder::display_category(Category::ROOT_CATEGORY, 'root', self::$module_id, $this->sort_field, $this->sort_mode, '%d');
 				$this->url_without_sorting_parameters = ItemsUrlBuilder::display_category(Category::ROOT_CATEGORY, 'root', self::$module_id);

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 23
+ * @version     PHPBoost 6.0 - last update: 2021 02 24
  * @since       PHPBoost 6.0 - 2020 02 11
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -49,29 +49,29 @@ class DefaultConfigurationController extends AbstractAdminItemController
 		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['configuration.module.title'], array('module_name' => self::get_module_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->items_lang['config.items.per.page'], $this->config->get_items_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->lang['config.items.per.page'], $this->config->get_items_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
 		if (self::get_module_configuration()->has_rich_items())
 		{
-			$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort_field', $this->items_lang['config.items.default.sort.field'], $this->config->get_items_default_sort_field(), $item_class_name::get_sorting_field_options(),
+			$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort_field', $this->lang['config.items.default.sort.field'], $this->config->get_items_default_sort_field(), $item_class_name::get_sorting_field_options(),
 				array('select_to_list' => true)
 			));
 
-			$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort_mode', $this->items_lang['config.items.default.sort.mode'], $this->config->get_items_default_sort_mode(), $item_class_name::get_sorting_mode_options(),
+			$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort_mode', $this->lang['config.items.default.sort.mode'], $this->config->get_items_default_sort_mode(), $item_class_name::get_sorting_mode_options(),
 				array('select_to_list' => true)
 			));
 
 			if ($this->module_item->content_field_enabled())
 			{
-				$fieldset->add_field(new FormFieldCheckbox('summary_displayed_to_guests', $this->items_lang['config.items.summary.displayed.to.guests'], $this->config->get_summary_displayed_to_guests(),
+				$fieldset->add_field(new FormFieldCheckbox('summary_displayed_to_guests', $this->lang['config.items.summary.displayed.to.guests'], $this->config->get_summary_displayed_to_guests(),
 					array('class' => 'custom-checkbox')
 				));
 
-				$fieldset->add_field(new FormFieldNumberEditor('auto_cut_characters_number', $this->items_lang['config.auto.cut.characters.number'], $this->config->get_auto_cut_characters_number(),
-					array('min' => 20, 'max' => 1000, 'description' => $this->items_lang['config.auto.cut.characters.number.explain'], 'required' => true),
+				$fieldset->add_field(new FormFieldNumberEditor('auto_cut_characters_number', $this->lang['config.auto.cut.characters.number'], $this->config->get_auto_cut_characters_number(),
+					array('min' => 20, 'max' => 1000, 'description' => $this->lang['config.auto.cut.characters.number.explain'], 'required' => true),
 					array(new FormFieldConstraintIntegerRange(20, 1000))
 				));
 			}
@@ -106,7 +106,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 					}'))
 			));
 
-			$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->items_lang['config.items.per.row'], $this->config->get_items_per_row(),
+			$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->lang['config.items.per.row'], $this->config->get_items_per_row(),
 				array(
 					'hidden' => $this->config->get_display_type() !== DefaultRichModuleConfig::GRID_VIEW,
 					'min' => 1, 'max' => 4,
@@ -119,7 +119,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 
 			if ($this->module_item->content_field_enabled())
 			{
-				$fieldset->add_field(new FormFieldRichTextEditor('default_content', $this->items_lang['config.item.default.content'], $this->config->get_default_content(),
+				$fieldset->add_field(new FormFieldRichTextEditor('default_content', $this->lang['config.item.default.content'], $this->config->get_default_content(),
 					array('rows' => 8, 'cols' => 47)
 				));
 			}

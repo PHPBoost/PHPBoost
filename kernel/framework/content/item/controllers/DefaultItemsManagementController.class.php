@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 23
+ * @version     PHPBoost 6.0 - last update: 2021 02 24
  * @since       PHPBoost 6.0 - 2020 01 16
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -44,7 +44,7 @@ class DefaultItemsManagementController extends AbstractItemController
 
 		$table_model = new SQLHTMLTableModel(self::get_module_configuration()->get_items_table_name(), 'items-manager', $columns, new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
 
-		$table_model->set_layout_title($this->items_lang['items.management']);
+		$table_model->set_layout_title($this->lang['items.management']);
 
 		$table = new HTMLTable($table_model);
 
@@ -149,12 +149,12 @@ class DefaultItemsManagementController extends AbstractItemController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->items_lang['items.management'], self::get_module_configuration()->get_name(), $page);
+		$graphical_environment->set_page_title($this->lang['items.management'], self::get_module_configuration()->get_name(), $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(ItemsUrlBuilder::manage());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add(self::get_module_configuration()->get_name(), ModulesUrlBuilder::home());
-		$breadcrumb->add($this->items_lang['items.management'], ItemsUrlBuilder::manage());
+		$breadcrumb->add($this->lang['items.management'], ItemsUrlBuilder::manage());
 
 		return $response;
 	}
