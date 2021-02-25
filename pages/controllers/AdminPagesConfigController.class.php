@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 25
+ * @version     PHPBoost 6.0 - last update: 2021 02 26
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
@@ -32,7 +32,7 @@ class AdminPagesConfigController extends DefaultConfigurationController
 			array('rows' => 8, 'cols' => 47)
 		));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('default_content', $this->lang['pages.config.default.content'], $this->config->get_default_content(),
+		$fieldset->add_field(new FormFieldRichTextEditor('default_content', $this->lang['config.item.default.content'], $this->config->get_default_content(),
 			array('rows' => 8, 'cols' => 47)
 		));
 		

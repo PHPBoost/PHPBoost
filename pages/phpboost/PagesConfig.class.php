@@ -9,14 +9,10 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class PagesConfig extends DefaultModuleConfig
+class PagesConfig extends DefaultRichModuleConfig
 {
-	const DEFAULT_CONTENT           = 'default_content';
-	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
-	const DEFERRED_OPERATIONS       = 'deferred_operations';
 	const LEFT_COLUMN_DISABLED      = 'left_column_disabled';
 	const RIGHT_COLUMN_DISABLED     = 'right_column_disabled';
-	const VIEWS_NUMBER_ENABLED      = 'views_number_enabled';
 
 	public static function __static()
 	{
@@ -28,14 +24,14 @@ class PagesConfig extends DefaultModuleConfig
 	 */
 	public function get_default_values()
 	{
-		return array(
-			self::DEFAULT_CONTENT => '',
-			self::ROOT_CATEGORY_DESCRIPTION => CategoriesService::get_default_root_category_description('pages'),
-			self::AUTHORIZATIONS => array('r-1' => 33, 'r0' => 37, 'r1' => 61),
-			self::DEFERRED_OPERATIONS => array(),
-			self::LEFT_COLUMN_DISABLED => false,
-			self::RIGHT_COLUMN_DISABLED => false,
-			self::VIEWS_NUMBER_ENABLED => true,
+		return array_merge(
+			parent::get_default_values(),
+			array(
+				self::VIEWS_NUMBER_ENABLED => true,
+				self::AUTHORIZATIONS => array('r-1' => 33, 'r0' => 37, 'r1' => 61),
+				self::LEFT_COLUMN_DISABLED => false,
+				self::RIGHT_COLUMN_DISABLED => false,
+			)
 		);
 	}
 }

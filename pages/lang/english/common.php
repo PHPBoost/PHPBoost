@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 20
+ * @version     PHPBoost 6.0 - last update: 2021 02 26
  * @since       PHPBoost 1.6 - 2007 08 18
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -17,8 +17,8 @@
 // Module titles
 $lang['module.title'] = 'Pages';
 
-$lang['items'] = 'pages';
 $lang['item'] = 'page';
+$lang['items'] = 'pages';
 
 $lang['an.item'] = 'a page';
 $lang['the.item'] = 'the page';
@@ -29,13 +29,11 @@ $lang['member.items'] = 'Pages published by';
 $lang['pages.views'] = 'views';
 $lang['pages.view'] = 'view';
 
-$lang['pages.management'] = 'Pages management';
 $lang['pages.number'] = 'Pages number';
 
 // Configuration
 $lang['pages.config.left.column'] = 'Masquer les blocs de gauche';
 $lang['pages.config.right.column'] = 'Masquer les blocs de droite';
-$lang['pages.config.default.content'] = 'Set default content';
 
 // Form
 $lang['pages.add'] = 'New page';
@@ -50,5 +48,4 @@ $lang['pages.seo.description.member'] = 'All :author\'s pages.';
 // Messages helper
 $lang['pages.message.success.add'] = 'The page <b>:name</b> has been added';
 $lang['pages.message.success.edit'] = 'The page <b>:name</b> has been modified';
-$lang['pages.message.success.delete'] = 'The page <b>:name</b> has been deleted';
 ?>
