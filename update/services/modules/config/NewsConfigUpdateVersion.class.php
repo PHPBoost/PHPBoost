@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 02
+ * @version     PHPBoost 6.0 - last update: 2021 02 25
  * @since       PHPBoost 6.0 - 2021 02 02
 */
 
@@ -59,7 +59,7 @@ class NewsConfigUpdateVersion extends ConfigUpdateVersion
 				$news_suggestions_enabled = $old_config->get_property('news_suggestions_enabled');
 			} catch (PropertyNotFoundException $e) {}
 			if ($news_suggestions_enabled)
-				$config->set_item_suggestions_enabled($news_suggestions_enabled);
+				$config->set_items_suggestions_enabled($news_suggestions_enabled);
 			
 			try {
 				$nb_view_enabled = $old_config->get_property('nb_view_enabled');
