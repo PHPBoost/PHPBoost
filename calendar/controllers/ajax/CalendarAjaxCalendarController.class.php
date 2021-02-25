@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 15
+ * @version     PHPBoost 6.0 - last update: 2021 02 25
  * @since       PHPBoost 3.0 - 2012 11 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -121,8 +121,7 @@ class CalendarAjaxCalendarController extends AbstractController
 					{
 						$title = isset($array_items[$j]['title']) ? $array_items[$j]['title'] : '';
 						$array_items[$j] = array(
-							'title' => $title . (!empty($title) ? '
-	' : '') . ($item['type'] != 'BIRTHDAY' ? (($j == $start_date->get_day() && $month == $start_date->get_month() && $year == $start_date->get_year()) ? $start_date->get_hours() . 'h' . $start_date->get_minutes() . ' : ' : '') : LangLoader::get_message('calendar.labels.birthday.of', 'common', 'calendar') . ' ') . $item['title'],
+							'title' => $title . (!empty($title) ? '<br />' : '') . ($item['type'] != 'BIRTHDAY' ? (($j == $start_date->get_day() && $month == $start_date->get_month() && $year == $start_date->get_year()) ? $start_date->get_hours() . 'h' . $start_date->get_minutes() . ' : ' : '') : LangLoader::get_message('calendar.labels.birthday.of', 'common', 'calendar') . ' ') . $item['title'],
 							'type' => $item['type'],
 							'color' => ($item['type'] == 'BIRTHDAY' ? $config->get_birthday_color() : ($item['id_category'] != Category::ROOT_CATEGORY && isset($categories[$item['id_category']]) && $categories[$item['id_category']]->get_color() ? $categories[$item['id_category']]->get_color() : $config->get_event_color())),
 							'id_category' => $item['id_category'],
@@ -234,6 +233,7 @@ class CalendarAjaxCalendarController extends AbstractController
 				'C_COLOR' => $color || $birthday_day,
 				'C_WEEK_LABEL' => ($i % 8) == 1,
 				'DAY' => $content,
+				'C_HAS_TITLE' => !empty($array_items[$today]),
 				'TITLE' => !empty($array_items[$today]) ? $array_items[$today]['title'] : '',
 				'COLOR' => $color,
 				'CLASS' => $class,

@@ -64,7 +64,7 @@
 				# START day #
 					<td class="{day.CLASS}">
 						# IF day.C_MONTH_DAY #
-							<a href="{day.U_DAY_EVENTS}">
+							<a# IF day.C_HAS_TITLE # aria-label="{day.TITLE}"# ENDIF # href="{day.U_DAY_EVENTS}">
 								{day.DAY}
 								# IF day.C_COLOR #
 									<span class="event-spot" style="background-color: {day.COLOR}"></span>
