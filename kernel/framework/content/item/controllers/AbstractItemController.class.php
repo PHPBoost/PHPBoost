@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 24
+ * @version     PHPBoost 6.0 - last update: 2021 02 26
  * @since       PHPBoost 6.0 - 2019 12 20
 */
 
@@ -59,6 +59,34 @@ abstract class AbstractItemController extends ModuleController
 				'C_ENABLED_VIEWS'       => $this->config->get_views_number_enabled(),
 				'CATEGORIES_PER_ROW'    => $this->config->get_categories_per_row()
 			));
+		}
+		
+		// Automatically add module dedicated configuration parameters to template
+		$configuration_name = self::get_module_configuration()->get_configuration_name();
+		if (!in_array($configuration_name, array('DefaultModuleConfig', 'DefaultRichModuleConfig')))
+		{
+			$configuration_variables = array();
+			$kernel_configuration_class = new ReflectionClass('DefaultRichModuleConfig');
+			$configuration_class = new ReflectionClass($configuration_name);
+			
+			foreach (array_diff($configuration_class->getConstants(), $kernel_configuration_class->getConstants()) as $parameter)
+			{
+				$parameter_get_method = 'get_' . $parameter;
+				$type = gettype($configuration_class->getMethod('get_default_value')->invoke($this->config, $parameter));
+				
+				switch ($type) {
+					case 'boolean':
+						$configuration_variables['C_' . strtoupper($parameter)] = $this->config->$parameter_get_method();
+					break;
+					case 'integer':
+					case 'string':
+						$configuration_variables[strtoupper($parameter)] = $this->config->$parameter_get_method();
+					break;
+				}
+			}
+			
+			if ($configuration_variables)
+				$this->view->put_all($configuration_variables);
 		}
 		
 		$this->view->put_all($this->get_additional_view_parameters());
