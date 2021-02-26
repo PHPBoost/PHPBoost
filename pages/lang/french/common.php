@@ -33,8 +33,8 @@ $lang['pages.view'] = 'vue';
 $lang['pages.number'] = 'Nombre de pages';
 
 // Configuration
-$lang['pages.config.left.column'] = 'Masquer les blocs de gauche';
-$lang['pages.config.right.column'] = 'Masquer les blocs de droite';
+$lang['config.left.column.disabled'] = 'Masquer les blocs de gauche';
+$lang['config.right.column.disabled'] = 'Masquer les blocs de droite';
 
 // Form
 $lang['pages.add'] = 'Ajouter une page';
