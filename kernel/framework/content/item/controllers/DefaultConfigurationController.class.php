@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 25
+ * @version     PHPBoost 6.0 - last update: 2021 02 26
  * @since       PHPBoost 6.0 - 2020 02 11
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -21,6 +21,8 @@ class DefaultConfigurationController extends AbstractAdminItemController
 	 * @var FormButtonSubmit
 	 */
 	protected $submit_button;
+
+	protected $additional_fields_list = array();
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -212,9 +214,56 @@ class DefaultConfigurationController extends AbstractAdminItemController
 
 	protected function hide_fields() {}
 
-	protected function add_additional_fields(&$fieldset) {}
+	protected function add_additional_fields(&$fieldset)
+	{
+		// Automatically add module dedicated configuration parameters to config form
+		// Lang variable config.parameter.name (for a parameter PARAMETER_NAME in module config file) requested in lang file
+		$configuration_class_name = self::get_module_configuration()->get_configuration_name();
+		if (!in_array($configuration_class_name, array('DefaultModuleConfig', 'DefaultRichModuleConfig')))
+		{
+			$kernel_configuration_class = new ReflectionClass('DefaultRichModuleConfig');
+			$configuration_class = new ReflectionClass($configuration_class_name);
+			
+			foreach (array_diff($configuration_class->getConstants(), $kernel_configuration_class->getConstants()) as $parameter)
+			{
+				$parameter_lang_variable = 'config.' . str_replace('_', '.', $parameter);
+				if (isset($this->lang[$parameter_lang_variable]))
+				{
+					$this->additional_fields_list[] = $parameter;
+					$parameter_get_method = 'get_' . $parameter;
+					$type = gettype($configuration_class->getMethod('get_default_value')->invoke($this->config, $parameter));
+					
+					switch ($type) {
+						case 'boolean':
+							$fieldset->add_field(new FormFieldCheckbox($parameter, $this->lang[$parameter_lang_variable], $this->config->$parameter_get_method(),
+								array('class' => 'custom-checkbox', 'description' => (isset($this->lang[$parameter_lang_variable . '.explain']) ? $this->lang[$parameter_lang_variable . '.explain'] : ''))
+							));
+						break;
+						case 'integer':
+							$fieldset->add_field(new FormFieldNumberEditor($parameter, $this->lang[$parameter_lang_variable], $this->config->$parameter_get_method(),
+								array('min' => 1, 'max' => 50, 'description' => (isset($this->lang[$parameter_lang_variable . '.explain']) ? $this->lang[$parameter_lang_variable . '.explain'] : ''), 'required' => true),
+								array(new FormFieldConstraintIntegerRange(1, 50))
+							));
+						break;
+						case 'string':
+							$fieldset->add_field(new FormFieldTextEditor($parameter, $this->lang[$parameter_lang_variable], $this->config->$parameter_get_method(),
+								array('maxlength' => 100, 'description' => (isset($this->lang[$parameter_lang_variable . '.explain']) ? $this->lang[$parameter_lang_variable . '.explain'] : ''), 'required' => true, 'class' => 'top-field')
+							));
+						break;
+					}
+				}
+			}
+		}
+	}
 
-	protected function save_additional_fields() {}
+	protected function save_additional_fields()
+	{
+		foreach ($this->additional_fields_list as $parameter)
+		{
+			$parameter_set_method = 'set_' . $parameter;
+			$this->config->$parameter_set_method($this->form->get_value($parameter));
+		}
+	}
 
 	protected function add_additional_fieldsets(&$form) {}
 

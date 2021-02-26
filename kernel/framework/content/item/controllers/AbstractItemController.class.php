@@ -62,12 +62,12 @@ abstract class AbstractItemController extends ModuleController
 		}
 		
 		// Automatically add module dedicated configuration parameters to template
-		$configuration_name = self::get_module_configuration()->get_configuration_name();
-		if (!in_array($configuration_name, array('DefaultModuleConfig', 'DefaultRichModuleConfig')))
+		$configuration_class_name = self::get_module_configuration()->get_configuration_name();
+		if (!in_array($configuration_class_name, array('DefaultModuleConfig', 'DefaultRichModuleConfig')))
 		{
 			$configuration_variables = array();
 			$kernel_configuration_class = new ReflectionClass('DefaultRichModuleConfig');
-			$configuration_class = new ReflectionClass($configuration_name);
+			$configuration_class = new ReflectionClass($configuration_class_name);
 			
 			foreach (array_diff($configuration_class->getConstants(), $kernel_configuration_class->getConstants()) as $parameter)
 			{
