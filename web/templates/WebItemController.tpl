@@ -7,7 +7,7 @@
 		</div>
 		<h1><span id="name" itemprop="name">{TITLE}</span></h1>
 	</header>
-	<div class="sub-header">
+	<div class="sub-section">
 		<div class="content-container">
 			# IF NOT C_VISIBLE #
 				<div class="content">
@@ -112,7 +112,7 @@
 						<meta itemprop="interactionCount" content="{COMMENTS_NUMBER} UserComments">
 					# ENDIF #
 				</footer>
-			</article>			
+			</article>
 		</div>
 	</div>
 	<footer></footer>
