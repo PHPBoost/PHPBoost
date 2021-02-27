@@ -114,7 +114,6 @@ li:last-child .accordion .content-panel { border-width: 0 1px 1px; }
     height:100%;
     width:100%;
     overflow-y: auto;
-    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .modal-animation {
@@ -329,8 +328,8 @@ li:last-child .accordion .content-panel { border-width: 0 1px 1px; }
 .cssmenu-select ul li.has-sub:hover ul { left: -9999px; }
 
 .cssmenu-select.cssmenu-open ul li.has-sub ul {
-    left: 0; 
-    top: calc(100% - 0.1618rem) 
+    left: 0;
+    top: calc(100% - 0.1618rem)
 }
 
 .cssmenu-select li .cssmenu-title {

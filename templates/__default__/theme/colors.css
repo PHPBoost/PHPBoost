@@ -733,6 +733,8 @@ figure { border-color: var(--bdr-main); }
 abbr,
 a.wikipedia-link { border-bottom-color: var(--main-tone); }
 
+.sticky-menu { background-color: var(--bgc-alt); }
+
 /* --- Colors classes --------------------------------------------------------------- */
 .floating-element,
 .message-helper { background-color: var(--bgc-main) }
