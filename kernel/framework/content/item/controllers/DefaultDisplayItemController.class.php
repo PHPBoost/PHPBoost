@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 24
+ * @version     PHPBoost 6.0 - last update: 2021 02 28
  * @since       PHPBoost 6.0 - 2020 03 12
 */
 
@@ -66,10 +66,8 @@ class DefaultDisplayItemController extends AbstractItemController
 	{
 		if (in_array('comments', $this->enabled_features))
 		{
-			$comments_topic = new DefaultCommentsTopic(self::$module_id, $this->get_item());
-			$comments_topic->set_id_in_module($this->get_item()->get_id());
-			$comments_topic->set_url($this->current_url);
-
+			$comments_topic = new DefaultCommentsTopic(self::$module_id, $this->get_item(), $this->current_url);
+			
 			$this->view->put('COMMENTS', $comments_topic->display());
 		}
 

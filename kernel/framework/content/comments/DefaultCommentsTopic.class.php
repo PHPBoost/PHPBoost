@@ -3,22 +3,28 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 15
+ * @version     PHPBoost 6.0 - last update: 2021 02 28
  * @since       PHPBoost 6.0 - 2020 01 10
 */
 
 class DefaultCommentsTopic extends CommentsTopic
 {
-	protected $module_id;
 	protected $module;
 	protected $item;
 
-	public function __construct($module_id, Item $item = null)
+	public function __construct($module_id, Item $item = null, $url = null)
 	{
 		parent::__construct($module_id);
-		$this->module_id = $module_id;
 		$this->module = ModulesManager::get_module($module_id);
-		$this->item = $item;
+		
+		if ($item)
+		{
+			$this->item = $item;
+			$this->id_in_module = $item->get_id();
+		}
+		
+		if ($url)
+			$this->url = $url;
 	}
 
 	public function get_authorizations()
