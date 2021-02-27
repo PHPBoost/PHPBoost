@@ -1,8 +1,8 @@
 <section id="module-sandbox-nav-menus">
 	<header class="section-header">
-		# INCLUDE SANDBOX_SUBMENU #
 		<h1>{@cssmenu.h1}</h1>
 	</header>
+	# INCLUDE SANDBOX_SUBMENU #
 	<div class="sub-section">
 		<div class="content-container">
 			<article>

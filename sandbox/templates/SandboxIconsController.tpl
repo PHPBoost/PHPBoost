@@ -5,9 +5,10 @@
 
 <section id="module-sandbox-icons">
 	<header class="section-header">
-		# INCLUDE SANDBOX_SUBMENU #
 		<h1>{@sandbox.module.title} - {@title.icons}</h1>
 	</header>
+
+	# INCLUDE SANDBOX_SUBMENU #
 
 	<div class="sub-section"><div class="content-container"><div class="content"># INCLUDE FA #</div></div></div>
 

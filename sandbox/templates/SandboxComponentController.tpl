@@ -1,10 +1,11 @@
 <section id="module-sandbox-component">
 	<header class="section-header">
-		# INCLUDE SANDBOX_SUBMENU #
 		<h1>
 			{@sandbox.module.title} - {@title.component}
 		</h1>
 	</header>
+
+	# INCLUDE SANDBOX_SUBMENU #
 
 	<div class="sub-section"><div class="content-container"><div class="content"># INCLUDE TYPOGRAPHY #</div></div></div>
 
