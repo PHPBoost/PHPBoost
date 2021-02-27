@@ -106,7 +106,12 @@ class DefaultDisplayItemController extends AbstractItemController
 			}
 		}
 
-		$this->view->put_all($this->get_item()->get_template_vars());
+		$this->view->put_all(array_merge(
+			$this->get_item()->get_template_vars(),
+			array(
+				'ADDITIONAL_CONTENT' => $this->get_item()->get_additional_content_template()->display()
+			)
+		));
 	}
 
 	protected function get_template_to_use()

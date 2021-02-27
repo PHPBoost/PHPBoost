@@ -220,7 +220,7 @@
 											# IF C_ENABLED_COMMENTS #
 												<span class="pinned">
 													<i class="fa fa-comments" aria-hidden="true"></i>
-													{items.COMMENTS_NUMBER} # IF items.C_SEVERAL_COMMENTS #${TextHelper::lcfirst(LangLoader::get_message('comments', 'comments-common'))}# ELSE #${TextHelper::lcfirst(LangLoader::get_message('comment', 'comments-common'))}# ENDIF #
+													{items.COMMENTS_LABEL}
 												</span>
 											# ENDIF #
 										</div>
