@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 16
+ * @version     PHPBoost 6.0 - last update: 2021 02 27
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -67,7 +67,9 @@ class CalendarItemFormController extends ModuleController
 		$fieldset = new FormFieldsetHTML('event', $common_lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('title', $common_lang['form.title'], $item_content->get_title(), array('required' => true)));
+		$fieldset->add_field(new FormFieldTextEditor('title', $common_lang['form.title'], $item_content->get_title(),
+			array('required' => true)
+		));
 
 		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
 		{
@@ -77,13 +79,19 @@ class CalendarItemFormController extends ModuleController
 			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('category_id', LangLoader::get_message('category', 'categories-common'), $item_content->get_id_category(), $search_category_children_options));
 		}
 
-		$fieldset->add_field(new FormFieldRichTextEditor('content', $common_lang['form.content'], $item_content->get_content(), array('rows' => 15, 'required' => true)));
+		$fieldset->add_field(new FormFieldRichTextEditor('content', $common_lang['form.content'], $item_content->get_content(),
+			array('rows' => 15, 'required' => true)
+		));
 
 		$fieldset->add_field(new FormFieldThumbnail('thumbnail', $common_lang['form.picture'], $item_content->get_thumbnail()->relative(), CalendarItemContent::THUMBNAIL_URL));
 
-		$fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->lang['calendar.labels.start.date'], $this->get_item()->get_start_date(), array('required' => true, 'five_minutes_step' => true)));
+		$fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->lang['calendar.labels.start.date'], $this->get_item()->get_start_date(),
+			array('required' => true, 'five_minutes_step' => true)
+		));
 
-		$fieldset->add_field($end_date = new FormFieldDateTime('end_date', $this->lang['calendar.labels.end.date'], $this->get_item()->get_end_date(), array('required' => true, 'five_minutes_step' => true)));
+		$fieldset->add_field($end_date = new FormFieldDateTime('end_date', $this->lang['calendar.labels.end.date'], $this->get_item()->get_end_date(),
+			array('required' => true, 'five_minutes_step' => true)
+		));
 
 		$end_date->add_form_constraint(new FormConstraintFieldsDifferenceSuperior($start_date, $end_date));
 
@@ -95,16 +103,22 @@ class CalendarItemFormController extends ModuleController
 				new FormFieldSelectChoiceOption($date_lang['every_month'], CalendarItemContent::MONTHLY),
 				new FormFieldSelectChoiceOption($date_lang['every_year'], CalendarItemContent::YEARLY),
 			),
-			array('events' => array('change' => '
-			if (HTMLForms.getField("repeat_type").getValue() != "' . CalendarItemContent::NEVER . '") {
-				HTMLForms.getField("repeat_number").enable();
-			} else {
-				HTMLForms.getField("repeat_number").disable();
-			}'))
+			array(
+				'events' => array('change' => '
+					if (HTMLForms.getField("repeat_type").getValue() != "' . CalendarItemContent::NEVER . '") {
+						HTMLForms.getField("repeat_number").enable();
+					} else {
+						HTMLForms.getField("repeat_number").disable();
+					}'
+				)
+			)
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('repeat_number', $this->lang['calendar.labels.repeat.number'], $item_content->get_repeat_number(),
-			array('min' => 1, 'max' => 150, 'hidden' => ($request->is_post_method() ? ($request->get_poststring(__CLASS__ . '_repeat_type', '') == CalendarItemContent::NEVER) : $item_content->get_repeat_type() == CalendarItemContent::NEVER)),
+			array(
+				'min' => 1, 'max' => 150,
+				'hidden' => ($request->is_post_method() ? ($request->get_poststring(__CLASS__ . '_repeat_type', '') == CalendarItemContent::NEVER) : $item_content->get_repeat_type() == CalendarItemContent::NEVER)
+			),
 			array(new FormFieldConstraintIntegerRange(1, 150))
 		));
 
@@ -119,14 +133,17 @@ class CalendarItemFormController extends ModuleController
 
 		if ($this->config->is_googlemaps_available())
 		{
-			$fieldset->add_field(new GoogleMapsFormFieldMapAddress('location', $this->lang['calendar.labels.location'], $location, array(
-				'events' => array('blur' => '
-				if (HTMLForms.getField("location").getValue()) {
-					HTMLForms.getField("map_displayed").enable();
-				} else {
-					HTMLForms.getField("map_displayed").disable();
-				}'
-			))));
+			$fieldset->add_field(new GoogleMapsFormFieldMapAddress('location', $this->lang['calendar.labels.location'], $location,
+				array(
+					'events' => array('blur' => '
+						if (HTMLForms.getField("location").getValue()) {
+							HTMLForms.getField("map_displayed").enable();
+						} else {
+							HTMLForms.getField("map_displayed").disable();
+						}'
+					)
+				)
+			));
 
 			$fieldset->add_field(new FormFieldCheckbox('map_displayed', $this->lang['calendar.labels.map.displayed'], $item_content->is_map_displayed(),
 				array('hidden' => !$location)
@@ -135,35 +152,45 @@ class CalendarItemFormController extends ModuleController
 		else
 			$fieldset->add_field(new FormFieldShortMultiLineTextEditor('location', $this->lang['calendar.labels.location'], $location));
 
-		$fieldset->add_field(new FormFieldCheckbox('registration_authorized', $this->lang['calendar.labels.registration.authorized'], $item_content->is_registration_authorized(), array(
-			'events' => array('click' => '
-			if (HTMLForms.getField("registration_authorized").getValue()) {
-				HTMLForms.getField("max_registered_members").enable();
-				HTMLForms.getField("last_registration_date_enabled").enable();
-				jQuery("#' . __CLASS__ . '_register_authorizations").show();
-			} else {
-				HTMLForms.getField("max_registered_members").disable();
-				HTMLForms.getField("last_registration_date_enabled").disable();
-				jQuery("#' . __CLASS__ . '_register_authorizations").hide();
-			}'
-		))));
+		$fieldset->add_field(new FormFieldCheckbox('registration_authorized', $this->lang['calendar.labels.registration.authorized'], $item_content->is_registration_authorized(),
+			array(
+				'events' => array('click' => '
+					if (HTMLForms.getField("registration_authorized").getValue()) {
+						HTMLForms.getField("max_registered_members").enable();
+						HTMLForms.getField("last_registration_date_enabled").enable();
+						jQuery("#' . __CLASS__ . '_register_authorizations").show();
+					} else {
+						HTMLForms.getField("max_registered_members").disable();
+						HTMLForms.getField("last_registration_date_enabled").disable();
+						jQuery("#' . __CLASS__ . '_register_authorizations").hide();
+					}'
+				)
+			)
+		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('max_registered_members', $this->lang['calendar.labels.max.registered.members'], $item_content->get_max_registered_members(),
-			array('description' => $this->lang['calendar.labels.max.registered.members.explain'], 'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_registration_authorized', false) : !$item_content->is_registration_authorized())),
+			array(
+				'description' => $this->lang['calendar.labels.max.registered.members.explain'],
+				'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_registration_authorized', false) : !$item_content->is_registration_authorized())
+			),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'))
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('last_registration_date_enabled', $this->lang['calendar.labels.last.registration.date.enabled'], $item_content->is_last_registration_date_enabled(),array(
-			'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_registration_authorized', false) : !$item_content->is_registration_authorized()), 'events' => array('click' => '
-			if (HTMLForms.getField("last_registration_date_enabled").getValue()) {
-				HTMLForms.getField("last_registration_date").enable();
-			} else {
-				HTMLForms.getField("last_registration_date").disable();
-			}'
-		))));
+		$fieldset->add_field(new FormFieldCheckbox('last_registration_date_enabled', $this->lang['calendar.labels.last.registration.date.enabled'], $item_content->is_last_registration_date_enabled(),
+			array(
+				'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_registration_authorized', false) : !$item_content->is_registration_authorized()),
+				'events' => array('click' => '
+					if (HTMLForms.getField("last_registration_date_enabled").getValue()) {
+						HTMLForms.getField("last_registration_date").enable();
+					} else {
+						HTMLForms.getField("last_registration_date").disable();
+					}'
+				)
+			)
+		));
 
-		$fieldset->add_field($last_registration_date = new FormFieldDateTime('last_registration_date', $this->lang['calendar.labels.last.registration.date'], $item_content->get_last_registration_date(), array(
-			'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_last_registration_date_enabled', false) : !$item_content->is_last_registration_date_enabled()))
+		$fieldset->add_field($last_registration_date = new FormFieldDateTime('last_registration_date', $this->lang['calendar.labels.last.registration.date'], $item_content->get_last_registration_date(),
+			array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_last_registration_date_enabled', false) : !$item_content->is_last_registration_date_enabled()))
 		));
 
 		$last_registration_date->add_form_constraint(new FormConstraintFieldsDifferenceInferior($start_date, $last_registration_date));
