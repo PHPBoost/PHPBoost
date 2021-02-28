@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 21
+ * @version     PHPBoost 6.0 - last update: 2021 02 28
  * @since       PHPBoost 6.0 - 2020 01 10
  * @contributor xela <xela@phpboost.com>
 */
@@ -22,7 +22,8 @@ class DefaultModuleConfig extends AbstractConfigData
 
 	public static function __static()
 	{
-		self::$module_id = Environment::get_running_module_name();
+		$module_id = ClassLoader::get_module_id_from_class_name(get_called_class());
+		self::$module_id = ($module_id && !in_array($module_id, array('admin', 'kernel', 'user')) ? $module_id : Environment::get_running_module_name());
 	}
 
 	/**
@@ -30,10 +31,21 @@ class DefaultModuleConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
-		return array(
-			self::ITEMS_PER_PAGE => 15,
-			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13)
+		return array_merge(
+			array(
+				self::ITEMS_PER_PAGE => 15,
+				self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13)
+			),
+			$this->get_additional_default_values()
 		);
+	}
+
+	/**
+	 * Returns the default values of additional parameters of the module.
+	 */
+	public function get_additional_default_values()
+	{
+		return array();
 	}
 
 	/**

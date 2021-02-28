@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 12
+ * @version     PHPBoost 6.0 - last update: 2021 02 28
  * @since       PHPBoost 3.0 - 2009 10 21
  * @contributor mipel <mipel@phpboost.com>
 */
@@ -91,6 +91,14 @@ class ClassLoader
 			}
 		}
 		return $result;
+	}
+
+	/**
+	 * Get module id from a class name
+	 */
+	public static function get_module_id_from_class_name($class_name)
+	{
+		return isset(self::$autoload[$class_name]) ? current(explode('/', ltrim(dirname(self::$autoload[$class_name]), '/'))) : '';
 	}
 
 	/**
