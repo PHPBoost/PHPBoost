@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 02 10
+ * @version     PHPBoost 6.0 - last update: 2021 02 28
  * @since       PHPBoost 6.0 - 2020 01 28
 */
 
@@ -41,7 +41,7 @@ class DefaultCategoriesFeedProvider implements FeedProvider
 
 			$items_lang = ItemsService::get_items_lang($this->module_id);
 			$data = new FeedData();
-			$data->set_title($items_lang['last.items'] . ' - ' . $site_name);
+			$data->set_title($name ? $name : $items_lang['last.items'] . ' - ' . $site_name);
 			$data->set_date(new Date());
 			$data->set_link(SyndicationUrlBuilder::rss($this->module_id, $id_category));
 			$data->set_host(HOST);
