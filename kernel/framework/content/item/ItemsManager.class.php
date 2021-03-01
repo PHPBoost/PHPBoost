@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 08 27
+ * @version     PHPBoost 6.0 - last update: 2021 03 01
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor xela <xela@phpboost.com>
 */
@@ -24,7 +24,8 @@ class ItemsManager
 
 	public function __construct($module_id = '')
 	{
-		self::$module_id   = $module_id ? $module_id : Environment::get_running_module_name();
+		$called_module_id  = ClassLoader::get_module_id_from_class_name(get_called_class());
+		self::$module_id   = $module_id ? $module_id : ($called_module_id && !in_array($called_module_id, array('admin', 'kernel', 'user')) ? $called_module_id : Environment::get_running_module_name());
 		self::$module      = ModulesManager::get_module(self::$module_id);
 		self::$items_table = self::$module->get_configuration()->get_items_table_name();
 	}
@@ -93,7 +94,7 @@ class ItemsManager
 	}
 
 	 /**
-	 * @desc Return the item with all its properties.
+	 * @desc Return the item with all its properties from its id.
 	 * @param int $id Item identifier
 	 */
 	public function get_item(int $id)
@@ -124,7 +125,7 @@ class ItemsManager
 	}
 
 	 /**
-	 * @desc Return the list of items correspnding to the condition.
+	 * @desc Return the list of items corresponding to the condition.
 	 * @param string $condition Restriction to apply to the item
 	 * @param array $parameters Parameters of the condition
 	 * @param int $number_items_per_page Number of items to display
@@ -204,7 +205,8 @@ class ItemsManager
 	/**
 	 * @return string module identifier.
 	 */
-	public function get_module_id() {
+	public function get_module_id()
+	{
 		return self::$module_id;
 	}
 

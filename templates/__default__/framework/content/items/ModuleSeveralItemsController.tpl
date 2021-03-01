@@ -26,7 +26,8 @@
 		</div>
 	# ENDIF #
 
-	# IF C_SUB_CATEGORIES #
+	# IF C_DISPLAY_SUB_CATEGORIES #
+		# IF C_SUB_CATEGORIES #
 		<div class="sub-section">
 			<div class="content-container">
 				<div class="cell-flex cell-tile cell-columns-{CATEGORIES_PER_ROW}">
@@ -54,6 +55,7 @@
 				# IF C_SUBCATEGORIES_PAGINATION #<div class="align-center"># INCLUDE SUBCATEGORIES_PAGINATION #</div># ENDIF #
 			</div>
 		</div>
+		# ENDIF #
 	# ENDIF #
 
 	<div class="sub-section">
@@ -187,9 +189,9 @@
 											# IF C_ENABLED_DATE #
 												<span class="pinned">
 													<i class="far fa-calendar-alt" aria-hidden="true"></i>
-													<time datetime="# IF items.C_DIFFERED #{items.PUBLISHING_START_DATE_ISO8601}# ELSE #{items.DATE_ISO8601}# ENDIF #" itemprop="datePublished">
-														# IF items.C_DIFFERED #
-															{items.PUBLISHING_START_DATE}
+													<time datetime="# IF items.C_DEFFERED_PUBLISHING #{items.DEFFERED_PUBLISHING_START_DATE_ISO8601}# ELSE #{items.DATE_ISO8601}# ENDIF #" itemprop="datePublished">
+														# IF items.C_DEFFERED_PUBLISHING #
+															{items.DEFFERED_PUBLISHING_START_DATE}
 														# ELSE #
 															{items.DATE}
 														# ENDIF #

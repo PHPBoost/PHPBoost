@@ -33,8 +33,8 @@
 							# IF C_ENABLED_DATE #
 								<span class="pinned">
 									<i class="far fa-calendar-alt" aria-hidden="true"></i>
-									<time datetime="# IF C_DIFFERED #{DIFFERED_START_DATE_ISO8601}# ELSE #{DATE_ISO8601}# ENDIF #" itemprop="datePublished">
-										# IF C_DIFFERED #{DIFFERED_START_DATE}# ELSE #{DATE}# ENDIF #
+									<time datetime="# IF C_DEFFERED_PUBLISHING #{DEFFERED_PUBLISHING_START_DATE_ISO8601}# ELSE #{DATE_ISO8601}# ENDIF #" itemprop="datePublished">
+										# IF C_DEFFERED_PUBLISHING #{DEFFERED_PUBLISHING_START_DATE}# ELSE #{DATE}# ENDIF #
 									</time>
 								</span>
 							# ENDIF #

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 28
+ * @version     PHPBoost 6.0 - last update: 2021 03 01
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor xela <xela@phpboost.com>
 */
@@ -602,6 +602,13 @@ class Item
 		);
 	}
 
+	public function get_global_template_vars()
+	{
+		return array(
+			'C_DISPLAY_SUB_CATEGORIES' => true
+		);
+	}
+
 	public function get_template_vars()
 	{
 		$categories_template_vars = $comments_template_vars = $notation_template_vars = $newcontent_template_vars = $sources_template_vars = array();
@@ -662,6 +669,7 @@ class Item
 		return array_merge(
 			Date::get_array_tpl_vars($this->creation_date, 'date'),
 			Date::get_array_tpl_vars($this->update_date, 'update_date'),
+			Date::get_array_tpl_vars($this->publishing_start_date, 'deffered_publishing_start_date'),
 			$categories_template_vars,
 			$comments_template_vars,
 			$notation_template_vars,
@@ -669,10 +677,11 @@ class Item
 			$sources_template_vars,
 			array(
 			// Conditions
-			'C_CONTROLS'           => $this->is_authorized_to_manage(),
-			'C_AUTHOR_EXIST'       => $author->get_id() !== User::VISITOR_LEVEL,
-			'C_AUTHOR_GROUP_COLOR' => !empty($author_group_color),
-			'C_HAS_UPDATE_DATE'    => $this->has_update_date(),
+			'C_CONTROLS'            => $this->is_authorized_to_manage(),
+			'C_AUTHOR_EXIST'        => $author->get_id() !== User::VISITOR_LEVEL,
+			'C_AUTHOR_GROUP_COLOR'  => !empty($author_group_color),
+			'C_HAS_UPDATE_DATE'     => $this->has_update_date(),
+			'C_DEFFERED_PUBLISHING' => $this->published == self::DEFERRED_PUBLICATION,
 
 			// Item parameters
 			'ID'                                              => $this->get_id(),
