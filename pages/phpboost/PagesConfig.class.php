@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 25
+ * @version     PHPBoost 6.0 - last update: 2021 02 28
  * @since       PHPBoost 3.0 - 2012 03 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -14,24 +14,16 @@ class PagesConfig extends DefaultRichModuleConfig
 	const LEFT_COLUMN_DISABLED      = 'left_column_disabled';
 	const RIGHT_COLUMN_DISABLED     = 'right_column_disabled';
 
-	public static function __static()
-	{
-		self::$module_id = 'pages';
-	}
-
 	/**
 	 * {@inheritdoc}
 	 */
-	public function get_default_values()
+	public function get_additional_default_values()
 	{
-		return array_merge(
-			parent::get_default_values(),
-			array(
-				self::VIEWS_NUMBER_ENABLED => true,
-				self::AUTHORIZATIONS => array('r-1' => 33, 'r0' => 37, 'r1' => 61),
-				self::LEFT_COLUMN_DISABLED => false,
-				self::RIGHT_COLUMN_DISABLED => false,
-			)
+		return array(
+			self::VIEWS_NUMBER_ENABLED  => true,
+			self::AUTHORIZATIONS        => array('r-1' => 33, 'r0' => 37, 'r1' => 61),
+			self::LEFT_COLUMN_DISABLED  => false,
+			self::RIGHT_COLUMN_DISABLED => false
 		);
 	}
 }
