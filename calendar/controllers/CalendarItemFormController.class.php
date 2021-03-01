@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 27
+ * @version     PHPBoost 6.0 - last update: 2021 03 01
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -156,13 +156,27 @@ class CalendarItemFormController extends ModuleController
 			array(
 				'events' => array('click' => '
 					if (HTMLForms.getField("registration_authorized").getValue()) {
-						HTMLForms.getField("max_registered_members").enable();
+						HTMLForms.getField("registration_limit").enable();
 						HTMLForms.getField("last_registration_date_enabled").enable();
 						jQuery("#' . __CLASS__ . '_register_authorizations").show();
 					} else {
-						HTMLForms.getField("max_registered_members").disable();
+						HTMLForms.getField("registration_limit").disable();
 						HTMLForms.getField("last_registration_date_enabled").disable();
+						HTMLForms.getField("max_registered_members").disable();
 						jQuery("#' . __CLASS__ . '_register_authorizations").hide();
+					}'
+				)
+			)
+		));
+
+		$fieldset->add_field(new FormFieldCheckbox('registration_limit', $this->lang['calendar.labels.registration.limit'], $item_content->is_registration_limited(),
+			array(
+				'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_registration_authorized', false) : !$item_content->is_registration_authorized()),
+				'events' => array('click' => '
+					if (HTMLForms.getField("registration_limit").getValue()) {
+						HTMLForms.getField("max_registered_members").enable();
+					} else {
+						HTMLForms.getField("max_registered_members").disable();
 					}'
 				)
 			)
@@ -170,10 +184,11 @@ class CalendarItemFormController extends ModuleController
 
 		$fieldset->add_field(new FormFieldNumberEditor('max_registered_members', $this->lang['calendar.labels.max.registered.members'], $item_content->get_max_registered_members(),
 			array(
-				'description' => $this->lang['calendar.labels.max.registered.members.explain'],
-				'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_registration_authorized', false) : !$item_content->is_registration_authorized())
+				'min' => 1,
+				'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_registration_limit', false) : !$item_content->is_registration_limited())
 			),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'))
+			array(new FormFieldConstraintRegex('`^[0-9]+$`iu')),
+			array(new FormFieldConstraintLengthMin(1))
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('last_registration_date_enabled', $this->lang['calendar.labels.last.registration.date.enabled'], $item_content->is_last_registration_date_enabled(),
@@ -346,7 +361,18 @@ class CalendarItemFormController extends ModuleController
 		if ($this->form->get_value('registration_authorized'))
 		{
 			$item_content->authorize_registration();
-			$item_content->set_max_registered_members($this->form->get_value('max_registered_members'));
+
+			if($this->form->get_value('registration_limit'))
+			{
+				$item_content->limit_registration();
+				$item_content->set_max_registered_members($this->form->get_value('max_registered_members'));
+			}
+			else
+			{
+				$item_content->unlimit_registration();
+				$item_content->set_max_registered_members(null);
+			}
+
 
 			if ($this->form->get_value('last_registration_date_enabled') && $this->form->get_value('last_registration_date') !== null)
 			{

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 18
+ * @version     PHPBoost 6.0 - last update: 2021 03 01
  * @since       PHPBoost 4.0 - 2013 10 29
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -28,6 +28,7 @@ class CalendarItemContent
 	private $author_user;
 
 	private $registration_authorized;
+	private $registration_limit;
 	private $max_registered_members;
 	private $last_registration_date_enabled;
 	private $last_registration_date;
@@ -201,6 +202,21 @@ class CalendarItemContent
 		return $this->registration_authorized;
 	}
 
+	public function limit_registration()
+	{
+		$this->registration_limit = true;
+	}
+
+	public function unlimit_registration()
+	{
+		$this->registration_limit = false;
+	}
+
+	public function is_registration_limited()
+	{
+		return $this->registration_limit;
+	}
+
 	public function set_max_registered_members($max_registered_members)
 	{
 		$this->max_registered_members = $max_registered_members;
@@ -312,6 +328,7 @@ class CalendarItemContent
 			'creation_date' => (int)$this->get_creation_date()->get_timestamp(),
 			'author_user_id' => $this->get_author_user()->get_id(),
 			'registration_authorized' => (int)$this->is_registration_authorized(),
+			'registration_limit' => (int)$this->is_registration_limited(),
 			'max_registered_members' => (int)$this->get_max_registered_members(),
 			'last_registration_date' => (int)($this->get_last_registration_date() !== null ? $this->get_last_registration_date()->get_timestamp() : ''),
 			'register_authorizations' => TextHelper::serialize($this->get_register_authorizations()),
@@ -350,6 +367,11 @@ class CalendarItemContent
 		else
 			$this->unauthorize_registration();
 
+		if ($properties['registration_limit'])
+			$this->limit_registration();
+		else
+			$this->limit_registration();
+
 		$this->max_registered_members = $properties['max_registered_members'];
 		$this->last_registration_date_enabled = !empty($properties['last_registration_date']);
 		$this->last_registration_date = !empty($properties['last_registration_date']) ? new Date($properties['last_registration_date'], Timezone::SERVER_TIMEZONE) : null;
@@ -378,7 +400,8 @@ class CalendarItemContent
 		$this->thumbnail_url = FormFieldThumbnail::DEFAULT_VALUE;
 
 		$this->registration_authorized = false;
-		$this->max_registered_members = 0;
+		$this->registration_limit = false;
+		$this->max_registred_members = null;
 		$this->last_registration_date_enabled = false;
 		$this->register_authorizations = array('r0' => 3, 'r1' => 3);
 

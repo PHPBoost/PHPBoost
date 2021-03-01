@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 20
+ * @version     PHPBoost 6.0 - last update: 2021 03 01
  * @since       PHPBoost 4.0 - 2013 08 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -54,10 +54,10 @@ $lang['calendar.labels.location'] = 'Adresse';
 $lang['calendar.labels.map.displayed'] = 'Afficher l\'adresse sur une carte';
 $lang['calendar.labels.thumbnail'] = 'Ajouter une image';
 $lang['calendar.labels.registration.authorized'] = 'Activer l\'inscription des membres à l\'événement';
+$lang['calendar.labels.registration.limit'] = 'Limiter le nombre d\'inscrits';
 $lang['calendar.labels.remaining.place'] = 'Plus qu\'une place disponible !';
 $lang['calendar.labels.remaining.places'] = 'Il ne reste que :missing_number places !';
 $lang['calendar.labels.max.registered.members'] = 'Nombre de participants maximum';
-$lang['calendar.labels.max.registered.members.explain'] = '0 pour illimité';
 $lang['calendar.labels.max.participants.reached'] = 'Le nombre de participants maximum a été atteint.';
 $lang['calendar.labels.last.registration.date.enabled'] = 'Définir une date limite d\'inscription';
 $lang['calendar.labels.last.registration.date'] = 'Dernière date d\'inscription';

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 20
+ * @version     PHPBoost 6.0 - last update: 2021 03 01
  * @since       PHPBoost 4.0 - 2013 08 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -54,10 +54,10 @@ $lang['calendar.labels.location'] = 'Location';
 $lang['calendar.labels.map.displayed'] = 'Display address on a map';
 $lang['calendar.labels.thumbnail'] = 'Add a thumbnail';
 $lang['calendar.labels.registration.authorized'] = 'Active members registration for the event';
+$lang['calendar.labels.registration.limit'] = 'Limit subscribers number';
 $lang['calendar.labels.remaining.place'] = 'Only one place left!';
 $lang['calendar.labels.remaining.places'] = 'Only :missing_number places left!';
 $lang['calendar.labels.max.registered.members'] = 'Maximum participant number';
-$lang['calendar.labels.max.registered.members.explain'] = '0 for no limit';
 $lang['calendar.labels.max.participants.reached'] = 'Maximum participants number has been reached.';
 $lang['calendar.labels.last.registration.date.enabled'] = 'Set a limit registration date';
 $lang['calendar.labels.last.registration.date'] = 'Last registration date';
