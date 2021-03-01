@@ -16,30 +16,32 @@ class HomeLandingConfigUpdateVersion extends ConfigUpdateVersion
 
 	protected function build_new_config()
 	{
+		HomeLandingSetup::upgrade($installed_version);
+
 		$old_config = $this->get_old_config();
-		
+
 		if (ModulesManager::is_module_installed('HomeLanding') && ModulesManager::get_module('HomeLanding')->get_configuration()->get_compatibility() == UpdateServices::NEW_KERNEL_VERSION && class_exists('HomeLandingConfig') && !empty($old_config))
 		{
 			$config = HomeLandingConfig::load();
 			$onepage_menu = '';
-			
+
 			try {
 				$onepage_menu = $old_config->get_property('onepage_menu');
 			} catch (PropertyNotFoundException $e) {}
 			if ($onepage_menu)
 			$config->set_anchors_menu((bool)$old_config->get_property('onepage_menu'));
-			
+
 			$modules = $config->get_modules();
 			foreach($modules as &$module)
 			{
 				if ($module['module_id'] == 'onepage_menu')
 					$module['module_id'] = 'anchors_menu';
 			}
-			
+
 			$config->set_modules($modules);
-			
+
 			HomeLandingConfig::save();
-			
+
 			return true;
 		}
 		return false;
