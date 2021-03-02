@@ -75,7 +75,6 @@
 									<th>${TextHelper::ucfirst(@form.title)}</th>
 									# IF NOT C_MEMBER_ITEMS ## IF C_AUTHOR_DISPLAYED #<th class="col-small">${TextHelper::ucfirst(@author)}</th># ENDIF ## ENDIF #
 									# IF C_ENABLED_DATE #<th class="col-small">${LangLoader::get_message('date', 'date-common')}</th># ENDIF #
-									# IF C_ENABLED_CATEGORIES #<th class="col-small">${LangLoader::get_message('category', 'categories-common')}</th># ENDIF #
 									# IF C_ENABLED_VIEWS #<th class="col-small">${TextHelper::ucfirst(@views)}</th># ENDIF #
 									# IF C_ENABLED_VISITS #<th class="col-small">${TextHelper::ucfirst(@visits)}</th># ENDIF #
 									# IF C_ENABLED_DOWNLOADS #<th class="col-small">${TextHelper::ucfirst(@downloads)}</th># ENDIF #
@@ -117,11 +116,6 @@
 														{items.DATE}
 													# ENDIF #
 												</time>
-											</td>
-										# ENDIF #
-										# IF C_ENABLED_CATEGORIES #
-											<td>
-												<a itemprop="about" href="{items.U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {items.CATEGORY_NAME}</a>
 											</td>
 										# ENDIF #
 										# IF C_ENABLED_VIEWS #
@@ -205,13 +199,6 @@
 													<time datetime="{items.UPDATE_DATE_ISO8601}" itemprop="dateModified">
 														{items.UPDATE_DATE}
 													</time>
-												</span>
-												# ENDIF #
-											# ENDIF #
-											# IF items.C_HAS_CATEGORY #
-												# IF NOT items.C_ROOT_CATEGORY #
-												<span class="pinned">
-													<a itemprop="about" href="{items.U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {items.CATEGORY_NAME}</a>
 												</span>
 												# ENDIF #
 											# ENDIF #
