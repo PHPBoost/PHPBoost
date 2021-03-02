@@ -68,20 +68,20 @@
 					</div>
 				# ENDIF #
 				# IF C_TABLE_VIEW #
-					<div class="responsive-table ">
+					<div class="responsive-table">
 						<table class="table">
 							<thead>
 								<tr>
-									<th>${TextHelper::ucfirst(@title)}</th>
-									# IF NOT C_MEMBER_ITEMS ## IF C_ENABLED_AUTHOR #<th class="col-small">${TextHelper::ucfirst(@author)}</th># ENDIF ## ENDIF #
-									# IF C_ENABLED_DATE #<th class="col-small">${TextHelper::ucfirst(@date)}</th># ENDIF #
-									# IF C_ENABLED_CATEGORY #<th class="col-small">${TextHelper::ucfirst(@category)}</th># ENDIF #
+									<th>${TextHelper::ucfirst(@form.title)}</th>
+									# IF NOT C_MEMBER_ITEMS ## IF C_AUTHOR_DISPLAYED #<th class="col-small">${TextHelper::ucfirst(@author)}</th># ENDIF ## ENDIF #
+									# IF C_ENABLED_DATE #<th class="col-small">${LangLoader::get_message('date', 'date-common')}</th># ENDIF #
+									# IF C_ENABLED_CATEGORIES #<th class="col-small">${TextHelper::ucfirst(@category)}</th># ENDIF #
 									# IF C_ENABLED_VIEWS #<th class="col-small">${TextHelper::ucfirst(@views)}</th># ENDIF #
 									# IF C_ENABLED_VISITS #<th class="col-small">${TextHelper::ucfirst(@visits)}</th># ENDIF #
 									# IF C_ENABLED_DOWNLOADS #<th class="col-small">${TextHelper::ucfirst(@downloads)}</th># ENDIF #
 									# IF C_ENABLED_NOTATION #<th class="col-small">${TextHelper::ucfirst(@note)}</th># ENDIF #
 									# IF C_ENABLED_COMMENTS #<th class="col-small">${LangLoader::get_message('comments', 'comments-common')}</th># ENDIF #
-									# IF C_CONTROLS #<th class="col-smaller">${TextHelper::ucfirst(@controls)}</th># ENDIF #
+									# IF C_CONTROLS #<th class="col-smaller">${LangLoader::get_message('moderation', 'common')}</th># ENDIF #
 								</tr>
 							</thead>
 							<tbody>
@@ -119,7 +119,7 @@
 												</time>
 											</td>
 										# ENDIF #
-										# IF C_ENABLED_CATEGORY #
+										# IF C_ENABLED_CATEGORIES #
 											<td>
 												<a itemprop="about" href="{items.U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {items.CATEGORY_NAME}</a>
 											</td>
@@ -198,10 +198,20 @@
 													</time>
 												</span>
 											# ENDIF #
-											# IF C_ENABLED_CATEGORY #
+											# IF C_ENABLED_UPDATE_DATE #
+												<span class="pinned">
+													<i class="far fa-calendar-plus" aria-hidden="true"></i>
+													<time datetime="{items.UPDATE_DATE_ISO8601}" itemprop="dateModified">
+														{items.UPDATE_DATE}
+													</time>
+												</span>
+											# ENDIF #
+											# IF items.C_HAS_CATEGORY #
+												# IF NOT items.C_ROOT_CATEGORY #
 												<span class="pinned">
 													<a itemprop="about" href="{items.U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {items.CATEGORY_NAME}</a>
 												</span>
+												# ENDIF #
 											# ENDIF #
 											# IF C_ENABLED_VIEWS #
 												<span class="pinned" role="contentinfo" aria-label="{items.VIEWS_NUMBER} # IF items.C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #"><i class="fa fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span>

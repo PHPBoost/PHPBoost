@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 01
+ * @version     PHPBoost 6.0 - last update: 2021 03 02
  * @since       PHPBoost 6.0 - 2019 12 20
 */
 
@@ -40,11 +40,12 @@ abstract class AbstractItemController extends ModuleController
 			$this->enabled_features[] = 'notation';
 		
 		$this->view->put_all(array(
-			'MODULE_ID'          => self::get_module()->get_id(),
-			'MODULE_NAME'        => self::get_module_configuration()->get_name(),
-			'ITEMS_PER_ROW'      => $this->config->get_items_per_row(),
-			'C_ENABLED_COMMENTS' => in_array('comments', $this->enabled_features),
-			'C_ENABLED_NOTATION' => in_array('notation', $this->enabled_features)
+			'MODULE_ID'            => self::get_module()->get_id(),
+			'MODULE_NAME'          => self::get_module_configuration()->get_name(),
+			'ITEMS_PER_ROW'        => $this->config->get_items_per_row(),
+			'C_ENABLED_CATEGORIES' => self::get_module_configuration()->has_categories(),
+			'C_ENABLED_COMMENTS'   => in_array('comments', $this->enabled_features),
+			'C_ENABLED_NOTATION'   => in_array('notation', $this->enabled_features)
 		));
 		
 		if (self::get_module_configuration()->has_rich_config_parameters())
