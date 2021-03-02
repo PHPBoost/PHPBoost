@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 01
+ * @version     PHPBoost 6.0 - last update: 2021 03 02
  * @since       PHPBoost 4.0 - 2014 02 11
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -57,7 +57,6 @@ class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 				'columns' => array(
 					'contents'    => 'content MEDIUMTEXT',
 					'author_id'    => 'author_user_id INT(11) NOT NULL DEFAULT 0',
-					'max_registered_members' => 'max_registered_members INT(11) NULL DEFAULT ""',
 					'picture_url' => 'thumbnail VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 0',
 				)
 			)

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 01
+ * @version     PHPBoost 6.0 - last update: 2021 03 02
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -162,7 +162,6 @@ class CalendarItemFormController extends ModuleController
 					} else {
 						HTMLForms.getField("registration_limit").disable();
 						HTMLForms.getField("last_registration_date_enabled").disable();
-						HTMLForms.getField("max_registered_members").disable();
 						jQuery("#' . __CLASS__ . '_register_authorizations").hide();
 					}'
 				)
@@ -183,12 +182,8 @@ class CalendarItemFormController extends ModuleController
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('max_registered_members', $this->lang['calendar.labels.max.registered.members'], $item_content->get_max_registered_members(),
-			array(
-				'min' => 1,
-				'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_registration_limit', false) : !$item_content->is_registration_limited())
-			),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`iu')),
-			array(new FormFieldConstraintLengthMin(1))
+			array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_registration_limit', false) : !$item_content->is_registration_limited())),
+			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'))
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('last_registration_date_enabled', $this->lang['calendar.labels.last.registration.date.enabled'], $item_content->is_last_registration_date_enabled(),
@@ -370,9 +365,7 @@ class CalendarItemFormController extends ModuleController
 			else
 			{
 				$item_content->unlimit_registration();
-				$item_content->set_max_registered_members(null);
 			}
-
 
 			if ($this->form->get_value('last_registration_date_enabled') && $this->form->get_value('last_registration_date') !== null)
 			{
