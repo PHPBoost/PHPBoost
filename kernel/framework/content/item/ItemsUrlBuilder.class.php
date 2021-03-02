@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 17
+ * @version     PHPBoost 6.0 - last update: 2021 03 03
  * @since       PHPBoost 6.0 - 2019 12 20
 */
 
@@ -79,7 +79,7 @@ class ItemsUrlBuilder
 	 */
 	public static function display_comments($id_category, $rewrited_name_category, $id, $rewrited_title, $module_id = '')
 	{
-		return self::display($id_category, $rewrited_name_category, $id, $rewrited_title, '#comments-list', $module_id);
+		return self::display($id_category, $rewrited_name_category, $id, $rewrited_title, $module_id, '#comments-list');
 	}
 
 	/**
@@ -87,7 +87,7 @@ class ItemsUrlBuilder
 	 */
 	public static function display_item_comments($id, $rewrited_title, $module_id = '')
 	{
-		return self::display_item($id, $rewrited_title, '#comments-list', $module_id);
+		return self::display_item($id, $rewrited_title, $module_id, '#comments-list');
 	}
 
 	/**

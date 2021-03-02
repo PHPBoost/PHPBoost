@@ -220,8 +220,7 @@
 											# ENDIF #
 											# IF C_ENABLED_COMMENTS #
 												<span class="pinned">
-													<i class="fa fa-comments" aria-hidden="true"></i>
-													{items.COMMENTS_LABEL}
+													<a href="{items.U_COMMENTS}"><i class="fa fa-comments" aria-hidden="true"></i> {items.COMMENTS_LABEL}</a>
 												</span>
 											# ENDIF #
 										</div>
