@@ -40,6 +40,7 @@ $lang['config.items.per.page'] = ':Items_number par page';
 $lang['config.items.per.row'] = ':Items_number par ligne';
 $lang['config.items.default.sort.field'] = 'Ordre d\'affichage des :items par défaut';
 $lang['config.items.default.sort.mode'] = 'Sens d\'affichage des :items par défaut';
+$lang['config.full.item.display'] = 'Affichage complet des :items dans les listes';
 $lang['config.auto.cut.characters.number'] = 'Longueur par défaut du résumé des :items';
 $lang['config.auto.cut.characters.number.explain'] = 'Nombre de caractères affichés dans le résumé par défaut';
 $lang['config.items.summary.displayed.to.guests'] = 'Afficher le résumé des :items aux visiteurs s\'ils n\'ont pas l\'autorisation de lecture';

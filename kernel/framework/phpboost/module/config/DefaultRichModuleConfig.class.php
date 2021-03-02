@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 18
+ * @version     PHPBoost 6.0 - last update: 2021 03 02
  * @since       PHPBoost 6.0 - 2020 01 10
 */
 
@@ -16,6 +16,7 @@ class DefaultRichModuleConfig extends DefaultModuleConfig
 	const ITEMS_DEFAULT_SORT_MODE = 'items_default_sort_mode';
 
 	const DEFAULT_CONTENT = 'default_content';
+	const FULL_ITEM_DISPLAY = 'full_item_display';
 	const SUMMARY_DISPLAYED_TO_GUESTS = 'summary_displayed_to_guests';
 	const AUTO_CUT_CHARACTERS_NUMBER = 'auto_cut_characters_number';
 	const AUTHOR_DISPLAYED = 'author_displayed';
@@ -37,27 +38,25 @@ class DefaultRichModuleConfig extends DefaultModuleConfig
 	/**
 	 * {@inheritdoc}
 	 */
-	public function get_default_values()
+	public function get_kernel_additional_default_values()
 	{
-		return array_merge(
-			parent::get_default_values(),
-			array(
-				self::ITEMS_PER_ROW               => 2,
-				self::ITEMS_DEFAULT_SORT_FIELD    => 'date',
-				self::ITEMS_DEFAULT_SORT_MODE     => TextHelper::strtolower(Item::DESC),
-				self::DEFAULT_CONTENT             => '',
-				self::SUMMARY_DISPLAYED_TO_GUESTS => false,
-				self::AUTO_CUT_CHARACTERS_NUMBER  => 150,
-				self::AUTHOR_DISPLAYED            => true,
-				self::DATE_DISPLAYED              => true,
-				self::UPDATE_DATE_DISPLAYED       => true,
-				self::VIEWS_NUMBER_ENABLED        => false,
-				self::CATEGORIES_PER_PAGE         => 10,
-				self::CATEGORIES_PER_ROW          => 3,
-				self::ROOT_CATEGORY_DESCRIPTION   => CategoriesService::get_default_root_category_description(self::$module_id),
-				self::DISPLAY_TYPE                => self::GRID_VIEW,
-				self::DEFERRED_OPERATIONS         => array()
-			)
+		return array(
+			self::ITEMS_PER_ROW               => 2,
+			self::ITEMS_DEFAULT_SORT_FIELD    => 'date',
+			self::ITEMS_DEFAULT_SORT_MODE     => TextHelper::strtolower(Item::DESC),
+			self::DEFAULT_CONTENT             => '',
+			self::FULL_ITEM_DISPLAY           => false,
+			self::SUMMARY_DISPLAYED_TO_GUESTS => false,
+			self::AUTO_CUT_CHARACTERS_NUMBER  => 150,
+			self::AUTHOR_DISPLAYED            => true,
+			self::DATE_DISPLAYED              => true,
+			self::UPDATE_DATE_DISPLAYED       => true,
+			self::VIEWS_NUMBER_ENABLED        => false,
+			self::CATEGORIES_PER_PAGE         => 10,
+			self::CATEGORIES_PER_ROW          => 3,
+			self::ROOT_CATEGORY_DESCRIPTION   => CategoriesService::get_default_root_category_description(self::$module_id),
+			self::DISPLAY_TYPE                => self::GRID_VIEW,
+			self::DEFERRED_OPERATIONS         => array()
 		);
 	}
 }

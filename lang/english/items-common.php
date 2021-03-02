@@ -36,6 +36,7 @@ $lang['config.items.per.page'] = ':Items_number per page';
 $lang['config.items.per.row'] = ':Items_number per line';
 $lang['config.items.default.sort.field'] = ':Items default display order';
 $lang['config.items.default.sort.mode'] = ':Items default display direction';
+$lang['config.full.item.display'] = 'Full :items display in lists';
 $lang['config.auto.cut.characters.number'] = 'Default length of :items summary';
 $lang['config.auto.cut.characters.number.explain'] = 'Number of characters displayed in the summary by default';
 $lang['config.items.summary.displayed.to.guests'] = 'Display :items summary to guests if they don\'t have read permission';

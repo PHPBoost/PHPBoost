@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 28
+ * @version     PHPBoost 6.0 - last update: 2021 03 02
  * @since       PHPBoost 6.0 - 2020 01 10
  * @contributor xela <xela@phpboost.com>
 */
@@ -36,8 +36,17 @@ class DefaultModuleConfig extends AbstractConfigData
 				self::ITEMS_PER_PAGE => 15,
 				self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13)
 			),
+			$this->get_kernel_additional_default_values(),
 			$this->get_additional_default_values()
 		);
+	}
+
+	/**
+	 * Returns the default values of additional parameters defined in other config classes of the kernel.
+	 */
+	public function get_kernel_additional_default_values()
+	{
+		return array();
 	}
 
 	/**
