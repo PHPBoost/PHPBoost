@@ -39,12 +39,14 @@
 								</span>
 							# ENDIF #
 							# IF C_ENABLED_UPDATE_DATE #
+								# IF C_HAS_UPDATE_DATE #
 								<span class="pinned">
 									<i class="far fa-calendar-plus" aria-hidden="true"></i>
 									<time datetime="{UPDATE_DATE_ISO8601}" itemprop="dateModified">
 										{UPDATE_DATE}
 									</time>
 								</span>
+								# ENDIF #
 							# ENDIF #
 							# IF C_HAS_CATEGORY #
 								# IF NOT C_ROOT_CATEGORY #

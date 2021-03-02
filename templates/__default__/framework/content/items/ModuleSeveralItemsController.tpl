@@ -110,11 +110,11 @@
 										# ENDIF #
 										# IF C_ENABLED_DATE #
 											<td>
-												<time datetime="# IF NOT items.C_DIFFERED #{items.DATE_ISO8601}# ELSE #{items.PUBLISHING_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished">
-													# IF NOT items.C_DIFFERED #
-														{items.DATE}
+												<time datetime="# IF items.C_DEFFERED_PUBLISHING #{items.DEFFERED_PUBLISHING_START_DATE_ISO8601}# ELSE #{items.DATE_ISO8601}# ENDIF #" itemprop="datePublished">
+													# IF items.C_DEFFERED_PUBLISHING #
+														{items.DEFFERED_PUBLISHING_START_DATE}
 													# ELSE #
-														{items.PUBLISHING_START_DATE}
+														{items.DATE}
 													# ENDIF #
 												</time>
 											</td>
@@ -199,12 +199,14 @@
 												</span>
 											# ENDIF #
 											# IF C_ENABLED_UPDATE_DATE #
+												# IF items.C_HAS_UPDATE_DATE #
 												<span class="pinned">
 													<i class="far fa-calendar-plus" aria-hidden="true"></i>
 													<time datetime="{items.UPDATE_DATE_ISO8601}" itemprop="dateModified">
 														{items.UPDATE_DATE}
 													</time>
 												</span>
+												# ENDIF #
 											# ENDIF #
 											# IF items.C_HAS_CATEGORY #
 												# IF NOT items.C_ROOT_CATEGORY #
