@@ -6,7 +6,7 @@
 			dataType: "html",
 			data: {module_id: ${escapejs(MODULE_ID)}, id_in_module: ${escapejs(ID_IN_MODULE)}, topic_identifier: ${escapejs(TOPIC_IDENTIFIER)}, token: ${escapejs(TOKEN)}},
 			success: function(returnData){
-				jQuery("#comments-list").append(returnData);
+				jQuery("#comments-section").append(returnData);
 				jQuery('#refresh-comments').remove();
 			}
 		});
@@ -23,16 +23,16 @@
 
 <hr />
 # INCLUDE KEEP_MESSAGE #
-<div class="tabs-container">
+<div id="comments-list" class="tabs-container">
     # IF C_DISPLAY_FORM #
 		<nav class="tabs-nav">
 	        <ul class="flex-between">
-	            <li><a href="#" data-tabs="" data-target="comments-list"><h5>{@comments}</h5></a></li>
+	            <li><a href="#" data-tabs="" data-target="comments-section"><h5>{@comments}</h5></a></li>
 	            # IF NOT C_IS_LOCKED #<li><a class="pinned question" href="#" data-tabs="" data-target="add-comment">{@comment.add}</a></li># ENDIF #
 	        </ul>
 	    </nav>
 	# ENDIF #
-    <div id="comments-list" class="first-tab tabs tabs-animation">
+    <div id="comments-section" class="first-tab tabs tabs-animation">
         <div class="content-panel">
 			# IF C_COMMENTS #
 				# IF C_DISPLAY_DELETE_FORM #
