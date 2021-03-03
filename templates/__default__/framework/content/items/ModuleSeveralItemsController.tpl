@@ -73,15 +73,56 @@
 							<thead>
 								<tr>
 									<th>${TextHelper::ucfirst(@form.title)}</th>
-									# IF NOT C_MEMBER_ITEMS ## IF C_AUTHOR_DISPLAYED #<th class="col-small">${TextHelper::ucfirst(@author)}</th># ENDIF ## ENDIF #
-									# IF C_ENABLED_DATE #<th class="col-small">${LangLoader::get_message('date', 'date-common')}</th># ENDIF #
-									# IF C_ENABLED_CATEGORIES #<th class="col-small">${LangLoader::get_message('category', 'categories-common')}</th># ENDIF #
-									# IF C_ENABLED_VIEWS #<th class="col-small">${TextHelper::ucfirst(@views)}</th># ENDIF #
-									# IF C_ENABLED_VISITS #<th class="col-small">${TextHelper::ucfirst(@visits)}</th># ENDIF #
-									# IF C_ENABLED_DOWNLOADS #<th class="col-small">${TextHelper::ucfirst(@downloads)}</th># ENDIF #
-									# IF C_ENABLED_NOTATION #<th class="col-small">${TextHelper::ucfirst(@note)}</th># ENDIF #
-									# IF C_ENABLED_COMMENTS #<th class="col-small">${LangLoader::get_message('comments', 'comments-common')}</th># ENDIF #
-									# IF C_CONTROLS #<th class="col-smaller">${LangLoader::get_message('moderation', 'common')}</th># ENDIF #
+									# IF NOT C_MEMBER_ITEMS #
+										# IF C_AUTHOR_DISPLAYED #
+											<th aria-label="${TextHelper::ucfirst(@author)}">
+												<i class="far fa-fw fa-user hidden-small-screens" aria-hidden="true"></i>
+												<span class="hidden-large-screens">${TextHelper::ucfirst(@author)}</span>
+											</th>
+										# ENDIF #
+									# ENDIF #
+									# IF C_ENABLED_DATE #
+										<th class="col-small" aria-label="${LangLoader::get_message('date', 'date-common')}">
+											<i class="far fa-fw fa-calendar-check hidden-small-screens" aria-hidden="true"></i>
+											<span class="hidden-large-screens">${LangLoader::get_message('date', 'date-common')}</span>
+										</th>
+									# ENDIF #
+									# IF C_ENABLED_VIEWS #
+										<th class="col-small" aria-label="${TextHelper::ucfirst(@views)}">
+											<i class="fa fa-fw fa-eye hidden-small-screens" aria-hidden="true"></i>
+											<span class="hidden-large-screens">${TextHelper::ucfirst(@views)}</span>
+										</th>
+									# ENDIF #
+									# IF C_ENABLED_VISITS #
+										<th class="col-small" aria-label="${TextHelper::ucfirst(@visits)}">
+											<i class="fa fa-fw fa-share hidden-small-screens" aria-hidden="true"></i>
+											<span class="hidden-large-screens">${TextHelper::ucfirst(@visits)}</span>
+										</th>
+									# ENDIF #
+									# IF C_ENABLED_DOWNLOADS #
+										<th class="col-small" aria-label="${TextHelper::ucfirst(@downloads)}">
+											<i class="fa fa-fw fa-dowload hidden-small-screens" aria-hidden="true"></i>
+											<span class="hidden-large-screens">${TextHelper::ucfirst(@downloads)}</span>
+										</th>
+									# ENDIF #
+									# IF C_ENABLED_NOTATION #
+										<th class="col-small" aria-label="${TextHelper::ucfirst(@note)}">
+											<i class="far fa-fw fa-star hidden-small-screens" aria-hidden="true"></i>
+											<span class="hidden-large-screens">${TextHelper::ucfirst(@note)}</span>
+										</th>
+									# ENDIF #
+									# IF C_ENABLED_COMMENTS #
+										<th class="col-small" aria-label="${LangLoader::get_message('comments', 'comments-common')}">
+											<i class="far fa-fw fa-comments hidden-small-screens" aria-hidden="true"></i>
+											<span class="hidden-large-screens">${LangLoader::get_message('comments', 'comments-common')}</span>
+										</th>
+									# ENDIF #
+									# IF C_CONTROLS #
+										<th class="col-smaller" aria-label="${LangLoader::get_message('moderation', 'common')}">
+											<i class="fa fa-fw fa-gavel hidden-small-screens" aria-hidden="true"></i>
+											<span class="hidden-large-screens">${LangLoader::get_message('moderation', 'common')}</span>
+										</th>
+									# ENDIF #
 								</tr>
 							</thead>
 							<tbody>
@@ -93,7 +134,6 @@
 										# IF NOT C_MEMBER_ITEMS #
 											# IF C_AUTHOR_DISPLAYED #
 												<td>
-													<i class="far fa-user"></i>
 													# IF items.C_AUTHOR_CUSTOM_NAME #
 														<span class="pinned">{items.AUTHOR_CUSTOM_NAME}</span>
 													# ELSE #
@@ -111,27 +151,26 @@
 										# IF C_ENABLED_DATE #
 											<td>
 												<time datetime="# IF items.C_DEFFERED_PUBLISHING #{items.DEFFERED_PUBLISHING_START_DATE_ISO8601}# ELSE #{items.DATE_ISO8601}# ENDIF #" itemprop="datePublished">
-													# IF items.C_DEFFERED_PUBLISHING #
-														{items.DEFFERED_PUBLISHING_START_DATE}
+													# IF C_HAS_UPDATE_DATE #
+														{items.UPDATE_DATE}
 													# ELSE #
-														{items.DATE}
+														# IF items.C_DEFFERED_PUBLISHING #
+															{items.DEFFERED_PUBLISHING_START_DATE}
+														# ELSE #
+															{items.DATE}
+														# ENDIF #
 													# ENDIF #
 												</time>
 											</td>
 										# ENDIF #
-										# IF C_ENABLED_CATEGORIES #
-											<td>
-												<a itemprop="about" href="{items.U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {items.CATEGORY_NAME}</a>
-											</td>
-										# ENDIF #
 										# IF C_ENABLED_VIEWS #
 											<td>
-												{items.VIEWS_NUMBER} # IF items.C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #
+												{items.VIEWS_NUMBER}
 											</td>
 										# ENDIF #
 										# IF C_ENABLED_VISITS #
 											<td class="col-small">
-												{items.VISITS_NUMBER} # IF items.C_SEVERAL_VISITS #{@visits}# ELSE #{@visit}# ENDIF #
+												{items.VISITS_NUMBER}
 											</td>
 										# ENDIF #
 										# IF C_ENABLED_DOWNLOADS #
@@ -146,7 +185,7 @@
 										# ENDIF #
 										# IF C_ENABLED_COMMENTS #
 											<td>
-												{items.COMMENTS_NUMBER} # IF items.C_SEVERAL_COMMENTS #${TextHelper::lcfirst(LangLoader::get_message('comments', 'comments-common'))}# ELSE #${TextHelper::lcfirst(LangLoader::get_message('comment', 'comments-common'))}# ENDIF #
+												{items.COMMENTS_NUMBER}
 											</td>
 										# ENDIF #
 										# IF items.C_CONTROLS #
@@ -206,15 +245,6 @@
 														{items.UPDATE_DATE}
 													</time>
 												</span>
-												# ENDIF #
-											# ENDIF #
-											# IF C_ENABLED_CATEGORIES #
-												# IF items.C_HAS_CATEGORY #
-													# IF NOT items.C_ROOT_CATEGORY #
-													<span class="pinned">
-														<a itemprop="about" href="{items.U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {items.CATEGORY_NAME}</a>
-													</span>
-													# ENDIF #
 												# ENDIF #
 											# ENDIF #
 											# IF C_ENABLED_VIEWS #
