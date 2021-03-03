@@ -166,7 +166,7 @@
 												# ENDIF #
 											</td>
 										# ENDIF #
-										IF C_ENABLED_CATEGORIES #
+										# IF C_ENABLED_CATEGORIES #
 											<td>
 												<a itemprop="about" href="{items.U_CATEGORY}">{items.CATEGORY_NAME}</a>
 											</td>
@@ -253,6 +253,15 @@
 														{items.UPDATE_DATE}
 													</time>
 												</span>
+												# ENDIF #
+											# ENDIF #
+											# IF C_ENABLED_CATEGORIES #
+												# IF items.C_HAS_CATEGORY #
+													# IF NOT items.C_ROOT_CATEGORY #
+														<span class="pinned">
+															<a itemprop="about" href="{items.U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {items.CATEGORY_NAME}</a>
+														</span>
+													# ENDIF #
 												# ENDIF #
 											# ENDIF #
 											# IF C_ENABLED_VIEWS #
