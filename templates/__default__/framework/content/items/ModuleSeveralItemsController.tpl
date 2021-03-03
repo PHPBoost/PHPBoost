@@ -84,7 +84,13 @@
 									# IF C_ENABLED_DATE #
 										<th class="col-small" aria-label="${LangLoader::get_message('date', 'date-common')}">
 											<i class="far fa-fw fa-calendar-check hidden-small-screens" aria-hidden="true"></i>
-											<span class="hidden-large-screens">${LangLoader::get_message('date', 'date-common')}</span>
+											<span class="hidden-large-screens">${LangLoader::get_message('form.date.creation', 'common')}</span>
+										</th>
+									# ENDIF #
+									# IF C_ENABLED_CATEGORIES #
+										<th class="col-small" arai-label="${LangLoader::get_message('category', 'categories-common')}">
+											<i class="far fa-fw fa-folder hidden-small-screens" aria-hidden="true"></i>
+											<span class="hidden-large-screens">${LangLoader::get_message('category', 'categories-common')}</span>
 										</th>
 									# ENDIF #
 									# IF C_ENABLED_VIEWS #
@@ -95,7 +101,7 @@
 									# ENDIF #
 									# IF C_ENABLED_VISITS #
 										<th class="col-small" aria-label="${TextHelper::ucfirst(@visits)}">
-											<i class="fa fa-fw fa-share hidden-small-screens" aria-hidden="true"></i>
+											<i class="fa fa-fw fa-share-square hidden-small-screens" aria-hidden="true"></i>
 											<span class="hidden-large-screens">${TextHelper::ucfirst(@visits)}</span>
 										</th>
 									# ENDIF #
@@ -118,7 +124,7 @@
 										</th>
 									# ENDIF #
 									# IF C_CONTROLS #
-										<th class="col-smaller" aria-label="${LangLoader::get_message('moderation', 'common')}">
+										<th class="col-small" aria-label="${LangLoader::get_message('moderation', 'common')}">
 											<i class="fa fa-fw fa-gavel hidden-small-screens" aria-hidden="true"></i>
 											<span class="hidden-large-screens">${LangLoader::get_message('moderation', 'common')}</span>
 										</th>
@@ -151,16 +157,18 @@
 										# IF C_ENABLED_DATE #
 											<td>
 												<time datetime="# IF items.C_DEFFERED_PUBLISHING #{items.DEFFERED_PUBLISHING_START_DATE_ISO8601}# ELSE #{items.DATE_ISO8601}# ENDIF #" itemprop="datePublished">
-													# IF C_HAS_UPDATE_DATE #
-														{items.UPDATE_DATE}
-													# ELSE #
-														# IF items.C_DEFFERED_PUBLISHING #
-															{items.DEFFERED_PUBLISHING_START_DATE}
-														# ELSE #
-															{items.DATE}
-														# ENDIF #
-													# ENDIF #
+													# IF items.C_DEFFERED_PUBLISHING #{items.DEFFERED_PUBLISHING_START_DATE}# ELSE #{items.DATE}# ENDIF #
 												</time>
+												# IF C_HAS_UPDATE_DATE #
+													<time class="pinned notice small text-italic" aria-label="${LangLoader::get_message('form.date.update', 'common')}"datetime="{items.UPDATE_DATE_ISO8601}" itemprop="dateModified">
+														{items.UPDATE_DATE}
+													</time>
+												# ENDIF #
+											</td>
+										# ENDIF #
+										IF C_ENABLED_CATEGORIES #
+											<td>
+												<a itemprop="about" href="{items.U_CATEGORY}">{items.CATEGORY_NAME}</a>
 											</td>
 										# ENDIF #
 										# IF C_ENABLED_VIEWS #

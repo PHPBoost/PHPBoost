@@ -56,27 +56,43 @@
 		</div>
 	# ENDIF #
 
-	# IF C_ITEMS #
-		# IF C_SEVERAL_ITEMS #
-			<div class="sub-section">
-				<div class="content-container">
+	<div class="sub-section">
+		<div class="content-container">
+		# IF C_ITEMS #
+			# IF C_SEVERAL_ITEMS #
+				<div class="content">
 					# INCLUDE SORT_FORM #
 					<div class="spacer"></div>
 				</div>
-			</div>
-		# ENDIF #
-		<div class="sub-section">
-			<div class="content-container">
+			# ENDIF #
 				# IF C_TABLE_VIEW #
 					<div class="responsive-table">
 						<table class="table">
 							<thead>
 								<tr>
-									<th>${LangLoader::get_message('form.name', 'common')} <span class="small more">(${LangLoader::get_message('see.details', 'common')})</span></th>
-									<th class="col-small">{@web.visits.number}</th>
-									# IF C_ENABLED_NOTATION #<th>${LangLoader::get_message('note', 'common')}</th># ENDIF #
-									# IF C_ENABLED_COMMENTS #<th class="col-small">${LangLoader::get_message('comments', 'comments-common')}</th># ENDIF #
-									# IF C_CONTROLS #<th class="col-smaller"></th># ENDIF #
+									<th>${LangLoader::get_message('form.name', 'common')}</th>
+									<th class="col-small" aria-label="{@web.visits.number}">
+										<i class="fa fa-fw fa-share-square hidden-small-screens" aria-hidden="true"></i>
+										<span class="hidden-large-screens">{@web.visits.number}</span>
+									</th>
+									# IF C_ENABLED_NOTATION #
+										<th aria-label="${LangLoader::get_message('note', 'common')}">
+											<i class="far fa-fw fa-star hidden-small-screens" aria-hidden="true"></i>
+											<span class="hidden-large-screens">${LangLoader::get_message('note', 'common')}</span>
+										</th>
+									# ENDIF #
+									# IF C_ENABLED_COMMENTS #
+										<th class="col-small" aria-label="${LangLoader::get_message('comments', 'comments-common')}">
+											<i class="far fa-fw fa-comments hidden-small-screens" aria-hidden="true"></i>
+											<span class="hidden-large-screens">${LangLoader::get_message('comments', 'comments-common')}</span>
+										</th>
+									# ENDIF #
+									# IF C_CONTROLS #
+										<th class="col-small" aria-label="${LangLoader::get_message('moderation', 'common')}">
+											<i class="fa fa-fw fa-gavel hidden-small-screens" aria-hidden="true"></i>
+											<span class="hidden-large-screens">${LangLoader::get_message('moderation', 'common')}</span>
+										</th>
+									# ENDIF #
 								</tr>
 							</thead>
 							<tbody>
@@ -95,7 +111,7 @@
 										# ENDIF #
 										# IF C_ENABLED_COMMENTS #
 											<td>
-												# IF items.C_COMMENTS # {items.COMENTS_NUMBER} # ENDIF # {items.L_COMMENTS}
+												{items.COMMENTS_NUMBER}
 											</td>
 										# ENDIF #
 										# IF items.C_CONTROLS #
@@ -219,20 +235,16 @@
 						# END items #
 					</div>
 				# ENDIF #
-			</div>
-		</div>
-	# ELSE #
-		# IF NOT C_HIDE_NO_ITEM_MESSAGE #
-			<div class="sub-section">
-				<div class="content-container">
+			# ELSE #
+				# IF NOT C_HIDE_NO_ITEM_MESSAGE #
 					<div class="content">
 						<div class="message-helper bgc notice align-center">
 							${LangLoader::get_message('no_item_now', 'common')}
 						</div>
 					</div>
-				</div>
+				# ENDIF #
 			</div>
-		# ENDIF #
+		</div>
 	# ENDIF #
 
 	<footer># IF C_PAGINATION #<div class="sub-section"><div class="content-container"># INCLUDE PAGINATION #</div></div># ENDIF #</footer>

@@ -76,10 +76,6 @@
 										<i class="far fa-fw fa-calendar-plus hidden-small-screens" aria-hidden="true"></i>
 										<span class="hidden-large-screens">${LangLoader::get_message('form.date.creation', 'common')}</span>
 									</th>
-									<th class="col-small" aria-label="${LangLoader::get_message('status.last.update', 'common')}">
-										<i class="far fa-fw fa-calendar-check hidden-small-screens" aria-hidden="true"></i>
-										<span class="hidden-large-screens">${LangLoader::get_message('status.last.update', 'common')}</span>
-									</th>
 									<th class="col-small" aria-label="{@downloads.number}">
 										<i class="fa fa-fw fa-download hidden-small-screens" aria-hidden="true"></i>
 										<span class="hidden-large-screens">{@downloads.number}</span>
@@ -102,8 +98,8 @@
 											<span class="hidden-large-screens">${LangLoader::get_message('comments', 'comments-common')}</span>
 										</th>
 									# ENDIF #
-									# IF C_MODERATION #
-										<th class="col-smaller" aria-label="${LangLoader::get_message('moderation', 'common')}">
+									# IF C_CONTROLS #
+										<th class="col-small" aria-label="${LangLoader::get_message('moderation', 'common')}">
 											<i class="fa fa-fw fa-gavel hidden-small-screens" aria-hidden="true"></i>
 											<span class="hidden-large-screens">${LangLoader::get_message('moderation', 'common')}</span>
 										</th>
@@ -117,13 +113,11 @@
 											<a href="{items.U_ITEM}" itemprop="name"# IF items.C_NEW_CONTENT # class="new-content"# ENDIF #>{items.TITLE}</a>
 										</td>
 										<td>
-											<time datetime="# IF NOT items.C_DIFFERED #{items.DATE_ISO8601}# ELSE #{items.DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT items.C_DIFFERED #{items.DATE}# ELSE #{items.DIFFERED_START_DATE}# ENDIF #</time>
-										</td>
-										<td>
+											<time datetime="# IF NOT items.C_DIFFERED #{items.DATE_ISO8601}# ELSE #{items.DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished">
+												# IF NOT items.C_DIFFERED #{items.DATE}# ELSE #{items.DIFFERED_START_DATE}# ENDIF #
+											</time>
 											# IF items.C_HAS_UPDATE_DATE #
-												<time datetime="{items.UPDATE_DATE_ISO8601}" itemprop="datePublished">{items.UPDATE_DATE}</time>
-											# ELSE #
-												--
+												<time class="pinned notice small text-italic" aria-label="${LangLoader::get_message('form.date.update', 'common')}" datetime="{items.UPDATE_DATE_ISO8601}" itemprop="datePublished">{items.UPDATE_DATE}</time>
 											# ENDIF #
 										</td>
 										<td>
@@ -141,10 +135,10 @@
 										# ENDIF #
 										# IF C_ENABLED_COMMENTS #
 											<td>
-												# IF items.C_COMMENTS # {items.COMMENTS_NUMBER} # ENDIF # {items.L_COMMENTS}
+												{items.COMMENTS_NUMBER}
 											</td>
 										# ENDIF #
-										# IF C_MODERATION #
+										# IF C_CONTROLS #
 											<td class="controls">
 												# IF items.C_EDIT #
 													<a href="{items.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
