@@ -3,11 +3,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 29
+ * @version     PHPBoost 6.0 - last update: 2021 03 02
  * @since       PHPBoost 2.0 - 2008 03 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 if (defined('PHPBOOST') !== true)
@@ -77,10 +78,12 @@ $vars_tpl = array(
 	'U_TOPIC_TRACK'            => Url::to_rel('/forum/track.php'),
 	'U_LAST_MSG_READ'          => Url::to_rel('/forum/lastread.php'),
 	'U_MSG_NOT_READ'           => Url::to_rel('/forum/unread.php'),
+	'U_MSG_NO_ANSWER'          => Url::to_rel('/forum/noanswer.php'),
 	'U_MSG_SET_VIEW'           => Url::to_rel('/forum/action' . url('.php?read=1', '')),
 	'L_SHOW_TOPIC_TRACK'       => $LANG['show_topic_track'],
 	'L_SHOW_LAST_READ'         => $LANG['show_last_read'],
 	'L_SHOW_NOT_READS'         => $LANG['show_not_reads'],
+	'L_SHOW_NO_ANSWER'         => $LANG['show.no.answer'],
 	'L_MARK_AS_READ'           => $LANG['mark_as_read'],
 	'C_IS_GUEST'               => !$is_guest,
 	'NBR_MSG_NOT_READ'         => $nbr_msg_not_read,

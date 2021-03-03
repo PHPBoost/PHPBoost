@@ -53,6 +53,7 @@ $LANG['mark_as_read'] = 'Marquer comme lu';
 $LANG['show_topic_track'] = 'Sujets suivis';
 $LANG['no_msg_not_read'] = 'Aucun message non lu';
 $LANG['show_not_reads'] = 'Messages non lus';
+$LANG['show.no.answer'] = 'Messages sans réponse';
 $LANG['show_my_msg'] = 'Voir mes messages';
 $LANG['show_last_read'] = 'Derniers messages lus';
 $LANG['show_no_answer'] = 'Messages sans réponse';

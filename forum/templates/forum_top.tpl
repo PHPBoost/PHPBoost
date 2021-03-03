@@ -89,7 +89,7 @@
 						</li>
 						<li>
 							<span class="cssmenu-title">
-								<a href="{U_SHOW_MY_MSG}" aria-label="{L_SHOW_MY_MSG}"><i class="far fa-fw fa-user-circle" aria-hidden="true"></i> <span class="hidden-large-screens">{L_SHOW_MY_MSG}</span></a>
+								<a href="{U_MSG_NO_ANSWER}" aria-label="{L_SHOW_NO_ANSWER}"><i class="fa fa-fw fa-comment-slash" aria-hidden="true"></i> <span class="hidden-large-screens">{L_SHOW_NO_ANSWER}</span></a>
 							</span>
 						</li>
 						<li>

@@ -3,11 +3,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 20
+ * @version     PHPBoost 6.0 - last update: 2021 03 02
  * @since       PHPBoost 1.6 - 2006 11 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ####################################################
@@ -52,6 +53,7 @@ $LANG['mark_as_read'] = 'Mark all threads as read';
 $LANG['show_topic_track'] = 'Tracked threads';
 $LANG['no_msg_not_read'] = 'No message unread';
 $LANG['show_not_reads'] = 'Unread messages';
+$LANG['show.no.answer'] = 'Messages without answer';
 $LANG['show_my_msg'] = 'Show my messages';
 $LANG['show_last_read'] = 'Last messages read';
 $LANG['show_no_answer'] = 'Messages without answer';
