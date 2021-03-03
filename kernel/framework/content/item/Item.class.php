@@ -715,7 +715,7 @@ class Item
 		return array();
 	}
 
-	protected function get_additional_content_template()
+	public function get_additional_content_template()
 	{
 		return new StringTemplate('');
 	}
