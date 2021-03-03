@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 11
+ * @version     PHPBoost 6.0 - last update: 2021 03 03
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -119,7 +119,7 @@ class DownloadCategoryController extends ModuleController
 			'C_ENABLED_COMMENTS'         => $this->comments_config->module_comments_is_enabled('download'),
 			'C_ENABLED_NOTATION'         => $this->content_management_config->module_notation_is_enabled('download'),
 			'C_ENABLED_VIEWS_NUMBER'     => $this->config->get_enabled_views_number(),
-			'C_MODERATION'               => DownloadAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
+			'C_CONTROLS'                 => DownloadAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_PAGINATION'               => $pagination->has_several_pages(),
 			'C_CATEGORY'                 => true,
 			'C_ROOT_CATEGORY'            => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
