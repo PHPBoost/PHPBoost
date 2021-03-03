@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 17
+ * @version     PHPBoost 6.0 - last update: 2021 03 03
  * @since       PHPBoost 6.0 - 2020 02 07
 */
 
@@ -34,7 +34,7 @@ class ModuleDispatchManager extends DispatchManager
 			$url_controller_mappers[] = new UrlControllerMapper('DefaultConfigurationController', '`^/admin(?:/config)?/?$`');
 		}
 
-		if ($module_configuration->has_items())
+		if ($module_configuration->has_items() || $module_configuration->has_rich_items())
 		{
 			//Items management
 			$url_controller_mappers[] = new UrlControllerMapper('DefaultItemsManagementController', '`^/manage/?$`');

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 28
+ * @version     PHPBoost 6.0 - last update: 2021 03 03
  * @since       PHPBoost 6.0 - 2020 01 28
 */
 
@@ -57,7 +57,7 @@ class DefaultCategoriesFeedProvider implements FeedProvider
 				'categories_id' => array_keys(CategoriesService::get_categories_manager($this->module_id)->get_children($id_category, new SearchCategoryChildrensOptions(), true))
 			);
 			
-			foreach (ItemsService::get_items_manager($this->module_id)->get_items($condition, $parameters, self::MAXIMUM_ITEMS_NUMBER) as $item)
+			foreach (ItemsService::get_items_manager($this->module_id)->get_items($condition, $parameters, self::MAXIMUM_ITEMS_NUMBER, 0, 'creation_date', 'DESC') as $item)
 			{
 				$link = ItemsUrlBuilder::display($item->get_id_category(), ($item->get_id_category() != Category::ROOT_CATEGORY ? $categories_cache->get_category($item->get_id_category())->get_name() : 'root'), $item->get_id(), $item->get_rewrited_title(), $this->module_id);
 				$feed_item = new FeedItem();

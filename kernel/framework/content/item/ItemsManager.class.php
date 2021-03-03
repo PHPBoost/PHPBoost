@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 01
+ * @version     PHPBoost 6.0 - last update: 2021 03 03
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor xela <xela@phpboost.com>
 */
@@ -133,7 +133,7 @@ class ItemsManager
 	 * @param string $sort_field Field on which apply the sorting
 	 * @param string $sort_mode Sort mode (asc or desc)
 	 */
-	public function get_items($condition = '', array $parameters = array(), int $number_items_per_page = 0, int $display_from = 0, $sort_field = '', $sort_mode = '', $keywords = false)
+	public function get_items($condition = '', array $parameters = array(), int $number_items_per_page = 0, int $display_from = 0, $sort_field = '', $sort_mode = 'DESC', $keywords = false)
 	{
 		$now = new Date();
 		$items = array();
