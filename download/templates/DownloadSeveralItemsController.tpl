@@ -55,21 +55,18 @@
 		</div>
 	# ENDIF #
 
-	# IF C_SEVERAL_ITEMS #
-		# IF NOT C_MEMBER_ITEMS #
-			<div class="sub-section">
-				<div class="content-container">
-					# INCLUDE SORT_FORM #
-					<div class="spacer"></div>
-				</div>
-			</div>
-		# ENDIF #
-	# ENDIF #
-
-	# IF C_ITEMS #
-		# IF C_TABLE_VIEW #
-			<div class="sub-section">
-				<div class="content-container">
+	<div class="sub-section">
+		<div class="content-container">
+			# IF C_ITEMS #
+				# IF C_SEVERAL_ITEMS #
+					# IF NOT C_MEMBER_ITEMS #
+						<div class="content">
+							# INCLUDE SORT_FORM #
+							<div class="spacer"></div>
+						</div>
+					# ENDIF #
+				# ENDIF #
+				# IF C_TABLE_VIEW #
 					<div class="responsive-table">
 						<table class="table">
 							<thead>
@@ -162,11 +159,7 @@
 							</tbody>
 						</table>
 					</div>
-				</div>
-			</div>
-		# ELSE #
-			<div class="sub-section">
-				<div class="content-container">
+				# ELSE #
 					<div class="# IF C_GRID_VIEW #cell-flex cell-columns-{ITEMS_PER_ROW}# ELSE #cell-row# ENDIF #">
 						# START items #
 							<article id="download-item-{items.ID}" class="download-item several-items category-{items.CATEGORY_ID} cell# IF items.C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
@@ -251,22 +244,22 @@
 							</article>
 						# END items #
 					</div>
-				</div>
-			</div>
-		# ENDIF #
-	# ELSE #
-		# IF NOT C_HIDE_NO_ITEM_MESSAGE #
-			<div class="sub-section">
-				<div class="content-container">
-					<div class="content">
-						<div class="message-helper bgc notice align-center">
-							${LangLoader::get_message('no_item_now', 'common')}
+				# ENDIF #
+			# ELSE #
+				# IF NOT C_HIDE_NO_ITEM_MESSAGE #
+					<div class="sub-section">
+						<div class="content-container">
+							<div class="content">
+								<div class="message-helper bgc notice align-center">
+									${LangLoader::get_message('no_item_now', 'common')}
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-		# ENDIF #
-	# ENDIF #
+				# ENDIF #
+			# ENDIF #
+		</div>
+	</div>
 	<footer>
 		# IF C_PAGINATION #<div class="sub-section"><div class="content-container"># INCLUDE PAGINATION #</div></div># ENDIF #
 	</footer>
