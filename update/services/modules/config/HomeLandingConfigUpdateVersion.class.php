@@ -16,13 +16,73 @@ class HomeLandingConfigUpdateVersion extends ConfigUpdateVersion
 
 	protected function build_new_config()
 	{
-		HomeLandingSetup::upgrade($installed_version);
+		$config = HomeLandingConfig::load();
+
+		$modules = $config->get_modules();
+
+		if (!isset($modules[HomeLandingConfig::MODULE_ANCHORS_MENU]))
+		{
+			$new_modules_list = array();
+
+			$module = new HomeLandingModule();
+			$module->set_module_id(HomeLandingConfig::MODULE_ANCHORS_MENU);
+			$module->hide();
+
+			$new_modules_list[1] = $module->get_properties();
+
+			foreach ($modules as $module)
+			{
+				$new_modules_list[] = $module;
+			}
+
+			HomeLandingModulesList::save($new_modules_list);
+			HomeLandingConfig::save();
+		}
+
+		if (!isset($modules[HomeLandingConfig::MODULE_SMALLADS]))
+		{
+			$new_modules_list = array();
+
+			$module = new HomeLandingModule();
+			$module->set_module_id(HomeLandingConfig::MODULE_SMALLADS);
+			$module->set_phpboost_module_id(HomeLandingConfig::MODULE_SMALLADS);
+			$module->hide();
+
+			$new_modules_list[] = $module->get_properties();
+
+			foreach ($modules as $module)
+			{
+				$new_modules_list[] = $module;
+			}
+
+			HomeLandingModulesList::save($new_modules_list);
+			HomeLandingConfig::save();
+		}
+
+		if (!isset($modules[HomeLandingConfig::MODULE_SMALLADS_CATEGORY]))
+		{
+			$new_modules_list = array();
+
+			$module = new HomeLandingModule();
+			$module->set_module_id(HomeLandingConfig::MODULE_SMALLADS_CATEGORY);
+			$module->set_phpboost_module_id(HomeLandingConfig::MODULE_SMALLADS);
+			$module->hide();
+
+			$new_modules_list[] = $module->get_properties();
+
+			foreach ($modules as $module)
+			{
+				$new_modules_list[] = $module;
+			}
+
+			HomeLandingModulesList::save($new_modules_list);
+			HomeLandingConfig::save();
+		}
 
 		$old_config = $this->get_old_config();
 
 		if (ModulesManager::is_module_installed('HomeLanding') && ModulesManager::get_module('HomeLanding')->get_configuration()->get_compatibility() == UpdateServices::NEW_KERNEL_VERSION && class_exists('HomeLandingConfig') && !empty($old_config))
 		{
-			$config = HomeLandingConfig::load();
 			$onepage_menu = '';
 
 			try {
@@ -31,7 +91,6 @@ class HomeLandingConfigUpdateVersion extends ConfigUpdateVersion
 			if ($onepage_menu)
 			$config->set_anchors_menu((bool)$old_config->get_property('onepage_menu'));
 
-			$modules = $config->get_modules();
 			foreach($modules as &$module)
 			{
 				if ($module['module_id'] == 'onepage_menu')
@@ -44,6 +103,7 @@ class HomeLandingConfigUpdateVersion extends ConfigUpdateVersion
 
 			return true;
 		}
+		
 		return false;
 	}
 }
