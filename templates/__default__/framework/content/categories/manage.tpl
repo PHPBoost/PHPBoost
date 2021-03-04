@@ -62,7 +62,7 @@
 		<div class="content-container">
 			<div class="content">
 				# IF C_NO_CATEGORY #
-					<div class="message-helper bgc notice">${LangLoader::get_message('no_item_now', 'common')}</div>
+					<div class="message-helper bgc notice">${LangLoader::get_message('category.no.element', 'categories-common')}</div>
 				# ELSE #
 					<form action="{REWRITED_SCRIPT}" method="post" onsubmit="serialize_sortable();">
 						<fieldset>
