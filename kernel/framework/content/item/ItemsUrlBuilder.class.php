@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 03
+ * @version     PHPBoost 6.0 - last update: 2021 03 04
  * @since       PHPBoost 6.0 - 2019 12 20
 */
 
@@ -95,8 +95,8 @@ class ItemsUrlBuilder
 	 */
 	public static function display_category($id, $rewrited_name, $module_id = '', $sort_field = '', $sort_mode = '', $page = 1, $subcategories_page = 1)
 	{
-		$category = $id > 0 ? $id . '-' . $rewrited_name . '/' : '';
-		$sort_field = $sort_field !== '' ? $sort_field . '/' : '';
+		$category = $id > 0 || $sort_field ? $id . '-' . $rewrited_name . '/' : '';
+		$sort_field = is_string($sort_field) && $sort_field !== '' ? $sort_field . '/' : '';
 		$sort_mode = $sort_mode !== '' ? $sort_mode . '/' : '';
 		$page = $page !== 1 || $subcategories_page !== 1 ? $page . '/' : '';
 		$subcategories_page = $subcategories_page !== 1 ? $subcategories_page . '/' : '';
@@ -108,7 +108,7 @@ class ItemsUrlBuilder
 	 */
 	public static function display_tag($rewrited_name, $module_id = '', $sort_field = '', $sort_mode = '', $page = 1)
 	{
-		$sort_field = $sort_field !== '' ? $sort_field . '/' : '';
+		$sort_field = is_string($sort_field) && $sort_field !== '' ? $sort_field . '/' : '';
 		$sort_mode = $sort_mode !== '' ? $sort_mode . '/' : '';
 		$page = $page !== 1 ? $page . '/' : '';
 		return DispatchManager::get_url(self::get_dispatcher($module_id), '/tag/' . $rewrited_name . '/' . $sort_field . $sort_mode . $page);
@@ -119,7 +119,7 @@ class ItemsUrlBuilder
 	 */
 	public static function display_pending($module_id = '', $sort_field = '', $sort_mode = '', $page = 1)
 	{
-		$sort_field = $sort_field !== '' ? $sort_field . '/' : '';
+		$sort_field = is_string($sort_field) && $sort_field !== '' ? $sort_field . '/' : '';
 		$sort_mode = $sort_mode !== '' ? $sort_mode . '/' : '';
 		$page = $page !== 1 ? $page . '/' : '';
 		return DispatchManager::get_url(self::get_dispatcher($module_id), '/pending/' . $sort_field . $sort_mode . $page);
@@ -130,7 +130,7 @@ class ItemsUrlBuilder
 	 */
 	public static function display_member_items($user_id, $module_id = '', $sort_field = '', $sort_mode = '', $page = 1)
 	{
-		$sort_field = $sort_field !== '' ? $sort_field . '/' : '';
+		$sort_field = is_string($sort_field) && $sort_field !== '' ? $sort_field . '/' : '';
 		$sort_mode = $sort_mode !== '' ? $sort_mode . '/' : '';
 		$page = $page !== 1 ? $page . '/' : '';
 		return DispatchManager::get_url(self::get_dispatcher($module_id), '/member/' . $user_id . '/' . $sort_field . $sort_mode . $page);

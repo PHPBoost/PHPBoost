@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 02
+ * @version     PHPBoost 6.0 - last update: 2021 03 04
  * @since       PHPBoost 6.0 - 2020 02 11
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -179,15 +179,18 @@ class DefaultConfigurationController extends AbstractAdminItemController
 				$fieldset_categories = new FormFieldsetHTML('categories', LangLoader::get_message('categories', 'categories-common'));
 				$form->add_fieldset($fieldset_categories);
 
-				$fieldset_categories->add_field(new FormFieldNumberEditor('categories_per_page', $this->lang['config.categories_number_per_page'], $this->config->get_categories_per_page(),
-					array('min' => 1, 'max' => 50, 'required' => true),
-					array(new FormFieldConstraintIntegerRange(1, 50))
-				));
+				if ($this->module_item->sub_categories_displayed())
+				{
+					$fieldset_categories->add_field(new FormFieldNumberEditor('categories_per_page', $this->lang['config.categories_number_per_page'], $this->config->get_categories_per_page(),
+						array('min' => 1, 'max' => 50, 'required' => true),
+						array(new FormFieldConstraintIntegerRange(1, 50))
+					));
 
-				$fieldset_categories->add_field(new FormFieldNumberEditor('categories_per_row', $this->lang['config.categories.per.row'], $this->config->get_categories_per_row(),
-					array('min' => 1, 'max' => 4, 'required' => true),
-					array(new FormFieldConstraintIntegerRange(1, 4))
-				));
+					$fieldset_categories->add_field(new FormFieldNumberEditor('categories_per_row', $this->lang['config.categories.per.row'], $this->config->get_categories_per_row(),
+						array('min' => 1, 'max' => 4, 'required' => true),
+						array(new FormFieldConstraintIntegerRange(1, 4))
+					));
+				}
 
 				$fieldset_categories->add_field(new FormFieldRichTextEditor('root_category_description', $this->lang['config.root_category_description'], $this->config->get_root_category_description(),
 					array('rows' => 8, 'cols' => 47)
@@ -246,8 +249,11 @@ class DefaultConfigurationController extends AbstractAdminItemController
 
 			if (self::get_module_configuration()->has_categories())
 			{
-				$this->config->set_categories_per_page($this->form->get_value('categories_per_page'));
-				$this->config->set_categories_per_row($this->form->get_value('categories_per_row'));
+				if ($this->module_item->sub_categories_displayed())
+				{
+					$this->config->set_categories_per_page($this->form->get_value('categories_per_page'));
+					$this->config->set_categories_per_row($this->form->get_value('categories_per_row'));
+				}
 				$this->config->set_root_category_description($this->form->get_value('root_category_description'));
 			}
 		}

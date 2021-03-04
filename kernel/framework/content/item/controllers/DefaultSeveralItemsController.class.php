@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 03
+ * @version     PHPBoost 6.0 - last update: 2021 03 04
  * @since       PHPBoost 6.0 - 2020 01 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -141,8 +141,8 @@ class DefaultSeveralItemsController extends AbstractItemController
 
 			if (self::get_module_configuration()->has_categories())
 			{
-				$this->sql_condition = 'WHERE id_category = :id_category
-				AND (published = ' . Item::PUBLISHED . (self::get_module_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))' : '') . ')';
+				$this->sql_condition = 'WHERE' . ($this->module_item->sub_categories_displayed() ? ' id_category = :id_category
+				AND' : '') . ' (published = ' . Item::PUBLISHED . (self::get_module_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))' : '') . ')';
 
 				$this->sql_parameters['id_category'] = $this->get_category()->get_id();
 
@@ -152,7 +152,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 					$this->page_description = StringVars::replace_vars($this->lang['items.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->category->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category', 'categories-common') . ' ' . $this->category->get_name() : '');
 				$this->current_url = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
 				$this->pagination_url = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id, $this->sort_field, $this->sort_mode, '%d', $this->subcategories_page);
-				$this->url_without_sorting_parameters = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id);
+				$this->url_without_sorting_parameters = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id, true);
 
 				$this->view->put_all(array(
 					'C_SYNDICATION' => true,
@@ -169,7 +169,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 				$this->page_description = StringVars::replace_vars($this->lang['items.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name()));
 				$this->current_url = ItemsUrlBuilder::display_category(Category::ROOT_CATEGORY, 'root', self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
 				$this->pagination_url = ItemsUrlBuilder::display_category(Category::ROOT_CATEGORY, 'root', self::$module_id, $this->sort_field, $this->sort_mode, '%d');
-				$this->url_without_sorting_parameters = ItemsUrlBuilder::display_category(Category::ROOT_CATEGORY, 'root', self::$module_id);
+				$this->url_without_sorting_parameters = ItemsUrlBuilder::display_category(Category::ROOT_CATEGORY, 'root', self::$module_id, true);
 			}
 			
 			$this->view->put('C_ENABLED_CATEGORIES', false);
@@ -278,34 +278,43 @@ class DefaultSeveralItemsController extends AbstractItemController
 
 	protected function build_categories_listing_view()
 	{
-		$subcategories = CategoriesService::get_categories_manager()->get_categories_cache()->get_children($this->get_category()->get_id(), CategoriesService::get_authorized_categories($this->get_category()->get_id(), $this->module_item->content_field_enabled() ? $this->config->get_summary_displayed_to_guests() : true));
-		$subcategories_pagination = $this->get_subcategories_pagination(count($subcategories));
-
 		$displayed_categories_number = 0;
-		foreach ($subcategories as $id => $category)
+		if ($this->module_item->sub_categories_displayed())
 		{
-			$displayed_categories_number++;
+			$subcategories = CategoriesService::get_categories_manager()->get_categories_cache()->get_children($this->get_category()->get_id(), CategoriesService::get_authorized_categories($this->get_category()->get_id(), $this->module_item->content_field_enabled() ? $this->config->get_summary_displayed_to_guests() : true));
+			$subcategories_pagination = $this->get_subcategories_pagination(count($subcategories));
 
-			if ($displayed_categories_number > $subcategories_pagination->get_display_from() && $displayed_categories_number <= ($subcategories_pagination->get_display_from() + $subcategories_pagination->get_number_items_per_page()))
+			foreach ($subcategories as $id => $category)
 			{
-				$thumbnail_properties = array();
-				if (method_exists($category, 'get_thumbnail'))
-				{
-					$category_thumbnail = $category->get_thumbnail()->rel();
-					$thumbnail_properties = array(
-						'C_CATEGORY_THUMBNAIL' => !empty($category_thumbnail),
-						'U_CATEGORY_THUMBNAIL' => $category_thumbnail
-					);
-				}
+				$displayed_categories_number++;
 
-				$this->view->assign_block_vars('sub_categories_list', array_merge($thumbnail_properties, array(
-					'C_SEVERAL_ITEMS' => $category->get_elements_number() > 1,
-					'CATEGORY_ID'     => $category->get_id(),
-					'CATEGORY_NAME'   => $category->get_name(),
-					'ITEMS_NUMBER'    => $category->get_elements_number(),
-					'U_CATEGORY'      => ItemsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), self::$module_id)->rel(),
-				)));
+				if ($displayed_categories_number > $subcategories_pagination->get_display_from() && $displayed_categories_number <= ($subcategories_pagination->get_display_from() + $subcategories_pagination->get_number_items_per_page()))
+				{
+					$thumbnail_properties = array();
+					if (method_exists($category, 'get_thumbnail'))
+					{
+						$category_thumbnail = $category->get_thumbnail()->rel();
+						$thumbnail_properties = array(
+							'C_CATEGORY_THUMBNAIL' => !empty($category_thumbnail),
+							'U_CATEGORY_THUMBNAIL' => $category_thumbnail
+						);
+					}
+
+					$this->view->assign_block_vars('sub_categories_list', array_merge($thumbnail_properties, array(
+						'C_SEVERAL_ITEMS' => $category->get_elements_number() > 1,
+						'CATEGORY_ID'     => $category->get_id(),
+						'CATEGORY_NAME'   => $category->get_name(),
+						'ITEMS_NUMBER'    => $category->get_elements_number(),
+						'U_CATEGORY'      => ItemsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), self::$module_id)->rel(),
+					)));
+				}
 			}
+
+			$this->view->put_all(array(
+				'C_SUB_CATEGORIES'           => $displayed_categories_number > 0,
+				'C_SUBCATEGORIES_PAGINATION' => $subcategories_pagination->has_several_pages(),
+				'SUBCATEGORIES_PAGINATION'   => $subcategories_pagination->display()
+			));
 		}
 
 		$category_description = '';
@@ -331,12 +340,9 @@ class DefaultSeveralItemsController extends AbstractItemController
 			'C_CATEGORY'                 => true,
 			'C_ROOT_CATEGORY'            => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
 			'C_HIDE_NO_ITEM_MESSAGE'     => $this->get_category()->get_id() == Category::ROOT_CATEGORY && ($displayed_categories_number != 0 || !empty($category_description)),
-			'C_SUB_CATEGORIES'           => $displayed_categories_number > 0,
-			'C_SUBCATEGORIES_PAGINATION' => $subcategories_pagination->has_several_pages(),
 			'CATEGORY_ID'                => $this->get_category()->get_id(),
 			'CATEGORY_NAME'              => $this->get_category()->get_name(),
-			'SUBCATEGORIES_PAGINATION'   => $subcategories_pagination->display(),
-			'U_EDIT_CATEGORY'            => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? ModulesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id(), self::$module_id)->rel(),
+			'U_EDIT_CATEGORY'            => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? ModulesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id(), self::$module_id)->rel()
 		));
 	}
 

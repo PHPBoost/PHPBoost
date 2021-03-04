@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 03
+ * @version     PHPBoost 6.0 - last update: 2021 03 04
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -38,6 +38,7 @@ class Item
 	protected $additional_attributes_items_table_options = array();
 
 	protected $content_field_enabled = true;
+	protected $sub_categories_displayed = true;
 
 	const READ_AUTHORIZATIONS = 1;
 	const WRITE_AUTHORIZATIONS = 2;
@@ -395,6 +396,16 @@ class Item
 		return $this->content_field_enabled;
 	}
 
+	protected function hide_sub_categories()
+	{
+		$this->sub_categories_displayed = false;
+	}
+
+	public function sub_categories_displayed()
+	{
+		return $this->sub_categories_displayed;
+	}
+
 	public function get_properties()
 	{
 		$category_properties = self::$module->get_configuration()->has_categories() ? array('id_category' => $this->get_id_category()) : array();
@@ -607,7 +618,7 @@ class Item
 	{
 		return array(
 			'C_CONTROLS'               => $this->get_authorizations_checker()->moderation(),
-			'C_DISPLAY_SUB_CATEGORIES' => true
+			'C_DISPLAY_SUB_CATEGORIES' => $this->sub_categories_displayed
 		);
 	}
 
