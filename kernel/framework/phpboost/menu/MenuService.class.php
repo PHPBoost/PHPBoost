@@ -352,10 +352,10 @@ class MenuService
 	public static function update_mini_modules_list($update_cache = true)
 	{
 		$installed_menus = array();
-		$results = self::$querier->select_rows(DB_TABLE_MENUS, array('title'), 'WHERE class NOT IN :class_list', array('class_list' => array(ContentMenu::CONTENT_MENU__CLASS, FeedMenu::FEED_MENU__CLASS, LinksMenu::LINKS_MENU__CLASS)));
+		$results = self::$querier->select_rows(DB_TABLE_MENUS, array('*'), 'WHERE class NOT IN :class_list', array('class_list' => array(ContentMenu::CONTENT_MENU__CLASS, FeedMenu::FEED_MENU__CLASS, LinksMenu::LINKS_MENU__CLASS)));
 		foreach ($results as $row)
 		{
-			$installed_menus[] = str_replace(' ', '_', $row['title']);
+			$installed_menus[str_replace(' ', '_', $row['title'])] = $row;
 		}
 		$results->dispose();
 		
@@ -366,7 +366,8 @@ class MenuService
 			{
 				foreach ($extension_point->get_menus() as $menu)
 				{
-					if (!in_array($module_id . '/' . str_replace(' ', '_', $menu->get_title()), $installed_menus))
+					$rewrited_title = $module_id . '/' . str_replace(' ', '_', $menu->get_title());
+					if (!array_key_exists($rewrited_title, $installed_menus))
 					{
 						$new_menus[] = array(
 							'module_id' => $module_id,
@@ -374,10 +375,18 @@ class MenuService
 							'menu'      => $menu
 						);
 					}
+					unset($installed_menus[$rewrited_title]);
 				}
 			}
 		}
-
+		
+		// Delete old menus that should not be there anymore
+		foreach ($installed_menus as $menu)
+		{
+			self::delete(self::initialize($menu));
+		}
+		
+		// Add new menus
 		foreach ($new_menus as $menu)
 		{
 			$mini_module = $menu['menu'];
