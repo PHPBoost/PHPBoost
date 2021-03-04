@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 30
+ * @version     PHPBoost 6.0 - last update: 2021 03 04
  * @since       PHPBoost 2.0 - 2008 11 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -351,46 +351,38 @@ class MenuService
 	 */
 	public static function update_mini_modules_list($update_cache = true)
 	{
-		// Retrieves the mini modules already installed
-		$installed_minimodules = array();
-		$menus = array();
+		$installed_menus = array();
+		$results = self::$querier->select_rows(DB_TABLE_MENUS, array('title'), 'WHERE class NOT IN :class_list', array('class_list' => array(ContentMenu::CONTENT_MENU__CLASS, FeedMenu::FEED_MENU__CLASS, LinksMenu::LINKS_MENU__CLASS)));
+		foreach ($results as $row)
+		{
+			$installed_menus[] = str_replace(' ', '_', $row['title']);
+		}
+		$results->dispose();
+		
+		$new_menus = array();
 		foreach (MenusProvidersService::get_extension_point() as $module_id => $extension_point)
 		{
 			if ($extension_point !== null)
 			{
 				foreach ($extension_point->get_menus() as $menu)
 				{
-					$menus[get_class($menu)] = array(
-						'module_id' => $module_id,
-						'menu' => $menu
-					);
+					if (!in_array($module_id . '/' . str_replace(' ', '_', $menu->get_title()), $installed_menus))
+					{
+						$new_menus[] = array(
+							'module_id' => $module_id,
+							'title'     => $module_id . '/' . $menu->get_title(),
+							'menu'      => $menu
+						);
+					}
 				}
 			}
 		}
 
-		$results = self::$querier->select_rows(DB_TABLE_MENUS, array('id', 'title', 'class'));
-		foreach ($results as $row)
-		{
-			if (array_key_exists($row['class'], $menus))
-			{
-				$installed_minimodules[$row['class']] = $row['id'];
-			}
-			else
-			{
-				if (!in_array($row['class'], array(ContentMenu::CONTENT_MENU__CLASS, FeedMenu::FEED_MENU__CLASS, LinksMenu::LINKS_MENU__CLASS)))
-					self::delete($row['id']);
-			}
-		}
-		$results->dispose();
-
-		$new_menus = array_diff_key($menus, $installed_minimodules);
-		foreach ($new_menus as $class => $menu)
+		foreach ($new_menus as $menu)
 		{
 			$mini_module = $menu['menu'];
-			$title = $mini_module->get_title();
-			$default_block = $mini_module->get_default_block();
-			$mini_module->set_title($menu['module_id'] . '/' . $title);
-			$mini_module->set_block($default_block);
+			$mini_module->set_title($menu['title']);
+			$mini_module->set_block($mini_module->get_default_block());
 			$mini_module->enabled($mini_module->default_is_enabled());
 			self::save($mini_module);
 		}

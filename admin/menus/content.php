@@ -3,14 +3,14 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2017 03 24
+ * @version     PHPBoost 6.0 - last update: 2021 03 04
  * @since       PHPBoost 2.0 - 2008 11 23
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '../..');
 require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
-define('TITLE', $LANG['administration']);
+define('TITLE', $LANG['menus_content_add']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
 $id = (int)retrieve(REQUEST, 'id', 0);
