@@ -1,8 +1,8 @@
 <section id="module-{MODULE_ID}">
 	<header class="section-header">
 		<div class="controls align-right">
-			# IF C_SYNDICATION #<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a># ENDIF #
-			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF ## ENDIF #
+			# IF C_SYNDICATION #<a href="{U_SYNDICATION}" aria-label="{@syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a># ENDIF #
+			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="{@edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF ## ENDIF #
 		</div>
 		<h1>
 			# IF C_PENDING #
@@ -84,7 +84,7 @@
 									# IF C_ENABLED_DATE #
 										<th class="col-small" aria-label="${LangLoader::get_message('date', 'date-common')}">
 											<i class="far fa-fw fa-calendar-check hidden-small-screens" aria-hidden="true"></i>
-											<span class="hidden-large-screens">${LangLoader::get_message('form.date.creation', 'common')}</span>
+											<span class="hidden-large-screens">{@form.date.creation}</span>
 										</th>
 									# ENDIF #
 									# IF C_ENABLED_CATEGORIES #
@@ -124,9 +124,9 @@
 										</th>
 									# ENDIF #
 									# IF C_CONTROLS #
-										<th class="col-small" aria-label="${LangLoader::get_message('moderation', 'common')}">
+										<th class="col-small" aria-label="{@moderation}">
 											<i class="fa fa-fw fa-gavel hidden-small-screens" aria-hidden="true"></i>
-											<span class="hidden-large-screens">${LangLoader::get_message('moderation', 'common')}</span>
+											<span class="hidden-large-screens">{@moderation}</span>
 										</th>
 									# ENDIF #
 								</tr>
@@ -160,7 +160,7 @@
 													# IF items.C_DEFFERED_PUBLISHING #{items.DEFFERED_PUBLISHING_START_DATE}# ELSE #{items.DATE}# ENDIF #
 												</time>
 												# IF C_HAS_UPDATE_DATE #
-													<time class="pinned notice small text-italic" aria-label="${LangLoader::get_message('form.date.update', 'common')}"datetime="{items.UPDATE_DATE_ISO8601}" itemprop="dateModified">
+													<time class="pinned notice small text-italic" aria-label="{@form.date.update}"datetime="{items.UPDATE_DATE_ISO8601}" itemprop="dateModified">
 														{items.UPDATE_DATE}
 													</time>
 												# ENDIF #
@@ -198,8 +198,8 @@
 										# ENDIF #
 										# IF items.C_CONTROLS #
 											<td class="controls">
-												<a href="{items.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
-												<a href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+												<a href="{items.U_EDIT}" aria-label="{@edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+												<a href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="{@delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 											</td>
 										# ENDIF #
 									</tr>
@@ -288,8 +288,8 @@
 										</div>
 										# IF items.C_CONTROLS #
 											<div class="controls align-right">
-												<a href="{items.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
-												<a href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+												<a href="{items.U_EDIT}" aria-label="{@edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+												<a href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="{@delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 											</div>
 										# ENDIF #
 									</div>
@@ -298,7 +298,7 @@
 											<div class="cell-thumbnail cell-landscape cell-center">
 												<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
 												<a class="cell-thumbnail-caption" href="{items.U_ITEM}">
-													${LangLoader::get_message('see.details', 'common')}
+													{@see.details}
 												</a>
 											</div>
 										# ENDIF #
@@ -312,7 +312,7 @@
 														<i class="fa fa-globe" aria-hidden="true"></i> {@go.website}
 													</a>
 													# IF IS_USER_CONNECTED #
-														<a href="{items.U_DEADLINK}" data-confirmation="${LangLoader::get_message('deadlink.confirmation', 'common')}" class="button bgc-full warning small" aria-label="${LangLoader::get_message('deadlink', 'common')}">
+														<a href="{items.U_DEADLINK}" data-confirmation="{@deadlink.confirmation}" class="button bgc-full warning small" aria-label="{@deadlink}">
 															<i class="fa fa-unlink" aria-hidden="true"></i>
 														</a>
 													# ENDIF #
@@ -327,7 +327,7 @@
 														<i class="fa fa-dowload" aria-hidden="true"></i> {@go.download}
 													</a>
 													# IF IS_USER_CONNECTED #
-														<a href="{items.U_DEADLINK}" data-confirmation="${LangLoader::get_message('deadlink.confirmation', 'common')}" class="button bgc-full warning small" aria-label="${LangLoader::get_message('deadlink', 'common')}">
+														<a href="{items.U_DEADLINK}" data-confirmation="{@deadlink.confirmation}" class="button bgc-full warning small" aria-label="{@deadlink}">
 															<i class="fa fa-unlink" aria-hidden="true"></i>
 														</a>
 													# ENDIF #
@@ -344,7 +344,7 @@
 												{items.CONTENT}
 											# ELSE #
 												{items.SUMMARY}
-												# IF items.C_READ_MORE # <a href="{items.U_ITEM}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
+												# IF items.C_READ_MORE # <a href="{items.U_ITEM}" class="read-more">[{@read-more}]</a># ENDIF #
 											# ENDIF #
 										</div>
 									</div>
@@ -366,7 +366,7 @@
 				# IF NOT C_HIDE_NO_ITEM_MESSAGE #
 					<div class="content">
 						<div class="message-helper bgc notice align-center">
-							${LangLoader::get_message('no_item_now', 'common')}
+							{@no_item_now}
 						</div>
 					</div>
 				# ENDIF #

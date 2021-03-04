@@ -12,7 +12,7 @@
 				<div class="align-center"># INCLUDE PAGINATION #</div>
 			# ENDIF #
 			# IF C_NO_MESSAGE #
-				<div class="message-helper bgc notice message-helper-small align-center">${LangLoader::get_message('no_item_now', 'common')}</div>
+				<div class="message-helper bgc notice message-helper-small align-center">{@no_item_now}</div>
 			# ELSE #
 				<form method="post" class="fieldset-content">
 					# START messages #
@@ -32,21 +32,21 @@
 										</h3>
 										<div class="message-actions">
 											# IF messages.C_DELETE #
-												<label for="multiple-checkbox-{messages.MESSAGE_NUMBER}" class="checkbox" aria-label="${LangLoader::get_message('select.element', 'common')}">
+												<label for="multiple-checkbox-{messages.MESSAGE_NUMBER}" class="checkbox" aria-label="{@select.element}">
 													<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{messages.MESSAGE_NUMBER}" name="delete-checkbox-{messages.MESSAGE_NUMBER}" onclick="delete_button_display({MESSAGES_NUMBER});" />
 													<span>&nbsp;</span>
 												</label>
 											# ENDIF #
 											# IF messages.C_EDIT #
-												<a href="{messages.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+												<a href="{messages.U_EDIT}" aria-label="{@edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 											# ENDIF #
 											# IF messages.C_DELETE #
-												<a href="{messages.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+												<a href="{messages.U_DELETE}" data-confirmation="delete-element" aria-label="{@delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 											# ENDIF #
 										</div>
 									</div>
 									<div class="message-infos">
-										<time datetime="{messages.DATE}">${LangLoader::get_message('the', 'common')} {messages.DATE}</time>
+										<time datetime="{messages.DATE}">{@the} {messages.DATE}</time>
 										<a href="{messages.U_ANCHOR}" aria-label="${LangLoader::get_message('link.to.anchor', 'comments-common')}">\#{messages.ID}</a>
 									</div>
 								</div>
@@ -55,7 +55,7 @@
 								{messages.CONTENTS}
 								# IF messages.C_ENABLED_UPDATE_DATE #
 									<p class="message-edition">
-										<span class="text-strong">${LangLoader::get_message('form.date.update', 'common')} : </span>
+										<span class="text-strong">{@form.date.update} : </span>
 										<time datetime="{messages.UPDATE_DATE_ISO8601}# ENDIF #" itemprop="dateModified">
 											{messages.UPDATE_DATE}
 										</time>
@@ -81,12 +81,12 @@
 					# END messages #
 					# IF C_MULTIPLE_DELETE_DISPLAYED #
 						<div class="mini-checkbox">
-							<label for="delete-all-checkbox" class="checkbox" aria-label="${LangLoader::get_message('select.all.elements', 'common')}">
+							<label for="delete-all-checkbox" class="checkbox" aria-label="{@select.all.elements}">
 								<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {MESSAGES_NUMBER});">
 								<span>&nbsp;</span>
 							</label>
 							<input type="hidden" name="token" value="{TOKEN}" />
-							<button type="submit" id="delete-all-button" name="delete-selected-elements" value="true" class="button submit" data-confirmation="delete-element" disabled="disabled">${LangLoader::get_message('delete', 'common')}</button>
+							<button type="submit" id="delete-all-button" name="delete-selected-elements" value="true" class="button submit" data-confirmation="delete-element" disabled="disabled">{@delete}</button>
 						</div>
 					# ENDIF #
 				</form>
