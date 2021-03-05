@@ -201,6 +201,15 @@
 					${ContentSharingActionsMenuService::display()}
 				</aside>
 
+				# IF C_KEYWORDS #
+					<aside class="tags-container">
+						<span class="text-strong"><i class="fa fa-tags" aria-hidden="true"></i> {@form.keywords}</span> :
+						# START keywords #
+							<a class="pinned question" href="{keywords.URL}" itemprop="keywords" rel="tag">{keywords.NAME}</a>
+						# END keywords #
+					</aside>
+				# ENDIF #
+
 				# IF C_SOURCES #
 					<aside class="sources-container">
 						<span class="text-strong"><i class="fa fa-map-signs" aria-hidden="true"></i> {@form.sources}</span> :
@@ -208,15 +217,6 @@
 							<a class="pinned question" href="{sources.URL}" itemprop="isBasedOnUrl" rel="nofollow">{sources.NAME}</a>
 							# IF sources.C_SEPARATOR ## ENDIF #
 						# END sources #
-					</aside>
-				# ENDIF #
-
-				# IF C_KEYWORDS #
-					<aside class="tags-container">
-						<span class="text-strong"><i class="fa fa-tags" aria-hidden="true"></i> {@form.keywords}</span> :
-						# START keywords #
-							<a class="pinned question" href="{keywords.URL}" itemprop="keywords" rel="tag">{keywords.NAME}</a>
-						# END keywords #
 					</aside>
 				# ENDIF #
 
