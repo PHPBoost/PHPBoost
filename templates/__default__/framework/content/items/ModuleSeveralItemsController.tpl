@@ -351,6 +351,22 @@
 								</div>
 
 								<footer>
+									# IF items.C_KEYWORDS #
+										<div class="tags-container">
+											<span class="text-strong"><i class="fa fa-tags" aria-hidden="true"></i> {@form.keywords}</span> :
+											# START items.keywords #
+												<a itemprop="keywords" href="{items.keywords.URL}" class="pinned question">{items.keywords.NAME}</a>
+											# END items.keywords #
+										</div>
+									# ENDIF #
+									# IF items.C_SOURCES #
+										<div class="sources-container">
+											<span class="text-strong"><i class="fa fa-map-signs" aria-hidden="true"></i> {@form.sources}</span> :
+											# START items.sources #
+												<a itemprop="isBasedOnUrl" href="{items.sources.URL}" class="pinned question" rel="nofollow">{items.sources.NAME}</a># IF items.sources.C_SEPARATOR ## ENDIF #
+											# END items.sources #
+										</div>
+									# ENDIF #
 									<meta itemprop="url" content="{items.U_ITEM}">
 									<meta itemprop="description" content="${escape(items.SUMMARY)}"/>
 									# IF C_ENABLED_COMMENTS #

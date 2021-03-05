@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 04
+ * @version     PHPBoost 6.0 - last update: 2021 03 05
  * @since       PHPBoost 6.0 - 2020 01 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -238,6 +238,22 @@ class DefaultSeveralItemsController extends AbstractItemController
 		foreach ($items as $item)
 		{
 			$this->view->assign_block_vars('items', $item->get_template_vars());
+			
+			if (self::get_module_configuration()->feature_is_enabled('keywords'))
+			{
+				foreach ($item->get_keywords() as $keyword)
+				{
+					$this->view->assign_block_vars('items.keywords', $item->get_template_keyword_vars($keyword));
+				}
+			}
+
+			if (self::get_module_configuration()->feature_is_enabled('sources'))
+			{
+				foreach ($item->get_sources() as $name => $url)
+				{
+					$this->view->assign_block_vars('items.sources', $item->get_template_source_vars($name));
+				}
+			}
 		}
 	}
 

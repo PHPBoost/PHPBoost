@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 28
+ * @version     PHPBoost 6.0 - last update: 2021 03 05
  * @since       PHPBoost 6.0 - 2020 03 12
 */
 
@@ -73,15 +73,9 @@ class DefaultDisplayItemController extends AbstractItemController
 
 		if (self::get_module_configuration()->feature_is_enabled('keywords'))
 		{
-			$keywords = $this->get_item()->get_keywords();
-			$this->view->put('C_KEYWORDS', !empty($keywords));
-
-			foreach ($keywords as $keyword)
+			foreach ($this->get_item()->get_keywords() as $keyword)
 			{
-				$this->view->assign_block_vars('keywords', array(
-					'NAME' => $keyword->get_name(),
-					'URL' => ItemsUrlBuilder::display_tag($keyword->get_rewrited_name(), self::$module_id)->rel()
-				));
+				$this->view->assign_block_vars('keywords', $this->get_item()->get_template_keyword_vars($keyword));
 			}
 		}
 
@@ -109,7 +103,7 @@ class DefaultDisplayItemController extends AbstractItemController
 		$this->view->put_all(array_merge(
 			$this->get_item()->get_template_vars(),
 			array(
-				'ADDITIONAL_CONTENT' => $this->get_item()->get_additional_content_template()->display()
+				'ADDITIONAL_CONTENT' => $this->get_item()->get_additional_content_template()
 			)
 		));
 	}

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 04
+ * @version     PHPBoost 6.0 - last update: 2021 03 05
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -668,6 +668,13 @@ class Item
 			);
 		}
 
+		if (self::$module->get_configuration()->feature_is_enabled('keywords'))
+		{
+			$keywords_template_vars = array(
+				'C_KEYWORDS' => $this->get_keywords()
+			);
+		}
+
 		if (self::$module->get_configuration()->feature_is_enabled('sources'))
 		{
 			$sources_template_vars = array(
@@ -687,6 +694,7 @@ class Item
 			$comments_template_vars,
 			$notation_template_vars,
 			$newcontent_template_vars,
+			$keywords_template_vars,
 			$sources_template_vars,
 			array(
 			// Conditions
@@ -729,6 +737,14 @@ class Item
 	public function get_additional_content_template()
 	{
 		return new StringTemplate('');
+	}
+
+	public function get_template_keyword_vars($keyword)
+	{
+		return array(
+			'NAME' => $keyword->get_name(),
+			'URL' => ItemsUrlBuilder::display_tag($keyword->get_rewrited_name(), self::$module_id)->rel()
+		);
 	}
 
 	public function get_template_source_vars($source_name)
