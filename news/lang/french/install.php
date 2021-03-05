@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 02
+ * @version     PHPBoost 6.0 - last update: 2021 03 05
  * @since       PHPBoost 4.0 - 2013 04 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -16,11 +16,16 @@
 #                     French                       #
 ####################################################
 
-$lang['cat.name'] = 'Test';
-$lang['cat.description'] = 'Catégorie de test';
-$lang['news.title'] = 'Votre site sous PHPBoost CMS';
-$lang['news.content'] = '
-    Votre site propulsé par PHPBoost est bien installé et fonctionnel. Afin de vous aider à le prendre en main,
+$lang['categories'] = $lang['items'] = array();
+
+$lang['categories'][] = array(
+	'category.name'        => 'Test',
+	'category.description' => 'Catégorie de test'
+);
+
+$lang['items'][] = array(
+	'item.title'   => 'Votre site sous PHPBoost CMS',
+	'item.content' => 'Votre site propulsé par PHPBoost est bien installé et fonctionnel. Afin de vous aider à le prendre en main,
     l\'accueil de chaque module contient un message pour vous guider dans vos premiers pas. Voici également quelques recommandations supplémentaires que nous vous proposons de lire avec attention : <br />
     <br />
     <h2 class="formatter-title">N\'oubliez pas de supprimer le répertoire "install"</h2><br />
@@ -47,6 +52,7 @@ $lang['news.content'] = '
     <br />
     N\'hésitez pas à consulter <a href="https://www.phpboost.com/wiki/">la documentation de PHPBoost</a> ou à poser vos questions sur le <a href="https://www.phpboost.com/forum/">forum d\'entraide</a>.<br /> <br />
     <br />
-    <p class="float-right">Toute l\'équipe de PHPBoost vous remercie d\'utiliser son logiciel pour créer votre site web !</p>
-';
+    <p class="float-right">Toute l\'équipe de PHPBoost vous remercie d\'utiliser son logiciel pour créer votre site web !</p>',
+	'item.summary' => ''
+);
 ?>

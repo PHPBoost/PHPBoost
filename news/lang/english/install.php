@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 02
+ * @version     PHPBoost 6.0 - last update: 2021 03 05
  * @since       PHPBoost 4.0 - 2012 04 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -14,11 +14,16 @@
 #                     English                      #
 ####################################################
 
-$lang['cat.name'] = 'Test';
-$lang['cat.description'] = 'Test category';
-$lang['news.title'] = 'Your site under PHPBoost CMS';
-$lang['news.content'] = '
-    Your website powered by PHPBoost is now installed and functional. To help you building your website,
+$lang['categories'] = $lang['items'] = array();
+
+$lang['categories'][] = array(
+	'category.name'        => 'Test',
+	'category.description' => 'Test category'
+);
+
+$lang['items'][] = array(
+	'item.title'   => 'Your site powered by PHPBoost CMS',
+	'item.content' => 'Your website powered by PHPBoost is now installed and functional. To help you building your website,
     each module homepage has a message to guide you through its configuration. We strongly recommand to do the followings :  <br />
     <br />
     <h2 class="formatter-title">Delete the "install" folder</h2><br />
@@ -47,6 +52,7 @@ $lang['news.content'] = '
     <br />
     Feel free to consult the <a href="https://www.phpboost.com/wiki/">PHPBoost documentation</a> or to ask your question on the <a href="https://www.phpboost.com/forum/">forum</a> for assistance. As the English community is still young, we strongly recommend that you use the second solution.<br /> <br />
     <br />
-    <p class="float-right">The PHPBoost Team thanks you for using its software to create your Web site!</p>
-';
+    <p class="float-right">The PHPBoost Team thanks you for using its software to create your Web site!</p>',
+	'item.summary' => ''
+);
 ?>
