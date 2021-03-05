@@ -34,6 +34,10 @@ body {
 /* --- Cookies --- */
 .cookiebar-container { background-color: var(--bgc-alt); }
 
+/* --- Prime item --- */
+table tbody tr.prime-item td,
+.prime-item { background-color: var(--bgc-alt);}
+
 /* --- Pagination --- */
 .pagination-item a { border-color: var(--bdr-main); }
 

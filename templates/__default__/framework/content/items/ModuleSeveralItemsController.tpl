@@ -133,7 +133,7 @@
 							</thead>
 							<tbody>
 								# START items #
-									<tr class="category-{items.CATEGORY_ID}">
+									<tr class="category-{items.CATEGORY_ID}# IF items.C_PRIME_ITEM # prime-item# ENDIF #">
 										<td>
 											<a href="{items.U_ITEM}" itemprop="name"# IF items.C_NEW_CONTENT # class="new-content"# ENDIF#>{items.TITLE}</a>
 										</td>
