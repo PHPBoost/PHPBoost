@@ -12,7 +12,7 @@
 				<div class="align-center"># INCLUDE PAGINATION #</div>
 			# ENDIF #
 			# IF C_NO_MESSAGE #
-				<div class="message-helper bgc notice message-helper-small align-center">{@no_item_now}</div>
+				<div class="message-helper bgc notice message-helper-small align-center">{@items.no.element}</div>
 			# ELSE #
 				<form method="post" class="fieldset-content">
 					# START messages #

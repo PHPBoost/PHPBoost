@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 02
+ * @version     PHPBoost 6.0 - last update: 2021 03 05
  * @since       PHPBoost 6.0 - 2020 01 08
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -23,6 +23,8 @@ $lang['all.items.alt'] = 'toutes les :items';
 $lang['last.items'] = 'derniers :items';
 $lang['last.items.alt'] = 'dernières :items';
 $lang['items.number'] = 'Nombre de :items';
+$lang['items.no.element'] = 'Aucun :item n\'est disponible pour le moment';
+$lang['items.no.element.alt'] = 'Aucune :item n\'est disponible pour le moment';
 
 //Management
 $lang['items.management'] = 'Gestion des :items';

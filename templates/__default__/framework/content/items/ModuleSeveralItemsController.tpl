@@ -382,7 +382,7 @@
 				# IF NOT C_HIDE_NO_ITEM_MESSAGE #
 					<div class="content">
 						<div class="message-helper bgc notice align-center">
-							{@no_item_now}
+							{@items.no.element}
 						</div>
 					</div>
 				# ENDIF #
