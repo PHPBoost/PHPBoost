@@ -295,7 +295,7 @@
 			<fieldset id="databse-backup">
 				<legend>{@database.backup.database}</legend>
 				<div class="fieldset-inset">
-					<div class="form-element full-field">{@database.backup.description}</div>
+					<div class="form-element full-field">{@H|database.backup.description}</div>
 					<div class="form-element third-field">
 						<label for="table_list[]">{@database.table.list}</label>
 						<div class="form-field form-field-select">
@@ -397,7 +397,7 @@
 						<div class="form-field form-field-textarea">
 							<textarea rows="12" id="query" name="query">{QUERY}</textarea>
 						</div>
-					</div>					
+					</div>
 				</div>
 			</fieldset>
 			<fieldset class="fieldset-submit">
