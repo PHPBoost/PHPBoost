@@ -108,7 +108,7 @@
 	</div>
 </div>
 # IF C_DISPLAY_FORM #
-	<form action="#" method="post">
+	<form action="#" method="post" class="cell-form">
 		# IF NOT C_MEMBER #
 			<label for="shout-pseudo" class="cell-form grouped-inputs">
 				<span class="grouped-element">${LangLoader::get_message('form.name', 'common')}</span>
