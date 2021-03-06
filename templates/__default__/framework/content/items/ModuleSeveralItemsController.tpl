@@ -344,7 +344,7 @@
 												{items.CONTENT}
 											# ELSE #
 												{items.SUMMARY}
-												# IF items.C_READ_MORE # <a href="{items.U_ITEM}" class="read-more">[{@read-more}]</a># ENDIF #
+												# IF items.C_READ_MORE # <a href="{items.U_ITEM}" class="read-more">[{@read.more}]</a># ENDIF #
 											# ENDIF #
 										</div>
 									</div>

@@ -218,7 +218,7 @@
 											# ENDIF #
 											<div itemprop="text">{items.CONTENT}</div>
 										# ELSE #
-											{items.SUMMARY}# IF items.C_READ_MORE # <a href="{items.U_ITEM}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
+											{items.SUMMARY}# IF items.C_READ_MORE # <a href="{items.U_ITEM}" class="read-more">[${LangLoader::get_message('read.more', 'common')}]</a># ENDIF #
 										# ENDIF #
 									</div>
 								</div>
