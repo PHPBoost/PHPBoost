@@ -55,20 +55,22 @@
 								</span>
 								# ENDIF #
 							# ENDIF #
-							# IF C_ENABLED_VIEWS #
-								<span class="pinned" role="contentinfo" aria-label="{VIEWS_NUMBER} # IF C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #">
-									<i class="fa fa-eye" aria-hidden="true"></i> {VIEWS_NUMBER} # IF C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #
-								</span>
-							# ENDIF #
-							# IF C_ENABLED_NOTATION #
-								<li class="align-center">
-									{NOTATION}
-								</li>
-							# ENDIF #
-							# IF C_ENABLED_COMMENTS #
-								<span class="pinned">
-									<a href="#comments-list"><i class="fa fa-comments" aria-hidden="true"></i> {COMMENTS_LABEL}</a>
-								</span>
+							# IF C_PUBLISHED #
+								# IF C_ENABLED_VIEWS #
+									<span class="pinned" role="contentinfo" aria-label="{VIEWS_NUMBER} # IF C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #">
+										<i class="fa fa-eye" aria-hidden="true"></i> {VIEWS_NUMBER} # IF C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #
+									</span>
+								# ENDIF #
+								# IF C_ENABLED_NOTATION #
+									<li class="align-center">
+										{NOTATION}
+									</li>
+								# ENDIF #
+								# IF C_ENABLED_COMMENTS #
+									<span class="pinned">
+										<a href="#comments-list"><i class="fa fa-comments" aria-hidden="true"></i> {COMMENTS_LABEL}</a>
+									</span>
+								# ENDIF #
 							# ENDIF #
 						</div>
 					# ENDIF #
@@ -169,15 +171,17 @@
 										</li>
 										# ENDIF #
 									# ENDIF #
-									# IF C_ENABLED_COMMENTS #
-										<li>
-											<span>{COMMENTS_LABEL}</span>
-										</li>
-									# ENDIF #
-									# IF C_ENABLED_NOTATION #
-										<li class="align-center">
-											{NOTATION}
-										</li>
+									# IF C_PUBLISHED #
+										# IF C_ENABLED_COMMENTS #
+											<li>
+												<span>{COMMENTS_LABEL}</span>
+											</li>
+										# ENDIF #
+										# IF C_ENABLED_NOTATION #
+											<li class="align-center">
+												{NOTATION}
+											</li>
+										# ENDIF #
 									# ENDIF #
 								</ul>
 							</div>
@@ -225,10 +229,12 @@
 
 				# INCLUDE ADDITIONAL_CONTENT #
 
-				# IF C_ENABLED_COMMENTS #
-					<aside>
-						# INCLUDE COMMENTS #
-					</aside>
+				# IF C_PUBLISHED #
+					# IF C_ENABLED_COMMENTS #
+						<aside>
+							# INCLUDE COMMENTS #
+						</aside>
+					# ENDIF #
 				# ENDIF #
 			</article>
 		</div>

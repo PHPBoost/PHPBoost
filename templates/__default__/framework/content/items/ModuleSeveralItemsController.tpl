@@ -93,35 +93,37 @@
 											<span class="hidden-large-screens">${LangLoader::get_message('category', 'categories-common')}</span>
 										</th>
 									# ENDIF #
-									# IF C_ENABLED_VIEWS #
-										<th class="col-small" aria-label="${TextHelper::ucfirst(@views)}">
-											<i class="fa fa-fw fa-eye hidden-small-screens" aria-hidden="true"></i>
-											<span class="hidden-large-screens">${TextHelper::ucfirst(@views)}</span>
-										</th>
-									# ENDIF #
-									# IF C_ENABLED_VISITS #
-										<th class="col-small" aria-label="${TextHelper::ucfirst(@visits)}">
-											<i class="fa fa-fw fa-share-square hidden-small-screens" aria-hidden="true"></i>
-											<span class="hidden-large-screens">${TextHelper::ucfirst(@visits)}</span>
-										</th>
-									# ENDIF #
-									# IF C_ENABLED_DOWNLOADS #
-										<th class="col-small" aria-label="${TextHelper::ucfirst(@downloads)}">
-											<i class="fa fa-fw fa-dowload hidden-small-screens" aria-hidden="true"></i>
-											<span class="hidden-large-screens">${TextHelper::ucfirst(@downloads)}</span>
-										</th>
-									# ENDIF #
-									# IF C_ENABLED_NOTATION #
-										<th class="col-small" aria-label="${TextHelper::ucfirst(@note)}">
-											<i class="far fa-fw fa-star hidden-small-screens" aria-hidden="true"></i>
-											<span class="hidden-large-screens">${TextHelper::ucfirst(@note)}</span>
-										</th>
-									# ENDIF #
-									# IF C_ENABLED_COMMENTS #
-										<th class="col-small" aria-label="${LangLoader::get_message('comments', 'comments-common')}">
-											<i class="far fa-fw fa-comments hidden-small-screens" aria-hidden="true"></i>
-											<span class="hidden-large-screens">${LangLoader::get_message('comments', 'comments-common')}</span>
-										</th>
+									# IF NOT C_PENDING #
+										# IF C_ENABLED_VIEWS #
+											<th class="col-small" aria-label="${TextHelper::ucfirst(@views)}">
+												<i class="fa fa-fw fa-eye hidden-small-screens" aria-hidden="true"></i>
+												<span class="hidden-large-screens">${TextHelper::ucfirst(@views)}</span>
+											</th>
+										# ENDIF #
+										# IF C_ENABLED_VISITS #
+											<th class="col-small" aria-label="${TextHelper::ucfirst(@visits)}">
+												<i class="fa fa-fw fa-share-square hidden-small-screens" aria-hidden="true"></i>
+												<span class="hidden-large-screens">${TextHelper::ucfirst(@visits)}</span>
+											</th>
+										# ENDIF #
+										# IF C_ENABLED_DOWNLOADS #
+											<th class="col-small" aria-label="${TextHelper::ucfirst(@downloads)}">
+												<i class="fa fa-fw fa-dowload hidden-small-screens" aria-hidden="true"></i>
+												<span class="hidden-large-screens">${TextHelper::ucfirst(@downloads)}</span>
+											</th>
+										# ENDIF #
+										# IF C_ENABLED_NOTATION #
+											<th class="col-small" aria-label="${TextHelper::ucfirst(@note)}">
+												<i class="far fa-fw fa-star hidden-small-screens" aria-hidden="true"></i>
+												<span class="hidden-large-screens">${TextHelper::ucfirst(@note)}</span>
+											</th>
+										# ENDIF #
+										# IF C_ENABLED_COMMENTS #
+											<th class="col-small" aria-label="${LangLoader::get_message('comments', 'comments-common')}">
+												<i class="far fa-fw fa-comments hidden-small-screens" aria-hidden="true"></i>
+												<span class="hidden-large-screens">${LangLoader::get_message('comments', 'comments-common')}</span>
+											</th>
+										# ENDIF #
 									# ENDIF #
 									# IF C_CONTROLS #
 										<th class="col-small" aria-label="{@moderation}">
@@ -171,30 +173,32 @@
 												<a itemprop="about" href="{items.U_CATEGORY}">{items.CATEGORY_NAME}</a>
 											</td>
 										# ENDIF #
-										# IF C_ENABLED_VIEWS #
-											<td>
-												{items.VIEWS_NUMBER}
-											</td>
-										# ENDIF #
-										# IF C_ENABLED_VISITS #
-											<td class="col-small">
-												{items.VISITS_NUMBER}
-											</td>
-										# ENDIF #
-										# IF C_ENABLED_DOWNLOADS #
-											<td class="col-small">
-												{items.DOWNLOADS_NUMBER} # IF items.C_SEVERAL_DOWNLOADS #{@downloads}# ELSE #{@download}# ENDIF #
-											</td>
-										# ENDIF #
-										# IF C_ENABLED_NOTATION #
-											<td>
-												{items.STATIC_NOTATION}
-											</td>
-										# ENDIF #
-										# IF C_ENABLED_COMMENTS #
-											<td>
-												{items.COMMENTS_NUMBER}
-											</td>
+										# IF NOT C_PENDING #
+											# IF C_ENABLED_VIEWS #
+												<td>
+													{items.VIEWS_NUMBER}
+												</td>
+											# ENDIF #
+											# IF C_ENABLED_VISITS #
+												<td class="col-small">
+													{items.VISITS_NUMBER}
+												</td>
+											# ENDIF #
+											# IF C_ENABLED_DOWNLOADS #
+												<td class="col-small">
+													{items.DOWNLOADS_NUMBER} # IF items.C_SEVERAL_DOWNLOADS #{@downloads}# ELSE #{@download}# ENDIF #
+												</td>
+											# ENDIF #
+											# IF C_ENABLED_NOTATION #
+												<td>
+													{items.STATIC_NOTATION}
+												</td>
+											# ENDIF #
+											# IF C_ENABLED_COMMENTS #
+												<td>
+													{items.COMMENTS_NUMBER}
+												</td>
+											# ENDIF #
 										# ENDIF #
 										# IF items.C_CONTROLS #
 											<td class="controls">
@@ -264,26 +268,28 @@
 													# ENDIF #
 												# ENDIF #
 											# ENDIF #
-											# IF C_ENABLED_VIEWS #
-												<span class="pinned" role="contentinfo" aria-label="{items.VIEWS_NUMBER} # IF items.C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #"><i class="fa fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span>
-											# ENDIF #
-											# IF C_ENABLED_VISITS #
-												<span class="pinned">
-													{items.VISITS_NUMBER} # IF C_SEVERAL_VISITS #{@visits}# ELSE #{@visit}# ENDIF #
-												</span>
-											# ENDIF #
-											# IF C_ENABLED_DOWNLOADS #
-												<span class="pinned">
-													{items.DOWNLOADS_NUMBER} # IF C_SEVERAL_DOWNLOADS #{@downloads}# ELSE #{@download}# ENDIF #
-												</span>
-											# ENDIF #
-											# IF C_ENABLED_NOTATION #
-												<div class="pinned">{items.STATIC_NOTATION}</div>
-											# ENDIF #
-											# IF C_ENABLED_COMMENTS #
-												<span class="pinned">
-													<a href="{items.U_COMMENTS}"><i class="fa fa-comments" aria-hidden="true"></i> {items.COMMENTS_LABEL}</a>
-												</span>
+											# IF NOT C_PENDING #
+												# IF C_ENABLED_VIEWS #
+													<span class="pinned" role="contentinfo" aria-label="{items.VIEWS_NUMBER} # IF items.C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #"><i class="fa fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span>
+												# ENDIF #
+												# IF C_ENABLED_VISITS #
+													<span class="pinned">
+														{items.VISITS_NUMBER} # IF C_SEVERAL_VISITS #{@visits}# ELSE #{@visit}# ENDIF #
+													</span>
+												# ENDIF #
+												# IF C_ENABLED_DOWNLOADS #
+													<span class="pinned">
+														{items.DOWNLOADS_NUMBER} # IF C_SEVERAL_DOWNLOADS #{@downloads}# ELSE #{@download}# ENDIF #
+													</span>
+												# ENDIF #
+												# IF C_ENABLED_NOTATION #
+													<div class="pinned">{items.STATIC_NOTATION}</div>
+												# ENDIF #
+												# IF C_ENABLED_COMMENTS #
+													<span class="pinned">
+														<a href="{items.U_COMMENTS}"><i class="fa fa-comments" aria-hidden="true"></i> {items.COMMENTS_LABEL}</a>
+													</span>
+												# ENDIF #
 											# ENDIF #
 										</div>
 										# IF items.C_CONTROLS #
