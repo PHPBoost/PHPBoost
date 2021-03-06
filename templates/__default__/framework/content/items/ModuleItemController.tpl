@@ -74,6 +74,9 @@
 					# ENDIF #
 
 					# IF C_CONTROLS #
+						# IF NOT C_MORE_OPTIONS #
+							<div></div>
+						# ENDIF #
 						<div class="controls align-right">
 							<a href="{U_EDIT}" aria-label="{@edit}"><i class="far fa-fw fa-edit"></i></a>
 							<a href="{U_DELETE}" data-confirmation="delete-element" aria-label="{@delete}"><i class="far fa-fw fa-trash-alt"></i></a>
