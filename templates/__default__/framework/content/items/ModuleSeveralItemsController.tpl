@@ -82,7 +82,7 @@
 										# ENDIF #
 									# ENDIF #
 									# IF C_ENABLED_DATE #
-										<th class="col-small" aria-label="${LangLoader::get_message('date', 'date-common')}">
+										<th class="col-small" aria-label="{@form.date.creation}">
 											<i class="far fa-fw fa-calendar-check hidden-small-screens" aria-hidden="true"></i>
 											<span class="hidden-large-screens">{@form.date.creation}</span>
 										</th>

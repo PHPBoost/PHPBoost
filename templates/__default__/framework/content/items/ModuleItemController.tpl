@@ -149,7 +149,7 @@
 									# ENDIF #
 									# IF C_ENABLED_DATE #
 										<li class="li-stretch">
-											<span class="text-strong">${TextHelper::ucfirst(@date)} : </span>
+											<span class="text-strong">{@form.date.creation} : </span>
 											<time datetime="# IF C_DIFFERED #{DIFFERED_START_DATE_ISO8601}# ELSE #{DATE_ISO8601}# ENDIF #" itemprop="datePublished">
 												# IF C_DIFFERED #{DIFFERED_START_DATE}# ELSE #{DATE}# ENDIF #
 											</time>
@@ -163,10 +163,10 @@
 											</time>
 										</li>
 									# ENDIF #
-									# IF C_ENABLED_CATEGORY #
+									# IF C_HAS_CATEGORY #
 										# IF NOT C_ROOT_CATEGORY #
 										<li class="li-stretch">
-											<span class="text-strong">${TextHelper::ucfirst(@category)} : </span>
+											<span class="text-strong">${LangLoader::get_message('category', 'categories-common')} : </span>
 											<span><a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a></span>
 										</li>
 										# ENDIF #
