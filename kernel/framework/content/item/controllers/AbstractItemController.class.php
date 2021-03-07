@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 02
+ * @version     PHPBoost 6.0 - last update: 2021 03 08
  * @since       PHPBoost 6.0 - 2019 12 20
 */
 
@@ -54,6 +54,8 @@ abstract class AbstractItemController extends ModuleController
 				'C_GRID_VIEW'           => $this->config->get_display_type() == DefaultRichModuleConfig::GRID_VIEW,
 				'C_LIST_VIEW'           => $this->config->get_display_type() == DefaultRichModuleConfig::LIST_VIEW,
 				'C_TABLE_VIEW'          => $this->config->get_display_type() == DefaultRichModuleConfig::TABLE_VIEW,
+				'C_MORE_OPTIONS'        => $this->config->get_display_options() == DefaultRichModuleConfig::MORE_OPTIONS,
+				'C_CELL_OPTIONS'        => $this->config->get_display_options() == DefaultRichModuleConfig::CELL_OPTIONS,
 				'C_FULL_ITEM_DISPLAY'   => $this->config->get_full_item_display(),
 				'C_AUTHOR_DISPLAYED'    => $this->config->get_author_displayed(),
 				'C_ENABLED_DATE'        => $this->config->get_date_displayed(),

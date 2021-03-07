@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 02
+ * @version     PHPBoost 6.0 - last update: 2021 03 08
  * @since       PHPBoost 6.0 - 2020 01 10
 */
 
@@ -33,6 +33,10 @@ class DefaultRichModuleConfig extends DefaultModuleConfig
 	const LIST_VIEW = 'list_view';
 	const TABLE_VIEW = 'table_view';
 
+	const DISPLAY_OPTIONS = 'display_options';
+	const MORE_OPTIONS = 'more_options';
+	const CELL_OPTIONS = 'cell_options';
+
 	const DEFERRED_OPERATIONS = 'deferred_operations';
 
 	/**
@@ -56,6 +60,7 @@ class DefaultRichModuleConfig extends DefaultModuleConfig
 			self::CATEGORIES_PER_ROW          => 3,
 			self::ROOT_CATEGORY_DESCRIPTION   => CategoriesService::get_default_root_category_description(self::$module_id),
 			self::DISPLAY_TYPE                => self::GRID_VIEW,
+			self::DISPLAY_OPTIONS             => self::MORE_OPTIONS,
 			self::DEFERRED_OPERATIONS         => array()
 		);
 	}
