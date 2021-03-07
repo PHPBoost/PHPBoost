@@ -174,7 +174,7 @@
 									# IF C_PUBLISHED #
 										# IF C_ENABLED_COMMENTS #
 											<li>
-												<span>{COMMENTS_LABEL}</span>
+												<span><a href="#comments-list"><i class="fa fa-comments" aria-hidden="true"></i> {COMMENTS_LABEL}</a></span>
 											</li>
 										# ENDIF #
 										# IF C_ENABLED_NOTATION #
