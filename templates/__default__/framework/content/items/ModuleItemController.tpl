@@ -86,7 +86,7 @@
 					# ENDIF #
 				</div>
 
-				<div class="content">
+				<div class="content cell-tile">
 					# IF C_CELL_OPTIONS #
 						<div class="cell cell-options">
 							<div class="cell-header">
