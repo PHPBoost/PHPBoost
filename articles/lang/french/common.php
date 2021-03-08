@@ -15,7 +15,6 @@
 #####################################################
 
 $lang['item'] = 'article';
-$lang['items'] = 'articles';
 $lang['the.item'] = 'l\'article';
 
 $lang['articles.table.of.contents'] = 'Sommaire :';

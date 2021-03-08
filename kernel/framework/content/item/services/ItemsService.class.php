@@ -35,6 +35,7 @@ class ItemsService
 	{
 		$items_lang = LangLoader::get('items-common');
 		$module_lang = LangLoader::filename_exists($filename, $module_id) ? LangLoader::get($filename, $module_id) : array();
+		$items_lang['items'] = isset($module_lang['items']) ? $module_lang['items'] : StringVars::replace_vars($items_lang['items'], array('items' => (isset($module_lang['item']) ? $module_lang['item'] : $items_lang['item']) . 's'));
 		$parameters_list = $parameters = array();
 		
 		foreach (array_keys($items_lang) as $element)

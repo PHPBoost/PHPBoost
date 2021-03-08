@@ -15,7 +15,6 @@
 #####################################################
 
 $lang['item'] = 'article';
-$lang['items'] = 'articles';
 
 $lang['articles.table.of.contents'] = 'Table of contents:';
 $lang['articles.print.item'] = 'Print an article';
