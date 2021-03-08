@@ -13,7 +13,7 @@
 ####################################################
 
 $lang['item'] = 'item';
-$lang['items'] = 'items';
+$lang['items'] = ':items';
 
 $lang['the.item'] = 'the :item';
 $lang['an.item'] = 'an :item';

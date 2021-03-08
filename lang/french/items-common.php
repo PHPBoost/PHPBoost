@@ -13,7 +13,7 @@
 ####################################################
 
 $lang['item'] = 'élément';
-$lang['items'] = 'éléments';
+$lang['items'] = ':items';
 
 $lang['the.item'] = 'le :item';
 $lang['an.item'] = 'un :item';
@@ -23,6 +23,7 @@ $lang['all.items.alt'] = 'toutes les :items';
 $lang['last.items'] = 'derniers :items';
 $lang['last.items.alt'] = 'dernières :items';
 $lang['items.number'] = 'Nombre de :items';
+$lang['items.number.alt2'] = 'Nombre d\':items';
 $lang['items.no.element'] = 'Aucun :item n\'est disponible pour le moment';
 $lang['items.no.element.alt'] = 'Aucune :item n\'est disponible pour le moment';
 
@@ -31,7 +32,9 @@ $lang['items.management'] = 'Gestion des :items';
 $lang['items.manage'] = 'Gérer les :items';
 $lang['item.add'] = 'Ajouter :an_item';
 $lang['item.edit'] = 'Modifier :the_item';
-$lang['item.edition'] = 'Modification d\':an_item';
+$lang['item.edition'] = 'Modification du :item';
+$lang['item.edition.alt'] = 'Modification de :the_item';
+$lang['item.edition.alt2'] = 'Modification de :the_item';
 $lang['my.items'] = 'Mes :items';
 $lang['member.items'] = ':Items publiés par';
 $lang['member.items.alt'] = ':Items publiées par';
