@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 06
+ * @version     PHPBoost 6.0 - last update: 2021 03 09
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -39,7 +39,7 @@ $lang['none_e'] = 'Aucune';
 
 $lang['add'] = 'Ajouter';
 $lang['delete'] = 'Supprimer';
-$lang['edit'] = 'Editer';
+$lang['edit'] = 'Éditer';
 $lang['apply'] = 'Appliquer';
 $lang['validation'] = 'Validation';
 $lang['moderation'] = 'Modération';
@@ -68,7 +68,7 @@ $lang['minimum'] = 'Minimum';
 
 $lang['filters'] = 'Filtres';
 $lang['click.to.select'] = 'Cliquer pour sélectionner une option';
-$lang['table_footer_stats'] = 'Eléments :start à :end sur :total';
+$lang['table_footer_stats'] = 'Éléments :start à :end sur :total';
 
 //Multimedia
 $lang['previous'] = 'Précédent';
@@ -176,7 +176,7 @@ $lang['thumbnail.custom'] = 'Image personnalisée';
 
 //Dead links
 $lang['deadlink'] = 'Signaler un lien mort';
-$lang['deadlink.confirmation'] = 'Etes-vous sûr de vouloir signaler ce lien comme étant mort ?';
+$lang['deadlink.confirmation'] = 'Êtes-vous sûr de vouloir signaler ce lien comme étant mort ?';
 $lang['contribution.deadlink'] = 'Lien mort : :link_name';
 $lang['contribution.deadlink_explain'] = 'Un membre a signalé ce lien comme étant mort. Veuillez vérifier le lien et modifiez-le si nécessaire.';
 
