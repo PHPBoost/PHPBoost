@@ -18,6 +18,7 @@
 $lang['module.title'] = 'Pages';
 
 $lang['item'] = 'page';
+$lang['items'] = 'pages';
 
 $lang['the.item'] = 'the page';
 $lang['my.items'] = 'My pages';
