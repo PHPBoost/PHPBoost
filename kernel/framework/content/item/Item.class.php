@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 07
+ * @version     PHPBoost 6.0 - last update: 2021 03 09
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -577,7 +577,7 @@ class Item
 
 		if (self::$module && self::$module->get_configuration()->feature_is_enabled('comments') && CommentsConfig::load()->module_comments_is_enabled(self::$module_id))
 			$fields_list['comments'] = array('database_field' => 'number_comments', 'label' => $common_lang['sort_by.comments.number'], 'icon' => 'far fa-comments');
-		if (self::$module && !self::$module->get_configuration()->feature_is_enabled('notation') && ContentManagementConfig::load()->module_notation_is_enabled(self::$module_id))
+		if (self::$module && self::$module->get_configuration()->feature_is_enabled('notation') && ContentManagementConfig::load()->module_notation_is_enabled(self::$module_id))
 			$fields_list['notes'] = array('database_field' => 'average_notes', 'label' => $common_lang['sort_by.best.note'], 'icon' => 'far fa-star');
 
 		return $fields_list;
