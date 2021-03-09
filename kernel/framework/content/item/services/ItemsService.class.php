@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 08
+ * @version     PHPBoost 6.0 - last update: 2021 03 09
  * @since       PHPBoost 6.0 - 2020 01 08
 */
 
@@ -35,18 +35,26 @@ class ItemsService
 	{
 		$items_lang = LangLoader::get('items-common');
 		$module_lang = LangLoader::filename_exists($filename, $module_id) ? LangLoader::get($filename, $module_id) : array();
-		$items_lang['items'] = isset($module_lang['items']) ? $module_lang['items'] : StringVars::replace_vars($items_lang['items'], array('items' => (isset($module_lang['item']) ? $module_lang['item'] : $items_lang['item']) . 's'));
 		$parameters_list = $parameters = array();
+		
+		$items_lang['item'] = (isset($module_lang['item']) ? $module_lang['item'] : $items_lang['item']);
+		$items_lang['items'] = isset($module_lang['items']) ? $module_lang['items'] : StringVars::replace_vars($items_lang['items'], array('items' => $items_lang['item'] . (TextHelper::mb_substr($items_lang['item'], '-1') != 's' ? 's' : '')));
+		
+		// Specific lang variables
+		if (AppContext::get_current_user()->get_locale() == 'french' && !isset($module_lang['the.item']) && in_array(Url::encode_rewrite(TextHelper::mb_substr($items_lang['item'], 0, 1)), array('a', 'e', 'i', 'o', 'u', 'y')))
+			$module_lang['the.item'] = 'l\':item';
+		if (AppContext::get_current_user()->get_locale() == 'english' && !isset($module_lang['an.item']) && !in_array(Url::encode_rewrite(TextHelper::mb_substr($items_lang['item'], 0, 1)), array('a', 'e', 'i', 'o', 'u', 'y')))
+			$module_lang['an.item'] = 'a :item';
 		
 		foreach (array_keys($items_lang) as $element)
 		{
-			if (isset($module_lang['the.item']) && substr(strtolower($module_lang['the.item']), 0, 2) == 'la' && isset($items_lang[$element . '.alt']))
+			if (isset($module_lang['the.item']) && TextHelper::mb_substr(strtolower($module_lang['the.item']), 0, 2) == 'la' && isset($items_lang[$element . '.alt']) || isset($module_lang['an.item']) && TextHelper::mb_substr(strtolower($module_lang['an.item']), 0, 3) == 'une' && isset($items_lang[$element . '.alt']))
 				$items_lang[$element] = $items_lang[$element . '.alt'];
 			
-			if (isset($module_lang['the.item']) && substr(strtolower($module_lang['the.item']), 0, 2) == 'l\'' && isset($items_lang[$element . '.alt2']))
+			if (isset($module_lang['the.item']) && TextHelper::mb_substr(strtolower($module_lang['the.item']), 0, 2) == 'l\'' && isset($items_lang[$element . '.alt2']))
 				$items_lang[$element] = $items_lang[$element . '.alt2'];
 			
-			if (substr($element, -4) != '.alt')
+			if (TextHelper::mb_substr($element, -4) != '.alt')
 			{
 				$parameters_list[str_replace('.', '_', TextHelper::ucfirst($element))] = isset($module_lang[$element]) ? TextHelper::ucfirst($module_lang[$element]) : TextHelper::ucfirst($items_lang[$element]);
 				$parameters_list[str_replace('.', '_', TextHelper::lcfirst($element))] = isset($module_lang[$element]) ? TextHelper::lcfirst($module_lang[$element]) : TextHelper::lcfirst($items_lang[$element]);
