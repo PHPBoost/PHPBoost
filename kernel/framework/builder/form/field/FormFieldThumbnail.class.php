@@ -5,22 +5,22 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 06
+ * @version     PHPBoost 6.0 - last update: 2021 03 09
  * @since       PHPBoost 6.0 - 2020 02 27
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldThumbnail extends AbstractFormField
 {
-	protected $default_url = '';
+	protected $default_picture = '';
 
 	const NONE  = 'none';
 	const DEFAULT_VALUE = 'default';
 	const CUSTOM = 'custom';
 
-	public function __construct($id, $label = '', $value = self::NONE, $default_url = '', array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label = '', $value = self::NONE, $default_picture = '', array $field_options = array(), array $constraints = array())
 	{
-		$this->default_url = self::get_default_thumbnail_url($default_url);
+		$this->default_picture = self::get_default_thumbnail_url($default_picture);
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 	}
 
@@ -35,18 +35,18 @@ class FormFieldThumbnail extends AbstractFormField
 		$this->assign_common_template_variables($template);
 		$this->assign_common_template_variables($tpl);
 
-		$real_file_url = $this->get_value() == self::DEFAULT_VALUE ? $this->default_url : $this->get_value();
+		$real_file_url = $this->get_value() == self::DEFAULT_VALUE ? $this->default_picture : $this->get_value();
 		$file_type = new FileType(new File($real_file_url));
 
 		$tpl->put_all(array(
-			'C_DEFAULT_URL'     => $this->default_url,
+			'C_DEFAULT_URL'     => $this->default_picture,
 			'C_PREVIEW_HIDDEN'  => !$this->get_value() || !$file_type->is_picture(),
 			'C_AUTH_UPLOAD'     => FileUploadConfig::load()->is_authorized_to_access_interface_files(),
 			'FILE_PATH'         => Url::to_rel($real_file_url),
 			'C_NONE_CHECKED'    => $this->get_value() == '',
-			'C_DEFAULT_CHECKED' => $this->get_value() && ($this->get_value() == self::DEFAULT_VALUE || $this->get_value() == $this->default_url),
-			'C_CUSTOM_CHECKED'  => $this->get_value() && $this->get_value() != self::DEFAULT_VALUE && $this->get_value() != $this->default_url,
-			'DEFAULT_URL'       => Url::to_rel($this->default_url)
+			'C_DEFAULT_CHECKED' => $this->get_value() && ($this->get_value() == self::DEFAULT_VALUE || $this->get_value() == $this->default_picture),
+			'C_CUSTOM_CHECKED'  => $this->get_value() && $this->get_value() != self::DEFAULT_VALUE && $this->get_value() != $this->default_picture,
+			'DEFAULT_URL'       => Url::to_rel($this->default_picture)
 		));
 
 		$template->assign_block_vars('fieldelements', array(
