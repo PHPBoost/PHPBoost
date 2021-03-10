@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 05
+ * @version     PHPBoost 6.0 - last update: 2021 03 10
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -50,24 +50,26 @@ class NewsItem extends RichItem
 		foreach ($suggested_news as $news)
 		{
 			$template->assign_block_vars('suggested', array(
-				'CATEGORY_NAME' => CategoriesService::get_categories_manager(self::$module_id)->get_categories_cache()->get_category($news['id_category'])->get_name(),
-				'TITLE'         => $news['title'],
-				'U_CATEGORY'    => ItemsUrlBuilder::display_category($news['id_category'], CategoriesService::get_categories_manager(self::$module_id)->get_categories_cache()->get_category($news['id_category'])->get_rewrited_name())->rel(),
-				'U_ITEM'        => ItemsUrlBuilder::display($news['id_category'], CategoriesService::get_categories_manager(self::$module_id)->get_categories_cache()->get_category($news['id_category'])->get_rewrited_name(), $news['id'], $news['rewrited_title'], self::$module_id)->rel(),
-				'U_THUMBNAIL'   => !empty($news['thumbnail']) ? Url::to_rel($news['thumbnail']) : Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(RichItem::THUMBNAIL_URL))
+				'C_HAS_THUMBNAIL' => !empty($news['thumbnail']),
+				'CATEGORY_NAME'   => CategoriesService::get_categories_manager(self::$module_id)->get_categories_cache()->get_category($news['id_category'])->get_name(),
+				'TITLE'           => $news['title'],
+				'U_CATEGORY'      => ItemsUrlBuilder::display_category($news['id_category'], CategoriesService::get_categories_manager(self::$module_id)->get_categories_cache()->get_category($news['id_category'])->get_rewrited_name())->rel(),
+				'U_ITEM'          => ItemsUrlBuilder::display($news['id_category'], CategoriesService::get_categories_manager(self::$module_id)->get_categories_cache()->get_category($news['id_category'])->get_rewrited_name(), $news['id'], $news['rewrited_title'], self::$module_id)->rel(),
+				'U_THUMBNAIL'     => $news['thumbnail'] == FormFieldThumbnail::DEFAULT_VALUE ? FormFieldThumbnail::get_default_thumbnail_url(RichItem::THUMBNAIL_URL) : Url::to_rel($news['thumbnail'])
 			));
 		}
 		
 		foreach (ItemsService::get_items_manager(self::$module_id)->get_navigation_links($this) as $link)
 		{
 			$template->put_all(array(
-				'C_'. $link['type'] .'_ITEM'      => true,
-				$link['type'] . '_ITEM'           => $link['title'],
-				'U_'. $link['type'] .'_ITEM'      => ItemsUrlBuilder::display($link['id_category'], CategoriesService::get_categories_manager(self::$module_id)->get_categories_cache()->get_category($link['id_category'])->get_rewrited_name(), $link['id'], $link['rewrited_title'], self::$module_id)->rel(),
-				'U_'. $link['type'] .'_THUMBNAIL' => !empty($link['thumbnail']) ? Url::to_rel($link['thumbnail']) : Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(RichItem::THUMBNAIL_URL))
+				'C_'. $link['type'] .'_HAS_THUMBNAIL' => !empty($link['thumbnail']),
+				'C_'. $link['type'] .'_ITEM'          => true,
+				$link['type'] . '_ITEM'               => $link['title'],
+				'U_'. $link['type'] .'_ITEM'          => ItemsUrlBuilder::display($link['id_category'], CategoriesService::get_categories_manager(self::$module_id)->get_categories_cache()->get_category($link['id_category'])->get_rewrited_name(), $link['id'], $link['rewrited_title'], self::$module_id)->rel(),
+				'U_'. $link['type'] .'_THUMBNAIL'     => $link['thumbnail'] == FormFieldThumbnail::DEFAULT_VALUE ? FormFieldThumbnail::get_default_thumbnail_url(RichItem::THUMBNAIL_URL) : Url::to_rel($link['thumbnail'])
 			));
 		}
-		
+			
 		return $template;
 	}
 }
