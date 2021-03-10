@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 09
+ * @version     PHPBoost 6.0 - last update: 2021 03 10
  * @since       PHPBoost 6.0 - 2020 02 27
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -39,14 +39,14 @@ class FormFieldThumbnail extends AbstractFormField
 		$file_type = new FileType(new File($real_file_url));
 
 		$tpl->put_all(array(
-			'C_DEFAULT_URL'     => $this->default_picture,
-			'C_PREVIEW_HIDDEN'  => !$this->get_value() || !$file_type->is_picture(),
-			'C_AUTH_UPLOAD'     => FileUploadConfig::load()->is_authorized_to_access_interface_files(),
-			'FILE_PATH'         => Url::to_rel($real_file_url),
-			'C_NONE_CHECKED'    => $this->get_value() == '',
-			'C_DEFAULT_CHECKED' => $this->get_value() && ($this->get_value() == self::DEFAULT_VALUE || $this->get_value() == $this->default_picture),
-			'C_CUSTOM_CHECKED'  => $this->get_value() && $this->get_value() != self::DEFAULT_VALUE && $this->get_value() != $this->default_picture,
-			'DEFAULT_URL'       => Url::to_rel($this->default_picture)
+			'C_DEFAULT_PICTURE_URL' => $this->default_picture,
+			'C_PREVIEW_HIDDEN'      => !$this->get_value() || !$file_type->is_picture(),
+			'C_AUTH_UPLOAD'         => FileUploadConfig::load()->is_authorized_to_access_interface_files(),
+			'FILE_PATH'             => Url::to_rel($real_file_url),
+			'C_NONE_CHECKED'        => $this->get_value() == '',
+			'C_DEFAULT_CHECKED'     => $this->get_value() && ($this->get_value() == self::DEFAULT_VALUE || $this->get_value() == $this->default_picture),
+			'C_CUSTOM_CHECKED'      => $this->get_value() && $this->get_value() != self::DEFAULT_VALUE && $this->get_value() != $this->default_picture,
+			'DEFAULT_PICTURE_URL'   => Url::to_rel($this->default_picture)
 		));
 
 		$template->assign_block_vars('fieldelements', array(

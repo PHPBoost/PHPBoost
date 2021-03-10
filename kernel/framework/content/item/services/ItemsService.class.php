@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 09
+ * @version     PHPBoost 6.0 - last update: 2021 03 10
  * @since       PHPBoost 6.0 - 2020 01 08
 */
 
@@ -42,9 +42,9 @@ class ItemsService
 		
 		// Specific lang variables
 		if (AppContext::get_current_user()->get_locale() == 'french' && !isset($module_lang['the.item']) && in_array(Url::encode_rewrite(TextHelper::mb_substr($items_lang['item'], 0, 1)), array('a', 'e', 'i', 'o', 'u', 'y')))
-			$module_lang['the.item'] = 'l\':item';
+			$module_lang['the.item'] = $items_lang['the.item.alt2'];
 		if (AppContext::get_current_user()->get_locale() == 'english' && !isset($module_lang['an.item']) && !in_array(Url::encode_rewrite(TextHelper::mb_substr($items_lang['item'], 0, 1)), array('a', 'e', 'i', 'o', 'u', 'y')))
-			$module_lang['an.item'] = 'a :item';
+			$module_lang['an.item'] = $items_lang['an.item.alt'];
 		
 		foreach (array_keys($items_lang) as $element)
 		{

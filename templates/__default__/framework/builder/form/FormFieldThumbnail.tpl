@@ -6,7 +6,7 @@
 				<span> {@thumbnail.none}</span>
 			</label>
 		</div>
-		# IF C_DEFAULT_URL #
+		# IF C_DEFAULT_PICTURE_URL #
 		<div class="form-field-radio">
 			<label class="radio" for="${escape(ID)}_default">
 				<input id="${escape(ID)}_default" type="radio" name="${escape(NAME)}" value="default" # IF C_DEFAULT_CHECKED # checked="checked" # ENDIF #>
@@ -59,7 +59,7 @@
 			}
 		} else if (option == 'default') {
 			jQuery("#onblurContainerResponse" + ${escapejs(HTML_ID)} + "_custom_file").hide();
-			jQuery('#${escape(HTML_ID)}_preview_picture').attr("src", ${escapejs(DEFAULT_URL)});
+			jQuery('#${escape(HTML_ID)}_preview_picture').attr("src", ${escapejs(DEFAULT_PICTURE_URL)});
 			jQuery('#${escape(HTML_ID)}_preview_picture').show();
 			jQuery('#${escape(HTML_ID)}_preview').show();
 		} else {
