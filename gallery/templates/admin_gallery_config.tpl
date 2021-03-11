@@ -96,7 +96,7 @@
 					<div class="form-field form-field-number"><input type="number" min="1" max="100" id="quality" name="quality" value="{QUALITY}" /> </div>
 				</div>
 				<div class="form-element">
-					<label for="categories_number_per_page">* ${LangLoader::get_message('config.categories_number_per_page', 'admin-common')}</label>
+					<label for="categories_number_per_page">* ${LangLoader::get_message('config.categories.per.page', 'admin-common')}</label>
 					<div class="form-field form-field-number"><input type="number" min="1" max="50" id="categories_number_per_page" name="categories_number_per_page" value="{CATEGORIES_NUMBER_PER_PAGE}" /></div>
 				</div>
 				<div class="form-element">

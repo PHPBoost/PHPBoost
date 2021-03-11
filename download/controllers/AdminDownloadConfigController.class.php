@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 03 11
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -75,7 +75,7 @@ class AdminDownloadConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->admin_common_lang['configuration.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldNumberEditor('categories_per_page', $this->admin_common_lang['config.categories_number_per_page'], $this->config->get_categories_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('categories_per_page', $this->admin_common_lang['config.categories.per.page'], $this->config->get_categories_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
@@ -87,7 +87,7 @@ class AdminDownloadConfigController extends AdminModuleController
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort', $this->admin_common_lang['config.items_default_sort'], $this->config->get_items_default_sort_field() . '-' . $this->config->get_items_default_sort_mode(), $this->get_sort_options()));
 
-		$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->admin_common_lang['config.author_displayed'], $this->config->is_author_displayed(),
+		$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->admin_common_lang['config.author.displayed'], $this->config->is_author_displayed(),
 			array('class' => 'custom-checkbox')
 		));
 
