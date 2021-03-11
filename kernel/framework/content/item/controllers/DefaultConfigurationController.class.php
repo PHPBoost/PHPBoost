@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 04
+ * @version     PHPBoost 6.0 - last update: 2021 03 11
  * @since       PHPBoost 6.0 - 2020 02 11
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -147,6 +147,10 @@ class DefaultConfigurationController extends AbstractAdminItemController
 				));
 			}
 
+			$fieldset->add_field(new FormFieldCheckbox('sort_form_displayed', $this->lang['config.sort.form.displayed'], $this->config->get_sort_form_displayed(),
+				array('class' => 'custom-checkbox')
+			));
+
 			$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->lang['config.author.displayed'], $this->config->get_author_displayed(),
 				array('class' => 'custom-checkbox')
 			));
@@ -181,7 +185,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 
 				if ($this->module_item->sub_categories_displayed())
 				{
-					$fieldset_categories->add_field(new FormFieldNumberEditor('categories_per_page', $this->lang['config.categories_number_per_page'], $this->config->get_categories_per_page(),
+					$fieldset_categories->add_field(new FormFieldNumberEditor('categories_per_page', $this->lang['config.categories.per.page'], $this->config->get_categories_per_page(),
 						array('min' => 1, 'max' => 50, 'required' => true),
 						array(new FormFieldConstraintIntegerRange(1, 50))
 					));
@@ -228,6 +232,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 		{
 			$this->config->set_items_default_sort_field($this->form->get_value('items_default_sort_field')->get_raw_value());
 			$this->config->set_items_default_sort_mode($this->form->get_value('items_default_sort_mode')->get_raw_value());
+			$this->config->set_sort_form_displayed($this->form->get_value('sort_form_displayed'));
 			$this->config->set_author_displayed($this->form->get_value('author_displayed'));
 			$this->config->set_date_displayed($this->form->get_value('date_displayed'));
 			$this->config->set_update_date_displayed($this->form->get_value('update_date_displayed'));

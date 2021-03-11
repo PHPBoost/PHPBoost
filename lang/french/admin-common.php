@@ -33,7 +33,6 @@ $lang['compatibility'] = 'Compatibilité';
 $lang['not_compatible'] = 'Non compatible';
 
 $lang['config.items_number_per_page'] = 'Nombre d\'éléments par page'; // To be deleted
-$lang['config.categories_number_per_page'] = 'Nombre de catégories par page'; // To be deleted
 $lang['config.categories.per.page'] = 'Nombre de catégories par page';
 $lang['config.columns_number_per_line'] = 'Nombre de colonnes d\'affichage par ligne';
 $lang['config.columns_number_per_line.description'] = 'Catégories et éléments';
@@ -44,8 +43,7 @@ $lang['config.display.summary.to.guests'] = 'Afficher le résumé des éléments
 $lang['config.full.item.display'] = 'Affichage complet des éléments';
 $lang['config.items_default_sort'] = 'Ordre d\'affichage des éléments par défaut'; // To be deleted
 $lang['config.items.default.sort.field'] = 'Ordre d\'affichage des éléments par défaut';
-$lang['config.items.default.sort.mode'] = 'Sens d\'affichage des éléments par défaut';
-$lang['config.author_displayed'] = 'Afficher le nom de l\'auteur'; // To be deleted
+$lang['config.sort.form.displayed'] = 'Afficher le formulaire de tri dans les listes';
 $lang['config.author.displayed'] = 'Afficher le nom de l\'auteur';
 $lang['config.date.displayed'] = 'Afficher la date de publication';
 $lang['config.update.date.displayed'] = 'Afficher la date de mise à jour';
