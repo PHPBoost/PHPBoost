@@ -60,19 +60,21 @@ class DefaultConfigurationController extends AbstractAdminItemController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->lang['config.items.per.page'], $this->config->get_items_per_page(),
-			array('min' => 1, 'max' => 50, 'required' => true),
+			array('min' => 1, 'max' => 50, 'required' => true, 'class' => 'third-field'),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
 		if (self::get_module_configuration()->has_rich_items())
 		{
 			$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort_field', $this->lang['config.items.default.sort.field'], $this->config->get_items_default_sort_field(), $item_class_name::get_sorting_field_options(),
-				array('select_to_list' => true)
+				array('select_to_list' => true, 'class' => 'third-field')
 			));
 
 			$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort_mode', $this->lang['config.items.default.sort.mode'], $this->config->get_items_default_sort_mode(), $item_class_name::get_sorting_mode_options(),
-				array('select_to_list' => true)
+				array('select_to_list' => true, 'class' => 'third-field')
 			));
+
+			$fieldset->add_field(new FormFieldSpacer('display', ''));
 
 			$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['config.display.type'], $this->config->get_display_type(),
 				array(
@@ -146,6 +148,8 @@ class DefaultConfigurationController extends AbstractAdminItemController
 					)
 				));
 			}
+
+			$fieldset->add_field(new FormFieldSpacer('options', ''));
 
 			$fieldset->add_field(new FormFieldCheckbox('sort_form_displayed', $this->lang['config.sort.form.displayed'], $this->config->get_sort_form_displayed(),
 				array('class' => 'custom-checkbox')
@@ -240,7 +244,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 			$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
 			if ($this->config->get_display_type() == DefaultRichModuleConfig::GRID_VIEW)
 				$this->config->set_items_per_row($this->form->get_value('items_per_row'));
-			
+
 			if ($this->module_item->content_field_enabled())
 			{
 				if ($this->config->get_display_type() == DefaultRichModuleConfig::LIST_VIEW)
@@ -284,7 +288,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 		{
 			$kernel_configuration_class = new ReflectionClass('DefaultRichModuleConfig');
 			$configuration_class = new ReflectionClass($configuration_class_name);
-			
+
 			foreach (array_diff($configuration_class->getConstants(), $kernel_configuration_class->getConstants()) as $parameter)
 			{
 				$parameter_lang_variable = 'config.' . str_replace('_', '.', $parameter);
@@ -293,7 +297,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 					$this->additional_fields_list[] = $parameter;
 					$parameter_get_method = 'get_' . $parameter;
 					$type = gettype($configuration_class->getMethod('get_default_value')->invoke($this->config, $parameter));
-					
+
 					switch ($type) {
 						case 'boolean':
 							$fieldset->add_field(new FormFieldCheckbox($parameter, $this->lang[$parameter_lang_variable], $this->config->$parameter_get_method(),
