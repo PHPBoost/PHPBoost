@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 10
+ * @version     PHPBoost 6.0 - last update: 2021 03 11
  * @since       PHPBoost 6.0 - 2020 01 08
 */
 
@@ -37,8 +37,10 @@ class ItemsService
 		$module_lang = LangLoader::filename_exists($filename, $module_id) ? LangLoader::get($filename, $module_id) : array();
 		$parameters_list = $parameters = array();
 		
-		$items_lang['item'] = (isset($module_lang['item']) ? $module_lang['item'] : $items_lang['item']);
-		$items_lang['items'] = isset($module_lang['items']) ? $module_lang['items'] : StringVars::replace_vars($items_lang['items'], array('items' => $items_lang['item'] . (TextHelper::mb_substr($items_lang['item'], '-1') != 's' ? 's' : '')));
+		$module_name = ModulesManager::get_module($module_id)->get_configuration()->get_name();
+		$item_name = TextHelper::mb_substr($module_name, '-1') == 's' ? TextHelper::mb_substr(str_replace('s ', ' ', $module_name), 0, -1) : $items_lang['item'];
+		$items_lang['item'] = isset($module_lang['item']) ? $module_lang['item'] : $item_name;
+		$items_lang['items'] = isset($module_lang['items']) ? $module_lang['items'] : ((preg_match('/s /', $module_name) || TextHelper::mb_substr($module_name, '-1') == 's') ? $module_name : StringVars::replace_vars($items_lang['items'], array('items' => $items_lang['item'] . (TextHelper::mb_substr($items_lang['item'], '-1') != 's' ? 's' : ''))));
 		
 		// Specific lang variables
 		if (AppContext::get_current_user()->get_locale() == 'french' && !isset($module_lang['the.item']) && in_array(Url::encode_rewrite(TextHelper::mb_substr($items_lang['item'], 0, 1)), array('a', 'e', 'i', 'o', 'u', 'y')))
