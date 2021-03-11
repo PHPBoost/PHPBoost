@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 17
+ * @version     PHPBoost 6.0 - last update: 2021 03 11
  * @since       PHPBoost 6.0 - 2020 05 10
 */
 
@@ -29,7 +29,7 @@ class ItemsModuleExtensionPointProvider extends ModuleExtensionPointProvider
 		if ($class = $this->get_class('Searchable', 'SearchableExtensionPoint'))
 			return $class;
 		else
-			return $this->module && ($this->module->get_configuration()->has_categories() || $this->module->get_configuration()->has_items()) ? new DefaultSearchable($this->get_id()) : false;
+			return $this->module && $this->module->get_configuration()->feature_is_enabled('search') && ($this->module->get_configuration()->has_categories() || $this->module->get_configuration()->has_items()) ? new DefaultSearchable($this->get_id()) : false;
 	}
 
 	public function sitemap()
