@@ -61,11 +61,13 @@
 	<div class="sub-section">
 		<div class="content-container">
 			# IF C_ITEMS #
-				# IF C_SEVERAL_ITEMS #
-					<div class="content">
-						# INCLUDE SORTING_FORM #
-						<div class="spacer"></div>
-					</div>
+				# IF C_ENABLED_SORTING_FORM #
+					# IF C_SEVERAL_ITEMS #
+						<div class="content">
+							# INCLUDE SORTING_FORM #
+							<div class="spacer"></div>
+						</div>
+					# ENDIF #
 				# ENDIF #
 				# IF C_TABLE_VIEW #
 					<div class="responsive-table">

@@ -51,18 +51,18 @@ abstract class AbstractItemController extends ModuleController
 		if (self::get_module_configuration()->has_rich_config_parameters())
 		{
 			$this->view->put_all(array(
-				'C_GRID_VIEW'           => $this->config->get_display_type() == DefaultRichModuleConfig::GRID_VIEW,
-				'C_LIST_VIEW'           => $this->config->get_display_type() == DefaultRichModuleConfig::LIST_VIEW,
-				'C_TABLE_VIEW'          => $this->config->get_display_type() == DefaultRichModuleConfig::TABLE_VIEW,
-				'C_MORE_OPTIONS'        => $this->config->get_display_options() == DefaultRichModuleConfig::MORE_OPTIONS,
-				'C_CELL_OPTIONS'        => $this->config->get_display_options() == DefaultRichModuleConfig::CELL_OPTIONS,
-				'C_FULL_ITEM_DISPLAY'   => $this->config->get_full_item_display(),
-				'C_AUTHOR_DISPLAYED'    => $this->config->get_author_displayed(),
-				'C_ENABLED_DATE'        => $this->config->get_date_displayed(),
-				'C_ENABLED_SORT_FORM'   => $this->config->get_sort_form_displayed(),
-				'C_ENABLED_UPDATE_DATE' => $this->config->get_update_date_displayed(),
-				'C_ENABLED_VIEWS'       => $this->config->get_views_number_enabled(),
-				'CATEGORIES_PER_ROW'    => $this->config->get_categories_per_row()
+				'C_GRID_VIEW'            => $this->config->get_display_type() == DefaultRichModuleConfig::GRID_VIEW,
+				'C_LIST_VIEW'            => $this->config->get_display_type() == DefaultRichModuleConfig::LIST_VIEW,
+				'C_TABLE_VIEW'           => $this->config->get_display_type() == DefaultRichModuleConfig::TABLE_VIEW,
+				'C_MORE_OPTIONS'         => $this->config->get_display_options() == DefaultRichModuleConfig::MORE_OPTIONS,
+				'C_CELL_OPTIONS'         => $this->config->get_display_options() == DefaultRichModuleConfig::CELL_OPTIONS,
+				'C_FULL_ITEM_DISPLAY'    => $this->config->get_full_item_display(),
+				'C_AUTHOR_DISPLAYED'     => $this->config->get_author_displayed(),
+				'C_ENABLED_DATE'         => $this->config->get_date_displayed(),
+				'C_ENABLED_SORTING_FORM' => $this->config->get_sort_form_displayed(),
+				'C_ENABLED_UPDATE_DATE'  => $this->config->get_update_date_displayed(),
+				'C_ENABLED_VIEWS'        => $this->config->get_views_number_enabled(),
+				'CATEGORIES_PER_ROW'     => $this->config->get_categories_per_row()
 			));
 		}
 		
