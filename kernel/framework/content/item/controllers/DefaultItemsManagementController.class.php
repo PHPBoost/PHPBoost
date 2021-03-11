@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 24
+ * @version     PHPBoost 6.0 - last update: 2021 03 11
  * @since       PHPBoost 6.0 - 2020 01 16
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -60,7 +60,7 @@ class DefaultItemsManagementController extends AbstractItemController
 		{
 			$item = self::get_items_manager()->get_item_class();
 			$item->set_properties($row);
-			$category = $display_categories ? $item->get_category() : null;
+			$category = self::get_module_configuration()->has_categories() ? $item->get_category() : null;
 			$user = $item->get_author_user();
 
 			$this->elements_number++;
