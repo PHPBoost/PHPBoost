@@ -385,25 +385,22 @@ function bbcode_code(field)
 		file_path = document.getElementById('bb_code_custom_name' + field).value,
 		inline = document.getElementById('bb_code_line' + field).checked;
 
-		if(file_path != '' && file_path != null)
-		{
-			if(inline)
-				insertbbcode('[code=' + file_path + ',0,1]', '[/code]', field);
-			else
-				insertbbcode('[code=' + file_path + ']', '[/code]', field);
-		}
-		else if(language != '' && language != null)
-		{
-			if(inline)
-				insertbbcode('[code=' + language + ',0,1]', '[/code]', field);
-			else
-				insertbbcode('[code=' + language + ']', '[/code]', field);
-		}
+	if(file_path != '' && file_path != null)
+	{
+		if(inline)
+			insertbbcode('[code=' + file_path + ',0,1]', '[/code]', field);
 		else
-			insertbbcode('[code]', '[/code]', field);
-
-
-
+			insertbbcode('[code=' + file_path + ']', '[/code]', field);
+	}
+	else if(language != '' && language != null)
+	{
+		if(inline)
+			insertbbcode('[code=' + language + ',0,1]', '[/code]', field);
+		else
+			insertbbcode('[code=' + language + ']', '[/code]', field);
+	}
+	else
+		insertbbcode('[code]', '[/code]', field);
 }
 
 function checkbox_revealer()
