@@ -803,3 +803,7 @@ a.wikipedia-link { border-bottom-color: var(--main-tone); }
 .bgc-full:hover.member        { background-color: var(--member-light); }
 .bgc-full:hover.moderator     { background-color: var(--moderator-light); }
 .bgc-full:hover.administrator { background-color: var(--administrator-light); }
+
+.member-only    { border-color: var(--member-tone);}
+.moderator-only { border-color: var(--moderator-tone);}
+.teaser::after  { background-image: linear-gradient(to top, rgba(var(--lighten), 1) 0%, rgba(var(--lighten), 0) 100%);}

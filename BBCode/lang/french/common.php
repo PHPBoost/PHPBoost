@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 28
+ * @version     PHPBoost 6.0 - last update: 2021 03 12
  * @since       PHPBoost 4.1 - 2014 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -74,12 +74,12 @@ $lang['bbcode.abbr.label'] = 'Nom complet';
 $lang['bbcode.quote'] = 'Citation';
 $lang['bbcode.quote.author'] = 'Auteur de la citation';
 
-$lang['bbcode.hide'] = 'Texte Caché';
-$lang['bbcode.member'] = 'Texte pour les membres';
-$lang['bbcode.moderator'] = 'Texte pour les modérateurs';
-$lang['bbcode.hide.all'] = 'Cache le texte et l\'affiche au clic';
-$lang['bbcode.hide.member'] = 'Cache le texte pour les visiteurs';
-$lang['bbcode.hide.moderator'] = 'Cache le texte pour les membres';
+$lang['bbcode.hide'] = 'Contenu Caché';
+$lang['bbcode.moderator'] = 'Contenu réservé aux modérateurs';
+$lang['bbcode.hide.all'] = 'Cache le contenu et l\'affiche au clic';
+$lang['bbcode.hide.member'] = 'Cache le contenu aux visiteurs';
+$lang['bbcode.hide.teaser'] = 'Cache la fin du contenu aux visiteurs';
+$lang['bbcode.hide.moderator'] = 'Cache le contenu aux membres';
 
 $lang['bbcode.style'] = 'Style';
 

@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 01 15
+ * @version     PHPBoost 6.0 - last update: 2021 03 12
  * @since       PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -191,6 +191,7 @@ class BBCodeParser extends ContentFormattingParser
 			'figure' => '`\[figure=([^"]+)\](.*)\[/figure\]`isuU',
 			'member' => '`\[member\](.*)\[/member\]`isuU',
 			'moderator' => '`\[moderator\](.*)\[/moderator\]`isuU',
+			'teaser' => '`\[teaser\](.*)\[/teaser\]`isuU',
 		);
 
 		$array_preg_replace = array(
@@ -237,6 +238,7 @@ class BBCodeParser extends ContentFormattingParser
 			'lightbox' => '<a href="$1" data-lightbox="formatter" class="formatter-lightbox">$6</a>',
 			'figure' => '<figure>$2<figcaption>$1</figcaption></figure>',
 			'member' => '[[MEMBER]]$1[[/MEMBER]]',
+			'teaser' => '[[TEASER]]$1[[/TEASER]]',
 			'moderator' => '[[MODERATOR]]$1[[/MODERATOR]]',
 		);
 

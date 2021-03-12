@@ -485,15 +485,19 @@
 						<div class="cell-list">
 							<ul>
 								<li class="li-stretch{AUTH_HIDE}">
-									<span><i class="far fa-fw fa-eye-slash" role="contentinfo" aria-label="{@bbcode.hide.all}"></i> {@bbcode.hide}</span>
+									<span><i class="far fa-fw fa-eye-slash" role="contentinfo"></i> {@bbcode.hide.all}</span>
 									<span class="button hide-modal" onclick="insertbbcode('[hide]', '[/hide]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
 								<li class="li-stretch{AUTH_MEMBER}">
-									<span><i class="fa fa-fw fa-user-friends" role="contentinfo" aria-label="{@bbcode.hide.member}"></i> {@bbcode.member}</span>
+									<span><i class="fa fa-fw fa-user-friends" role="contentinfo"></i> {@bbcode.hide.member}</span>
 									<span class="button hide-modal" onclick="insertbbcode('[member]', '[/member]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
+								<li class="li-stretch{AUTH_TEASER}">
+									<span><i class="fa fa-fw fa-user" role="contentinfo"></i> {@bbcode.hide.teaser}</span>
+									<span class="button hide-modal" onclick="insertbbcode('[teaser]', '[/teaser]', '{FIELD}');">{@bbcode.tags.add}</span>
+								</li>
 								<li class="li-stretch{AUTH_MODERATOR}">
-									<span><i class="fa fa-fw fa-user-shield" role="contentinfo" aria-label="{@bbcode.hide.moderator}"></i> {@bbcode.moderator}</span>
+									<span><i class="fa fa-fw fa-user-shield" role="contentinfo"></i> {@bbcode.hide.moderator}</span>
 									<span class="button hide-modal" onclick="insertbbcode('[moderator]', '[/moderator]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
 							</ul>

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 13
+ * @version     PHPBoost 6.0 - last update: 2021 03 12
  * @since       PHPBoost 3.0 - 2012 04 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -112,8 +112,11 @@ $lang['extended_field.avatar_upload_invalid_format'] = 'Invalid avatar file form
 $lang['extended_field.avatar_upload_max_dimension'] = 'Max avatar file dimensions exceeded';
 
 //BBcode
-$lang['bbcode_member'] = 'Message for members';
-$lang['bbcode_moderator'] = 'Message for moderators';
+$lang['bbcode_member'] = 'This frame hides content for members only';
+$lang['bbcode_moderator'] = 'This frame hides content for moderators only';
+$lang['bbcode.teaser'] = 'Only members can read the whole following content.';
+$lang['bbcode.is.member'] = 'The following content is only visible to members';
+$lang['bbcode.is.moderator'] = 'The following content is only visible to moderators';
 
 //Locked content
 $lang['content.is_locked.description'] = 'The item is currently open by :user_display_name, you can not access it, try again later.';

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 28
+ * @version     PHPBoost 6.0 - last update: 2021 03 12
  * @since       PHPBoost 4.1 - 2014 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -74,12 +74,11 @@ $lang['bbcode.abbr.label'] = 'Full name';
 $lang['bbcode.quote'] = 'Quote';
 $lang['bbcode.quote.author'] = 'Quote author';
 
-$lang['bbcode.hide'] = 'Hidden Text';
-$lang['bbcode.member'] = 'Member';
-$lang['bbcode.moderator'] = 'Moderator';
-$lang['bbcode.hide.all'] = 'Hide Text and show him on click [hide]text[/hide]';
-$lang['bbcode.hide.member'] = 'Hide Text for visitors [member]text[/member]';
-$lang['bbcode.hide.moderator'] = 'Hide Text for members [moderator]text[/moderator]';
+$lang['bbcode.hide'] = 'Hidden content';
+$lang['bbcode.hide.all'] = 'Hide content and show it on click';
+$lang['bbcode.hide.member'] = 'Hide content to visitors';
+$lang['bbcode.hide.teaser'] = 'Hide end of content to visitors';
+$lang['bbcode.hide.moderator'] = 'Hide content to members';
 
 $lang['bbcode.style'] = 'Style [style=x]text[/style]';
 

@@ -10,7 +10,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 23
+ * @version     PHPBoost 6.0 - last update: 2021 03 12
  * @since       PHPBoost 2.0 - 2008 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -52,6 +52,12 @@ class ContentSecondParser extends AbstractParser
 		if (stripos($this->content, '[[MEMBER]]') !== false)
 		{
 			$this->content = preg_replace_callback('`\[\[MEMBER\]\](.+)\[\[/MEMBER\]\]`suU', array($this, 'callback_member_tag'), $this->content);
+		}
+
+		// Teaser tag
+		if (stripos($this->content, '[[TEASER]]') !== false)
+		{
+			$this->content = preg_replace_callback('`\[\[TEASER\]\](.+)\[\[/TEASER\]\]`suU', array($this, 'callback_teaser_tag'), $this->content);
 		}
 
 		//Balise moderator
@@ -258,9 +264,24 @@ class ContentSecondParser extends AbstractParser
 	{
 		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 		{
-			return $matches[1];
+			return  MessageHelper::display(LangLoader::get_message('bbcode.is.member', 'status-messages-common'), MessageHelper::MEMBER_ONLY)->render() . '<div class="member-only">' . $matches[1] . '</div>';
 		}
 		return MessageHelper::display(LangLoader::get_message('bbcode_member', 'status-messages-common'), MessageHelper::MEMBER_ONLY)->render();
+	}
+
+	/**
+	 * @static
+	 * Display the content only if it's a member user. The begining of the content is shown to visitors
+	 * @param string[] 1 => the content inside teaser tag.
+	 * @return string The content if it's a member or a generic message.
+	 */
+	private function callback_teaser_tag($matches)
+	{
+		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
+		{
+			return  MessageHelper::display(LangLoader::get_message('bbcode.is.teaser', 'status-messages-common'), MessageHelper::MEMBER_ONLY)->render() . '<div class="member-only">' . $matches[1] . '</div>';
+		}
+		return MessageHelper::display(LangLoader::get_message('bbcode.teaser', 'status-messages-common'), MessageHelper::MEMBER_ONLY)->render() . '<div class="teaser">' . $matches[1] . '</div>';
 	}
 
 	/**
@@ -273,7 +294,7 @@ class ContentSecondParser extends AbstractParser
 	{
 		if (AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL))
 		{
-			return $matches[1];
+			return  MessageHelper::display(LangLoader::get_message('bbcode.is.moderator', 'status-messages-common'), MessageHelper::MODERATOR_ONLY)->render() . '<div class="moderator-only">' . $matches[1] . '</div>';
 		}
 		return MessageHelper::display(LangLoader::get_message('bbcode_moderator', 'status-messages-common'), MessageHelper::MODERATOR_ONLY)->render();
 	}

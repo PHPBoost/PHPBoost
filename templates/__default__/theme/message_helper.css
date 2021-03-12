@@ -82,3 +82,27 @@
 }
 
 .floating-message-container .message-helper > a { cursor: pointer; }
+
+.member-only,
+.moderator-only {
+	padding-left: 0.618em;
+	border-width: 0 0 0 2px;
+	border-style: solid;
+	border-color: transparent;
+}
+
+.teaser {
+	position: relative;
+	max-height: 80px;
+	overflow: hidden;
+}
+
+.teaser::after {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	content: "";
+	pointer-events: none;
+}
