@@ -254,6 +254,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			'`<a href="([^"]+)" data-lightbox="formatter"(?: class="formatter-lightbox")?>(.*)</a>`isuU',
 			'`<figure>(.*)<figcaption>(.*)</figcation></figure>`isuU',
 			'`\[\[MEMBER\]\](.+)\[\[/MEMBER\]\]`suU',
+			'`\[\[TEASER\]\](.+)\[\[/TEASER\]\]`suU',
 			'`\[\[MODERATOR\]\](.+)\[\[/MODERATOR\]\]`suU',
 		);
 
@@ -290,6 +291,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			"[lightbox=$1]$2[/lightbox]",
 			"[figure=$2]$1[/figure]",
 			"[member]$1[/member]",
+			"[teaser]$1[/teaser]",
 			"[moderator]$1[/moderator]",
 		);
 

@@ -656,6 +656,7 @@ class TinyMCEParser extends ContentFormattingParser
 			'lightbox' => '`\[lightbox=((?!javascript:)' . Url::get_wellformness_regex() . ')\](.*)\[/lightbox\]`isuU',
 			'figure' => '`\[figure=([^"]+)\](.*)\[/figure\]`isuU',
 			'member' => '`\[member\](.*)\[/member\]`isuU',
+			'teaser' => '`\[teaser\](.*)\[/teaser\]`isuU',
 			'moderator' => '`\[moderator\](.*)\[/moderator\]`isuU',
 		);
 
@@ -688,6 +689,7 @@ class TinyMCEParser extends ContentFormattingParser
 			'lightbox' => '<a href="$1" data-lightbox="formatter" class="formatter-lightbox">$6</a>',
 			'figure' => '<figure>$2<figcaption>$1</figcation></figure>',
 			'member' => '[[MEMBER]]$1[[/MEMBER]]',
+			'teaser' => '[[TEASER]]$1[[/TEASER]]',
 			'moderator' => '[[MODERATOR]]$1[[/MODERATOR]]',
 		);
 
