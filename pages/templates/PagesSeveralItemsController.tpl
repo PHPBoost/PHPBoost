@@ -57,7 +57,7 @@
 							# START items #
 								<tr>
 									<td class="align-left"><a href="{items.U_ITEM}"><span itemprop="name"><i class="far fa-fw fa-file-alt" aria-hidden="true"></i> {items.TITLE}</a></td>
-									<td aria-label="${LangLoader::get_message('form.date.creation', 'common')}"><i class="far fa-calendar-plus" aria-hidden="true"></i> <time datetime="# IF NOT items.C_DIFFERED #{items.DATE_ISO8601}# ELSE #{items.DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT items.C_DIFFERED #{items.DATE}# ELSE #{items.DIFFERED_START_DATE}# ENDIF #</time></td>
+									<td aria-label="${LangLoader::get_message('form.date.creation', 'common')}"><i class="far fa-calendar-plus" aria-hidden="true"></i> <time datetime="# IF NOT items.C_DEFFERED_PUBLISHING #{items.DATE_ISO8601}# ELSE #{items.DEFFERED_PUBLISHING_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT items.C_DEFFERED_PUBLISHING #{items.DATE}# ELSE #{items.DEFFERED_PUBLISHING_START_DATE}# ENDIF #</time></td>
 									<td aria-label="${LangLoader::get_message('form.date.update', 'common')}">
 										<i class="far fa-calendar-check" aria-hidden="true"></i>
 										# IF items.C_HAS_UPDATE_DATE #
@@ -71,16 +71,16 @@
 									# ENDIF #
 									# IF NOT C_MEMBER_ITEMS #
 										<td>
-											<span class="pinned {items.USER_LEVEL_CLASS}"# IF items.C_USER_GROUP_COLOR # style="color:{items.USER_GROUP_COLOR};border-color:{items.USER_GROUP_COLOR};"# ENDIF #>
+											<span class="pinned {items.AUTHOR_LEVEL_CLASS}"# IF items.C_AUTHOR_GROUP_COLOR # style="color:{items.AUTHOR_GROUP_COLOR};border-color:{items.AUTHOR_GROUP_COLOR};"# ENDIF #>
 												# IF items.C_AUTHOR_CUSTOM_NAME #
 													<i class="far fa-user" aria-hidden="true"></i> <span class="custom-author">{items.AUTHOR_CUSTOM_NAME}</span>
 												# ELSE #
 													# IF items.C_AUTHOR_EXIST #
-														<a itemprop="author" class="{items.USER_LEVEL_CLASS}" href="{items.U_AUTHOR_PROFILE}"# IF items.C_USER_GROUP_COLOR # style="color:{items.USER_GROUP_COLOR}"# ENDIF #>
-															<i class="far fa-user" aria-hidden="true"></i> {items.PSEUDO}
+														<a itemprop="author" class="{items.AUTHOR_LEVEL_CLASS}" href="{items.U_AUTHOR}"# IF items.C_AUTHOR_GROUP_COLOR # style="color:{items.AUTHOR_GROUP_COLOR}"# ENDIF #>
+															<i class="far fa-user" aria-hidden="true"></i> {items.AUTHOR_DISPLAY_NAME}
 														</a>
 													# ELSE #
-														<i class="far fa-user" aria-hidden="true"></i> <span class="visitor">{items.PSEUDO}</span>
+														<i class="far fa-user" aria-hidden="true"></i> <span class="visitor">{items.AUTHOR_DISPLAY_NAME}</span>
 													# ENDIF #
 												# ENDIF #
 											</span>

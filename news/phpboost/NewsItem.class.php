@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 10
+ * @version     PHPBoost 6.0 - last update: 2021 03 12
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -16,8 +16,6 @@ class NewsItem extends RichItem
 {
 	protected $sub_categories_displayed = false;
 	
-	private $top_list_enabled;
-
 	protected function set_additional_attributes_list()
 	{
 		$this->add_additional_attribute('top_list_enabled', array('type' => 'boolean', 'notnull' => 1, 'default' => 0, 'attribute_options_field_parameters' => array(

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 26
+ * @version     PHPBoost 6.0 - last update: 2021 03 12
  * @since       PHPBoost 4.0 - 2014 05 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -78,6 +78,7 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 				'table_name' => PREFIX . 'pages',
 				'columns' => array(
 					'i_order'               => array('type' => 'integer', 'length'  => 11, 'notnull'  => 1, 'default' => 0),
+					'summary'               => array('type' => 'text', 'length'     => 65000),
 					'author_display'        => array('type' => 'boolean', 'notnull' => 1, 'default'   => 0),
 					'author_custom_name'    => array('type' => 'string', 'length'   => 255, 'default' => "''"),
 					'published'             => array('type' => 'integer', 'length'  => 1, 'notnull'   => 1, 'default' => 0),
