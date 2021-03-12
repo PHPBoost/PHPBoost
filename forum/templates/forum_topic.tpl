@@ -173,7 +173,7 @@
 									{poll_result.ANSWERS}
 
 									{poll_result.PERCENT}% - [{poll_result.NBRVOTE} {L_VOTE}]
-									<div class="progressbar-container" aria-label="{poll_result.PERCENT}%">
+									<div class="progressbar-container" role="progressbar" aria-valuenow="{poll_result.PERCENT}" aria-valuemin="0" aria-valuemax="100">
 										<div class="progressbar-infos">{poll_result.PERCENT}%</div>
 										<div class="progressbar" style="width:{poll_result.PERCENT}%"></div>
 									</div>
