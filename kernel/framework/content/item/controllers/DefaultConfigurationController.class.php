@@ -248,6 +248,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 			if ($this->module_item->content_field_enabled())
 			{
 				if ($this->module_item->summary_field_enabled())
+				{
 					if ($this->config->get_display_type() == DefaultRichModuleConfig::LIST_VIEW)
 						$this->config->set_full_item_display($this->form->get_value('full_item_display'));
 					if ($this->config->get_display_type() == DefaultRichModuleConfig::LIST_VIEW && !$this->config->get_full_item_display())
