@@ -9,7 +9,7 @@
 	</header>
 	<div class="sub-section">
 		<div class="content-container">
-			# IF NOT C_VISIBLE #
+			# IF NOT C_PUBLISHED #
 				# INCLUDE NOT_VISIBLE_MESSAGE #
 			# ENDIF #
 			<article itemscope="itemscope" itemtype="https://schema.org/CreativeWork" id="pages-item-{ID}" class="pages-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #">

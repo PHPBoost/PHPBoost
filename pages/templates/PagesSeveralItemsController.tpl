@@ -5,15 +5,7 @@
 			# IF C_CATEGORIES ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF ## ENDIF #
 		</div>
 		<h1>
-			# IF C_PENDING_ITEMS #
-				{@pending.items}
-			# ELSE #
-				# IF C_MEMBER_ITEMS #
-					# IF C_MY_ITEMS #{@my.items}# ELSE #{@member.items} {MEMBER_NAME}# ENDIF #
-				# ELSE #
-					{@items}# IF C_CATEGORIES # - {CATEGORY_NAME}# ENDIF #
-				# ENDIF #
-			# ENDIF #
+			{@module.title}# IF C_CATEGORIES # - {CATEGORY_NAME}# ENDIF #
 		</h1>
 	</header>
 
