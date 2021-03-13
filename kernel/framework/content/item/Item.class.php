@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 12
+ * @version     PHPBoost 6.0 - last update: 2021 03 13
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -54,10 +54,8 @@ class Item
 
 	public function __construct($module_id = '')
 	{
-		if ($module_id)
-			self::$module_id = $module_id;
-		if (self::$module_id)
-			self::$module = ModulesManager::get_module(self::$module_id);
+		self::$module_id = !empty($module_id) ? $module_id : Environment::get_running_module_name();
+		self::$module = ModulesManager::get_module(self::$module_id);
 
 		$this->set_kernel_additional_attributes_list();
 		$this->set_additional_attributes_list();

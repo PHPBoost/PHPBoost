@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 01 30
+ * @version     PHPBoost 6.0 - last update: 2021 03 13
  * @since       PHPBoost 6.0 - 2020 01 23
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,21 +13,33 @@
 
 class RichItem extends Item
 {
+	protected $summary_field_enabled = true;
+	
 	const THUMBNAIL_URL = '/templates/__default__/images/default_item_thumbnail.png';
+
+	protected function disable_summary_field()
+	{
+		$this->summary_field_enabled = false;
+	}
+
+	public function summary_field_enabled()
+	{
+		return $this->summary_field_enabled;
+	}
 
 	protected function set_kernel_additional_attributes_list()
 	{
 		$this->add_additional_attribute('views_number', array('type' => 'integer', 'length' => 11, 'default' => 0));
 
-		if ($this->content_field_enabled)
+		if ($this->content_field_enabled && $this->summary_field_enabled)
 			$this->add_additional_attribute('summary', array('type' => 'text', 'length' => 65000, 'fulltext' => true));
 
 		$this->add_additional_attribute('author_custom_name', array('type' => 'string', 'length' => 255, 'default' => "''"));
 
 		$this->add_additional_attribute('thumbnail', array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''", 'attribute_options_field_parameters' => array(
-			'field_class' => 'FormFieldThumbnail',
-			'label' => LangLoader::get_message('form.picture', 'common'),
-			'value' => FormFieldThumbnail::DEFAULT_VALUE,
+			'field_class'     => 'FormFieldThumbnail',
+			'label'           => LangLoader::get_message('form.picture', 'common'),
+			'value'           => FormFieldThumbnail::DEFAULT_VALUE,
 			'default_picture' => self::THUMBNAIL_URL
 			)
 		));
@@ -126,13 +138,13 @@ class RichItem extends Item
 	protected function get_kernel_additional_template_vars($parsed_content = '')
 	{
 		$content = $parsed_content ? $parsed_content : FormatingHelper::second_parse($this->content);
-		$summary = $this->content_field_enabled ? $this->get_real_summary($content) : '';
+		$summary = $this->content_field_enabled && $this->summary_field_enabled ? $this->get_real_summary($content) : '';
 
 		return array(
 			// Conditions
 			'C_HAS_THUMBNAIL'      => $this->has_thumbnail(),
 			'C_AUTHOR_CUSTOM_NAME' => $this->is_author_custom_name_enabled(),
-			'C_READ_MORE'          => $this->content_field_enabled && !$this->get_additional_property('summary') && TextHelper::strlen($content) > self::$module->get_configuration()->get_configuration_parameters()->get_auto_cut_characters_number() && $summary != @strip_tags($content, '<br><br/>'),
+			'C_READ_MORE'          => $this->content_field_enabled && $this->summary_field_enabled && !$this->get_additional_property('summary') && TextHelper::strlen($content) > self::$module->get_configuration()->get_configuration_parameters()->get_auto_cut_characters_number() && $summary != @strip_tags($content, '<br><br/>'),
 			'C_SEVERAL_VIEWS'      => $this->get_views_number() > 1,
 
 			// Item parameters

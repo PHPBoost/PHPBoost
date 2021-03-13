@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 05
+ * @version     PHPBoost 6.0 - last update: 2021 03 13
  * @since       PHPBoost 6.0 - 2020 01 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -16,6 +16,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 	protected $sort_mode;
 	protected $page;
 	protected $subcategories_page;
+	protected $summary_displayed_to_guests;
 
 	protected $sql_condition;
 	protected $sql_parameters = array();
@@ -49,6 +50,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 		$this->sort_mode = (in_array(TextHelper::strtoupper($requested_sort_mode), array(Item::ASC, Item::DESC)) ? $requested_sort_mode : $this->config->get_items_default_sort_mode());
 		$this->page = $this->request->get_getint('page', 1);
 		$this->subcategories_page = $this->request->get_getint('subcategories_page', 1);
+		$this->summary_displayed_to_guests = ($this->module_item->content_field_enabled() && $this->module_item->summary_field_enabled() ? $this->config->get_summary_displayed_to_guests() : true);
 
 		$now = new Date();
 		$this->sql_parameters['timestamp_now'] = $now->get_timestamp();
@@ -61,7 +63,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 				AND id_category IN :authorized_categories
 				AND (published = ' . Item::PUBLISHED . (self::get_module_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))' : '') . ')';
 
-				$this->sql_parameters['authorized_categories'] = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $this->module_item->content_field_enabled() ? $this->config->get_summary_displayed_to_guests() : true);
+				$this->sql_parameters['authorized_categories'] = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $this->summary_displayed_to_guests);
 			}
 			else
 			{
@@ -87,7 +89,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 				AND author_user_id = :user_id
 				AND (published = ' . Item::PUBLISHED . (self::get_module_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))' : '') . ')';
 
-				$this->sql_parameters['authorized_categories'] = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $this->module_item->content_field_enabled() ? $this->config->get_summary_displayed_to_guests() : true);
+				$this->sql_parameters['authorized_categories'] = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $this->summary_displayed_to_guests);
 			}
 			else
 			{
@@ -117,7 +119,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 				' . (!CategoriesAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
 				AND (published = ' . Item::NOT_PUBLISHED . (self::get_module_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND (publishing_start_date > :timestamp_now OR (publishing_end_date != 0 AND publishing_end_date < :timestamp_now)))' : '') . ')';
 
-				$this->sql_parameters['authorized_categories'] = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $this->module_item->content_field_enabled() ? $this->config->get_summary_displayed_to_guests() : true);
+				$this->sql_parameters['authorized_categories'] = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $this->summary_displayed_to_guests);
 			}
 			else
 			{
@@ -297,7 +299,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 		$displayed_categories_number = 0;
 		if ($this->module_item->sub_categories_displayed())
 		{
-			$subcategories = CategoriesService::get_categories_manager()->get_categories_cache()->get_children($this->get_category()->get_id(), CategoriesService::get_authorized_categories($this->get_category()->get_id(), $this->module_item->content_field_enabled() ? $this->config->get_summary_displayed_to_guests() : true));
+			$subcategories = CategoriesService::get_categories_manager()->get_categories_cache()->get_children($this->get_category()->get_id(), CategoriesService::get_authorized_categories($this->get_category()->get_id(), $this->summary_displayed_to_guests));
 			$subcategories_pagination = $this->get_subcategories_pagination(count($subcategories));
 
 			foreach ($subcategories as $id => $category)
@@ -402,7 +404,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 		$authorizations = self::get_module_configuration()->has_categories() ? CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id(), self::$module_id) : ItemsAuthorizationsService::check_authorizations(self::$module_id);
 
 		if ($this->category !== null)
-			return ((AppContext::get_current_user()->is_guest() && ($this->module_item->content_field_enabled() ? $this->config->get_summary_displayed_to_guests() : true) && Authorizations::check_auth(RANK_TYPE, User::MEMBER_LEVEL, $this->get_category()->get_authorizations(), Category::READ_AUTHORIZATIONS)) || $authorizations->read()) ? true : $this->display_user_not_authorized_page();
+			return ((AppContext::get_current_user()->is_guest() && $this->summary_displayed_to_guests && Authorizations::check_auth(RANK_TYPE, User::MEMBER_LEVEL, $this->get_category()->get_authorizations(), Category::READ_AUTHORIZATIONS)) || $authorizations->read()) ? true : $this->display_user_not_authorized_page();
 		else if ($this->keyword !== null)
 			return $authorizations->read() ? true : $this->display_user_not_authorized_page();
 		else

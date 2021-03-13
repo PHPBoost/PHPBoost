@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 11
+ * @version     PHPBoost 6.0 - last update: 2021 03 13
  * @since       PHPBoost 6.0 - 2020 02 11
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -34,7 +34,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 			if (self::get_module_configuration()->has_rich_items())
 			{
 				$this->form->get_field_by_id('items_per_row')->set_hidden($this->config->get_display_type() != DefaultRichModuleConfig::GRID_VIEW);
-				if ($this->module_item->content_field_enabled())
+				if ($this->module_item->content_field_enabled() && $this->module_item->summary_field_enabled())
 				{
 					$this->form->get_field_by_id('full_item_display')->set_hidden($this->config->get_display_type() != DefaultRichModuleConfig::LIST_VIEW);
 					$this->form->get_field_by_id('auto_cut_characters_number')->set_hidden($this->config->get_display_type() != DefaultRichModuleConfig::LIST_VIEW || $this->config->get_full_item_display());
@@ -116,7 +116,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 				array(new FormFieldConstraintIntegerRange(1, 4))
 			));
 
-			if ($this->module_item->content_field_enabled())
+			if ($this->module_item->content_field_enabled() && $this->module_item->summary_field_enabled())
 			{
 				$fieldset->add_field(new FormFieldCheckbox('full_item_display', $this->lang['config.full.item.display'], $this->config->get_full_item_display(),
 					array(
@@ -247,12 +247,14 @@ class DefaultConfigurationController extends AbstractAdminItemController
 
 			if ($this->module_item->content_field_enabled())
 			{
-				if ($this->config->get_display_type() == DefaultRichModuleConfig::LIST_VIEW)
-					$this->config->set_full_item_display($this->form->get_value('full_item_display'));
-				if ($this->config->get_display_type() == DefaultRichModuleConfig::LIST_VIEW && !$this->config->get_full_item_display())
-					$this->config->set_auto_cut_characters_number($this->form->get_value('auto_cut_characters_number'));
-				if ($this->config->get_display_type() != DefaultRichModuleConfig::TABLE_VIEW)
-					$this->config->set_summary_displayed_to_guests($this->form->get_value('summary_displayed_to_guests'));
+				if ($this->module_item->summary_field_enabled())
+					if ($this->config->get_display_type() == DefaultRichModuleConfig::LIST_VIEW)
+						$this->config->set_full_item_display($this->form->get_value('full_item_display'));
+					if ($this->config->get_display_type() == DefaultRichModuleConfig::LIST_VIEW && !$this->config->get_full_item_display())
+						$this->config->set_auto_cut_characters_number($this->form->get_value('auto_cut_characters_number'));
+					if ($this->config->get_display_type() != DefaultRichModuleConfig::TABLE_VIEW)
+						$this->config->set_summary_displayed_to_guests($this->form->get_value('summary_displayed_to_guests'));
+				}
 				$this->config->set_default_content($this->form->get_value('default_content'));
 			}
 
