@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 21
+ * @version     PHPBoost 6.0 - last update: 2021 03 13
  * @since       PHPBoost 5.2 - 2020 06 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -39,7 +39,8 @@ class PagesHomeController extends ModuleController
 	{
 		$now = new Date();
 		$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, true, 'pages');
-
+		$items_table = ModulesManager::get_module('pages')->get_configuration()->get_items_table_name();
+		
 		$this->view->put_all(array(
 			'C_CONTROLS'             => AppContext::get_current_user()->get_level() == User::ADMIN_LEVEL,
 			'C_CATEGORY_DESCRIPTION' => !empty($this->config->get_root_category_description()),
@@ -49,7 +50,7 @@ class PagesHomeController extends ModuleController
 
 		// Root category pages
 		$root_result = PersistenceContext::get_querier()->select('SELECT *
-			FROM '. PagesSetup::$pages_table .' pages
+			FROM '. $items_table .' pages
 			WHERE pages.id_category = 0
 			AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
 			ORDER BY pages.i_order', array(
@@ -70,7 +71,7 @@ class PagesHomeController extends ModuleController
 			if ($id != Category::ROOT_CATEGORY && in_array($id, $authorized_categories))
 			{
 				$result = PersistenceContext::get_querier()->select('SELECT *
-					FROM '. PagesSetup::$pages_table .' pages
+					FROM '. $items_table .' pages
 					WHERE id_category = :id_cat
 					AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
 					ORDER BY i_order', array(

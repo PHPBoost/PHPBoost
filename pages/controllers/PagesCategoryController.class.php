@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 05
+ * @version     PHPBoost 6.0 - last update: 2021 03 13
  * @since       PHPBoost 5.2 - 2020 06 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -46,6 +46,8 @@ class PagesCategoryController extends ModuleController
 
 	private function build_items_listing_view(Date $now)
 	{
+		$items_table = ModulesManager::get_module('pages')->get_configuration()->get_items_table_name();
+		
 		$condition = 'WHERE id_category = :id_category
 		AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))';
 		$parameters = array(
@@ -54,7 +56,7 @@ class PagesCategoryController extends ModuleController
 		);
 
 		$result = PersistenceContext::get_querier()->select('SELECT pages.*, member.*
-		FROM ' . PagesSetup::$pages_table . ' pages
+		FROM ' . $items_table . ' pages
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = pages.author_user_id
 		' . $condition . '
 		ORDER BY i_order', array_merge($parameters, array(

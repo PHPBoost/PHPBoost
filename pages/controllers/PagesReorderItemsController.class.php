@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 21
+ * @version     PHPBoost 6.0 - last update: 2021 03 13
  * @since       PHPBoost 5.2 - 2020 06 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -46,9 +46,10 @@ class PagesReorderItemsController extends ModuleController
 	{
 		$now = new Date();
 		$config = PagesConfig::load();
-
+		$items_table = ModulesManager::get_module('pages')->get_configuration()->get_items_table_name();
+		
 		$result = PersistenceContext::get_querier()->select('SELECT *
-		FROM '. PagesSetup::$pages_table .' pages
+		FROM '. $items_table .' pages
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = pages.author_user_id
 		WHERE id_category = :id_category
 		AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
