@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2020 02 01
+ * @version     PHPBoost 6.0 - last update: 2021 03 13
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once('../kernel/begin.php');
@@ -18,9 +19,12 @@ if (!CategoriesAuthorizationsService::check_authorizations()->moderation())
 }
 
 require_once('media_begin.php');
-$NUMBER_ELEMENTS_PER_PAGE = 25;
+$config = MediaConfig::load();
+$items_per_page = $config->get_items_number_per_page();
 
-$tpl = new FileTemplate('media/moderation_media.tpl');
+$view = new FileTemplate('media/moderation_media.tpl');
+$lang = LangLoader::get('common', 'media');
+$view->add_lang($lang);
 
 $Bread_crumb->add(LangLoader::get_message('module.title', 'common', 'media'), url('media.php'));
 $Bread_crumb->add($LANG['modo_panel'], url('moderation_media.php'));
@@ -37,35 +41,27 @@ if ($submit)
 	AppContext::get_session()->csrf_get_protect();
 
 	$action = $request->get_array('action');
-	$show = $hide = $unaprobed = $delete = array();
+	$show = $hide = $disapproved = $delete = array();
 
 	if (!empty($action))
 	{
 		foreach ($action as $key => $value)
 		{
 			if ($value == 'visible')
-			{
 				$show[] = $key;
-			}
-			elseif ($value == 'unvisible')
-			{
+			elseif ($value == 'invisible')
 				$hide[] = $key;
-			}
-			elseif ($value == 'unaprobed')
-			{
-				$unaprobed[] = $key;
-			}
+			elseif ($value == 'disapproved')
+				$disapproved[] = $key;
 			elseif ($value == 'delete')
-			{
 				$delete[] = $key;
-			}
 		}
 
 		if (!empty($show))
 		{
 			foreach ($show as $key)
 			{
-				PersistenceContext::get_querier()->update(PREFIX . 'media', array('infos' => MEDIA_STATUS_APROBED), 'WHERE id=:id', array('id' => $key));
+				PersistenceContext::get_querier()->update(PREFIX . 'media', array('published' => MEDIA_STATUS_APPROVED), 'WHERE id=:id', array('id' => $key));
 			}
 		}
 
@@ -73,15 +69,15 @@ if ($submit)
 		{
 			foreach ($hide as $key)
 			{
-				PersistenceContext::get_querier()->update(PREFIX . 'media', array('infos' => MEDIA_STATUS_UNVISIBLE), 'WHERE id=:id', array('id' => $key));
+				PersistenceContext::get_querier()->update(PREFIX . 'media', array('published' => MEDIA_STATUS_INVISIBLE), 'WHERE id=:id', array('id' => $key));
 			}
 		}
 
-		if (!empty($unaprobed))
+		if (!empty($disapproved))
 		{
-			foreach ($unaprobed as $key)
+			foreach ($disapproved as $key)
 			{
-				PersistenceContext::get_querier()->update(PREFIX . 'media', array('infos' => MEDIA_STATUS_UNAPROBED), 'WHERE id=:id', array('id' => $key));
+				PersistenceContext::get_querier()->update(PREFIX . 'media', array('published' => MEDIA_STATUS_DISAPPROVED), 'WHERE id=:id', array('id' => $key));
 			}
 		}
 
@@ -103,53 +99,43 @@ if ($submit)
 		AppContext::get_response()->redirect(url('moderation_media.php'));
 	}
 	else
-	{
 		AppContext::get_response()->redirect(url('moderation_media.php'));
-	}
 }
 else
 {
-	// Filtre pour le panneau de modération.
+	// Filters
 	$js_array = array();
-	$authorized_categories = CategoriesService::get_authorized_categories(!empty($cat) ? $cat : Category::ROOT_CATEGORY);
+	$authorized_categories = CategoriesService::get_authorized_categories(!empty($id_category) ? $id_category : Category::ROOT_CATEGORY);
 
 	if ($filter)
 	{
 		$state = retrieve(POST, 'state', 'all', TSTRING);
-		$cat = (int)retrieve(POST, 'id_category', 0, TINTEGER);
+		$id_category = (int)retrieve(POST, 'id_category', 0, TINTEGER);
 		$sub_cats = (bool)retrieve(POST, 'sub_cats', false, TBOOL);
 
 		if ($state == "visible")
-		{
-			$db_where = MEDIA_STATUS_APROBED;
-		}
-		elseif ($state == 'unvisible')
-		{
-			$db_where = MEDIA_STATUS_UNVISIBLE;
-		}
-		elseif ($state == 'unaprobed')
-		{
-			$db_where = MEDIA_STATUS_UNAPROBED;
-		}
+			$db_where = MEDIA_STATUS_APPROVED;
+		elseif ($state == 'invisible')
+			$db_where = MEDIA_STATUS_INVISIBLE;
+		elseif ($state == 'disapproved')
+			$db_where = MEDIA_STATUS_DISAPPROVED;
 		else
-		{
 			$db_where = null;
-		}
 	}
 	else
 	{
-		$cat = 0;
+		$id_category = 0;
 		$db_where = null;
 		$sub_cats = true;
 	}
 
-	$nbr_media = PersistenceContext::get_querier()->count(PREFIX . "media", 'WHERE ' . ($sub_cats && !empty($authorized_categories) ? 'id_category IN :authorized_categories' : 'id_category = :id_category') . (is_null($db_where) ? '' : ' AND infos = :infos'), array('authorized_categories' => $authorized_categories, 'id_category' => (!empty($cat) ? $cat : 0), 'infos' => $db_where));
+	$items_number = PersistenceContext::get_querier()->count(PREFIX . "media", 'WHERE ' . ($sub_cats && !empty($authorized_categories) ? 'id_category IN :authorized_categories' : 'id_category = :id_category') . (is_null($db_where) ? '' : ' AND published = :published'), array('authorized_categories' => $authorized_categories, 'id_category' => (!empty($id_category) ? $id_category : 0), 'published' => $db_where));
 
 	$categories_cache = CategoriesService::get_categories_manager()->get_categories_cache();
 
-	//On crée une pagination si le nombre de fichier est trop important.
+	// Pagination if items number > items per page.
 	$page = AppContext::get_request()->get_getint('p', 1);
-	$pagination = new ModulePagination($page, $nbr_media, $NUMBER_ELEMENTS_PER_PAGE);
+	$pagination = new ModulePagination($page, $items_number, $items_per_page);
 	$pagination->set_url(new Url('/media/moderation_media.php?p=%d'));
 
 	if ($pagination->current_page_is_empty() && $page > 1)
@@ -158,16 +144,16 @@ else
 		DispatchManager::redirect($error_controller);
 	}
 
-	$result = PersistenceContext::get_querier()->select("SELECT media.*, media_cats.name AS cat_name
+	$result = PersistenceContext::get_querier()->select("SELECT media.*, media_cats.name AS name
 		FROM " . MediaSetup::$media_table . " media
 		LEFT JOIN " . MediaSetup::$media_cats_table . " media_cats ON media_cats.id = media.id_category
-		WHERE " . ($sub_cats && !empty($authorized_categories) ? 'id_category IN :authorized_categories' : 'id_category = :id_category') . (is_null($db_where) ? '' : ' AND infos = :infos') . "
-		ORDER BY infos ASC, timestamp DESC
-		LIMIT :number_items_per_page OFFSET :display_from", array(
+		WHERE " . ($sub_cats && !empty($authorized_categories) ? 'id_category IN :authorized_categories' : 'id_category = :id_category') . (is_null($db_where) ? '' : ' AND published = :published') . "
+		ORDER BY :published ASC, creation_date DESC
+		LIMIT :items_per_page OFFSET :display_from", array(
 			'authorized_categories' => $authorized_categories,
-			'id_category' => (!empty($cat) ? $cat : 0),
-			'infos' => $db_where,
-			'number_items_per_page' => $pagination->get_number_items_per_page(),
+			'id_category' => (!empty($id_category) ? $id_category : 0),
+			'published' => $db_where,
+			'items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
 	));
 
@@ -175,22 +161,24 @@ else
 	{
 		$js_array[] = $row['id'];
 
-		$tpl->assign_block_vars('files', array(
+		$view->assign_block_vars('items', array(
+			'CATEGORY_NAME' => $categories_cache->category_exists($row['id_category']) ? $row['name'] : $LANG['unknown'],
+			'U_CATEGORY' => url('media.php?cat=' . $row['id_category']),
+
 			'ID' => $row['id'],
-			'NAME' => $row['name'],
-			'U_FILE' => url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $row['id_category'] . '+' . Url::encode_rewrite($row['name']) . '.php'),
+			'TITLE' => $row['title'],
+			'COLOR' => $row['published'] == MEDIA_STATUS_INVISIBLE ? 'bgc warning' : ($row['published'] == MEDIA_STATUS_APPROVED ? 'bgc success' : 'bgc error'),
+			'VISIBLE' => $row['published'] == MEDIA_STATUS_APPROVED ? ' checked="checked"' : '',
+			'INVISIBLE' => $row['published'] == MEDIA_STATUS_INVISIBLE ? ' checked="checked"' : '',
+			'DISAPPROVED' => $row['published'] == MEDIA_STATUS_DISAPPROVED ? ' checked="checked"' : '',
+
+			'U_ITEM' => url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $row['id_category'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 			'U_EDIT' => url('media_action.php?edit=' . $row['id']),
-			'CAT' => $categories_cache->category_exists($row['id_category']) ? $row['cat_name'] : $LANG['unknown'],
-			'U_CAT' => url('media.php?cat=' . $row['id_category']),
-			'COLOR' => $row['infos'] == MEDIA_STATUS_UNVISIBLE ? 'bgc warning' : ($row['infos'] == MEDIA_STATUS_APROBED ? 'bgc success' : 'bgc error'),
-			'SHOW' => $row['infos'] == MEDIA_STATUS_APROBED ? ' checked="checked"' : '',
-			'HIDE' => $row['infos'] == MEDIA_STATUS_UNVISIBLE ? ' checked="checked"' : '',
-			'UNAPROBED' => $row['infos'] == MEDIA_STATUS_UNAPROBED ? ' checked="checked"' : '',
 		));
 	}
 	$result->dispose();
 
-	$tpl->put_all(array(
+	$view->put_all(array(
 		'C_DISPLAY' => true,
 		'C_PAGINATION' => $pagination->has_several_pages(),
 		'L_FILTER' => $MEDIA_LANG['filter'],
@@ -198,26 +186,26 @@ else
 		'L_ALL' => $MEDIA_LANG['all_file'],
 		'SELECTED_ALL' => is_null($db_where) ? ' selected="selected"' : '',
 		'L_FVISIBLE' => $MEDIA_LANG['visible'],
-		'SELECTED_VISIBLE' => $db_where === MEDIA_STATUS_APROBED ? ' selected="selected"' : '',
-		'L_FUNVISIBLE' => $MEDIA_LANG['unvisible'],
-		'SELECTED_UNVISIBLE' => $db_where === MEDIA_STATUS_UNVISIBLE ? ' selected="selected"' : '',
-		'L_FUNAPROBED' => $MEDIA_LANG['unaprobed'],
-		'SELECTED_UNAPROBED' => $db_where === MEDIA_STATUS_UNAPROBED ? ' selected="selected"' : '',
+		'SELECTED_VISIBLE' => $db_where === MEDIA_STATUS_APPROVED ? ' selected="selected"' : '',
+		'L_INVISIBLE' => $MEDIA_LANG['invisible'],
+		'SELECTED_INVISIBLE' => $db_where === MEDIA_STATUS_INVISIBLE ? ' selected="selected"' : '',
+		'L_FDISAPPROVED' => $MEDIA_LANG['disapproved'],
+		'SELECTED_DISAPPROVED' => $db_where === MEDIA_STATUS_DISAPPROVED ? ' selected="selected"' : '',
 		'L_CATEGORIES' => $MEDIA_LANG['from_cats'],
 		'L_INCLUDE_SUB_CATS' => $MEDIA_LANG['include_sub_cats'],
 		'SUB_CATS' => is_null($sub_cats) ? ' checked="checked"' : ($sub_cats ? ' checked="checked"' : ''),
 		'L_MODO_PANEL' => $LANG['modo_panel'],
-		'L_NAME' => $LANG['name'],
+		'L_TITLE' => $LANG['title'],
 		'L_VISIBLE' => $MEDIA_LANG['show_media_short'],
-		'L_UNVISIBLE' => $MEDIA_LANG['hide_media_short'],
-		'L_UNAPROBED' => $MEDIA_LANG['unaprobed_media_short'],
-		'C_NO_MODERATION' => $nbr_media > 0 ? 0 : 1,
+		'L_INVISIBLE' => $MEDIA_LANG['hide_media_short'],
+		'L_DISAPPROVED' => $MEDIA_LANG['disapproved_media_short'],
+		'C_NO_MODERATION' => $items_number > 0 ? 0 : 1,
 		'L_NO_MODERATION' => $MEDIA_LANG['no_media_moderate'],
 		'L_CONFIRM_DELETE_ALL' => str_replace('\'', '\\\'', $MEDIA_LANG['confirm_delete_media_all']),
 		'L_LEGEND' => $MEDIA_LANG['legend'],
-		'L_FILE_UNAPROBED' => $MEDIA_LANG['file_unaprobed'],
-		'L_FILE_UNVISIBLE' => $MEDIA_LANG['file_unvisible'],
-		'L_FILE_VISIBLE' => $MEDIA_LANG['file_visible'],
+		'L_FILE_DISAPPROVED' => $MEDIA_LANG['disapproved.item'],
+		'L_FILE_INVISIBLE' => $MEDIA_LANG['invisible.item'],
+		'L_FILE_VISIBLE' => $MEDIA_LANG['visible.item'],
 		'PAGINATION' => $pagination->display(),
 		'L_SUBMIT' => $LANG['submit'],
 		'L_RESET' => $LANG['reset'],
@@ -225,7 +213,7 @@ else
 	));
 }
 
-$tpl->display();
+$view->display();
 
 require_once('../kernel/footer.php');
 

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 21
+ * @version     PHPBoost 6.0 - last update: 2021 03 13
  * @since       PHPBoost 3.0 - 2010 01 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -55,23 +55,25 @@ class MediaSetup extends DefaultModuleSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'iduser' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => -1),
-			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'name' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
-			'content' => array('type' => 'text', 'length' => 65000),
-			'url' => array('type' => 'text', 'length' => 2048),
+			'title' => array('type' => 'string', 'length' => 250, 'notnull' => 1, 'default' => "''"),
+			'rewrited_title' => array('type' => 'string', 'length' => 250, 'notnull' => 1, 'default' => "''"),
+			'content' => array('type' => 'text', 'length' => 16777215),
+			'summary' => array('type' => 'text', 'length' => 65000),
+			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => -1),
+			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'published' => array('type' => 'integer', 'length' => 6, 'notnull' => 1, 'default' => 0),
+			'file_url' => array('type' => 'text', 'length' => 2048),
 			'mime_type' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => 0),
-			'infos' => array('type' => 'integer', 'length' => 6, 'notnull' => 1, 'default' => 0),
 			'width' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 100),
 			'height' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 100),
-			'poster' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'counter' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'thumbnail' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'views_number' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 		);
 		$options = array(
 			'primary' => array('id'),
 			'indexes' => array(
 				'id_category' => array('type' => 'key', 'fields' => 'id_category'),
-				'name' => array('type' => 'fulltext', 'fields' => 'name'),
+				'title' => array('type' => 'fulltext', 'fields' => 'title'),
 				'content' => array('type' => 'fulltext', 'fields' => 'content')
 		));
 		PersistenceContext::get_dbms_utils()->create_table(self::$media_table, $fields, $options);
@@ -99,7 +101,7 @@ class MediaSetup extends DefaultModuleSetup
 			'rewrited_name' => Url::encode_rewrite($this->messages['media.cat.name']),
 			'name' => $this->messages['media.cat.name'],
 			'description' => $this->messages['media.cat.content'],
-			'thumbnail' => '/media/templates/images/video.png',
+			'thumbnail' => '/templates/__default__/images/default_category_thumbnail.png',
 			'content_type' => 2
 		));
 	}
@@ -109,16 +111,17 @@ class MediaSetup extends DefaultModuleSetup
 		PersistenceContext::get_querier()->insert(self::$media_table, array(
 			'id' => 1,
 			'id_category' => 1,
-			'iduser' => 1,
-			'timestamp' => time(),
-			'name' => $this->messages['media.name'],
+			'title' => $this->messages['media.title'],
+			'rewrited_title' => Url::encode_rewrite($this->messages['media.title']),
 			'content' => $this->messages['media.content'],
-			'url' => $this->messages['media.url'],
+			'author_user_id' => 1,
+			'creation_date' => time(),
+			'published' => 2,
+			'file_url' => $this->messages['media.file.url'],
 			'mime_type' => 'video/host',
-			'infos' => 2,
 			'width' => 800,
 			'height' => 450,
-			'counter' => 0,
+			'views_number' => 0,
 		));
 	}
 }

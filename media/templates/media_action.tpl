@@ -4,12 +4,12 @@
 		{
 			if (document.getElementById('name').value == "")
 			{
-				alert ("{L_REQUIRE_NAME}");
+				alert ("{L_REQUIRE_TITLE}");
 				return false;
 		    }
 			if (document.getElementById('u_media').value == "" || document.getElementById('u_media').value == "http://")
 			{
-				alert ("{L_REQUIRE_URL}");
+				alert ("{L_REQUIRE_FILE_URL}");
 				return false;
 		    }
 			return true;
@@ -43,8 +43,8 @@
 
 		jQuery(document).ready(function() {
 			# IF C_MUSIC #
-			jQuery('#width_dl').hide();
-			jQuery('#height_dl').hide();
+				jQuery('#width_dl').hide();
+				jQuery('#height_dl').hide();
 			# ENDIF #
 			jQuery('#id_category').change(function() {
 				hide_width_height();
@@ -64,8 +64,8 @@
 						<fieldset>
 							<legend>{L_PAGE_TITLE}</legend>
 							<div class="form-element">
-								<label for="name">* {L_TITLE}</label>
-								<div class="form-field"><input type="text" id="name" name="name" value="{NAME}" /></div>
+								<label for="title">* {L_TITLE}</label>
+								<div class="form-field"><input type="text" id="title" name="title" value="{TITLE}" /></div>
 							</div>
 							# IF C_CATEGORIES #
 							<div class="form-element">
@@ -97,9 +97,9 @@
 								</div>
 							</div>
 							<div class="form-element form-element-upload-file">
-								<label for="poster">{L_POSTER}</label>
+								<label for="thumbnail">{L_POSTER}</label>
 								<div class="form-field# IF C_AUTH_UPLOAD # grouped-inputs form-field-upload-file# ENDIF #">
-									<input class="grouped-element upload-input" type="text" id="poster" name="poster" value="{POSTER}" />
+									<input class="grouped-element upload-input" type="text" id="thumbnail" name="thumbnail" value="{POSTER}" />
 									# IF C_AUTH_UPLOAD #
 										<a class="grouped-element" aria-label="${LangLoader::get_message('files_management', 'main')}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=poster&amp;parse=true&amp;no_path=true', '', 'height=500,width=769,resizable=yes,scrollbars=yes');return false;">
 											<i class="fa fa-cloud-upload-alt fa-2x" aria-hidden="true"></i>
@@ -115,29 +115,29 @@
 								</div>
 							</div>
 							# IF C_APROB #
-							<div class="form-element">
-								<label>{L_APPROVED}</label>
-								<div class="form-field">
-									<label for="approved" class="checkbox">
-										<input type="checkbox" name="approved" id="approved"{APPROVED} />
-										<span>&nbsp</span>
-									</label>
+								<div class="form-element">
+									<label>{L_APPROVED}</label>
+									<div class="form-field">
+										<label for="approved" class="checkbox">
+											<input type="checkbox" name="approved" id="approved"{APPROVED} />
+											<span>&nbsp</span>
+										</label>
+									</div>
 								</div>
-							</div>
 							# ENDIF #
 						</fieldset>
 						# IF C_CONTRIBUTION #
-						<fieldset>
-							<legend>{L_CONTRIBUTION_LEGEND}</legend>
-							<div class="message-helper bgc notice">{L_NOTICE_CONTRIBUTION}</div>
-							<div class="form-element form-element-textarea">
-								<label>{L_CONTRIBUTION_COUNTERPART} <p class="field-description">{L_CONTRIBUTION_COUNTERPART_EXPLAIN}</p></label>
-								{CONTRIBUTION_COUNTERPART_EDITOR}
-								<div class="form-field-textarea">
-									<textarea rows="20" cols="40" id="counterpart" name="counterpart">{CONTRIBUTION_COUNTERPART}</textarea>
+							<fieldset>
+								<legend>{L_CONTRIBUTION_LEGEND}</legend>
+								<div class="message-helper bgc notice">{L_NOTICE_CONTRIBUTION}</div>
+								<div class="form-element form-element-textarea">
+									<label>{L_CONTRIBUTION_COUNTERPART} <p class="field-description">{L_CONTRIBUTION_COUNTERPART_EXPLAIN}</p></label>
+									{CONTRIBUTION_COUNTERPART_EDITOR}
+									<div class="form-field-textarea">
+										<textarea rows="20" cols="40" id="counterpart" name="counterpart">{CONTRIBUTION_COUNTERPART}</textarea>
+									</div>
 								</div>
-							</div>
-						</fieldset>
+							</fieldset>
 						# ENDIF #
 
 						<fieldset class="fieldset-submit">

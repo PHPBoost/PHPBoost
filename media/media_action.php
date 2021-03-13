@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 01 26
+ * @version     PHPBoost 6.0 - last update: 2021 03 13
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -26,18 +26,18 @@ $request = AppContext::get_request();
 
 $submit = $request->get_postvalue('submit', false);
 
-$unvisible = (int)retrieve(GET, 'unvisible', 0, TINTEGER);
+$invisible = (int)retrieve(GET, 'invisible', 0, TINTEGER);
 $add = (int)retrieve(GET, 'add', 0, TINTEGER);
 $edit = (int)retrieve(GET, 'edit', 0, TINTEGER);
 $delete = (int)retrieve(GET, 'del', 0, TINTEGER);
 
 // File status modification
-if ($unvisible > 0)
+if ($invisible > 0)
 {
 	AppContext::get_session()->csrf_get_protect();
 
 	try {
-		$media = PersistenceContext::get_querier()->select_single_row(PREFIX . 'media', array('*'), 'WHERE id=:id', array('id' => $unvisible));
+		$media = PersistenceContext::get_querier()->select_single_row(PREFIX . 'media', array('*'), 'WHERE id=:id', array('id' => $invisible));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
@@ -56,12 +56,12 @@ if ($unvisible > 0)
 	}
 
 	bread_crumb($media['id_category']);
-	$Bread_crumb->add($media['name'], url('media.php?id=' . $media['id'], 'media-' . $media['id'] . '-' . $media['id_category'] . '+' . Url::encode_rewrite($media['name']) . '.php'));
-	$Bread_crumb->add($MEDIA_LANG['hide_media'], url('media_action.php?unvisible=' . $media['id'] . '&amp;token=' . AppContext::get_session()->get_token()));
+	$Bread_crumb->add($media['title'], url('media.php?id=' . $media['id'], 'media-' . $media['id'] . '-' . $media['id_category'] . '+' . Url::encode_rewrite($media['title']) . '.php'));
+	$Bread_crumb->add($MEDIA_LANG['hide_media'], url('media_action.php?invisible=' . $media['id'] . '&amp;token=' . AppContext::get_session()->get_token()));
 
 	define('TITLE', $MEDIA_LANG['media_moderation']);
 
-	PersistenceContext::get_querier()->update(PREFIX . 'media', array('infos' => MEDIA_STATUS_UNVISIBLE), 'WHERE id=:id', array('id' => $unvisible));
+	PersistenceContext::get_querier()->update(PREFIX . 'media', array('published' => MEDIA_STATUS_INVISIBLE), 'WHERE id=:id', array('id' => $invisible));
 
 	require_once('../kernel/header.php');
 
@@ -133,8 +133,8 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 		'L_CONTRIBUTION_COUNTERPART' => $MEDIA_LANG['contribution_counterpart'],
 		'L_CONTRIBUTION_COUNTERPART_EXPLAIN' => $MEDIA_LANG['contribution_counterpart_explain'],
 		'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
-		'L_REQUIRE_NAME' => $MEDIA_LANG['require_name'],
-		'L_REQUIRE_URL' => $MEDIA_LANG['require_url'],
+		'L_REQUIRE_TITLE' => $MEDIA_LANG['require_name'],
+		'L_REQUIRE_FILE_URL' => $MEDIA_LANG['require_url'],
 		'L_RESET' => $LANG['reset'],
 		'L_PREVIEW' => $LANG['preview'],
 		'L_SUBMIT' => $edit > 0 ? $LANG['update'] : $LANG['submit']
@@ -187,16 +187,16 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 			'L_PAGE_TITLE' => $MEDIA_LANG['edit_media'],
 			'C_CONTRIBUTION' => 0,
 			'IDEDIT' => $media['id'],
-			'NAME' => $media['name'],
+			'TITLE' => $media['title'],
 			'C_CATEGORIES' => CategoriesService::get_categories_manager()->get_categories_cache()->has_categories(),
 			'CATEGORIES' => $categories_list,
 			'WIDTH' => $media['width'],
 			'HEIGHT' => $media['height'],
-			'U_MEDIA' => $media['url'],
-			'POSTER' => $media['poster'],
+			'U_MEDIA' => $media['file_url'],
+			'POSTER' => $media['thumbnail'],
 			'DESCRIPTION' => FormatingHelper::unparse(stripslashes($media['content'])),
-			'APPROVED' => ($media['infos'] & MEDIA_STATUS_APROBED) !== 0 ? ' checked="checked"' : '',
-			'C_APROB' => ($media['infos'] & MEDIA_STATUS_APROBED) === 0,
+			'APPROVED' => ($media['published'] & MEDIA_STATUS_APPROVED) !== 0 ? ' checked="checked"' : '',
+			'C_APROB' => ($media['published'] & MEDIA_STATUS_APPROVED) === 0,
 			'JS_ID_MUSIC' => '"' . implode('", "', $js_id_music) . '"',
 			'C_MUSIC' => in_array($media['mime_type'], $mime_type['audio'])
 		));
@@ -226,7 +226,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 			'C_CONTRIBUTION' => !$write,
 			'CONTRIBUTION_COUNTERPART_EDITOR' => $editor->display(),
 			'IDEDIT' => 0,
-			'NAME' => '',
+			'TITLE' => '',
 			'C_CATEGORIES' => CategoriesService::get_categories_manager()->get_categories_cache()->has_categories(),
 			'CATEGORIES' => $categories_list,
 			'WIDTH' => '800',
@@ -248,7 +248,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 
 	if (!empty($media))
 	{
-		$Bread_crumb->add($media['name'], url('media.php?id=' . $media['id'], 'media-' . $media['id'] . '-' . $media['id_category'] . '+' . Url::encode_rewrite($media['name']) . '.php'));
+		$Bread_crumb->add($media['title'], url('media.php?id=' . $media['id'], 'media-' . $media['id'] . '-' . $media['id_category'] . '+' . Url::encode_rewrite($media['title']) . '.php'));
 		$Bread_crumb->add($MEDIA_LANG['edit_media'], url('media_action.php?edit=' . $media['id']));
 		define('TITLE', $MEDIA_LANG['edit_media']);
 	}
@@ -267,12 +267,12 @@ elseif ($submit)
 
 	$media = array(
 		'idedit' => (int)retrieve(POST, 'idedit', 0, TINTEGER),
-		'name' => stripslashes(retrieve(POST, 'name', '', TSTRING)),
+		'title' => stripslashes(retrieve(POST, 'title', '', TSTRING)),
 		'id_category' => CategoriesService::get_categories_manager()->get_categories_cache()->has_categories() ? retrieve(POST, 'id_category', 0, TINTEGER) : Category::ROOT_CATEGORY,
 		'width' => min(retrieve(POST, 'width', $config->get_max_video_width(), TINTEGER), $config->get_max_video_width()),
 		'height' => min(retrieve(POST, 'height', $config->get_max_video_height(), TINTEGER), $config->get_max_video_height()),
-		'url' => new Url(retrieve(POST, 'u_media', '', TSTRING)),
-		'poster' => new Url(retrieve(POST, 'poster', '', TSTRING)),
+		'file_url' => new Url(retrieve(POST, 'u_media', '', TSTRING)),
+		'thumbnail' => new Url(retrieve(POST, 'thumbnail', '', TSTRING)),
 		'content' => retrieve(POST, 'content', '', TSTRING_PARSE),
 		'approved' => (bool)retrieve(POST, 'approved', false, TBOOL),
 		'contrib' => (bool)retrieve(POST, 'contrib', false, TBOOL),
@@ -284,7 +284,7 @@ elseif ($submit)
 
 	if ($media['idedit'])
 	{
-		$Bread_crumb->add($media['name'], url('media.php?id=' . $media['idedit'], 'media-' . $media['idedit'] . '-' . $media['id_category'] . '+' . Url::encode_rewrite($media['name']) . '.php'));
+		$Bread_crumb->add($media['title'], url('media.php?id=' . $media['idedit'], 'media-' . $media['idedit'] . '-' . $media['id_category'] . '+' . Url::encode_rewrite($media['title']) . '.php'));
 		$Bread_crumb->add($MEDIA_LANG['edit_media'], url('media_action.php?edit=' . $media['idedit']));
 		define('TITLE', $MEDIA_LANG['edit_media']);
 	}
@@ -312,16 +312,16 @@ elseif ($submit)
 		$host_ok = array_merge($host_ok['audio'], $host_ok['video']);
 	}
 
-	if (!empty($media['url']))
+	if (!empty($media['file_url']))
 	{
-		$url_media = preg_replace('`\?.*`u', '', $media['url']->relative());
+		$url_media = preg_replace('`\?.*`u', '', $media['file_url']->relative());
 		$pathinfo = pathinfo($url_media);
 
-		if (($url_parsed = parse_url($media['url']->relative())) && in_array($url_parsed['host'], $host_ok) && (strpos($pathinfo['dirname'], 'soundcloud') !== false) && in_array('audio/host', $mime_type))
+		if (($url_parsed = parse_url($media['file_url']->relative())) && in_array($url_parsed['host'], $host_ok) && (strpos($pathinfo['dirname'], 'soundcloud') !== false) && in_array('audio/host', $mime_type))
 		{
 			$media['mime_type'] = 'audio/host';
 		}
-		elseif(Url::check_url_validity($media['url']))
+		elseif(Url::check_url_validity($media['file_url']))
 		{
 			if (!empty($pathinfo['extension']))
 			{
@@ -335,11 +335,11 @@ elseif ($submit)
 					DispatchManager::redirect($controller);
 				}
 			}
-			elseif (($url_parsed = parse_url($media['url']->relative())) && in_array($url_parsed['host'], $host_ok) && in_array('video/host', $mime_type))
+			elseif (($url_parsed = parse_url($media['file_url']->relative())) && in_array($url_parsed['host'], $host_ok) && in_array('video/host', $mime_type))
 			{
 				$media['mime_type'] = 'video/host';
 			}
-			elseif (function_exists('get_headers') && ($headers = get_headers($media['url']->relative(), 1)) && !empty($headers['Content-Type']))
+			elseif (function_exists('get_headers') && ($headers = get_headers($media['file_url']->relative(), 1)) && !empty($headers['Content-Type']))
 			{
 				if (!is_array($headers['Content-Type']) && in_array($headers['Content-Type'], $mime_type))
 				{
@@ -381,14 +381,14 @@ elseif ($submit)
 	}
 	else
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), (empty($media['url']) ? $LANG['e_link_empty_media'] : $LANG['e_link_invalid_media']));
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), (empty($media['file_url']) ? $LANG['e_link_empty_media'] : $LANG['e_link_invalid_media']));
 		DispatchManager::redirect($controller);
 	}
 
 	// Edit
 	if ($media['idedit'] && CategoriesAuthorizationsService::check_authorizations($media['id_category'])->moderation())
 	{
-		PersistenceContext::get_querier()->update(PREFIX . "media", array('id_category' => $media['id_category'], 'name' => $media['name'], 'url' => $media['url']->relative(), 'poster' => $media['poster']->relative(), 'mime_type' => $media['mime_type'], 'content' => $media['content'], 'infos' => (CategoriesAuthorizationsService::check_authorizations($media['id_category'])->write() ? MEDIA_STATUS_APROBED : 0), 'width' => $media['width'], 'height' => $media['height']), 'WHERE id = :id', array('id' => $media['idedit']));
+		PersistenceContext::get_querier()->update(PREFIX . "media", array('id_category' => $media['id_category'], 'title' => $media['title'], 'file_url' => $media['file_url']->relative(), 'thumbnail' => $media['thumbnail']->relative(), 'mime_type' => $media['mime_type'], 'content' => $media['content'], 'published' => (CategoriesAuthorizationsService::check_authorizations($media['id_category'])->write() ? MEDIA_STATUS_APPROVED : 0), 'width' => $media['width'], 'height' => $media['height']), 'WHERE id = :id', array('id' => $media['idedit']));
 
 		if ($media['approved'])
 		{
@@ -414,7 +414,7 @@ elseif ($submit)
 	// Add
 	elseif (!$media['idedit'] && (($auth_write = CategoriesAuthorizationsService::check_authorizations($media['id_category'])->write()) || CategoriesAuthorizationsService::check_authorizations($media['id_category'])->contribution()))
 	{
-		$result = PersistenceContext::get_querier()->insert(PREFIX . "media", array('id_category' => $media['id_category'], 'iduser' => AppContext::get_current_user()->get_id(), 'timestamp' => time(), 'name' => $media['name'], 'content' => $media['content'], 'url' => $media['url']->relative(), 'poster' => $media['poster']->relative(), 'mime_type' => $media['mime_type'], 'infos' => (CategoriesAuthorizationsService::check_authorizations($media['id_category'])->write() ? MEDIA_STATUS_APROBED : 0), 'width' => $media['width'], 'height' => $media['height']));
+		$result = PersistenceContext::get_querier()->insert(PREFIX . "media", array('id_category' => $media['id_category'], 'author_user_id' => AppContext::get_current_user()->get_id(), 'creation_date' => time(), 'title' => $media['title'], 'content' => $media['content'], 'file_url' => $media['file_url']->relative(), 'thumbnail' => $media['thumbnail']->relative(), 'mime_type' => $media['mime_type'], 'published' => (CategoriesAuthorizationsService::check_authorizations($media['id_category'])->write() ? MEDIA_STATUS_APPROVED : 0), 'width' => $media['width'], 'height' => $media['height']));
 
 		$new_id_media = $result->get_last_inserted_id();
 		// Feeds Regeneration
@@ -427,7 +427,7 @@ elseif ($submit)
 			$media_contribution = new Contribution();
 			$media_contribution->set_id_in_module($new_id_media);
 			$media_contribution->set_description(stripslashes($media['counterpart']));
-			$media_contribution->set_entitled($media['name']);
+			$media_contribution->set_entitled($media['title']);
 			$media_contribution->set_fixing_url('/media/media_action.php?edit=' . $new_id_media);
 			$media_contribution->set_poster_id(AppContext::get_current_user()->get_id());
 			$media_contribution->set_module('media');

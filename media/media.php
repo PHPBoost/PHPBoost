@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 01 12
+ * @version     PHPBoost 6.0 - last update: 2021 03 13
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -44,7 +44,7 @@ elseif ($id_media > 0)
 	try {
 		$media = PersistenceContext::get_querier()->select_single_row_query("SELECT v.*, mb.display_name, mb.user_groups, mb.level, notes.average_notes, notes.number_notes, note.note
 		FROM " . PREFIX . "media AS v
-		LEFT JOIN " . DB_TABLE_MEMBER . " AS mb ON v.iduser = mb.user_id
+		LEFT JOIN " . DB_TABLE_MEMBER . " AS mb ON v.author_user_id = mb.user_id
 		LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON notes.id_in_module = v.id AND notes.module_name = 'media'
 		LEFT JOIN " . DB_TABLE_NOTE . " note ON note.id_in_module = v.id AND note.module_name = 'media' AND note.user_id = :user_id
 		WHERE v.id = :id", array(
@@ -56,7 +56,7 @@ elseif ($id_media > 0)
    		DispatchManager::redirect($error_controller);
 	}
 
-	if (($media['infos'] & MEDIA_STATUS_UNVISIBLE) !== 0)
+	if (($media['published'] & MEDIA_STATUS_INVISIBLE) !== 0)
 	{
 		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
 		$LANG['e_unexist_media']);
@@ -69,14 +69,14 @@ elseif ($id_media > 0)
 	}
 
 	bread_crumb($media['id_category']);
-	$Bread_crumb->add($media['name'], url('media.php?id=' . $id_media, 'media-' . $id_media . '-' . $media['id_category'] . '+' . Url::encode_rewrite($media['name']) . '.php'));
+	$Bread_crumb->add($media['title'], url('media.php?id=' . $id_media, 'media-' . $id_media . '-' . $media['id_category'] . '+' . Url::encode_rewrite($media['title']) . '.php'));
 
-	define('TITLE', $media['name']);
+	define('TITLE', $media['title']);
 	define('DESCRIPTION', TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse(stripslashes($media['content'])), '<br><br/>'), 150));
 	require_once('../kernel/header.php');
 
-	// Update counter
-	PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "media SET counter = counter + 1 WHERE id = :id", array('id' => $id_media));
+	// Update views_number
+	PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "media SET views_number = views_number + 1 WHERE id = :id", array('id' => $id_media));
 
 	$notation = new Notation();
 	$notation->set_module_name('media');
@@ -88,7 +88,7 @@ elseif ($id_media > 0)
 
 	$group_color = User::get_group_color($media['user_groups'], $media['level']);
 
-	$date = new Date($media['timestamp'], Timezone::SERVER_TIMEZONE);
+	$date = new Date($media['creation_date'], Timezone::SERVER_TIMEZONE);
 
 	$view->put_all(array_merge(
 		Date::get_array_tpl_vars($date, 'date'),
@@ -99,23 +99,23 @@ elseif ($id_media > 0)
 			'C_CONTROLS' => CategoriesAuthorizationsService::check_authorizations($media['id_category'])->moderation(),
 			'C_DISPLAY_NOTATION' => $content_management_config->module_notation_is_enabled('media'),
 			'C_DISPLAY_COMMENTS' => $comments_config->module_comments_is_enabled('media'),
-			'C_NEW_CONTENT' => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('media', $media['timestamp']),
-			'NAME' => $media['name'],
+			'C_NEW_CONTENT' => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('media', $media['creation_date']),
+			'TITLE' => $media['title'],
 			'CONTENT' => FormatingHelper::second_parse(stripslashes($media['content'])),
-			'COUNT' => $media['counter'],
+			'COUNT' => $media['views_number'],
 			'KERNEL_NOTATION' => NotationService::display_active_image($notation),
-			'HITS' => ((int)$media['counter']+1) > 1 ? sprintf($MEDIA_LANG['n_times'], ((int)$media['counter']+1)) : sprintf($MEDIA_LANG['n_time'], ((int)$media['counter']+1)),
-			'U_COM' => PATH_TO_ROOT .'/media/media' . url('.php?id=' . $id_media . '&amp;com=0', '-' . $id_media . '-' . $media['id_category'] . '+' . Url::encode_rewrite($media['name']) . '.php?com=0') .'#comments-list',
+			'HITS' => ((int)$media['views_number']+1) > 1 ? sprintf($MEDIA_LANG['n_times'], ((int)$media['views_number']+1)) : sprintf($MEDIA_LANG['n_time'], ((int)$media['views_number']+1)),
+			'U_COM' => PATH_TO_ROOT .'/media/media' . url('.php?id=' . $id_media . '&amp;com=0', '-' . $id_media . '-' . $media['id_category'] . '+' . Url::encode_rewrite($media['title']) . '.php?com=0') .'#comments-list',
 			'L_COM' => CommentsService::get_number_and_lang_comments('media', $id_media),
 			'L_DATE' => LangLoader::get_message('date', 'date-common'),
 			'L_SIZE' => $LANG['size'],
 			'L_MEDIA_INFOS' => $MEDIA_LANG['media_infos'],
 			'L_MODO_PANEL' => $LANG['modo_panel'],
-			'L_UNAPROBED' => $MEDIA_LANG['unaprobed_media_short'],
+			'L_DISAPPROVED' => $MEDIA_LANG['disapproved_media_short'],
 			'HEIGHT_P' => $media['height'] + 50,
 			'L_VIEWED' => $LANG['view'],
-			'AUTHOR_NAME' => !empty($media['display_name']) ? '<a href="' . UserUrlBuilder::profile($media['iduser'])->rel() . '" class="'.UserService::get_level_class($media['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $media['display_name'] . '</a>' : $LANG['guest'],
-			'U_UNVISIBLE_MEDIA' => url('media_action.php?unvisible=' . $id_media . '&amp;token=' . AppContext::get_session()->get_token()),
+			'AUTHOR_NAME' => !empty($media['display_name']) ? '<a href="' . UserUrlBuilder::profile($media['author_user_id'])->rel() . '" class="'.UserService::get_level_class($media['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $media['display_name'] . '</a>' : $LANG['guest'],
+			'U_INVISIBLE_MEDIA' => url('media_action.php?invisible=' . $id_media . '&amp;token=' . AppContext::get_session()->get_token()),
 			'U_EDIT_MEDIA' => url('media_action.php?edit=' . $id_media),
 			'U_DELETE_MEDIA' => url('media_action.php?del=' . $id_media . '&amp;token=' . AppContext::get_session()->get_token()),
 			'U_POPUP_MEDIA' => url('media_popup.php?id=' . $id_media),
@@ -134,10 +134,10 @@ elseif ($id_media > 0)
 		$media_tpl = new FileTemplate('media/' . $mime_type_tpl[$media['mime_type']]);
 	}
 
-	if (!empty($media['poster']))
+	if (!empty($media['thumbnail']))
 	{
-		$poster_type = new FileType(new File($media['poster']));
-		$picture_url = new Url($media['poster']);
+		$poster_type = new FileType(new File($media['thumbnail']));
+		$picture_url = new Url($media['thumbnail']);
 
 		$media_tpl->put_all(array(
 			'C_POSTER' => $poster_type->is_picture(),
@@ -146,7 +146,7 @@ elseif ($id_media > 0)
 	}
 
 	// Media from websites
-	$pathinfo = pathinfo($media['url']);
+	$pathinfo = pathinfo($media['file_url']);
 	$media_id = $pathinfo['basename'];
 	$dirname = $pathinfo['dirname'];
 
@@ -216,7 +216,7 @@ elseif ($id_media > 0)
 	}
 
 	$media_tpl->put_all(array(
-		'URL' => Url::to_rel($media['url']),
+		'FILE_URL' => Url::to_rel($media['file_url']),
 		'MIME' => $media['mime_type'],
 		'WIDTH' => $media['width'],
 		'HEIGHT' => $media['height'],

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 01 05
+ * @version     PHPBoost 6.0 - last update: 2021 03 13
  * @since       PHPBoost 5.0 - 2017 03 09
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -36,14 +36,33 @@ class MediaModuleUpdateVersion extends ModuleUpdateVersion
 			array(
 				'table_name' => PREFIX . 'media',
 				'columns' => array(
-					'idcat' => 'id_category INT(11) NOT NULL DEFAULT 0',
-					'contents' => 'content MEDIUMTEXT'
+					'idcat'     => 'id_category INT(11) NOT NULL DEFAULT 0',
+					'name'      => 'title TEXT',
+					'contents'  => 'content MEDIUMTEXT',
+					'iduser'    => 'author_user_id INT(11) NOT NULL DEFAULT 0',
+					'timestamp' => 'creation_date INT(11) NOT NULL DEFAULT 0',
+					'infos'     => 'published INT(11) NOT NULL DEFAULT 0',
+					'url'       => 'file_url TEXT',
+					'counter'   => 'views_number INT(11) NOT NULL DEFAULT 0',
+					'poster'    => 'thumbnail VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 0',
 				)
 			),
 			array(
 				'table_name' => PREFIX . 'media_cats',
 				'columns' => array(
 					'image' => 'thumbnail VARCHAR(255) NOT NULL DEFAULT ""'
+				)
+			)
+		);
+
+		$this->database_columns_to_add = array(
+			array(
+				'table_name' => PREFIX . 'media',
+				'columns' => array(
+					'summary'     => array('type' => 'text', 'length' => 65000),
+					'update_date' => array('type' => 'integer', 'length' => 11, 'notnull'  => 1, 'default' => 0),
+					'sources'     => array('type' => 'text', 'length' => 65000),
+					'rewrited_title' => array('type' => 'string', 'length' => 250, 'notnull' => 1, 'default' => "''"),
 				)
 			)
 		);

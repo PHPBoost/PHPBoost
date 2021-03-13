@@ -25,7 +25,7 @@ $lang['media.manage'] = 'Manage multimedia files';
 $lang['add.on.date'] = 'Added on';
 
 // Items manager
-$lang['media.unaprobed'] = 'Unaprobed';
+$lang['media.disapproved'] = 'Unaprobed';
 
 // Categories
 $lang['content.type'] = 'Type of files allowed';

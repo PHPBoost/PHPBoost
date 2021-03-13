@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 28
+ * @version     PHPBoost 6.0 - last update: 2021 03 13
  * @since       PHPBoost 4.0 - 2015 02 04
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MediaCategoriesCache extends DefaultCategoriesCache
@@ -23,10 +24,10 @@ class MediaCategoriesCache extends DefaultCategoriesCache
 	{
 		require_once(PATH_TO_ROOT . '/media/media_constant.php');
 
-		return MediaService::count('WHERE id_category = :id_category AND infos = :status',
+		return MediaService::count('WHERE id_category = :id_category AND published = :status',
 			array(
 				'id_category' => $id_category,
-				'status' => MEDIA_STATUS_APROBED
+				'status' => MEDIA_STATUS_APPROVED
 			)
 		);
 	}

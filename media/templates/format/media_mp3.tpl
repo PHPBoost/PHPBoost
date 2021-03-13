@@ -1,3 +1,3 @@
-<audio class="media-audio" controls> 
-	<source src="{URL}" />
+<audio class="media-audio" controls>
+	<source src="{FILE_URL}" />
 </audio>

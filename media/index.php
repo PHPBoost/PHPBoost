@@ -21,7 +21,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('DefaultCategoriesFormController', '`^/categories/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('DefaultDeleteCategoryController', '`^/categories/([0-9]+)/delete/?$`', array('id')),
 
-	new UrlControllerMapper('MediaDisplayCategoryController',  '`^/([0-9]+)-([a-z0-9-_]+)/?$`', array('cat', 'rewrited_name')),
+	new UrlControllerMapper('MediaDisplayCategoryController',  '`^/([0-9]+)-([a-z0-9-_]+)/?$`', array('id', 'rewrited_name')),
 	new UrlControllerMapper('MediaDisplayCategoryController', '`^/?$`'),
 );
 DispatchManager::dispatch($url_controller_mappers);

@@ -11,9 +11,9 @@
 */
 
 // Informations on files.
-define('MEDIA_STATUS_UNAPROBED', 0);
-define('MEDIA_STATUS_UNVISIBLE', 1);
-define('MEDIA_STATUS_APROBED', 2);
+define('MEDIA_STATUS_DISAPPROVED', 0);
+define('MEDIA_STATUS_INVISIBLE', 1);
+define('MEDIA_STATUS_APPROVED', 2);
 
 // Authorized files extension.
 $mime_type = array(

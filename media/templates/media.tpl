@@ -96,7 +96,7 @@
 							<article id="article-media-{items.ID}" class="media-item several-items category-{items.CATEGORY_ID} cell# IF items.C_NEW_CONTENT # new-content# ENDIF #">
 								<header class="cell-header">
 									<h2 class="cell-name">
-										<a href="{items.U_MEDIA_LINK}">{items.NAME}</a>
+										<a href="{items.U_MEDIA_LINK}">{items.TITLE}</a>
 									</h2>
 								</header>
 								<div class="cell-body">
@@ -114,7 +114,7 @@
 										</div>
 										# IF C_CONTROLS #
 											<div class="controls align-right">
-												<a href="{items.U_ADMIN_UNVISIBLE_MEDIA}" aria-label="{L_UNAPROBED}"><i class="fa fa-fw fa-eye-slash"></i></a>
+												<a href="{items.U_ADMIN_INVISIBLE_MEDIA}" aria-label="{L_DISAPPROVED}"><i class="fa fa-fw fa-eye-slash"></i></a>
 												<a href="{items.U_ADMIN_EDIT_MEDIA}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit"></i></a>
 												<a href="{items.U_ADMIN_DELETE_MEDIA}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt"></i></a>
 											</div>
@@ -122,7 +122,7 @@
 									</div>
 									# IF items.C_HAS_PICTURE #
 										<div class="cell-thumbnail cell-landscape cell-center">
-											<img itemprop="thumbnailUrl" src="{items.PICTURE}" alt="{items.NAME}" />
+											<img itemprop="thumbnailUrl" src="{items.PICTURE}" alt="{items.TITLE}" />
 											<a class="cell-thumbnail-caption" href="{items.U_MEDIA_LINK}" aria-label="${LangLoader::get_message('see.details', 'common')}"><i class="fa fa-2x fa-play-circle"></i></a>
 										</div>
 									# ENDIF #
@@ -160,7 +160,7 @@
 				{@module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 			</div>
 			<h1>
-				{NAME}
+				{TITLE}
 			</h1>
 		</header>
 		<div class="sub-section">
@@ -181,7 +181,7 @@
 						</div>
 						# IF C_CONTROLS #
 							<div class="controls">
-								<a href="{U_UNVISIBLE_MEDIA}" aria-label="{L_UNAPROBED}"><i class="fa fa-eye-slash"></i></a>
+								<a href="{U_INVISIBLE_MEDIA}" aria-label="{L_DISAPPROVED}"><i class="fa fa-eye-slash"></i></a>
 								<a href="{U_EDIT_MEDIA}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit"></i></a>
 								<a href="{U_DELETE_MEDIA}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-trash-alt"></i></a>
 							</div>
