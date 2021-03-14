@@ -163,7 +163,7 @@
 												<time datetime="# IF items.C_DEFFERED_PUBLISHING #{items.DEFFERED_PUBLISHING_START_DATE_ISO8601}# ELSE #{items.DATE_ISO8601}# ENDIF #" itemprop="datePublished">
 													# IF items.C_DEFFERED_PUBLISHING #{items.DEFFERED_PUBLISHING_START_DATE}# ELSE #{items.DATE}# ENDIF #
 												</time>
-												# IF C_HAS_UPDATE_DATE #
+												# IF items.C_HAS_UPDATE_DATE #
 													<time class="pinned notice small text-italic" aria-label="{@form.date.update}"datetime="{items.UPDATE_DATE_ISO8601}" itemprop="dateModified">
 														{items.UPDATE_DATE}
 													</time>
