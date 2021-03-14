@@ -198,7 +198,7 @@
 											# ENDIF #
 											# IF C_ENABLED_COMMENTS #
 												<td>
-													{items.COMMENTS_NUMBER}
+													<a href="{items.U_COMMENTS}">{items.COMMENTS_NUMBER}</a>
 												</td>
 											# ENDIF #
 										# ENDIF #
