@@ -4,12 +4,12 @@
 		{
 			if (document.getElementById('name').value == "")
 			{
-				alert ("{L_REQUIRE_TITLE}");
+				alert ("{@media.require.title}");
 				return false;
 		    }
 			if (document.getElementById('u_media').value == "" || document.getElementById('u_media').value == "http://")
 			{
-				alert ("{L_REQUIRE_FILE_URL}");
+				alert ("{@media.require.file.url}");
 				return false;
 		    }
 			return true;
@@ -54,39 +54,49 @@
 
 	<section id="module-media-action">
 		<header class="section-header">
-			<h1>{L_PAGE_TITLE}</h1>
+			<h1>
+				# IF C_EDIT #
+					{@media.edit.item}
+				# ELSE #
+					# IF C_CONTRIBUTION #
+						{@media.contribution}
+					# ELSE #
+						{@media.add.item}
+					# ENDIF #
+				# ENDIF #
+			</h1>
 		</header>
 		<div class="sub-section">
 			<div class="content-container">
 				<div class="content">
 					<form action="media_action.php" method="post" onsubmit="return check_form();" class="fieldset-content">
-						<p class="align-center">{L_REQUIRE}</p>
+						<p class="align-center">${LangLoader::get_message('form.explain_required_fields', 'status-messages-common')}</p>
 						<fieldset>
-							<legend>{L_PAGE_TITLE}</legend>
+							<legend>${LangLoader::get_message('form.parameters', 'common')}</legend>
 							<div class="form-element">
-								<label for="title">* {L_TITLE}</label>
+								<label for="title">* {@media.title}</label>
 								<div class="form-field"><input type="text" id="title" name="title" value="{TITLE}" /></div>
 							</div>
 							# IF C_CATEGORIES #
-							<div class="form-element">
-								<label for="category">${LangLoader::get_message('form.category', 'common')}</label>
-								<div class="form-field">
-									<select name="id_category" id="id_category">
-										{CATEGORIES}
-									</select>
+								<div class="form-element">
+									<label for="category">${LangLoader::get_message('form.category', 'common')}</label>
+									<div class="form-field">
+										<select name="id_category" id="id_category">
+											{CATEGORIES}
+										</select>
+									</div>
 								</div>
-							</div>
 							# ENDIF #
 							<div class="form-element" id="width_dl">
-								<label for="width">{L_WIDTH}</label>
+								<label for="width">{@media.width}</label>
 								<div class="form-field"><input type="number" min="10" max="5000" maxlength="4" id="width" name="width" value="{WIDTH}" /></div>
 							</div>
 							<div class="form-element" id="height_dl">
-								<label for="height">{L_HEIGHT}</label>
+								<label for="height">{@media.height}</label>
 								<div class="form-field"><input type="number" min="10" max="5000" id="height" name="height" value="{HEIGHT}" /></div>
 							</div>
 							<div class="form-element form-element-upload-file">
-								<label for="u_media">* {L_U_MEDIA}</label>
+								<label for="u_media">* {@media.file.url}</label>
 								<div class="form-field# IF C_AUTH_UPLOAD #  grouped-inputs form-field-upload-file# ENDIF #">
 									<input class="grouped-element upload-input" type="text" id="u_media" name="u_media" value="{U_MEDIA}" />
 									# IF C_AUTH_UPLOAD #
@@ -97,7 +107,7 @@
 								</div>
 							</div>
 							<div class="form-element form-element-upload-file">
-								<label for="thumbnail">{L_POSTER}</label>
+								<label for="thumbnail">{@media.poster}</label>
 								<div class="form-field# IF C_AUTH_UPLOAD # grouped-inputs form-field-upload-file# ENDIF #">
 									<input class="grouped-element upload-input" type="text" id="thumbnail" name="thumbnail" value="{POSTER}" />
 									# IF C_AUTH_UPLOAD #
@@ -108,15 +118,15 @@
 								</div>
 							</div>
 							<div class="form-element form-element-textarea">
-								<label for="content" id="preview_content">{L_CONTENT}</label>
+								<label for="content" id="preview_content">{@media.description}</label>
 								{KERNEL_EDITOR}
 								<div class="form-field-textarea">
-									<textarea rows="10" cols="90" id="content" name="content">{DESCRIPTION}</textarea>
+									<textarea rows="10" cols="90" id="content" name="content">{CONTENT}</textarea>
 								</div>
 							</div>
-							# IF C_APROB #
+							# IF C_APPROVAL #
 								<div class="form-element">
-									<label>{L_APPROVED}</label>
+									<label>{@media.approval}</label>
 									<div class="form-field">
 										<label for="approved" class="checkbox">
 											<input type="checkbox" name="approved" id="approved"{APPROVED} />
@@ -128,26 +138,40 @@
 						</fieldset>
 						# IF C_CONTRIBUTION #
 							<fieldset>
-								<legend>{L_CONTRIBUTION_LEGEND}</legend>
-								<div class="message-helper bgc notice">{L_NOTICE_CONTRIBUTION}</div>
+								<legend>${LangLoader::get_message('contribution', 'main')}</legend>
+								<div class="message-helper bgc warning">{@H|media.contribution.notice}</div>
 								<div class="form-element form-element-textarea">
-									<label>{L_CONTRIBUTION_COUNTERPART} <p class="field-description">{L_CONTRIBUTION_COUNTERPART_EXPLAIN}</p></label>
-									{CONTRIBUTION_COUNTERPART_EDITOR}
+									<label>{@media.additional.contribution} <p class="field-description">{@media.additional.contribution.description}</p></label>
+									{CONTRIBUTION_EDITOR}
 									<div class="form-field-textarea">
-										<textarea rows="20" cols="40" id="counterpart" name="counterpart">{CONTRIBUTION_COUNTERPART}</textarea>
+										<textarea rows="20" cols="40" id="counterpart" name="counterpart"></textarea>
 									</div>
 								</div>
 							</fieldset>
 						# ENDIF #
 
 						<fieldset class="fieldset-submit">
-							<legend>{L_SUBMIT}</legend>
-							<input type="hidden" name="idedit" value="{IDEDIT}" />
-							<input type="hidden" name="contrib" value="{C_CONTRIBUTION}" />
-							<input type="hidden" name="token" value="{TOKEN}" />
-							<button type="submit" class="button submit" name="submit" value="true">{L_SUBMIT}</button>
-							<button type="button" class="button preview-button" onclick="XMLHttpRequest_preview(); return false;">{L_PREVIEW}</button>
-							<button type="reset" class="button reset-button" value="true">{L_RESET}</button>
+							<legend>
+								# IF C_EDIT #
+									${LangLoader::get_message('update', 'main')}
+								# ELSE #
+									${LangLoader::get_message('submit', 'main')}
+								# ENDIF #
+							</legend>
+							<div class="fieldset-inset">
+								<input type="hidden" name="idedit" value="{ITEM_ID}" />
+								<input type="hidden" name="contrib" value="{C_CONTRIBUTION}" />
+								<input type="hidden" name="token" value="{TOKEN}" />
+								<button type="submit" class="button submit" name="submit" value="true">
+									# IF C_EDIT #
+										${LangLoader::get_message('update', 'main')}
+									# ELSE #
+										${LangLoader::get_message('submit', 'main')}
+									# ENDIF #
+								</button>
+								<button type="button" class="button preview-button" onclick="XMLHttpRequest_preview(); return false;">${LangLoader::get_message('preview', 'main')}</button>
+								<button type="reset" class="button reset-button" value="true">${LangLoader::get_message('reset', 'main')}</button>
+							</div>
 						</fieldset>
 					</form>
 				</div>

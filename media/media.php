@@ -34,7 +34,7 @@ if (empty($id_media))
 // Display the media file.
 elseif ($id_media > 0)
 {
-	$view = new FileTemplate('media/media.tpl');
+	$view = new FileTemplate('media/MediaItemController.tpl');
 	$lang = LangLoader::get('common', 'media');
 	$view->add_lang($lang);
 	$config = MediaConfig::load();
@@ -84,7 +84,6 @@ elseif ($id_media > 0)
 	$notation->set_number_notes($media['number_notes']);
 	$notation->set_average_notes($media['average_notes']);
 	$notation->set_user_already_noted(!empty($media['note']));
-	$nbr_notes = $media['number_notes'];
 
 	$group_color = User::get_group_color($media['user_groups'], $media['level']);
 
@@ -94,26 +93,16 @@ elseif ($id_media > 0)
 		Date::get_array_tpl_vars($date, 'date'),
 		array(
 			'ID' => $id_media,
-			'C_DISPLAY_MEDIA' => true,
 			'C_ROOT_CATEGORY' => $media['id_category'] == Category::ROOT_CATEGORY,
 			'C_CONTROLS' => CategoriesAuthorizationsService::check_authorizations($media['id_category'])->moderation(),
-			'C_DISPLAY_NOTATION' => $content_management_config->module_notation_is_enabled('media'),
-			'C_DISPLAY_COMMENTS' => $comments_config->module_comments_is_enabled('media'),
+			'C_ENABLED_NOTATION' => $content_management_config->module_notation_is_enabled('media'),
+			'C_ENABLED_COMMENTS' => $comments_config->module_comments_is_enabled('media'),
 			'C_NEW_CONTENT' => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('media', $media['creation_date']),
 			'TITLE' => $media['title'],
 			'CONTENT' => FormatingHelper::second_parse(stripslashes($media['content'])),
-			'COUNT' => $media['views_number'],
 			'KERNEL_NOTATION' => NotationService::display_active_image($notation),
-			'HITS' => ((int)$media['views_number']+1) > 1 ? sprintf($MEDIA_LANG['n_times'], ((int)$media['views_number']+1)) : sprintf($MEDIA_LANG['n_time'], ((int)$media['views_number']+1)),
-			'U_COM' => PATH_TO_ROOT .'/media/media' . url('.php?id=' . $id_media . '&amp;com=0', '-' . $id_media . '-' . $media['id_category'] . '+' . Url::encode_rewrite($media['title']) . '.php?com=0') .'#comments-list',
-			'L_COM' => CommentsService::get_number_and_lang_comments('media', $id_media),
-			'L_DATE' => LangLoader::get_message('date', 'date-common'),
-			'L_SIZE' => $LANG['size'],
-			'L_MEDIA_INFOS' => $MEDIA_LANG['media_infos'],
-			'L_MODO_PANEL' => $LANG['modo_panel'],
-			'L_DISAPPROVED' => $MEDIA_LANG['disapproved_media_short'],
-			'HEIGHT_P' => $media['height'] + 50,
-			'L_VIEWED' => $LANG['view'],
+			'VIEWS_NUMBER' => (int)$media['views_number']+1,
+			'COMMENTS_NUMBER' => CommentsService::get_number_and_lang_comments('media', $id_media),
 			'AUTHOR_NAME' => !empty($media['display_name']) ? '<a href="' . UserUrlBuilder::profile($media['author_user_id'])->rel() . '" class="'.UserService::get_level_class($media['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $media['display_name'] . '</a>' : $LANG['guest'],
 			'U_INVISIBLE_MEDIA' => url('media_action.php?invisible=' . $id_media . '&amp;token=' . AppContext::get_session()->get_token()),
 			'U_EDIT_MEDIA' => url('media_action.php?edit=' . $id_media),
@@ -223,7 +212,7 @@ elseif ($id_media > 0)
 		'MEDIA_ID' => $media_id
 	));
 
-	$view->put('media_format', $media_tpl);
+	$view->put('MEDIA_FORMAT', $media_tpl);
 
 	// Comments display
 	if (AppContext::get_request()->get_getint('com', 0) == 0)

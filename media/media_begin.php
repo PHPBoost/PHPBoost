@@ -13,7 +13,6 @@ if (defined('PHPBOOST') !== true)
 	exit;
 }
 
-load_module_lang('media');
 $request = AppContext::get_request();
 
 $id_media = $request->get_getint('id', 0);

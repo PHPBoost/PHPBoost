@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 13
+ * @version     PHPBoost 6.0 - last update: 2021 03 14
  * @since       PHPBoost 5.0 - 2017 03 09
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -18,7 +18,9 @@ class MediaModuleUpdateVersion extends ModuleUpdateVersion
 		$this->content_tables = array(PREFIX . 'media');
 		self::$delete_old_files_list = array(
 			'/lang/english/config.php',
+			'/lang/english/media_english.php',
 			'/lang/french/config.php',
+			'/lang/french/media_french.php',
 			'/phpboost/MediaComments.class.php',
 			'/phpboost/MediaNewContent.class.php',
 			'/phpboost/MediaNotation.class.php',
@@ -26,6 +28,7 @@ class MediaModuleUpdateVersion extends ModuleUpdateVersion
 			'/phpboost/MediaHomePageExtensionPoint.class.php',
 			'/services/MediaAuthorizationsService.class.php',
 			'/templates/format/media_flv.tpl',
+			'/templates/media.tpl',
 			'/util/AdminMediaDisplayResponse.class.php'
 		);
 		self::$delete_old_folders_list = array(

@@ -74,11 +74,11 @@ class AdminMediaConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('root_category_content_type', $this->lang['config.root.category.content.type'], $this->config->get_root_category_content_type(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('root_category_content_type', $this->lang['config.root.category.media.content.type'], $this->config->get_root_category_content_type(),
 			array(
-				new FormFieldSelectChoiceOption($this->lang['content.type.music.and.video'], MediaConfig::CONTENT_TYPE_MUSIC_AND_VIDEO),
-				new FormFieldSelectChoiceOption($this->lang['content.type.music'], MediaConfig::CONTENT_TYPE_MUSIC),
-				new FormFieldSelectChoiceOption($this->lang['content.type.video'], MediaConfig::CONTENT_TYPE_VIDEO)
+				new FormFieldSelectChoiceOption($this->lang['media.content.type.music.and.video'], MediaConfig::CONTENT_TYPE_MUSIC_AND_VIDEO),
+				new FormFieldSelectChoiceOption($this->lang['media.content.type.music'], MediaConfig::CONTENT_TYPE_MUSIC),
+				new FormFieldSelectChoiceOption($this->lang['media.content.type.video'], MediaConfig::CONTENT_TYPE_VIDEO)
 			)
 		));
 

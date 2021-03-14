@@ -1,23 +1,23 @@
 # IF C_DISPLAY #
 	<section id="module-media">
 		<header class="section-header">
-			<h1>{L_MODO_PANEL}</h1>
+			<h1>${LangLoader::get_message('modo_panel', 'main')}</h1>
 		</header>
 		<div class="sub-section">
 			<div class="content-container">
 				<form action="moderation_media.php" method="post" class="fieldset-content media-filter">
 					<fieldset>
-						<legend class="sr-only">{L_FILTER}</legend>
+						<legend class="sr-only">{@media.filter}</legend>
 						<div id="form-filter" class="align-center fieldset-inset">
-							{L_DISPLAY_FILE}&nbsp;
+							{@media.display.files}&nbsp;
 							<select name="state" id="state" class="nav" onchange="change_order()">
-								<option value="all"{SELECTED_ALL}>{L_ALL}</option>
-								<option value="visible"{SELECTED_VISIBLE}>{L_FVISIBLE}</option>
-								<option value="invisible"{SELECTED_INVISIBLE}>{L_INVISIBLE}</option>
-								<option value="disapproved"{SELECTED_DISAPPROVED}>{L_FDISAPPROVED}</option>
+								<option value="all"{SELECTED_ALL}>{@media.all.files}</option>
+								<option value="visible"{SELECTED_VISIBLE}>{@media.visible}</option>
+								<option value="invisible"{SELECTED_INVISIBLE}>{@media.invisible}</option>
+								<option value="disapproved"{SELECTED_DISAPPROVED}>{@media.disapproved}</option>
 							</select>
 							<label for="show_sub_cats" class="checkbox">
-								<span>{L_INCLUDE_SUB_CATS}</span>
+								<span>{@media.include.sub.categories}</span>
 								<input type="checkbox" id="show_sub_cats" name="sub_cats" value="1"{SUB_CATS}>
 							</label>
 						</div>
@@ -39,7 +39,7 @@
 
 						if (type == "delete")
 						{
-							if (confirm ('{L_CONFIRM_DELETE_ALL}'))
+							if (confirm ('{@media.confirm.delete.all.files}'))
 							{
 								for (var i=0; i < item.length; i++)
 									document.getElementById(type + item[i]).checked = 'checked';
@@ -84,9 +84,9 @@
 								</tr>
 							</thead>
 							<tbody>
-								# IF C_NO_MODERATION #
+								# IF C_NO_ITEM #
 									<tr>
-										<td colspan="6">{L_NO_MODERATION}</td>
+										<td colspan="6"><div class="message-helper notice">${LangLoader::get_message('no_item_now', 'common')}</div></td>
 									</tr>
 								# ELSE #
 									# START items #
@@ -122,13 +122,13 @@
 										<td colspan="7">
 											<div class="align-center">
 												<span class="pinned small" data-color-surround="rgba(var(--error-rgb-t), 0.4)">
-													{L_FILE_DISAPPROVED}
+													{@media.disapproved.description}
 												</span>
 												<span class="pinned small" data-color-surround="rgba(var(--warning-rgb-t), 0.4)">
-													{L_FILE_INVISIBLE}
+													{@media.invisible.description}
 												</span>
 												<span class="pinned small" data-color-surround="rgba(var(--success-rgb-t), 0.4)">
-													{L_FILE_VISIBLE}
+													{@media.visible.description}
 												</span>
 											</div>
 											# INCLUDE PAGINATION #
@@ -139,10 +139,12 @@
 						</table>
 					</div>
 					<fieldset class="fieldset-submit">
-						<legend>{L_SUBMIT}</legend>
-						<input type="hidden" name="token" value="{TOKEN}">
-						<button type="submit" name="submit" value="true" class="button submit">{L_SUBMIT}</button>
-						<button type="reset" class="button reset-button" value="true">{L_RESET}</button>
+						<legend>${LangLoader::get_message('submit', 'main')}</legend>
+						<div class="fieldset-inset">
+							<input type="hidden" name="token" value="{TOKEN}">
+							<button type="submit" name="submit" value="true" class="button submit">${LangLoader::get_message('submit', 'main')}</button>
+							<button type="reset" class="button reset-button" value="true">${LangLoader::get_message('reset', 'main')}</button>
+						</div>
 					</fieldset>
 				</form>
 

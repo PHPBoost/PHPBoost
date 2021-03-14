@@ -33,16 +33,13 @@ class MediaDisplayCategoryController extends ModuleController
 	{
 		$this->lang = LangLoader::get('common', 'media');
 		$this->common_lang = LangLoader::get('common');
-		$this->view = new FileTemplate('media/media.tpl');
+		$this->view = new FileTemplate('media/MediaSeveralItemsController.tpl');
 		$this->view->add_lang($this->lang);
 	}
 
 	private function build_view()
 	{
-		global $LANG, $MEDIA_LANG;
-
 		require_once(PATH_TO_ROOT . '/media/media_constant.php');
-		load_module_lang('media');
 		$config = MediaConfig::load();
 		$comments_config = CommentsConfig::load();
 		$content_management_config = ContentManagementConfig::load();
@@ -66,12 +63,12 @@ class MediaDisplayCategoryController extends ModuleController
 			DispatchManager::redirect($error_controller);
 		}
 
-		$nbr_cat_displayed = 0;
+		$categories_number = 0;
 		foreach ($subcategories as $id => $category)
 		{
-			$nbr_cat_displayed++;
+			$categories_number++;
 
-			if ($nbr_cat_displayed > $subcategories_pagination->get_display_from() && $nbr_cat_displayed <= ($subcategories_pagination->get_display_from() + $subcategories_pagination->get_number_items_per_page()))
+			if ($categories_number > $subcategories_pagination->get_display_from() && $categories_number <= ($subcategories_pagination->get_display_from() + $subcategories_pagination->get_number_items_per_page()))
 			{
 				$category_thumbnail = $category->get_thumbnail()->rel();
 
@@ -90,23 +87,21 @@ class MediaDisplayCategoryController extends ModuleController
 		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
 
 		$this->view->put_all(array(
-			'C_CATEGORIES' => true,
 			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
 			'C_CATEGORY_DESCRIPTION' => $category_description,
-			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
+			'C_SUB_CATEGORIES' => $categories_number > 0,
 			'C_CONTROLS' => CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_SUBCATEGORIES_PAGINATION' => $subcategories_pagination->has_several_pages(),
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
-			'L_DISAPPROVED' => $MEDIA_LANG['disapproved_media_short'],
 			'CATEGORIES_NUMBER_PER_ROW' => $config->get_categories_number_per_row(),
 			'ITEMS_NUMBER_PER_ROW' => $config->get_items_number_per_row(),
 			'CATEGORY_NAME' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? $this->lang['module.title'] : $this->get_category()->get_name(),
 			'CATEGORY_DESCRIPTION' => $category_description,
 			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? MediaUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id())->rel(),
-			'ID_CAT' => $this->get_category()->get_id()
+			'CATEGORY_ID' => $this->get_category()->get_id()
 		));
 
-		$selected_fields = array('alpha' => '', 'date' => '', 'nbr' => '', 'note' => '', 'com' => '', 'asc' => '', 'desc' => '');
+		$selected_fields = array('alpha' => '', 'date' => '', 'views' => '', 'note' => '', 'com' => '', 'asc' => '', 'desc' => '');
 
 		switch ($get_sort)
 		{
@@ -119,9 +114,9 @@ class MediaDisplayCategoryController extends ModuleController
 				$sort = 'creation_date';
 				$selected_fields['date'] = ' selected="selected"';
 				break;
-			case 'nbr':
+			case 'views':
 				$sort = 'views_number';
-				$selected_fields['nbr'] = ' selected="selected"';
+				$selected_fields['views'] = ' selected="selected"';
 				break;
 			case 'note':
 				$sort = 'average_notes';
@@ -139,19 +134,11 @@ class MediaDisplayCategoryController extends ModuleController
 			$selected_fields['asc'] = ' selected="selected"';
 
 		$this->view->put_all(array(
-			'C_DISPLAY_NOTATION' => $content_management_config->module_notation_is_enabled('media'),
-			'C_DISPLAY_COMMENTS' => $comments_config->module_comments_is_enabled('media'),
-			'L_ALPHA'    => $this->common_lang['sort_by.alphabetic'],
-			'L_DATE'     => LangLoader::get_message('date', 'date-common'),
-			'L_NBR'      => $this->common_lang['sort_by.views.number'],
-			'L_NOTE'     => $this->common_lang['sort_by.best.note'],
-			'L_COM'      => $this->common_lang['sort_by.comments.number'],
-			'L_DESC'     => $this->common_lang['sort.desc'],
-			'L_ASC'      => $this->common_lang['sort.asc'],
-			'L_ORDER_BY' => $this->common_lang['sort_by'],
+			'C_ENABLED_NOTATION' => $content_management_config->module_notation_is_enabled('media'),
+			'C_ENABLED_COMMENTS' => $comments_config->module_comments_is_enabled('media'),
 			'SELECTED_ALPHA' => $selected_fields['alpha'],
 			'SELECTED_DATE'  => $selected_fields['date'],
-			'SELECTED_NBR'   => $selected_fields['nbr'],
+			'SELECTED_VIEWS' => $selected_fields['views'],
 			'SELECTED_NOTE'  => $selected_fields['note'],
 			'SELECTED_COM'   => $selected_fields['com'],
 			'SELECTED_ASC'   => $selected_fields['asc'],
@@ -191,18 +178,14 @@ class MediaDisplayCategoryController extends ModuleController
 				'display_from' => $pagination->get_display_from()
 		)));
 
-		$number_columns_display_per_line = $config->get_categories_number_per_row();
-
 		$this->view->put_all(array(
-			'C_FILES' => $result->get_rows_count() > 0,
-			'C_DISPLAY_NO_FILE_MSG'  => $result->get_rows_count() == 0 && $this->get_category()->get_id() != Category::ROOT_CATEGORY,
-			'C_PAGINATION'           => $pagination->has_several_pages(),
-			'PAGINATION'             => $pagination->display(),
-			'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'media-0-' . $this->get_category()->get_id() . '.php?' : 'media.php?cat=' . $this->get_category()->get_id() . '&',
-			'C_SEVERAL_COLUMNS'      => $number_columns_display_per_line > 1,
-			'COLUMNS_NUMBER'         => $number_columns_display_per_line,
-			'C_GRID_VIEW'            => $config->get_display_type() == MediaConfig::GRID_VIEW,
-			'C_LIST_VIEW'            => $config->get_display_type() == MediaConfig::LIST_VIEW,
+			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
+			'C_NO_ITEM'       => $result->get_rows_count() == 0 && $this->get_category()->get_id() != Category::ROOT_CATEGORY,
+			'C_GRID_VIEW'     => $config->get_display_type() == MediaConfig::GRID_VIEW,
+			'C_LIST_VIEW'     => $config->get_display_type() == MediaConfig::LIST_VIEW,
+			'C_PAGINATION'    => $pagination->has_several_pages(),
+			'PAGINATION'      => $pagination->display(),
+			'CHANGE_ORDER'    => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'media-0-' . $this->get_category()->get_id() . '.php?' : 'media.php?cat=' . $this->get_category()->get_id() . '&',
 		));
 
 		while ($row = $result->fetch())
@@ -212,6 +195,7 @@ class MediaDisplayCategoryController extends ModuleController
 			$notation->set_id_in_module($row['id']);
 			$notation->set_number_notes($row['number_notes']);
 			$notation->set_average_notes($row['average_notes']);
+			$notation->set_user_already_noted(!empty($media['note']));
 
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
@@ -237,16 +221,16 @@ class MediaDisplayCategoryController extends ModuleController
 				'TITLE'          => $row['title'],
 				'IMG_TITLE'      => str_replace('"', '\"', $row['title']),
 				'C_NEW_CONTENT' => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('media', $row['creation_date']),
-				'C_DESCRIPTION' => !empty($row['content']),
-				'DESCRIPTION'   => FormatingHelper::second_parse(stripslashes($row['content'])),
-				'AUTHOR'        => $MEDIA_LANG['media_added_by'] . ' : ' . !empty($row['display_name']) ? '<a href="' . UserUrlBuilder::profile($row['author_user_id'])->rel() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>' : $LANG['guest'],
-				'COUNT'         => $row['views_number'],
-				'NOTE'          => NotationService::display_static_image($notation),
+				'C_CONTENT' => !empty($row['content']),
+				'CONTENT'   => FormatingHelper::second_parse(stripslashes($row['content'])),
+				'PSEUDO'     => !empty($row['display_name']) ? '<a href="' . UserUrlBuilder::profile($row['author_user_id'])->rel() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>' : LangLoader::get_message('guest', 'main'),
+				'VIEWS_NUMBER'  => $row['views_number'],
+				'COMMENTS_NUMBER'=> CommentsService::get_number_and_lang_comments('media', $row['id']),
+				'KERNEL_NOTATION'          => NotationService::display_static_image($notation),
 				'U_MEDIA_LINK'            => PATH_TO_ROOT . '/media/' . url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $this->get_category()->get_id() . '+' . Url::encode_rewrite($row['title']) . '.php'),
 				'U_ADMIN_INVISIBLE_MEDIA' => PATH_TO_ROOT . url('/media/media_action.php?invisible=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
 				'U_ADMIN_EDIT_MEDIA'      => PATH_TO_ROOT . url('/media/media_action.php?edit=' . $row['id']),
-				'U_ADMIN_DELETE_MEDIA'    => PATH_TO_ROOT . url('/media/media_action.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
-				'U_COM_LINK'              => '<a href="'. PATH_TO_ROOT .'/media/media' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '-' . $this->get_category()->get_id() . '+' . Url::encode_rewrite($row['title']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments('media', $row['id']) . '</a>'
+				'U_ADMIN_DELETE_MEDIA'    => PATH_TO_ROOT . url('/media/media_action.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token())
 			)));
 		}
 		$result->dispose();

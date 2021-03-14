@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 13
+ * @version     PHPBoost 6.0 - last update: 2021 03 14
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -23,8 +23,7 @@ $config = MediaConfig::load();
 $items_per_page = $config->get_items_number_per_page();
 
 $view = new FileTemplate('media/moderation_media.tpl');
-$lang = LangLoader::get('common', 'media');
-$view->add_lang($lang);
+$view->add_lang(LangLoader::get('common', 'media'));
 
 $Bread_crumb->add(LangLoader::get_message('module.title', 'common', 'media'), url('media.php'));
 $Bread_crumb->add($LANG['modo_panel'], url('moderation_media.php'));
@@ -181,34 +180,14 @@ else
 	$view->put_all(array(
 		'C_DISPLAY' => true,
 		'C_PAGINATION' => $pagination->has_several_pages(),
-		'L_FILTER' => $MEDIA_LANG['filter'],
-		'L_DISPLAY_FILE' => $MEDIA_LANG['display_file'],
-		'L_ALL' => $MEDIA_LANG['all_file'],
+		'C_NO_ITEM' => $items_number > 0 ? 0 : 1,
+
 		'SELECTED_ALL' => is_null($db_where) ? ' selected="selected"' : '',
-		'L_FVISIBLE' => $MEDIA_LANG['visible'],
 		'SELECTED_VISIBLE' => $db_where === MEDIA_STATUS_APPROVED ? ' selected="selected"' : '',
-		'L_INVISIBLE' => $MEDIA_LANG['invisible'],
 		'SELECTED_INVISIBLE' => $db_where === MEDIA_STATUS_INVISIBLE ? ' selected="selected"' : '',
-		'L_FDISAPPROVED' => $MEDIA_LANG['disapproved'],
 		'SELECTED_DISAPPROVED' => $db_where === MEDIA_STATUS_DISAPPROVED ? ' selected="selected"' : '',
-		'L_CATEGORIES' => $MEDIA_LANG['from_cats'],
-		'L_INCLUDE_SUB_CATS' => $MEDIA_LANG['include_sub_cats'],
 		'SUB_CATS' => is_null($sub_cats) ? ' checked="checked"' : ($sub_cats ? ' checked="checked"' : ''),
-		'L_MODO_PANEL' => $LANG['modo_panel'],
-		'L_TITLE' => $LANG['title'],
-		'L_VISIBLE' => $MEDIA_LANG['show_media_short'],
-		'L_INVISIBLE' => $MEDIA_LANG['hide_media_short'],
-		'L_DISAPPROVED' => $MEDIA_LANG['disapproved_media_short'],
-		'C_NO_MODERATION' => $items_number > 0 ? 0 : 1,
-		'L_NO_MODERATION' => $MEDIA_LANG['no_media_moderate'],
-		'L_CONFIRM_DELETE_ALL' => str_replace('\'', '\\\'', $MEDIA_LANG['confirm_delete_media_all']),
-		'L_LEGEND' => $MEDIA_LANG['legend'],
-		'L_FILE_DISAPPROVED' => $MEDIA_LANG['disapproved.item'],
-		'L_FILE_INVISIBLE' => $MEDIA_LANG['invisible.item'],
-		'L_FILE_VISIBLE' => $MEDIA_LANG['visible.item'],
 		'PAGINATION' => $pagination->display(),
-		'L_SUBMIT' => $LANG['submit'],
-		'L_RESET' => $LANG['reset'],
 		'JS_ARRAY' => '"' . implode('", "', $js_array) . '"'
 	));
 }
