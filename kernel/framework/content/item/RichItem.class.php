@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 13
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 6.0 - 2020 01 23
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -73,12 +73,14 @@ class RichItem extends Item
 
 	public function get_real_summary($parsed_content = '')
 	{
-		$summary = $this->get_additional_property('summary');
-
-		if (!empty($summary))
+		if ($this->summary_field_enabled)
 		{
-			return FormatingHelper::second_parse($summary);
+			$summary = $this->get_additional_property('summary');
+
+			if (!empty($summary))
+				return FormatingHelper::second_parse($summary);
 		}
+		
 		return TextHelper::cut_string(@strip_tags($parsed_content ? $parsed_content : FormatingHelper::second_parse($this->content), '<br><br/>'), self::$module->get_configuration()->get_configuration_parameters()->get_auto_cut_characters_number());
 	}
 
