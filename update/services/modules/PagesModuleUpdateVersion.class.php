@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 13
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 4.0 - 2014 05 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -47,10 +47,13 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 			'/xmlhttprequest.php',
 			// 6.0.b1
 			'/controllers/PagesDeleteItemController.class.php',
+			'/controllers/PagesItemController.class.php',
+			'/controllers/PagesItemFormController.class.php',
 			'/controllers/PagesItemsManagerController.class.php',
 			'/controllers/PagesMemberItemsController.class.php',
 			'/controllers/PagesPendingItemsController.class.php',
 			'/controllers/PagesTagController.class.php',
+			'/templates/PagesItemController.tpl',
 		);
 		// 6.0.b1
 		self::$delete_old_folders_list = array(

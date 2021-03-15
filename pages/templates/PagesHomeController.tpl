@@ -58,7 +58,7 @@
 										<div class="d-block flex-between toggle-menu-button-{categories.CATEGORY_ID}">
 											<div class="categories-item flex-between">
 												<span><i class="far fa-fw fa-folder" aria-hidden="true"></i> {categories.CATEGORY_NAME}</span>
-												<span class="small" aria-label="{@pages.number}">({categories.ITEMS_NUMBER})</span>
+												<span class="small" aria-label="{@items.number}">({categories.ITEMS_NUMBER})</span>
 											</div>
 											<a href="{categories.U_CATEGORY}" aria-label="{categories.CATEGORY_NAME}"><i class="fa fa-fw fa-caret-right" aria-hidden="true"></i></a>
 										</div>

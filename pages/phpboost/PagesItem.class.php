@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 13
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 5.2 - 2020 06 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -70,13 +70,7 @@ class PagesItem extends RichItem
 				'C_VIEWS_NUMBER'     => $config->get_views_number_enabled(),
 
 				'C_COMMENTS'      => !empty($comments_number),
-				'L_COMMENTS'      => CommentsService::get_lang_comments('pages', $this->id),
-				
-				// Links
-				'U_ITEM'           => PagesUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_title)->rel(),
-				'U_EDIT'           => PagesUrlBuilder::edit_item($this->id)->rel(),
-				'U_DELETE'         => PagesUrlBuilder::delete_item($this->id)->rel(),
-				'U_COMMENTS'       => PagesUrlBuilder::display_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_title)->rel()
+				'L_COMMENTS'      => CommentsService::get_lang_comments('pages', $this->id)
 			)
 		);
 	}
