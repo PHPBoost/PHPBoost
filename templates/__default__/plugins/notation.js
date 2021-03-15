@@ -2,10 +2,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 12 27
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 3.0 - 2010 02 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 function Note(id, notation_scale, default_note, already_post){
@@ -108,9 +109,9 @@ Note.prototype = {
 		}
 	},
 	change_nbr_note: function () {
-		var number_notes_el = jQuery('#notation-' + this.id + ' span.number-notes').first();
-		var number_notes = parseInt(number_notes_el.text()) + 1;
-		number_notes_el.text(number_notes);
-		jQuery('#notation-' + this.id + ' .notes span:not(.number-notes)').text((number_notes > 1 ? NOTATION_LANG_NOTES : NOTATION_LANG_NOTE));
+		var notes_number_el = jQuery('#notation-' + this.id + ' span.number-notes').first();
+		var notes_number = parseInt(notes_number_el.text()) + 1;
+		notes_number_el.text(notes_number);
+		jQuery('#notation-' + this.id + ' .notes span:not(.number-notes)').text((notes_number > 1 ? NOTATION_LANG_NOTES : NOTATION_LANG_NOTE));
 	}
 };

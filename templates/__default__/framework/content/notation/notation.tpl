@@ -4,7 +4,7 @@
 			# START star #
 				<a href="#" onclick="return false;" class="far star fa-star" id="star-{ID_IN_MODULE}-{star.I}" aria-hidden="true"><span class="star-width {star.STAR_WIDTH}"></span></a>
 			# END star #
-			<meta itemprop="ratingCount" content="{NUMBER_NOTES}">
+			<meta itemprop="ratingCount" content="{NOTES_NUMBER}">
 			<meta itemprop="ratingValue" content="{AVERAGE_NOTES}">
 			<meta itemprop="bestRating" content="{NOTATION_SCALE}">
 		</div>
@@ -34,11 +34,11 @@
 			# END star #
 		</span>
 		<span class="notes">
-			<span class="number-notes" # IF C_NOTES #itemprop="ratingCount"# ENDIF #>{NUMBER_NOTES}</span>
+			<span class="number-notes" # IF C_NOTES #itemprop="ratingCount"# ENDIF #>{NOTES_NUMBER}</span>
 			# IF C_MORE_1_NOTES #
-				<span role="note" aria-label="{NUMBER_NOTES} {L_NOTES}">{L_NOTES}</span>
+				<span role="note" aria-label="{NOTES_NUMBER} {L_NOTES}">{L_NOTES}</span>
 			# ELSE #
-				<span role="note" aria-label="{NUMBER_NOTES} {L_NOTE}">{L_NOTE}</span>
+				<span role="note" aria-label="{NOTES_NUMBER} {L_NOTE}">{L_NOTE}</span>
 			# ENDIF #
 		</span>
 		# IF C_NOTES #
