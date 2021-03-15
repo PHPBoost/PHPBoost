@@ -52,10 +52,6 @@ class PagesItem extends RichItem
 
 	public function get_template_vars()
 	{
-		$category = $this->get_category();
-		$comments_number = CommentsService::get_comments_number('pages', $this->id);
-		$config = PagesConfig::load();
-
 		return array_merge(
 			parent::get_template_vars(),
 			array(
@@ -66,11 +62,7 @@ class PagesItem extends RichItem
 				'C_AUTHOR_DISPLAYED' => $this->get_author_display(),
 				
 				// Item
-				'STATUS'             => $this->get_status(),
-				'C_VIEWS_NUMBER'     => $config->get_views_number_enabled(),
-
-				'C_COMMENTS'      => !empty($comments_number),
-				'L_COMMENTS'      => CommentsService::get_lang_comments('pages', $this->id)
+				'STATUS'             => $this->get_status()
 			)
 		);
 	}
