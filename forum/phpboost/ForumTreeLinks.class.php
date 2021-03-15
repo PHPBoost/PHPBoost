@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 01
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 4.0 - 2013 11 23
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -19,9 +19,9 @@ class ForumTreeLinks implements ModuleTreeLinksExtensionPoint
 		$lang = LangLoader::get('common', $module_id);
 		$tree = new ModuleTreeLinks();
 
-		$manage_categories_link = new ModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), CategoriesUrlBuilder::manage_categories($module_id), ForumAuthorizationsService::check_authorizations()->manage_categories());
-		$manage_categories_link->add_sub_link(new ModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), CategoriesUrlBuilder::manage_categories($module_id), ForumAuthorizationsService::check_authorizations()->manage_categories()));
-		$manage_categories_link->add_sub_link(new ModuleLink(LangLoader::get_message('category.add', 'categories-common'), CategoriesUrlBuilder::add_category(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY), $module_id), ForumAuthorizationsService::check_authorizations()->manage_categories()));
+		$manage_categories_link = new ModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), CategoriesUrlBuilder::manage($module_id), ForumAuthorizationsService::check_authorizations()->manage());
+		$manage_categories_link->add_sub_link(new ModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), CategoriesUrlBuilder::manage($module_id), ForumAuthorizationsService::check_authorizations()->manage()));
+		$manage_categories_link->add_sub_link(new ModuleLink(LangLoader::get_message('category.add', 'categories-common'), CategoriesUrlBuilder::add(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY), $module_id), ForumAuthorizationsService::check_authorizations()->manage()));
 		$tree->add_link($manage_categories_link);
 
 		$manage_ranks_link = new AdminModuleLink($lang['forum.ranks.manager'], ForumUrlBuilder::manage_ranks());

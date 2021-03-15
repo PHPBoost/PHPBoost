@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 13
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 6.0 - 2020 05 16
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -25,7 +25,7 @@ class DefaultItemFormController extends AbstractItemController
 	 * @var Item
 	 */
 	protected $item;
-	
+
 	protected $item_class;
 	protected $is_new_item;
 
@@ -568,7 +568,7 @@ class DefaultItemFormController extends AbstractItemController
 				foreach ($categories as $id => $category)
 				{
 					if ($category->get_id() != Category::ROOT_CATEGORY)
-						$breadcrumb->add($category->get_name(), CategoriesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), self::$module_id));
+						$breadcrumb->add($category->get_name(), CategoriesUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), self::$module_id));
 				}
 				$breadcrumb->add($this->get_item()->get_title(), ItemsUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id));
 			}

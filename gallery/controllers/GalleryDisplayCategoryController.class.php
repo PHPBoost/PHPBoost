@@ -151,7 +151,7 @@ class GalleryDisplayCategoryController extends ModuleController
 			'C_SEVERAL_CATS_COLUMNS' => $nbr_column_cats > 1,
 			'COLUMNS_NUMBER' => $config->get_columns_number(),
 			'CATEGORY_DESCRIPTION' => $category_description,
-			'U_EDIT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY ? GalleryUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($category->get_id())->rel(),
+			'U_EDIT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY ? GalleryUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($category->get_id())->rel(),
 			'CAT_ID' => $category->get_id(),
 			'DISPLAY_MODE' => $config->get_pics_enlargement_mode(),
 			'GALLERY' => $category->get_id() != Category::ROOT_CATEGORY ? $this->lang['module_title'] . ' - ' . $category->get_name() : $this->lang['module_title'],

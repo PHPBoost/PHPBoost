@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 29
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 6.0 - 2019 11 02
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CategoriesAuthorizationsService
@@ -43,7 +44,7 @@ class CategoriesAuthorizationsService
 		return $this->is_authorized(Category::MODERATION_AUTHORIZATIONS);
 	}
 
-	public function manage_categories()
+	public function manage()
 	{
 		return $this->is_authorized(Category::CATEGORIES_MANAGEMENT_AUTHORIZATIONS);
 	}

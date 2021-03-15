@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 27
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 6.0 - 2019 11 02
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DefaultSitemapCategoriesModule extends SitemapCategoriesModule
@@ -22,7 +23,7 @@ class DefaultSitemapCategoriesModule extends SitemapCategoriesModule
 
 	protected function get_category_url(Category $category)
 	{
-		return CategoriesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), $this->module_id);
+		return CategoriesUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->module_id);
 	}
 }
 ?>

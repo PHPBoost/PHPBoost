@@ -562,7 +562,7 @@ class DownloadItem
 				'CATEGORY_DESCRIPTION' => $category->get_description(),
 				'U_CATEGORY'           => DownloadUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
 				'U_CATEGORY_THUMBNAIL' => $category->get_thumbnail()->rel(),
-				'U_EDIT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY ? DownloadUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($category->get_id())->rel(),
+				'U_EDIT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY ? DownloadUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($category->get_id())->rel(),
 
 				// Links
 				'U_SYNDICATION'    => SyndicationUrlBuilder::rss('download', $this->id_category)->rel(),

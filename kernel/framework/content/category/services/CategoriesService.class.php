@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 28
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 6.0 - 2019 11 11
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CategoriesService
@@ -30,12 +31,12 @@ class CategoriesService
 		if (self::$categories_manager === null || (!empty($requested_module_id) && $requested_module_id != self::$categories_manager->get_module_id()))
 		{
 			$module_id = !empty($requested_module_id) ? $requested_module_id : Environment::get_running_module_name();
-			
+
 			if (preg_match('/^index\.php\?/suU', $module_id))
 				$module_id = GeneralConfig::load()->get_module_home_page();
-			
+
 			$module = ModulesManager::get_module($module_id);
-			
+
 			$module_categories_cache_class_name = TextHelper::ucfirst($module_id) . 'CategoriesCache';
 			$categories_cache_class = ClassLoader::is_class_registered_and_valid($module_categories_cache_class_name) ? $module_categories_cache_class_name : ClassLoader::get_module_subclass_of($module_id, 'CategoriesCache');
 			if ($categories_cache_class)
@@ -46,10 +47,10 @@ class CategoriesService
 				$categories_cache = DefaultCategoriesCache::load($module_id);
 			else if (preg_match('/^(A-Za-z0-9_-)+$/suU', $module_id) && !in_array($module_id, array('admin', 'kernel', 'user')))
 				throw new Exception('Class ' . $categories_cache_class . ' does not exist in module ' . $module_id);
-			
+
 			$categories_items_parameters = new CategoriesItemsParameters();
 			$categories_items_parameters->set_table_name_contains_items($categories_cache->get_table_name_containing_items());
-			
+
 			self::$categories_manager = new CategoriesManager($categories_cache, $categories_items_parameters);
 		}
 		return self::$categories_manager;
@@ -62,7 +63,7 @@ class CategoriesService
 		$items_lang = ItemsService::get_items_lang($module_id, $module_lang_filename);
 		$elements_number_lang_parameter = isset($module_lang['default.created.elements.number']) ? $module_lang['default.created.elements.number'] : $categories_lang['default.created.elements.number'];
 		$module = ModulesManager::get_module($module_id);
-		
+
 		if ($module)
 		{
 			if (isset($module_lang['default.root.category.description']))
@@ -80,14 +81,14 @@ class CategoriesService
 				{
 					$elements_number .= ($items_number > 1 ? $items_number . ' ' . TextHelper::lcfirst($items_lang['items']) : (!empty($items_number) ? TextHelper::lcfirst($items_lang['an.item']) : TextHelper::ucfirst($items_lang['an.item'])));
 				}
-				
+
 				$module_configuration = $module->get_configuration();
-				
+
 				return StringVars::replace_vars($categories_lang['default.root.category.description'], array(
 					'module_name'             => $module_configuration->get_name(),
 					'created_elements_number' => StringVars::replace_vars($elements_number_lang_parameter, array('elements_number' => $elements_number)),
 					'configuration_link'      => ModulesUrlBuilder::configuration($module_id)->relative(),
-					'add_category_link'       => CategoriesUrlBuilder::add_category(Category::ROOT_CATEGORY, $module_id)->relative(),
+					'add_category_link'       => CategoriesUrlBuilder::add(Category::ROOT_CATEGORY, $module_id)->relative(),
 					'add_item_link'           => ItemsUrlBuilder::add(Category::ROOT_CATEGORY, $module_id)->relative(),
 					'items'                   => TextHelper::lcfirst($items_lang['items']),
 					'documentation_link'      => $module_configuration->get_documentation() ? $module_configuration->get_documentation() : 'https://www.phpboost.com'

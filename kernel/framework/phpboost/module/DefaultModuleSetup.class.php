@@ -5,10 +5,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 10 02
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 2.0 - 2009 01 16
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor xela <xela@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DefaultModuleSetup implements ModuleSetup
@@ -19,13 +20,13 @@ class DefaultModuleSetup implements ModuleSetup
 	protected $module_configuration;
 	private $id_category = 1;
 	private $id_item = 1;
-	
+
 	public static function __static()
 	{
 		self::$db_querier = PersistenceContext::get_querier();
 		self::$dbms_utils = PersistenceContext::get_dbms_utils();
 	}
-	
+
 	public function __construct($module_id = '')
 	{
 		if ($module_id)
@@ -35,7 +36,7 @@ class DefaultModuleSetup implements ModuleSetup
 			$this->module_configuration = $module->get_configuration();
 		}
 	}
-	
+
 	/* (non-PHPdoc)
 	 * @see kernel/framework/phpboost/module/ModuleSetup#check_environment()
 	 */
@@ -61,7 +62,7 @@ class DefaultModuleSetup implements ModuleSetup
 	{
 		$this->drop_tables();
 		KeywordsService::get_keywords_manager()->delete_module_relations();
-		
+
 		if ($this->module_id && $this->module_configuration->get_configuration_name())
 			ConfigManager::delete($this->module_id, 'config');
 	}
@@ -77,29 +78,29 @@ class DefaultModuleSetup implements ModuleSetup
 	protected function get_sql_tables_list()
 	{
 		$tables_list = array();
-		
+
 		if ($this->module_id)
 		{
 			if ($this->module_configuration->has_items())
 				$tables_list[] = $this->module_configuration->get_items_table_name();
-			
+
 			if ($this->module_configuration->has_categories())
 				$tables_list[] = $this->module_configuration->get_categories_table_name();
 		}
-		
+
 		return $tables_list;
 	}
 
 	private function drop_tables()
 	{
 		$tables_list = $this->get_sql_tables_list();
-		
+
 		if ($tables_list)
 			self::$dbms_utils->drop($tables_list);
-		
+
 		$this->drop_additional_tables();
 	}
-	
+
 	protected function drop_additional_tables() {}
 
 	private function create_tables()
@@ -111,7 +112,7 @@ class DefaultModuleSetup implements ModuleSetup
 				$item_class_name = $this->module_configuration->get_item_name();
 				$item_class_name::create_items_table($this->module_id);
 			}
-			
+
 			if ($this->module_configuration->has_categories())
 			{
 				$module_category_class = TextHelper::ucfirst($this->module_id) . 'Category';
@@ -121,9 +122,9 @@ class DefaultModuleSetup implements ModuleSetup
 		}
 		$this->create_additional_tables();
 	}
-	
+
 	protected function create_additional_tables() {}
-	
+
 	protected function insert_default_data()
 	{
 		if ($this->module_id)
@@ -137,7 +138,7 @@ class DefaultModuleSetup implements ModuleSetup
 			}
 		}
 	}
-	
+
 	protected function insert_default_categories($lang)
 	{
 		if (isset($lang['categories']) && is_array($lang['categories']))
@@ -148,7 +149,7 @@ class DefaultModuleSetup implements ModuleSetup
 			}
 		}
 	}
-	
+
 	protected function insert_default_items($lang)
 	{
 		if (isset($lang['items']) && is_array($lang['items']))
@@ -159,7 +160,7 @@ class DefaultModuleSetup implements ModuleSetup
 			}
 		}
 	}
-	
+
 	protected function get_default_category_additional_fields($lang, $category_id)
 	{
 		$additional_fields = array();
@@ -175,7 +176,7 @@ class DefaultModuleSetup implements ModuleSetup
 		}
 		return $additional_fields;
 	}
-	
+
 	protected function get_default_item_additional_fields($lang, $item_id)
 	{
 		$additional_fields = array();
@@ -191,7 +192,7 @@ class DefaultModuleSetup implements ModuleSetup
 		}
 		return $additional_fields;
 	}
-	
+
 	protected function add_category($name, $description = '', $thumbnail = FormFieldThumbnail::DEFAULT_VALUE, $id_parent = Category::ROOT_CATEGORY, $additional_fields = array(), $auth = '')
 	{
 		self::$db_querier->insert($this->module_configuration->get_categories_table_name(), array_merge(array(
@@ -219,23 +220,23 @@ class DefaultModuleSetup implements ModuleSetup
 			'update_date' => 0,
 			'published' => Item::PUBLISHED
 		);
-		
+
 		if ($this->module_configuration->has_categories())
 		{
 			$fields['id_category'] = $id_category ? $id_category : ($this->id_category - 1);
 		}
-		
+
 		if ($this->module_configuration->feature_is_enabled('deferred_publication'))
 		{
 			$fields['publishing_start_date'] = 0;
 			$fields['publishing_end_date'] = 0;
 		}
-		
+
 		if ($this->module_configuration->feature_is_enabled('sources'))
 		{
 			$fields['sources'] = TextHelper::serialize(array());
 		}
-		
+
 		if ($this->module_configuration->has_rich_items())
 		{
 			$fields['summary'] = $summary;
@@ -243,7 +244,7 @@ class DefaultModuleSetup implements ModuleSetup
 			$fields['author_custom_name'] = '';
 			$fields['views_number'] = 0;
 		}
-		
+
 		self::$db_querier->insert($this->module_configuration->get_items_table_name(), array_merge($fields, $additional_fields));
 		$this->id_item++;
 	}

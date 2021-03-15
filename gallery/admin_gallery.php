@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 02
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 1.2 - 2005 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -186,7 +186,7 @@ $tpl->assign_block_vars('pics', array(
 	'ID' => $idpics,
 	'ID_CATEGORY' => $id_category,
 	'CATNAME' => $category->get_name(),
-	'U_EDIT_CATEGORY' => CategoriesUrlBuilder::edit_category($id_category)->rel()
+	'U_EDIT_CATEGORY' => CategoriesUrlBuilder::edit($id_category)->rel()
 ));
 
 if ($nbr_pics > 0)

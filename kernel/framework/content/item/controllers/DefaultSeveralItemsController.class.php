@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 13
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 6.0 - 2020 01 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -78,7 +78,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 			$this->current_url = ItemsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
 			$this->pagination_url = ItemsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), self::$module_id, $this->sort_field, $this->sort_mode, '%d');
 			$this->url_without_sorting_parameters = ItemsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), self::$module_id);
-			
+
 			$this->view->put('C_KEYWORD_ITEMS_LIST', true);
 		}
 		else if (TextHelper::strstr($this->request->get_current_url(), '/member/'))
@@ -173,7 +173,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 				$this->pagination_url = ItemsUrlBuilder::display_category(Category::ROOT_CATEGORY, 'root', self::$module_id, $this->sort_field, $this->sort_mode, '%d');
 				$this->url_without_sorting_parameters = ItemsUrlBuilder::display_category(Category::ROOT_CATEGORY, 'root', self::$module_id, true);
 			}
-			
+
 			$this->view->put('C_ENABLED_CATEGORIES', false);
 		}
 	}
@@ -240,7 +240,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 		foreach ($items as $item)
 		{
 			$this->view->assign_block_vars('items', $item->get_template_vars());
-			
+
 			if (self::get_module_configuration()->feature_is_enabled('keywords'))
 			{
 				foreach ($item->get_keywords() as $keyword)
@@ -360,7 +360,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 			'C_HIDE_NO_ITEM_MESSAGE'     => $this->get_category()->get_id() == Category::ROOT_CATEGORY && ($displayed_categories_number != 0 || !empty($category_description)),
 			'CATEGORY_ID'                => $this->get_category()->get_id(),
 			'CATEGORY_NAME'              => $this->get_category()->get_name(),
-			'U_EDIT_CATEGORY'            => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? ModulesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id(), self::$module_id)->rel()
+			'U_EDIT_CATEGORY'            => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? ModulesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->get_category()->get_id(), self::$module_id)->rel()
 		));
 	}
 

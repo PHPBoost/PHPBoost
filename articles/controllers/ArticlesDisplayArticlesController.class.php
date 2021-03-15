@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 11
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 4.0 - 2013 03 03
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -299,7 +299,7 @@ class ArticlesDisplayArticlesController extends AbstractItemController
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id() != Category::ROOT_CATEGORY)
-				$breadcrumb->add($category->get_name(), CategoriesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), 'articles'));
+				$breadcrumb->add($category->get_name(), CategoriesUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), 'articles'));
 		}
 		$breadcrumb->add($this->item->get_title(), ItemsUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title(), 'articles'));
 

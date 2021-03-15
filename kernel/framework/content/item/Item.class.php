@@ -634,9 +634,9 @@ class Item
 				'CATEGORY_ID'          => $category->get_id(),
 				'CATEGORY_NAME'        => $category->get_name(),
 				'CATEGORY_DESCRIPTION' => $category->get_description(),
-				'U_CATEGORY'           => CategoriesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), self::$module_id)->rel(),
+				'U_CATEGORY'           => CategoriesUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), self::$module_id)->rel(),
 				'U_CATEGORY_THUMBNAIL' => $category->get_thumbnail()->rel(),
-				'U_EDIT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY ? ModulesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($category->get_id(), self::$module_id)->rel()
+				'U_EDIT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY ? ModulesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($category->get_id(), self::$module_id)->rel()
 			);
 		}
 
