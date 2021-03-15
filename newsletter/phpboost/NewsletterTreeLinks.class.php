@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 01
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 4.0 - 2013 11 24
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -16,10 +16,8 @@ class NewsletterTreeLinks implements ModuleTreeLinksExtensionPoint
 		$lang = LangLoader::get('common', 'newsletter');
 		$tree = new ModuleTreeLinks();
 
-		$manage_newsletter_link = new ModuleLink($lang['newsletter.streams.manager'], NewsletterUrlBuilder::manage_streams(), NewsletterAuthorizationsService::default_authorizations()->manage_streams());
-		$manage_newsletter_link->add_sub_link(new ModuleLink($lang['newsletter.streams.manager'], NewsletterUrlBuilder::manage_streams(), NewsletterAuthorizationsService::default_authorizations()->manage_streams()));
-		$manage_newsletter_link->add_sub_link(new ModuleLink($lang['stream.add'], NewsletterUrlBuilder::add_stream(), NewsletterAuthorizationsService::default_authorizations()->manage_streams()));
-		$tree->add_link($manage_newsletter_link);
+		$tree->add_link(new ModuleLink($lang['newsletter.streams.manager'], NewsletterUrlBuilder::manage_streams(), NewsletterAuthorizationsService::default_authorizations()->manage_streams()));
+		$tree->add_link(new ModuleLink($lang['stream.add'], NewsletterUrlBuilder::add_stream(), NewsletterAuthorizationsService::default_authorizations()->manage_streams()));
 
 		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), NewsletterUrlBuilder::configuration()));
 

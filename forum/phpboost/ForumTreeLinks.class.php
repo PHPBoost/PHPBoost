@@ -19,16 +19,12 @@ class ForumTreeLinks implements ModuleTreeLinksExtensionPoint
 		$lang = LangLoader::get('common', $module_id);
 		$tree = new ModuleTreeLinks();
 
-		$manage_categories_link = new ModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), CategoriesUrlBuilder::manage($module_id), ForumAuthorizationsService::check_authorizations()->manage());
-		$manage_categories_link->add_sub_link(new ModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), CategoriesUrlBuilder::manage($module_id), ForumAuthorizationsService::check_authorizations()->manage()));
-		$manage_categories_link->add_sub_link(new ModuleLink(LangLoader::get_message('category.add', 'categories-common'), CategoriesUrlBuilder::add(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY), $module_id), ForumAuthorizationsService::check_authorizations()->manage()));
-		$tree->add_link($manage_categories_link);
-
-		$manage_ranks_link = new AdminModuleLink($lang['forum.ranks.manager'], ForumUrlBuilder::manage_ranks());
-		$manage_ranks_link->add_sub_link(new AdminModuleLink($lang['forum.ranks.manager'], ForumUrlBuilder::manage_ranks()));
-		$manage_ranks_link->add_sub_link(new AdminModuleLink($lang['forum.rank.add'], ForumUrlBuilder::add_rank()));
-		$tree->add_link($manage_ranks_link);
-
+		$tree->add_link(new ModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), CategoriesUrlBuilder::manage($module_id), ForumAuthorizationsService::check_authorizations()->manage()));
+		$tree->add_link(new ModuleLink(LangLoader::get_message('category.add', 'categories-common'), CategoriesUrlBuilder::add(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY), $module_id), ForumAuthorizationsService::check_authorizations()->manage()));
+		
+		$tree->add_link(new AdminModuleLink($lang['forum.ranks.manager'], ForumUrlBuilder::manage_ranks()));
+		$tree->add_link(new AdminModuleLink($lang['forum.rank.add'], ForumUrlBuilder::add_rank()));
+		
 		$tree->add_link(new ModuleLink($lang['my.items'], ForumUrlBuilder::display_member_items(), ForumAuthorizationsService::check_authorizations()->write() || ForumAuthorizationsService::check_authorizations()->moderation()));
 
 		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin-common'), ForumUrlBuilder::configuration()));

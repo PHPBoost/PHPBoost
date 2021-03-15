@@ -70,20 +70,16 @@ class DefaultTreeLinks implements ModuleTreeLinksExtensionPoint
 
 		if ($has_categories)
 		{
-			$manage_categories_link = new ModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), CategoriesUrlBuilder::manage($this->module_id), $this->authorizations->manage());
-			$manage_categories_link->add_sub_link(new ModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), CategoriesUrlBuilder::manage($this->module_id), $this->authorizations->manage()));
-			$manage_categories_link->add_sub_link(new ModuleLink(LangLoader::get_message('category.add', 'categories-common'), CategoriesUrlBuilder::add(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY), $this->module_id), $this->authorizations->manage()));
-			$tree->add_link($manage_categories_link);
+			$tree->add_link(new ModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), CategoriesUrlBuilder::manage($this->module_id), $this->authorizations->manage()));
+			$tree->add_link(new ModuleLink(LangLoader::get_message('category.add', 'categories-common'), CategoriesUrlBuilder::add(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY), $this->module_id), $this->authorizations->manage()));
 		}
 
 		if ($this->display_items_links)
 		{
 			$lang = ItemsService::get_items_lang($this->module_id);
 
-			$manage_items_link = new ModuleLink($lang['items.manage'], ItemsUrlBuilder::manage($this->module_id), $this->authorizations->moderation());
-			$manage_items_link->add_sub_link(new ModuleLink($lang['items.manage'], ItemsUrlBuilder::manage($this->module_id), $this->authorizations->moderation()));
-			$manage_items_link->add_sub_link(new ModuleLink($lang['item.add'], $this->get_add_item_url(), $this->authorizations->moderation()));
-			$tree->add_link($manage_items_link);
+			$tree->add_link(new ModuleLink($lang['items.manage'], ItemsUrlBuilder::manage($this->module_id), $this->authorizations->moderation()));
+			$tree->add_link(new ModuleLink($lang['item.add'], $this->get_add_item_url(), $this->authorizations->moderation()));
 
 			if (!$this->authorizations->moderation())
 			{
