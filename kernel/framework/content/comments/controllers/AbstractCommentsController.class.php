@@ -36,7 +36,7 @@ class AbstractCommentsController extends AbstractController
 
 	public function is_displayed()
 	{
-		return !empty($this->provider) && $this->provider->is_displayed($this->get_module_id(), $this->get_id_in_module());
+		return !empty($this->provider) && $this->provider->is_displayed();
 	}
 
 	public function get_module_id()
