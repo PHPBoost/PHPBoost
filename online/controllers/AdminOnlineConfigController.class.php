@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 3.0 - 2012 01 29
  * @contributor xela <xela@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminOnlineConfigController extends AdminModuleController
@@ -59,7 +60,7 @@ class AdminOnlineConfigController extends AdminModuleController
 		$fieldset_config = new FormFieldsetHTML('configuration', StringVars::replace_vars(LangLoader::get_message('configuration.module.title', 'admin-common'), array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset_config);
 
-		$fieldset_config->add_field(new FormFieldNumberEditor('number_member_displayed', $this->lang['admin.nbr-displayed'], $this->config->get_number_member_displayed(),
+		$fieldset_config->add_field(new FormFieldNumberEditor('number_member_displayed', $this->lang['admin.nbr-displayed'], $this->config->get_members_number_displayed(),
 			array('min' => 1, 'max' => 1000, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 1000))
 		));

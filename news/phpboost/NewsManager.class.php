@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 05
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 6.0 - 2021 02 26
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class NewsManager extends ItemsManager
@@ -22,8 +23,8 @@ class NewsManager extends ItemsManager
 	{
 		$now = new Date();
 		$items = array();
-		
-		$result = self::$db_querier->select('SELECT ' . self::$module_id . '.*, member.*, comments_topic.number_comments, average_notes.average_notes, average_notes.number_notes, note.note
+
+		$result = self::$db_querier->select('SELECT ' . self::$module_id . '.*, member.*, comments_topic.comments_number, average_notes.average_notes, average_notes.notes_number, note.note
 		FROM ' . self::$items_table . ' ' . self::$module_id . '
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = ' . self::$module_id . '.author_user_id
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' comments_topic ON comments_topic.module_id = :module_id AND comments_topic.id_in_module = ' . self::$module_id . '.id
@@ -39,7 +40,7 @@ class NewsManager extends ItemsManager
 			'number_items_per_page' => $number_items_per_page,
 			'display_from'          => $display_from
 		)));
-		
+
 		while ($row = $result->fetch())
 		{
 			$item = self::get_item_class();
@@ -47,7 +48,7 @@ class NewsManager extends ItemsManager
 			$items[] = $item;
 		}
 		$result->dispose();
-		
+
 		return $items;
 	}
 
@@ -59,7 +60,7 @@ class NewsManager extends ItemsManager
 	{
 		$now = new Date();
 		$suggested_news = array();
-		
+
 		$result = self::$db_querier->select('SELECT id, title, id_category, rewrited_title, thumbnail, (2 * FT_SEARCH_RELEVANCE(title, :search_content) + FT_SEARCH_RELEVANCE(content, :search_content) / 3) AS relevance
 		FROM ' . self::$items_table . '
 		WHERE (FT_SEARCH(title, :search_content) OR FT_SEARCH(content, :search_content)) AND id <> :excluded_id
@@ -70,13 +71,13 @@ class NewsManager extends ItemsManager
 			'search_content' => $item->get_title() . ',' . $item->get_content(),
 			'timestamp_now' => $now->get_timestamp()
 		));
-		
+
 		while ($row = $result->fetch())
 		{
 			$suggested_news[] = $row;
 		}
 		$result->dispose();
-		
+
 		return $suggested_news;
 	}
 
@@ -88,7 +89,7 @@ class NewsManager extends ItemsManager
 	{
 		$now = new Date();
 		$navigation_links = array();
-		
+
 		$result = self::$db_querier->select('(SELECT id, title, id_category, rewrited_title, thumbnail, \'PREVIOUS\' as type
 		FROM '. self::$items_table .'
 		WHERE (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))) AND creation_date < :timestamp AND id_category IN :authorized_categories
@@ -106,13 +107,13 @@ class NewsManager extends ItemsManager
 			'timestamp' => $item->get_creation_date()->get_timestamp(),
 			'authorized_categories' => array($item->get_id_category())
 		));
-		
+
 		while ($row = $result->fetch())
 		{
 			$navigation_links[] = $row;
 		}
 		$result->dispose();
-		
+
 		return $navigation_links;
 	}
 }

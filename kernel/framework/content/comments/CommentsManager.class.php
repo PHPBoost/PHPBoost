@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 14
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 3.0 - 2011 09 25
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -44,7 +44,7 @@ class CommentsManager
 				$id_comment = CommentsDAO::add_comment($id_topic, $message, self::$user->get_id(), $pseudo, '', AppContext::get_request()->get_ip_address());
 		}
 
-		CommentsTopicDAO::incremente_number_comments_topic($id_topic);
+		CommentsTopicDAO::increment_comments_number_topic($id_topic);
 
 		self::regenerate_cache();
 		return $id_comment;
@@ -60,7 +60,7 @@ class CommentsManager
 	{
 		$comment = CommentsCache::load()->get_comment($comment_id);
 		CommentsDAO::delete_comment($comment_id);
-		CommentsTopicDAO::decremente_number_comments_topic($comment['id_topic']);
+		CommentsTopicDAO::decrement_comments_number_topic($comment['id_topic']);
 		self::regenerate_cache();
 	}
 

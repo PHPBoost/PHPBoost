@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 29
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 1.6 - 2006 10 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -85,7 +85,7 @@ if (($page_type == 'article' || $page_type == 'cat') && (!$general_auth || AppCo
 		'C_ACTIV_COM' => true,
 		'U_COM' => url('property.php?idcom=' . $id_article . '&amp;com=0'),
 		'L_COM' => $LANG['wiki_article_com_article'],
-		'COM_NB' => (isset($article_infos['number_comments']) &&  ($article_infos['number_comments'] > 0) ? ' (' . $article_infos['number_comments'] . ')' : '')
+		'COM_NB' => (isset($article_infos['comments_number']) &&  ($article_infos['comments_number'] > 0) ? ' (' . $article_infos['comments_number'] . ')' : '')
 	));
 }
 ?>

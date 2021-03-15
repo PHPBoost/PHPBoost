@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 04
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -89,7 +89,7 @@ class DownloadService
 	 */
 	public static function get_item($condition, array $parameters)
 	{
-		$row = self::$db_querier->select_single_row_query('SELECT download.*, member.*, notes.average_notes, notes.number_notes, note.note
+		$row = self::$db_querier->select_single_row_query('SELECT download.*, member.*, notes.average_notes, notes.notes_number, note.note
 		FROM ' . DownloadSetup::$download_table . ' download
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = download.author_user_id
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = download.id AND notes.module_name = \'download\'

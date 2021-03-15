@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2015 12 17
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 3.0 - 2011 09 25
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CommentsTopicDAO
@@ -64,7 +65,7 @@ class CommentsTopicDAO
 			'module_id' => $module_id,
 			'id_in_module' => $id_in_module,
 			'topic_identifier' => $topic_identifier,
-			'number_comments' => 0,
+			'comments_number' => 0,
 			'is_locked' => 0,
 			'path' => $path
 		);
@@ -97,14 +98,14 @@ class CommentsTopicDAO
 		Debug::dump(self::$db_querier->delete(DB_TABLE_COMMENTS_TOPIC, $condition, $parameters));
 	}
 
-	public static function incremente_number_comments_topic($id_topic)
+	public static function increment_comments_number_topic($id_topic)
 	{
-		self::$db_querier->inject("UPDATE ". DB_TABLE_COMMENTS_TOPIC ." SET number_comments = number_comments + 1 WHERE id_topic = '" . $id_topic . "'");
+		self::$db_querier->inject("UPDATE ". DB_TABLE_COMMENTS_TOPIC ." SET comments_number = comments_number + 1 WHERE id_topic = '" . $id_topic . "'");
 	}
 
-	public static function decremente_number_comments_topic($id_topic)
+	public static function decrement_comments_number_topic($id_topic)
 	{
-		self::$db_querier->inject("UPDATE ". DB_TABLE_COMMENTS_TOPIC ." SET number_comments = number_comments - 1 WHERE id_topic = '" . $id_topic . "'");
+		self::$db_querier->inject("UPDATE ". DB_TABLE_COMMENTS_TOPIC ." SET comments_number = comments_number - 1 WHERE id_topic = '" . $id_topic . "'");
 	}
 
 	public static function comments_topic_locked($module_id, $id_in_module, $topic_identifier)

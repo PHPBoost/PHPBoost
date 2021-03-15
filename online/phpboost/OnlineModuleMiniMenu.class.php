@@ -3,18 +3,19 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 09
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class OnlineModuleMiniMenu extends ModuleMiniMenu
 {
-	private $number_robot = 0;
-	private $number_visitor = 0;
-	private $number_member = 0;
-	private $number_moderator = 0;
-	private $number_administrator = 0;
+	private $robot_number = 0;
+	private $visitor_number = 0;
+	private $member_number = 0;
+	private $moderator_number = 0;
+	private $administrator_number = 0;
 	private $total_users = 0;
 
 	public function get_default_block()
@@ -55,11 +56,11 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 		$users = OnlineService::get_online_users($condition, $parameters);
 		foreach ($users as $user)
 		{
-			$this->incremente_level($user);
+			$this->increment_level($user);
 
 			if ($online_config->are_robots_displayed() || ($user->get_level() != User::ROBOT_LEVEL))
 			{
-				if ($this->total_users <= $online_config->get_number_member_displayed())
+				if ($this->total_users <= $online_config->get_members_number_displayed())
 				{
 					$group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 
@@ -79,81 +80,81 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 		}
 
 		if (!$online_config->are_robots_displayed())
-			$this->number_visitor += $this->number_robot;
+			$this->visitor_number += $this->robot_number;
 
 		$main_lang = LangLoader::get('main');
 		$tpl->put_all(array(
 			'C_DISPLAY_ROBOTS' => $online_config->are_robots_displayed(),
-			'C_MORE_USERS' => $this->total_users > $online_config->get_number_member_displayed(),
-			'L_ROBOT' => $this->number_robot > 1 ? $main_lang['robot_s'] : $main_lang['robot'],
-			'L_VISITOR' => $this->number_visitor > 1 ? $main_lang['guest_s'] : $main_lang['guest'],
-			'L_MEMBER' => $this->number_member > 1 ? $main_lang['member_s'] : $main_lang['member'],
-			'L_MODO' => $this->number_moderator > 1 ? $main_lang['modo_s'] : $main_lang['modo'],
-			'L_ADMIN' => $this->number_administrator > 1 ? $main_lang['admin_s'] : $main_lang['admin'],
+			'C_MORE_USERS' => $this->total_users > $online_config->get_members_number_displayed(),
+			'L_ROBOT' => $this->robot_number > 1 ? $main_lang['robot_s'] : $main_lang['robot'],
+			'L_VISITOR' => $this->visitor_number > 1 ? $main_lang['guest_s'] : $main_lang['guest'],
+			'L_MEMBER' => $this->member_number > 1 ? $main_lang['member_s'] : $main_lang['member'],
+			'L_MODO' => $this->moderator_number > 1 ? $main_lang['modo_s'] : $main_lang['modo'],
+			'L_ADMIN' => $this->administrator_number > 1 ? $main_lang['admin_s'] : $main_lang['admin'],
 			'L_USERS_ONLINE' => $this->total_users > 1 ? $lang['online_users'] : $lang['online_user'],
 			'L_TOTAL' => $main_lang['total'],
 			'TOTAL_USERS_CONNECTED' => $this->total_users,
-			'TOTAL_ROBOT_CONNECTED' => $this->number_robot,
-			'TOTAL_VISITOR_CONNECTED' => $this->number_visitor,
-			'TOTAL_MEMBER_CONNECTED' => $this->number_member,
-			'TOTAL_MODERATOR_CONNECTED' => $this->number_moderator,
-			'TOTAL_ADMINISTRATOR_CONNECTED' => $this->number_administrator
+			'TOTAL_ROBOT_CONNECTED' => $this->robot_number,
+			'TOTAL_VISITOR_CONNECTED' => $this->visitor_number,
+			'TOTAL_MEMBER_CONNECTED' => $this->member_number,
+			'TOTAL_MODERATOR_CONNECTED' => $this->moderator_number,
+			'TOTAL_ADMINISTRATOR_CONNECTED' => $this->administrator_number
 		));
 
 		return $tpl->render();
 	}
 
-	private function incremente_level(User $user)
+	private function increment_level(User $user)
 	{
-		$this->incremente_user();
+		$this->increment_user();
 		switch ($user->get_level())
 		{
 			case User::ROBOT_LEVEL:
-				$this->incremente_robot();
+				$this->increment_robot();
 			break;
 			case User::VISITOR_LEVEL:
-				$this->incremente_visitor();
+				$this->increment_visitor();
 			break;
 			case User::MEMBER_LEVEL:
-				$this->incremente_member();
+				$this->increment_member();
 			break;
 			case User::MODERATOR_LEVEL:
-				$this->incremente_moderator();
+				$this->increment_moderator();
 			break;
 			case User::ADMIN_LEVEL:
-				$this->incremente_administrator();
+				$this->increment_administrator();
 			break;
 		}
 	}
 
-	private function incremente_user()
+	private function increment_user()
 	{
 		$this->total_users++;
 	}
 
-	private function incremente_robot()
+	private function increment_robot()
 	{
-		$this->number_robot++;
+		$this->robot_number++;
 	}
 
-	private function incremente_visitor()
+	private function increment_visitor()
 	{
-		$this->number_visitor++;
+		$this->visitor_number++;
 	}
 
-	private function incremente_member()
+	private function increment_member()
 	{
-		$this->number_member++;
+		$this->member_number++;
 	}
 
-	private function incremente_moderator()
+	private function increment_moderator()
 	{
-		$this->number_moderator++;
+		$this->moderator_number++;
 	}
 
-	private function incremente_administrator()
+	private function increment_administrator()
 	{
-		$this->number_administrator++;
+		$this->administrator_number++;
 	}
 }
 ?>

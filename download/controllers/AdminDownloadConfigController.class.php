@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 11
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -180,7 +180,7 @@ class AdminDownloadConfigController extends AdminModuleController
 		);
 
 		if ($this->comments_config->module_comments_is_enabled('download'))
-			$sort_options[] = new FormFieldSelectChoiceOption($this->common_lang['sort_by.comments.number'], DownloadItem::SORT_NUMBER_COMMENTS, array('data_option_icon' => 'far fa-comments'));
+			$sort_options[] = new FormFieldSelectChoiceOption($this->common_lang['sort_by.comments.number'], DownloadItem::SORT_COMMENTS_NUMBER, array('data_option_icon' => 'far fa-comments'));
 
 		if ($this->content_management_config->module_notation_is_enabled('download'))
 			$sort_options[] = new FormFieldSelectChoiceOption($this->common_lang['sort_by.best.note'], DownloadItem::SORT_NOTATION, array('data_option_icon' => 'far fa-star'));
@@ -249,8 +249,8 @@ class AdminDownloadConfigController extends AdminModuleController
 
 		if ($this->comments_config->module_comments_is_enabled('download'))
 		{
-			$sort_options[] = new FormFieldSelectChoiceOption($this->common_lang['sort_by.comments.number'] . ' - ' . $this->common_lang['sort.asc'], DownloadItem::SORT_NUMBER_COMMENTS . '-' . DownloadItem::ASC);
-			$sort_options[] = new FormFieldSelectChoiceOption($this->common_lang['sort_by.comments.number'] . ' - ' . $this->common_lang['sort.desc'], DownloadItem::SORT_NUMBER_COMMENTS . '-' . DownloadItem::DESC);
+			$sort_options[] = new FormFieldSelectChoiceOption($this->common_lang['sort_by.comments.number'] . ' - ' . $this->common_lang['sort.asc'], DownloadItem::SORT_COMMENTS_NUMBER . '-' . DownloadItem::ASC);
+			$sort_options[] = new FormFieldSelectChoiceOption($this->common_lang['sort_by.comments.number'] . ' - ' . $this->common_lang['sort.desc'], DownloadItem::SORT_COMMENTS_NUMBER . '-' . DownloadItem::DESC);
 		}
 
 		if ($this->content_management_config->module_notation_is_enabled('download'))

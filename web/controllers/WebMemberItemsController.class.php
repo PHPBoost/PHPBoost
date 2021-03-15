@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 19
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 5.2 - 2020 12 05
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -53,7 +53,7 @@ class WebMemberItemsController extends ModuleController
 		$page = $request->get_getint('page', 1);
 		$pagination = $this->get_pagination($condition, $parameters, $page);
 
-		$result = PersistenceContext::get_querier()->select('SELECT web.*, member.*, com.number_comments, notes.average_notes, notes.number_notes, note.note
+		$result = PersistenceContext::get_querier()->select('SELECT web.*, member.*, com.comments_number, notes.average_notes, notes.notes_number, note.note
 		FROM '. WebSetup::$web_table .' web
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = web.author_user_id
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = web.id AND com.module_id = \'web\'

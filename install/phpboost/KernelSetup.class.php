@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 01
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 3.0 - 2010 05 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -166,7 +166,7 @@ class KernelSetup
 			'topic_identifier' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "'default'"),
 			'id_in_module' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'is_locked' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'number_comments' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'comments_number' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'path' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''")
 		);
 		$options = array(
@@ -197,7 +197,7 @@ class KernelSetup
 			'module_name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'id_in_module' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'average_notes' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => 0),
-			'number_notes' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => 0),
+			'notes_number' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => 0),
 		);
 		$options = array(
 			'primary' => array('id'),

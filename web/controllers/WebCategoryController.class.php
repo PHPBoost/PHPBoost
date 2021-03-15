@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 15
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -91,7 +91,7 @@ class WebCategoryController extends ModuleController
 		else
 			$sort_field = $this->config->get_items_default_sort_field();
 
-		$result = PersistenceContext::get_querier()->select('SELECT web.*, member.*, com.number_comments, notes.average_notes, notes.number_notes, note.note
+		$result = PersistenceContext::get_querier()->select('SELECT web.*, member.*, com.comments_number, notes.average_notes, notes.notes_number, note.note
 		FROM '. WebSetup::$web_table .' web
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = web.author_user_id
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = web.id AND com.module_id = \'web\'
@@ -171,7 +171,7 @@ class WebCategoryController extends ModuleController
 		);
 
 		if ($this->comments_config->module_comments_is_enabled('web'))
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.comments.number'], WebItem::SORT_FIELDS_URL_VALUES[WebItem::SORT_NUMBER_COMMENTS], array('data_option_icon' => 'far fa-comments'));
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.comments.number'], WebItem::SORT_FIELDS_URL_VALUES[WebItem::SORT_COMMENTS_NUMBER], array('data_option_icon' => 'far fa-comments'));
 
 		if ($this->content_management_config->module_notation_is_enabled('web'))
 			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best.note'], WebItem::SORT_FIELDS_URL_VALUES[WebItem::SORT_NOTATION], array('data_option_icon' => 'far fa-star'));

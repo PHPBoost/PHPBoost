@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 09
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 3.0 - 2011 09 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class OnlineConfig extends AbstractConfigData
@@ -47,7 +48,7 @@ class OnlineConfig extends AbstractConfigData
 		}
 	}
 
-	public function get_number_member_displayed()
+	public function get_members_number_displayed()
 	{
 		return $this->get_property(self::NUMBER_MEMBER_DISPLAYED);
 	}

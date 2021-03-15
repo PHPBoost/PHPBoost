@@ -6,10 +6,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 02 14
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 3.0 - 2010 02 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class NotationService
@@ -88,12 +89,12 @@ class NotationService
 				));
 			}
 
-			$count_notes = $notation->get_number_notes();
+			$count_notes = $notation->get_notes_number();
 			$template->put_all(array(
 				'C_STATIC_DISPLAY' => true,
 				'C_NOTES' => $count_notes > 0,
 				'ID_IN_MODULE' => $notation->get_id_in_module(),
-				'NUMBER_NOTES' => $notation->get_number_notes(),
+				'NOTES_NUMBER' => $notation->get_notes_number(),
 				'AVERAGE_NOTES' => $average_notes,
 				'NOTATION_SCALE' => $notation->get_notation_scale(),
 				'L_NO_NOTE' => LangLoader::get_message('no_note', 'common'),
@@ -175,7 +176,7 @@ class NotationService
 				));
 			}
 
-			$count_notes = $notation->get_number_notes();
+			$count_notes = $notation->get_notes_number();
 			$template->put_all(array(
 				'C_JS_NOT_ALREADY_INCLUDED' => !self::$js_already_included,
 				'C_NOTES' => $count_notes > 0,
@@ -183,7 +184,7 @@ class NotationService
 				'CURRENT_URL' => REWRITED_SCRIPT,
 				'ID_IN_MODULE' => $notation->get_id_in_module(),
 				'NOTATION_SCALE' => $notation->get_notation_scale(),
-				'NUMBER_NOTES' => $count_notes,
+				'NOTES_NUMBER' => $count_notes,
 				'AVERAGE_NOTES' => $average_notes,
 				'ALREADY_NOTE' => $notation->user_already_noted(),
 				'L_NO_NOTE' => LangLoader::get_message('no_note', 'common'),
@@ -252,10 +253,10 @@ class NotationService
 	/**
 	 * This function required object Notation containing the module_name and id_in_module.
 	 */
-	public static function get_number_notes(Notation $notation)
+	public static function get_notes_number(Notation $notation)
 	{
 		try {
-			return self::$db_querier->get_column_value(DB_TABLE_AVERAGE_NOTES, 'number_notes', 'WHERE module_name = :module_name AND id_in_module = :id_in_module',
+			return self::$db_querier->get_column_value(DB_TABLE_AVERAGE_NOTES, 'notes_number', 'WHERE module_name = :module_name AND id_in_module = :id_in_module',
 			array('module_name' => $notation->get_module_name(), 'id_in_module' => $notation->get_id_in_module()));
 		} catch (RowNotFoundException $e) {
 			return 0;
@@ -281,7 +282,7 @@ class NotationService
 	public static function get_informations_note(Notation $notation)
 	{
 		try {
-			return self::$db_querier->select_single_row_query('SELECT average_notes, number_notes, (SELECT COUNT(*) FROM '. DB_TABLE_NOTE .'
+			return self::$db_querier->select_single_row_query('SELECT average_notes, notes_number, (SELECT COUNT(*) FROM '. DB_TABLE_NOTE .'
 			WHERE user_id=:user_id AND module_name=:module_name AND id_in_module=:id_in_module) AS user_already_noted
 			FROM ' . DB_TABLE_AVERAGE_NOTES . '
 			WHERE module_name = :module_name AND id_in_module = :id_in_module', array(
@@ -292,7 +293,7 @@ class NotationService
 		} catch (RowNotFoundException $e) {
 			return array(
 				'average_notes' => 0,
-				'number_notes' => 0,
+				'notes_number' => 0,
 				'user_already_noted' => 0
 			);
 		}
@@ -328,14 +329,14 @@ class NotationService
 						'module_name' => $notation->get_module_name(),
 						'id_in_module' => $notation->get_id_in_module(),
 						'average_notes' => self::calculates_average_notes($notation),
-						'number_notes' => 1
+						'notes_number' => 1
 					));
 				}
 				else
 				{
 					self::$db_querier->update(DB_TABLE_AVERAGE_NOTES, array(
 						'average_notes' => self::calculates_average_notes($notation),
-						'number_notes' => self::get_number_notes($notation) + 1)
+						'notes_number' => self::get_notes_number($notation) + 1)
 					, $condition, $parameters);
 				}
 			}

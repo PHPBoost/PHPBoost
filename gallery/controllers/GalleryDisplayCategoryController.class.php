@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 10 19
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -212,7 +212,7 @@ class GalleryDisplayCategoryController extends ModuleController
 				$sort_type = 'notes.average_notes';
 				break;
 				case 'com' :
-				$sort_type = 'com.number_comments';
+				$sort_type = 'com.comments_number';
 				break;
 				default :
 				$sort_type = 'g.timestamp';
@@ -241,7 +241,7 @@ class GalleryDisplayCategoryController extends ModuleController
 			{
 				$info_pics = array();
 				try {
-					$info_pics = $this->db_querier->select_single_row_query("SELECT g.*, m.display_name, m.user_groups, m.level, notes.average_notes, notes.number_notes, note.note
+					$info_pics = $this->db_querier->select_single_row_query("SELECT g.*, m.display_name, m.user_groups, m.level, notes.average_notes, notes.notes_number, note.note
 					FROM " . GallerySetup::$gallery_table . " g
 					LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 					LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = g.id AND com.module_id = 'gallery'
@@ -321,7 +321,7 @@ class GalleryDisplayCategoryController extends ModuleController
 						$notation = new Notation();
 						$notation->set_module_name('gallery');
 						$notation->set_id_in_module($info_pics['id']);
-						$notation->set_number_notes($info_pics['number_notes']);
+						$notation->set_notes_number($info_pics['notes_number']);
 						$notation->set_average_notes($info_pics['average_notes']);
 						$notation->set_user_already_noted(!empty($info_pics['note']));
 					}
@@ -470,7 +470,7 @@ class GalleryDisplayCategoryController extends ModuleController
 				$result = $this->db_querier->select("SELECT
 					g.id, g.id_category, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, g.user_id, g.views, g.aprob,
 					m.display_name, m.user_groups, m.level,
-					notes.average_notes, notes.number_notes, note.note
+					notes.average_notes, notes.notes_number, note.note
 				FROM " . GallerySetup::$gallery_table . " g
 				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 				LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = g.id AND com.module_id = 'gallery'
@@ -532,7 +532,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					$notation = new Notation();
 					$notation->set_module_name('gallery');
 					$notation->set_id_in_module($row['id']);
-					$notation->set_number_notes( $row['number_notes']);
+					$notation->set_notes_number( $row['notes_number']);
 					$notation->set_average_notes($row['average_notes']);
 					$notation->set_user_already_noted(!empty($row['note']));
 

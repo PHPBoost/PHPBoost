@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 03
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor xela <xela@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ItemsManager
@@ -83,11 +84,11 @@ class ItemsManager
 			$controller = PHPBoostErrors::user_in_read_only();
 			DispatchManager::redirect($controller);
 		}
-		
+
 		self::$db_querier->delete(self::$items_table, 'WHERE id=:id', array('id' => $id));
-		
+
 		self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => self::$module_id, 'id' => $id));
-		
+
 		CommentsService::delete_comments_topic_module(self::$module_id, $id);
 		KeywordsService::get_keywords_manager()->delete_relations($id);
 		NotationService::delete_notes_id_in_module(self::$module_id, $id);
@@ -99,7 +100,7 @@ class ItemsManager
 	 */
 	public function get_item(int $id)
 	{
-		$row = self::$db_querier->select_single_row_query('SELECT ' . self::$module_id . '.*, member.*, average_notes.average_notes, average_notes.number_notes, note.note
+		$row = self::$db_querier->select_single_row_query('SELECT ' . self::$module_id . '.*, member.*, average_notes.average_notes, average_notes.notes_number, note.note
 		FROM ' . self::$items_table . ' ' . self::$module_id . '
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = ' . self::$module_id . '.author_user_id
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' average_notes ON average_notes.module_name = :module_id AND average_notes.id_in_module = ' . self::$module_id . '.id
@@ -137,8 +138,8 @@ class ItemsManager
 	{
 		$now = new Date();
 		$items = array();
-		
-		$result = self::$db_querier->select('SELECT ' . self::$module_id . '.*, member.*, comments_topic.number_comments, average_notes.average_notes, average_notes.number_notes, note.note
+
+		$result = self::$db_querier->select('SELECT ' . self::$module_id . '.*, member.*, comments_topic.comments_number, average_notes.average_notes, average_notes.notes_number, note.note
 		FROM ' . self::$items_table . ' ' . self::$module_id . '
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = ' . self::$module_id . '.author_user_id
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' comments_topic ON comments_topic.module_id = :module_id AND comments_topic.id_in_module = ' . self::$module_id . '.id
@@ -154,7 +155,7 @@ class ItemsManager
 			'number_items_per_page' => $number_items_per_page,
 			'display_from'          => $display_from
 		)));
-		
+
 		while ($row = $result->fetch())
 		{
 			$item = self::get_item_class();
@@ -162,7 +163,7 @@ class ItemsManager
 			$items[] = $item;
 		}
 		$result->dispose();
-		
+
 		return $items;
 	}
 
@@ -173,10 +174,10 @@ class ItemsManager
 	{
 		Feed::clear_cache(self::$module_id);
 		KeywordsCache::invalidate();
-		
+
 		if (self::$module->get_configuration()->has_categories())
 			CategoriesService::get_categories_manager()->regenerate_cache();
-		
+
 		$this->clear_module_cache();
 	}
 
@@ -192,7 +193,7 @@ class ItemsManager
 				call_user_func($cache_class .'::invalidate');
 		}
 	}
-	
+
 	/**
 	 * Get the authorizations of the module.
 	 * @return mixed[] The array of authorizations of the module.

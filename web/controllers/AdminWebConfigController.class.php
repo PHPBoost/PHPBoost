@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -197,8 +197,8 @@ class AdminWebConfigController extends AdminModuleController
 
 		if ($this->comments_config->module_comments_is_enabled('web'))
 		{
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.comments.number'] . ' - ' . $common_lang['sort.asc'], WebItem::SORT_NUMBER_COMMENTS . '-' . WebItem::ASC);
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.comments.number'] . ' - ' . $common_lang['sort.desc'], WebItem::SORT_NUMBER_COMMENTS . '-' . WebItem::DESC);
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.comments.number'] . ' - ' . $common_lang['sort.asc'], WebItem::SORT_COMMENTS_NUMBER . '-' . WebItem::ASC);
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.comments.number'] . ' - ' . $common_lang['sort.desc'], WebItem::SORT_COMMENTS_NUMBER . '-' . WebItem::DESC);
 		}
 
 		if ($this->content_management_config->module_notation_is_enabled('web'))

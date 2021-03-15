@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 13
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -486,7 +486,7 @@ class Item
 			$notation = new Notation();
 			$notation->set_module_name(self::$module_id);
 			$notation->set_id_in_module($properties['id']);
-			$notation->set_number_notes($properties['number_notes']);
+			$notation->set_notes_number($properties['notes_number']);
 			$notation->set_average_notes($properties['average_notes']);
 			$notation->set_user_already_noted(!empty($properties['note']));
 			$this->notation = $notation;
@@ -574,7 +574,7 @@ class Item
 		);
 
 		if (self::$module && self::$module->get_configuration()->feature_is_enabled('comments') && CommentsConfig::load()->module_comments_is_enabled(self::$module_id))
-			$fields_list['comments'] = array('database_field' => 'number_comments', 'label' => $common_lang['sort_by.comments.number'], 'icon' => 'far fa-comments');
+			$fields_list['comments'] = array('database_field' => 'comments_number', 'label' => $common_lang['sort_by.comments.number'], 'icon' => 'far fa-comments');
 		if (self::$module && self::$module->get_configuration()->feature_is_enabled('notation') && ContentManagementConfig::load()->module_notation_is_enabled(self::$module_id))
 			$fields_list['notes'] = array('database_field' => 'average_notes', 'label' => $common_lang['sort_by.best.note'], 'icon' => 'far fa-star');
 

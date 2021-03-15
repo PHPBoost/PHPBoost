@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 13
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -42,7 +42,7 @@ elseif ($id_media > 0)
 	$content_management_config = ContentManagementConfig::load();
 
 	try {
-		$media = PersistenceContext::get_querier()->select_single_row_query("SELECT v.*, mb.display_name, mb.user_groups, mb.level, notes.average_notes, notes.number_notes, note.note
+		$media = PersistenceContext::get_querier()->select_single_row_query("SELECT v.*, mb.display_name, mb.user_groups, mb.level, notes.average_notes, notes.notes_number, note.note
 		FROM " . PREFIX . "media AS v
 		LEFT JOIN " . DB_TABLE_MEMBER . " AS mb ON v.author_user_id = mb.user_id
 		LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON notes.id_in_module = v.id AND notes.module_name = 'media'
@@ -81,7 +81,7 @@ elseif ($id_media > 0)
 	$notation = new Notation();
 	$notation->set_module_name('media');
 	$notation->set_id_in_module($id_media);
-	$notation->set_number_notes($media['number_notes']);
+	$notation->set_notes_number($media['notes_number']);
 	$notation->set_average_notes($media['average_notes']);
 	$notation->set_user_already_noted(!empty($media['note']));
 

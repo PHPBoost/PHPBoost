@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 13
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -123,7 +123,7 @@ class MediaDisplayCategoryController extends ModuleController
 				$selected_fields['note'] = ' selected="selected"';
 				break;
 			case 'com':
-				$sort = 'com.number_comments';
+				$sort = 'com.comments_number';
 				$selected_fields['com'] = ' selected="selected"';
 				break;
 		}
@@ -165,8 +165,8 @@ class MediaDisplayCategoryController extends ModuleController
 		$result = PersistenceContext::get_querier()->select("SELECT
 			v.id, v.author_user_id, v.title, v.creation_date, v.views_number, v.published, v.thumbnail, v.content,
 			mb.display_name, mb.user_groups, mb.level,
-			notes.number_notes, notes.average_notes,
-			com.number_comments
+			notes.notes_number, notes.average_notes,
+			com.comments_number
 			FROM " . PREFIX . "media AS v
 			LEFT JOIN " . DB_TABLE_MEMBER . " AS mb ON v.author_user_id = mb.user_id
 			LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON v.id = notes.id_in_module AND notes.module_name = 'media'
@@ -193,7 +193,7 @@ class MediaDisplayCategoryController extends ModuleController
 			$notation = new Notation();
 			$notation->set_module_name('media');
 			$notation->set_id_in_module($row['id']);
-			$notation->set_number_notes($row['number_notes']);
+			$notation->set_notes_number($row['notes_number']);
 			$notation->set_average_notes($row['average_notes']);
 			$notation->set_user_already_noted(!empty($media['note']));
 

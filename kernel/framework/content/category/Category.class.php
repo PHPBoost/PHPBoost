@@ -5,10 +5,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 07
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 4.0 - 2013 01 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class Category
@@ -87,7 +88,7 @@ class Category
 		$this->order = $order;
 	}
 
-	public function incremente_order()
+	public function increment_order()
 	{
 		$this->order++;
 	}
@@ -158,24 +159,24 @@ class Category
 		{
 			if ($parameters['key'] == true)
 				$this->additional_attributes_categories_table_options[$id] = array('type' => 'key', 'fields' => $id);
-			
+
 			unset($parameters['key']);
 		}
-		
+
 		$this->additional_attributes_list[$id] = array('is_url' => false);
 		if (isset($parameters['is_url']))
 		{
 			$this->additional_attributes_list[$id]['is_url'] = $parameters['is_url'];
-			
+
 			unset($parameters['is_url']);
 		}
 		if (isset($parameters['attribute_field_parameters']))
 		{
 			$this->additional_attributes_list[$id]['attribute_field_parameters'] = $parameters['attribute_field_parameters'];
-			
+
 			unset($parameters['attribute_field_parameters']);
 		}
-		
+
 		$this->additional_attributes_categories_table_fields[$id] = $parameters;
 	}
 
@@ -214,7 +215,7 @@ class Category
 	protected function get_additional_properties()
 	{
 		$properties = array();
-		
+
 		foreach ($this->additional_attributes_list as $id => $attribute)
 		{
 			if ($attribute['is_url'])
@@ -230,7 +231,7 @@ class Category
 			else
 				$properties[$id] = $this->additional_attributes_values[$id];
 		}
-		
+
 		return $properties;
 	}
 
@@ -274,7 +275,7 @@ class Category
 	{
 		$class_name = get_called_class();
 		$object = new $class_name();
-		
+
 		$fields = array_merge(array(
 			'id'                     => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'name'                   => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),

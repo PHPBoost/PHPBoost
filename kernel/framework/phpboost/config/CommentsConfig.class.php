@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 14
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 3.0 - 2010 07 08
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -18,7 +18,7 @@ class CommentsConfig extends AbstractConfigData
 	const VISITOR_EMAIL_ENABLED        = 'visitor_email';
 	const COMMENTS_UNAUTHORIZED_MODULE = 'comments_unauthorized_modules';
 	const AUTHORIZATIONS               = 'authorizations';
-	const NUMBER_COMMENTS_DISPLAY      = 'number_comments_per_page';
+	const COMMENTS_NUMBER_DISPLAY      = 'comments_number_per_page';
 	const FORBIDDEN_TAGS               = 'forbidden_tags';
 	const MAX_LINKS_COMMENT            = 'max_links_comment';
 	const ORDER_DISPLAY_COMMENTS       = 'order_display_comments';
@@ -71,14 +71,14 @@ class CommentsConfig extends AbstractConfigData
 		$this->set_property(self::AUTHORIZATIONS, $array);
 	}
 
-	public function get_number_comments_display()
+	public function get_comments_number_display()
 	{
-		return $this->get_property(self::NUMBER_COMMENTS_DISPLAY);
+		return $this->get_property(self::COMMENTS_NUMBER_DISPLAY);
 	}
 
-	public function set_number_comments_display($number)
+	public function set_comments_number_display($number)
 	{
-		$this->set_property(self::NUMBER_COMMENTS_DISPLAY, $number);
+		$this->set_property(self::COMMENTS_NUMBER_DISPLAY, $number);
 	}
 
 	public function get_forbidden_tags()
@@ -138,7 +138,7 @@ class CommentsConfig extends AbstractConfigData
 			self::VISITOR_EMAIL_ENABLED        => true,
 			self::COMMENTS_UNAUTHORIZED_MODULE => array(),
 			self::AUTHORIZATIONS               => array('r1' => 7, 'r0' => 3, 'r-1' => 3),
-			self::NUMBER_COMMENTS_DISPLAY      => 15,
+			self::COMMENTS_NUMBER_DISPLAY      => 15,
 			self::FORBIDDEN_TAGS               => array(),
 			self::MAX_LINKS_COMMENT            => 2,
 			self::ORDER_DISPLAY_COMMENTS       => self::DESC_ORDER

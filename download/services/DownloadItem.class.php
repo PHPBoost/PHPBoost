@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 16
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -48,7 +48,7 @@ class DownloadItem
 	const SORT_DATE             = 'creation_date';
 	const SORT_UPDATE_DATE      = 'update_date';
 	const SORT_NOTATION         = 'average_notes';
-	const SORT_NUMBER_COMMENTS  = 'number_comments';
+	const SORT_COMMENTS_NUMBER  = 'comments_number';
 	const SORT_DOWNLOADS_NUMBER = 'downloads_number';
 	const SORT_VIEWS_NUMBERS 	= 'views_number';
 
@@ -60,7 +60,7 @@ class DownloadItem
 		self::SORT_DOWNLOADS_NUMBER => 'download',
 		self::SORT_VIEWS_NUMBERS    => 'views',
 		self::SORT_NOTATION         => 'notes',
-		self::SORT_NUMBER_COMMENTS  => 'comments'
+		self::SORT_COMMENTS_NUMBER  => 'comments'
 	);
 
 	const THUMBNAIL_URL = '/templates/__default__/images/default_item_thumbnail.png';
@@ -456,7 +456,7 @@ class DownloadItem
 		$notation = new Notation();
 		$notation->set_module_name('download');
 		$notation->set_id_in_module($properties['id']);
-		$notation->set_number_notes($properties['number_notes']);
+		$notation->set_notes_number($properties['notes_number']);
 		$notation->set_average_notes($properties['average_notes']);
 		$notation->set_user_already_noted(!empty($properties['note']));
 		$this->notation = $notation;

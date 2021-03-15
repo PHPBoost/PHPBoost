@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 15
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 3.0 - 2012 02 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -177,7 +177,7 @@ class UserCommentsController extends AbstractController
 			LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' topic ON comments.id_topic = topic.id_topic
 			'. $this->build_where_request())->fetch();
 
-		$pagination = new ModulePagination($page, $row['nbr_comments'], (int)CommentsConfig::load()->get_number_comments_display());
+		$pagination = new ModulePagination($page, $row['nbr_comments'], (int)CommentsConfig::load()->get_comments_number_display());
 		$pagination->set_url(UserUrlBuilder::comments($id_module, $user_id, '%d'));
 
 		if ($pagination->current_page_is_empty() && $page > 1)
