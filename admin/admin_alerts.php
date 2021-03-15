@@ -17,7 +17,7 @@ $template = new FileTemplate('admin/admin_alerts.tpl');
 
 define('NUM_ALERTS_PER_PAGE', 20);
 
-//Gestion des critères de tri
+// Management of sorting criteria
 $criteria = retrieve(GET, 'criteria', 'current_status');
 $order = retrieve(GET, 'order', 'asc');
 
@@ -35,7 +35,7 @@ if ($pagination->current_page_is_empty() && $page > 1)
 	DispatchManager::redirect($error_controller);
 }
 
-//On va chercher la liste des alertes
+// Get alerts list
 $alerts_list = AdministratorAlertService::get_all_alerts($criteria, $order, ($page - 1) * NUM_ALERTS_PER_PAGE, NUM_ALERTS_PER_PAGE);
 foreach ($alerts_list as $alert)
 {

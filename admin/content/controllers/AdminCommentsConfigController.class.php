@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 3.0 - 2011 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -40,7 +40,7 @@ class AdminCommentsConfigController extends AdminController
 			$this->regenerate_cache();
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 			$this->form->get_field_by_id('visitor_email_enabled')->set_hidden(!$this->configuration->are_comments_enabled());
-			$this->form->get_field_by_id('number_comments_display')->set_hidden(!$this->configuration->are_comments_enabled());
+			$this->form->get_field_by_id('comments_number_display')->set_hidden(!$this->configuration->are_comments_enabled());
 			$this->form->get_field_by_id('max_links_comment')->set_hidden(!$this->configuration->are_comments_enabled());
 			$this->form->get_field_by_id('order_display_comments')->set_hidden(!$this->configuration->are_comments_enabled());
 			$this->form->get_field_by_id('forbidden_tags')->set_selected_options($this->configuration->get_forbidden_tags());
@@ -75,14 +75,14 @@ class AdminCommentsConfigController extends AdminController
 				'events' => array('click' => '
 					if (HTMLForms.getField("comments_enabled").getValue()) {
 						HTMLForms.getField("visitor_email_enabled").enable();
-						HTMLForms.getField("number_comments_display").enable();
+						HTMLForms.getField("comments_number_display").enable();
 						HTMLForms.getField("max_links_comment").enable();
 						HTMLForms.getField("order_display_comments").enable();
 						HTMLForms.getField("forbidden_tags").enable();
 						HTMLForms.getField("comments_unauthorized_modules").enable();
 					} else {
 						HTMLForms.getField("visitor_email_enabled").disable();
-						HTMLForms.getField("number_comments_display").disable();
+						HTMLForms.getField("comments_number_display").disable();
 						HTMLForms.getField("max_links_comment").disable();
 						HTMLForms.getField("order_display_comments").disable();
 						HTMLForms.getField("forbidden_tags").disable();
@@ -99,7 +99,7 @@ class AdminCommentsConfigController extends AdminController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('number_comments_display', $this->content_lang['comments.config.number-comments-display'], $this->configuration->get_number_comments_display(),
+		$fieldset->add_field(new FormFieldNumberEditor('comments_number_display', $this->content_lang['comments.config.number-comments-display'], $this->configuration->get_comments_number_display(),
 			array(
 				'required' => true,
 				'hidden' => !$this->configuration->are_comments_enabled()
@@ -165,7 +165,7 @@ class AdminCommentsConfigController extends AdminController
 			$this->configuration->set_comments_enabled(true);
 			$this->configuration->set_visitor_email_enabled($this->form->get_value('visitor_email_enabled'));
 
-			$this->configuration->set_number_comments_display($this->form->get_value('number_comments_display'));
+			$this->configuration->set_comments_number_display($this->form->get_value('comments_number_display'));
 
 			$forbidden_tags = array();
 			foreach ($this->form->get_value('forbidden_tags') as $field => $option)

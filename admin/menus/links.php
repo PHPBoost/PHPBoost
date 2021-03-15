@@ -21,7 +21,7 @@ if ($action == 'save')
 {   // Save a Menu (New / Edit)
 	$menu_uid = (int)retrieve(POST, 'menu_uid', 0);
 
-	//Properties of the menu we are creating/editing
+	// Properties of the menu we are creating/editing
 	$type = retrieve(POST, 'menu_element_' . $menu_uid . '_type', LinksMenu::AUTOMATIC_MENU);
 
 	function build_menu_from_form($elements_ids, $level = 0)
@@ -96,14 +96,14 @@ if ($action == 'save')
 	$menu->set_type($type);
 
 	$previous_menu = null;
-	//If we edit the menu
+	// If we edit the menu
 	if ($menu_id > 0)
 	{   // Edit the Menu
 		$menu->id($menu_id);
 		$previous_menu = MenuService::load($menu_id);
 	}
 
-	//Menu enabled?
+	// Menu enabled?
 	$menu->enabled(retrieve(POST, 'menu_element_' . $menu_uid . '_enabled', Menu::MENU_NOT_ENABLED));
 	$menu->set_hidden_with_small_screens((bool)retrieve(POST, 'menu_element_' . $menu_uid . '_hidden_with_small_screens', false));
 	$menu->set_disabled_body((bool)retrieve(POST, 'menu_element_' . $menu_uid . '_disabled_body', false));
@@ -115,7 +115,7 @@ if ($action == 'save')
 		Menu::MENU_AUTH_BIT, 'menu_element_' . $menu_uid . '_auth'
 	));
 
-	//Filters
+	// Filters
 	MenuAdminService::set_retrieved_filters($menu);
 
 	if ($menu->is_enabled())
@@ -192,7 +192,7 @@ $tpl->put_all(array(
 	'JL_ADD_SUB_MENU' => TextHelper::to_js_string($LANG['add_sub_menu']),
 ));
 
-//Localisation possibles.
+// Possible locations
 $block = retrieve(GET, 's', Menu::BLOCK_POSITION__HEADER, TINTEGER);
 $array_location = array(
 	Menu::BLOCK_POSITION__HEADER => $LANG['menu_header'],
@@ -301,7 +301,7 @@ foreach ($array_expanding as $key => $name)
 	));
 }
 
-//Filtres
+// Filters
 MenuAdminService::add_filter_fieldset($menu, $tpl);
 
 $tpl->put_all(array(

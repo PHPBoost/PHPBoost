@@ -47,7 +47,7 @@ if ($action_post == 'save')
 	$menu->set_display_title(retrieve(POST, 'display_title', false));
 	$menu->set_content(retrieve(POST, 'contents', '', TSTRING_UNCHANGE));
 
-	//Filters
+	// Filters
 	MenuAdminService::set_retrieved_filters($menu);
 
 	if ($menu->is_enabled())
@@ -120,7 +120,7 @@ $tpl->put_all(array(
 	'L_DISPLAY_TITLE' => $LANG['display_title']
 ));
 
-//Localisation possibles.
+// Possible Locations.
 $block = retrieve(GET, 's', Menu::BLOCK_POSITION__HEADER, TINTEGER);
 $array_location = array(
 	Menu::BLOCK_POSITION__HEADER => $LANG['menu_header'],
@@ -174,7 +174,7 @@ foreach ($array_location as $key => $name)
 }
 
 
-//Filtres
+// Filters
 MenuAdminService::add_filter_fieldset($menu, $tpl);
 
 

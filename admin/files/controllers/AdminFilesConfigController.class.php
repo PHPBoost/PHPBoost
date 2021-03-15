@@ -122,7 +122,7 @@ class AdminFilesConfigController extends AdminController
 		{
 			foreach ($extend_extensions as $extension)
 			{
-				//Suppression de tous les caractères interdits dans les extensions
+				// Deleting all forbidden characters in extensions
 				$extension = str_replace('-', '', Url::encode_rewrite($extension));
 
 				if ($extension != '' && !isset($authorized_extensions[$extension]) && $extension != 'php')
@@ -136,7 +136,7 @@ class AdminFilesConfigController extends AdminController
 
 		FileUploadConfig::save();
 
-		//Régénération du .htaccess et du nginx.conf.
+		// Regeneration of .htaccess and nginx.conf
 		HtaccessFileCache::regenerate();
 		HtaccessFileCache::regenerate();
 	}

@@ -41,7 +41,7 @@ $move_folder = $request->get_getint('movefd', 0);
 $move_file = $request->get_getint('movefi', 0);
 $to = retrieve(POST, 'new_cat', -1);
 
-if ($parent_folder) //Changement de dossier
+if ($parent_folder) // Changing folder
 {
 	try {
 		$parent_folder = PersistenceContext::get_querier()->select_single_row(PREFIX . 'upload_cat', array('id_parent', 'user_id'), 'WHERE id=:id', array('id' => $parent_folder));
@@ -57,11 +57,11 @@ if ($parent_folder) //Changement de dossier
 	else
 		AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $parent_folder['id_parent']);
 }
-elseif ($home_folder) //Retour à la racine.
+elseif ($home_folder) // Back to root
 	AppContext::get_response()->redirect('/admin/admin_files.php');
-elseif (!empty($_FILES['upload_file']['name'])) //Ajout d'un fichier.
+elseif (!empty($_FILES['upload_file']['name'])) // Add file
 {
-	//Si le dossier n'est pas en écriture on tente un CHMOD 777
+	// If folder is not writable, we try CHMOD 777
 	@clearstatcache();
 	$dir = PATH_TO_ROOT . '/upload/';
 	if (!is_writable($dir))
@@ -69,14 +69,14 @@ elseif (!empty($_FILES['upload_file']['name'])) //Ajout d'un fichier.
 
 	@clearstatcache();
 	$error = '';
-	if (is_writable($dir)) //Dossier en écriture, upload possible
+	if (is_writable($dir)) // Folder is writable => upload is available
 	{
 		$Upload = new Upload($dir);
 		$Upload->file('upload_file', '`\.(' . implode('|', array_map('preg_quote', FileUploadConfig::load()->get_authorized_extensions())) . ')+$`i', Upload::UNIQ_NAME);
 
-		if ($Upload->get_error() != '') //Erreur, on arrête ici
+		if ($Upload->get_error() != '') // Error then stop
 			AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $folder . '&erroru=' . $Upload->get_error() . '#message_helper');
-		else //Insertion dans la bdd
+		else // Insert in database
 		{
 			$user_id = AppContext::get_current_user()->get_id();
 			try {
@@ -100,10 +100,10 @@ elseif (!empty($_FILES['upload_file']['name'])) //Ajout d'un fichier.
 	$anchor = !empty($error) ? '&error=' . $error . '#message_helper' : (!empty($id_file) ? '#fi1' . $id_file : '');
 	AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $folder . ($folder_member > 0 ? '&fm=' . $folder_member : '') . $anchor);
 }
-elseif (!empty($del_folder)) //Supprime un dossier.
+elseif (!empty($del_folder)) // Delete a folder
 {
-	AppContext::get_session()->csrf_get_protect(); //Protection csrf
-	//Suppression du dossier et de tout le contenu
+	AppContext::get_session()->csrf_get_protect(); // csrf protection
+	// Delete folder and its content
 	Uploads::Del_folder($del_folder);
 
 	if (!empty($folder_member))
@@ -111,25 +111,25 @@ elseif (!empty($del_folder)) //Supprime un dossier.
 	else
 		AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $folder);
 }
-elseif (!empty($empty_folder)) //Vide un dossier membre.
+elseif (!empty($empty_folder)) // Empty a member folder
 {
-	AppContext::get_session()->csrf_get_protect(); //Protection csrf.
-	//Suppression de tout les dossiers enfants.
+	AppContext::get_session()->csrf_get_protect(); // csrf protection
+	// Delete all child folders
 	Uploads::Empty_folder_member($empty_folder);
 
 	AppContext::get_response()->redirect('/admin/admin_files.php?showm=1');
 }
-elseif (!empty($del_file)) //Suppression d'un fichier
+elseif (!empty($del_file)) // Delete a file
 {
-	AppContext::get_session()->csrf_get_protect(); //Protection csrf
-	//Suppression d'un fichier.
+	AppContext::get_session()->csrf_get_protect(); // csrf protection
+	// Delete a file
 	Uploads::Del_file($del_file, -1, Uploads::ADMIN_NO_CHECK);
 
 	AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $folder . ($folder_member > 0 ? '&fm=' . $folder_member : ''));
 }
-elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
+elseif (!empty($move_folder) && $to != -1) // Moving folder
 {
-	AppContext::get_session()->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); // csrf protection
 
 	$user_id = AppContext::get_current_user()->get_id();
 	try {
@@ -157,16 +157,16 @@ elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 	$array_child_folder = array();
 	Uploads::Find_subfolder($move_list_parent, $move_folder, $array_child_folder);
 	$array_child_folder[] = $move_folder;
-	if (!in_array($to, $array_child_folder)) //Dossier de destination non sous-dossier du dossier source.
+	if (!in_array($to, $array_child_folder)) // Destination folder not subfolder of source folder
 		Uploads::Move_folder($move_folder, $to, AppContext::get_current_user()->get_id(), Uploads::ADMIN_NO_CHECK);
 	else
 		AppContext::get_response()->redirect('/admin/admin_files.php?movefd=' . $move_folder . '&f=0&error=folder_contains_folder');
 
 	AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $to);
 }
-elseif (!empty($move_file) && $to != -1) //Déplacement d'un fichier
+elseif (!empty($move_file) && $to != -1) // Moving file
 {
-	AppContext::get_session()->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); // csrf protection
 
 	Uploads::Move_file($move_file, $to, AppContext::get_current_user()->get_id(), Uploads::ADMIN_NO_CHECK);
 
@@ -227,7 +227,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 	if ($get_error == 'folder_contains_folder')
 		$template->put('message_helper', MessageHelper::display($LANG['upload_folder_contains_folder'], MessageHelper::WARNING));
 
-	//liste des fichiers disponibles
+	// Available files list
 	include_once(PATH_TO_ROOT . '/user/upload_functions.php');
 	$cats = array();
 
@@ -235,7 +235,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 		$folder_member = -1;
 
 	$is_folder = !empty($move_folder);
-	//Affichage du dossier/fichier à déplacer
+	// Display of folder/file to move
 	if ($is_folder)
 	{
 		try {
@@ -270,7 +270,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 		$size_img = '';
 		$display_real_img = false;
 		switch ($info_move['type']) {
-			//Images
+			// Images
 			case 'jpg':
 			case 'png':
 			case 'webp':
@@ -333,7 +333,7 @@ else
 	$folder_info = $result->fetch();
 	$result->dispose();
 
-	//Gestion des erreurs.
+	// Errors management
 	$array_error = array('e_upload_no_file', 'e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_unlink_disabled');
 	if (in_array($get_error, $array_error))
 		$template->put('message_helper', MessageHelper::display($LANG[$get_error], MessageHelper::WARNING));
@@ -440,7 +440,7 @@ else
 		));
 	}
 
-	//Affichage des dossiers
+	// Folder display
 	while ($row = $result->fetch())
 	{
 		$name_cut = (TextHelper::strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlspecialchars(TextHelper::substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
@@ -462,7 +462,7 @@ else
 	}
 	$result->dispose();
 
-	//Affichage des fichiers contenu dans le dossier
+	// Display the files from the folder
 	$types = array('personal_files' => 'up.idcat = :idcat AND up.user_id = :user_id', 'public_files' => 'up.public = 1');
 	foreach ($types as $loop_id => $where_clause)
 	{
@@ -538,7 +538,7 @@ else
 			$template->assign_block_vars($loop_id, array(
 				'C_ENABLED_THUMBNAILS' => FileUploadConfig::load()->get_display_file_thumbnail(),
 				'C_IMG' => $get_img_mimetype['img'] == 'far fa-file-image',
-				'C_RECENT_FILE' => $row['timestamp'] > ($now->get_timestamp() - (2 * 60)), // Ficher ajouté il y a moins de 2 minutes
+				'C_RECENT_FILE' => $row['timestamp'] > ($now->get_timestamp() - (2 * 60)), // File added less than 2 minutes ago
 				'ID' => $row['id'],
 				'C_POSTOR_EXIST' => !empty($row['display_name']),
 				'POSTOR' => $row['display_name'],

@@ -31,7 +31,7 @@ $data_group_limit = $request->get_postvalue('data_group_limit', '');
 
 $_NBR_ELEMENTS_PER_PAGE = 25;
 
-if ($valid && !empty($idgroup_post)) //Modification du groupe.
+if ($valid && !empty($idgroup_post)) // group modification
 {
 	$name = retrieve(POST, 'name', '');
 	$img = retrieve(POST, 'img', '');
@@ -49,11 +49,11 @@ if ($valid && !empty($idgroup_post)) //Modification du groupe.
 	$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);
 	PersistenceContext::get_querier()->update(DB_TABLE_GROUP, array('name' => $name, 'img' => $img, 'color' => $color_group, 'auth' => TextHelper::serialize($group_auth)), 'WHERE id = :id', array('id' => $idgroup_post));
 
-	GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
+	GroupsCache::invalidate(); // Regeneration of the group's cache
 
 	AppContext::get_response()->redirect('/admin/admin_groups.php?id=' . $idgroup_post);
 }
-elseif ($valid && $add_post) //ajout  du groupe.
+elseif ($valid && $add_post) // Add group
 {
 	$name = retrieve(POST, 'name', '');
 	$img = retrieve(POST, 'img', '');
@@ -67,11 +67,11 @@ elseif ($valid && $add_post) //ajout  du groupe.
 	{
 		if (!GroupsCache::load()->group_name_exists($name))
 		{
-			//Insertion
+			// Insert in database
 			$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);
 			$result = PersistenceContext::get_querier()->insert(DB_TABLE_GROUP, array('name' => $name, 'img' => $img, 'color' => $color_group, 'auth' => TextHelper::serialize($group_auth), 'members' => ''));
 
-			GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
+			GroupsCache::invalidate(); // Regeneration of the group's cache
 
 			AppContext::get_response()->redirect('/admin/admin_groups.php?id=' . $result->get_last_inserted_id());
 		}
@@ -83,7 +83,7 @@ elseif ($valid && $add_post) //ajout  du groupe.
 		AppContext::get_response()->redirect('/admin/admin_groups.php?add=1&error=incomplete#message_helper');
 	}
 }
-elseif (!empty($idgroup) && $del_group) //Suppression du groupe.
+elseif (!empty($idgroup) && $del_group) // Delete group.
 {
 	$array_members = array();
 	try {
@@ -95,19 +95,19 @@ elseif (!empty($idgroup) && $del_group) //Suppression du groupe.
 		foreach ($array_members as $key => $user_id)
 		{
 			if (!empty($user_id) && UserService::user_exists('WHERE user_id=:user_id', array('user_id' => $user_id)))
-				GroupsService::remove_member($user_id, $idgroup); //Mise à jour des membres étant dans le groupe supprimé.
+				GroupsService::remove_member($user_id, $idgroup); // Updating the list of members being in the deleted group.
 		}
 	}
 
 	PersistenceContext::get_querier()->delete(DB_TABLE_GROUP, 'WHERE id=:id', array('id' => $idgroup));
 
-	GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
+	GroupsCache::invalidate(); // Regeneration of the group's cache
 
 	AppContext::get_response()->redirect(HOST . DIR . '/admin/admin_groups.php');
 }
-elseif (!empty($idgroup) && $add_mbr) //Ajout du membre au groupe.
+elseif (!empty($idgroup) && $add_mbr) // Add member to group
 {
-	AppContext::get_session()->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); // csrf protection
 
 	$login = retrieve(POST, 'login_mbr', '');
 	$user_id = 0;
@@ -117,7 +117,7 @@ elseif (!empty($idgroup) && $add_mbr) //Ajout du membre au groupe.
 
 	if (!empty($user_id))
 	{
-		if (GroupsService::add_member($user_id, $idgroup)) //Succès.
+		if (GroupsService::add_member($user_id, $idgroup)) // Success.
 		{
 			GroupsCache::invalidate();
 			SessionData::recheck_cached_data_from_user_id($user_id);
@@ -133,18 +133,18 @@ elseif (!empty($idgroup) && $add_mbr) //Ajout du membre au groupe.
 		AppContext::get_response()->redirect('/admin/admin_groups.php?id=' . $idgroup . '&error=incomplete#message_helper');
 	}
 }
-elseif ($del_mbr && !empty($user_id) && !empty($idgroup)) //Suppression du membre du groupe.
+elseif ($del_mbr && !empty($user_id) && !empty($idgroup)) // Delete member from the group
 {
-	AppContext::get_session()->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); // csrf protection
 
 	GroupsService::remove_member($user_id, $idgroup);
 	GroupsCache::invalidate();
 	SessionData::recheck_cached_data_from_user_id($user_id);
 	AppContext::get_response()->redirect('/admin/admin_groups.php?id=' . $idgroup . '#add');
 }
-elseif (!empty($_FILES['upload_groups']['name'])) //Upload
+elseif (!empty($_FILES['upload_groups']['name'])) // Upload
 {
-	//Si le dossier n'est pas en écriture on tente un CHMOD 777
+	// If the folder is not writable, we try CHMOD 777
 	@clearstatcache();
 	$dir = PATH_TO_ROOT .'/images/group/';
 	if (!is_writable($dir))
@@ -154,7 +154,7 @@ elseif (!empty($_FILES['upload_groups']['name'])) //Upload
 
 	@clearstatcache();
 	$error = '';
-	if (is_writable($dir)) //Dossier en écriture, upload possible
+	if (is_writable($dir)) // Writable folder, upload is available
 	{
 		$authorized_pictures_extensions = FileUploadConfig::load()->get_authorized_picture_extensions();
 
@@ -176,7 +176,7 @@ elseif (!empty($_FILES['upload_groups']['name'])) //Upload
 	$error = !empty($error) ? '&error=' . $error : '&success=1';
 	AppContext::get_response()->redirect(HOST . SCRIPT . '?add=1' . $error);
 }
-elseif (!empty($idgroup)) //Interface d'édition du groupe.
+elseif (!empty($idgroup)) // Group editing interface
 {
 	$template = new FileTemplate('admin/admin_groups_management2.tpl');
 
@@ -189,7 +189,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 
 	if (!empty($group['id']))
 	{
-		//Gestion erreur.
+		// errors management
 		$get_error = retrieve(GET, 'error', '');
 		if ($get_error == 'incomplete')
 		{
@@ -200,7 +200,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 			$template->put('message_helper', MessageHelper::display($LANG['e_already_group'], MessageHelper::NOTICE));
 		}
 
-		//On recupère les dossier des images des groupes.
+		// Get the groups images folders
 		$img_groups = '<option value="">--</option>';
 		$image_folder_path = new Folder(PATH_TO_ROOT . '/images/group');
 		foreach ($image_folder_path->get_files('`\.(png|webp|jpg|bmp|gif)$`iu') as $image)
@@ -250,7 +250,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 			'L_ADD_MBR_GROUP' => $LANG['add_mbr_group']
 		));
 
-		//Liste des membres du groupe.
+		// Group members list
 		$members = '';
 		try {
 			$members = PersistenceContext::get_querier()->get_column_value(DB_TABLE_GROUP, 'members', 'WHERE id=:id', array('id' => NumberHelper::numeric($group['id'])));
@@ -291,11 +291,11 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 
 	$template->display();
 }
-elseif ($add) //Interface d'ajout du groupe.
+elseif ($add) // Add group interface
 {
 	$template = new FileTemplate('admin/admin_groups_management2.tpl');
 
-	//Gestion erreur.
+	// Errors management
 	$get_success = retrieve(GET, 'success', '');
 	if ($get_success == 1)
 	{
@@ -311,7 +311,7 @@ elseif ($add) //Interface d'ajout du groupe.
 		$template->put('message_helper', MessageHelper::display(LangLoader::get_message('element.already_exists', 'status-messages-common'), MessageHelper::NOTICE));
 	}
 
-	//On recupère les dossier des images des groupes contenu dans le dossier /images/group.
+	// Get the groups images folders contained in the /images/group folder.
 	$img_groups = '<option value="" selected="selected">--</option>';
 
 	$img_groups = '<option value="">--</option>';
@@ -353,7 +353,7 @@ elseif ($add) //Interface d'ajout du groupe.
 
 	$template->display();
 }
-else //Liste des groupes.
+else // Groups list
 {
 	$template = new FileTemplate('admin/admin_groups_management.tpl');
 

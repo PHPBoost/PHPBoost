@@ -15,7 +15,7 @@ require_once('../admin/admin_header.php');
 $template = new FileTemplate('admin/admin_extend.tpl');
 $template->add_lang(LangLoader::get('admin-links-common'));
 
-//Listing des modules disponibles
+// Listing available modules
 foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $module)
 {
 	$configuration = $module->get_configuration();

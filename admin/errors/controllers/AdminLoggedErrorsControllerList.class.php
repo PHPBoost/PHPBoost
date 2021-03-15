@@ -101,7 +101,7 @@ class AdminLoggedErrorsControllerList extends AdminController
 		$array_errinfo = array();
 		$file_path = PATH_TO_ROOT . '/cache/error.log';
 
-		if (is_file($file_path) && is_readable($file_path)) //Fichier accessible en lecture
+		if (is_file($file_path) && is_readable($file_path)) // Readable file
 		{
 			$handle = @fopen($file_path, 'r');
 			if ($handle)
@@ -138,7 +138,7 @@ class AdminLoggedErrorsControllerList extends AdminController
 			}
 		}
 
-		return array_reverse($array_errinfo); //Tri en sens inverse car enregistrement à la suite dans le fichier de log
+		return array_reverse($array_errinfo); // Sorting in reverse order because recording in the log file 
 	}
 }
 ?>

@@ -136,7 +136,7 @@ function save_position($block_position)
 	}
 }
 
-if ($action == 'save') //Save menus positions.
+if ($action == 'save') // Save menus positions.
 {
 	save_position(Menu::BLOCK_POSITION__HEADER);
 	save_position(Menu::BLOCK_POSITION__SUB_HEADER);

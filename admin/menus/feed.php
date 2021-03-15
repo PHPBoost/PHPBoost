@@ -52,7 +52,7 @@ if ($action_post == 'save')
 
 	$menu->set_auth(Authorizations::build_auth_array_from_form(Menu::MENU_AUTH_BIT));
 
-	//Filters
+	// Filters
 	MenuAdminService::set_retrieved_filters($menu);
 
 	if ($menu->is_enabled())
@@ -117,7 +117,7 @@ $tpl->put_all(array(
 	'ACTION' => 'save',
 ));
 
-//Localisation possibles.
+// Possible locations.
 $block = retrieve(GET, 's', Menu::BLOCK_POSITION__HEADER, TINTEGER);
 $array_location = array(
 	Menu::BLOCK_POSITION__HEADER => $LANG['menu_header'],
@@ -238,7 +238,7 @@ foreach ($array_location as $key => $name)
 	$locations .= '<option value="' . $key . '" ' . (($block == $key) ? 'selected="selected"' : '') . '>' . $name . '</option>';
 }
 
-//Filtres
+// Filters
 MenuAdminService::add_filter_fieldset($menu, $tpl);
 
 $tpl->put_all(array('LOCATIONS' => $locations));

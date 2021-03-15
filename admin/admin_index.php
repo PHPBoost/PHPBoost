@@ -14,7 +14,7 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-//Enregistrement du bloc note
+// Save writing pad
 $writingpad = retrieve(POST, 'writingpad', '');
 if (!empty($writingpad))
 {
@@ -67,7 +67,7 @@ while ($row = $result->fetch())
 }
 $result->dispose();
 
-//Multiple comments delete
+// Multiple comments delete
 $request = AppContext::get_request();
 if ($request->get_string('delete-selected-comments', false))
 {
@@ -82,17 +82,17 @@ if ($request->get_string('delete-selected-comments', false))
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT, LangLoader::get_message('process.success', 'status-messages-common'));
 }
 
-//Advises
+// Advises
 $advises_form = new HTMLForm('advises_list', '', false);
 AdminServerSystemReportController::get_advises($advises_form);
 
-//Header logo
+// Header logo
 $theme = ThemesManager::get_theme(AppContext::get_current_user()->get_theme());
 $customize_interface = $theme->get_customize_interface();
 $header_logo_path = $customize_interface->get_header_logo_path();
 
 
-//Check if modules are installed for quicklinks
+// Check if modules are installed for quicklinks
 $module_database_installed = ModulesManager::is_module_installed('database') && ModulesManager::is_module_activated('database');
 $module_customization_installed = ModulesManager::is_module_installed('customization') && ModulesManager::is_module_activated('customization');
 $module_articles_installed = ModulesManager::is_module_installed('articles') && ModulesManager::is_module_activated('articles');
@@ -156,7 +156,7 @@ $tpl->put_all(array(
 ));
 
 
-//Liste des personnes en lignes.
+// List of connected users
 $result = PersistenceContext::get_querier()->select("SELECT s.user_id, s.ip, s.timestamp, s.location_script, s.location_title, s.cached_data, m.display_name, m.user_groups, m.level
 FROM " . DB_TABLE_SESSIONS . " s
 LEFT JOIN " . DB_TABLE_MEMBER . " m ON s.user_id = m.user_id

@@ -184,56 +184,56 @@ class UpdateServices
 
 		Environment::try_to_increase_max_execution_time();
 
-		// Suppression des fichiers qui ne sont plus présent dans la nouvelle version pour éviter les conflits
+		// Delete files witch are no longer present in the new version to avoid conflicts
 		$this->delete_old_files();
 
-		// Désinstallation du module UrlUpdater pour éviter les problèmes
+		// Uninstalling the UrlUpdater module to avoid problems
 		if (ModulesManager::is_module_installed('UrlUpdater'))
 			ModulesManager::uninstall_module('UrlUpdater');
 
-		// Mise en maintenance du site s'il ne l'est pas déjà
+		// Maintenance of the site if it is not already
 		$this->put_site_under_maintenance();
 
 		if (GeneralConfig::load()->get_phpboost_major_version() != self::NEW_KERNEL_VERSION)
 		{
-			// Mise à jour des configurations
+			// Updating configurations
 			$this->update_configurations();
 		}
 
-		// Mise à jour des tables du noyau
+		// Updating kernel tables
 		$this->update_kernel_tables();
 
-		// Mise à jour de la version du noyau
+		// Updating kernel version number
 		$this->update_kernel_version();
 
-		// Mise à jour des modules
+		// Updating modules
 		$this->update_modules();
 
-		// Mise à jour des thèmes
+		// Updating themes
 		$this->update_themes();
 
-		// Mise à jour des langues
+		// Updating languages
 		$this->update_langs();
 
-		// Mise à jour du contenu
+		// Updating content
 		$this->update_content();
 
-		// Installation du module UrlUpdater pour la réécriture des Url des modules mis à jour
+		// Installation of the UrlUpdater module for rewriting the url of updated modules
 		$folder = new Folder(PATH_TO_ROOT . '/UrlUpdater');
 		if ($folder->exists())
 			ModulesManager::install_module('UrlUpdater');
 		else
 			$this->add_information_to_file('module UrlUpdater', 'has not been installed because it was not on the FTP');
 
-		// Installation du module SocialNetworks
+		// Installing the SocialNetworks module
 		$folder = new Folder(PATH_TO_ROOT . '/SocialNetworks');
 		if ($folder->exists() && !ModulesManager::is_module_installed('SocialNetworks'))
 			ModulesManager::install_module('SocialNetworks');
 
-		// Vérification de la date d'installation du site et correction si besoin
+		// Verification of the site installation date and correction if necessary
 		$this->check_installation_date();
 
-		// Fin de la mise à jour : régénération du cache
+		// End of update: cache refresh
 		$this->delete_update_token();
 		$this->generate_cache();
 	}

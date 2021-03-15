@@ -31,7 +31,7 @@ if ($post)
 	$menu->set_hidden_with_small_screens((bool)retrieve(POST, 'hidden_with_small_screens', false));
 	$menu->set_auth(Authorizations::build_auth_array_from_form(Menu::MENU_AUTH_BIT));
 
-	//Filters
+	// Filters
 	MenuAdminService::set_retrieved_filters($menu);
 
 	MenuService::save($menu);
@@ -70,7 +70,7 @@ $tpl->put_all(array(
 	'ACTION' => 'save',
 ));
 
-//Localisation possibles.
+// Possible Locations.
 $block = $menu->get_block();
 $array_location = array(
 	Menu::BLOCK_POSITION__HEADER => $LANG['menu_header'],
@@ -99,7 +99,7 @@ $tpl->put_all(array(
 	'C_ENABLED' => $menu->is_enabled(),
 ));
 
-//Filtres
+// Filters
 MenuAdminService::add_filter_fieldset($menu, $tpl);
 
 $tpl->display();
