@@ -39,7 +39,7 @@ class CommentsTopic
 	/**
 	 * @return boolean display
 	 */
-	public function is_display()
+	public function is_displayed()
 	{
 		return false;
 	}

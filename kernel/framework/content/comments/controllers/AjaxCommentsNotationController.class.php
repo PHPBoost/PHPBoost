@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2014 12 22
+ * @version     PHPBoost 6.0 - last update: 2021 03 15
  * @since       PHPBoost 3.0 - 2011 08 30
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AjaxCommentsNotationController extends AbstractCommentsController
@@ -85,7 +86,7 @@ class AjaxCommentsNotationController extends AbstractCommentsController
 
 	private function is_access_authorizations()
 	{
-		return $this->is_authorized_note() && $this->is_display() && $this->is_authorized_access();
+		return $this->is_authorized_note() && $this->is_displayed() && $this->is_authorized_access();
 	}
 
 	private function is_authorized_note()
