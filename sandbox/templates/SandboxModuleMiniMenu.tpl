@@ -233,7 +233,7 @@
 						</li>
 					</ul>
 				</li>
-				<li class="mini-sandbox-switcher">
+				<li class="mini-sandbox-switcher has-sub">
 					<span><i class="far fa-image fa-fw link-color-alt"></i> <span>{@mini.themes.switcher}</span></span>
 					<ul>
 						<li>
@@ -255,7 +255,7 @@
 						</li>
 					</ul>
 				</li>
-				<li class="mini-sandbox-infos">
+				<li class="mini-sandbox-infos has-sub">
 					<span><i class="fa fa-info fa-fw notice"></i> <span>{@mini.infos}</span></span>
 					<ul>
 						<li>
@@ -299,6 +299,41 @@
 									<p id="window-height"></p>
 								</div>
 							</div>
+						</li>
+					</ul>
+				</li>
+				<li class="mini-sandbox-admin-menu has-sub">
+					<span><i class="fa fa-university fa-fw administrator"></i> <span>{@mini.admin.menu}</span></span>
+					<ul>
+						<li>
+							<a href="${relative_url(UserUrlBuilder::administration())}#openmodal-administration">
+								<i class="fa fa-fw fa-cog" aria-hidden="true"></i>
+								<span>{@mini.admin.menu.administration}</span>
+							</a>
+						</li>
+						<li>
+							<a href="${relative_url(UserUrlBuilder::administration())}#openmodal-tools">
+								<i class="fa fa-fw fa-wrench" aria-hidden="true"></i>
+								<span>{@mini.admin.menu.tools}</span>
+							</a>
+						</li>
+						<li>
+							<a href="${relative_url(UserUrlBuilder::administration())}#openmodal-users">
+								<i class="fa fa-fw fa-user" aria-hidden="true"></i>
+								<span>{@mini.admin.menu.users}</span>
+							</a>
+						</li>
+						<li>
+							<a href="${relative_url(UserUrlBuilder::administration())}#openmodal-content">
+								<i class="far fa-fw fa-square" aria-hidden="true"></i>
+								<span>{@mini.admin.menu.content}</span>
+							</a>
+						</li>
+						<li>
+							<a href="${relative_url(UserUrlBuilder::administration())}#openmodal-modules">
+								<i class="fa fa-fw fa-cube" aria-hidden="true"></i>
+								<span>{@mini.admin.menu.modules}</span>
+							</a>
 						</li>
 					</ul>
 				</li>
