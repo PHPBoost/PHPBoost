@@ -91,10 +91,11 @@
 	<header class="section-header">
 		<div class="controls align-right">
 			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
+			# IF NOT C_ROOT_CATEGORY #{@faq.module.title}# ENDIF #
 			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1>
-			{@faq.module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
+			# IF C_ROOT_CATEGORY #{@faq.module.title}# ELSE #{CATEGORY_NAME}# ENDIF #
 		</h1>
 	</header>
 	# IF C_CATEGORY_DESCRIPTION #
@@ -107,10 +108,10 @@
 		</div>
 	# ENDIF #
 
-	# IF C_QUESTIONS #
-		<div class="sub-section">
-			<div class="content-container">
-				<div class="content">
+	<div class="sub-section">
+		<div class="content-container">
+			<div class="content">
+				# IF C_QUESTIONS #
 					<form action="{REWRITED_SCRIPT}" method="post" id="position-update-form" onsubmit="FaqQuestions.serialize_sortable();" class="faq-reorder-form">
 						<fieldset id="questions-management">
 							<ul id="questions-list" class="sortable-block">
@@ -163,21 +164,15 @@
 						</fieldset>
 						# ENDIF #
 					</form>
-				</div>
-			</div>
-		</div>
-	# ELSE #
-		# IF NOT C_HIDE_NO_ITEM_MESSAGE #
-			<div class="sub-section">
-				<div class="content-container">
-					<div class="content">
+				# ELSE #
+					# IF NOT C_HIDE_NO_ITEM_MESSAGE #
 						<div class="message-helper bgc notice align-center">
 							${LangLoader::get_message('no_item_now', 'common')}
 						</div>
-					</div>					
-				</div>
+					# ENDIF #
+				# ENDIF #
 			</div>
-		# ENDIF #
-	# ENDIF #
+		</div>
+	</div>
 	<footer></footer>
 </section>

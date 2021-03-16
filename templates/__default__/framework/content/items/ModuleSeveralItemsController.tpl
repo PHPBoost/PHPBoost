@@ -2,6 +2,7 @@
 	<header class="section-header">
 		<div class="controls align-right">
 			# IF C_SYNDICATION #<a href="{U_SYNDICATION}" aria-label="{@syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a># ENDIF #
+			# IF NOT C_ROOT_CATEGORY #{MODULE_NAME}# ENDIF #
 			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="{@edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF ## ENDIF #
 		</div>
 		<h1>
@@ -11,7 +12,7 @@
 				# IF C_MEMBER_ITEMS #
 					# IF C_MY_ITEMS #{@my.items}# ELSE #{@member.items} {MEMBER_NAME}# ENDIF #
 				# ELSE #
-					{MODULE_NAME}# IF C_CATEGORY ## IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF #
+					# IF C_ROOT_CATEGORY #{MODULE_NAME}# ELSE ## IF C_CATEGORY #{CATEGORY_NAME}# ENDIF ## ENDIF #
 				# ENDIF #
 			# ENDIF #
 		</h1>

@@ -33,6 +33,7 @@
 	<header class="section-header">
 		<div class="controls align-right">
 			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
+			# IF NOT C_ROOT_CATEGORY #{@faq.module.title}# ENDIF #
 			# IF C_CATEGORY #
 				# IF C_DISPLAY_REORDER_LINK #
 					<a href="{U_REORDER_QUESTIONS}" aria-label="{@faq.questions.reorder}"><i class="fa fa-fw fa-exchange-alt" aria-hidden="true"></i></a>
@@ -46,7 +47,7 @@
 			# IF C_PENDING #
 				{@faq.questions.pending}
 			# ELSE #
-				{@faq.module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
+				# IF C_ROOT_CATEGORY #{@faq.module.title}# ELSE #{CATEGORY_NAME}# ENDIF #
 			# ENDIF #
 		</h1>
 	</header>
@@ -146,7 +147,7 @@
 						<div id="no-item-message" class="message-helper bgc notice align-center"# IF C_QUESTIONS # style="display: none;"# ENDIF #>
 							${LangLoader::get_message('no_item_now', 'common')}
 						</div>
-					</div>					
+					</div>
 				</div>
 			</div>
 		# ENDIF #

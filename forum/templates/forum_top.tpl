@@ -126,22 +126,22 @@
 					</ul>
 				</nav>
 			# ELSE #
-			# IF C_FORUM_CONNEXION #
-				<nav itemscope itemtype="https://schema.org/SiteNavigationElement" class="cssmenu cssmenu-group float-right" id="cssmenu-sign-in-top-link">
-					<ul>
-						<li>
-							<span class="cssmenu-title">
-								<a href="${relative_url(UserUrlBuilder::connect())}" aria-label="{L_CONNECT}"><i class="fa fa-fw fa-sign-in-alt" aria-hidden="true"></i> <span class="hidden-large-screens">{L_CONNECT}</span></a>
-							</span>
-						</li>
-						<li>
-							<span class="cssmenu-title">
-								<a href="${relative_url(UserUrlBuilder::registration())}" aria-label="{L_REGISTER}"><i class="fa fa-fw fa-ticket-alt" aria-hidden="true"></i> <span class="hidden-large-screens">{L_REGISTER}</span></a>
-							</span>
-						</li>
-					</ul>
-				</nav>
-			# ENDIF #
+				# IF C_FORUM_CONNEXION #
+					<nav itemscope itemtype="https://schema.org/SiteNavigationElement" class="cssmenu cssmenu-group float-right" id="cssmenu-sign-in-top-link">
+						<ul>
+							<li>
+								<span class="cssmenu-title">
+									<a href="${relative_url(UserUrlBuilder::connect())}" aria-label="{L_CONNECT}"><i class="fa fa-fw fa-sign-in-alt" aria-hidden="true"></i> <span class="hidden-large-screens">{L_CONNECT}</span></a>
+								</span>
+							</li>
+							<li>
+								<span class="cssmenu-title">
+									<a href="${relative_url(UserUrlBuilder::registration())}" aria-label="{L_REGISTER}"><i class="fa fa-fw fa-ticket-alt" aria-hidden="true"></i> <span class="hidden-large-screens">{L_REGISTER}</span></a>
+								</span>
+							</li>
+						</ul>
+					</nav>
+				# ENDIF #
 			# ENDIF #
 		</div>
 		<script>

@@ -241,10 +241,11 @@
 	<header class="section-header">
 		<div class="controls align-right">
 			<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-fw fa-rss warning" aria-hidden="true"></i></a>
+			# IF NOT C_ROOT_CATEGORY #{MODULE_NAME}# ENDIF #
 			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1>
-			{GALLERY}
+			# IF C_ROOT_CATEGORY #{MODULE_NAME}# ELSE #{CATEGORY_NAME}# ENDIF #
 		</h1>
 	</header>
 
@@ -533,6 +534,6 @@
 	<footer>
 		<div class="sub-section">
 			<div class="content-container"><p class="nbr-total-pics">{L_TOTAL_IMG}</p></div>
-		</div>		
+		</div>
 	</footer>
 </section>

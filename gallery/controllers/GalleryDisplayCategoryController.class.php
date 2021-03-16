@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 15
+ * @version     PHPBoost 6.0 - last update: 2021 03 16
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -139,6 +139,8 @@ class GalleryDisplayCategoryController extends ModuleController
 
 		$this->tpl->put_all(array(
 			'C_ROOT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY,
+			'MODULE_NAME' => $LANG['gallery'],
+			'CATEGORY_NAME' => $category->get_name(),
 			'C_CATEGORY_DESCRIPTION' => $category_description,
 			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
 			'C_SUBCATEGORIES_PAGINATION' => $pagination->has_several_pages(),

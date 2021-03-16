@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 27
+ * @version     PHPBoost 6.0 - last update: 2021 03 16
  * @since       PHPBoost 1.2 - 2005 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -223,10 +223,11 @@ elseif ($g_add)
 
 	$search_category_children_options = new SearchCategoryChildrensOptions();
 	$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-
 	$tpl->put_all(array(
 		'CAT_ID' => $id_category,
-		'GALLERY' => !empty($id_category) ? $categories[$id_category]->get_name() : $LANG['gallery'],
+		'MODULE_NAME' => $LANG['gallery'],
+		'C_ROOT_CATEGORY' => $categories[$id_category]->get_id() == Category::ROOT_CATEGORY,
+		'CATEGORY_NAME' => $categories[$id_category]->get_name(),
 		'CATEGORIES_TREE' => CategoriesService::get_categories_manager()->get_select_categories_form_field('cat', LangLoader::get_message('form.category', 'common'), $id_category, $search_category_children_options)->display()->render(),
 		'MAX_WIDTH' => $config->get_max_width(),
 		'MAX_HEIGHT' => $config->get_max_height(),
