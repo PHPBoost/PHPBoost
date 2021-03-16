@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 15
+ * @version     PHPBoost 6.0 - last update: 2021 03 16
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -17,6 +17,12 @@ class ItemsManager
 	protected static $module_id;
 	protected static $module;
 	protected static $items_table;
+	
+	protected $get_items_static_select;
+	protected $get_items_static_join_table;
+	protected $get_items_static_condition;
+	protected $get_items_static_sort_field;
+	protected $get_items_static_sort_mode;
 
 	public static function __static()
 	{
@@ -29,6 +35,20 @@ class ItemsManager
 		self::$module_id   = $module_id ? $module_id : ($called_module_id && !in_array($called_module_id, array('admin', 'kernel', 'user')) ? $called_module_id : Environment::get_running_module_name());
 		self::$module      = ModulesManager::get_module(self::$module_id);
 		self::$items_table = self::$module->get_configuration()->get_items_table_name();
+		
+		$this->init_get_items_additional_parameters();
+	}
+
+	 /**
+	 * @desc Initialize the additional parameters to custom the request to get items. Possibility to modify this part only in modules to change the behaviour of the multiple select request.
+	 */
+	protected function init_get_items_additional_parameters()
+	{
+		$this->get_items_static_select = '';
+		$this->get_items_static_join_table = '';
+		$this->get_items_static_condition = '';
+		$this->get_items_static_sort_field = '';
+		$this->get_items_static_sort_mode = 'ASC';
 	}
 
 	 /**
@@ -133,21 +153,23 @@ class ItemsManager
 	 * @param int $display_from First item to take into account
 	 * @param string $sort_field Field on which apply the sorting
 	 * @param string $sort_mode Sort mode (asc or desc)
+	 * @param bool $keywords Join keywords relations or not
 	 */
 	public function get_items($condition = '', array $parameters = array(), int $number_items_per_page = 0, int $display_from = 0, $sort_field = '', $sort_mode = 'DESC', $keywords = false)
 	{
 		$now = new Date();
 		$items = array();
 
-		$result = self::$db_querier->select('SELECT ' . self::$module_id . '.*, member.*, comments_topic.comments_number, average_notes.average_notes, average_notes.notes_number, note.note
+		$result = self::$db_querier->select('SELECT ' . self::$module_id . '.*, member.*, comments_topic.comments_number, average_notes.average_notes, average_notes.notes_number, note.note' . ($this->get_items_static_select ? ', ' . $this->get_items_static_select : '') . '
 		FROM ' . self::$items_table . ' ' . self::$module_id . '
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = ' . self::$module_id . '.author_user_id
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' comments_topic ON comments_topic.module_id = :module_id AND comments_topic.id_in_module = ' . self::$module_id . '.id
 		' . ($keywords ? 'LEFT JOIN ' . DB_TABLE_KEYWORDS_RELATIONS . ' keywords_relations ON keywords_relations.module_id = :module_id AND keywords_relations.id_in_module = ' . self::$module_id . '.id' : '') . '
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' average_notes ON average_notes.module_name = :module_id AND average_notes.id_in_module = ' . self::$module_id . '.id
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.module_name = :module_id AND note.id_in_module = ' . self::$module_id . '.id AND note.user_id = :current_user_id
-		' . $condition . '
-		' . ($sort_field ? 'ORDER BY ' . $sort_field . ' ' . $sort_mode : '') . '
+		' . $this->get_items_static_join_table . '
+		' . $condition . ($this->get_items_static_condition ? ($condition ? ' AND ' : 'WHERE ') . $this->get_items_static_condition : '') . '
+		' . ($this->get_items_static_sort_field || $sort_field ? 'ORDER BY ' : '') . ($this->get_items_static_sort_field ? $this->get_items_static_sort_field . ' ' . $this->get_items_static_sort_mode : '') . ($this->get_items_static_sort_field && $sort_field ? ', ' : '') . ($sort_field ? $sort_field . ' ' . $sort_mode : '') . '
 		' . ($number_items_per_page ? 'LIMIT :number_items_per_page OFFSET :display_from' : ''), array_merge($parameters, array(
 			'module_id'             => self::$module_id,
 			'current_user_id'       => AppContext::get_current_user()->get_id(),
