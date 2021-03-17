@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 15
+ * @version     PHPBoost 6.0 - last update: 2021 03 17
  * @since       PHPBoost 6.0 - 2020 01 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -184,7 +184,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 		{
 			$id = $this->request->get_getstring('id_category', Category::ROOT_CATEGORY);
 			try {
-				$this->category = CategoriesService::get_categories_manager(self::get_module()->get_id())->get_categories_cache()->get_category($id);
+				$this->category = CategoriesService::get_categories_manager(self::$module_id)->get_categories_cache()->get_category($id);
 			} catch (CategoryNotFoundException $e) {
 				$this->display_unexisting_page();
 			}
@@ -411,7 +411,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 			return ($authorizations->write() || $authorizations->contribution() || $authorizations->moderation()) ? true : $this->display_user_not_authorized_page();
 	}
 
-	private function generate_response()
+	protected function generate_response()
 	{
 		$response = new SiteDisplayResponse($this->view);
 
@@ -437,6 +437,9 @@ class DefaultSeveralItemsController extends AbstractItemController
 			}
 		}
 		else if (!$this->display_published_items_list)
+			$breadcrumb->add($this->page_title, $this->current_url);
+		
+		if (self::get_module_configuration()->has_categories() && $this->category && !in_array($this->page_title, array($this->category->get_name(), self::get_module_configuration()->get_name())))
 			$breadcrumb->add($this->page_title, $this->current_url);
 
 		return $response;
