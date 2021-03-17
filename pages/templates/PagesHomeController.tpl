@@ -5,7 +5,7 @@
 			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF ## ENDIF #
 		</div>
 		<h1 class="flex-between">
-			{@module.title}
+			{MODULE_NAME}
 		</h1>
 	</header>
 
@@ -66,7 +66,7 @@
 											<ul class="items-list-{categories.CATEGORY_ID}">
 												# IF C_CONTROLS #
 													# IF categories.C_SEVERAL_ITEMS #
-														<a class="reorder-items" href="{categories.U_REORDER_ITEMS}" aria-label="${LangLoader::get_message('reorder', 'common')}"><i class="fa fa-fw fa-exchange-alt"></i></a>
+														<a class="reorder-items" href="{categories.U_REORDER_ITEMS}" aria-label="{@items.reorder}"><i class="fa fa-fw fa-exchange-alt"></i></a>
 													# ENDIF #
 												# ENDIF #
 												# START categories.items #

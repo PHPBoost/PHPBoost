@@ -20,6 +20,7 @@ class PagesConfig extends DefaultRichModuleConfig
 	public function get_additional_default_values()
 	{
 		return array(
+			self::SORT_FORM_DISPLAYED   => false,
 			self::VIEWS_NUMBER_ENABLED  => true,
 			self::DISPLAY_TYPE          => self::TABLE_VIEW,
 			self::AUTHORIZATIONS        => array('r-1' => 33, 'r0' => 37, 'r1' => 61),
