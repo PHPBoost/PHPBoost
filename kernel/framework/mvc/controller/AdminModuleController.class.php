@@ -19,7 +19,7 @@ abstract class AdminModuleController extends AbstractController
 
 	public static function __static()
 	{
-		self::$module_id = self::$module_id ? self::$module_id : self::$module_id = Environment::get_running_module_name();
+		self::$module_id = self::$module_id ? self::$module_id : Environment::get_running_module_name();
 	}
 	
 	public function __construct($module_id = '')
