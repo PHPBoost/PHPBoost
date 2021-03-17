@@ -29,14 +29,14 @@ class PagesHomeController extends DefaultSeveralItemsController
 				$id_parent = $categories[$id_parent]->get_id_parent();
 			}
 		}
-		
+
 		$this->view->put_all(array(
 			'C_ROOT_SEVERAL_ITEMS'   => $categories_elements_number[Category::ROOT_CATEGORY] > 1,
 			'C_CONTROLS'             => AppContext::get_current_user()->get_level() == User::ADMIN_LEVEL,
 			'C_CATEGORY_DESCRIPTION' => !empty($this->config->get_root_category_description()),
 			'CATEGORY_DESCRIPTION'   => FormatingHelper::second_parse($this->config->get_root_category_description()),
 			'TOTAL_ITEMS'            => $total_items_number,
-			'U_ROOT_REORDER_ITEMS'   => ItemsUrlBuilder::specific_page('reorder', self::$module_id)->rel()
+			'U_ROOT_REORDER_ITEMS'   => ItemsUrlBuilder::specific_page('reorder', self::$module_id, array(Category::ROOT_CATEGORY))->rel()
 		));
 
 		// Root category pages
@@ -44,7 +44,7 @@ class PagesHomeController extends DefaultSeveralItemsController
 		{
 			$this->view->assign_block_vars('root_items', $item->get_template_vars());
 		}
-		
+
 		foreach ($categories as $id => $category)
 		{
 			if ($id != Category::ROOT_CATEGORY && in_array($id, $authorized_categories))
