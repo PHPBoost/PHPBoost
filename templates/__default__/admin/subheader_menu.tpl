@@ -5,7 +5,7 @@
 				<a data-modal data-target="openmodal-administration"><i aria-hidden="true" class="fa fa-fw fa-cog"></i><span>{L_ADMINISTRATION}</span></a>
 			</li>
 			<li class="admin-li">
-				<a data-modal data-target="openmodal-tools"><i aria-hidden="true" class="fa fa-fw fa-wrench"></i><span>tools</span></a>
+				<a data-modal data-target="openmodal-tools"><i aria-hidden="true" class="fa fa-fw fa-wrench"></i><span>{L_TOOLS}</span></a>
 			</li>
 			<li class="admin-li">
 				<a data-modal data-target="openmodal-users"><i aria-hidden="true" class="fa fa-fw fa-user"></i><span>{L_USER}</span></a>
@@ -25,7 +25,7 @@
 			<div class="content-panel">
 				<div class="next-menu">
 					<a data-modal data-target="openmodal-modules"><i aria-hidden="true" class="fa fa-arrow-left"></i> {L_MODULES}</a>
-					<a data-modal data-target="openmodal-tools">tools <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
+					<a data-modal data-target="openmodal-tools">{L_TOOLS} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
 				</div>
 				<ul class="modal-menu">
 					<li>
