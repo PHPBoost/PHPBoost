@@ -35,6 +35,11 @@
 				<article class="pages-item several-items">
 					<div class="content">
 						<ul>
+							# IF C_CONTROLS #
+								# IF C_ROOT_SEVERAL_ITEMS #
+									<a class="reorder-items" href="{U_ROOT_REORDER_ITEMS}" aria-label="{@items.reorder}"><i class="fa fa-fw fa-exchange-alt"></i></a>
+								# ENDIF #
+							# ENDIF #
 							# START root_items #
 								<li class="flex-between">
 									<a class="categories-item d-block" href="{root_items.U_ITEM}"><i class="fa fa-fw fa-file-alt"></i> {root_items.TITLE}</a>

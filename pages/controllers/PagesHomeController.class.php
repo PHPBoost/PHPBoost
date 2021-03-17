@@ -12,13 +12,31 @@ class PagesHomeController extends DefaultSeveralItemsController
 {
 	protected function build_view()
 	{
+		$categories = CategoriesService::get_categories_manager(self::$module_id)->get_categories_cache()->get_categories();
 		$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, true, self::$module_id);
+		$total_items_number = self::get_items_manager()->count();
+		$categories_elements_number = array(Category::ROOT_CATEGORY => $total_items_number);
+
+		foreach ($categories as $id => $category)
+		{
+			$current_category_elements_number = $category->get_elements_number();
+			$id_parent = $category->get_id_parent();
+
+			while ($id_parent != Category::ROOT_CATEGORY)
+			{
+				$parent_elements_number = (int)(isset($categories_elements_number[$id_parent]) ? $categories_elements_number[$id_parent] : $categories[$id_parent]->get_elements_number());
+				$categories_elements_number[$id_parent] = $parent_elements_number - (int)$category->get_elements_number();
+				$id_parent = $categories[$id_parent]->get_id_parent();
+			}
+		}
 		
 		$this->view->put_all(array(
+			'C_ROOT_SEVERAL_ITEMS'   => $categories_elements_number[Category::ROOT_CATEGORY] > 1,
 			'C_CONTROLS'             => AppContext::get_current_user()->get_level() == User::ADMIN_LEVEL,
 			'C_CATEGORY_DESCRIPTION' => !empty($this->config->get_root_category_description()),
 			'CATEGORY_DESCRIPTION'   => FormatingHelper::second_parse($this->config->get_root_category_description()),
-			'TOTAL_ITEMS'            => self::get_items_manager()->count()
+			'TOTAL_ITEMS'            => $total_items_number,
+			'U_ROOT_REORDER_ITEMS'   => ItemsUrlBuilder::specific_page('reorder', self::$module_id)->rel()
 		));
 
 		// Root category pages
@@ -26,14 +44,15 @@ class PagesHomeController extends DefaultSeveralItemsController
 		{
 			$this->view->assign_block_vars('root_items', $item->get_template_vars());
 		}
-
-		foreach (CategoriesService::get_categories_manager(self::$module_id)->get_categories_cache()->get_categories() as $id => $category)
+		
+		foreach ($categories as $id => $category)
 		{
 			if ($id != Category::ROOT_CATEGORY && in_array($id, $authorized_categories))
 			{
+				$category_elements_number = isset($categories_elements_number[$id]) ? $categories_elements_number[$id] : $category->get_elements_number();
 				$this->view->assign_block_vars('categories', array(
-					'C_ITEMS'            => $category->get_elements_number() > 0,
-					'C_SEVERAL_ITEMS'    => $category->get_elements_number() > 1,
+					'C_ITEMS'            => $category_elements_number > 0,
+					'C_SEVERAL_ITEMS'    => $category_elements_number > 1,
 					'ITEMS_NUMBER'       => $category->get_elements_number(),
 					'CATEGORY_ID'        => $category->get_id(),
 					'CATEGORY_SUB_ORDER' => $category->get_order(),
