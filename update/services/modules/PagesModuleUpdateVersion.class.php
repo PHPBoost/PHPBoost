@@ -59,6 +59,7 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 		// 6.0.b1
 		self::$delete_old_folders_list = array(
 			'/services',
+			'/util',
 		);
 
 		$this->database_columns_to_modify = array(
