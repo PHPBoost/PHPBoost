@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 16
+ * @version     PHPBoost 6.0 - last update: 2021 03 17
  * @since       PHPBoost 5.2 - 2020 06 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -40,7 +40,7 @@ class PagesHomeController extends DefaultSeveralItemsController
 					'CATEGORY_PARENT_ID' => $category->get_id_parent(),
 					'CATEGORY_NAME'      => $category->get_name(),
 					'U_CATEGORY'         => ItemsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), self::$module_id)->rel(),
-					'U_REORDER_ITEMS'    => PagesUrlBuilder::reorder_items($category->get_id(), $category->get_rewrited_name())->rel()
+					'U_REORDER_ITEMS'    => ItemsUrlBuilder::specific_page('reorder', self::$module_id, array($category->get_id() . '-' . $category->get_rewrited_name()))->rel()
 				));
 
 				foreach (self::get_items_manager()->get_items($this->sql_condition, array('id_category' => $id)) as $item)
