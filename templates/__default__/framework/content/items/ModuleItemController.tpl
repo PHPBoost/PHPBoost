@@ -31,22 +31,12 @@
 								# ENDIF #
 							# ENDIF #
 							# IF C_ENABLED_DATE #
-								<span class="pinned">
+								<span class="pinned" aria-label="{@form.date.creation}">
 									<i class="far fa-calendar-alt" aria-hidden="true"></i>
 									<time datetime="# IF C_DEFFERED_PUBLISHING #{DEFFERED_PUBLISHING_START_DATE_ISO8601}# ELSE #{DATE_ISO8601}# ENDIF #" itemprop="datePublished">
 										# IF C_DEFFERED_PUBLISHING #{DEFFERED_PUBLISHING_START_DATE}# ELSE #{DATE}# ENDIF #
 									</time>
 								</span>
-							# ENDIF #
-							# IF C_ENABLED_UPDATE_DATE #
-								# IF C_HAS_UPDATE_DATE #
-								<span class="pinned">
-									<i class="far fa-calendar-plus" aria-hidden="true"></i>
-									<time datetime="{UPDATE_DATE_ISO8601}" itemprop="dateModified">
-										{UPDATE_DATE}
-									</time>
-								</span>
-								# ENDIF #
 							# ENDIF #
 							# IF C_HAS_CATEGORY #
 								# IF NOT C_ROOT_CATEGORY #
@@ -73,18 +63,18 @@
 								# ENDIF #
 							# ENDIF #
 						</div>
+					# ELSE #
+						<div></div>
 					# ENDIF #
 
 					# IF C_CONTROLS #
-						# IF NOT C_MORE_OPTIONS #
-							<div></div>
-						# ENDIF #
 						<div class="controls align-right">
 							# IF C_EDIT #<a href="{U_EDIT}" aria-label="{@edit}"><i class="far fa-fw fa-edit"></i></a># ENDIF #
 							# IF C_DELETE #<a href="{U_DELETE}" data-confirmation="delete-element" aria-label="{@delete}"><i class="far fa-fw fa-trash-alt"></i></a># ENDIF #
 						</div>
 					# ENDIF #
 				</div>
+				# IF C_HAS_UPDATE_DATE #<span class="pinned notice small text-italic modified-date">{@status.last.update} <time datetime="{UPDATE_DATE_ISO8601}" itemprop="dateModified">{UPDATE_DATE_FULL}</time></span># ENDIF #
 
 				<div class="content cell-tile">
 					# IF C_CELL_OPTIONS #
@@ -198,7 +188,6 @@
 
 					<div itemprop="text">{CONTENT}</div>
 				</div>
-				# IF C_HAS_UPDATE_DATE #<span class="pinned notice small text-italic modified-date">{@status.last.update} <time datetime="{UPDATE_DATE_ISO8601}" itemprop="dateModified">{UPDATE_DATE_FULL}</time></span># ENDIF #
 
 				# IF C_AUTHOR_DISPLAYED #
 					# IF NOT C_AUTHOR_CUSTOM_NAME #
