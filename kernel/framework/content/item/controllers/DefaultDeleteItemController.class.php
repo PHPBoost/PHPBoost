@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 24
+ * @version     PHPBoost 6.0 - last update: 2021 03 18
  * @since       PHPBoost 6.0 - 2019 12 20
 */
 
@@ -45,7 +45,7 @@ class DefaultDeleteItemController extends AbstractItemController
 
 	protected function check_authorizations()
 	{
-		return ($this->item->is_authorized_to_manage() && !AppContext::get_current_user()->is_readonly());
+		return ($this->item->is_authorized_to_delete() && !AppContext::get_current_user()->is_readonly());
 	}
 
 	protected function display_response()

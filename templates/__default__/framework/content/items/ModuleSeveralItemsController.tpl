@@ -205,8 +205,8 @@
 										# ENDIF #
 										# IF items.C_CONTROLS #
 											<td class="controls">
-												<a href="{items.U_EDIT}" aria-label="{@edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
-												<a href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="{@delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+												# IF items.C_EDIT #<a href="{items.U_EDIT}" aria-label="{@edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
+												# IF items.C_DELETE #<a href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="{@delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
 											</td>
 										# ENDIF #
 									</tr>
@@ -297,8 +297,8 @@
 										</div>
 										# IF items.C_CONTROLS #
 											<div class="controls align-right">
-												<a href="{items.U_EDIT}" aria-label="{@edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
-												<a href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="{@delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+												# IF items.C_EDIT #<a href="{items.U_EDIT}" aria-label="{@edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
+												# IF items.C_DELETE #<a href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="{@delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
 											</div>
 										# ENDIF #
 									</div>

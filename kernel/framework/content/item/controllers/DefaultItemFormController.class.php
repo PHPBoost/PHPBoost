@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 15
+ * @version     PHPBoost 6.0 - last update: 2021 03 18
  * @since       PHPBoost 6.0 - 2020 05 16
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -84,7 +84,7 @@ class DefaultItemFormController extends AbstractItemController
 
 	protected function check_authorizations()
 	{
-		if (($this->is_new_item && !$this->get_item()->is_authorized_to_add()) || (!$this->is_new_item && !$this->get_item()->is_authorized_to_manage()))
+		if (($this->is_new_item && !$this->get_item()->is_authorized_to_add()) || (!$this->is_new_item && !$this->get_item()->is_authorized_to_edit()))
 			$this->display_user_not_authorized_page();
 		if (AppContext::get_current_user()->is_readonly())
 			$this->display_user_in_read_only_page();

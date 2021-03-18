@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 15
+ * @version     PHPBoost 6.0 - last update: 2021 03 18
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -312,7 +312,12 @@ class Item
 		return $this->get_authorizations_checker()->write() || $this->get_authorizations_checker()->contribution();
 	}
 
-	public function is_authorized_to_manage()
+	public function is_authorized_to_edit()
+	{
+		return $this->get_authorizations_checker()->moderation() || (($this->get_authorizations_checker()->write() || ($this->get_authorizations_checker()->contribution() && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))));
+	}
+
+	public function is_authorized_to_delete()
 	{
 		return $this->get_authorizations_checker()->moderation() || (($this->get_authorizations_checker()->write() || ($this->get_authorizations_checker()->contribution() && !$this->is_published())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
@@ -696,7 +701,9 @@ class Item
 			$sources_template_vars,
 			array(
 			// Conditions
-			'C_CONTROLS'            => $this->is_authorized_to_manage(),
+			'C_CONTROLS'            => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
+			'C_EDIT'                => $this->is_authorized_to_edit(),
+			'C_DELETE'              => $this->is_authorized_to_delete(),
 			'C_AUTHOR_EXIST'        => $author->get_id() !== User::VISITOR_LEVEL,
 			'C_AUTHOR_GROUP_COLOR'  => !empty($author_group_color),
 			'C_HAS_UPDATE_DATE'     => $this->has_update_date(),
@@ -710,6 +717,7 @@ class Item
 			'AUTHOR_DISPLAY_NAME'                             => $author->get_display_name(),
 			'AUTHOR_LEVEL_CLASS'                              => UserService::get_level_class($author->get_level()),
 			'AUTHOR_GROUP_COLOR'                              => $author_group_color,
+			'STATUS'                                          => $this->get_status(),
 
 			// Links
 			'U_AUTHOR'      => UserUrlBuilder::profile($author->get_id())->rel(),
