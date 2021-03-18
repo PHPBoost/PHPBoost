@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 15
+ * @version     PHPBoost 6.0 - last update: 2021 03 18
  * @since       PHPBoost 6.0 - 2020 01 23
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -14,8 +14,30 @@
 class RichItem extends Item
 {
 	protected $summary_field_enabled = true;
+	protected $author_custom_name_field_enabled = true;
+	protected $thumbnail_field_enabled = true;
 	
 	const THUMBNAIL_URL = '/templates/__default__/images/default_item_thumbnail.png';
+
+	protected function set_kernel_additional_attributes_list()
+	{
+		$this->add_additional_attribute('views_number', array('type' => 'integer', 'length' => 11, 'default' => 0));
+
+		if ($this->content_field_enabled && $this->summary_field_enabled)
+			$this->add_additional_attribute('summary', array('type' => 'text', 'length' => 65000, 'fulltext' => true));
+
+		if ($this->author_custom_name_field_enabled)
+			$this->add_additional_attribute('author_custom_name', array('type' => 'string', 'length' => 255, 'default' => "''"));
+
+		if ($this->thumbnail_field_enabled)
+			$this->add_additional_attribute('thumbnail', array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''", 'attribute_options_field_parameters' => array(
+				'field_class'     => 'FormFieldThumbnail',
+				'label'           => LangLoader::get_message('form.picture', 'common'),
+				'value'           => FormFieldThumbnail::DEFAULT_VALUE,
+				'default_picture' => self::THUMBNAIL_URL
+				)
+			));
+	}
 
 	protected function disable_summary_field()
 	{
@@ -27,22 +49,24 @@ class RichItem extends Item
 		return $this->summary_field_enabled;
 	}
 
-	protected function set_kernel_additional_attributes_list()
+	protected function disable_author_custom_name_field()
 	{
-		$this->add_additional_attribute('views_number', array('type' => 'integer', 'length' => 11, 'default' => 0));
+		$this->author_custom_name_field_enabled = false;
+	}
 
-		if ($this->content_field_enabled && $this->summary_field_enabled)
-			$this->add_additional_attribute('summary', array('type' => 'text', 'length' => 65000, 'fulltext' => true));
+	public function author_custom_name_field_enabled()
+	{
+		return $this->author_custom_name_field_enabled;
+	}
 
-		$this->add_additional_attribute('author_custom_name', array('type' => 'string', 'length' => 255, 'default' => "''"));
+	protected function disable_thumbnail_field()
+	{
+		$this->thumbnail_field_enabled = false;
+	}
 
-		$this->add_additional_attribute('thumbnail', array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''", 'attribute_options_field_parameters' => array(
-			'field_class'     => 'FormFieldThumbnail',
-			'label'           => LangLoader::get_message('form.picture', 'common'),
-			'value'           => FormFieldThumbnail::DEFAULT_VALUE,
-			'default_picture' => self::THUMBNAIL_URL
-			)
-		));
+	public function thumbnail_field_enabled()
+	{
+		return $this->thumbnail_field_enabled;
 	}
 
 	public function get_views_number()
@@ -124,12 +148,17 @@ class RichItem extends Item
 		if ($this->content_field_enabled)
 		{
 			$this->set_content(self::$module->get_configuration()->get_configuration_parameters()->get_default_content());
-			$this->set_summary('');
+			if ($this->summary_field_enabled)
+				$this->set_summary('');
 		}
 		
 		$this->set_views_number(0);
-		$this->set_author_custom_name('');
-		$this->set_thumbnail(FormFieldThumbnail::DEFAULT_VALUE);
+
+		if ($this->author_custom_name_field_enabled)
+			$this->set_author_custom_name('');
+
+		if ($this->thumbnail_field_enabled)
+			$this->set_thumbnail(FormFieldThumbnail::DEFAULT_VALUE);
 	}
 
 	protected static function get_kernel_additional_sorting_fields()
@@ -144,18 +173,18 @@ class RichItem extends Item
 
 		return array(
 			// Conditions
-			'C_HAS_THUMBNAIL'      => $this->has_thumbnail(),
-			'C_AUTHOR_CUSTOM_NAME' => $this->is_author_custom_name_enabled(),
+			'C_HAS_THUMBNAIL'      => $this->thumbnail_field_enabled && $this->has_thumbnail(),
+			'C_AUTHOR_CUSTOM_NAME' => $this->author_custom_name_field_enabled && $this->is_author_custom_name_enabled(),
 			'C_READ_MORE'          => $this->content_field_enabled && $this->summary_field_enabled && !$this->get_additional_property('summary') && TextHelper::strlen($content) > self::$module->get_configuration()->get_configuration_parameters()->get_auto_cut_characters_number() && $summary != @strip_tags($content, '<br><br/>'),
 			'C_SEVERAL_VIEWS'      => $this->get_views_number() > 1,
 
 			// Item parameters
 			'SUMMARY'              => $summary,
-			'AUTHOR_CUSTOM_NAME'   => $this->get_author_custom_name(),
+			'AUTHOR_CUSTOM_NAME'   => $this->author_custom_name_field_enabled ? $this->get_author_custom_name() : '',
 			'VIEWS_NUMBER'         => $this->get_views_number(),
 
 			// Links
-			'U_THUMBNAIL'          => $this->get_thumbnail()->rel()
+			'U_THUMBNAIL'          => $this->thumbnail_field_enabled ? $this->get_thumbnail()->rel() : ''
 		);
 	}
 }

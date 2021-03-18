@@ -247,7 +247,7 @@ class DefaultItemFormController extends AbstractItemController
 				));
 			}
 
-			if ($this->config->get_author_displayed())
+			if ($this->config->get_author_displayed() && $this->module_item->author_custom_name_field_enabled())
 			{
 				$fieldset->add_field(new FormFieldCheckbox('author_custom_name_enabled', $this->common_lang['form.author_custom_name_enabled'], $this->get_item()->is_author_custom_name_enabled(),
 					array('events' => array('click' => '
@@ -325,7 +325,7 @@ class DefaultItemFormController extends AbstractItemController
 			if ($this->module_item->content_field_enabled() && $this->module_item->summary_field_enabled())
 				$this->get_item()->set_summary(($this->form->get_value('summary_enabled') ? $this->form->get_value('summary') : ''));
 
-			if ($this->config->get_author_displayed())
+			if ($this->config->get_author_displayed() && $this->module_item->author_custom_name_field_enabled())
 				$this->get_item()->set_author_custom_name(($this->form->get_value('author_custom_name') && $this->form->get_value('author_custom_name') !== $this->get_item()->get_author_user()->get_display_name() ? $this->form->get_value('author_custom_name') : ''));
 		}
 
