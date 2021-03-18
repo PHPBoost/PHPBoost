@@ -29,33 +29,33 @@
 
 	# IF C_DISPLAY_SUB_CATEGORIES #
 		# IF C_SUB_CATEGORIES #
-		<div class="sub-section">
-			<div class="content-container">
-				<div class="cell-flex cell-tile cell-columns-{CATEGORIES_PER_ROW}">
-					# START sub_categories_list #
-						<div class="cell category-{sub_categories_list.CATEGORY_ID}" itemscope>
-							<div class="cell-header">
-								<h5 class="cell-name" itemprop="about"><a href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
-								<span class="small pinned notice" aria-label="{sub_categories_list.ITEMS_NUMBER} # IF sub_categories_list.C_SEVERAL_ITEMS #{@items}# ELSE #{@item}# ENDIF #">
-									{sub_categories_list.ITEMS_NUMBER}
-								</span>
-							</div>
-							# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
-								<div class="cell-body">
-									<div class="cell-thumbnail cell-landscape cell-center">
-										<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
-										<a class="cell-thumbnail-caption" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
-											${LangLoader::get_message('see.category', 'categories-common')}
-										</a>
-									</div>
+			<div class="sub-section">
+				<div class="content-container">
+					<div class="cell-flex cell-tile cell-columns-{CATEGORIES_PER_ROW}">
+						# START sub_categories_list #
+							<div class="cell category-{sub_categories_list.CATEGORY_ID}" itemscope>
+								<div class="cell-header">
+									<h5 class="cell-name" itemprop="about"><a href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
+									<span class="small pinned notice" aria-label="{sub_categories_list.ITEMS_NUMBER} # IF sub_categories_list.C_SEVERAL_ITEMS #{@items}# ELSE #{@item}# ENDIF #">
+										{sub_categories_list.ITEMS_NUMBER}
+									</span>
 								</div>
-							# ENDIF #
-						</div>
-					# END sub_categories_list #
+								# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
+									<div class="cell-body">
+										<div class="cell-thumbnail cell-landscape cell-center">
+											<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
+											<a class="cell-thumbnail-caption" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
+												${LangLoader::get_message('see.category', 'categories-common')}
+											</a>
+										</div>
+									</div>
+								# ENDIF #
+							</div>
+						# END sub_categories_list #
+					</div>
+					# IF C_SUBCATEGORIES_PAGINATION #<div class="align-center"># INCLUDE SUBCATEGORIES_PAGINATION #</div># ENDIF #
 				</div>
-				# IF C_SUBCATEGORIES_PAGINATION #<div class="align-center"># INCLUDE SUBCATEGORIES_PAGINATION #</div># ENDIF #
 			</div>
-		</div>
 		# ENDIF #
 	# ENDIF #
 
