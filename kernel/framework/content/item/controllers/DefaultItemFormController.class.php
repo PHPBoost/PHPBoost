@@ -135,7 +135,7 @@ class DefaultItemFormController extends AbstractItemController
 		if ($this->get_item()->content_field_enabled())
 		{
 			$fieldset->add_field(new FormFieldRichTextEditor($this->item_class::get_content_label(), $this->common_lang['form.content'], $this->get_item()->get_content(),
-				array('rows' => 15, 'required' => true)
+				array('rows' => 15, 'required' => $this->get_item()->content_field_required())
 			));
 		}
 
@@ -231,7 +231,7 @@ class DefaultItemFormController extends AbstractItemController
 	{
 		if (self::get_module_configuration()->has_rich_items())
 		{
-			if ($this->module_item->content_field_enabled() && $this->module_item->summary_field_enabled())
+			if ($this->get_item()->content_field_enabled() && $this->get_item()->summary_field_enabled())
 			{
 				$fieldset->add_field(new FormFieldCheckbox('summary_enabled', $this->common_lang['form.custom.summary.enabled'], $this->get_item()->is_summary_enabled(),
 					array('description' => StringVars::replace_vars($this->common_lang['form.custom.summary.enabled.description'], array('number' => $this->config->get_auto_cut_characters_number())), 'events' => array('click' => '
@@ -247,7 +247,7 @@ class DefaultItemFormController extends AbstractItemController
 				));
 			}
 
-			if ($this->config->get_author_displayed() && $this->module_item->author_custom_name_field_enabled())
+			if ($this->config->get_author_displayed() && $this->get_item()->author_custom_name_field_enabled())
 			{
 				$fieldset->add_field(new FormFieldCheckbox('author_custom_name_enabled', $this->common_lang['form.author_custom_name_enabled'], $this->get_item()->is_author_custom_name_enabled(),
 					array('events' => array('click' => '
@@ -322,10 +322,10 @@ class DefaultItemFormController extends AbstractItemController
 
 		if (self::get_module_configuration()->has_rich_items())
 		{
-			if ($this->module_item->content_field_enabled() && $this->module_item->summary_field_enabled())
+			if ($this->get_item()->content_field_enabled() && $this->get_item()->summary_field_enabled())
 				$this->get_item()->set_summary(($this->form->get_value('summary_enabled') ? $this->form->get_value('summary') : ''));
 
-			if ($this->config->get_author_displayed() && $this->module_item->author_custom_name_field_enabled())
+			if ($this->config->get_author_displayed() && $this->get_item()->author_custom_name_field_enabled())
 				$this->get_item()->set_author_custom_name(($this->form->get_value('author_custom_name') && $this->form->get_value('author_custom_name') !== $this->get_item()->get_author_user()->get_display_name() ? $this->form->get_value('author_custom_name') : ''));
 		}
 

@@ -38,6 +38,7 @@ class Item
 	protected $additional_attributes_items_table_options = array();
 
 	protected $content_field_enabled = true;
+	protected $content_field_required = true;
 	protected $sub_categories_displayed = true;
 
 	const READ_AUTHORIZATIONS = 1;
@@ -397,6 +398,16 @@ class Item
 	public function content_field_enabled()
 	{
 		return $this->content_field_enabled;
+	}
+
+	protected function unrequire_content_field()
+	{
+		$this->content_field_required = false;
+	}
+
+	public function content_field_required()
+	{
+		return $this->content_field_required;
 	}
 
 	protected function hide_sub_categories()
