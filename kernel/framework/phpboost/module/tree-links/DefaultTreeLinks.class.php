@@ -79,7 +79,7 @@ class DefaultTreeLinks implements ModuleTreeLinksExtensionPoint
 			$lang = ItemsService::get_items_lang($this->module_id);
 
 			$tree->add_link(new ModuleLink($lang['items.manage'], ItemsUrlBuilder::manage($this->module_id), $this->authorizations->moderation()));
-			$tree->add_link(new ModuleLink$tree->add_link(new ModuleLink($lang['item.add'], $this->get_add_item_url(), $this->check_write_authorization()));
+			$tree->add_link(new ModuleLink($lang['item.add'], $this->get_add_item_url(), $this->check_write_authorization()));
 
 			$this->get_module_additional_items_actions_tree_links($tree);
 
