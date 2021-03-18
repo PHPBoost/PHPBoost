@@ -77,11 +77,11 @@
 
 .form-element-preview, .form-element-reset {
 	margin: 0.309em auto 0 auto;
-	text-align: center;
-	display: inline;
+	text-align: center;	
 }
 
 @media (min-width: 1025px) {
+	.form-element-preview, .form-element-reset { display: inline; }
 	.form-element-textarea > label { width: 100%; }
 }
 

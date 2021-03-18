@@ -153,7 +153,10 @@ select {
 .form-element-preview, .form-element-reset {
 	margin-top: 0.309em;
 	text-align: center;
-	display: inline-block;
+}
+
+@media (min-width: 769px) {
+	.form-element-preview, .form-element-reset { display: inline-block; }
 }
 
 /* --- Authorizations --- */

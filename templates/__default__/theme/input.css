@@ -6,8 +6,8 @@
 
 .button {
 	height: auto;
-	margin: 0.618em;
-	padding: 0.309em 1em;
+	padding: 0.618em 1.618em;
+	margin: 0.309em 0;
 	border-width: 1px;
 	border-style: solid;
 	border-color: transparent;
@@ -15,6 +15,14 @@
 	text-align: center;
 	display: inline-block;
 	transition: all 0.2s steps(3, end);
+	width: 100%;
+}
+
+@media (min-width: 769px) {
+	.button {
+		width: auto;
+		margin: 0.618em;
+	}
 }
 
 .button:hover  { transition: all 0.3s ease-in-out; text-decoration: none;}
