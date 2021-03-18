@@ -53,7 +53,7 @@
 									<li class="align-center">
 										<input type="hidden" name="redirect" value="{SITE_REWRITED_SCRIPT}">
 										<input type="hidden" name="token" value="{TOKEN}">
-										<button type="submit" name="authenticate" value="internal" class="button submit">{@connection}</button>
+										<button type="submit" name="authenticate" value="internal" class="button submit small">{@connection}</button>
 									</li>
 								</ul>
 							</form>
@@ -65,7 +65,7 @@
 								<form action="${relative_url(UserUrlBuilder::registration())}" method="post">
 									<ul>
 										<li class="align-center">
-											<button type="submit" name="register" value="true" class="button submit">{@register}</button>
+											<button type="submit" name="register" value="true" class="button submit small">{@register}</button>
 											<input type="hidden" name="token" value="{TOKEN}">
 										</li>
 									</ul>
@@ -79,7 +79,7 @@
 							</li>
 						# ENDIF #
 						<li class="align-center">
-							<a class="button small" href="${relative_url(UserUrlBuilder::forget_password())}">
+							<a class="button smaller" href="${relative_url(UserUrlBuilder::forget_password())}">
 								<i class="fa fa-question-circle" aria-hidden="true"></i> <span>${LangLoader::get_message('forget-password', 'user-common')}</span>
 							</a>
 						</li>
