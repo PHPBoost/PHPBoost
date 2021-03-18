@@ -33,7 +33,7 @@ class PagesItem extends RichItem
 	protected function get_additional_template_vars()
 	{
 		return array(
-			'C_AUTHOR_DISPLAYED' => $this->get_additional_property('top_list_enabled')
+			'C_AUTHOR_DISPLAYED' => $this->get_additional_property('author_display')
 		);
 	}
 }
