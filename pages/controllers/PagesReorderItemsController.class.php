@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 16
+ * @version     PHPBoost 6.0 - last update: 2021 03 18
  * @since       PHPBoost 5.2 - 2020 06 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -29,7 +29,7 @@ class PagesReorderItemsController extends DefaultSeveralItemsController
 	protected function init()
 	{
 		parent::init();
-		$this->page_title = $this->lang['items.reordering'];
+		$this->customized_page_title = $this->lang['items.reordering'];
 		$this->page_description = '';
 		$this->current_url = ItemsUrlBuilder::specific_page('reorder', self::$module_id, $this->category->get_id() != Category::ROOT_CATEGORY ? array($this->get_category()->get_id() . '-' . $this->get_category()->get_rewrited_name()) : array());
 	}
