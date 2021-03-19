@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 08 02
+ * @version     PHPBoost 6.0 - last update: 2021 03 20
  * @since       PHPBoost 5.0 - 2016 07 31
 */
 
@@ -61,6 +61,7 @@ class CLIUpdateCommand implements CLICommand
 		$this->update = new UpdateServices();
 		if ($this->update->database_config_file_checked())
 		{
+			$this->update->generate_update_token();
 			CLIOutput::writeln("\t" . 'executing update...');
 			$this->update->execute();
 			CLIOutput::writeln('update successfull');

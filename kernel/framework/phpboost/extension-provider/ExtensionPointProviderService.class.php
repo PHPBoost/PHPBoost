@@ -8,9 +8,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 12
+ * @version     PHPBoost 6.0 - last update: 2021 03 20
  * @since       PHPBoost 2.0 - 2008 01 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class ExtensionPointProviderService
@@ -33,6 +34,7 @@ class ExtensionPointProviderService
 		$this->register_provider('kernel');
 		$this->register_provider('user');
 		$this->register_provider('install');
+		$this->register_provider('update');
 	}
 
     /**

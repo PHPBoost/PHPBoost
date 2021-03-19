@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 27
+ * @version     PHPBoost 6.0 - last update: 2021 03 20
  * @since       PHPBoost 5.2 - 2019 10 26
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -464,7 +464,7 @@ class NginxFileCache implements CacheData
 
 	private static function update_nginx_file()
 	{
-		if (!preg_match('/apache/i', $_SERVER["SERVER_SOFTWARE"]))
+		if (isset($_SERVER["SERVER_SOFTWARE"]) && !preg_match('/apache/i', $_SERVER["SERVER_SOFTWARE"]))
 		{
 			$file = new File(PATH_TO_ROOT . '/nginx.conf');
 
