@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 18
+ * @version     PHPBoost 6.0 - last update: 2021 03 19
  * @since       PHPBoost 5.2 - 2020 06 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -30,7 +30,7 @@ class PagesHomeController extends DefaultSeveralItemsController
 
 		$this->view->put_all(array(
 			'C_ROOT_SEVERAL_ITEMS'   => $categories_elements_number[Category::ROOT_CATEGORY] > 1,
-			'C_CONTROLS'             => AppContext::get_current_user()->get_level() == User::ADMIN_LEVEL,
+			'C_CONTROLS'             => CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id(), self::$module_id)->moderation(),
 			'C_CATEGORY_DESCRIPTION' => !empty($this->config->get_root_category_description()),
 			'CATEGORY_DESCRIPTION'   => FormatingHelper::second_parse($this->config->get_root_category_description()),
 			'U_ROOT_REORDER_ITEMS'   => ItemsUrlBuilder::specific_page('reorder', self::$module_id)->rel()

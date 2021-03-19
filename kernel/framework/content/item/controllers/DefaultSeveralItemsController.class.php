@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 18
+ * @version     PHPBoost 6.0 - last update: 2021 03 19
  * @since       PHPBoost 6.0 - 2020 01 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -228,19 +228,14 @@ class DefaultSeveralItemsController extends AbstractItemController
 		$sorting_fields_list = Item::get_sorting_fields_list();
 		$sort_field = $sorting_fields_list[$this->sort_field];
 		$items = self::get_items_manager()->get_items($this->sql_condition, $this->sql_parameters, $pagination->get_number_items_per_page(), $pagination->get_display_from(), $sort_field['database_field'], TextHelper::strtoupper($this->sort_mode), $this->keyword !== null);
-
-		$this->view->put_all(array(
-			'C_ITEMS'         => !empty($items),
-			'C_SEVERAL_ITEMS' => count($items) > 1,
-			'C_PAGINATION'    => $pagination->has_several_pages(),
-			'PAGINATION'      => $pagination->display(),
-			'CATEGORY_NAME'   => $this->keyword !== null ? $this->get_keyword()->get_name() : ($this->category !== null ? $this->get_category()->get_name() : ''),
-			'SORTING_FORM'    => $this->build_sorting_form()
-		));
+		$controls_displayed = false;
 
 		foreach ($items as $item)
 		{
 			$this->view->assign_block_vars('items', $item->get_template_vars());
+
+			if ($item->is_authorized_to_edit() || $item->is_authorized_to_delete())
+				$controls_displayed = true;
 
 			if (self::get_module_configuration()->feature_is_enabled('keywords'))
 			{
@@ -258,6 +253,16 @@ class DefaultSeveralItemsController extends AbstractItemController
 				}
 			}
 		}
+
+		$this->view->put_all(array(
+			'C_ITEMS'         => !empty($items),
+			'C_CONTROLS'      => $controls_displayed,
+			'C_SEVERAL_ITEMS' => count($items) > 1,
+			'C_PAGINATION'    => $pagination->has_several_pages(),
+			'PAGINATION'      => $pagination->display(),
+			'CATEGORY_NAME'   => $this->keyword !== null ? $this->get_keyword()->get_name() : ($this->category !== null ? $this->get_category()->get_name() : ''),
+			'SORTING_FORM'    => $this->build_sorting_form()
+		));
 	}
 
 	protected function build_sorting_form()
