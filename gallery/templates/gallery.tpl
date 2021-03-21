@@ -517,7 +517,7 @@
 															</div>
 														</div>
 													</div>
-													<a id="img_aprob{pics_list.ID}" href="javascript:pics_aprob({pics_list.ID});" aria-label="{pics_list.L_APROB_IMG}"><i class="# IF pics_list.C_IMG_APROB #fa fa-fw fa-eye-slash# ELSE #fa fa-fw fa-eye# ENDIF #"></i></a>
+													<a href="javascript:pics_aprob({pics_list.ID});" aria-label="{pics_list.L_APROB_IMG}"><i id="img_aprob{pics_list.ID}" class="# IF pics_list.C_IMG_APROB #fa fa-fw fa-eye-slash# ELSE #fa fa-fw fa-eye# ENDIF #"></i></a>
 												</li>
 											</ul>
 										</div>
