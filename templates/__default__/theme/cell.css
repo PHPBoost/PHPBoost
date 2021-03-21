@@ -113,6 +113,7 @@ form > [class*="cell-"]:not(.cell-header) { border-width: 0 1px 1px; }
 .cell-center {
 	justify-content: center;
 	align-items: center;
+	margin: auto;
 }
 
 .cell-end {

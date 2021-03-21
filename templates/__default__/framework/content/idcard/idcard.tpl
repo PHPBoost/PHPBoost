@@ -4,8 +4,10 @@
 			<h5 class="cell-name">{@about.author}</h5>
 		</header>
 		<div class="cell-body">
-			# IF C_AVATAR #
-				<div class="cell-thumbnail"><img src="{U_AVATAR}" alt="${LangLoader::get_message('avatar', 'user-common')}" /></div>
+			# IF C_AUTHOR_IS_MEMBER #
+				# IF C_AVATAR #
+					<div class="cell-thumbnail cell-center cell-avatar"><img src="{U_AVATAR}" alt="${LangLoader::get_message('avatar', 'user-common')}" /></div>
+				# ENDIF #
 			# ENDIF #
 			<div class="cell-content">
 				<h6>
