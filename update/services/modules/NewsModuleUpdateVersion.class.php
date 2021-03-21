@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 05
+ * @version     PHPBoost 6.0 - last update: 2021 03 21
  * @since       PHPBoost 3.0 - 2012 04 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -68,6 +68,15 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 				)
 			)
 		);
+
+		$this->database_columns_to_delete = array(
+			array(
+				'table_name' => PREFIX . 'news',
+				'columns' => array(
+					'archive'
+				)
+			)
+		); 
 	}
 
 	protected function execute_module_specific_changes()
