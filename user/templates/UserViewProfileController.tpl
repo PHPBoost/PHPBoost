@@ -71,14 +71,14 @@
 						<ul>
 							# START extended_fields #
 								<li class="# IF extended_fields.C_AVATAR #li-stretch # ENDIF #user-profil-{extended_fields.REWRITED_NAME}">
-									<strong>{extended_fields.NAME} : </strong>
+									<strong>{extended_fields.NAME}</strong>
 									<span>{extended_fields.VALUE}</span>
 								</li>
 							# END extended_fields #
 						</ul>
 					</div>
 				</article>
-			# ENDIF #			
+			# ENDIF #
 		</div>
 	</div>
 	<footer></footer>
