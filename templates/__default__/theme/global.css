@@ -18,7 +18,8 @@
 .h-padding { padding: 0 0.618em; }
 .v-padding { padding: 0.618em 0; }
 
-.pinned {
+.pinned,
+.pinned-category {
 	display: inline-block;
 	padding: 0 0.228em;
 	margin: 0 0 0.228em 0;
@@ -31,7 +32,8 @@
 
 a.pinned { cursor: pointer; }
 
-.pinned[data-color-surround] {
+.pinned[data-color-surround],
+.pinned-category[data-color-surround] {
 	padding-left: 1.618em;
 	position: relative;
 }
