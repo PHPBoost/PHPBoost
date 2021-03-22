@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 21
+ * @version     PHPBoost 6.0 - last update: 2021 03 22
  * @since       PHPBoost 4.0 - 2013 08 21
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -37,9 +37,9 @@ class CalendarHomeController extends ModuleController
 	{
 		$year = $request->get_getint('year', date('Y'));
 		$month = $request->get_getint('month', date('n'));
-		$day = $request->get_getint('day', date('j'));
+		$day = $request->get_getint('day', 0);
 
-		if (!checkdate($month, $day, $year))
+		if (!checkdate($month, ($day ? $day : 1), $year))
 		{
 			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['calendar.error.invalid.date'], MessageHelper::ERROR));
 
@@ -49,7 +49,7 @@ class CalendarHomeController extends ModuleController
 		}
 
 		$this->view->put_all(array(
-			'CALENDAR' => CalendarAjaxCalendarController::get_view(false, $year, $month),
+			'CALENDAR' => CalendarAjaxCalendarController::get_view(false, $year, $month, $this->get_category()->get_id()),
 			'EVENTS' => CalendarAjaxEventsController::get_view($year, $month, $day)
 		));
 
@@ -104,6 +104,13 @@ class CalendarHomeController extends ModuleController
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::home());
 
+		$categories = array_reverse(CategoriesService::get_categories_manager('calendar')->get_parents($this->get_category()->get_id(), true));
+		foreach ($categories as $id => $category)
+		{
+			if ($category->get_id() != Category::ROOT_CATEGORY)
+				$breadcrumb->add($category->get_name(), CalendarUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
+		}
+		
 		return $response;
 	}
 

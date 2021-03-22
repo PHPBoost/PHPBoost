@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 01
+ * @version     PHPBoost 6.0 - last update: 2021 03 22
  * @since       PHPBoost 4.0 - 2013 08 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -30,7 +30,7 @@ $lang['member.items'] = 'Events published by';
 $lang['calendar.default.content'] = 'Event default content';
 
 // Messages
-$lang['calendar.notice.no.event'] = 'No events scheduled for this date';
+$lang['calendar.notice.no.event'] = 'No event';
 $lang['calendar.notice.no.pending.event'] = 'No pending event';
 $lang['calendar.suscribe.notice.expired.event.date'] = 'The event is finished, you can not suscribe.';
 $lang['calendar.unsuscribe.notice.expired.event.date'] = 'The event is started or finished, you can not unsuscribe.';
@@ -42,6 +42,7 @@ $lang['calendar.event.delete.serie'] = 'All events of the serie';
 $lang['calendar.event.add'] = 'Add event';
 $lang['calendar.event.edit'] = 'Event edition';
 $lang['calendar.events.of'] = 'Events of';
+$lang['calendar.events.of.month'] = 'Events of';
 $lang['calendar.event'] = 'Event';
 $lang['calendar.repetition'] = 'Repetition';
 $lang['calendar.pending.events'] = 'Pending events';

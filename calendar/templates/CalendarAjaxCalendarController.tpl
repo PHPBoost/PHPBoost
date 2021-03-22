@@ -2,7 +2,7 @@
 	function ChangeMonth(year, month)
 	{
 		jQuery.ajax({
-			url: ${escapejs(U_AJAX_CALENDAR)} + year + '/' + month + '/' + {MINI_MODULE},
+			url: ${escapejs(U_AJAX_CALENDAR)} + year + '/' + month + '/' + {ID_CATEGORY} + '/' + {MINI_MODULE},
 			success: function(returnData){
 				jQuery('#calendar').html(returnData);
 				jQuery('[data-color-surround]').colorSurround();
@@ -11,7 +11,7 @@
 
 		# IF NOT C_MINI_MODULE #
 			jQuery.ajax({
-				url: ${escapejs(U_AJAX_EVENTS)} + year + '/' + month,
+				url: ${escapejs(U_AJAX_EVENTS)} + year + '/' + month + '/0/' + {ID_CATEGORY},
 				success: function(returnData){
 					jQuery('#events').html(returnData);
 				}

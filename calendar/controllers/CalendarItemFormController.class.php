@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 02
+ * @version     PHPBoost 6.0 - last update: 2021 03 22
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -76,7 +76,7 @@ class CalendarItemFormController extends ModuleController
 			$search_category_children_options = new SearchCategoryChildrensOptions();
 			$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
 			$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('category_id', LangLoader::get_message('category', 'categories-common'), $item_content->get_id_category(), $search_category_children_options));
+			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', LangLoader::get_message('category', 'categories-common'), $item_content->get_id_category(), $search_category_children_options));
 		}
 
 		$fieldset->add_field(new FormFieldRichTextEditor('content', $common_lang['form.content'], $item_content->get_content(),
@@ -324,7 +324,7 @@ class CalendarItemFormController extends ModuleController
 		$item_content->set_rewrited_title(Url::encode_rewrite($this->form->get_value('title')));
 
 		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
-			$item_content->set_id_category($this->form->get_value('category_id')->get_raw_value());
+			$item_content->set_id_category($this->form->get_value('id_category')->get_raw_value());
 
 		$item_content->set_content($this->form->get_value('content'));
 		$item_content->set_thumbnail($this->form->get_value('thumbnail'));

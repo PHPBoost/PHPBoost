@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 02
+ * @version     PHPBoost 6.0 - last update: 2021 03 22
  * @since       PHPBoost 4.0 - 2014 02 11
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -17,9 +17,6 @@ class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 
 		$this->content_tables = array(PREFIX . 'calendar_events_content');
 		self::$delete_old_files_list = array(
-			'/controllers/categories/CalendarCategoriesFormController.class.php',
-			'/controllers/categories/CalendarCategoriesManageController.class.php',
-			'/controllers/categories/CalendarDeleteCategoryController.class.php',
 			'/controllers/CalendarDeleteController.class.php',
 			'/controllers/CalendarDisplayCategoryController.class.php',
 			'/controllers/CalendarDisplayEventController.class.php',
@@ -39,6 +36,9 @@ class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 			'/templates/CalendarDisplayEventController.tpl',
 			'/templates/CalendarDisplaySeveralEventsController.tpl',
 			'/util/AdminCalendarDisplayResponse.class.php'
+		);
+		self::$delete_old_folders_list = array(
+			'/controllers/categories'
 		);
 
 		$this->database_columns_to_add = array(

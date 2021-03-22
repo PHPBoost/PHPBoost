@@ -12,7 +12,7 @@
 class CalendarItemContent
 {
 	private $id;
-	private $category_id;
+	private $id_category;
 	private $title;
 	private $rewrited_title;
 	private $content;
@@ -58,19 +58,19 @@ class CalendarItemContent
 		return $this->id;
 	}
 
-	public function set_id_category($category_id)
+	public function set_id_category($id_category)
 	{
-		$this->category_id = $category_id;
+		$this->id_category = $id_category;
 	}
 
 	public function get_id_category()
 	{
-		return $this->category_id;
+		return $this->id_category;
 	}
 
 	public function get_category()
 	{
-		return CategoriesService::get_categories_manager()->get_categories_cache()->get_category($this->category_id);
+		return CategoriesService::get_categories_manager()->get_categories_cache()->get_category($this->id_category);
 	}
 
 	public function set_title($title)
@@ -340,7 +340,7 @@ class CalendarItemContent
 	public function set_properties(array $properties)
 	{
 		$this->id = $properties['id'];
-		$this->category_id = $properties['id_category'];
+		$this->id_category = $properties['id_category'];
 		$this->title = $properties['title'];
 		$this->rewrited_title = $properties['rewrited_title'];
 		$this->content = $properties['content'];
@@ -391,9 +391,9 @@ class CalendarItemContent
 		$this->set_author_user($user);
 	}
 
-	public function init_default_properties($category_id = Category::ROOT_CATEGORY)
+	public function init_default_properties($id_category = Category::ROOT_CATEGORY)
 	{
-		$this->category_id = $category_id;
+		$this->id_category = $id_category;
         $this->content = CalendarConfig::load()->get_default_content();
 		$this->author_user = AppContext::get_current_user();
 		$this->creation_date = new Date();

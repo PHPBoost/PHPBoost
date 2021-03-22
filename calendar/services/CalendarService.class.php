@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 18
+ * @version     PHPBoost 6.0 - last update: 2021 03 22
  * @since       PHPBoost 3.0 - 2012 11 20
  * @contributor Mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -243,9 +243,10 @@ class CalendarService
 	 */
 	public static function get_all_current_month_items($month, $year, $month_days, $id_category = Category::ROOT_CATEGORY)
 	{
-		$authorized_categories = CategoriesService::get_authorized_categories($id_category);
+		$items = array();
+		$authorized_categories = $id_category == Category::ROOT_CATEGORY ? CategoriesService::get_authorized_categories($id_category) : array($id_category);
 
-		return self::$db_querier->select((CalendarConfig::load()->is_members_birthday_enabled() ? "
+		$result = self::$db_querier->select((CalendarConfig::load()->is_members_birthday_enabled() ? "
 		(SELECT member_extended_fields.user_born AS start_date, member_extended_fields.user_born AS end_date, display_name AS title, 'BIRTHDAY' AS type, 0 AS id_category, '" . CalendarItemContent::YEARLY . "' AS repeat_type, 100 AS repeat_number
 		FROM " . DB_TABLE_MEMBER . " member
 		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " member_extended_fields ON member_extended_fields.user_id = member.user_id
@@ -264,6 +265,14 @@ class CalendarService
 			'last_month_day' => mktime(23, 59, 59, $month, $month_days, $year),
 			'authorized_categories' => $authorized_categories
 		));
+		
+		while ($row = $result->fetch())
+		{
+			$items[] = $row;
+		}
+		$result->dispose();
+
+		return $items;
 	}
 }
 ?>
