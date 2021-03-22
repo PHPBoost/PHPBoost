@@ -3,6 +3,11 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
+#module-mini-search .grouped-search { flex-direction: row; }
+
+#module-mini-search .grouped-search input { width: 100%; }
+#module-mini-search .grouped-search button { width: auto; }
+
 #mini-search-form {
 	margin: 1em 1em 1em 0;
 	white-space: nowrap;
@@ -11,4 +16,5 @@
 
 @media (min-width: 769px) {
 	#mini-search-form { margin: 0.618em 1.618em 0.618em 0; }
+	#module-mini-search .grouped-search input { width: auto; }
 }
