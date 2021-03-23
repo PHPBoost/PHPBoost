@@ -51,7 +51,7 @@ class CalendarHomeController extends ModuleController
 		$this->view->put_all(array(
 			// TODO: C_ROOT_CATEGORY display "root" when a specific day is selected
 			'C_CATEGORY' 	  => true,
-			'C_ROOT_CATEGORY' => $this->category == Category::ROOT_CATEGORY,
+			'C_ROOT_CATEGORY' => $this->category->get_id() == Category::ROOT_CATEGORY,
 			'CATEGORY_NAME'   => $this->category->get_name(),
 			'U_EDIT_CATEGORY' => $this->category == Category::ROOT_CATEGORY ? CalendarUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->category->get_id())->rel(),
 			'CALENDAR'        => CalendarAjaxCalendarController::get_view(false, $year, $month, $this->get_category()->get_id()),
