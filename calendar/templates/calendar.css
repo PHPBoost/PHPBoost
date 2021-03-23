@@ -15,8 +15,12 @@
 
 .location-map { margin: 0.618em 0; }
 
+.calendar-table { table-layout: fixed; }
+
 .calendar-table th,
 .calendar-table td { width: calc(100% / 8); }
+
+.calendar-table td a:hover { text-decoration: none; }
 
 td[class*="calendar-"],
 td[class*="calendar-"]:last-child {
@@ -24,19 +28,30 @@ td[class*="calendar-"]:last-child {
 	border-width: 0;
 }
 
-.calendar-table td a {
-    padding: 0.456em;
+.calendar-table td:not(.legend-line) a {
+    padding: 0.618em 0.456em;
     display: block;
+	position: relative;
 }
 
-#calendar .calendar-event a { position: relative; }
-
-#calendar .calendar-event a .event-spot {
+.event-container {
 	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	line-height: 0.456em;
+	padding: 0 0.309em 0.228em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	text-align: center;
+}
+
+.event-spot {
+	display: inline-block;
 	width: 8px;
 	height: 8px;
 	box-shadow: 0 0 1px 1px rgba(var(--darken), 0.2);
-	right: 25%;
 	border-radius: 50%;
 }
 

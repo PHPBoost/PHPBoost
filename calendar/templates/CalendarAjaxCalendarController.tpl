@@ -67,13 +67,17 @@
 							<a# IF day.C_HAS_TITLE # aria-label="{day.TITLE}"# ENDIF # href="{day.U_DAY_EVENTS}">
 								{day.DAY}
 								# IF day.C_COLOR #
-									# START day.colors #
-									<span class="event-spot" style="background-color: {day.colors.COLOR}"></span>
-									# END day.colors #
+									<div class="event-container">
+										# START day.colors #
+											<span class="event-spot" style="background-color: {day.colors.COLOR}"></span>
+										# END day.colors #
+									</div>
+								# ELSE #
+									<div class="event-container">&nbsp;</div>
 								# ENDIF #
 							</a>
 						# ENDIF #
-						# IF day.C_WEEK_LABEL #{day.DAY}# ENDIF #
+						# IF day.C_WEEK_LABEL #{day.DAY}<div class="event-container">&nbsp;</div># ENDIF #
 					</td>
 				# IF day.CHANGE_LINE #
 			</tr>
@@ -82,9 +86,9 @@
 				# END day #
 			</tr>
 			# IF C_DISPLAY_LEGEND #
-			<tr>
-				<td colspan="8" class="legend-line"># INCLUDE LEGEND #</td>
-			</tr>
+				<tr>
+					<td colspan="8" class="legend-line"># INCLUDE LEGEND #</td>
+				</tr>
 			# ENDIF #
 		</tbody>
 	</table>

@@ -59,7 +59,7 @@
 								<time class="text-strong" datetime="{items.START_DATE_ISO8601}" itemprop="startDate">{items.START_DATE}</time>
 								- <time class="text-strong" datetime="{items.END_DATE_ISO8601}" itemprop="endDate">{items.END_DATE}</time>
 							</span>
-							# IF NOT items.C_ROOT_CATEGORY #<span class="pinned" data-color-surround="{items.CATEGORY_COLOR}"><a href="{items.U_CATEGORY}"><i class="far fa-fw fa-folder"></i> {items.CATEGORY_NAME}</a></span># ENDIF #
+							# IF NOT items.C_ROOT_CATEGORY #<span class="pinned-category" data-color-surround="{items.CATEGORY_COLOR}"><a href="{items.U_CATEGORY}">{items.CATEGORY_NAME}</a></span># ENDIF #
 							# IF items.C_PARTICIPATION_ENABLED #
 								# IF items.C_DISPLAY_PARTICIPANTS #
 									<span class="pinned">
@@ -118,6 +118,6 @@
 	</div>
 # ELSE #
 	<div class="content">
-		<div class="message-helper bgc notice align-center"># IF C_PENDING_ITEMS #{@calendar.notice.no.pending.event}# ELSE #{@calendar.notice.no.event}# ENDIF #</div>
+		<div class="message-helper bgc notice"># IF C_PENDING_ITEMS #{@calendar.notice.no.pending.event}# ELSE #${LangLoader::get_message('no_item_now', 'common')}# ENDIF #</div>
 	</div>
 # ENDIF #
