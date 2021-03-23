@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 16
+ * @version     PHPBoost 6.0 - last update: 2021 03 23
  * @since       PHPBoost 4.0 - 2013 01 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -362,9 +362,9 @@ class CategoriesManager
 		return $result;
 	}
 
-	public function get_select_categories_form_field($id, $label, $value, SearchCategoryChildrensOptions $search_category_children_options, array $field_options = array())
+	public function get_select_categories_form_field($id, $label, $value, SearchCategoryChildrensOptions $search_category_children_options, array $field_options = array(), array $select_options = array())
 	{
-		return new FormFieldCategoriesSelect($id, $label, $value, $search_category_children_options, $field_options, $this->get_categories_cache());
+		return new FormFieldCategoriesSelect($id, $label, $value, $search_category_children_options, $field_options, $this->get_categories_cache(), $select_options);
 	}
 
 	/**

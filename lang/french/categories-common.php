@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 04
+ * @version     PHPBoost 6.0 - last update: 2021 03 23
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor mipel <mipel@phpboost.com>
 */
@@ -15,6 +15,7 @@
 $lang['category'] = 'Catégorie';
 $lang['categories'] = 'Catégories';
 $lang['a.category'] = 'Une catégorie';
+$lang['all.categories'] = 'Toutes les catégories';
 $lang['see.category'] = 'Voir la catégorie';
 
 $lang['sub_category'] = 'Sous-catégorie';
