@@ -67,7 +67,9 @@
 							<a# IF day.C_HAS_TITLE # aria-label="{day.TITLE}"# ENDIF # href="{day.U_DAY_EVENTS}">
 								{day.DAY}
 								# IF day.C_COLOR #
-									<span class="event-spot" style="background-color: {day.COLOR}"></span>
+									# START day.colors #
+									<span class="event-spot" style="background-color: {day.colors.COLOR}"></span>
+									# END day.colors #
 								# ENDIF #
 							</a>
 						# ENDIF #

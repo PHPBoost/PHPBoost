@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 22
+ * @version     PHPBoost 6.0 - last update: 2021 03 23
  * @since       PHPBoost 3.0 - 2012 11 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -126,16 +126,18 @@ class CalendarAjaxCalendarController extends AbstractController
 					if ($item['type'] == 'EVENT' || $item['type'] == 'BIRTHDAY')
 					{
 						$title = isset($array_items[$j]['title']) ? $array_items[$j]['title'] : '';
+						$color = isset($array_items[$j]['color']) ? $array_items[$j]['color'] : array();
+						$color[] = ($item['type'] == 'BIRTHDAY' ? $config->get_birthday_color() : ($item['id_category'] != Category::ROOT_CATEGORY && isset($categories[$item['id_category']]) && $categories[$item['id_category']]->get_color() ? $categories[$item['id_category']]->get_color() : $config->get_event_color()));
 						$array_items[$j] = array(
 							'title' => $title . (!empty($title) ? '<br />' : '') . ($item['type'] != 'BIRTHDAY' ? (($j == $start_date->get_day() && $month == $start_date->get_month() && $year == $start_date->get_year()) ? $start_date->get_hours() . 'h' . $start_date->get_minutes() . ' : ' : '') : LangLoader::get_message('calendar.labels.birthday.of', 'common', 'calendar') . ' ') . $item['title'],
 							'type' => $item['type'],
-							'color' => ($item['type'] == 'BIRTHDAY' ? $config->get_birthday_color() : ($item['id_category'] != Category::ROOT_CATEGORY && isset($categories[$item['id_category']]) && $categories[$item['id_category']]->get_color() ? $categories[$item['id_category']]->get_color() : $config->get_event_color())),
+							'color' => $color,
 							'id_category' => $item['id_category'],
 						);
 
 						if ($item['type'] == 'BIRTHDAY')
 						{
-							$items_legend_list[$j] = array(
+							$items_legend_list[] = array(
 								'id_category' => Category::ROOT_CATEGORY,
 								'name'        => LangLoader::get_message('calendar.labels.birthday', 'common', 'calendar'),
 								'color'       => $config->get_birthday_color()
@@ -143,7 +145,7 @@ class CalendarAjaxCalendarController extends AbstractController
 						}
 						else if ($item['type'] == 'EVENT' && $item['id_category'] == Category::ROOT_CATEGORY)
 						{
-							$items_legend_list[$j] = array(
+							$items_legend_list[] = array(
 								'id_category' => $item['id_category'],
 								'name'        => LangLoader::get_message('calendar.event', 'common', 'calendar'),
 								'color'       => $config->get_event_color()
@@ -195,7 +197,8 @@ class CalendarAjaxCalendarController extends AbstractController
 		$last_day = ($month_days + $first_day);
 		for ($i = 1; $i <= 56; $i++)
 		{
-			$birthday_day = $color = false;
+			$birthday_day = false;
+			$color_list = array();
 
 			if ( (($i % 8) == 1) && $i < $last_day)
 			{
@@ -210,7 +213,7 @@ class CalendarAjaxCalendarController extends AbstractController
 					if (!empty($array_items[$day]))
 					{
 						$birthday_day = $array_items[$day]['type'] == 'BIRTHDAY';
-						$color = $array_items[$day]['color'];
+						$color_list = $array_items[$day]['color'];
 						if ( (($i % 8) == 7) || (($i % 8) == 0))
 							$class = 'calendar-weekend calendar-event';
 						else
@@ -243,16 +246,22 @@ class CalendarAjaxCalendarController extends AbstractController
 			$today = $day - 1;
 			$this->view->assign_block_vars('day', array(
 				'C_MONTH_DAY' => ($i % 8) != 1 && $class != 'calendar-none',
-				'C_COLOR' => $color || $birthday_day,
+				'C_COLOR' => $color_list || $birthday_day,
 				'C_WEEK_LABEL' => ($i % 8) == 1,
 				'DAY' => $content,
 				'C_HAS_TITLE' => !empty($array_items[$today]),
 				'TITLE' => !empty($array_items[$today]) ? $array_items[$today]['title'] : '',
-				'COLOR' => $color,
 				'CLASS' => $class,
 				'CHANGE_LINE' => (($i % 8) == 0 && $i != 56),
 				'U_DAY_EVENTS' => $this->id_category != Category::ROOT_CATEGORY ? CalendarUrlBuilder::display_category($this->id_category, $categories[$this->id_category]->get_rewrited_name(), $year, $month, $today)->rel() : CalendarUrlBuilder::home($year, $month, $today, true)->rel()
 			));
+			
+			foreach ($color_list as $color)
+			{
+				$this->view->assign_block_vars('day.colors', array(
+					'COLOR' => $color
+				));
+			}
 		}
 	}
 
