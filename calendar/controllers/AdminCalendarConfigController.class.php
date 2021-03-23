@@ -202,15 +202,18 @@ class AdminCalendarConfigController extends AdminModuleController
 		else
 			$this->config->disable_members_birthday();
 
-		if($this->form->get_value('display_type') == CalendarConfig::GRID_VIEW) {
+		if ($this->form->get_value('display_type') == CalendarConfig::GRID_VIEW)
+		{
 			$this->config->set_items_number_per_row($this->form->get_value('items_per_row'));
 			$this->config->set_characters_number_to_cut($this->form->get_value('characters_number_to_cut'));
 		}
-		if($this->form->get_value('display_type') == CalendarConfig::LIST_VIEW) {
-			if ($this->form->get_value('full_item_display')) {
+
+		if ($this->form->get_value('display_type') == CalendarConfig::LIST_VIEW)
+		{
+			if ($this->form->get_value('full_item_display'))
 				$this->config->display_full_item();
-			}
-			else {
+			else
+			{
 				$this->config->set_characters_number_to_cut($this->form->get_value('characters_number_to_cut'));
 				$this->config->display_condensed_item();
 			}
