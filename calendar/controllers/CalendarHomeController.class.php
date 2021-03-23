@@ -49,7 +49,6 @@ class CalendarHomeController extends ModuleController
 		}
 
 		$this->view->put_all(array(
-			// TODO: C_ROOT_CATEGORY display "root" when a specific day is selected
 			'C_CATEGORY' 	  => true,
 			'C_ROOT_CATEGORY' => $this->category->get_id() == Category::ROOT_CATEGORY,
 			'CATEGORY_NAME'   => $this->category->get_name(),
