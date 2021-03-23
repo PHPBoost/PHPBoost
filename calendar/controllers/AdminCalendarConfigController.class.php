@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 03 23
  * @since       PHPBoost 3.0 - 2012 11 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -46,6 +46,9 @@ class AdminCalendarConfigController extends AdminModuleController
 			$this->save();
 			if ($this->user_born_field['display'])
 				$this->form->get_field_by_id('birthday_color')->set_hidden(!$this->config->is_members_birthday_enabled());
+			$this->form->get_field_by_id('characters_number_to_cut')->set_hidden(($this->config->is_full_item_displayed() && $this->config->get_display_type() == CalendarConfig::LIST_VIEW) || $this->config->get_display_type() == CalendarConfig::TABLE_VIEW);
+			$this->form->get_field_by_id('full_item_display')->set_hidden($this->config->get_display_type() !== CalendarConfig::LIST_VIEW);
+			$this->form->get_field_by_id('items_per_row')->set_hidden($this->config->get_display_type() !== CalendarConfig::GRID_VIEW);
 			$view->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 
@@ -73,14 +76,6 @@ class AdminCalendarConfigController extends AdminModuleController
 			array('class' => 'third-field', 'min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
-
-		$fieldset->add_field(new FormFieldNumberEditor('characters_number_to_cut', $this->admin_common_lang['config.characters.number.to.cut'], $this->config->get_characters_number_to_cut(),
-			array(
-				'class' => 'third-field', 'min' => 0, 'max' => 1000,
-				'description' => $this->lang['calendar.config.set.to.zero']
-			),
-			array(new FormFieldConstraintIntegerRange(0, 1000)
-		)));
 
 		$fieldset->add_field(new FormFieldColorPicker('event_color', $this->lang['calendar.config.event.color'], $this->config->get_event_color(),
 			array('class' => 'third-field'),
@@ -114,6 +109,67 @@ class AdminCalendarConfigController extends AdminModuleController
 			));
 		}
 
+		$fieldset->add_field(new FormFieldSpacer('display', ''));
+
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->admin_common_lang['config.display.type'], $this->config->get_display_type(),
+			array(
+				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.grid'], CalendarConfig::GRID_VIEW, array('data_option_icon' => 'fa fa-th-large')),
+				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.list'], CalendarConfig::LIST_VIEW, array('data_option_icon' => 'fa fa-list')),
+				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.table'], CalendarConfig::TABLE_VIEW, array('data_option_icon' => 'fa fa-table'))
+			),
+			array(
+				'select_to_list' => true,
+				'events' => array('change' => '
+					if (HTMLForms.getField("display_type").getValue() == \'' . CalendarConfig::GRID_VIEW . '\') {
+						HTMLForms.getField("items_per_row").enable();
+						HTMLForms.getField("characters_number_to_cut").enable();
+						HTMLForms.getField("full_item_display").disable();
+					} else if (HTMLForms.getField("display_type").getValue() == \'' . CalendarConfig::LIST_VIEW . '\') {
+						HTMLForms.getField("full_item_display").enable();
+						HTMLForms.getField("items_per_row").disable();
+						if (HTMLForms.getField("full_item_display").getValue()) {
+							HTMLForms.getField("characters_number_to_cut").disable();
+						} else {
+							HTMLForms.getField("characters_number_to_cut").enable();
+						}
+					} else {
+						HTMLForms.getField("items_per_row").disable();
+						HTMLForms.getField("full_item_display").disable();
+						HTMLForms.getField("characters_number_to_cut").disable();
+					}'
+				)
+			)
+		));
+
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->admin_common_lang['config.items.per.row'], $this->config->get_items_per_row(),
+			array(
+				'hidden' => $this->config->get_display_type() !== CalendarConfig::GRID_VIEW,
+				'min' => 1, 'max' => 4, 'required' => true),
+				array(new FormFieldConstraintIntegerRange(1, 4))
+		));
+
+		$fieldset->add_field(new FormFieldCheckbox('full_item_display', $this->admin_common_lang['config.full.item.display'], $this->config->is_full_item_displayed(),
+			array(
+				'class' => 'custom-checkbox',
+				'hidden' => $this->config->get_display_type() !== CalendarConfig::LIST_VIEW,
+				'events' => array('click' => '
+					if (HTMLForms.getField("full_item_display").getValue()) {
+						HTMLForms.getField("characters_number_to_cut").disable();
+					} else {
+						HTMLForms.getField("characters_number_to_cut").enable();
+					}'
+				)
+			)
+		));
+
+		$fieldset->add_field(new FormFieldNumberEditor('characters_number_to_cut', $this->admin_common_lang['config.characters.number.to.cut'], $this->config->get_characters_number_to_cut(),
+			array(
+				'min' => 20, 'max' => 1000, 'required' => true,
+				'hidden' => $this->config->get_display_type() == CalendarConfig::TABLE_VIEW || ($this->config->get_display_type() == CalendarConfig::LIST_VIEW && $this->config->is_full_item_displayed())
+			),
+			array(new FormFieldConstraintIntegerRange(20, 1000)
+		)));
+
         $fieldset->add_field(new FormFieldRichTextEditor('default_content', $this->lang['calendar.default.content'], $this->config->get_default_content(),
 			array('rows' => 8, 'cols' => 47)
 		));
@@ -138,7 +194,6 @@ class AdminCalendarConfigController extends AdminModuleController
 	{
 		$this->config->set_items_number_per_page($this->form->get_value('items_number_per_page'));
 		$this->config->set_event_color($this->form->get_value('event_color'));
-		$this->config->set_characters_number_to_cut($this->form->get_value('characters_number_to_cut', $this->config->get_characters_number_to_cut()));
 		if ($this->form->get_value('members_birthday_enabled'))
 		{
 			$this->config->enable_members_birthday();
@@ -147,6 +202,21 @@ class AdminCalendarConfigController extends AdminModuleController
 		else
 			$this->config->disable_members_birthday();
 
+		if($this->form->get_value('display_type') == CalendarConfig::GRID_VIEW) {
+			$this->config->set_items_number_per_row($this->form->get_value('items_per_row'));
+			$this->config->set_characters_number_to_cut($this->form->get_value('characters_number_to_cut'));
+		}
+		if($this->form->get_value('display_type') == CalendarConfig::LIST_VIEW) {
+			if ($this->form->get_value('full_item_display')) {
+				$this->config->display_full_item();
+			}
+			else {
+				$this->config->set_characters_number_to_cut($this->form->get_value('characters_number_to_cut'));
+				$this->config->display_condensed_item();
+			}
+		}
+
+		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
 		$this->config->set_default_content($this->form->get_value('default_content'));
         $this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 

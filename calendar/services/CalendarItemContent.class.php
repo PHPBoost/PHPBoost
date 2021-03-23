@@ -105,7 +105,7 @@ class CalendarItemContent
 
 	public function get_summary()
 	{
-			return TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($this->content), '<br><br/>'), CalendarConfig::load()->get_characters_number_to_cut());
+		return TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($this->content), '<br><br/>'), CalendarConfig::load()->get_characters_number_to_cut());
 	}
 
 	public function set_thumbnail($thumbnail)

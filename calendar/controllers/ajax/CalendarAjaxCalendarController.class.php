@@ -216,6 +216,8 @@ class CalendarAjaxCalendarController extends AbstractController
 						$color_list = $array_items[$day]['color'];
 						if ( (($i % 8) == 7) || (($i % 8) == 0))
 							$class = 'calendar-weekend calendar-event';
+						else if (($day == date("j")) && ($month == date("m")) && ($year == date("Y")))
+							$class = 'calendar-today calendar-event';
 						else
 							$class = 'calendar-other calendar-event';
 					}
@@ -255,7 +257,7 @@ class CalendarAjaxCalendarController extends AbstractController
 				'CHANGE_LINE' => (($i % 8) == 0 && $i != 56),
 				'U_DAY_EVENTS' => $this->id_category != Category::ROOT_CATEGORY ? CalendarUrlBuilder::display_category($this->id_category, $categories[$this->id_category]->get_rewrited_name(), $year, $month, $today)->rel() : CalendarUrlBuilder::home($year, $month, $today, true)->rel()
 			));
-			
+
 			foreach ($color_list as $color)
 			{
 				$this->view->assign_block_vars('day.colors', array(

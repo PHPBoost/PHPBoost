@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 22
+ * @version     PHPBoost 6.0 - last update: 2021 03 23
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -171,6 +171,9 @@ class CalendarItem
 			$has_location_map = $this->content->is_map_displayed();
 		}
 
+		$start_date = $this->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR);
+		$end_date = $this->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR);
+		
 		return array_merge(
 			Date::get_array_tpl_vars($this->start_date, 'start_date'),
 			Date::get_array_tpl_vars($this->end_date, 'end_date'),
@@ -179,6 +182,7 @@ class CalendarItem
 				'C_CONTROLS' => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
 				'C_EDIT' => $this->is_authorized_to_edit(),
 				'C_DELETE' => $this->is_authorized_to_delete(),
+				'C_DIFFERENT_DATE' => $start_date != $end_date,
 				'C_HAS_THUMBNAIL' => $this->content->has_thumbnail(),
 				'C_LOCATION' => !empty($location),
 				'C_LOCATION_MAP' => $has_location_map,
@@ -196,7 +200,7 @@ class CalendarItem
 				'C_AUTHOR_GROUP_COLOR' => !empty($author_group_color),
 				'C_AUTHOR_EXIST' => $author->get_id() !== User::VISITOR_LEVEL,
 				'C_CANCELLED' => $this->content->is_cancelled(),
-				'C_SUMMARY' => CalendarConfig::load()->get_characters_number_to_cut() > 0,
+				'C_FULL_ITEM' => CalendarConfig::load()->is_full_item_displayed(),
 
 				//Event
 				'ID' => $this->id,
@@ -236,7 +240,6 @@ class CalendarItem
 			)
 		);
 	}
-
 	private function round_to_five_minutes($timestamp)
 	{
 		if (($timestamp % 300) < 150)

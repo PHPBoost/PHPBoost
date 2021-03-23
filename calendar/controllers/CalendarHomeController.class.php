@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 22
+ * @version     PHPBoost 6.0 - last update: 2021 03 23
  * @since       PHPBoost 4.0 - 2013 08 21
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -49,8 +49,13 @@ class CalendarHomeController extends ModuleController
 		}
 
 		$this->view->put_all(array(
-			'CALENDAR' => CalendarAjaxCalendarController::get_view(false, $year, $month, $this->get_category()->get_id()),
-			'EVENTS' => CalendarAjaxEventsController::get_view($year, $month, $day)
+			// TODO: C_ROOT_CATEGORY display "root" when a specific day is selected
+			'C_CATEGORY' 	  => true,
+			'C_ROOT_CATEGORY' => $this->category == Category::ROOT_CATEGORY,
+			'CATEGORY_NAME'   => $this->category->get_name(),
+			'U_EDIT_CATEGORY' => $this->category == Category::ROOT_CATEGORY ? CalendarUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->category->get_id())->rel(),
+			'CALENDAR'        => CalendarAjaxCalendarController::get_view(false, $year, $month, $this->get_category()->get_id()),
+			'EVENTS'          => CalendarAjaxEventsController::get_view($year, $month, $day)
 		));
 
 		return $this->view;
@@ -110,7 +115,7 @@ class CalendarHomeController extends ModuleController
 			if ($category->get_id() != Category::ROOT_CATEGORY)
 				$breadcrumb->add($category->get_name(), CalendarUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
 		}
-		
+
 		return $response;
 	}
 

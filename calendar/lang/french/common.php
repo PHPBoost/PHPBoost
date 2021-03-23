@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 22
+ * @version     PHPBoost 6.0 - last update: 2021 03 23
  * @since       PHPBoost 4.0 - 2013 08 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -71,6 +71,7 @@ $lang['calendar.labels.repeat.times'] = 'fois';
 $lang['calendar.labels.repeat.never'] = 'Jamais';
 $lang['calendar.labels.events.number'] = ':items_number événements';
 $lang['calendar.labels.one.event'] = '1 événement';
+$lang['calendar.labels.date'] = 'Dates de l\'événement';
 $lang['calendar.labels.start.date'] = 'Date de début';
 $lang['calendar.labels.end.date'] = 'Date de fin';
 $lang['calendar.labels.contribution.explain'] = 'Vous n\'êtes pas autorisé à créer un événement, cependant vous pouvez en proposer un.';

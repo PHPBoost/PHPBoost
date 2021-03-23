@@ -14,6 +14,7 @@
 class CalendarConfig extends AbstractConfigData
 {
 	const ITEMS_NUMBER_PER_PAGE = 'items_number_per_page';
+	const ITEMS_PER_ROW = 'items_per_row';
 	const MEMBERS_BIRTHDAY_ENABLED = 'members_birthday_enabled';
 	const EVENT_COLOR = 'event_color';
 	const BIRTHDAY_COLOR = 'birthday_color';
@@ -24,6 +25,12 @@ class CalendarConfig extends AbstractConfigData
 
 	const CHARACTERS_NUMBER_TO_CUT = 'characters_number_to_cut';
 
+	const DISPLAY_TYPE = 'display_type';
+	const GRID_VIEW = 'grid_view';
+	const LIST_VIEW = 'list_view';
+	const TABLE_VIEW = 'table_view';
+	const FULL_ITEM_DISPLAY = 'full_item_display';
+
 	public function get_items_number_per_page()
 	{
 		return $this->get_property(self::ITEMS_NUMBER_PER_PAGE);
@@ -32,6 +39,41 @@ class CalendarConfig extends AbstractConfigData
 	public function set_items_number_per_page($value)
 	{
 		$this->set_property(self::ITEMS_NUMBER_PER_PAGE, $value);
+	}
+
+	public function get_items_per_row()
+	{
+		return $this->get_property(self::ITEMS_PER_ROW);
+	}
+
+	public function set_items_per_row($value)
+	{
+		$this->set_property(self::ITEMS_PER_ROW, $value);
+	}
+
+	public function display_full_item()
+	{
+		$this->set_property(self::FULL_ITEM_DISPLAY, true);
+	}
+
+	public function display_condensed_item()
+	{
+		$this->set_property(self::FULL_ITEM_DISPLAY, false);
+	}
+
+	public function is_full_item_displayed()
+	{
+		return $this->get_property(self::FULL_ITEM_DISPLAY);
+	}
+
+	public function get_display_type()
+	{
+		return $this->get_property(self::DISPLAY_TYPE);
+	}
+
+	public function set_display_type($value)
+	{
+		$this->set_property(self::DISPLAY_TYPE, $value);
 	}
 
 	public function get_characters_number_to_cut()
@@ -118,8 +160,11 @@ class CalendarConfig extends AbstractConfigData
 	{
 		return array(
 			self::ITEMS_NUMBER_PER_PAGE => 15,
+			self::ITEMS_PER_ROW => 2,
+			self::FULL_ITEM_DISPLAY => false,
 			self::MEMBERS_BIRTHDAY_ENABLED => false,
 			self::CHARACTERS_NUMBER_TO_CUT => 128,
+			self::DISPLAY_TYPE => self::LIST_VIEW,
             self::DEFAULT_CONTENT => '',
 			self::EVENT_COLOR => '#81A4C8',
 			self::BIRTHDAY_COLOR => '#8F8ACF',

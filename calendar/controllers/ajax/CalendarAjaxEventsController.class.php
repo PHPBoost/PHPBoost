@@ -57,7 +57,7 @@ class CalendarAjaxEventsController extends AbstractController
 		$comments_config = CommentsConfig::load();
 		$id_category = $this->id_category ? $this->id_category : $request->get_int('id_category', 0);
 		$authorized_categories = $id_category == Category::ROOT_CATEGORY ? CategoriesService::get_authorized_categories($id_category) : array($id_category);
-		
+
 		$year = $this->year ? $this->year : $request->get_int('calendar_ajax_year', date('Y'));
 		$month = $this->month ? $this->month : $request->get_int('calendar_ajax_month', date('n'));
 		$day = $this->day ? $this->day : $request->get_int('calendar_ajax_day', 0);
@@ -98,10 +98,18 @@ class CalendarAjaxEventsController extends AbstractController
 		$result->dispose();
 
 		$this->view->put_all(array(
-			'C_COMMENTS_ENABLED' => $comments_config->module_comments_is_enabled('calendar'),
-			'C_ITEMS' => $items_number > 0,
-			'C_DAY' => $day,
-			'DATE' => ($day ? $day . ' ' : '') . $array_l_month[$month - 1] . ' ' . $year,
+			// TODO: set C_CONTROLS to manage edit for member and its own items
+			'C_CONTROLS'		  => AppContext::get_current_user(User::ADMIN_LEVEL),
+			'C_TABLE_VIEW'        => $config->get_display_type() == CalendarConfig::TABLE_VIEW,
+			'C_LIST_VIEW'         => $config->get_display_type() == CalendarConfig::LIST_VIEW,
+			'C_GRID_VIEW'         => $config->get_display_type() == CalendarConfig::GRID_VIEW,
+			'C_FULL_ITEM_DISPLAY' => $config->is_full_item_displayed(),
+			'C_COMMENTS_ENABLED'  => $comments_config->module_comments_is_enabled('calendar'),
+			'C_ITEMS'             => $items_number > 0,
+			'C_DAY'               => $day,
+
+			'ITEMS_PER_ROW'  => $config->get_items_per_row(),
+			'DATE'           => ($day ? $day . ' ' : '') . $array_l_month[$month - 1] . ' ' . $year,
 			'L_ITEMS_NUMBER' => $items_number > 1 ? StringVars::replace_vars($this->lang['calendar.labels.events.number'], array('items_number' => $items_number)) : $this->lang['calendar.labels.one.event'],
 		));
 
