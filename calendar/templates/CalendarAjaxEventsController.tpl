@@ -20,9 +20,9 @@
 							<i class="fa fa-user" aria-hidden="true"></i>
 							<span class="hidden-large-screens">${LangLoader::get_message('author', 'common')}</span>
 						</th>
-						<th aria-label="{@calendar.labels.date}">
+						<th aria-label="{@calendar.labels.dates}">
 							<i class="far fa-calendar-alt" aria-hidden="true"></i>
-							<span class="hidden-large-screens">{@calendar.labels.date}</span>
+							<span class="hidden-large-screens">{@calendar.labels.dates}</span>
 						</th>
 						# IF C_CONTROLS #
 							<th aria-label="${LangLoader::get_message('moderation', 'common')}">
@@ -117,7 +117,7 @@
 							# ENDIF #
 
 							<div class="more">
-								<span class="pinned" aria-label="{@calendar.labels.date}">
+								<span class="pinned" aria-label="{@calendar.labels.dates}">
 									<i class="far fa-fw fa-calendar"></i>
 									<time class="text-strong" datetime="{items.START_DATE_ISO8601}" itemprop="startDate">{items.START_DATE}</time>
 									# IF items.C_DIFFERENT_DATE #- <time class="text-strong" datetime="{items.END_DATE_ISO8601}" itemprop="endDate">{items.END_DATE}</time># ENDIF #
