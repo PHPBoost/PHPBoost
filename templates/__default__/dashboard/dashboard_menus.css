@@ -328,6 +328,13 @@ ul.level-2 ul { padding: 0; }
 	}
 }
 
+.menus-block-list::before,
+.menus-block-list::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
 /* --- Themes selector --- */
 .themesmanagement {
 	padding: 8px 12px;

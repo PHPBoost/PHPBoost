@@ -6,7 +6,7 @@
 	var previous = '';
 	var started = false;
 
-	// Show the block
+// Show the block
 	function menu_display_block(divID)
 	{
 		if( timeout )
@@ -25,7 +25,8 @@
 			started = true;
 		}
 	}
-	// Hide the block
+
+// Hide the block
 	function menu_hide_block(idfield, stop)
 	{
 		if( stop && timeout )
@@ -66,6 +67,7 @@
 		'mod_topfooter',
 		'mod_footer'
 	);
+
 	function build_menu_tree()
 	{
 		var containerListLength = menusContainerList.length;
@@ -79,6 +81,7 @@
 			}).appendTo('#form_menus');
 		}
 	}
+	
 	function createSortableMenu()
 	{
 		var containerListLength = menusContainerList.length;
@@ -117,7 +120,6 @@
 							</label>
 						</span>
 						{L_HEADER}
-
 					</p>
 					<p class="menus-block-add" onclick="menu_display_block('addmenu1');" onmouseover="menu_hide_block('addmenu1', 1);" onmouseout="menu_hide_block('addmenu1', 0);">
 						<i class="fa fa-plus" aria-hidden="true"></i> {L_ADD_MENU}
@@ -200,7 +202,8 @@
 								</label>
 							</span>
 							{L_LEFT_MENU}
-						</p><p class="menus-block-add" onclick="menu_display_block('addmenu3');" onmouseover="menu_hide_block('addmenu3', 1);" onmouseout="menu_hide_block('addmenu3', 0);">
+						</p>
+						<p class="menus-block-add" onclick="menu_display_block('addmenu3');" onmouseover="menu_hide_block('addmenu3', 1);" onmouseout="menu_hide_block('addmenu3', 0);">
 							<i class="fa fa-plus" aria-hidden="true"></i> {L_ADD_MENU}
 						</p>
 					</div>
