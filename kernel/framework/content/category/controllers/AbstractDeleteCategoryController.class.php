@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 03 24
  * @since       PHPBoost 4.0 - 2013 02 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -56,7 +56,6 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 		{
 			if ($this->form->get_value('delete_category_and_content'))
 			{
-				self::$categories_manager->delete($this->get_category()->get_id());
 				foreach ($children as $id => $category)
 				{
 					self::$categories_manager->delete($id);
@@ -67,16 +66,15 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 				$id_parent = $this->form->get_value('move_in_other_cat')->get_raw_value();
 				self::$categories_manager->move_items_into_another($category, $id_parent);
 
-				$children = $this->get_category_children($category, false);
-				foreach ($children as $id => $category)
+				foreach ($this->get_category_children($category, false) as $id => $category)
 				{
 					self::$categories_manager->move_into_another($category, $id_parent);
 				}
-
-				self::$categories_manager->delete($this->get_category()->get_id());
-				$categories_cache = self::$categories_manager->get_categories_cache()->get_class();
-				$categories_cache::invalidate();
 			}
+			
+			self::$categories_manager->delete($this->get_category()->get_id());
+			$categories_cache = self::$categories_manager->get_categories_cache()->get_class();
+			$categories_cache::invalidate();
 			$this->clear_cache();
 			AppContext::get_response()->redirect($this->get_categories_management_url(), StringVars::replace_vars($this->get_success_message(), array('name' => $this->get_category()->get_name())));
 		}

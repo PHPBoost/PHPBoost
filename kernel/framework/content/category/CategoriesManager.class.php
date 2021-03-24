@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 23
+ * @version     PHPBoost 6.0 - last update: 2021 03 24
  * @since       PHPBoost 4.0 - 2013 01 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -18,27 +18,27 @@ class CategoriesManager
 	/**
 	 * @var string module identifier.
 	 */
-	private $module_id;
+	protected $module_id;
 
 	/**
 	 * @var string table name where are stocked the categories to manage.
 	 */
-	private $table_name;
+	protected $table_name;
 
 	/**
 	 * @var CategoriesCache The cached data class.
 	 */
-	private $categories_cache;
+	protected $categories_cache;
 
 	/**
 	 * @var CategoriesItemsParameters
 	 */
-	private $categories_items_parameters;
+	protected $categories_items_parameters;
 
 	/**
 	 * @var DBQuerier
 	 */
-	private $db_querier;
+	protected $db_querier;
 
 	const STANDARD_CATEGORY_CLASS = 'Category';
 	const RICH_CATEGORY_CLASS = 'RichCategory';

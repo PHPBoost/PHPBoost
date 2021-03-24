@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 15
+ * @version     PHPBoost 6.0 - last update: 2021 03 24
  * @since       PHPBoost 6.0 - 2019 11 11
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -51,7 +51,8 @@ class CategoriesService
 			$categories_items_parameters = new CategoriesItemsParameters();
 			$categories_items_parameters->set_table_name_contains_items($categories_cache->get_table_name_containing_items());
 
-			self::$categories_manager = new CategoriesManager($categories_cache, $categories_items_parameters);
+			$categories_manager_class = (ClassLoader::has_module_subclass_of($module_id, 'CategoriesManager') ? ClassLoader::get_module_subclass_of($module_id, 'CategoriesManager') : 'CategoriesManager');
+			self::$categories_manager = new $categories_manager_class($categories_cache, $categories_items_parameters);
 		}
 		return self::$categories_manager;
 	}
