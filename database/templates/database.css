@@ -12,3 +12,10 @@
 .db-executed-query { margin: 0; }
 
 .db-executed-query p { font-size: 1em; }
+
+.flex-database {
+    display: flex;
+    justify-content: space-around;
+}
+
+.flex-database button { margin: 0.618em; }

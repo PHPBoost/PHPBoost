@@ -167,27 +167,19 @@
 				<legend>{@database.action.for.selected.tables}</legend>
 				<div class="fieldset-inset">
 					<input type="hidden" name="token" value="{TOKEN}">
-					<div class="cell-flex cell-columns-3 no-style">
-						<div class="cell">
-							<button type="submit" name="optimize" value="true" class="button submit biggest">
-								<i class="fa fa-chart-bar fa-fw" aria-hidden="true"></i>
-								{@database.optimize}
-							</button>
-						</div>
-						<div class="cell">
-
-							<button type="submit" name="repair" value="true" class="button submit biggest">
-								<i class="fa fa-cogs fa-fw" aria-hidden="true"></i>
-								{@database.repair}
-							</button>
-						</div>
-						<div class="cell">
-
-							<button type="submit" name="backup" value="true" class="button submit biggest">
-								<i class="fa fa-save fa-fw" aria-hidden="true"></i>
-								{@database.backup}
-							</button>
-						</div>
+					<div class="flex-database">
+						<button type="submit" name="optimize" value="true" class="button submit big">
+							<i class="fa fa-chart-bar fa-fw" aria-hidden="true"></i>
+							{@database.optimize}
+						</button>
+						<button type="submit" name="repair" value="true" class="button submit big">
+							<i class="fa fa-cogs fa-fw" aria-hidden="true"></i>
+							{@database.repair}
+						</button>
+						<button type="submit" name="backup" value="true" class="button submit big">
+							<i class="fa fa-save fa-fw" aria-hidden="true"></i>
+							{@database.backup}
+						</button>
 					</div>
 				</div>
 			</fieldset>
