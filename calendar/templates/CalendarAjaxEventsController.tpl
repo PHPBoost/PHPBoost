@@ -105,11 +105,13 @@
 						# ENDIF #
 					</div>
 					<div class="cell-body# IF items.C_CANCELLED # error# ENDIF #">
-						# IF items.C_HAS_THUMBNAIL #
-							<div class="cell-thumbnail">
-								<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" />
-								<a class="cell-thumbnail-caption" href="{items.U_ITEM}" itemprop="thumbnailUrl" aria-label="{items.TITLE}"><i class="far fa-eye" aria-hidden="true"></i></a>
-							</div>
+						# IF NOT C_FULL_ITEM_DISPLAY #
+							# IF items.C_HAS_THUMBNAIL #
+								<div class="cell-thumbnail">
+									<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" />
+									<a class="cell-thumbnail-caption" href="{items.U_ITEM}" itemprop="thumbnailUrl" aria-label="{items.TITLE}"><i class="far fa-eye" aria-hidden="true"></i></a>
+								</div>
+							# ENDIF #
 						# ENDIF #
 						<div class="cell-content" itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 							# IF items.C_CANCELLED #
@@ -159,7 +161,12 @@
 							</div>
 
 							<div itemprop="text">
-								# IF items.C_FULL_ITEM #
+								# IF items.C_FULL_ITEM_DISPLAY #
+									# IF items.C_HAS_THUMBNAIL #
+										<a href="{items.U_ITEM}" class="item-thumbnail">
+											<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
+										</a>
+									# ENDIF #
 									{items.CONTENT}
 								# ELSE #
 									{items.SUMMARY}
