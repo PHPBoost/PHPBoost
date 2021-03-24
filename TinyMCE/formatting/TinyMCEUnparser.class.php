@@ -8,7 +8,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 08 22
+ * @version     PHPBoost 6.0 - last update: 2021 03 24
  * @since       PHPBoost 2.0 - 2008 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -291,8 +291,8 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			"[lightbox=$1]$2[/lightbox]",
 			"[figure=$2]$1[/figure]",
 			"[member]$1[/member]",
-			"[teaser]$1[/teaser]",
 			"[moderator]$1[/moderator]",
+			"[teaser]$1[/teaser]",
 		);
 
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
