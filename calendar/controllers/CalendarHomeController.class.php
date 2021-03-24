@@ -52,7 +52,7 @@ class CalendarHomeController extends ModuleController
 			'C_CATEGORY' 	  => true,
 			'C_ROOT_CATEGORY' => $this->category->get_id() == Category::ROOT_CATEGORY,
 			'CATEGORY_NAME'   => $this->category->get_name(),
-			'U_EDIT_CATEGORY' => $this->category->get_id() == Category::ROOT_CATEGORY ? CalendarUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->category->get_id())->rel(),
+			'U_EDIT_CATEGORY' => $this->category->get_id() == Category::ROOT_CATEGORY ? CalendarUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->category->get_id(), 'calendar')->rel(),
 			'CALENDAR'        => CalendarAjaxCalendarController::get_view(false, $year, $month, $this->get_category()->get_id()),
 			'EVENTS'          => CalendarAjaxEventsController::get_view($year, $month, $day)
 		));

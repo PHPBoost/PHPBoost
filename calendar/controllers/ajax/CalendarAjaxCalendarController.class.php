@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 23
+ * @version     PHPBoost 6.0 - last update: 2021 03 24
  * @since       PHPBoost 3.0 - 2012 11 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -155,7 +155,7 @@ class CalendarAjaxCalendarController extends AbstractController
 						{
 							if (isset($categories[$item['id_category']]) && !isset($items_legend_list[$item['id_category']]))
 							{
-								$items_legend_list[] = array(
+								$items_legend_list[$item['id_category']] = array(
 									'id_category'   => $item['id_category'],
 									'name'          => $categories[$item['id_category']]->get_name(),
 									'rewrited_name' => $categories[$item['id_category']]->get_rewrited_name(),
@@ -271,22 +271,14 @@ class CalendarAjaxCalendarController extends AbstractController
 	{
 		$legend_view = new FileTemplate('calendar/CalendarLegend.tpl');
 
-		$displayed_color = array();
-		$elements_number = 0;
 		foreach ($items_legend_list as $legend)
 		{
-			$elements_number++;
-
-			if (!in_array($legend['color'], $displayed_color))
-			{
-				$legend_view->assign_block_vars('legend', array(
-					'C_ROOT_CATEGORY' => $legend['id_category'] == Category::ROOT_CATEGORY,
-					'COLOR'           => $legend['color'],
-					'NAME'            => $legend['name'],
-					'U_CATEGORY'      => $legend['id_category'] != Category::ROOT_CATEGORY ? CalendarUrlBuilder::display_category($legend['id_category'], $legend['rewrited_name'], $legend['year'], $legend['month'])->rel() : ''
-				));
-				$displayed_color[] = $legend['color'];
-			}
+			$legend_view->assign_block_vars('legend', array(
+				'C_ROOT_CATEGORY' => $legend['id_category'] == Category::ROOT_CATEGORY,
+				'COLOR'           => $legend['color'],
+				'NAME'            => $legend['name'],
+				'U_CATEGORY'      => $legend['id_category'] != Category::ROOT_CATEGORY ? CalendarUrlBuilder::display_category($legend['id_category'], $legend['rewrited_name'], $legend['year'], $legend['month'])->rel() : ''
+			));
 		}
 
 		return $legend_view;
