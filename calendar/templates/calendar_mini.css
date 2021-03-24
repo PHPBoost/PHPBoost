@@ -11,8 +11,10 @@
 
 .mini-calendar { table-layout: fixed; }
 
+.mini-calendar .calendar-week span { display: block; }
+
 .mini-calendar th,
-.mini-calendar .calendar-week,
+.mini-calendar .calendar-week span,
 .mini-calendar td a {
 	padding: 0.809em;
 	font-size: 0.809em;
@@ -22,22 +24,22 @@
 
 @media (min-width: 481px) {
 	.mini-calendar th,
-	.mini-calendar .calendar-week,
+	.mini-calendar .calendar-week span,
 	.mini-calendar td a { padding: 0.809em 0.1618em; }
 }
 
 @media (min-width: 769px) {
 	.mini-calendar th,
-	.mini-calendar .calendar-week,
+	.mini-calendar .calendar-week span,
 	.mini-calendar td a {
-		padding: 0.309em 0;
+		padding: 0.456em 0;
 		font-size: 0.618em;
 	}
 }
 
 @media (min-width: 1025px) {
 	.mini-calendar th,
-	.mini-calendar .calendar-week,
+	.mini-calendar .calendar-week span,
 	.mini-calendar td a { font-size: 0.809em; }
 }
 
@@ -48,12 +50,9 @@
 }
 
 .mini-calendar td:not(.legend-line) a {
-    padding: 0.456em;
     display: block;
 	position: relative;
 }
-
-.mini-calendar td.calendar-week { padding: 0.456em; }
 
 .mini-calendar .event-container {
 	position: absolute;

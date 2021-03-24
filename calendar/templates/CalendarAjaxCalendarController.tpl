@@ -72,12 +72,10 @@
 											<span class="event-spot" style="background-color: {day.colors.COLOR}"></span>
 										# END day.colors #
 									</div>
-								# ELSE #
-									<div class="event-container">&nbsp;</div>
 								# ENDIF #
 							</a>
 						# ENDIF #
-						# IF day.C_WEEK_LABEL #{day.DAY}<div class="event-container">&nbsp;</div># ENDIF #
+						# IF day.C_WEEK_LABEL #<span>{day.DAY}</span># ENDIF #
 					</td>
 				# IF day.CHANGE_LINE #
 			</tr>
