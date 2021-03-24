@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 15
+ * @version     PHPBoost 6.0 - last update: 2021 03 24
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -46,7 +46,7 @@ class AdminDownloadConfigController extends AdminModuleController
 		{
 			$this->save();
 			$this->form->get_field_by_id('display_summary_to_guests')->set_hidden($this->config->get_display_type() == DownloadConfig::TABLE_VIEW);
-			$this->form->get_field_by_id('characters_number_to_cut')->set_hidden($this->config->is_full_item_displayed() && $this->config->get_display_type() !== DownloadConfig::GRID_VIEW);
+			$this->form->get_field_by_id('characters_number_to_cut')->set_hidden($this->config->is_full_item_displayed() || $this->config->get_display_type() == DownloadConfig::TABLE_VIEW);
 			$this->form->get_field_by_id('full_item_display')->set_hidden($this->config->get_display_type() !== DownloadConfig::LIST_VIEW);
 			$this->form->get_field_by_id('items_per_row')->set_hidden($this->config->get_display_type() !== DownloadConfig::GRID_VIEW);
 			$this->form->get_field_by_id('oldest_file_day_in_menu')->set_hidden(!$this->config->is_limit_oldest_file_day_in_menu_enabled());
@@ -87,20 +87,12 @@ class AdminDownloadConfigController extends AdminModuleController
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort', $this->admin_common_lang['config.items_default_sort'], $this->config->get_items_default_sort_field() . '-' . $this->config->get_items_default_sort_mode(), $this->get_sort_options()));
 
-		$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->admin_common_lang['config.author.displayed'], $this->config->is_author_displayed(),
-			array('class' => 'custom-checkbox')
-		));
-
-		$fieldset->add_field(new FormFieldCheckbox('nb_view_enabled', $this->lang['download.config.views.number.enabled'], $this->config->get_enabled_views_number(),
-			array('class' => 'custom-checkbox')
-		));$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->admin_common_lang['config.root_category_description'], $this->config->get_root_category_description(),
-			array('rows' => 8, 'cols' => 47)
-		));
-
 		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_items_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
+
+		$fieldset->add_field(new FormFieldSpacer('display', ''));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->admin_common_lang['config.display.type'], $this->config->get_display_type(),
 			array(
@@ -114,15 +106,22 @@ class AdminDownloadConfigController extends AdminModuleController
 				if (HTMLForms.getField("display_type").getValue() == \'' . DownloadConfig::GRID_VIEW . '\') {
 					HTMLForms.getField("items_per_row").enable();
 					HTMLForms.getField("display_summary_to_guests").enable();
+						HTMLForms.getField("characters_number_to_cut").enable();
 					HTMLForms.getField("full_item_display").disable();
 				} else if (HTMLForms.getField("display_type").getValue() == \'' . DownloadConfig::LIST_VIEW . '\') {
 					HTMLForms.getField("full_item_display").enable();
 					HTMLForms.getField("display_summary_to_guests").enable();
 					HTMLForms.getField("items_per_row").disable();
+					if (HTMLForms.getField("full_item_display").getValue()) {
+						HTMLForms.getField("characters_number_to_cut").disable();
+					} else {
+						HTMLForms.getField("characters_number_to_cut").enable();
+					}
 				} else {
 					HTMLForms.getField("items_per_row").disable();
 					HTMLForms.getField("display_summary_to_guests").disable();
 					HTMLForms.getField("full_item_display").disable();
+					HTMLForms.getField("characters_number_to_cut").disable();
 				}'
 			))
 		));
@@ -161,7 +160,19 @@ class AdminDownloadConfigController extends AdminModuleController
 				'class' => 'custom-checkbox',
 				'hidden' => $this->config->get_display_type() == DownloadConfig::TABLE_VIEW
 			)
+		));$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->admin_common_lang['config.root_category_description'], $this->config->get_root_category_description(),
+			array('rows' => 8, 'cols' => 47)
 		));
+
+		$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->admin_common_lang['config.author.displayed'], $this->config->is_author_displayed(),
+			array('class' => 'custom-checkbox')
+		));
+
+		$fieldset->add_field(new FormFieldCheckbox('nb_view_enabled', $this->lang['download.config.views.number.enabled'], $this->config->get_enabled_views_number(),
+			array('class' => 'custom-checkbox')
+		));
+
+
 
         $fieldset->add_field(new FormFieldRichTextEditor('default_content', $this->lang['download.config.default.content'], $this->config->get_default_content(),
 			array('rows' => 8, 'cols' => 47)

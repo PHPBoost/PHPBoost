@@ -82,6 +82,9 @@
 							</ul>
 						</div>
 					</div>
+					# IF C_HAS_UPDATE_DATE #
+						<span class="pinned notice small text-italic modified-date">${LangLoader::get_message('status.last.update', 'common')} <time datetime="{UPDATE_DATE_ISO8601}" itemprop="dateModified">{UPDATE_DATE_FULL}</time></span>
+					# ENDIF #
 
 					<div itemprop="text">{CONTENT}</div>
 				</div>

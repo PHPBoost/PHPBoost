@@ -182,6 +182,11 @@
 											# IF items.C_DELETE #<a href="{items.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
 										</div>
 									</div>
+									# IF items.C_HAS_UPDATE_DATE #
+										<div class="cell-footer">
+											<span class="pinned notice small text-italic modified-date">${LangLoader::get_message('status.last.update', 'common')} <time datetime="{items.UPDATE_DATE_ISO8601}" itemprop="dateModified">{items.UPDATE_DATE_FULL}</time></span>
+										</div>
+									# ENDIF #
 									# IF NOT C_FULL_ITEM_DISPLAY #
 										# IF items.C_HAS_THUMBNAIL #
 											<div class="cell-thumbnail cell-landscape cell-center">
@@ -221,11 +226,6 @@
 											# ENDIF #
 										</div>
 									</div>
-									# IF items.C_HAS_UPDATE_DATE #
-										<div class="cell-footer">
-											<span class="pinned notice small text-italic modified-date">${LangLoader::get_message('status.last.update', 'common')} <time datetime="{items.UPDATE_DATE_ISO8601}" itemprop="dateModified">{items.UPDATE_DATE_FULL}</time></span>
-										</div>
-									# ENDIF #
 								</div>
 
 								<footer>
