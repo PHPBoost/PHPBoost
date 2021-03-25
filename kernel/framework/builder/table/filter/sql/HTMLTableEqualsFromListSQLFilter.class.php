@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2014 12 22
+ * @version     PHPBoost 6.0 - last update: 2021 03 25
  * @since       PHPBoost 3.0 - 2010 02 27
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class HTMLTableEqualsFromListSQLFilter extends HTMLTableEqualsFromListFilter implements SQLFragmentBuilder
@@ -27,11 +28,11 @@ class HTMLTableEqualsFromListSQLFilter extends HTMLTableEqualsFromListFilter imp
 	public function get_sql()
 	{
 		$choice_option = $this->get_value();
-		if ($choice_option instanceof FormFieldSelectChoiceOption)
+		if ($choice_option instanceof FormFieldSelectChoiceOption && $choice_option->get_raw_value() !== 'all')
 		{
 			$parameter_name = $this->get_sql_value_parameter_prefix() . '_' . $this->db_field;
 			$query = $this->db_field . '=:' . $parameter_name;
-			$parameters = array($parameter_name => $this->get_value()->get_raw_value());
+			$parameters = array($parameter_name => $choice_option->get_raw_value());
 			return new SQLFragment($query, $parameters);
 		}
 		return new SQLFragment();
