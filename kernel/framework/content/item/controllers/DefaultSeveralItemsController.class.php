@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 19
+ * @version     PHPBoost 6.0 - last update: 2021 03 26
  * @since       PHPBoost 6.0 - 2020 01 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -272,7 +272,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 
 		$fieldset = new FormFieldsetHorizontal('sorting',
 			array(
-			'description' => LangLoader::get_message('sort_by', 'common'),
+			'description' => $this->lang['sort_by'],
 			'css_class' => 'grouped-inputs'
 			)
 		);

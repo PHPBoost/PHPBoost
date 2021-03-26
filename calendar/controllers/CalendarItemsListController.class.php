@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 25
+ * @version     PHPBoost 6.0 - last update: 2021 03 26
  * @since       PHPBoost 4.1 - 2015 04 13
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -123,6 +123,7 @@ class CalendarItemsListController extends ModuleController
 			$end_date = $item->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR);
 
 			if($item->get_content()->is_approved())
+			{
 				$row = array(
 					new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()), $item->get_content()->get_title()), 'left'),
 					new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), $item->get_start_date()->get_year(), $item->get_start_date()->get_month()), ($category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('none_e', 'common') : $category->get_name()), array('data-color-surround' => $category->get_id() != Category::ROOT_CATEGORY && $category->get_color() ? $category->get_color() : ($category->get_id() == Category::ROOT_CATEGORY ? $config->get_event_color() : '')), 'pinned')),
@@ -132,14 +133,15 @@ class CalendarItemsListController extends ModuleController
 					$moderation_link_number ? new HTMLTableRowCell($edit_link . $delete_link, 'controls') : null
 				);
 
-			if (!$display_categories)
-				unset($row[1]);
+				if (!$display_categories)
+					unset($row[1]);
 
-			$table_row = new HTMLTableRow($row);
-			if (in_array($item->get_id(), $this->hide_delete_input))
-				$table_row->hide_delete_input();
+				$table_row = new HTMLTableRow($row);
+				if (in_array($item->get_id(), $this->hide_delete_input))
+					$table_row->hide_delete_input();
 
-			$results[] = $table_row;
+				$results[] = $table_row;
+			}
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 19
+ * @version     PHPBoost 6.0 - last update: 2021 03 26
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -32,25 +32,25 @@ class Item
 
 	protected static $module_id;
 	protected static $module;
-	protected $additional_attributes_values = array();
-	protected $additional_attributes_list = array();
-	protected $additional_attributes_items_table_fields = array();
+	protected $additional_attributes_values              = array();
+	protected $additional_attributes_list                = array();
+	protected $additional_attributes_items_table_fields  = array();
 	protected $additional_attributes_items_table_options = array();
 
-	protected $content_field_enabled = true;
-	protected $content_field_required = true;
+	protected $content_field_enabled    = true;
+	protected $content_field_required   = true;
 	protected $sub_categories_displayed = true;
 
-	const READ_AUTHORIZATIONS = 1;
-	const WRITE_AUTHORIZATIONS = 2;
+	const READ_AUTHORIZATIONS         = 1;
+	const WRITE_AUTHORIZATIONS        = 2;
 	const CONTRIBUTION_AUTHORIZATIONS = 4;
-	const MODERATION_AUTHORIZATIONS = 8;
+	const MODERATION_AUTHORIZATIONS   = 8;
 
-	const NOT_PUBLISHED = 0;
-	const PUBLISHED = 1;
+	const NOT_PUBLISHED        = 0;
+	const PUBLISHED            = 1;
 	const DEFERRED_PUBLICATION = 2;
 
-	const ASC = 'ASC';
+	const ASC  = 'ASC';
 	const DESC = 'DESC';
 
 	public function __construct($module_id = '')

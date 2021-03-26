@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 15
+ * @version     PHPBoost 6.0 - last update: 2021 03 26
  * @since       PHPBoost 6.0 - 2020 01 16
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -32,10 +32,10 @@ class DefaultItemsManagementController extends AbstractItemController
 		$display_categories = self::get_module_configuration()->has_categories() && CategoriesService::get_categories_manager()->get_categories_cache()->has_categories();
 
 		$columns = array(
-			new HTMLTableColumn(LangLoader::get_message('form.title', 'common'), 'title'),
-			new HTMLTableColumn(LangLoader::get_message('author', 'common'), 'display_name'),
-			new HTMLTableColumn(LangLoader::get_message('form.date.creation', 'common'), 'creation_date'),
-			new HTMLTableColumn(LangLoader::get_message('status', 'common'), 'published'),
+			new HTMLTableColumn($this->lang['form.title'], 'title'),
+			new HTMLTableColumn($this->lang['author'], 'display_name'),
+			new HTMLTableColumn($this->lang['form.date.creation'], 'creation_date'),
+			new HTMLTableColumn($this->lang['status'], 'published'),
 			new HTMLTableColumn(LangLoader::get_message('actions', 'admin-common'), '', array('sr-only' => true))
 		);
 
@@ -46,7 +46,19 @@ class DefaultItemsManagementController extends AbstractItemController
 
 		$table_model->set_layout_title($this->lang['items.management']);
 
+		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('creation_date', 'filter1', $this->lang['form.date.creation'] . ' ' . TextHelper::lcfirst($this->lang['minimum'])));
+		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('creation_date', 'filter2', $this->lang['form.date.creation'] . ' ' . TextHelper::lcfirst($this->lang['maximum'])));
+		$table_model->add_filter(new HTMLTableAjaxUserAutoCompleteSQLFilter('display_name', 'filter3', $this->lang['author']));
+		if ($display_categories)
+			$table_model->add_filter(new HTMLTableCategorySQLFilter('filter4'));
+
+		$status_list = array(Item::PUBLISHED => $this->lang['status.approved.now'], Item::NOT_PUBLISHED => $this->lang['status.approved.not']);
+		if (self::get_module_configuration()->feature_is_enabled('deferred_publication'))
+			$status_list[Item::DEFERRED_PUBLICATION] = $this->lang['status.approved.date'];
+		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('published', 'filter5', $this->lang['status'], $status_list));
+		
 		$table = new HTMLTable($table_model);
+		$table->set_filters_fieldset_class_HTML();
 
 		$results = array();
 		$result = $table_model->get_sql_results(self::get_module()->get_id() . '
@@ -77,7 +89,7 @@ class DefaultItemsManagementController extends AbstractItemController
 			$dates = '';
 			if ($item->get_publishing_start_date() != null && $item->get_publishing_end_date() != null)
 			{
-				$dates = LangLoader::get_message('form.date.start', 'common') . ' ' . $item->get_publishing_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . $br->display() . LangLoader::get_message('form.date.end', 'common') . ' ' . $item->get_publishing_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE);
+				$dates = $this->lang['form.date.start'] . ' ' . $item->get_publishing_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . $br->display() . $this->lang['form.date.end'] . ' ' . $item->get_publishing_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE);
 			}
 			else
 			{
@@ -102,7 +114,7 @@ class DefaultItemsManagementController extends AbstractItemController
 			);
 
 			if ($display_categories)
-				array_splice($row, 1, 0, array(new HTMLTableRowCell(new LinkHTMLElement(CategoriesUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), self::$module_id), ($category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('none_e', 'common') : $category->get_name())))));
+				array_splice($row, 1, 0, array(new HTMLTableRowCell(new LinkHTMLElement(CategoriesUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), self::$module_id), ($category->get_id() == Category::ROOT_CATEGORY ? $this->lang['none_e'] : $category->get_name())))));
 
 			$results[] = new HTMLTableRow($row);
 		}
