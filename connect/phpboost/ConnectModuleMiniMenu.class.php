@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 01
+ * @version     PHPBoost 6.0 - last update: 2021 03 26
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ConnectModuleMiniMenu extends ModuleMiniMenu
@@ -72,7 +73,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 				$user_avatar = AppContext::get_session()->get_cached_data('user_avatar');
 				if (empty($user_avatar))
 				{
-					$user_avatar = '/templates/'. AppContext::get_current_user()->get_theme() .'/images/'. $user_accounts_config->get_default_avatar_name();
+					$user_avatar = $user_accounts_config->get_default_avatar();
 				}
 				$total_alert = $user->get_unread_pm() + $contribution_number + ($user->check_level(User::ADMIN_LEVEL) ? AdministratorAlertService::get_number_unread_alerts() : 0);
 
@@ -86,7 +87,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 					'C_UNREAD_ALERT' => (bool)AdministratorAlertService::get_number_unread_alerts(),
 					'C_HAS_PM' => $user->get_unread_pm() > 0,
 					'C_USER_GROUP_COLOR' => !empty($user_group_color),
-					'C_AVATAR_IMG' => $user_avatar || $user_accounts_config->is_default_avatar_enabled(),
+					'C_USER_AVATAR' => $user_avatar || $user_accounts_config->is_default_avatar_enabled(),
 					'NUMBER_UNREAD_CONTRIBUTIONS' => $contribution_number,
 					'NUMBER_UNREAD_ALERTS' => AdministratorAlertService::get_number_unread_alerts(),
 					'NUMBER_PM' => $user->get_unread_pm(),
@@ -96,7 +97,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 					'USER_GROUP_COLOR' => $user_group_color,
 					'U_USER_PROFILE' => UserUrlBuilder::profile($user->get_id())->rel(),
 					'U_USER_PM' => UserUrlBuilder::personnal_message($user->get_id())->rel(),
-					'U_AVATAR_IMG' => $user_avatar ? Url::to_rel($user_avatar) : $user_accounts_config->get_default_avatar(),
+					'U_USER_AVATAR' => $user_avatar ? Url::to_rel($user_avatar) : $user_accounts_config->get_default_avatar(),
 					'L_NBR_PM'  => $user->get_unread_pm() > 0 ? ($user->get_unread_pm() . ' ' . ($user->get_unread_pm() > 1 ? $lang['message_s'] : $lang['message'])) : $lang['private_messaging'],
 					'L_MESSAGE' => $user->get_unread_pm() > 1 ? $lang['message_s'] : $lang['message'],
 					'L_PM_PANEL' => $lang['private_messaging'],
@@ -109,7 +110,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 			else
 			{
 				$external_authentication = 0;
-				
+
 				foreach (AuthenticationService::get_external_auths_activated() as $id => $authentication)
 				{
 					$tpl->assign_block_vars('external_auth', array(
@@ -121,7 +122,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 					));
 					$external_authentication++;
 				}
-				
+
 				$tpl->put_all(array(
 					'C_USER_NOTCONNECTED' => true,
 					'C_USER_REGISTER' => UserAccountsConfig::load()->is_registration_enabled(),
