@@ -32,7 +32,7 @@
 								# ENDIF #
 								<thead>
 									<tr>
-										# IF C_MULTIPLE_DELETE_DISPLAYED #<th><span aria-label="${LangLoader::get_message('select.elements', 'common')}"><i class="far fa-square" aria-hidden="true"></i></span></th># ENDIF #
+										# IF C_MULTIPLE_DELETE_DISPLAYED #<th class="col-smaller"><span aria-label="${LangLoader::get_message('select.elements', 'common')}"><i class="far fa-square" aria-hidden="true"></i></span></th># ENDIF #
 										# START header_column #
 											<th
 												# IF header_column.C_CSS_CLASSES # class="{header_column.CSS_CLASSES}"# ENDIF #
