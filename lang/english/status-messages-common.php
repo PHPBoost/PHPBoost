@@ -115,8 +115,9 @@ $lang['extended_field.avatar_upload_max_dimension'] = 'Max avatar file dimension
 $lang['bbcode_member'] = 'This frame hides content for members only';
 $lang['bbcode_moderator'] = 'This frame hides content for moderators only';
 $lang['bbcode.teaser'] = 'Only members can read the whole following content.';
-$lang['bbcode.is.member'] = 'The following content is only visible to members';
-$lang['bbcode.is.moderator'] = 'The following content is only visible to moderators';
+$lang['bbcode.is.member'] = 'The following content is only displayed to members';
+$lang['bbcode.is.moderator'] = 'The following content is only displayed to moderators';
+$lang['bbcode.is.teaser'] = 'The following content, the beginning of which is displayed to visitors, is for members only.';
 
 //Locked content
 $lang['content.is_locked.description'] = 'The item is currently open by :user_display_name, you can not access it, try again later.';
