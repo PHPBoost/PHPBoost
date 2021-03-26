@@ -31,8 +31,9 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 			{
 				$unread_contributions = UnreadContributionsCache::load();
 
-				//Vaut 0 si l'utilisateur n'a aucune contribution. Est > 0 si on connait le nombre de contributions
-				//Vaut -1 si l'utilisateur a au moins une contribution (mais on ne sait pas combien à cause des recoupements entre les groupes)
+				// = 0 if user has no contribution.
+				// > 0 if the number of contribution is known
+				// = -1 if user has at least one contribution but unknown number of contribution because of the overlap between groups
 				$contribution_number = 0;
 
 				if ($user->check_level(User::ADMIN_LEVEL))
@@ -71,10 +72,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 
 				$user_accounts_config = UserAccountsConfig::load();
 				$user_avatar = AppContext::get_session()->get_cached_data('user_avatar');
-				if (empty($user_avatar))
-				{
-					$user_avatar = $user_accounts_config->get_default_avatar();
-				}
+
 				$total_alert = $user->get_unread_pm() + $contribution_number + ($user->check_level(User::ADMIN_LEVEL) ? AdministratorAlertService::get_number_unread_alerts() : 0);
 
 				$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
