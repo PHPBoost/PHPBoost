@@ -38,7 +38,7 @@
 		<div class="cell">
 			<form role="search" action="{U_FORM_VALID}" onsubmit="return check_search_mini_form_post();" method="post">
 				<fieldset>
-					<legend class="sr-only">{L_SEARCH_TITLE</legend>
+					<legend class="sr-only">{L_SEARCH_TITLE}</legend>
 					<div class="cell-form grouped-inputs grouped-auto grouped-search grouped-right">
 						<input class="grouped-element" type="search" id="searched-text" name="q" value="{TEXT_SEARCHED}" placeholder="{L_SEARCH_TITLE}..." aria-labelledby="search-button">
 						<input type="hidden" id="search-token" name="token" value="{TOKEN}">
