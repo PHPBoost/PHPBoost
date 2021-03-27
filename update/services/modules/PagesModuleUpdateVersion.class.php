@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 17
+ * @version     PHPBoost 6.0 - last update: 2021 03 27
  * @since       PHPBoost 4.0 - 2014 05 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -181,13 +181,13 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 			$this->querier->update(PREFIX . 'pages_cats', array('special_authorizations' => 1), 'WHERE auth != ""');
 
 			// Set update_date to creation_date if update_date = 0
-			$new_date = $this->querier->select('SELECT news.id, news.update_date, news.creation_date
-				FROM ' . PREFIX . 'news news'
+			$new_date = $this->querier->select('SELECT id, update_date, creation_date
+				FROM ' . PREFIX . 'pages'
 			);
 
 			while ($row = $new_date->fetch())
 			{
-				$this->querier->update(PREFIX . 'news', array('update_date' => $row['creation_date']), 'WHERE update_date = 0 AND id=:id', array('id' => $row['id']));
+				$this->querier->update(PREFIX . 'pages', array('update_date' => $row['creation_date']), 'WHERE update_date = 0 AND id=:id', array('id' => $row['id']));
 			}
 			$new_date->dispose();
 		}
