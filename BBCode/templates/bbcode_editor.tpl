@@ -658,20 +658,20 @@
 							<div class="cell-name">{@bbcode.feed}</div>
 						</div>
 						<div class="cell-form">
-							<label for="bb_module_name{FIELD}" class="cell-label">{@bbcode.feed.module}</label>
+							<label for="bb_feed_module_name{FIELD}" class="cell-label">{@bbcode.feed.module}</label>
 							<div class="cell-input">
-								<select id="bb_module_name{FIELD}">
+								<select id="bb_feed_module_name{FIELD}">
 									<option value="">{@bbcode.feed.select}</option>
-									# START modules #
-										<option value="{modules.VALUE}">{modules.NAME}</option>
-									# END modules #
+									# START feeds_modules #
+										<option value="{feeds_modules.VALUE}">{feeds_modules.NAME}</option>
+									# END feeds_modules #
 								</select>
 							</div>
 						</div>
 						<div class="cell-form">
-							<label for="bb_feed_category{FIELD}" class="cell-label">{@bbcode.feed.category}</label>
+							<label for="bb_feed_category{FIELD}" class="cell-label">${LangLoader::get_message('category', 'categories-common')}</label>
 							<div class="cell-input">
-								<input type="number" id="bb_feed_category{FIELD}" min="0" value="0">
+								<select id="bb_feed_category{FIELD}" disabled="disabled"></select>
 							</div>
 						</div>
 						<div class="cell-form">
@@ -1032,6 +1032,28 @@
 </div>
 
 <script>
+	jQuery("#bb_feed_module_name{FIELD}").change(function () {
+		var feed_module = jQuery("#bb_feed_module_name{FIELD}").children(":selected").attr("value");
+		if (feed_module != '' && feed_module != null) {
+			jQuery.ajax({
+				url: PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/categories/list/',
+				type: "post",
+				dataType: "json",
+				data: {token: ${escapejs(TOKEN)}, module_id: feed_module},
+				success: function(returnData){
+					jQuery("#bb_feed_category{FIELD}").empty().append(returnData.options);
+					jQuery("#bb_feed_category{FIELD}").prop("disabled", false);
+				},
+				error: function(e){
+					jQuery("#bb_feed_category{FIELD}").empty();
+					jQuery("#bb_feed_category{FIELD}").prop("disabled", true);
+				}
+			});
+		} else {
+			jQuery("#bb_feed_category{FIELD}").prop("disabled", true);
+		}
+	});
+
 	// bbcode size : resize lorem texte when input value is changing
 	jQuery('.font-size-input').on('input', function(e){
 		jQuery(".font-size-sample").css('font-size',jQuery(this).val()+'px');

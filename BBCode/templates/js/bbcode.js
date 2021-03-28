@@ -303,7 +303,7 @@ function bbcode_wikipedia(field)
 
 function bbcode_feed(field)
 {
-	var feed_module = document.getElementById('bb_module_name' + field).value,
+	var feed_module = document.getElementById('bb_feed_module_name' + field).value,
 		feed_cat = document.getElementById('bb_feed_category' + field).value,
 		feed_number = document.getElementById('bb_feed_number' + field).value;
 

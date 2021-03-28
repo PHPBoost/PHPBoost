@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 09
+ * @version     PHPBoost 6.0 - last update: 2021 03 28
  * @since       PHPBoost 2.0 - 2008 07 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -124,7 +124,7 @@ class BBCodeEditor extends ContentEditor
 		{
 			if (array_key_exists($module->get_id(), $feeds_modules))
 			{
-				$template->assign_block_vars('modules', array(
+				$template->assign_block_vars('feeds_modules', array(
 					'NAME' => $module->get_configuration()->get_name(),
 					'VALUE' => $module->get_id()
 				));

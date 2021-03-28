@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 12
+ * @version     PHPBoost 6.0 - last update: 2021 03 28
  * @since       PHPBoost 4.1 - 2014 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -97,8 +97,7 @@ $lang['bbcode.wikipedia.lang'] = 'Language';
 $lang['bbcode.feed'] = 'RSS flux';
 $lang['bbcode.feed.module'] = 'Module name';
 $lang['bbcode.feed.select'] = 'Pick a module';
-$lang['bbcode.feed.category'] = 'Category id';
-$lang['bbcode.feed.number'] = 'Items number';
+$lang['bbcode.feed.number'] = 'Items number to display';
 
 $lang['bbcode.anchor'] = 'Anchor somewhere in the page [anchor=x]text[/anchor]';
 $lang['bbcode.anchor.name'] = 'Anchor name (format : anchor-name)?';
