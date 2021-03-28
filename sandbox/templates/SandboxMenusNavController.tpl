@@ -32,6 +32,6 @@
 		jQuery('aside#menu-right').load('{PATH_TO_ROOT}/sandbox/templates/pagecontent/menus/vertical-right.tpl');
 		jQuery('#bottom-content').load('{PATH_TO_ROOT}/sandbox/templates/pagecontent/menus/bottom-content.tpl');
 		jQuery('#top-footer').load('{PATH_TO_ROOT}/sandbox/templates/pagecontent/menus/top-footer.tpl');
-		jQuery('.footer-content').load('{PATH_TO_ROOT}/sandbox/templates/pagecontent/menus/footer.tpl');
+		jQuery('#footer-content').load('{PATH_TO_ROOT}/sandbox/templates/pagecontent/menus/footer.tpl');
 	});
 </script>

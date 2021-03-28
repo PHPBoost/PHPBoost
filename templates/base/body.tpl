@@ -119,7 +119,7 @@
 	# ENDIF #
 
 	# IF C_MENUS_FOOTER_CONTENT #
-	<div class="footer-content">
+	<div id="footer-content">
 		# START menus_footer #
 		{menus_footer.MENU}
 		# END menus_footer #
