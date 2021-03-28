@@ -9,9 +9,17 @@
 # ENDIF #
 				# IF C_FILTERS #
 					<div id="filters-{TABLE_ID}" class="html-table-filters">
+						<a href="" class="filter-button button bgc link-color">${LangLoader::get_message('filter.items', 'common')}</a>
 						<script src="{PATH_TO_ROOT}/templates/__default__/plugins/UrlSerializedParameterEncoder.js"></script>
 						# INCLUDE filters #
 					</div>
+					<script>
+						jQuery('.filter-button').opensubmenu({
+							osmTarget: '#filters-{TABLE_ID}',
+							osmCloseExcept: '#filters-{TABLE_ID} form *',
+							osmCloseButton: '',
+						});
+					</script>
 				# ENDIF #
 
 				# IF NOT C_HAS_ROWS #

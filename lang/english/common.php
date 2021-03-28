@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 06
+ * @version     PHPBoost 6.0 - last update: 2021 03 28
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -67,6 +67,7 @@ $lang['maximum'] = 'Maximum';
 $lang['minimum'] = 'Minimum';
 
 $lang['filters'] = 'Filters';
+$lang['filter.items'] = 'Filter items';
 $lang['click.to.select'] = 'Click to select an option';
 $lang['table_footer_stats'] = ':start to :end of :total elements';
 

@@ -77,6 +77,18 @@ tfoot td select { padding: 0.1618em 0.309em; }
 
 .html-table-filters { padding: 0.809em; }
 
+.html-table-filters form {
+	opacity: 0;
+	visibility: hidden;
+	height: 0;
+}
+
+.html-table-filters.opened form {
+	opacity: 1;
+	visibility: visible;
+	height: auto;
+}
+
 .html-table-elements-number { text-align: left; }
 
 /* --- thead patch for formated tables --- */
