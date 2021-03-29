@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 02 25
+ * @version     PHPBoost 6.0 - last update: 2021 03 29
  * @since       PHPBoost 4.0 - 2014 01 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -26,7 +26,7 @@ class AdminLoggedErrorsControllerList extends AdminController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-errors-common');
+		$this->lang = array_merge(LangLoader::get('common'), LangLoader::get('admin-errors-common'));
 		$this->view = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM # # INCLUDE table #');
 	}
 
@@ -46,7 +46,7 @@ class AdminLoggedErrorsControllerList extends AdminController
 			new HTMLTableColumn(LangLoader::get_message('description', 'main'))
 		), new HTMLTableSortingRule(''), self::NUMBER_ITEMS_PER_PAGE);
 
-		$table = new HTMLTable($table_model, 'error-list');
+		$table = new HTMLTable($table_model, $this->lang, 'error-list');
 		$table->hide_multiple_delete();
 
 		$table_model->set_caption($this->lang['logged_errors_list']);
@@ -78,7 +78,7 @@ class AdminLoggedErrorsControllerList extends AdminController
 			));
 		}
 		else
-			$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('no_item_now', 'common'), MessageHelper::SUCCESS, 0, true));
+			$this->view->put('MSG', MessageHelper::display($this->lang['no_item_now'], MessageHelper::SUCCESS, 0, true));
 
 		return $table->get_page_number();
 	}

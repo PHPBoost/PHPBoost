@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 02 25
+ * @version     PHPBoost 6.0 - last update: 2021 03 29
  * @since       PHPBoost 3.0 - 2009 12 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -40,7 +40,7 @@ class AdminErrorsController404List extends AdminController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-errors-common');
+		$this->lang = array_merge(LangLoader::get('common'), LangLoader::get('admin-errors-common'));
 		$this->view = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM # # INCLUDE table #');
 	}
 
@@ -50,10 +50,10 @@ class AdminErrorsController404List extends AdminController
 			new HTMLTableColumn($this->lang['404_error_requested_url']),
 			new HTMLTableColumn($this->lang['404_error_from_url']),
 			new HTMLTableColumn($this->lang['404_error_times'], 'times', array('css_class' => 'col-large')),
-			new HTMLTableColumn(LangLoader::get_message('delete', 'common'), '', array('css_class' => 'col-small'))
+			new HTMLTableColumn($this->lang['delete'], '', array('css_class' => 'col-small'))
 		), new HTMLTableSortingRule('times', HTMLTableSortingRule::DESC));
 
-		$table = new HTMLTable($table_model, 'error-list404');
+		$table = new HTMLTable($table_model, $this->lang, 'error-list404');
 
 		$table_model->set_caption($this->lang['404_list']);
 		$table_model->set_footer_css_class('footer-error-list404');
@@ -85,7 +85,7 @@ class AdminErrorsController404List extends AdminController
 			$this->view->put('table', $table->display());
 		}
 		else
-			$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('no_item_now', 'common'), MessageHelper::SUCCESS, 0, true));
+			$this->view->put('MSG', MessageHelper::display($this->lang['no_item_now'], MessageHelper::SUCCESS, 0, true));
 
 		return $table->get_page_number();
 	}

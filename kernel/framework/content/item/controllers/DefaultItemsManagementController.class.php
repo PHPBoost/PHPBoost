@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 26
+ * @version     PHPBoost 6.0 - last update: 2021 03 29
  * @since       PHPBoost 6.0 - 2020 01 16
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -57,7 +57,7 @@ class DefaultItemsManagementController extends AbstractItemController
 			$status_list[Item::DEFERRED_PUBLICATION] = $this->lang['status.approved.date'];
 		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('published', 'filter5', $this->lang['status'], $status_list));
 		
-		$table = new HTMLTable($table_model);
+		$table = new HTMLTable($table_model, $this->lang);
 		$table->set_filters_fieldset_class_HTML();
 
 		$results = array();

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 10
+ * @version     PHPBoost 6.0 - last update: 2021 03 29
  * @since       PHPBoost 6.0 - 2020 01 08
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -33,6 +33,7 @@ $lang['my.items'] = 'My :items';
 $lang['member.items'] = ':Items published by';
 $lang['pending.items'] = 'Pending :items';
 $lang['item.infos'] = ':Item informations';
+$lang['filter.items'] = 'Filter :items';
 
 //Configuration
 $lang['config.items.per.page'] = ':Items_number per page';

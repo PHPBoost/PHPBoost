@@ -9,7 +9,7 @@
 # ENDIF #
 				# IF C_FILTERS #
 					<div id="filters-{TABLE_ID}" class="html-table-filters">
-						<a href="" class="filter-button button bgc link-color"><i class="fa fa-sliders-h" aria-hidden="true"></i> ${LangLoader::get_message('filter.items', 'common')}</a>
+						<a href="" class="filter-button button bgc link-color"><i class="fa fa-sliders-h" aria-hidden="true"></i> {@filter.items}</a>
 						<div class="filters-container">
 							<i class="close-filters far fa-window-close" aria-hidden="true"></i> <span class="sr-only">${LangLoader::get_message('close', 'main')}</span>
 							<script src="{PATH_TO_ROOT}/templates/__default__/plugins/UrlSerializedParameterEncoder.js"></script>
@@ -27,7 +27,7 @@
 
 				# IF NOT C_HAS_ROWS #
 					<div class="message-helper bgc notice">
-						${LangLoader::get_message('no_item_now', 'common')}
+						{@no_item_now}
 					</div>
 				# ELSE #
 					<form method="post" class="fieldset-content">
@@ -43,14 +43,14 @@
 								# ENDIF #
 								<thead>
 									<tr>
-										# IF C_MULTIPLE_DELETE_DISPLAYED #<th class="col-smaller"><span aria-label="${LangLoader::get_message('select.elements', 'common')}"><i class="far fa-square" aria-hidden="true"></i></span></th># ENDIF #
+										# IF C_MULTIPLE_DELETE_DISPLAYED #<th class="col-smaller"><span aria-label="{@select.elements}"><i class="far fa-square" aria-hidden="true"></i></span></th># ENDIF #
 										# START header_column #
 											<th
 												# IF header_column.C_CSS_CLASSES # class="{header_column.CSS_CLASSES}"# ENDIF #
 												# IF header_column.C_CSS_STYLE # style="{header_column.CSS_STYLE}"# ENDIF #>
 												# IF header_column.C_SORTABLE #
 													<span class="html-table-header-sortable# IF header_column.C_SORT_DESC_SELECTED # sort-active# ENDIF #">
-														<a href="{header_column.U_SORT_DESC}" aria-label="${LangLoader::get_message('sort.desc', 'common')}">
+														<a href="{header_column.U_SORT_DESC}" aria-label="{@sort.desc}">
 															<i class="fa fa-caret-up" aria-hidden="true"></i>
 														</a>
 													</span>
@@ -58,7 +58,7 @@
 												<span class="html-table-header-name# IF header_column.C_SR_ONLY # sr-only# ENDIF #">{header_column.NAME}</span>
 												# IF header_column.C_SORTABLE #
 													<span class="html-table-header-sortable# IF header_column.C_SORT_ASC_SELECTED # sort-active# ENDIF #">
-														<a href="{header_column.U_SORT_ASC}" aria-label="${LangLoader::get_message('sort.asc', 'common')}">
+														<a href="{header_column.U_SORT_ASC}" aria-label="{@sort.asc}">
 															<i class="fa fa-caret-down" aria-hidden="true"></i>
 														</a>
 													</span>
@@ -77,7 +77,7 @@
 										# IF C_MULTIPLE_DELETE_DISPLAYED #
 											<td class="mini-checkbox">
 												# IF row.C_DISPLAY_DELETE_INPUT #
-													<label for="multiple-checkbox-{row.ELEMENT_NUMBER}" class="checkbox" aria-label="${LangLoader::get_message('select.element', 'common')}">
+													<label for="multiple-checkbox-{row.ELEMENT_NUMBER}" class="checkbox" aria-label="{@select.element}">
 														<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{row.ELEMENT_NUMBER}" name="delete-checkbox-{row.ELEMENT_NUMBER}" onclick="delete_button_display({ELEMENTS_NUMBER});" />
 														<span>&nbsp;</span>
 													</label>
@@ -103,12 +103,12 @@
 												<div class="flex-between">
 													# IF C_MULTIPLE_DELETE_DISPLAYED #
 														<div class="mini-checkbox">
-															<label for="delete-all-checkbox" class="checkbox" aria-label="${LangLoader::get_message('select.all.elements', 'common')}">
+															<label for="delete-all-checkbox" class="checkbox" aria-label="{@select.all.elements}">
 																<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {ELEMENTS_NUMBER});">
 																<span>&nbsp;</span>
 															</label>
 															<input type="hidden" name="token" value="{TOKEN}" />
-															<button type="submit" id="delete-all-button" name="delete-selected-elements" value="true" class="button submit" data-confirmation="delete-element" disabled="disabled">${LangLoader::get_message('delete', 'common')}</button>
+															<button type="submit" id="delete-all-button" name="delete-selected-elements" value="true" class="button submit" data-confirmation="delete-element" disabled="disabled">{@delete}</button>
 														</div>
 													# ENDIF #
 													<div class="html-table-elements-number">

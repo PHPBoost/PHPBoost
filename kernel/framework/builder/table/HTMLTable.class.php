@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 23
+ * @version     PHPBoost 6.0 - last update: 2021 03 29
  * @since       PHPBoost 3.0 - 2009 12 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -14,10 +14,11 @@
 
 class HTMLTable extends AbstractHTMLElement
 {
-	private $arg_id = 1;
-	private $nb_rows = 0;
-	private $page_number = 1;
-	private $multiple_delete_displayed = true;
+	protected $arg_id = 1;
+	protected $nb_rows = 0;
+	protected $page_number = 1;
+	protected $multiple_delete_displayed = true;
+	protected $lang;
 
 	/**
 	 * @var HTMLTableParameters
@@ -27,26 +28,26 @@ class HTMLTable extends AbstractHTMLElement
 	/**
 	 * @var Template
 	 */
-	private $tpl;
+	protected $tpl;
 
 	/**
 	 * @var HTMLTableModel
 	 */
-	private $model;
+	protected $model;
 
 	/**
 	 * @var HTMLTableColumn[]
 	 */
-	private $columns = array();
+	protected $columns = array();
 
 	/**
 	 * @var HTMLTableRow[]
 	 */
-	private $rows = array();
+	protected $rows = array();
 
-	private $filters_fieldset_class = 'FormFieldsetHorizontal';
+	protected $filters_fieldset_class = 'FormFieldsetHorizontal';
 
-	public function __construct(HTMLTableModel $model, $css_class = '', $tpl_path = '')
+	public function __construct(HTMLTableModel $model, $lang = array(), $css_class = '', $tpl_path = '')
 	{
 		if ($tpl_path === '')
 		{
@@ -54,8 +55,10 @@ class HTMLTable extends AbstractHTMLElement
 		}
 		$model->set_html_table($this);
 
+		$this->lang = !empty($lang) ? $lang : LangLoader::get('common');
 		$this->css_class = $css_class;
 		$this->tpl = new FileTemplate($tpl_path);
+		$this->tpl->add_lang($this->lang);
 		$this->model = $model;
 		$this->columns = $this->model->get_columns();
 		$this->parameters = new HTMLTableParameters($this->model);
