@@ -19,7 +19,7 @@
 					<script>
 						jQuery('.filter-button').opensubmenu({
 							osmTarget: '#filters-{TABLE_ID}',
-							osmCloseExcept: '#filters-{TABLE_ID} filters-container *',
+							osmCloseExcept: '#filters-{TABLE_ID} .filters-container *',
 							osmCloseButton: '.close-filters',
 						});
 					</script>
