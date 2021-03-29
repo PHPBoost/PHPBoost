@@ -77,16 +77,24 @@ tfoot td select { padding: 0.1618em 0.309em; }
 
 .html-table-filters { padding: 0.809em; }
 
-.html-table-filters form {
+.html-table-filters .filters-container {
+	position: relative;
 	opacity: 0;
 	visibility: hidden;
 	height: 0;
 }
 
-.html-table-filters.opened form {
+.html-table-filters.opened .filters-container {
 	opacity: 1;
 	visibility: visible;
 	height: auto;
+}
+
+.close-filters {
+	position: absolute;
+	top: 0.228em;
+	right: 0.618em;
+	cursor: pointer;
 }
 
 .html-table-elements-number { text-align: left; }

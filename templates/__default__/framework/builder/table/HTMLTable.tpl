@@ -9,15 +9,18 @@
 # ENDIF #
 				# IF C_FILTERS #
 					<div id="filters-{TABLE_ID}" class="html-table-filters">
-						<a href="" class="filter-button button bgc link-color">${LangLoader::get_message('filter.items', 'common')}</a>
-						<script src="{PATH_TO_ROOT}/templates/__default__/plugins/UrlSerializedParameterEncoder.js"></script>
-						# INCLUDE filters #
+						<a href="" class="filter-button button bgc link-color"><i class="fa fa-sliders-h" aria-hidden="true"></i> ${LangLoader::get_message('filter.items', 'common')}</a>
+						<div class="filters-container">
+							<i class="close-filters far fa-window-close" aria-hidden="true"></i> <span class="sr-only">${LangLoader::get_message('close', 'main')}</span>
+							<script src="{PATH_TO_ROOT}/templates/__default__/plugins/UrlSerializedParameterEncoder.js"></script>
+							# INCLUDE filters #
+						</div>
 					</div>
 					<script>
 						jQuery('.filter-button').opensubmenu({
 							osmTarget: '#filters-{TABLE_ID}',
-							osmCloseExcept: '#filters-{TABLE_ID} form *',
-							osmCloseButton: '',
+							osmCloseExcept: '#filters-{TABLE_ID} filters-container *',
+							osmCloseButton: '.close-filters',
 						});
 					</script>
 				# ENDIF #
