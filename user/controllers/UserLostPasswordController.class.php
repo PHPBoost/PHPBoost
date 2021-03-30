@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 03 30
  * @since       PHPBoost 3.0 - 2011 07 25
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UserLostPasswordController extends AbstractController
@@ -42,7 +43,9 @@ class UserLostPasswordController extends AbstractController
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
-		$fieldset = new FormFieldsetHTML('fieldset', $this->lang['forget-password']);
+		$form->set_layout_title($this->lang['forget-password']);
+
+		$fieldset = new FormFieldsetHTML('fieldset', LangLoader::get_message('form.parameters', 'common'));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['email'], '',

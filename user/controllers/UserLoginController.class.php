@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 03 30
  * @since       PHPBoost 3.0 - 2012 04 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UserLoginController extends AbstractController
@@ -210,9 +211,10 @@ class UserLoginController extends AbstractController
 	private function build_form()
 	{
 		$this->form = new HTMLForm('loginForm', $this->build_target(), false);
+		$this->form->set_layout_title($this->lang['connection']);
 		$this->form->set_css_class('fieldset-content');
 
-		$this->fieldset = new FormFieldsetHTML('loginFieldset', $this->lang['connection']);
+		$this->fieldset = new FormFieldsetHTML('loginFieldset', LangLoader::get_message('form.parameters', 'common'));
 		$this->form->add_fieldset($this->fieldset);
 
 		$this->fieldset->add_field(new FormFieldTextEditor('login', $this->lang['login'], '',

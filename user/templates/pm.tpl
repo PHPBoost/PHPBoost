@@ -229,7 +229,7 @@
 				# INCLUDE message_helper #
 				<span id="quote"></span>
 				<form action="pm{post_pm.U_PM_ACTION_POST}" method="post" onsubmit="return check_form_msg();" class="post-pm">
-					<fieldset id="pm_message" class="sub-section">
+					<fieldset id="pm_message">
 						<legend>{L_RESPOND}</legend>
 						<div class="fieldset-inset">
 							<div class="form-element form-element-textarea">
@@ -240,7 +240,7 @@
 							</div>
 						</div>
 					</fieldset>
-					<fieldset id="pm_fbutton" class="sub-section fieldset-submit">
+					<fieldset id="pm_fbutton" class="fieldset-submit">
 						<div class="fieldset-inset">
 							<input type="hidden" name="token" value="{TOKEN}">
 							<button type="submit" class="button submit" name="pm" value="true">{L_SUBMIT}</button>

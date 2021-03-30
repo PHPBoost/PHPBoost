@@ -182,7 +182,7 @@
 											# IF C_GRID_VIEW #
 												# IF items.C_HAS_UPDATE_DATE #
 													<span class="pinned" aria-label="${LangLoader::get_message('form.date.update', 'common')}">
-														<i class="far fa-calendar-alt" aria-hidden="true"></i>
+														<i class="far fa-calendar-plus" aria-hidden="true"></i>
 														<time datetime="{items.UPDATE_DATE_ISO8601}" itemprop="dateModified">{items.UPDATE_DATE}</time>
 													</span>
 												# ENDIF #
