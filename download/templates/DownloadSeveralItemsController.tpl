@@ -177,10 +177,12 @@
 												<div class="pinned">{items.STATIC_NOTATION}</div>
 											# ENDIF #
 										</div>
-										<div class="controls align-right">
-											# IF items.C_EDIT #<a href="{items.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
-											# IF items.C_DELETE #<a href="{items.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
-										</div>
+										# IF items.C_CONTROLS #
+											<div class="controls align-right">
+												# IF items.C_EDIT #<a href="{items.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
+												# IF items.C_DELETE #<a href="{items.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
+											</div>
+										# ENDIF #
 									</div>
 									# IF items.C_HAS_UPDATE_DATE #
 										<div class="cell-footer">
