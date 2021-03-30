@@ -144,7 +144,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 
 			if (self::get_module_configuration()->has_categories())
 			{
-				$this->sql_condition = 'WHERE' . ($this->module_item->sub_categories_displayed() ? ' id_category = :id_category
+				$this->sql_condition = 'WHERE' . ($this->module_item->sub_categories_displayed() || $this->get_category()->get_id() != Category::ROOT_CATEGORY ? ' id_category = :id_category
 				AND' : '') . ' (published = ' . Item::PUBLISHED . (self::get_module_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))' : '') . ')';
 
 				$this->sql_parameters['id_category'] = $this->get_category()->get_id();
