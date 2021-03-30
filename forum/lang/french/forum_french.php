@@ -1,9 +1,9 @@
 <?php
 /**
- * @copyright 	&copy; 2005-2019 PHPBoost
+ * @copyright 	&copy; 2005-2021 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 19
+ * @version   	PHPBoost 5.2 - last update: 2021 03 30
  * @since   	PHPBoost 1.6 - 2006 11 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -21,7 +21,7 @@ $LANG['update_data_cached'] = 'Recompter le nombre de sujets et de messages';
 //Erreurs
 $LANG['e_topic_lock_forum'] = 'Sujet verrouillé, vous ne pouvez pas poster de message';
 $LANG['e_cat_lock_forum'] = 'Forum verrouillé, création de nouveau sujet/message impossible';
-$LANG['e_unexist_topic_forum'] = 'Le topic que vous demandez n\'existe pas';
+$LANG['e_unexist_topic_forum'] = 'Le sujet que vous demandez n\'existe pas';
 $LANG['e_unable_cut_forum'] = 'Vous ne pouvez pas scinder le sujet à partir de ce message';
 $LANG['e_cat_write'] = 'Vous n\'êtes pas autorisé à écrire dans cette catégorie';
 
@@ -84,7 +84,7 @@ $LANG['untrack_topic_pm'] = 'Arrêter le suivi par message privé';
 $LANG['track_topic_mail'] = 'Suivre par mail';
 $LANG['untrack_topic_mail'] = 'Arrêter le suivi par mail';
 $LANG['alert_topic'] = 'Alerter les modérateurs';
-$LANG['alert_modo_explain'] = 'Vous êtes sur le point d\'alerter les modérateurs. Vous aidez l\'équipe modératrice en lui signalant des topics qui ne respectent pas certaines règles, mais sachez que lorsque vous alertez un modérateur votre pseudo est enregistré, il est donc nécessaire que votre demande soit justifiée sans quoi vous risquez des sanctions de la part de l\'équipe des modérateurs et administrateurs en cas d\'abus. Afin d\'aider l\'équipe, merci d\'expliquer ce qui ne respecte pas les conditions dans ce sujet.
+$LANG['alert_modo_explain'] = 'Vous êtes sur le point d\'alerter les modérateurs. Vous aidez l\'équipe modératrice en lui signalant des sujets qui ne respectent pas certaines règles, mais sachez que lorsque vous alertez un modérateur votre pseudo est enregistré, il est donc nécessaire que votre demande soit justifiée sans quoi vous risquez des sanctions de la part de l\'équipe des modérateurs et administrateurs en cas d\'abus. Afin d\'aider l\'équipe, merci d\'expliquer ce qui ne respecte pas les conditions dans ce sujet.
 
 Vous désirez alerter les modérateurs d\'un problème sur le sujet suivant';
 $LANG['alert_title'] = 'Brève description';
@@ -214,5 +214,5 @@ $LANG['member_msg_seo'] = 'Tous les messages du forum d\'un membre';
 $LANG['root_description_seo'] = 'Toutes les catégories du forum du site :site.';
 $LANG['show_no_answer_seo'] = 'Liste des messages sans réponse';
 $LANG['stats_seo'] = 'Toutes les statistiques du forum';
-$LANG['topic_title_seo'] = 'Topic :title du forum :forum';
+$LANG['topic_title_seo'] = 'Sujet :title du forum :forum';
 ?>
