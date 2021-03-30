@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 15
+ * @version     PHPBoost 6.0 - last update: 2021 03 30
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -159,7 +159,7 @@ class WebCategoryController extends ModuleController
 		$common_lang = LangLoader::get('common');
 
 		$form = new HTMLForm(__CLASS__, '', false);
-		$form->set_css_class('options no-style');
+		$form->set_css_class('options');
 
 		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $common_lang['sort_by']));
 		$form->add_fieldset($fieldset);
