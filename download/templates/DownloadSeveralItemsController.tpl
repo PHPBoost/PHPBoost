@@ -173,20 +173,20 @@
 													</span>
 												# ENDIF #
 											# ENDIF #
-												<span class="pinned" aria-label="${LangLoader::get_message('form.date.creation', 'common')}">
-													<i class="far fa-calendar-alt" aria-hidden="true"></i>
-													<time datetime="# IF items.C_DEFFERED_PUBLISHING #{items.DEFFERED_PUBLISHING_START_DATE_ISO8601}# ELSE #{items.DATE_ISO8601}# ENDIF #" itemprop="datePublished">
-														# IF items.C_DEFFERED_PUBLISHING #{items.DEFFERED_PUBLISHING_START_DATE}# ELSE #{items.DATE}# ENDIF #
-													</time>
-													# IF C_GRID_VIEW #
-														# IF items.C_HAS_UPDATE_DATE #
-															<span class="pinned notice small text-italic modified-date" aria-label="${LangLoader::get_message('form.date.update', 'common')}">
-																<i class="far fa-calendar-alt" aria-hidden="true"></i>
-																<time datetime="{items.UPDATE_DATE_ISO8601}" itemprop="dateModified">{items.UPDATE_DATE}</time>
-															</span>
-														# ENDIF #
-													# ENDIF #
-												</span>
+											<span class="pinned" aria-label="${LangLoader::get_message('form.date.creation', 'common')}">
+												<i class="far fa-calendar-alt" aria-hidden="true"></i>
+												<time datetime="# IF items.C_DEFFERED_PUBLISHING #{items.DEFFERED_PUBLISHING_START_DATE_ISO8601}# ELSE #{items.DATE_ISO8601}# ENDIF #" itemprop="datePublished">
+													# IF items.C_DEFFERED_PUBLISHING #{items.DEFFERED_PUBLISHING_START_DATE}# ELSE #{items.DATE}# ENDIF #
+												</time>
+											</span>
+											# IF C_GRID_VIEW #
+												# IF items.C_HAS_UPDATE_DATE #
+													<span class="pinned" aria-label="${LangLoader::get_message('form.date.update', 'common')}">
+														<i class="far fa-calendar-alt" aria-hidden="true"></i>
+														<time datetime="{items.UPDATE_DATE_ISO8601}" itemprop="dateModified">{items.UPDATE_DATE}</time>
+													</span>
+												# ENDIF #
+											# ENDIF #
 											<span class="pinned" role="contentinfo" aria-label="{items.L_DOWNLOADED_TIMES}"><i class="fa fa-download" aria-hidden="true"></i> {items.DOWNLOADS_NUMBER}</span>
 											# IF C_ENABLED_VIEWS_NUMBER #<span class="pinned" role="contentinfo" aria-label="{items.VIEWS_NUMBER} {@download.view}"><i class="fa fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span># ENDIF #
 											# IF C_ENABLED_COMMENTS #
