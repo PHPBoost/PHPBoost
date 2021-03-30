@@ -72,7 +72,7 @@
 						<table class="table">
 							<thead>
 								<tr>
-									<th>${LangLoader::get_message('form.name', 'common')}</th>
+									<th>${LangLoader::get_message('form.title', 'common')}</th>
 									<th class="col-small" aria-label="${LangLoader::get_message('form.date.creation', 'common')}">
 										<i class="far fa-fw fa-calendar-plus hidden-small-screens" aria-hidden="true"></i>
 										<span class="hidden-large-screens">${LangLoader::get_message('form.date.creation', 'common')}</span>
@@ -164,6 +164,29 @@
 								<div class="cell-body">
 									<div class="cell-infos">
 										<div class="more">
+											# IF C_AUTHOR_DISPLAYED #
+												# IF items.C_AUTHOR_CUSTOM_NAME #
+													<span class="pinned"><i class="far fa-user" aria-hidden="true"></i> <span class="custom-author">{items.AUTHOR_CUSTOM_NAME}</span></span>
+												# ELSE #
+													<span class="pinned {AUTHOR_LEVEL_CLASS}"# IF C_AUTHOR_GROUP_COLOR # style="color:{items.AUTHOR_GROUP_COLOR}; border-color:{items.AUTHOR_GROUP_COLOR}" # ENDIF #>
+														<i class="far fa-user" aria-hidden="true"></i> # IF items.C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{items.AUTHOR_LEVEL_CLASS}" href="{items.U_AUTHOR_PROFILE}" # IF items.C_AUTHOR_GROUP_COLOR # style="color:{items.AUTHOR_GROUP_COLOR}" # ENDIF #>{items.AUTHOR_DISPLAY_NAME}</a># ELSE #<span class="visitor">{items.AUTHOR_DISPLAY_NAME}</span># ENDIF #
+													</span>
+												# ENDIF #
+											# ENDIF #
+												<span class="pinned" aria-label="${LangLoader::get_message('form.date.creation', 'common')}">
+													<i class="far fa-calendar-alt" aria-hidden="true"></i>
+													<time datetime="# IF items.C_DEFFERED_PUBLISHING #{items.DEFFERED_PUBLISHING_START_DATE_ISO8601}# ELSE #{items.DATE_ISO8601}# ENDIF #" itemprop="datePublished">
+														# IF items.C_DEFFERED_PUBLISHING #{items.DEFFERED_PUBLISHING_START_DATE}# ELSE #{items.DATE}# ENDIF #
+													</time>
+													# IF C_GRID_VIEW #
+														# IF items.C_HAS_UPDATE_DATE #
+															<span class="pinned notice small text-italic modified-date" aria-label="${LangLoader::get_message('form.date.update', 'common')}">
+																<i class="far fa-calendar-alt" aria-hidden="true"></i>
+																<time datetime="{items.UPDATE_DATE_ISO8601}" itemprop="dateModified">{items.UPDATE_DATE}</time>
+															</span>
+														# ENDIF #
+													# ENDIF #
+												</span>
 											<span class="pinned" role="contentinfo" aria-label="{items.L_DOWNLOADED_TIMES}"><i class="fa fa-download" aria-hidden="true"></i> {items.DOWNLOADS_NUMBER}</span>
 											# IF C_ENABLED_VIEWS_NUMBER #<span class="pinned" role="contentinfo" aria-label="{items.VIEWS_NUMBER} {@download.view}"><i class="fa fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span># ENDIF #
 											# IF C_ENABLED_COMMENTS #
@@ -172,7 +195,6 @@
 													# IF items.C_COMMENTS # {items.COMMENTS_NUMBER} # ENDIF # {items.L_COMMENTS}
 												</span>
 											# ENDIF #
-											<div class="spacer"></div>
 											# IF C_ENABLED_NOTATION #
 												<div class="pinned">{items.STATIC_NOTATION}</div>
 											# ENDIF #
@@ -184,10 +206,12 @@
 											</div>
 										# ENDIF #
 									</div>
-									# IF items.C_HAS_UPDATE_DATE #
-										<div class="cell-footer">
-											<span class="pinned notice small text-italic modified-date">${LangLoader::get_message('status.last.update', 'common')} <time datetime="{items.UPDATE_DATE_ISO8601}" itemprop="dateModified">{items.UPDATE_DATE_FULL}</time></span>
-										</div>
+									# IF C_LIST_VIEW #
+										# IF items.C_HAS_UPDATE_DATE #
+											<div class="cell-footer">
+												<span class="pinned notice small text-italic modified-date">${LangLoader::get_message('status.last.update', 'common')} <time datetime="{items.UPDATE_DATE_ISO8601}" itemprop="dateModified">{items.UPDATE_DATE_FULL}</time></span>
+											</div>
+										# ENDIF #
 									# ENDIF #
 									# IF NOT C_FULL_ITEM_DISPLAY #
 										# IF items.C_HAS_THUMBNAIL #

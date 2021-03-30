@@ -55,7 +55,7 @@
 								# IF C_VERSION_NUMBER #<li class="li-stretch"><span class="text-strong">{@download.version} : </span><span>{VERSION_NUMBER}</span></li># ENDIF #
 								<li class="li-stretch"><span class="text-strong">${LangLoader::get_message('size', 'common')} : </span><span># IF C_SIZE #{SIZE}# ELSE #${LangLoader::get_message('unknown_size', 'common')}# ENDIF #</span></li>
 								<li class="li-stretch"><span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} : </span><time datetime="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT C_DIFFERED #{DATE}# ELSE #{DIFFERED_START_DATE}# ENDIF #</time></li>
-								# IF C_HAS_UPDATE_DATE #<li class="li-stretch"><span class="text-strong">${LangLoader::get_message('status.last.update', 'common')} : </span><time datetime="{UPDATED_DATE_ISO8601}" itemprop="dateModified">{UPDATED_DATE}</time></li># ENDIF #
+								# IF C_HAS_UPDATE_DATE #<li class="li-stretch"><span class="text-strong">${LangLoader::get_message('status.last.update', 'common')} : </span><time datetime="{UPDATED_DATE_ISO8601}" itemprop="dateModified">{UPDATE_DATE}</time></li># ENDIF #
 								<li class="li-stretch"><span class="text-strong">{@downloads.number} : </span><span>{DOWNLOADS_NUMBER}</span></li>
 								# IF C_ENABLED_VIEWS_NUMBER #<li class="li-stretch"><span class="text-strong">{@download.views.number} : </span><span>{VIEWS_NUMBER}</span></li># ENDIF #
 								<li class="li-stretch"><span class="text-strong">${LangLoader::get_message('category', 'categories-common')} : </span><a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a></li>
@@ -66,7 +66,7 @@
 											# IF C_AUTHOR_CUSTOM_NAME #
 												<span class="custom-author">{AUTHOR_CUSTOM_NAME}</span>
 											# ELSE #
-												# IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #<span class="visitor">{PSEUDO}</span># ENDIF #
+												# IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{AUTHOR_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR_DISPLAY_NAME}</a># ELSE #<span class="visitor">{AUTHOR_DISPLAY_NAME}</span># ENDIF #
 											# ENDIF #
 										</span>
 									</li>
@@ -82,10 +82,6 @@
 							</ul>
 						</div>
 					</div>
-					# IF C_HAS_UPDATE_DATE #
-						<span class="pinned notice small text-italic modified-date">${LangLoader::get_message('status.last.update', 'common')} <time datetime="{UPDATE_DATE_ISO8601}" itemprop="dateModified">{UPDATE_DATE_FULL}</time></span>
-					# ENDIF #
-
 					<div itemprop="text">{CONTENT}</div>
 				</div>
 

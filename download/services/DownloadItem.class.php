@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 15
+ * @version     PHPBoost 6.0 - last update: 2021 03 30
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -526,30 +526,30 @@ class DownloadItem
 				'C_VERSION_NUMBER'       => !empty($this->version_number),
 				'C_AUTHOR_CUSTOM_NAME'   => $this->is_author_custom_name_enabled(),
 				'C_ENABLED_VIEWS_NUMBER' => $config->get_enabled_views_number(),
-				'C_USER_GROUP_COLOR'     => !empty($user_group_color),
+				'C_AUTHOR_GROUP_COLOR'     => !empty($user_group_color),
 				'C_HAS_UPDATE_DATE'      => $this->has_update_date(),
 				'C_SOURCES'              => $nbr_sources > 0,
 				'C_DIFFERED'             => $this->published == self::DEFERRED_PUBLICATION,
 				'C_NEW_CONTENT'          => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('download', $this->get_publishing_start_date() != null ? $this->get_publishing_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_published(),
 
 				// Item
-				'ID'                 => $this->id,
-				'TITLE'              => $this->title,
-				'SIZE'               => $this->formated_size,
-				'CONTENT'            => $content,
-				'SUMMARY'     		 => $real_summary,
-				'STATUS'             => $this->get_publishing_state(),
-				'AUTHOR_CUSTOM_NAME' => $this->author_custom_name,
-				'C_AUTHOR_EXIST'     => $user->get_id() !== User::VISITOR_LEVEL,
-				'PSEUDO'             => $user->get_display_name(),
-				'USER_LEVEL_CLASS'   => UserService::get_level_class($user->get_level()),
-				'USER_GROUP_COLOR'   => $user_group_color,
-				'VERSION_NUMBER'     => $this->version_number,
-				'DOWNLOADS_NUMBER'   => $this->downloads_number,
-				'VIEWS_NUMBER'       => $this->get_views_number(),
-				'L_DOWNLOADED_TIMES' => StringVars::replace_vars(LangLoader::get_message('download.times', 'common', 'download'), array('downloads_number' => $this->downloads_number)),
-				'STATIC_NOTATION'    => NotationService::display_static_image($this->get_notation()),
-				'NOTATION'           => NotationService::display_active_image($this->get_notation()),
+				'ID'                  => $this->id,
+				'TITLE'               => $this->title,
+				'SIZE'                => $this->formated_size,
+				'CONTENT'             => $content,
+				'SUMMARY' 		      => $real_summary,
+				'STATUS'              => $this->get_publishing_state(),
+				'AUTHOR_CUSTOM_NAME'  => $this->author_custom_name,
+				'C_AUTHOR_EXIST'      => $user->get_id() !== User::VISITOR_LEVEL,
+				'AUTHOR_DISPLAY_NAME' => $user->get_display_name(),
+				'AUTHOR_LEVEL_CLASS'  => UserService::get_level_class($user->get_level()),
+				'AUTHOR_GROUP_COLOR'    => $user_group_color,
+				'VERSION_NUMBER'      => $this->version_number,
+				'DOWNLOADS_NUMBER'    => $this->downloads_number,
+				'VIEWS_NUMBER'        => $this->get_views_number(),
+				'L_DOWNLOADED_TIMES'  => StringVars::replace_vars(LangLoader::get_message('download.times', 'common', 'download'), array('downloads_number' => $this->downloads_number)),
+				'STATIC_NOTATION'     => NotationService::display_static_image($this->get_notation()),
+				'NOTATION'            => NotationService::display_active_image($this->get_notation()),
 
 				'C_COMMENTS'      => !empty($comments_number),
 				'L_COMMENTS'      => CommentsService::get_lang_comments('download', $this->id),
