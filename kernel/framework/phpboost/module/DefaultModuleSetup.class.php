@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 15
+ * @version     PHPBoost 6.0 - last update: 2021 03 30
  * @since       PHPBoost 2.0 - 2009 01 16
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -18,6 +18,7 @@ class DefaultModuleSetup implements ModuleSetup
 	protected static $dbms_utils;
 	protected $module_id;
 	protected $module_configuration;
+	protected $item_class_name;
 	private $id_category = 1;
 	private $id_item = 1;
 
@@ -109,8 +110,8 @@ class DefaultModuleSetup implements ModuleSetup
 		{
 			if ($this->module_configuration->has_items())
 			{
-				$item_class_name = $this->module_configuration->get_item_name();
-				$item_class_name::create_items_table($this->module_id);
+				$this->item_class_name = $this->module_configuration->get_item_name();
+				$this->item_class_name::create_items_table($this->module_id);
 			}
 
 			if ($this->module_configuration->has_categories())
@@ -133,8 +134,12 @@ class DefaultModuleSetup implements ModuleSetup
 			if ($file->exists())
 			{
 				$lang = LangLoader::get('install', $this->module_id);
-				$this->insert_default_categories($lang);
-				$this->insert_default_items($lang);
+
+				if ($this->module_configuration->has_categories())
+					$this->insert_default_categories($lang);
+
+				if ($this->module_configuration->has_items() && $this->item_class_name)
+					$this->insert_default_items($lang);
 			}
 		}
 	}
@@ -210,21 +215,23 @@ class DefaultModuleSetup implements ModuleSetup
 
 	protected function add_item($title, $content, $summary = '', $thumbnail = FormFieldThumbnail::DEFAULT_VALUE, $id_category = Category::ROOT_CATEGORY, $additional_fields = array())
 	{
+		$item = new $this->item_class_name();
+
 		$fields = array(
 			'id' => $this->id_item,
 			'title' => $title,
 			'rewrited_title' => Url::encode_rewrite($title),
-			'content' => $content,
 			'author_user_id' => 1,
 			'creation_date' => time(),
 			'update_date' => 0,
 			'published' => Item::PUBLISHED
 		);
 
+		if ($item->content_field_enabled())
+			$fields['content'] = $content;
+
 		if ($this->module_configuration->has_categories())
-		{
 			$fields['id_category'] = $id_category ? $id_category : ($this->id_category - 1);
-		}
 
 		if ($this->module_configuration->feature_is_enabled('deferred_publication'))
 		{
@@ -239,9 +246,15 @@ class DefaultModuleSetup implements ModuleSetup
 
 		if ($this->module_configuration->has_rich_items())
 		{
-			$fields['summary'] = $summary;
-			$fields['thumbnail'] = $thumbnail;
-			$fields['author_custom_name'] = '';
+			if ($item->content_field_enabled() && $item->summary_field_enabled())
+				$fields['summary'] = $summary;
+
+			if ($item->thumbnail_field_enabled())
+				$fields['thumbnail'] = $thumbnail;
+
+			if ($item->author_custom_name_field_enabled())
+				$fields['author_custom_name'] = '';
+
 			$fields['views_number'] = 0;
 		}
 
