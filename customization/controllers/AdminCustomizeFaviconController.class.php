@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 03
+ * @version     PHPBoost 6.0 - last update: 2021 03 30
  * @since       PHPBoost 3.0 - 2011 08 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -69,7 +69,7 @@ class AdminCustomizeFaviconController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('customize-favicon', $this->lang['customization.favicon.title']);
+		$fieldset = new FormFieldsetHTML('customize-favicon', $this->lang['customization.favicon.title']);
 		$form->add_fieldset($fieldset);
 
 		if ($this->config->get_favicon_path() == null || $this->config->get_favicon_path() == '')
