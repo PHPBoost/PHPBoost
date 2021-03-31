@@ -136,6 +136,7 @@ abstract class AbstractItemController extends ModuleController
 	protected function get_template_to_use()
 	{
 		$class_name = get_called_class();
+		$templates_module_folder = PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/modules/' . self::$module_id . '/';
 
 		// If the module has a template with the name of the called class we take it
 		if (file_exists(PATH_TO_ROOT . '/' . self::$module_id . '/templates/' . $class_name . '.tpl'))
@@ -147,13 +148,13 @@ abstract class AbstractItemController extends ModuleController
 		else if ($this->get_template_url() && preg_match('/\.tpl$/', $this->get_template_url()))
 		{
 			// If the module has a template with the name of the template put in url we take it
-			if (file_exists(PATH_TO_ROOT . '/' . self::$module_id . '/templates/' . basename($this->get_template_url())))
+			if (file_exists(PATH_TO_ROOT . '/' . self::$module_id . '/templates/' . basename($this->get_template_url())) || file_exists($templates_module_folder . basename($this->get_template_url())))
 				return new FileTemplate(self::$module_id . '/' . basename($this->get_template_url()));
 			// Otherwise if the module has a template with the name of the template put in url which begins with Default and Default is replace by module id we take it
-			else if (preg_match('/^Default/', basename($this->get_template_url())) && file_exists(PATH_TO_ROOT . '/' . self::$module_id . '/templates/' . str_replace('Default', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url()))))
+			else if (preg_match('/^Default/', basename($this->get_template_url())) && (file_exists(PATH_TO_ROOT . '/' . self::$module_id . '/templates/' . str_replace('Default', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url()))) || file_exists($templates_module_folder . str_replace('Default', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url())))))
 				return new FileTemplate(self::$module_id . '/' . str_replace('Default', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url())));
 			// Otherwise if the module has a template with the name of the template put in url which does not begin with Default but module id is added at the beginning f the template name we take it
-			else if (!preg_match('/^Default/', basename($this->get_template_url())) && file_exists(PATH_TO_ROOT . '/' . self::$module_id . '/templates/' . TextHelper::ucfirst(self::$module_id) . basename($this->get_template_url())))
+			else if (!preg_match('/^Default/', basename($this->get_template_url())) && (file_exists(PATH_TO_ROOT . '/' . self::$module_id . '/templates/' . TextHelper::ucfirst(self::$module_id) . basename($this->get_template_url())) || file_exists($templates_module_folder . TextHelper::ucfirst(self::$module_id) . basename($this->get_template_url()))))
 				return new FileTemplate(self::$module_id . '/' . TextHelper::ucfirst(self::$module_id) . basename($this->get_template_url()));
 			// Otherwise we take the default url defined for the default template
 			else
