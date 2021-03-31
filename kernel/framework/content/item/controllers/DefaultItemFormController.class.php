@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 18
+ * @version     PHPBoost 6.0 - last update: 2021 03 31
  * @since       PHPBoost 6.0 - 2020 05 16
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -77,9 +77,9 @@ class DefaultItemFormController extends AbstractItemController
 		return $this->item;
 	}
 
-	protected function get_template_to_use()
+	protected function get_template_string_content()
 	{
-		return new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+		return '# INCLUDE MSG # # INCLUDE FORM #';
 	}
 
 	protected function check_authorizations()

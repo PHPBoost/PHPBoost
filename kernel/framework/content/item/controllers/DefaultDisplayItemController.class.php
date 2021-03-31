@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 05
+ * @version     PHPBoost 6.0 - last update: 2021 03 31
  * @since       PHPBoost 6.0 - 2020 03 12
 */
 
@@ -108,9 +108,9 @@ class DefaultDisplayItemController extends AbstractItemController
 		));
 	}
 
-	protected function get_template_to_use()
+	protected function get_template_url()
 	{
-		return new FileTemplate('framework/content/items/ModuleItemController.tpl');
+		return 'framework/content/items/ModuleItemController.tpl';
 	}
 
 	protected function check_authorizations()
