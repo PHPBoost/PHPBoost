@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 11
+ * @version     PHPBoost 6.0 - last update: 2021 03 31
  * @since       PHPBoost 4.1 - 2015 02 03
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -107,10 +107,11 @@ class AdminMediaConfigController extends AdminModuleController
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->config_lang['config.display.type'], $this->config->get_display_type(),
 			array(
-				new FormFieldSelectChoiceOption($this->config_lang['config.display.type.grid'], MediaConfig::GRID_VIEW),
-				new FormFieldSelectChoiceOption($this->config_lang['config.display.type.list'], MediaConfig::LIST_VIEW),
+				new FormFieldSelectChoiceOption($this->config_lang['config.display.type.grid'], MediaConfig::GRID_VIEW, array('data_option_icon' => 'fa fa-th-large')),
+				new FormFieldSelectChoiceOption($this->config_lang['config.display.type.list'], MediaConfig::LIST_VIEW, array('data_option_icon' => 'fa fa-list')),
 			),
 			array(
+				'select_to_list' => true,
 				'events' => array('change' => '
 					if (HTMLForms.getField("display_type").getValue() == \'' . MediaConfig::GRID_VIEW . '\') {
 						HTMLForms.getField("items_number_per_row").enable();
