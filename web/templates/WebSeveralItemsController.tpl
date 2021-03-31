@@ -59,13 +59,13 @@
 
 	<div class="sub-section">
 		<div class="content-container">
-		# IF C_ITEMS #
-			# IF C_SEVERAL_ITEMS #
-				<div class="content">
-					# INCLUDE SORT_FORM #
-					<div class="spacer"></div>
-				</div>
-			# ENDIF #
+			# IF C_ITEMS #
+				# IF C_SEVERAL_ITEMS #
+					<div class="content">
+						# INCLUDE SORT_FORM #
+						<div class="spacer"></div>
+					</div>
+				# ENDIF #
 				# IF C_TABLE_VIEW #
 					<div class="responsive-table">
 						<table class="table">
@@ -244,9 +244,9 @@
 						</div>
 					</div>
 				# ENDIF #
-			</div>
+			# ENDIF #
 		</div>
-	# ENDIF #
+	</div>
 
 	<footer># IF C_PAGINATION #<div class="sub-section"><div class="content-container"># INCLUDE PAGINATION #</div></div># ENDIF #</footer>
 </section>
