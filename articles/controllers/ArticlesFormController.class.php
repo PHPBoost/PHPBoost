@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 21
+ * @version     PHPBoost 6.0 - last update: 2021 03 31
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -44,11 +44,6 @@ class ArticlesFormController extends DefaultItemFormController
 		}
 		
 		parent::build_post_content_fields($fieldset);
-	}
-
-	protected function get_template_to_use()
-	{
-		return new FileTemplate('articles/ArticlesFormController.tpl');
 	}
 }
 ?>
