@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 31
+ * @version     PHPBoost 6.0 - last update: 2021 04 01
  * @since       PHPBoost 6.0 - 2020 02 08
 */
 
@@ -68,7 +68,7 @@ abstract class AbstractAdminItemController extends AdminModuleController
 			return new FileTemplate(self::$module_id . '/' . $class_name . '.tpl');
 		// Otherwise if the module has a template with the name of the called class which begins with Default and Default is replace by module id we take it
 		else if (preg_match('/^Default/', $class_name) && file_exists(PATH_TO_ROOT . '/' . self::$module_id . '/templates/' . str_replace('Default', TextHelper::ucfirst(self::$module_id), $class_name) . '.tpl'))
-			return new FileTemplate(self::$module_id . '/' . $class_name . '.tpl');
+			return new FileTemplate(self::$module_id . '/' . str_replace('Default', TextHelper::ucfirst(self::$module_id), $class_name) . '.tpl');
 		// Otherwise if a template url is defined and it ends with tpl extension we go further
 		else if ($this->get_template_url() && preg_match('/\.tpl$/', $this->get_template_url()))
 		{
