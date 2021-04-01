@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 31
+ * @version     PHPBoost 6.0 - last update: 2021 04 01
  * @since       PHPBoost 6.0 - 2020 01 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -158,8 +158,9 @@ class DefaultSeveralItemsController extends AbstractItemController
 				$this->url_without_sorting_parameters = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id, true);
 
 				$this->view->put_all(array(
-					'C_SYNDICATION' => true,
-					'U_SYNDICATION' => SyndicationUrlBuilder::rss(self::$module_id, $this->get_category()->get_id())->rel()
+					'C_ENABLED_CATEGORIES' => !$this->module_item->sub_categories_displayed(),
+					'C_SYNDICATION'        => true,
+					'U_SYNDICATION'        => SyndicationUrlBuilder::rss(self::$module_id, $this->get_category()->get_id())->rel()
 				));
 
 				$this->build_categories_listing_view();
