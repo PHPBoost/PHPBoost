@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 08
+ * @version     PHPBoost 6.0 - last update: 2021 04 01
  * @since       PHPBoost 3.0 - 2009 12 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -211,11 +211,11 @@ class ModuleConfiguration
 		$this->check_parse_ini_file($config, $config_ini_file);
 
 		$this->author                 = $config['author'];
-		$this->author_email           = $config['author_mail'];
-		$this->author_website         = $config['author_website'];
+		$this->author_email           = isset($config['author_mail']) ? $config['author_mail'] : '';
+		$this->author_website         = isset($config['author_website']) ? $config['author_website'] : '';
 		$this->version                = $config['version'];
-		$this->creation_date          = isset($config['creation_date']) ? Date::to_format(strtotime($config['creation_date']),Date::FORMAT_DAY_MONTH_YEAR) : '';
-		$this->last_update            = isset($config['last_update']) ? Date::to_format(strtotime($config['last_update']),Date::FORMAT_DAY_MONTH_YEAR) : '';
+		$this->creation_date          = isset($config['creation_date']) ? Date::to_format(strtotime($config['creation_date']), Date::FORMAT_DAY_MONTH_YEAR) : '';
+		$this->last_update            = isset($config['last_update']) ? Date::to_format(strtotime($config['last_update']), Date::FORMAT_DAY_MONTH_YEAR) : '';
 		$this->compatibility          = $config['compatibility'];
 		$this->php_version            = !empty($config['php_version']) ? $config['php_version'] : ServerConfiguration::MIN_PHP_VERSION;
 		$this->repository             = !empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
