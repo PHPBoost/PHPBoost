@@ -2,10 +2,10 @@
 /**
  * @package     PHPBoost
  * @subpackage  Stats
- * @copyright   &copy; 2005-2019 PHPBoost
+ * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 11 22
+ * @version     PHPBoost 5.2 - last update: 2021 04 02
  * @since       PHPBoost 4.0 - 2013 01 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -57,6 +57,7 @@ class Robots
 			'Applebot',
 			'13TABS',
 			'360Spider',
+			'AhrefsBot',
 			'AntBot',
 			'Apexoo Spider',
 			'Barkrowler',
@@ -66,25 +67,31 @@ class Robots
 			'coccocbot',
 			'Daumoa',
 			'DeuSu',
+			'DotBot',
 			'Elefent',
 			'exif-search',
 			'Findxbot',
 			'Gigabot',
 			'glindahl-cocrawler',
 			'Gowikibot',
+			'GrapeshotCrawler',
+			'ia_archiver',
 			'IstellaBot',
 			'KD Bot',
 			'KOCMOHABT bot',
 			'Laserlikebot',
 			'LetsearchBot',
 			'Mail.Ru bot',
+			'MegaIndex.ru',
 			'MojeekBot',
 			'NaverBot',
 			'omgilibot',
 			'parsijoo-bot',
+			'PetalBot',
 			'Plukkie',
 			'psbot',
 			'Seekport Crawler',
+			'SemrushBot',
 			'SeznamBot',
 			'SnowHaze SearcH',
 			'SOLOFIELD bot',
