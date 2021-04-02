@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 26
+ * @version   	PHPBoost 5.2 - last update: 2021 04 02
  * @since   	PHPBoost 1.2 - 2005 06 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -158,7 +158,7 @@ while ($row = $result->fetch())
 		'GROUP_COLOR' => $group_color,
 		'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 		'USER_IP' => $row['ip'],
-		'WHERE' => '<a href="' . $row['location_script'] . '">' . (!empty($row['location_title']) ? stripslashes($row['location_title']) : $LANG['unknown']) . '</a>',
+		'WHERE' => (!empty($row['location_title']) ? '<a href="' . $row['location_script'] . '">' . stripslashes($row['location_title']) . '</a>' : $LANG['unknown']),
 		'TIME' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)
 	));
 }
