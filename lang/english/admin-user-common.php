@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 04 28
+ * @version     PHPBoost 6.0 - last update: 2021 04 02
  * @since       PHPBoost 3.0 - 2010 08 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -22,6 +22,7 @@ $lang['members.edit-member'] = 'Edit member';
 $lang['members.rules'] = 'Rules';
 
 //Configuration
+$lang['members.config.display.type'] = 'Members list display';
 $lang['members.config.registration-activation'] = 'Enable the registration of members';
 $lang['members.config.type-activation'] = 'User account activation type';
 $lang['members.config.unactivated-accounts-timeout'] = 'Number of days after which the unactivated members are cleared';

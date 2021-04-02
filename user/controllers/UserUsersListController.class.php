@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 04
+ * @version     PHPBoost 6.0 - last update: 2021 04 02
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -14,6 +14,7 @@ class UserUsersListController extends AbstractController
 	private $lang;
 	private $view;
 	private $groups_cache;
+	private $config;
 
 	private $elements_number = 0;
 	private $ids = array();
@@ -23,12 +24,18 @@ class UserUsersListController extends AbstractController
 		$this->init();
 		$this->build_select_group_form();
 		$this->build_form();
-		$current_page = $this->build_table();
+		$this->build_table();
+		$this->build_view();
 
 		if (AppContext::get_current_user()->is_admin())
 			$this->execute_multiple_delete_if_needed($request);
 
-		return $this->generate_response($current_page);
+		$this->view->put_all(array(
+			'C_TABLE_VIEW' => $this->config->get_display_type() == UserAccountsConfig::TABLE_VIEW,
+			'C_GRID_VIEW' => $this->config->get_display_type() == UserAccountsConfig::GRID_VIEW,
+		));
+
+		return $this->generate_response($request);
 	}
 
 	private function init()
@@ -37,6 +44,7 @@ class UserUsersListController extends AbstractController
 		$this->view = new FileTemplate('user/UserUsersListController.tpl');
 		$this->view->add_lang($this->lang);
 		$this->groups_cache = GroupsCache::load();
+		$this->config = UserAccountsConfig::load();
 	}
 
 	private function build_form()
@@ -49,6 +57,75 @@ class UserUsersListController extends AbstractController
 		$fieldset->add_field(new FormFieldAjaxSearchUserAutoComplete('member', $this->lang['display_name'], ''));
 
 		$this->view->put('FORM', $form->display());
+	}
+
+	private function build_view()
+	{
+
+		$result = PersistenceContext::get_querier()->select('SELECT member.*, mef.user_avatar, mef.user_website
+		FROM ' . DB_TABLE_MEMBER . ' member
+		LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' mef ON mef.user_id = member.user_id
+		WHERE member.warning_percentage < 100
+		ORDER BY display_name');
+
+		$this->view->put_all(array(
+			'C_ENABLED_AVATAR' => $this->config->is_default_avatar_enabled(),
+		));
+
+		while ($row = $result->fetch())
+		{
+			$modules = AppContext::get_extension_provider_service()->get_extension_point(UserExtensionPoint::EXTENSION_POINT);
+			$contributions_number = 0;
+			foreach ($modules as $module)
+			{
+				$contributions_number += $module->get_publications_number($row['user_id']);
+			}
+
+			$this->view->assign_block_vars('users', array(
+				'C_HAS_WEBSITE' => $row['user_website'] != '',
+				'C_ENABLED_EMAIL'   => $row['show_email'],
+				'C_IS_GROUP'	=> !empty(User::get_group_color($row['user_groups'], $row['level'])),
+				'C_HAS_GROUP'	=> !empty(User::get_group_color($row['user_groups'])),
+				'C_CONTROLS' => $row['level'] >= 1,
+
+				'DISPLAYED_NAME'       => $row['display_name'],
+				'REGISTRATION_DATE'    => Date::to_format($row['registration_date'], Date::FORMAT_DAY_MONTH_YEAR),
+				'LAST_CONNECTION'      => !empty($row['last_connection_date']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('never', 'main'),
+				'CONTRIBUTIONS_NUMBER' => $contributions_number,
+				'RANK_LEVEL'		   => UserService::get_level_lang($row['level']),
+
+				'LEVEL_COLOR' => UserService::get_level_class($row['level']),
+				'GROUP_COLOR' => User::get_group_color($row['user_groups'], $row['level']),
+
+				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
+				'U_AVATAR'  => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : $this->config->get_default_avatar(),
+				'U_WEBSITE' => Url::to_rel($row['user_website']),
+				'U_EMAIL'   => $row['email'],
+				'U_MP'      => UserUrlBuilder::personnal_message($row['user_id'])->rel()
+			));
+
+			foreach ($modules as $module)
+			{
+				$this->view->assign_block_vars('users.modules', array(
+					'MODULE_NAME' => $module->get_publications_module_name(),
+					'MODULE_CONTRIBUTIONS_NUMBER' => $module->get_publications_number($row['user_id'])
+				));
+			}
+
+			$user_groups = explode('|', $row['user_groups']);
+			foreach (GroupsService::get_groups() as $group_id => $group_data)
+			{
+				if (is_numeric(array_search($group_id, $user_groups)))
+				{
+					$this->view->assign_block_vars('users.groups', array(
+						'C_HAS_GROUP' => !empty($row['user_groups']),
+						'GROUP_NAME' => $group_data['name'],
+						'GROUP_COLOR' => User::get_group_color($group_id)
+					));
+				}
+			}
+		}
+		$result->dispose();
 	}
 
 	private function build_table()
@@ -185,12 +262,17 @@ class UserUsersListController extends AbstractController
 		return $groups;
 	}
 
-	private function generate_response($page = 1)
+	private function generate_response(HTTPRequestCustom $request)
 	{
 		$response = new SiteDisplayResponse($this->view);
+
+		$sort_field = $request->get_getstring('field', 'display_name');
+		$sort_mode = $request->get_getstring('sort', 'DESC');
+		$page = $request->get_getint('page', 1);
+
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['users'], '', $page);
-		$graphical_environment->get_seo_meta_data()->set_description($this->lang['seo.user.list'], $page);
+		$graphical_environment->get_seo_meta_data()->set_description($this->lang['seo.user.list'], $sort_field, $sort_mode, $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::home());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();

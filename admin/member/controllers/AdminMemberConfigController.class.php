@@ -41,6 +41,8 @@ class AdminMemberConfigController extends AdminController
 
 			$this->form->get_field_by_id('type_activation_members')->set_hidden(!$this->user_accounts_config->is_registration_enabled());
 			$this->form->get_field_by_id('unactivated_accounts_timeout')->set_hidden(!$this->user_accounts_config->is_registration_enabled() || $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION);
+			$this->form->get_field_by_id('items_per_page')->set_hidden($this->user_accounts_config->get_display_type() !== UserAccountsConfig::GRID_VIEW);
+			$this->form->get_field_by_id('items_per_row')->set_hidden($this->user_accounts_config->get_display_type() !== UserAccountsConfig::GRID_VIEW);
 
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
@@ -60,6 +62,7 @@ class AdminMemberConfigController extends AdminController
 
 	private function build_form()
 	{
+		$admin_common_lang = LangLoader::get('admin-common');
 		$form = new HTMLForm(__CLASS__);
 
 		$fieldset = new FormFieldsetHTML('members_config', $this->lang['members.config-members']);
@@ -117,6 +120,42 @@ class AdminMemberConfigController extends AdminController
 
 		$fieldset->add_field(new FormFieldCheckbox('allow_users_to_change_email', $this->lang['members.config.allow_users_to_change_email'], $this->user_accounts_config->are_users_allowed_to_change_email(),
 			array('class' => 'custom-checkbox')
+		));
+
+		$fieldset = new FormFieldsetHTML('display_view', $this->lang['members.config.display.type']);
+		$form->add_fieldset($fieldset);
+
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $admin_common_lang['config.display.type'], $this->user_accounts_config->get_display_type(),
+			array(
+				new FormFieldSelectChoiceOption($admin_common_lang['config.display.type.grid'], DownloadConfig::GRID_VIEW, array('data_option_icon' => 'fa fa-th-large')),
+				new FormFieldSelectChoiceOption($admin_common_lang['config.display.type.table'], DownloadConfig::TABLE_VIEW, array('data_option_icon' => 'fa fa-table'))
+			),
+			array(
+				'select_to_list' => true,
+				'events' => array('change' => '
+				if (HTMLForms.getField("display_type").getValue() == \'' . UserAccountsConfig::GRID_VIEW . '\') {
+					HTMLForms.getField("items_per_page").enable();
+					HTMLForms.getField("items_per_row").enable();
+				} else {
+					HTMLForms.getField("items_per_page").disable();
+					HTMLForms.getField("items_per_row").disable();
+				}'
+			))
+		));
+
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $admin_common_lang['config.items_number_per_page'], $this->user_accounts_config->get_items_per_page(),
+			array(
+				'min' => 1, 'max' => 50, 'required' => true,
+				'hidden' => $this->user_accounts_config->get_display_type() !== UserAccountsConfig::GRID_VIEW,
+			),
+			array(new FormFieldConstraintIntegerRange(1, 50))
+		));
+
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $admin_common_lang['config.items.per.row'], $this->user_accounts_config->get_items_per_row(),
+			array(
+				'hidden' => $this->user_accounts_config->get_display_type() !== UserAccountsConfig::GRID_VIEW,
+				'min' => 1, 'max' => 4, 'required' => true),
+				array(new FormFieldConstraintIntegerRange(1, 4))
 		));
 
 		$fieldset = new FormFieldsetHTML('security_config', $this->lang['members.config-security']);
@@ -211,6 +250,11 @@ class AdminMemberConfigController extends AdminController
 
 	private function save()
 	{
+		$this->user_accounts_config->set_display_type($this->form->get_value('display_type')->get_raw_value());
+		if($this->form->get_value('display_type') == UserAccountsConfig::GRID_VIEW)
+			$this->user_accounts_config->set_items_per_page($this->form->get_value('items_per_page'));
+			$this->user_accounts_config->set_items_per_row($this->form->get_value('items_per_row'));
+
 		$this->user_accounts_config->set_registration_enabled($this->form->get_value('members_activation'));
 
 		if (!$this->form->field_is_disabled('type_activation_members'))

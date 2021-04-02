@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 08
+ * @version     PHPBoost 6.0 - last update: 2021 04 02
  * @since       PHPBoost 3.0 - 2009 10 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -86,7 +86,44 @@ class UserAccountsConfig extends AbstractConfigData
 	const MAIL_USER_ACCOUNTS_VALIDATION = '2';
 	const ADMINISTRATOR_USER_ACCOUNTS_VALIDATION = '3';
 
+	const DISPLAY_TYPE = 'display_type';
+	const TABLE_VIEW = 'table_view';
+	const GRID_VIEW = 'grid_view';
+	const ITEMS_PER_PAGE = 'items_per_page';
+	const ITEMS_PER_ROW = 'items_per_row';
+
 	const NO_AVATAR_URL = '/templates/__default__/images/no_avatar.png';
+
+
+	public function get_display_type()
+	{
+		return $this->get_property(self::DISPLAY_TYPE);
+	}
+
+	public function set_display_type($value)
+	{
+		$this->set_property(self::DISPLAY_TYPE, $value);
+	}
+
+	public function get_items_per_page()
+	{
+		return $this->get_property(self::ITEMS_PER_PAGE);
+	}
+
+	public function set_items_per_page($value)
+	{
+		$this->set_property(self::ITEMS_PER_PAGE, $value);
+	}
+
+	public function get_items_per_row()
+	{
+		return $this->get_property(self::ITEMS_PER_ROW);
+	}
+
+	public function set_items_per_row($value)
+	{
+		$this->set_property(self::ITEMS_PER_ROW, $value);
+	}
 
 	/**
 	 * Tells how the member accounts are activated
@@ -423,6 +460,9 @@ class UserAccountsConfig extends AbstractConfigData
 		$server_configuration = new ServerConfiguration();
 
 		return array(
+			self::DISPLAY_TYPE => self::TABLE_VIEW,
+			self::ITEMS_PER_PAGE => 25,
+			self::ITEMS_PER_ROW => 2,
 			self::REGISTRATION_ENABLED_PROPERTY => FormFieldCheckbox::CHECKED,
 			self::MEMBER_ACCOUNTS_VALIDATION_METHOD_PROPERTY => self::AUTOMATIC_USER_ACCOUNTS_VALIDATION,
 			self::WELCOME_MESSAGE_PROPERTY => LangLoader::get_message('site_config_msg_mbr', 'main'),
