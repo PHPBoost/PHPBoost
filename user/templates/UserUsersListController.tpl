@@ -148,6 +148,9 @@
 										# ENDIF #
 									</tr>
 								# END users #
+								<tr class="no-result hidden">
+									<td colspan="# IF IS_ADMIN #7# ELSE #6# ENDIF #"><div class="message-helper bgc notice">${LangLoader::get_message('no_item_now', 'common')}</div></td>
+								</tr>
 							</tbody>
 						</table>
 					</div>
@@ -207,6 +210,7 @@
 							</article>
 						# END users #
 					</div>
+					<div class="no-result hidden message-helper bgc notice"> ${LangLoader::get_message('no_item_now', 'common')} </div>
 				# ENDIF #
 			</div>
 		</div>
@@ -254,6 +258,15 @@
 	jQuery('document').ready(function(){
 		// jpList
 		jplist.init();
+
+		jQuery('input[type=radio][name=groups-filter]').change(function(){
+			var itemsNumber = jQuery('[data-jplist-item]').length;
+			console.log(itemsNumber);
+			if (itemsNumber < 1)
+				jQuery('.no-result').show();
+			else
+				jQuery('.no-result').hide();
+		});
 
 		// Filters
 			// toggle sub-menu on click (close on click outside)
