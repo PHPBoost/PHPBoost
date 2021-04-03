@@ -48,7 +48,7 @@
 	</head>
 
 	<body itemscope="itemscope" itemtype="https://schema.org/WebPage">
-		<div id="push-container" class="body-wrapper content-preloader">
+		<div id="push-container" class="body-wrapper">
 			# INCLUDE BODY #
 		</div>
 		# INCLUDE JS_BOTTOM #

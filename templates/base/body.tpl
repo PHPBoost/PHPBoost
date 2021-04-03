@@ -44,7 +44,7 @@
 	<div class="spacer"></div>
 </header>
 
-<div id="global" role="main">
+<div id="global" class="content-preloader" role="main">
 	# IF C_MENUS_LEFT_CONTENT #
 		<aside id="menu-left"# IF C_MENUS_RIGHT_CONTENT # class="narrow-menu-left"# ENDIF #>
 			# START menus_left #
