@@ -1,9 +1,9 @@
 <?php
 /**
- * @copyright 	&copy; 2005-2019 PHPBoost
+ * @copyright 	&copy; 2005-2021 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Arnaud GENET <elenwii@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 01 17
+ * @version   	PHPBoost 5.2 - last update: 2021 04 03
  * @since   	PHPBoost 5.0 - 2016 09 18
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -32,7 +32,7 @@ if (!empty($change_cat))
 	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . ($new_cat && ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . $new_cat->get_rewrited_name() : '') . '.php', '&'));
 }
 
-if (ForumAuthorizationsService::check_authorizations()->read())
+if (ForumAuthorizationsService::check_authorizations()->read() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 {
 	$tpl = new FileTemplate('forum/forum_forum.tpl');
 
@@ -62,10 +62,11 @@ if (ForumAuthorizationsService::check_authorizations()->read())
 	LEFT JOIN " . PREFIX . "forum_poll p ON p.idtopic = t.id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m1 ON m1.user_id = t.user_id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = t.last_user_id
-	WHERE t.nbr_msg = 1
+	WHERE t.nbr_msg = 1 AND t.idcat IN :authorized_categories
 	ORDER BY t.last_timestamp DESC
 	LIMIT :number_items_per_page OFFSET :display_from", array(
 		'user_id' => AppContext::get_current_user()->get_id(),
+		'authorized_categories' => ForumService::get_authorized_categories(Category::ROOT_CATEGORY),
 		'number_items_per_page' => $pagination->get_number_items_per_page(),
 		'display_from' => $pagination->get_display_from()
 	));
