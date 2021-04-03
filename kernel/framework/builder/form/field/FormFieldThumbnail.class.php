@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 10
+ * @version     PHPBoost 6.0 - last update: 2021 04 03
  * @since       PHPBoost 6.0 - 2020 02 27
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -42,7 +42,8 @@ class FormFieldThumbnail extends AbstractFormField
 			'C_DEFAULT_PICTURE_URL' => $this->default_picture,
 			'C_PREVIEW_HIDDEN'      => !$this->get_value() || !$file_type->is_picture(),
 			'C_AUTH_UPLOAD'         => FileUploadConfig::load()->is_authorized_to_access_interface_files(),
-			'FILE_PATH'             => Url::to_rel($real_file_url),
+			'FILE_PATH'             => Url::to_relative($real_file_url),
+			'PREVIEW_FILE_PATH'     => Url::to_rel($real_file_url),
 			'C_NONE_CHECKED'        => $this->get_value() == '',
 			'C_DEFAULT_CHECKED'     => $this->get_value() && ($this->get_value() == self::DEFAULT_VALUE || $this->get_value() == $this->default_picture),
 			'C_CUSTOM_CHECKED'      => $this->get_value() && $this->get_value() != self::DEFAULT_VALUE && $this->get_value() != $this->default_picture,
