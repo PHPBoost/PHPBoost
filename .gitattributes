@@ -3,3 +3,5 @@
 *.ttf binary
 *.woff binary
 *.woff2 binary
+
+*.tpl linguist-language=HTML
