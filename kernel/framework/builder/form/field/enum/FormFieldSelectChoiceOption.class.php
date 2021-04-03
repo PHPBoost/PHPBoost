@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 10 13
+ * @version     PHPBoost 6.0 - last update: 2021 04 03
  * @since       PHPBoost 3.0 - 2009 04 28
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -43,7 +43,8 @@ class FormFieldSelectChoiceOption extends AbstractFormFieldEnumOption
 			'OPTION_ICON' => $this->get_data_option_icon(),
 			'C_OPTION_CLASS' => !empty($this->get_data_option_class()),
 			'OPTION_CLASS' => $this->get_data_option_class(),
-			'LABEL' => $this->get_label()
+			'LABEL' => $this->get_label(),
+			'PROTECTED_LABEL' => stripslashes(TextHelper::strprotect($this->get_label()))
 		));
 
 		return $tpl;
