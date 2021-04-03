@@ -27,6 +27,7 @@
 
 <script src="{PATH_TO_ROOT}/kernel/lib/js/jquery/jquery.js"></script>
 <script src="{PATH_TO_ROOT}/kernel/lib/js/prism/prism.js"></script>
+<script src="{PATH_TO_ROOT}/templates/__default__/plugins/list_order.min.js"></script>
 
 # IF C_CSS_CACHE_ENABLED #
 	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/@phpboost.min.js"></script>

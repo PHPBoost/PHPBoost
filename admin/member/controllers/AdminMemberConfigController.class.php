@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 04 03
  * @since       PHPBoost 3.0 - 2010 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -41,7 +41,6 @@ class AdminMemberConfigController extends AdminController
 
 			$this->form->get_field_by_id('type_activation_members')->set_hidden(!$this->user_accounts_config->is_registration_enabled());
 			$this->form->get_field_by_id('unactivated_accounts_timeout')->set_hidden(!$this->user_accounts_config->is_registration_enabled() || $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION);
-			$this->form->get_field_by_id('items_per_page')->set_hidden($this->user_accounts_config->get_display_type() !== UserAccountsConfig::GRID_VIEW);
 			$this->form->get_field_by_id('items_per_row')->set_hidden($this->user_accounts_config->get_display_type() !== UserAccountsConfig::GRID_VIEW);
 
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
@@ -134,10 +133,8 @@ class AdminMemberConfigController extends AdminController
 				'select_to_list' => true,
 				'events' => array('change' => '
 				if (HTMLForms.getField("display_type").getValue() == \'' . UserAccountsConfig::GRID_VIEW . '\') {
-					HTMLForms.getField("items_per_page").enable();
 					HTMLForms.getField("items_per_row").enable();
 				} else {
-					HTMLForms.getField("items_per_page").disable();
 					HTMLForms.getField("items_per_row").disable();
 				}'
 			))
@@ -146,7 +143,6 @@ class AdminMemberConfigController extends AdminController
 		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $admin_common_lang['config.items_number_per_page'], $this->user_accounts_config->get_items_per_page(),
 			array(
 				'min' => 1, 'max' => 50, 'required' => true,
-				'hidden' => $this->user_accounts_config->get_display_type() !== UserAccountsConfig::GRID_VIEW,
 			),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
@@ -251,8 +247,8 @@ class AdminMemberConfigController extends AdminController
 	private function save()
 	{
 		$this->user_accounts_config->set_display_type($this->form->get_value('display_type')->get_raw_value());
-		if($this->form->get_value('display_type') == UserAccountsConfig::GRID_VIEW)
-			$this->user_accounts_config->set_items_per_page($this->form->get_value('items_per_page'));
+		$this->user_accounts_config->set_items_per_page($this->form->get_value('items_per_page'));
+		if($this->form->get_value('display_type')->get_raw_value() == UserAccountsConfig::GRID_VIEW)
 			$this->user_accounts_config->set_items_per_row($this->form->get_value('items_per_row'));
 
 		$this->user_accounts_config->set_registration_enabled($this->form->get_value('members_activation'));

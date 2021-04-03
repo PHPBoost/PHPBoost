@@ -28,6 +28,8 @@
 	border-color: transparent;
 }
 
+.cell .hidden { display: none; }
+
 [class*="cell-"] + [class*="cell-"],
 legend + [class*="cell-"],
 form > [class*="cell-"]:not(.cell-header) { border-width: 0 1px 1px; }

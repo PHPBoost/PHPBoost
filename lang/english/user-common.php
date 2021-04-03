@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 11
+ * @version     PHPBoost 6.0 - last update: 2021 04 03
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -26,6 +26,7 @@ $lang['maintain'] = 'Maintain';
 $lang['welcome'] = 'Welcome';
 $lang['about.author'] = 'About the author';
 
+$lang['members.all'] = 'All members';
 $lang['members_list'] = 'Members list';
 $lang['member-management'] = 'Member management';
 $lang['punishment-management'] = 'Punishments management';
@@ -109,6 +110,7 @@ $lang['avatar'] = 'Avatar';
 $lang['groups'] = 'Groups';
 $lang['groups.list'] = 'Groups list';
 $lang['groups.select'] = 'Group select';
+$lang['groups.all'] = 'All groups';
 $lang['group.of_group'] = 'of group :';
 $lang['group.view_list_members'] = 'View members of group';
 $lang['group.hide_list_members'] = 'Hide members of group';

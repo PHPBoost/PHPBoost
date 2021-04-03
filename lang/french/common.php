@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 28
+ * @version     PHPBoost 6.0 - last update: 2021 04 03
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -199,6 +199,7 @@ $lang['pagination.next'] = 'Vers la page suivante';
 $lang['pagination.last'] = 'Vers la dernière page';
 $lang['pagination.current'] = 'Page courante';
 $lang['pagination.page'] = 'Vers la page';
+$lang['pagination.per'] = ' par page';
 
 //Multiple select
 $lang['select'] = 'Sélectionner';

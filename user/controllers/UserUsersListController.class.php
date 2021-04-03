@@ -22,9 +22,7 @@ class UserUsersListController extends AbstractController
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
-		$this->build_select_group_form();
-		$this->build_form();
-		$this->build_table();
+		$this->build_search_form();
 		$this->build_view();
 
 		if (AppContext::get_current_user()->is_admin())
@@ -47,7 +45,7 @@ class UserUsersListController extends AbstractController
 		$this->config = UserAccountsConfig::load();
 	}
 
-	private function build_form()
+	private function build_search_form()
 	{
 		$form = new HTMLForm(__CLASS__);
 
@@ -61,16 +59,32 @@ class UserUsersListController extends AbstractController
 
 	private function build_view()
 	{
-
 		$result = PersistenceContext::get_querier()->select('SELECT member.*, mef.user_avatar, mef.user_website
 		FROM ' . DB_TABLE_MEMBER . ' member
 		LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' mef ON mef.user_id = member.user_id
 		WHERE member.warning_percentage < 100
-		ORDER BY display_name');
+		ORDER BY member.display_name ASC');
 
 		$this->view->put_all(array(
 			'C_ENABLED_AVATAR' => $this->config->is_default_avatar_enabled(),
+			'C_PAGINATION'     => $result->get_rows_count() > $this->config->get_items_per_page(),
+			'C_HAS_GROUP' => !empty(GroupsService::get_groups()),
+
+			'USERS_NUMBER'     => $result->get_rows_count(),
+			'ITEMS_PER_PAGE'   => $this->config->get_items_per_page(),
+			'L_PAGE_NUMBER'    => '{pageNumber}',
 		));
+
+		foreach (GroupsService::get_groups() as $group_id => $group_data)
+		{
+			if (is_numeric($group_id))
+			{
+				$this->view->assign_block_vars('groups', array(
+					'GROUP_NAME' => $group_data['name'],
+					'GROUP_NAME_FILTER' => Url::encode_rewrite(TextHelper::strtolower($group_data['name']))
+				));
+			}
+		}
 
 		while ($row = $result->fetch())
 		{
@@ -81,18 +95,23 @@ class UserUsersListController extends AbstractController
 				$contributions_number += $module->get_publications_number($row['user_id']);
 			}
 
-			$this->view->assign_block_vars('users', array(
-				'C_HAS_WEBSITE' => $row['user_website'] != '',
-				'C_ENABLED_EMAIL'   => $row['show_email'],
-				'C_IS_GROUP'	=> !empty(User::get_group_color($row['user_groups'], $row['level'])),
-				'C_HAS_GROUP'	=> !empty(User::get_group_color($row['user_groups'])),
-				'C_CONTROLS' => $row['level'] >= 1,
+			$number_admins = UserService::count_admin_members();
 
-				'DISPLAYED_NAME'       => $row['display_name'],
-				'REGISTRATION_DATE'    => Date::to_format($row['registration_date'], Date::FORMAT_DAY_MONTH_YEAR),
-				'LAST_CONNECTION'      => !empty($row['last_connection_date']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('never', 'main'),
-				'CONTRIBUTIONS_NUMBER' => $contributions_number,
-				'RANK_LEVEL'		   => UserService::get_level_lang($row['level']),
+			$this->view->assign_block_vars('users', array(
+				'C_HAS_WEBSITE'   => $row['user_website'] != '',
+				'C_ENABLED_EMAIL' => $row['show_email'],
+				'C_IS_GROUP'	  => !empty(User::get_group_color($row['user_groups'], $row['level'])),
+				'C_HAS_GROUP'	  => !empty(User::get_group_color($row['user_groups'])),
+				'C_CONTROLS' 	  => $row['level'] >= 1,
+				'C_DELETE'		  => $row['level'] != User::ADMIN_LEVEL || ($row['level'] == User::ADMIN_LEVEL && $number_admins > 1),
+
+				'DISPLAYED_NAME'              => $row['display_name'],
+				'REGISTRATION_DATE'           => Date::to_format($row['registration_date'], Date::FORMAT_DAY_MONTH_YEAR),
+				'LAST_CONNECTION'             => !empty($row['last_connection_date']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('never', 'main'),
+				'REGISTRATION_DATE_TIMESTAMP' => Date::to_format($row['registration_date'], Date::FORMAT_TIMESTAMP),
+				'LAST_CONNECTION_TIMESTAMP'   => !empty($row['last_connection_date']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_TIMESTAMP) : 0,
+				'PUBLICATIONS_NUMBER'         => $contributions_number,
+				'RANK_LEVEL'		          => UserService::get_level_lang($row['level']),
 
 				'LEVEL_COLOR' => UserService::get_level_class($row['level']),
 				'GROUP_COLOR' => User::get_group_color($row['user_groups'], $row['level']),
@@ -101,14 +120,16 @@ class UserUsersListController extends AbstractController
 				'U_AVATAR'  => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : $this->config->get_default_avatar(),
 				'U_WEBSITE' => Url::to_rel($row['user_website']),
 				'U_EMAIL'   => $row['email'],
-				'U_MP'      => UserUrlBuilder::personnal_message($row['user_id'])->rel()
+				'U_MP'      => UserUrlBuilder::personnal_message($row['user_id'])->rel(),
+				'U_EDIT'	=> UserUrlBuilder::edit_profile($row['user_id'])->rel(),
+				'U_DELETE'	=> AdminMembersUrlBuilder::delete($row['user_id'])->rel()
 			));
 
 			foreach ($modules as $module)
 			{
 				$this->view->assign_block_vars('users.modules', array(
 					'MODULE_NAME' => $module->get_publications_module_name(),
-					'MODULE_CONTRIBUTIONS_NUMBER' => $module->get_publications_number($row['user_id'])
+					'MODULE_PUBLICATIONS_NUMBER' => $module->get_publications_number($row['user_id'])
 				));
 			}
 
@@ -120,78 +141,13 @@ class UserUsersListController extends AbstractController
 					$this->view->assign_block_vars('users.groups', array(
 						'C_HAS_GROUP' => !empty($row['user_groups']),
 						'GROUP_NAME' => $group_data['name'],
-						'GROUP_COLOR' => User::get_group_color($group_id)
+						'GROUP_COLOR' => User::get_group_color($group_id),
+						'GROUP_NAME_FILTER' => Url::encode_rewrite(TextHelper::strtolower($group_data['name']))
 					));
 				}
 			}
 		}
 		$result->dispose();
-	}
-
-	private function build_table()
-	{
-		$number_admins = UserService::count_admin_members();
-
-		$sql_html_table_model = array(
-			new HTMLTableColumn($this->lang['display_name'], 'display_name'),
-			new HTMLTableColumn($this->lang['email']),
-			new HTMLTableColumn($this->lang['registration_date'], 'registration_date'),
-			new HTMLTableColumn($this->lang['messages'], 'posted_msg'),
-			new HTMLTableColumn($this->lang['last_connection'], 'last_connection_date'),
-			new HTMLTableColumn($this->lang['private_message'])
-		);
-
-		if (AppContext::get_current_user()->is_admin())
-			$sql_html_table_model[] = new HTMLTableColumn(LangLoader::get_message('actions', 'admin-common'), '', array('sr-only' => true));
-
-		$table_model = new SQLHTMLTableModel(DB_TABLE_MEMBER, 'users-list', $sql_html_table_model, new HTMLTableSortingRule('display_name', HTMLTableSortingRule::ASC));
-
-		$table = new HTMLTable($table_model);
-		if (!AppContext::get_current_user()->is_admin())
-			$table->hide_multiple_delete();
-
-		$results = array();
-		$result = $table_model->get_sql_results();
-		foreach ($result as $row)
-		{
-			$this->elements_number++;
-			$this->ids[$this->elements_number] = $row['user_id'];
-
-			$posted_msg = !empty($row['posted_msg']) ? $row['posted_msg'] : '0';
-			$group_color = User::get_group_color($row['user_groups'], $row['level']);
-
-			$author = new LinkHTMLElement(UserUrlBuilder::profile($row['user_id']), $row['display_name'], (!empty($group_color) ? array('style' => 'color: ' . $group_color) : array()), UserService::get_level_class($row['level']));
-
-			$html_table_row = array(
-				new HTMLTableRowCell($author),
-				new HTMLTableRowCell($row['show_email'] == 1 ? new LinkHTMLElement('mailto:' . $row['email'], '<i class="fa fa-fw iboost fa-iboost-email"></i>', array('aria-label' => $this->lang['email']), 'button small') : ''),
-				new HTMLTableRowCell(Date::to_format($row['registration_date'], Date::FORMAT_DAY_MONTH_YEAR)),
-				new HTMLTableRowCell($posted_msg),
-				new HTMLTableRowCell(!empty($row['last_connection_date']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('never', 'main')),
-				new HTMLTableRowCell(new LinkHTMLElement(UserUrlBuilder::personnal_message($row['user_id']), '<i class="fa fa-fw fa-people-arrows"></i>', array('aria-label' => $this->lang['private_message']), 'button small'))
-			);
-
-			if (AppContext::get_current_user()->is_admin())
-			{
-				$user = new User();
-				$user->set_properties($row);
-				$edit_link = new EditLinkHTMLElement(UserUrlBuilder::edit_profile($user->get_id()));
-
-				if ($user->get_level() != User::ADMIN_LEVEL || ($user->get_level() == User::ADMIN_LEVEL && $number_admins > 1))
-					$delete_link = new DeleteLinkHTMLElement(AdminMembersUrlBuilder::delete($user->get_id()));
-				else
-					$delete_link = new DeleteLinkHTMLElement('', '', array('disabled' => true));
-
-				$html_table_row[] = new HTMLTableRowCell($edit_link->display() . $delete_link->display(), 'controls');
-			}
-
-			$results[] = new HTMLTableRow($html_table_row);
-		}
-		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
-
-		$this->view->put('TABLE', $table->display());
-
-		return $table->get_page_number();
 	}
 
 	private function execute_multiple_delete_if_needed(HTTPRequestCustom $request)
@@ -227,41 +183,6 @@ class UserUsersListController extends AbstractController
 				AppContext::get_response()->redirect(UserUrlBuilder::home(), LangLoader::get_message('process.success', 'status-messages-common'));
 		}
 	}
-
-	private function build_select_group_form()
-	{
-		$form = new HTMLForm('groups', '', false);
-		$form->set_css_class('options');
-
-		$fieldset = new FormFieldsetHorizontal('show_group', array('description' =>$this->lang['groups.select'], 'css_class' => 'grouped-inputs'));
-		$form->add_fieldset($fieldset);
-
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('groups_select','', '', $this->build_select_groups(),
-			array(
-				'class' => 'grouped-element',
-				'events' => array('change' => 'document.location = "'. UserUrlBuilder::groups()->rel() .'" + HTMLForms.getField("groups_select").getValue();')
-			)
-		));
-
-		$groups = $this->groups_cache->get_groups();
-		$this->view->put_all(array(
-			'C_ARE_GROUPS' => !empty($groups),
-			'SELECT_GROUP' => $form->display()
-		));
-	}
-
-	private function build_select_groups()
-	{
-		$groups = array();
-		$list_lang = LangLoader::get_message('list', 'main');
-		$groups[] = new FormFieldSelectChoiceOption('-- '. $list_lang .' --', '');
-		foreach ($this->groups_cache->get_groups() as $id => $row)
-		{
-			$groups[] = new FormFieldSelectChoiceOption($row['name'], $id);
-		}
-		return $groups;
-	}
-
 	private function generate_response(HTTPRequestCustom $request)
 	{
 		$response = new SiteDisplayResponse($this->view);

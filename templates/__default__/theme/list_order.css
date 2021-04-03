@@ -1,0 +1,142 @@
+/* --- Sort/filter Options - jpList ----------------------------------------- */
+.jplist-panel .cell { position: relative; }
+
+/*
+* Copy this file into your theme to customize the module.
+* https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
+*/
+
+/* --- Pagination --- */
+.jplist-panel .pagination {
+	margin-bottom: 20px;
+	min-height: 30px;
+}
+.pagination .jplist-label { display: none; }
+
+.jplist-pagingprev,
+.jplist-pagingmid,
+.jplist-pagingnext { display: inline-block; }
+
+.jplist-hidden { display: none; }
+
+.jplist-current { background-color: rgba(var(--darken), 0.2); }
+
+.jplist-pagingmid button:not(:first-child) { margin-left: -3px; }
+
+.jplist-pagination .jplist-holder { display: inline-block; }
+
+.jplist-pagination .button {
+	margin: 0.309em;
+	width: auto;
+}
+
+.button.jplist-selected {
+	background-color: var(--main-tone);
+	color: var(--txt-alt);
+}
+
+/* --- Filter types --- */
+.jplist-type-filter { position: relative; }
+
+.selected-label { cursor: pointer; }
+
+.selected-label span {
+	font-size: 1.4rem;
+	font-weight: bold;
+}
+
+.selected-label i.fa { float: right; }
+
+.label-list {
+	opacity: 0;
+	visibility: hidden;
+	position: absolute;
+	top: 150%;
+	left: 0;
+	width: 100%;
+	transition: 0.3s;
+    border-radius: 0 0 3px 3px;
+}
+
+.label-list.reveal-list {
+	opacity: 1;
+	visibility: visible;
+	top: 100%;
+	transition: 0.3s;
+}
+
+.jplist-type-filter .jplist-label {
+	display: block;
+	line-height: 30px;
+	padding: 0 5px;
+}
+
+.jplist-type-filter .jplist-label:hover { background-color: rgba(var(--darken), 0.05); }
+
+.jplist-label [type="radio"]{
+	position: absolute;
+	width: 100%;
+	opacity: 0;
+	height: 100%;
+}
+
+/* --- Sort field --- */
+.sort-list { position: relative; }
+
+.jplist-drop-down .jplist-dd-panel {
+	overflow: hidden;
+	cursor: pointer;
+	position: relative;
+	font-size: 1.4rem;
+	font-weight: bold;
+	height: 100%;
+}
+
+.jplist-drop-down .jplist-dd-panel::after {
+	content: '\f0d7';
+	font-family: "Font Awesome 5 Free";
+	display: inline-block;
+	position: absolute;
+	right: 10px;
+	font-weight: 900;
+	font-style: normal;
+	font-variant: normal;
+	text-rendering: auto;
+}
+
+.jplist-drop-down ul {
+    position: absolute;
+    top: 150%;
+	left: 0;
+    overflow: hidden;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+	opacity: 0;
+	visibility: hidden;
+	transition: all 0.3s ease;
+}
+
+.jplist-drop-down ul.jplist-dd-opened {
+	opacity: 1;
+	visibility: visible;
+	transition: all 0.3s ease;
+	top: 100%;
+}
+
+.jplist-drop-down ul li {
+	width: 100%;
+	float: left;
+	line-height: 1.618;
+	padding: 0 0 0 0.618em;
+}
+
+.jplist-drop-down ul li:hover { background-color: rgba(var(--darken), 0.05); }
+
+.jplist-drop-down ul li .sort-type {
+	float: right;
+	padding: 0 0.618em;
+	cursor: pointer;
+}
+
+.jplist-drop-down ul li .sort-type:hover { background-color: rgba(var(--main-rgb-t), 0.2); }
