@@ -59,6 +59,8 @@ lang/*
 nbproject
 *.sublime-project
 *.sublime-workspace
+*.tags
+*.tags_swap
 
 # Directories starting by a dot (.)
 .*/
