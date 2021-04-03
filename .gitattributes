@@ -4,4 +4,4 @@
 *.woff binary
 *.woff2 binary
 
-*.tpl linguist-language=HTML
+*.tpl text diff=html linguist-language=html
