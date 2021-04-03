@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 02
+ * @version     PHPBoost 6.0 - last update: 2021 04 03
  * @since       PHPBoost 3.0 - 2009 10 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -478,8 +478,8 @@ class UserAccountsConfig extends AbstractConfigData
 			self::DEFAULT_LANG => 'english',
 			self::DEFAULT_THEME => 'base',
 			self::MAX_PRIVATE_MESSAGES_NUMBER => 50,
-			self::ALLOW_USERS_TO_CHANGE_DISPLAY_NAME => false,
-			self::ALLOW_USERS_TO_CHANGE_EMAIL => false
+			self::ALLOW_USERS_TO_CHANGE_DISPLAY_NAME => true,
+			self::ALLOW_USERS_TO_CHANGE_EMAIL => true
 		);
 	}
 
