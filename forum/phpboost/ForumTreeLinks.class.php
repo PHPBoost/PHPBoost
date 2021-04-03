@@ -1,9 +1,9 @@
 <?php
 /**
- * @copyright   &copy; 2005-2020 PHPBoost
+ * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 15
+ * @version     PHPBoost 6.0 - last update: 2021 04 03
  * @since       PHPBoost 4.0 - 2013 11 23
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -31,7 +31,7 @@ class ForumTreeLinks implements ModuleTreeLinksExtensionPoint
 
 		$tree->add_link(new ModuleLink(LangLoader::get_message('moderation_panel', 'main'), ForumUrlBuilder::moderation_panel(), ForumAuthorizationsService::check_authorizations()->moderation()));
 
-		$tree->add_link(new ModuleLink($lang['forum.no.answer'], ForumUrlBuilder::show_no_answer(), ForumAuthorizationsService::check_authorizations()->read()));
+		$tree->add_link(new ModuleLink($lang['forum.no.answer'], ForumUrlBuilder::show_no_answer(), ForumAuthorizationsService::check_authorizations()->read() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)));
 
 		if (ModulesManager::get_module($module_id)->get_configuration()->get_documentation())
 			$tree->add_link(new ModuleLink(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('forum')->get_configuration()->get_documentation(), ForumAuthorizationsService::check_authorizations()->moderation()));
