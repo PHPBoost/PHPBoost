@@ -88,7 +88,7 @@
 											<em class="sort-type" data-path=".jp-last-connection" data-order="asc" data-type="number"><span class="sr-only">{@last_connection} &#8593;</span> <i class="fa fa-sort-numeric-down"></i></em>
 											<em class="sort-type" data-path=".jp-last-connection" data-order="desc" data-type="number"><span class="sr-only">{@last_connection} &#8595;</span> <i class="fa fa-sort-numeric-down-alt"></i></em>
 										</li>
-										<li> {@publications.number}
+										<li> ${TextHelper::ucfirst(@publications.number)}
 											<em class="sort-type" data-path=".jp-publications-number" data-order="asc" data-type="number"><span class="sr-only">{@publications.number} &#8593;</span> <i class="fa fa-sort-numeric-down"></i></em>
 											<em class="sort-type" data-path=".jp-publications-number" data-order="desc" data-type="number"><span class="sr-only">{@publications.number} &#8595;</span> <i class="fa fa-sort-numeric-down-alt"></i></em>
 										</li>
