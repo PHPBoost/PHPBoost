@@ -261,7 +261,6 @@
 
 		jQuery('input[type=radio][name=groups-filter]').change(function(){
 			var itemsNumber = jQuery('[data-jplist-item]').length;
-			console.log(itemsNumber);
 			if (itemsNumber < 1)
 				jQuery('.no-result').show();
 			else
