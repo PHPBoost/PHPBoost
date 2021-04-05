@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 30
+ * @version     PHPBoost 6.0 - last update: 2021 04 05
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -181,7 +181,7 @@ class DownloadItem
 		{
 			return FormatingHelper::second_parse($this->summary);
 		}
-		return TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($this->content), '<br><br/>'), (int)DownloadConfig::load()->get_characters_number_to_cut());
+		return TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($this->content), '<br><br/>'), (int)DownloadConfig::load()->get_auto_cut_characters_number());
 	}
 
 	public function get_publishing_state()
@@ -520,7 +520,7 @@ class DownloadItem
 				'C_CONTROLS'			 => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
 				'C_EDIT'                 => $this->is_authorized_to_edit(),
 				'C_DELETE'               => $this->is_authorized_to_delete(),
-				'C_READ_MORE'            => !$this->is_summary_enabled() && TextHelper::strlen($content) > $config->get_characters_number_to_cut() && $real_summary != @strip_tags($content, '<br><br/>'),
+				'C_READ_MORE'            => !$this->is_summary_enabled() && TextHelper::strlen($content) > $config->get_auto_cut_characters_number() && $real_summary != @strip_tags($content, '<br><br/>'),
 				'C_SIZE'                 => !empty($this->size),
 				'C_HAS_THUMBNAIL'        => $this->has_thumbnail(),
 				'C_VERSION_NUMBER'       => !empty($this->version_number),

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 24
+ * @version     PHPBoost 6.0 - last update: 2021 04 05
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -46,7 +46,7 @@ class AdminDownloadConfigController extends AdminModuleController
 		{
 			$this->save();
 			$this->form->get_field_by_id('display_summary_to_guests')->set_hidden($this->config->get_display_type() == DownloadConfig::TABLE_VIEW);
-			$this->form->get_field_by_id('characters_number_to_cut')->set_hidden($this->config->is_full_item_displayed() || $this->config->get_display_type() == DownloadConfig::TABLE_VIEW);
+			$this->form->get_field_by_id('auto_cut_characters_number')->set_hidden($this->config->is_full_item_displayed() || $this->config->get_display_type() == DownloadConfig::TABLE_VIEW);
 			$this->form->get_field_by_id('full_item_display')->set_hidden($this->config->get_display_type() !== DownloadConfig::LIST_VIEW);
 			$this->form->get_field_by_id('items_per_row')->set_hidden($this->config->get_display_type() !== DownloadConfig::GRID_VIEW);
 			$this->form->get_field_by_id('oldest_file_day_in_menu')->set_hidden(!$this->config->is_limit_oldest_file_day_in_menu_enabled());
@@ -106,22 +106,22 @@ class AdminDownloadConfigController extends AdminModuleController
 				if (HTMLForms.getField("display_type").getValue() == \'' . DownloadConfig::GRID_VIEW . '\') {
 					HTMLForms.getField("items_per_row").enable();
 					HTMLForms.getField("display_summary_to_guests").enable();
-						HTMLForms.getField("characters_number_to_cut").enable();
+						HTMLForms.getField("auto_cut_characters_number").enable();
 					HTMLForms.getField("full_item_display").disable();
 				} else if (HTMLForms.getField("display_type").getValue() == \'' . DownloadConfig::LIST_VIEW . '\') {
 					HTMLForms.getField("full_item_display").enable();
 					HTMLForms.getField("display_summary_to_guests").enable();
 					HTMLForms.getField("items_per_row").disable();
 					if (HTMLForms.getField("full_item_display").getValue()) {
-						HTMLForms.getField("characters_number_to_cut").disable();
+						HTMLForms.getField("auto_cut_characters_number").disable();
 					} else {
-						HTMLForms.getField("characters_number_to_cut").enable();
+						HTMLForms.getField("auto_cut_characters_number").enable();
 					}
 				} else {
 					HTMLForms.getField("items_per_row").disable();
 					HTMLForms.getField("display_summary_to_guests").disable();
 					HTMLForms.getField("full_item_display").disable();
-					HTMLForms.getField("characters_number_to_cut").disable();
+					HTMLForms.getField("auto_cut_characters_number").disable();
 				}'
 			))
 		));
@@ -139,15 +139,15 @@ class AdminDownloadConfigController extends AdminModuleController
 				'hidden' => $this->config->get_display_type() !== DownloadConfig::LIST_VIEW,
 				'events' => array('click' => '
 					if (HTMLForms.getField("full_item_display").getValue()) {
-						HTMLForms.getField("characters_number_to_cut").disable();
+						HTMLForms.getField("auto_cut_characters_number").disable();
 					} else {
-						HTMLForms.getField("characters_number_to_cut").enable();
+						HTMLForms.getField("auto_cut_characters_number").enable();
 					}'
 				)
 			)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('characters_number_to_cut', $this->admin_common_lang['config.characters.number.to.cut'], $this->config->get_characters_number_to_cut(),
+		$fieldset->add_field(new FormFieldNumberEditor('auto_cut_characters_number', $this->admin_common_lang['config.characters.number.to.cut'], $this->config->get_auto_cut_characters_number(),
 			array(
 				'min' => 20, 'max' => 1000, 'required' => true,
 				'hidden' => $this->config->get_display_type() == DownloadConfig::LIST_VIEW && $this->config->is_full_item_displayed()
@@ -306,7 +306,7 @@ class AdminDownloadConfigController extends AdminModuleController
 		else
 			$this->config->hide_author();
 
-		$this->config->set_characters_number_to_cut($this->form->get_value('characters_number_to_cut', $this->config->get_characters_number_to_cut()));
+		$this->config->set_auto_cut_characters_number($this->form->get_value('auto_cut_characters_number', $this->config->get_auto_cut_characters_number()));
 		$this->config->set_enabled_views_number($this->form->get_value('nb_view_enabled'));
 		$this->config->set_root_category_description($this->form->get_value('root_category_description'));
 		$this->config->set_sort_type($this->form->get_value('sort_type')->get_raw_value());
