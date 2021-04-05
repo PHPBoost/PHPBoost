@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 04 05
  * @since       PHPBoost 3.0 - 2009 12 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -48,7 +48,6 @@ class SandboxTableController extends ModuleController
 			new HTMLTableColumn($this->lang['table.header.messaging'])
 		), new HTMLTableSortingRule('user_id', HTMLTableSortingRule::ASC));
 
-
 		$table_model->set_layout_title($this->lang['table.member.list']);
 
 		$options = array('jod' => 'John Doe', 'jad' => 'Jane Doe', 'jid' => 'Jim Doe');
@@ -69,6 +68,7 @@ class SandboxTableController extends ModuleController
 		$table_model->add_filter(new HTMLTableEqualsToSQLFilter('user_id', 'filter15', $this->lang['table.id.equal']));
 
 		$table = new HTMLTable($table_model);
+		$table->set_filters_fieldset_class_HTML();
 		$table->hide_multiple_delete();
 
 		$results = array();
