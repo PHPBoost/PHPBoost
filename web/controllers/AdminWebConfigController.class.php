@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 15
+ * @version     PHPBoost 6.0 - last update: 2021 04 05
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -45,7 +45,7 @@ class AdminWebConfigController extends AdminModuleController
 		{
 			$this->save();
 			$this->form->get_field_by_id('full_item_display')->set_hidden($this->config->get_display_type() !== WebConfig::LIST_VIEW);
-			$this->form->get_field_by_id('characters_number_to_cut')->set_hidden($this->config->is_full_item_displayed() && $this->config->get_display_type() !== WebConfig::GRID_VIEW);
+			$this->form->get_field_by_id('auto_cut_characters_number')->set_hidden($this->config->is_full_item_displayed() && $this->config->get_display_type() !== WebConfig::GRID_VIEW);
 			$this->form->get_field_by_id('items_per_row')->set_hidden($this->config->get_display_type() !== WebConfig::GRID_VIEW);
 			$view->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
@@ -134,15 +134,15 @@ class AdminWebConfigController extends AdminModuleController
 				'hidden' => $this->config->get_display_type() !== WebConfig::LIST_VIEW,
 				'events' => array('click' => '
 					if (HTMLForms.getField("full_item_display").getValue()) {
-						HTMLForms.getField("characters_number_to_cut").disable();
+						HTMLForms.getField("auto_cut_characters_number").disable();
 					} else {
-						HTMLForms.getField("characters_number_to_cut").enable();
+						HTMLForms.getField("auto_cut_characters_number").enable();
 					}'
 				)
 			)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('characters_number_to_cut', $this->admin_common_lang['config.characters.number.to.cut'], $this->config->get_characters_number_to_cut(),
+		$fieldset->add_field(new FormFieldNumberEditor('auto_cut_characters_number', $this->admin_common_lang['config.characters.number.to.cut'], $this->config->get_auto_cut_characters_number(),
 			array(
 				'min' => 20, 'max' => 1000, 'required' => true,
 				'hidden' => $this->config->get_display_type() == WebConfig::LIST_VIEW && $this->config->is_full_item_displayed()
@@ -222,7 +222,7 @@ class AdminWebConfigController extends AdminModuleController
 		else
 			$this->config->display_condensed_item();
 
-		$this->config->set_characters_number_to_cut($this->form->get_value('characters_number_to_cut', $this->config->get_characters_number_to_cut()));
+		$this->config->set_auto_cut_characters_number($this->form->get_value('auto_cut_characters_number', $this->config->get_auto_cut_characters_number()));
 		$this->config->set_categories_per_page($this->form->get_value('categories_per_page'));
 		$this->config->set_categories_per_row($this->form->get_value('categories_per_row'));
 		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
