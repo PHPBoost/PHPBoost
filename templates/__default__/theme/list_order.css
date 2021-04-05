@@ -4,22 +4,22 @@
 */
 
 /* --- Sort/filter Options - jpList ----------------------------------------- */
-.jplist-panel .cell { position: relative; }
+.listorder-panel .cell { position: relative; }
 
 /* --- Pagination --- */
-.pagination.jplist-pagination > ul { margin-bottom: 0.618em; }
+.pagination.listorder-pagination > ul { margin-bottom: 0.618em; }
 
-.jplist-hidden { display: none; }
+.listorder-hidden { display: none; }
 
-.jplist-current { background-color: rgba(var(--darken), 0.2); }
+.listorder-current { background-color: rgba(var(--darken), 0.2); }
 
-.jplist-selected a {
+.listorder-selected a {
 	border-color: var(--main-tone);
 	background-color: rgba(var(--main-rgb-t), 0.3);
 }
 
 /* --- Filter types --- */
-.jplist-type-filter { position: relative; }
+.listorder-type-filter { position: relative; }
 
 .selected-label { cursor: pointer; }
 
@@ -48,15 +48,15 @@
 	transition: 0.3s;
 }
 
-.jplist-type-filter .jplist-label {
+.listorder-type-filter .listorder-label {
 	display: block;
 	line-height: 30px;
 	padding: 0 5px;
 }
 
-.jplist-type-filter .jplist-label:hover { background-color: rgba(var(--darken), 0.05); }
+.listorder-type-filter .listorder-label:hover { background-color: rgba(var(--darken), 0.05); }
 
-.jplist-label [type="radio"]{
+.listorder-label [type="radio"]{
 	position: absolute;
 	width: 100%;
 	opacity: 0;
@@ -66,7 +66,7 @@
 /* --- Sort field --- */
 .sort-list { position: relative; }
 
-.jplist-drop-down .jplist-dd-panel {
+.listorder-drop-down .listorder-dd-panel {
 	overflow: hidden;
 	cursor: pointer;
 	position: relative;
@@ -75,7 +75,7 @@
 	height: 100%;
 }
 
-.jplist-drop-down .jplist-dd-panel::after {
+.listorder-drop-down .listorder-dd-panel::after {
 	content: '\f0d7';
 	font-family: "Font Awesome 5 Free";
 	display: inline-block;
@@ -87,7 +87,7 @@
 	text-rendering: auto;
 }
 
-.jplist-drop-down ul {
+.listorder-drop-down ul {
     position: absolute;
     top: 150%;
 	left: 0;
@@ -100,26 +100,26 @@
 	transition: all 0.3s ease;
 }
 
-.jplist-drop-down ul.jplist-dd-opened {
+.listorder-drop-down ul.listorder-dd-opened {
 	opacity: 1;
 	visibility: visible;
 	transition: all 0.3s ease;
 	top: 100%;
 }
 
-.jplist-drop-down ul li {
+.listorder-drop-down ul li {
 	width: 100%;
 	float: left;
 	line-height: 1.618;
 	padding: 0 0 0 0.618em;
 }
 
-.jplist-drop-down ul li:hover { background-color: rgba(var(--darken), 0.05); }
+.listorder-drop-down ul li:hover { background-color: rgba(var(--darken), 0.05); }
 
-.jplist-drop-down ul li .sort-type {
+.listorder-drop-down ul li .sort-type {
 	float: right;
 	padding: 0 0.618em;
 	cursor: pointer;
 }
 
-.jplist-drop-down ul li .sort-type:hover { background-color: rgba(var(--main-rgb-t), 0.2); }
+.listorder-drop-down ul li .sort-type:hover { background-color: rgba(var(--main-rgb-t), 0.2); }

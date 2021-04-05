@@ -7,7 +7,7 @@
 			<div class="content">
 				# INCLUDE FORM #
 				<div class="cell-flex cell-tile cell-columns-2">
-					<div class="jplist-type-filter cell">
+					<div class="listorder-type-filter cell">
 						<div class="cell-body">
 							<div class="cell-content">
 								<span>{@groups.select} :</span>
@@ -16,42 +16,42 @@
 										<span>{@groups.all}</span> <i class="fa fa-fw fa-caret-down" aria-hidden="true"></i>
 									</div>
 									<div class="label-list dropdown-container">
-										<label class="jplist-label" for="default-radio">
+										<label class="listorder-label" for="default-radio">
 											<input
 												id="default-radio"
 												type="radio"
-												data-jplist-control="radio-buttons-path-filter"
+												data-listorder-control="radio-buttons-path-filter"
 												data-path="default"
 												data-group="users-items"
 												name="groups-filter"
 												checked /> {@groups.all}
 										</label>
-										<label class="jplist-label" for="is-administrator">
+										<label class="listorder-label" for="is-administrator">
 											<input
 												id="is-administrator"
 												type="radio"
-												data-jplist-control="radio-buttons-path-filter"
+												data-listorder-control="radio-buttons-path-filter"
 												data-path=".is-administrator"
 												data-group="users-items"
 												name="groups-filter"
 												value="${LangLoader::get_message('admin_s', 'main')}"/>${LangLoader::get_message('admin_s', 'main')}
 										</label>
-										<label class="jplist-label" for="is-moderator">
+										<label class="listorder-label" for="is-moderator">
 											<input
 												id="is-moderator"
 												type="radio"
-												data-jplist-control="radio-buttons-path-filter"
+												data-listorder-control="radio-buttons-path-filter"
 												data-path=".is-moderator"
 												data-group="users-items"
 												name="groups-filter"
 												value="${LangLoader::get_message('modo_s', 'main')}"/>${LangLoader::get_message('modo_s', 'main')}
 										</label>
 										# START groups #
-											<label class="jplist-label" for="{groups.GROUP_NAME_FILTER}">
+											<label class="listorder-label" for="{groups.GROUP_NAME_FILTER}">
 												<input
 													id="{groups.GROUP_NAME_FILTER}"
 													type="radio"
-													data-jplist-control="radio-buttons-path-filter"
+													data-listorder-control="radio-buttons-path-filter"
 													data-path=".{groups.GROUP_NAME_FILTER}"
 													data-group="users-items"
 													name="groups-filter"
@@ -70,11 +70,11 @@
 							<div class="cell-content">
 								<span>${LangLoader::get_message('sort_by', 'common')} :</span>
 								<div
-									data-jplist-control="dropdown-sort"
-									class="jplist-drop-down"
+									data-listorder-control="dropdown-sort"
+									class="listorder-drop-down"
 									data-group="users-items"
 									data-name="sorttitle">
-									<div data-type="panel" class="jplist-dd-panel"></div>
+									<div data-type="panel" class="listorder-dd-panel"></div>
 									<ul data-type="content" class="dropdown-container">
 										<li> {@display_name}
 											<em class="sort-type" data-path=".jp-name" data-order="asc" data-type="text" data-selected="true"><span class="sr-only">{@display_name} &#8593;</span> <i class="fa fa-sort-alpha-down"></i></em>
@@ -114,9 +114,9 @@
 									# IF IS_ADMIN #<th></th># ENDIF #
 								</tr>
 							</thead>
-							<tbody data-jplist-group="users-items">
+							<tbody data-listorder-group="users-items">
 								# START users #
-									<tr data-jplist-item>
+									<tr data-listorder-item>
 										<td class="jp-name">
 											<a href="{users.U_PROFILE}"# IF users.C_IS_GROUP # style="color: {users.GROUP_COLOR};"# ELSE # class="{users.LEVEL_COLOR}"# ENDIF #>{users.DISPLAYED_NAME}</a>
 										</td>
@@ -155,9 +155,9 @@
 						</table>
 					</div>
 				# ELSE #
-					<div class="cell-flex cell-tile cell-columns-2 user-card " data-jplist-group="users-items">
+					<div class="cell-flex cell-tile cell-columns-2 user-card " data-listorder-group="users-items">
 						# START users #
-							<article data-jplist-item class="cell">
+							<article data-listorder-item class="cell">
 								<header class="cell-header">
 									<h5 class="cell-name jp-name">
 										<a href="{users.U_PROFILE}"# IF users.C_IS_GROUP # style="color: {users.GROUP_COLOR};"# ELSE # class="{users.LEVEL_COLOR} is-{users.LEVEL_COLOR}"# ENDIF #>{users.DISPLAYED_NAME}</a>
@@ -220,8 +220,8 @@
 		<div class="sub-section items-pagination">
 			<div class="content-container">
 				<nav
-				   	class="pagination jplist-pagination"
-				   	data-jplist-control="pagination"
+				   	class="pagination listorder-pagination"
+				   	data-listorder-control="pagination"
 			        data-group="users-items"
 			        data-items-per-page="{ITEMS_PER_PAGE}"
 			        data-current-page="0"
@@ -231,7 +231,7 @@
 						<li class="pagination-item" data-type="first" aria-label="${LangLoader::get_message('pagination.first', 'common')}"><a href="#"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></a> </li>
 					    <li class="pagination-item" data-type="prev" aria-label="${LangLoader::get_message('pagination.previous', 'common')}"><a href="#"><i class="fa fa-chevron-left" aria-hidden="true"></i></a> </li>
 
-					    <ul class="jplist-holder" data-type="pages">
+					    <ul class="listorder-holder" data-type="pages">
 					        <li class="pagination-item" data-type="page"><a href="#">{L_PAGE_NUMBER}</a></li>
 					    </ul>
 
@@ -255,11 +255,11 @@
 
 <script>
 	jQuery('document').ready(function(){
-		// jpList
-		jplist.init();
+		// listorder
+		listorder.init();
 
 		jQuery('input[type=radio][name=groups-filter]').change(function(){
-			var itemsNumber = jQuery('[data-jplist-item]').length,
+			var itemsNumber = jQuery('[data-listorder-item]').length,
 				maxItems = {ITEMS_PER_PAGE};
 			if (itemsNumber < 1) jQuery('.no-result').show();
 			else jQuery('.no-result').hide();
