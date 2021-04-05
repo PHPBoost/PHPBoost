@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 02
+ * @version     PHPBoost 6.0 - last update: 2021 04 05
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -22,7 +22,6 @@ class UserUsersListController extends AbstractController
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
-		$this->build_search_form();
 		$this->build_view();
 
 		if (AppContext::get_current_user()->is_admin())
@@ -45,18 +44,6 @@ class UserUsersListController extends AbstractController
 		$this->config = UserAccountsConfig::load();
 	}
 
-	private function build_search_form()
-	{
-		$form = new HTMLForm(__CLASS__);
-
-		$fieldset = new FormFieldsetHTML('search_member', LangLoader::get_message('search_member', 'main'));
-		$form->add_fieldset($fieldset);
-
-		$fieldset->add_field(new FormFieldAjaxSearchUserAutoComplete('member', $this->lang['display_name'], ''));
-
-		$this->view->put('FORM', $form->display());
-	}
-
 	private function build_view()
 	{
 		$result = PersistenceContext::get_querier()->select('SELECT member.*, mef.user_avatar, mef.user_website
@@ -68,11 +55,10 @@ class UserUsersListController extends AbstractController
 		$this->view->put_all(array(
 			'C_ENABLED_AVATAR' => $this->config->is_default_avatar_enabled(),
 			'C_PAGINATION'     => $result->get_rows_count() > $this->config->get_items_per_page(),
-			'C_HAS_GROUP' => !empty(GroupsService::get_groups()),
+			'C_HAS_GROUP'      => !empty(GroupsService::get_groups()),
 
-			'USERS_NUMBER'     => $result->get_rows_count(),
-			'ITEMS_PER_PAGE'   => $this->config->get_items_per_page(),
-			'L_PAGE_NUMBER'    => '{pageNumber}',
+			'USERS_NUMBER'   => $result->get_rows_count(),
+			'ITEMS_PER_PAGE' => $this->config->get_items_per_page()
 		));
 
 		foreach (GroupsService::get_groups() as $group_id => $group_data)

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 03
+ * @version     PHPBoost 6.0 - last update: 2021 04 05
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -200,6 +200,13 @@ $lang['pagination.last'] = 'To last page';
 $lang['pagination.current'] = 'The Current page';
 $lang['pagination.page'] = 'To Page';
 $lang['pagination.per'] = ' per page';
+
+// Lst order
+$lang['listorder.item.start'] = '{startItem}';
+$lang['listorder.item.end'] = '{endItem}';
+$lang['listorder.items.number'] = '{itemsNumber}';
+$lang['listorder.page.number'] = '{pageNumber}';
+$lang['listorder.pages.number'] = '{pagesNumber}';
 
 //Multiple select
 $lang['select'] = 'Select';

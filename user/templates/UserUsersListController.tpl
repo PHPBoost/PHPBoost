@@ -5,7 +5,21 @@
 	<div class="sub-section">
 		<div class="content-container">
 			<div class="content">
-				# INCLUDE FORM #
+				<form id="UserUsersListController" class="fieldset-content">
+					<fieldset id="UserUsersListController_search_member">
+						<legend>${LangLoader::get_message('search_member', 'main')}</legend>
+						<div class="fieldset-inset">
+							<div id="UserUsersListController_member_field" class="form-element">
+								<label for="UserUsersListController_member">
+									{@display_name}
+								</label>
+								<div id="onblurContainerResponseUserUsersListController_member" class="form-field form-field-text picture-status-constraint">
+									<input data-listorder-control="textbox-filter" data-group="users-items" data-path=".jp-name" size="30" maxlength="255" type="text" value="">
+								</div>
+							</div>
+						</div>
+					</fieldset>
+				</form>
 				<div class="cell-flex cell-tile cell-columns-2">
 					<div class="listorder-type-filter cell">
 						<div class="cell-body">
@@ -227,12 +241,15 @@
 			        data-current-page="0"
 			        data-name="pagination1"
 				   	data-name="paging">
+					<p data-type="info" class="align-center">
+						${LangLoader::get_message('listorder.item.start', 'common')} - ${LangLoader::get_message('listorder.item.end', 'common')} / ${LangLoader::get_message('listorder.items.number', 'common')} ${TextHelper::lcfirst(@users)}
+					</p>
 					<ul>
 						<li class="pagination-item" data-type="first" aria-label="${LangLoader::get_message('pagination.first', 'common')}"><a href="#"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></a> </li>
 					    <li class="pagination-item" data-type="prev" aria-label="${LangLoader::get_message('pagination.previous', 'common')}"><a href="#"><i class="fa fa-chevron-left" aria-hidden="true"></i></a> </li>
 
 					    <ul class="listorder-holder" data-type="pages">
-					        <li class="pagination-item" data-type="page"><a href="#">{L_PAGE_NUMBER}</a></li>
+					        <li class="pagination-item" data-type="page"><a href="#">${LangLoader::get_message('listorder.page.number', 'common')}</a></li>
 					    </ul>
 
 					    <li class="pagination-item" data-type="next" aria-label="${LangLoader::get_message('pagination.next', 'common')}"><a href="#"><i class="fa fa-chevron-right" aria-hidden="true"></i></a> </li>
