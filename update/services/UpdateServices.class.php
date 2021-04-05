@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 20
+ * @version     PHPBoost 6.0 - last update: 2021 04 05
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -194,11 +194,8 @@ class UpdateServices
 		// Maintenance of the site if it is not already
 		$this->put_site_under_maintenance();
 
-		if (GeneralConfig::load()->get_phpboost_major_version() != self::NEW_KERNEL_VERSION)
-		{
-			// Updating configurations
-			$this->update_configurations();
-		}
+		// Updating configurations
+		$this->update_configurations();
 
 		// Updating kernel tables
 		$this->update_kernel_tables();

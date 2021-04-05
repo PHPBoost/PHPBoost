@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 28
+ * @version     PHPBoost 6.0 - last update: 2021 04 05
  * @since       PHPBoost 6.0 - 2020 05 06
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -12,79 +12,47 @@ class DownloadConfigUpdateVersion extends ConfigUpdateVersion
 {
 	public function __construct()
 	{
-		parent::__construct('download-config', false);
-	}
+		parent::__construct('download');
 
-	protected function build_new_config()
-	{
-		$old_config = $this->get_old_config();
-
-		if (class_exists('DownloadConfig') && !empty($old_config))
-		{
-			$config = DownloadConfig::load();
-			$items_default_sort_field = $items_default_sort_mode = $sort_type = '';
-
-			try {
-				$items_default_sort_field = $old_config->get_property('items_default_sort_field');
-			} catch (PropertyNotFoundException $e) {}
-			if ($items_default_sort_field)
-			{
-				switch ($items_default_sort_field)
-				{
-					case 'name':
-						$config->set_items_default_sort_field('title');
-					break;
-					case 'updated_date':
-						$config->set_items_default_sort_field('update_date');
-					break;
-					case 'number_downloads':
-						$config->set_items_default_sort_field('downloads_number');
-					break;
-					case 'number_view':
-						$config->set_items_default_sort_field('views_number');
-					break;
-					default:
-						$config->set_items_default_sort_field($items_default_sort_field);
-					break;
-				}
-			}
-
-			try {
-				$items_default_sort_mode = $old_config->get_property('items_default_sort_mode');
-			} catch (PropertyNotFoundException $e) {}
-			if ($items_default_sort_mode)
-			$config->set_items_default_sort_mode(in_array(TextHelper::strtoupper($items_default_sort_mode), array(Item::ASC, Item::DESC)) ? TextHelper::strtolower($items_default_sort_mode) : TextHelper::strtolower(Item::DESC));
-
-			try {
-				$sort_type = $old_config->get_property('sort_type');
-			} catch (PropertyNotFoundException $e) {}
-			if ($sort_type)
-			{
-				switch ($sort_type)
-				{
-					case 'name':
-						$config->set_sort_type('title');
-					break;
-					case 'updated_date':
-						$config->set_sort_type('update_date');
-					break;
-					case 'number_downloads':
-						$config->set_sort_type('downloads_number');
-					break;
-					case 'number_view':
-						$config->set_sort_type('views_number');
-					break;
-					default:
-						$config->set_sort_type($sort_type);
-					break;
-				}
-			}
-
-			DownloadConfig::save();
-
-			return true;
-		}
-		return false;
+		$this->config_parameters_to_modify = array(
+			'items_number_per_page'            => 'items_per_page',
+			'categories_number_per_page'       => 'categories_per_page',
+			'columns_number_per_line'          => 'items_per_row',
+			'descriptions_displayed_to_guests' => 'summary_displayed_to_guests',
+			'items_default_sort_field'         => array(
+				'parameter_name' => 'items_default_sort_field',
+				'values'         => array(
+					'name'             => 'title',
+					'updated_date'     => 'update_date',
+					'number_downloads' => 'downloads_number',
+					'number_view'      => 'views_number'
+				)
+			),
+			'items_default_sort_mode' => array(
+				'parameter_name' => 'items_default_sort_mode',
+				'values'         => array(
+					Item::ASC  => TextHelper::strtolower(Item::ASC),
+					Item::DESC => TextHelper::strtolower(Item::DESC)
+				)
+			),
+			'category_display_type' => array(
+				'parameter_name' => 'display_type',
+				'values'         => array(
+					'summary'     => 'list_view',
+					'all_content' => 'list_view',
+					'table'       => 'table_view'
+				)
+			),
+			'sort_type' => array(
+				'parameter_name' => 'sort_type',
+				'values'         => array(
+					'name'             => 'title',
+					'updated_date'     => 'update_date',
+					'number_downloads' => 'downloads_number',
+					'number_view'      => 'views_number'
+				)
+			)
+		);
 	}
 }
 ?>

@@ -3,21 +3,26 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2017 07 31
+ * @version     PHPBoost 6.0 - last update: 2021 04 05
  * @since       PHPBoost 3.0 - 2012 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 abstract class ConfigUpdateVersion implements UpdateVersion
 {
+	protected static $module_id;
+
+	protected $delete_old_config;
 	protected $config_name;
 	protected $querier;
-	protected $delete_old_config = true;
 
-	public function __construct($config_name, $delete_old_config = true)
+	protected $config_parameters_to_modify = array();
+
+	public function __construct($module_id, $delete_old_config = false, $config_name = '')
 	{
-		$this->config_name = $config_name;
+		self::$module_id = $module_id;
 		$this->delete_old_config = $delete_old_config;
+		$this->config_name = $config_name ? $config_name : self::$module_id . '-config';
 		$this->querier = PersistenceContext::get_querier();
 	}
 
@@ -28,15 +33,17 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 
 	public function execute()
 	{
-		try {
-			if ($this->build_new_config())
-			{
-				if ($this->delete_old_config)
+		if (ModulesManager::is_module_installed(self::$module_id))
+		{
+			try {
+				if ($this->build_new_config())
 				{
-					$this->delete_old_config();
+					if ($this->delete_old_config)
+					{
+						$this->delete_old_config();
+					}
 				}
-			}
-		} catch (RowNotFoundException $e) {
+			} catch (RowNotFoundException $e) {}
 		}
 	}
 
@@ -57,12 +64,57 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 
 	protected function build_new_config()
 	{
-		return true;
+		return $this->modify_config_parameters();
 	}
 
 	protected function delete_old_config()
 	{
 		$this->querier->delete(DB_TABLE_CONFIGS, 'WHERE name = :config_name', array('config_name' => $this->get_config_name()));
+	}
+
+	/**
+	 * Updates config parameters.
+	 */
+	protected function modify_config_parameters()
+	{
+		$configuration_class_name = ModulesManager::get_module(self::$module_id)->get_configuration()->get_configuration_name();
+		$old_config = $this->get_old_config();
+		
+		if (class_exists($configuration_class_name) && !empty($old_config))
+		{
+			$config = $configuration_class_name::load();
+			foreach ($this->config_parameters_to_modify as $old_name => $new_name)
+			{
+				$property = '';
+				
+				try {
+					$property = $old_config->get_property($old_name);
+				} catch (PropertyNotFoundException $e) {}
+				if ($property)
+				{
+					if (!is_array($new_name))
+					{
+						$set_new_property = 'set_' . $new_name;
+						$config->$set_new_property($property);
+					}
+					else
+					{
+						$set_new_property = 'set_' . $new_name['parameter_name'];
+						
+						foreach ($new_name['values'] as $old_value_name => $new_value_name)
+						{
+							if ($property == $old_value_name)
+								$config->$set_new_property($new_value_name);
+						}
+					}
+				}
+			}
+
+			$configuration_class_name::save();
+
+			return true;
+		}
+		return false;
 	}
 }
 ?>
