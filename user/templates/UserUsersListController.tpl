@@ -217,37 +217,36 @@
 	</div>
 
 	# IF C_PAGINATION #
-		<div class="sub-section">
+		<div class="sub-section items-pagination">
 			<div class="content-container">
-				<div class="pagination options no-style">
-					<p class="align-center"></p>
-					<div
-				   	class="jplist-pagination"
+				<nav
+				   	class="pagination jplist-pagination"
 				   	data-jplist-control="pagination"
 			        data-group="users-items"
 			        data-items-per-page="{ITEMS_PER_PAGE}"
 			        data-current-page="0"
 			        data-name="pagination1"
 				   	data-name="paging">
-						<button class="button small" type="button" data-type="first" aria-label="${LangLoader::get_message('pagination.first', 'common')}"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> </button>
-					    <button class="button small" type="button" data-type="prev" aria-label="${LangLoader::get_message('pagination.previous', 'common')}"><i class="fa fa-chevron-left" aria-hidden="true"></i> </button>
+					<ul>
+						<li class="pagination-item" data-type="first" aria-label="${LangLoader::get_message('pagination.first', 'common')}"><a href="#"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></a> </li>
+					    <li class="pagination-item" data-type="prev" aria-label="${LangLoader::get_message('pagination.previous', 'common')}"><a href="#"><i class="fa fa-chevron-left" aria-hidden="true"></i></a> </li>
 
-					    <div class="jplist-holder" data-type="pages">
-					        <button type="button" class="button small" data-type="page">{L_PAGE_NUMBER}</button>
-					    </div>
+					    <ul class="jplist-holder" data-type="pages">
+					        <li class="pagination-item" data-type="page"><a href="#">{L_PAGE_NUMBER}</a></li>
+					    </ul>
 
-					    <button class="button small" type="button" data-type="next" aria-label="${LangLoader::get_message('pagination.next', 'common')}"><i class="fa fa-chevron-right" aria-hidden="true"></i> </button>
-					    <button class="button small" type="button" data-type="last" aria-label="${LangLoader::get_message('pagination.last', 'common')}"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i> </button>
-
-			            <select data-type="items-per-page">
-			                <option value="{ITEMS_PER_PAGE}"> {ITEMS_PER_PAGE} ${LangLoader::get_message('pagination.per', 'common')}</option>
-			                <option value="50"> 50 ${LangLoader::get_message('pagination.per', 'common')}</option>
-			                <option value="100"> 100 ${LangLoader::get_message('pagination.per', 'common')}</option>
-			                <option value="0"> {@members.all} </option>
-			            </select>
-					</div>
+					    <li class="pagination-item" data-type="next" aria-label="${LangLoader::get_message('pagination.next', 'common')}"><a href="#"><i class="fa fa-chevron-right" aria-hidden="true"></i></a> </li>
+					    <li class="pagination-item" data-type="last" aria-label="${LangLoader::get_message('pagination.last', 'common')}"><a href="#"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i></a> </li>
+					</ul>
+				</nav>
+				<div class="align-center">
+					<select data-type="items-per-page">
+		                <option value="{ITEMS_PER_PAGE}"> {ITEMS_PER_PAGE} ${LangLoader::get_message('pagination.per', 'common')}</option>
+		                <option value="50"> 50 ${LangLoader::get_message('pagination.per', 'common')}</option>
+		                <option value="100"> 100 ${LangLoader::get_message('pagination.per', 'common')}</option>
+		                <option value="0"> {@members.all} </option>
+		            </select>
 				</div>
-				<div class="spacer"></div>
 			</div>
 		</div>
 	# ENDIF #
@@ -260,11 +259,12 @@
 		jplist.init();
 
 		jQuery('input[type=radio][name=groups-filter]').change(function(){
-			var itemsNumber = jQuery('[data-jplist-item]').length;
-			if (itemsNumber < 1)
-				jQuery('.no-result').show();
-			else
-				jQuery('.no-result').hide();
+			var itemsNumber = jQuery('[data-jplist-item]').length,
+				maxItems = {ITEMS_PER_PAGE};
+			if (itemsNumber < 1) jQuery('.no-result').show();
+			else jQuery('.no-result').hide();
+			if (itemsNumber < maxItems) jQuery('.items-pagination').hide();
+			else jQuery('.items-pagination').show();
 		});
 
 		// Filters

@@ -1,38 +1,21 @@
-/* --- Sort/filter Options - jpList ----------------------------------------- */
-.jplist-panel .cell { position: relative; }
-
 /*
 * Copy this file into your theme to customize the module.
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-/* --- Pagination --- */
-.jplist-panel .pagination {
-	margin-bottom: 20px;
-	min-height: 30px;
-}
-.pagination .jplist-label { display: none; }
+/* --- Sort/filter Options - jpList ----------------------------------------- */
+.jplist-panel .cell { position: relative; }
 
-.jplist-pagingprev,
-.jplist-pagingmid,
-.jplist-pagingnext { display: inline-block; }
+/* --- Pagination --- */
+.pagination.jplist-pagination > ul { margin-bottom: 0.618em; }
 
 .jplist-hidden { display: none; }
 
 .jplist-current { background-color: rgba(var(--darken), 0.2); }
 
-.jplist-pagingmid button:not(:first-child) { margin-left: -3px; }
-
-.jplist-pagination .jplist-holder { display: inline-block; }
-
-.jplist-pagination .button {
-	margin: 0.309em;
-	width: auto;
-}
-
-.button.jplist-selected {
-	background-color: var(--main-tone);
-	color: var(--txt-alt);
+.jplist-selected a {
+	border-color: var(--main-tone);
+	background-color: rgba(var(--main-rgb-t), 0.3);
 }
 
 /* --- Filter types --- */
