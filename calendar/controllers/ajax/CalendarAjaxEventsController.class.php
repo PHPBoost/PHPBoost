@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 22
+ * @version     PHPBoost 6.0 - last update: 2021 04 05
  * @since       PHPBoost 4.0 - 2014 03 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -69,7 +69,10 @@ class CalendarAjaxEventsController extends AbstractController
 		$month_days = $array_month[$month - 1];
 
 		$items_number = 0;
+		$controls_displayed = false;
 
+		$first_day_hour = DateTime::createFromFormat('Y-m-d H:i:s', $year . '-' . $month . '-' . ($day ? $day : 1) . ' 00:00:00', Timezone::get_timezone(Timezone::USER_TIMEZONE));
+		$last_day_hour = DateTime::createFromFormat('Y-m-d H:i:s', $year . '-' . $month . '-' . ($day ? $day : $month_days) . ' 23:59:59', Timezone::get_timezone(Timezone::USER_TIMEZONE));
 		$result = $db_querier->select("SELECT *
 		FROM " . CalendarSetup::$calendar_events_table . " event
 		LEFT JOIN " . CalendarSetup::$calendar_events_content_table . " event_content ON event_content.id = event.content_id
@@ -79,8 +82,8 @@ class CalendarAjaxEventsController extends AbstractController
 		AND ((start_date BETWEEN :first_day_hour AND :last_day_hour) OR (end_date BETWEEN :first_day_hour AND :last_day_hour) OR (:first_day_hour BETWEEN start_date AND end_date))
 		AND id_category IN :authorized_categories
 		ORDER BY start_date ASC", array(
-			'first_day_hour' => mktime(0, 0, 0, $month, ($day ? $day : 1), $year),
-			'last_day_hour' => mktime(23, 59, 59, $month, ($day ? $day : $month_days), $year),
+			'first_day_hour' => $first_day_hour->getTimestamp(),
+			'last_day_hour' => $last_day_hour->getTimestamp(),
 			'authorized_categories' => $authorized_categories
 		));
 
@@ -88,6 +91,9 @@ class CalendarAjaxEventsController extends AbstractController
 		{
 			$item = new CalendarItem();
 			$item->set_properties($row);
+
+			if ($item->is_authorized_to_edit() || $item->is_authorized_to_delete())
+				$controls_displayed = true;
 
 			if (CategoriesAuthorizationsService::check_authorizations($item->get_content()->get_id_category(), 'calendar')->read())
 			{
@@ -97,9 +103,10 @@ class CalendarAjaxEventsController extends AbstractController
 		}
 		$result->dispose();
 
+		$alt_title_label = (isset($this->lang['calendar.events.of.month.alt']) && in_array(Url::encode_rewrite(TextHelper::mb_substr($array_l_month[$month - 1], 0, 1)), array('a', 'e', 'i', 'o', 'u', 'y')));
+
 		$this->view->put_all(array(
-			// TODO: set C_CONTROLS to manage edit for member and its own items
-			'C_CONTROLS'		  => AppContext::get_current_user(User::ADMIN_LEVEL),
+			'C_CONTROLS'		  => $controls_displayed,
 			'C_TABLE_VIEW'        => $config->get_display_type() == CalendarConfig::TABLE_VIEW,
 			'C_LIST_VIEW'         => $config->get_display_type() == CalendarConfig::LIST_VIEW,
 			'C_GRID_VIEW'         => $config->get_display_type() == CalendarConfig::GRID_VIEW,
@@ -107,9 +114,9 @@ class CalendarAjaxEventsController extends AbstractController
 			'C_COMMENTS_ENABLED'  => $comments_config->module_comments_is_enabled('calendar'),
 			'C_ITEMS'             => $items_number > 0,
 			'C_DAY'               => $day,
-
+		
 			'ITEMS_PER_ROW'  => $config->get_items_per_row(),
-			'DATE'           => ($day ? $day . ' ' : '') . $array_l_month[$month - 1] . ' ' . $year,
+			'DATE_LABEL'     => ($day ? $this->lang['calendar.events.of'] : $this->lang['calendar.events.of.month' . ($alt_title_label ? '.alt' : '')]) . (!$alt_title_label ? ' ' : '') . ($day ? $day . ' ' : '') . $array_l_month[$month - 1] . ' ' . $year,
 			'L_ITEMS_NUMBER' => $items_number > 1 ? StringVars::replace_vars($this->lang['calendar.labels.events.number'], array('items_number' => $items_number)) : $this->lang['calendar.labels.one.event'],
 		));
 

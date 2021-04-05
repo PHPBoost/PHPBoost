@@ -1,6 +1,6 @@
 # IF NOT C_PENDING_ITEMS #
 	# IF NOT C_MEMBER_ITEMS #
-		<div class="calendar-event-day"># IF C_DAY #{@calendar.events.of}# ELSE #{@calendar.events.of.month}# ENDIF # {DATE}</div>
+		<div class="calendar-event-day">{DATE_LABEL}</div>
 		# IF C_ITEMS #<div class="more align-center"><span class="pinned notice">{L_ITEMS_NUMBER}</span></div># ENDIF #
 	# ENDIF #
 # ENDIF #

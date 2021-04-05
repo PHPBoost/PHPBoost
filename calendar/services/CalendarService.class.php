@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 22
+ * @version     PHPBoost 6.0 - last update: 2021 04 05
  * @since       PHPBoost 3.0 - 2012 11 20
  * @contributor Mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -246,6 +246,8 @@ class CalendarService
 		$items = array();
 		$authorized_categories = $id_category == Category::ROOT_CATEGORY ? CategoriesService::get_authorized_categories($id_category) : array($id_category);
 
+		$first_month_day = DateTime::createFromFormat('Y-m-d H:i:s', $year . '-' . $month . '-' . 1 . ' 00:00:00', Timezone::get_timezone(Timezone::USER_TIMEZONE));
+		$last_month_day = DateTime::createFromFormat('Y-m-d H:i:s', $year . '-' . $month . '-' . $month_days . ' 23:59:59', Timezone::get_timezone(Timezone::USER_TIMEZONE));
 		$result = self::$db_querier->select((CalendarConfig::load()->is_members_birthday_enabled() ? "
 		(SELECT member_extended_fields.user_born AS start_date, member_extended_fields.user_born AS end_date, display_name AS title, 'BIRTHDAY' AS type, 0 AS id_category, '" . CalendarItemContent::YEARLY . "' AS repeat_type, 100 AS repeat_number
 		FROM " . DB_TABLE_MEMBER . " member
@@ -261,8 +263,8 @@ class CalendarService
 		ORDER BY type ASC, start_date ASC", array(
 			'month' => $month,
 			'year' => $year,
-			'first_month_day' => mktime(0, 0, 0, $month, 1, $year),
-			'last_month_day' => mktime(23, 59, 59, $month, $month_days, $year),
+			'first_month_day' => $first_month_day->getTimestamp(),
+			'last_month_day' => $last_month_day->getTimestamp(),
 			'authorized_categories' => $authorized_categories
 		));
 		
