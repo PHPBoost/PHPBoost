@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 03
+ * @version     PHPBoost 6.0 - last update: 2021 04 06
  * @since       PHPBoost 3.0 - 2010 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -126,8 +126,8 @@ class AdminMemberConfigController extends AdminController
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $admin_common_lang['config.display.type'], $this->user_accounts_config->get_display_type(),
 			array(
-				new FormFieldSelectChoiceOption($admin_common_lang['config.display.type.grid'], DownloadConfig::GRID_VIEW, array('data_option_icon' => 'fa fa-th-large')),
-				new FormFieldSelectChoiceOption($admin_common_lang['config.display.type.table'], DownloadConfig::TABLE_VIEW, array('data_option_icon' => 'fa fa-table'))
+				new FormFieldSelectChoiceOption($admin_common_lang['config.display.type.grid'], UserAccountsConfig::GRID_VIEW, array('data_option_icon' => 'fa fa-th-large')),
+				new FormFieldSelectChoiceOption($admin_common_lang['config.display.type.table'], UserAccountsConfig::TABLE_VIEW, array('data_option_icon' => 'fa fa-table'))
 			),
 			array(
 				'select_to_list' => true,
