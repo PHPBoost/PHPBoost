@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 16
+ * @version     PHPBoost 6.0 - last update: 2021 04 06
  * @since       PHPBoost 6.0 - 2021 02 26
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -59,19 +59,19 @@ class NewsManager extends ItemsManager
 
 		$result = self::$db_querier->select('(SELECT id, title, id_category, rewrited_title, thumbnail, \'PREVIOUS\' as type
 		FROM '. self::$items_table .'
-		WHERE (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))) AND creation_date < :timestamp AND id_category IN :authorized_categories
-		ORDER BY creation_date DESC
+		WHERE (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))) AND update_date < :timestamp AND id_category IN :authorized_categories
+		ORDER BY update_date DESC, top_list_enabled DESC
 		LIMIT 1
 		OFFSET 0)
 		UNION
 		(SELECT id, title, id_category, rewrited_title, thumbnail, \'NEXT\' as type
 		FROM '. self::$items_table .'
-		WHERE (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))) AND creation_date > :timestamp AND id_category IN :authorized_categories
-		ORDER BY creation_date ASC
+		WHERE (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))) AND update_date > :timestamp AND id_category IN :authorized_categories
+		ORDER BY update_date ASC, top_list_enabled ASC
 		LIMIT 1
 		OFFSET 0)', array(
 			'timestamp_now' => $now->get_timestamp(),
-			'timestamp' => $item->get_creation_date()->get_timestamp(),
+			'timestamp' => $item->get_update_date()->get_timestamp(),
 			'authorized_categories' => array($item->get_id_category())
 		));
 
