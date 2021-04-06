@@ -137,7 +137,7 @@
 										<td>{users.REGISTRATION_DATE}<span class="lo-registration-date hidden">{users.REGISTRATION_DATE_TIMESTAMP}</span></td>
 										<td>{users.LAST_CONNECTION}<span class="lo-last-connection hidden">{users.LAST_CONNECTION_TIMESTAMP}</span></td>
 										<td class="lo-publications-number" aria-label="# START users.modules # {users.modules.MODULE_NAME}: {users.modules.MODULE_PUBLICATIONS_NUMBER}<br /># END users.modules #">
-											{users.PUBLICATIONS_NUMBER} <a href="{users.U_PUBLICATIONS}" aria-label="{@view.user.publications}"><i class="fa fa-share-square"></i></a>
+											<a href="{users.U_PUBLICATIONS}" aria-label="{@view.user.publications}">{users.PUBLICATIONS_NUMBER}</a>
 										</td>
 										<td>
 											<a href="{users.U_MP}" class="pinned bgc-full notice" aria-label="{@private_message}"}><i class="fa fa-fw fa-people-arrows"></i></a>
@@ -191,7 +191,7 @@
 										</li>
 										<li class="li-stretch lo-publications-number" aria-label="# START users.modules # {users.modules.MODULE_NAME}: {users.modules.MODULE_PUBLICATIONS_NUMBER}<br /># END users.modules #">
 											<span class="small">${TextHelper::ucfirst(@publications.number)}</span>
-											<span>{users.PUBLICATIONS_NUMBER} <a href="{users.U_PUBLICATIONS}" aria-label="{@view.user.publications}"><i class="fa fa-share-square"></i></a></span>
+											<a href="{users.U_PUBLICATIONS}" aria-label="{@view.user.publications}">{users.PUBLICATIONS_NUMBER}</a>
 										</li>
 										<li class="li-stretch">
 											<span class="small">${LangLoader::get_message('contact', 'main')}</span>
