@@ -13,7 +13,7 @@
 
 class CalendarConfig extends AbstractConfigData
 {
-	const ITEMS_NUMBER_PER_PAGE = 'items_number_per_page';
+	const ITEMS_PER_PAGE = 'items_per_page';
 	const ITEMS_PER_ROW = 'items_per_row';
 	const MEMBERS_BIRTHDAY_ENABLED = 'members_birthday_enabled';
 	const EVENT_COLOR = 'event_color';
@@ -31,12 +31,12 @@ class CalendarConfig extends AbstractConfigData
 	const TABLE_VIEW = 'table_view';
 	const FULL_ITEM_DISPLAY = 'full_item_display';
 
-	public function get_items_number_per_page()
+	public function get_items_per_page()
 	{
 		return $this->get_property(self::ITEMS_NUMBER_PER_PAGE);
 	}
 
-	public function set_items_number_per_page($value)
+	public function set_items_per_page($value)
 	{
 		$this->set_property(self::ITEMS_NUMBER_PER_PAGE, $value);
 	}

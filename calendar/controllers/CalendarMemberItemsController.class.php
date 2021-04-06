@@ -121,7 +121,7 @@ class CalendarMemberItemsController extends ModuleController
 		LEFT JOIN ' . CalendarSetup::$calendar_events_content_table . ' event_content ON event_content.id = event.content_id
 		' . $condition, $parameters);
 
-		$pagination = new ModulePagination($page, $row['events_number'], (int)CalendarConfig::load()->get_items_number_per_page());
+		$pagination = new ModulePagination($page, $row['events_number'], (int)CalendarConfig::load()->get_items_per_page());
 		$pagination->set_url(CalendarUrlBuilder::display_member_items($this->get_member()->get_id(), '%d'));
 
 		if ($pagination->current_page_is_empty() && $page > 1)

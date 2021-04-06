@@ -72,7 +72,7 @@ class AdminCalendarConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->admin_common_lang['configuration.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_number_per_page', $this->lang['calendar.config.items.number.per.page'], $this->config->get_items_number_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->lang['calendar.config.items.number.per.page'], $this->config->get_items_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
@@ -190,7 +190,7 @@ class AdminCalendarConfigController extends AdminModuleController
 
 	private function save()
 	{
-		$this->config->set_items_number_per_page($this->form->get_value('items_number_per_page'));
+		$this->config->set_items_per_page($this->form->get_value('items_per_page'));
 		$this->config->set_event_color($this->form->get_value('event_color'));
 		if ($this->form->get_value('members_birthday_enabled'))
 		{
