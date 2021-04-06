@@ -18,7 +18,6 @@ class WebConfigUpdateVersion extends ConfigUpdateVersion
 			'items_number_per_page'            => 'items_per_page',
 			'categories_number_per_page'       => 'categories_per_page',
 			'columns_number_per_line'          => 'items_per_row',
-			'descriptions_displayed_to_guests' => 'summary_displayed_to_guests',
 			'items_default_sort_field'         => array(
 				'parameter_name' => 'items_default_sort_field',
 				'values'         => array(

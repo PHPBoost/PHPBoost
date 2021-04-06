@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 31
+ * @version     PHPBoost 6.0 - last update: 2021 04 06
  * @since       PHPBoost 4.1 - 2015 02 03
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -86,7 +86,7 @@ class AdminMediaConfigController extends AdminModuleController
 			array('rows' => 8, 'cols' => 47)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->config_lang['config.items_per_page'], $this->config->get_items_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->config_lang['config.items_number_per_page'], $this->config->get_items_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
