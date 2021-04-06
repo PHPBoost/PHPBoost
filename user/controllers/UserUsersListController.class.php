@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 05
+ * @version     PHPBoost 6.0 - last update: 2021 04 06
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -102,13 +102,14 @@ class UserUsersListController extends AbstractController
 				'LEVEL_COLOR' => UserService::get_level_class($row['level']),
 				'GROUP_COLOR' => User::get_group_color($row['user_groups'], $row['level']),
 
-				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
-				'U_AVATAR'  => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : $this->config->get_default_avatar(),
-				'U_WEBSITE' => Url::to_rel($row['user_website']),
-				'U_EMAIL'   => $row['email'],
-				'U_MP'      => UserUrlBuilder::personnal_message($row['user_id'])->rel(),
-				'U_EDIT'	=> UserUrlBuilder::edit_profile($row['user_id'])->rel(),
-				'U_DELETE'	=> AdminMembersUrlBuilder::delete($row['user_id'])->rel()
+				'U_PROFILE'      => UserUrlBuilder::profile($row['user_id'])->rel(),
+				'U_AVATAR'       => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : $this->config->get_default_avatar(),
+				'U_WEBSITE'      => Url::to_rel($row['user_website']),
+				'U_EMAIL'        => $row['email'],
+				'U_MP'           => UserUrlBuilder::personnal_message($row['user_id'])->rel(),
+				'U_PUBLICATIONS' => UserUrlBuilder::publications($row['user_id'])->rel(),
+				'U_EDIT'	     => UserUrlBuilder::edit_profile($row['user_id'])->rel(),
+				'U_DELETE'	     => AdminMembersUrlBuilder::delete($row['user_id'])->rel()
 			));
 
 			foreach ($modules as $module)

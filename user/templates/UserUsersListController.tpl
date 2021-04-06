@@ -14,7 +14,7 @@
 									{@display_name}
 								</label>
 								<div id="onblurContainerResponseUserUsersListController_member" class="form-field form-field-text picture-status-constraint">
-									<input data-listorder-control="textbox-filter" data-group="users-items" data-path=".jp-name" size="30" maxlength="255" type="text" value="">
+									<input data-listorder-control="textbox-filter" data-group="users-items" data-path=".lo-name" size="30" maxlength="255" type="text" value="">
 								</div>
 							</div>
 						</div>
@@ -91,20 +91,20 @@
 									<div data-type="panel" class="listorder-dd-panel"></div>
 									<ul data-type="content" class="dropdown-container">
 										<li> {@display_name}
-											<em class="sort-type" data-path=".jp-name" data-order="asc" data-type="text" data-selected="true"><span class="sr-only">{@display_name} &#8593;</span> <i class="fa fa-sort-alpha-down"></i></em>
-											<em class="sort-type" data-path=".jp-name" data-order="desc" data-type="text"><span class="sr-only">{@display_name} &#8595;</span> <i class="fa fa-sort-alpha-down-alt"></i></em>
+											<em class="sort-type" data-path=".lo-name" data-order="asc" data-type="text" data-selected="true"><span class="sr-only">{@display_name} &#8593;</span> <i class="fa fa-sort-alpha-down"></i></em>
+											<em class="sort-type" data-path=".lo-name" data-order="desc" data-type="text"><span class="sr-only">{@display_name} &#8595;</span> <i class="fa fa-sort-alpha-down-alt"></i></em>
 										</li>
 										<li> {@registration_date}
-											<em class="sort-type" data-path=".jp-registration-date" data-order="asc" data-type="number"><span class="sr-only">{@registration_date} &#8593;</span> <i class="fa fa-sort-numeric-down"></i></em>
-											<em class="sort-type" data-path=".jp-registration-date" data-order="desc" data-type="number"><span class="sr-only">{@registration_date} &#8595;</span> <i class="fa fa-sort-numeric-down-alt"></i></em>
+											<em class="sort-type" data-path=".lo-registration-date" data-order="asc" data-type="number"><span class="sr-only">{@registration_date} &#8593;</span> <i class="fa fa-sort-numeric-down"></i></em>
+											<em class="sort-type" data-path=".lo-registration-date" data-order="desc" data-type="number"><span class="sr-only">{@registration_date} &#8595;</span> <i class="fa fa-sort-numeric-down-alt"></i></em>
 										</li>
 										<li> {@last_connection}
-											<em class="sort-type" data-path=".jp-last-connection" data-order="asc" data-type="number"><span class="sr-only">{@last_connection} &#8593;</span> <i class="fa fa-sort-numeric-down"></i></em>
-											<em class="sort-type" data-path=".jp-last-connection" data-order="desc" data-type="number"><span class="sr-only">{@last_connection} &#8595;</span> <i class="fa fa-sort-numeric-down-alt"></i></em>
+											<em class="sort-type" data-path=".lo-last-connection" data-order="asc" data-type="number"><span class="sr-only">{@last_connection} &#8593;</span> <i class="fa fa-sort-numeric-down"></i></em>
+											<em class="sort-type" data-path=".lo-last-connection" data-order="desc" data-type="number"><span class="sr-only">{@last_connection} &#8595;</span> <i class="fa fa-sort-numeric-down-alt"></i></em>
 										</li>
 										<li> ${TextHelper::ucfirst(@publications.number)}
-											<em class="sort-type" data-path=".jp-publications-number" data-order="asc" data-type="number"><span class="sr-only">{@publications.number} &#8593;</span> <i class="fa fa-sort-numeric-down"></i></em>
-											<em class="sort-type" data-path=".jp-publications-number" data-order="desc" data-type="number"><span class="sr-only">{@publications.number} &#8595;</span> <i class="fa fa-sort-numeric-down-alt"></i></em>
+											<em class="sort-type" data-path=".lo-publications-number" data-order="asc" data-type="number"><span class="sr-only">{@publications.number} &#8593;</span> <i class="fa fa-sort-numeric-down"></i></em>
+											<em class="sort-type" data-path=".lo-publications-number" data-order="desc" data-type="number"><span class="sr-only">{@publications.number} &#8595;</span> <i class="fa fa-sort-numeric-down-alt"></i></em>
 										</li>
 									</ul>
 								</div>
@@ -122,7 +122,7 @@
 									<th>{@display_name}</th>
 									<th>{@registration_date}</th>
 									<th>{@last_connection}</th>
-									<th>{@publications.number}</th>
+									<th>${TextHelper::ucfirst(@publications.number)}</th>
 									<th>${LangLoader::get_message('contact', 'main')}</th>
 									<th>${LangLoader::get_message('groups', 'main')}</th>
 									# IF IS_ADMIN #<th></th># ENDIF #
@@ -131,13 +131,13 @@
 							<tbody data-listorder-group="users-items">
 								# START users #
 									<tr data-listorder-item>
-										<td class="jp-name">
+										<td class="lo-name">
 											<a href="{users.U_PROFILE}"# IF users.C_IS_GROUP # style="color: {users.GROUP_COLOR};"# ELSE # class="{users.LEVEL_COLOR}"# ENDIF #>{users.DISPLAYED_NAME}</a>
 										</td>
-										<td>{users.REGISTRATION_DATE}<span class="jp-registration-date hidden">{users.REGISTRATION_DATE_TIMESTAMP}</span></td>
-										<td>{users.LAST_CONNECTION}<span class="jp-last-connection hidden">{users.LAST_CONNECTION_TIMESTAMP}</span></td>
-										<td class="jp-publications-number" aria-label="# START users.modules # {users.modules.MODULE_NAME}: {users.modules.MODULE_PUBLICATIONS_NUMBER}<br /># END users.modules #">
-											{users.PUBLICATIONS_NUMBER}
+										<td>{users.REGISTRATION_DATE}<span class="lo-registration-date hidden">{users.REGISTRATION_DATE_TIMESTAMP}</span></td>
+										<td>{users.LAST_CONNECTION}<span class="lo-last-connection hidden">{users.LAST_CONNECTION_TIMESTAMP}</span></td>
+										<td class="lo-publications-number" aria-label="# START users.modules # {users.modules.MODULE_NAME}: {users.modules.MODULE_PUBLICATIONS_NUMBER}<br /># END users.modules #">
+											{users.PUBLICATIONS_NUMBER} <a href="{users.U_PUBLICATIONS}" aria-label="{@view.user.publications}"><i class="fa fa-share-square"></i></a>
 										</td>
 										<td>
 											<a href="{users.U_MP}" class="pinned bgc-full notice" aria-label="{@private_message}"}><i class="fa fa-fw fa-people-arrows"></i></a>
@@ -173,8 +173,8 @@
 						# START users #
 							<article data-listorder-item class="cell">
 								<header class="cell-header">
-									<h5 class="cell-name jp-name">
-										<a href="{users.U_PROFILE}"# IF users.C_IS_GROUP # style="color: {users.GROUP_COLOR};"# ELSE # class="{users.LEVEL_COLOR} is-{users.LEVEL_COLOR}"# ENDIF #>{users.DISPLAYED_NAME}</a>
+									<h5 class="cell-name">
+										<a href="{users.U_PROFILE}"# IF users.C_IS_GROUP # style="color: {users.GROUP_COLOR};"# ELSE # class="{users.LEVEL_COLOR} is-{users.LEVEL_COLOR} lo-name"# ENDIF #>{users.DISPLAYED_NAME}</a>
 										# IF users.C_CONTROLS #<span class="description-field smaller">{users.RANK_LEVEL}</span># ENDIF #
 									</h5>
 									# IF C_ENABLED_AVATAR #<img class="user-card-avatar" src="{users.U_AVATAR}" alt="{users.DISPLAYED_NAME}"># ENDIF #
@@ -182,16 +182,16 @@
 								<div class="cell-list">
 									<ul>
 										<li class="li-stretch">
-											<span class="small">{@registration_date}<span class="jp-registration-date hidden">{users.REGISTRATION_DATE_TIMESTAMP}</span></span>
+											<span class="small">{@registration_date}<span class="lo-registration-date hidden">{users.REGISTRATION_DATE_TIMESTAMP}</span></span>
 											<span>{users.REGISTRATION_DATE}</span>
 										</li>
 										<li class="li-stretch">
-											<span class="small">{@last_connection}<span class="jp-last-connection hidden">{users.LAST_CONNECTION_TIMESTAMP}</span></span>
+											<span class="small">{@last_connection}<span class="lo-last-connection hidden">{users.LAST_CONNECTION_TIMESTAMP}</span></span>
 											<span>{users.LAST_CONNECTION}</span>
 										</li>
-										<li class="li-stretch jp-publications-number" aria-label="# START users.modules # {users.modules.MODULE_NAME}: {users.modules.MODULE_PUBLICATIONS_NUMBER}<br /># END users.modules #">
-											<span class="small">{@publications.number}</span>
-											<span>{users.PUBLICATIONS_NUMBER}</span>
+										<li class="li-stretch lo-publications-number" aria-label="# START users.modules # {users.modules.MODULE_NAME}: {users.modules.MODULE_PUBLICATIONS_NUMBER}<br /># END users.modules #">
+											<span class="small">${TextHelper::ucfirst(@publications.number)}</span>
+											<span>{users.PUBLICATIONS_NUMBER} <a href="{users.U_PUBLICATIONS}" aria-label="{@view.user.publications}"><i class="fa fa-share-square"></i></a></span>
 										</li>
 										<li class="li-stretch">
 											<span class="small">${LangLoader::get_message('contact', 'main')}</span>

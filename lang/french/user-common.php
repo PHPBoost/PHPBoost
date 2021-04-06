@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 03
+ * @version     PHPBoost 6.0 - last update: 2021 04 06
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -100,6 +100,7 @@ $lang['last_connection'] = 'Dernière connexion';
 $lang['user.publications'] = 'Publications de l\'utilisateur';
 $lang['my.publications'] = 'Mes publications';
 $lang['publications.number'] = 'publications';
+$lang['view.user.publications'] = 'Voir les publications de l\'utilisateur';
 $lang['private_message'] = 'Message privé';
 $lang['delete-account'] = 'Supprimer le compte';
 $lang['delete-account.confirmation.member'] = 'Etes-vous sûr de vouloir supprimer votre compte ?';
