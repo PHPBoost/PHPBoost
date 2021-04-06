@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 04 06
  * @since       PHPBoost 4.1 - 2014 11 28
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ####################################################
@@ -22,7 +23,7 @@ $lang['shoutbox.edit'] = 'Edition d\'un message';
 $lang['shoutbox.messages'] = 'Messages';
 
 //Config
-$lang['config.items_number_per_page'] = 'Nombre d\'éléments affichés par page dans les archives';
+$lang['config.items_per_page'] = 'Nombre d\'éléments affichés par page dans les archives';
 $lang['config.max_messages_number_enabled'] = 'Limiter le nombre de messages dans les archives';
 $lang['config.max_messages_number'] = 'Nombre de messages maximum à conserver';
 $lang['config.max_links_number_per_message_enabled'] = 'Limiter le nombre de liens dans les messages';

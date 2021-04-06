@@ -54,7 +54,7 @@ class MediaDisplayCategoryController extends ModuleController
 
 		$subcategories = CategoriesService::get_categories_manager('media')->get_categories_cache()->get_children($this->get_category()->get_id(), CategoriesService::get_authorized_categories($this->get_category()->get_id(), true, 'media'));
 
-		$subcategories_pagination = new ModulePagination($subcategories_page, count($subcategories), $config->get_categories_number_per_page());
+		$subcategories_pagination = new ModulePagination($subcategories_page, count($subcategories), $config->get_categories_per_page());
 		$subcategories_pagination->set_url(new Url('/media/media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $this->get_category()->get_id() . '&amp;p=' . $page . '&amp;subcategories_page=%d'));
 
 		if ($subcategories_pagination->current_page_is_empty() && $subcategories_page > 1)
@@ -93,8 +93,8 @@ class MediaDisplayCategoryController extends ModuleController
 			'C_CONTROLS' => CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_SUBCATEGORIES_PAGINATION' => $subcategories_pagination->has_several_pages(),
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
-			'CATEGORIES_NUMBER_PER_ROW' => $config->get_categories_number_per_row(),
-			'ITEMS_NUMBER_PER_ROW' => $config->get_items_number_per_row(),
+			'CATEGORIES_NUMBER_PER_ROW' => $config->get_categories_per_row(),
+			'ITEMS_NUMBER_PER_ROW' => $config->get_items_per_row(),
 			'CATEGORY_NAME' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? $this->lang['module.title'] : $this->get_category()->get_name(),
 			'CATEGORY_DESCRIPTION' => $category_description,
 			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? MediaUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->get_category()->get_id())->rel(),
@@ -153,7 +153,7 @@ class MediaDisplayCategoryController extends ModuleController
 
 		// Pagination creation for a too big amount of items
 		$mediafiles_number = MediaService::count($condition, $parameters);
-		$pagination = new ModulePagination($page, $mediafiles_number, $config->get_items_number_per_page());
+		$pagination = new ModulePagination($page, $mediafiles_number, $config->get_items_per_page());
 		$pagination->set_url(new Url('/media/media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $this->get_category()->get_id() . '&amp;p=%d&amp;subcategories_page=' . $subcategories_page));
 
 		if ($pagination->current_page_is_empty() && $page > 1)

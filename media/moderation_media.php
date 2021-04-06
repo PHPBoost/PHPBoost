@@ -20,7 +20,7 @@ if (!CategoriesAuthorizationsService::check_authorizations()->moderation())
 
 require_once('media_begin.php');
 $config = MediaConfig::load();
-$items_per_page = $config->get_items_number_per_page();
+$items_per_page = $config->get_items_per_page();
 
 $view = new FileTemplate('media/moderation_media.tpl');
 $view->add_lang(LangLoader::get('common', 'media'));

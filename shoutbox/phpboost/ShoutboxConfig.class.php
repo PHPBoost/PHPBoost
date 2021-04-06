@@ -3,14 +3,15 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 02 11
+ * @version     PHPBoost 6.0 - last update: 2021 04 06
  * @since       PHPBoost 3.0 - 2010 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ShoutboxConfig extends AbstractConfigData
 {
-	const ITEMS_NUMBER_PER_PAGE = 'items_number_per_page';
+	const ITEMS_PER_PAGE = 'items_per_page';
 	const MAX_MESSAGES_NUMBER_ENABLED = 'max_messages_number_enabled';
 	const MAX_MESSAGES_NUMBER = 'max_messages_number';
 	const MAX_LINKS_NUMBER_PER_MESSAGE_ENABLED = 'max_links_number_per_message_enabled';
@@ -26,14 +27,14 @@ class ShoutboxConfig extends AbstractConfigData
 	const VALIDATION_ONKEYPRESS_ENTER_ENABLED = 'validation_onkeypress_enter_enabled';
 	const AUTHORIZATIONS = 'authorizations';
 
-	public function get_items_number_per_page()
+	public function get_items_per_page()
 	{
-		return $this->get_property(self::ITEMS_NUMBER_PER_PAGE);
+		return $this->get_property(self::ITEMS_PER_PAGE);
 	}
 
-	public function set_items_number_per_page($number)
+	public function set_items_per_page($number)
 	{
-		$this->set_property(self::ITEMS_NUMBER_PER_PAGE, $number);
+		$this->set_property(self::ITEMS_PER_PAGE, $number);
 	}
 
 	public function enable_max_messages_number()
@@ -232,7 +233,7 @@ class ShoutboxConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::ITEMS_NUMBER_PER_PAGE => 20,
+			self::ITEMS_PER_PAGE => 20,
 			self::MAX_MESSAGES_NUMBER_ENABLED => true,
 			self::MAX_MESSAGES_NUMBER => 200,
 			self::MAX_LINKS_NUMBER_PER_MESSAGE_ENABLED => true,

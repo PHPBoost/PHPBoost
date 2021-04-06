@@ -41,7 +41,7 @@ class AdminMediaConfigController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->form->get_field_by_id('items_number_per_row')->set_hidden($this->config->get_display_type() !== MediaConfig::GRID_VIEW);
+			$this->form->get_field_by_id('items_per_row')->set_hidden($this->config->get_display_type() !== MediaConfig::GRID_VIEW);
 			$view->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 
@@ -64,12 +64,12 @@ class AdminMediaConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars(LangLoader::get_message('configuration.module.title', 'admin-common'), array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldNumberEditor('categories_number_per_page', $this->config_lang['config.categories.per.page'], $this->config->get_categories_number_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('categories_per_page', $this->config_lang['config.categories.per.page'], $this->config->get_categories_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('categories_number_per_row', $this->config_lang['config.categories.per.row'], $this->config->get_categories_number_per_row(),
+		$fieldset->add_field(new FormFieldNumberEditor('categories_per_row', $this->config_lang['config.categories.per.row'], $this->config->get_categories_per_row(),
 			array('min' => 1, 'max' => 4, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
@@ -86,7 +86,7 @@ class AdminMediaConfigController extends AdminModuleController
 			array('rows' => 8, 'cols' => 47)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_number_per_page', $this->config_lang['config.items_number_per_page'], $this->config->get_items_number_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->config_lang['config.items_per_page'], $this->config->get_items_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
@@ -114,15 +114,15 @@ class AdminMediaConfigController extends AdminModuleController
 				'select_to_list' => true,
 				'events' => array('change' => '
 					if (HTMLForms.getField("display_type").getValue() == \'' . MediaConfig::GRID_VIEW . '\') {
-						HTMLForms.getField("items_number_per_row").enable();
+						HTMLForms.getField("items_per_row").enable();
 					} else {
-						HTMLForms.getField("items_number_per_row").disable();
+						HTMLForms.getField("items_per_row").disable();
 					}'
 				)
 			)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_number_per_row', $this->config_lang['config.items.per.row'], $this->config->get_items_number_per_row(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->config_lang['config.items.per.row'], $this->config->get_items_per_row(),
 			array(
 				'min' => 1, 'max' => 4, 'required' => true,
 				'hidden' => $this->config->get_display_type() !== MediaConfig::GRID_VIEW
@@ -155,10 +155,10 @@ class AdminMediaConfigController extends AdminModuleController
 
 	private function save()
 	{
-		$this->config->set_categories_number_per_page($this->form->get_value('categories_number_per_page'));
-		$this->config->set_categories_number_per_row($this->form->get_value('categories_number_per_row'));
-		$this->config->set_items_number_per_page($this->form->get_value('items_number_per_page'));
-		$this->config->set_items_number_per_row($this->form->get_value('items_number_per_row'));
+		$this->config->set_categories_per_page($this->form->get_value('categories_per_page'));
+		$this->config->set_categories_per_row($this->form->get_value('categories_per_row'));
+		$this->config->set_items_per_page($this->form->get_value('items_per_page'));
+		$this->config->set_items_per_row($this->form->get_value('items_per_row'));
 		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
 
 		if ($this->form->get_value('author_displayed'))

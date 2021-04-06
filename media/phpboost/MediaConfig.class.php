@@ -11,10 +11,10 @@
 
 class MediaConfig extends AbstractConfigData
 {
-	const CATEGORIES_NUMBER_PER_PAGE = 'categories_number_per_page';
-	const CATEGORIES_NUMBER_PER_ROW = 'categories_number_per_row';
-	const ITEMS_NUMBER_PER_PAGE = 'items_number_per_page';
-	const ITEMS_NUMBER_PER_ROW = 'items_number_per_row';
+	const CATEGORIES_PER_PAGE = 'categories_per_page';
+	const CATEGORIES_PER_ROW = 'categories_per_row';
+	const ITEMS_PER_PAGE = 'items_per_page';
+	const ITEMS_PER_ROW = 'items_per_row';
 	const AUTHOR_DISPLAYED = 'author_displayed';
 	const MAX_VIDEO_WIDTH = 'max_video_width';
 	const MAX_VIDEO_HEIGHT = 'max_video_height';
@@ -32,44 +32,44 @@ class MediaConfig extends AbstractConfigData
 
 	const PEERTUBE_CONSTANT = '';
 
-	public function get_categories_number_per_page()
+	public function get_categories_per_page()
 	{
-		return $this->get_property(self::CATEGORIES_NUMBER_PER_PAGE);
+		return $this->get_property(self::CATEGORIES_PER_PAGE);
 	}
 
-	public function set_categories_number_per_page($value)
+	public function set_categories_per_page($value)
 	{
-		$this->set_property(self::CATEGORIES_NUMBER_PER_PAGE, $value);
+		$this->set_property(self::CATEGORIES_PER_PAGE, $value);
 	}
 
-	public function get_categories_number_per_row()
+	public function get_categories_per_row()
 	{
-		return $this->get_property(self::CATEGORIES_NUMBER_PER_ROW);
+		return $this->get_property(self::CATEGORIES_PER_ROW);
 	}
 
-	public function set_categories_number_per_row($value)
+	public function set_categories_per_row($value)
 	{
-		$this->set_property(self::CATEGORIES_NUMBER_PER_ROW, $value);
+		$this->set_property(self::CATEGORIES_PER_ROW, $value);
 	}
 
-	public function get_items_number_per_page()
+	public function get_items_per_page()
 	{
-		return $this->get_property(self::ITEMS_NUMBER_PER_PAGE);
+		return $this->get_property(self::ITEMS_PER_PAGE);
 	}
 
-	public function set_items_number_per_page($value)
+	public function set_items_per_page($value)
 	{
-		$this->set_property(self::ITEMS_NUMBER_PER_PAGE, $value);
+		$this->set_property(self::ITEMS_PER_PAGE, $value);
 	}
 
-	public function get_items_number_per_row()
+	public function get_items_per_row()
 	{
-		return $this->get_property(self::ITEMS_NUMBER_PER_ROW);
+		return $this->get_property(self::ITEMS_PER_ROW);
 	}
 
-	public function set_items_number_per_row($value)
+	public function set_items_per_row($value)
 	{
-		$this->set_property(self::ITEMS_NUMBER_PER_ROW, $value);
+		$this->set_property(self::ITEMS_PER_ROW, $value);
 	}
 
 	public function get_display_type()
@@ -178,10 +178,10 @@ class MediaConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::CATEGORIES_NUMBER_PER_PAGE => 10,
-			self::CATEGORIES_NUMBER_PER_ROW => 2,
-			self::ITEMS_NUMBER_PER_PAGE => 25,
-			self::ITEMS_NUMBER_PER_ROW => 2,
+			self::CATEGORIES_PER_PAGE => 10,
+			self::CATEGORIES_PER_ROW => 2,
+			self::ITEMS_PER_PAGE => 25,
+			self::ITEMS_PER_ROW => 2,
 			self::DISPLAY_TYPE => self::GRID_VIEW,
 			self::AUTHOR_DISPLAYED => true,
 			self::MAX_VIDEO_WIDTH => 900,

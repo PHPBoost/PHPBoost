@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 04 06
  * @since       PHPBoost 4.1 - 2014 10 14
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -104,7 +104,7 @@ class ShoutboxHomeController extends ModuleController
 		$this->view->put_all(array(
 			'C_NO_MESSAGE'                => $result->get_rows_count() == 0,
 			'C_MULTIPLE_DELETE_DISPLAYED' => $this->display_multiple_delete,
-			'C_PAGINATION'                => $messages_number > ShoutboxConfig::load()->get_items_number_per_page(),
+			'C_PAGINATION'                => $messages_number > ShoutboxConfig::load()->get_items_per_page(),
 			'PAGINATION'                  => $pagination->display(),
 			'MESSAGES_NUMBER'             => $this->elements_number
 		));
@@ -156,7 +156,7 @@ class ShoutboxHomeController extends ModuleController
 			}
 
 			$page = AppContext::get_request()->get_getint('page', 1);
-			if ($page > 1 && $deleted_messages_number == ShoutboxConfig::load()->get_items_number_per_page())
+			if ($page > 1 && $deleted_messages_number == ShoutboxConfig::load()->get_items_per_page())
 				$page--;
 
 			AppContext::get_response()->redirect(ShoutboxUrlBuilder::home($page), LangLoader::get_message('process.success', 'status-messages-common'));
@@ -174,7 +174,7 @@ class ShoutboxHomeController extends ModuleController
 
 	private function get_pagination($messages_number, $page)
 	{
-		$pagination = new ModulePagination($page, $messages_number, (int)ShoutboxConfig::load()->get_items_number_per_page());
+		$pagination = new ModulePagination($page, $messages_number, (int)ShoutboxConfig::load()->get_items_per_page());
 		$pagination->set_url(ShoutboxUrlBuilder::home('%d'));
 
 		if ($pagination->current_page_is_empty() && $page > 1)
