@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 27
+ * @version     PHPBoost 6.0 - last update: 2021 04 06
  * @since       PHPBoost 4.0 - 2014 05 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -75,7 +75,7 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 					// 6.0.b1
 					'thumbnail_url' => 'thumbnail VARCHAR(255) NOT NULL DEFAULT ""',
 					'updated_date'  => 'update_date INT(11) NOT NULL DEFAULT 0',
-					'publication'   => 'published INT(11) NOT NULL DEFAULT 0',
+					'publication'   => 'published INT(1) NOT NULL DEFAULT 0',
 					'start_date'    => 'publishing_start_date INT(11) NOT NULL DEFAULT 0',
 					'end_date'      => 'publishing_end_date INT(11) NOT NULL DEFAULT 0',
 				)

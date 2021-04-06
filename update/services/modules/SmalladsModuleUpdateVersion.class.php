@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 02
+ * @version     PHPBoost 6.0 - last update: 2021 04 06
  * @since       PHPBoost 5.1 - 2018 09 20
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -103,7 +103,7 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 					'picture'      => 'thumbnail_url VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 0',
 					'type'         => 'smallad_type VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL',
 					'id_created'   => 'author_user_id INT(11) NOT NULL DEFAULT 0',
-					'approved'     => 'published INT(11) NOT NULL DEFAULT 0',
+					'approved'     => 'published INT(1) NOT NULL DEFAULT 0',
 					'date_created' => 'creation_date INT(11) NOT NULL DEFAULT 0',
 					'publication_start_date' => 'publishing_start_date INT(11) NOT NULL DEFAULT 0',
 					'publication_end_date' => 'publishing_end_date INT(11) NOT NULL DEFAULT 0',

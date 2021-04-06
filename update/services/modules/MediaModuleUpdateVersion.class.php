@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 14
+ * @version     PHPBoost 6.0 - last update: 2021 04 06
  * @since       PHPBoost 5.0 - 2017 03 09
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -44,7 +44,7 @@ class MediaModuleUpdateVersion extends ModuleUpdateVersion
 					'contents'  => 'content MEDIUMTEXT',
 					'iduser'    => 'author_user_id INT(11) NOT NULL DEFAULT 0',
 					'timestamp' => 'creation_date INT(11) NOT NULL DEFAULT 0',
-					'infos'     => 'published INT(11) NOT NULL DEFAULT 0',
+					'infos'     => 'published INT(1) NOT NULL DEFAULT 0',
 					'url'       => 'file_url TEXT',
 					'counter'   => 'views_number INT(11) NOT NULL DEFAULT 0',
 					'poster'    => 'thumbnail VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 0',
