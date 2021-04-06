@@ -159,7 +159,7 @@ class CalendarConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::ITEMS_NUMBER_PER_PAGE => 15,
+			self::ITEMS_PER_PAGE => 15,
 			self::ITEMS_PER_ROW => 2,
 			self::FULL_ITEM_DISPLAY => false,
 			self::MEMBERS_BIRTHDAY_ENABLED => false,
