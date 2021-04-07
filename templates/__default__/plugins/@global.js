@@ -157,14 +157,23 @@ function copy_to_clipboard(tocopy)
 		myclass = (typeof myclass !== 'undefined') ? myclass : "opened";
 		closeother = (typeof closeother !== 'undefined') ? closeother : false;
 
+		var elem = document.getElementById(myid);
+
 		if (closeother == false)
-			jQuery('#' + myid).toggleClass(myclass);
+			elem.classList.toggle(myclass);
 		else {
-			if (jQuery('#' + myid).hasClass(myclass))
-				jQuery('.' + closeother).removeClass(myclass);
+			var elems = document.querySelectorAll('.' + closeother);
+
+			if (elem.classList.contains(myclass)) {
+				[].forEach.call(elems, function(el) {
+					el.classList.remove(myclass);
+				});
+			}
 			else {
-				jQuery('.' + closeother).removeClass(myclass);
-				jQuery('#' + myid).addClass(myclass);
+				[].forEach.call(elems, function(el) {
+					el.classList.remove(myclass);
+				});
+  				elem.classList.add(myclass);
 			}
 		}
 	}
