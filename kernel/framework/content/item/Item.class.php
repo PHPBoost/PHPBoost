@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 26
+ * @version     PHPBoost 6.0 - last update: 2021 04 07
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -792,7 +792,7 @@ class Item
 
 		if ($object->content_field_enabled())
 		{
-			$content_field = array($class_name::get_content_label() => array('type' => 'text',    'length' => 16777215));
+			$content_field = array($class_name::get_content_label() => array('type' => 'text', 'length' => 16777215));
 			$content_option = array('content' => array('type' => 'fulltext', 'fields' => $class_name::get_content_label()));
 		}
 		else
@@ -822,7 +822,6 @@ class Item
 		),
 		$content_field,
 		array(
-			$class_name::get_content_label()             => array('type' => 'text',    'length' => 16777215),
 			'author_user_id'                             => array('type' => 'integer', 'length' => 11,  'notnull' => 1, 'default' => 0),
 			'creation_date'                              => array('type' => 'integer', 'length' => 11,  'notnull' => 1, 'default' => 0),
 			'update_date'                                => array('type' => 'integer', 'length' => 11,  'notnull' => 1, 'default' => 0),
