@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 01 27
+ * @version     PHPBoost 6.0 - last update: 2021 04 07
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -19,7 +19,7 @@ class UpdateDisplayResponse extends AbstractResponse
 
 	private $current_step = 0;
 
-	private $nb_steps;
+	private $steps_number;
 
 	/**
 	 * @var Template
@@ -41,7 +41,7 @@ class UpdateDisplayResponse extends AbstractResponse
 			'C_HAS_PREVIOUS_STEP' => false,
 			'C_HAS_NEXT_STEP' => false,
 			'L_XML_LANGUAGE' => LangLoader::get_message('xml_lang', 'main'),
-			'PROGRESSION' => floor(100 * $this->current_step / $this->nb_steps)
+			'PROGRESSION' => floor(100 * $this->current_step / $this->steps_number)
 		));
 
 		parent::__construct($env, $this->full_view);
@@ -84,59 +84,46 @@ class UpdateDisplayResponse extends AbstractResponse
 	private function init_steps($step_number)
 	{
 		$this->current_step = $step_number;
+		$server_configuration = new ServerConfiguration();
 
 		$steps = array(
 			array('name' => $this->lang['step.list.introduction'], 'img' => 'home'),
-			array('name' => $this->lang['step.list.server'], 'img' => 'cog')
 		);
 
-		if (!UpdateServices::database_config_file_checked())
-		{
-			$steps[] = array('name' => $this->lang['step.list.database'], 'img' => 'server');
-			$hide_database_page = false;
-		}
-		else
-		{
-			if ($this->current_step > 2)
-				$this->current_step--;
+		if (!$server_configuration->is_php_compatible() || !PHPBoostFoldersPermissions::validate() || !$server_configuration->has_mbstring_library())
+			$steps[] = array('name' => $this->lang['step.list.server'], 'img' => 'cog');
+		else if ($this->current_step > 1)
+			$this->current_step--;
 
-			$hide_database_page = true;
-		}
+		if (!UpdateServices::database_config_file_checked())
+			$steps[] = array('name' => $this->lang['step.list.database'], 'img' => 'server');
+		else if ($this->current_step > 2)
+			$this->current_step--;
 
 		$steps[] = array('name' => $this->lang['step.list.execute'], 'img' => 'sync-alt');
 		$steps[] = array('name' => $this->lang['step.list.end'], 'img' => 'check');
 
-		$this->nb_steps = count($steps) - 1;
+		$this->steps_number = count($steps);
+		$this->full_view->put('STEPS_NUMBER', $this->steps_number);
 
-		$i = 0;
+		$i = 1;
 		foreach ($steps as $step)
 		{
 			if ($i < $this->current_step)
-			{
 				$row_class = 'row-success';
-			}
-			elseif ($i == $this->current_step && $i == $this->nb_steps)
-			{
+			elseif ($i == $this->current_step && $i == $this->steps_number)
 				$row_class = 'row-current row-final';
-			}
 			elseif ($i == $this->current_step)
-			{
 				$row_class = 'row-current';
-			}
-			elseif ($i == $this->nb_steps)
-			{
+			elseif ($i == $this->steps_number)
 				$row_class = 'row-next row-final';
-			}
 			else
-			{
 				$row_class = 'row-next';
-			}
 
 			$this->full_view->assign_block_vars('step', array(
-				'C_NO_DATABASE_STEP_CLASS' => $hide_database_page,
 				'CSS_CLASS' => $row_class,
-				'IMG' => $step['img'],
-				'NAME' => $step['name']
+				'IMG'       => $step['img'],
+				'NAME'      => $step['name']
 			));
 
 			$i++;
@@ -145,7 +132,7 @@ class UpdateDisplayResponse extends AbstractResponse
 
 	private function update_progress_bar()
 	{
-		for ($i = 1; $i <= floor(($this->current_step / $this->nb_steps) * 24); $i++)
+		for ($i = 1; $i <= floor(($this->current_step / $this->steps_number) * 24); $i++)
 		{
 			$this->full_view->assign_block_vars('progress_bar', array());
 		}

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 26
+ * @version     PHPBoost 6.0 - last update: 2021 04 07
  * @since       PHPBoost 3.0 - 2012 02 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -35,6 +35,7 @@ abstract class ModuleUpdateVersion implements UpdateVersion
 		self::$delete_old_folders_list = array();
 		$this->querier = PersistenceContext::get_querier();
 		$this->db_utils = PersistenceContext::get_dbms_utils();
+		$this->tables_list = $this->db_utils->list_tables(true);
 	}
 
 	public function get_module_id()
@@ -48,9 +49,7 @@ abstract class ModuleUpdateVersion implements UpdateVersion
 		self::delete_old_folders();
 		
 		if (ModulesManager::is_module_installed(self::$module_id))
-		{
-			$this->tables_list = $this->db_utils->list_tables(true);
-			
+		{			
 			$this->modify_database_columns();
 			
 			$this->add_database_columns();

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 08 01
+ * @version     PHPBoost 6.0 - last update: 2021 04 07
  * @since       PHPBoost 3.0 - 2012 03 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -159,16 +159,27 @@ class UpdateVersionExecuteController extends UpdateController
 	private function create_response(Template $view)
 	{
 		$step_title = $this->lang['step.execute.title'];
-		$response = new UpdateDisplayResponse(3, $step_title, $view);
+		$response = new UpdateDisplayResponse(4, $step_title, $view);
 		return $response;
 	}
 
 	private function add_navigation(Template $view)
 	{
+		$server_configuration = new ServerConfiguration();
+		if (UpdateServices::database_config_file_checked())
+		{
+			if ($server_configuration->is_php_compatible() && PHPBoostFoldersPermissions::validate() && $server_configuration->has_mbstring_library())
+				$back_url = UpdateUrlBuilder::introduction();
+			else
+				$back_url = UpdateUrlBuilder::server_configuration();
+		}
+		else
+			$back_url = UpdateUrlBuilder::database();
+		
 		$form = new HTMLForm('continueForm', '', false);
 
 		$action_fieldset = new FormFieldsetSubmit('actions');
-		$back = new FormButtonLinkCssImg($this->lang['step.previous'], UpdateServices::database_config_file_checked() ? UpdateUrlBuilder::server_configuration() : UpdateUrlBuilder::database(), 'fa fa-arrow-left');
+		$back = new FormButtonLinkCssImg($this->lang['step.previous'], $back_url, 'fa fa-arrow-left');
 		$action_fieldset->add_element($back);
 		$refresh = new FormButtonLinkCssImg(LangLoader::get_message('refresh', 'main'), UpdateUrlBuilder::update()->rel(), 'fa fa-sync');
 		$action_fieldset->add_element($refresh);

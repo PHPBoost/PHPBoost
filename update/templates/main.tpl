@@ -67,7 +67,7 @@ ${resources('update/update')}
 					<nav class="cssmenu cssmenu-vertical step-menu">
 						<ul>
 						# START step #
-							<li class="{step.CSS_CLASS}# IF step.C_NO_DATABASE_STEP_CLASS # no-database-step# ENDIF #">
+							<li class="{step.CSS_CLASS} {STEPS_NUMBER}-steps">
 								<span class="cssmenu-title">
 									<i class="fa fa-{step.IMG} fa-fw" aria-hidden="true"></i><span>{step.NAME}</span>
 								</span>

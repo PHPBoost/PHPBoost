@@ -21,12 +21,17 @@
 }
 
 @media (max-width: 768px) {
-	.step-menu.cssmenu > ul > li.no-database-step {
+	.step-menu.cssmenu > ul > li.3-steps {
+        display: inline-block;
+		width: calc(100% / 3);
+	}
+
+	.step-menu.cssmenu > ul > li.4-steps {
         display: inline-block;
 		width: calc(100% / 4);
 	}
 
-	.step-menu.cssmenu > ul > li {
+	.step-menu.cssmenu > ul > li.5-steps {
         display: inline-block;
 		width: calc(100% / 5);
 	}
