@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 23
+ * @version   	PHPBoost 5.2 - last update: 2021 04 07
  * @since   	PHPBoost 1.2 - 2005 06 22
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -75,7 +75,7 @@ if ($valid)
 		$date = new Date($current_date);
 		$timestamp = $date->get_timestamp();
 		if ($timestamp > 0)
-			$timestamp += ($hour * 3600) + ($min * 60);
+			$timestamp += ((int)$hour * 3600) + ((int)$min * 60);
 		else //Ajout des heures et minutes
 			$timestamp = time();
 
