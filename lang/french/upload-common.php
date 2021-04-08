@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Mipel <mipel@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 02 21
+ * @version     PHPBoost 6.0 - last update: 2021 04 08
  * @since       PHPBoost 6.0 - 2019 11 27
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -12,11 +12,11 @@
 #                     French                       #
 ####################################################
 
-$lang['public.checkbox'] = 'Cocher cette case pour que les fichiers soient enregistrés comme publics';
-$lang['public.title'] = 'Fichiers Publics';
+$lang['shared.checkbox'] = 'Cocher cette case pour que les fichiers soient enregistrés comme fichiers partagés';
+$lang['shared.title'] = 'Fichiers Partagés';
 $lang['personal.title'] = 'Fichiers Personnels';
 $lang['change.to.personal'] = 'Changer en Personnel';
-$lang['change.to.public'] = 'Changer en Public';
+$lang['change.to.shared'] = 'Changer en Partagé';
 $lang['posted.by'] = 'Déposé par : ';
 
 $lang['drag.and.drop.file'] = 'Cliquer ici ou déposer un fichier';

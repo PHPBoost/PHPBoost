@@ -365,7 +365,7 @@
 		            <nav class="tabs-nav">
 		                <ul>
 		                    <li><a href="#" data-tabs data-target="upload-personal">{L_PERSONAL_TITLE}</a></li>
-		                    <li><a href="#" data-tabs data-target="upload-public">{L_PUBLIC_TITLE}</a></li>
+		                    <li><a href="#" data-tabs data-target="upload-shared">{L_SHARED_TITLE}</a></li>
 		                </ul>
 		            </nav>
 		            <div id="upload-personal" class="tabs tabs-animation first-tab">
@@ -407,10 +407,10 @@
 		                                <ul class="ulist"></ul>
 		                            </fieldset>
 		                            <div class="form-element">
-		                                <label for="is_public_checkbox">{L_PUBLIC_CHECKBOX}</label>
+		                                <label for="is_shared_checkbox">{L_SHARED_CHECKBOX}</label>
 		                                <div class="form-field form-field-checkbox">
-		                                    <label class="checkbox" for="is_public_checkbox">
-		                                        <input type="checkbox" id="is_public_checkbox" name='is_public_checkbox' />
+		                                    <label class="checkbox" for="is_shared_checkbox">
+		                                        <input type="checkbox" id="is_shared_checkbox" name='is_shared_checkbox' />
 		                                        <span></span>
 		                                    </label>
 		                                </div>
@@ -509,12 +509,12 @@
 						                                {personal_files.RENAME_FILE}
 						                                <a href="upload.php?del={personal_files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
 						                                <a href="upload{personal_files.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a>
-							                            # IF personal_files.C_IS_PUBLIC_FILE #
+							                            # IF personal_files.C_IS_SHARED_FILE #
 								                            <a href="#" id="status_function_{personal_files.ID}" onclick="change_status({personal_files.ID}, 0);return false;" aria-label="{L_CHANGE_PERSONAL}">
 								                                <i id="status_{personal_files.ID}" class="fas fa-users"></i>
 								                            </a>
 							                            # ELSE #
-								                            <a href="#" id="status_function_{personal_files.ID}" onclick="change_status({personal_files.ID}, 1);return false;" aria-label="{L_CHANGE_PUBLIC}">
+								                            <a href="#" id="status_function_{personal_files.ID}" onclick="change_status({personal_files.ID}, 1);return false;" aria-label="{L_CHANGE_SHARED}">
 								                                <i id="status_{personal_files.ID}" class="fas fa-user-shield"></i>
 								                            </a>
 							                            # ENDIF #
@@ -548,64 +548,64 @@
 							# ENDIF #
 		                </div>
 		            </div>
-		            <div id="upload-public" class="tabs tabs-animation">
+		            <div id="upload-shared" class="tabs tabs-animation">
 		                <div class="content-panel">
-							# IF C_PUBLIC_FILES #
+							# IF C_SHARED_FILES #
 		                    	<div class="cell-flex cell-tile # IF C_POPUP #cell-inline# ELSE #cell-columns-4# ENDIF #">
-			                        # START public_files #
-				                        <div class="cell# IF public_files.C_RECENT_FILE # new-content# ENDIF #">
-											<span id="imgf{public_files.ID}"></span>
+			                        # START shared_files #
+				                        <div class="cell# IF shared_files.C_RECENT_FILE # new-content# ENDIF #">
+											<span id="imgf{shared_files.ID}"></span>
 											<div class="cell-header">
-												<div id="fifl{public_files.ID}" class="cell-name ellipsis">{public_files.NAME}</div>
-												# IF NOT public_files.C_ENABLED_THUMBNAILS #
-						                            <a href="{public_files.URL}" {public_files.LIGHTBOX} aria-label="${Langloader::get_message('see.details', 'common')}">
-						                                <i class="far {public_files.IMG}"> </i>
+												<div id="fifl{shared_files.ID}" class="cell-name ellipsis">{shared_files.NAME}</div>
+												# IF NOT shared_files.C_ENABLED_THUMBNAILS #
+						                            <a href="{shared_files.URL}" {shared_files.LIGHTBOX} aria-label="${Langloader::get_message('see.details', 'common')}">
+						                                <i class="far {shared_files.IMG}"> </i>
 						                            </a>
 												# ENDIF #
-					                            <span id="fi{public_files.ID}"></span>
+					                            <span id="fi{shared_files.ID}"></span>
 											</div>
-				                            # IF public_files.C_ENABLED_THUMBNAILS #
+				                            # IF shared_files.C_ENABLED_THUMBNAILS #
 												<div class="cell-body" aria-label="${Langloader::get_message('see.details', 'common')}">
 													<div class="cell-thumbnail cell-landscape">
-							                            # IF public_files.C_IMG #
-															<img src="{public_files.URL}" alt="{public_files.NAME}">
-							                                <a class="cell-thumbnail-caption" href="{public_files.URL}" data-lightbox="formatter" data-rel="lightcase:collection">
+							                            # IF shared_files.C_IMG #
+															<img src="{shared_files.URL}" alt="{shared_files.NAME}">
+							                                <a class="cell-thumbnail-caption" href="{shared_files.URL}" data-lightbox="formatter" data-rel="lightcase:collection">
 							                                    <i class="fa fa-eye"></i>
 							                                </a>
 							                            # ELSE #
-															<i class="far {public_files.IMG} fa-4x"></i>
-								                            <a class="cell-thumbnail-caption" href="{public_files.URL}" {public_files.LIGHTBOX}>
-								                                <i class="far {public_files.IMG}"></i>
+															<i class="far {shared_files.IMG} fa-4x"></i>
+								                            <a class="cell-thumbnail-caption" href="{shared_files.URL}" {shared_files.LIGHTBOX}>
+								                                <i class="far {shared_files.IMG}"></i>
 								                            </a>
 							                            # ENDIF #
 													</div>
 												</div>
 											# ENDIF #
 				                            <div class="cell-form grouped-inputs">
-												<input type="text" readonly="readonly" onclick="select_div(text_{public_files.ID});" id="text_{public_files.ID}" class="grouped-element" value="{public_files.DISPLAYED_CODE}">
+												<input type="text" readonly="readonly" onclick="select_div(text_{shared_files.ID});" id="text_{shared_files.ID}" class="grouped-element" value="{shared_files.DISPLAYED_CODE}">
 				                            	# IF C_POPUP #
-													<a class="grouped-element" href="javascript:insert_popup('{public_files.INSERTED_CODE}')" aria-label="${LangLoader::get_message('popup_insert', 'main')}"><i class="fa fa-clipboard" aria-hidden="true"></i></a>
+													<a class="grouped-element" href="javascript:insert_popup('{shared_files.INSERTED_CODE}')" aria-label="${LangLoader::get_message('popup_insert', 'main')}"><i class="fa fa-clipboard" aria-hidden="true"></i></a>
 												# ELSE #
-													<a class="grouped-element" href="#" onclick="copy_to_clipboard('{public_files.DISPLAYED_CODE}'); return false;" aria-label="${LangLoader::get_message('tag_copytoclipboard', 'editor-common')}"><i class="fa fa-copy" aria-hidden="true"></i></a>
+													<a class="grouped-element" href="#" onclick="copy_to_clipboard('{shared_files.DISPLAYED_CODE}'); return false;" aria-label="${LangLoader::get_message('tag_copytoclipboard', 'editor-common')}"><i class="fa fa-copy" aria-hidden="true"></i></a>
 												# ENDIF #
 											</div>
 				                            <div class="cell-list">
 												<ul class="small">
 													<li class="li-stretch">
-														<span>{public_files.FILETYPE}</span>
-														<span>{public_files.SIZE}</span>
+														<span>{shared_files.FILETYPE}</span>
+														<span>{shared_files.SIZE}</span>
 													</li>
 												</ul>
 				                            </div>
 				                        </div>
-			                        # END public_files #
+			                        # END shared_files #
 			                    </div>
 			                    <div class="cell-flex cell-options cell-tile">
 									<div class="cell">
 										<div class="cell-list">
 											<ul class="small">
 												<li class="li-stretch">
-													<span>{L_FILES} :</span> <strong>{TOTAL_PUBLIC_FILES}</strong>
+													<span>{L_FILES} :</span> <strong>{TOTAL_SHARED_FILES}</strong>
 												</li>
 												<li class="li-stretch">
 													<span>{L_DATA} :</span> <strong>{TOTAL_SIZE}</strong>

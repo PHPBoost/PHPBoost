@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 05
+ * @version     PHPBoost 6.0 - last update: 2021 04 08
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -280,8 +280,8 @@ class UpdateServices
 
 		$columns = self::$db_utils->desc_table(PREFIX . 'upload');
 
-		if (!isset($columns['public']))
-			self::$db_utils->add_column(PREFIX . 'upload', 'public', array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0));
+		if (!isset($columns['shared']))
+			self::$db_utils->add_column(PREFIX . 'upload', 'shared', array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0));
 
 		$columns = self::$db_utils->desc_table(PREFIX . 'comments');
 
@@ -292,7 +292,7 @@ class UpdateServices
 
 		if (!isset($columns['comments_number']))
 			self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'comments_topic CHANGE number_comments comments_number INT(11) NOT NULL DEFAULT 0');
-		
+
 		$columns = self::$db_utils->desc_table(PREFIX . 'average_notes');
 
 		if (!isset($columns['notes_number']))

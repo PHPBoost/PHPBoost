@@ -293,10 +293,10 @@
 				<ul class="ulist"></ul>
 			</fieldset>
 			<div class="form-element custom-checkbox full-field">
-				<label for="is_public_checkbox">{L_PUBLIC_CHECKBOX}</label>
+				<label for="is_shared_checkbox">{L_SHARED_CHECKBOX}</label>
 				<div class="form-field form-field-checkbox">
-					<label class="checkbox" for="is_public_checkbox">
-						<input type="checkbox" id="is_public_checkbox" name='is_public_checkbox' />
+					<label class="checkbox" for="is_shared_checkbox">
+						<input type="checkbox" id="is_shared_checkbox" name='is_shared_checkbox' />
 						<span></span>
 					</label>
 				</div>
@@ -314,7 +314,7 @@
 		<legend>{L_FILES_ACTION}</legend>
 		<div class="fieldset-inset">
 			<div class="upload-address-bar">
-				<a href="admin_files.php"><i class="fa fa-home" aria-hidden="true"></i> {L_ROOT}</a>{URL}# IF C_SHOW_PUBLIC_FILES # | {L_PUBLIC_TITLE}# ENDIF #
+				<a href="admin_files.php"><i class="fa fa-home" aria-hidden="true"></i> {L_ROOT}</a>{URL}# IF C_SHOW_SHARED_FILES # | {L_SHARED_TITLE}# ENDIF #
 			</div>
 
 			<div class="upload-address-bar-links">
@@ -335,7 +335,7 @@
 	</fieldset>
 
 	<fieldset class="upload-elements-container">
-		<legend>{L_FOLDER_CONTENT} : {URL}# IF C_SHOW_PUBLIC_FILES # {L_PUBLIC_TITLE}# ENDIF #</legend>
+		<legend>{L_FOLDER_CONTENT} : {URL}# IF C_SHOW_SHARED_FILES # {L_SHARED_TITLE}# ENDIF #</legend>
 		# IF C_PERSONAL_SUMMARY #
 			<div class="cell align-right">
 				<span class="pinned question"><span id="total-folder">{L_FOLDERS} :</span> <strong>{TOTAL_FOLDERS}</strong></span>
@@ -344,10 +344,10 @@
 				<span class="pinned moderator"><span>{L_DATA} :</span> <strong>{TOTAL_SIZE}</strong></span>
 			</div>
 		# ENDIF #
-		# IF C_SHOW_PUBLIC_FILES #
+		# IF C_SHOW_SHARED_FILES #
 			<div class="cell align-right">
-				<span class="pinned question"><span>{L_FILES} :</span> <strong>{TOTAL_PUBLIC_FILES}</strong></span>
-				<span class="pinned question"><span>{L_FOLDER_SIZE} :</span> <strong>{TOTAL_PUBLIC_SIZE}</strong></span>
+				<span class="pinned question"><span>{L_FILES} :</span> <strong>{TOTAL_SHARED_FILES}</strong></span>
+				<span class="pinned question"><span>{L_FOLDER_SIZE} :</span> <strong>{TOTAL_SHARED_SIZE}</strong></span>
 				<span class="pinned moderator"><span>{L_DATA} :</span> <strong>{TOTAL_SIZE}</strong></span>
 			</div>
 		# ENDIF #
@@ -358,9 +358,9 @@
 				<span id="new-folder"></span>
 			# ELSE #
 				<div class="cell-flex cell-tile cell-inline">
-					<div id="public-folder" class="cell">
+					<div id="shared-folder" class="cell">
 						<div class="cell-header">
-							<div class="cell-name"><a href="admin_files.php?showp=1">{L_PUBLIC_TITLE}</a></div>
+							<div class="cell-name"><a href="admin_files.php?showp=1">{L_SHARED_TITLE}</a></div>
 							<i class="far fa-folder" aria-hidden="true"></i>
 						</div>
 					</div>
@@ -439,12 +439,12 @@
 										<a href="admin_files{personal_files.U_MOVE}" aria-label="{L_MOVETO}">
 											<i class="fa fa-share" aria-hidden="true"></i>
 										</a>
-										# IF personal_files.C_IS_PUBLIC_FILE #
+										# IF personal_files.C_IS_SHARED_FILE #
 											<a href="#" id="status_function_{personal_files.ID}" onclick="change_status({personal_files.ID}, 0);return false;" aria-label="{L_CHANGE_PERSONAL}">
 												<i id="status_{personal_files.ID}" class="fas fa-users" aria-hidden="true"></i>
 											</a>
 										# ELSE #
-											<a href="#" id="status_function_{personal_files.ID}" onclick="change_status({personal_files.ID}, 1);return false;" aria-label="{L_CHANGE_PUBLIC}">
+											<a href="#" id="status_function_{personal_files.ID}" onclick="change_status({personal_files.ID}, 1);return false;" aria-label="{L_CHANGE_SHARED}">
 												<i id="status_{personal_files.ID}" class="fas fa-user-shield" aria-hidden="true"></i>
 											</a>
 										# ENDIF #
@@ -467,54 +467,54 @@
 
 			# ENDIF #
 		</div>
-		# IF C_SHOW_PUBLIC_FILES #
-			# IF C_PUBLIC_FILES_EXIST #
+		# IF C_SHOW_SHARED_FILES #
+			# IF C_SHARED_FILES_EXIST #
 				<div class="cell-flex cell-tile cell-inline">
-					# START public_files #
-						<div class="cell# IF public_files.C_RECENT_FILE # new-content# ENDIF #">
-							<span><span>{L_POSTOR}</span># IF public_files.C_POSTOR_EXIST #<a class="{public_files.POSTOR_LEVEL_CLASS}"# IF public_files.C_POSTOR_GROUP_COLOR # style="color:{public_files.POSTOR_GROUP_COLOR}"# ENDIF # href="{public_files.U_POSTOR_PROFILE}">{public_files.POSTOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #</span>
-							<span id="imgf{public_files.ID}"></span>
+					# START shared_files #
+						<div class="cell# IF shared_files.C_RECENT_FILE # new-content# ENDIF #">
+							<span><span>{L_POSTOR}</span># IF shared_files.C_POSTOR_EXIST #<a class="{shared_files.POSTOR_LEVEL_CLASS}"# IF shared_files.C_POSTOR_GROUP_COLOR # style="color:{shared_files.POSTOR_GROUP_COLOR}"# ENDIF # href="{shared_files.U_POSTOR_PROFILE}">{shared_files.POSTOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #</span>
+							<span id="imgf{shared_files.ID}"></span>
 							<div class="cell-header">
-								<div id="fifl{public_files.ID}" class="cell-name ellipsis">{public_files.NAME}</div>
-								# IF NOT public_files.C_ENABLED_THUMBNAILS #
-									<a href="{public_files.URL}" aria-label="${Langloader::get_message('see.details', 'common')}">
-										<i class="far {public_files.IMG}"></i>
+								<div id="fifl{shared_files.ID}" class="cell-name ellipsis">{shared_files.NAME}</div>
+								# IF NOT shared_files.C_ENABLED_THUMBNAILS #
+									<a href="{shared_files.URL}" aria-label="${Langloader::get_message('see.details', 'common')}">
+										<i class="far {shared_files.IMG}"></i>
 									</a>
 								# ENDIF #
-								<span id="fi{public_files.ID}"></span>
+								<span id="fi{shared_files.ID}"></span>
 							</div>
-							# IF public_files.C_ENABLED_THUMBNAILS #
+							# IF shared_files.C_ENABLED_THUMBNAILS #
 								<div class="cell-body" aria-label="${Langloader::get_message('see.details', 'common')}">
 									<div class="cell-thumbnail cell-landscape cell-center">
-										# IF public_files.C_IMG #
-											<img src="{public_files.URL}" alt="{public_files.NAME}">
-											<a class="cell-thumbnail-caption" href="{public_files.URL}">
+										# IF shared_files.C_IMG #
+											<img src="{shared_files.URL}" alt="{shared_files.NAME}">
+											<a class="cell-thumbnail-caption" href="{shared_files.URL}">
 												<i class="fa fa-eye"></i>
 											</a>
 										# ELSE #
-											<i class="far {public_files.IMG} fa-4x"></i>
-											<a class="cell-thumbnail-caption" href="{public_files.URL}">
-												<i class="far {public_files.IMG}"></i>
+											<i class="far {shared_files.IMG} fa-4x"></i>
+											<a class="cell-thumbnail-caption" href="{shared_files.URL}">
+												<i class="far {shared_files.IMG}"></i>
 											</a>
 										# ENDIF #
 									</div>
 								</div>
 							# ENDIF #
 							<div class="cell-form">
-								{public_files.BBCODE}
+								{shared_files.BBCODE}
 							</div>
 							<div class="cell-list">
 								<ul>
 									<li class="li-stretch">
-										{public_files.RENAME_FILE}
-										<a href="admin_files.php?del={public_files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
-										# IF public_files.C_IS_PUBLIC_FILE #
-											<a href="#" id="status_function_{public_files.ID}" onclick="change_status({public_files.ID}, 0);return false;" aria-label="{L_CHANGE_PERSONAL}">
-												<i id="status_{public_files.ID}" class="fas fa-users"></i>
+										{shared_files.RENAME_FILE}
+										<a href="admin_files.php?del={shared_files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+										# IF shared_files.C_IS_SHARED_FILE #
+											<a href="#" id="status_function_{shared_files.ID}" onclick="change_status({shared_files.ID}, 0);return false;" aria-label="{L_CHANGE_PERSONAL}">
+												<i id="status_{shared_files.ID}" class="fas fa-users"></i>
 											</a>
 										# ELSE #
-											<a href="#" id="status_function_{public_files.ID}" onclick="change_status({public_files.ID}, 1);return false;" aria-label="{L_CHANGE_PUBLIC}">
-												<i id="status_{public_files.ID}" class="fas fa-user-shield"></i>
+											<a href="#" id="status_function_{shared_files.ID}" onclick="change_status({shared_files.ID}, 1);return false;" aria-label="{L_CHANGE_SHARED}">
+												<i id="status_{shared_files.ID}" class="fas fa-user-shield"></i>
 											</a>
 										# ENDIF #
 									</li>
@@ -523,13 +523,13 @@
 							<div class="cell-list">
 								<ul class="small">
 									<li class="li-stretch">
-										<span>{public_files.FILETYPE}</span>
-										<span>{public_files.SIZE}</span>
+										<span>{shared_files.FILETYPE}</span>
+										<span>{shared_files.SIZE}</span>
 									</li>
 								</ul>
 							</div>
 						</div>
-					# END public_files #
+					# END shared_files #
 				</div>
 			# ELSE #
 				<span class="message-helper bgc notice">{L_NO_ITEM}</span>
@@ -550,8 +550,8 @@
 	});
 
 	var urlPath = $(location).attr("href").split('/'),
-		publicPath = 'admin_files.php?showp=1',
+		sharedPath = 'admin_files.php?showp=1',
 		urlEnd = urlPath[urlPath.length - 1];
-	if (urlEnd === publicPath)
-		jQuery('#members-folder, #public-folder').hide();
+	if (urlEnd === sharedPath)
+		jQuery('#members-folder, #shared-folder').hide();
 </script>

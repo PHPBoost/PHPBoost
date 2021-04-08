@@ -14,16 +14,16 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-// Personal or public files
+// Personal or shared files
 $request = AppContext::get_request();
 $upload_lang = LangLoader::get('upload-common');
-$is_public_checkbox = ($request->get_postvalue('is_public_checkbox', 1) === 'on' ? 1 : 0);
+$is_shared_checkbox = ($request->get_postvalue('is_shared_checkbox', 1) === 'on' ? 1 : 0);
 $item_id = $request->get_int('item_id', 0);
 $status = $request->get_int('status', 0);
 
 if ($item_id)
 {
-	PersistenceContext::get_querier()->update(PREFIX . "upload", array('public' => $status), 'WHERE id = :id', array('id' => $item_id));
+	PersistenceContext::get_querier()->update(PREFIX . "upload", array('shared' => $status), 'WHERE id = :id', array('id' => $item_id));
 }
 
 $folder = $request->get_getint('f', 0);
@@ -36,7 +36,7 @@ $del_file = $request->get_getint('del', 0);
 $get_error = $request->get_getvalue('error', '');
 $get_l_error = $request->get_getvalue('erroru', '');
 $show_member = $request->get_getvalue('showm', false);
-$show_public = $request->get_getvalue('showp', false);
+$show_shared = $request->get_getvalue('showp', false);
 $move_folder = $request->get_getint('movefd', 0);
 $move_file = $request->get_getint('movefi', 0);
 $to = retrieve(POST, 'new_cat', -1);
@@ -89,7 +89,7 @@ elseif (!empty($_FILES['upload_file']['name'])) // Add file
 
 			foreach ($Upload->get_files_parameters() as $parameters)
 			{
-				$result = PersistenceContext::get_querier()->insert(DB_TABLE_UPLOAD, array('public' => $is_public_checkbox, 'idcat' => $folder, 'name' => $parameters['name'], 'path' => $parameters['path'], 'user_id' => $user_id, 'size' => $parameters['size'], 'type' => $parameters['extension'], 'timestamp' => time()));
+				$result = PersistenceContext::get_querier()->insert(DB_TABLE_UPLOAD, array('shared' => $is_shared_checkbox, 'idcat' => $folder, 'name' => $parameters['name'], 'path' => $parameters['path'], 'user_id' => $user_id, 'size' => $parameters['size'], 'type' => $parameters['extension'], 'timestamp' => time()));
 				$id_file = $result->get_last_inserted_id();
 			}
 		}
@@ -385,11 +385,11 @@ else
 		'L_EMPTY' => $LANG['empty'],
 		'L_UPLOAD' => $LANG['upload'],
 		'L_URL' => $LANG['url'],
-		'L_PUBLIC_CHECKBOX' => $upload_lang['public.checkbox'],
-		'L_PUBLIC_TITLE' => $upload_lang['public.title'],
+		'L_SHARED_CHECKBOX' => $upload_lang['shared.checkbox'],
+		'L_SHARED_TITLE' => $upload_lang['shared.title'],
 		'L_PERSONAL_TITLE' => $upload_lang['personal.title'],
 		'L_CHANGE_PERSONAL' => $upload_lang['change.to.personal'],
-		'L_CHANGE_PUBLIC' => $upload_lang['change.to.public'],
+		'L_CHANGE_SHARED' => $upload_lang['change.to.shared'],
 		'L_POSTOR' => $upload_lang['posted.by']
 	));
 
@@ -404,7 +404,7 @@ else
 		));
 	}
 
-	list($total_folder_size, $total_public_size, $total_personal_files, $total_public_files, $total_directories) = array(0, 0, 0, 0, 0);
+	list($total_folder_size, $total_shared_size, $total_personal_files, $total_shared_files, $total_directories) = array(0, 0, 0, 0, 0);
 
 	if ($show_member)
 	{
@@ -463,14 +463,14 @@ else
 	$result->dispose();
 
 	// Display the files from the folder
-	$types = array('personal_files' => 'up.idcat = :idcat AND up.user_id = :user_id', 'public_files' => 'up.public = 1');
+	$types = array('personal_files' => 'up.idcat = :idcat AND up.user_id = :user_id', 'shared_files' => 'up.shared = 1');
 	foreach ($types as $loop_id => $where_clause)
 	{
 
 		$now = new Date();
-		if (!empty($folder_member) && empty($folder) || $show_public)
+		if (!empty($folder_member) && empty($folder) || $show_shared)
 		{
-			$result = PersistenceContext::get_querier()->select("SELECT up.id, up.public, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.display_name, m.level, m.user_groups
+			$result = PersistenceContext::get_querier()->select("SELECT up.id, up.shared, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.display_name, m.level, m.user_groups
 	    	FROM " . DB_TABLE_UPLOAD . " up
 	    	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
 	        WHERE " . $where_clause . "
@@ -481,7 +481,7 @@ else
 		}
 		else
 		{
-			$result = PersistenceContext::get_querier()->select("SELECT up.id, up.public, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.display_name, m.level, m.user_groups
+			$result = PersistenceContext::get_querier()->select("SELECT up.id, up.shared, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.display_name, m.level, m.user_groups
 			FROM " . DB_TABLE_UPLOAD . " up
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
 			WHERE idcat = :id" . ((empty($folder) || $folder_info['user_id'] <= 0) ? ' AND up.user_id = -1' : ' AND up.user_id != -1'), array(
@@ -546,7 +546,7 @@ else
 				'C_POSTOR_GROUP_COLOR' => !empty($group_color),
 				'POSTOR_GROUP_COLOR' => $group_color,
 				'U_POSTOR_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
-				'C_IS_PUBLIC_FILE' => $row['public'] == 1,
+				'C_IS_SHARED_FILE' => $row['shared'] == 1,
 				'IMG' => $get_img_mimetype['img'],
 				'URL' => $link,
 				'NAME' => $name_cut,
@@ -559,10 +559,10 @@ else
 				'LIGHTBOX' => !empty($size_img) ? ' data-lightbox="1" data-rel="lightcase:collection"' : '',
 				'U_MOVE' => '.php?movefi=' . $row['id'] . '&amp;f=' . $folder . '&amp;fm=' . $row['user_id']
 			));
-			if ($loop_id == 'public_files')
+			if ($loop_id == 'shared_files')
 			{
-				$total_public_files ++;
-				$total_public_size += $row['size'];
+				$total_shared_files ++;
+				$total_shared_size += $row['size'];
 			}
 			else
 			{
@@ -582,15 +582,15 @@ else
 
 	}
 	$template->put_all(array(
-		'C_PERSONAL_SUMMARY' => ($total_directories > 0 || $total_personal_files > 0) && !$show_public,
-		'C_PUBLIC_FILES_EXIST' => $total_public_files > 0,
-		'C_SHOW_PUBLIC_FILES' => $show_public,
+		'C_PERSONAL_SUMMARY' => ($total_directories > 0 || $total_personal_files > 0) && !$show_shared,
+		'C_SHARED_FILES_EXIST' => $total_shared_files > 0,
+		'C_SHOW_SHARED_FILES' => $show_shared,
 		'TOTAL_SIZE' => File::get_formated_size($total_size * 1024),
-		'TOTAL_PUBLIC_SIZE' => File::get_formated_size($total_public_size * 1024),
+		'TOTAL_SHARED_SIZE' => File::get_formated_size($total_shared_size * 1024),
 		'TOTAL_FOLDER_SIZE' => File::get_formated_size($total_folder_size * 1024),
 		'TOTAL_FOLDERS' => $total_directories,
 		'TOTAL_PERSONAL_FILES' => $total_personal_files,
-		'TOTAL_PUBLIC_FILES' => $total_public_files,
+		'TOTAL_SHARED_FILES' => $total_shared_files,
 		'L_NO_ITEM' => LangLoader::get_message('no_item_now', 'common'),
 	));
 
