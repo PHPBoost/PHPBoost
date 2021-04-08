@@ -55,9 +55,8 @@
 	justify-content: flex-start;
 }
 
+.small-screen .cssmenu-title,
 .cssmenu-vertical > ul > li > .cssmenu-title { white-space: normal; }
-
-.small-screen .cssmenu-title { white-space: normal; }
 
 .cssmenu-title img + span,
 .cssmenu-title i + span,
@@ -108,7 +107,7 @@
 	content: '\f067';
 }
 
-.cssmenu ul li.has-sub:hover > .cssmenu-title:after {
+.cssmenu ul li.has-sub:hover > .cssmenu-title::after {
 	content: '\f068';
 	transition: 0.2s;
 }
