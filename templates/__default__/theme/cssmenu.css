@@ -5,9 +5,6 @@
  * Contains links menu properties for menus built with MenuMaker
 */
 
-/* --- Module-mini ---------------------------------------------------------- */
-.cssmenu-content .module-mini-contents { padding: 0; }
-
 /* --- General classes ------------------------------------------------------ */
 .cssmenu { font-size: 0; }
 
@@ -22,8 +19,8 @@
 	display: block;
 }
 
-.cssmenu:after,
-.cssmenu > ul:after {
+.cssmenu::after,
+.cssmenu > ul::after {
 	display: block;
 	visibility: hidden;
 	height: 0;
@@ -32,20 +29,16 @@
 	clear: both;
 }
 
-.cssmenu-img { display: none; }
+.small-screen .cssmenu-img { display: none; }
 
-@media (min-width: 769px) {
-	.cssmenu-img {
-		display: inline-block;
-		margin-left: 1.309rem;
-	}
-
-	.cssmenu-horizontal .cssmenu-img { vertical-align: bottom; }
-
-	.cssmenu .menu-with-img { display: inline-block; }
-
-	.module-mini-top img { margin: 0 0.309em 0 0; }
+.cssmenu-img {
+	display: inline-block;
+	margin-left: 1.309rem;
 }
+
+.cssmenu-horizontal .cssmenu-img { vertical-align: bottom; }
+
+.cssmenu .menu-with-img { display: inline-block; }
 
 .cssmenu-horizontal > ul > li > ul { min-width: 100%; }
 
@@ -54,7 +47,7 @@
 .cssmenu-title {
 	padding: 0.456em 0.618em;
 	font-size: 1.482rem;
-	white-space: normal;
+	white-space: nowrap;
 	font-weight: 400;
 	text-align: left;
 	display: flex;
@@ -62,11 +55,9 @@
 	justify-content: flex-start;
 }
 
-@media (min-width: 769px) {
-	.cssmenu-title { white-space: nowrap; }
+.cssmenu-vertical > ul > li > .cssmenu-title { white-space: normal; }
 
-	.cssmenu-vertical > ul > li > .cssmenu-title { white-space: normal; }
-}
+.small-screen .cssmenu-title { white-space: normal; }
 
 .cssmenu-title img + span,
 .cssmenu-title i + span,
@@ -92,7 +83,7 @@
 
 .cssmenu-right ul li.has-sub > .cssmenu-title { padding-left: 1.618em; }
 
-.cssmenu ul li.has-sub > .cssmenu-title:after,
+.cssmenu ul li.has-sub > .cssmenu-title::after,
 .cssmenu-right ul li.has-sub > .cssmenu-title:before {
 	position: absolute;
 	display: inline-block;
@@ -104,13 +95,13 @@
 	transform: translateY(-40%);
 }
 
-.cssmenu ul li.has-sub > .cssmenu-title:after {
+.cssmenu ul li.has-sub > .cssmenu-title::after {
 	right: 0.809em;
 	content: '\f067';
 	transition: 0.2s;
 }
 
-.cssmenu-right ul li.has-sub > .cssmenu-title:after { content: ''; }
+.cssmenu-right ul li.has-sub > .cssmenu-title::after { content: ''; }
 
 .cssmenu-right ul li.has-sub > .cssmenu-title:before {
 	left: 0.809em;
@@ -122,7 +113,7 @@
 	transition: 0.2s;
 }
 
-.cssmenu-right ul li.has-sub:hover > .cssmenu-title:after { content: ''; }
+.cssmenu-right ul li.has-sub:hover > .cssmenu-title::after { content: ''; }
 
 .cssmenu-right ul li.has-sub:hover > .cssmenu-title:before { content: '\f068'; }
 
@@ -233,7 +224,7 @@
 	text-align: left;
 }
 
-.small-screen .menu-button:after {
+.small-screen .menu-button::after {
 	position: absolute;
 	padding: 0.618em;
 	display: inline-block;
@@ -245,10 +236,10 @@
 	top: 0;
 }
 
-.small-screen .menu-button.menu-opened:after { content: '\f00d'; }
+.small-screen .menu-button.menu-opened::after { content: '\f00d'; }
 
 /* --- Small screens sub-menu button --- */
-.cssmenu.small-screen ul li.has-sub > .cssmenu-title:after,
+.cssmenu.small-screen ul li.has-sub > .cssmenu-title::after,
 .cssmenu-right.small-screen ul li.has-sub > .cssmenu-title:before { display: none; }
 
 .small-screen .submenu-button {
@@ -260,7 +251,7 @@
 	cursor: pointer;
 }
 
-.small-screen .submenu-button:after {
+.small-screen .submenu-button::after {
 	position: absolute;
 	display: block;
 	content: '\f0d7';
@@ -272,13 +263,13 @@
 	padding: 0.618em;
 }
 
-.small-screen ul ul .submenu-button:after {
+.small-screen ul ul .submenu-button::after {
 	top: 0.309em;
 	font-size: 1.306rem;
 	padding: 0.456em;
 }
 
-.small-screen .submenu-button.submenu-opened:after { content: '\f0d8'}
+.small-screen .submenu-button.submenu-opened::after { content: '\f0d8'}
 
 
 /* --- Cssmenu-actionslinks variant ----------------------------------------- */
@@ -289,7 +280,7 @@
 
 .cssmenu-actionslinks .menu-button { display: block; }
 
-.cssmenu-actionslinks .menu-button:after {
+.cssmenu-actionslinks .menu-button::after {
 	position: absolute;
 	display: block;
 	font-family: 'Font Awesome 5 Free';
@@ -304,7 +295,7 @@
 	border-color: transparent;
 }
 
-.cssmenu-actionslinks:hover .menu-button:after { border-bottom-width: 0; }
+.cssmenu-actionslinks:hover .menu-button::after { border-bottom-width: 0; }
 
 .cssmenu-actionslinks ul {
 	position: absolute;
@@ -320,26 +311,26 @@
 	right: -1px;
 }
 
-@media (min-width: 769px) {
-	.cssmenu-actionslinks .menu-button {
-		font-size: 0;
-		z-index: 9;
-	}
+.cssmenu-actionslinks .menu-button {
+	font-size: 0;
+	z-index: 9;
 }
 
-/* --- Small screens cssmenu-actionslinks variant --- */
+.cssmenu-actionslinks.small-screen .menu-button { font-size: 1.228rem; }
+
 .cssmenu-actionslinks.small-screen {
 	margin: 0;
 	float: none;
 }
 
-.cssmenu-actionslinks.small-screen .menu-button:after {
-	content: '\f0c9';
+.cssmenu-actionslinks.small-screen .menu-button::after {
+	content: '\f013';
 	border-width: 0;
 	padding: 0.618em;
+	font-size: 1.309rem;
 }
 
-.cssmenu-actionslinks.small-screen .menu-button.menu-opened:after { content: '\f00d'; }
+.cssmenu-actionslinks.small-screen .menu-button.menu-opened::after { content: '\f00d'; }
 
 .cssmenu-actionslinks.small-screen .menu-button:hover + ul,
 .cssmenu-actionslinks.small-screen .menu-button + ul:hover {
@@ -368,7 +359,7 @@
 .cssmenu-tools.small-screen li.has-sub > a,
 .cssmenu-tools.small-screen li.has-sub > .submenu-button { display: block; }
 
-.cssmenu-tools .menu-button:after { content: "\f0c9"; }
+.cssmenu-tools .menu-button::after { content: "\f0c9"; }
 
 
 /* --- Cssmenu-group variant ------------------------------------------------ */
@@ -405,7 +396,7 @@
 
 .cssmenu-static > ul > li > .cssmenu-title { text-align: center; }
 
-.cssmenu-static ul li.has-sub > .cssmenu-title:after,
+.cssmenu-static ul li.has-sub > .cssmenu-title::after,
 .cssmenu-static ul li.has-sub > .cssmenu-title:before { display: none; }
 
 .cssmenu-static > ul > li { padding: 0 0.618em; }
@@ -433,5 +424,5 @@
 	margin: 0;
 }
 
-.cssmenu-static.small-screen .submenu-button:after { content: '\f0d8'}
-.cssmenu-static.small-screen .submenu-button.submenu-opened:after { content: '\f0d7'}
+.cssmenu-static.small-screen .submenu-button::after { content: '\f0d8'}
+.cssmenu-static.small-screen .submenu-button.submenu-opened::after { content: '\f0d7'}
