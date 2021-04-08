@@ -62,7 +62,17 @@ class AdminViewAllMembersController extends AdminController
 			new HTMLTableColumn(LangLoader::get_message('actions', 'admin-common'), '', array('sr-only' => true))
 		), new HTMLTableSortingRule('display_name', HTMLTableSortingRule::ASC));
 
+		$table_model->add_filter(new HTMLTableBeginsWithTextSQLFilter('display_name', 'filter1', $this->lang['display_name']));
+		// $table_model->add_filter(new HTMLTableBeginsWithTextSQLFilter('level', 'filter2', $this->lang['level']));
+		$table_model->add_filter(new HTMLTableBeginsWithTextSQLFilter('email', 'filter3', $this->lang['email']));
+		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('registration_date', 'filter4', $this->lang['registration_date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('minimum', 'common'))));
+		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('registration_date', 'filter5', $this->lang['registration_date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('maximum', 'common'))));
+		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('last_connection_date', 'filter6', $this->lang['last_connection'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('minimum', 'common'))));
+		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('last_connection_date', 'filter7', $this->lang['last_connection'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('maximum', 'common'))));
+		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('approved', 'filter4', $this->lang['approbation'], array(1 => LangLoader::get_message('status.approved', 'common'), 0 => LangLoader::get_message('status.unapproved', 'common'))));
+
 		$table = new HTMLTable($table_model);
+		$table->set_filters_fieldset_class_HTML();
 
 		$table_model->set_caption(LangLoader::get_message('members.members-management', 'admin-user-common'));
 
