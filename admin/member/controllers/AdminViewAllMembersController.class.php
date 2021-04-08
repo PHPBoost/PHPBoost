@@ -63,7 +63,7 @@ class AdminViewAllMembersController extends AdminController
 		), new HTMLTableSortingRule('display_name', HTMLTableSortingRule::ASC));
 
 		$table_model->add_filter(new HTMLTableBeginsWithTextSQLFilter('display_name', 'filter1', $this->lang['display_name']));
-		// $table_model->add_filter(new HTMLTableBeginsWithTextSQLFilter('level', 'filter2', $this->lang['level']));
+		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('level', 'filter2', $this->lang['level'], array(2 => LangLoader::get_message('admin_s', 'main'), 1 => LangLoader::get_message('modo_s', 'main'), 0 => LangLoader::get_message('member_s', 'main'))));
 		$table_model->add_filter(new HTMLTableBeginsWithTextSQLFilter('email', 'filter3', $this->lang['email']));
 		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('registration_date', 'filter4', $this->lang['registration_date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('minimum', 'common'))));
 		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('registration_date', 'filter5', $this->lang['registration_date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('maximum', 'common'))));
