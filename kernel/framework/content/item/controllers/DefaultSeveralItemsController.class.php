@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 01
+ * @version     PHPBoost 6.0 - last update: 2021 04 08
  * @since       PHPBoost 6.0 - 2020 01 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -184,7 +184,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 		{
 			$id = $this->request->get_getstring('id_category', Category::ROOT_CATEGORY);
 			try {
-				$this->category = CategoriesService::get_categories_manager(self::$module_id)->get_categories_cache()->get_category($id);
+				$this->category = CategoriesService::get_categories_manager(self::$module->get_id())->get_categories_cache()->get_category($id);
 			} catch (CategoryNotFoundException $e) {
 				$this->display_unexisting_page();
 			}
@@ -406,7 +406,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 
 	protected function check_authorizations()
 	{
-		$authorizations = self::get_module_configuration()->has_categories() ? CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id(), self::$module_id) : ItemsAuthorizationsService::check_authorizations(self::$module_id);
+		$authorizations = self::get_module_configuration()->has_categories() ? CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id(), self::$module->get_id()) : ItemsAuthorizationsService::check_authorizations(self::$module->get_id());
 
 		if ($this->category !== null)
 			return ((AppContext::get_current_user()->is_guest() && $this->summary_displayed_to_guests && Authorizations::check_auth(RANK_TYPE, User::MEMBER_LEVEL, $this->get_category()->get_authorizations(), Category::READ_AUTHORIZATIONS)) || $authorizations->read()) ? true : $this->display_user_not_authorized_page();

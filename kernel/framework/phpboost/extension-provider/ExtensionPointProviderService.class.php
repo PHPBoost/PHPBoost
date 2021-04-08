@@ -8,7 +8,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 04
+ * @version     PHPBoost 6.0 - last update: 2021 04 08
  * @since       PHPBoost 2.0 - 2008 01 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -74,7 +74,7 @@ class ExtensionPointProviderService
 		foreach ($authorized_providers_ids as $extension_provider_id)
 		{
 			$provider = $this->get_provider($extension_provider_id);
-			if ($provider->has_extension_point($extension_point) && $provider->get_extension_point($extension_point) !== false)
+			if ($provider->has_extension_point($extension_point) && $provider->get_extension_point($extension_point, $extension_provider_id) !== false)
 			{
 				$providers[$provider->get_id()] = $provider;
 			}
