@@ -148,6 +148,7 @@ class KernelSetup
 			'message' => array('type' => 'text', 'length' => 65000),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'pseudo' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'visitor_email' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'user_ip' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'note' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
