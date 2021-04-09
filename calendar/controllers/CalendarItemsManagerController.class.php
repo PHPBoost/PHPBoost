@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 26
+ * @version     PHPBoost 6.0 - last update: 2021 04 09
  * @since       PHPBoost 4.0 - 2013 07 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -59,13 +59,14 @@ class CalendarItemsManagerController extends ModuleController
 		$table_model->set_layout_title($this->lang['calendar.config.events.management']);
 		$table_model->add_permanent_filter('parent_id = 0');
 
+		$table_model->set_filters_menu_title($this->lang['filter.items']);
 		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('start_date', 'filter1', $this->lang['calendar.labels.start.date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('minimum', 'common'))));
 		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('start_date', 'filter2', $this->lang['calendar.labels.start.date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('maximum', 'common'))));
 		$table_model->add_filter(new HTMLTableAjaxUserAutoCompleteSQLFilter('display_name', 'filter3', LangLoader::get_message('author', 'common')));
 		if ($display_categories)
 			$table_model->add_filter(new HTMLTableCategorySQLFilter('filter4'));
 		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('approved', 'filter5', LangLoader::get_message('status', 'common'), array(1 => LangLoader::get_message('status.approved', 'common'), 0 => LangLoader::get_message('status.unapproved', 'common'))));
-		
+
 		$table = new HTMLTable($table_model);
 		$table->set_filters_fieldset_class_HTML();
 

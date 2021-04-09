@@ -25,6 +25,7 @@ $lang['an.item'] = 'un événement';
 $lang['the.item'] = 'l\'événement';
 $lang['my.items'] = 'Mes événements';
 $lang['member.items'] = 'Événements publiés par';
+$lang['filter.items'] = 'Filtrer les événements';
 
 // Configuration
 $lang['calendar.default.content'] = 'Contenu par défaut d\'un événement';

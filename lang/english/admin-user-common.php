@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 02
+ * @version     PHPBoost 6.0 - last update: 2021 04 09
  * @since       PHPBoost 3.0 - 2010 08 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -20,6 +20,7 @@ $lang['members.add-member'] = 'Add member';
 $lang['members.members-punishment'] = 'Members punishment';
 $lang['members.edit-member'] = 'Edit member';
 $lang['members.rules'] = 'Rules';
+$lang['filter.members'] = 'Filter members';
 
 //Configuration
 $lang['members.config.display.type'] = 'Members list display';
