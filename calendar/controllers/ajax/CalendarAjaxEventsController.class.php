@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 05
+ * @version     PHPBoost 6.0 - last update: 2021 04 09
  * @since       PHPBoost 4.0 - 2014 03 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -114,9 +114,9 @@ class CalendarAjaxEventsController extends AbstractController
 			'C_COMMENTS_ENABLED'  => $comments_config->module_comments_is_enabled('calendar'),
 			'C_ITEMS'             => $items_number > 0,
 			'C_DAY'               => $day,
-		
+
 			'ITEMS_PER_ROW'  => $config->get_items_per_row(),
-			'DATE_LABEL'     => ($day ? $this->lang['calendar.events.of'] : $this->lang['calendar.events.of.month' . ($alt_title_label ? '.alt' : '')]) . (!$alt_title_label ? ' ' : '') . ($day ? $day . ' ' : '') . $array_l_month[$month - 1] . ' ' . $year,
+			'DATE_LABEL'     => ($day ? $this->lang['calendar.events.of'] : $this->lang['calendar.events.of.month' . ($alt_title_label ? '.alt' : '')]) . (!$alt_title_label ? ' ' : '') . ($day ? ' ' . $day . ' ' : '') . $array_l_month[$month - 1] . ' ' . $year,
 			'L_ITEMS_NUMBER' => $items_number > 1 ? StringVars::replace_vars($this->lang['calendar.labels.events.number'], array('items_number' => $items_number)) : $this->lang['calendar.labels.one.event'],
 		));
 
