@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 04 09
  * @since       PHPBoost 3.0 - 2010 02 25
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -31,6 +31,7 @@ class HTMLTableModel
 	private $allowed_sort_parameters = array();
 	private $filters = array();
 	private $permanent_filters = array();
+	private $filters_menu_title = '';
 	private $display_footer = true;
 	private $footer_css_class = '';
 
@@ -212,6 +213,21 @@ class HTMLTableModel
 	public function get_permanent_filters()
 	{
 		return $this->permanent_filters;
+	}
+
+	public function has_filters_menu_title()
+	{
+		return !empty($this->filters_menu_title);
+	}
+
+	public function get_filters_menu_title()
+	{
+		return $this->filters_menu_title;
+	}
+
+	public function set_filters_menu_title($filters_menu_title)
+	{
+		$this->filters_menu_title = $filters_menu_title;
 	}
 
 	public function set_id($id)

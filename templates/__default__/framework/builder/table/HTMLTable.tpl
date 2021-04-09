@@ -9,7 +9,7 @@
 # ENDIF #
 				# IF C_FILTERS #
 					<div id="filters-{TABLE_ID}" class="html-table-filters">
-						<a href="" class="filter-button button bgc link-color"><i class="fa fa-sliders-h" aria-hidden="true"></i> {@filter.items}</a>
+						<a href="" class="filter-button button bgc link-color"><i class="fa fa-sliders-h" aria-hidden="true"></i> # IF C_FILTERS_MENU_TITLE #{FILTERS_MENU_TITLE}# ELSE #{@filter.items}# ENDIF #</a>
 						<div class="filters-container">
 							<i class="close-filters far fa-window-close" aria-hidden="true"></i> <span class="sr-only">${LangLoader::get_message('close', 'main')}</span>
 							<script src="{PATH_TO_ROOT}/templates/__default__/plugins/UrlSerializedParameterEncoder.js"></script>
@@ -41,7 +41,7 @@
 								# IF C_CSS_STYLE # style="{CSS_STYLE}"# ENDIF #>
 								# IF C_CAPTION #
 									<caption>
-										<a href="{U_TABLE_DEFAULT_OPIONS}" aria-label="${escape(CAPTION)}">${escape(CAPTION)}</a>
+										<a href="{U_TABLE_DEFAULT_OPTIONS}" aria-label="${escape(CAPTION)}">${escape(CAPTION)}</a>
 									</caption>
 								# ENDIF #
 								<thead>
