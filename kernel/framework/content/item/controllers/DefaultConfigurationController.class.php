@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 13
+ * @version     PHPBoost 6.0 - last update: 2021 04 09
  * @since       PHPBoost 6.0 - 2020 02 11
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -299,25 +299,28 @@ class DefaultConfigurationController extends AbstractAdminItemController
 				{
 					$this->additional_fields_list[] = $parameter;
 					$parameter_get_method = 'get_' . $parameter;
-					$type = gettype($configuration_class->getMethod('get_default_value')->invoke($this->config, $parameter));
+					if ($configuration_class->hasMethod($parameter_get_method))
+					{
+						$type = gettype($configuration_class->getMethod('get_default_value')->invoke($this->config, $parameter));
 
-					switch ($type) {
-						case 'boolean':
-							$fieldset->add_field(new FormFieldCheckbox($parameter, $this->lang[$parameter_lang_variable], $this->config->$parameter_get_method(),
-								array('class' => 'custom-checkbox', 'description' => (isset($this->lang[$parameter_lang_variable . '.explain']) ? $this->lang[$parameter_lang_variable . '.explain'] : ''))
-							));
-						break;
-						case 'integer':
-							$fieldset->add_field(new FormFieldNumberEditor($parameter, $this->lang[$parameter_lang_variable], $this->config->$parameter_get_method(),
-								array('min' => 1, 'max' => 50, 'description' => (isset($this->lang[$parameter_lang_variable . '.explain']) ? $this->lang[$parameter_lang_variable . '.explain'] : ''), 'required' => true),
-								array(new FormFieldConstraintIntegerRange(1, 50))
-							));
-						break;
-						case 'string':
-							$fieldset->add_field(new FormFieldTextEditor($parameter, $this->lang[$parameter_lang_variable], $this->config->$parameter_get_method(),
-								array('maxlength' => 100, 'description' => (isset($this->lang[$parameter_lang_variable . '.explain']) ? $this->lang[$parameter_lang_variable . '.explain'] : ''), 'required' => true, 'class' => 'top-field')
-							));
-						break;
+						switch ($type) {
+							case 'boolean':
+								$fieldset->add_field(new FormFieldCheckbox($parameter, $this->lang[$parameter_lang_variable], $this->config->$parameter_get_method(),
+									array('class' => 'custom-checkbox', 'description' => (isset($this->lang[$parameter_lang_variable . '.explain']) ? $this->lang[$parameter_lang_variable . '.explain'] : ''))
+								));
+							break;
+							case 'integer':
+								$fieldset->add_field(new FormFieldNumberEditor($parameter, $this->lang[$parameter_lang_variable], $this->config->$parameter_get_method(),
+									array('min' => 1, 'max' => 50, 'description' => (isset($this->lang[$parameter_lang_variable . '.explain']) ? $this->lang[$parameter_lang_variable . '.explain'] : ''), 'required' => true),
+									array(new FormFieldConstraintIntegerRange(1, 50))
+								));
+							break;
+							case 'string':
+								$fieldset->add_field(new FormFieldTextEditor($parameter, $this->lang[$parameter_lang_variable], $this->config->$parameter_get_method(),
+									array('maxlength' => 100, 'description' => (isset($this->lang[$parameter_lang_variable . '.explain']) ? $this->lang[$parameter_lang_variable . '.explain'] : ''), 'required' => true, 'class' => 'top-field')
+								));
+							break;
+						}
 					}
 				}
 			}
