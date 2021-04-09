@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 13
+ * @version     PHPBoost 6.0 - last update: 2021 04 09
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -20,10 +20,14 @@ class NewsItem extends RichItem
 	{
 		$this->add_additional_attribute('top_list_enabled', array('type' => 'boolean', 'notnull' => 1, 'default' => 0, 'attribute_options_field_parameters' => array(
 			'field_class' => 'FormFieldCheckbox',
-			'label'       => LangLoader::get_message('form.top.list.enabled', 'common', 'news'),
-			'value'       => 0
+			'label'       => LangLoader::get_message('form.top.list.enabled', 'common', 'news')
 			)
 		));
+	}
+	
+	protected function default_properties()
+	{
+		$this->set_additional_property('top_list_enabled', 0);
 	}
 
 	protected function get_additional_template_vars()

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 06
+ * @version     PHPBoost 6.0 - last update: 2021 04 09
  * @since       PHPBoost 6.0 - 2021 02 26
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -71,7 +71,7 @@ class NewsManager extends ItemsManager
 		LIMIT 1
 		OFFSET 0)', array(
 			'timestamp_now' => $now->get_timestamp(),
-			'timestamp' => $item->get_update_date()->get_timestamp(),
+			'timestamp' => $item->has_update_date() ? $item->get_update_date()->get_timestamp() : $item->get_creation_date()->get_timestamp(),
 			'authorized_categories' => array($item->get_id_category())
 		));
 

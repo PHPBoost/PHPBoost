@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 18
+ * @version     PHPBoost 6.0 - last update: 2021 04 09
  * @since       PHPBoost 5.2 - 2020 06 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -18,16 +18,15 @@ class PagesItem extends RichItem
 		
 		$this->add_additional_attribute('author_display', array('type' => 'boolean', 'notnull' => 1, 'default' => 0, 'attribute_post_content_field_parameters' => array(
 			'field_class' => 'FormFieldCheckbox',
-			'label'       => LangLoader::get_message('config.author.displayed', 'admin-common'),
-			'value'       => 0
+			'label'       => LangLoader::get_message('config.author.displayed', 'admin-common')
 			)
 		));
 	}
 	
 	protected function default_properties()
 	{
-		$this->set_additional_property('author_display', 0);
 		$this->set_additional_property('i_order', 0);
+		$this->set_additional_property('author_display', 0);
 	}
 
 	protected function get_additional_template_vars()
