@@ -22,6 +22,9 @@
 							osmCloseExcept: '#filters-{TABLE_ID} .filters-container *',
 							osmCloseButton: '.close-filters',
 						});
+						let url = window.location.search;
+						if (url.indexOf(',filters:') != -1)
+							jQuery('.html-table-filters').addClass('opened');
 					</script>
 				# ENDIF #
 
