@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 20
+ * @version     PHPBoost 6.0 - last update: 2021 04 10
  * @since       PHPBoost 4.1 - 2015 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -51,8 +51,6 @@ $lang['config.message.before.topic.title.icon.displayed'] = 'Display associated 
 $lang['category.status.locked'] = 'Locked';
 
 //Extended Field
-$lang['extended.field.website'] = 'Website';
-$lang['extended.field.website.explain'] = 'Please enter a valid url (ex : https://www.phpboost.com)';
 
 $lang['extended.field.skype'] = 'Skype';
 $lang['extended.field.skype.explain'] = '';

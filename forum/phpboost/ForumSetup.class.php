@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 21
+ * @version     PHPBoost 6.0 - last update: 2021 04 10
  * @since       PHPBoost 3.0 - 2010 05 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -277,18 +277,6 @@ class ForumSetup extends DefaultModuleSetup
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(false);
 		$extended_field->set_is_freeze(true);
-		ExtendedFieldsService::add($extended_field);
-
-		//Website
-		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['extended.field.website']);
-		$extended_field->set_field_name('user_website');
-		$extended_field->set_description($lang['extended.field.website.explain']);
-		$extended_field->set_field_type('MemberShortTextExtendedField');
-		$extended_field->set_is_required(false);
-		$extended_field->set_display(false);
-		$extended_field->set_is_freeze(true);
-		$extended_field->set_regex(5);
 		ExtendedFieldsService::add($extended_field);
 
 		//Skype

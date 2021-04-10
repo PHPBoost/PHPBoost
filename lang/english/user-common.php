@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 06
+ * @version     PHPBoost 6.0 - last update: 2021 04 10
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -288,6 +288,9 @@ $lang['extended-field.field.biography'] = 'Biography';
 $lang['extended-field.field.biography-explain'] = 'A few lines describing you';
 $lang['extended-field.field.no-biography'] = 'This member didn\'t fill his biography';
 $lang['extended-field.field.no-member'] = 'This member is no longer registred';
+
+$lang['extended.field.website'] = 'Website';
+$lang['extended.field.website-explain'] = 'Please enter a valid url (ex : https://www.phpboost.com)';
 
 //Scroll to
 $lang['scroll-to.top'] = 'Scroll to Top';

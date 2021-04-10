@@ -289,6 +289,9 @@ $lang['extended-field.field.biography-explain'] = '';
 $lang['extended-field.field.no-biography'] = 'Ce membre n\'a pas renseigné la biographie de son profil';
 $lang['extended-field.field.no-member'] = 'Ce membre n\'est plus inscrit';
 
+$lang['extended.field.website'] = 'Site internet';
+$lang['extended.field.website.explain'] = 'Veuillez renseigner un site web valide (ex : https://www.phpboost.com)';
+
 //Scroll to
 $lang['scroll-to.top'] = 'haut de la page';
 $lang['scroll-to.bottom'] = 'bas de la page';
