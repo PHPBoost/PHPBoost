@@ -135,7 +135,7 @@ function copy_to_clipboard(tocopy)
 	}
 }
 
-// Open submenu
+	// Open submenu
 	// Function open_submenu
 	// for links submenu, in HTML onclick attribute
 	//
@@ -151,6 +151,8 @@ function copy_to_clipboard(tocopy)
 	//
 	// Comments : if {myclass} is missing, we use CSS class "opened"
 	// Comments : if {closeother} is defined, we close every elements with {closeother} CSS class
+	// Comments : The variable elem contain the Element with the unique ID myid
+	// Comments : The variable elems contain all Elements with the class closeother
 	//
 	function open_submenu(myid, myclass, closeother)
 	{
@@ -165,17 +167,33 @@ function copy_to_clipboard(tocopy)
 			var elems = document.querySelectorAll('.' + closeother);
 
 			if (elem.classList.contains(myclass)) {
-				[].forEach.call(elems, function(el) {
-					el.classList.remove(myclass);
-				});
+				closeother_submenu(elems, myclass);
 			}
 			else {
-				[].forEach.call(elems, function(el) {
-					el.classList.remove(myclass);
-				});
+				closeother_submenu(elems, myclass);
   				elem.classList.add(myclass);
 			}
 		}
+	}
+
+	// closeother_submenu
+	// Function closeother_submenu
+	//
+	// Description :
+	// This function close submenu with a specified CSS Class
+	//
+	// parameters : three
+	// {elems} correspond to the list of specific elements you want to remove your CSS class
+	// {myclass} correspond to the name of CSS class you want to remove to each element.
+	//
+	// Return : -
+	//
+	//
+	function closeother_submenu(elems, myclass)
+	{
+		[].forEach.call(elems, function(el) {
+			el.classList.remove(myclass);
+		});
 	}
 
 	// Function opensubmenu
