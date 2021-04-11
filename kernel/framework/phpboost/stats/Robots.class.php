@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 02
+ * @version     PHPBoost 6.0 - last update: 2021 04 11
  * @since       PHPBoost 4.0 - 2013 01 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -32,7 +32,10 @@ class Robots
 			}
 			if (preg_match('`(http:\/\/|bot|spider|crawl)+`iu', $user_agent))
 			{
-				return 'unknow_bot';
+				if (preg_match('`Linux x86_64; ([^/]+)`iu', $user_agent, $matches) || preg_match('`compatible; ([^/]+)`iu', $user_agent, $matches))
+					return $matches[1];
+				else
+					return 'unknow_bot';
 			}
 		}
 
