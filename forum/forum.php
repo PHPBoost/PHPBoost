@@ -208,6 +208,7 @@ if (!empty($id_get))
 					'IDCAT'                       => $row['cid'],
 					'NAME'                        => stripslashes($row['name']),
 					'DESC'                        => stripslashes($row['subname']),
+					'CSSNAME_CAT'                 => Url::encode_rewrite(TextHelper::strtolower($row['name'])),
 					'SUBFORUMS'                   => !empty($subforums) && !empty($row['subname']) ? $subforums : $subforums,
 					'C_SUBFORUMS'                 => !empty($subforums),
 					'L_SUBFORUMS'                 => $LANG['subforum_s'],
@@ -264,16 +265,19 @@ if (!empty($id_get))
 
 	//Affichage de l'arborescence des catégories.
 	$i = 0;
+	$current_subcat = "";
+
 	foreach ($Bread_crumb->get_links() as $key => $array)
 	{
 		if ($i >= 2)
 		{
 			$tpl->assign_block_vars('syndication_cats', array(
 				'C_DISPLAY_RAQUO' => $i > 2,
-				'LINK' =>  $array[1],
-				'LABEL' =>  $array[0]
+				'LINK'            => $array[1],
+				'LABEL'           => $array[0]
 			));
 		}
+		$current_subcat = $array[0];
 		$i++;
 	}
 
@@ -285,6 +289,7 @@ if (!empty($id_get))
 		'FORUM_NAME'                 => $config->get_forum_name(),
 		'PAGINATION'                 => $pagination->display(),
 		'IDCAT'                      => $id_get,
+		'NAME_CURRENT_SUBCAT'        => $current_subcat,
 		//'C_MASS_MODO_CHECK'        => $check_group_edit_auth,
 		'C_MASS_MODO_CHECK'          => false,
 		'C_POST_NEW_SUBJECT'         => $check_group_write_auth,

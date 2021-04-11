@@ -105,8 +105,9 @@ class ForumHomeController extends ModuleController
 			if ($row['id_parent'] == Category::ROOT_CATEGORY) //Si c'est une catégorie
 			{
 				$this->view->assign_block_vars('forums_list.cats', array(
-					'IDCAT' => $row['cid'],
-					'NAME' => $row['name'],
+					'IDCAT'        => $row['cid'],
+					'NAME'         => $row['name'],
+					'CSSNAME_CAT'  => Url::encode_rewrite(TextHelper::strtolower($row['name'])),
 					'U_FORUM_VARS' => ForumUrlBuilder::display_category($row['cid'], $row['rewrited_name'])->rel()
 				));
 				$display_sub_cats = $row['cat_status'] == ForumCategory::STATUS_UNLOCKED;
@@ -121,8 +122,9 @@ class ForumHomeController extends ModuleController
 					if ($display_cat) //Affichage des forums d'une catégorie, ajout de la catégorie.
 					{
 						$this->view->assign_block_vars('forums_list.cats', array(
-							'IDCAT' => $this->category->get_id(),
-							'NAME' => $this->category->get_name(),
+							'IDCAT'        => $this->category->get_id(),
+							'NAME'         => $this->category->get_name(),
+							'CSSNAME_CAT'  => Url::encode_rewrite(TextHelper::strtolower($this->category->get_name())),
 							'U_FORUM_VARS' => PATH_TO_ROOT . '/forum/' . url('index.php?id=' . $this->category->get_id(), 'cat-' . $this->category->get_id() . '+' . $this->category->get_rewrited_name() . '.php')
 						));
 						$display_cat = false;
@@ -130,9 +132,9 @@ class ForumHomeController extends ModuleController
 
 					$subforums = '';
 					$this->view->put_all(array(
-						'C_FORUM_ROOT_CAT' => false,
+						'C_FORUM_ROOT_CAT'  => false,
 						'C_FORUM_CHILD_CAT' => true,
-						'C_END_S_CATS' => false
+						'C_END_S_CATS'      => false
 					));
 
 					$children = CategoriesService::get_categories_manager('forum')->get_categories_cache()->get_children($row['cid']);
@@ -195,29 +197,30 @@ class ForumHomeController extends ModuleController
 
 					$this->view->assign_block_vars('forums_list.subcats', array_merge(
 						Date::get_array_tpl_vars($last_msg_date, 'LAST_MSG_DATE'), array(
-						'C_BLINK' => $blink,
-						'IMG_ANNOUNCE' => $img_announce,
-						'IDCAT' => $row['cid'],
-						'NAME' => $row['name'],
-						'DESC' => FormatingHelper::second_parse($row['subname']),
-						'SUBFORUMS' => $subforums,
-						'C_SUBFORUMS' => !empty($subforums),
-						'L_SUBFORUMS' => $LANG['subforum_s'],
-						'NBR_TOPIC' => $row['nbr_topic'],
-						'NBR_MSG' => $row['nbr_msg'],
-						'U_FORUM_URL' => $row['url'],
-						'U_FORUM_VARS' => ForumUrlBuilder::display_forum($row['cid'], $row['rewrited_name'])->rel(),
-						'C_LAST_TOPIC_MSG' => !empty($row['last_topic_id']),
-						'LAST_TOPIC_TITLE' => !empty($row['last_topic_id']) ? stripslashes($last_topic_title) : '',
-						'U_LAST_TOPIC' => PATH_TO_ROOT . "/forum/topic" . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . Url::encode_rewrite($row['title'])  . '.php'),
-						'U_LAST_MSG' => !empty($row['last_topic_id']) ? PATH_TO_ROOT . "/forum/topic" . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title'])  . '.php') . '#m' .  $last_msg_id : '',
-						'C_LAST_MSG_GUEST' => ($row['last_user_id']) != '-1',
-						'U_LAST_MSG_USER_PROFIL' => UserUrlBuilder::profile($row['last_user_id'])->rel(),
-						'LAST_MSG_USER_LOGIN' => $row['login'],
-						'LAST_MSG_USER_LEVEL' => UserService::get_level_class($row['user_level']),
+						'C_BLINK'                     => $blink,
+						'IMG_ANNOUNCE'                => $img_announce,
+						'IDCAT'                       => $row['cid'],
+						'NAME'                        => $row['name'],
+						'CSSNAME_CAT'                 => Url::encode_rewrite(TextHelper::strtolower($row['name'])),
+						'DESC'                        => FormatingHelper::second_parse($row['subname']),
+						'SUBFORUMS'                   => $subforums,
+						'C_SUBFORUMS'                 => !empty($subforums),
+						'L_SUBFORUMS'                 => $LANG['subforum_s'],
+						'NBR_TOPIC'                   => $row['nbr_topic'],
+						'NBR_MSG'                     => $row['nbr_msg'],
+						'U_FORUM_URL'                 => $row['url'],
+						'U_FORUM_VARS'                => ForumUrlBuilder::display_forum($row['cid'], $row['rewrited_name'])->rel(),
+						'C_LAST_TOPIC_MSG'            => !empty($row['last_topic_id']),
+						'LAST_TOPIC_TITLE'            => !empty($row['last_topic_id']) ? stripslashes($last_topic_title) : '',
+						'U_LAST_TOPIC'                => PATH_TO_ROOT . "/forum/topic" . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
+						'U_LAST_MSG'                  => !empty($row['last_topic_id']) ? PATH_TO_ROOT . "/forum/topic" . url('.php?' . $last_page . 'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title']) . '.php') . '#m' . $last_msg_id : '',
+						'C_LAST_MSG_GUEST'            => ($row['last_user_id']) != '-1',
+						'U_LAST_MSG_USER_PROFIL'      => UserUrlBuilder::profile($row['last_user_id'])->rel(),
+						'LAST_MSG_USER_LOGIN'         => $row['login'],
+						'LAST_MSG_USER_LEVEL'         => UserService::get_level_class($row['user_level']),
 						'C_LAST_MSG_USER_GROUP_COLOR' => !empty($last_group_color),
-						'LAST_MSG_USER_GROUP_COLOR' => $last_group_color,
-						'L_NO_MSG' => $LANG['no_message']
+						'LAST_MSG_USER_GROUP_COLOR'   => $last_group_color,
+						'L_NO_MSG'                    => $LANG['no_message']
 					)));
 				}
 			}
