@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 05
+ * @version     PHPBoost 6.0 - last update: 2021 04 12
  * @since       PHPBoost 3.0 - 2009 04 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -21,13 +21,13 @@ class FormFieldCheckbox extends AbstractFormField
 	 * Constructs a FormFieldCheckbox.
 	 * @param string $id Field identifier
 	 * @param string $label Field label
-	 * @param bool $checked FormFieldCheckbox::CHECKED if it's checked by default or FormFieldCheckbox::UNCHECKED if not checked.
+	 * @param bool $value FormFieldCheckbox::CHECKED if it's checked by default or FormFieldCheckbox::UNCHECKED if not checked.
 	 * @param string[] $field_options Map containing the options
 	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
 	 */
-	public function __construct($id, $label, $checked = self::UNCHECKED, array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, $value = self::UNCHECKED, array $field_options = array(), array $constraints = array())
 	{
-		parent::__construct($id, $label, $checked, $field_options, $constraints);
+		parent::__construct($id, $label, $value, $field_options, $constraints);
 		$this->set_css_form_field_class('form-field-checkbox');
 	}
 
