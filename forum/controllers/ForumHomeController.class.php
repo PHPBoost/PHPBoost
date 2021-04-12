@@ -63,7 +63,8 @@ class ForumHomeController extends ModuleController
 		$i = 0;
 
 		//On liste les catégories et sous-catégories.
-		$result = PersistenceContext::get_querier()->select('SELECT c.id AS cid, c.id_parent, c.name, c.rewrited_name, c.description as subname, c.url, c.last_topic_id, c.status as cat_status, t.id AS tid, t.id_category, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, t.status, m.user_id, m.display_name as login, m.level as user_level, m.user_groups, v.last_view_id
+		$result = PersistenceContext::get_querier()->select('
+		SELECT c.id AS cid, c.id_parent, c.name, c.rewrited_name, c.description AS subname, c.url, c.last_topic_id, c.status AS cat_status, t.id AS tid, t.id_category, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, t.status, m.user_id, m.display_name as login, m.level as user_level, m.user_groups, v.last_view_id
 		FROM ' . ForumSetup::$forum_cats_table . ' c
 		LEFT JOIN ' . ForumSetup::$forum_topics_table . ' t ON t.id = c.last_topic_id
 		LEFT JOIN ' . ForumSetup::$forum_view_table . ' v ON v.user_id = :user_id AND v.idtopic = t.id
@@ -107,7 +108,7 @@ class ForumHomeController extends ModuleController
 				$this->view->assign_block_vars('forums_list.cats', array(
 					'IDCAT'        => $row['cid'],
 					'NAME'         => $row['name'],
-					'CSSNAME_CAT'  => Url::encode_rewrite(TextHelper::strtolower($row['name'])),
+					'CSSNAME_CAT'  => TextHelper::strtolower($row['rewrited_name']),
 					'U_FORUM_VARS' => ForumUrlBuilder::display_category($row['cid'], $row['rewrited_name'])->rel()
 				));
 				$display_sub_cats = $row['cat_status'] == ForumCategory::STATUS_UNLOCKED;
@@ -124,7 +125,7 @@ class ForumHomeController extends ModuleController
 						$this->view->assign_block_vars('forums_list.cats', array(
 							'IDCAT'        => $this->category->get_id(),
 							'NAME'         => $this->category->get_name(),
-							'CSSNAME_CAT'  => Url::encode_rewrite(TextHelper::strtolower($this->category->get_name())),
+							'CSSNAME_CAT'  => TextHelper::strtolower($this->category->get_rewrited_name()),
 							'U_FORUM_VARS' => PATH_TO_ROOT . '/forum/' . url('index.php?id=' . $this->category->get_id(), 'cat-' . $this->category->get_id() . '+' . $this->category->get_rewrited_name() . '.php')
 						));
 						$display_cat = false;
@@ -201,7 +202,7 @@ class ForumHomeController extends ModuleController
 						'IMG_ANNOUNCE'                => $img_announce,
 						'IDCAT'                       => $row['cid'],
 						'NAME'                        => $row['name'],
-						'CSSNAME_CAT'                 => Url::encode_rewrite(TextHelper::strtolower($row['name'])),
+						'CSSNAME_CAT'                 => TextHelper::strtolower($row['rewrited_name']),
 						'DESC'                        => FormatingHelper::second_parse($row['subname']),
 						'SUBFORUMS'                   => $subforums,
 						'C_SUBFORUMS'                 => !empty($subforums),
