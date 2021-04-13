@@ -163,29 +163,9 @@ class StatsSaver
 			'windows nt 6.3' => 'windows8.1',
 			'windows nt 6.2' => 'windows8',
 			'windows nt 6.1|seven' => 'windowsseven',
-			'windows nt 6.0|vista' => 'windowsvista',
-			'windows nt 5.2|windows server 2003' => 'windowsserver2003',
-			'windows nt 5.1|windows xp' => 'windowsxp',
-			'windows nt 5.0|windows 2000' => 'windowsold',
-			'winnt|windows nt|windows nt 4.0'  => 'windowsold',
-			'windows 98|win98' => 'windowsold',
-			'win 9x 4.90|windows me' => 'windowsold',
-			'win95|win32|windows 95|windows 3.1' => 'windowsold',
-			'windows ce' => 'windowsold',
-			'windows phone' => 'windowsphone',
 			'linux|x11' => 'linux',
 			'macintosh|mac|ppc|powerpc' => 'macintosh',
-			'solaris|sunos' => 'sunos',
-			'nintendo wii' => 'wii',
-			'playstation portable' => 'psp',
-			'playstation 3' => 'playstation3',
-			'freebsd' => 'freebsd',
-			'aix' => 'aix',
-			'irix' => 'irix',
-			'hp-ux' => 'hp-ux',
-			'os2|os/2' => 'os2',
-			'netbsd' => 'netbsd',
-			'samsung|sony|nokia|blackberry|ipod|opera mini|palm|iemobile|smartphone|symbian' => 'phone'
+			'samsung|sony|nokia|blackberry|ipod|opera mini|palm|phone|iemobile|smartphone|symbian' => 'phone'
 		);
 		if (!empty($_SERVER['HTTP_USER_AGENT']) ) //On ignore si user agent vide.
 		{
@@ -229,7 +209,7 @@ class StatsSaver
 	public static function register_bot()
 	{
 		$current_robot = Robots::get_current_robot_name();
-		if ($current_robot!== null)
+		if ($current_robot !== null)
 		{
 			self::write_stats('robots', $current_robot, false);
 		}
