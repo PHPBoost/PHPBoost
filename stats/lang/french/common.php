@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 28
+ * @version     PHPBoost 6.0 - last update: 2021 04 13
  * @since       PHPBoost 1.6 - 2007 09 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -101,30 +101,12 @@ $stats_array_os = array(
 	'windows8.1'        => array('Windows 8.1', 'windows8.png'),
 	'windows8'          => array('Windows 8', 'windows8.png'),
 	'windowsseven'      => array('Windows 7', 'windowsseven.png'),
-	'windowsvista'      => array('Windows Vista', 'windowsvista.png'),
-	'windowsserver2003' => array('Windows Serveur 2003', 'windowsxp.png'),
-	'windowsxp'         => array('Windows XP', 'windowsxp.png'),
-	'windowsold'        => array('Ancien Windows (avant 2000)', 'windowsold.png'),
 
 	'linux'             => array('Linux', 'linux.png'),
-	'sunos'             => array('SunOS', 'sun.png'),
-	'os2'               => array('OS2', 'os2.png'),
-	'freebsd'           => array('FreeBSD', 'freebsd.png'),
-	'netbsd'            => array('NetBSD', 'freebsd.png'),
-	'aix'               => array('AIX', 'aix.png'),
-	'irix'              => array('Irix', 'irix.png'),
-	'hp-ux'             => array('HP-UX', 'hpux.png'),
-
-	'wii'               => array('Wii', 'wii.png'),
-	'psp'               => array('PSP', 'psp.png'),
-	'playstation3'      => array('Playstation 3', 'ps3.png'),
-	'playstation4'      => array('Playstation 4', 'ps3.png'),
-	'xboxone'           => array('Xbox One', 'other.png'),
 
 	'android'           => array('Android', 'android.png'),
 	'ios'               => array('IOS', 'iphone.png'),
 	'phone'             => array('Mobile', 'phone.png'),
-	'windowsphone'      => array('Windows phone', 'windows8.png'),
 
 	'other'             => array('Autres', 'other.png')
 );
