@@ -106,10 +106,10 @@ class ForumHomeController extends ModuleController
 			if ($row['id_parent'] == Category::ROOT_CATEGORY) //Si c'est une catégorie
 			{
 				$this->view->assign_block_vars('forums_list.cats', array(
-					'IDCAT'        => $row['cid'],
-					'NAME'         => $row['name'],
-					'CSSNAME_CAT'  => TextHelper::strtolower($row['rewrited_name']),
-					'U_FORUM_VARS' => ForumUrlBuilder::display_category($row['cid'], $row['rewrited_name'])->rel()
+					'IDCAT'         => $row['cid'],
+					'NAME'          => $row['name'],
+					'REWRITED_NAME' => $row['rewrited_name'],
+					'U_FORUM_VARS'  => ForumUrlBuilder::display_category($row['cid'], $row['rewrited_name'])->rel()
 				));
 				$display_sub_cats = $row['cat_status'] == ForumCategory::STATUS_UNLOCKED;
 			}
@@ -123,10 +123,10 @@ class ForumHomeController extends ModuleController
 					if ($display_cat) //Affichage des forums d'une catégorie, ajout de la catégorie.
 					{
 						$this->view->assign_block_vars('forums_list.cats', array(
-							'IDCAT'        => $this->category->get_id(),
-							'NAME'         => $this->category->get_name(),
-							'CSSNAME_CAT'  => TextHelper::strtolower($this->category->get_rewrited_name()),
-							'U_FORUM_VARS' => PATH_TO_ROOT . '/forum/' . url('index.php?id=' . $this->category->get_id(), 'cat-' . $this->category->get_id() . '+' . $this->category->get_rewrited_name() . '.php')
+							'IDCAT'         => $this->category->get_id(),
+							'NAME'          => $this->category->get_name(),
+							'REWRITED_NAME' => $this->category->get_rewrited_name(),
+							'U_FORUM_VARS'  => PATH_TO_ROOT . '/forum/' . url('index.php?id=' . $this->category->get_id(), 'cat-' . $this->category->get_id() . '+' . $this->category->get_rewrited_name() . '.php')
 						));
 						$display_cat = false;
 					}
@@ -202,7 +202,7 @@ class ForumHomeController extends ModuleController
 						'IMG_ANNOUNCE'                => $img_announce,
 						'IDCAT'                       => $row['cid'],
 						'NAME'                        => $row['name'],
-						'CSSNAME_CAT'                 => TextHelper::strtolower($row['rewrited_name']),
+						'REWRITED_NAME'               => $row['rewrited_name'],
 						'DESC'                        => FormatingHelper::second_parse($row['subname']),
 						'SUBFORUMS'                   => $subforums,
 						'C_SUBFORUMS'                 => !empty($subforums),
