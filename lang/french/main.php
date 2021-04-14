@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 27
+ * @version     PHPBoost 6.0 - last update: 2021 04 14
  * @since       PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -120,6 +120,7 @@ $LANG['title_s'] = 'Titres';
 $LANG['n_time'] = 'Fois';
 $LANG['written_by'] = 'Écrit par';
 $LANG['valid'] = 'Valide';
+$LANG['validate'] = 'Valider';
 $LANG['info'] = 'Informations';
 $LANG['asc'] = 'Croissant';
 $LANG['desc'] = 'Décroissant';

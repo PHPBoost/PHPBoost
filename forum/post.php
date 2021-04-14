@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 21
+ * @version     PHPBoost 6.0 - last update: 2021 04 14
  * @since       PHPBoost 1.2 - 2005 10 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -530,7 +530,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					'L_TITLE'              => $LANG['title'],
 					'L_DESC'               => $LANG['description'],
 					'L_MESSAGE'            => $LANG['message'],
-					'L_SUBMIT'             => $LANG['update'],
+					'L_SUBMIT'             => $LANG['validate'],
 					'L_PREVIEW'            => $LANG['preview'],
 					'L_RESET'              => $LANG['reset'],
 					'L_POLL'               => $LANG['poll'],
@@ -633,7 +633,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					'L_FORUM_INDEX'  => $LANG['forum_index'],
 					'L_EDIT_MESSAGE' => $LANG['edit_message'],
 					'L_MESSAGE'      => $LANG['message'],
-					'L_SUBMIT'       => $LANG['update'],
+					'L_SUBMIT'       => $LANG['validate'],
 					'L_PREVIEW'      => $LANG['preview'],
 					'L_RESET'        => $LANG['reset'],
 				);

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 04 14
  * @since       PHPBoost 1.5 - 2006 07 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -587,7 +587,7 @@ elseif (!empty($pm_edit)) // Edit PM, if recipient hasn't read it yet
 					'L_EDIT' => LangLoader::get_message('edit', 'common'),
 					'L_PRIVATE_MESSAGE' => $LANG['private_message'],
 					'L_MESSAGE' => $LANG['message'],
-					'L_SUBMIT' => $LANG['update'],
+					'L_SUBMIT' => $LANG['validate'],
 					'L_PREVIEW' => $LANG['preview'],
 					'L_RESET' => $LANG['reset']
 				));

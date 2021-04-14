@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 23
+ * @version     PHPBoost 6.0 - last update: 2021 04 14
  * @since       PHPBoost 1.5 - 2007 05 25
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -55,7 +55,7 @@ $tpl->put_all(array(
 	'L_WIKI_GROUPS' => $LANG['wiki_groups_config'],
 	'L_CONFIG_WIKI' => $LANG['wiki_config'],
 	'EXPLAIN_WIKI_GROUPS' => $LANG['explain_wiki_groups'],
-	'L_UPDATE' => $LANG['update'],
+	'L_UPDATE' => $LANG['validate'],
 	'L_RESET' => $LANG['reset'],
 	'L_CREATE_ARTICLE' => $LANG['wiki_auth_create_article'],
 	'L_CREATE_CAT' => $LANG['wiki_auth_create_cat'],

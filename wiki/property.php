@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 08 07
+ * @version     PHPBoost 6.0 - last update: 2021 04 14
  * @since       PHPBoost 1.6 - 2007 05 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -453,7 +453,7 @@ $tpl->put_all(array(
 	'L_EXPLAIN_REMOVE_CAT' => $LANG['wiki_explain_remove_cat'],
 	'L_FUTURE_CAT' => $LANG['wiki_future_cat'],
 	'L_ALERT_REMOVING_CAT' => str_replace('\'', '\\\'', $LANG['wiki_alert_removing_cat']),
-	'L_UPDATE' => $LANG['update'],
+	'L_UPDATE' => $LANG['validate'],
 	'L_RESET' => $LANG['reset'],
 	'L_CREATE_ARTICLE' => $LANG['wiki_auth_create_article'],
 	'L_CREATE_CAT' => $LANG['wiki_auth_create_cat'],

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 18
+ * @version     PHPBoost 6.0 - last update: 2021 04 14
  * @since       PHPBoost 2.0 - 2008 07 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -204,7 +204,7 @@ if ($contribution_id > 0)
 		'L_DELETE_CONTRIBUTION' => $LANG['delete.contribution'],
 		'L_CONFIRM_DELETE_CONTRIBUTION' => $LANG['confirm_delete_contribution'],
 		'L_DELETE' => LangLoader::get_message('delete', 'common'),
-		'L_UPDATE' => $LANG['update'],
+		'L_UPDATE' => $LANG['validate'],
 		'U_UPDATE' => url('contribution_panel.php?edit=' . $contribution_id),
 		'U_DELETE' => url('contribution_panel.php?del=' . $contribution_id . '&amp;token=' . AppContext::get_session()->get_token())
 	));

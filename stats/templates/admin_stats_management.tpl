@@ -49,9 +49,9 @@
 		</fieldset>
 
 		<fieldset class="fieldset-submit">
-			<legend>{@update}</legend>
+			<legend>{@validate}</legend>
 			<div class="fieldset-inset">
-				<button type="submit" name="valid" value="true" class="button submit">{@update}</button>
+				<button type="submit" name="valid" value="true" class="button submit">{@validate}</button>
 				<button type="reset" class="button reset-button" value="true">{@reset}</button>
 				<input type="hidden" name="token" value="{TOKEN}">
 			</div>

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 29
+ * @version     PHPBoost 6.0 - last update: 2021 04 14
  * @since       PHPBoost 1.2 - 2005 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -223,7 +223,7 @@ $tpl->put_all(array(
 	'L_UNIT_KO' => LangLoader::get_message('unit.kilobytes', 'common'),
 	'L_COLUMN' => $LANG['column'],
 	'L_EMPTY' => $LANG['empty'],
-	'L_UPDATE' => $LANG['update'],
+	'L_UPDATE' => $LANG['validate'],
 	'L_SUBMIT' => $LANG['submit'],
 	'L_RESET' => $LANG['reset']
 ));

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 23
+ * @version     PHPBoost 6.0 - last update: 2021 04 14
  * @since       PHPBoost 1.6 - 2006 11 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -68,7 +68,7 @@ $tpl->put_all(array(
 	'DISPLAY_CATEGORIES_ON_INDEX' => $config->are_categories_displayed_on_index() ? 'checked="checked"' : '',
 	'NUMBER_ARTICLES_ON_INDEX' => $config->get_number_articles_on_index(),
 	'DESCRIPTION' => FormatingHelper::unparse($config->get_index_text()),
-	'L_UPDATE' => $LANG['update'],
+	'L_UPDATE' => $LANG['validate'],
 	'L_RESET' => $LANG['reset'],
 	'L_PREVIEW' => $LANG['preview'],
 	'L_WIKI_MANAGEMENT' => $LANG['wiki_management'],

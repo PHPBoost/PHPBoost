@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 10
+ * @version     PHPBoost 6.0 - last update: 2021 04 14
  * @since       PHPBoost 1.2 - 2005 10 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -103,7 +103,7 @@ $template->put_all(array(
 	'L_NBR_MSG'                => $LANG['nbr_msg'],
 	'L_IMG_ASSOC'              => $LANG['img_assoc'],
 	'L_DELETE'                 => LangLoader::get_message('delete', 'common'),
-	'L_UPDATE'                 => $LANG['update'],
+	'L_UPDATE'                 => $LANG['validate'],
 	'L_RESET'                  => $LANG['reset'],
 	'L_ADD'                    => LangLoader::get_message('add', 'common')
 ));
