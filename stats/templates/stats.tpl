@@ -695,7 +695,7 @@
 										{@colors}
 									</th>
 									<th>
-										{@number.r.visit}
+										{@visits.number}
 									</th>
 								</tr>
 							</thead>

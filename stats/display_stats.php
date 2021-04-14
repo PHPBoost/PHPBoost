@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 26
+ * @version     PHPBoost 6.0 - last update: 2021 04 14
  * @since       PHPBoost 1.6 - 2007 08 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -325,8 +325,13 @@ elseif ($get_bot)
 		$array_robot[$lang['unknown']] = $array_robot['unknow_bot'];
 		unset($array_robot['unknow_bot']);
 	}
+	$robots_visits = array();
+	foreach ($array_robot as $key => $value)
+	{
+		$robots_visits[$key] = is_array($value) ? $value['visits_number'] : $value;
+	}
 
-	$Stats->load_data($array_robot, 'ellipse', 5);
+	$Stats->load_data($robots_visits, 'ellipse', 5);
 	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/stats/cache/bot.png');
 }
 

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 11
+ * @version     PHPBoost 6.0 - last update: 2021 04 14
  * @since       PHPBoost 4.0 - 2013 01 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -28,90 +28,29 @@ class Robots
 			foreach (self::get_robots_list() as $robot)
 			{
 				if (TextHelper::stripos($user_agent, $robot) !== false)
-					return $robot;
+					$user_agent = $robot;
 			}
 			if (preg_match('`(http:\/\/|bot|spider|crawl)+`iu', $user_agent))
 			{
-				if (preg_match('`Linux x86_64; ([^/]+)`iu', $user_agent, $matches) || preg_match('`compatible; ([^/]+)`iu', $user_agent, $matches))
-					return $matches[1];
-				else
-					return 'unknow_bot';
+				$result = (preg_match('`x86_64; ([^/]+)`iu', $user_agent, $matches) || preg_match('`x64; ([^/]+)`iu', $user_agent, $matches) || preg_match('`compatible; ([^/]+)`iu', $user_agent, $matches)) ? $matches[1] : $user_agent;
+				$result = preg_split('`(\ |;|\/|\+)`', $result);
+				$result = TextHelper::ucfirst(str_replace(array('(', ')'), '', $result[0]));
+				$result = preg_replace('`bot[0-9\.]+$`iu', 'Bot', $result);
+				$result = (preg_match('`bot`iu', $result) && !preg_match('`robot`iu', $result)) ? preg_replace('`bot$`iu', 'Bot', $result) : $result;
+				$result = preg_replace('`spider$`iu', 'Spider', $result);
+				return $result; == "Mozilla" ? 'unknow_bot' : $result;
 			}
 		}
 
 		return null;
 	}
 
-	// Robots list from https://udger.com/resources/ua-list/crawlers?c=1
+	// Robots with user-agents that don't match the regex
 	private static function get_robots_list()
 	{
 		return array(
-			'Googlebot',
-			'Bingbot',
-			'Yahoo',
-			'DuckDuckBot',
-			'Baiduspider',
-			'YandexBot',
-			'Sogou',
-			'Exabot',
-			'Exalead',
-			'Facebot',
-			'Qwantify',
 			'Applebot',
-			'13TABS',
-			'360Spider',
-			'AhrefsBot',
-			'AntBot',
-			'Apexoo Spider',
-			'Barkrowler',
-			'BehloolBot',
-			'CarianBot',
-			'Cliqzbot',
-			'coccocbot',
-			'Daumoa',
-			'DeuSu',
-			'DotBot',
-			'Elefent',
-			'exif-search',
-			'Findxbot',
-			'Gigabot',
-			'glindahl-cocrawler',
-			'Gowikibot',
-			'GrapeshotCrawler',
-			'ia_archiver',
-			'IstellaBot',
-			'KD Bot',
-			'KOCMOHABT bot',
-			'Laserlikebot',
-			'LetsearchBot',
-			'Mail.Ru bot',
-			'MegaIndex.ru',
-			'MojeekBot',
-			'NaverBot',
-			'omgilibot',
-			'parsijoo-bot',
-			'PetalBot',
-			'Plukkie',
-			'psbot',
-			'Seekport Crawler',
-			'SemrushBot',
-			'SeznamBot',
-			'SnowHaze SearcH',
-			'SOLOFIELD bot',
-			'Sosospider',
-			'TarmotGezgin',
-			'TeeRaidBot',
-			'TinEye',
-			'Toweyabot',
-			'UptimeRobot',
-			'vebidoobot',
-			'WBSearchBot',
-			'Wotbox',
-			'yacybot',
-			'YioopBot',
 			'YisouSpider',
-			'Yooo bot',
-			'yoozBot'
 		);
 	}
 }
