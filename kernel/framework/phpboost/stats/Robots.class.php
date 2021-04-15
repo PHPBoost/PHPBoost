@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 14
+ * @version     PHPBoost 6.0 - last update: 2021 04 15
  * @since       PHPBoost 4.0 - 2013 01 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -38,7 +38,7 @@ class Robots
 				$result = preg_replace('`bot[0-9\.]+$`iu', 'Bot', $result);
 				$result = (preg_match('`bot`iu', $result) && !preg_match('`robot`iu', $result)) ? preg_replace('`bot$`iu', 'Bot', $result) : $result;
 				$result = preg_replace('`spider$`iu', 'Spider', $result);
-				return $result; == "Mozilla" ? 'unknow_bot' : $result;
+				return $result == "Mozilla" ? 'unknow_bot' : $result;
 			}
 		}
 
@@ -49,6 +49,7 @@ class Robots
 	private static function get_robots_list()
 	{
 		return array(
+			'360Spider',
 			'Applebot',
 			'YisouSpider',
 		);
