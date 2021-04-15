@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 31
+ * @version     PHPBoost 6.0 - last update: 2021 04 15
  * @since       PHPBoost 1.2 - 2005 07 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -12,6 +12,7 @@
 */
 
 require_once('../admin/admin_begin.php');
+define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 $lang = LangLoader::get('common', 'stats');
 $main_lang = LangLoader::get('main');
