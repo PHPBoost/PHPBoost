@@ -38,7 +38,8 @@ class Robots
 				$result = preg_replace('`bot[0-9\.]+$`iu', 'Bot', $result);
 				$result = (preg_match('`bot`iu', $result) && !preg_match('`robot`iu', $result)) ? preg_replace('`bot$`iu', 'Bot', $result) : $result;
 				$result = preg_replace('`spider$`iu', 'Spider', $result);
-				return $result == "Mozilla" ? 'unknow_bot' : $result;
+				$result = ($result == "Sogou" ? 'Sogou Spider' : $result);
+				return ($result == "Mozilla" ? 'unknow_bot' : $result);
 			}
 		}
 
