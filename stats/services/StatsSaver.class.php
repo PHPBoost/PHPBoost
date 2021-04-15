@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 13
+ * @version     PHPBoost 6.0 - last update: 2021 04 15
  * @since       PHPBoost 2.0 - 2008 08 23
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -210,9 +210,7 @@ class StatsSaver
 	{
 		$current_robot = Robots::get_current_robot_name();
 		if ($current_robot !== null)
-		{
-			self::write_stats('robots', $current_robot, false);
-		}
+			self::write_robots_stats($current_robot);
 	}
 
 	/**
@@ -240,31 +238,137 @@ class StatsSaver
     /**
 	 * @desc Save stats to file
 	 */
-	private static function write_stats($file_path, $stats_item, $strtolower = true)
+	private static function write_stats($file_path, $stats_item)
 	{
 		$file_path = PATH_TO_ROOT . '/stats/cache/' . $file_path . '.txt';
 		if (!file_exists($file_path))
-		{
-			$file = @fopen($file_path, 'w+');
-			@fwrite($file, TextHelper::serialize(array()));
-			@fclose($file);
-		}
+			self::create_stats_file($file_path);
 		if (is_file($file_path) && is_writable($file_path))
 		{
 			$line = file($file_path);
 			if (isset($line[0]))
 			{
 				$stats_array = TextHelper::unserialize($line[0]);
-				if (isset($stats_array[$strtolower ? TextHelper::strtolower($stats_item) : $stats_item]))
-					$stats_array[$strtolower ? TextHelper::strtolower($stats_item) : $stats_item]++;
+				if (isset($stats_array[TextHelper::strtolower($stats_item)]))
+					$stats_array[TextHelper::strtolower($stats_item)]++;
 				else
-					$stats_array[$strtolower ? TextHelper::strtolower($stats_item) : $stats_item] = 1;
+					$stats_array[TextHelper::strtolower($stats_item)] = 1;
 
-				$file = @fopen($file_path, 'r+');
-				fwrite($file, TextHelper::serialize($stats_array));
-				fclose($file);
+				self::save_stats_to_file($file_path, $stats_array);
 			}
 		}
+	}
+
+    /**
+	 * @desc Save robots stats to file
+	 */
+	private static function write_robots_stats($current_robot)
+	{
+		$file_path = PATH_TO_ROOT . '/stats/cache/robots.txt';
+		if (!file_exists($file_path))
+			self::create_stats_file($file_path);
+		if (is_file($file_path) && is_writable($file_path))
+		{
+			$line = file($file_path);
+			if (isset($line[0]))
+			{
+				$stats_array = TextHelper::unserialize($line[0]);
+
+				$list = array(strtolower($current_robot), ucfirst(strtolower($current_robot)));
+				if (preg_match('`bot`iu', $current_robot) && !preg_match('`robot`iu', $current_robot))
+				{
+					$bot_name = preg_replace('`bot$`iu', '', $current_robot);
+					$list[] = strtolower($bot_name);
+					$list[] = ucfirst(strtolower($bot_name));
+				}
+				if (preg_match('`spider`iu', $current_robot))
+				{
+					$bot_name = preg_replace('`spider$`iu', '', $current_robot);
+					$list[] = strtolower($bot_name);
+					$list[] = ucfirst(strtolower($bot_name));
+				}
+				
+				$delete_cache_file = false;
+				foreach ($list as $name)
+				{
+					if (isset($stats_array[$name]))
+					{
+						if (isset($stats_array[$current_robot]))
+						{
+							if (is_array($stats_array[$current_robot]))
+							{
+								if (is_array($stats_array[$name]))
+									$stats_array[$current_robot]['visits_number'] += $stats_array[$name]['visits_number'];
+								else
+									$stats_array[$current_robot]['visits_number'] += $stats_array[$name];
+							}
+							else
+							{
+								if (is_array($stats_array[$name]))
+									$stats_array[$current_robot] += $stats_array[$name]['visits_number'];
+								else
+									$stats_array[$current_robot] += $stats_array[$name];
+							}
+						}
+						else
+						{
+							if (is_array($stats_array[$name]))
+								$stats_array[$current_robot] = $stats_array[$name]['visits_number'];
+							else
+								$stats_array[$current_robot] = $stats_array[$name];
+						}
+						
+						unset($stats_array[$name]);
+						$delete_cache_file = true;
+					}
+				}
+
+				if (isset($stats_array[$current_robot]))
+				{
+					$visits_number = is_array($stats_array[$current_robot]) ? $stats_array[$current_robot]['visits_number']++ : $stats_array[$current_robot]++;
+					$stats_array[$current_robot] = array(
+						'visits_number' => $visits_number,
+						'last_seen'     => time()
+					);
+				}
+				else
+				{
+					$stats_array[$current_robot] = array(
+						'visits_number' => 1,
+						'last_seen'     => time()
+					);
+				}
+				
+				if ($delete_cache_file)
+				{
+					$file = new File($file_path);
+					$file->delete();
+					self::create_stats_file($file_path);
+				}
+				
+				self::save_stats_to_file($file_path, $stats_array);
+			}
+		}
+	}
+	
+	/**
+	 * @desc Create stats file
+	 */
+	private static function create_stats_file($file_path)
+	{
+		$file = @fopen($file_path, 'w+');
+		@fwrite($file, TextHelper::serialize(array()));
+		@fclose($file);
+	}
+	
+	/**
+	 * @desc Save stats to file
+	 */
+	private static function save_stats_to_file($file_path, array $stats_array)
+	{
+		$file = @fopen($file_path, 'r+');
+		fwrite($file, TextHelper::serialize($stats_array));
+		fclose($file);
 	}
 }
 ?>

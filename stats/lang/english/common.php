@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 14
+ * @version     PHPBoost 6.0 - last update: 2021 04 15
  * @since       PHPBoost 1.6 - 2007 09 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -34,6 +34,7 @@ $lang['unknown_bot'] = 'Unknown robot';
 $lang['erase.rapport'] = 'Erase rapport';
 $lang['visits.number'] = 'Visits number';
 $lang['last.seen'] = 'Last seen';
+$lang['last.seen.unknown'] = 'A long time ago';
 
 // Statistiques
 $lang['site'] = 'Site';

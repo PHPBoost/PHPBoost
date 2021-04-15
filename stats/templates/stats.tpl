@@ -697,25 +697,31 @@
 									<th>
 										{@visits.number}
 									</th>
+									<th>
+										{@last.seen}
+									</th>
 								</tr>
 							</thead>
 							<tbody>
 								# START list #
 									<tr>
 										<td>
-											 {list.L_NAME}  <span class="smaller">({list.PERCENT}%)</span>
+											# IF list.C_BOT_DETAILS #<a href="{list.U_BOT_DETAILS}"># ENDIF #{list.L_NAME}# IF list.C_BOT_DETAILS #</a># ENDIF # <span class="smaller">({list.PERCENT}%)</span>
 										</td>
 										<td>
 											<div class="stats-color-square" style="background-color: {list.COLOR};"></div>
 										</td>
 										<td>
-											{list.VIEWS}
+											{list.VISITS_NUMBER}
+										</td>
+										<td>
+											{list.LAST_SEEN}
 										</td>
 									</tr>
 								# END list #
 								# IF NOT C_ROBOTS_DATA #
 								<tr>
-									<td colspan="3">
+									<td colspan="4">
 									${LangLoader::get_message('no_item_now', 'common')}
 									</td>
 								</tr>

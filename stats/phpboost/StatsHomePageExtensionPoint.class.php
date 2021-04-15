@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 02
+ * @version     PHPBoost 6.0 - last update: 2021 04 15
  * @since       PHPBoost 3.0 - 2012 02 08
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -1150,38 +1150,44 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				$array_robot[$lang['unknown']] = $array_robot['unknow_bot'];
 				unset($array_robot['unknow_bot']);
 			}
+			$robots_visits = array();
 			$robots_visits_number = 0;
 			foreach ($array_robot as $key => $value)
 			{
-				$robots_visits_number += $value;
+				$robots_visits[$key] = is_array($value) ? $value['visits_number'] : $value;
+				$robots_visits_number += $robots_visits[$key];
 			}
 
 			if ($robots_visits_number)
 			{
 				$Stats = new ImagesStats();
-				$Stats->load_data($array_robot, 'ellipse');
+				$Stats->load_data($robots_visits, 'ellipse');
 				foreach ($Stats->data_stats as $key => $angle_value)
 				{
-						$array_color = $Stats->array_allocated_color[$Stats->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
-						$view->assign_block_vars('list', array(
-							'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
-							'VIEWS' => $array_robot[$key],
-							'PERCENT' => NumberHelper::round(($angle_value/3.6), 1),
-							'L_NAME' => $key
-						));
+					$bot_details_url = 'https://udger.com/resources/ua-list/bot-detail?bot=' . urlencode($key);
+					$array_color = $Stats->array_allocated_color[$Stats->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
+					$view->assign_block_vars('list', array(
+						'C_BOT_DETAILS' => $key != $lang['unknown'],
+						'COLOR'         => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
+						'VISITS_NUMBER' => $robots_visits[$key],
+						'LAST_SEEN'     => is_array($array_robot[$key]) && isset($array_robot[$key]['last_seen']) ? Date::to_format($array_robot[$key]['last_seen'], Date::FORMAT_DAY_MONTH_YEAR) : $lang['last.seen.unknown'],
+						'PERCENT'       => NumberHelper::round(($angle_value/3.6), 1),
+						'L_NAME'        => $key,
+						'U_BOT_DETAILS' => $bot_details_url,
+					));
 				}
 			}
 
 			$view->put_all(array(
 				'C_STATS_ROBOTS' => true,
-				'C_ROBOTS_DATA' => $robots_visits_number,
+				'C_ROBOTS_DATA'  => $robots_visits_number,
 			));
 		}
 		else
 		{
 			$view->put_all(array(
 				'C_STATS_SITE' => true,
-				'START' => GeneralConfig::load()->get_site_install_date()->format(Date::FORMAT_DAY_MONTH_YEAR),
+				'START'   => GeneralConfig::load()->get_site_install_date()->format(Date::FORMAT_DAY_MONTH_YEAR),
 				'VERSION' => GeneralConfig::load()->get_phpboost_major_version()
 			));
 		}
