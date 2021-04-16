@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 09
+ * @version     PHPBoost 6.0 - last update: 2021 04 16
  * @since       PHPBoost 3.0 - 2010 02 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -63,9 +63,9 @@ class AdminViewAllMembersController extends AdminController
 		), new HTMLTableSortingRule('display_name', HTMLTableSortingRule::ASC));
 
 		$table_model->set_filters_menu_title(LangLoader::get_message('filter.members', 'admin-user-common'));
-		$table_model->add_filter(new HTMLTableBeginsWithTextSQLFilter('display_name', 'filter1', $this->lang['display_name']));
+		$table_model->add_filter(new HTMLTableContainsTextSQLFilter('display_name', 'filter1', $this->lang['display_name']));
 		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('level', 'filter2', $this->lang['level'], array(2 => LangLoader::get_message('admin_s', 'main'), 1 => LangLoader::get_message('modo_s', 'main'), 0 => LangLoader::get_message('member_s', 'main'))));
-		$table_model->add_filter(new HTMLTableBeginsWithTextSQLFilter('email', 'filter3', $this->lang['email']));
+		$table_model->add_filter(new HTMLTableContainsTextSQLFilter('email', 'filter3', $this->lang['email']));
 		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('registration_date', 'filter4', $this->lang['registration_date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('minimum', 'common'))));
 		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('registration_date', 'filter5', $this->lang['registration_date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('maximum', 'common'))));
 		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('last_connection_date', 'filter6', $this->lang['last_connection'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('minimum', 'common'))));
