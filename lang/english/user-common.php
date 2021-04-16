@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 10
+ * @version     PHPBoost 6.0 - last update: 2021 04 16
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,6 +15,61 @@
 #                     English                      #
 ####################################################
 
+// Labels
+$lang['user.welcome'] = 'Welcome';
+
+// Form alerts
+$lang['user.required.username'] = 'Please enter a username !';
+$lang['user.required.password'] = 'Please enter a password !';
+
+// Connexion panel
+$lang['user.username']           = 'Username';
+$lang['user.username.tooltip']   = 'If you didn\'t checked "Choose a login" in your account, you have to connect with your email address.';
+$lang['user.password']           = 'Password';
+$lang['user.sign.in']            = 'Sign in';
+$lang['user.auto.connect']       = 'Auto connect';
+$lang['user.sign.out']           = 'Sign out';
+$lang['user.sign.up']            = 'Sign up';
+$lang['user.forgotten.password'] = 'Forgotten password';
+
+// Registration page
+
+//Forget password
+$lang['user.change.password']            = 'Change password';
+$lang['user.forgotten.password.select']  = 'Select the field you want to informat (email or login)';
+$lang['user.forgotten.password.success'] = 'An email has been sent with a link to change your password';
+$lang['user.forgotten.password.error']   = 'Information provided are not correct, please correct it and try again';
+$lang['user.forgotten.password.mail.content'] = 'Dear(e) :pseudo,
+
+You are receiving this email because you (or someone claiming to be) have requested a new password to be sent to your account :host.
+If you have not asked to change your password, please ignore it. If you continue to receive it, please contact the site administrator.
+
+To change your password, click on the link below and follow the directions on the site.
+
+:change_password_link
+
+If you have problems, please contact the site administrator.
+
+:signature';
+
+// Dashboard
+$lang['user.private.messaging']  = 'Private messaging';
+$lang['user.admin.panel']        = 'Admin panel';
+$lang['user.moderation.panel']   = 'Moderation panel';
+$lang['user.contribution.panel'] = 'Contribution panel';
+$lang['user.dashboard']          = 'Dashboard';
+$lang['user.my.account']         = 'My account';
+$lang['user.my.profile']         = 'My profile';
+
+// Ranks
+$lang['user.rank.rank'] = 'Rank';
+$lang['user.rank.robot'] = 'Robot';
+$lang['user.rank.visitor'] = 'Visitor';
+$lang['user.rank.member'] = 'Member';
+$lang['user.rank.moderator'] = 'Moderator';
+$lang['user.rank.administrator'] = 'Administrator';
+
+// ######################### To be rearranged
 $lang['user'] = 'User';
 $lang['users'] = 'Users';
 $lang['profile'] = 'Profile';
@@ -70,14 +125,14 @@ Comment :<br />
 //User fields
 $lang['display_name'] = 'Display name';
 $lang['display_name.explain'] = 'Display name on each item you add.';
-$lang['login'] = 'Login';
+$lang['login'] = 'Login'; // ###
 $lang['login.explain'] = 'Email address or your customized login if you chose one.';
 $lang['login.custom'] = 'Choose a login';
 $lang['login.custom.explain'] = '<span class="error">Default, you must log in with your email address.</span>';
-$lang['login.tooltip'] = 'If you didn\'t checked "Choose a login" in your account, you have to connect with your email address.';
+$lang['login.tooltip'] = 'If you didn\'t checked "Choose a login" in your account, you have to connect with your email address.'; // ###
 $lang['password.custom'] = 'Define a password';
 $lang['password.custom.explain'] = 'The password is automatically generated per default';
-$lang['password'] = 'Password';
+$lang['password'] = 'Password'; // ###
 $lang['password.new'] = 'New password';
 $lang['password.old'] = 'Old password';
 $lang['password.old.explain'] = 'Complete only if amended';
@@ -141,7 +196,7 @@ $lang['share_by'] = 'Share by';
 $lang['share.menu'] = 'Social network menu';
 $lang['share.sms'] = 'SMS';
 
-// Ranks
+// Ranks #######################################
 $lang['rank'] = 'Rank';
 $lang['robot'] = 'Robot';
 $lang['visitor'] = 'Visitor';

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 14
+ * @version     PHPBoost 6.0 - last update: 2021 04 16
  * @since       PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -57,11 +57,11 @@ $LANG['message_s'] = 'Messages';
 //Alertes formulaires
 $LANG['require_title'] = 'Veuillez entrer un titre !';
 $LANG['require_text'] = 'Veuillez entrer un texte !';
-$LANG['require_pseudo'] = 'Veuillez entrer un pseudo !';
+$LANG['require_pseudo'] = 'Veuillez entrer un pseudo !'; // ### -> user
 $LANG['require_mail'] = 'Veuillez entrer un mail valide !';
 $LANG['require_subcat'] = 'Veuillez sélectionner une sous-catégorie !';
 $LANG['require_url'] = 'Veuillez entrer une url valide !';
-$LANG['require_password'] = 'Veuillez entrer un mot de passe !';
+$LANG['require_password'] = 'Veuillez entrer un mot de passe !'; // ### -> user
 $LANG['require_recipient'] = 'Veuillez entrer le destinataire du message !';
 
 //Alertes
@@ -76,8 +76,8 @@ $LANG['share.email'] = 'Partager par email';
 $LANG['share.sms'] = 'Partager par sms';
 
 //Connexion
-$LANG['private_messaging'] = 'Messagerie privée';
-$LANG['my_private_profile'] = 'Mon profil';
+$LANG['private_messaging'] = 'Messagerie privée'; // ### -> user
+$LANG['my_private_profile'] = 'Mon profil'; // ### -> user
 
 //Maintain
 $LANG['maintain'] = 'Le site est actuellement en maintenance. Merci de votre patience.';
@@ -141,8 +141,8 @@ $LANG['average'] = 'Moyenne';
 $LANG['page'] = 'Page';
 $LANG['illimited'] = 'Illimité';
 $LANG['unspecified'] = 'Non spécifié';
-$LANG['admin_panel'] = 'Panneau d\'administration';
-$LANG['modo_panel'] = 'Panneau de modération';
+$LANG['admin_panel'] = 'Panneau d\'administration'; // ### -> user
+$LANG['modo_panel'] = 'Panneau de modération'; // ### -> user
 $LANG['group'] = 'Groupe';
 $LANG['groups'] = 'Groupes';
 $LANG['size'] = 'Taille';
@@ -216,7 +216,7 @@ $LANG['contact'] = 'Contact';
 $LANG['registered'] = 'Inscrit';
 $LANG['registered_s'] = 'Inscrits';
 $LANG['registered_on'] = 'Inscrit le';
-$LANG['private_message'] = 'Messagerie privée';
+$LANG['private_message'] = 'Messagerie privée'; // ### -> user
 $LANG['nbr_message'] = 'Nombre de message(s)';
 $LANG['member_msg_display'] = 'Afficher les messages du membre';
 $LANG['member_msg'] = 'Messages du membre';
@@ -280,7 +280,7 @@ $LANG['upload_folder_contains_folder'] = 'Vous souhaitez placer cette catégorie
 $LANG['popup_insert'] = 'Insérer le code dans le formulaire';
 
 // Moderation panel
-$LANG['moderation_panel'] = 'Panneau de modération';
+$LANG['moderation_panel'] = 'Panneau de modération'; // ### -> user
 $LANG['user_contact_pm'] = 'Contacter par message privé';
 $LANG['user_alternative_pm'] = 'Message privé envoyé au membre <span class="smaller">(Laisser vide pour aucun message privé)</span>. <br />Le membre averti ne pourra pas répondre à ce message, et ne connaîtra pas l\'expéditeur.';
 
@@ -329,7 +329,7 @@ S\'il s\'agit d\'une erreur veuillez contacter l\'administrateur du site.
 %s';
 
 //Panneau de contribution
-$LANG['contribution_panel'] = 'Panneau de contribution';
+$LANG['contribution_panel'] = 'Panneau de contribution'; // ### -> user
 $LANG['contribution'] = 'Contribution';
 $LANG['contribution.details'] = 'Détails de la contribution';
 $LANG['contribution_status_unread'] = 'Non traitée';

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 06
+ * @version     PHPBoost 6.0 - last update: 2021 04 16
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,6 +15,62 @@
 #                     French                       #
 ####################################################
 
+// Labels
+$lang['user.welcome'] = 'Bienvenue';
+
+// Form alerts
+$lang['user.required.username'] = 'Veuillez entrer un nom d\'utilisateur !';
+$lang['user.required.password'] = 'Veuillez entrer un mot de passe !';
+
+// Connexion panel
+$lang['user.username']           = 'Identifiant de connexion';
+$lang['user.username.tooltip']   = 'Si vous n\'avez pas coché "Choisir un identifiant de connexion" dans votre profil, connectez-vous avec l\'adresse email que vous avez déclarée.';
+$lang['user.password']           = 'Mot de passe';
+$lang['user.sign.in']            = 'Connexion';
+$lang['user.auto.connect']        = 'Connexion automatique';
+$lang['user.sign.out']           = 'Déconnexion';
+$lang['user.sign.up']            = 'S\'inscrire';
+$lang['user.forgotten.password'] = 'Mot de passe oublié';
+
+// Registration page
+
+//Forgotten password
+$lang['user.change.password']            = 'Changement de mot de passe';
+$lang['user.forgotten.password.select']  = 'Sélectionnez le champ que vous voulez renseigner (email ou pseudo)';
+$lang['user.forgotten.password.success'] = 'Un email vous a été envoyé avec un lien pour changer votre mot de passe';
+$lang['user.forgotten.password.error']   = 'Les informations fournies ne sont pas correctes, veuillez les rectifier et réessayer';
+$lang['user.forgotten.password.mail.content'] = 'Cher(e) :pseudo,
+
+Vous recevez cet e-mail parce que vous (ou quelqu\'un qui prétend l\'être) avez demandé à ce qu\'un nouveau mot de passe vous soit envoyé pour votre compte sur :host.
+Si vous n\'avez pas demandé de changement de mot de passe, veuillez l\'ignorer. Si vous continuez à le recevoir, veuillez contacter l\'administrateur du site.
+
+Pour changer de mot de passe, cliquez sur le lien fourni ci-dessous et suivez les indications sur le site.
+
+:change_password_link
+
+Si vous rencontrez des difficultés, veuillez contacter l\'administrateur du site.
+
+:signature';
+
+// Dashboard
+$lang['user.private.messaging']  = 'Messagerie privée';
+$lang['user.admin.panel']        = 'Panneau d\'administration';
+$lang['user.moderation.panel']   = 'Panneau de modération';
+$lang['user.contribution.panel'] = 'Panneau de contribution';
+$lang['user.dashboard']          = 'Tableau de bord';
+$lang['user.my.account']         = 'Mon compte';
+$lang['user.my.profile']         = 'Mon profil';
+
+// Ranks
+$lang['user.rank.rank']          = 'Rang';
+$lang['user.rank.robot']         = 'Robot';
+$lang['user.rank.visitor']       = 'Visiteur';
+$lang['user.rank.member']        = 'Membre';
+$lang['user.rank.moderator']     = 'Modérateur';
+$lang['user.rank.administrator'] = 'Administrateur';
+
+// ###################### To be rearranged
+// Old method
 $lang['user'] = 'Utilisateur';
 $lang['users'] = 'Utilisateurs';
 $lang['profile'] = 'Profil';
@@ -23,7 +79,7 @@ $lang['profile.edit'] = 'Edition du profil';
 $lang['dashboard'] = 'Tableau de bord';
 $lang['messages'] = 'Messages de l\'utilisateur';
 $lang['maintain'] = 'Maintenance';
-$lang['welcome'] = 'Bienvenue';
+$lang['welcome'] = 'Bienvenue'; // ###
 $lang['about.author'] = 'À propos de l\'auteur';
 
 $lang['members.all'] = 'Tous les membres';
@@ -67,17 +123,17 @@ Commentaire :<br />
 <br />
 <a href=":contribution_url">Accéder à la contribution</a>';
 
-//User fields
+// User fields
 $lang['display_name'] = 'Nom d\'affichage';
 $lang['display_name.explain'] = 'Nom affiché sur chacun des éléments que vous ajoutez.';
-$lang['login'] = 'Identifiant de connexion';
+$lang['login'] = 'Identifiant de connexion'; // ###
 $lang['login.explain'] = 'Adresse email ou votre login personnalisé si vous en avez choisi un.';
 $lang['login.custom'] = 'Choisir un identifiant de connexion';
 $lang['login.custom.explain'] = '<span class="error">Si non coché, vous devrez vous connecter avec votre adresse email</span>';
-$lang['login.tooltip'] = 'Si vous n\'avez pas coché "Choisir un identifiant de connexion" dans votre profil, connectez-vous avec l\'adresse email que vous avez déclarée.';
+$lang['login.tooltip'] = 'Si vous n\'avez pas coché "Choisir un identifiant de connexion" dans votre profil, connectez-vous avec l\'adresse email que vous avez déclarée.'; // ###
 $lang['password.custom'] = 'Définir un mot de passe';
 $lang['password.custom.explain'] = 'Par défaut un mot de passe est généré automatiquement';
-$lang['password'] = 'Mot de passe';
+$lang['password'] = 'Mot de passe'; // ###
 $lang['password.new'] = 'Nouveau mot de passe';
 $lang['password.old'] = 'Ancien mot de passe';
 $lang['password.old.explain'] = 'Remplir seulement en cas de modification';
@@ -123,9 +179,9 @@ $lang['no_member'] = 'Aucun membre dans ce groupe';
 $lang['caution'] = 'Avertissement';
 $lang['readonly'] = 'Lecture seule';
 $lang['banned'] = 'Banni';
-$lang['connection'] = 'Connexion';
-$lang['autoconnect'] = 'Connexion auto';
-$lang['disconnect'] = 'Se déconnecter';
+$lang['connection'] = 'Connexion'; // ###
+$lang['autoconnect'] = 'Connexion auto'; // ###
+$lang['disconnect'] = 'Se déconnecter'; // ###
 
 $lang['internal_connection'] = 'Connexion interne';
 $lang['create_internal_connection'] = 'Créer un compte interne';
@@ -141,7 +197,7 @@ $lang['share_by'] = 'Partager par';
 $lang['share.menu'] = 'Menu réseaux sociaux';
 $lang['share.sms'] = 'SMS';
 
-// Ranks
+// Ranks #######################################
 $lang['rank'] = 'Rang';
 $lang['robot'] = 'Robot';
 $lang['visitor'] = 'Visiteur';
@@ -149,7 +205,7 @@ $lang['member'] = 'Membre';
 $lang['moderator'] = 'Modérateur';
 $lang['administrator'] = 'Administrateur';
 
-//Forget password
+//Forget password #################################
 $lang['forget-password'] = 'Mot de passe oublié';
 $lang['forget-password.select'] = 'Sélectionnez le champ que vous voulez renseigner (email ou pseudo)';
 $lang['forget-password.success'] = 'Un email vous a été envoyé avec un lien pour changer votre mot de passe';

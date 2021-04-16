@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 26
+ * @version     PHPBoost 6.0 - last update: 2021 04 16
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -17,17 +17,16 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 		return self::BLOCK_POSITION__SUB_HEADER;
 	}
 
-	public function display($tpl = false)
+	public function display($view = false)
 	{
-		$lang = LangLoader::get('main');
-
 		if (!Url::is_current_url('/login'))
 		{
-			$tpl = new FileTemplate('connect/connect_mini.tpl');
-			$tpl->add_lang(LangLoader::get('user-common'));
+			$view = new FileTemplate('connect/connect_mini.tpl');
+			$view->add_lang(LangLoader::get('user-common'));
 			$user = AppContext::get_current_user();
-			MenuService::assign_positions_conditions($tpl, $this->get_block());
-			if ($user->check_level(User::MEMBER_LEVEL)) //Connecté.
+			MenuService::assign_positions_conditions($view, $this->get_block());
+
+			if ($user->check_level(User::MEMBER_LEVEL)) // if user is connected.
 			{
 				$unread_contributions = UnreadContributionsCache::load();
 
@@ -77,32 +76,26 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 
 				$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 
-				$tpl->put_all(array(
-					'C_ADMIN_AUTH' => $user->check_level(User::ADMIN_LEVEL),
-					'C_MODERATOR_AUTH' => $user->check_level(User::MODERATOR_LEVEL),
-					'C_UNREAD_CONTRIBUTION' => $contribution_number != 0,
-					'C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION' => $contribution_number > 0,
-					'C_UNREAD_ALERT' => (bool)AdministratorAlertService::get_number_unread_alerts(),
-					'C_HAS_PM' => $user->get_unread_pm() > 0,
-					'C_USER_GROUP_COLOR' => !empty($user_group_color),
-					'C_USER_AVATAR' => $user_avatar || $user_accounts_config->is_default_avatar_enabled(),
-					'NUMBER_UNREAD_CONTRIBUTIONS' => $contribution_number,
-					'NUMBER_UNREAD_ALERTS' => AdministratorAlertService::get_number_unread_alerts(),
-					'NUMBER_PM' => $user->get_unread_pm(),
-					'NUMBER_TOTAL_ALERT' => $total_alert,
-					'PSEUDO' => $user->get_display_name(),
-					'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
-					'USER_GROUP_COLOR' => $user_group_color,
+				$view->put_all(array(
+					'C_UNREAD_CONTRIBUTIONS'  => $contribution_number != 0,
+					'C_SEVERAL_CONTRIBUTIONS' => $contribution_number > 1,
+					'C_UNREAD_ALERTS'         => (bool)AdministratorAlertService::get_number_unread_alerts(),
+					'C_HAS_PM'                => $user->get_unread_pm() > 0,
+					'C_SEVERAL_PM'			  => $user->get_unread_pm() > 1,
+					'C_USER_GROUP_COLOR'      => !empty($user_group_color),
+					'C_USER_AVATAR'           => $user_avatar || $user_accounts_config->is_default_avatar_enabled(),
+
+					'ALERTS_TOTAL_NUMBER'         => $total_alert,
+					'UNREAD_CONTRIBUTIONS_NUMBER' => $contribution_number,
+					'UNREAD_ALERTS_NUMBER'        => AdministratorAlertService::get_number_unread_alerts(),
+					'PM_NUMBER'                   => $user->get_unread_pm(),
+					'USER_DISPLAYED_NAME'         => $user->get_display_name(),
+					'USER_LEVEL_CLASS'            => UserService::get_level_class($user->get_level()),
+					'USER_GROUP_COLOR'            => $user_group_color,
+
 					'U_USER_PROFILE' => UserUrlBuilder::profile($user->get_id())->rel(),
-					'U_USER_PM' => UserUrlBuilder::personnal_message($user->get_id())->rel(),
-					'U_USER_AVATAR' => $user_avatar ? Url::to_rel($user_avatar) : $user_accounts_config->get_default_avatar(),
-					'L_NBR_PM'  => $user->get_unread_pm() > 0 ? ($user->get_unread_pm() . ' ' . ($user->get_unread_pm() > 1 ? $lang['message_s'] : $lang['message'])) : $lang['private_messaging'],
-					'L_MESSAGE' => $user->get_unread_pm() > 1 ? $lang['message_s'] : $lang['message'],
-					'L_PM_PANEL' => $lang['private_messaging'],
-					'L_ADMIN_PANEL' => $lang['admin_panel'],
-					'L_MODO_PANEL' => $lang['modo_panel'],
-					'L_PRIVATE_PROFIL' => $lang['my_private_profile'],
-					'L_CONTRIBUTION_PANEL' => $lang['contribution_panel']
+					'U_USER_PM'      => UserUrlBuilder::personnal_message($user->get_id())->rel(),
+					'U_USER_AVATAR'  => $user_avatar ? Url::to_rel($user_avatar) : $user_accounts_config->get_default_avatar(),
 				));
 			}
 			else
@@ -111,28 +104,27 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 
 				foreach (AuthenticationService::get_external_auths_activated() as $id => $authentication)
 				{
-					$tpl->assign_block_vars('external_auth', array(
-						'U_CONNECT' => UserUrlBuilder::connect($id)->rel(),
-						'ID' => $id,
-						'NAME' => $authentication->get_authentication_name(),
+					$view->assign_block_vars('external_auth', array(
+						'U_SIGN_IN'  => UserUrlBuilder::connect($id)->rel(),
+						'ID'         => $id,
+						'NAME'       => $authentication->get_authentication_name(),
 						'IMAGE_HTML' => $authentication->get_image_renderer_html(),
-						'CSS_CLASS' => $authentication->get_css_class()
+						'CSS_CLASS'  => $authentication->get_css_class()
 					));
 					$external_authentication++;
 				}
 
-				$tpl->put_all(array(
-					'C_USER_NOTCONNECTED' => true,
-					'C_USER_REGISTER' => UserAccountsConfig::load()->is_registration_enabled(),
-					'C_DISPLAY_REGISTER_CONTAINER' => $external_authentication || UserAccountsConfig::load()->is_registration_enabled(),
-					'L_REQUIRE_PSEUDO' => $lang['require_pseudo'],
-					'L_REQUIRE_PASSWORD' => $lang['require_password'],
-					'U_CONNECT' => UserUrlBuilder::connect()->rel(),
-					'SITE_REWRITED_SCRIPT' => TextHelper::substr(REWRITED_SCRIPT, TextHelper::strlen(GeneralConfig::load()->get_site_path()))
+				$view->put_all(array(
+					'C_REGISTRATION_ENABLED' => UserAccountsConfig::load()->is_registration_enabled(),
+					'C_REGISTRATION_DISPLAYED' => $external_authentication || UserAccountsConfig::load()->is_registration_enabled(),
+
+					'SITE_REWRITED_SCRIPT' => TextHelper::substr(REWRITED_SCRIPT, TextHelper::strlen(GeneralConfig::load()->get_site_path())),
+
+					'U_SIGN_IN' => UserUrlBuilder::connect()->rel(),
 				));
 			}
 
-			return $tpl->render();
+			return $view->render();
 		}
 		return '';
 	}

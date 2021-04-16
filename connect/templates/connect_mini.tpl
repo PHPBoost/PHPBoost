@@ -1,15 +1,15 @@
-# IF C_USER_NOTCONNECTED #
+# IF NOT IS_USER_CONNECTED #
 	<script>
 		function check_connect()
 		{
 			if( document.getElementById('login').value == "" )
 			{
-				alert("{L_REQUIRE_PSEUDO}");
+				alert("{@user.required.username}");
 				return false;
 			}
 			if( document.getElementById('password').value == "" )
 			{
-				alert("{L_REQUIRE_PASSWORD}");
+				alert("{@user.required.password}");
 				return false;
 			}
 		}
@@ -18,69 +18,69 @@
 
 <div id="module-connect" class="cell-mini# IF C_VERTICAL # cell-tile cell-mini-vertical# ENDIF #">
 	<div class="cell">
-		# IF C_USER_NOTCONNECTED #
+		# IF NOT IS_USER_CONNECTED #
 			# IF C_VERTICAL #
 				<div class="cell-header">
-					<h6 class="cell-name">{@connection}</h6>
+					<h6 class="cell-name">{@user.welcome} {@user.rank.visitor}</h6>
 				</div>
 				<div class="cell-list connect-contents">
 			# ELSE #
 				<div class="cell-list cell-list-inline connect-contents">
-					<a href="#" class="js-menu-button" onclick="open_submenu('module-connect', 'active-connect');return false;"><i class="fa fa-sign-in-alt" aria-hidden="true"></i> <span>{@connection}</span></a>
+					<a href="#" class="js-menu-button" onclick="open_submenu('module-connect', 'active-connect');return false;"><i class="fa fa-sign-in-alt" aria-hidden="true"></i> <span>{@user.sign.in}</span></a>
 			# ENDIF #
-					<ul class="connect-container">
+					<ul class="connect-container# IF C_HORIZONTAL # connect-container-horizontal# ENDIF #">
 						<li>
-							<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();">
+							<form action="{U_SIGN_IN}" method="post" onsubmit="return check_connect();">
 								<ul>
 									<li>
 										<label for="login">
-											<input type="text" id="login" name="login" aria-label="{@login} - {@login.tooltip}" placeholder="{@login}">
-											<span class="sr-only">{@login}</span>
+											<input type="text" id="login" name="login" aria-label="{@user.username.tooltip}" placeholder="{@user.username}">
+											<span class="sr-only">{@user.username}</span>
 										</label>
 									</li>
 									<li>
 										<label for="password">
-											<input type="password" id="password" name="password" placeholder="{@password}">
-											<span class="sr-only">{@password}</span>
+											<input type="password" id="password" name="password" placeholder="{@user.password}">
+											<span class="sr-only">{@user.password}</span>
 										</label>
 									</li>
 									<li class="align-center">
 										<label class="checkbox" for="autoconnect">
-											<span>{@autoconnect}</span>
-											<input checked="checked" type="checkbox" id="autoconnect" name="autoconnect" aria-label="{@autoconnect}">
+											<span>{@user.auto.connect}</span>
+											<input checked="checked" type="checkbox" id="autoconnect" name="autoconnect" aria-label="{@user.auto.connect}">
 										</label>
 									</li>
 									<li class="align-center">
 										<input type="hidden" name="redirect" value="{SITE_REWRITED_SCRIPT}">
 										<input type="hidden" name="token" value="{TOKEN}">
-										<button type="submit" name="authenticate" value="internal" class="button submit small">{@connection}</button>
+										<button type="submit" name="authenticate" value="internal" class="button submit small">{@user.sign.in}</button>
 									</li>
 								</ul>
 							</form>
 						</li>
 
-						# IF C_DISPLAY_REGISTER_CONTAINER #
-							# IF C_USER_REGISTER #
-							<li>
-								<form action="${relative_url(UserUrlBuilder::registration())}" method="post">
-									<ul>
-										<li class="align-center">
-											<button type="submit" name="register" value="true" class="button submit small">{@register}</button>
-											<input type="hidden" name="token" value="{TOKEN}">
-										</li>
-									</ul>
-								</form>
-							</li>
+						# IF C_REGISTRATION_DISPLAYED #
+							# IF C_REGISTRATION_ENABLED #
+								<li>
+									<form action="${relative_url(UserUrlBuilder::registration())}" method="post">
+										<ul>
+											<li class="align-center">
+												<button type="submit" name="register" value="true" class="button submit small offload">{@user.sign.up}</button>
+												<input type="hidden" name="token" value="{TOKEN}">
+											</li>
+										</ul>
+									</form>
+								</li>
 							# ENDIF #
 							<li# IF C_VERTICAL # class="li-stretch"# ENDIF #>
 								# START external_auth #
-									<a class="{external_auth.CSS_CLASS}" href="{external_auth.U_CONNECT}" aria-label="{external_auth.NAME}">{external_auth.IMAGE_HTML}</a>
+									<a class="{external_auth.CSS_CLASS}" href="{external_auth.U_SIGN_IN}" aria-label="{external_auth.NAME}">{external_auth.IMAGE_HTML}</a>
 								# END external_auth #
 							</li>
 						# ENDIF #
 						<li class="align-center">
-							<a class="button smaller" href="${relative_url(UserUrlBuilder::forget_password())}">
-								<i class="fa fa-question-circle" aria-hidden="true"></i> <span>${LangLoader::get_message('forget-password', 'user-common')}</span>
+							<a class="button smaller offload" href="${relative_url(UserUrlBuilder::forget_password())}">
+								<i class="fa fa-question-circle" aria-hidden="true"></i> <span>{@user.forgotten.password}</span>
 							</a>
 						</li>
 					</ul>
@@ -90,84 +90,121 @@
 
 			# IF C_VERTICAL #
 				<div class="cell-header">
-					<h6 class="cell-name">{L_PRIVATE_PROFIL}</h6>
+					<h6 class="cell-name {USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF #>{@user.welcome} {USER_DISPLAYED_NAME}</h6>
+					# IF C_USER_AVATAR #
+						<img src="{U_USER_AVATAR}" class="valign-middle" width="16px" height="16px" alt="{USER_DISPLAYED_NAME}">
+					# ELSE #
+						# IF IS_MODERATOR #
+							<i class="fa fa-user-tie" aria-hidden="true"></i>
+						# ELSE #
+							<i class="fa fa-user" aria-hidden="true"></i>
+						# ENDIF #
+					# ENDIF #
 				</div>
 				<div class="cell-list connected-contents">
 			# ELSE #
 				<div class="cell-list cell-list-inline connected-contents">
 					<a href="#" class="js-menu-button" onclick="open_submenu('module-connect', 'active-connect');return false;">
-						<i class="fa fa-fw fa-bars # IF NUMBER_TOTAL_ALERT # blink alert# ENDIF #" aria-hidden="true"></i>
-						<span>{L_PRIVATE_PROFIL}</span>
+						# IF C_USER_AVATAR #
+							<img src="{U_USER_AVATAR}" class="valign-middle" width="16px" height="16px" alt="{USER_DISPLAYED_NAME}">
+						# ELSE #
+							# IF IS_MODERATOR #
+								<i class="fa fa-user-tie" aria-hidden="true"></i>
+							# ELSE #
+								<i class="fa fa-user" aria-hidden="true"></i>
+							# ENDIF #
+						# ENDIF #
+						<span aria-label="{@user.my.profile}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF #>{USER_DISPLAYED_NAME}</span>
 						# IF C_HAS_PM #
-							<span class="stacked blink member">
+							<span class="stacked member">
 								<i class="fa fa-fw fa-people-arrows" aria-hidden="true"></i>
-								<span class="stack-event stack-circle stack-sup stack-right bgc member">{NUMBER_PM}</span>
+								<span class="stack-event stack-circle stack-sup stack-right bgc member blink">{PM_NUMBER}</span>
 							</span>
 						# ENDIF #
-						# IF C_ADMIN_AUTH #
-							# IF C_UNREAD_ALERT #
-								<span class="stacked blink administrator">
+						# IF IS_ADMIN #
+							# IF C_UNREAD_ALERTS #
+								<span class="stacked administrator">
 									<i class="fa fa-fw fa-wrench" aria-hidden="true"></i>
-									<span class="stack-event stack-circle stack-sup stack-right bgc administrator">{NUMBER_UNREAD_ALERTS}</span>
+									<span class="stack-event stack-circle stack-sup stack-right bgc administrator blink">{UNREAD_ALERTS_NUMBER}</span>
 								</span>
 							# ENDIF #
 						# ENDIF #
-						# IF C_UNREAD_CONTRIBUTION #
-							<span class="stacked blink moderator">
+						# IF C_UNREAD_CONTRIBUTIONS #
+							<span class="stacked moderator">
 								<i class="fa fa-fw fa-file-alt" aria-hidden="true"></i>
-								<span class="stack-event stack-circle stack-sup stack-right bgc moderator">{NUMBER_UNREAD_CONTRIBUTIONS}</span>
+								<span class="stack-event stack-circle stack-sup stack-right bgc moderator blink">{UNREAD_CONTRIBUTIONS_NUMBER}</span>
 							</span>
 						# ENDIF #
 					</a>
 			# ENDIF #
-					<ul class="connect-container">
-						<li class="# IF C_VERTICAL #li-stretch # ELSE #li-spaced # ENDIF #connect-profil">
-							<i class="fa fa-fw fa-tachometer-alt" aria-hidden="true"></i>
-							<a href="${relative_url(UserUrlBuilder::home_profile())}">
-								 <span class="pbt-small-screen">{@dashboard}</span>
-							</a>
+					<ul class="connect-container# IF C_HORIZONTAL # connect-container-horizontal# ENDIF #">
+						<li class="# IF C_VERTICAL #li-stretch # ELSE #li-spaced # ENDIF #connect-profile">
+							# IF C_VERTICAL #
+								# IF IS_MODERATOR #
+									<i class="fa fa-user-tie" aria-hidden="true"></i>
+								# ELSE #
+									<i class="fa fa-user" aria-hidden="true"></i>
+								# ENDIF #
+								<a href="${relative_url(UserUrlBuilder::home_profile())}" class="offload">
+									<span>{@user.my.account}</span>
+								</a>
+							# ELSE #
+								# IF C_USER_AVATAR #
+									<img src="{U_USER_AVATAR}" class="valign-middle" width="16px" height="16px" alt="{USER_DISPLAYED_NAME}">
+								# ELSE #
+									# IF IS_MODERATOR #
+										<i class="fa fa-user-tie" aria-hidden="true"></i>
+									# ELSE #
+										<i class="fa fa-user" aria-hidden="true"></i>
+									# ENDIF #
+								# ENDIF #
+								<a href="${relative_url(UserUrlBuilder::home_profile())}" class="offload">
+									<span class="hidden-small-screens {USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF # aria-label="{@user.my.profile}">{USER_DISPLAYED_NAME}</span>
+									<span class="hidden-large-screens">{@user.dashboard}</span>
+								</a>
+							# ENDIF #
 						</li>
 						<li class="# IF C_VERTICAL #li-stretch # ELSE #li-spaced # ENDIF #connect-pm">
-							<span # IF C_HAS_PM #class="stacked blink member"# ENDIF #>
+							<span # IF C_HAS_PM #class="stacked member"# ENDIF #>
 								<i class="fa fa-fw fa-people-arrows" aria-hidden="true"></i>
-								# IF C_HAS_PM #<span class="stack-event stack-circle stack-sup stack-right bgc member">{NUMBER_PM}</span> # ENDIF #
+								# IF C_HAS_PM #<span class="stack-event stack-circle stack-sup stack-right bgc member blink">{PM_NUMBER}</span> # ENDIF #
 							</span>
-							<a href="{U_USER_PM}">
-								 <span>{L_PM_PANEL}</span>
+							<a href="{U_USER_PM}" class="offload">
+								<span>{@user.private.messaging}</span>
 							</a>
 						</li>
-						# IF C_ADMIN_AUTH #
+						# IF IS_ADMIN #
 							<li class="# IF C_VERTICAL #li-stretch # ELSE #li-spaced # ENDIF #connect-admin">
-								<span # IF C_UNREAD_ALERT #class="stacked blink administrator"# ENDIF #>
+								<span # IF C_UNREAD_ALERTS #class="stacked administrator"# ENDIF #>
 									<i class="fa fa-fw fa-wrench" aria-hidden="true"></i>
-									# IF C_UNREAD_ALERT # <span class="stack-event stack-circle stack-sup stack-right bgc administrator">{NUMBER_UNREAD_ALERTS}</span> # ENDIF #
+									# IF C_UNREAD_ALERTS # <span class="stack-event stack-circle stack-sup stack-right bgc administrator blink">{UNREAD_ALERTS_NUMBER}</span> # ENDIF #
 								</span>
-								<a href="${relative_url(UserUrlBuilder::administration())}">
-									 <span>{L_ADMIN_PANEL}</span>
+								<a href="${relative_url(UserUrlBuilder::administration())}" class="offload">
+									<span>{@user.admin.panel}</span>
 								</a>
 							</li>
 						# ENDIF #
-						# IF C_MODERATOR_AUTH #
-							<li class="# IF C_VERTICAL #li-stretch # ELSE #li-spaced # ENDIF #connect-modo">
+						# IF IS_MODERATOR #
+							<li class="# IF C_VERTICAL #li-stretch # ELSE #li-spaced # ENDIF #connect-moderation">
 								<i class="fa fa-fw fa-gavel" aria-hidden="true"></i>
-								<a href="${relative_url(UserUrlBuilder::moderation_panel())}">
-									 <span>{L_MODO_PANEL}</span>
+								<a href="${relative_url(UserUrlBuilder::moderation_panel())}" class="offload">
+									<span>{@user.moderation.panel}</span>
 								</a>
 							</li>
 						# ENDIF #
 						<li class="# IF C_VERTICAL #li-stretch # ELSE #li-spaced # ENDIF #connect-contribution">
-							<span # IF C_UNREAD_CONTRIBUTION #class="stacked blink moderator"# ENDIF #>
+							<span # IF C_UNREAD_CONTRIBUTIONS #class="stacked moderator"# ENDIF #>
 								<i class="fa fa-fw fa-file-alt" aria-hidden="true"></i>
-								# IF C_UNREAD_CONTRIBUTION #<span class="stack-event stack-circle stack-sup stack-right bgc moderator">{NUMBER_UNREAD_CONTRIBUTIONS}</span># ENDIF #
+								# IF C_UNREAD_CONTRIBUTIONS #<span class="stack-event stack-circle stack-sup stack-right bgc moderator blink">{UNREAD_CONTRIBUTIONS_NUMBER}</span># ENDIF #
 							</span>
-							<a href="${relative_url(UserUrlBuilder::contribution_panel())}">
-								 <span>{L_CONTRIBUTION_PANEL}</span>
+							<a href="${relative_url(UserUrlBuilder::contribution_panel())}" class="offload">
+								<span>{@user.contribution.panel}</span>
 							</a>
 						</li>
-						<li class="# IF C_VERTICAL #li-stretch # ELSE #li-spaced # ENDIF #connect-disconnect">
+						<li class="# IF C_VERTICAL #li-stretch # ELSE #li-spaced # ENDIF #connect-sign-out">
 							<i class="fa fa-fw fa-sign-out-alt" aria-hidden="true"></i>
-							<a href="${relative_url(UserUrlBuilder::disconnect())}">
-								 <span>{@disconnect}</span>
+							<a href="${relative_url(UserUrlBuilder::disconnect())}" class="offload">
+								<span>{@user.sign.out}</span>
 							</a>
 						</li>
 					</ul>

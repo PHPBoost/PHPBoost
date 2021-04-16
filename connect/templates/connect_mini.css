@@ -50,7 +50,7 @@
 	#module-connect .li-spaced { width: auto; }
 }
 
-.connect-container {
+.connect-container-horizontal {
 	opacity: 0;
 	visibility: hidden;
 	width: 100%;
@@ -58,7 +58,7 @@
 	height: 0;
 }
 
-.active-connect .connect-container {
+.active-connect .connect-container-horizontal {
 	opacity: 1;
 	visibility: visible;
 	height: auto;
@@ -68,7 +68,7 @@
 .js-menu-button:hover { text-decoration: none; }
 
 @media (min-width: 769px) {
-	#module-connect .connect-container {
+	#module-connect .connect-container-horizontal {
 		opacity: 1;
 		visibility: visible;
 		height: auto;
