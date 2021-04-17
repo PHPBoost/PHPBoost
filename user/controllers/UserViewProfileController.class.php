@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 11
+ * @version     PHPBoost 6.0 - last update: 2021 04 17
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -36,7 +36,7 @@ class UserViewProfileController extends AbstractController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('user-common');
+		$this->lang = LangLoader::get('user-lang');
 		$this->tpl = new FileTemplate('user/UserViewProfileController.tpl');
 		$this->tpl->add_lang($this->lang);
 		$this->user = AppContext::get_current_user();
@@ -75,7 +75,7 @@ class UserViewProfileController extends AbstractController
 			'C_DISPLAY_PM_LINK'   => !$this->same_user_view_profile($user_id) && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 			'C_EXTENDED_FIELDS'   => $extended_fields_number,
 
-			'TITLE_PROFILE'       => $this->user_infos['user_id'] == AppContext::get_current_user()->get_id() ? $this->lang['profile'] : StringVars::replace_vars($this->lang['profile_of'], array('name' => $this->user_infos['display_name'])),
+			'TITLE_PROFILE'       => $this->user_infos['user_id'] == AppContext::get_current_user()->get_id() ? $this->lang['user.profile'] : StringVars::replace_vars($this->lang['user.profile.of'], array('name' => $this->user_infos['display_name'])),
 			'DISPLAY_NAME'        => $this->user_infos['display_name'],
 			'LEVEL'               => UserService::get_level_lang($this->user_infos['level']),
 			'LEVEL_CLASS'         => UserService::get_level_class($this->user_infos['level']),
@@ -122,13 +122,13 @@ class UserViewProfileController extends AbstractController
 	{
 		$response = new SiteDisplayResponse($view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->user_infos['user_id'] == AppContext::get_current_user()->get_id() ? $this->lang['profile'] : StringVars::replace_vars($this->lang['profile_of'], array('name' => $this->user_infos['display_name']), $this->lang['user']));
-		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['seo.user.profile'], array('name' => $this->user_infos['display_name'])));
+		$graphical_environment->set_page_title($this->user_infos['user_id'] == AppContext::get_current_user()->get_id() ? $this->lang['user.profile'] : StringVars::replace_vars($this->lang['profile_of'], array('name' => $this->user_infos['display_name']), $this->lang['user.user']));
+		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['user.seo.profile'], array('name' => $this->user_infos['display_name'])));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::profile($user_id));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['user'], UserUrlBuilder::home()->rel());
-		$breadcrumb->add($this->user_infos['user_id'] == AppContext::get_current_user()->get_id() ? $this->lang['profile'] : StringVars::replace_vars($this->lang['profile_of'], array('name' => $this->user_infos['display_name'])), UserUrlBuilder::profile($user_id)->rel());
+		$breadcrumb->add($this->lang['user.user'], UserUrlBuilder::home()->rel());
+		$breadcrumb->add($this->user_infos['user_id'] == AppContext::get_current_user()->get_id() ? $this->lang['user.profile'] : StringVars::replace_vars($this->lang['user.profile.of'], array('name' => $this->user_infos['display_name'])), UserUrlBuilder::profile($user_id)->rel());
 
 		return $response;
 	}

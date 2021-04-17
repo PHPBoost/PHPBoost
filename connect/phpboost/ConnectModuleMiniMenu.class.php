@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 16
+ * @version     PHPBoost 6.0 - last update: 2021 04 17
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -22,7 +22,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 		if (!Url::is_current_url('/login'))
 		{
 			$view = new FileTemplate('connect/connect_mini.tpl');
-			$view->add_lang(LangLoader::get('user-common'));
+			$view->add_lang(LangLoader::get('user-lang'));
 			$user = AppContext::get_current_user();
 			MenuService::assign_positions_conditions($view, $this->get_block());
 

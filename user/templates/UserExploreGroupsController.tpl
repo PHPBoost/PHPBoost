@@ -2,7 +2,7 @@
 	<section id="module-user-group-list">
 		<header class="section-header">
 			<div class="controls align-right">
-				{@members_list} {@group.of_group}
+				{@user.members.list} {@user.group.of.group}
 				# IF C_ADMIN #
 					<a href="{U_ADMIN_GROUPS}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a>
 				# ENDIF #
@@ -15,7 +15,7 @@
 			<div class="content-container">
 				<div class="cell-flex cell-tile cell-columns-2 user-card">
 					# IF C_NO_MEMBERS #
-						<span class="text-strong">{@no_member}</span>
+						<span class="text-strong">{@user.no.member}</span>
 					# ELSE #
 						# START members_list #
 							<article class="user-groups-item several-item cell">
@@ -43,7 +43,7 @@
 			<div class="sub-section">
 				<div class="content-container">
 					<div class="content align-center">
-						<a href="{U_GROUP_LIST}" class="button">{@groups.list}</a>
+						<a href="{U_GROUP_LIST}" class="button">{@user.groups.list}</a>
 					</div>
 				</div>
 			</div>
@@ -53,7 +53,7 @@
 	<section id="module-user-groups-list" class="groups-list-container">
 		<header class="section-header">
 			# IF C_HAS_GROUP #
-				<span class="groups-list-title">{@groups.select}</span>
+				<span class="groups-list-title">{@user.groups.select}</span>
 				<div class="groups-list-select">
 					# START group #
 						# IF group.C_GROUP_HAS_IMG #
@@ -73,10 +73,10 @@
 							<header>
 								<h2>
 									<span class="list-members-container-action">
-										<a href="#" onclick="open_group('admin', 0);return false;" aria-label="{@group.hide_list_members}" class="action-less"><i class="fa fa-minus" aria-hidden="true"></i></a>
-										<a href="#" onclick="open_group('admin', 1);return false;" aria-label="{@group.view_list_members}" class="action-more"><i class="fa fa-plus" aria-hidden="true"></i></a>
+										<a href="#" onclick="open_group('admin', 0);return false;" aria-label="{@user.group.hide.list.members}" class="action-less"><i class="fa fa-minus" aria-hidden="true"></i></a>
+										<a href="#" onclick="open_group('admin', 1);return false;" aria-label="{@user.group.view.list.members}" class="action-more"><i class="fa fa-plus" aria-hidden="true"></i></a>
 									</span>
-									{@admins.list} <span class="small">({NUMBER_ADMINS})</span>
+									{@user.admins.list} <span class="small">({NUMBER_ADMINS})</span>
 								</h2>
 							</header>
 							<div class="cell-flex cell-tile cell-columns-2 user-card">
@@ -107,10 +107,10 @@
 							<header>
 								<h2>
 									<span class="list-members-container-action">
-										<a href="#" onclick="open_group('modo', 0);return false;" aria-label="{@group.hide_list_members}" class="action-less"><i class="fa fa-minus" aria-hidden="true"></i></a>
-										<a href="#" onclick="open_group('modo', 1);return false;" aria-label="{@group.view_list_members}" class="action-more"><i class="fa fa-plus" aria-hidden="true"></i></a>
+										<a href="#" onclick="open_group('modo', 0);return false;" aria-label="{@user.group.hide.list.members}" class="action-less"><i class="fa fa-minus" aria-hidden="true"></i></a>
+										<a href="#" onclick="open_group('modo', 1);return false;" aria-label="{@user.group.view.list.members}" class="action-more"><i class="fa fa-plus" aria-hidden="true"></i></a>
 									</span>
-									{@modos.list} <span class="small">({NUMBER_MODOS})</span>
+									{@user.modos.list} <span class="small">({NUMBER_MODOS})</span>
 								</h2>
 							</header>
 							<div class="cell-flex cell-tile cell-columns-2 user-card">
@@ -142,8 +142,8 @@
 							<header>
 								<h2>
 									<span class="list-members-container-action">
-										<a href="#" onclick="open_group({group.GROUP_ID}, 0);return false;" aria-label="{@group.hide_list_members}" class="action-less"><i class="fa fa-minus" aria-hidden="true"></i></a>
-										<a href="#" onclick="open_group({group.GROUP_ID}, 1);return false;" aria-label="{@group.view_list_members}" class="action-more"><i class="fa fa-plus" aria-hidden="true"></i></a>
+										<a href="#" onclick="open_group({group.GROUP_ID}, 0);return false;" aria-label="{@user.group.hide.list.members}" class="action-less"><i class="fa fa-minus" aria-hidden="true"></i></a>
+										<a href="#" onclick="open_group({group.GROUP_ID}, 1);return false;" aria-label="{@user.group.view.list.members}" class="action-more"><i class="fa fa-plus" aria-hidden="true"></i></a>
 									</span>
 									<a href="{group.U_GROUP}" class="group-name">{group.GROUP_NAME} <span class="small">({group.NUMBER_MEMBERS})</span></a>
 									# IF C_ADMIN #
@@ -172,7 +172,7 @@
 										</article>
 									# END group.group_members_list #
 								# ELSE #
-									{@no_member}
+									{@user.no.member}
 								# ENDIF #
 							</div>
 							<footer></footer>

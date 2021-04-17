@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 30
+ * @version     PHPBoost 6.0 - last update: 2021 04 17
  * @since       PHPBoost 3.0 - 2011 07 25
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -13,7 +13,7 @@
 class UserLostPasswordController extends AbstractController
 {
 	private $lang;
-	private $tpl;
+	private $view;
 	private $form;
 	private $submit_button;
 
@@ -28,27 +28,27 @@ class UserLostPasswordController extends AbstractController
 			$this->send_email();
 		}
 
-		$this->tpl->put('FORM', $this->form->display());
+		$this->view->put('FORM', $this->form->display());
 
-		return $this->build_response($this->tpl);
+		return $this->build_response($this->view);
 	}
 
 	private function init()
 	{
-		$this->tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$this->lang = LangLoader::get('user-common');
-		$this->tpl->add_lang($this->lang);
+		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
+		$this->lang = LangLoader::get('user-lang');
+		$this->view->add_lang($this->lang);
 	}
 
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
-		$form->set_layout_title($this->lang['forget-password']);
+		$form->set_layout_title($this->lang['user.forgotten.password']);
 
 		$fieldset = new FormFieldsetHTML('fieldset', LangLoader::get_message('form.parameters', 'common'));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['email'], '',
+		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['user.email'], '',
 			array('required' => true)
 		));
 
@@ -62,13 +62,13 @@ class UserLostPasswordController extends AbstractController
 	{
 		$response = new SiteDisplayResponse($view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['forget-password'], $this->lang['user']);
-		$graphical_environment->get_seo_meta_data()->set_description($this->lang['seo.user.forget-password']);
+		$graphical_environment->set_page_title($this->lang['user.forgotten.password'], $this->lang['user.user']);
+		$graphical_environment->get_seo_meta_data()->set_description($this->lang['user.seo.forgotten.password']);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::forget_password());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['user'], UserUrlBuilder::home()->rel());
-		$breadcrumb->add($this->lang['forget-password'], UserUrlBuilder::forget_password()->rel());
+		$breadcrumb->add($this->lang['user.user'], UserUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['user.forgotten.password'], UserUrlBuilder::forget_password()->rel());
 
 		return $response;
 	}
@@ -87,11 +87,11 @@ class UserLostPasswordController extends AbstractController
 			'change_password_link' => UserUrlBuilder::change_password($change_password_pass)->absolute(),
 			'signature'            => MailServiceConfig::load()->get_mail_signature()
 		);
-		$subject = $general_config->get_site_name() . ' : ' . $this->lang['forget-password'];
-		$content = StringVars::replace_vars($this->lang['forget-password.mail.content'], $parameters);
+		$subject = $general_config->get_site_name() . ' : ' . $this->lang['user.forgotten.password'];
+		$content = StringVars::replace_vars($this->lang['user.forgotten.password.email.content'], $parameters);
 		AppContext::get_mail_service()->send_from_properties($user->get_email(), $subject, $content);
 
-		$this->tpl->put('MSG', MessageHelper::display($this->lang['forget-password.success'], MessageHelper::SUCCESS));
+		$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['user.forgotteb.password.success'], MessageHelper::SUCCESS));
 	}
 
 	private function get_user()
@@ -101,7 +101,7 @@ class UserLostPasswordController extends AbstractController
 
 		if (!$user_id)
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $this->lang['forget-password.error'], MessageHelper::NOTICE);
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $this->lang['user.forgotten.password.error'], MessageHelper::NOTICE);
 			DispatchManager::redirect($controller);
 		}
 		else

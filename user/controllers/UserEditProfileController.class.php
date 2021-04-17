@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 30
+ * @version     PHPBoost 6.0 - last update: 2021 04 17
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -97,7 +97,7 @@ class UserEditProfileController extends AbstractController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('user-common');
+		$this->lang = LangLoader::get('user-lang');
 		$this->tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$this->tpl->add_lang($this->lang);
 		$this->user_accounts_config = UserAccountsConfig::load();
@@ -113,16 +113,16 @@ class UserEditProfileController extends AbstractController
 		$security_config = SecurityConfig::load();
 
 		$form = new HTMLForm(__CLASS__);
-		$form->set_layout_title($this->lang['profile.edit']);
+		$form->set_layout_title($this->lang['user.profile.edit']);
 		$this->member_extended_fields_service = new MemberExtendedFieldsService($form);
 
 		$fieldset = new FormFieldsetHTML('edit_profile', LangLoader::get_message('form.parameters', 'common'));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field($display_name = new FormFieldTextEditor('display_name', $this->lang['display_name'], $this->user->get_display_name(),
+		$fieldset->add_field($display_name = new FormFieldTextEditor('display_name', $this->lang['user.displayed.name'], $this->user->get_display_name(),
 			array(
 				'maxlength' => 100, 'required' => true,
-				'description'=> $this->lang['display_name.explain'],
+				'description'=> $this->lang['user.displayed.name.clue'],
 				'disabled' => !AppContext::get_current_user()->is_admin() && !$this->user_accounts_config->are_users_allowed_to_change_display_name() && $this->user->get_display_name(),
 				'events' => array('blur' => '
 					if (!HTMLForms.getField("login").getValue() && HTMLForms.getField("display_name").validate() == "") {
@@ -133,7 +133,7 @@ class UserEditProfileController extends AbstractController
 			array(new FormFieldConstraintLengthRange(3, 100), new FormFieldConstraintDisplayNameExists($this->user->get_id()))
 		));
 
-		$fieldset->add_field($email = new FormFieldMailEditor('email', $this->lang['email'], $this->user->get_email(),
+		$fieldset->add_field($email = new FormFieldMailEditor('email', $this->lang['user.email'], $this->user->get_email(),
 			array(
 				'required' => true,
 				'disabled' => !AppContext::get_current_user()->is_admin() && !$this->user_accounts_config->are_users_allowed_to_change_email() && $this->user->get_email()
@@ -141,22 +141,22 @@ class UserEditProfileController extends AbstractController
 			array(new FormFieldConstraintMailExist($this->user->get_id()))
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('user_hide_mail', $this->lang['email.hide'], !$this->user->get_show_email()));
+		$fieldset->add_field(new FormFieldCheckbox('user_hide_mail', $this->lang['user.email.hide'], !$this->user->get_show_email()));
 
 		if (AppContext::get_current_user()->is_admin())
 		{
-			$manage_fieldset = new FormFieldsetHTML('member_management', $this->lang['member-management']);
+			$manage_fieldset = new FormFieldsetHTML('member_management', $this->lang['user.member.management']);
 			$form->add_fieldset($manage_fieldset);
 
 			if ($this->internal_auth_infos)
-				$manage_fieldset->add_field(new FormFieldCheckbox('approbation', $this->lang['approbation'], $this->internal_auth_infos['approved']));
+				$manage_fieldset->add_field(new FormFieldCheckbox('approbation', $this->lang['user.approbation'], $this->internal_auth_infos['approved']));
 
-			$manage_fieldset->add_field(new FormFieldRanksSelect('rank', $this->lang['rank'], $this->user->get_level()));
+			$manage_fieldset->add_field(new FormFieldRanksSelect('rank', $this->lang['user.rank'], $this->user->get_level()));
 
-			$manage_fieldset->add_field(new FormFieldGroups('groups', $this->lang['groups'], $this->user->get_groups()));
+			$manage_fieldset->add_field(new FormFieldGroups('groups', $this->lang['user.groups'], $this->user->get_groups()));
 		}
 
-		$connect_fieldset = new FormFieldsetHTML('connect', $this->lang['connection']);
+		$connect_fieldset = new FormFieldsetHTML('connect', $this->lang['user.sign.in']);
 		$form->add_fieldset($connect_fieldset);
 
 		$activated_external_authentication = AuthenticationService::get_external_auths_activated();
@@ -169,17 +169,17 @@ class UserEditProfileController extends AbstractController
 		{
 			if ($internal_auth_connected)
 			{
-				$connect_fieldset->add_field(new FormFieldFree('internal_auth', $this->lang['internal_connection'] . ' <i class="fa fa-check success"></i>', LangLoader::get_message('edit_internal_connection', 'user-common')));
+				$connect_fieldset->add_field(new FormFieldFree('internal_auth', $this->lang['user.internal.connection'] . ' <i class="fa fa-check success"></i>', LangLoader::get_message('edit_internal_connection', 'user-common')));
 			}
 			else
 			{
-				$connect_fieldset->add_field(new FormFieldFree('internal_auth', $this->lang['internal_connection'] . ' <i class="fa fa-times error"></i>', '<a  href="#" onclick="javascript:HTMLForms.getField(\'custom_login\').setValue(false);HTMLForms.getField(\'custom_login\').enable();HTMLForms.getField(\'password\').enable();HTMLForms.getField(\'password_bis\').enable();return false;">' . LangLoader::get_message('create_internal_connection', 'user-common') . '</a>'));
+				$connect_fieldset->add_field(new FormFieldFree('internal_auth', $this->lang['user.internal.connection'] . ' <i class="fa fa-times error"></i>', '<a  href="#" onclick="javascript:HTMLForms.getField(\'custom_login\').setValue(false);HTMLForms.getField(\'custom_login\').enable();HTMLForms.getField(\'password\').enable();HTMLForms.getField(\'password_bis\').enable();return false;">' . LangLoader::get_message('create_internal_connection', 'user-common') . '</a>'));
 			}
 		}
 
-		$connect_fieldset->add_field($custom_login_checked = new FormFieldCheckbox('custom_login', $this->lang['login.custom'], $has_custom_login,
+		$connect_fieldset->add_field($custom_login_checked = new FormFieldCheckbox('custom_login', $this->lang['user.username.custom'], $has_custom_login,
 			array(
-				'description'=> $this->lang['login.custom.explain'],
+				'description'=> $this->lang['user.username.custom.clue'],
 				'hidden' => !$internal_auth_connected,
 				'events' => array('click' => '
 					if (HTMLForms.getField("custom_login").getValue()) {
@@ -191,7 +191,7 @@ class UserEditProfileController extends AbstractController
 			)
 		));
 
-		$connect_fieldset->add_field($login = new FormFieldTextEditor('login', $this->lang['login'], ($has_custom_login ? $this->internal_auth_infos['login'] : preg_replace('/\s+/u', '', $this->user->get_display_name())),
+		$connect_fieldset->add_field($login = new FormFieldTextEditor('login', $this->lang['user.username'], ($has_custom_login ? $this->internal_auth_infos['login'] : preg_replace('/\s+/u', '', $this->user->get_display_name())),
 			array(
 				'required' => true, 'maxlength' => 25,
 				'hidden' => !$internal_auth_connected || !$has_custom_login
@@ -201,24 +201,24 @@ class UserEditProfileController extends AbstractController
 
 		if ($this->user->get_id() == AppContext::get_current_user()->get_id())
 		{
-			$connect_fieldset->add_field(new FormFieldPasswordEditor('old_password', $this->lang['password.old'], '',
+			$connect_fieldset->add_field(new FormFieldPasswordEditor('old_password', $this->lang['user.password.old'], '',
 				array(
 					'autocomplete' => false,
-					'description' => $this->lang['password.old.explain'],
+					'description' => $this->lang['user.password.old.clue'],
 					'hidden' => !$internal_auth_connected
 				)
 			));
 		}
 
-		$connect_fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '',
+		$connect_fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['user.password'], '',
 			array(
-				'description' => StringVars::replace_vars($this->lang['password.explain'], array('number' => $security_config->get_internal_password_min_length())),
+				'description' => StringVars::replace_vars($this->lang['user.password.clue'], array('number' => $security_config->get_internal_password_min_length())),
 				'autocomplete' => false, 'hidden' => !$internal_auth_connected
 			),
 			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
 		));
 
-		$connect_fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '',
+		$connect_fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['user.password.confirm'], '',
 			array('autocomplete' => false, 'hidden' => !$internal_auth_connected),
 			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
 		));
@@ -235,48 +235,48 @@ class UserEditProfileController extends AbstractController
 		{
 			if (in_array($id, $this->user_auth_types))
 			{
-				$connect_fieldset->add_field(new FormFieldFree($id .'_auth', $authentication->get_authentication_name() . ' <i class="fa fa-check success"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), 'dissociate', $id)->absolute() . '">' . ($this->user->get_id() != AppContext::get_current_user()->get_id() ? $this->lang['dissociate_account_admin'] : $this->lang['dissociate_account']) . '</a>'));
+				$connect_fieldset->add_field(new FormFieldFree($id .'_auth', $authentication->get_authentication_name() . ' <i class="fa fa-check success"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), 'dissociate', $id)->absolute() . '">' . ($this->user->get_id() != AppContext::get_current_user()->get_id() ? $this->lang['user.dissociate.account.admin'] : $this->lang['user.dissociate.account']) . '</a>'));
 			}
 			else
 			{
-				$connect_fieldset->add_field(new FormFieldFree($id .'_auth', $authentication->get_authentication_name() . ' <i class="fa fa-times"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), 'associate', $id)->absolute() . '">' . ($this->user->get_id() != AppContext::get_current_user()->get_id() ? $this->lang['associate_account_admin'] : $this->lang['associate_account']) . '</a>'));
+				$connect_fieldset->add_field(new FormFieldFree($id .'_auth', $authentication->get_authentication_name() . ' <i class="fa fa-times"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), 'associate', $id)->absolute() . '">' . ($this->user->get_id() != AppContext::get_current_user()->get_id() ? $this->lang['user.associate.account.admin'] : $this->lang['user.associate.account']) . '</a>'));
 			}
 		}
 
 		$options_fieldset = new FormFieldsetHTML('options', LangLoader::get_message('options', 'main'));
 		$form->add_fieldset($options_fieldset);
 
-		$options_fieldset->add_field(new FormFieldTimezone('timezone', $this->lang['timezone.choice'],
-			$this->user->get_timezone(), array('description' => $this->lang['timezone.choice.explain'])
+		$options_fieldset->add_field(new FormFieldTimezone('timezone', $this->lang['user.timezone.choice'],
+			$this->user->get_timezone(), array('description' => $this->lang['user.timezone.choice.clue'])
 		));
 
 		if (count(ThemesManager::get_activated_and_authorized_themes_map()) > 1)
 		{
-			$options_fieldset->add_field(new FormFieldThemesSelect('theme', $this->lang['theme'], $this->user->get_theme(),
+			$options_fieldset->add_field(new FormFieldThemesSelect('theme', $this->lang['user.theme'], $this->user->get_theme(),
 				array(
 					'check_authorizations' => true,
 					'events' => array('change' => $this->build_javascript_picture_themes())
 				)
 			));
-			$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['theme.preview'], '<img id="img_theme" src="'. $this->get_picture_theme($this->user->get_theme()) .'" alt="' . $this->lang['theme.preview'] . '" class="preview-img" />'));
+			$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['user.theme.preview'], '<img id="img_theme" src="'. $this->get_picture_theme($this->user->get_theme()) .'" alt="' . $this->lang['user.theme.preview'] . '" class="preview-img" />'));
 		}
 
-		$options_fieldset->add_field(new FormFieldEditors('text-editor', $this->lang['text-editor'], $this->user->get_editor()));
+		$options_fieldset->add_field(new FormFieldEditors('text-editor', $this->lang['user.text.editor'], $this->user->get_editor()));
 
-		$options_fieldset->add_field(new FormFieldLangsSelect('lang', $this->lang['lang'], $this->user->get_locale(),
+		$options_fieldset->add_field(new FormFieldLangsSelect('lang', $this->lang['user.lang'], $this->user->get_locale(),
 			array('check_authorizations' => true)
 		));
 
 		if (AppContext::get_current_user()->is_admin())
 		{
-			$fieldset_punishment = new FormFieldsetHTML('punishment_management', $this->lang['punishment-management']);
+			$fieldset_punishment = new FormFieldsetHTML('punishment_management', $this->lang['user.punishment.management']);
 			$form->add_fieldset($fieldset_punishment);
 
-			$fieldset_punishment->add_field(new FormFieldMemberCaution('user_warning', $this->lang['caution'], $this->user->get_warning_percentage()));
+			$fieldset_punishment->add_field(new FormFieldMemberCaution('user_warning', $this->lang['user.caution'], $this->user->get_warning_percentage()));
 
-			$fieldset_punishment->add_field(new FormFieldMemberSanction('user_readonly', $this->lang['readonly'], $this->user->get_delay_readonly()));
+			$fieldset_punishment->add_field(new FormFieldMemberSanction('user_readonly', $this->lang['user.readonly'], $this->user->get_delay_readonly()));
 
-			$fieldset_punishment->add_field(new FormFieldMemberSanction('user_ban', $this->lang['banned'], $this->user->get_delay_banned()));
+			$fieldset_punishment->add_field(new FormFieldMemberSanction('user_ban', $this->lang['user.banned'], $this->user->get_delay_banned()));
 		}
 
 		$this->member_extended_fields_service->display_form_fields($this->user->get_id());
@@ -287,7 +287,7 @@ class UserEditProfileController extends AbstractController
 
 		if ($this->user->get_level() != User::ADMIN_LEVEL || ($this->user->get_level() == User::ADMIN_LEVEL && $this->user->get_id() != AppContext::get_current_user()->get_id()) || ($this->user->get_level() == User::ADMIN_LEVEL && $this->user->get_id() == AppContext::get_current_user()->get_id() && UserService::count_admin_members() > 1))
 		{
-			$form->add_button(new FormButtonLink($this->lang['delete-account'], UserUrlBuilder::edit_profile($this->user->get_id(), 'delete-account')->relative(), '', 'delete-account warning', ($this->user->get_id() != AppContext::get_current_user()->get_id() ? $this->lang['delete-account.confirmation.admin'] : $this->lang['delete-account.confirmation.member'])));
+			$form->add_button(new FormButtonLink($this->lang['user.delete.account'], UserUrlBuilder::edit_profile($this->user->get_id(), 'delete-account')->relative(), '', 'delete-account warning', ($this->user->get_id() != AppContext::get_current_user()->get_id() ? $this->lang['user.delete.account.confirmation.admin'] : $this->lang['user.delete.account.confirmation.member'])));
 		}
 
 		$this->form = $form;
@@ -385,7 +385,7 @@ class UserEditProfileController extends AbstractController
 				else
 				{
 					$has_error = true;
-					$this->tpl->put('MSG', MessageHelper::display($this->lang['profile.edit.password.error'], MessageHelper::NOTICE));
+					$this->tpl->put('MSG', MessageHelper::display($this->lang['user.profile.edit.password.error'], MessageHelper::NOTICE));
 				}
 			}
 		}
@@ -409,8 +409,8 @@ class UserEditProfileController extends AbstractController
 					AdministratorAlertService::save_alert($alert);
 
 					$site_name = GeneralConfig::load()->get_site_name();
-					$subject = StringVars::replace_vars($this->lang['registration.subject-mail'], array('site_name' => $site_name));
-					$content = StringVars::replace_vars($this->lang['registration.email.mail-administrator-validation'], array(
+					$subject = StringVars::replace_vars($this->lang['user.registration.email.subject'], array('site_name' => $site_name));
+					$content = StringVars::replace_vars($this->lang['user.registration.email.administrator.validation.content'], array(
 						'pseudo' => $this->user->get_display_name(),
 						'site_name' => $site_name,
 						'signature' => MailServiceConfig::load()->get_mail_signature()
@@ -461,12 +461,12 @@ class UserEditProfileController extends AbstractController
 	{
 		$response = new SiteDisplayResponse($this->tpl);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['profile.edit'], $this->lang['user']);
+		$graphical_environment->set_page_title($this->lang['user.profile.edit'], $this->lang['user.user']);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['user'], UserUrlBuilder::home()->rel());
-		$breadcrumb->add(StringVars::replace_vars($this->lang['profile_of'], array('name' => $this->user->get_display_name())), UserUrlBuilder::profile($this->user->get_id())->rel());
-		$breadcrumb->add($this->lang['profile.edit'], UserUrlBuilder::edit_profile($this->user->get_id())->rel());
+		$breadcrumb->add($this->lang['user.user'], UserUrlBuilder::home()->rel());
+		$breadcrumb->add(StringVars::replace_vars($this->lang['user.profile.of'], array('name' => $this->user->get_display_name())), UserUrlBuilder::profile($this->user->get_id())->rel());
+		$breadcrumb->add($this->lang['user.profile.edit'], UserUrlBuilder::edit_profile($this->user->get_id())->rel());
 
 		return $response;
 	}

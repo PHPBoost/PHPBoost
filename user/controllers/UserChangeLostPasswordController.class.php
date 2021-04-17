@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 30
+ * @version     PHPBoost 6.0 - last update: 2021 04 17
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -12,7 +12,7 @@
 class UserChangeLostPasswordController extends AbstractController
 {
 	private $lang;
-	private $tpl;
+	private $view;
 	private $form;
 	private $submit_button;
 
@@ -36,16 +36,16 @@ class UserChangeLostPasswordController extends AbstractController
 			$this->change_password($user_id, $this->form->get_value('password'));
 		}
 
-		$this->tpl->put('FORM', $this->form->display());
+		$this->view->put('FORM', $this->form->display());
 
-		return $this->build_response($this->tpl, $change_password_pass);
+		return $this->build_response($this->view, $change_password_pass);
 	}
 
 	private function init()
 	{
-		$this->tpl = new StringTemplate('# INCLUDE ERROR_MESSAGE ## INCLUDE FORM #');
-		$this->lang = LangLoader::get('user-common');
-		$this->tpl->add_lang($this->lang);
+		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER ## INCLUDE FORM #');
+		$this->lang = LangLoader::get('user-lang');
+		$this->view->add_lang($this->lang);
 	}
 
 	private function build_form($user_id)
@@ -55,20 +55,20 @@ class UserChangeLostPasswordController extends AbstractController
 		$internal_auth_infos = PHPBoostAuthenticationMethod::get_auth_infos($user_id);
 
 		$form = new HTMLForm(__CLASS__);
-		$form->set_layout_title($this->lang['change-password']);
+		$form->set_layout_title($this->lang['user.change.password']);
 
 		$fieldset = new FormFieldsetHTML('fieldset', LangLoader::get_message('form.parameters', 'common'));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password.new'], '',
+		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['user.password.new'], '',
 			array(
 				'required' => true, 'autocomplete' => false,
-				'description' => StringVars::replace_vars($this->lang['password.explain'], array('number' => $security_config->get_internal_password_min_length()))
+				'description' => StringVars::replace_vars($this->lang['user.password.explain'], array('number' => $security_config->get_internal_password_min_length()))
 			),
 			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
 		));
 
-		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '',
+		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['user.password.confirm'], '',
 			array('required' => true, 'autocomplete' => false),
 			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
 		));
@@ -112,7 +112,7 @@ class UserChangeLostPasswordController extends AbstractController
 			{
 				$session = AppContext::get_session();
 				Session::delete($session);
-				$this->tpl->put('ERROR_MESSAGE', MessageHelper::display(LangLoader::get_message('user.not_authorized_during_maintain', 'status-messages-common'), MessageHelper::NOTICE));
+				$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('user.not_authorized_during_maintain', 'status-messages-common'), MessageHelper::NOTICE));
 			}
 			else
 			{
@@ -125,7 +125,7 @@ class UserChangeLostPasswordController extends AbstractController
 					$session = AppContext::get_session();
 					Session::delete($session);
 
-					$this->tpl->put('ERROR_MESSAGE', MessageHelper::display($authentication->get_error_msg(), MessageHelper::NOTICE));
+					$this->view->put('MESSAGE_HELPER', MessageHelper::display($authentication->get_error_msg(), MessageHelper::NOTICE));
 				}
 			}
 		}
@@ -142,11 +142,11 @@ class UserChangeLostPasswordController extends AbstractController
 	{
 		$response = new SiteDisplayResponse($view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['change-password'], $this->lang['user']);
+		$graphical_environment->set_page_title($this->lang['user.change.password'], $this->lang['user.user']);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['user'], UserUrlBuilder::home()->rel());
-		$breadcrumb->add($this->lang['change-password'], UserUrlBuilder::change_password($key)->rel());
+		$breadcrumb->add($this->lang['user.user'], UserUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['user.change.password'], UserUrlBuilder::change_password($key)->rel());
 
 		return $response;
 	}

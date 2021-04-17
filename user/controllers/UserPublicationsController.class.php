@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 17
+ * @version     PHPBoost 6.0 - last update: 2021 04 17
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -13,7 +13,7 @@
 class UserPublicationsController extends AbstractController
 {
 	private $lang;
-	private $tpl;
+	private $view;
 	private $user;
 
 	public function execute(HTTPRequestCustom $request)
@@ -38,15 +38,15 @@ class UserPublicationsController extends AbstractController
 		}
 
 		$this->build_view();
-		return $this->build_response($this->tpl);
+		return $this->build_response($this->view);
 	}
 
 	private function init()
 	{
 		$this->user = AppContext::get_current_user();
-		$this->tpl = new FileTemplate('user/UserPublicationsController.tpl');
-		$this->lang = LangLoader::get('user-common');
-		$this->tpl->add_lang($this->lang);
+		$this->view = new FileTemplate('user/UserPublicationsController.tpl');
+		$this->lang = LangLoader::get('user-lang');
+		$this->view->add_lang($this->lang);
 	}
 
 	private function build_view()
@@ -69,7 +69,7 @@ class UserPublicationsController extends AbstractController
 				else
 					$thumbnail = 'fa fa-cube';
 
-				$this->tpl->assign_block_vars('user_publications', array(
+				$this->view->assign_block_vars('user_publications', array(
 					'C_ICON_IS_PICTURE'   => $is_picture,
 					'MODULE_NAME'         => $module->get_publications_module_name(),
 					'MODULE_THUMBNAIL'    => $thumbnail,
@@ -82,15 +82,15 @@ class UserPublicationsController extends AbstractController
 
 	private function build_response(View $view)
 	{
-		$title = $this->lang['messages'];
+		$title = $this->lang['user.messages'];
 		$response = new SiteDisplayResponse($view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($title);
-		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['seo.user.messages'], array('name' => $this->user->get_display_name())));
+		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['user.seo.messages'], array('name' => $this->user->get_display_name())));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::publications($this->user->get_id()));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['user'], UserUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['user.user'], UserUrlBuilder::home()->rel());
 		$breadcrumb->add($title, UserUrlBuilder::publications($this->user->get_id())->rel());
 
 		return $response;

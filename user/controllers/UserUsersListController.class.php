@@ -37,7 +37,7 @@ class UserUsersListController extends AbstractController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('user-common');
+		$this->lang = LangLoader::get('user-lang');
 		$this->view = new FileTemplate('user/UserUsersListController.tpl');
 		$this->view->add_lang($this->lang);
 		$this->groups_cache = GroupsCache::load();
@@ -179,12 +179,12 @@ class UserUsersListController extends AbstractController
 		$page = $request->get_getint('page', 1);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['users'], '', $page);
-		$graphical_environment->get_seo_meta_data()->set_description($this->lang['seo.user.list'], $sort_field, $sort_mode, $page);
+		$graphical_environment->set_page_title($this->lang['user.users'], '', $page);
+		$graphical_environment->get_seo_meta_data()->set_description($this->lang['user.seo.list'], $sort_field, $sort_mode, $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::home());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['users'], UserUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['user.users'], UserUrlBuilder::home()->rel());
 
 		return $response;
 	}

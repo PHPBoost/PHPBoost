@@ -1,6 +1,6 @@
 <section id="module-user-users-list">
 	<header class="section-header">
-		<h1>{@users}</h1>
+		<h1>{@user.users}</h1>
 	</header>
 	<div class="sub-section">
 		<div class="content-container">
@@ -11,7 +11,7 @@
 						<div class="fieldset-inset">
 							<div id="UserUsersListController_member_field" class="form-element">
 								<label for="UserUsersListController_member">
-									{@display_name}
+									{@user.displayed.name}
 								</label>
 								<div id="onblurContainerResponseUserUsersListController_member" class="form-field form-field-text picture-status-constraint">
 									<input data-listorder-control="textbox-filter" data-group="users-items" data-path=".lo-name" size="30" maxlength="255" type="text" value="">
@@ -24,10 +24,10 @@
 					<div class="listorder-type-filter cell">
 						<div class="cell-body">
 							<div class="cell-content">
-								<span>{@groups.select} :</span>
+								<span>{@user.groups.select} :</span>
 								<div class="type-filter-radio">
 									<div class="selected-label">
-										<span>{@groups.all}</span> <i class="fa fa-fw fa-caret-down" aria-hidden="true"></i>
+										<span>{@user.groups.all}</span> <i class="fa fa-fw fa-caret-down" aria-hidden="true"></i>
 									</div>
 									<div class="label-list dropdown-container">
 										<label class="listorder-label" for="default-radio">
@@ -38,7 +38,7 @@
 												data-path="default"
 												data-group="users-items"
 												name="groups-filter"
-												checked /> {@groups.all}
+												checked /> {@user.groups.all}
 										</label>
 										<label class="listorder-label" for="is-administrator">
 											<input
@@ -90,21 +90,21 @@
 									data-name="sorttitle">
 									<div data-type="panel" class="listorder-dd-panel"></div>
 									<ul data-type="content" class="dropdown-container">
-										<li> {@display_name}
-											<em class="sort-type" data-path=".lo-name" data-order="asc" data-type="text" data-selected="true"><span class="sr-only">{@display_name} &#8593;</span> <i class="fa fa-sort-alpha-down"></i></em>
-											<em class="sort-type" data-path=".lo-name" data-order="desc" data-type="text"><span class="sr-only">{@display_name} &#8595;</span> <i class="fa fa-sort-alpha-down-alt"></i></em>
+										<li> {@user.displayed.name}
+											<em class="sort-type" data-path=".lo-name" data-order="asc" data-type="text" data-selected="true"><span class="sr-only">{@user.displayed.name} &#8593;</span> <i class="fa fa-sort-alpha-down"></i></em>
+											<em class="sort-type" data-path=".lo-name" data-order="desc" data-type="text"><span class="sr-only">{@user.displayed.name} &#8595;</span> <i class="fa fa-sort-alpha-down-alt"></i></em>
 										</li>
-										<li> {@registration_date}
-											<em class="sort-type" data-path=".lo-registration-date" data-order="asc" data-type="number"><span class="sr-only">{@registration_date} &#8593;</span> <i class="fa fa-sort-numeric-down"></i></em>
-											<em class="sort-type" data-path=".lo-registration-date" data-order="desc" data-type="number"><span class="sr-only">{@registration_date} &#8595;</span> <i class="fa fa-sort-numeric-down-alt"></i></em>
+										<li> {@user.registration.date}
+											<em class="sort-type" data-path=".lo-registration-date" data-order="asc" data-type="number"><span class="sr-only">{@user.registration.date} &#8593;</span> <i class="fa fa-sort-numeric-down"></i></em>
+											<em class="sort-type" data-path=".lo-registration-date" data-order="desc" data-type="number"><span class="sr-only">{@user.registration.date} &#8595;</span> <i class="fa fa-sort-numeric-down-alt"></i></em>
 										</li>
-										<li> {@last_connection}
-											<em class="sort-type" data-path=".lo-last-connection" data-order="asc" data-type="number"><span class="sr-only">{@last_connection} &#8593;</span> <i class="fa fa-sort-numeric-down"></i></em>
-											<em class="sort-type" data-path=".lo-last-connection" data-order="desc" data-type="number"><span class="sr-only">{@last_connection} &#8595;</span> <i class="fa fa-sort-numeric-down-alt"></i></em>
+										<li> {@user.last.connection}
+											<em class="sort-type" data-path=".lo-last-connection" data-order="asc" data-type="number"><span class="sr-only">{@user.last.connection} &#8593;</span> <i class="fa fa-sort-numeric-down"></i></em>
+											<em class="sort-type" data-path=".lo-last-connection" data-order="desc" data-type="number"><span class="sr-only">{@user.last.connection} &#8595;</span> <i class="fa fa-sort-numeric-down-alt"></i></em>
 										</li>
-										<li> ${TextHelper::ucfirst(@publications.number)}
-											<em class="sort-type" data-path=".lo-publications-number" data-order="asc" data-type="number"><span class="sr-only">{@publications.number} &#8593;</span> <i class="fa fa-sort-numeric-down"></i></em>
-											<em class="sort-type" data-path=".lo-publications-number" data-order="desc" data-type="number"><span class="sr-only">{@publications.number} &#8595;</span> <i class="fa fa-sort-numeric-down-alt"></i></em>
+										<li> ${TextHelper::ucfirst(@user.publications.number)}
+											<em class="sort-type" data-path=".lo-publications-number" data-order="asc" data-type="number"><span class="sr-only">{@user.publications.number} &#8593;</span> <i class="fa fa-sort-numeric-down"></i></em>
+											<em class="sort-type" data-path=".lo-publications-number" data-order="desc" data-type="number"><span class="sr-only">{@user.publications.number} &#8595;</span> <i class="fa fa-sort-numeric-down-alt"></i></em>
 										</li>
 									</ul>
 								</div>
@@ -119,10 +119,10 @@
 						<table class="table">
 							<thead>
 								<tr>
-									<th>{@display_name}</th>
-									<th>{@registration_date}</th>
-									<th>{@last_connection}</th>
-									<th>${TextHelper::ucfirst(@publications.number)}</th>
+									<th>{@user.displayed.name}</th>
+									<th>{@user.registration.date}</th>
+									<th>{@user.last.connection}</th>
+									<th>${TextHelper::ucfirst(@user.publications.number)}</th>
 									<th>${LangLoader::get_message('contact', 'main')}</th>
 									<th>${LangLoader::get_message('groups', 'main')}</th>
 									# IF IS_ADMIN #<th></th># ENDIF #
@@ -137,12 +137,12 @@
 										<td>{users.REGISTRATION_DATE}<span class="lo-registration-date hidden">{users.REGISTRATION_DATE_TIMESTAMP}</span></td>
 										<td>{users.LAST_CONNECTION}<span class="lo-last-connection hidden">{users.LAST_CONNECTION_TIMESTAMP}</span></td>
 										<td class="lo-publications-number" aria-label="# START users.modules # {users.modules.MODULE_NAME}: {users.modules.MODULE_PUBLICATIONS_NUMBER}<br /># END users.modules #">
-											<a href="{users.U_PUBLICATIONS}" aria-label="{@view.user.publications}">{users.PUBLICATIONS_NUMBER}</a>
+											<a href="{users.U_PUBLICATIONS}" aria-label="{@user.view.publications}">{users.PUBLICATIONS_NUMBER}</a>
 										</td>
 										<td>
-											<a href="{users.U_MP}" class="pinned bgc-full notice" aria-label="{@private_message}"}><i class="fa fa-fw fa-people-arrows"></i></a>
+											<a href="{users.U_MP}" class="pinned bgc-full notice" aria-label="{@user.private.message}"}><i class="fa fa-fw fa-people-arrows"></i></a>
 											# IF users.C_ENABLED_EMAIL #
-												<span><a href="mailto:{users.U_EMAIL}" class="pinned bgc-full member" aria-label="{@email}"><i class="iboost fa fa-iboost-email"></i></a></span>
+												<span><a href="mailto:{users.U_EMAIL}" class="pinned bgc-full member" aria-label="{@user.email}"><i class="iboost fa fa-iboost-email"></i></a></span>
 											# ENDIF #
 											# IF users.C_HAS_WEBSITE #
 												<a href="{users.U_WEBSITE}" class="pinned bgc-full link-color" aria-label="${LangLoader::get_message('regex.website', 'admin-user-common')}"><i class="fa fa-globe"></i></a>
@@ -182,23 +182,23 @@
 								<div class="cell-list">
 									<ul>
 										<li class="li-stretch">
-											<span class="small">{@registration_date}<span class="lo-registration-date hidden">{users.REGISTRATION_DATE_TIMESTAMP}</span></span>
+											<span class="small">{@user.registration.date}<span class="lo-registration-date hidden">{users.REGISTRATION_DATE_TIMESTAMP}</span></span>
 											<span>{users.REGISTRATION_DATE}</span>
 										</li>
 										<li class="li-stretch">
-											<span class="small">{@last_connection}<span class="lo-last-connection hidden">{users.LAST_CONNECTION_TIMESTAMP}</span></span>
+											<span class="small">{@user.last.connection}<span class="lo-last-connection hidden">{users.LAST_CONNECTION_TIMESTAMP}</span></span>
 											<span>{users.LAST_CONNECTION}</span>
 										</li>
 										<li class="li-stretch lo-publications-number" aria-label="# START users.modules # {users.modules.MODULE_NAME}: {users.modules.MODULE_PUBLICATIONS_NUMBER}<br /># END users.modules #">
-											<span class="small">${TextHelper::ucfirst(@publications.number)}</span>
-											<a href="{users.U_PUBLICATIONS}" aria-label="{@view.user.publications}">{users.PUBLICATIONS_NUMBER}</a>
+											<span class="small">${TextHelper::ucfirst(@user.publications.number)}</span>
+											<a href="{users.U_PUBLICATIONS}" aria-label="{@user.view.publications}">{users.PUBLICATIONS_NUMBER}</a>
 										</li>
 										<li class="li-stretch">
 											<span class="small">${LangLoader::get_message('contact', 'main')}</span>
 											<span>
-												<a href="{users.U_MP}" class="pinned bgc-full notice" aria-label="{@private_message}"}><i class="fa fa-fw fa-people-arrows"></i></a>
+												<a href="{users.U_MP}" class="pinned bgc-full notice" aria-label="{@user.private_message}"}><i class="fa fa-fw fa-people-arrows"></i></a>
 												# IF users.C_ENABLED_EMAIL #
-													<span><a href="mailto:{users.U_EMAIL}" class="pinned bgc-full member" aria-label="{@email}"><i class="iboost fa fa-iboost-email"></i></a></span>
+													<span><a href="mailto:{users.U_EMAIL}" class="pinned bgc-full member" aria-label="{@user.email}"><i class="iboost fa fa-iboost-email"></i></a></span>
 												# ENDIF #
 												# IF users.C_HAS_WEBSITE #
 													<a href="{users.U_WEBSITE}" class="pinned bgc-full link-color" aria-label="${LangLoader::get_message('regex.website', 'admin-user-common')}"><i class="fa fa-globe"></i></a>
@@ -242,7 +242,7 @@
 			        data-name="pagination1"
 				   	data-name="paging">
 					<p data-type="info" class="align-center">
-						${LangLoader::get_message('listorder.item.start', 'common')} - ${LangLoader::get_message('listorder.item.end', 'common')} / ${LangLoader::get_message('listorder.items.number', 'common')} ${TextHelper::lcfirst(@users)}
+						${LangLoader::get_message('listorder.item.start', 'common')} - ${LangLoader::get_message('listorder.item.end', 'common')} / ${LangLoader::get_message('listorder.items.number', 'common')} ${TextHelper::lcfirst(@user.users)}
 					</p>
 					<ul>
 						<li class="pagination-item" data-type="first" aria-label="${LangLoader::get_message('pagination.first', 'common')}"><a href="#"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></a> </li>
@@ -261,7 +261,7 @@
 		                <option value="{ITEMS_PER_PAGE}"> {ITEMS_PER_PAGE} ${LangLoader::get_message('pagination.per', 'common')}</option>
 		                <option value="50"> 50 ${LangLoader::get_message('pagination.per', 'common')}</option>
 		                <option value="100"> 100 ${LangLoader::get_message('pagination.per', 'common')}</option>
-		                <option value="0"> {@members.all} </option>
+		                <option value="0"> {@user.members.all} </option>
 		            </select>
 				</div>
 			</div>

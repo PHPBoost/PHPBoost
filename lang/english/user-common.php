@@ -16,7 +16,14 @@
 ####################################################
 
 // Labels
-$lang['user.welcome'] = 'Welcome';
+$lang['user.user']         = 'User';
+$lang['user.users']        = 'Users';
+$lang['user.profile']      = 'Profile';
+$lang['user.profile.of']   = 'Profile of :name';
+$lang['user.profile.edit'] = 'Edit profile';
+$lang['user.messages']     = 'User messages';
+$lang['user.maintain']     = 'Maintain';
+$lang['user.welcome']      = 'Welcome';
 
 // Form alerts
 $lang['user.required.username'] = 'Please enter a username !';
@@ -68,6 +75,18 @@ $lang['user.rank.visitor'] = 'Visitor';
 $lang['user.rank.member'] = 'Member';
 $lang['user.rank.moderator'] = 'Moderator';
 $lang['user.rank.administrator'] = 'Administrator';
+
+// S.E.O.
+$lang['user.seo.profile'] = 'All informations about :name.';
+$lang['user.seo.list'] = 'Table of users list.';
+$lang['user.seo.groups'] = 'Each group users.';
+$lang['user.seo.comments'] = 'All comments.';
+$lang['user.seo.comments.user'] = 'All comments of :name.';
+$lang['user.seo.messages'] = 'All messages of :name.';
+$lang['user.seo.registration'] = 'Fill all required informations to create an account.';
+$lang['user.seo.login'] = 'Log to the site to reach the protected area.';
+$lang['user.seo.forgotten.password'] = 'Fill all required informations to receive a link to change your password.';
+$lang['user.seo.about.cookie'] = 'All informations about cookies.';
 
 // ######################### To be rearranged
 $lang['user'] = 'User';

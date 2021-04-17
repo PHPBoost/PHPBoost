@@ -18,6 +18,7 @@
 	#global {
 		padding: 2.618em;
 		align-items: center;
+		justify-content: flex-start;
 	}
 }
 

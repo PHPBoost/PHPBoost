@@ -1,14 +1,14 @@
 <section id="module-user-home">
 	<header class="section-header">
-		<h1>{@dashboard}</h1>
+		<h1>{@user.dashboard}</h1>
 	</header>
 	<div class="sub-section">
 		<div class="content-container">
 			<div class="content">
-				<p class="align-center text-strong">{@welcome} {PSEUDO}</p>
+				<p class="align-center text-strong">{@user.welcome} {PSEUDO}</p>
 				# IF C_AVATAR_IMG #
 					<p class="align-center">
-						<img src="{U_AVATAR_IMG}" alt="{@avatar}" />
+						<img src="{U_AVATAR_IMG}" alt="{@user.avatar}" />
 					</p>
 				# ENDIF #
 			</div>
@@ -106,7 +106,7 @@
 						<div class="cell-content align-center">
 							<a href="${relative_url(UserUrlBuilder::disconnect())}">
 								<i class="fa fa-sign-out-alt fa-2x" aria-hidden="true"></i>
-								<span class="d-block">{@disconnect}</span>
+								<span class="d-block">{@user.sign.out}</span>
 							</a>
 						</div>
 					</div>
@@ -117,7 +117,7 @@
 			</div>
 			<hr />
 			<div class="content">
-				<h2>{@my.publications}</h2>
+				<h2>{@user.my.publications}</h2>
 			</div>
 			<div id="user-publications" class="cell-flex cell-tile cell-columns-3">
 				# START user_publications #
@@ -136,7 +136,7 @@
 						</div>
 					</article>
 				# END user_publications #
-			</div>			
+			</div>
 		</div>
 	</div>
 	<footer></footer>

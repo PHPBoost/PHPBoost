@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 04
+ * @version     PHPBoost 6.0 - last update: 2021 04 17
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -185,7 +185,7 @@ class UserExploreGroupsController extends AbstractController
 			'C_AVATAR'      => $user['user_avatar'] || $user_accounts_config->is_default_avatar_enabled(),
 			'C_GROUP_COLOR' => !empty($group_color),
 			'PSEUDO'        => $user['display_name'],
-			'LEVEL'         => ($user['warning_percentage'] < '100' || (time() - $user['delay_banned']) < 0) ? UserService::get_level_lang($user['level']) : $this->lang['banned'],
+			'LEVEL'         => ($user['warning_percentage'] < '100' || (time() - $user['delay_banned']) < 0) ? UserService::get_level_lang($user['level']) : $this->lang['user.banned'],
 			'LEVEL_CLASS'   => UserService::get_level_class($user['level']),
 			'GROUP_COLOR'   => $group_color,
 			'U_PROFILE'     => UserUrlBuilder::profile($user['user_id'])->rel(),
@@ -236,7 +236,7 @@ class UserExploreGroupsController extends AbstractController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('user-common');
+		$this->lang = LangLoader::get('user-lang');
 		$this->view = new FileTemplate('user/UserExploreGroupsController.tpl');
 		$this->view->add_lang($this->lang);
 		$this->groups_cache = GroupsCache::load();
@@ -246,13 +246,13 @@ class UserExploreGroupsController extends AbstractController
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['groups'], $this->lang['user']);
-		$graphical_environment->get_seo_meta_data()->set_description($this->lang['seo.user.groups']);
+		$graphical_environment->set_page_title($this->lang['user.groups'], $this->lang['user.user']);
+		$graphical_environment->get_seo_meta_data()->set_description($this->lang['user.seo.groups']);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::groups());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['users'], UserUrlBuilder::home()->rel());
-		$breadcrumb->add($this->lang['groups'], UserUrlBuilder::groups()->rel());
+		$breadcrumb->add($this->lang['user.users'], UserUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['user.groups'], UserUrlBuilder::groups()->rel());
 
 		return $response;
 	}

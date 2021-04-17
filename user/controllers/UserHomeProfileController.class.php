@@ -12,7 +12,7 @@
 class UserHomeProfileController extends AbstractController
 {
 	private $lang;
-	private $tpl;
+	private $view;
 	private $user;
 
 	public function execute(HTTPRequestCustom $request)
@@ -26,15 +26,15 @@ class UserHomeProfileController extends AbstractController
 		}
 
 		$this->build_form();
-		return $this->build_response($this->tpl);
+		return $this->build_response($this->view);
 	}
 
 	private function init()
 	{
 		$this->user = AppContext::get_current_user();
-		$this->tpl = new FileTemplate('user/UserHomeProfileController.tpl');
-		$this->lang = LangLoader::get('user-common');
-		$this->tpl->add_lang($this->lang);
+		$this->view = new FileTemplate('user/UserHomeProfileController.tpl');
+		$this->lang = LangLoader::get('user-lang');
+		$this->view->add_lang($this->lang);
 	}
 
 	private function build_form()
@@ -43,7 +43,7 @@ class UserHomeProfileController extends AbstractController
 		$user_accounts_config = UserAccountsConfig::load();
 		$contribution_number = $this->get_unread_contributions_number();
 		$is_authorized_files_panel = $this->user->check_auth(FileUploadConfig::load()->get_authorization_enable_interface_files(), FileUploadConfig::AUTH_FILES_BIT);
-		$this->tpl->put_all(array(
+		$this->view->put_all(array(
 			'C_USER_AUTH_FILES'     => $is_authorized_files_panel,
 			'C_USER_INDEX'          => true,
 			'C_IS_MODERATOR'        => $this->user->get_level() >= User::MODERATOR_LEVEL,
@@ -86,7 +86,7 @@ class UserHomeProfileController extends AbstractController
 				else
 					$thumbnail = 'fa fa-cube';
 
-				$this->tpl->assign_block_vars('user_publications', array(
+				$this->view->assign_block_vars('user_publications', array(
 					'C_ICON_IS_PICTURE'   => $is_picture,
 					'MODULE_NAME'         => $module->get_publications_module_name(),
 					'MODULE_THUMBNAIL'    => $thumbnail,
@@ -145,12 +145,12 @@ class UserHomeProfileController extends AbstractController
 	{
 		$response = new SiteDisplayResponse($view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['dashboard'], $this->lang['user']);
+		$graphical_environment->set_page_title($this->lang['user.dashboard'], $this->lang['user.user']);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::home_profile());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['user'], UserUrlBuilder::home()->rel());
-		$breadcrumb->add($this->lang['dashboard'], UserUrlBuilder::home_profile()->rel());
+		$breadcrumb->add($this->lang['user.user'], UserUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['user.dashboard'], UserUrlBuilder::home_profile()->rel());
 
 		return $response;
 	}

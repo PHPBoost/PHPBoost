@@ -22,7 +22,7 @@
 						</div>
 					</div>
 				# END user_publications #
-			</div>			
+			</div>
 		</div>
 	</div>
 	<footer></footer>

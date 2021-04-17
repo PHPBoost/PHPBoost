@@ -20,7 +20,7 @@ class UserConfirmRegistrationController extends AbstractController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('user-common');
+		$this->lang = LangLoader::get('user-lang');
 	}
 
 	private function check_activation($registration_pass)
@@ -41,7 +41,7 @@ class UserConfirmRegistrationController extends AbstractController
 		}
 		else
 		{
-			$controller = new UserErrorController($this->lang['profile'], LangLoader::get_message('process.error', 'status-messages-common'), UserErrorController::WARNING);
+			$controller = new UserErrorController($this->lang['user.profile'], LangLoader::get_message('process.error', 'status-messages-common'), UserErrorController::WARNING);
 			DispatchManager::redirect($controller);
 		}
 	}

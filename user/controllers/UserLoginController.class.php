@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 30
+ * @version     PHPBoost 6.0 - last update: 2021 04 17
  * @since       PHPBoost 3.0 - 2012 04 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -104,7 +104,7 @@ class UserLoginController extends AbstractController
 	{
 		$this->request = $request;
 		$this->view = new FileTemplate('user/UserLoginController.tpl');
-		$this->lang = LangLoader::get('user-common');
+		$this->lang = LangLoader::get('user-lang');
 		$this->view->add_lang($this->lang);
 		$this->maintain_config = MaintenanceConfig::load();
 	}
@@ -125,16 +125,28 @@ class UserLoginController extends AbstractController
 			$external_authentication++;
 		}
 
+		$header_logo_path = '';
+		$theme = ThemesManager::get_theme(AppContext::get_current_user()->get_theme());
+
+		if ($theme)
+		{
+			$customize_interface = $theme->get_customize_interface();
+			$header_logo_path = $customize_interface->get_header_logo_path();
+		}
+
 		$this->view->put_all(array(
 			'C_REGISTRATION_ENABLED' => UserAccountsConfig::load()->is_registration_enabled(),
 			'C_DISPLAY_EXTERNAL_AUTHENTICATION' => $external_authentication,
-			'C_USER_LOGIN'      => $this->login_type == self::USER_LOGIN && !$this->maintain_config->is_under_maintenance(),
-			'C_ADMIN_LOGIN'     => $this->login_type == self::ADMIN_LOGIN,
-			'C_HAS_ERROR'       => $this->has_error,
-			'U_REGISTER'        => UserUrlBuilder::registration()->rel(),
-			'U_FORGET_PASSWORD' => UserUrlBuilder::forget_password()->rel(),
-			'L_FORGET_PASSWORD' => $this->lang['forget-password'],
-			'LOGIN_FORM'        => $this->form->display(),
+			'C_USER_LOGIN'         => $this->login_type == self::USER_LOGIN && !$this->maintain_config->is_under_maintenance(),
+			'C_ADMIN_LOGIN'        => $this->login_type == self::ADMIN_LOGIN,
+			'C_HAS_ERROR'          => $this->has_error,
+			'SITE_NAME'            => GeneralConfig::load()->get_site_name(),
+			'SITE_SLOGAN'          => GeneralConfig::load()->get_site_slogan(),
+			'C_HEADER_LOGO'        => !empty($header_logo_path),
+			'HEADER_LOGO'          => Url::to_rel($header_logo_path),
+			'U_REGISTER'           => UserUrlBuilder::registration()->rel(),
+			'U_FORGOTTEN_PASSWORD' => UserUrlBuilder::forget_password()->rel(),
+			'LOGIN_FORM'           => $this->form->display(),
 		));
 
 		if ($this->maintain_config->is_under_maintenance())
@@ -189,7 +201,7 @@ class UserLoginController extends AbstractController
 			$response = new SiteDisplayFrameResponse($this->view);
 			$graphical_environment = $response->get_graphical_environment();
 			$graphical_environment->set_page_title(($this->login_type == self::ADMIN_LOGIN ? LangLoader::get_message('administration', 'admin') : LangLoader::get_message('title_maintain', 'main')));
-			$graphical_environment->get_seo_meta_data()->set_description($this->lang['seo.user.login']);
+			$graphical_environment->get_seo_meta_data()->set_description($this->lang['user.seo.login']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::connect());
 			$graphical_environment->display_css_login();
 			return $response;
@@ -198,8 +210,8 @@ class UserLoginController extends AbstractController
 		{
 			$response = new SiteDisplayResponse($this->view);
 			$graphical_environment = $response->get_graphical_environment();
-			$graphical_environment->set_page_title($this->lang['connection'], $this->lang['user']);
-			$graphical_environment->get_seo_meta_data()->set_description($this->lang['seo.user.login']);
+			$graphical_environment->set_page_title($this->lang['user.sign.in'], $this->lang['user.user']);
+			$graphical_environment->get_seo_meta_data()->set_description($this->lang['user.seo.login']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::connect());
 			return $response;
 		}
@@ -211,23 +223,22 @@ class UserLoginController extends AbstractController
 	private function build_form()
 	{
 		$this->form = new HTMLForm('loginForm', $this->build_target(), false);
-		$this->form->set_layout_title($this->lang['connection']);
 		$this->form->set_css_class('fieldset-content');
 
 		$this->fieldset = new FormFieldsetHTML('loginFieldset', LangLoader::get_message('form.parameters', 'common'));
 		$this->form->add_fieldset($this->fieldset);
 
-		$this->fieldset->add_field(new FormFieldTextEditor('login', $this->lang['login'], '',
-			array('description' => $this->lang['login.explain'], 'required' => true)
+		$this->fieldset->add_field(new FormFieldTextEditor('login', $this->lang['user.username'], '',
+			array('description' => $this->lang['user.username.tooltip'], 'required' => true)
 		));
 
-		$this->fieldset->add_field(new FormFieldPasswordEditor('password', $this->lang['password'], '',
+		$this->fieldset->add_field(new FormFieldPasswordEditor('password', $this->lang['user.password'], '',
 			array('required' => true)
 		));
 
-		$this->fieldset->add_field(new FormFieldCheckbox('autoconnect', $this->lang['autoconnect'], true));
+		$this->fieldset->add_field(new FormFieldCheckbox('autoconnect', $this->lang['user.auto.connect'], true));
 
-		$this->submit_button = new FormButtonSubmit($this->lang['connection'], 'authenticate');
+		$this->submit_button = new FormButtonSubmit($this->lang['user.sign.in'], 'authenticate');
 		$this->form->add_button($this->submit_button);
 	}
 
