@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 15
+ * @version     PHPBoost 6.0 - last update: 2021 04 17
  * @since       PHPBoost 3.0 - 2012 02 08
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -37,7 +37,41 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 		$main_lang = LangLoader::get('main');
 		$date_lang = LangLoader::get('date-common');
 
-		global $auth_write, $Bread_crumb, $members, $pages, $pages_year, $referer, $keyword, $visit, $visit_year, $os, $browser, $user_lang, $stats_array_browsers, $stats_array_os, $stats_array_lang, $bot;
+		global $auth_write, $Bread_crumb, $members, $pages, $pages_year, $referer, $keyword, $visit, $visit_year, $os, $browser, $user_lang, $stats_array_browsers, $stats_array_os, $stats_array_lang, $bot, $erase, $erase_occasional;
+
+		if ($erase) //erase robots.txt
+		{
+			$file = new File(PATH_TO_ROOT . '/stats/cache/robots.txt');
+			if ($file->exists())
+				$file->delete();
+		}
+
+		if ($erase_occasional) //Erase occasional robots
+		{
+			$array_robot = StatsSaver::retrieve_stats('robots');
+			$robots_visits = array();
+			$robots_visits_number = 0;
+			foreach ($array_robot as $key => $value)
+			{
+				$robots_visits[$key] = is_array($value) ? $value['visits_number'] : $value;
+				$robots_visits_number += $robots_visits[$key];
+			}
+
+			if ($robots_visits_number)
+			{
+				$Stats = new ImagesStats();
+				$Stats->load_data($robots_visits, 'ellipse');
+				foreach ($Stats->data_stats as $key => $angle_value)
+				{
+					if (!NumberHelper::round(($angle_value/3.6), 1))
+						unset($array_robot[$key]);
+				}
+			}
+
+			$file = @fopen(PATH_TO_ROOT . '/stats/cache/robots.txt', 'r+');
+			fwrite($file, TextHelper::serialize($array_robot));
+			fclose($file);
+		}
 
 		require_once(PATH_TO_ROOT . '/stats/stats_begin.php');
 
