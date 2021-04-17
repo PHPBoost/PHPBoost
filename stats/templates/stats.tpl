@@ -728,15 +728,17 @@
 								# ENDIF #
 							</tbody>
 						</table>
-						# IF C_ROBOTS_DATA #
-						<fieldset class="fieldset-submit">
-							<legend>{@erase.list}</legend>
-							<div class="fieldset-inset">
-								<button type="submit" name="erase" value="true" class="button submit">{@erase.list}</button>
-								<button type="submit" name="erase-occasional" value="true" class="button submit">{@erase.occasional}</button>
-								<input type="hidden" name="token" value="{TOKEN}">
-							</div>
-						</fieldset>
+						# IF IS_ADMIN #
+							# IF C_ROBOTS_DATA #
+							<fieldset class="fieldset-submit">
+								<legend>{@erase.list}</legend>
+								<div class="fieldset-inset">
+									<button type="submit" name="erase" value="true" class="button submit">{@erase.list}</button>
+									<button type="submit" name="erase-occasional" value="true" class="button submit">{@erase.occasional}</button>
+									<input type="hidden" name="token" value="{TOKEN}">
+								</div>
+							</fieldset>
+							# ENDIF #
 						# ENDIF #
 					</article>
 				</form>
