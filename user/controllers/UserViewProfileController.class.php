@@ -122,7 +122,7 @@ class UserViewProfileController extends AbstractController
 	{
 		$response = new SiteDisplayResponse($view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->user_infos['user_id'] == AppContext::get_current_user()->get_id() ? $this->lang['user.profile'] : StringVars::replace_vars($this->lang['profile_of'], array('name' => $this->user_infos['display_name']), $this->lang['user.user']));
+		$graphical_environment->set_page_title($this->user_infos['user_id'] == AppContext::get_current_user()->get_id() ? $this->lang['user.profile'] : StringVars::replace_vars($this->lang['user.profile.of'], array('name' => $this->user_infos['display_name']), $this->lang['user.user']));
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['user.seo.profile'], array('name' => $this->user_infos['display_name'])));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::profile($user_id));
 

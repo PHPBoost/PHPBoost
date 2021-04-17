@@ -62,14 +62,14 @@
 
 					<form action="{U_ACTION}" method="post" class="fieldset-content">
 						<fieldset>
-							<legend>{L_SEARCH_USER} plop</legend>
+							<legend>{L_TITLE}</legend>
 							<div class="fieldset-inset">
 								<div class="form-element">
-									<label for="login">{@user.search.member} <span class="field-description">{L_JOKER}</span></label>
+									<label for="login">{@user.search.member}</label>
 									<div class="form-field grouped-inputs">
 										<input type="text" maxlength="25" id="login" value="" name="login">
 										<input type="hidden" name="token" value="{TOKEN}">
-										<button class="button submit" onclick="XMLHttpRequest_search(this.form);" type="button">{L_SEARCH}</button>
+										<button class="button submit" onclick="XMLHttpRequest_search(this.form);" type="button">{@user.search}</button>
 									</div>
 								</div>
 								<div id="xmlhttprequest-result-search" style="display: none;" class="xmlhttprequest-result-search"></div>
@@ -80,10 +80,10 @@
 					<table class="table">
 						<thead>
 							<tr>
-								<th>{L_LOGIN}</th>
+								<th>{@user.displayed.name}</th>
 								<th>{L_INFO}</th>
 								<th>{L_ACTION_USER}</th>
-								<th>{L_PM}</th>
+								<th>{@user.contact.pm}</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -144,12 +144,12 @@
 									</div>
 								</div>
 								<div class="form-element form-element-textarea">
-									<label for="action_contents">{L_ALTERNATIVE_PM}</label>
+									<label for="action_contents">{@H|user.alternative.pm}</label>
 									{KERNEL_EDITOR}
 									<textarea name="action_contents" id="action_contents" rows="12">{ALTERNATIVE_PM}</textarea>
 								</div>
 								<div class="form-element">
-									<label>{L_INFO_EXPLAIN}</label>
+									<label>{@user.readonly.clue}</label>
 									<div class="form-field">
 										<span id="action_info" class="hidden">{INFO}</span>
 										<select name="new_info" onchange="change_textarea_level(this.options[this.selectedIndex].value, {REGEX})">
@@ -162,7 +162,7 @@
 
 						<fieldset class="fieldset-submit">
 							<input type="hidden" name="token" value="{TOKEN}">
-							<button type="submit" name="valid_user" value="true" class="button submit">{L_CHANGE_INFO}</button>
+							<button type="submit" name="valid_user" value="true" class="button submit">{@user.validate}</button>
 						</fieldset>
 					</form>
 				# ENDIF #
@@ -185,7 +185,7 @@
 									</div>
 								</div>
 								<div class="form-element">
-									<label>{L_DELAY_BAN}</label>
+									<label>{@user.ban.delay}</label>
 									<div class="form-field">
 										<select name="user_ban">
 										# START select_ban #
@@ -199,7 +199,7 @@
 
 						<fieldset class="fieldset-submit">
 							<input type="hidden" name="token" value="{TOKEN}">
-							<button type="submit" name="valid_user" value="true" class="button submit">{L_BAN}</button>
+							<button type="submit" name="valid_user" value="true" class="button submit">{@user.validate}</button>
 						</fieldset>
 					</form>
 				# ENDIF #

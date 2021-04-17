@@ -104,6 +104,7 @@ $lang['user.members_list']          = 'Members list';
 $lang['user.member.management']     = 'Member management';
 $lang['user.search.member']         = 'Search member';
 $lang['user.search']                = 'Search';
+$lang['user.validate']              = 'Validate';
 
 $lang['user.profile.edit.password.error']       = 'The new password is not correct';
 $lang['user.external.auth.account.exists']      = 'You already have an account. To use this login method, please login to the site and go to editing of your profile';
@@ -332,7 +333,7 @@ $lang['user.contact.pm'] = 'Contact by private message';
 $lang['user.alternative.pm'] = 'Private message sent to the member <span class="smaller">(Leave empty for no private message)</span>. The member won\'t be able to reply to this message, he won\'t know who sent it';
 
 // Punishment management
-$lang['user.punishment'] = 'Punishment';
+$lang['user.punishments'] = 'Punishment';
 $lang['user.punishment.management'] = 'Punishment management';
 $lang['user.punish.until'] = 'Punishment until';
 $lang['user.no.punish'] = 'No punished user';
@@ -346,12 +347,11 @@ $lang['user.readonly.changed'] = 'You have been set on read only status by a mem
 This is a semi-automatic message.';
 
 // Warning management
-$lang['user.warning'] = 'Warning';
+$lang['user.warnings'] = 'Warnings';
 $lang['user.warning.management'] = 'Warning management';
 $lang['user.warning.level'] = 'Warning level';
 $lang['user.no.user.warning'] = 'No warned users';
 $lang['user.warning.clue'] = 'Member warning level. You can update it, but at 100% the member is banned';
-$lang['user.change.user.warning'] = 'Change warning level';
 $lang['user.warning.title'] = 'Warning';
 $lang['user.warning.level.changed'] = 'You have been warned by a member of the moderation team, your warning level is now %level%%. Be careful with your behavior, if you reach 100% you will be permanently banned.
 
@@ -363,7 +363,6 @@ $lang['user.warning.user'] = 'Warn user';
 $lang['user.bans'] = 'Ban';
 $lang['user.ban.management'] = 'Ban management';
 $lang['user.ban.until'] = 'Banned until';
-$lang['user.ban.user'] = 'Ban';
 $lang['user.no.ban'] = 'No banned user';
 $lang['user.ban.delay'] = 'Ban delay';
 $lang['user.ban.title.email'] = 'Banned';

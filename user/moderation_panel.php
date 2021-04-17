@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 04
+ * @version     PHPBoost 6.0 - last update: 2021 04 17
  * @since       PHPBoost 1.6 - 2007 03 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -29,11 +29,11 @@ switch ($action)
 		$Bread_crumb->add($lang['user.bans'], UserUrlBuilder::moderation_panel('ban')->rel());
 		break;
 	case 'punish':
-		$Bread_crumb->add($lang['user.punishment'], UserUrlBuilder::moderation_panel('punish')->rel());
+		$Bread_crumb->add($lang['user.punishments'], UserUrlBuilder::moderation_panel('punish')->rel());
 		break;
 	case 'warning':
 	default:
-		$Bread_crumb->add($lang['user.warning'], UserUrlBuilder::moderation_panel('warning')->rel());
+		$Bread_crumb->add($lang['user.warnings'], UserUrlBuilder::moderation_panel('warning')->rel());
 }
 
 define('TITLE', $lang['user.moderation.panel']);
@@ -49,13 +49,6 @@ $view = new FileTemplate('user/moderation_panel.tpl');
 $view->add_lang($lang);
 
 $view->put_all(array(
-	'L_MODERATION_PANEL' => $lang['user.moderation.panel'],
-	'L_PUNISHMENT'       => $lang['user.punishment'],
-	'L_WARNING'          => $lang['user.warning'],
-	'L_BAN'              => $lang['user.bans'],
-	'L_USERS_PUNISHMENT' => $lang['user.punishment.management'],
-	'L_USERS_WARNING'    => $lang['user.warning.management'],
-	'L_USERS_BAN'        => $lang['user.ban.management'],
 	'U_WARNING'          => UserUrlBuilder::moderation_panel('warning')->rel(),
 	'U_PUNISH'           => UserUrlBuilder::moderation_panel('punish')->rel(),
 	'U_BAN'              => UserUrlBuilder::moderation_panel('ban')->rel()
@@ -91,8 +84,6 @@ if ($action == 'punish')
 	$view->put_all(array(
 		'C_MODO_PANEL_USER' => true,
 		'L_ACTION_INFO'     => $lang['user.punishment.management'],
-		'L_LOGIN'           => LangLoader::get_message('display_name', 'user-common'),
-		'L_INFO_MANAGEMENT' => $lang['user.punishment.management'],
 		'U_XMLHTTPREQUEST'  => 'punish_user',
 		'U_ACTION'          => UserUrlBuilder::moderation_panel('punish')->rel()
 	));
@@ -116,13 +107,9 @@ if ($action == 'punish')
 
 		$view->put_all(array(
 			'C_MODO_PANEL_USER_LIST' => true,
-			'L_PM'                   => $lang['user.contact.pm'],
+			'L_TITLE'				 => $lang['user.punishment.management'],
+			'L_ACTION_USER'          => $lang['user.punishments'],
 			'L_INFO'                 => $lang['user.punish.until'],
-			'L_ACTION_USER'          => $lang['user.punishment.management'],
-			'L_PROFILE'              => $lang['user.profile'],
-			'L_SEARCH_USER'          => $lang['user.search.member'],
-			'L_SEARCH'               => $lang['user.search'],
-			'L_REQUIRE_LOGIN'        => $lang['user.required.username']
 		));
 
 		$i = 0;
@@ -230,13 +217,7 @@ if ($action == 'punish')
 			'REGEX'            => '/[0-9]+ [a-zéèêA-Z]+/u',
 			'U_PM'             => url('.php?pm='. $id_get, '-' . $id_get . '.php'),
 			'U_ACTION_INFO'    => UserUrlBuilder::moderation_panel('punish', $id_get)->rel() . '&amp;token=' . AppContext::get_session()->get_token(),
-			'U_PROFILE'        => UserUrlBuilder::profile($id_get)->rel(),
-			'L_ALTERNATIVE_PM' => $lang['user.alternative.pm'],
-			'L_INFO_EXPLAIN'   => $lang['user.readonly.explain'],
-			'L_PM'             => $lang['user.contact.pm'],
-			'L_LOGIN'          => $lang['user.displayed.name'],
-			'L_PM'             => $lang['user.contact.pm'],
-			'L_CHANGE_INFO'    => $lang['user.submit']
+			'U_PROFILE'        => UserUrlBuilder::profile($id_get)->rel()
 		));
 	}
 }
@@ -277,8 +258,6 @@ else if ($action == 'warning')
 	$view->put_all(array(
 		'C_MODO_PANEL_USER' => true,
 		'L_ACTION_INFO'     => $lang['user.warning.management'],
-		'L_LOGIN'           => $lang['user.displayed.name'],
-		'L_INFO_MANAGEMENT' => $lang['user.warning.management'],
 		'U_XMLHTTPREQUEST'  => 'warning_user',
 		'U_ACTION'          => UserUrlBuilder::moderation_panel('warning')->rel() . '&amp;' . AppContext::get_session()->get_token()
 	));
@@ -302,12 +281,9 @@ else if ($action == 'warning')
 
 		$view->put_all(array(
 			'C_MODO_PANEL_USER_LIST' => true,
-			'L_PM'                   => $lang['user.contact.pm'],
+			'L_TITLE'				 => $lang['user.warning.management'],
+			'L_ACTION_USER'          => $lang['user.warnings'],
 			'L_INFO'                 => $lang['user.warning.level'],
-			'L_ACTION_USER'          => $lang['user.warning.management'],
-			'L_SEARCH_USER'          => $lang['user.search.member'],
-			'L_SEARCH'               => $lang['user.search'],
-			'L_REQUIRE_LOGIN'        => $lang['user.required.username']
 		));
 
 		$i = 0;
@@ -379,12 +355,7 @@ else if ($action == 'warning')
 			'U_ACTION_INFO'          => UserUrlBuilder::moderation_panel('warning', $id_get)->rel() . '&amp;token=' . AppContext::get_session()->get_token(),
 			'U_PM'                   => UserUrlBuilder::personnal_message($id_get)->rel(),
 			'U_PROFILE'              => UserUrlBuilder::profile($id_get)->rel(),
-			'L_ALTERNATIVE_PM'       => $lang['user.alternative.pm'],
-			'L_INFO_EXPLAIN'         => $lang['user.warning.clue'],
-			'L_PM'                   => $lang['user.contact.pm'],
 			'L_INFO'                 => $lang['user.warning.level'],
-			'L_PM'                   => $lang['user.contact.pm'],
-			'L_CHANGE_INFO'          => $lang['user.change.user.warning']
 		));
 	}
 }
@@ -414,10 +385,7 @@ else
 
 	$view->put_all(array(
 		'C_MODO_PANEL_USER' => true,
-
 		'L_ACTION_INFO'     => $lang['user.ban.management'],
-		'L_LOGIN'           => LangLoader::get_message('display_name', 'user-common'),
-		'L_INFO_MANAGEMENT' => $lang['user.ban.management'],
 
 		'U_XMLHTTPREQUEST'  => 'ban_user',
 		'U_ACTION'          => UserUrlBuilder::moderation_panel('ban')->rel() . '&amp;token=' . AppContext::get_session()->get_token()
@@ -442,14 +410,9 @@ else
 
 		$view->put_all(array(
 			'C_MODO_PANEL_USER_LIST' => true,
-
-			'L_PM'            => $lang['user.contact.pm'],
+			'L_TITLE'				 => $lang['user.ban.management'],
+			'L_ACTION_USER'   => $lang['user.bans'],
 			'L_INFO'          => $lang['user.ban.until'],
-			'L_ACTION_USER'   => $lang['user.ban.management'],
-			'L_PROFILE'       => LangLoader::get_message('profile', 'user-common'),
-			'L_SEARCH_USER'   => $lang['user.search.member'],
-			'L_SEARCH'        => $lang['user.search'],
-			'L_REQUIRE_LOGIN' => $lang['user.required.username']
 		));
 
 		$i = 0;
@@ -507,10 +470,6 @@ else
 			'USER_LEVEL_CLASS' => UserService::get_level_class($member['level']),
 			'USER_GROUP_COLOR' => $group_color,
 			'KERNEL_EDITOR'    => $editor->display(),
-			'L_PM'             => $lang['user.contact.pm'],
-			'L_LOGIN'          => $lang['user.displayed.name'],
-			'L_BAN'            => $lang['user.ban.user'],
-			'L_DELAY_BAN'      => $lang['user.ban.delay'],
 
 			'U_PM'             => UserUrlBuilder::personnal_message($id_get)->rel(),
 			'U_ACTION_INFO'    => UserUrlBuilder::moderation_panel('ban', $id_get)->rel() . '&amp;token=' . AppContext::get_session()->get_token(),

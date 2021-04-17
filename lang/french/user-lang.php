@@ -104,6 +104,7 @@ $lang['user.members.list']          = 'Liste des membres';
 $lang['user.member.management']     = 'Gestion du membre';
 $lang['user.search.member']         = 'Rechercher un membre';
 $lang['user.search']                = 'Rechercher';
+$lang['user.validate']              = 'Valider';
 
 $lang['user.profile.edit.password.error']       = 'Le mot de passe que vous avez entré n\'est pas correct';
 $lang['user.external.auth.account.exists']      = 'Vous avez déjà un compte sur le site. Pour utiliser cette méthode de connexion, veuillez vous connecter et vous rendre dans l\'édition de votre profil';
@@ -332,10 +333,10 @@ $lang['user.extended.field.website.clue'] = 'Veuillez renseigner un site web val
 
 // Moderation panel
 $lang['user.contact.pm'] = 'Contacter par message privé';
-$lang['user.alternative.pm'] = 'Message privé envoyé au membre <span class="smaller">(Laisser vide pour aucun message privé)</span>. <br />Le membre averti ne pourra pas répondre à ce message, et ne connaîtra pas l\'expéditeur.';
+$lang['user.alternative.pm'] = 'Message privé envoyé au membre <span class="small text-italic">(Laisser vide pour aucun message privé)</span>. <br />Le membre averti ne pourra pas répondre à ce message, et ne connaîtra pas l\'expéditeur.';
 
 // Punishments management
-$lang['user.punishment'] = 'Sanctions';
+$lang['user.punishments'] = 'Sanctions';
 $lang['user.punishment.management'] = 'Gestion des sanctions';
 $lang['user.punish.until'] = 'Sanction jusqu\'au';
 $lang['user.no.punish'] = 'Il n\'y a aucun utilisateur sanctionné.';
@@ -349,12 +350,11 @@ $lang['user.readonly.changed'] = 'Vous avez été mis en lecture seule par un me
 Ceci est un message semi-automatique.';
 
 // Warning management
-$lang['user.warning'] = 'Avertissements';
+$lang['user.warnings'] = 'Avertissements';
 $lang['user.warning.management'] = 'Gestion des avertissements';
 $lang['user.warning.level'] = 'Niveau d\'avertissement';
 $lang['user.no.user.warning'] = 'Il n\'y a aucun utilisateur averti.';
 $lang['user.warning.clue'] = 'Niveau d\'avertissement du membre. Vous pouvez le modifier, mais sachez qu\'à 100% le membre est banni.';
-$lang['user.change.user.warning'] = 'Changer le niveau';
 $lang['user.warning.title'] = 'Avertissement';
 $lang['user.warning.level.changed'] = 'Vous avez été averti par un membre de l\'équipe de modération, votre niveau d\'avertissement est passé à %level%%. Attention à votre comportement, si vous atteignez 100% vous serez banni définitivement.
 
@@ -366,7 +366,6 @@ $lang['user.warning.user'] = 'Membre averti';
 $lang['user.bans'] = 'Bannissements';
 $lang['user.ban.management'] = 'Gestion des bannissements';
 $lang['user.ban.until'] = 'Banni jusqu\'au';
-$lang['user.ban.user'] = 'Bannir';
 $lang['user.no.ban'] = 'Il n\'y a aucun utilisateur banni.';
 $lang['user.ban.delay'] = 'Durée du bannissement';
 $lang['user.ban.title.email'] = 'Banni';
