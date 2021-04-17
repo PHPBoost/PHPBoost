@@ -53,6 +53,7 @@ select {
 	margin-bottom: 0.1618em;
 	width: 100%;
 	max-width: 100%;
+	filter: none;
 }
 
 [type="color"] {
