@@ -1,6 +1,6 @@
 <section id="module-user-moderation-panel">
 	<header class="section-header">
-		<h1>{L_MODERATION_PANEL}</h1>
+		<h1>{@user.moderation.panel}</h1>
 	</header>
 	<div class="sub-section">
 		<div class="content-container">
@@ -9,9 +9,9 @@
 					<div class="cell">
 						<div class="cell-body">
 							<div class="cell-content align-center">
-								<a href="{U_WARNING}" aria-label="{L_USERS_WARNING}">
+								<a href="{U_WARNING}">
 									<i class="fa fa-exclamation-triangle fa-2x warning" aria-hidden="true"></i>
-									<span class="d-block">{L_USERS_WARNING}</span>
+									<span class="d-block">{@user.warning.management}</span>
 								</a>
 							</div>
 						</div>
@@ -19,9 +19,9 @@
 					<div class="cell">
 						<div class="cell-body">
 							<div class="cell-content align-center">
-								<a href="{U_PUNISH}" aria-label="{L_USERS_PUNISHMENT}">
+								<a href="{U_PUNISH}">
 									<i class="fa fa-times fa-2x error" aria-hidden="true"></i>
-									<span class="d-block">{L_USERS_PUNISHMENT}</span>
+									<span class="d-block">{@user.punishment.management}</span>
 								</a>
 							</div>
 						</div>
@@ -29,9 +29,9 @@
 					<div class="cell">
 						<div class="cell-body">
 							<div class="cell-content align-center">
-								<a href="{U_BAN}" aria-label="{L_USERS_BAN}">
+								<a href="{U_BAN}">
 									<i class="fa fa-minus-circle fa-2x error" aria-hidden="true"></i>
-									<span class="d-block">{L_USERS_BAN}</span>
+									<span class="d-block">{@user.ban.management}</span>
 								</a>
 							</div>
 						</div>
@@ -56,16 +56,16 @@
 								});
 							}
 							else
-								alert("{L_REQUIRE_LOGIN}");
+								alert("{@user.required.username}");
 						}
 					</script>
 
 					<form action="{U_ACTION}" method="post" class="fieldset-content">
 						<fieldset>
-							<legend>{L_SEARCH_USER}</legend>
+							<legend>{L_SEARCH_USER} plop</legend>
 							<div class="fieldset-inset">
 								<div class="form-element">
-									<label for="login">{L_SEARCH_USER} <span class="field-description">{L_JOKER}</span></label>
+									<label for="login">{@user.search.member} <span class="field-description">{L_JOKER}</span></label>
 									<div class="form-field grouped-inputs">
 										<input type="text" maxlength="25" id="login" value="" name="login">
 										<input type="hidden" name="token" value="{TOKEN}">

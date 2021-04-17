@@ -13,8 +13,10 @@
 
 require_once('../kernel/begin.php');
 
-$Bread_crumb->add($LANG['user_s'], UserUrlBuilder::home()->rel());
-$Bread_crumb->add($LANG['moderation_panel'], UserUrlBuilder::moderation_panel()->rel());
+$lang = LangLoader::get('user-lang');
+
+$Bread_crumb->add($lang['user.users'], UserUrlBuilder::home()->rel());
+$Bread_crumb->add($lang['user.moderation.panel'], UserUrlBuilder::moderation_panel()->rel());
 
 $action = retrieve(GET, 'action', 'warning', TSTRING_UNCHANGE);
 $id_get = (int)retrieve(GET, 'id', 0);
@@ -24,17 +26,17 @@ $search_member = (bool)retrieve(POST, 'search_member', false);
 switch ($action)
 {
 	case 'ban':
-		$Bread_crumb->add($LANG['bans'], UserUrlBuilder::moderation_panel('ban')->rel());
+		$Bread_crumb->add($lang['user.bans'], UserUrlBuilder::moderation_panel('ban')->rel());
 		break;
 	case 'punish':
-		$Bread_crumb->add($LANG['punishment'], UserUrlBuilder::moderation_panel('punish')->rel());
+		$Bread_crumb->add($lang['user.punishment'], UserUrlBuilder::moderation_panel('punish')->rel());
 		break;
 	case 'warning':
 	default:
-		$Bread_crumb->add($LANG['warning'], UserUrlBuilder::moderation_panel('warning')->rel());
+		$Bread_crumb->add($lang['user.warning'], UserUrlBuilder::moderation_panel('warning')->rel());
 }
 
-define('TITLE', $LANG['moderation_panel']);
+define('TITLE', $lang['user.moderation.panel']);
 require_once('../kernel/header.php');
 
 if (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL)) // If user is not moderator
@@ -43,16 +45,17 @@ if (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL)) // If u
 	DispatchManager::redirect($error_controller);
 }
 
-$moderation_panel_template = new FileTemplate('user/moderation_panel.tpl');
+$view = new FileTemplate('user/moderation_panel.tpl');
+$view->add_lang($lang);
 
-$moderation_panel_template->put_all(array(
-	'L_MODERATION_PANEL' => $LANG['moderation_panel'],
-	'L_PUNISHMENT'       => $LANG['punishment'],
-	'L_WARNING'          => $LANG['warning'],
-	'L_BAN'              => $LANG['bans'],
-	'L_USERS_PUNISHMENT' => $LANG['punishment_management'],
-	'L_USERS_WARNING'    => $LANG['warning_management'],
-	'L_USERS_BAN'        => $LANG['ban_management'],
+$view->put_all(array(
+	'L_MODERATION_PANEL' => $lang['user.moderation.panel'],
+	'L_PUNISHMENT'       => $lang['user.punishment'],
+	'L_WARNING'          => $lang['user.warning'],
+	'L_BAN'              => $lang['user.bans'],
+	'L_USERS_PUNISHMENT' => $lang['user.punishment.management'],
+	'L_USERS_WARNING'    => $lang['user.warning.management'],
+	'L_USERS_BAN'        => $lang['user.ban.management'],
 	'U_WARNING'          => UserUrlBuilder::moderation_panel('warning')->rel(),
 	'U_PUNISH'           => UserUrlBuilder::moderation_panel('punish')->rel(),
 	'U_BAN'              => UserUrlBuilder::moderation_panel('ban')->rel()
@@ -85,11 +88,11 @@ if ($action == 'punish')
 		AppContext::get_response()->redirect(HOST . DIR . url('/user/moderation_panel.php?action=punish', '', '&'));
 	}
 
-	$moderation_panel_template->put_all(array(
+	$view->put_all(array(
 		'C_MODO_PANEL_USER' => true,
-		'L_ACTION_INFO'     => $LANG['punishment_management'],
+		'L_ACTION_INFO'     => $lang['user.punishment.management'],
 		'L_LOGIN'           => LangLoader::get_message('display_name', 'user-common'),
-		'L_INFO_MANAGEMENT' => $LANG['punishment_management'],
+		'L_INFO_MANAGEMENT' => $lang['user.punishment.management'],
 		'U_XMLHTTPREQUEST'  => 'punish_user',
 		'U_ACTION'          => UserUrlBuilder::moderation_panel('punish')->rel()
 	));
@@ -111,15 +114,15 @@ if ($action == 'punish')
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('punish'));
 		}
 
-		$moderation_panel_template->put_all(array(
+		$view->put_all(array(
 			'C_MODO_PANEL_USER_LIST' => true,
-			'L_PM'                   => $LANG['user_contact_pm'],
-			'L_INFO'                 => $LANG['user_punish_until'],
-			'L_ACTION_USER'          => $LANG['punishment_management'],
-			'L_PROFILE'              => LangLoader::get_message('profile', 'user-common'),
-			'L_SEARCH_USER'          => $LANG['search_member'],
-			'L_SEARCH'               => $LANG['search'],
-			'L_REQUIRE_LOGIN'        => $LANG['require_pseudo']
+			'L_PM'                   => $lang['user.contact.pm'],
+			'L_INFO'                 => $lang['user.punish.until'],
+			'L_ACTION_USER'          => $lang['user.punishment.management'],
+			'L_PROFILE'              => $lang['user.profile'],
+			'L_SEARCH_USER'          => $lang['user.search.member'],
+			'L_SEARCH'               => $lang['user.search'],
+			'L_REQUIRE_LOGIN'        => $lang['user.required.username']
 		));
 
 		$i = 0;
@@ -133,7 +136,7 @@ if ($action == 'punish')
 		{
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
-			$moderation_panel_template->assign_block_vars('member_list', array(
+			$view->assign_block_vars('member_list', array(
 				'C_USER_GROUP_COLOR' => !empty($group_color),
 				'LOGIN'              => $row['display_name'],
 				'USER_LEVEL_CLASS'   => UserService::get_level_class($row['level']),
@@ -150,9 +153,9 @@ if ($action == 'punish')
 
 		if ($i === 0)
 		{
-			$moderation_panel_template->put_all(array(
+			$view->put_all(array(
 				'C_EMPTY_LIST' => true,
-				'L_NO_USER'    => $LANG['no_punish'],
+				'L_NO_USER'    => $lang['user.no.punish'],
 			));
 		}
 	}
@@ -195,14 +198,14 @@ if ($action == 'punish')
 		}
 
 		$group_color = User::get_group_color($member['user_groups'], $member['level']);
-		$moderation_panel_template->put_all(array(
+		$view->put_all(array(
 			'C_MODO_PANEL_USER_INFO' => true,
 			'C_USER_GROUP_COLOR'     => !empty($group_color),
 			'LOGIN'                  => $member['display_name'],
 			'USER_LEVEL_CLASS'       => UserService::get_level_class($member['level']),
 			'USER_GROUP_COLOR'       => $group_color,
 			'KERNEL_EDITOR'          => $editor->display(),
-			'ALTERNATIVE_PM'         => ($key_sanction > 0) ? str_replace('%date%', $array_sanction[$key_sanction], $LANG['user_readonly_changed']) : str_replace('%date%', '1 ' . LangLoader::get_message('minute', 'date-common'), $LANG['user_readonly_changed']),
+			'ALTERNATIVE_PM'         => ($key_sanction > 0) ? str_replace('%date%', $array_sanction[$key_sanction], $lang['user.readonly.changed']) : str_replace('%date%', '1 ' . LangLoader::get_message('minute', 'date-common'), $lang['user.readonly.changed']),
 			'INFO'                   => $array_sanction[$key_sanction],
 			'SELECT'                 => $select,
 			'REPLACE_VALUE' => 'replace_value = parseInt(replace_value);'. "\n" .
@@ -228,12 +231,12 @@ if ($action == 'punish')
 			'U_PM'             => url('.php?pm='. $id_get, '-' . $id_get . '.php'),
 			'U_ACTION_INFO'    => UserUrlBuilder::moderation_panel('punish', $id_get)->rel() . '&amp;token=' . AppContext::get_session()->get_token(),
 			'U_PROFILE'        => UserUrlBuilder::profile($id_get)->rel(),
-			'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],
-			'L_INFO_EXPLAIN'   => $LANG['user_readonly_explain'],
-			'L_PM'             => $LANG['user_contact_pm'],
-			'L_LOGIN'          => LangLoader::get_message('display_name', 'user-common'),
-			'L_PM'             => $LANG['user_contact_pm'],
-			'L_CHANGE_INFO'    => $LANG['submit']
+			'L_ALTERNATIVE_PM' => $lang['user.alternative.pm'],
+			'L_INFO_EXPLAIN'   => $lang['user.readonly.explain'],
+			'L_PM'             => $lang['user.contact.pm'],
+			'L_LOGIN'          => $lang['user.displayed.name'],
+			'L_PM'             => $lang['user.contact.pm'],
+			'L_CHANGE_INFO'    => $lang['user.submit']
 		));
 	}
 }
@@ -271,11 +274,11 @@ else if ($action == 'warning')
 		AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('warning'));
 	}
 
-	$moderation_panel_template->put_all(array(
+	$view->put_all(array(
 		'C_MODO_PANEL_USER' => true,
-		'L_ACTION_INFO'     => $LANG['warning_management'],
-		'L_LOGIN'           => LangLoader::get_message('display_name', 'user-common'),
-		'L_INFO_MANAGEMENT' => $LANG['warning_management'],
+		'L_ACTION_INFO'     => $lang['user.warning.management'],
+		'L_LOGIN'           => $lang['user.displayed.name'],
+		'L_INFO_MANAGEMENT' => $lang['user.warning.management'],
 		'U_XMLHTTPREQUEST'  => 'warning_user',
 		'U_ACTION'          => UserUrlBuilder::moderation_panel('warning')->rel() . '&amp;' . AppContext::get_session()->get_token()
 	));
@@ -297,15 +300,14 @@ else if ($action == 'warning')
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('warning'));
 		}
 
-		$moderation_panel_template->put_all(array(
+		$view->put_all(array(
 			'C_MODO_PANEL_USER_LIST' => true,
-			'L_PM'                   => $LANG['user_contact_pm'],
-			'L_INFO'                 => $LANG['user_warning_level'],
-			'L_PM'                   => $LANG['user_contact_pm'],
-			'L_ACTION_USER'          => $LANG['warning_management'],
-			'L_SEARCH_USER'          => $LANG['search_member'],
-			'L_SEARCH'               => $LANG['search'],
-			'L_REQUIRE_LOGIN'        => $LANG['require_pseudo']
+			'L_PM'                   => $lang['user.contact.pm'],
+			'L_INFO'                 => $lang['user.warning.level'],
+			'L_ACTION_USER'          => $lang['user.warning.management'],
+			'L_SEARCH_USER'          => $lang['user.search.member'],
+			'L_SEARCH'               => $lang['user.search'],
+			'L_REQUIRE_LOGIN'        => $lang['user.required.username']
 		));
 
 		$i = 0;
@@ -317,7 +319,7 @@ else if ($action == 'warning')
 		{
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
-			$moderation_panel_template->assign_block_vars('member_list', array(
+			$view->assign_block_vars('member_list', array(
 				'C_USER_GROUP_COLOR' => !empty($group_color),
 				'LOGIN'              => $row['display_name'],
 				'USER_LEVEL_CLASS'   => UserService::get_level_class($row['level']),
@@ -334,9 +336,9 @@ else if ($action == 'warning')
 
 		if ($i === 0)
 		{
-			$moderation_panel_template->put_all(array(
+			$view->put_all(array(
 				'C_EMPTY_LIST' => true,
-				'L_NO_USER'    => $LANG['no_user_warning'],
+				'L_NO_USER'    => $lang['user.no.user.warning'],
 			));
 		}
 	}
@@ -362,27 +364,27 @@ else if ($action == 'warning')
 
 		$group_color = User::get_group_color($member['user_groups'], $member['level']);
 
-		$moderation_panel_template->put_all(array(
+		$view->put_all(array(
 			'C_MODO_PANEL_USER_INFO' => true,
 			'C_USER_GROUP_COLOR'     => !empty($group_color),
 			'LOGIN'                  => $member['display_name'],
 			'USER_LEVEL_CLASS'       => UserService::get_level_class($member['level']),
 			'USER_GROUP_COLOR'       => $group_color,
 			'KERNEL_EDITOR'          => $editor->display(),
-			'ALTERNATIVE_PM'         => str_replace('%level%', $member['warning_percentage'], $LANG['user_warning_level_changed']),
-			'INFO'                   => $LANG['user_warning_level'] . ': ' . $member['warning_percentage'] . '%',
+			'ALTERNATIVE_PM'         => str_replace('%level%', $member['warning_percentage'], $lang['user.warning.level.changed']),
+			'INFO'                   => $lang['user.warning.level'] . ': ' . $member['warning_percentage'] . '%',
 			'SELECT'                 => $select,
-			'REPLACE_VALUE'          => 'contents = contents.replace(regex, \' \' + replace_value + \'%\');' . "\n" . 'document.getElementById(\'action_info\').innerHTML = \'' . addslashes($LANG['user_warning_level']) . ': \' + replace_value + \'%\';',
+			'REPLACE_VALUE'          => 'contents = contents.replace(regex, \' \' + replace_value + \'%\');' . "\n" . 'document.getElementById(\'action_info\').innerHTML = \'' . addslashes($lang['user.warning.level']) . ': \' + replace_value + \'%\';',
 			'REGEX'                  => '/ [0-9]+%/u',
 			'U_ACTION_INFO'          => UserUrlBuilder::moderation_panel('warning', $id_get)->rel() . '&amp;token=' . AppContext::get_session()->get_token(),
 			'U_PM'                   => UserUrlBuilder::personnal_message($id_get)->rel(),
 			'U_PROFILE'              => UserUrlBuilder::profile($id_get)->rel(),
-			'L_ALTERNATIVE_PM'       => $LANG['user_alternative_pm'],
-			'L_INFO_EXPLAIN'         => $LANG['user_warning_explain'],
-			'L_PM'                   => $LANG['user_contact_pm'],
-			'L_INFO'                 => $LANG['user_warning_level'],
-			'L_PM'                   => $LANG['user_contact_pm'],
-			'L_CHANGE_INFO'          => $LANG['change_user_warning']
+			'L_ALTERNATIVE_PM'       => $lang['user.alternative.pm'],
+			'L_INFO_EXPLAIN'         => $lang['user.warning.clue'],
+			'L_PM'                   => $lang['user.contact.pm'],
+			'L_INFO'                 => $lang['user.warning.level'],
+			'L_PM'                   => $lang['user.contact.pm'],
+			'L_CHANGE_INFO'          => $lang['user.change.user.warning']
 		));
 	}
 }
@@ -410,12 +412,12 @@ else
 		AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('ban'));
 	}
 
-	$moderation_panel_template->put_all(array(
+	$view->put_all(array(
 		'C_MODO_PANEL_USER' => true,
 
-		'L_ACTION_INFO'     => $LANG['ban_management'],
+		'L_ACTION_INFO'     => $lang['user.ban.management'],
 		'L_LOGIN'           => LangLoader::get_message('display_name', 'user-common'),
-		'L_INFO_MANAGEMENT' => $LANG['ban_management'],
+		'L_INFO_MANAGEMENT' => $lang['user.ban.management'],
 
 		'U_XMLHTTPREQUEST'  => 'ban_user',
 		'U_ACTION'          => UserUrlBuilder::moderation_panel('ban')->rel() . '&amp;token=' . AppContext::get_session()->get_token()
@@ -438,16 +440,16 @@ else
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('ban'));
 		}
 
-		$moderation_panel_template->put_all(array(
+		$view->put_all(array(
 			'C_MODO_PANEL_USER_LIST' => true,
 
-			'L_PM'            => $LANG['user_contact_pm'],
-			'L_INFO'          => $LANG['user_ban_until'],
-			'L_ACTION_USER'   => $LANG['ban_management'],
+			'L_PM'            => $lang['user.contact.pm'],
+			'L_INFO'          => $lang['user.ban.until'],
+			'L_ACTION_USER'   => $lang['user.ban.management'],
 			'L_PROFILE'       => LangLoader::get_message('profile', 'user-common'),
-			'L_SEARCH_USER'   => $LANG['search_member'],
-			'L_SEARCH'        => $LANG['search'],
-			'L_REQUIRE_LOGIN' => $LANG['require_pseudo']
+			'L_SEARCH_USER'   => $lang['user.search.member'],
+			'L_SEARCH'        => $lang['user.search'],
+			'L_REQUIRE_LOGIN' => $lang['user.required.username']
 		));
 
 		$i = 0;
@@ -461,13 +463,13 @@ else
 		{
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
-			$moderation_panel_template->assign_block_vars('member_list', array(
+			$view->assign_block_vars('member_list', array(
 				'C_USER_GROUP_COLOR' => !empty($group_color),
 
 				'LOGIN'              => $row['display_name'],
 				'USER_LEVEL_CLASS'   => UserService::get_level_class($row['level']),
 				'USER_GROUP_COLOR'   => $group_color,
-				'INFO'               => ($row['warning_percentage'] != 100) ? Date::to_format($row['delay_banned'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) : $LANG['illimited'],
+				'INFO'               => ($row['warning_percentage'] != 100) ? Date::to_format($row['delay_banned'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) : $lang['user.illimited'],
 
 				'U_PROFILE'          => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'U_ACTION_USER'      => '<a href="'. UserUrlBuilder::moderation_panel('ban', $row['user_id'])->rel() .'" class="fa fa-minus-circle error"></a>',
@@ -480,9 +482,9 @@ else
 
 		if ($i === 0)
 		{
-			$moderation_panel_template->put_all(array(
+			$view->put_all(array(
 				'C_EMPTY_LIST' => true,
-				'L_NO_USER'    => $LANG['no_ban'],
+				'L_NO_USER'    => $lang['user.no.ban'],
 			));
 		}
 	}
@@ -497,7 +499,7 @@ else
 
 		$group_color = User::get_group_color($member['user_groups'], $member['level']);
 
-		$moderation_panel_template->put_all(array(
+		$view->put_all(array(
 			'C_MODO_PANEL_USER_BAN' => true,
 			'C_USER_GROUP_COLOR'    => !empty($group_color),
 
@@ -505,10 +507,10 @@ else
 			'USER_LEVEL_CLASS' => UserService::get_level_class($member['level']),
 			'USER_GROUP_COLOR' => $group_color,
 			'KERNEL_EDITOR'    => $editor->display(),
-			'L_PM'             => $LANG['user_contact_pm'],
-			'L_LOGIN'          => LangLoader::get_message('display_name', 'user-common'),
-			'L_BAN'            => $LANG['ban_user'],
-			'L_DELAY_BAN'      => $LANG['user_ban_delay'],
+			'L_PM'             => $lang['user.contact.pm'],
+			'L_LOGIN'          => $lang['user.displayed.name'],
+			'L_BAN'            => $lang['user.ban.user'],
+			'L_DELAY_BAN'      => $lang['user.ban.delay'],
 
 			'U_PM'             => UserUrlBuilder::personnal_message($id_get)->rel(),
 			'U_ACTION_INFO'    => UserUrlBuilder::moderation_panel('ban', $id_get)->rel() . '&amp;token=' . AppContext::get_session()->get_token(),
@@ -518,7 +520,7 @@ else
 		// Ban duration
 		$date_lang = LangLoader::get('date-common');
 		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 5184000, 326592000);
-		$array_sanction = array(LangLoader::get_message('no', 'common'), '1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['days'], '1 ' . $date_lang['week'], '2 ' . $date_lang['weeks'], '1 ' . $date_lang['month'], '2 ' . $date_lang['month'], $LANG['illimited']);
+		$array_sanction = array(LangLoader::get_message('no', 'common'), '1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['days'], '1 ' . $date_lang['week'], '2 ' . $date_lang['weeks'], '1 ' . $date_lang['month'], '2 ' . $date_lang['month'], $lang['user.illimited']);
 
 		$diff = ($member['delay_banned'] - time());
 		$key_sanction = 0;
@@ -542,14 +544,14 @@ else
 		foreach ($array_time as $key => $time)
 		{
 			$selected = ($key_sanction == $key) ? 'selected="selected"' : '' ;
-			$moderation_panel_template->assign_block_vars('select_ban', array(
+			$view->assign_block_vars('select_ban', array(
 				'TIME' => '<option value="' . $time . '" ' . $selected . '>' . $array_sanction[$key] . '</option>'
 			));
 		}
 	}
 }
 
-$moderation_panel_template->display();
+$view->display();
 
 require_once('../kernel/footer.php');
 
