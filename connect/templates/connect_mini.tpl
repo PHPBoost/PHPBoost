@@ -61,15 +61,8 @@
 
 						# IF C_REGISTRATION_DISPLAYED #
 							# IF C_REGISTRATION_ENABLED #
-								<li>
-									<form action="${relative_url(UserUrlBuilder::registration())}" method="post">
-										<ul>
-											<li class="align-center">
-												<button type="submit" name="register" value="true" class="button submit small offload">{@user.sign.up}</button>
-												<input type="hidden" name="token" value="{TOKEN}">
-											</li>
-										</ul>
-									</form>
+								<li class="align-center">
+									<a href="${relative_url(UserUrlBuilder::registration())}" class="button submit small offload">{@user.sign.up}</a>
 								</li>
 							# ENDIF #
 							<li# IF C_VERTICAL # class="li-stretch"# ENDIF #>
