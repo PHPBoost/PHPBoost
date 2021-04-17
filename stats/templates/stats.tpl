@@ -54,11 +54,13 @@
 							<i class="fa fa-fw fa-key" aria-hidden="true"></i> <span>{@keyword.s}</span>
 						</a>
 					</li>
+					# IF IS_ADMIN #
 					<li>
 						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_ROBOTS}#stats" aria-label="{@robot_s}">
 							<i class="fa fa-fw fa-search" aria-hidden="true"></i> <span>{@robot_s}</span>
 						</a>
 					</li>
+					# ENDIF #
 				</ul>
 			</nav>
 
@@ -674,74 +676,74 @@
 				</article>
 			# ENDIF #
 
-			# IF C_STATS_ROBOTS #
-				<form action="stats.php?bot=1#stats" name="form" method="post" onsubmit="return check_form();">
-					<article class="content">
-						<header>
-							<h2>{@robot_s}</h2>
-						</header>
-						# IF C_ROBOTS_DATA #
-							<div class="align-center">
-								<img class="fieldset-img" src="display_stats.php?bot=1" alt="{@robot_s}" />
-							</div>
-						# ENDIF #
-						<table class="table">
-							<thead>
-								<tr>
-									<th>
-										{@robot_s}
-									</th>
-									<th>
-										{@colors}
-									</th>
-									<th>
-										{@visits.number}
-									</th>
-									<th>
-										{@last.seen}
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								# START list #
+			# IF IS_ADMIN #
+				# IF C_STATS_ROBOTS #
+					<form action="stats.php?bot=1#stats" name="form" method="post" onsubmit="return check_form();">
+						<article class="content">
+							<header>
+								<h2>{@robot_s}</h2>
+							</header>
+							# IF C_ROBOTS_DATA #
+								<div class="align-center">
+									<img class="fieldset-img" src="display_stats.php?bot=1" alt="{@robot_s}" />
+								</div>
+							# ENDIF #
+							<table class="table">
+								<thead>
 									<tr>
-										<td>
-											# IF list.C_BOT_DETAILS #<a href="{list.U_BOT_DETAILS}"># ENDIF #{list.L_NAME}# IF list.C_BOT_DETAILS #</a># ENDIF # <span class="smaller">({list.PERCENT}%)</span>
-										</td>
-										<td>
-											<div class="stats-color-square" style="background-color: {list.COLOR};"></div>
-										</td>
-										<td>
-											{list.VISITS_NUMBER}
-										</td>
-										<td>
-											{list.LAST_SEEN}
+										<th>
+											{@robot_s}
+										</th>
+										<th>
+											{@colors}
+										</th>
+										<th>
+											{@visits.number}
+										</th>
+										<th>
+											{@last.seen}
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									# START list #
+										<tr>
+											<td>
+												# IF list.C_BOT_DETAILS #<a href="{list.U_BOT_DETAILS}"># ENDIF #{list.L_NAME}# IF list.C_BOT_DETAILS #</a># ENDIF # <span class="smaller">({list.PERCENT}%)</span>
+											</td>
+											<td>
+												<div class="stats-color-square" style="background-color: {list.COLOR};"></div>
+											</td>
+											<td>
+												{list.VISITS_NUMBER}
+											</td>
+											<td>
+												{list.LAST_SEEN}
+											</td>
+										</tr>
+									# END list #
+									# IF NOT C_ROBOTS_DATA #
+									<tr>
+										<td colspan="4">
+										${LangLoader::get_message('no_item_now', 'common')}
 										</td>
 									</tr>
-								# END list #
-								# IF NOT C_ROBOTS_DATA #
-								<tr>
-									<td colspan="4">
-									${LangLoader::get_message('no_item_now', 'common')}
-									</td>
-								</tr>
-								# ENDIF #
-							</tbody>
-						</table>
-						# IF IS_ADMIN #
-							# IF C_ROBOTS_DATA #
-							<fieldset class="fieldset-submit">
-								<legend>{@erase.list}</legend>
-								<div class="fieldset-inset">
-									<button type="submit" name="erase" value="true" class="button submit">{@erase.list}</button>
-									<button type="submit" name="erase-occasional" value="true" class="button submit">{@erase.occasional}</button>
-									<input type="hidden" name="token" value="{TOKEN}">
-								</div>
-							</fieldset>
+									# ENDIF #
+								</tbody>
+							</table>
+								# IF C_ROBOTS_DATA #
+								<fieldset class="fieldset-submit">
+									<legend>{@erase.list}</legend>
+									<div class="fieldset-inset">
+										<button type="submit" name="erase" value="true" class="button submit">{@erase.list}</button>
+										<button type="submit" name="erase-occasional" value="true" class="button submit">{@erase.occasional}</button>
+										<input type="hidden" name="token" value="{TOKEN}">
+									</div>
+								</fieldset>
 							# ENDIF #
-						# ENDIF #
-					</article>
-				</form>
+						</article>
+					</form>
+				# ENDIF #			
 			# ENDIF #			
 		</div>
 	</div>
