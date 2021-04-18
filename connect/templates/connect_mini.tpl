@@ -85,7 +85,7 @@
 				<div class="cell-header">
 					<h6 class="cell-name {USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF #>{@user.welcome} {USER_DISPLAYED_NAME}</h6>
 					# IF C_USER_AVATAR #
-						<img src="{U_USER_AVATAR}" class="valign-middle" width="16px" height="16px" alt="{USER_DISPLAYED_NAME}">
+						<img src="{U_USER_AVATAR}" class="valign-middle" width="22px" height="22px" alt="{USER_DISPLAYED_NAME}">
 					# ELSE #
 						# IF IS_MODERATOR #
 							<i class="fa fa-user-tie" aria-hidden="true"></i>
@@ -99,7 +99,7 @@
 				<div class="cell-list cell-list-inline connected-contents">
 					<a href="#" class="js-menu-button" onclick="open_submenu('module-connect', 'active-connect');return false;">
 						# IF C_USER_AVATAR #
-							<img src="{U_USER_AVATAR}" class="valign-middle" width="16px" height="16px" alt="{USER_DISPLAYED_NAME}">
+							<img src="{U_USER_AVATAR}" class="valign-middle" width="22px" height="22px" alt="{USER_DISPLAYED_NAME}">
 						# ELSE #
 							# IF IS_MODERATOR #
 								<i class="fa fa-user-tie" aria-hidden="true"></i>
@@ -143,7 +143,7 @@
 								</a>
 							# ELSE #
 								# IF C_USER_AVATAR #
-									<img src="{U_USER_AVATAR}" class="valign-middle" width="16px" height="16px" alt="{USER_DISPLAYED_NAME}">
+									<img src="{U_USER_AVATAR}" class="valign-middle" width="22px" height="22px" alt="{USER_DISPLAYED_NAME}">
 								# ELSE #
 									# IF IS_MODERATOR #
 										<i class="fa fa-user-tie" aria-hidden="true"></i>
