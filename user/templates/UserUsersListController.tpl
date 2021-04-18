@@ -91,19 +91,19 @@
 									<div data-type="panel" class="listorder-dd-panel"></div>
 									<ul data-type="content" class="dropdown-container">
 										<li> {@user.display.name}
-											<em class="sort-type bgc-full link-color" data-path=".lo-name" data-order="asc" data-type="text" data-selected="true"><span class="sr-only">{@user.display.name} &#8593;</span> <i class="fa fa-sort-alpha-down"></i></em>
+											<em class="sort-type bgc-full link-color" data-path=".lo-name" data-order="asc" data-type="text" data-selected="true"><span class="sr-only">{@user.display.name} &#8593;</span> <i class="fa fa-sort-alpha-up-alt"></i></em>
 											<em class="sort-type bgc-full logo-color" data-path=".lo-name" data-order="desc" data-type="text"><span class="sr-only">{@user.display.name} &#8595;</span> <i class="fa fa-sort-alpha-down-alt"></i></em>
 										</li>
 										<li> {@user.registration.date}
-											<em class="sort-type bgc-full link-color" data-path=".lo-registration-date" data-order="asc" data-type="number"><span class="sr-only">{@user.registration.date} &#8593;</span> <i class="fa fa-sort-numeric-down"></i></em>
+											<em class="sort-type bgc-full link-color" data-path=".lo-registration-date" data-order="asc" data-type="number"><span class="sr-only">{@user.registration.date} &#8593;</span> <i class="fa fa-sort-numeric-up-alt"></i></em>
 											<em class="sort-type bgc-full logo-color" data-path=".lo-registration-date" data-order="desc" data-type="number"><span class="sr-only">{@user.registration.date} &#8595;</span> <i class="fa fa-sort-numeric-down-alt"></i></em>
 										</li>
 										<li> {@user.last.connection}
-											<em class="sort-type bgc-full link-color" data-path=".lo-last-connection" data-order="asc" data-type="number"><span class="sr-only">{@user.last.connection} &#8593;</span> <i class="fa fa-sort-numeric-down"></i></em>
+											<em class="sort-type bgc-full link-color" data-path=".lo-last-connection" data-order="asc" data-type="number"><span class="sr-only">{@user.last.connection} &#8593;</span> <i class="fa fa-sort-numeric-up-alt"></i></em>
 											<em class="sort-type bgc-full logo-color" data-path=".lo-last-connection" data-order="desc" data-type="number"><span class="sr-only">{@user.last.connection} &#8595;</span> <i class="fa fa-sort-numeric-down-alt"></i></em>
 										</li>
 										<li> {@user.publications}
-											<em class="sort-type bgc-full link-color" data-path=".lo-publications-number" data-order="asc" data-type="number"><span class="sr-only">{@user.publications} &#8593;</span> <i class="fa fa-sort-numeric-down"></i></em>
+											<em class="sort-type bgc-full link-color" data-path=".lo-publications-number" data-order="asc" data-type="number"><span class="sr-only">{@user.publications} &#8593;</span> <i class="fa fa-sort-numeric-up-alt"></i></em>
 											<em class="sort-type bgc-full logo-color" data-path=".lo-publications-number" data-order="desc" data-type="number"><span class="sr-only">{@user.publications} &#8595;</span> <i class="fa fa-sort-numeric-down-alt"></i></em>
 										</li>
 									</ul>
