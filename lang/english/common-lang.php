@@ -175,4 +175,8 @@ $lang['common.select'] = 'Select';
 $lang['common.select.element'] = 'Select this element';
 $lang['common.select.elements'] = 'Select elements';
 $lang['common.select.all.elements'] = 'Select all elements';
+
+// Scroll to
+$lang['common.scroll.to.top']    = 'Scroll to Top';
+$lang['common.scroll.to.bottom'] = 'Scroll to Bottom';
 ?>

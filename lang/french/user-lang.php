@@ -394,10 +394,6 @@ $lang['user.participants']          = 'Participant(s)';
 $lang['user.quote.last.message']    = 'Reprise du message précédent';
 $lang['user.select.all.messages']   = 'Sélectionner tous les messages';
 
-//Scroll to
-$lang['user.scroll.to.top']    = 'haut de la page';
-$lang['user.scroll.to.bottom'] = 'bas de la page';
-
 //Cookies bar
 $lang['user.cookiebar.cookie']                    = 'Cookie';
 $lang['user.cookiebar.cookie.management']         = 'Gestion des Cookies';
