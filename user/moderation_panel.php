@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 17
+ * @version     PHPBoost 6.0 - last update: 2021 04 18
  * @since       PHPBoost 1.6 - 2007 03 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -46,7 +46,7 @@ if (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL)) // If u
 }
 
 $view = new FileTemplate('user/moderation_panel.tpl');
-$view->add_lang($lang);
+$view->add_lang(array_merge($lang, LangLoader::get('warning-lang')));
 
 $view->put_all(array(
 	'U_WARNING'          => UserUrlBuilder::moderation_panel('warning')->rel(),

@@ -56,7 +56,7 @@
 								});
 							}
 							else
-								alert("{@user.required.username}");
+								alert("{@warning.username}");
 						}
 					</script>
 

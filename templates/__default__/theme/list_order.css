@@ -120,6 +120,7 @@
 	float: right;
 	padding: 0 0.618em;
 	cursor: pointer;
+	margin: 0.228em;
 }
 
-.listorder-drop-down ul li .sort-type:hover { background-color: rgba(var(--main-rgb-t), 0.2); }
+.listorder-drop-down ul li .sort-type:hover { filter: saturate(2.2); }
