@@ -86,7 +86,7 @@
 
 			# IF NOT C_HAS_ERROR #
 				<p class="align-center">
-					<a href="#" id="connect" onclick="jQuery('#loginForm').toggle();jQuery('#externalAuthForm').toggle();return false;">${LangLoader::get_message('connection', 'user-common')}</a>
+					<a href="#" id="connect" onclick="jQuery('#loginForm').toggle();jQuery('#externalAuthForm').toggle();return false;">{@user.sign.in}</a>
 				</p>
 
 				<script>

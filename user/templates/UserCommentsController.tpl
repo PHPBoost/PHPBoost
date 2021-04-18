@@ -5,7 +5,7 @@
 	<div class="sub-section">
 		<div class="content-container">
 			<div class="content">
-				# INCLUDE MSG #
+				# INCLUDE MESSAGE_HELPER #
 				# INCLUDE MODULE_CHOICE_FORM #
 				# IF C_COMMENTS #
 					<form method="post" class="fieldset-content">
@@ -34,7 +34,7 @@
 						${LangLoader::get_message('no_item_now', 'common')}
 					</div>
 				# ENDIF #
-			</div>			
+			</div>
 		</div>
 	</div>
 </section>

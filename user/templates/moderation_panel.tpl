@@ -80,7 +80,7 @@
 					<table class="table">
 						<thead>
 							<tr>
-								<th>{@user.displayed.name}</th>
+								<th>{@user.display.name}</th>
 								<th>{L_INFO}</th>
 								<th>{L_ACTION_USER}</th>
 								<th>{@user.contact.pm}</th>

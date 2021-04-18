@@ -1,28 +1,28 @@
 <script>
 	function check_form_convers() {
 		if(document.getElementById('login').value == "") {
-			alert("{L_REQUIRE_RECIPIENT}");
+			alert("{@warning.recipient}");
 			return false;
 	    }
 		if(document.getElementById('contents').value == "") {
-			alert("{L_REQUIRE_MESSAGE}");
+			alert("{@warning.text}");
 			return false;
 	    }
 		if(document.getElementById('title').value == "") {
-			alert("{L_REQUIRE_TITLE}");
+			alert("{@warning.title}");
 			return false;
 	    }
 		return true;
 	}
 	function check_form_pm() {
 		if(document.getElementById('contents').value == "") {
-			alert("{L_REQUIRE_MESSAGE}");
+			alert("{@warning.text}");
 			return false;
 	    }
 		return true;
 	}
 	function Confirm_pm() {
-		return confirm("{L_DELETE_MESSAGE}");
+		return confirm("{@warning.delete.message}");
 	}
 </script>
 
@@ -39,12 +39,12 @@
 			document.getElementById('validc').checked = status;
 		}
 	</script>
-	# INCLUDE message_helper #
+	# INCLUDE MESSAGE_HELPER #
 
 	<section id="module-user-convers">
 		<header class="section-header">
-			<div class="align-right">{L_PRIVATE_MSG}: {convers.PM_POURCENT}</div>
-			<h1>{convers.U_PM_BOX}</h1>
+			<div class="controls align-right">{@user.private.messages}: {convers.PM_POURCENT}</div>
+			<h1>{@user.pm.box}</h1>
 		</header>
 		<div class="sub-section">
 			<div class="content-container">
@@ -53,10 +53,10 @@
 						<nav id="cssmenu-pmactions" class="cssmenu cssmenu-group">
 							<ul>
 								<li>
-									<a href="{convers.U_POST_NEW_CONVERS}" class="cssmenu-title"><i class="fa fa-plus" aria-hidden="true"></i> <span>{convers.L_POST_NEW_CONVERS}</span></a>
+									<a href="{convers.U_POST_NEW_CONVERS}" class="offload cssmenu-title"><i class="fa fa-plus" aria-hidden="true"></i> <span>{@user.post.new.conversation}</span></a>
 								</li>
 								<li>
-									<a href="{convers.U_MARK_AS_READ}" class="cssmenu-title"><i class="fa fa-eraser" aria-hidden="true"></i> <span>{convers.L_MARK_AS_READ}</span></a>
+									<a href="{convers.U_MARK_AS_READ}" class="offload cssmenu-title"><i class="fa fa-eraser" aria-hidden="true"></i> <span>{@user.mark.pm.as.read}</span></a>
 								</li>
 							</ul>
 						</nav>
@@ -71,22 +71,22 @@
 							<thead>
 								<tr>
 									<th>
-										<span aria-label="${LangLoader::get_message('select.elements', 'common')}"><i class="far fa-square" aria-hidden="true"></i></span>
+										<span aria-label="{@common.select.elements}"><i class="far fa-square" aria-hidden="true"></i></span>
 									</th>
 									<th>
-										<span aria-label="${LangLoader::get_message('pm.status', 'main')}"><i class="fa fa-eye" aria-hidden="true"></i></span>
+										<span aria-label="{@user.pm.status}"><i class="fa fa-eye" aria-hidden="true"></i></span>
 									</th>
 									<th>
-										{L_TITLE}
+										{@common.title}
 									</th>
 									<th>
-										{L_PARTICIPANTS}
+										{@common.participants}
 									</th>
 									<th>
-										{L_MESSAGE}
+										{@user.messages}
 									</th>
 									<th>
-										{L_LAST_MESSAGE}
+										{@user.last.message}
 									</th>
 								</tr>
 							</thead>
@@ -94,16 +94,16 @@
 								# START convers.list #
 									<tr>
 										<td>
-											<label for="d{convers.list.INCR}" class="checkbox" aria-label="${LangLoader::get_message('select.element', 'common')}">
+											<label for="d{convers.list.INCR}" class="checkbox" aria-label="{@common.select.element}">
 												<input type="checkbox" id="d{convers.list.INCR}" name="{convers.list.ID}" />
 												<span>&nbsp;</span>
 											</label>
 										</td>
 										<td class="convers-announce">
-											<span aria-label="${LangLoader::get_message('pm.status', 'main')}"><i class="fa fa-people-arrows {convers.list.ANNOUNCE}" aria-hidden="true"></i></span>
+											<span><i class="fa fa-people-arrows {convers.list.ANNOUNCE}" aria-hidden="true"></i></span>
 										</td>
-										<td class="convers-title">
-											{convers.list.ANCRE} <a href="pm{convers.list.U_CONVERS}">{convers.list.TITLE}</a> &nbsp;<span class="smaller">[{convers.list.U_AUTHOR}]</span>
+										<td class="align-left">
+											{convers.list.ANCRE} <a href="pm{convers.list.U_CONVERS}" class="offload">{convers.list.TITLE}</a> &nbsp;<span class="smaller">[{convers.list.U_AUTHOR}]</span>
 										</td>
 										<td>
 											{convers.list.U_PARTICIPANTS}
@@ -120,7 +120,7 @@
 								# START convers.no_pm #
 									<tr>
 										<td colspan="6">
-											<span class="text-strong">{convers.no_pm.L_NO_PM}</span>
+											<div class="message-helper bgc notice">{@common.no.item.now}</div>
 										</td>
 									</tr>
 								# END convers.no_pm #
@@ -129,12 +129,12 @@
 								<tr>
 									<td colspan="6">
 										<div class="align-left">
-											<label for="validc" class="checkbox" aria-label="${LangLoader::get_message('select.all.elements', 'common')}">
+											<label for="validc" class="checkbox" aria-label="{@common.select.all.elements}">
 												<input type="checkbox" id="validc" onclick="check_convers(this.checked, 'd');" />
 												<span>&nbsp;</span>
 											</label>
 											<input type="hidden" name="token" value="{TOKEN}" />
-											<button type="submit" name="valid" value="true" class="button submit">{L_DELETE}</button>
+											<button type="submit" name="valid" value="true" class="button submit">{@common.delete}</button>
 										</div>
 										# IF convers.C_PAGINATION #<div class="float-right"># INCLUDE convers.PAGINATION #</div># ENDIF #
 									</td>
@@ -145,13 +145,13 @@
 						<table class="table-no-header announce-legend">
 							<tr>
 								<td>
-									<i class="fa fa-people-arrows message-announce" aria-hidden="true"></i> {L_READ}
+									<i class="fa fa-people-arrows message-announce-track" aria-hidden="true"></i> {@user.pm.track}
 								</td>
 								<td>
-									<i class="fa fa-people-arrows message-announce-track" aria-hidden="true"></i> {L_TRACK}
+									<i class="fa fa-people-arrows message-announce-new" aria-hidden="true"></i> {@user.not.read}
 								</td>
 								<td>
-									<i class="fa fa-people-arrows message-announce-new" aria-hidden="true"></i> {L_NOT_READ}
+									<i class="fa fa-people-arrows message-announce" aria-hidden="true"></i> {@user.read}
 								</td>
 							</tr>
 						</table>
@@ -166,7 +166,8 @@
 # START pm #
 	<section id="module-user-pm">
 		<header class="section-header">
-			<h1>{pm.U_PM_BOX} : {pm.U_TITLE_CONVERS}</h1>
+			<div class="controls align-right">{@user.private.messaging}</div>
+			<h1>{pm.U_TITLE_CONVERS}</h1>
 		</header>
 		<div class="sub-section">
 			<div class="content-container">
@@ -184,21 +185,21 @@
 											# IF pm.msg.C_VISITOR #
 												<span>{pm.msg.PSEUDO}</span>
 											# ELSE #
-												<a href="{pm.msg.U_PROFILE}" class="{pm.msg.LEVEL_CLASS}" # IF pm.msg.C_GROUP_COLOR # style="color:{pm.msg.GROUP_COLOR}" # ENDIF #>
+												<a href="{pm.msg.U_PROFILE}" class="offload {pm.msg.LEVEL_CLASS}" # IF pm.msg.C_GROUP_COLOR # style="color:{pm.msg.GROUP_COLOR}" # ENDIF #>
 													{pm.msg.PSEUDO}
 												</a>
 											# ENDIF #
 						                </h3>
 						                <div class="message-actions">
 											# IF pm.msg.C_MODERATION_TOOLS #
-												<a href="pm.php?edit={pm.msg.ID}" aria-label="{L_EDIT}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
-												<a href="pm.php?del={pm.msg.ID}&amp;token={TOKEN}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+												<a href="pm.php?edit={pm.msg.ID}" class="offload" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+												<a href="pm.php?del={pm.msg.ID}&amp;token={TOKEN}" class="offload" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 											# ENDIF #
 						            	</div>
 						            </div>
 						            <div class="message-infos">
-						                <time datetime="Date" itemprop="{pm.msg.DATE_FULL}">${LangLoader::get_message('on', 'main')} {pm.msg.DATE_FULL}</time>
-						                <a href="#article-pm-{pm.msg.ID}" aria-label="${LangLoader::get_message('link.to.anchor', 'comments-common')}">\#{pm.msg.ID}</a>
+						                <time datetime="Date" itemprop="{pm.msg.DATE_FULL}">{@common.on} {pm.msg.DATE_FULL}</time>
+						                <a href="#article-pm-{pm.msg.ID}" aria-label="{@common.link.to.anchor}">\#{pm.msg.ID}</a>
 						            </div>
 						        </div>
 						    </header>
@@ -208,7 +209,7 @@
 						    <footer class="message-footer-container# IF pm.msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
 						        <div class="message-user-assoc">
 						            <div class="message-group-level"></div>
-						            <div class="message-user-rank">{pm.msg.L_LEVEL}</div>
+						            <div class="message-user-rank">{pm.msg.WARNING_LEVEL}</div>
 						        </div>
 						    </footer>
 						</article>
@@ -226,11 +227,11 @@
 	<div class="sub-section">
 		<div class="content-container">
 			<div class="content">
-				# INCLUDE message_helper #
+				# INCLUDE MESSAGE_HELPER #
 				<span id="quote"></span>
 				<form action="pm{post_pm.U_PM_ACTION_POST}" method="post" onsubmit="return check_form_msg();" class="post-pm">
 					<fieldset id="pm_message">
-						<legend>{L_RESPOND}</legend>
+						<legend>{@common.respond}</legend>
 						<div class="fieldset-inset">
 							<div class="form-element form-element-textarea">
 								{KERNEL_EDITOR}
@@ -243,9 +244,9 @@
 					<fieldset id="pm_fbutton" class="fieldset-submit">
 						<div class="fieldset-inset">
 							<input type="hidden" name="token" value="{TOKEN}">
-							<button type="submit" class="button submit" name="pm" value="true">{L_SUBMIT}</button>
-							<button type="button" class="button preview-button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
-							<button type="reset" class="button reset-button" value="true">{L_RESET}</button>
+							<button type="submit" class="button submit" name="pm" value="true">{@form.submit}</button>
+							<button type="button" class="button preview-button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{@form.preview}</button>
+							<button type="reset" class="button reset-button" value="true">{@form.reset}</button>
 						</div>
 					</fieldset>
 				</form>
@@ -258,37 +259,38 @@
 # START edit_pm #
 	<section id="module-user-edit-pm">
 		<header class="section-header">
-			<h1>{edit_pm.U_PM_BOX}</h1>
+			<div class="controls align-right">{@user.private.messaging}</div>
+			<h1>{@common.edit}</h1>
 		</header>
 		<div class="sub-section">
 			<div class="content-container">
 				<div class="content">
 					<form action="pm{edit_pm.U_ACTION_EDIT}" method="post" onsubmit="return check_form_convers();" class="fieldset-content">
-						<p class="align-center small text-italic">{L_REQUIRE}</p>
+						<p class="align-center small text-italic">{@form.required.fields}</p>
 						<fieldset>
-							<legend>{L_EDIT}</legend>
+							<legend class="sr-only">{@common.edit}</legend>
 							<div class="fieldset-inset">
 								# START edit_pm.title #
 									<div class="form-element">
-										<label for="title">* {L_TITLE}</label>
+										<label for="title">* {@form.title}</label>
 										<div class="form-field form-field-text"><input type="text" id="title" name="title" value="{edit_pm.title.TITLE}"></div>
 									</div>
 								# END edit_pm.title #
 								<div class="form-element form-element-textarea">
-									<label for="contents">* {L_MESSAGE}</label>
+									<label for="content">* {@user.message}</label>
 									{KERNEL_EDITOR}
 									<div class="form-field form-field-textarea">
-										<textarea rows="25" id="contents" name="contents">{edit_pm.CONTENTS}</textarea>
+										<textarea rows="25" id="content" name="contents">{edit_pm.CONTENTS}</textarea>
 									</div>
 								</div>
 							</div>
 						</fieldset>
 						<fieldset class="fieldset-submit">
-							<legend>{L_SUBMIT}</legend>
+							<legend>{@form.submit}</legend>
 							<input type="hidden" name="token" value="{TOKEN}">
-							<button type="submit" class="button submit" name="{SUBMIT_NAME}" value="{L_SUBMIT}">{L_SUBMIT}</button>
-							<button type="button" class="button preview-button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
-							<button type="reset" class="button reset-button" value="true">{L_RESET}</button>
+							<button type="submit" class="button submit" name="{SUBMIT_NAME}" value="{@form.submit}">{@form.submit}</button>
+							<button type="button" class="button preview-button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{@form.preview}</button>
+							<button type="reset" class="button reset-button" value="true">{@form.reset}</button>
 						</fieldset>
 					</form>
 				</div>
@@ -301,40 +303,41 @@
 # START post_convers #
 	<section id="module-user-post-convers">
 		<header class="section-header">
-			<h1>{post_convers.U_PM_BOX}</h1>
+			<div class="controls align-right">{@user.private.messaging}</div>
+			<h1>{@user.post.new.conversation}</h1>
 		</header>
 		<div class="sub-section">
 			<div class="content-container">
 				<div class="content">
-					# INCLUDE message_helper #
+					# INCLUDE MESSAGE_HELPER #
 					<form action="pm.php" method="post" onsubmit="return check_form_convers();">
 						<div class="fieldset-content">
-						<p class="align-center small text-italic">{L_REQUIRE}</p>
+						<p class="align-center small text-italic">{@form.required.fields}</p>
 						<fieldset>
-							<legend>{L_POST_NEW_CONVERS}</legend>
+							<legend class="sr-only">{@user.post.new.conversation}</legend>
 							<div class="fieldset-inset">
 								# START post_convers.user_id_dest #
-								<div class="form-element">
-									<label for="login">* {L_RECIPIENT}</label>
-									<div class="form-field">
-										<label for="" class="grouped-inputs">
-											<input class="grouped-element" type="text" maxlength="25" id="login" name="login" value="{post_convers.LOGIN}">
-											<button type="button" class="button" value="{L_SEARCH}" onclick="XMLHttpRequest_search_members('', '{THEME}', 'insert_member', '{L_REQUIRE_RECIPIENT}');">{L_SEARCH}</button>
-											<span id="search_img"></span>
-										</label>
-										<div id="xmlhttprequest-result-search" style="display: none;" class="pinned question"></div>
-										# START post_convers.user_id_dest.search #
-											{post_convers.user_id_dest.search.RESULT}
-										# END post_convers.user_id_dest.search #
+									<div class="form-element">
+										<label for="login">* {@user.recipient}</label>
+										<div class="form-field">
+											<label for="" class="grouped-inputs">
+												<input class="grouped-element" type="text" maxlength="25" id="login" name="login" value="{post_convers.LOGIN}">
+												<button type="button" class="button" value="{@form.search}" onclick="XMLHttpRequest_search_members('', '{THEME}', 'insert_member', '{@warning.recipient}');">{@form.search}</button>
+												<span id="search_img"></span>
+											</label>
+											<div id="xmlhttprequest-result-search" style="display: none;" class="pinned question"></div>
+											# START post_convers.user_id_dest.search #
+												{post_convers.user_id_dest.search.RESULT}
+											# END post_convers.user_id_dest.search #
+										</div>
 									</div>
-								</div>
 								# END post_convers.user_id_dest #
 								<div class="form-element">
-									<label for="title">* {L_TITLE}</label>
+									<label for="title">* {@form.title}</label>
 									<div class="form-field form-field-text"><input type="text" id="title" name="title" value="{post_convers.TITLE}"></div>
 								</div>
 								<div class="form-element form-element-textarea">
-									<label for="contents">* {L_MESSAGE}</label>
+									<label for="contents">* {@user.message}</label>
 									{KERNEL_EDITOR}
 									<div class="form-field form-field-textarea">
 										<textarea rows="25" id="contents" name="contents">{CONTENTS}</textarea>
@@ -345,11 +348,11 @@
 						</fieldset>
 
 						<fieldset class="fieldset-submit">
-							<legend>{L_SUBMIT}</legend>
+							<legend>{@form.submit}</legend>
 							<input type="hidden" name="token" value="{TOKEN}">
-							<button type="submit" class="button submit" name="convers" value="true">{L_SUBMIT}</button>
-							<button type="button" class="button preview-button" name="prw_convers" id="prw_convers_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
-							<button type="reset" class="button reset-button" value="true">{L_RESET}</button>
+							<button type="submit" class="button submit" name="convers" value="true">{@form.submit}</button>
+							<button type="button" class="button preview-button" name="prw_convers" id="prw_convers_pm" onclick="XMLHttpRequest_preview();">{@form.preview}</button>
+							<button type="reset" class="button reset-button" value="true">{@form.reset}</button>
 						</fieldset>
 					</form>
 				</div>

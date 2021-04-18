@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 17
+ * @version     PHPBoost 6.0 - last update: 2021 04 18
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -14,10 +14,6 @@
 ####################################################
 #                     English                      #
 ####################################################
-
-// Form alerts
-$lang['user.required.username'] = 'Please enter a username !';
-$lang['user.required.password'] = 'Please enter a password !';
 
 // Connexion panel
 $lang['user.username']           = 'Username';
@@ -31,7 +27,7 @@ $lang['user.sign.out']           = 'Sign out';
 $lang['user.sign.up']            = 'Sign up';
 $lang['user.forgotten.password'] = 'Forgotten password';
 
-//Forget password
+// Forgotten password
 $lang['user.change.password']            = 'Change password';
 $lang['user.forgotten.password.select']  = 'Select the field you want to informat (email or login)';
 $lang['user.forgotten.password.success'] = 'An email has been sent with a link to change your password';
@@ -84,7 +80,10 @@ $lang['user.users']          = 'Users';
 $lang['user.profile']        = 'Profile';
 $lang['user.profile.of']     = 'Profile of :name';
 $lang['user.profile.edit']   = 'Edit profile';
-$lang['user.messages']       = 'User messages';
+$lang['user.message']        = 'Message';
+$lang['user.messages']       = 'Messages';
+$lang['user.last.message']   = 'Last message';
+$lang['user.user.messages']  = 'User messages';
 $lang['user.maintain']       = 'Maintain';
 $lang['user.welcome']        = 'Welcome';
 $lang['user.about.author']   = 'About the author';
@@ -99,19 +98,19 @@ $lang['user.moderators']     = 'Moderators';
 $lang['user.administrator']  = 'Administrator';
 $lang['user.administrators'] = 'Administrators';
 
-$lang['user.members.all']           = 'All members';
-$lang['user.members_list']          = 'Members list';
-$lang['user.member.management']     = 'Member management';
-$lang['user.search.member']         = 'Search member';
-$lang['user.search']                = 'Search';
-$lang['user.validate']              = 'Validate';
+$lang['user.members.all']       = 'All members';
+$lang['user.members_list']      = 'Members list';
+$lang['user.member.management'] = 'Member management';
+$lang['user.search.member']     = 'Search member';
+$lang['user.search']            = 'Search';
+$lang['user.validate']          = 'Validate';
 
 $lang['user.profile.edit.password.error']       = 'The new password is not correct';
 $lang['user.external.auth.account.exists']      = 'You already have an account. To use this login method, please login to the site and go to editing of your profile';
 $lang['user.external.auth.email.not.found']     = 'The email address of your account could not be retrieved, your account can not be associated.';
 $lang['user.external.auth.user.data.not.found'] = 'The informations of your account could not be retrieved, your account can not be created.';
 
-// Contribution
+// Contributions
 $lang['user.my.items']                    = 'My contributions';
 $lang['user.contribution']                = 'Contribution';
 $lang['user.contribution.member.edition'] = 'Contribution modification by the author';
@@ -139,7 +138,7 @@ $lang['user.contribution.confirmed.messages'] = '
     </p>
 ';
 $lang['user.contribution.pm.title']    = 'The contribution <strong>:title</strong> has been commented';
-$lang['user.contribution.pm.contents'] = '
+$lang['user.contribution.pm.content'] = '
     :author add a comment to the contribution <strong>:title</strong>.
     <p>
         <h6>Comment :</h6>
@@ -148,9 +147,9 @@ $lang['user.contribution.pm.contents'] = '
     <a href=":contribution_url">See the contribution</a>
 ';
 
-//User fields
-$lang['user.displayed.name']       = 'Displayed name';
-$lang['user.displayed.name.clue']  = 'Displayed name on each item you add.';
+// User fields
+$lang['user.display.name']         = 'Displayed name';
+$lang['user.display.name.clue']    = 'Displayed name on each item you add.';
 $lang['user.username.clue']        = 'Email address or your customized username if you chose one.';
 $lang['user.username.custom']      = 'Choose a username';
 $lang['user.username.custom.clue'] = '<span class="error">Default, you must log in with your email address.</span>';
@@ -373,6 +372,24 @@ It may be an error, if you think it is, you can contact the administrator of the
 
 
 %s';
+
+// Private messaging
+$lang['user.private.message']       = 'Private message';
+$lang['user.private.messages']      = 'Private messages';
+$lang['user.pm.box']                = 'Private message box';
+$lang['user.recipient']             = 'Recipient';
+$lang['user.post.new.conversation'] = 'Create a new conversation';
+$lang['user.new.pm']                = 'New private message';
+$lang['user.pm.conversation.link']  = 'Read the full discussion';
+$lang['user.pm.status']             = 'Message status';
+$lang['user.pm.track']              = 'Unread by recipient';
+$lang['user.not.read']              = 'Not read';
+$lang['user.read']                  = 'Read';
+$lang['user.last.message']          = 'Last message';
+$lang['user.mark.pm.as.read']       = 'Mark all privates messages as read';
+$lang['user.participants']          = 'Participant(s)';
+$lang['user.quote.last.message']    = 'Repost of the preceding message';
+$lang['user.select.all.messages']   = 'Select all messages';
 
 //Scroll to
 $lang['user.scroll.to.top']    = 'Scroll to Top';

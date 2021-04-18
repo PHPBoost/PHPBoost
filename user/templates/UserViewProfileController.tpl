@@ -14,7 +14,7 @@
 							</li>
 						# ENDIF #
 						<li class="li-stretch user-profile-display-name">
-							<strong>{@user.displayed.name}</strong>
+							<strong>{@user.display.name}</strong>
 							<span>{DISPLAY_NAME}</span>
 						</li>
 						<li class="li-stretch user-profile-level">

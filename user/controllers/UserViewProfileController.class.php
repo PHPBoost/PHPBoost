@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 17
+ * @version     PHPBoost 6.0 - last update: 2021 04 18
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -14,7 +14,7 @@ class UserViewProfileController extends AbstractController
 {
 	private $lang;
 	private $user_infos;
-	private $tpl;
+	private $view;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -31,14 +31,14 @@ class UserViewProfileController extends AbstractController
 
 		$this->build_view($this->user_infos['user_id']);
 
-		return $this->build_response($this->tpl, $user_id);
+		return $this->build_response($this->view, $user_id);
 	}
 
 	private function init()
 	{
 		$this->lang = LangLoader::get('user-lang');
-		$this->tpl = new FileTemplate('user/UserViewProfileController.tpl');
-		$this->tpl->add_lang($this->lang);
+		$this->view = new FileTemplate('user/UserViewProfileController.tpl');
+		$this->view->add_lang($this->lang);
 		$this->user = AppContext::get_current_user();
 	}
 
@@ -51,7 +51,7 @@ class UserViewProfileController extends AbstractController
 
 		foreach (MemberExtendedFieldsService::display_profile_fields($user_id) as $field)
 		{
-			$this->tpl->assign_block_vars('extended_fields', array(
+			$this->view->assign_block_vars('extended_fields', array(
 				'NAME'          => $field['name'],
 				'REWRITED_NAME' => Url::encode_rewrite($field['name']),
 				'VALUE'         => $field['value'],
@@ -67,7 +67,7 @@ class UserViewProfileController extends AbstractController
 			$contributions_number += $module->get_publications_number($user_id);
 		}
 
-		$this->tpl->put_all(array(
+		$this->view->put_all(array(
 			'C_DISPLAY_EDIT_LINK' => $this->user_infos['user_id'] == AppContext::get_current_user()->get_id() || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
 			'C_IS_BANNED'         => $this->user->is_banned(),
 			'C_GROUPS'            => $has_groups,
@@ -104,7 +104,7 @@ class UserViewProfileController extends AbstractController
 			if ($group_id > 0 && $groups_cache->group_exists($group_id))
 			{
 				$group = $groups_cache->get_group($group_id);
-				$this->tpl->assign_block_vars('groups', array(
+				$this->view->assign_block_vars('groups', array(
 					'ID'              => $group_id,
 					'C_PICTURE'       => !empty($group['img']),
 					'NAME'            => $group['name'],

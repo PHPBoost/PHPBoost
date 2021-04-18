@@ -54,11 +54,7 @@
 	text-align: center;
 }
 
-.convers-announce { padding-right: 0; }
-
-.convers-title { text-align: left; }
-
-table.announce-legend td { width: 33%; }
+table.announce-legend td { width: calc(100% / 3); }
 
 /* --- Error 403/404 --- */
 #module-user-error-403 .content,

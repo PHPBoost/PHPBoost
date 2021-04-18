@@ -11,7 +11,7 @@
 						<div class="fieldset-inset">
 							<div id="UserUsersListController_member_field" class="form-element">
 								<label for="UserUsersListController_member">
-									{@user.displayed.name}
+									{@user.display.name}
 								</label>
 								<div id="onblurContainerResponseUserUsersListController_member" class="form-field form-field-text picture-status-constraint">
 									<input data-listorder-control="textbox-filter" data-group="users-items" data-path=".lo-name" size="30" maxlength="255" type="text" value="">
@@ -90,9 +90,9 @@
 									data-name="sorttitle">
 									<div data-type="panel" class="listorder-dd-panel"></div>
 									<ul data-type="content" class="dropdown-container">
-										<li> {@user.displayed.name}
-											<em class="sort-type" data-path=".lo-name" data-order="asc" data-type="text" data-selected="true"><span class="sr-only">{@user.displayed.name} &#8593;</span> <i class="fa fa-sort-alpha-down"></i></em>
-											<em class="sort-type" data-path=".lo-name" data-order="desc" data-type="text"><span class="sr-only">{@user.displayed.name} &#8595;</span> <i class="fa fa-sort-alpha-down-alt"></i></em>
+										<li> {@user.display.name}
+											<em class="sort-type" data-path=".lo-name" data-order="asc" data-type="text" data-selected="true"><span class="sr-only">{@user.display.name} &#8593;</span> <i class="fa fa-sort-alpha-down"></i></em>
+											<em class="sort-type" data-path=".lo-name" data-order="desc" data-type="text"><span class="sr-only">{@user.display.name} &#8595;</span> <i class="fa fa-sort-alpha-down-alt"></i></em>
 										</li>
 										<li> {@user.registration.date}
 											<em class="sort-type" data-path=".lo-registration-date" data-order="asc" data-type="number"><span class="sr-only">{@user.registration.date} &#8593;</span> <i class="fa fa-sort-numeric-down"></i></em>
@@ -119,7 +119,7 @@
 						<table class="table">
 							<thead>
 								<tr>
-									<th>{@user.displayed.name}</th>
+									<th>{@user.display.name}</th>
 									<th>{@user.registration.date}</th>
 									<th>{@user.last.connection}</th>
 									<th>${TextHelper::ucfirst(@user.publications.number)}</th>

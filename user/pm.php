@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 14
+ * @version     PHPBoost 6.0 - last update: 2021 04 18
  * @since       PHPBoost 1.5 - 2006 07 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -11,9 +11,12 @@
 */
 
 require_once('../kernel/begin.php');
-define('TITLE', $LANG['title_pm']);
-$Bread_crumb->add($LANG['user'], UserUrlBuilder::profile(AppContext::get_current_user()->get_id())->rel());
-$Bread_crumb->add($LANG['title_pm'], UserUrlBuilder::personnal_message()->rel());
+
+$lang = LangLoader::get('user-lang');
+
+define('TITLE', $lang['user.private.messaging']);
+$Bread_crumb->add($lang['user.user'], UserUrlBuilder::profile(AppContext::get_current_user()->get_id())->rel());
+$Bread_crumb->add($lang['user.private.messaging'], UserUrlBuilder::personnal_message()->rel());
 require_once('../kernel/header.php');
 $current_user = AppContext::get_current_user();
 
@@ -119,7 +122,7 @@ if ($convers && empty($pm_edit) && empty($pm_del)) // Sending conversation.
 			$pmtomail_field = ExtendedFieldsCache::load()->get_extended_field_by_field_name('user_pmtomail');
 			if (!empty($pmtomail_field) && $pmtomail_field['display'])
 			{
-				$contents = $contents . '<br /><br />' . $current_user->get_display_name() . '<br /><br /><a href="' . GeneralConfig::load()->get_complete_site_url() . '/user/pm' . url('.php?id=' . $pm_convers_id, '-0-' . $pm_convers_id, '&') . '#m' . $pm_msg_id . '">' . $LANG['pm_conversation_link'] . '</a>';
+				$contents = $contents . '<br /><br />' . $current_user->get_display_name() . '<br /><br /><a href="' . GeneralConfig::load()->get_complete_site_url() . '/user/pm' . url('.php?id=' . $pm_convers_id, '-0-' . $pm_convers_id, '&') . '#m' . $pm_msg_id . '">' . $lang['user.pm.conversation.link'] . '</a>';
 				$send_mail = false;
 				try {
 					$send_mail = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER_EXTENDED_FIELDS, 'user_pmtomail', 'WHERE user_id = :id', array('id' => $user_id_dest));
@@ -133,7 +136,7 @@ if ($convers && empty($pm_edit) && empty($pm_del)) // Sending conversation.
 					} catch (RowNotFoundException $ex) {}
 
 					if ($email_dest)
-						AppContext::get_mail_service()->send_from_properties($email_dest, $LANG['new_pm'] . ' : ' . stripslashes($title), ContentSecondParser::export_html_text($contents), '', Mail::SENDER_USER);
+						AppContext::get_mail_service()->send_from_properties($email_dest, $lang['user.new.pm'] . ' : ' . stripslashes($title), ContentSecondParser::export_html_text($contents), '', Mail::SENDER_USER);
 				}
 			}
 
@@ -148,26 +151,16 @@ if ($convers && empty($pm_edit) && empty($pm_del)) // Sending conversation.
 }
 elseif (!empty($post) || (!empty($pm_get) && $pm_get != $current_user->get_id()) && $pm_get > '0') // Message form interface
 {
-	$Bread_crumb->add($LANG['post_new_convers'], '');
+	$view         = new FileTemplate('user/pm.tpl');
+	$lang         = LangLoader::get('user-lang');
+	$common_lang  = LangLoader::get('common-lang');
+	$form_lang    = LangLoader::get('form-lang');
+	$warning_lang = LangLoader::get('warning-lang');
+	$view->add_lang(array_merge($lang, $common_lang, $form_lang, $warning_lang));
 
-	$tpl = new FileTemplate('user/pm.tpl');
+	$Bread_crumb->add($lang['user.post.new.conversation'], '');
 
-	$tpl->put_all(array(
-		'KERNEL_EDITOR' => $editor->display(),
-		'L_REQUIRE_RECIPIENT' => $LANG['require_recipient'],
-		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
-		'L_REQUIRE_TITLE' => $LANG['require_title'],
-		'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
-		'L_PRIVATE_MESSAGE' => $LANG['private_message'],
-		'L_POST_NEW_CONVERS' => $LANG['post_new_convers'],
-		'L_RECIPIENT' => $LANG['recipient'],
-		'L_SEARCH' => $LANG['search'],
-		'L_TITLE' => $LANG['title'],
-		'L_MESSAGE' => $LANG['message'],
-		'L_SUBMIT' => $LANG['submit'],
-		'L_PREVIEW' => $LANG['preview'],
-		'L_RESET' => $LANG['reset']
-	));
+	$view->put('KERNEL_EDITOR', $editor->display());
 
 	$login = '';
 	if (!empty($pm_get))
@@ -177,19 +170,19 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $current_user->get_id())
 		} catch (RowNotFoundException $ex) {}
 	}
 
-	$tpl->assign_block_vars('post_convers', array(
-		'U_PM_BOX' => '<a href="pm.php' . '">' . $LANG['pm_box'] . '</a>',
+	$view->assign_block_vars('post_convers', array(
 		'LOGIN' => $login
 	));
 
 	$limit_group = $current_user->check_max_value(PM_GROUP_LIMIT, $user_accounts_config->get_max_private_messages_number());
 	$nbr_pm = PrivateMsg::count_conversations($current_user->get_id());
 	if (!$current_user->check_level(User::MODERATOR_LEVEL) && !($limit_group === -1) && $nbr_pm >= $limit_group)
-		$tpl->put('message_helper', MessageHelper::display($LANG['e_pm_full_post'], MessageHelper::WARNING));
+		$view->put('MESSAGE_HELPER', MessageHelper::display($warning_lang['warning.pm.full.post'], MessageHelper::WARNING));
 	else
 	{
 		// Errors management
 		$get_error = retrieve(GET, 'error', '');
+		$warning_lang  = LangLoader::get('warning-lang');
 		switch ($get_error)
 		{
 			case 'e_unexist_user':
@@ -197,24 +190,24 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $current_user->get_id())
 				$type = MessageHelper::WARNING;
 				break;
 			case 'e_pm_full_post':
-				$errstr = $LANG['e_pm_full_post'];
+				$errstr = $warning_lang['warning.pm.full.post'];
 				$type = MessageHelper::WARNING;
 				break;
 			case 'e_incomplete':
-				$errstr = $LANG['e_incomplete'];
+				$errstr = $warning_lang['warning.incomplete'];
 				$type = MessageHelper::NOTICE;
 			break;
 			default:
 				$errstr = '';
 		}
 		if (!empty($errstr))
-			$tpl->put('message_helper', MessageHelper::display($errstr, $type));
+			$view->put('MESSAGE_HELPER', MessageHelper::display($errstr, $type));
 	}
 
-	$tpl->assign_block_vars('post_convers.user_id_dest', array(
+	$view->assign_block_vars('post_convers.user_id_dest', array(
 	));
 
-	$tpl->display();
+	$view->display();
 }
 elseif ($prw_convers && empty($mp_edit)) // Conversation preview.
 {
@@ -222,40 +215,30 @@ elseif ($prw_convers && empty($mp_edit)) // Conversation preview.
 	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 	$login = retrieve(POST, 'login', '');
 
-	$tpl = new FileTemplate('user/pm.tpl');
+	$view         = new FileTemplate('user/pm.tpl');
+	$lang         = LangLoader::get('user-lang');
+	$common_lang  = LangLoader::get('common-lang');
+	$form_lang    = LangLoader::get('form-lang');
+	$warning_lang = LangLoader::get('warning-lang');
+	$view->add_lang(array_merge($lang, $common_lang, $form_lang, $warning_lang));
 
-	$tpl->put_all(array(
-		'KERNEL_EDITOR' => $editor->display(),
-		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
-		'L_REQUIRE_TITLE' => $LANG['require_title'],
-		'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
-		'L_PRIVATE_MESSAGE' => $LANG['private_message'],
-		'L_POST_NEW_CONVERS' => $LANG['post_new_convers'],
-		'L_RECIPIENT' => $LANG['recipient'],
-		'L_SEARCH' => $LANG['search'],
-		'L_TITLE' => $LANG['title'],
-		'L_MESSAGE' => $LANG['message'],
-		'L_SUBMIT' => $LANG['submit'],
-		'L_PREVIEW' => $LANG['preview'],
-		'L_RESET' => $LANG['reset']
-	));
+	$view->put('KERNEL_EDITOR', $editor->display());
 
-	$tpl->assign_block_vars('post_convers', array(
-		'U_PM_BOX' => '<a href="pm.php' . '">' . $LANG['pm_box'] . '</a>',
+	$view->assign_block_vars('post_convers', array(
 		'LOGIN' => $login,
 		'TITLE' => stripslashes($title),
 		'CONTENTS' => $contents
 	));
 
-	$tpl->assign_block_vars('post_convers.show_convers', array(
+	$view->assign_block_vars('post_convers.show_convers', array(
 		'DATE' => Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 		'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($contents)))
 	));
 
-	$tpl->assign_block_vars('post_convers.user_id_dest', array(
+	$view->assign_block_vars('post_convers.user_id_dest', array(
 	));
 
-	$tpl->display();
+	$view->display();
 }
 elseif ($prw && empty($pm_edit) && empty($pm_del)) // Message preview
 {
@@ -267,31 +250,27 @@ elseif ($prw && empty($pm_edit) && empty($pm_del)) // Message preview
 		$convers_title = PersistenceContext::get_querier()->get_column_value(DB_TABLE_PM_TOPIC, 'title', 'WHERE id = :id', array('id' => $pm_id_get));
 	} catch (RowNotFoundException $ex) {}
 
-	$tpl = new FileTemplate('user/pm.tpl');
+	$view         = new FileTemplate('user/pm.tpl');
+	$lang         = LangLoader::get('user-lang');
+	$common_lang  = LangLoader::get('common-lang');
+	$form_lang    = LangLoader::get('form-lang');
+	$warning_lang = LangLoader::get('warning-lang');
+	$view->add_lang(array_merge($lang, $common_lang, $form_lang, $warning_lang));
 
-	$tpl->put_all(array(
-		'KERNEL_EDITOR' => $editor->display(),
-		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
-		'L_DELETE_MESSAGE' => $LANG['alert_delete_msg'],
-		'L_PRIVATE_MESSAGE' => $LANG['private_message'],
-		'L_SUBMIT' => $LANG['submit'],
-		'L_PREVIEW' => $LANG['preview'],
-		'L_RESET' => $LANG['reset']
-	));
+	$view->put('KERNEL_EDITOR', $editor->display());
 
-	$tpl->assign_block_vars('show_pm', array(
+	$view->assign_block_vars('show_pm', array(
 		'DATE' => Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 		'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($contents))),
-		'U_PM_BOX' => '<a href="pm.php' . '">' . $LANG['pm_box'] . '</a>',
 		'U_TITLE_CONVERS' => '<a href="pm' . url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get) . '">' . $convers_title . '</a>'
 	));
 
-	$tpl->assign_block_vars('post_pm', array(
+	$view->assign_block_vars('post_pm', array(
 		'CONTENTS' => $contents,
 		'U_PM_ACTION_POST' => url('.php?id=' . $pm_id_get . '&amp;token=' . AppContext::get_session()->get_token())
 	));
 
-	$tpl->display();
+	$view->display();
 }
 elseif ($pm_post && !empty($pm_id_get) && empty($pm_edit) && empty($pm_del)) // Sending messages.
 {
@@ -334,7 +313,7 @@ elseif ($pm_post && !empty($pm_id_get) && empty($pm_edit) && empty($pm_del)) // 
 			$pmtomail_field = ExtendedFieldsCache::load()->get_extended_field_by_field_name('user_pmtomail');
 			if (!empty($pmtomail_field) && $pmtomail_field['display'])
 			{
-				$contents = $contents . '<br /><br /><a href="' . GeneralConfig::load()->get_complete_site_url() . '/user/pm' . url('.php?id=' . $pm_id_get . $last_page, '-0-' . $pm_id_get . $last_page_rewrite, '&') . '#m' . $pm_msg_id . '">' . $LANG['pm_conversation_link'] . '</a>';
+				$contents = $contents . '<br /><br /><a href="' . GeneralConfig::load()->get_complete_site_url() . '/user/pm' . url('.php?id=' . $pm_id_get . $last_page, '-0-' . $pm_id_get . $last_page_rewrite, '&') . '#m' . $pm_msg_id . '">' . $lang['user.pm.conversation.link'] . '</a>';
 				$send_email = 0;
 				try {
 					$send_email = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER_EXTENDED_FIELDS, 'user_pmtomail', 'WHERE user_id = :id', array('id' => $user_id_dest));
@@ -348,7 +327,7 @@ elseif ($pm_post && !empty($pm_id_get) && empty($pm_edit) && empty($pm_del)) // 
 					} catch (RowNotFoundException $ex) {}
 
 					if ($email_dest)
-						AppContext::get_mail_service()->send_from_properties($email_dest, $LANG['new_pm'] . ' : ' . stripslashes($convers['title']), $contents);
+						AppContext::get_mail_service()->send_from_properties($email_dest, $lang['user.new.pm'] . ' : ' . stripslashes($convers['title']), $contents);
 				}
 			}
 
@@ -406,16 +385,16 @@ elseif ($pm_del_convers) // Conversation removal.
 					$del_convers = true;
 			}
 
-			$view_status = 0;
+			$reading_status = 0;
 			try {
-				$view_status = PersistenceContext::get_querier()->get_column_value(DB_TABLE_PM_MSG, 'view_status', 'WHERE id = :id', array('id' => $row['last_msg_id']));
+				$reading_status = PersistenceContext::get_querier()->get_column_value(DB_TABLE_PM_MSG, 'view_status', 'WHERE id = :id', array('id' => $row['last_msg_id']));
 			} catch (RowNotFoundException $ex) {}
 
-			$update_nbr_pm = ($view_status == '0');
+			$update_nbr_pm = ($reading_status == '0');
 			PrivateMsg::delete_conversation($current_user->get_id(), $row['id'], $expd, $del_convers, $update_nbr_pm);
 
 			// Deleting the message if the recipient hasn't read yet
-			if ($view_status != '1')
+			if ($reading_status != '1')
 			{
 				$id_msg = 0;
 				try {
@@ -490,8 +469,9 @@ elseif (!empty($pm_del)) // Deleting message if recipient hasn't read yet
 			}
 			else // User has already read the message, it can't be deleted anymore
 			{
+				$warning_lang  = LangLoader::get('warning-lang');
 				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
-                    $LANG['e_pm_nodel']);
+                    $warning_lang['warning.pm.no.del']);
                 DispatchManager::redirect($controller);
 			}
 		}
@@ -526,12 +506,12 @@ elseif (!empty($pm_edit)) // Edit PM, if recipient hasn't read it yet
 			DispatchManager::redirect($error_controller);
 		}
 
-		$view = false;
+		$reading = false;
 		if ($pm['view_status'] == '1') // User has already read the message => failure
-			$view = true;
+			$reading = true;
 
 		// Recipient hasn't read the message yet => edit available
-		if ($view === false)
+		if ($reading === false)
 		{
 			$id_first = 0;
 			try {
@@ -566,10 +546,11 @@ elseif (!empty($pm_edit)) // Edit PM, if recipient hasn't read it yet
 						DispatchManager::redirect($error_controller);
 					}
 				}
-				else //Champs manquants.
+				else // Missing fields
 				{
+					$warning_lang  = LangLoader::get('warning-lang');
 					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
-                        $LANG['e_incomplete']);
+                        $warning_lang['warning.incomplete']);
                     DispatchManager::redirect($controller);
 				}
 
@@ -578,34 +559,28 @@ elseif (!empty($pm_edit)) // Edit PM, if recipient hasn't read it yet
 			}
 			else // Edition interface
 			{
-				$tpl = new FileTemplate('user/pm.tpl');
+				$view         = new FileTemplate('user/pm.tpl');
+				$lang         = LangLoader::get('user-lang');
+				$common_lang  = LangLoader::get('common-lang');
+				$form_lang    = LangLoader::get('form-lang');
+				$warning_lang = LangLoader::get('warning-lang');
+				$view->add_lang(array_merge($lang, $common_lang, $form_lang, $warning_lang));
 
-				$tpl->put_all(array(
-					'KERNEL_EDITOR' => $editor->display(),
-					'L_REQUIRE_MESSAGE' => $LANG['require_text'],
-					'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
-					'L_EDIT' => LangLoader::get_message('edit', 'common'),
-					'L_PRIVATE_MESSAGE' => $LANG['private_message'],
-					'L_MESSAGE' => $LANG['message'],
-					'L_SUBMIT' => $LANG['validate'],
-					'L_PREVIEW' => $LANG['preview'],
-					'L_RESET' => $LANG['reset']
-				));
+				$view->put('KERNEL_EDITOR', $editor->display());
 
 				$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 				$title = retrieve(POST, 'title', '', TSTRING_UNCHANGE);
 
-				$Bread_crumb->add(LangLoader::get_message('edit', 'common'));
+				$Bread_crumb->add($common_lang['common.edit']);
 
-				$tpl->assign_block_vars('edit_pm', array(
+				$view->assign_block_vars('edit_pm', array(
 					'CONTENTS' => ($prw_convers XOR $prw) ? $contents : FormatingHelper::unparse($pm['contents']),
 					'U_ACTION_EDIT' => url('.php?edit=' . $pm_edit . '&amp;token=' . AppContext::get_session()->get_token()),
-					'U_PM_BOX' => '<a href="pm.php' . '">' . $LANG['pm_box'] . '</a>'
 				));
 
 				if ($prw_convers XOR $prw)
 				{
-					$tpl->assign_block_vars('edit_pm.show_pm', array(
+					$view->assign_block_vars('edit_pm.show_pm', array(
 						'DATE' => Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 						'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($contents))),
 					));
@@ -613,27 +588,22 @@ elseif (!empty($pm_edit)) // Edit PM, if recipient hasn't read it yet
 
 				if ($id_first == $pm_edit) // First message of the conversation => Edit
 				{
-					$tpl->put_all(array(
-						'SUBMIT_NAME' => 'convers',
-						'L_TITLE' => $LANG['title'],
-					));
+					$view->put('SUBMIT_NAME', 'convers');
 
-					$tpl->assign_block_vars('edit_pm.title', array(
+					$view->assign_block_vars('edit_pm.title', array(
 						'TITLE' => ($prw_convers XOR $prw) ? stripslashes($title) : stripslashes($conversation['title'])
 					));
 				}
 				else
-					$tpl->put_all(array(
-						'SUBMIT_NAME' => 'edit_pm',
-					));
+					$view->put('SUBMIT_NAME', 'edit_pm');
 
-				$tpl->display();
+				$view->display();
 			}
 		}
 		else // User has already read the message => edition is disabled
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
-                $LANG['e_pm_noedit']);
+			$warning_lang  = LangLoader::get('warning-lang');
+			$controller = new UserErrorController($warning_lang['warning.error'], $warning_lang['warning.pm.no.edit']);
             DispatchManager::redirect($controller);
 		}
 	}
@@ -645,7 +615,12 @@ elseif (!empty($pm_edit)) // Edit PM, if recipient hasn't read it yet
 }
 elseif (!empty($pm_id_get)) // Messages associated with the conversation.
 {
-	$tpl = new FileTemplate('user/pm.tpl');
+	$view         = new FileTemplate('user/pm.tpl');
+	$lang         = LangLoader::get('user-lang');
+	$common_lang  = LangLoader::get('common-lang');
+	$form_lang    = LangLoader::get('form-lang');
+	$warning_lang = LangLoader::get('warning-lang');
+	$view->add_lang(array_merge($lang, $common_lang, $form_lang, $warning_lang));
 
 	// Retrieve the conversation infos
 	try {
@@ -692,24 +667,10 @@ elseif (!empty($pm_id_get)) // Messages associated with the conversation.
 		DispatchManager::redirect($error_controller);
 	}
 
-	$tpl->assign_block_vars('pm', array(
+	$view->assign_block_vars('pm', array(
 		'C_PAGINATION' => $pagination->has_several_pages(),
 		'PAGINATION' => $pagination->display(),
-		'U_PM_BOX' => '<a href="pm.php' . '">' . $LANG['pm_box'] . '</a>',
 		'U_TITLE_CONVERS' => '<a href="pm' . url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get) . '">' . stripslashes($convers['title']) . '</a>'
-	));
-
-	$tpl->put_all(array(
-		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
-		'L_REQUIRE_TITLE' => $LANG['require_title'],
-		'L_DELETE_MESSAGE' => $LANG['alert_delete_msg'],
-		'L_PRIVATE_MESSAGE' => $LANG['private_message'],
-		'L_RESPOND' => $LANG['respond'],
-		'L_SUBMIT' => $LANG['submit'],
-		'L_PREVIEW' => $LANG['preview'],
-		'L_EDIT' => LangLoader::get_message('edit', 'common'),
-		'L_DELETE' => LangLoader::get_message('delete', 'common'),
-		'L_RESET' => $LANG['reset']
 	));
 
 	// Message not read by the other user view_status => 0.
@@ -750,29 +711,30 @@ elseif (!empty($pm_id_get)) // Messages associated with the conversation.
 			$is_guest_in_convers = empty($row['display_name']);
 
 		// Resumption of the last message from the previous page.
-		$row['contents'] = ($quote_last_msg == 1 && $i == 0) ? '<span class="text-strong">' . $LANG['quote_last_msg'] . '</span><br /><br />' . $row['contents'] : $row['contents'];
+		$row['contents'] = ($quote_last_msg == 1 && $i == 0) ? '<span class="text-strong">' . $lang['user.quote.last.message'] . '</span><br /><br />' . $row['contents'] : $row['contents'];
 		$i++;
 
 		$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
 		$date = new Date($row['timestamp'],Timezone::SERVER_TIMEZONE);
 
-		$tpl->assign_block_vars('pm.msg', array_merge(
+		$view->assign_block_vars('pm.msg', array_merge(
 			Date::get_array_tpl_vars($date,'date'),
 			array(
 			'C_CURRENT_USER_MESSAGE' => AppContext::get_current_user()->get_display_name() == $row['display_name'],
-			'C_MODERATION_TOOLS' => ($row['id'] === $convers['last_msg_id']) && !$row['view_status'], // Last editable PM if recipient has'nt read it yet
-			'C_VISITOR' => $is_admin,
-			'C_AVATAR' => $row['user_avatar'] || $user_accounts_config->is_default_avatar_enabled(),
-			'C_GROUP_COLOR' => !empty($group_color),
-			'ID' => $row['id'],
-			'CONTENTS' => FormatingHelper::second_parse($row['contents']),
-			'USER_AVATAR' => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : $user_accounts_config->get_default_avatar(),
-			'PSEUDO' => $is_admin ? $LANG['admin'] : (!empty($row['display_name']) ? $row['display_name'] : $LANG['guest']),
-			'LEVEL_CLASS' => UserService::get_level_class($row['level']),
-			'GROUP_COLOR' => $group_color,
-			'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
-			'L_LEVEL' => (($row['warning_percentage'] < '100' || (time() - $row['delay_banned']) < 0) ? UserService::get_level_lang($row['level'] !== null ? $row['level'] : '-1') : LangLoader::get_message('banned', 'user-common'))
+			'C_MODERATION_TOOLS'     => ($row['id']                                        === $convers['last_msg_id']) && !$row['view_status'], // Last editable PM if recipient has'nt read it yet
+			'C_VISITOR'              => $is_admin,
+			'C_AVATAR'               => $row['user_avatar'] || $user_accounts_config->is_default_avatar_enabled(),
+			'C_GROUP_COLOR'          => !empty($group_color),
+
+			'ID'            => $row['id'],
+			'CONTENTS'      => FormatingHelper::second_parse($row['contents']),
+			'USER_AVATAR'   => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : $user_accounts_config->get_default_avatar(),
+			'PSEUDO'        => $is_admin ? $lang['administrator'] : (!empty($row['display_name']) ? $row['display_name'] : $lang['guest']),
+			'LEVEL_CLASS'   => UserService::get_level_class($row['level']),
+			'GROUP_COLOR'   => $group_color,
+			'U_PROFILE'     => UserUrlBuilder::profile($row['user_id'])->rel(),
+			'WARNING_LEVEL' => (($row['warning_percentage'] < '100' || (time() - $row['delay_banned']) < 0) ? UserService::get_level_lang($row['level'] !== null ? $row['level'] : '-1') : $lang['banned'])
 			)
 		));
 
@@ -805,39 +767,43 @@ elseif (!empty($pm_id_get)) // Messages associated with the conversation.
 
 	if ($convers['user_id'] > 0 && !$is_guest_in_convers)
 	{
-		$tpl->put_all(array(
-			'KERNEL_EDITOR' => $editor->display(),
-		));
+		$view->put('KERNEL_EDITOR', $editor->display());
 
-		$tpl->assign_block_vars('post_pm', array(
+		$view->assign_block_vars('post_pm', array(
 			'CONTENTS' => $contents,
 			'U_PM_ACTION_POST' => url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get)
 		));
 
 		// Errors management
 		$get_error = retrieve(GET, 'error', '');
+		$warning_lang  = LangLoader::get('warning-lang');
 		switch ($get_error)
 		{
 			case 'e_incomplete':
-				$errstr = $LANG['e_incomplete'];
+				$errstr = $warning_lang['warning.incomplete'];
 				$type = MessageHelper::NOTICE;
 				break;
 			case 'e_pm_del':
-				$errstr = $LANG['e_pm_del'];
+				$errstr = $warning_lang['warning.pm.del'];
 				$type = MessageHelper::WARNING;
 				break;
 			default:
 				$errstr = '';
 		}
 		if (!empty($errstr))
-			$tpl->put('message_helper', MessageHelper::display($errstr, $type));
+			$view->put('MESSAGE_HELPER', MessageHelper::display($errstr, $type));
 	}
 
-	$tpl->display();
+	$view->display();
 }
 else // Conversation list in the user email box
 {
-	$tpl = new FileTemplate('user/pm.tpl');
+	$view         = new FileTemplate('user/pm.tpl');
+	$lang         = LangLoader::get('user-lang');
+	$common_lang  = LangLoader::get('common-lang');
+	$form_lang    = LangLoader::get('form-lang');
+	$warning_lang = LangLoader::get('warning-lang');
+	$view->add_lang(array_merge($lang, $common_lang, $form_lang, $warning_lang));
 
 	$nbr_pm = PrivateMsg::count_conversations($current_user->get_id());
 
@@ -854,29 +820,24 @@ else // Conversation list in the user email box
 
 	$limit_group = $current_user->check_max_value(PM_GROUP_LIMIT, $user_accounts_config->get_max_private_messages_number());
 	$unlimited_pm = $current_user->check_level(User::MODERATOR_LEVEL) || ($limit_group === -1);
-	$pm_max = $unlimited_pm ? $LANG['illimited'] : $limit_group;
+	$pm_max = $unlimited_pm ? $lang['user.illimited'] : $limit_group;
 
-	$tpl->assign_block_vars('convers', array(
+	$view->assign_block_vars('convers', array(
 		'C_PAGINATION'       => $pagination->has_several_pages(),
 
 		'PAGINATION'         => $pagination->display(),
 		'NBR_PM'             => $nbr_pm,
 		'PM_POURCENT'        => '<strong>' . $nbr_pm . '</strong> / <strong>' . $pm_max . '</strong>',
-		'L_MARK_AS_READ'     => $LANG['mark_pm_as_read'],
-		'L_POST_NEW_CONVERS' => $LANG['post_new_convers'],
 
 		'U_MARK_AS_READ'     => 'pm.php?read=1',
 		'U_USER_ACTION_PM'   => url('.php?del_convers=1&amp;p=' . $page . '&amp;token=' . AppContext::get_session()->get_token()),
-		'U_PM_BOX'           => '<a href="pm.php' . '">' . $LANG['pm_box'] . '</a>',
 		'U_POST_NEW_CONVERS' => 'pm' . url('.php?post=1', '')
 	));
 
 	// No PM
 	if ($nbr_pm == 0)
 	{
-		$tpl->assign_block_vars('convers.no_pm', array(
-			'L_NO_PM' => LangLoader::get_message('no_item_now', 'common')
-		));
+		$view->assign_block_vars('convers.no_pm', array());
 	}
 	$nbr_waiting_pm = 0;
 	if (!$unlimited_pm && $nbr_pm > $limit_group)
@@ -886,27 +847,9 @@ else // Conversation list in the user email box
 		// Errors management
 		if ($nbr_waiting_pm > 0)
 		{
-			$tpl->put('message_helper', MessageHelper::display(sprintf($LANG['e_pm_full'], $nbr_waiting_pm), MessageHelper::WARNING));
+			$view->put('MESSAGE_HELPER', MessageHelper::display(sprintf($warning_lang['warning.pm.full'], $nbr_waiting_pm), MessageHelper::WARNING));
 		}
 	}
-
-	$tpl->put_all(array(
-		'L_REQUIRE_MESSAGE'     => $LANG['require_text'],
-		'L_REQUIRE_TITLE'       => $LANG['require_title'],
-		'L_DELETE_MESSAGE'      => $LANG['alert_delete_msg'],
-		'L_PRIVATE_MSG'         => $LANG['private_message'],
-		'L_PM_BOX'              => $LANG['select_all_messages'],
-		'L_SELECT_ALL_MESSAGES' => $LANG['pm_box'],
-		'L_TITLE'               => $LANG['title'],
-		'L_PARTICIPANTS'        => $LANG['participants'],
-		'L_MESSAGE'             => $LANG['replies'],
-		'L_LAST_MESSAGE'        => $LANG['last_message'],
-		'L_STATUS'              => $LANG['status'],
-		'L_DELETE'              => LangLoader::get_message('delete', 'common'),
-		'L_READ'                => $LANG['read'],
-		'L_TRACK'               => $LANG['pm_track'],
-		'L_NOT_READ'            => $LANG['not_read']
-	));
 
 	// Conversation exists for both users: user_convers_status => 0.
 	// Conversation deleted on sender side: user_convers_status => 1.
@@ -956,23 +899,23 @@ else // Conversation list in the user email box
 				continue;
 		}
 
-		$view = false;
+		$reading = false;
 		$track = false;
 		if ($row['last_user_id'] == $current_user->get_id()) // The user is the last poster
 		{
-			$view = true;
+			$reading = true;
 			if ($row['view_status'] === '0') // The recipient hasn't read the message yet
 				$track = true;
 		}
 		else // The user isn't the last poster
 		{
 			if ($row['view_status'] === '1') // The recipient has already read the message
-				$view = true;
+				$reading = true;
 		}
 
 		$announce = 'message-announce';
 		// Checking read/unread messages
-		if ($view === false) // New message (not read).
+		if ($reading === false) // New message (not read).
 			$announce = $announce . '-new';
 		if ($track === true) // Message reception marker
 			$announce = $announce . '-track';
@@ -1017,7 +960,7 @@ else // Conversation list in the user email box
 		$last_msg = '<a href="pm' . url('.php?' . $last_page . 'id=' . $row['id'], '-0-' . $row['id'] . $last_page_rewrite) . '#m' . $row['last_msg_id'] . '" class="far fa-hand-point-right"></a>' . ' ' . $LANG['on'] . ' ' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br />';
 		$last_msg .= ($row['user_id'] == -1) ? $LANG['by'] . ' ' . $LANG['admin'] : $LANG['by'] . ' <a href="' . UserUrlBuilder::profile($row['last_user_id'])->rel() . '" class="small '.UserService::get_level_class($row['last_level']).'"' . (!empty($last_group_color) ? ' style="color:' . $last_group_color . '"' : '') . '>' . $row['last_login'] . '</a>';
 
-		$tpl->assign_block_vars('convers.list', array(
+		$view->assign_block_vars('convers.list', array(
 			'INCR'           => $i,
 			'ID'             => $row['id'],
 			'ANNOUNCE'       => $announce,
@@ -1032,7 +975,7 @@ else // Conversation list in the user email box
 	}
 	$result->dispose();
 
-	$tpl->display();
+	$view->display();
 }
 
 include('../kernel/footer.php');

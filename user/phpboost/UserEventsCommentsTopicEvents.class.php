@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 04
+ * @version     PHPBoost 6.0 - last update: 2021 04 18
  * @since       PHPBoost 5.0 - 2016 07 11
 */
 
@@ -68,7 +68,7 @@ class UserEventsCommentsTopicEvents extends CommentsTopicEvents
 	public function send_PM($recipient_id, Contribution $contribution, $message)
 	{
 		// Load module lang
-		$lang = LangLoader::get('user-common');
+		$lang = LangLoader::get('user-lang');
 
 		// Send the PM if the recipient is not a guest
 		if ($recipient_id > 0)
@@ -76,7 +76,7 @@ class UserEventsCommentsTopicEvents extends CommentsTopicEvents
 			// Get current user
 			$current_user = AppContext::get_current_user();
 
-			$pm_content = StringVars::replace_vars($lang['contribution.pm.contents'], array(
+			$pm_content = StringVars::replace_vars($lang['user.contribution.pm.content'], array(
 				'author'           => $current_user->get_display_name(),
 				'title'            => $contribution->get_entitled(),
 				'comment'          => $message,
@@ -86,7 +86,7 @@ class UserEventsCommentsTopicEvents extends CommentsTopicEvents
 			// Send the PM
 			PrivateMsg::start_conversation(
 				$recipient_id,
-				StringVars::replace_vars($lang['contribution.pm.title'], array('title' => $contribution->get_entitled())),
+				StringVars::replace_vars($lang['user.contribution.pm.title'], array('title' => $contribution->get_entitled())),
 				$pm_content,
 				-1,
 				PrivateMsg::SYSTEM_PM

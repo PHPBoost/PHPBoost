@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 15
+ * @version     PHPBoost 6.0 - last update: 2021 04 18
  * @since       PHPBoost 3.0 - 2012 02 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,7 +13,7 @@ class UserCommentsController extends AbstractController
 {
 	private $module;
 	private $user;
-	private $tpl;
+	private $view;
 	private $lang;
 	private $current_user;
 	private $comments_number;
@@ -52,12 +52,12 @@ class UserCommentsController extends AbstractController
 
 	private function init($request)
 	{
-		$this->tpl = new FileTemplate('user/UserCommentsController.tpl');
+		$this->view = new FileTemplate('user/UserCommentsController.tpl');
 		$this->lang = LangLoader::get('comments-common');
 		$this->current_user = AppContext::get_current_user();
-		$this->tpl->add_lang($this->lang);
-		$this->tpl->put('MODULE_CHOICE_FORM', $this->build_modules_choice_form()->display());
-		$this->tpl->put('COMMENTS', $this->build_view($request));
+		$this->view->add_lang($this->lang);
+		$this->view->put('MODULE_CHOICE_FORM', $this->build_modules_choice_form()->display());
+		$this->view->put('COMMENTS', $this->build_view($request));
 
 		if ($request->get_string('delete-selected-comments', false))
 		{
@@ -69,8 +69,8 @@ class UserCommentsController extends AbstractController
 						CommentsManager::delete_comment($this->ids[$i]);
 				}
 			}
-			$this->tpl->put('COMMENTS', $this->build_view($request));
-			$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+			$this->view->put('COMMENTS', $this->build_view($request));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 		}
 	}
 
@@ -82,7 +82,7 @@ class UserCommentsController extends AbstractController
 		$id_module = $this->module === null ? null : $this->module->get_id();
 		$pagination = $this->get_pagination($page);
 
-		$this->tpl->put_all(array(
+		$this->view->put_all(array(
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display()
 		));
@@ -158,7 +158,7 @@ class UserCommentsController extends AbstractController
 		}
 		$result->dispose();
 
-		$this->tpl->put_all(array(
+		$this->view->put_all(array(
 			'C_COMMENTS'              => $this->comments_number > 0,
 			'C_DISPLAY_DELETE_BUTTON' => $this->comments_number && ($comments_authorizations->is_authorized_moderation() || $display_delete_button),
 			'COMMENTS_NUMBER'         => $this->comments_number
@@ -243,7 +243,7 @@ class UserCommentsController extends AbstractController
 		$module_id = $request->get_getstring('module_id', '');
 		$page = $request->get_getint('page', 1);
 
-		$response = new SiteDisplayResponse($this->tpl);
+		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
 
 		if ($this->user !== null)
@@ -251,7 +251,7 @@ class UserCommentsController extends AbstractController
 		else
 			$graphical_environment->set_page_title($this->lang['comments'], '', $page);
 
-		$graphical_environment->get_seo_meta_data()->set_description($this->user !== null ? StringVars::replace_vars(LangLoader::get_message('seo.user.comments.user', 'user-common'), array('name' => $this->user->get_display_name())) : LangLoader::get_message('seo.user.comments', 'user-common'));
+		$graphical_environment->get_seo_meta_data()->set_description($this->user !== null ? StringVars::replace_vars(LangLoader::get_message('user.seo.comments.user', 'user-lang'), array('name' => $this->user->get_display_name())) : LangLoader::get_message('user.seo.comments', 'user-lang'));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::comments($module_id, $this->user !== null ? $this->user->get_id() : null, $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
@@ -259,12 +259,12 @@ class UserCommentsController extends AbstractController
 		if ($this->user !== null)
 		{
 			$breadcrumb->add($this->user->get_display_name(), UserUrlBuilder::profile($this->user->get_id())->rel());
-			$breadcrumb->add(LangLoader::get_message('user.publications', 'user-common'), UserUrlBuilder::publications($this->user->get_id())->rel());
+			$breadcrumb->add(LangLoader::get_message('user.publications', 'user-lang'), UserUrlBuilder::publications($this->user->get_id())->rel());
 			$breadcrumb->add($this->lang['comments'], UserUrlBuilder::comments($module_id, $this->user->get_id(), $page)->rel());
 		}
 		else
 		{
-			$breadcrumb->add(LangLoader::get_message('users', 'user-common'), UserUrlBuilder::home()->rel());
+			$breadcrumb->add(LangLoader::get_message('user.users', 'user-lang'), UserUrlBuilder::home()->rel());
 			$breadcrumb->add($this->lang['comments'], UserUrlBuilder::comments()->rel());
 		}
 

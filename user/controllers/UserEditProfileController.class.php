@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 17
+ * @version     PHPBoost 6.0 - last update: 2021 04 18
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -119,10 +119,10 @@ class UserEditProfileController extends AbstractController
 		$fieldset = new FormFieldsetHTML('edit_profile', LangLoader::get_message('form.parameters', 'common'));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field($display_name = new FormFieldTextEditor('display_name', $this->lang['user.displayed.name'], $this->user->get_display_name(),
+		$fieldset->add_field($display_name = new FormFieldTextEditor('display_name', $this->lang['user.display.name'], $this->user->get_display_name(),
 			array(
 				'maxlength' => 100, 'required' => true,
-				'description'=> $this->lang['user.displayed.name.clue'],
+				'description'=> $this->lang['user.display.name.clue'],
 				'disabled' => !AppContext::get_current_user()->is_admin() && !$this->user_accounts_config->are_users_allowed_to_change_display_name() && $this->user->get_display_name(),
 				'events' => array('blur' => '
 					if (!HTMLForms.getField("login").getValue() && HTMLForms.getField("display_name").validate() == "") {
@@ -169,11 +169,11 @@ class UserEditProfileController extends AbstractController
 		{
 			if ($internal_auth_connected)
 			{
-				$connect_fieldset->add_field(new FormFieldFree('internal_auth', $this->lang['user.internal.connection'] . ' <i class="fa fa-check success"></i>', LangLoader::get_message('edit_internal_connection', 'user-common')));
+				$connect_fieldset->add_field(new FormFieldFree('internal_auth', $this->lang['user.internal.connection'] . ' <i class="fa fa-check success"></i>', $this->lang['user.edit.internal.connection']));
 			}
 			else
 			{
-				$connect_fieldset->add_field(new FormFieldFree('internal_auth', $this->lang['user.internal.connection'] . ' <i class="fa fa-times error"></i>', '<a  href="#" onclick="javascript:HTMLForms.getField(\'custom_login\').setValue(false);HTMLForms.getField(\'custom_login\').enable();HTMLForms.getField(\'password\').enable();HTMLForms.getField(\'password_bis\').enable();return false;">' . LangLoader::get_message('create_internal_connection', 'user-common') . '</a>'));
+				$connect_fieldset->add_field(new FormFieldFree('internal_auth', $this->lang['user.internal.connection'] . ' <i class="fa fa-times error"></i>', '<a  href="#" onclick="javascript:HTMLForms.getField(\'custom_login\').setValue(false);HTMLForms.getField(\'custom_login\').enable();HTMLForms.getField(\'password\').enable();HTMLForms.getField(\'password_bis\').enable();return false;">' . $this->lang['user.create.internal.connection'] . '</a>'));
 			}
 		}
 
