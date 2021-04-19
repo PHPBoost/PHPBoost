@@ -123,8 +123,8 @@
 									<th>{@user.registration.date}</th>
 									<th>{@user.last.connection}</th>
 									<th>{@user.publications}</th>
-									<th>${LangLoader::get_message('contact', 'main')}</th>
-									<th>${LangLoader::get_message('groups', 'main')}</th>
+									<th>{@user.contact}</th>
+									<th>{@user.groups}</th>
 									# IF IS_ADMIN #<th></th># ENDIF #
 								</tr>
 							</thead>
@@ -194,7 +194,7 @@
 											<a href="{users.U_PUBLICATIONS}" aria-label="{@user.view.publications}">{users.PUBLICATIONS_NUMBER}</a>
 										</li>
 										<li class="li-stretch">
-											<span class="small">${LangLoader::get_message('contact', 'main')}</span>
+											<span class="small">{@user.contact}</span>
 											<span>
 												<a href="{users.U_MP}" class="pinned bgc-full notice" aria-label="{@user.private.message}"}><i class="fa fa-fw fa-people-arrows"></i></a>
 												# IF users.C_ENABLED_EMAIL #
@@ -207,7 +207,7 @@
 										</li>
 										# IF users.C_HAS_GROUP #
 											<li class="li-stretch">
-												<span class="small">${LangLoader::get_message('groups', 'main')}</span>
+												<span class="small">{@user.groups}</span>
 												<span>
 													# START users.groups #<span class="pinned small {users.groups.GROUP_NAME_FILTER}" data-color-surround="{users.groups.GROUP_COLOR}">{users.groups.GROUP_NAME}</span><br /># END users.groups #
 												</span>

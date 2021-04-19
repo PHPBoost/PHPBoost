@@ -391,7 +391,7 @@
 		                                    <div class="modal-container">
 		                                        <button class="button upload-help" data-modal data-target="upload-helper" aria-label="${LangLoader::get_message('upload.helper', 'upload-common')}"><i class="fa fa-question" aria-hidden="true"></i></button>
 		                                        <div id="upload-helper" class="modal modal-animation">
-		                                            <div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+		                                            <div class="close-modal" aria-label="${LangLoader::get_message('form.close', 'form-lang')}"></div>
 		                                            <div class="content-panel">
 		                                                <h3>${LangLoader::get_message('upload.helper', 'upload-common')}</h3>
 		                                                # IF IS_ADMIN #
@@ -498,7 +498,7 @@
 				                            <div class="cell-form grouped-inputs">
 												<input type="text" readonly="readonly" onclick="select_div(text_{personal_files.ID});" id="text_{personal_files.ID}" class="grouped-element" value="{personal_files.DISPLAYED_CODE}">
 				                            	# IF C_POPUP #
-													<a class="grouped-element submit" href="javascript:insert_popup('{personal_files.INSERTED_CODE}')" aria-label="${LangLoader::get_message('popup_insert', 'main')}"><i class="fa fa-clipboard" aria-hidden="true"></i></a>
+													<a class="grouped-element submit" href="javascript:insert_popup('{personal_files.INSERTED_CODE}')" aria-label="${LangLoader::get_message('upload.popup.insert', 'upload-lang')}"><i class="fa fa-clipboard" aria-hidden="true"></i></a>
 												# ELSE #
 													<a class="grouped-element submit" href="#" onclick="copy_to_clipboard('{personal_files.DISPLAYED_CODE}'); return false;" aria-label="${LangLoader::get_message('tag_copytoclipboard', 'editor-common')}"><i class="fa fa-copy" aria-hidden="true"></i></a>
 												# ENDIF #
@@ -584,7 +584,7 @@
 				                            <div class="cell-form grouped-inputs">
 												<input type="text" readonly="readonly" onclick="select_div(text_{shared_files.ID});" id="text_{shared_files.ID}" class="grouped-element" value="{shared_files.DISPLAYED_CODE}">
 				                            	# IF C_POPUP #
-													<a class="grouped-element" href="javascript:insert_popup('{shared_files.INSERTED_CODE}')" aria-label="${LangLoader::get_message('popup_insert', 'main')}"><i class="fa fa-clipboard" aria-hidden="true"></i></a>
+													<a class="grouped-element" href="javascript:insert_popup('{shared_files.INSERTED_CODE}')" aria-label="${LangLoader::get_message('upload.popup.insert', 'upload-lang')}"><i class="fa fa-clipboard" aria-hidden="true"></i></a>
 												# ELSE #
 													<a class="grouped-element" href="#" onclick="copy_to_clipboard('{shared_files.DISPLAYED_CODE}'); return false;" aria-label="${LangLoader::get_message('tag_copytoclipboard', 'editor-common')}"><i class="fa fa-copy" aria-hidden="true"></i></a>
 												# ENDIF #
@@ -628,8 +628,8 @@
 			<div class="sub-section">
 				<div class="content-container">
 			        <fieldset class="fieldset-submit">
-			            <legend>${LangLoader::get_message('close', 'main')}</legend>
-			            <button type="reset" class="button reset-button" onclick="javascript:close_popup()" value="true">${LangLoader::get_message('close', 'main')}</button>
+			            <legend>${LangLoader::get_message('form.close', 'form-lang')}</legend>
+			            <button type="reset" class="button reset-button" onclick="javascript:close_popup()" value="true">${LangLoader::get_message('form.close', 'form-lang')}</button>
 			        </fieldset>
 				</div>
 			</div>

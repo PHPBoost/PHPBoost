@@ -19,7 +19,7 @@
 						<div class="cell-content align-center">
 							<a href="{U_VIEW_PROFILE}">
 								<i class="fa fa-user fa-2x" aria-hidden="true"></i>
-								<span class="d-block">${LangLoader::get_message('my_private_profile', 'main')}</span>
+								<span class="d-block">{@user.my.profile}</span>
 							</a>
 						</div>
 					</div>
@@ -36,7 +36,7 @@
 								# ELSE #
 									<i class="fa fa-people-arrows fa-2x"></i>
 								# END IF #
-								<span class="d-block">${LangLoader::get_message('private_message', 'main')}</span>
+								<span class="d-block">{@user.private.message}</span>
 							</a>
 						</div>
 					</div>
@@ -47,7 +47,7 @@
 							<div class="cell-content align-center">
 								<a href="{U_UPLOAD}">
 									<i class="fa fa-cloud-upload-alt fa-2x" aria-hidden="true"></i>
-									<span class="d-block">${LangLoader::get_message('files_management', 'main')}</span>
+									<span class="d-block">${LangLoader::get_message('upload.files.management', 'upload-lang')}</span>
 								</a>
 							</div>
 						</div>
@@ -66,7 +66,7 @@
 									# ELSE #
 										<i class="fa fa-wrench fa-2x" aria-hidden="true"></i>
 									# ENDIF #
-									<span class="d-block">${LangLoader::get_message('admin_panel', 'main')}</span>
+									<span class="d-block">{@user.admin.panel}</span>
 								</a>
 							</div>
 						</div>
@@ -78,7 +78,7 @@
 							<div class="cell-content align-center">
 								<a href="{U_MODERATION_PANEL}">
 									<i class="fa fa-gavel fa-2x" aria-hidden="true"></i>
-									<span class="d-block">${LangLoader::get_message('moderation_panel', 'main')}</span>
+									<span class="d-block">{@user.moderation.panel}</span>
 								</a>
 							</div>
 						</div>
@@ -96,7 +96,7 @@
 								# ELSE #
 									<i class="fa fa-file-alt fa-2x" aria-hidden="true"></i>
 								# ENDIF #
-								<span class="d-block">${LangLoader::get_message('contribution_panel', 'main')}</span>
+								<span class="d-block">{@user.contribution.panel}</span>
 							</a>
 						</div>
 					</div>

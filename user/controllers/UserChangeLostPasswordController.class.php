@@ -82,8 +82,8 @@ class UserChangeLostPasswordController extends AbstractController
 
 		if ($security_config->are_login_and_email_forbidden_in_password())
 		{
-			$form->add_constraint(new FormConstraintFieldsNotIncluded($email, $password, LangLoader::get_message('form.login_and_mail_must_not_be_contained_in_second_field', 'status-messages-common')));
-			$form->add_constraint(new FormConstraintFieldsNotIncluded($login, $password, LangLoader::get_message('form.login_and_mail_must_not_be_contained_in_second_field', 'status-messages-common')));
+			$form->add_constraint(new FormConstraintFieldsNotIncluded($email, $password, LangLoader::get_message('warning.login.and.email.must.not.be.contained.in.second.field', 'warning-lang')));
+			$form->add_constraint(new FormConstraintFieldsNotIncluded($login, $password, LangLoader::get_message('warning.login.and.email.must.not.be.contained.in.second.field', 'warning-lang')));
 		}
 
 		$this->form = $form;
@@ -112,7 +112,7 @@ class UserChangeLostPasswordController extends AbstractController
 			{
 				$session = AppContext::get_session();
 				Session::delete($session);
-				$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('user.not_authorized_during_maintain', 'status-messages-common'), MessageHelper::NOTICE));
+				$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('user.not.authorized.during.maintain', 'warning-lang'), MessageHelper::NOTICE));
 			}
 			else
 			{

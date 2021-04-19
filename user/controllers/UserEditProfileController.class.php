@@ -243,7 +243,7 @@ class UserEditProfileController extends AbstractController
 			}
 		}
 
-		$options_fieldset = new FormFieldsetHTML('options', LangLoader::get_message('options', 'main'));
+		$options_fieldset = new FormFieldsetHTML('options', LangLoader::get_message('common.options', 'common-lang'));
 		$form->add_fieldset($options_fieldset);
 
 		$options_fieldset->add_field(new FormFieldTimezone('timezone', $this->lang['user.timezone.choice'],
@@ -422,7 +422,7 @@ class UserEditProfileController extends AbstractController
 			$user_warning = $this->form->get_value('user_warning')->get_raw_value();
 			if (!empty($user_warning) && $user_warning != $this->user->get_warning_percentage())
 			{
-				MemberSanctionManager::caution($user_id, $user_warning, MemberSanctionManager::SEND_MP, str_replace('%level%', $user_warning, LangLoader::get_message('user_warning_level_changed', 'main')));
+				MemberSanctionManager::caution($user_id, $user_warning, MemberSanctionManager::SEND_MP, str_replace('%level%', $user_warning, $this->lang['user.warning.level.changed']));
 			}
 			elseif (empty($user_warning))
 			{
@@ -432,7 +432,7 @@ class UserEditProfileController extends AbstractController
 			$user_readonly = $this->form->get_value('user_readonly')->get_raw_value();
 			if (!empty($user_readonly) && $user_readonly != $this->user->get_delay_readonly())
 			{
-				MemberSanctionManager::remove_write_permissions($user_id, time() + $user_readonly, MemberSanctionManager::SEND_MP, str_replace('%date%', $this->form->get_value('user_readonly')->get_label(), LangLoader::get_message('user_readonly_changed', 'main')));
+				MemberSanctionManager::remove_write_permissions($user_id, time() + $user_readonly, MemberSanctionManager::SEND_MP, str_replace('%date%', $this->form->get_value('user_readonly')->get_label(), $this->lang['user.readonly.changed']));
 			}
 			elseif (empty($user_readonly))
 			{

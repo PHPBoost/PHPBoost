@@ -3,17 +3,18 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 02 11
+ * @version     PHPBoost 6.0 - last update: 2021 04 19
  * @since       PHPBoost 3.0 - 2012 10 19
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UserError403Controller extends UserErrorController
 {
 	public function __construct()
 	{
-		$error = LangLoader::get_message('error', 'status-messages-common');
-		$unexist_page = LangLoader::get_message('error.page.forbidden', 'status-messages-common');
+		$error = LangLoader::get_message('warning.error', 'warning-lang');
+		$unexist_page = LangLoader::get_message('warning.page.forbidden', 'warning-lang');
 		$message = '<strong>403.</strong> ' . $unexist_page;
 		parent::__construct($error. ' 403', $message, self::WARNING);
 	}

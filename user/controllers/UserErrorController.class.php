@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 01 08
+ * @version     PHPBoost 6.0 - last update: 2021 04 19
  * @since       PHPBoost 3.0 - 2009 12 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -40,7 +40,7 @@ class UserErrorController extends AbstractController
 		$this->title = $title;
 		$this->message = $message;
 		$this->error_type = $error_type;
-		$this->link_name = LangLoader::get_message('back', 'main');
+		$this->link_name = LangLoader::get_message('common.back', 'common-lang');
 	}
 
 	public function set_correction_link($link_name, $link = self::PREVIOUS_PAGE)

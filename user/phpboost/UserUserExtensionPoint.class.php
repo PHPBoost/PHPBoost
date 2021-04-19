@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 12
+ * @version     PHPBoost 6.0 - last update: 2021 04 19
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -18,7 +18,7 @@ class UserUserExtensionPoint implements UserExtensionPoint
 
 	public function get_publications_module_name()
 	{
-		return LangLoader::get_message('comments', 'comments-common');
+		return LangLoader::get_message('comment.comments', 'comment-lang');
 	}
 
 	public function get_publications_module_id()

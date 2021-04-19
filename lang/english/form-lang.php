@@ -18,6 +18,7 @@ $lang['form.submit']  = 'Submit';
 $lang['form.reset']   = 'Reset';
 $lang['form.preview'] = 'Preview';
 $lang['form.empty']   = 'Empty';
+$lang['form.close']   = 'Close';
 $lang['form.update']  = 'Update';
 $lang['form.search']  = 'Search';
 $lang['form.save']    = 'Save';

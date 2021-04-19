@@ -13,8 +13,15 @@
 #                     English                      #
 ####################################################
 
-$lang['common.title'] = 'Title';
-$lang['common.name']  = 'Name';
+$lang['common.title']   = 'Title';
+$lang['common.name']    = 'Name';
+$lang['common.author']  = 'Author';
+$lang['common.avatar']  = 'Avatar';
+$lang['common.options'] = 'Options';
+$lang['common.other']   = 'Other';
+$lang['common.back']    = 'Back';
+
+$lang['common.unspecified']    = 'Unspecified';
 
 $lang['common.participants'] = 'Participants';
 
@@ -42,9 +49,12 @@ $lang['common.hidden']    = 'Hidden';
 $lang['common.yes'] = 'Yes';
 $lang['common.no']  = 'No';
 
-$lang['common.all']    = 'All';
-$lang['common.none']   = 'None';
-$lang['common.none.e'] = 'None';
+$lang['common.all']     = 'All';
+$lang['common.always']  = 'Always';
+$lang['common.unknown'] = 'Unknown';
+$lang['common.none']    = 'None';
+$lang['common.none.e']  = 'None';
+$lang['common.never']   = 'Never';
 
 $lang['common.add']        = 'Add';
 $lang['common.delete']     = 'Delete';
@@ -54,15 +64,13 @@ $lang['common.validation'] = 'Validation';
 $lang['common.moderation'] = 'Moderation';
 $lang['common.reorder']    = 'Reorder';
 $lang['common.respond']    = 'Respond';
+$LANG['common.loading']     = 'Loading';
 
 $lang['common.select.files'] = 'Select files';
 
 $lang['common.syndication'] = 'Syndication';
 $lang['common.syndication.rss'] = 'RSS';
 $lang['common.syndication.atom'] = 'ATOM';
-
-$lang['common.author'] = 'Author';
-$lang['common.avatar'] = 'Avatar';
 
 $lang['common.size'] = 'Size';
 $lang['common.unknown.size'] = 'Unknown size';

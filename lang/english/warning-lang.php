@@ -30,6 +30,18 @@ $lang['warning.incomplete'] = 'All the required fields must be filled!';
 $lang['warning.readonly']   = 'You can\'t perform this action because your account is read-only!';
 $lang['warning.flood']      = 'You can\'t post yet, retry in a few moments';
 $lang['warning.link.flood'] = 'You can\'t post more than %d link(s) in your message';
+$lang['warning.auth'] = 'You don\'t have the required level!';
+$lang['warning.auth.guest'] = 'Protected content. Please suscribe or connect to access this page.';
+$lang['warning.auth.registration.disabled'] = 'Registration is disabled on the site.';
+$lang['warning.page.forbidden'] = 'This folder access is forbidden!';
+$lang['warning.page.unexist'] = 'This page doesn\'t exist!';
+$lang['warning.action.unauthorized'] = 'Unauthorized action!';
+$lang['warning.module.uninstalled'] = 'This module isn\'t installed!';
+$lang['warning.module.unactivated'] = 'This module isn\'t activated!';
+$lang['warning.invalid.archive.content'] = 'The content of the archive is invalid!';
+$lang['warning.404.message'] = 'It seems that a tornado has passed through here. <br />Unfortunately nothing more to see.';
+$lang['warning.403.message'] = 'It seems that a tornado has passed through here. <br />Access is forbidden to the public.';
+$lang['warning.csrf.invalid.token'] = 'Invalid session token. Please try to reload the page because the operation has not been performed.';
 
 // Upload
 $lang['warning.upload.max.dimension']     = 'Max file dimensions exceeded';
@@ -75,7 +87,51 @@ $lang['warning.message.success.position.update'] = 'The position of the items ha
 
 $lang['warning.message.download.file.error'] = 'File :filename download failed';
 
-$lang['warning.message.delete_install_and_update_folders'] = 'For security reasons we recommand you to delete the <b>install</b> and <b>update</b> folders and all their contents, hackers could manage to run the installation script and you could lose data !';
-$lang['warning.message.delete_install_or_update_folders']  = 'For security reasons we recommand you to delete the <b>:folder</b> folder and all its contents, hackers could manage to run the installation script and you could lose data !';
+$lang['warning.message.delete.install.and.update.folders'] = 'For security reasons we recommand you to delete the <b>install</b> and <b>update</b> folders and all their contents, hackers could manage to run the installation script and you could lose data !';
+$lang['warning.message.delete.install.or.update.folders']  = 'For security reasons we recommand you to delete the <b>:folder</b> folder and all its contents, hackers could manage to run the installation script and you could lose data !';
 
+// Regex
+$lang['warning.regex'] = 'The entered value does not fit the proper format';
+$lang['warning.regex.date'] = 'The entered value has to be a valid date';
+$lang['warning.regex.url'] = 'The entered value has to be a valid url';
+$lang['warning.regex.email'] = 'The entered value has to be a valid mail';
+$lang['warning.regex.tel'] = 'The entered value has to be a valid phone number';
+$lang['warning.regex.number'] = 'The value entered must be a number';
+$lang['warning.regex.authorized.extensions'] = 'File extension is not authorized. Valid extensions : :extensions.';
+$lang['warning.regex.picture.file'] = 'The value entered must correspond to a picture';
+$lang['warning.length.intervall'] = 'The entered value does not fit the specified length (:lower_bound <= value <= :upper_bound)';
+$lang['warning.length.min'] = 'The entered value must be at least :lower_bound characters';
+$lang['warning.length.max'] = 'The entered value must be max :upper_bound characters';
+$lang['warning.integer.intervall'] = 'The entered value does not fit the specified interval (:lower_bound <= value <= :upper_bound)';
+$lang['warning.integer.min'] = 'The entered value must be superior or equal to :lower_bound';
+$lang['warning.integer.max'] = 'The entered value must be inferior or equal to :upper_bound';
+$lang['warning.medium.password.regex'] = 'The password must contain at least one lower case letter and one upper case letter or one lower case letter and a digit';
+$lang['warning.strong.password.regex'] = 'The password must contain at least one lower case letter, one upper case letter and a digit';
+$lang['warning.very.strong.password.regex'] = 'The password must contain at least one lower case letter, one upper case letter, one digit and a special character';
+$lang['form.invalid.url'] = 'The url is not valid';
+$lang['form.invalid.picture'] = 'The file is not a picture';
+$lang['form.unexisting.file'] = 'The file has not been found, its url must be incorrect';
+$lang['form.has.to.be.filled'] = 'The field ":name" has to be filled';
+$lang['form.validation.error'] = 'Please correct the form errors';
+$lang['form.fields.must.be.equal'] = 'Fields ":field1" and ":field2" must be equal';
+$lang['form.fields.must.not.be.equal'] = 'Fields ":field1" and ":field2" must have different values';
+$lang['form.first.field.must.be.inferior.to.second.field'] = 'Field ":field2" must have a value inferior to field ":field1"';
+$lang['form.first.field.must.be.superior.to.second.field'] = 'Field ":field2" must have a value superior to field ":field1"';
+$lang['form.first.field.must.not.be.contained.in.second.field'] = 'Value of field ":field1" must not be present in field ":field2"';
+$lang['form.login.and.email.must.not.be.contained.in.second.field'] = 'Your mail or your login must not be present in field ":field2"';
+$lang['warning.email.authorized.domains.regex'] = 'This mail domain address is not authorized, please choose another mail address';
+
+// User
+$lang['warning.user.not.authorized.during.maintain'] = 'You are not authorized to connect during the maintenance';
+$lang['warning.user.not.exists'] = 'User not exists !';
+$lang['warning.user.auth.password.flood'] = ':remaining_tries tries are remaining. After that, you\'ll have to wait 5 minutes to have 2 more tries (10min for 5)!';
+$lang['warning.user.auth.password.flood.max'] = 'You have failed, too many authentication attempts, your account is locked for 5 minutes.';
+
+// Element
+$lang['warning.element.already.exists'] = 'The item already exists.';
+$lang['warning.element.unexist'] = 'The item you requested does not exist.';
+$lang['warning.element.not.visible'] = 'This element is not yet or no more approved, it is not displayed for the other users.';
+
+$lang['warning.misfit.php'] = 'Inadequate PHP version';
+$lang['warning.misfit.phpboost'] = 'Inadequate PHPBoost version';
 ?>

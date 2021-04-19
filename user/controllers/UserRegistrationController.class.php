@@ -122,7 +122,7 @@ class UserRegistrationController extends AbstractController
 			$form->add_constraint(new FormConstraintFieldsNotIncluded($custom_login_checked == 'on' ? $login : $display_name, $password));
 		}
 
-		$options_fieldset = new FormFieldsetHTML('options', LangLoader::get_message('options', 'main'));
+		$options_fieldset = new FormFieldsetHTML('options', LangLoader::get_message('common.options', 'common-lang'));
 		$form->add_fieldset($options_fieldset);
 
 		$options_fieldset->add_field(new FormFieldTimezone('timezone', $this->lang['user.timezone.choice'], GeneralConfig::load()->get_site_timezone(),

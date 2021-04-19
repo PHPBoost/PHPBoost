@@ -3,18 +3,19 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2015 11 23
+ * @version     PHPBoost 6.0 - last update: 2021 04 19
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UserError404Controller extends UserErrorController
 {
 	public function __construct()
 	{
-		$error = LangLoader::get_message('error', 'status-messages-common');
-		$unexist_page = LangLoader::get_message('error.page.unexist', 'status-messages-common');
+		$error = LangLoader::get_message('warning.error', 'warning-lang');
+		$unexist_page = LangLoader::get_message('warning.page.unexist', 'warning-lang');
 		$message = '<strong>404.</strong> ' . $unexist_page;
 		parent::__construct($error. ' 404', $message, self::WARNING);
 	}

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 04
+ * @version     PHPBoost 6.0 - last update: 2021 04 19
  * @since       PHPBoost 1.6 - 2007 07 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -338,7 +338,7 @@ elseif (!empty($del_folder))
 
             'NAME'      => $info_move['name'],
             'FILETYPE'  => $get_img_mimetype['filetype'] . $size_img,
-            'SIZE'      => ($info_move['size'] > 1024) ? NumberHelper::round($info_move['size'] / 1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($info_move['size'], 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
+            'SIZE'      => ($info_move['size'] > 1024) ? NumberHelper::round($info_move['size'] / 1024, 2) . ' ' . LangLoader::get_message('common.unit.megabytes', 'common-lang') : NumberHelper::round($info_move['size'], 0) . ' ' . LangLoader::get_message('common.unit.kilobytes', 'common-lang'),
             'FILE_ICON' => FileUploadConfig::load()->get_display_file_thumbnail() ? ($display_real_img ? $info_move['path'] : $get_img_mimetype['img']) : $get_img_mimetype['img']
     	));
 
@@ -386,7 +386,7 @@ elseif (!empty($del_folder))
         'L_CONFIRM_DEL_FILE'       => $LANG['confim_del_file'],
         'L_CONFIRM_DEL_FOLDER'     => $LANG['confirm_del_folder'],
         'L_CONFIRM_EMPTY_FOLDER'   => $LANG['confirm_empty_folder'],
-        'L_FOLDER_ALREADY_EXIST'   => LangLoader::get_message('element.already_exists', 'status-messages-common'),
+        'L_FOLDER_ALREADY_EXIST'   => LangLoader::get_message('warning.element.already.exists', 'warning-lang'),
         'L_FOLDER_FORBIDDEN_CHARS' => $LANG['folder_forbidden_chars'],
         'L_FILES_MANAGEMENT'       => $LANG['files_management'],
         'L_FILES_ACTION'           => $LANG['files_management'],
@@ -403,7 +403,7 @@ elseif (!empty($del_folder))
         'L_FOLDER_CONTENT'         => $LANG['folder_content'],
         'L_FOLDER_UP'              => $LANG['folders_up'],
         'L_FILES'                  => $LANG['files'],
-        'L_DELETE'                 => LangLoader::get_message('delete', 'common'),
+        'L_DELETE'                 => LangLoader::get_message('common.delete', 'common-lang'),
         'L_EMPTY'                  => $LANG['empty'],
         'L_UPLOAD'                 => $LANG['upload'],
         'L_URL'                    => $LANG['url'],
@@ -429,7 +429,7 @@ elseif (!empty($del_folder))
         $tpl->assign_block_vars('folder', array(
             'ID'                => $row['id'],
             'NAME'              => $name_cut,
-            'RENAME_FOLDER'     => '<span id="fhref' . $row['id'] . '"><a href="javascript:display_rename_folder(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" aria-label="' . LangLoader::get_message('edit', 'common') . '"><i class="far fa-edit"></i></a></span>',
+            'RENAME_FOLDER'     => '<span id="fhref' . $row['id'] . '"><a href="javascript:display_rename_folder(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" aria-label="' . LangLoader::get_message('common.edit', 'common-lang') . '"><i class="far fa-edit"></i></a></span>',
             'MOVE'              => '<a href="javascript:upload_display_block(' . $row['id'] . ');" onmouseover="upload_hide_block(' . $row['id'] . ', 1);" onmouseout="upload_hide_block(' . $row['id'] . ', 0);" class="fa fa-share" aria-label="' . $LANG['moveto'] . '"></a>',
             'U_MOVE'            => url('.php?movefd=' . $row['id'] . '&amp;f=' . $folder . $popup),
             'L_TYPE_DEL_FOLDER' => $LANG['del_folder']
@@ -512,10 +512,10 @@ elseif (!empty($del_folder))
                 'URL'            => PATH_TO_ROOT . $link,
                 'TITLE'          => str_replace('"', '\"', $row['name']),
                 'NAME'           => $name_cut,
-                'RENAME_FILE'    => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\',\'' . addslashes($row['name']) . '\',\'' . addslashes($name_cut) . '\');" aria-label="' . LangLoader::get_message('edit', 'common') . '"><i class="far fa-edit" aria-hidden="true"></i></a></span>',
+                'RENAME_FILE'    => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\',\'' . addslashes($row['name']) . '\',\'' . addslashes($name_cut) . '\');" aria-label="' . LangLoader::get_message('common.edit', 'common-lang') . '"><i class="far fa-edit" aria-hidden="true"></i></a></span>',
                 'FILETYPE'       => $get_img_mimetype['filetype'] . $size_img,
                 'DISPLAYED_CODE' => $displayed_code,
-                'SIZE'           => ($row['size'] > 1024) ? NumberHelper::round($row['size'] / 1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($row['size'], 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
+                'SIZE'           => ($row['size'] > 1024) ? NumberHelper::round($row['size'] / 1024, 2) . ' ' . LangLoader::get_message('common.unit.megabytes', 'common-lang') : NumberHelper::round($row['size'], 0) . ' ' . LangLoader::get_message('common.unit.kilobytes', 'common-lang'),
                 'INSERTED_CODE'  => $inserted_code,
                 'LIGHTBOX'       => !empty($size_img) ? ' data-lightbox="1"' : '',
 
@@ -548,7 +548,7 @@ elseif (!empty($del_folder))
     $total_size = !empty($folder) ? Uploads::Member_memory_used(AppContext::get_current_user()->get_id()) : $total_size;
     $tpl->put_all(array(
         'PERCENT'              => !$unlimited_data ? '(' . NumberHelper::round($total_size / $group_limit, 3) * 100 . '%)' : '',
-        'SIZE_LIMIT'           => !$unlimited_data ? (($group_limit > 1024) ? NumberHelper::round($group_limit / 1024, 2) . ' ' . LangLoader  ::get_message('unit.megabytes', 'common') : NumberHelper::round($group_limit, 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common')) : $LANG['illimited'],
+        'SIZE_LIMIT'           => !$unlimited_data ? (($group_limit > 1024) ? NumberHelper::round($group_limit / 1024, 2) . ' ' . LangLoader  ::get_message('common.unit.megabytes', 'common-lang') : NumberHelper::round($group_limit, 0) . ' ' . LangLoader::get_message('common.unit.kilobytes', 'common-lang')) : $LANG['illimited'],
         'MAX_FILES_SIZE'       => !$unlimited_data ? (($group_limit * 1024 > 1024 * 1024) ? NumberHelper::round($group_limit * 1024, 2) : NumberHelper::round($group_limit * 1024, 0)) : -1,
         'TOTAL_SIZE'           => File::get_formated_size($total_size * 1024),
         'TOTAL_SHARED_SIZE'    => File::get_formated_size($total_shared_size * 1024),
@@ -562,7 +562,7 @@ elseif (!empty($del_folder))
         'C_PERSONAL_SUMMARY' => $total_directories > 0 || $total_personal_files > 0,
         'C_PERSONAL_FILES'   => $total_personal_files > 0,
         'C_SHARED_FILES'     => $total_shared_files > 0,
-        'L_NO_ITEM'          => LangLoader::get_message('no_item_now', 'common')
+        'L_NO_ITEM'          => LangLoader::get_message('common.no.item.now', 'common-lang')
     ));
 
     $tpl->display();

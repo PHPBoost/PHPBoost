@@ -101,7 +101,7 @@ class UserLostPasswordController extends AbstractController
 
 		if (!$user_id)
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $this->lang['user.forgotten.password.error'], MessageHelper::NOTICE);
+			$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $this->lang['user.forgotten.password.error'], MessageHelper::NOTICE);
 			DispatchManager::redirect($controller);
 		}
 		else

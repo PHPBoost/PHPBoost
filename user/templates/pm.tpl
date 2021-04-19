@@ -62,7 +62,7 @@
 						</nav>
 						<script>
 							jQuery("#cssmenu-pmactions").menumaker({
-								title: "${LangLoader::get_message('form.options', 'common')}",
+								title: "${LangLoader::get_message('form.options', 'form-lang')}",
 								format: "multitoggle",
 								breakpoint: 768
 							});

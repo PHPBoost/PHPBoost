@@ -33,7 +33,7 @@
 										# END groups #
 									</ul>
 								# ELSE #
-									${LangLoader::get_message('none', 'common')}
+									${LangLoader::get_message('common.none', 'common-lang')}
 								# ENDIF #
 							</span>
 						</li>
@@ -66,7 +66,7 @@
 			</article>
 			# IF C_EXTENDED_FIELDS #
 				<article class="user-profil-item several-items cell cell-tile">
-					<header class="cell-header"><h5>${LangLoader::get_message('other', 'main')}</h5></header>
+					<header class="cell-header"><h5>${LangLoader::get_message('common.other', 'common-lang')}</h5></header>
 					<div class="cell-list member-view-extand-fieldset">
 						<ul>
 							# START extended_fields #

@@ -93,7 +93,7 @@ class UserUsersListController extends AbstractController
 
 				'DISPLAYED_NAME'              => $row['display_name'],
 				'REGISTRATION_DATE'           => Date::to_format($row['registration_date'], Date::FORMAT_DAY_MONTH_YEAR),
-				'LAST_CONNECTION'             => !empty($row['last_connection_date']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('never', 'main'),
+				'LAST_CONNECTION'             => !empty($row['last_connection_date']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('common.never', 'common-lang'),
 				'REGISTRATION_DATE_TIMESTAMP' => Date::to_format($row['registration_date'], Date::FORMAT_TIMESTAMP),
 				'LAST_CONNECTION_TIMESTAMP'   => !empty($row['last_connection_date']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_TIMESTAMP) : 0,
 				'PUBLICATIONS_NUMBER'         => $contributions_number,
@@ -165,9 +165,9 @@ class UserUsersListController extends AbstractController
 				}
 			}
 			if ($last_admin_delete && $selected_users_number == 1)
-				AppContext::get_response()->redirect(UserUrlBuilder::home(), LangLoader::get_message('error.action.unauthorized', 'status-messages-common'), MessageHelper::ERROR);
+				AppContext::get_response()->redirect(UserUrlBuilder::home(), LangLoader::get_message('warning.action.unauthorized', 'warning-lang'), MessageHelper::ERROR);
 			else
-				AppContext::get_response()->redirect(UserUrlBuilder::home(), LangLoader::get_message('process.success', 'status-messages-common'));
+				AppContext::get_response()->redirect(UserUrlBuilder::home(), LangLoader::get_message('warning.process.success', 'warning-lang'));
 		}
 	}
 	private function generate_response(HTTPRequestCustom $request)

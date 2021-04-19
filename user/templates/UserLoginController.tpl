@@ -38,8 +38,8 @@
 
 				# IF C_DISPLAY_DELAY #
 					<div class="delay">
-						${LangLoader::get_message('maintain_delay', 'main')}
-						<div id="release">${LangLoader::get_message('loading', 'main')}...</div>
+						${LangLoader::get_message('admin.maintain.delay', 'admin-lang')}
+						<div id="release">${LangLoader::get_message('common.loading', 'common-lang')}...</div>
 					</div>
 
 					<script>

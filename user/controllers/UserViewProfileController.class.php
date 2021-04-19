@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 18
+ * @version     PHPBoost 6.0 - last update: 2021 04 19
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -44,8 +44,8 @@ class UserViewProfileController extends AbstractController
 
 	private function build_view($user_id)
 	{
-		$registration_date = !empty($this->user_infos['registration_date']) ? Date::to_format($this->user_infos['registration_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('unknown', 'main');
-		$last_connection_date = !empty($this->user_infos['last_connection_date']) ? Date::to_format($this->user_infos['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('never', 'main');
+		$registration_date = !empty($this->user_infos['registration_date']) ? Date::to_format($this->user_infos['registration_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('common.unknown', 'common-lang');
+		$last_connection_date = !empty($this->user_infos['last_connection_date']) ? Date::to_format($this->user_infos['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('common.never', 'common-lang');
 		$has_groups = $this->build_groups(explode('|', $this->user_infos['user_groups']));
 		$extended_fields_number = 0;
 

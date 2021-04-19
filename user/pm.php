@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 18
+ * @version     PHPBoost 6.0 - last update: 2021 04 19
  * @since       PHPBoost 1.5 - 2006 07 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -186,7 +186,7 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $current_user->get_id())
 		switch ($get_error)
 		{
 			case 'e_unexist_user':
-				$errstr = LangLoader::get_message('user.not_exists', 'status-messages-common');
+				$errstr = LangLoader::get_message('warning.user.not.exists', 'warning-lang');
 				$type = MessageHelper::WARNING;
 				break;
 			case 'e_pm_full_post':
@@ -470,7 +470,7 @@ elseif (!empty($pm_del)) // Deleting message if recipient hasn't read yet
 			else // User has already read the message, it can't be deleted anymore
 			{
 				$warning_lang  = LangLoader::get('warning-lang');
-				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
+				$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'),
                     $warning_lang['warning.pm.no.del']);
                 DispatchManager::redirect($controller);
 			}
@@ -549,7 +549,7 @@ elseif (!empty($pm_edit)) // Edit PM, if recipient hasn't read it yet
 				else // Missing fields
 				{
 					$warning_lang  = LangLoader::get('warning-lang');
-					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
+					$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'),
                         $warning_lang['warning.incomplete']);
                     DispatchManager::redirect($controller);
 				}
@@ -928,23 +928,23 @@ else // Conversation list in the user email box
 		$group_color = User::get_group_color($row['m_user_groups'], $row['level']);
 
 		if ($row['user_id'] == -1)
-			$author = $LANG['admin'];
+			$author = $lang['user.administrator'];
 		elseif (!empty($row['login']))
 			$author = '<a href="' . UserUrlBuilder::profile($row['user_id'])->rel() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>';
 		else
-			$author = '<del>' . $LANG['guest'] . '</del>';
+			$author = '<del>' . $lang['user.guest'] . '</del>';
 
 		$participants = ($row['login_dest'] != $current_user->get_display_name()) ? $row['login_dest'] : $author;
 		$user_id_dest = $row['user_id_dest'] != $current_user->get_id() ? $row['user_id_dest'] : $row['user_id'];
-		$participants_group_color = ($participants != $LANG['admin'] && $participants != '<del>' . $LANG['guest'] . '</del>') ? User::get_group_color($row['dest_groups'], $row['dest_level']) : '';
+		$participants_group_color = ($participants != $lang['user.administrator'] && $participants != '<del>' . $lang['user.guest'] . '</del>') ? User::get_group_color($row['dest_groups'], $row['dest_level']) : '';
 
 		switch ($author)
 		{
-			case $LANG['admin']:
+			case $lang['user.administrator']:
 				$participants_level_class = UserService::get_level_class(User::ADMIN_LEVEL);
 				break;
 
-			case '<del>' . $LANG['guest'] . '</del>':
+			case '<del>' . $lang['user.guest'] . '</del>':
 				$participants_level_class = '';
 				break;
 
@@ -953,12 +953,12 @@ else // Conversation list in the user email box
 				break;
 		}
 
-		$participants = !empty($participants) ? '<a href="' . UserUrlBuilder::profile($user_id_dest)->rel() . '" class="' . $participants_level_class . '"' . (!empty($participants_group_color) ? ' style="color:' . $participants_group_color . '"' : '') . '>' . $participants . '</a>' : '<del>' . $LANG['admin']. '</del>';
+		$participants = !empty($participants) ? '<a href="' . UserUrlBuilder::profile($user_id_dest)->rel() . '" class="' . $participants_level_class . '"' . (!empty($participants_group_color) ? ' style="color:' . $participants_group_color . '"' : '') . '>' . $participants . '</a>' : '<del>' . $lang['user.administrator']. '</del>';
 
 		// Display of last message
 		$last_group_color = User::get_group_color($row['last_groups'], $row['last_level']);
-		$last_msg = '<a href="pm' . url('.php?' . $last_page . 'id=' . $row['id'], '-0-' . $row['id'] . $last_page_rewrite) . '#m' . $row['last_msg_id'] . '" class="far fa-hand-point-right"></a>' . ' ' . $LANG['on'] . ' ' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br />';
-		$last_msg .= ($row['user_id'] == -1) ? $LANG['by'] . ' ' . $LANG['admin'] : $LANG['by'] . ' <a href="' . UserUrlBuilder::profile($row['last_user_id'])->rel() . '" class="small '.UserService::get_level_class($row['last_level']).'"' . (!empty($last_group_color) ? ' style="color:' . $last_group_color . '"' : '') . '>' . $row['last_login'] . '</a>';
+		$last_msg = '<a href="pm' . url('.php?' . $last_page . 'id=' . $row['id'], '-0-' . $row['id'] . $last_page_rewrite) . '#m' . $row['last_msg_id'] . '" class="far fa-hand-point-right"></a>' . ' ' . $common_lang['common.on'] . ' ' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br />';
+		$last_msg .= ($row['user_id'] == -1) ? $common_lang['common.by'] . ' ' . $lang['user.administrator'] : $common_lang['common.by'] . ' <a href="' . UserUrlBuilder::profile($row['last_user_id'])->rel() . '" class="small '.UserService::get_level_class($row['last_level']).'"' . (!empty($last_group_color) ? ' style="color:' . $last_group_color . '"' : '') . '>' . $row['last_login'] . '</a>';
 
 		$view->assign_block_vars('convers.list', array(
 			'INCR'           => $i,
@@ -968,7 +968,7 @@ else // Conversation list in the user email box
 			'MSG'            => ($row['nbr_msg'] - 1),
 			'U_PARTICIPANTS' => (($row['user_convers_status'] != 0) ? '<del>' . $participants . '</del>' : $participants),
 			'U_CONVERS'	     => url('.php?id=' . $row['id'], '-0-' . $row['id']),
-			'U_AUTHOR'       => $LANG['by'] . ' ' . $author,
+			'U_AUTHOR'       => $common_lang['common.by'] . ' ' . $author,
 			'U_LAST_MSG'     => $last_msg
 		));
 		$i++;
