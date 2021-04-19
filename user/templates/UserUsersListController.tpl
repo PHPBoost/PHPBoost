@@ -156,14 +156,14 @@
 										</td>
 										# IF IS_ADMIN #
 											<td>
-												<a href="{users.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit"></i></a>
-												# IF users.C_DELETE #<a href="{users.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-trash-alt"></i></a># ENDIF #
+												<a href="{users.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-edit"></i></a>
+												# IF users.C_DELETE #<a href="{users.U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-trash-alt"></i></a># ENDIF #
 											</td>
 										# ENDIF #
 									</tr>
 								# END users #
 								<tr class="no-result hidden">
-									<td colspan="# IF IS_ADMIN #7# ELSE #6# ENDIF #"><div class="message-helper bgc notice">${LangLoader::get_message('no_item_now', 'common')}</div></td>
+									<td colspan="# IF IS_ADMIN #7# ELSE #6# ENDIF #"><div class="message-helper bgc notice">{@common.no.item.now}</div></td>
 								</tr>
 							</tbody>
 						</table>
@@ -215,8 +215,8 @@
 										# ENDIF #
 										# IF IS_ADMIN #
 											<li class="li-stretch controls">
-												<a href="{users.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit"></i></a>
-												# IF users.C_DELETE #<a href="{users.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-trash-alt"></i></a># ENDIF #
+												<a href="{users.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-edit"></i></a>
+												# IF users.C_DELETE #<a href="{users.U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-trash-alt"></i></a># ENDIF #
 											</li>
 										# ENDIF #
 									</ul>
@@ -224,7 +224,7 @@
 							</article>
 						# END users #
 					</div>
-					<div class="no-result hidden message-helper bgc notice"> ${LangLoader::get_message('no_item_now', 'common')} </div>
+					<div class="no-result hidden message-helper bgc notice"> {@common.no.item.now} </div>
 				# ENDIF #
 			</div>
 		</div>
@@ -242,25 +242,25 @@
 			        data-name="pagination1"
 				   	data-name="paging">
 					<p data-type="info" class="align-center">
-						${LangLoader::get_message('listorder.item.start', 'common')} - ${LangLoader::get_message('listorder.item.end', 'common')} / ${LangLoader::get_message('listorder.items.number', 'common')} ${TextHelper::lcfirst(@user.users)}
+						{@common.listorder.item.start} - {@common.listorder.item.end} / {@common.listorder.items.number} ${TextHelper::lcfirst(@user.users)}
 					</p>
 					<ul>
-						<li class="pagination-item" data-type="first" aria-label="${LangLoader::get_message('pagination.first', 'common')}"><a href="#"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></a> </li>
-					    <li class="pagination-item" data-type="prev" aria-label="${LangLoader::get_message('pagination.previous', 'common')}"><a href="#"><i class="fa fa-chevron-left" aria-hidden="true"></i></a> </li>
+						<li class="pagination-item" data-type="first" aria-label="{@common.pagination.first}"><a href="#"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></a> </li>
+					    <li class="pagination-item" data-type="prev" aria-label="{@common.pagination.previous}"><a href="#"><i class="fa fa-chevron-left" aria-hidden="true"></i></a> </li>
 
 					    <ul class="listorder-holder" data-type="pages">
-					        <li class="pagination-item" data-type="page"><a href="#">${LangLoader::get_message('listorder.page.number', 'common')}</a></li>
+					        <li class="pagination-item" data-type="page"><a href="#">{@common.listorder.page.number}</a></li>
 					    </ul>
 
-					    <li class="pagination-item" data-type="next" aria-label="${LangLoader::get_message('pagination.next', 'common')}"><a href="#"><i class="fa fa-chevron-right" aria-hidden="true"></i></a> </li>
-					    <li class="pagination-item" data-type="last" aria-label="${LangLoader::get_message('pagination.last', 'common')}"><a href="#"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i></a> </li>
+					    <li class="pagination-item" data-type="next" aria-label="{@common.pagination.next}"><a href="#"><i class="fa fa-chevron-right" aria-hidden="true"></i></a> </li>
+					    <li class="pagination-item" data-type="last" aria-label="{@common.pagination.last}"><a href="#"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i></a> </li>
 					</ul>
 				</nav>
 				<div class="align-center">
 					<select data-type="items-per-page">
-		                <option value="{ITEMS_PER_PAGE}"> {ITEMS_PER_PAGE} ${LangLoader::get_message('pagination.per', 'common')}</option>
-		                <option value="50"> 50 ${LangLoader::get_message('pagination.per', 'common')}</option>
-		                <option value="100"> 100 ${LangLoader::get_message('pagination.per', 'common')}</option>
+		                <option value="{ITEMS_PER_PAGE}"> {ITEMS_PER_PAGE} {@common.pagination.per}</option>
+		                <option value="50"> 50 {@common.pagination.per}</option>
+		                <option value="100"> 100 {@common.pagination.per}</option>
 		                <option value="0"> {@user.members.all} </option>
 		            </select>
 				</div>

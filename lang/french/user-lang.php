@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 18
+ * @version     PHPBoost 6.0 - last update: 2021 04 19
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -102,8 +102,6 @@ $lang['user.members.all']       = 'Tous les membres';
 $lang['user.members.list']      = 'Liste des membres';
 $lang['user.member.management'] = 'Gestion du membre';
 $lang['user.search.member']     = 'Rechercher un membre';
-$lang['user.search']            = 'Rechercher';
-$lang['user.validate']          = 'Valider';
 
 $lang['user.profile.edit.password.error']       = 'Le mot de passe que vous avez entré n\'est pas correct';
 $lang['user.external.auth.account.exists']      = 'Vous avez déjà un compte sur le site. Pour utiliser cette méthode de connexion, veuillez vous connecter et vous rendre dans l\'édition de votre profil';
@@ -330,30 +328,31 @@ $lang['user.extended.field.website']      = 'Site internet';
 $lang['user.extended.field.website.clue'] = 'Veuillez renseigner un site web valide (ex : https://www.phpboost.com)';
 
 // Moderation panel
-$lang['user.contact.pm']     = 'Contacter par message privé';
-$lang['user.alternative.pm'] = 'Message privé envoyé au membre <span class="small text-italic">(Laisser vide pour aucun message privé)</span>. <br />Le membre averti ne pourra pas répondre à ce message, et ne connaîtra pas l\'expéditeur.';
+$lang['user.contact.pm']          = 'Contacter par message privé';
+$lang['user.alternative.pm']      = 'Message privé envoyé au membre';
+$lang['user.alternative.pm.clue'] = 'Laisser vide pour aucun message privé. <br />Le membre averti ne pourra pas répondre à ce message, et ne connaîtra pas l\'expéditeur.';
 
 // Punishments management
 $lang['user.punishments']           = 'Sanctions';
 $lang['user.punishment.management'] = 'Gestion des sanctions';
 $lang['user.punish.until']          = 'Sanction jusqu\'au';
 $lang['user.no.punish']             = 'Il n\'y a aucun utilisateur sanctionné.';
-$lang['user.readonly.clue']         = 'Membre en lecture seule, celui-ci peut lire mais ne peut plus poster sur la totalité du site (commentaires, etc.)';
 $lang['user.life']                  = 'A vie';
-$lang['user.readonly.user']         = 'Membre en lecture seule';
+$lang['user.readonly']              = 'Membre en lecture seule';
+$lang['user.readonly.clue']         = 'Celui-ci peut lire mais ne peut plus poster sur la totalité du site (commentaires, etc.)';
 $lang['user.read.only.title']       = 'Sanction';
-$lang['user.readonly.changed'] = 'Vous avez été mis en lecture seule par un membre de l\'équipe de modération, vous ne pourrez plus poster pendant %date%.
+$lang['user.readonly.changed']      = 'Vous avez été mis en lecture seule par un membre de l\'équipe de modération, vous ne pourrez plus poster pendant %date%.
 
 
 Ceci est un message semi-automatique.';
 
 // Warning management
+$lang['user.warning']            = 'Avertissement';
 $lang['user.warnings']           = 'Avertissements';
 $lang['user.warning.management'] = 'Gestion des avertissements';
 $lang['user.warning.level']      = 'Niveau d\'avertissement';
 $lang['user.no.user.warning']    = 'Il n\'y a aucun utilisateur averti.';
 $lang['user.warning.clue']       = 'Niveau d\'avertissement du membre. Vous pouvez le modifier, mais sachez qu\'à 100% le membre est banni.';
-$lang['user.warning.title']      = 'Avertissement';
 $lang['user.warning.user']       = 'Membre averti';
 $lang['user.warning.level.changed'] = 'Vous avez été averti par un membre de l\'équipe de modération, votre niveau d\'avertissement est passé à %level%%. Attention à votre comportement, si vous atteignez 100% vous serez banni définitivement.
 
@@ -361,6 +360,7 @@ $lang['user.warning.level.changed'] = 'Vous avez été averti par un membre de l
 Ceci est un message semi-automatique.';
 
 // Bans management.
+$lang['user.ban']             = 'Bannissement';
 $lang['user.bans']            = 'Bannissements';
 $lang['user.ban.management']  = 'Gestion des bannissements';
 $lang['user.ban.until']       = 'Banni jusqu\'au';
@@ -378,6 +378,7 @@ S\'il s\'agit d\'une erreur veuillez contacter l\'administrateur du site.
 // Private messaging
 $lang['user.private.message']       = 'Message privé';
 $lang['user.private.messages']      = 'Messages privés';
+$lang['user.pm']                    = 'MP';
 $lang['user.pm.box']                = 'Boîte de réception';
 $lang['user.recipient']             = 'Destinataire';
 $lang['user.post.new.conversation'] = 'Créer une nouvelle conversation';

@@ -4,7 +4,7 @@
 	</header>
 	<div class="sub-section">
 		<div class="content-container">
-			# IF C_MODO_PANEL_USER #
+			# IF C_USER #
 				<div class="cell-flex cell-columns-3">
 					<div class="cell">
 						<div class="cell-body">
@@ -37,7 +37,7 @@
 						</div>
 					</div>
 				</div>
-				# IF C_MODO_PANEL_USER_LIST #
+				# IF C_USER_LIST #
 					<script>
 						function XMLHttpRequest_search()
 						{
@@ -69,7 +69,7 @@
 									<div class="form-field grouped-inputs">
 										<input type="text" maxlength="25" id="login" value="" name="login">
 										<input type="hidden" name="token" value="{TOKEN}">
-										<button class="button submit" onclick="XMLHttpRequest_search(this.form);" type="button">{@user.search}</button>
+										<button class="button submit" onclick="XMLHttpRequest_search(this.form);" type="button">{@form.search}</button>
 									</div>
 								</div>
 								<div id="xmlhttprequest-result-search" style="display: none;" class="xmlhttprequest-result-search"></div>
@@ -115,7 +115,7 @@
 					</table>
 				# ENDIF #
 
-				# IF C_MODO_PANEL_USER_INFO #
+				# IF C_USER_INFO #
 					<script>
 						function change_textarea_level(replace_value, regex)
 						{
@@ -132,24 +132,30 @@
 							<legend>{L_ACTION_INFO}</legend>
 							<div class="fieldset-inset">
 								<div class="form-element">
-									<label>{L_LOGIN}</label>
+									<label>{@user.display.name}</label>
 									<div class="form-field">
 										<a href="{U_PROFILE}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{LOGIN}</a>
 									</div>
 								</div>
 								<div class="form-element">
-									<label>{L_PM}</label>
+									<label>{@user.private.message}</label>
 									<div class="form-field">
-										<a href="{U_PM}" class="button alt-button smaller">MP</a>
+										<a href="{U_PM}" class="button alt-button smaller">{@user.pm}</a>
 									</div>
 								</div>
 								<div class="form-element form-element-textarea">
-									<label for="action_contents">{@H|user.alternative.pm}</label>
+									<label for="action_contents">
+										{@user.alternative.pm}
+										<span class="field-description">{@H|user.alternative.pm.clue}</span>
+									</label>
 									{KERNEL_EDITOR}
 									<textarea name="action_contents" id="action_contents" rows="12">{ALTERNATIVE_PM}</textarea>
 								</div>
 								<div class="form-element">
-									<label>{@user.readonly.clue}</label>
+									<label>
+										{@user.readonly}
+										<span class="field-description">{@user.readonly.clue}</span>
+									</label>
 									<div class="form-field">
 										<span id="action_info" class="hidden">{INFO}</span>
 										<select name="new_info" onchange="change_textarea_level(this.options[this.selectedIndex].value, {REGEX})">
@@ -162,24 +168,24 @@
 
 						<fieldset class="fieldset-submit">
 							<input type="hidden" name="token" value="{TOKEN}">
-							<button type="submit" name="valid_user" value="true" class="button submit">{@user.validate}</button>
+							<button type="submit" name="valid_user" value="true" class="button submit">{@form.submit}</button>
 						</fieldset>
 					</form>
 				# ENDIF #
 
-				# IF C_MODO_PANEL_USER_BAN #
+				# IF C_USER_BAN #
 					<form action="{U_ACTION_INFO}" method="post">
 						<fieldset>
 							<legend>{L_ACTION_INFO}</legend>
 							<div class="fieldset-inset">
 								<div class="form-element">
-									<label>{L_LOGIN}</label>
+									<label>{@user.display.name}</label>
 									<div class="form-field">
 										<a href="{U_PROFILE}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{LOGIN}</a>
 									</div>
 								</div>
 								<div class="form-element">
-									<label>{L_PM}</label>
+									<label>{@user.private.message}</label>
 									<div class="form-field">
 										<a href="{U_PM}" class="button alt-button smaller">MP</a>
 									</div>
@@ -199,7 +205,7 @@
 
 						<fieldset class="fieldset-submit">
 							<input type="hidden" name="token" value="{TOKEN}">
-							<button type="submit" name="valid_user" value="true" class="button submit">{@user.validate}</button>
+							<button type="submit" name="valid_user" value="true" class="button submit">{@form.submit}</button>
 						</fieldset>
 					</form>
 				# ENDIF #

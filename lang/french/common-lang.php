@@ -20,13 +20,13 @@ $lang['common.participants'] = 'Participants';
 
 $lang['common.by']  = 'Par';
 $lang['common.the'] = 'Le';
-$lang['common.on'] = 'Le';
+$lang['common.on']  = 'Le';
 $lang['common.in']  = 'Dans';
 $lang['common.of']  = 'Sur';
 $lang['common.and'] = 'Et';
 
-$lang['common.read.more']   = 'Lire la suite';
-$lang['common.suggestions'] = 'Suggestions';
+$lang['common.read.more']      = 'Lire la suite';
+$lang['common.suggestions']    = 'Suggestions';
 $lang['common.link.to.anchor'] = 'Lien vers l\'ancre';
 
 $lang['common.enable']   = 'Activer';

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 18
+ * @version     PHPBoost 6.0 - last update: 2021 04 19
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -102,8 +102,6 @@ $lang['user.members.all']       = 'All members';
 $lang['user.members_list']      = 'Members list';
 $lang['user.member.management'] = 'Member management';
 $lang['user.search.member']     = 'Search member';
-$lang['user.search']            = 'Search';
-$lang['user.validate']          = 'Validate';
 
 $lang['user.profile.edit.password.error']       = 'The new password is not correct';
 $lang['user.external.auth.account.exists']      = 'You already have an account. To use this login method, please login to the site and go to editing of your profile';
@@ -327,42 +325,44 @@ $lang['user.extended.field.website']      = 'Website';
 $lang['user.extended.field.website.clue'] = 'Please enter a valid url (ex : https://www.phpboost.com)';
 
 // Moderation panel
-$lang['user.contact.pm'] = 'Contact by private message';
-$lang['user.alternative.pm'] = 'Private message sent to the member <span class="smaller">(Leave empty for no private message)</span>. The member won\'t be able to reply to this message, he won\'t know who sent it';
+$lang['user.contact.pm']          = 'Contact by private message';
+$lang['user.alternative.pm']      = 'Private message sent to the member';
+$lang['user.alternative.pm.clue'] = 'Leave empty for no private message. The member won\'t be able to reply to this message, he won\'t know who sent it';
 
 // Punishment management
-$lang['user.punishments'] = 'Punishment';
+$lang['user.punishments']           = 'Punishment';
 $lang['user.punishment.management'] = 'Punishment management';
-$lang['user.punish.until'] = 'Punishment until';
-$lang['user.no.punish'] = 'No punished user';
-$lang['user.readonly.clue'] = 'User is in read only, he can read but can\'t post on the whole website (comments, etc...)';
-$lang['user.life'] = 'Life';
-$lang['user.readonly.user'] = 'Member on read only';
-$lang['user.read.only.title'] = 'Punishement';
-$lang['user.readonly.changed'] = 'You have been set on read only status by a member of the moderator team, you can\'t post during %date%.
+$lang['user.punish.until']          = 'Punishment until';
+$lang['user.no.punish']             = 'No punished user';
+$lang['user.life']                  = 'Life';
+$lang['user.readonly']              = 'Member on read only';
+$lang['user.readonly.clue']         = 'He can read but can\'t post on the whole website (comments, etc...)';
+$lang['user.read.only.title']       = 'Punishement';
+$lang['user.readonly.changed']      = 'You have been set on read only status by a member of the moderator team, you can\'t post during %date%.
 
 
 This is a semi-automatic message.';
 
 // Warning management
-$lang['user.warnings'] = 'Warnings';
+$lang['user.warning']            = 'Warning';
+$lang['user.warnings']           = 'Warnings';
 $lang['user.warning.management'] = 'Warning management';
-$lang['user.warning.level'] = 'Warning level';
-$lang['user.no.user.warning'] = 'No warned users';
-$lang['user.warning.clue'] = 'Member warning level. You can update it, but at 100% the member is banned';
-$lang['user.warning.title'] = 'Warning';
+$lang['user.warning.level']      = 'Warning level';
+$lang['user.no.user.warning']    = 'No warned users';
+$lang['user.warning.clue']       = 'Member warning level. You can update it, but at 100% the member is banned';
+$lang['user.warning.user']       = 'Warn user';
 $lang['user.warning.level.changed'] = 'You have been warned by a member of the moderation team, your warning level is now %level%%. Be careful with your behavior, if you reach 100% you will be permanently banned.
 
 
 This is a semi-automatic message.';
-$lang['user.warning.user'] = 'Warn user';
 
 // Ban management.
-$lang['user.bans'] = 'Ban';
-$lang['user.ban.management'] = 'Ban management';
-$lang['user.ban.until'] = 'Banned until';
-$lang['user.no.ban'] = 'No banned user';
-$lang['user.ban.delay'] = 'Ban delay';
+$lang['user.ban']             = 'Ban';
+$lang['user.bans']            = 'Bans';
+$lang['user.ban.management']  = 'Ban management';
+$lang['user.ban.until']       = 'Banned until';
+$lang['user.no.ban']          = 'No banned user';
+$lang['user.ban.delay']       = 'Ban delay';
 $lang['user.ban.title.email'] = 'Banned';
 $lang['user.ban.email'] = 'Dear member,
 
@@ -375,6 +375,7 @@ It may be an error, if you think it is, you can contact the administrator of the
 // Private messaging
 $lang['user.private.message']       = 'Private message';
 $lang['user.private.messages']      = 'Private messages';
+$lang['user.pm']                    = 'PM';
 $lang['user.pm.box']                = 'Private message box';
 $lang['user.recipient']             = 'Recipient';
 $lang['user.post.new.conversation'] = 'Create a new conversation';

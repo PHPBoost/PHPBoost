@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 18
+ * @version     PHPBoost 6.0 - last update: 2021 04 19
  * @since       PHPBoost 1.6 - 2007 03 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -46,7 +46,7 @@ if (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL)) // If u
 }
 
 $view = new FileTemplate('user/moderation_panel.tpl');
-$view->add_lang(array_merge($lang, LangLoader::get('warning-lang')));
+$view->add_lang(array_merge($lang, LangLoader::get('warning-lang'), LangLoader::get('form-lang')));
 
 $view->put_all(array(
 	'U_WARNING'          => UserUrlBuilder::moderation_panel('warning')->rel(),
@@ -82,7 +82,7 @@ if ($action == 'punish')
 	}
 
 	$view->put_all(array(
-		'C_MODO_PANEL_USER' => true,
+		'C_USER' => true,
 		'L_ACTION_INFO'     => $lang['user.punishment.management'],
 		'U_XMLHTTPREQUEST'  => 'punish_user',
 		'U_ACTION'          => UserUrlBuilder::moderation_panel('punish')->rel()
@@ -106,7 +106,7 @@ if ($action == 'punish')
 		}
 
 		$view->put_all(array(
-			'C_MODO_PANEL_USER_LIST' => true,
+			'C_USER_LIST' => true,
 			'L_TITLE'				 => $lang['user.punishment.management'],
 			'L_ACTION_USER'          => $lang['user.punishments'],
 			'L_INFO'                 => $lang['user.punish.until'],
@@ -186,7 +186,7 @@ if ($action == 'punish')
 
 		$group_color = User::get_group_color($member['user_groups'], $member['level']);
 		$view->put_all(array(
-			'C_MODO_PANEL_USER_INFO' => true,
+			'C_USER_INFO' => true,
 			'C_USER_GROUP_COLOR'     => !empty($group_color),
 			'LOGIN'                  => $member['display_name'],
 			'USER_LEVEL_CLASS'       => UserService::get_level_class($member['level']),
@@ -256,7 +256,7 @@ else if ($action == 'warning')
 	}
 
 	$view->put_all(array(
-		'C_MODO_PANEL_USER' => true,
+		'C_USER' => true,
 		'L_ACTION_INFO'     => $lang['user.warning.management'],
 		'U_XMLHTTPREQUEST'  => 'warning_user',
 		'U_ACTION'          => UserUrlBuilder::moderation_panel('warning')->rel() . '&amp;' . AppContext::get_session()->get_token()
@@ -280,7 +280,7 @@ else if ($action == 'warning')
 		}
 
 		$view->put_all(array(
-			'C_MODO_PANEL_USER_LIST' => true,
+			'C_USER_LIST' => true,
 			'L_TITLE'				 => $lang['user.warning.management'],
 			'L_ACTION_USER'          => $lang['user.warnings'],
 			'L_INFO'                 => $lang['user.warning.level'],
@@ -341,7 +341,7 @@ else if ($action == 'warning')
 		$group_color = User::get_group_color($member['user_groups'], $member['level']);
 
 		$view->put_all(array(
-			'C_MODO_PANEL_USER_INFO' => true,
+			'C_USER_INFO' => true,
 			'C_USER_GROUP_COLOR'     => !empty($group_color),
 			'LOGIN'                  => $member['display_name'],
 			'USER_LEVEL_CLASS'       => UserService::get_level_class($member['level']),
@@ -384,7 +384,7 @@ else
 	}
 
 	$view->put_all(array(
-		'C_MODO_PANEL_USER' => true,
+		'C_USER' => true,
 		'L_ACTION_INFO'     => $lang['user.ban.management'],
 
 		'U_XMLHTTPREQUEST'  => 'ban_user',
@@ -409,7 +409,7 @@ else
 		}
 
 		$view->put_all(array(
-			'C_MODO_PANEL_USER_LIST' => true,
+			'C_USER_LIST' => true,
 			'L_TITLE'				 => $lang['user.ban.management'],
 			'L_ACTION_USER'   => $lang['user.bans'],
 			'L_INFO'          => $lang['user.ban.until'],
@@ -463,8 +463,8 @@ else
 		$group_color = User::get_group_color($member['user_groups'], $member['level']);
 
 		$view->put_all(array(
-			'C_MODO_PANEL_USER_BAN' => true,
-			'C_USER_GROUP_COLOR'    => !empty($group_color),
+			'C_USER_BAN'         => true,
+			'C_USER_GROUP_COLOR' => !empty($group_color),
 
 			'LOGIN'            => $member['display_name'],
 			'USER_LEVEL_CLASS' => UserService::get_level_class($member['level']),
