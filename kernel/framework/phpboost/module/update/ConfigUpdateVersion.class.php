@@ -33,7 +33,7 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 
 	public function execute()
 	{
-		$folder = new Folder(PATH_to_ROOT . '/' . self::$module_id);
+		$folder = new Folder(PATH_TO_ROOT . '/' . self::$module_id);
 		if ($folder->exists())
 		{
 			try {
