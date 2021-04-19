@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 05
+ * @version     PHPBoost 6.0 - last update: 2021 04 19
  * @since       PHPBoost 3.0 - 2012 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -18,7 +18,7 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 
 	protected $config_parameters_to_modify = array();
 
-	public function __construct($module_id, $delete_old_config = false, $config_name = '')
+	public function __construct($module_id, $delete_old_config = true, $config_name = '')
 	{
 		self::$module_id = $module_id;
 		$this->delete_old_config = $delete_old_config;
@@ -33,7 +33,8 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 
 	public function execute()
 	{
-		if (ModulesManager::is_module_installed(self::$module_id))
+		$folder = new Folder(PATH_to_ROOT . '/' . self::$module_id);
+		if ($folder->exists())
 		{
 			try {
 				if ($this->build_new_config())
@@ -83,6 +84,7 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 		if (class_exists($configuration_class_name) && !empty($old_config))
 		{
 			$config = $configuration_class_name::load();
+			$modified_properties = array();
 			foreach ($this->config_parameters_to_modify as $old_name => $new_name)
 			{
 				$property = '';
@@ -106,6 +108,26 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 							if ($property == $old_value_name)
 								$config->$set_new_property($new_value_name);
 						}
+					}
+					$modified_properties[] = !is_array($new_name) ? $new_name : $new_name['parameter_name'];
+				}
+			}
+			
+			$configuration_class = new ReflectionClass($configuration_class_name);
+			
+			foreach (array_diff($configuration_class->getConstants(), $modified_properties) as $parameter)
+			{
+				if (is_string($parameter))
+				{
+					$property = '';
+
+					try {
+						$property = $old_config->get_property($parameter);
+					} catch (PropertyNotFoundException $e) {}
+					if ($property && $configuration_class->hasMethod('set_' . $parameter))
+					{
+						$set_new_property = 'set_' . $parameter;
+						$config->$set_new_property($property);
 					}
 				}
 			}
