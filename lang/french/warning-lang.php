@@ -63,4 +63,20 @@ $lang['warning.pm.del']         = 'Le destinataire a supprimé la conversation, 
 $lang['warning.pm.no.edit']     = 'Le destinataire a déjà lu votre message, vous ne pouvez plus l\'éditer';
 $lang['warning.pm.no.del']      = 'Le destinataire a déjà lu votre message, vous ne pouvez plus le supprimer';
 
+// Process
+$lang['warning.process.success'] = 'L\'opération s\'est déroulée avec succès';
+$lang['warning.process.error']   = 'Une erreur s\'est produite lors de l\'opération';
+
+$lang['warning.confirm.delete']          = 'Voulez-vous vraiment supprimer cet élément ?';
+$lang['warning.confirm.delete.elements'] = 'Voulez-vous vraiment supprimer ces éléments ?';
+
+$lang['warning.message.success.config']          = 'La configuration a été modifiée';
+$lang['warning.message.success.position.update'] = 'Les éléments ont été repositionnés';
+
+$lang['warning.message.download.file.error'] = 'Echec lors du téléchargement du fichier :filename';
+
+$lang['warning.message.delete_install_and_update_folders'] = 'Par mesure de sécurité nous vous conseillons fortement de supprimer les dossiers <b>install</b> et <b>update</b> et tout ce qu\'ils contiennent, des personnes mal intentionnées pourraient relancer le script d\'installation et écraser certaines de vos données !';
+$lang['warning.message.delete_install_or_update_folders']  = 'Par mesure de sécurité nous vous conseillons fortement de supprimer le dossier <b>:folder</b> et tout ce qu\'il contient, des personnes mal intentionnées pourraient relancer le script d\'installation et écraser certaines de vos données !';
+
+
 ?>

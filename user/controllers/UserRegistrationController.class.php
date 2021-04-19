@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 18
+ * @version     PHPBoost 6.0 - last update: 2021 04 19
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -58,7 +58,7 @@ class UserRegistrationController extends AbstractController
 		$form->set_layout_title($this->lang['user.registration']);
 		$this->member_extended_fields_service = new MemberExtendedFieldsService($form);
 
-		$fieldset = new FormFieldsetHTML('registration', LangLoader::get_message('form.parameters', 'common'));
+		$fieldset = new FormFieldsetHTML('registration', LangLoader::get_message('form.parameters', 'form-lang'));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldHTML('validation_method', $this->get_accounts_validation_method_explain()));

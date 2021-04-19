@@ -1,7 +1,7 @@
 # START comments #
 	<article id="com{comments.ID_COMMENT}" class="comment-item several-items message-container message-small" itemscope="itemscope" itemtype="https://schema.org/Comment">
 		<header class="message-header-container">
-			# IF comments.C_AVATAR #<img src="{comments.U_AVATAR}" alt="${LangLoader::get_message('avatar', 'user-common')}" class="message-user-avatar" /># ENDIF #
+			# IF comments.C_AVATAR #<img src="{comments.U_AVATAR}" alt="{@common.avatar}" class="message-user-avatar" /># ENDIF #
 			<div class="message-header-infos">
 				<div class="message-user">
 					<h3 class="message-user-pseudo">
@@ -15,12 +15,12 @@
 					</h3>
 					<div class="message-actions">
 						# IF comments.C_MODERATOR #
-							<label class="checkbox" for="multiple-checkbox-{comments.COMMENT_NUMBER}" aria-label="${LangLoader::get_message('select.element', 'common')}">
+							<label class="checkbox" for="multiple-checkbox-{comments.COMMENT_NUMBER}" aria-label="{@common.select.element}">
 								<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{comments.COMMENT_NUMBER}" name="delete-checkbox-{comments.COMMENT_NUMBER}" onclick="delete_button_display({comments.TOTAL_COMMENTS_NUMBER});" />
 								<span>&nbsp;</span>
 							</label>
-							<a href="{comments.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
-							<a href="{comments.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+							<a href="{comments.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+							<a href="{comments.U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 						# ENDIF #
 					</div>
 				</div>

@@ -62,6 +62,7 @@ $lang['common.syndication.rss'] = 'RSS';
 $lang['common.syndication.atom'] = 'ATOM';
 
 $lang['common.author'] = 'Author';
+$lang['common.avatar'] = 'Avatar';
 
 $lang['common.size'] = 'Size';
 $lang['common.unknown.size'] = 'Unknown size';
@@ -100,15 +101,16 @@ $lang['common.constraint.required'] = 'Required';
 $lang['common.constraint.not.required'] = 'Not required';
 
 // Sort
-$lang['common.sort'] = 'Sort';
-$lang['common.sort.options'] = 'Sort options';
-$lang['common.sort.by'] = 'Sort by';
-$lang['common.sort.by.alphabetic'] = 'Alphabetic';
-$lang['common.sort.by.views.number'] = 'Views number';
-$lang['common.sort.by.best.note'] = 'Best note';
+$lang['common.filters']                 = 'Filters';
+$lang['common.sort']                    = 'Sort';
+$lang['common.sort.options']            = 'Sort options';
+$lang['common.sort.by']                 = 'Sort by';
+$lang['common.sort.by.alphabetic']      = 'Alphabetic';
+$lang['common.sort.by.views.number']    = 'Views number';
+$lang['common.sort.by.best.note']       = 'Best note';
 $lang['common.sort.by.comments.number'] = 'Comments number';
-$lang['common.sort.asc'] = 'Ascending';
-$lang['common.sort.desc'] = 'Descending';
+$lang['common.sort.asc']                = 'Ascending';
+$lang['common.sort.desc']               = 'Descending';
 
 // Units
 $lang['common.unit.gigabytes'] = 'Gb';

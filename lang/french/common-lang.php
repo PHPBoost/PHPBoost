@@ -62,6 +62,7 @@ $lang['common.syndication.rss'] = 'RSS';
 $lang['common.syndication.atom'] = 'ATOM';
 
 $lang['common.author'] = 'Auteur';
+$lang['common.avatar'] = 'Avatar';
 
 $lang['common.size'] = 'Taille';
 $lang['common.unknown.size'] = 'Taille inconnue';
@@ -100,6 +101,7 @@ $lang['common.constraint.required'] = 'Requis';
 $lang['common.constraint.not.required'] = 'Non requis';
 
 // Sort
+$lang['common.filters']                 = 'Filtres';
 $lang['common.sort']                    = 'Trier';
 $lang['common.sort.options']            = 'Options de tri';
 $lang['common.sort.by']                 = 'Trier par';

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 18
+ * @version     PHPBoost 6.0 - last update: 2021 04 19
  * @since       PHPBoost 3.0 - 2012 02 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -53,11 +53,13 @@ class UserCommentsController extends AbstractController
 	private function init($request)
 	{
 		$this->view = new FileTemplate('user/UserCommentsController.tpl');
-		$this->lang = LangLoader::get('comments-common');
+		$this->lang = LangLoader::get('comment-lang');
 		$this->current_user = AppContext::get_current_user();
-		$this->view->add_lang($this->lang);
-		$this->view->put('MODULE_CHOICE_FORM', $this->build_modules_choice_form()->display());
-		$this->view->put('COMMENTS', $this->build_view($request));
+		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
+		$this->view->put_all(array(
+			'MODULE_CHOICE_FORM' => $this->build_modules_choice_form()->display(),
+			'COMMENTS'           => $this->build_view($request)
+		));
 
 		if ($request->get_string('delete-selected-comments', false))
 		{
@@ -70,13 +72,14 @@ class UserCommentsController extends AbstractController
 				}
 			}
 			$this->view->put('COMMENTS', $this->build_view($request));
-			$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
 		}
 	}
 
 	private function build_view($request)
 	{
 		$template = new FileTemplate('framework/content/comments/comments_list.tpl');
+		$template->add_lang(LangLoader::get('common-lang'));
 		$page = $request->get_getint('page', 1);
 
 		$id_module = $this->module === null ? null : $this->module->get_id();
@@ -153,7 +156,7 @@ class UserCommentsController extends AbstractController
 			$template->put_all(array(
 				'MODULE_ID'    => $row['module_id'],
 				'ID_IN_MODULE' => $row['id_in_module'],
-				'L_VIEW_TOPIC' => $this->lang['view-topic']
+				'L_VIEW_TOPIC' => $this->lang['comment.view.topic']
 			));
 		}
 		$result->dispose();
@@ -216,16 +219,17 @@ class UserCommentsController extends AbstractController
 		$selected = $this->module !== null ? $this->module->get_id() : '';
 		$user_id = $this->user !== null ? $this->user->get_id() : null;
 		$form = new HTMLForm('ModuleChoice', '', false);
-		$fieldset = new FormFieldsetHTML('ModuleChoice', LangLoader::get_message('filters', 'common'));
+		$fieldset = new FormFieldsetHTML('ModuleChoice', LangLoader::get_message('common.filters', 'common-lang'));
 		$form->add_fieldset($fieldset);
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('module', LangLoader::get_message('sort', 'common') . ' : ', $selected, $this->build_select(),
-		array('events' => array('change' => 'document.location = "'. UserUrlBuilder::comments('', $user_id)->rel() .'" + HTMLForms.getField("module").getValue();'))));
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('module', LangLoader::get_message('common.sort', 'common-lang') . ' : ', $selected, $this->build_select(),
+			array('events' => array('change' => 'document.location = "'. UserUrlBuilder::comments('', $user_id)->rel() .'" + HTMLForms.getField("module").getValue();'))
+		));
 		return $form;
 	}
 
 	private function build_select()
 	{
-		$modules = array(new FormFieldSelectChoiceOption(LangLoader::get_message('view_all_comments', 'admin'), ''));
+		$modules = array(new FormFieldSelectChoiceOption($this->lang['comment.see.all.comments'], ''));
 		$comments_config = CommentsConfig::load();
 
 		foreach (ModulesManager::get_activated_feature_modules('comments') as $module)
@@ -247,9 +251,9 @@ class UserCommentsController extends AbstractController
 		$graphical_environment = $response->get_graphical_environment();
 
 		if ($this->user !== null)
-			$graphical_environment->set_page_title($this->user->get_display_name(), $this->lang['comments'], $page);
+			$graphical_environment->set_page_title($this->user->get_display_name(), $this->lang['comment.comments'], $page);
 		else
-			$graphical_environment->set_page_title($this->lang['comments'], '', $page);
+			$graphical_environment->set_page_title($this->lang['comment.comments'], '', $page);
 
 		$graphical_environment->get_seo_meta_data()->set_description($this->user !== null ? StringVars::replace_vars(LangLoader::get_message('user.seo.comments.user', 'user-lang'), array('name' => $this->user->get_display_name())) : LangLoader::get_message('user.seo.comments', 'user-lang'));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::comments($module_id, $this->user !== null ? $this->user->get_id() : null, $page));
@@ -260,12 +264,12 @@ class UserCommentsController extends AbstractController
 		{
 			$breadcrumb->add($this->user->get_display_name(), UserUrlBuilder::profile($this->user->get_id())->rel());
 			$breadcrumb->add(LangLoader::get_message('user.publications', 'user-lang'), UserUrlBuilder::publications($this->user->get_id())->rel());
-			$breadcrumb->add($this->lang['comments'], UserUrlBuilder::comments($module_id, $this->user->get_id(), $page)->rel());
+			$breadcrumb->add($this->lang['comment.comments'], UserUrlBuilder::comments($module_id, $this->user->get_id(), $page)->rel());
 		}
 		else
 		{
 			$breadcrumb->add(LangLoader::get_message('user.users', 'user-lang'), UserUrlBuilder::home()->rel());
-			$breadcrumb->add($this->lang['comments'], UserUrlBuilder::comments()->rel());
+			$breadcrumb->add($this->lang['comment.comments'], UserUrlBuilder::comments()->rel());
 		}
 
 		return $response;

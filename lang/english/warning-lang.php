@@ -62,4 +62,20 @@ $lang['warning.unexist.user']   = 'The selected user doesn\'t exist!';
 $lang['warning.pm.del']         = 'The recipient has deleted the conversation, you can\'t post anymore';
 $lang['warning.pm.no.edit']     = 'The recipient has already read your message, you can\'t edit it anymore';
 $lang['warning.pm.no.del']      = 'The recipient has already read your message, you can\'t delete it anymore';
+
+// Process
+$lang['warning.process.success'] = 'The operation is a success';
+$lang['warning.process.error']   = 'An error occurred during the operation';
+
+$lang['warning.confirm.delete']          = 'Do you really want to delete this item?';
+$lang['warning.confirm.delete.elements'] = 'Do you really want to delete these items?';
+
+$lang['warning.message.success.config']          = 'The configuration has been modified';
+$lang['warning.message.success.position.update'] = 'The position of the items has been updated';
+
+$lang['warning.message.download.file.error'] = 'File :filename download failed';
+
+$lang['warning.message.delete_install_and_update_folders'] = 'For security reasons we recommand you to delete the <b>install</b> and <b>update</b> folders and all their contents, hackers could manage to run the installation script and you could lose data !';
+$lang['warning.message.delete_install_or_update_folders']  = 'For security reasons we recommand you to delete the <b>:folder</b> folder and all its contents, hackers could manage to run the installation script and you could lose data !';
+
 ?>
