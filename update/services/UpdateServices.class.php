@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 08
+ * @version     PHPBoost 6.0 - last update: 2021 04 20
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -669,10 +669,7 @@ class UpdateServices
 		{
 			$is_token_valid = $this->token->exists() && $this->token->read() == self::$token_file_content;
 		}
-		catch (IOException $ioe)
-		{
-			$is_token_valid = false;
-		}
+		catch (IOException $ioe) {}
 
 		if (!$is_token_valid)
 		{
@@ -691,10 +688,7 @@ class UpdateServices
 		{
 			@include_once(PATH_TO_ROOT . '/kernel/db/config.php');
 
-			if (defined('PREFIX'))
-			{
-				return true;
-			}
+			return defined('PREFIX');
 		}
 		return false;
 	}
@@ -828,12 +822,11 @@ class UpdateServices
 
 	private function delete_old_files_templates()
 	{
-
-	        $folder = new Folder(PATH_TO_ROOT . '/templates/default');
+        $folder = new Folder(PATH_TO_ROOT . '/templates/default');
 		if ($folder->exists())
 		$folder->delete();
 
-                $file = new File(PATH_TO_ROOT . '/templates/base/theme/colors.css');
+        $file = new File(PATH_TO_ROOT . '/templates/base/theme/colors.css');
 		$file->delete();
 
 		$file = new File(PATH_TO_ROOT . '/templates/base/theme/content.css');
