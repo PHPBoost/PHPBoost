@@ -79,7 +79,7 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 	 */
 	protected function modify_config_parameters()
 	{
-		$configuration_class_name = ModulesManager::is_module_installed(self::$module_id) ? ModulesManager::get_module(self::$module_id)->get_configuration()->get_configuration_name() : false;
+		$configuration_class_name = ClassLoader::get_module_subclass_of(self::$module_id, 'AbstractConfigData');
 		$old_config = $this->get_old_config();
 
 		if ($configuration_class_name && class_exists($configuration_class_name) && !empty($old_config))
