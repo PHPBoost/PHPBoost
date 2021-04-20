@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 20
+ * @version     PHPBoost 6.0 - last update: 2021 04 21
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -316,9 +316,8 @@ class UpdateServices
 
 	private function update_configurations()
 	{
-		$configs_class = array_merge($this->get_class(PATH_TO_ROOT . self::$directory . '/kernel/config/', self::$configuration_pattern, 'config'), $this->get_class(PATH_TO_ROOT . self::$directory . '/modules/config/', self::$configuration_pattern, 'config'));
-
-		foreach ($configs_class as $class)
+		// Update kernel configs
+		foreach ($this->get_class(PATH_TO_ROOT . self::$directory . '/kernel/config/', self::$configuration_pattern, 'config') as $class)
 		{
 			try {
 				$object = new $class['name']();
@@ -330,6 +329,39 @@ class UpdateServices
 				$message = $e->getMessage();
 			}
 			$this->add_error_to_file($class['type'] . ' ' . $object->get_config_name(), $success, $message);
+		}
+		
+		// Update modules configs
+		$update_modules_configs_class = array();
+
+		foreach ($this->get_class(PATH_TO_ROOT . self::$directory . '/modules/config/', self::$configuration_pattern, 'config') as $class)
+		{
+			$object = new $class['name']();
+			$update_modules_configs_class[$object->get_module_id()] = $class['name'];
+		}
+
+		$modules_folder = new Folder(PATH_TO_ROOT);
+		foreach ($modules_folder->get_folders() as $folder)
+		{
+			if ($folder->get_files('/config\.ini/'))
+			{
+				$module_id = $folder->get_name();
+				$module = ModulesManager::get_module($module_id);
+
+				if (ModulesManager::is_module_installed($module_id) && $module->get_configuration()->get_compatibility() == self::NEW_KERNEL_VERSION && in_array($module_id, array_keys($update_modules_configs_class)))
+				{
+					$module_config_update = new $update_modules_configs_class[$module_id]();
+					try {
+						$module_config_update->execute();
+						$success = true;
+						$message = '';
+					} catch (Exception $e) {
+						$success = false;
+						$message = $e->getMessage();
+					}
+					$this->add_error_to_file($class['type'] . ' ' . $module_config_update->get_module_id(), $success, $message);
+				}
+			}
 		}
 	}
 

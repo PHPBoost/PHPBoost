@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 08
+ * @version     PHPBoost 6.0 - last update: 2021 04 21
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,6 +15,11 @@ class NewsConfig extends DefaultRichModuleConfig
 {
 	const ITEMS_SUGGESTIONS_ENABLED = 'items_suggestions_enabled';
 	const ITEMS_NAVIGATION_ENABLED = 'items_navigation_enabled';
+
+	public static function __static()
+	{
+		self::$module_id = 'news';
+	}
 
 	/**
 	 * {@inheritdoc}
