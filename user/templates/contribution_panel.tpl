@@ -1,17 +1,17 @@
 # IF C_CONTRIBUTION_LIST #
 	<section id="module-user-contribution-list">
 		<header class="section-header">
-			<h1>{L_CONTRIBUTION_PANEL}</h1>
+			<h1>{@contribution.panel}</h1>
 		</header>
 		<div class="sub-section">
 			<div class="content-container">
 				<article class="user-contribution-item several-items">
 					<header>
-						<h2>{L_CONTRIBUTE}</h2>
+						<h2>{@contribution.contribute}</h2>
 					</header>
 					<div class="content">
 						# IF NOT C_NO_MODULE_IN_WHICH_CONTRIBUTE #
-							<p>{L_CONTRIBUTE_EXPLAIN}</p>
+							<p>{@contribution.contribute.in.modules}</p>
 
 							# START row #
 								<div class="cell-flex cell-tile cell-columns-{row.MODULES_PER_ROW}">
@@ -26,7 +26,7 @@
 								</div>
 							# END row #
 						# ELSE #
-							<div class="message-helper bgc warning">{L_NO_MODULE_IN_WHICH_CONTRIBUTE}</div>
+							<div class="message-helper bgc warning">{@contribution.no.module.to.contribute}</div>
 						# ENDIF #
 					</div>
 				</article>
@@ -37,12 +37,12 @@
 			<div class="content-container">
 				<article class="contribution-item several-items">
 					<header>
-						<h2>{L_CONTRIBUTION_LIST}</h2>
+						<h2>{@contribution.list}</h2>
 					</header>
 
 					# IF C_NO_CONTRIBUTION #
 						<div class="content">
-							<div class="message-helper bgc success">{L_NO_CONTRIBUTION_TO_DISPLAY}</div>
+							<div class="message-helper bgc success">{@common.no.item.now}</div>
 						</div>
 					# ELSE #
 						<div class="content">
@@ -52,91 +52,91 @@
 										<tr>
 											<th>
 												<span class="html-table-header-sortable# IF C_ORDER_ENTITLED_ASC # sort-active# ENDIF #">
-													<a href="{U_ORDER_ENTITLED_ASC}" aria-label="${LangLoader::get_message('sort.asc', 'common')}">
+													<a href="{U_ORDER_ENTITLED_ASC}" aria-label="{@common.sort.asc}">
 														<i class="fa fa-caret-up" aria-hidden="true"></i>
 													</a>
 												</span>
-												{L_ENTITLED}
+												{@common.title}
 												<span class="html-table-header-sortable# IF C_ORDER_ENTITLED_DESC # sort-active# ENDIF #">
-													<a href="{U_ORDER_ENTITLED_DESC}" aria-label="${LangLoader::get_message('sort.desc', 'common')}">
+													<a href="{U_ORDER_ENTITLED_DESC}" aria-label="{@common.sort.desc}">
 														<i class="fa fa-caret-down" aria-hidden="true"></i>
 													</a>
 												</span>
 											</th>
 											<th>
 												<span class="html-table-header-sortable# IF C_ORDER_MODULE_ASC # sort-active# ENDIF #">
-													<a href="{U_ORDER_MODULE_ASC}" aria-label="${LangLoader::get_message('sort.asc', 'common')}">
+													<a href="{U_ORDER_MODULE_ASC}" aria-label="{@common.sort.asc}">
 														<i class="fa fa-caret-up" aria-hidden="true"></i>
 													</a>
 												</span>
-												{L_MODULE}
+												{@common.module}
 												<span class="html-table-header-sortable# IF C_ORDER_MODULE_DESC # sort-active# ENDIF #">
-													<a href="{U_ORDER_MODULE_DESC}" aria-label="${LangLoader::get_message('sort.desc', 'common')}">
+													<a href="{U_ORDER_MODULE_DESC}" aria-label="{@common.sort.desc}">
 														<i class="fa fa-caret-down" aria-hidden="true"></i>
 													</a>
 												</span>
 											</th>
 											<th>
 												<span class="html-table-header-sortable# IF C_ORDER_STATUS_ASC # sort-active# ENDIF #">
-													<a href="{U_ORDER_STATUS_ASC}" aria-label="${LangLoader::get_message('sort.asc', 'common')}">
+													<a href="{U_ORDER_STATUS_ASC}" aria-label="{@common.sort.asc}">
 														<i class="fa fa-caret-up" aria-hidden="true"></i>
 													</a>
 												</span>
-												{L_STATUS}
+												{@common.status}
 												<span class="html-table-header-sortable# IF C_ORDER_STATUS_DESC # sort-active# ENDIF #">
-													<a href="{U_ORDER_STATUS_DESC}" aria-label="${LangLoader::get_message('sort.desc', 'common')}">
+													<a href="{U_ORDER_STATUS_DESC}" aria-label="{@common.sort.desc}">
 														<i class="fa fa-caret-down" aria-hidden="true"></i>
 													</a>
 												</span>
 											</th>
 											<th>
 												<span class="html-table-header-sortable# IF C_ORDER_CREATION_DATE_ASC # sort-active# ENDIF #">
-													<a href="{U_ORDER_CREATION_DATE_ASC}" aria-label="${LangLoader::get_message('sort.asc', 'common')}">
+													<a href="{U_ORDER_CREATION_DATE_ASC}" aria-label="{@common.sort.asc}">
 														<i class="fa fa-caret-up" aria-hidden="true"></i>
 													</a>
 												</span>
-												{L_CREATION_DATE}
+												{@common.creation.date}
 												<span class="html-table-header-sortable# IF C_ORDER_CREATION_DATE_DESC # sort-active# ENDIF #">
-													<a href="{U_ORDER_CREATION_DATE_DESC}" aria-label="${LangLoader::get_message('sort.desc', 'common')}">
+													<a href="{U_ORDER_CREATION_DATE_DESC}" aria-label="{@common.sort.desc}">
 														<i class="fa fa-caret-down" aria-hidden="true"></i>
 													</a>
 												</span>
 											</th>
 											<th>
 												<span class="html-table-header-sortable# IF C_ORDER_FIXING_DATE_ASC # sort-active# ENDIF #">
-													<a href="{U_ORDER_FIXING_DATE_ASC}" aria-label="${LangLoader::get_message('sort.asc', 'common')}">
+													<a href="{U_ORDER_FIXING_DATE_ASC}" aria-label="{@common.sort.asc}">
 														<i class="fa fa-caret-up" aria-hidden="true"></i>
 													</a>
 												</span>
-												{L_FIXING_DATE}
+												{@contribution.closing.date}
 												<span class="html-table-header-sortable# IF C_ORDER_FIXING_DATE_DESC # sort-active# ENDIF #">
-													<a href="{U_ORDER_FIXING_DATE_DESC}" aria-label="${LangLoader::get_message('sort.desc', 'common')}">
+													<a href="{U_ORDER_FIXING_DATE_DESC}" aria-label="{@common.sort.desc}">
 														<i class="fa fa-caret-down" aria-hidden="true"></i>
 													</a>
 												</span>
 											</th>
 											<th>
 												<span class="html-table-header-sortable# IF C_ORDER_POSTER_ASC # sort-active# ENDIF #">
-													<a href="{U_ORDER_POSTER_ASC}" aria-label="${LangLoader::get_message('sort.asc', 'common')}">
+													<a href="{U_ORDER_POSTER_ASC}" aria-label="{@common.sort.asc}">
 														<i class="fa fa-caret-up" aria-hidden="true"></i>
 													</a>
 												</span>
-												{L_POSTER}
+												{@common.author}
 												<span class="html-table-header-sortable# IF C_ORDER_POSTER_DESC # sort-active# ENDIF #">
-													<a href="{U_ORDER_POSTER_DESC}" aria-label="${LangLoader::get_message('sort.desc', 'common')}">
+													<a href="{U_ORDER_POSTER_DESC}" aria-label="{@common.sort.desc}">
 														<i class="fa fa-caret-down" aria-hidden="true"></i>
 													</a>
 												</span>
 											</th>
 											<th>
 												<span class="html-table-header-sortable# IF C_ORDER_FIXER_ASC # sort-active# ENDIF #">
-													<a href="{U_ORDER_FIXER_ASC}" aria-label="${LangLoader::get_message('sort.asc', 'common')}">
+													<a href="{U_ORDER_FIXER_ASC}" aria-label="{@common.sort.asc}">
 														<i class="fa fa-caret-up" aria-hidden="true"></i>
 													</a>
 												</span>
-												{L_FIXER}
+												${LangLoader::get_message('user.supervisor', 'user-lang')}
 												<span class="html-table-header-sortable# IF C_ORDER_FIXER_DESC # sort-active# ENDIF #">
-													<a href="{U_ORDER_FIXER_DESC}" aria-label="${LangLoader::get_message('sort.desc', 'common')}">
+													<a href="{U_ORDER_FIXER_DESC}" aria-label="{@common.sort.desc}">
 														<i class="fa fa-caret-down" aria-hidden="true"></i>
 													</a>
 												</span>
@@ -215,8 +215,8 @@
 		<header class="section-header">
 			# IF C_WRITE_AUTH #
 				<div class="controls align-right">
-					<a href="{U_UPDATE}" aria-label="{L_UPDATE}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
-					<a href="{U_DELETE}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+					<a href="{U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+					<a href="{U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 				</div>
 			# ENDIF #
 			<h1>{ENTITLED}</h1>
@@ -232,7 +232,7 @@
 										<div class="cell-content align-center">
 											<a href="{FIXING_URL}">
 												<i class="fa fa-wrench fa-2x"aria-hidden="true"></i>
-												<span class="d-block">{L_PROCESS_CONTRIBUTION}</span>
+												<span class="d-block">{@contribution.process}</span>
 											</a>
 										</div>
 									</div>
@@ -242,7 +242,7 @@
 										<div class="cell-content align-center">
 											<a href="{U_UPDATE}">
 												<i class="fa fa-check fa-2x success"aria-hidden="true"></i>
-												<span class="d-block">{L_CHANGE_CONTRIBUTION}</span>
+												<span class="d-block">{@contribution.change.status}</span>
 											</a>
 										</div>
 									</div>
@@ -252,7 +252,7 @@
 										<div class="cell-content align-center">
 											<a href="{U_DELETE}" data-confirmation="delete-element">
 												<i class="far fa-trash-alt fa-2x error"aria-hidden="true"></i>
-												<span class="d-block">{L_DELETE_CONTRIBUTION}</span>
+												<span class="d-block">{@contribution.delete}</span>
 											</a>
 										</div>
 									</div>
@@ -267,43 +267,43 @@
 			<div class="content-container">
 				<article class="user-contribution-item several-items">
 					<header>
-						<h2>{L_CONTRIBUTION_DETAILS}</h2>
+						<h2>{@contribution.details}</h2>
 					</header>
 					<div class="cell cell-tile">
 						<div class="cell-list">
 							<ul>
 								<li class="li-stretch">
-									<span class="text-strong">{L_ENTITLED}</span>
+									<span class="text-strong">{@common.title}</span>
 									<span>{ENTITLED}</span>
 								</li>
 								<li>
-									<span class="text-strong">{L_DESCRIPTION}</span>
+									<span class="text-strong">{@common.description}</span>
 									<span>{DESCRIPTION}</span>
 								</li>
 								<li class="li-stretch">
-									<span class="text-strong">{L_STATUS}</span>
+									<span class="text-strong">{@common.status}</span>
 									<span>{STATUS}</span>
 								</li>
 								<li class="li-stretch">
-									<span class="text-strong">{L_CONTRIBUTOR}</span>
+									<span class="text-strong">{@contribution.contributor}</span>
 									<span><a href="{U_CONTRIBUTOR_PROFILE}" class="{CONTRIBUTOR_LEVEL_CLASS}" # IF C_CONTRIBUTOR_GROUP_COLOR # style="color:{CONTRIBUTOR_GROUP_COLOR}" # ENDIF #>{CONTRIBUTOR}</a></span>
 								</li>
 								<li class="li-stretch">
-									<span class="text-strong">{L_CREATION_DATE}</span>
+									<span class="text-strong">{@common.creation.date}</span>
 									<span>{CREATION_DATE}</span>
 								</li>
 								# IF C_CONTRIBUTION_FIXED #
 								<li class="li-stretch">
-									<span class="text-strong">{L_FIXER}</span>
+									<span class="text-strong">${LangLoader::get_message('user.supervisor', 'user-lang')}</span>
 									<span><a href="{U_FIXER_PROFILE}" class="{FIXER_LEVEL_CLASS}" # IF C_FIXER_GROUP_COLOR # style="color:{FIXER_GROUP_COLOR}" # ENDIF #>{FIXER}</a></span>
 								</li>
 								<li class="li-stretch">
-									<span class="text-strong">{L_FIXING_DATE}</span>
+									<span class="text-strong">{@contribution.closing.date}</span>
 									<span>{FIXING_DATE}</span>
 								</li>
 								# ENDIF #
 								<li class="li-stretch">
-									<span class="text-strong">{L_MODULE}</span>
+									<span class="text-strong">{@common.module}</span>
 									<span>{MODULE}</span>
 								</li>
 							</ul>
@@ -329,39 +329,40 @@
 				<div class="content">
 					<form action="contribution_panel.php" method="post">
 						<fieldset>
-							<legend>{L_CONTRIBUTION}</legend>
+							<legend>{@contribution.contributions}</legend>
 							<div class="form-element">
-								<label for="entitled">{L_ENTITLED}</label>
+								<label for="entitled">{@common.title}</label>
 								<div class="form-field">
 									<input type="text" name="entitled" id="entitled" value="{ENTITLED}">
 								</div>
 							</div>
 							<div class="form-element form-element-textarea">
-								<label for="contents">{L_DESCRIPTION}</label>
-								{EDITOR}
+								<label for="contents">{@common.description}</label>
+								{KERNEL_EDITOR}
 								<div class="form-field-textarea">
 									<textarea rows="15" id="contents" name="contents">{DESCRIPTION}</textarea>
 								</div>
 							</div>
 							<div class="form-element">
-								<label for="status">{L_STATUS}</label>
+								<label for="status">{@common.status}</label>
 								<div class="form-field"><select name="status" id="status">
-										<option value="0"{EVENT_STATUS_UNREAD_SELECTED}>{L_CONTRIBUTION_STATUS_UNREAD}</option>
-										<option value="1"{EVENT_STATUS_BEING_PROCESSED_SELECTED}>{L_CONTRIBUTION_STATUS_BEING_PROCESSED}</option>
-										<option value="2"{EVENT_STATUS_PROCESSED_SELECTED}>{L_CONTRIBUTION_STATUS_PROCESSED}</option>
+										<option value="0"{EVENT_STATUS_UNREAD_SELECTED}>{@contribution.not.processed}</option>
+										<option value="1"{EVENT_STATUS_BEING_PROCESSED_SELECTED}>{@contribution.in.progress}</option>
+										<option value="2"{EVENT_STATUS_PROCESSED_SELECTED}>{@contribution.processed}</option>
 									</select>
 								</div>
 							</div>
 						</fieldset>
 						<fieldset class="fieldset-submit">
+							<legend class="sr-only">{@form.submit}</legend>
 							<input type="hidden" name="idedit" value="{CONTRIBUTION_ID}">
 							<input type="hidden" name="token" value="{TOKEN}">
-							<button type="submit" class="button submit" value="true">{L_SUBMIT}</button>
-							<button type="button" class="button preview-button" name="preview" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
-							<button type="reset" class="button reset-button">{L_RESET}</button>
+							<button type="submit" class="button submit" value="true">{@form.submit}</button>
+							<button type="button" class="button preview-button" name="preview" onclick="XMLHttpRequest_preview();">{@form.preview}</button>
+							<button type="reset" class="button reset-button">{@form.reset}</button>
 						</fieldset>
 					</form>
-				</div>				
+				</div>
 			</div>
 		</div>
 		<footer></footer>

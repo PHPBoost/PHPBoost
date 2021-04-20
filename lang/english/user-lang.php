@@ -97,9 +97,10 @@ $lang['user.moderator']      = 'Moderator';
 $lang['user.moderators']     = 'Moderators';
 $lang['user.administrator']  = 'Administrator';
 $lang['user.administrators'] = 'Administrators';
-$LANG['user.sex']            = 'Sex';
-$LANG['user.male']           = 'Male';
-$LANG['user.female']         = 'Female';
+$lang['user.supervisor']     = 'Supervisor';
+$lang['user.sex']            = 'Sex';
+$lang['user.male']           = 'Male';
+$lang['user.female']         = 'Female';
 
 $lang['user.members.management'] = 'Members management';
 $lang['user.members.config']     = 'Members configuration';
@@ -114,43 +115,6 @@ $lang['user.profile.edit.password.error']       = 'The new password is not corre
 $lang['user.external.auth.account.exists']      = 'You already have an account. To use this login method, please login to the site and go to editing of your profile';
 $lang['user.external.auth.email.not.found']     = 'The email address of your account could not be retrieved, your account can not be associated.';
 $lang['user.external.auth.user.data.not.found'] = 'The informations of your account could not be retrieved, your account can not be created.';
-
-// Contributions
-$lang['user.my.items']                    = 'My contributions';
-$lang['user.contribution']                = 'Contribution';
-$lang['user.contribution.member.edition'] = 'Contribution modification by the author';
-$lang['user.contribution.clue'] = '
-    Your contribution will be treated in the contribution panel.
-    <span class="error text-strong">Amendment is possible until the contribution has been approved.</span>
-    In the next field, you can justify your contribution to explain your approach to a moderator.';
-$lang['user.contribution.extended.clue'] = '
-    Your contribution will be treated in the contribution panel.
-    <span class="error text-strong">Amendment is possible until the contribution has been approved or after.</span>
-    In the next field, you can justify your contribution to explain your approach to a moderator.
-    If you modify your contribution after <span class="text-strong">its approbation</span>, it will be sent back to the contribution panel, waiting for a new approbation.';
-$lang['user.contribution.member.edition.clue'] = '
-    You are about to modify your contribution. It will be sent back to the contribution panel to be treated
-    and a new alert will be sent to approvers.';
-$lang['user.contribution.description']                     = 'Additional contribution';
-$lang['user.contribution.description.clue']                = 'Explain the reasons of your contribution. This field is not required but it may help the moderator to make his decision.';
-$lang['user.contribution.member.edition.description']      = 'Additional modification';
-$lang['user.contribution.member.edition.description.desc'] = 'Please explain what you have modified to help approvers.';
-$lang['user.contribution.confirmed']                       = 'Your contribution has been saved.';
-$lang['user.contribution.confirmed.messages'] = '
-    <p>
-        You can follow it into the <a href="' . UserUrlBuilder::contribution_panel()->rel() . '">contribution panel</a>
-        and possibly discuss with the validators if their choice is not straightforward.</p><p>Thank you for participating in the life of the site!
-    </p>
-';
-$lang['user.contribution.pm.title']    = 'The contribution <strong>:title</strong> has been commented';
-$lang['user.contribution.pm.content'] = '
-    :author add a comment to the contribution <strong>:title</strong>.
-    <p>
-        <h6>Comment :</h6>
-        :comment
-    </p>
-    <a href=":contribution_url">See the contribution</a>
-';
 
 // User fields
 $lang['user.display.name']         = 'Displayed name';
@@ -176,7 +140,7 @@ $lang['user.timezone.choice']      = 'Timezone choice';
 $lang['user.timezone.choice.clue'] = 'Adjusts the time to your location';
 $lang['user.level']                = 'Level';
 $lang['user.approbation']          = 'Approbation';
-$lang['user.illimited']            = 'Illimited';
+$lang['user.unlimited']            = 'Unlimited';
 
 $lang['user.avatar']              = 'Avatar';
 $lang['user.registration_date']   = 'Registration date';

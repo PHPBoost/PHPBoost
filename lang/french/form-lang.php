@@ -20,6 +20,7 @@ $lang['form.preview'] = 'Prévisualisation';
 $lang['form.empty']   = 'Vider';
 $lang['form.close']   = 'Fermer';
 $lang['form.update']  = 'Mettre à jour';
+$lang['form.upload']  = 'Uploader';
 $lang['form.search']  = 'Rechercher';
 $lang['form.save']    = 'Sauvegarder';
 $lang['form.go']      = 'Go';

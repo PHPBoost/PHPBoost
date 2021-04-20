@@ -12,27 +12,17 @@
 #                     English                      #
 ####################################################
 
-$lang['upload.confim.del.file'] = 'Delete this file?';
-$lang['upload.confirm.del.folder'] = 'Delete this folder, and all his contents?';
-$lang['upload.confirm.empty.folder'] = 'Empty all folders contents?';
-$lang['upload.file.forbidden.chars'] = 'File name can\'t contain the following characters: \\\ / . | ? < > \"';
-$lang['upload.folder.forbidden.chars'] = 'Folder name can\'t contain the following characters: \\\ / . | ? < > \"';
-
 $lang['upload.files.management'] = 'Files management';
 $lang['upload.files.config'] = 'File configuration';
 $lang['upload.file.add'] = 'Add a file';
 $lang['upload.files.add'] = 'Add files';
-$lang['upload.data'] = 'Total data';
+$lang['upload.total.datas'] = 'Total datas';
 $lang['upload.folders'] = 'Folders';
-$lang['upload.folders.up'] = 'Parent folder';
+$lang['upload.folder.up'] = 'Parent folder';
 $lang['upload.folder.new'] = 'New folder';
 $lang['upload.folder.content'] = 'Folder content';
-$lang['upload.empty.member.folder'] = 'Empty folder?';
-$lang['upload.del.folder'] = 'Delete folder?';
-$lang['upload.empty'] = 'Empty';
 $lang['upload.root'] = 'Root';
 $lang['upload.files'] = 'Files';
-$lang['upload.files.del.failed'] = 'Delete files procedure has failed, please manually remove the files';
 $lang['upload.folder.size'] = 'Folder size';
 $lang['upload.file.type'] = 'File %s';
 $lang['upload.image.type'] = 'Image %s';
@@ -40,14 +30,11 @@ $lang['upload.audio.type'] = 'Audio file %s';
 $lang['upload.zip.type'] = 'Archive %s';
 $lang['upload.adobe.pdf'] = 'Adobe Document';
 $lang['upload.document.type'] = 'Document %s';
-$lang['upload.moveto'] = 'Move to';
-$lang['upload.success.upload'] = 'Your file has been uploaded successfully !';
-$lang['upload.upload.folder.contains.folder'] = 'You wish to put this category in its subcategory or in itself, that\'s impossible !';
 $lang['upload.popup.insert'] = 'Insert code into the form';
 
 $lang['upload.shared.checkbox'] = 'Check this box for files to be saved as shared';
-$lang['upload.shared.title'] = 'Shared Files';
-$lang['upload.personal.title'] = 'Personal Files';
+$lang['upload.shared.files'] = 'Shared Files';
+$lang['upload.personal.files'] = 'Personal Files';
 $lang['upload.change.to.personal'] = 'Change to Personal';
 $lang['upload.change.to.shared'] = 'Change to Shared';
 $lang['upload.posted.by'] = 'Posted by : ';

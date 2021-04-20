@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 18
+ * @version     PHPBoost 6.0 - last update: 2021 04 20
  * @since       PHPBoost 1.5 - 2006 06 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -24,36 +24,56 @@ $lang['warning.subcat']    = 'Please select a sub-category !';
 $lang['warning.url']       = 'Please enter a valid URL !';
 $lang['warning.recipient'] = 'Please enter the recipient !';
 
+// Contributions
+$lang['warning.delete.contribution'] = 'Do you really want to delete this contribution?';
+
+// Editor
+$lang['warning.code.too.long.error']   = 'The code you want to highlight is too large and would use too much resources to be highlighted. Please reduce its size or split it.';
+$lang['warning.feed.tag.error']        = 'The feed of the module <em>:module</em> that you want to display couldn\'t be found or the options you entered aren\'t correct.';
+$lang['warning.is.default.editor']     = 'The editor you want to uninstall or disable, is set by default, you must select another default editor first';
+$lang['warning.last.editor.installed'] = 'Last text editor, you can not delete or disable it. Please install another one first.';
+
 // Errors
-$lang['warning.error']      = 'Error';
-$lang['warning.incomplete'] = 'All the required fields must be filled!';
-$lang['warning.readonly']   = 'You can\'t perform this action because your account is read-only!';
-$lang['warning.flood']      = 'You can\'t post yet, retry in a few moments';
-$lang['warning.link.flood'] = 'You can\'t post more than %d link(s) in your message';
-$lang['warning.auth'] = 'You don\'t have the required level!';
-$lang['warning.auth.guest'] = 'Protected content. Please suscribe or connect to access this page.';
-$lang['warning.auth.registration.disabled'] = 'Registration is disabled on the site.';
-$lang['warning.page.forbidden'] = 'This folder access is forbidden!';
-$lang['warning.page.unexist'] = 'This page doesn\'t exist!';
-$lang['warning.action.unauthorized'] = 'Unauthorized action!';
-$lang['warning.module.uninstalled'] = 'This module isn\'t installed!';
-$lang['warning.module.unactivated'] = 'This module isn\'t activated!';
+$lang['warning.error']                   = 'Error';
+$lang['warning.incomplete']              = 'All the required fields must be filled!';
+$lang['warning.readonly']                = 'You can\'t perform this action because your account is read-only!';
+$lang['warning.flood']                   = 'You can\'t post yet, retry in a few moments';
+$lang['warning.link.flood']              = 'You can\'t post more than %d links in your message';
+$lang['warning.auth']                    = 'You don\'t have the required level!';
+$lang['warning.auth.guest']              = 'Protected content. Please suscribe or connect to access this page.';
+$lang['warning.registration.disabled']   = 'Registration is disabled on the site.';
+$lang['warning.page.forbidden']          = 'This folder access is forbidden!';
+$lang['warning.page.unexist']            = 'This page doesn\'t exist!';
+$lang['warning.action.unauthorized']     = 'Unauthorized action!';
+$lang['warning.module.uninstalled']      = 'This module isn\'t installed!';
+$lang['warning.module.unactivated']      = 'This module isn\'t activated!';
 $lang['warning.invalid.archive.content'] = 'The content of the archive is invalid!';
-$lang['warning.404.message'] = 'It seems that a tornado has passed through here. <br />Unfortunately nothing more to see.';
-$lang['warning.403.message'] = 'It seems that a tornado has passed through here. <br />Access is forbidden to the public.';
-$lang['warning.csrf.invalid.token'] = 'Invalid session token. Please try to reload the page because the operation has not been performed.';
+$lang['warning.404.message']             = 'It seems that a tornado has passed through here. <br />Unfortunately nothing more to see.';
+$lang['warning.403.message']             = 'It seems that a tornado has passed through here. <br />Access is forbidden to the public.';
+$lang['warning.csrf.invalid.token']      = 'Invalid session token. Please try to reload the page because the operation has not been performed.';
 
 // Upload
-$lang['warning.upload.max.dimension']     = 'Max file dimensions exceeded';
-$lang['warning.upload.max.weight']        = 'Maximum file size exceeded';
-$lang['warning.upload.invalid.format']    = 'Invalid file format';
-$lang['warning.upload.php.code']          = 'Invalid file content, php code is forbidden';
-$lang['warning.upload.error']             = 'Error while uploading file';
-$lang['warning.unlink.disabled']          = 'File deleting function not supported by your server';
-$lang['warning.upload.failed.unwritable'] = 'Impossible to upload because writing in this directory is not allowed';
-$lang['warning.upload.already.exist']     = 'File already exists, overwrite is not allowed';
-$lang['warning.upload.no.selected.file']  = 'No file has been selected';
-$lang['warning.max.data.reach']           = 'Max size reached, delete old files';
+$lang['warning.file.max.dimension']     = 'Max file dimensions exceeded';
+$lang['warning.file.max.weight']        = 'Maximum file size exceeded';
+$lang['warning.file.invalid.format']    = 'Invalid file format';
+$lang['warning.file.php.code']          = 'Invalid file content, php code is forbidden';
+$lang['warning.file.error']             = 'Error while uploading file';
+$lang['warning.unlink.disabled']        = 'File deleting function not supported by your server';
+$lang['warning.folder.unwritable']      = 'Impossible to upload because writing in this directory is not allowed';
+$lang['warning.file.already.exists']    = 'File already exists, overwrite is not allowed';
+$lang['warning.folder.already.exists']  = 'The folder already exists.';
+$lang['warning.no.selected.file']       = 'No file has been selected';
+$lang['warning.max.data.reach']         = 'Max size reached, delete old files';
+$lang['warning.del.file']               = 'Delete this file?';
+$lang['warning.empty.folder']           = 'Empty folder?';
+$lang['warning.empty.folder.content']   = 'Empty all folders contents?';
+$lang['warning.del.folder']             = 'Delete folder?';
+$lang['warning.del.folder.content']     = 'Delete this folder, and all his contents?';
+$lang['warning.file.forbidden.chars']   = 'File name can\'t contain the following characters : \\\ / . | ? < > \"';
+$lang['warning.folder.forbidden.chars'] = 'Folder name can\'t contain the following characters: \\\ / . | ? < > \"';
+$lang['warning.files.del.failed']       = 'Delete files procedure has failed, please manually remove the files';
+$lang['warning.success.upload']         = 'Your file has been uploaded successfully !';
+$lang['warning.folder.contains.folder'] = 'You try to put this directory in one of its sub-directory or in itself, that\'s impossible !';
 
 // Members
 $lang['warning.display.name.auth']  = 'The entered display name is already used!';

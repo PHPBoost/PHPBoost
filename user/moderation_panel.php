@@ -432,7 +432,7 @@ else
 				'LOGIN'              => $row['display_name'],
 				'USER_LEVEL_CLASS'   => UserService::get_level_class($row['level']),
 				'USER_GROUP_COLOR'   => $group_color,
-				'INFO'               => ($row['warning_percentage'] != 100) ? Date::to_format($row['delay_banned'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) : $lang['user.illimited'],
+				'INFO'               => ($row['warning_percentage'] != 100) ? Date::to_format($row['delay_banned'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) : $lang['user.unlimited'],
 
 				'U_PROFILE'          => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'U_ACTION_USER'      => '<a href="'. UserUrlBuilder::moderation_panel('ban', $row['user_id'])->rel() .'" class="fa fa-minus-circle error"></a>',
@@ -479,7 +479,7 @@ else
 		// Ban duration
 		$date_lang = LangLoader::get('date-common');
 		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 5184000, 326592000);
-		$array_sanction = array(LangLoader::get_message('common.no', 'common-lang'), '1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['days'], '1 ' . $date_lang['week'], '2 ' . $date_lang['weeks'], '1 ' . $date_lang['month'], '2 ' . $date_lang['month'], $lang['user.illimited']);
+		$array_sanction = array(LangLoader::get_message('common.no', 'common-lang'), '1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['days'], '1 ' . $date_lang['week'], '2 ' . $date_lang['weeks'], '1 ' . $date_lang['month'], '2 ' . $date_lang['month'], $lang['user.unlimited']);
 
 		$diff = ($member['delay_banned'] - time());
 		$key_sanction = 0;

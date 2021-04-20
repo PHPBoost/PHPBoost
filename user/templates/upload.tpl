@@ -52,7 +52,7 @@
 	}
 	function Confirm_member()
 	{
-		return confirm("{L_CONFIRM_EMPTY_FOLDER}");
+		return confirm("{@warning.empty.folder.content}");
 	}
 	function popup_upload(path, width, height, scrollbars)
 	{
@@ -104,7 +104,7 @@
 		document.getElementById('img' + id_folder).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 		if( name != '' && regex.test(name) ) // prohibition of special characters in the name.
 		{
-			alert("{L_FOLDER_FORBIDDEN_CHARS}");
+			alert("{@warning.folder.forbidden.chars}");
 			document.getElementById('f' + id_folder).innerHTML = '<a href="upload.php?f=' + id_folder + '{POPUP}">' + previous_cut_name + '</a>';
 			document.getElementById('img' + id_folder).innerHTML = '';
 		}
@@ -124,7 +124,7 @@
 					}
 					else
 					{
-						alert("{L_FOLDER_ALREADY_EXIST}");
+						alert("{@warning.folder.already.exists}");
 						document.getElementById('f' + id_folder).innerHTML = '<a href="upload.php?f=' + id_folder + '{POPUP}">' + previous_cut_name + '</a>';
 					}
 					document.getElementById('img' + id_folder).innerHTML = '';
@@ -142,7 +142,7 @@
 
 		if( name != '' && regex.test(name) ) // prohibition of special characters in the name.
 		{
-			alert("{L_FOLDER_FORBIDDEN_CHARS}");
+			alert("{@warning.folder.forbidden.chars}");
 			document.getElementById('new-folder' + divid).innerHTML = '';
 			document.getElementById('new-folder' + divid).style.display = 'none';
 			hide_folder = true;
@@ -178,7 +178,7 @@
 									<a href="upload.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="' + ${escapejs(LangLoader::get_message('delete', 'common'))} + '">\
 										<i class="far fa-trash-alt" aria-hidden="true"></i>\
 									</a>\
-									<a href="upload.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}{POPUP}" aria-label="{L_MOVETO}">\
+									<a href="upload.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}{POPUP}" aria-label="{@common.move.to}">\
 										<i class="fa fa-share" aria-hidden="true"></i>\
 									</a>\
 								</li>\
@@ -194,7 +194,7 @@
 					}
 					else
 					{
-						alert("{L_FOLDER_ALREADY_EXIST}");
+						alert("{@warning.folder.already.exists}");
 						document.getElementById('new-folder' + divid).innerHTML = '';
 						document.getElementById('new-folder' + divid).style.display = 'none';
 						hide_folder = true;
@@ -230,7 +230,7 @@
 		document.getElementById('imgf' + id_file).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 		if( name != '' && regex.test(name) ) // prohibition of special characters in the name.
 		{
-			alert("{L_FOLDER_FORBIDDEN_CHARS}");
+			alert("{@warning.folder.forbidden.chars}");
 			document.getElementById('fifl' + id_file).style.display = 'inline';
 			document.getElementById('fi' + id_file).style.display = 'none';
 			document.getElementById('imgf' + id_file).innerHTML = '';
@@ -246,7 +246,7 @@
 				{
 					if( xhr_object.responseText == '/' )
 					{
-						alert("{L_FOLDER_ALREADY_EXIST}");
+						alert("{@warning.folder.already.exists}");
 						document.getElementById('fifl' + id_file).style.display = 'inline';
 						document.getElementById('fi' + id_file).style.display = 'none';
 					}
@@ -356,7 +356,7 @@
 
 <section id="module-user-upload">
     <header class="section-header">
-        <h1>{L_FILES_ACTION}</h1>
+        <h1>{@upload.files.management}</h1>
     </header>
 	<div class="sub-section">
 		<div class="content-container">
@@ -364,25 +364,25 @@
 		        <div class="tabs-container">
 		            <nav class="tabs-nav">
 		                <ul>
-		                    <li><a href="#" data-tabs data-target="upload-personal">{L_PERSONAL_TITLE}</a></li>
-		                    <li><a href="#" data-tabs data-target="upload-shared">{L_SHARED_TITLE}</a></li>
+		                    <li><a href="#" data-tabs data-target="upload-personal">{@upload.personal.files}</a></li>
+		                    <li><a href="#" data-tabs data-target="upload-shared">{@upload.shared.files}</a></li>
 		                </ul>
 		            </nav>
 		            <div id="upload-personal" class="tabs tabs-animation first-tab">
 		                <div class="content-panel">
 		                    <div id="new-multiple-files">
-		                        # INCLUDE message_helper #
+		                        # INCLUDE MESSAGE_HELPER #
 		                        <form action="upload.php?f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" enctype="multipart/form-data" method="post">
 		                            <fieldset>
-		                                <legend>{L_ADD_FILES}</legend>
+		                                <legend>{@upload.files.add}</legend>
 		                                <div class="dnd-area">
 		                                    <div class="dnd-dropzone">
-		                                        <label for="inputfiles" class="dnd-label">${LangLoader::get_message('drag.and.drop.files', 'upload-common')} <span class="d-block"></span></label>
+		                                        <label for="inputfiles" class="dnd-label">{@upload.drag.and.drop.files} <span class="d-block"></span></label>
 		                                        <input type="file" name="upload_file[]" id="inputfiles" class="ufiles" />
 		                                    </div>
 		                                    <input type="hidden" name="max_file_size" value="{MAX_FILE_SIZE}">
 		                                    <div class="ready-to-load">
-		                                        <button type="button" class="button clear-list">${LangLoader::get_message('clear.list', 'upload-common')}</button>
+		                                        <button type="button" class="button clear-list">{@upload.clear.list}</button>
 		                                        <span class="fa-stack fa-lg">
 		                                            <i class="far fa-file fa-stack-2x"></i>
 		                                            <strong class="fa-stack-1x files-nbr"></strong>
@@ -393,13 +393,13 @@
 		                                        <div id="upload-helper" class="modal modal-animation">
 		                                            <div class="close-modal" aria-label="${LangLoader::get_message('form.close', 'form-lang')}"></div>
 		                                            <div class="content-panel">
-		                                                <h3>${LangLoader::get_message('upload.helper', 'upload-common')}</h3>
+		                                                <h3>{@upload.upload.helper}</h3>
 		                                                # IF IS_ADMIN #
-		                                                	<p><strong>${LangLoader::get_message('max.file.size', 'upload-common')} :</strong> {MAX_FILE_SIZE_TEXT}</p>
+		                                                	<p><strong>{@upload.max.file.size} :</strong> {MAX_FILE_SIZE_TEXT}</p>
 		                                                # ELSE #
-		                                                	<p><strong>${LangLoader::get_message('max.files.size', 'upload-common')} :</strong> {SIZE_LIMIT}</p>
+		                                                	<p><strong>{@upload.max.files.size} :</strong> {SIZE_LIMIT}</p>
 		                                                # ENDIF #
-		                                            	<p><strong>${LangLoader::get_message('allowed.extensions', 'upload-common')} :</strong> "{ALLOWED_EXTENSIONS}"</p>
+		                                            	<p><strong>{@upload.allowed.extensions} :</strong> "{ALLOWED_EXTENSIONS}"</p>
 		                                            </div>
 		                                        </div>
 		                                    </div>
@@ -407,7 +407,7 @@
 		                                <ul class="ulist"></ul>
 		                            </fieldset>
 		                            <div class="form-element">
-		                                <label for="is_shared_checkbox">{L_SHARED_CHECKBOX}</label>
+		                                <label for="is_shared_checkbox">{@upload.shared.checkbox}</label>
 		                                <div class="form-field form-field-checkbox">
 		                                    <label class="checkbox" for="is_shared_checkbox">
 		                                        <input type="checkbox" id="is_shared_checkbox" name='is_shared_checkbox' />
@@ -418,29 +418,29 @@
 		                            <fieldset class="fieldset-submit">
 		                                <div class="fieldset-inset">
 		                                    <input type="hidden" name="token" value="{TOKEN}">
-		                                    <button type="submit" name="valid_up" value="true" class="button submit">{L_UPLOAD}</button>
+		                                    <button type="submit" name="valid_up" value="true" class="button submit">{@form.upload}</button>
 		                                </div>
 		                            </fieldset>
 		                        </form>
 		                    </div>
 
 		                    <div class="upload-address-bar">
-		                        <a href="upload.php?root=1{POPUP}"><i class="fa fa-home" aria-hidden="true"></i> {L_ROOT}</a>{URL}
+		                        <a href="upload.php?root=1{POPUP}"><i class="fa fa-home" aria-hidden="true"></i> {@common.root}</a>{URL}
 		                    </div>
 
 		                    <div class="upload-address-bar-links">
 		                        <a href="upload.php?fup={FOLDER_ID}{POPUP}">
-		                            <i class="fa fa-level-up-alt" aria-hidden="true"></i> {L_FOLDER_UP}
+		                            <i class="fa fa-level-up-alt" aria-hidden="true"></i> {@upload.folder.up}
 		                        </a>
 		                        <a href="javascript:display_new_folder();">
-		                            <i class="fa fa-plus" aria-hidden="true"></i> {L_FOLDER_NEW}
+		                            <i class="fa fa-plus" aria-hidden="true"></i> {@upload.folder.new}
 		                        </a>
 		                        <a href="javascript:document.getElementById('inputfiles').click();">
-		                            <i class="fa fa-save" aria-hidden="true"></i> {L_ADD_FILES}
+		                            <i class="fa fa-save" aria-hidden="true"></i> {@upload.files.add}
 		                        </a>
 		                    </div>
 
-		                    <h2>{L_FOLDER_CONTENT}</h2>
+		                    <h2>{@upload.folder.content}</h2>
 							<div class="cell-flex cell-tile # IF C_POPUP #cell-inline# ELSE #cell-columns-4# ENDIF #">
 		                        # START folder #
 			                        <div class="cell">
@@ -453,8 +453,8 @@
 											<ul>
 												<li class="li-stretch">
 													{folder.RENAME_FOLDER}
-													<a href="upload.php?delf={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="{folder.L_TYPE_DEL_FOLDER}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
-													<a href="upload{folder.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a>
+													<a href="upload.php?delf={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+													<a href="upload{folder.U_MOVE}" aria-label="{@common.move.to}"><i class="fa fa-share" aria-hidden="true"></i></a>
 												</li>
 											</ul>
 			                            </div>
@@ -500,21 +500,21 @@
 				                            	# IF C_POPUP #
 													<a class="grouped-element submit" href="javascript:insert_popup('{personal_files.INSERTED_CODE}')" aria-label="${LangLoader::get_message('upload.popup.insert', 'upload-lang')}"><i class="fa fa-clipboard" aria-hidden="true"></i></a>
 												# ELSE #
-													<a class="grouped-element submit" href="#" onclick="copy_to_clipboard('{personal_files.DISPLAYED_CODE}'); return false;" aria-label="${LangLoader::get_message('tag_copytoclipboard', 'editor-common')}"><i class="fa fa-copy" aria-hidden="true"></i></a>
+													<a class="grouped-element submit" href="#" onclick="copy_to_clipboard('{personal_files.DISPLAYED_CODE}'); return false;" aria-label="${LangLoader::get_message('common.copy.to.clipboard', 'editor-lang')}"><i class="fa fa-copy" aria-hidden="true"></i></a>
 												# ENDIF #
 				                            </div>
 				                            <div class="cell-list">
 												<ul>
 													<li class="li-stretch">
 						                                {personal_files.RENAME_FILE}
-						                                <a href="upload.php?del={personal_files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
-						                                <a href="upload{personal_files.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a>
+						                                <a href="upload.php?del={personal_files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+						                                <a href="upload{personal_files.U_MOVE}" aria-label="{@common.move.to}"><i class="fa fa-share" aria-hidden="true"></i></a>
 							                            # IF personal_files.C_IS_SHARED_FILE #
-								                            <a href="#" id="status_function_{personal_files.ID}" onclick="change_status({personal_files.ID}, 0);return false;" aria-label="{L_CHANGE_PERSONAL}">
+								                            <a href="#" id="status_function_{personal_files.ID}" onclick="change_status({personal_files.ID}, 0);return false;" aria-label="{@upload.change.to.personal}">
 								                                <i id="status_{personal_files.ID}" class="fas fa-users"></i>
 								                            </a>
 							                            # ELSE #
-								                            <a href="#" id="status_function_{personal_files.ID}" onclick="change_status({personal_files.ID}, 1);return false;" aria-label="{L_CHANGE_SHARED}">
+								                            <a href="#" id="status_function_{personal_files.ID}" onclick="change_status({personal_files.ID}, 1);return false;" aria-label="{@upload.change.to.shared}">
 								                                <i id="status_{personal_files.ID}" class="fas fa-user-shield"></i>
 								                            </a>
 							                            # ENDIF #
@@ -529,7 +529,7 @@
 				                        </div>
 			                        # END personal_files #
 								# ELSE #
-									<span class="message-helper bgc notice">{L_NO_ITEM}</span>
+									<span class="message-helper bgc notice">{@common.no.item.now}</span>
 								# ENDIF #
 		                    </div>
 							# IF C_PERSONAL_SUMMARY #
@@ -537,10 +537,10 @@
 				                    <div class="cell">
 										<div class="cell-list">
 											<ul class="small">
-												<li class="li-stretch"><span id="total-folder">{L_FOLDERS} :</span> <strong>{TOTAL_FOLDERS}</strong></li>
-												<li class="li-stretch"><span>{L_FILES} :</span> <strong>{TOTAL_PERSONAL_FILES}</strong></li>
-												<li class="li-stretch"><span>{L_FOLDER_SIZE} :</span> <strong>{TOTAL_FOLDER_SIZE}</strong></li>
-												<li class="li-stretch"><span>{L_DATA} :</span> <strong>{TOTAL_SIZE}</strong></li>
+												<li class="li-stretch"><span id="total-folder">{@upload.folders} :</span> <strong>{TOTAL_FOLDERS}</strong></li>
+												<li class="li-stretch"><span>{@upload.files} :</span> <strong>{TOTAL_PERSONAL_FILES}</strong></li>
+												<li class="li-stretch"><span>{@upload.folder.size} :</span> <strong>{TOTAL_FOLDER_SIZE}</strong></li>
+												<li class="li-stretch"><span>{@upload.total.datas} :</span> <strong>{TOTAL_SIZE}</strong></li>
 											</ul>
 										</div>
 				                    </div>
@@ -586,7 +586,7 @@
 				                            	# IF C_POPUP #
 													<a class="grouped-element" href="javascript:insert_popup('{shared_files.INSERTED_CODE}')" aria-label="${LangLoader::get_message('upload.popup.insert', 'upload-lang')}"><i class="fa fa-clipboard" aria-hidden="true"></i></a>
 												# ELSE #
-													<a class="grouped-element" href="#" onclick="copy_to_clipboard('{shared_files.DISPLAYED_CODE}'); return false;" aria-label="${LangLoader::get_message('tag_copytoclipboard', 'editor-common')}"><i class="fa fa-copy" aria-hidden="true"></i></a>
+													<a class="grouped-element" href="#" onclick="copy_to_clipboard('{shared_files.DISPLAYED_CODE}'); return false;" aria-label="${LangLoader::get_message('common.copy.to.clipboard', 'editor-lang')}"><i class="fa fa-copy" aria-hidden="true"></i></a>
 												# ENDIF #
 											</div>
 				                            <div class="cell-list">
@@ -605,17 +605,17 @@
 										<div class="cell-list">
 											<ul class="small">
 												<li class="li-stretch">
-													<span>{L_FILES} :</span> <strong>{TOTAL_SHARED_FILES}</strong>
+													<span>{@upload.files} :</span> <strong>{TOTAL_SHARED_FILES}</strong>
 												</li>
 												<li class="li-stretch">
-													<span>{L_DATA} :</span> <strong>{TOTAL_SIZE}</strong>
+													<span>{@upload.total.datas} :</span> <strong>{TOTAL_SIZE}</strong>
 												</li>
 											</ul>
 										</div>
 									</div>
 			                    </div>
 							# ELSE #
-								<span class="message-helper bgc notice">{L_NO_ITEM}</span>
+								<span class="message-helper bgc notice">{@common.no.item.now}</span>
 							# ENDIF #
 		                </div>
 		            </div>

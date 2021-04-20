@@ -13,15 +13,20 @@
 #                     French                       #
 ####################################################
 
-$lang['common.title']   = 'Titre';
-$lang['common.name']    = 'Nom';
-$lang['common.author']  = 'Auteur';
-$lang['common.avatar']  = 'Avatar';
-$lang['common.options'] = 'Options';
-$lang['common.other']   = 'Autre';
-$lang['common.back']    = 'Retour';
+$lang['common.title']       = 'Titre';
+$lang['common.name']        = 'Nom';
+$lang['common.avatar']      = 'Avatar';
+$lang['common.options']     = 'Options';
+$lang['common.other']       = 'Autre';
+$lang['common.back']        = 'Retour';
+$lang['common.root']        = 'Racine';
+$lang['common.description'] = 'Description';
+$lang['common.module']      = 'Module';
 
-$lang['common.unspecified']    = 'Non précisé';
+$lang['common.update']      = 'Mise à jour';
+$lang['common.unspecified'] = 'Non précisé';
+$lang['common.unlimited']   = 'Illimité';
+$lang['common.status']      = 'Statut';
 
 $lang['common.participants'] = 'Participants';
 
@@ -67,8 +72,6 @@ $lang['common.reorder']    = 'Réorganiser';
 $lang['common.respond']    = 'Répondre';
 $LANG['common.loading']    = 'Chargement';
 
-$lang['common.select.files'] = 'Sélectionner des fichiers';
-
 $lang['common.syndication'] = 'Syndication';
 $lang['common.syndication.rss'] = 'RSS';
 $lang['common.syndication.atom'] = 'ATOM';
@@ -86,10 +89,18 @@ $lang['common.view'] = 'vue';
 $lang['common.maximum'] = 'Maximum';
 $lang['common.minimum'] = 'Minimum';
 
-$lang['common.filters'] = 'Filtres';
-$lang['common.filter.items'] = 'Filtrer les éléments';
-$lang['common.click.to.select'] = 'Cliquer pour sélectionner une option';
+$lang['common.filters']            = 'Filtres';
+$lang['common.filter.items']       = 'Filtrer les éléments';
+$lang['common.click.to.select']    = 'Cliquer pour sélectionner une option';
 $lang['common.table.footer.stats'] = 'Éléments :start à :end sur :total';
+
+// More
+$lang['common.author']        = 'Auteur';
+$lang['common.creation.date'] = 'Date de création';
+$lang['common.last.update']   = 'Dernière mise à jour';
+$lang['common.category']      = 'Catégorie';
+$lang['common.comments']      = 'Commentaires';
+$lang['common.rating']        = 'Note';
 
 // Multimedia
 $lang['common.previous'] = 'Précédent';
@@ -98,12 +109,13 @@ $lang['common.play']     = 'Lecture';
 $lang['common.pause']    = 'Pause';
 
 // Position
-$lang['common.position']           = 'Position';
-$lang['common.position.move']      = 'Déplacer';
-$lang['common.position.move.up']   = 'Monter';
-$lang['common.position.move.down'] = 'Descendre';
-$lang['common.position.update']    = 'Valider les positions';
-$lang['common.position.drop.here'] = 'Déplacer ici';
+$lang['common.position']        = 'Position';
+$lang['common.move']            = 'Déplacer';
+$lang['common.move.to']         = 'Déplacer vers';
+$lang['common.move.up']         = 'Monter';
+$lang['common.move.down']       = 'Descendre';
+$lang['common.update.position'] = 'Valider les positions';
+$lang['common.drop.here']       = 'Déplacer ici';
 
 // Constraint
 $lang['common.constraint.required'] = 'Requis';
@@ -138,7 +150,7 @@ $lang['common.no.note']  = 'Aucune note';
 $lang['common.status']               = 'Statut';
 $lang['common.status.approved']      = 'Approuvé';
 $lang['common.status.unapproved']    = 'Non approuvé';
-$lang['common.status.approved.not']  = 'Brouillon';
+$lang['common.status.draft']         = 'Brouillon';
 $lang['common.status.approved.now']  = 'Publié';
 $lang['common.status.approved.date'] = 'Publication différée';
 $lang['common.status.last.update']   = 'Dernière mise à jour le ';
@@ -186,6 +198,11 @@ $lang['common.select'] = 'Sélectionner';
 $lang['common.select.element'] = 'Sélectionner cet élément';
 $lang['common.select.elements'] = 'Sélectionner des éléments';
 $lang['common.select.all.elements'] = 'Sélectionner tous les éléments';
+
+// Formatter
+$lang['common.hidden.texte']    = 'Ce texte est caché, cliquer ici pour afficher son contenu.';
+$lang['common.hide.text']    = 'Cliquer ici pour cacher le texte.';
+$lang['common.copy.to.clipboard'] = 'Copier vers le presse-papier';
 
 // Scroll to
 $lang['common.scroll.to.top']    = 'haut de la page';

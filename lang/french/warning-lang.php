@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 17
+ * @version     PHPBoost 6.0 - last update: 2021 04 20
  * @since       PHPBoost 1.5 - 2006 06 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -24,37 +24,56 @@ $lang['warning.subcat']    = 'Veuillez sélectionner une sous-catégorie !';
 $lang['warning.url']       = 'Veuillez entrer une url valide !';
 $lang['warning.recipient'] = 'Veuillez entrer le destinataire du message !';
 
+// Contributions
+$lang['warning.delete.contribution'] = 'Etes-vous sûr de vouloir supprimer cette contribution ?';
+
+// Editor
+$lang['warning.code.too.long.error']   = 'Le code que vous voulez colorer est trop long et consommerait trop de ressources pour être interprété. Merci de réduire sa taille ou de l\'éclater en plusieurs morceaux.';
+$lang['warning.feed.tag.error']        = 'Le flux du module <em>:module</em> que vous souhaitez afficher n\'a pas pu être trouvé ou les options que vous avez rentrées ne sont pas correctes.';
+$lang['warning.is.default.editor']     = 'L\'éditeur que vous souhaitez désinstaller ou désactiver, est défini par défaut, veuillez d\'abord sélectionner un autre éditeur par défaut';
+$lang['warning.last.editor.installed'] = 'Dernier éditeur de texte, vous ne pouvez pas le supprimer ou le désactiver. Veuillez d\'abord en installer un autre.';
+
 // Errors
-$lang['warning.error']      = 'Erreur';
-$lang['warning.error']      = 'Erreur';
-$lang['warning.incomplete'] = 'Tous les champs obligatoires doivent être remplis !';
-$lang['warning.readonly']   = 'Vous ne pouvez exécuter cette action, car vous avez été placé en lecture seule !';
-$lang['warning.flood']      = 'Vous ne pouvez pas encore poster, réessayez dans quelques instants';
-$lang['warning.link.flood'] = 'Nombre maximum de lien(s) internet autorisé(s) dans votre message : %d';
-$lang['warning.auth'] = 'Vous n\'avez pas le niveau requis !';
-$lang['warning.auth.guest'] = 'Le contenu de cette page est protégé. Veuillez vous inscrire ou vous connecter sur le site pour y accéder.';
-$lang['warning.auth.registration.disabled'] = 'L\'inscription de nouveaux membres est désactivée sur le site.';
-$lang['warning.page.forbidden'] = 'L\'accès à ce dossier est interdit !';
-$lang['warning.page.unexist'] = 'La page que vous demandez n\'existe pas !';
-$lang['warning.action.unauthorized'] = 'Action non autorisée !';
-$lang['warning.module.uninstalled'] = 'Ce module n\'est pas installé !';
-$lang['warning.module.unactivated'] = 'Ce module n\'est pas activé !';
+$lang['warning.error']                   = 'Erreur';
+$lang['warning.incomplete']              = 'Tous les champs obligatoires doivent être remplis !';
+$lang['warning.readonly']                = 'Vous ne pouvez exécuter cette action, car vous avez été placé en lecture seule !';
+$lang['warning.flood']                   = 'Vous ne pouvez pas encore poster, réessayez dans quelques instants';
+$lang['warning.link.flood']              = 'Nombre maximum de liens internet autorisés dans votre message : %d';
+$lang['warning.auth']                    = 'Vous n\'avez pas le niveau requis !';
+$lang['warning.auth.guest']              = 'Le contenu de cette page est protégé. Veuillez vous inscrire ou vous connecter sur le site pour y accéder.';
+$lang['warning.registration.disabled']   = 'L\'inscription de nouveaux membres est désactivée sur le site.';
+$lang['warning.page.forbidden']          = 'L\'accès à ce dossier est interdit !';
+$lang['warning.page.unexist']            = 'La page que vous demandez n\'existe pas !';
+$lang['warning.action.unauthorized']     = 'Action non autorisée !';
+$lang['warning.module.uninstalled']      = 'Ce module n\'est pas installé !';
+$lang['warning.module.unactivated']      = 'Ce module n\'est pas activé !';
 $lang['warning.invalid.archive.content'] = 'Le contenu de l\'archive est incorrect !';
-$lang['warning.404.message'] = 'Il semblerait qu\'une tornade soit passée par ici.<br />Il ne reste malheureusement plus rien à voir.';
-$lang['warning.403.message'] = 'Il semblerait qu\'une tornade soit passée par ici.<br />L\'accès est interdit au public.';
-$lang['warning.csrf.invalid.token'] = 'Jeton de session invalide. Veuillez essayer de recharger la page car l\'opération n\'a pas pu être effectuée.';
+$lang['warning.404.message']             = 'Il semblerait qu\'une tornade soit passée par ici.<br />Il ne reste malheureusement plus rien à voir.';
+$lang['warning.403.message']             = 'Il semblerait qu\'une tornade soit passée par ici.<br />L\'accès est interdit au public.';
+$lang['warning.csrf.invalid.token']      = 'Jeton de session invalide. Veuillez essayer de recharger la page car l\'opération n\'a pas pu être effectuée.';
 
 // Upload
-$lang['warning.upload.max.dimension']     = 'Dimensions maximales du fichier dépassées';
-$lang['warning.upload.max.weight']        = 'Poids maximum du fichier dépassé';
-$lang['warning.upload.invalid.format']    = 'Format du fichier invalide';
-$lang['warning.upload.php.code']          = 'Contenu du fichier invalide, le code php est interdit';
-$lang['warning.upload.error']             = 'Erreur lors de l\'upload du fichier';
-$lang['warning.unlink.disabled']          = 'Fonction de suppression des fichiers désactivée sur votre serveur';
-$lang['warning.upload.failed.unwritable'] = 'Upload impossible, interdiction d\'écriture dans ce dossier';
-$lang['warning.upload.already.exist']     = 'Le fichier existe déjà, écrasement non autorisé';
-$lang['warning.upload.no.selected.file']  = 'Aucun fichier n\'a été sélectionné';
-$lang['warning.max.data.reach']           = 'Taille maximale atteinte, supprimez d\'anciens fichiers';
+$lang['warning.file.max.dimension']     = 'Dimensions maximales du fichier dépassées';
+$lang['warning.file.max.weight']        = 'Poids maximum du fichier dépassé';
+$lang['warning.file.invalid.format']    = 'Format du fichier invalide';
+$lang['warning.file.php.code']          = 'Contenu du fichier invalide, le code php est interdit';
+$lang['warning.file.upload.error']      = 'Erreur lors de l\'upload du fichier';
+$lang['warning.unlink.disabled']        = 'Fonction de suppression des fichiers désactivée sur votre serveur';
+$lang['warning.folder.unwritable']      = 'Upload impossible, interdiction d\'écriture dans ce dossier';
+$lang['warning.file.already.exists']    = 'Le fichier existe déjà, écrasement non autorisé';
+$lang['warning.folder.already.exists']  = 'Le dossier existe déjà.';
+$lang['warning.no.selected.file']       = 'Aucun fichier n\'a été sélectionné';
+$lang['warning.max.data.reach']         = 'Taille maximale atteinte, supprimez d\'anciens fichiers';
+$lang['warning.del.file']               = 'Supprimer ce fichier ?';
+$lang['warning.empty.folder']           = 'Vider ce dossier ?';
+$lang['warning.empty.folder.content']   = 'Vider tout le contenu de ce dossier ?';
+$lang['warning.del.folder']             = 'Supprimer ce dossier ?';
+$lang['warning.del.folder.content']     = 'Supprimer ce dossier, et tout son contenu ?';
+$lang['warning.file.forbidden.chars']   = 'Le nom du fichier ne peut contenir aucun des caractères suivants : \\\ / . | ? < > \"';
+$lang['warning.folder.forbidden.chars'] = 'Le nom du dossier ne peut contenir aucun des caractères suivants : \\\ / . | ? < > \"';
+$lang['warning.files.del.failed']       = 'La suppression des fichiers a échoué, veuillez le faire manuellement';
+$lang['warning.success.upload']         = 'Votre fichier a bien été enregistré !';
+$lang['warning.folder.contains.folder'] = 'Vous essayez de placer ce répertoire dans un de ses sous-répertoire ou dans lui-même, ce qui est impossible !';
 
 // Members
 $lang['warning.display.name.auth']  = 'Le nom d\'affichage entré est déjà utilisé !';

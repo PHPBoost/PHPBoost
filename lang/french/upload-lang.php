@@ -12,42 +12,29 @@
 #                     French                       #
 ####################################################
 
-$lang['upload.confim.del.file'] = 'Supprimer ce fichier ?';
-$lang['upload.confirm.del.folder'] = 'Supprimer ce dossier, et tout son contenu ?';
-$lang['upload.confirm.empty.folder'] = 'Vider tout le contenu de ce dossier ?';
-$lang['upload.file.forbidden.chars'] = 'Le nom du fichier ne peut contenir aucun des caractères suivants : \\\ / . | ? < > \"';
-$lang['upload.folder.forbidden.chars'] = 'Le nom du dossier ne peut contenir aucun des caractères suivants : \\\ / . | ? < > \"';
-
 $lang['upload.files.management'] = 'Gestion des fichiers';
-$lang['upload.files.config'] = 'Configuration des fichiers';
-$lang['upload.file.add'] = 'Ajouter un fichier';
-$lang['upload.files.add'] = 'Ajout de fichiers';
-$lang['upload.data'] = 'Total des données';
-$lang['upload.folders'] = 'Répertoires';
-$lang['upload.folders.up'] = 'Répertoire parent';
-$lang['upload.folder.new'] = 'Nouveau dossier';
-$lang['upload.folder.content'] = 'Contenu du répertoire';
-$lang['upload.empty.member.folder'] = 'Vider ce dossier ?';
-$lang['upload.del.folder'] = 'Supprimer ce dossier ?';
-$lang['upload.empty'] = 'Vider';
-$lang['upload.root'] = 'Racine';
-$lang['upload.files'] = 'Fichiers';
-$lang['upload.files.del.failed'] = 'La suppression des fichiers a échoué, veuillez le faire manuellement';
-$lang['upload.folder.size'] = 'Taille du dossier';
-$lang['upload.file.type'] = 'Fichier %s';
-$lang['upload.image.type'] = 'Image %s';
-$lang['upload.audio.type'] = 'Fichier audio %s';
-$lang['upload.zip.type'] = 'Archive %s';
-$lang['upload.adobe.pdf'] = 'Adobe Document';
-$lang['upload.document.type'] = 'Document %s';
-$lang['upload.moveto'] = 'Déplacer vers';
-$lang['upload.success.upload'] = 'Votre fichier a bien été enregistré !';
-$lang['upload.upload.folder.contains.folder'] = 'Vous souhaitez placer cette catégorie dans une de ses catégories filles ou dans elle-même, ce qui est impossible !';
-$lang['upload.popup.insert'] = 'Insérer le code dans le formulaire';
+$lang['upload.files.config']     = 'Configuration des fichiers';
+$lang['upload.file.add']         = 'Ajouter un fichier';
+$lang['upload.files.add']        = 'Ajout de fichiers';
+$lang['upload.total.datas']      = 'Total des données';
+$lang['upload.folders']          = 'Répertoires';
+$lang['upload.folder.up']        = 'Répertoire parent';
+$lang['upload.folder.new']       = 'Nouveau dossier';
+$lang['upload.folder.content']   = 'Contenu du répertoire';
+$lang['upload.root']             = 'Racine';
+$lang['upload.files']            = 'Fichiers';
+$lang['upload.folder.size']      = 'Taille du dossier';
+$lang['upload.file.type']        = 'Fichier %s';
+$lang['upload.image.type']       = 'Image %s';
+$lang['upload.audio.type']       = 'Fichier audio %s';
+$lang['upload.zip.type']         = 'Archive %s';
+$lang['upload.adobe.pdf']        = 'Adobe Document';
+$lang['upload.document.type']    = 'Document %s';
+$lang['upload.popup.insert']     = 'Insérer le code dans le formulaire';
 
 $lang['upload.shared.checkbox'] = 'Cocher cette case pour que les fichiers soient enregistrés comme fichiers partagés';
-$lang['upload.shared.title'] = 'Fichiers Partagés';
-$lang['upload.personal.title'] = 'Fichiers Personnels';
+$lang['upload.shared.files'] = 'Fichiers Partagés';
+$lang['upload.personal.files'] = 'Fichiers Personnels';
 $lang['upload.change.to.personal'] = 'Changer en Personnel';
 $lang['upload.change.to.shared'] = 'Changer en Partagé';
 $lang['upload.posted.by'] = 'Déposé par : ';

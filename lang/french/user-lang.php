@@ -97,9 +97,10 @@ $lang['user.moderator']      = 'Modérateur';
 $lang['user.moderators']     = 'Modérateurs';
 $lang['user.administrator']  = 'Administrateur';
 $lang['user.administrators'] = 'Administrateurs';
-$LANG['user.sex']            = 'Sexe';
-$LANG['user.male']           = 'Homme';
-$LANG['user.female']         = 'Femme';
+$lang['user.supervisor']     = 'Responsable';
+$lang['user.sex']            = 'Sexe';
+$lang['user.male']           = 'Homme';
+$lang['user.female']         = 'Femme';
 
 $lang['user.members.management'] = 'Gestion des membres';
 $lang['user.members.config']     = 'Configuration des membres';
@@ -114,46 +115,6 @@ $lang['user.profile.edit.password.error']       = 'Le mot de passe que vous avez
 $lang['user.external.auth.account.exists']      = 'Vous avez déjà un compte sur le site. Pour utiliser cette méthode de connexion, veuillez vous connecter et vous rendre dans l\'édition de votre profil';
 $lang['user.external.auth.email.not.found']     = 'L\'adresse email de votre compte n\'a pas pu être récupérée, votre compte ne peut pas être associé.';
 $lang['user.external.auth.user.data.not.found'] = 'Les informations de votre compte n\'ont pas pu être récupérées, votre compte ne peut pas être créé.';
-
-// Contributions
-$lang['user.my.items']                    = 'Mes contributions';
-$lang['user.contribution']                = 'Contribution';
-$lang['user.contribution.member.edition'] = 'Modification de contribution par l\'auteur';
-$lang['user.contribution.clue'] = '
-    Votre contribution sera traitée dans le panneau de contribution.
-    <span class="error text-strong">La modification est possible tant que la contribution n\'a pas été approuvée.</span>
-    Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un modérateur.
-';
-$lang['user.contribution.extended.clue'] = '
-    Votre contribution sera traitée dans le panneau de contribution.
-    <span class="error text-strong">La modification est possible avant son approbation ainsi qu\'après.</span>
-    Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un modérateur.
-    Si vous modifiez votre contribution <span class="text-strong">après approbation</span>, elle sera retraitée dans le panneau de contribution, en attente d\'une nouvelle approbation.
-';
-$lang['user.contribution.member.edition.clue'] = '
-    Vous êtes sur le point de modifier votre contribution. Elle va être déplacée dans les éléments en attente afin d\'être traitée
-    et une nouvelle alerte sera envoyée aux administrateurs.
-';
-$lang['user.contribution.description']                     = 'Complément de contribution';
-$lang['user.contribution.description.clue']                = 'Expliquez les raisons de votre contribution. Ce champ est facultatif mais il peut aider un approbateur à prendre sa décision.';
-$lang['user.contribution.member.edition.description']      = 'Complément de modification';
-$lang['user.contribution.member.edition.description.desc'] = 'Expliquez ce que vous avez modifié pour un meilleur traitement d\'approbation.';
-$lang['user.contribution.confirmed']                       = 'Votre contribution a bien été enregistrée.';
-$lang['user.contribution.confirmed.messages'] = '
-    <p>
-        Vous pourrez la suivre dans le <a href="' . UserUrlBuilder::contribution_panel()->rel() . '">panneau de contribution</a>
-        et éventuellement discuter avec les validateurs si leur choix n\'est pas franc.</p><p>Merci d\'avoir participé à la vie du site !
-    </p>
-';
-$lang['user.contribution.pm.title']    = 'La contribution <strong>:title</strong> a été commentée';
-$lang['user.contribution.pm.content'] = '
-    :author a ajouté un commentaire à la contribution <strong>:title</strong>.
-    <p>
-        <h6>Commentaire :</h6>
-        :comment
-    </p>
-    <a href=":contribution_url">Accéder à la contribution</a>
-';
 
 // User fields
 $lang['user.display.name']         = 'Nom d\'affichage';
@@ -179,7 +140,7 @@ $lang['user.timezone.choice']      = 'Choix du fuseau horaire';
 $lang['user.timezone.choice.clue'] = 'Permet d\'ajuster l\'heure à votre localisation';
 $lang['user.level']                = 'Rang';
 $lang['user.approbation']          = 'Approbation';
-$lang['user.illimited']            = 'Illimité';
+$lang['user.unlimited']            = 'Illimité';
 
 $lang['user.avatar']              = 'Avatar';
 $lang['user.registration.date']   = 'Date d\'inscription';
@@ -204,7 +165,7 @@ $lang['user.no.member']      = 'Aucun membre dans ce groupe';
 $lang['user.group.view.list.members'] = 'Voir les membres du groupe';
 $lang['user.group.hide.list.members'] = 'Masquer les membres du groupe';
 
-//Other
+// Other
 $lang['user.caution']  = 'Avertissement';
 $lang['user.readonly'] = 'Lecture seule';
 $lang['user.banned']   = 'Banni';
@@ -223,7 +184,7 @@ $lang['user.share.by']   = 'Partager par';
 $lang['user.share.menu'] = 'Menu réseaux sociaux';
 $lang['user.share.sms']  = 'SMS';
 
-//Registration
+// Registration
 $lang['user.register']     = 'S\'inscrire';
 $lang['user.registration'] = 'Inscription';
 
@@ -401,7 +362,7 @@ $lang['user.participants']          = 'Participant(s)';
 $lang['user.quote.last.message']    = 'Reprise du message précédent';
 $lang['user.select.all.messages']   = 'Sélectionner tous les messages';
 
-//Cookies bar
+// Cookies bar
 $lang['user.cookiebar.cookie']                    = 'Cookie';
 $lang['user.cookiebar.cookie.management']         = 'Gestion des Cookies';
 $lang['user.cookiebar.message.notracking']        = 'En poursuivant votre navigation sur ce site internet, vous acceptez l\'utilisation de Cookies afin de gérer votre connexion, vos préférences, ainsi que l\'enregistrement de statistiques anonymes des visites.';
@@ -437,6 +398,6 @@ $lang['user.cookiebar.more']          = 'En savoir plus';
 $lang['user.cookiebar.cookies']       = 'Cookies';
 $lang['user.cookiebar.change.choice'] = 'Modifier vos préférences';
 
-//Menu
+// Menu
 $lang['user.menu.link.to'] = 'Lien vers la page ';
 ?>

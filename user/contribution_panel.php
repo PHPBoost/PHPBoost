@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 14
+ * @version     PHPBoost 6.0 - last update: 2021 04 20
  * @since       PHPBoost 2.0 - 2008 07 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -12,6 +12,7 @@
 */
 
 require_once('../kernel/begin.php');
+$lang = LangLoader::get('contribution-lang');
 
 if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) // If user is not member (guests have nothing to do here)
 {
@@ -36,11 +37,11 @@ if ($contribution_id > 0)
 		DispatchManager::redirect($error_controller);
 	}
 
-	$Bread_crumb->add($LANG['user'], UserUrlBuilder::home()->rel());
-	$Bread_crumb->add($LANG['contribution_panel'], url('contribution_panel.php'));
+	$Bread_crumb->add(LangLoader::get_message('user.user', 'user-lang'), UserUrlBuilder::home()->rel());
+	$Bread_crumb->add($lang['contribution.panel'], url('contribution_panel.php'));
 	$Bread_crumb->add($contribution->get_entitled(), url('contribution_panel.php?id=' . $contribution->get_id()));
 
-	define('TITLE', $LANG['contribution_panel'] . ' - ' . $contribution->get_entitled());
+	define('TITLE', $lang['contribution.panel'] . ' - ' . $contribution->get_entitled());
 }
 
 // Contribution modification
@@ -55,12 +56,12 @@ elseif ($id_update > 0)
 	   DispatchManager::redirect($error_controller);
     }
 
-	$Bread_crumb->add($LANG['user'], UserUrlBuilder::home()->rel());
-	$Bread_crumb->add($LANG['contribution_panel'], url('contribution_panel.php'));
+	$Bread_crumb->add(LangLoader::get_message('user.user', 'user-lang'), UserUrlBuilder::home()->rel());
+	$Bread_crumb->add($lang['contribution.panel'], url('contribution_panel.php'));
 	$Bread_crumb->add($contribution->get_entitled(), url('contribution_panel.php?id=' . $contribution->get_id()));
-	$Bread_crumb->add($LANG['contribution_edition'], url('contribution_panel.php?edit=' . $id_update));
+	$Bread_crumb->add($lang['contribution.edition'], url('contribution_panel.php?edit=' . $id_update));
 
-	define('TITLE', $LANG['contribution_panel'] . ' - ' . $LANG['contribution_edition']);
+	define('TITLE', $lang['contribution.panel'] . ' - ' . $lang['contribution.edition']);
 }
 // Saving contribution modification
 elseif ($id_to_update > 0)
@@ -127,18 +128,19 @@ elseif ($id_to_delete > 0)
 }
 else
 {
-	$Bread_crumb->add($LANG['user'], UserUrlBuilder::home()->rel());
-	$Bread_crumb->add($LANG['contribution_panel'], url('contribution_panel.php'));
-	define('TITLE', $LANG['contribution_panel']);
+	$Bread_crumb->add(LangLoader::get_message('user.user', 'user-lang'), UserUrlBuilder::home()->rel());
+	$Bread_crumb->add($lang['contribution.panel'], url('contribution_panel.php'));
+	define('TITLE', $lang['contribution.panel']);
 }
 
 require_once('../kernel/header.php');
 
-$template = new FileTemplate('user/contribution_panel.tpl');
+$view = new FileTemplate('user/contribution_panel.tpl');
+$view->add_lang(array_merge($lang, LangLoader::get('common-lang'), LangLoader::get('form-lang')));
 
 if ($contribution_id > 0)
 {
-	$template->put_all(array(
+	$view->put_all(array(
 		'C_CONSULT_CONTRIBUTION' => true
 	));
 
@@ -152,7 +154,7 @@ if ($contribution_id > 0)
 
 	$contributor_group_color = User::get_group_color($contributor['user_groups'], $contributor['level']);
 
-	$template->put_all(array(
+	$view->put_all(array(
 		'C_WRITE_AUTH' => AppContext::get_current_user()->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT),
 		'C_UNPROCESSED_CONTRIBUTION' => $contribution->get_status() != Event::EVENT_STATUS_PROCESSED,
 		'C_CONTRIBUTOR_GROUP_COLOR' => !empty($contributor_group_color),
@@ -178,7 +180,7 @@ if ($contribution_id > 0)
 
 		$fixer_group_color = User::get_group_color($fixer['user_groups'], $fixer['level']);
 
-		$template->put_all(array(
+		$view->put_all(array(
 			'C_CONTRIBUTION_FIXED' => true,
 			'C_FIXER_GROUP_COLOR' => !empty($fixer_group_color),
 			'FIXER' => $fixer['display_name'],
@@ -189,24 +191,9 @@ if ($contribution_id > 0)
 		));
 	}
 
-	$template->put_all(array(
-		'L_CONTRIBUTION_DETAILS' => $LANG['contribution.details'],
-		'L_ENTITLED' => $LANG['contribution_entitled'],
-		'L_DESCRIPTION' => $LANG['contribution_description'],
-		'L_STATUS' => $LANG['contribution_status'],
-		'L_CONTRIBUTOR' => $LANG['contributor'],
-		'L_CREATION_DATE' => $LANG['contribution_creation_date'],
-		'L_FIXER' => $LANG['contribution_fixer'],
-		'L_FIXING_DATE' => $LANG['contribution_fixing_date'],
-		'L_MODULE' => $LANG['contribution_module'],
-		'L_PROCESS_CONTRIBUTION' => $LANG['process_contribution'],
-		'L_CHANGE_CONTRIBUTION' => $LANG['change.contribution'],
-		'L_DELETE_CONTRIBUTION' => $LANG['delete.contribution'],
-		'L_CONFIRM_DELETE_CONTRIBUTION' => $LANG['confirm_delete_contribution'],
-		'L_DELETE' => LangLoader::get_message('delete', 'common'),
-		'L_UPDATE' => $LANG['validate'],
-		'U_UPDATE' => url('contribution_panel.php?edit=' . $contribution_id),
-		'U_DELETE' => url('contribution_panel.php?del=' . $contribution_id . '&amp;token=' . AppContext::get_session()->get_token())
+	$view->put_all(array(
+		'U_EDIT'   => url('contribution_panel.php?edit =' . $contribution_id),
+		'U_DELETE' => url('contribution_panel.php?del  =' . $contribution_id . '&amp;token=' . AppContext::get_session()->get_token())
 	));
 }
 
@@ -216,30 +203,20 @@ elseif ($id_update > 0)
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
 	$editor->set_identifier('contents');
 
-	$template->put_all(array(
+	$view->put_all(array(
 		'C_EDIT_CONTRIBUTION' => true,
-		'EDITOR' => $editor->display(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'ENTITLED' => $contribution->get_entitled(),
 		'DESCRIPTION' => FormatingHelper::unparse($contribution->get_description()),
 		'CONTRIBUTION_ID' => $contribution->get_id(),
 		'EVENT_STATUS_UNREAD_SELECTED' => $contribution->get_status() == Event::EVENT_STATUS_UNREAD ? ' selected="selected"' : '',
 		'EVENT_STATUS_BEING_PROCESSED_SELECTED' => $contribution->get_status() == Event::EVENT_STATUS_BEING_PROCESSED ? ' selected="selected"' : '',
 		'EVENT_STATUS_PROCESSED_SELECTED' => $contribution->get_status() == Event::EVENT_STATUS_PROCESSED ? ' selected="selected"' : '',
-		'L_CONTRIBUTION_STATUS_UNREAD' => $LANG['contribution_status_unread'],
-		'L_CONTRIBUTION_STATUS_BEING_PROCESSED' => $LANG['contribution_status_being_processed'],
-		'L_CONTRIBUTION_STATUS_PROCESSED' => $LANG['contribution_status_processed'],
-		'L_CONTRIBUTION' => $LANG['contribution'],
-		'L_DESCRIPTION' => $LANG['contribution_description'],
-		'L_STATUS' => $LANG['contribution_status'],
-		'L_ENTITLED' => $LANG['contribution_entitled'],
-		'L_SUBMIT' => $LANG['submit'],
-		'L_PREVIEW' => $LANG['preview'],
-		'L_RESET' => $LANG['reset']
 	));
 }
 else
 {
-	$template->put_all(array(
+	$view->put_all(array(
 		'C_CONTRIBUTION_LIST' => true
 	));
 
@@ -269,7 +246,7 @@ else
 				$poster_group_color = User::get_group_color($this_contribution->get_poster_groups(), $this_contribution->get_poster_level());
 				$fixer_group_color = User::get_group_color($this_contribution->get_fixer_groups(), $this_contribution->get_fixer_level());
 
-				$template->assign_block_vars('contributions', array(
+				$view->assign_block_vars('contributions', array(
 					'C_POSTER_GROUP_COLOR' => !empty($poster_group_color),
 					'C_FIXER_GROUP_COLOR'  => !empty($fixer_group_color),
 					'ENTITLED' => $this_contribution->get_entitled(),
@@ -306,14 +283,13 @@ else
 	}
 
 	if ($num_contributions > 1)
-		$template->put_all(array(
+		$view->put_all(array(
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION'   => $pagination->display()
 		));
 	else
-		$template->put_all(array(
-			'C_NO_CONTRIBUTION'            => true,
-			'L_NO_CONTRIBUTION_TO_DISPLAY' => LangLoader::get_message('no_item_now', 'common')
+		$view->put_all(array(
+			'C_NO_CONTRIBUTION'            => true
 		));
 
 	// List of modules with contribution
@@ -332,39 +308,27 @@ else
 		{
 			if ($i_module % NUMBER_OF_MODULES_PER_LINE == 0)
 			{
-				$template->assign_block_vars('row', array(
+				$view->assign_block_vars('row', array(
 					'MODULES_PER_ROW' => NUMBER_OF_MODULES_PER_LINE,
 				));
 			}
 
-			$template->assign_block_vars('row.module', array(
+			$view->assign_block_vars('row.module', array(
 				'U_MODULE_LINK' => $contribution_interface,
 				'MODULE_ID'     => $module->get_id(),
 				'MODULE_NAME'   => $module->get_configuration()->get_name(),
-				'LINK_TITLE'    => sprintf($LANG['contribute_in_module_name'], $module->get_configuration()->get_name())
+				'LINK_TITLE'    => sprintf($lang['contribution.contribute.in.module.name'], $module->get_configuration()->get_name())
 			));
 			$i_module++;
 		}
 	}
 
-	$template->put_all(array(
-		'L_ENTITLED'                      => $LANG['contribution_entitled'],
-		'L_STATUS'                        => $LANG['contribution_status'],
-		'L_POSTER'                        => $LANG['contributor'],
-		'L_CREATION_DATE'                 => $LANG['contribution_creation_date'],
-		'L_FIXER'                         => $LANG['contribution_fixer'],
-		'L_FIXING_DATE'                   => $LANG['contribution_fixing_date'],
-		'L_MODULE'                        => $LANG['contribution_module'],
-		'L_CONTRIBUTION_PANEL'            => $LANG['contribution_panel'],
-		'L_CONTRIBUTION_LIST'             => $LANG['contribution_list'],
-		'L_CONTRIBUTE'                    => $LANG['contribute'],
-		'L_CONTRIBUTE_EXPLAIN'            => $LANG['contribute_in_modules_explain'],
-		'L_NO_MODULE_IN_WHICH_CONTRIBUTE' => $LANG['no_module_to_contribute'],
+	$view->put_all(array(
 		'C_NO_MODULE_IN_WHICH_CONTRIBUTE' => $i_module == 0
 	));
 
 	// Sorting management
-	$template->put_all(array(
+	$view->put_all(array(
 		'C_ORDER_ENTITLED_ASC'       => $criteria == 'entitled' && $order == 'asc',
 		'U_ORDER_ENTITLED_ASC'       => url('contribution_panel.php?p =' . $page . '&amp;criteria =entitled&amp;order=asc'),
 		'C_ORDER_ENTITLED_DESC'      => $criteria == 'entitled' && $order == 'desc',
@@ -396,7 +360,7 @@ else
 	));
 }
 
-$template->display();
+$view->display();
 
 require_once('../kernel/footer.php');
 ?>
