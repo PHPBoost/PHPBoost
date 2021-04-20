@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 19
+ * @version     PHPBoost 6.0 - last update: 2021 04 21
  * @since       PHPBoost 3.0 - 2012 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -26,6 +26,11 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 		$this->querier = PersistenceContext::get_querier();
 	}
 
+	public function get_module_id()
+	{
+		return self::$module_id;
+	}
+
 	public function get_config_name()
 	{
 		return $this->config_name;
@@ -33,19 +38,15 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 
 	public function execute()
 	{
-		$folder = new Folder(PATH_TO_ROOT . '/' . self::$module_id);
-		if ($folder->exists())
-		{
-			try {
-				if ($this->build_new_config())
+		try {
+			if ($this->build_new_config())
+			{
+				if ($this->delete_old_config)
 				{
-					if ($this->delete_old_config)
-					{
-						$this->delete_old_config();
-					}
+					$this->delete_old_config();
 				}
-			} catch (RowNotFoundException $e) {}
-		}
+			}
+		} catch (RowNotFoundException $e) {}
 	}
 
 	protected function get_old_config($serialize = true)
@@ -78,12 +79,12 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 	 */
 	protected function modify_config_parameters()
 	{
-		$configuration_class_name = ModulesManager::get_module(self::$module_id)->get_configuration()->get_configuration_name();
+		$configuration_class_name = ModulesManager::is_module_installed(self::$module_id) ? ModulesManager::get_module(self::$module_id)->get_configuration()->get_configuration_name() : false;
 		$old_config = $this->get_old_config();
-		
-		if (class_exists($configuration_class_name) && !empty($old_config))
+
+		if ($configuration_class_name && class_exists($configuration_class_name) && !empty($old_config))
 		{
-			$config = $configuration_class_name::load();
+			$config = $configuration_class_name::load(self::$module_id);
 			$modified_properties = array();
 			foreach ($this->config_parameters_to_modify as $old_name => $new_name)
 			{
@@ -132,7 +133,7 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 				}
 			}
 
-			$configuration_class_name::save();
+			$configuration_class_name::save(self::$module_id);
 
 			return true;
 		}
