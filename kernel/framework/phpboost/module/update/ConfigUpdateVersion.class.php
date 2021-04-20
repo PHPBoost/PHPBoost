@@ -18,7 +18,7 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 
 	protected $config_parameters_to_modify = array();
 
-	public function __construct($module_id, $delete_old_config = true, $config_name = '')
+	public function __construct($module_id, $delete_old_config = false, $config_name = '')
 	{
 		self::$module_id = $module_id;
 		$this->delete_old_config = $delete_old_config;
@@ -79,10 +79,10 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 	 */
 	protected function modify_config_parameters()
 	{
-		$configuration_class_name = ClassLoader::get_module_subclass_of(self::$module_id, 'AbstractConfigData');
+		$configuration_class_name = ucfirst(self::$module_id) . 'Config';
 		$old_config = $this->get_old_config();
 
-		if ($configuration_class_name && class_exists($configuration_class_name) && !empty($old_config))
+		if (class_exists($configuration_class_name) && !empty($old_config))
 		{
 			$config = $configuration_class_name::load(self::$module_id);
 			$modified_properties = array();
