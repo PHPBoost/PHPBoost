@@ -145,7 +145,7 @@
 												<span><a href="mailto:{users.U_EMAIL}" class="pinned bgc-full member" aria-label="{@user.email}"><i class="iboost fa fa-iboost-email"></i></a></span>
 											# ENDIF #
 											# IF users.C_HAS_WEBSITE #
-												<a href="{users.U_WEBSITE}" class="pinned bgc-full link-color" aria-label="${LangLoader::get_message('regex.website', 'admin-user-common')}"><i class="fa fa-globe"></i></a>
+												<a href="{users.U_WEBSITE}" class="pinned bgc-full link-color" aria-label="${LangLoader::get_message('form.website', 'form-lang')}"><i class="fa fa-globe"></i></a>
 											# ENDIF #
 										</td>
 										<td>
@@ -201,7 +201,7 @@
 													<span><a href="mailto:{users.U_EMAIL}" class="pinned bgc-full member" aria-label="{@user.email}"><i class="iboost fa fa-iboost-email"></i></a></span>
 												# ENDIF #
 												# IF users.C_HAS_WEBSITE #
-													<a href="{users.U_WEBSITE}" class="pinned bgc-full link-color" aria-label="${LangLoader::get_message('regex.website', 'admin-user-common')}"><i class="fa fa-globe"></i></a>
+													<a href="{users.U_WEBSITE}" class="pinned bgc-full link-color" aria-label="${LangLoader::get_message('form.website', 'form.lang')}"><i class="fa fa-globe"></i></a>
 												# ENDIF #
 											</span>
 										</li>

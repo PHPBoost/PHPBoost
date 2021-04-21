@@ -38,7 +38,7 @@
 
 				# IF C_DISPLAY_DELAY #
 					<div class="delay">
-						${LangLoader::get_message('admin.maintain.delay', 'admin-lang')}
+						${LangLoader::get_message('admin.maintenance.delay', 'admin-lang')}
 						<div id="release">${LangLoader::get_message('common.loading', 'common-lang')}...</div>
 					</div>
 
@@ -76,7 +76,7 @@
 									release_seconds = Math.floor(release_time);
 									release_seconds = (release_seconds < 10) ? '0' + release_seconds : release_seconds;
 
-									document.getElementById('release').innerHTML = '<strong>' + release_days + '</strong> ${LangLoader::get_message('days', 'date-common')} <strong>' + release_hours + '</strong> ${LangLoader::get_message('hours', 'date-common')} <strong>' + release_minutes + '</strong> ${LangLoader::get_message('minutes', 'date-common')} <strong>' + release_seconds + '</strong> ${LangLoader::get_message('seconds', 'date-common')}';
+									document.getElementById('release').innerHTML = '<strong>' + release_days + '</strong> ' + ${escapejs(LangLoader::get_message('date.days', 'date-lang'))} + '<strong> ' + release_hours + '</strong> ' + ${escapejs(LangLoader::get_message('date.hours', 'date-lang'))} + '<strong> ' + release_minutes + '</strong> ' + ${escapejs(LangLoader::get_message('date.minutes', 'date-lang'))} + '<strong> ' + release_seconds + '</strong> ' + ${escapejs(LangLoader::get_message('date.seconds', 'date-lang'))};
 							}
 						}
 						release({MAINTAIN_RELEASE_FORMAT});

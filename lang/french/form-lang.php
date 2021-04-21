@@ -69,4 +69,14 @@ $lang['form.source.name'] = 'Nom de la source';
 $lang['form.source.url'] = 'Adresse de la source';
 $lang['form.captcha'] = 'Code de vérification';
 
+// Regex
+$lang['form.figures']         = 'Chiffres';
+$lang['form.letters']         = 'Lettres';
+$lang['form.figures.letters'] = 'Chiffres et lettres';
+$lang['form.word']            = 'Mot';
+$lang['form.website']         = 'Site web';
+$lang['form.email']           = 'Email';
+$lang['form.phone.number']    = 'Numéro de téléphone';
+$lang['form.personnal.regex'] = 'Expression régulière personnalisée';
+
 ?>

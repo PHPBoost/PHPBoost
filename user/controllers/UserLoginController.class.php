@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 19
+ * @version     PHPBoost 6.0 - last update: 2021 04 21
  * @since       PHPBoost 3.0 - 2012 04 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -200,7 +200,7 @@ class UserLoginController extends AbstractController
 		{
 			$response = new SiteDisplayFrameResponse($this->view);
 			$graphical_environment = $response->get_graphical_environment();
-			$graphical_environment->set_page_title(($this->login_type == self::ADMIN_LOGIN ? LangLoader::get_message('admin.administration', 'admin-lang') : LangLoader::get_message('admin.maintain', 'admin-lang')));
+			$graphical_environment->set_page_title(($this->login_type == self::ADMIN_LOGIN ? LangLoader::get_message('admin.administration', 'admin-lang') : LangLoader::get_message('admin.maintenance', 'admin-lang')));
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['user.seo.login']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::connect());
 			$graphical_environment->display_css_login();
@@ -268,9 +268,9 @@ class UserLoginController extends AbstractController
 
 	private function init_maintain_delay()
 	{
-		$date_lang = LangLoader::get('date-common');
+		$date_lang = LangLoader::get('date-lang');
 		$array_time = array(0 => '-1', 1 => '0', 2 => '60', 3 => '300', 4 => '900', 5 => '1800', 6 => '3600', 7 => '7200', 8 => '86400', 9 => '172800', 10 => '604800');
-		$array_delay = array(0 => LangLoader::get_message('common.unspecified', 'common-lang'), 1 => '', 2 => '1 ' . $date_lang['minute'], 3 => '5 ' . $date_lang['minutes'], 4 => '15 ' . $date_lang['minutes'], 5 => '30 ' . $date_lang['minutes'], 6 => '1 ' . $date_lang['hour'], 7 => '2 ' . $date_lang['hours'], 8 => '1 ' . $date_lang['day'], 9 => '2 ' . $date_lang['days'], 10 => '1 ' . $date_lang['week']);
+		$array_delay = array(0 => LangLoader::get_message('common.unspecified', 'common-lang'), 1 => '', 2 => '1 ' . $date_lang['date.minute'], 3 => '5 ' . $date_lang['date.minutes'], 4 => '15 ' . $date_lang['date.minutes'], 5 => '30 ' . $date_lang['date.minutes'], 6 => '1 ' . $date_lang['date.hour'], 7 => '2 ' . $date_lang['date.hours'], 8 => '1 ' . $date_lang['date.day'], 9 => '2 ' . $date_lang['date.days'], 10 => '1 ' . $date_lang['date.week']);
 
 		if (!$this->maintain_config->is_unlimited_maintenance())
 		{

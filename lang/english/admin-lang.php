@@ -18,9 +18,9 @@
 $lang['admin.administration'] = 'Administration';
 
 // Maintenance
-$lang['admin.maintenance']      = 'Maintenance';
-$LANG['admin.maintain.title']   = 'Website in maintenance';
-$LANG['admin.maintain.content'] = 'The website is under maintenance. Thank you for your patience.';
-$LANG['admin.maintain.delay']   = 'Time remaining:';
+$lang['admin.maintenance']         = 'Maintenance';
+$lang['admin.maintenance.title']   = 'Website in maintenance';
+$lang['admin.maintenance.content'] = 'The website is under maintenance. Thank you for your patience.';
+$lang['admin.maintenance.delay']   = 'Time remaining:';
 
 ?>

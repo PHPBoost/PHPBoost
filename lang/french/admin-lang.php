@@ -17,11 +17,10 @@
 // Labels
 $lang['admin.administration'] = 'Administration';
 
-
 // Maintenance
-$lang['admin.maintenance']      = 'Maintenance';
-$LANG['admin.maintain.title']   = 'Site en maintenance';
-$LANG['admin.maintain.content'] = 'Le site est actuellement en maintenance. Merci de votre patience.';
-$LANG['admin.maintain.delay']   = 'Délai estimé avant réouverture du site :';
+$lang['admin.maintenance']         = 'Maintenance';
+$lang['admin.maintenance.title']   = 'Site en maintenance';
+$lang['admin.maintenance.content'] = 'Le site est actuellement en maintenance. Merci de votre patience.';
+$lang['admin.maintenance.delay']   = 'Délai estimé avant réouverture du site :';
 
 ?>

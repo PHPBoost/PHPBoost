@@ -70,7 +70,7 @@ $lang['common.validation'] = 'Validation';
 $lang['common.moderation'] = 'Modération';
 $lang['common.reorder']    = 'Réorganiser';
 $lang['common.respond']    = 'Répondre';
-$LANG['common.loading']    = 'Chargement';
+$lang['common.loading']    = 'Chargement';
 
 $lang['common.syndication'] = 'Syndication';
 $lang['common.syndication.rss'] = 'RSS';
@@ -200,8 +200,8 @@ $lang['common.select.elements'] = 'Sélectionner des éléments';
 $lang['common.select.all.elements'] = 'Sélectionner tous les éléments';
 
 // Formatter
-$lang['common.hidden.texte']    = 'Ce texte est caché, cliquer ici pour afficher son contenu.';
-$lang['common.hide.text']    = 'Cliquer ici pour cacher le texte.';
+$lang['common.hidden.text']       = 'Ce texte est caché, cliquer ici pour afficher son contenu.';
+$lang['common.hide.text']         = 'Cliquer ici pour cacher le texte.';
 $lang['common.copy.to.clipboard'] = 'Copier vers le presse-papier';
 
 // Scroll to

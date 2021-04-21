@@ -69,7 +69,7 @@ $lang['common.validation'] = 'Validation';
 $lang['common.moderation'] = 'Moderation';
 $lang['common.reorder']    = 'Reorder';
 $lang['common.respond']    = 'Respond';
-$LANG['common.loading']    = 'Loading';
+$lang['common.loading']    = 'Loading';
 
 $lang['common.syndication']      = 'Syndication';
 $lang['common.syndication.rss']  = 'RSS';

@@ -33,6 +33,11 @@ $lang['warning.feed.tag.error']        = 'Le flux du module <em>:module</em> que
 $lang['warning.is.default.editor']     = 'L\'éditeur que vous souhaitez désinstaller ou désactiver, est défini par défaut, veuillez d\'abord sélectionner un autre éditeur par défaut';
 $lang['warning.last.editor.installed'] = 'Dernier éditeur de texte, vous ne pouvez pas le supprimer ou le désactiver. Veuillez d\'abord en installer un autre.';
 
+// Element
+$lang['warning.element.already.exists'] = 'L\'élément existe déjà.';
+$lang['warning.element.unexist']        = 'L\'élément que vous demandez n\'existe pas.';
+$lang['warning.element.not.visible']    = 'Cet élément n\'est pas encore ou n\'est plus approuvé, il n\'est pas affiché pour les autres utilisateurs du site.';
+
 // Errors
 $lang['warning.error']                   = 'Erreur';
 $lang['warning.incomplete']              = 'Tous les champs obligatoires doivent être remplis !';
@@ -52,28 +57,8 @@ $lang['warning.404.message']             = 'Il semblerait qu\'une tornade soit p
 $lang['warning.403.message']             = 'Il semblerait qu\'une tornade soit passée par ici.<br />L\'accès est interdit au public.';
 $lang['warning.csrf.invalid.token']      = 'Jeton de session invalide. Veuillez essayer de recharger la page car l\'opération n\'a pas pu être effectuée.';
 
-// Upload
-$lang['warning.file.max.dimension']     = 'Dimensions maximales du fichier dépassées';
-$lang['warning.file.max.weight']        = 'Poids maximum du fichier dépassé';
-$lang['warning.file.invalid.format']    = 'Format du fichier invalide';
-$lang['warning.file.php.code']          = 'Contenu du fichier invalide, le code php est interdit';
-$lang['warning.file.upload.error']      = 'Erreur lors de l\'upload du fichier';
-$lang['warning.unlink.disabled']        = 'Fonction de suppression des fichiers désactivée sur votre serveur';
-$lang['warning.folder.unwritable']      = 'Upload impossible, interdiction d\'écriture dans ce dossier';
-$lang['warning.file.already.exists']    = 'Le fichier existe déjà, écrasement non autorisé';
-$lang['warning.folder.already.exists']  = 'Le dossier existe déjà.';
-$lang['warning.no.selected.file']       = 'Aucun fichier n\'a été sélectionné';
-$lang['warning.max.data.reach']         = 'Taille maximale atteinte, supprimez d\'anciens fichiers';
-$lang['warning.del.file']               = 'Supprimer ce fichier ?';
-$lang['warning.empty.folder']           = 'Vider ce dossier ?';
-$lang['warning.empty.folder.content']   = 'Vider tout le contenu de ce dossier ?';
-$lang['warning.del.folder']             = 'Supprimer ce dossier ?';
-$lang['warning.del.folder.content']     = 'Supprimer ce dossier, et tout son contenu ?';
-$lang['warning.file.forbidden.chars']   = 'Le nom du fichier ne peut contenir aucun des caractères suivants : \\\ / . | ? < > \"';
-$lang['warning.folder.forbidden.chars'] = 'Le nom du dossier ne peut contenir aucun des caractères suivants : \\\ / . | ? < > \"';
-$lang['warning.files.del.failed']       = 'La suppression des fichiers a échoué, veuillez le faire manuellement';
-$lang['warning.success.upload']         = 'Votre fichier a bien été enregistré !';
-$lang['warning.folder.contains.folder'] = 'Vous essayez de placer ce répertoire dans un de ses sous-répertoire ou dans lui-même, ce qui est impossible !';
+// Groups
+$lang['warning.already.group'] = 'Le membre appartient déjà au groupe';
 
 // Members
 $lang['warning.display.name.auth']  = 'Le nom d\'affichage entré est déjà utilisé !';
@@ -82,9 +67,6 @@ $lang['warning.email.auth']         = 'L\'adresse email entrée est déjà utili
 $lang['warning.member.ban']         = 'Vous avez été banni! Vous pourrez vous reconnecter dans';
 $lang['warning.member.ban.contact'] = 'Vous avez été banni pour un comportement abusif! Contactez l\'administrateur s\'il s\'agit d\'une erreur.';
 $lang['warning.unactive.member']    = 'Votre compte n\'a pas encore été activé !';
-
-// Groups
-$lang['warning.already.group'] = 'Le membre appartient déjà au groupe';
 
 // Private messages
 $lang['warning.delete.message'] = 'Supprimer le.s message.s ?';
@@ -141,17 +123,36 @@ $lang['warning.first.field.must.not.be.contained.in.second.field'] = 'La valeur 
 $lang['warning.login.and.email.must.not.be.contained.in.second.field'] = 'Votre email ou votre identifiant de connexion ne doivent pas être contenus dans le champ ":field2"';
 $lang['warning.email.authorized.domains.regex'] = 'Le nom de domaine de cette adresse n\'est pas autorisé sur le site, veuillez choisir une autre adresse email';
 
+// Upload
+$lang['warning.file.max.dimension']     = 'Dimensions maximales du fichier dépassées';
+$lang['warning.file.max.weight']        = 'Poids maximum du fichier dépassé';
+$lang['warning.file.invalid.format']    = 'Format du fichier invalide';
+$lang['warning.file.php.code']          = 'Contenu du fichier invalide, le code php est interdit';
+$lang['warning.file.upload.error']      = 'Erreur lors de l\'upload du fichier';
+$lang['warning.unlink.disabled']        = 'Fonction de suppression des fichiers désactivée sur votre serveur';
+$lang['warning.folder.unwritable']      = 'Upload impossible, interdiction d\'écriture dans ce dossier';
+$lang['warning.file.already.exists']    = 'Le fichier existe déjà, écrasement non autorisé';
+$lang['warning.folder.already.exists']  = 'Le dossier existe déjà.';
+$lang['warning.no.selected.file']       = 'Aucun fichier n\'a été sélectionné';
+$lang['warning.max.data.reach']         = 'Taille maximale atteinte, supprimez d\'anciens fichiers';
+$lang['warning.del.file']               = 'Supprimer ce fichier ?';
+$lang['warning.empty.folder']           = 'Vider ce dossier ?';
+$lang['warning.empty.folder.content']   = 'Vider tout le contenu de ce dossier ?';
+$lang['warning.del.folder']             = 'Supprimer ce dossier ?';
+$lang['warning.del.folder.content']     = 'Supprimer ce dossier, et tout son contenu ?';
+$lang['warning.file.forbidden.chars']   = 'Le nom du fichier ne peut contenir aucun des caractères suivants : \\\ / . | ? < > \"';
+$lang['warning.folder.forbidden.chars'] = 'Le nom du dossier ne peut contenir aucun des caractères suivants : \\\ / . | ? < > \"';
+$lang['warning.files.del.failed']       = 'La suppression des fichiers a échoué, veuillez le faire manuellement';
+$lang['warning.success.upload']         = 'Votre fichier a bien été enregistré !';
+$lang['warning.folder.contains.folder'] = 'Vous essayez de placer ce répertoire dans un de ses sous-répertoire ou dans lui-même, ce qui est impossible !';
+
 // User
 $lang['warning.user.not.authorized.during.maintain'] = 'Vous n\'avez pas l\'autorisation d\'accéder au site pendant la maintenance';
 $lang['warning.user.not.exists'] = 'L\'utilisateur n\'existe pas !';
 $lang['warning.user.auth.password.flood'] = 'Il vous reste :remaining_tries essai(s) après cela il vous faudra attendre 5 minutes pour obtenir 2 nouveaux essais (10min pour 5)!';
 $lang['warning.user.auth.password.flood.max'] = 'Vous avez épuisé tous vos essais de connexion, votre compte est verrouillé pendant 5 minutes.';
 
-// Element
-$lang['warning.element.already.exists'] = 'L\'élément existe déjà.';
-$lang['warning.element.unexist'] = 'L\'élément que vous demandez n\'existe pas.';
-$lang['warning.element.not.visible'] = 'Cet élément n\'est pas encore ou n\'est plus approuvé, il n\'est pas affiché pour les autres utilisateurs du site.';
-
-$lang['warning.misfit.php'] = 'Version PHP inadaptée';
+// Version
+$lang['warning.misfit.php']      = 'Version PHP inadaptée';
 $lang['warning.misfit.phpboost'] = 'Version de PHPBoost inadaptée';
 ?>

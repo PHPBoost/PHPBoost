@@ -33,6 +33,11 @@ $lang['warning.feed.tag.error']        = 'The feed of the module <em>:module</em
 $lang['warning.is.default.editor']     = 'The editor you want to uninstall or disable, is set by default, you must select another default editor first';
 $lang['warning.last.editor.installed'] = 'Last text editor, you can not delete or disable it. Please install another one first.';
 
+// Element
+$lang['warning.element.already.exists'] = 'The item already exists.';
+$lang['warning.element.unexist']        = 'The item you requested does not exist.';
+$lang['warning.element.not.visible']    = 'This element is not yet or no more approved, it is not displayed for the other users.';
+
 // Errors
 $lang['warning.error']                   = 'Error';
 $lang['warning.incomplete']              = 'All the required fields must be filled!';
@@ -52,28 +57,8 @@ $lang['warning.404.message']             = 'It seems that a tornado has passed t
 $lang['warning.403.message']             = 'It seems that a tornado has passed through here. <br />Access is forbidden to the public.';
 $lang['warning.csrf.invalid.token']      = 'Invalid session token. Please try to reload the page because the operation has not been performed.';
 
-// Upload
-$lang['warning.file.max.dimension']     = 'Max file dimensions exceeded';
-$lang['warning.file.max.weight']        = 'Maximum file size exceeded';
-$lang['warning.file.invalid.format']    = 'Invalid file format';
-$lang['warning.file.php.code']          = 'Invalid file content, php code is forbidden';
-$lang['warning.file.error']             = 'Error while uploading file';
-$lang['warning.unlink.disabled']        = 'File deleting function not supported by your server';
-$lang['warning.folder.unwritable']      = 'Impossible to upload because writing in this directory is not allowed';
-$lang['warning.file.already.exists']    = 'File already exists, overwrite is not allowed';
-$lang['warning.folder.already.exists']  = 'The folder already exists.';
-$lang['warning.no.selected.file']       = 'No file has been selected';
-$lang['warning.max.data.reach']         = 'Max size reached, delete old files';
-$lang['warning.del.file']               = 'Delete this file?';
-$lang['warning.empty.folder']           = 'Empty folder?';
-$lang['warning.empty.folder.content']   = 'Empty all folders contents?';
-$lang['warning.del.folder']             = 'Delete folder?';
-$lang['warning.del.folder.content']     = 'Delete this folder, and all his contents?';
-$lang['warning.file.forbidden.chars']   = 'File name can\'t contain the following characters : \\\ / . | ? < > \"';
-$lang['warning.folder.forbidden.chars'] = 'Folder name can\'t contain the following characters: \\\ / . | ? < > \"';
-$lang['warning.files.del.failed']       = 'Delete files procedure has failed, please manually remove the files';
-$lang['warning.success.upload']         = 'Your file has been uploaded successfully !';
-$lang['warning.folder.contains.folder'] = 'You try to put this directory in one of its sub-directory or in itself, that\'s impossible !';
+// Groups
+$lang['warning.already.group'] = 'Member is already in this group';
 
 // Members
 $lang['warning.display.name.auth']  = 'The entered display name is already used!';
@@ -82,9 +67,6 @@ $lang['warning.email.auth']         = 'The entered email address is already used
 $lang['warning.member.ban']         = 'You have been banned! You can retry to connect in';
 $lang['warning.member.ban.contact'] = 'You have been banned for your behaviour! Contact the administator if you think it\'s an warning.';
 $lang['warning.unactive.member']    = 'Your account has not been activated yet!';
-
-// Groups
-$lang['warning.already.group'] = 'Member is already in this group';
 
 // Private messages
 $lang['warning.delete.message'] = 'Delete message.s ?';
@@ -141,17 +123,36 @@ $lang['form.first.field.must.not.be.contained.in.second.field'] = 'Value of fiel
 $lang['form.login.and.email.must.not.be.contained.in.second.field'] = 'Your mail or your login must not be present in field ":field2"';
 $lang['warning.email.authorized.domains.regex'] = 'This mail domain address is not authorized, please choose another mail address';
 
+// Upload
+$lang['warning.file.max.dimension']     = 'Max file dimensions exceeded';
+$lang['warning.file.max.weight']        = 'Maximum file size exceeded';
+$lang['warning.file.invalid.format']    = 'Invalid file format';
+$lang['warning.file.php.code']          = 'Invalid file content, php code is forbidden';
+$lang['warning.file.error']             = 'Error while uploading file';
+$lang['warning.unlink.disabled']        = 'File deleting function not supported by your server';
+$lang['warning.folder.unwritable']      = 'Impossible to upload because writing in this directory is not allowed';
+$lang['warning.file.already.exists']    = 'File already exists, overwrite is not allowed';
+$lang['warning.folder.already.exists']  = 'The folder already exists.';
+$lang['warning.no.selected.file']       = 'No file has been selected';
+$lang['warning.max.data.reach']         = 'Max size reached, delete old files';
+$lang['warning.del.file']               = 'Delete this file?';
+$lang['warning.empty.folder']           = 'Empty folder?';
+$lang['warning.empty.folder.content']   = 'Empty all folders contents?';
+$lang['warning.del.folder']             = 'Delete folder?';
+$lang['warning.del.folder.content']     = 'Delete this folder, and all his contents?';
+$lang['warning.file.forbidden.chars']   = 'File name can\'t contain the following characters : \\\ / . | ? < > \"';
+$lang['warning.folder.forbidden.chars'] = 'Folder name can\'t contain the following characters: \\\ / . | ? < > \"';
+$lang['warning.files.del.failed']       = 'Delete files procedure has failed, please manually remove the files';
+$lang['warning.success.upload']         = 'Your file has been uploaded successfully !';
+$lang['warning.folder.contains.folder'] = 'You try to put this directory in one of its sub-directory or in itself, that\'s impossible !';
+
 // User
 $lang['warning.user.not.authorized.during.maintain'] = 'You are not authorized to connect during the maintenance';
 $lang['warning.user.not.exists'] = 'User not exists !';
 $lang['warning.user.auth.password.flood'] = ':remaining_tries tries are remaining. After that, you\'ll have to wait 5 minutes to have 2 more tries (10min for 5)!';
 $lang['warning.user.auth.password.flood.max'] = 'You have failed, too many authentication attempts, your account is locked for 5 minutes.';
 
-// Element
-$lang['warning.element.already.exists'] = 'The item already exists.';
-$lang['warning.element.unexist'] = 'The item you requested does not exist.';
-$lang['warning.element.not.visible'] = 'This element is not yet or no more approved, it is not displayed for the other users.';
-
+// Version
 $lang['warning.misfit.php'] = 'Inadequate PHP version';
 $lang['warning.misfit.phpboost'] = 'Inadequate PHPBoost version';
 ?>
