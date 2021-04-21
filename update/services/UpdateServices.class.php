@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 21
+ * @version     PHPBoost 6.0 - last update: 2021 04 22
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -628,8 +628,11 @@ class UpdateServices
 			}
 			$result->dispose();
 
-			$object = new self('', false);
-			$object->add_information_to_file('table ' . $table, ': ' . $updated_content . ' contents updated');
+			if ($updated_content)
+			{
+				$object = new self('', false);
+				$object->add_information_to_file('table ' . $table, ': ' . $updated_content . ' content' . ($updated_content > 1 ? 's' : '') . ' updated');
+			}
 		}
 	}
 
