@@ -23,4 +23,11 @@ $lang['admin.maintenance.title']   = 'Website in maintenance';
 $lang['admin.maintenance.content'] = 'The website is under maintenance. Thank you for your patience.';
 $lang['admin.maintenance.delay']   = 'Time remaining:';
 
+$lang['admin.forbidden.module'] = 'Forbidden modules';
+$lang['admin.comments.forbidden.module.clue'] = 'Select modules in which you do not want to enable comments';
+$lang['admin.notation.forbidden.module.clue'] = 'Select modules in which you do not want to enable notation';
+$lang['admin.new.content.forbidden.module.clue'] = 'Select modules in which you do not want to enable new-content tag';
+$lang['admin.hide.left.column'] = 'Hide left column in module :module';
+$lang['admin.hide.right.column'] = 'Hide right column in module :module';
+
 ?>

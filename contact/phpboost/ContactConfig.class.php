@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 03
+ * @version     PHPBoost 6.0 - last update: 2021 04 22
  * @since       PHPBoost 3.0 - 2010 05 02
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -249,9 +249,9 @@ class ContactConfig extends AbstractConfigData
 		$lang = LangLoader::get('config', 'contact');
 
 		$field = new ContactField();
-		$field->set_name($lang['contact.mail.address']);
+		$field->set_name($lang['contact.email.address']);
 		$field->set_field_name('f_sender_mail');
-		$field->set_description($lang['contact.mail.address.description']);
+		$field->set_description($lang['contact.email.address.clue']);
 		$field->set_field_type('ContactShortTextField');
 		$field->set_regex(4);
 		$field->readonly();
@@ -263,7 +263,7 @@ class ContactConfig extends AbstractConfigData
 		$field = new ContactField();
 		$field->set_name($lang['contact.subject']);
 		$field->set_field_name('f_subject');
-		$field->set_description($lang['contact.subject.description']);
+		$field->set_description($lang['contact.subject.clue']);
 		$field->set_field_type('ContactShortTextField');
 		$field->not_deletable();
 

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 14
+ * @version     PHPBoost 6.0 - last update: 2021 04 22
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -22,6 +22,9 @@ $lang['common.back']        = 'Retour';
 $lang['common.root']        = 'Racine';
 $lang['common.description'] = 'Description';
 $lang['common.module']      = 'Module';
+$lang['common.actions']     = 'Actions';
+$lang['common.controls']    = 'Contrôles';
+$lang['common.syndication'] = 'Syndication';
 
 $lang['common.update']      = 'Mise à jour';
 $lang['common.unspecified'] = 'Non précisé';
@@ -101,6 +104,7 @@ $lang['common.last.update']   = 'Dernière mise à jour';
 $lang['common.category']      = 'Catégorie';
 $lang['common.comments']      = 'Commentaires';
 $lang['common.rating']        = 'Note';
+$lang['common.location']      = 'Localisation';
 
 // Multimedia
 $lang['common.previous'] = 'Précédent';

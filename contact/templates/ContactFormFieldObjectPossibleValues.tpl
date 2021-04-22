@@ -19,7 +19,7 @@
 				jQuery('#radio_' + this.integer).after(' ');
 
 				jQuery('<div/>', {id : 'inputs_' + this.integer, class: 'grouped-inputs'}).appendTo('#' + id);
-				jQuery('<input/>', {class : 'grouped-element', type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, required : "required", placeholder : '{@contact.field.possible.values.subject}'}).appendTo('#inputs_' + this.integer);
+				jQuery('<input/>', {class : 'grouped-element', type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, required : "required", placeholder : '{@contact.possible.values.subject}'}).appendTo('#inputs_' + this.integer);
 				jQuery('#' + id).append(' ');
 
 				jQuery('<select/>', {class : 'grouped-element', 'id' : 'field_recipient_' + id, 'name' : 'field_recipient_' + id}).appendTo('#inputs_' + this.integer);
@@ -29,7 +29,7 @@
 				jQuery('<option/>', {'value' : ${escapejs(recipients_list.ID)}}).text(${escapejs(recipients_list.NAME)}).appendTo('#field_recipient_' + id);
 				# END recipients_list #
 
-				jQuery('<a/>', {class : 'grouped-element', href : 'javascript:ContactFormFieldObjectPossibleValues.delete('+ this.integer +');', 'aria-label' : "${LangLoader::get_message('delete', 'common')}"}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#inputs_' + this.integer);
+				jQuery('<a/>', {class : 'grouped-element', href : 'javascript:ContactFormFieldObjectPossibleValues.delete('+ this.integer +');', 'aria-label' : "${LangLoader::get_message('common.delete', 'common-lang')}"}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#inputs_' + this.integer);
 
 				jQuery('<script/>').html('jQuery("#field_is_default_' + id + '").on(\'click\',function(){ jQuery("#uncheck_default_${escape(HTML_ID)}").show(); });').appendTo('#' + id);
 
@@ -52,9 +52,9 @@
 
 <div id="input_fields_${escape(HTML_ID)}">
 	<div class="text-strong">
-		<span class="title-possible-value is-default-title">${LangLoader::get_message('field_possible.values.is_default', 'admin-user-common')}</span>
-		<span class="title-possible-value name-title">{@contact.field.possible.values.subject}</span>
-		<span class="title-possible-value title-desc">${LangLoader::get_message('field_possible.values.recipient', 'common', 'contact')}</span>
+		<span class="title-possible-value is-default-title">${LangLoader::get_message('form.possible.values.is.default', 'form-lang')}</span>
+		<span class="title-possible-value name-title">{@contact.possible.values.subject}</span>
+		<span class="title-possible-value title-desc">${LangLoader::get_message('contact.possible.values.recipient', 'common', 'contact')}</span>
 	</div>
 	# START fieldelements #
 		<div id="${escape(HTML_ID)}_{fieldelements.ID}" class="possible-values custom-radio">
@@ -65,13 +65,13 @@
 				</label>
 			</div>
 			<div class="grouped-inputs">
-				<input class="grouped-element" type="text" name="field_name_${escape(HTML_ID)}_{fieldelements.ID}" id="field_name_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@contact.field.possible.values.subject}">
+				<input class="grouped-element" type="text" name="field_name_${escape(HTML_ID)}_{fieldelements.ID}" id="field_name_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@contact.possible.values.subject}">
 				<select class="grouped-element" id="field_recipient_${escape(HTML_ID)}_{fieldelements.ID}" name="field_recipient_${escape(HTML_ID)}_{fieldelements.ID}">
 					# START fieldelements.recipients_list #
 					<option value="{fieldelements.recipients_list.ID}" # IF fieldelements.recipients_list.C_RECIPIENT_SELECTED #selected="selected"# ENDIF #>{fieldelements.recipients_list.NAME}</option>
 					# END fieldelements.recipients_list #
 				</select>
-				<a class="grouped-element" href="javascript:ContactFormFieldObjectPossibleValues.delete({fieldelements.ID});" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+				<a class="grouped-element" href="javascript:ContactFormFieldObjectPossibleValues.delete({fieldelements.ID});" aria-label="${LangLoader::get_message('common.delete', 'common-lang')}" data-confirmation="delete-element"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
 			</div>
 			<script>
 				jQuery("#field_is_default_${escape(HTML_ID)}_{fieldelements.ID}").on('click',function(){
@@ -82,8 +82,8 @@
 	# END fieldelements #
 </div>
 <div class="flex-between">
-	<a href="javascript:ContactFormFieldObjectPossibleValues.add();" id="add-${escape(HTML_ID)}" class="form-field-more-values" aria-label="${LangLoader::get_message('add', 'common')}"><i class="far fa-lg fa-plus-square" aria-hidden="true"></i></a>
-	<a href="#" onclick="return false;" id="uncheck_default_${escape(HTML_ID)}"# IF NOT C_HAS_DEFAULT_VALUE # style="display: none;"# ENDIF # class="small"><i class="fa fa-times" aria-hidden="true"></i> ${LangLoader::get_message('contact.field.possible.values.delete_default', 'admin-user-common')}</a>
+	<a href="javascript:ContactFormFieldObjectPossibleValues.add();" id="add-${escape(HTML_ID)}" class="form-field-more-values" aria-label="${LangLoader::get_message('common.add', 'common-lang')}"><i class="far fa-lg fa-plus-square" aria-hidden="true"></i></a>
+	<a href="#" onclick="return false;" id="uncheck_default_${escape(HTML_ID)}"# IF NOT C_HAS_DEFAULT_VALUE # style="display: none;"# ENDIF # class="small"><i class="fa fa-times" aria-hidden="true"></i> ${LangLoader::get_message('form.possible.values.delete.default', 'form-lang')}</a>
 </div>
 
 <script>

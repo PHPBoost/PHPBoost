@@ -1,11 +1,11 @@
 <section id="module-contact">
 	<header class="section-header">
-		<h1>{@module.title}</h1>
+		<h1>{@contact.module.title}</h1>
 	</header>
 	<div class="sub-section">
 		<div class="content-container">
 			<div class="content">
-				# INCLUDE MSG #
+				# INCLUDE MESSAGE_HELPER #
 
 				# IF NOT C_MAIL_SENT #
 
@@ -64,7 +64,7 @@
 
 				# ELSE #
 					<div class="spacer"></div>
-					<div class="align-center"><a href="#">{@contact.send.another.mail}</a></div>
+					<div class="align-center"><a href="${relative_url(ContactUrlBuilder::home())}">{@contact.send.another.email}</a></div>
 				# ENDIF #
 			</div>
 		</div>

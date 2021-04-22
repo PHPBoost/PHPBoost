@@ -13,6 +13,7 @@
 
 $lang['contribution.panel']          = 'Contributions panel';
 $lang['contribution.my.items']       = 'My contributions';
+$lang['contribution.contribution']   = 'Contribution';
 $lang['contribution.contributions']  = 'Contributions';
 $lang['contribution.details']        = 'Contribution details';
 $lang['contribution.process']        = 'Process the contribution';
@@ -44,6 +45,7 @@ $lang['contribution.extended.clue'] = '
 $lang['contribution.member.edition.clue'] = '
     You are about to modify your contribution. It will be sent back to the contribution panel to be treated
     and a new alert will be sent to approvers.';
+    
 $lang['contribution.description']                     = 'Additional contribution';
 $lang['contribution.description.clue']                = 'Explain the reasons of your contribution. This field is not required but it may help the moderator to make his decision.';
 $lang['contribution.member.edition.description']      = 'Additional modification';

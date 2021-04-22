@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 04 22
  * @since       PHPBoost 4.0 - 2013 03 01
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -32,8 +32,8 @@ class AdminContactConfigController extends AdminModuleController
 
 		$this->build_form();
 
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
+		$view->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -46,12 +46,12 @@ class AdminContactConfigController extends AdminModuleController
 				$this->form->get_field_by_id('map_position')->set_hidden(!$this->config->is_map_enabled());
 				$this->form->get_field_by_id('map_markers')->set_hidden(!$this->config->is_map_enabled());
 			}
-			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.message.success.config', 'warning-lang'), MessageHelper::SUCCESS, 5));
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$view->put('FORM', $this->form->display());
 
-		return new AdminContactDisplayResponse($tpl, $this->lang['module.config.title']);
+		return new AdminContactDisplayResponse($view, $this->lang['contact.config.module.title']);
 	}
 
 	private function init()
@@ -64,7 +64,7 @@ class AdminContactConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('configuration', LangLoader::get_message('configuration', 'admin-common'));
+		$fieldset = new FormFieldsetHTML('configuration', $this->lang['contact.config.module.title']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['contact.form.title'], $this->config->get_title(),
@@ -91,7 +91,7 @@ class AdminContactConfigController extends AdminModuleController
 		$fieldset->add_field(new FormFieldCheckbox('date_in_tracking_number_enabled', $this->lang['contact.date.in.tracking.number.enabled'], $this->config->is_date_in_tracking_number_enabled(),
 			array(
 				'class' => 'custom-checkbox',
-				'description' => $this->lang['contact.date.in.tracking.number.description'],
+				'description' => $this->lang['contact.date.in.tracking.number.clue'],
 				'hidden' => !$this->config->is_tracking_number_enabled()
 			)
 		));
@@ -101,7 +101,7 @@ class AdminContactConfigController extends AdminModuleController
 		$fieldset->add_field(new FormFieldCheckbox('informations_enabled', $this->lang['contact.informations.enabled'], $this->config->are_informations_enabled(),
 			array(
 				'class' => 'custom-checkbox',
-				'description' => $this->lang['contact.informations.description'],
+				'description' => $this->lang['contact.informations.clue'],
 				'events' => array('click' => '
 					if (HTMLForms.getField("informations_enabled").getValue()) {
 						HTMLForms.getField("informations_position").enable();
@@ -172,7 +172,7 @@ class AdminContactConfigController extends AdminModuleController
 			));
 		}
 
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations', LangLoader::get_message('authorizations', 'common'));
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations', LangLoader::get_message('common.authorizations', 'common-lang'));
 		$form->add_fieldset($fieldset_authorizations);
 
 		$auth_settings = new AuthorizationsSettings(array(

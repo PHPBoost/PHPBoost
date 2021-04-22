@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 03
+ * @version     PHPBoost 6.0 - last update: 2021 04 22
  * @since       PHPBoost 3.0 - 2010 05 02
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -53,25 +53,25 @@ class ContactController extends ModuleController
 		{
 			if ($this->send_mail())
 			{
-				$this->view->put('MSG', MessageHelper::display($this->lang['contact.message.success.mail'] . ($this->config->is_sender_acknowledgment_enabled() ? ' ' . $this->lang['contact.message.acknowledgment'] : ''), MessageHelper::SUCCESS));
+				$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['contact.message.success.email'] . ($this->config->is_sender_acknowledgment_enabled() ? ' ' . $this->lang['contact.message.acknowledgment'] : ''), MessageHelper::SUCCESS));
 				$this->view->put('C_MAIL_SENT', true);
 			}
 			else
-				$this->view->put('MSG', MessageHelper::display($this->lang['contact.message.error.mail'], MessageHelper::ERROR, 5));
+				$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['contact.message.error.email'], MessageHelper::ERROR, 5));
 		}
 
 		$this->view->put('FORM', $this->form->display());
 
 		$this->view->put_all(array(
-			'C_INFORMATIONS_LEFT' => $this->config->are_informations_enabled() && $this->config->are_informations_left(),
-			'C_INFORMATIONS_TOP' => $this->config->are_informations_enabled() && $this->config->are_informations_top(),
-			'C_INFORMATIONS_RIGHT' => $this->config->are_informations_enabled() && $this->config->are_informations_right(),
+			'C_INFORMATIONS_LEFT'   => $this->config->are_informations_enabled() && $this->config->are_informations_left(),
+			'C_INFORMATIONS_TOP'    => $this->config->are_informations_enabled() && $this->config->are_informations_top(),
+			'C_INFORMATIONS_RIGHT'  => $this->config->are_informations_enabled() && $this->config->are_informations_right(),
 			'C_INFORMATIONS_BOTTOM' => $this->config->are_informations_enabled() && $this->config->are_informations_bottom(),
-			'C_INFORMATIONS_SIDE' => $this->config->are_informations_enabled() && ($this->config->are_informations_left() || $this->config->are_informations_right()),
-			'INFORMATIONS' => FormatingHelper::second_parse($this->config->get_informations()),
-			'C_MAP_ENABLED' => $this->config->is_map_enabled(),
-			'C_MAP_TOP' => $this->config->is_map_enabled() && $this->config->is_map_top(),
-			'C_MAP_BOTTOM' => $this->config->is_map_enabled() && $this->config->is_map_bottom(),
+			'C_INFORMATIONS_SIDE'   => $this->config->are_informations_enabled() && ($this->config->are_informations_left() || $this->config->are_informations_right()),
+			'INFORMATIONS'          => FormatingHelper::second_parse($this->config->get_informations()),
+			'C_MAP_ENABLED'         => $this->config->is_map_enabled(),
+			'C_MAP_TOP'             => $this->config->is_map_enabled() && $this->config->is_map_top(),
+			'C_MAP_BOTTOM'          => $this->config->is_map_enabled() && $this->config->is_map_bottom(),
 		));
 	}
 
@@ -176,7 +176,7 @@ class ContactController extends ModuleController
 		$message .= $this->form->get_value('f_message');
 
 		$mail = new Mail();
-		$mail->set_sender(MailServiceConfig::load()->get_default_mail_sender(), $this->lang['module.title']);
+		$mail->set_sender(MailServiceConfig::load()->get_default_mail_sender(), $this->lang['contact.module.title']);
 		$mail->set_reply_to($this->form->get_value('f_sender_mail'), $current_user->get_display_name());
 		$mail->set_subject($subject);
 		$mail->set_content(TextHelper::html_entity_decode($message));
@@ -257,12 +257,12 @@ class ContactController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['module.title']);
+		$graphical_environment->set_page_title($this->lang['contact.module.title']);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['contact.seo.description'], array('site' => GeneralConfig::load()->get_site_name())));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(ContactUrlBuilder::home());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'], ContactUrlBuilder::home());
+		$breadcrumb->add($this->lang['contact.module.title'], ContactUrlBuilder::home());
 
 		return $response;
 	}

@@ -27,6 +27,8 @@ $lang['date.unit.minute']  = 'mn';
 $lang['date.unit.seconds'] = 's';
 
 $lang['date.date']        = 'Date';
+$lang['date.from.date']   = 'from';
+$lang['date.to.date']     = 'to';
 $lang['date.today']       = 'Today';
 $lang['date.every.day']   = 'Everyday';
 $lang['date.every.week']  = 'Every week';

@@ -19,13 +19,13 @@
 				jQuery('#checkbox_' + this.integer).after(' ');
 
 				jQuery('<div/>', {id : 'inputs_' + this.integer, class : 'grouped-inputs'}).appendTo('#' + id);
-				jQuery('<input/>', {class : 'grouped-element', type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, required : "required", placeholder : '{@field.name}'}).appendTo('#inputs_' + this.integer);
+				jQuery('<input/>', {class : 'grouped-element', type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, required : "required", placeholder : '{@form.name}'}).appendTo('#inputs_' + this.integer);
 				jQuery('#' + id).append(' ');
 
-				jQuery('<input/>', {class : 'grouped-element', type : 'email', id : 'field_email_' + id, name : 'field_email_' + id, placeholder : "${LangLoader::get_message('contact.field.possible.values.email', 'common', 'contact')}", required : "required", multiple : "multiple"}).appendTo('#inputs_' + this.integer);
+				jQuery('<input/>', {class : 'grouped-element', type : 'email', id : 'field_email_' + id, name : 'field_email_' + id, placeholder : "${LangLoader::get_message('contact.possible.values.email', 'common', 'contact')}", required : "required", multiple : "multiple"}).appendTo('#inputs_' + this.integer);
 				jQuery('#' + id).append(' ');
 
-				jQuery('<a/>', {class : 'grouped-element', href : 'javascript:ContactFormFieldRecipientsPossibleValues.delete('+ this.integer +');', 'aria-label' : "${LangLoader::get_message('delete', 'common')}"}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#inputs_' + this.integer);
+				jQuery('<a/>', {class : 'grouped-element', href : 'javascript:ContactFormFieldRecipientsPossibleValues.delete('+ this.integer +');', 'aria-label' : "${LangLoader::get_message('common.delete', 'common-lang')}"}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#inputs_' + this.integer);
 
 				this.integer++;
 			}
@@ -45,7 +45,7 @@
 </script>
 
 <div id="input_fields_${escape(HTML_ID)}">
-<span class="text-strong is-default-title">{@field.possible_values.is_default}</span>
+<span class="text-strong is-default-title">{@form.possible.values.is.default}</span>
 # START fieldelements #
 	<div id="${escape(HTML_ID)}_{fieldelements.ID}" class="possible-values mini-checkbox">
 		<div class="form-field-checkbox">
@@ -55,11 +55,11 @@
 			</label>
 		</div>
 		<div class="grouped-inputs">
-			<input class="grouped-element" type="text" name="field_name_${escape(HTML_ID)}_{fieldelements.ID}" id="field_name_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@field.name}">
-			<input class="grouped-element" type="email" name="field_email_${escape(HTML_ID)}_{fieldelements.ID}" id="field_email_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.EMAIL}" placeholder="${LangLoader::get_message('contact.field.possible.values.email', 'common', 'contact')}" multiple="multiple"# IF NOT fieldelements.C_DELETABLE # disabled="disabled"# ENDIF #>
-			# IF fieldelements.C_DELETABLE #<a class="grouped-element" href="javascript:ContactFormFieldRecipientsPossibleValues.delete({fieldelements.ID});" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
+			<input class="grouped-element" type="text" name="field_name_${escape(HTML_ID)}_{fieldelements.ID}" id="field_name_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@form.name}">
+			<input class="grouped-element" type="email" name="field_email_${escape(HTML_ID)}_{fieldelements.ID}" id="field_email_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.EMAIL}" placeholder="${LangLoader::get_message('contact.possible.values.email', 'common', 'contact')}" multiple="multiple"# IF NOT fieldelements.C_DELETABLE # disabled="disabled"# ENDIF #>
+			# IF fieldelements.C_DELETABLE #<a class="grouped-element" href="javascript:ContactFormFieldRecipientsPossibleValues.delete({fieldelements.ID});" aria-label="${LangLoader::get_message('common.delete', 'common-lang')}" data-confirmation="delete-element"><i class="far fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
 		</div>
 	</div>
 # END fieldelements #
 </div>
-<a href="javascript:ContactFormFieldRecipientsPossibleValues.add();" id="add-${escape(HTML_ID)}" class="form-field-checkbox-more-value" aria-label="${LangLoader::get_message('add', 'common')}"><i class="far fa-lg fa-plus-square" aria-hidden="true"></i></a>
+<a href="javascript:ContactFormFieldRecipientsPossibleValues.add();" id="add-${escape(HTML_ID)}" class="form-field-checkbox-more-value" aria-label="${LangLoader::get_message('common.add', 'common-lang')}"><i class="far fa-lg fa-plus-square" aria-hidden="true"></i></a>

@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 09 18
+ * @version     PHPBoost 6.0 - last update: 2021 04 22
  * @since       PHPBoost 4.0 - 2013 09 29
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
@@ -21,10 +22,9 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 	function display()
 	{
 		$template = $this->get_template_to_use();
-		$lang = LangLoader::get('admin-user-common');
 
-		$tpl = new FileTemplate('contact/ContactFormFieldRecipientsPossibleValues.tpl');
-		$tpl->add_lang($lang);
+		$view = new FileTemplate('contact/ContactFormFieldRecipientsPossibleValues.tpl');
+		$view->add_lang(LangLoader::get('form-lang'));
 
 		$this->assign_common_template_variables($template);
 
@@ -35,7 +35,7 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 			if (!empty($options))
 			{
 				$has_default = $options['is_default'] ? true : $has_default;
-				$tpl->assign_block_vars('fieldelements', array(
+				$view->assign_block_vars('fieldelements', array(
 					'C_DELETABLE' => $i > 0,
 					'ID' => $i,
 					'NAME' => stripslashes($options['title']),
@@ -46,7 +46,7 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 			}
 		}
 
-		$tpl->put_all(array(
+		$view->put_all(array(
 			'NAME' => $this->get_html_id(),
 			'HTML_ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->is_disabled(),
@@ -56,7 +56,7 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 		));
 
 		$template->assign_block_vars('fieldelements', array(
-			'ELEMENT' => $tpl->render()
+			'ELEMENT' => $view->render()
 		));
 
 		return $template;

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 19
+ * @version     PHPBoost 6.0 - last update: 2021 04 22
  * @since       PHPBoost 6.0 - 2021 04 18
 */
 
@@ -25,58 +25,143 @@ $lang['form.search']  = 'Search';
 $lang['form.save']    = 'Save';
 $lang['form.go']      = 'Go';
 $lang['form.ok']      = 'OK';
+$lang['form.refresh'] = 'Refresh';
+
+// Configuration
+$lang['form.documentation']             = 'Documentation';
+$lang['form.configuration']             = 'Configuration';
+$lang['form.module.title']              = ':module_name module configuration';
+$lang['form.categories.per.page']       = 'Categories number per page';
+$lang['form.categories.per.row']        = 'Categories number per row';
+$lang['form.items.per.row']             = 'Items number per row';
+$lang['form.items.per.page']            = 'Items number per page';
+$lang['form.display.summary.to.guests'] = 'Display summary of files to guests if they don\'t have read permission';
+$lang['form.items.default.sort.field']  = 'Default items display order';
+$lang['form.items.default.sort.mode']   = 'Default items display direction';
+$lang['form.sort.form.displayed']       = 'Display sort form on lists';
+$lang['form.author.displayed']          = 'Display author\'s name';
+$lang['form.date.displayed']            = 'Display publication date';
+$lang['form.update.date.displayed']     = 'Display update date';
+$lang['form.views.number.enabled']      = 'Display views number';
+$lang['form.comments_enabled']          = 'Enable comments';
+$lang['form.notation_enabled']          = 'Enable notation';
+$lang['form.notation_scale']            = 'Notation scale';
+$lang['form.forbidden-tags']            = 'Forbidden tags';
+$lang['form.display']                   = 'Display';
+$lang['form.display.not']               = 'Don\'t display';
+$lang['form.displayed']                 = 'Displayed';
+$lang['form.displayed.not']             = 'Not displayed';
+$lang['form.display.type']              = 'Display type';
+$lang['form.display.type.grid']         = 'Display in grid view';
+$lang['form.display.type.list']         = 'Display in list view';
+$lang['form.full.item.display']         = 'Full item display';
+$lang['form.display.type.table']        = 'Display in table view';
+$lang['form.characters.number.to.cut']  = 'Characters number to cut';
+$lang['form.root.category.description'] = 'Root category description';
+$lang['form.item.default.content']      = 'Item default content';
+$lang['form.authorizations.clue']       = 'Global module authorizations. You can change these authorizations on each category.';
+
+// Extended Fields
+$lang['form.fields.management']                     = 'Profile field management';
+$lang['form.extended.field.add']                    = 'Add profile field';
+$lang['form.extended.field.edit']                   = 'Edit profile field';
+$lang['form.extended.field']                        = 'Profile fields';
+$lang['form.extended.fields.management']            = 'Profile field management';
+$lang['form.extended.fields.error.already.exists']  = 'The field already exists.';
+$lang['form.extended.fields.error.phpboost.config'] = 'The fields used by default PHPBoost can not be created more than one time, please choose another type of field.';
+
+// Fields
+$lang['form.fields.management']              = 'Fields management';
+$lang['form.field.add']                      = 'Add a field';
+$lang['form.field.edit']                     = 'Edit a field';
+$lang['form.field.type']                     = 'Field Type';
+$lang['form.default.field']                  = 'Default field';
+$lang['form.short.text']                     = 'Short text (max 255 characters)';
+$lang['form.long.text']                      = 'Long text (unlimited)';
+$lang['form.half.text']                      = 'Medium text';
+$lang['form.simple.select']                  = 'Single selection (between several values)';
+$lang['form.multiple.select']                = 'Multiple selection (between several values)';
+$lang['form.simple.check']                   = 'Single choice (between several values)';
+$lang['form.multiple.check']                 = 'Multiple choice (between several values)';
+$lang['form.date']                           = 'Date';
+$lang['form.themes.choice']                  = 'Theme';
+$lang['form.langs.choice']                   = 'Language';
+$lang['form.birthdate']                      = 'Date of birth';
+$lang['form.pm.to.email']                    = 'Email notification when receiving private message';
+$lang['form.editor.choice']                  = 'Editor';
+$lang['form.timezone.choice']                = 'Timezone choice';
+$lang['form.sex.choice']                     = 'Sex';
+$lang['form.avatar.management']              = 'Avatar';
+$lang['form.required.field']                 = 'Required field';
+$lang['form.required.field.clue']            = 'Required in the member profile and registration area';
+$lang['form.possible.values']                = 'Possible values';
+$lang['form.possible.values.is.default']     = 'Is default';
+$lang['form.possible.values.delete.default'] = 'Delete default value';
+$lang['form.default.value']                  = 'Default value';
+$lang['form.read.authorizations']            = 'Read permissions of the field in the profile';
+$lang['form.actions.authorizations']         = 'Read permissions of the field when creating or editing a profile';
+
+// Messages
+$lang['form.message.success.add'] = 'The profile field <b>:name</b> has been added';
+$lang['form.message.success.edit'] = 'The profile field <b>:name</b> has been modified';
 
 // Labels
-$lang['form.name'] = 'Name';
-$lang['form.title'] = 'Title';
-$lang['form.content'] = 'Content';
-$lang['form.description'] = 'Description';
-$lang['form.summary'] = 'Summary';
-$lang['form.custom.summary.enabled'] = 'Personalize short content';
+$lang['form.name']                        = 'Name';
+$lang['form.title']                       = 'Title';
+$lang['form.content']                     = 'Content';
+$lang['form.description']                 = 'Description';
+$lang['form.summary']                     = 'Summary';
+$lang['form.custom.summary.enabled']      = 'Personalize short content';
 $lang['form.custom.summary.enabled.clue'] = 'If unchecked, the content is automatically cut to :number characters and formatting of the text deleted.';
-$lang['form.short.content.enabled.clue'] = 'If unchecked, the content is automatically cut to :number characters and formatting of the text deleted.'; // To be deleted whan all modules will use the new variable
-$lang['form.author.custom.name.enabled'] = 'Personalize author name';
-$lang['form.author.custom.name'] = 'Author name';
-$lang['form.category'] = 'Location';
-$lang['form.rewrited.name'] = 'Rewrited name in the url';
-$lang['form.rewrited.name.clue'] = 'Only contains lowercase letters, numbers and hyphens.';
-$lang['form.rewrited.name.personalize'] = 'Personalize rewrited name in the url';
-$lang['form.approve'] = 'Approve';
-$lang['form.approbation'] = 'Publication';
-$lang['form.approbation.not'] = 'Keep in draft';
-$lang['form.approbation.now'] = 'Publish now';
-$lang['form.date.selector'] = 'Open/close the date selector';
-$lang['form.date.start'] = 'From';
-$lang['form.date.end'] = 'Until';
-$lang['form.date.creation'] = 'Creation date';
-$lang['form.update.date.creation'] = 'Update creation date with today\'s date';
-$lang['form.date.update'] = 'Last update';
-$lang['form.date.end.enable'] = 'Define a publication end date';
-$lang['form.url'] = 'Address';
-$lang['form.other'] = 'Other';
-$lang['form.parameters'] = 'Parameters';
-$lang['form.options'] = 'Options';
-$lang['form.keywords'] = 'Keywords';
-$lang['form.keywords.clue'] = 'Only one keyword per row';
-$lang['form.thumbnail'] = 'Thumbnail';
-$lang['form.thumbnail.preview'] = 'Thumbnail preview';
-$lang['form.picture'] = 'Picture';
-$lang['form.picture.preview'] = 'Picture preview';
-$lang['form.sources'] = 'Sources';
-$lang['form.add.source'] = 'Add a source';
-$lang['form.del.source'] = 'Delete the source';
-$lang['form.source.name'] = 'Source name';
-$lang['form.source.url'] = 'Source address';
-$lang['form.captcha'] = 'Code de vérification';
+$lang['form.short.content.enabled.clue']  = 'If unchecked, the content is automatically cut to :number characters and formatting of the text deleted.'; // To be deleted whan all modules will use the new variable
+$lang['form.author.custom.name.enabled']  = 'Personalize author name';
+$lang['form.author.custom.name']          = 'Author name';
+$lang['form.category']                    = 'Location';
+$lang['form.rewrited.name']               = 'Rewrited name in the url';
+$lang['form.rewrited.name.clue']          = 'Only contains lowercase letters, numbers and hyphens.';
+$lang['form.rewrited.name.personalize']   = 'Personalize rewrited name in the url';
+$lang['form.approve']                     = 'Approve';
+$lang['form.approbation']                 = 'Publication';
+$lang['form.approbation.not']             = 'Keep in draft';
+$lang['form.approbation.now']             = 'Publish now';
+$lang['form.date.selector']               = 'Open/close the date selector';
+$lang['form.date.start']                  = 'From';
+$lang['form.date.end']                    = 'Until';
+$lang['form.date.creation']               = 'Creation date';
+$lang['form.update.date.creation']        = 'Update creation date with today\'s date';
+$lang['form.date.update']                 = 'Last update';
+$lang['form.date.end.enable']             = 'Define a publication end date';
+$lang['form.url']                         = 'Address';
+$lang['form.other']                       = 'Other';
+$lang['form.parameters']                  = 'Parameters';
+$lang['form.options']                     = 'Options';
+$lang['form.keywords']                    = 'Keywords';
+$lang['form.keywords.clue']               = 'Only one keyword per row';
+$lang['form.thumbnail']                   = 'Thumbnail';
+$lang['form.thumbnail.preview']           = 'Thumbnail preview';
+$lang['form.picture']                     = 'Picture';
+$lang['form.picture.preview']             = 'Picture preview';
+$lang['form.sources']                     = 'Sources';
+$lang['form.add.source']                  = 'Add a source';
+$lang['form.del.source']                  = 'Delete the source';
+$lang['form.source.name']                 = 'Source name';
+$lang['form.source.url']                  = 'Source address';
+$lang['form.captcha']                     = 'Code de vérification';
 
 // Regex
-$lang['form.figures']         = 'Figures';
-$lang['form.letters']         = 'Letters';
-$lang['form.figures.letters'] = 'Figures and letters';
-$lang['form.word']            = 'Word';
-$lang['form.website']         = 'Website';
-$lang['form.email']           = 'Email';
-$lang['form.phone.number']    = 'Phone number';
-$lang['form.personnal.regex'] = 'Custom regular expression';
+$lang['form.regex']            = 'Entry form control';
+$lang['form.figures']          = 'Figures';
+$lang['form.letters']          = 'Letters';
+$lang['form.figures.letters']  = 'Figures and letters';
+$lang['form.word']             = 'Word';
+$lang['form.website']          = 'Website';
+$lang['form.email']            = 'Email';
+$lang['form.phone.number']     = 'Phone number';
+$lang['form.personnal.regex']  = 'Custom regular expression';
+$lang['form.predefined.regex'] = 'Predefined pattern';
+$lang['form.regex.clue'] = '
+    You can control the form of input used. For instance, if an email address is expected, you can verify that its form is correct.<br />
+    For advanced users, it is possible to write your own regular expression (<acronym="Perl Compatible Regular Expression">PCRE</acronym>) to control the user input.
+';
 
 ?>

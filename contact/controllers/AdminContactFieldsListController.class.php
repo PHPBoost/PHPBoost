@@ -3,13 +3,13 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 02 11
+ * @version     PHPBoost 6.0 - last update: 2021 04 22
  * @since       PHPBoost 4.0 - 2013 03 01
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminContactFieldsListController extends AdminModuleController
 {
-	private $lang;
 	private $view;
 	private $config;
 
@@ -26,30 +26,29 @@ class AdminContactFieldsListController extends AdminModuleController
 			$field->set_properties($properties);
 
 			$this->view->assign_block_vars('fields_list', array(
-				'C_DELETE' => $field->is_deletable(),
+				'C_DELETE'   => $field->is_deletable(),
 				'C_READONLY' => $field->is_readonly(),
-				'C_DISPLAY' => $field->is_displayed(),
+				'C_DISPLAY'  => $field->is_displayed(),
 				'C_REQUIRED' => $field->is_required(),
-				'ID' => $id,
-				'NAME' => $field->get_name(),
-				'U_EDIT' => ContactUrlBuilder::edit_field($id)->rel()
+				'ID'         => $id,
+				'NAME'       => $field->get_name(),
+				'U_EDIT'     => ContactUrlBuilder::edit_field($id)->rel()
 			));
 			$fields_number++;
 		}
 
 		$this->view->put_all(array(
-			'C_FIELDS' => $fields_number,
-			'C_MORE_THAN_ONE_FIELD' => $fields_number > 1
+			'C_FIELDS'         => $fields_number,
+			'C_SEVERAL_FIELDS' => $fields_number > 1
 		));
 
-		return new AdminContactDisplayResponse($this->view, LangLoader::get_message('contact.fields.management.title', 'common', 'contact'));
+		return new AdminContactDisplayResponse($this->view, LangLoader::get_message('form.fields.management', 'form-lang'));
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-user-common');
 		$this->view = new FileTemplate('contact/AdminContactFieldsListController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->view->add_lang(array_merge(LangLoader::get('common-lang'), LangLoader::get('form-lang')));
 		$this->config = ContactConfig::load();
 	}
 
@@ -58,7 +57,7 @@ class AdminContactFieldsListController extends AdminModuleController
 		if ($request->get_value('submit', false))
 		{
 			$this->update_position($request);
-			$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.position.update', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.message.success.position.update', 'warning-lang'), MessageHelper::SUCCESS, 5));
 		}
 	}
 

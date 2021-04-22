@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 09 18
+ * @version     PHPBoost 6.0 - last update: 2021 04 22
  * @since       PHPBoost 4.0 - 2013 10 07
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ContactFormFieldObjectPossibleValues extends AbstractFormField
@@ -24,8 +25,8 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 		$lang = LangLoader::get('common', 'contact');
 		$config = ContactConfig::load();
 
-		$tpl = new FileTemplate('contact/ContactFormFieldObjectPossibleValues.tpl');
-		$tpl->add_lang($lang);
+		$view = new FileTemplate('contact/ContactFormFieldObjectPossibleValues.tpl');
+		$view->add_lang($lang);
 
 		$this->assign_common_template_variables($template);
 
@@ -38,7 +39,7 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 		{
 			if (!empty($options))
 			{
-				$tpl->assign_block_vars('recipients_list', array(
+				$view->assign_block_vars('recipients_list', array(
 					'ID' => $id,
 					'NAME' => stripslashes($options['title'])
 				));
@@ -52,7 +53,7 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 			if (!empty($options))
 			{
 				$has_default = $options['is_default'] ? true : $has_default;
-				$tpl->assign_block_vars('fieldelements', array(
+				$view->assign_block_vars('fieldelements', array(
 					'ID' => $i,
 					'NAME' => stripslashes($options['title']),
 					'IS_DEFAULT' => (int) $options['is_default']
@@ -61,7 +62,7 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 				{
 					if (!empty($recipient_options))
 					{
-						$tpl->assign_block_vars('fieldelements.recipients_list', array(
+						$view->assign_block_vars('fieldelements.recipients_list', array(
 							'C_RECIPIENT_SELECTED' => $options['recipient'] == $id,
 							'ID' => $id,
 							'NAME' => stripslashes($recipient_options['title'])
@@ -74,7 +75,7 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 
 		if ($i == 0)
 		{
-			$tpl->assign_block_vars('fieldelements', array(
+			$view->assign_block_vars('fieldelements', array(
 				'ID' => $i,
 				'NAME' => '',
 				'IS_DEFAULT' => 0,
@@ -83,7 +84,7 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 			{
 				if (!empty($options))
 				{
-					$tpl->assign_block_vars('fieldelements.recipients_list', array(
+					$view->assign_block_vars('fieldelements.recipients_list', array(
 						'ID' => $id,
 						'NAME' => stripslashes($options['title'])
 					));
@@ -92,7 +93,7 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 			$i++;
 		}
 
-		$tpl->put_all(array(
+		$view->put_all(array(
 			'NAME' => $this->get_html_id(),
 			'HTML_ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->is_disabled(),
@@ -102,7 +103,7 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 		));
 
 		$template->assign_block_vars('fieldelements', array(
-			'ELEMENT' => $tpl->render()
+			'ELEMENT' => $view->render()
 		));
 
 		return $template;

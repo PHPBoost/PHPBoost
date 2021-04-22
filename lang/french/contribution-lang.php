@@ -13,6 +13,7 @@
 
 $lang['contribution.panel']          = 'Panneau de contributions';
 $lang['contribution.my.items']       = 'Mes contributions';
+$lang['contribution.contribution']   = 'Contribution';
 $lang['contribution.contributions']  = 'Contributions';
 $lang['contribution.details']        = 'Détails de la contribution';
 $lang['contribution.process']        = 'Traiter la contribution';
@@ -47,6 +48,7 @@ $lang['contribution.member.edition.clue'] = '
     Vous êtes sur le point de modifier votre contribution. Elle va être déplacée dans les éléments en attente afin d\'être traitée
     et une nouvelle alerte sera envoyée aux administrateurs.
 ';
+
 $lang['contribution.description']                     = 'Complément de contribution';
 $lang['contribution.description.clue']                = 'Expliquez les raisons de votre contribution. Ce champ est facultatif mais il peut aider un approbateur à prendre sa décision.';
 $lang['contribution.member.edition.description']      = 'Complément de modification';
