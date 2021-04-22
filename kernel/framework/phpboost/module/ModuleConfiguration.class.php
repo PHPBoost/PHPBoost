@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 01
+ * @version     PHPBoost 6.0 - last update: 2021 04 22
  * @since       PHPBoost 3.0 - 2009 12 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -232,7 +232,7 @@ class ModuleConfiguration
 		}
 		
 		$this->home_page              = !empty($config['home_page']) ? $config['home_page'] : ($this->item_name ? 'index.php' : '');
-		$this->admin_main_page        = !empty($config['admin_main_page']) ? (!preg_match('/' . $this->module_id . '\//', $config['admin_main_page']) ? Url::to_rel('/' . $this->module_id . '/' . $config['admin_main_page']) : $config['admin_main_page']) : ($this->get_configuration_name() ? ModulesUrlBuilder::admin($this->module_id)->relative() : '');
+		$this->admin_main_page        = !empty($config['admin_main_page']) ? (!preg_match('/' . $this->module_id . '\//', $config['admin_main_page']) ? Url::to_relative('/' . $this->module_id . '/' . $config['admin_main_page']) : $config['admin_main_page']) : ($this->get_configuration_name() ? ModulesUrlBuilder::admin($this->module_id)->relative() : '');
 		$this->admin_menu             = !empty($config['admin_menu']) ? $config['admin_menu'] : 'modules';
 	}
 
