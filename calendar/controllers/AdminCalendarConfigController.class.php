@@ -146,7 +146,7 @@ class AdminCalendarConfigController extends AdminModuleController
 				array(new FormFieldConstraintIntegerRange(1, 4))
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('full_item_display', $this->form_lang['form.full.item.display'], $this->config->is_full_item_displayed(),
+		$fieldset->add_field(new FormFieldCheckbox('full_item_display', $this->form_lang['form.display.full.item'], $this->config->is_full_item_displayed(),
 			array(
 				'class' => 'custom-checkbox',
 				'hidden' => $this->config->get_display_type() !== CalendarConfig::LIST_VIEW,

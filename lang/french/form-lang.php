@@ -13,7 +13,7 @@
 
 $lang['form.required.fields'] = 'Les champs marqués * sont obligatoires !';
 
-// buttons
+// Buttons
 $lang['form.submit']  = 'Valider';
 $lang['form.reset']   = 'Défaut';
 $lang['form.preview'] = 'Prévisualisation';
@@ -35,15 +35,8 @@ $lang['form.categories.per.page']       = 'Nombre de catégories par page';
 $lang['form.categories.per.row']        = 'Nombre de catégories par ligne';
 $lang['form.items.per.row']             = 'Nombre d\'éléments par ligne';
 $lang['form.items.per.page']            = 'Nombre d\'éléments par page';
-$lang['form.display.summary.to.guests'] = 'Afficher le résumé des éléments aux visiteurs non autorisés en lecture';
-$lang['form.items.default.sort.field']  = 'Ordre d\'affichage des éléments par défaut';
-$lang['form.sort.form.displayed']       = 'Afficher le formulaire de tri dans les listes';
-$lang['form.author.displayed']          = 'Afficher le nom de l\'auteur';
-$lang['form.date.displayed']            = 'Afficher la date de publication';
-$lang['form.update.date.displayed']     = 'Afficher la date de mise à jour';
-$lang['form.views.number.enabled']      = 'Afficher le nombre de vues';
-$lang['form.comments.enabled']          = 'Activer les commentaires';
-$lang['form.notation.enabled']          = 'Activer la notation';
+$lang['form.enable.comments']           = 'Activer les commentaires';
+$lang['form.enable.notation']           = 'Activer la notation';
 $lang['form.notation.scale']            = 'Echelle de notation';
 $lang['form.forbidden.tags']            = 'Formats interdits';
 $lang['form.display']                   = 'Afficher';
@@ -54,8 +47,16 @@ $lang['form.display.type']              = 'Type d\'affichage';
 $lang['form.display.type.grid']         = 'Affichage en grille';
 $lang['form.display.type.list']         = 'Affichage en liste';
 $lang['form.display.type.table']        = 'Affichage en tableau';
-$lang['form.full.item.display']         = 'Affichage complet des éléments';
+$lang['form.display.full.item']         = 'Afficher les éléments en entier';
 $lang['form.characters.number.to.cut']  = 'Nombre de caractères pour couper l\'élément';
+$lang['form.display.summary.to.guests'] = 'Afficher le résumé des éléments aux visiteurs non autorisés en lecture';
+$lang['form.display.author']            = 'Afficher le nom de l\'auteur';
+$lang['form.display.date']              = 'Afficher la date de publication';
+$lang['form.display.update.date']       = 'Afficher la date de mise à jour';
+$lang['form.display.views.number']      = 'Afficher le nombre de vues';
+$lang['form.items.default.sort']        = 'Tri par défaut des éléments';
+$lang['form.items.default.sort.mode']   = 'Sens du tri par défaut des éléments';
+$lang['form.display.sort.form']         = 'Afficher le formulaire de tri des éléments';
 $lang['form.root.category.description'] = 'Description de la catégorie racine';
 $lang['form.item.default.content']      = 'Contenu par défaut d\'un élément';
 $lang['form.authorizations.clue']       = 'Autorisations globales du module. Vous pouvez changer ces autorisations localement sur chaque catégorie.';
@@ -101,7 +102,7 @@ $lang['form.read.authorizations']            = 'Autorisations de lecture du cham
 $lang['form.actions.authorizations']         = 'Autorisations de lecture du champ dans la création ou la modification d\'un profil';
 
 // Messages
-$lang['form.message.success.add'] = 'Le champ du profil <b>:name</b> a été ajouté';
+$lang['form.message.success.add']  = 'Le champ du profil <b>:name</b> a été ajouté';
 $lang['form.message.success.edit'] = 'Le champ du profil <b>:name</b> a été modifié';
 
 // Labels

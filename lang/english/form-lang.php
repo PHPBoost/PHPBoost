@@ -35,18 +35,10 @@ $lang['form.categories.per.page']       = 'Categories number per page';
 $lang['form.categories.per.row']        = 'Categories number per row';
 $lang['form.items.per.row']             = 'Items number per row';
 $lang['form.items.per.page']            = 'Items number per page';
-$lang['form.display.summary.to.guests'] = 'Display summary of files to guests if they don\'t have read permission';
-$lang['form.items.default.sort.field']  = 'Default items display order';
-$lang['form.items.default.sort.mode']   = 'Default items display direction';
-$lang['form.sort.form.displayed']       = 'Display sort form on lists';
-$lang['form.author.displayed']          = 'Display author\'s name';
-$lang['form.date.displayed']            = 'Display publication date';
-$lang['form.update.date.displayed']     = 'Display update date';
-$lang['form.views.number.enabled']      = 'Display views number';
-$lang['form.comments_enabled']          = 'Enable comments';
-$lang['form.notation_enabled']          = 'Enable notation';
-$lang['form.notation_scale']            = 'Notation scale';
-$lang['form.forbidden-tags']            = 'Forbidden tags';
+$lang['form.enable.comments']           = 'Enable comments';
+$lang['form.enable.notation']           = 'Enable notation';
+$lang['form.notation.scale']            = 'Notation scale';
+$lang['form.forbidden.tags']            = 'Forbidden tags';
 $lang['form.display']                   = 'Display';
 $lang['form.display.not']               = 'Don\'t display';
 $lang['form.displayed']                 = 'Displayed';
@@ -54,15 +46,23 @@ $lang['form.displayed.not']             = 'Not displayed';
 $lang['form.display.type']              = 'Display type';
 $lang['form.display.type.grid']         = 'Display in grid view';
 $lang['form.display.type.list']         = 'Display in list view';
-$lang['form.full.item.display']         = 'Full item display';
 $lang['form.display.type.table']        = 'Display in table view';
+$lang['form.display.full.item']         = 'Display full item';
 $lang['form.characters.number.to.cut']  = 'Characters number to cut';
+$lang['form.display.summary.to.guests'] = 'Display summary of files to guests if they don\'t have read permission';
+$lang['form.display.author']            = 'Display author\'s name';
+$lang['form.display.date']              = 'Display publication date';
+$lang['form.display.update.date']       = 'Display update date';
+$lang['form.display.views.number']      = 'Display views number';
+$lang['form.items.default.sort']        = 'Items default sort';
+$lang['form.items.default.sort.mode']   = 'Items default sort direction';
+$lang['form.display.sort.form']         = 'Display items sort form';
 $lang['form.root.category.description'] = 'Root category description';
 $lang['form.item.default.content']      = 'Item default content';
 $lang['form.authorizations.clue']       = 'Global module authorizations. You can change these authorizations on each category.';
 
 // Extended Fields
-$lang['form.fields.management']                     = 'Profile field management';
+$lang['form.profile.fields.management']             = 'Profile field management';
 $lang['form.extended.field.add']                    = 'Add profile field';
 $lang['form.extended.field.edit']                   = 'Edit profile field';
 $lang['form.extended.field']                        = 'Profile fields';
@@ -102,7 +102,7 @@ $lang['form.read.authorizations']            = 'Read permissions of the field in
 $lang['form.actions.authorizations']         = 'Read permissions of the field when creating or editing a profile';
 
 // Messages
-$lang['form.message.success.add'] = 'The profile field <b>:name</b> has been added';
+$lang['form.message.success.add']  = 'The profile field <b>:name</b> has been added';
 $lang['form.message.success.edit'] = 'The profile field <b>:name</b> has been modified';
 
 // Labels
