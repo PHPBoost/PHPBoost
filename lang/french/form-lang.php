@@ -13,6 +13,18 @@
 
 $lang['form.required.fields'] = 'Les champs marqués * sont obligatoires !';
 
+// Autorisations
+$lang['form.authorizations']                       = 'Autorisations';
+$lang['form.authorizations.read']                  = 'Autorisation de lecture';
+$lang['form.authorizations.write']                 = 'Autorisation d\'écriture';
+$lang['form.authorizations.contribution']          = 'Autorisation de contribution';
+$lang['form.authorizations.moderation']            = 'Autorisation de modération';
+$lang['form.authorizations.categories.management'] = 'Autorisation de gérer les catégories';
+$lang['form.authorizations.menu']                  = 'Autorisation d\'afficher le menu';
+$lang['form.authorizations.specials']              = 'Autorisations spéciales';
+$lang['form.authorizations.default']               = 'Autorisations par défaut';
+$lang['form.authorizations.clue']                  = 'Autorisations globales du module. Vous pouvez changer ces autorisations localement sur chaque catégorie.';
+
 // Buttons
 $lang['form.submit']  = 'Valider';
 $lang['form.reset']   = 'Défaut';
@@ -59,7 +71,6 @@ $lang['form.items.default.sort.mode']   = 'Sens du tri par défaut des élément
 $lang['form.display.sort.form']         = 'Afficher le formulaire de tri des éléments';
 $lang['form.root.category.description'] = 'Description de la catégorie racine';
 $lang['form.item.default.content']      = 'Contenu par défaut d\'un élément';
-$lang['form.authorizations.clue']       = 'Autorisations globales du module. Vous pouvez changer ces autorisations localement sur chaque catégorie.';
 
 // Extended Fields
 $lang['form.profile.fields.management']             = 'Gestion des champs du profil';

@@ -13,6 +13,18 @@
 
 $lang['form.required.fields'] = 'The fields marked with a * are required !';
 
+// Autorisations
+$lang['form.authorizations']                       = 'Permissions';
+$lang['form.authorizations.read']                  = 'Read permission';
+$lang['form.authorizations.write']                 = 'Write permission';
+$lang['form.authorizations.contribution']          = 'Contribution permission';
+$lang['form.authorizations.moderation']            = 'Moderation permission';
+$lang['form.authorizations.categories.management'] = 'Categories management permission';
+$lang['form.authorizations.menu']                  = 'Permission to display menu';
+$lang['form.authorizations.specials']              = 'Special authorizations';
+$lang['form.authorizations.default']               = 'Default authorisations';
+$lang['form.authorizations.clue']                  = 'Global module authorizations. You can change these authorizations on each category.';
+
 // Buttons
 $lang['form.submit']  = 'Submit';
 $lang['form.reset']   = 'Reset';
@@ -59,7 +71,6 @@ $lang['form.items.default.sort.mode']   = 'Items default sort direction';
 $lang['form.display.sort.form']         = 'Display items sort form';
 $lang['form.root.category.description'] = 'Root category description';
 $lang['form.item.default.content']      = 'Item default content';
-$lang['form.authorizations.clue']       = 'Global module authorizations. You can change these authorizations on each category.';
 
 // Extended Fields
 $lang['form.profile.fields.management']             = 'Profile field management';

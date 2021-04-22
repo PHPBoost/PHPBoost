@@ -172,7 +172,7 @@ class AdminContactConfigController extends AdminModuleController
 			));
 		}
 
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations', LangLoader::get_message('common.authorizations', 'common-lang'));
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations', LangLoader::get_message('form.authorizations', 'form-lang'));
 		$form->add_fieldset($fieldset_authorizations);
 
 		$auth_settings = new AuthorizationsSettings(array(

@@ -131,9 +131,13 @@ $lang['common.sort']                    = 'Trier';
 $lang['common.sort.options']            = 'Options de tri';
 $lang['common.sort.by']                 = 'Trier par';
 $lang['common.sort.by.alphabetic']      = 'Alphabétique';
+$lang['common.sort.by.author']          = 'Auteur';
+$lang['common.sort.by.date']            = 'Date';
+$lang['common.sort.by.update']          = 'Dernières modifications';
 $lang['common.sort.by.views.number']    = 'Nombre de vues';
 $lang['common.sort.by.best.note']       = 'Meilleure note';
 $lang['common.sort.by.comments.number'] = 'Nombre de commentaires';
+$lang['common.sort.direction']          = 'Sens de tri';
 $lang['common.sort.asc']                = 'Croissant';
 $lang['common.sort.desc']               = 'Décroissant';
 
@@ -169,17 +173,6 @@ $lang['common.deadlink']                   = 'Signaler un lien mort';
 $lang['common.deadlink.confirmation']      = 'Êtes-vous sûr de vouloir signaler ce lien comme étant mort ?';
 $lang['common.contribution.deadlink']      = 'Lien mort : :link_name';
 $lang['common.contribution.deadlink.clue'] = 'Un membre a signalé ce lien comme étant mort. Veuillez vérifier le lien et modifiez-le si nécessaire.';
-
-// Autorisations
-$lang['common.authorizations'] = 'Autorisations';
-$lang['common.authorizations.read'] = 'Autorisation de lecture';
-$lang['common.authorizations.write'] = 'Autorisation d\'écriture';
-$lang['common.authorizations.contribution'] = 'Autorisation de contribution';
-$lang['common.authorizations.moderation'] = 'Autorisation de modération';
-$lang['common.authorizations.categories.management'] = 'Autorisation de gérer les catégories';
-$lang['common.authorizations.menu'] = 'Autorisation d\'afficher le menu';
-$lang['common.authorizations.specials'] = 'Autorisations spéciales';
-$lang['common.authorizations.default'] = 'Autorisations par défaut';
 
 // Pagination
 $lang['common.pagination.first'] = 'Vers la première page';

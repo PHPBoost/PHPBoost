@@ -130,9 +130,13 @@ $lang['common.sort']                    = 'Sort';
 $lang['common.sort.options']            = 'Sort options';
 $lang['common.sort.by']                 = 'Sort by';
 $lang['common.sort.by.alphabetic']      = 'Alphabetic';
+$lang['common.sort.by.author']          = 'Author';
+$lang['common.sort.by.date']            = 'Date';
+$lang['common.sort.by.update']          = 'Date';
 $lang['common.sort.by.views.number']    = 'Views number';
 $lang['common.sort.by.best.note']       = 'Best note';
 $lang['common.sort.by.comments.number'] = 'Comments number';
+$lang['common.sort.direction']          = 'Sort ddirection';
 $lang['common.sort.asc']                = 'Ascending';
 $lang['common.sort.desc']               = 'Descending';
 
@@ -168,17 +172,6 @@ $lang['common.deadlink'] = 'Report a dead link';
 $lang['common.deadlink.confirmation'] = 'Do you really want to report this link as dead?';
 $lang['common.contribution.deadlink'] = 'Dead link : :link_name';
 $lang['common.contribution.deadlink.clue'] = 'One member reported this link as dead. Please check the link and change it if necessary.';
-
-// Autorisations
-$lang['common.authorizations']                       = 'Permissions';
-$lang['common.authorizations.read']                  = 'Read permission';
-$lang['common.authorizations.write']                 = 'Write permission';
-$lang['common.authorizations.contribution']          = 'Contribution permission';
-$lang['common.authorizations.moderation']            = 'Moderation permission';
-$lang['common.authorizations.categories.management'] = 'Categories management permission';
-$lang['common.authorizations.menu']                  = 'Permission to display menu';
-$lang['common.authorizations.specials']              = 'Special authorizations';
-$lang['common.authorizations.default']               = 'Default authorisations';
 
 // Pagination
 $lang['common.pagination.first']    = 'To first page';
