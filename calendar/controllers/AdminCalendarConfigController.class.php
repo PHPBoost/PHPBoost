@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 06
+ * @version     PHPBoost 6.0 - last update: 2021 04 22
  * @since       PHPBoost 3.0 - 2012 11 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -23,7 +23,7 @@ class AdminCalendarConfigController extends AdminModuleController
 	private $submit_button;
 
 	private $lang;
-	private $admin_common_lang;
+	private $form_lang;
 
 	private $user_born_field;
 
@@ -38,8 +38,8 @@ class AdminCalendarConfigController extends AdminModuleController
 
 		$this->build_form();
 
-		$view = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$view->add_lang(array_merge($this->lang, $this->admin_common_lang));
+		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
+		$view->add_lang(array_merge($this->lang, $this->form_lang));
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -49,7 +49,7 @@ class AdminCalendarConfigController extends AdminModuleController
 			$this->form->get_field_by_id('characters_number_to_cut')->set_hidden(($this->config->is_full_item_displayed() && $this->config->get_display_type() == CalendarConfig::LIST_VIEW) || $this->config->get_display_type() == CalendarConfig::TABLE_VIEW);
 			$this->form->get_field_by_id('full_item_display')->set_hidden($this->config->get_display_type() !== CalendarConfig::LIST_VIEW);
 			$this->form->get_field_by_id('items_per_row')->set_hidden($this->config->get_display_type() !== CalendarConfig::GRID_VIEW);
-			$view->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 
 		$view->put('FORM', $this->form->display());
@@ -61,7 +61,7 @@ class AdminCalendarConfigController extends AdminModuleController
 	{
 		$this->user_born_field = ExtendedFieldsCache::load()->get_extended_field_by_field_name('user_born');
 		$this->lang = LangLoader::get('common', 'calendar');
-		$this->admin_common_lang = LangLoader::get('admin-common');
+		$this->form_lang = LangLoader::get('form-lang');
 		$this->config = CalendarConfig::load();
 	}
 
@@ -69,10 +69,10 @@ class AdminCalendarConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->admin_common_lang['configuration.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->form_lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->lang['calendar.config.items.number.per.page'], $this->config->get_items_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->form_lang['form.items.per.page'], $this->config->get_items_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
@@ -88,7 +88,7 @@ class AdminCalendarConfigController extends AdminModuleController
 		}
 		else
 		{
-			$fieldset->add_field(new FormFieldCheckbox('members_birthday_enabled', $this->lang['calendar.config.members.birthday.enabled'], $this->config->is_members_birthday_enabled(),
+			$fieldset->add_field(new FormFieldCheckbox('members_birthday_enabled', $this->lang['calendar.config.display.birthdays'], $this->config->is_members_birthday_enabled(),
 				array(
 					'class' => 'custom-checkbox',
 					'events' => array('click' => '
@@ -109,11 +109,11 @@ class AdminCalendarConfigController extends AdminModuleController
 
 		$fieldset->add_field(new FormFieldSpacer('display', ''));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->admin_common_lang['config.display.type'], $this->config->get_display_type(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->form_lang['form.display.type'], $this->config->get_display_type(),
 			array(
-				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.grid'], CalendarConfig::GRID_VIEW, array('data_option_icon' => 'fa fa-th-large')),
-				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.list'], CalendarConfig::LIST_VIEW, array('data_option_icon' => 'fa fa-list')),
-				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.table'], CalendarConfig::TABLE_VIEW, array('data_option_icon' => 'fa fa-table'))
+				new FormFieldSelectChoiceOption($this->form_lang['form.display.type.grid'], CalendarConfig::GRID_VIEW, array('data_option_icon' => 'fa fa-th-large')),
+				new FormFieldSelectChoiceOption($this->form_lang['form.display.type.list'], CalendarConfig::LIST_VIEW, array('data_option_icon' => 'fa fa-list')),
+				new FormFieldSelectChoiceOption($this->form_lang['form.display.type.table'], CalendarConfig::TABLE_VIEW, array('data_option_icon' => 'fa fa-table'))
 			),
 			array(
 				'select_to_list' => true,
@@ -139,14 +139,14 @@ class AdminCalendarConfigController extends AdminModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->admin_common_lang['config.items.per.row'], $this->config->get_items_per_row(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->form_lang['form.items.per.row'], $this->config->get_items_per_row(),
 			array(
 				'hidden' => $this->config->get_display_type() !== CalendarConfig::GRID_VIEW,
 				'min' => 1, 'max' => 4, 'required' => true),
 				array(new FormFieldConstraintIntegerRange(1, 4))
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('full_item_display', $this->admin_common_lang['config.full.item.display'], $this->config->is_full_item_displayed(),
+		$fieldset->add_field(new FormFieldCheckbox('full_item_display', $this->form_lang['form.full.item.display'], $this->config->is_full_item_displayed(),
 			array(
 				'class' => 'custom-checkbox',
 				'hidden' => $this->config->get_display_type() !== CalendarConfig::LIST_VIEW,
@@ -160,7 +160,7 @@ class AdminCalendarConfigController extends AdminModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('characters_number_to_cut', $this->admin_common_lang['config.characters.number.to.cut'], $this->config->get_characters_number_to_cut(),
+		$fieldset->add_field(new FormFieldNumberEditor('characters_number_to_cut', $this->form_lang['form.characters.number.to.cut'], $this->config->get_characters_number_to_cut(),
 			array(
 				'min' => 20, 'max' => 1000, 'required' => true,
 				'hidden' => $this->config->get_display_type() == CalendarConfig::TABLE_VIEW || ($this->config->get_display_type() == CalendarConfig::LIST_VIEW && $this->config->is_full_item_displayed())
@@ -168,12 +168,12 @@ class AdminCalendarConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(20, 1000)
 		)));
 
-        $fieldset->add_field(new FormFieldRichTextEditor('default_content', $this->lang['calendar.default.content'], $this->config->get_default_content(),
+        $fieldset->add_field(new FormFieldRichTextEditor('default_content', $this->form_lang['form.item.default.content'], $this->config->get_default_content(),
 			array('rows' => 8, 'cols' => 47)
 		));
 
 		$fieldset = new FormFieldsetHTML('authorizations_fieldset', LangLoader::get_message('authorizations', 'common'),
-			array('description' => LangLoader::get_message('config.authorizations.explain', 'admin-common'))
+			array('description' => $this->form_lang['form.authorizations.clue'])
 		);
 		$form->add_fieldset($fieldset);
 

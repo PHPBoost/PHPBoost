@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 21
+ * @version     PHPBoost 6.0 - last update: 2021 04 22
  * @since       PHPBoost 3.0 - 2012 11 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -58,17 +58,16 @@ class CalendarDeleteItemController extends ModuleController
 
 	private function build_form(HTTPRequestCustom $request)
 	{
-		$common_lang = LangLoader::get('common');
 		$form = new HTMLForm(__CLASS__);
-		$form->set_layout_title($this->lang['calendar.event.delete']);
+		$form->set_layout_title($this->lang['calendar.item.delete']);
 
-		$fieldset = new FormFieldsetHTML('delete_serie', $common_lang['form.parameters']);
+		$fieldset = new FormFieldsetHTML('delete_serie', LangLoader::get_message('form.parameters', 'form-lang'));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldRadioChoice('delete_serie', LangLoader::get_message('delete', 'common'), 0,
+		$fieldset->add_field(new FormFieldRadioChoice('delete_serie', LangLoader::get_message('common.delete', 'common-lang'), 0,
 			array(
-				new FormFieldRadioChoiceOption($this->lang['calendar.event.delete.occurrence'], 0),
-				new FormFieldRadioChoiceOption($this->lang['calendar.event.delete.serie'], 1)
+				new FormFieldRadioChoiceOption($this->lang['calendar.delete.occurrence'], 0),
+				new FormFieldRadioChoiceOption($this->lang['calendar.delete.serie'], 1)
 			)
 		));
 
@@ -153,17 +152,17 @@ class CalendarDeleteItemController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['calendar.event.delete'], $this->lang['module.title']);
+		$graphical_environment->set_page_title($this->lang['calendar.item.delete'], $this->lang['calendar.module.title']);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::home());
+		$breadcrumb->add($this->lang['calendar.module.title'], CalendarUrlBuilder::home());
 
 		$item_content = $this->item->get_content();
 
 		$category = $item_content->get_category();
 		$breadcrumb->add($item_content->get_title(), CalendarUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $item_content->get_id(), $item_content->get_rewrited_title()));
 
-		$breadcrumb->add($this->lang['calendar.event.delete'], CalendarUrlBuilder::delete_item($this->item->get_id()));
+		$breadcrumb->add($this->lang['calendar.item.delete'], CalendarUrlBuilder::delete_item($this->item->get_id()));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::delete_item($this->item->get_id()));
 
 		return $response;

@@ -1,8 +1,8 @@
 <section id="module-calendar" class="category-{CATEGORY_ID}">
 	<header class="section-header">
 		<div class="controls align-right">
-			<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
-			{@module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
+			<a href="{U_SYNDICATION}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
+			{@calendar.module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1>
 			<span itemprop="name">{TITLE}</span>
@@ -10,7 +10,7 @@
 	</header>
 	<div class="sub-section">
 		<div class="content-container">
-			<article itemscope="itemscope" itemtype="https://schema.org/Event" id="article-calendar-{ID}" class="calendar-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #">
+			<article itemscope="itemscope" itemtype="https://schema.org/Event" id="calendar-item-{ID}" class="calendar-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #">
 
 				<div class="flex-between">
 					<div class="more">
@@ -20,10 +20,10 @@
 					# IF C_CONTROLS #
 						<div class="controls align-right">
 							# IF C_EDIT #
-								<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+								<a href="{U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 							# ENDIF #
 							# IF C_DELETE #
-								<a href="{U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}"# IF NOT C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+								<a href="{U_DELETE}" aria-label="{@common.delete}"# IF NOT C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 							# ENDIF #
 						</div>
 					# ENDIF #
@@ -36,7 +36,7 @@
 				<div class="content# IF C_CANCELLED # error# ENDIF #" itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 
 					# IF C_CANCELLED #
-					<span class="message-helper bgc error">{@calendar.cancelled.event}</span>
+					<span class="message-helper bgc error">{@calendar.cancelled.item}</span>
 					# ENDIF #
 
 					<div class="cell-tile cell-options">
@@ -51,45 +51,45 @@
 							<div class="cell-list">
 								<ul>
 									<li class="li-stretch">
-										<span class="text-strong">{@calendar.labels.start.date}</span>
+										<span class="text-strong">{@calendar.start.date}</span>
 										<time datetime="{START_DATE_ISO8601}" itemprop="startDate">{START_DATE_FULL}</time>
 									</li>
 									<li class="li-stretch">
-										<span class="text-strong">{@calendar.labels.end.date}</span>
+										<span class="text-strong">{@calendar.end.date}</span>
 										<time datetime="{END_DATE_ISO8601}" itemprop="endDate">{END_DATE_FULL}</time>
 									</li>
 									# IF C_LOCATION #
 										<li itemprop="location" itemscope itemtype="https://schema.org/Place">
-											<span class="text-strong">{@calendar.labels.location}: </span>
+											<span class="text-strong">{@calendar.location}: </span>
 											<span itemprop="name">{LOCATION}</span>
 										</li>
 									# ENDIF #
 									# IF C_PARTICIPATION_ENABLED #
 										# IF C_DISPLAY_PARTICIPANTS #
 											<li>
-												<span class="text-strong">{@calendar.labels.participants}</span> :
+												<span class="text-strong">{@calendar.participants}</span> :
 												# IF C_PARTICIPANTS #
 													# START participant #
 														<a href="{participant.U_PROFILE}" class="{participant.LEVEL_CLASS}" # IF participant.C_GROUP_COLOR # style="color:{participant.GROUP_COLOR}" # ENDIF #>{participant.DISPLAY_NAME}</a># IF NOT participant.C_LAST_PARTICIPANT #,# ENDIF #
 													# END participant #
 												# ELSE #
-													{@calendar.labels.no.one}
+													{@calendar.no.one}
 												# ENDIF #
 											</li>
 										# ENDIF #
 										# IF C_REGISTRATION_CLOSED #
 											<li>
-												<span class="small text-italic">{@calendar.labels.registration.closed}</span>
+												<span class="small text-italic">{@calendar.registration.closed}</span>
 											</li>
 										# ELSE #
 											# IF C_MAX_PARTICIPANTS_REACHED #
 												<li>
-													<span class="small text-italic">{@calendar.labels.max.participants.reached}</span>
+													<span class="small text-italic">{@calendar.max.participants.reached}</span>
 												</li>
 											# ELSE #
 												# IF C_PARTICIPATE #
 													<li>
-														<a href="{U_SUSCRIBE}" class="button alt-button">{@calendar.labels.suscribe}</a>
+														<a href="{U_SUSCRIBE}" class="button alt-button">{@calendar.suscribe}</a>
 														# IF C_MISSING_PARTICIPANTS #
 															<span class="small text-italic">({L_MISSING_PARTICIPANTS})</span>
 														# ENDIF #
@@ -103,7 +103,7 @@
 										# IF C_IS_PARTICIPANT #
 											<li>
 												# IF C_UNSUBSCRIBE #
-													<a href="{U_UNSUSCRIBE}" class="button alt-button">{@calendar.labels.unsuscribe}</a>
+													<a href="{U_UNSUSCRIBE}" class="button alt-button">{@calendar.unsuscribe}</a>
 												# ELSE #
 													<span>{@calendar.unsuscribe.notice.expired.event.date}</span>
 												# ENDIF #

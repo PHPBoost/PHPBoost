@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 22
+ * @version     PHPBoost 6.0 - last update: 2021 04 22
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -57,17 +57,17 @@ class CalendarItemFormController extends ModuleController
 
 	private function build_form(HTTPRequestCustom $request)
 	{
-		$common_lang = LangLoader::get('common');
-		$date_lang = LangLoader::get('date-common');
+		$form_lang = LangLoader::get('form-lang');
+		$date_lang = LangLoader::get('date-lang');
 		$item_content = $this->get_item()->get_content();
 
 		$form = new HTMLForm(__CLASS__);
-		$form->set_layout_title($item_content->get_id() === null ? $this->lang['calendar.event.add'] : ($this->lang['calendar.event.edit'] . ': ' . $item_content->get_title()));
+		$form->set_layout_title($item_content->get_id() === null ? $this->lang['calendar.item.add'] : $this->lang['calendar.item.edit']);
 
-		$fieldset = new FormFieldsetHTML('event', $common_lang['form.parameters']);
+		$fieldset = new FormFieldsetHTML('event', $form_lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('title', $common_lang['form.title'], $item_content->get_title(),
+		$fieldset->add_field(new FormFieldTextEditor('title', $form_lang['form.title'], $item_content->get_title(),
 			array('required' => true)
 		));
 
@@ -76,32 +76,32 @@ class CalendarItemFormController extends ModuleController
 			$search_category_children_options = new SearchCategoryChildrensOptions();
 			$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
 			$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', LangLoader::get_message('category', 'categories-common'), $item_content->get_id_category(), $search_category_children_options));
+			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', LangLoader::get_message('category.category', 'category-lang'), $item_content->get_id_category(), $search_category_children_options));
 		}
 
-		$fieldset->add_field(new FormFieldRichTextEditor('content', $common_lang['form.content'], $item_content->get_content(),
+		$fieldset->add_field(new FormFieldRichTextEditor('content', $form_lang['form.content'], $item_content->get_content(),
 			array('rows' => 15, 'required' => true)
 		));
 
-		$fieldset->add_field(new FormFieldThumbnail('thumbnail', $common_lang['form.picture'], $item_content->get_thumbnail()->relative(), CalendarItemContent::THUMBNAIL_URL));
+		$fieldset->add_field(new FormFieldThumbnail('thumbnail', $form_lang['form.picture'], $item_content->get_thumbnail()->relative(), CalendarItemContent::THUMBNAIL_URL));
 
-		$fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->lang['calendar.labels.start.date'], $this->get_item()->get_start_date(),
+		$fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->lang['calendar.start.date'], $this->get_item()->get_start_date(),
 			array('required' => true, 'five_minutes_step' => true)
 		));
 
-		$fieldset->add_field($end_date = new FormFieldDateTime('end_date', $this->lang['calendar.labels.end.date'], $this->get_item()->get_end_date(),
+		$fieldset->add_field($end_date = new FormFieldDateTime('end_date', $this->lang['calendar.end.date'], $this->get_item()->get_end_date(),
 			array('required' => true, 'five_minutes_step' => true)
 		));
 
 		$end_date->add_form_constraint(new FormConstraintFieldsDifferenceSuperior($start_date, $end_date));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('repeat_type', $this->lang['calendar.labels.repeat.type'], $item_content->get_repeat_type(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('repeat_type', $this->lang['calendar.form.repeat.type'], $item_content->get_repeat_type(),
 			array(
-				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.never'], CalendarItemContent::NEVER),
-				new FormFieldSelectChoiceOption($date_lang['every_day'], CalendarItemContent::DAILY),
-				new FormFieldSelectChoiceOption($date_lang['every_week'], CalendarItemContent::WEEKLY),
-				new FormFieldSelectChoiceOption($date_lang['every_month'], CalendarItemContent::MONTHLY),
-				new FormFieldSelectChoiceOption($date_lang['every_year'], CalendarItemContent::YEARLY),
+				new FormFieldSelectChoiceOption($this->lang['calendar.form.repeat.never'], CalendarItemContent::NEVER),
+				new FormFieldSelectChoiceOption($date_lang['date.every.day'], CalendarItemContent::DAILY),
+				new FormFieldSelectChoiceOption($date_lang['date.every.week'], CalendarItemContent::WEEKLY),
+				new FormFieldSelectChoiceOption($date_lang['date.every.month'], CalendarItemContent::MONTHLY),
+				new FormFieldSelectChoiceOption($date_lang['date.every.year'], CalendarItemContent::YEARLY),
 			),
 			array(
 				'events' => array('change' => '
@@ -114,7 +114,7 @@ class CalendarItemFormController extends ModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('repeat_number', $this->lang['calendar.labels.repeat.number'], $item_content->get_repeat_number(),
+		$fieldset->add_field(new FormFieldNumberEditor('repeat_number', $this->lang['calendar.form.repeat.number'], $item_content->get_repeat_number(),
 			array(
 				'min' => 1, 'max' => 150,
 				'hidden' => ($request->is_post_method() ? ($request->get_poststring(__CLASS__ . '_repeat_type', '') == CalendarItemContent::NEVER) : $item_content->get_repeat_type() == CalendarItemContent::NEVER)
@@ -133,7 +133,7 @@ class CalendarItemFormController extends ModuleController
 
 		if ($this->config->is_googlemaps_available())
 		{
-			$fieldset->add_field(new GoogleMapsFormFieldMapAddress('location', $this->lang['calendar.labels.location'], $location,
+			$fieldset->add_field(new GoogleMapsFormFieldMapAddress('location', $this->lang['calendar.location'], $location,
 				array(
 					'events' => array('blur' => '
 						if (HTMLForms.getField("location").getValue()) {
@@ -145,14 +145,14 @@ class CalendarItemFormController extends ModuleController
 				)
 			));
 
-			$fieldset->add_field(new FormFieldCheckbox('map_displayed', $this->lang['calendar.labels.map.displayed'], $item_content->is_map_displayed(),
+			$fieldset->add_field(new FormFieldCheckbox('map_displayed', $this->lang['calendar.form.display.map'], $item_content->is_map_displayed(),
 				array('hidden' => !$location)
 			));
 		}
 		else
-			$fieldset->add_field(new FormFieldShortMultiLineTextEditor('location', $this->lang['calendar.labels.location'], $location));
+			$fieldset->add_field(new FormFieldShortMultiLineTextEditor('location', $this->lang['calendar.location'], $location));
 
-		$fieldset->add_field(new FormFieldCheckbox('registration_authorized', $this->lang['calendar.labels.registration.authorized'], $item_content->is_registration_authorized(),
+		$fieldset->add_field(new FormFieldCheckbox('registration_authorized', $this->lang['calendar.form.enable.registration'], $item_content->is_registration_authorized(),
 			array(
 				'events' => array('click' => '
 					if (HTMLForms.getField("registration_authorized").getValue()) {
@@ -168,7 +168,7 @@ class CalendarItemFormController extends ModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('registration_limit', $this->lang['calendar.labels.registration.limit'], $item_content->is_registration_limited(),
+		$fieldset->add_field(new FormFieldCheckbox('registration_limit', $this->lang['calendar.form.registration.limit'], $item_content->is_registration_limited(),
 			array(
 				'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_registration_authorized', false) : !$item_content->is_registration_authorized()),
 				'events' => array('click' => '
@@ -181,12 +181,12 @@ class CalendarItemFormController extends ModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('max_registered_members', $this->lang['calendar.labels.max.registered.members'], $item_content->get_max_registered_members(),
+		$fieldset->add_field(new FormFieldNumberEditor('max_registered_members', $this->lang['calendar.form.max.registered'], $item_content->get_max_registered_members(),
 			array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_registration_limit', false) : !$item_content->is_registration_limited())),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'))
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('last_registration_date_enabled', $this->lang['calendar.labels.last.registration.date.enabled'], $item_content->is_last_registration_date_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('last_registration_date_enabled', $this->lang['calendar.form.registration.deadline'], $item_content->is_last_registration_date_enabled(),
 			array(
 				'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_registration_authorized', false) : !$item_content->is_registration_authorized()),
 				'events' => array('click' => '
@@ -199,7 +199,7 @@ class CalendarItemFormController extends ModuleController
 			)
 		));
 
-		$fieldset->add_field($last_registration_date = new FormFieldDateTime('last_registration_date', $this->lang['calendar.labels.last.registration.date'], $item_content->get_last_registration_date(),
+		$fieldset->add_field($last_registration_date = new FormFieldDateTime('last_registration_date', $this->lang['calendar.form.last.date.registration'], $item_content->get_last_registration_date(),
 			array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_last_registration_date_enabled', false) : !$item_content->is_last_registration_date_enabled()))
 		));
 
@@ -214,10 +214,10 @@ class CalendarItemFormController extends ModuleController
 		$fieldset->add_field($auth_setter);
 
 		if ($this->get_item()->get_id() !== null)
-			$fieldset->add_field(new FormFieldCheckbox('cancelled', $this->lang['calendar.labels.cancel'], $this->get_item()->get_content()->is_cancelled()));
+			$fieldset->add_field(new FormFieldCheckbox('cancelled', $this->lang['calendar.form.cancel'], $this->get_item()->get_content()->is_cancelled()));
 
 		if (CategoriesAuthorizationsService::check_authorizations($item_content->get_id_category())->moderation())
-			$fieldset->add_field(new FormFieldCheckbox('approved', $common_lang['form.approve'], $item_content->is_approved()));
+			$fieldset->add_field(new FormFieldCheckbox('approved', $form_lang['form.approve'], $item_content->is_approved()));
 
 		$this->build_contribution_fieldset($form);
 
@@ -232,23 +232,23 @@ class CalendarItemFormController extends ModuleController
 
 	private function build_contribution_fieldset($form)
 	{
-		$user_common = LangLoader::get('user-common');
+		$contribution = LangLoader::get('contribution-lang');
 		if ($this->get_item()->get_id() === null && $this->is_contributor_member())
 		{
-			$fieldset = new FormFieldsetHTML('contribution', $user_common['contribution']);
-			$fieldset->set_description(MessageHelper::display($user_common['contribution.extended.explain'], MessageHelper::WARNING)->render());
+			$fieldset = new FormFieldsetHTML('contribution', $contribution['contribution.contribution']);
+			$fieldset->set_description(MessageHelper::display($contribution['contribution.extended.clue'], MessageHelper::WARNING)->render());
 			$form->add_fieldset($fieldset);
 
-			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $user_common['contribution.description'], '', array('description' => $user_common['contribution.description.explain'])));
+			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $contribution['contribution.description'], '', array('description' => $contribution['contribution.description.clue'])));
 		}
 		elseif ($this->get_item()->is_authorized_to_edit() && !AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 		{
-			$fieldset = new FormFieldsetHTML('member_edition', $user_common['contribution.member.edition']);
-			$fieldset->set_description(MessageHelper::display($user_common['contribution.member.edition.explain'], MessageHelper::WARNING)->render());
+			$fieldset = new FormFieldsetHTML('member_edition', $contribution['contribution.member.edition']);
+			$fieldset->set_description(MessageHelper::display($contribution['contribution.member.edition.clue'], MessageHelper::WARNING)->render());
 			$form->add_fieldset($fieldset);
 
-			$fieldset->add_field(new FormFieldRichTextEditor('edition_description', $user_common['contribution.member.edition.description'], '',
-				array('description' => $user_common['contribution.member.edition.description.desc'])
+			$fieldset->add_field(new FormFieldRichTextEditor('edition_description', $contribution['contribution.member.edition.description'], '',
+				array('description' => $contribution['contribution.member.edition.description.clue'])
 			));
 		}
 	}
@@ -600,13 +600,13 @@ class CalendarItemFormController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::home());
+		$breadcrumb->add($this->lang['calendar.module.title'], CalendarUrlBuilder::home());
 
 		if ($item->get_id() === null)
 		{
-			$graphical_environment->set_page_title($this->lang['calendar.event.add'], $this->lang['module.title']);
-			$breadcrumb->add($this->lang['calendar.event.add'], CalendarUrlBuilder::add_item());
-			$graphical_environment->get_seo_meta_data()->set_description($this->lang['calendar.event.add']);
+			$graphical_environment->set_page_title($this->lang['calendar.item.add'], $this->lang['calendar.module.title']);
+			$breadcrumb->add($this->lang['calendar.item.add'], CalendarUrlBuilder::add_item());
+			$graphical_environment->get_seo_meta_data()->set_description($this->lang['calendar.item.add']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::add_item());
 		}
 		else
@@ -614,13 +614,13 @@ class CalendarItemFormController extends ModuleController
 			if (!AppContext::get_session()->location_id_already_exists($location_id))
 				$graphical_environment->set_location_id($location_id);
 
-			$graphical_environment->set_page_title($this->lang['calendar.event.edit'], $this->lang['module.title']);
+			$graphical_environment->set_page_title($this->lang['calendar.item.edit'], $this->lang['calendar.module.title']);
 
 			$category = $item->get_content()->get_category();
 			$breadcrumb->add($item->get_content()->get_title(), CalendarUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()));
 
-			$breadcrumb->add($this->lang['calendar.event.edit'], CalendarUrlBuilder::edit_item($item->get_id()));
-			$graphical_environment->get_seo_meta_data()->set_description($this->lang['calendar.event.edit']);
+			$breadcrumb->add($this->lang['calendar.item.edit'], CalendarUrlBuilder::edit_item($item->get_id()));
+			$graphical_environment->get_seo_meta_data()->set_description($this->lang['calendar.item.edit']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::edit_item($item->get_id()));
 		}
 

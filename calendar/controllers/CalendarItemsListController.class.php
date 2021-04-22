@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 26
+ * @version     PHPBoost 6.0 - last update: 2021 04 22
  * @since       PHPBoost 4.1 - 2015 04 13
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -48,10 +48,10 @@ class CalendarItemsListController extends ModuleController
 		$config = CalendarConfig::load();
 
 		$columns = array(
-			new HTMLTableColumn(LangLoader::get_message('form.title', 'common'), 'title'),
-			new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category'),
-			new HTMLTableColumn(LangLoader::get_message('author', 'common'), 'display_name'),
-			new HTMLTableColumn(LangLoader::get_message('date', 'date-common'), 'start_date'),
+			new HTMLTableColumn(LangLoader::get_message('common.title', 'common-lang'), 'title'),
+			new HTMLTableColumn(LangLoader::get_message('category.category', 'category-lang'), 'id_category'),
+			new HTMLTableColumn(LangLoader::get_message('common.author', 'common-lang'), 'display_name'),
+			new HTMLTableColumn(LangLoader::get_message('date.date', 'date-lang'), 'start_date'),
 			new HTMLTableColumn($this->lang['calendar.repetition']),
 			new HTMLTableColumn('')
 		);
@@ -61,13 +61,13 @@ class CalendarItemsListController extends ModuleController
 
 		$table_model = new SQLHTMLTableModel(CalendarSetup::$calendar_events_table, 'items-list', $columns, new HTMLTableSortingRule('start_date', HTMLTableSortingRule::ASC));
 
-		$table_model->set_layout_title($this->lang['calendar.events.list']);
+		$table_model->set_layout_title($this->lang['calendar.items.list']);
 		$table_model->add_permanent_filter('parent_id = 0');
 
-		$table_model->set_filters_menu_title($this->lang['filter.items']);
-		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('start_date', 'filter1', $this->lang['calendar.labels.start.date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('minimum', 'common'))));
-		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('start_date', 'filter2', $this->lang['calendar.labels.start.date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('maximum', 'common'))));
-		$table_model->add_filter(new HTMLTableAjaxUserAutoCompleteSQLFilter('display_name', 'filter3', LangLoader::get_message('author', 'common')));
+		$table_model->set_filters_menu_title($this->lang['calendar.filter.items']);
+		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('start_date', 'filter1', $this->lang['calendar.start.date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('common.minimum', 'common-lang'))));
+		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('start_date', 'filter2', $this->lang['calendar.start.date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('common.maximum', 'common-lang'))));
+		$table_model->add_filter(new HTMLTableAjaxUserAutoCompleteSQLFilter('display_name', 'filter3', LangLoader::get_message('common.author', 'common-lang')));
 		if ($display_categories)
 			$table_model->add_filter(new HTMLTableCategorySQLFilter('filter4'));
 
@@ -127,10 +127,10 @@ class CalendarItemsListController extends ModuleController
 			{
 				$row = array(
 					new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()), $item->get_content()->get_title()), 'left'),
-					new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), $item->get_start_date()->get_year(), $item->get_start_date()->get_month()), ($category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('none_e', 'common') : $category->get_name()), array('data-color-surround' => $category->get_id() != Category::ROOT_CATEGORY && $category->get_color() ? $category->get_color() : ($category->get_id() == Category::ROOT_CATEGORY ? $config->get_event_color() : '')), 'pinned')),
+					new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), $item->get_start_date()->get_year(), $item->get_start_date()->get_month()), ($category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('common.none.e', 'common-lang') : $category->get_name()), array('data-color-surround' => $category->get_id() != Category::ROOT_CATEGORY && $category->get_color() ? $category->get_color() : ($category->get_id() == Category::ROOT_CATEGORY ? $config->get_event_color() : '')), 'pinned')),
 					new HTMLTableRowCell($author),
-					new HTMLTableRowCell(($start_date != $end_date) ? LangLoader::get_message('from_date', 'main') . ' ' . $item->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR) . $br->display() . LangLoader::get_message('to_date', 'main') . ' ' . $item->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR) : $item->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR)),
-					new HTMLTableRowCell($item->belongs_to_a_serie() ? $this->get_repeat_type_label($item) . ' - ' . $item->get_content()->get_repeat_number() . ' ' . $this->lang['calendar.labels.repeat.times'] : LangLoader::get_message('no', 'common')),
+					new HTMLTableRowCell(($start_date != $end_date) ? LangLoader::get_message('date.from.date', 'date-lang') . ' ' . $item->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR) . $br->display() . LangLoader::get_message('date.to.date', 'date-lang') . ' ' . $item->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR) : $item->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR)),
+					new HTMLTableRowCell($item->belongs_to_a_serie() ? $this->get_repeat_type_label($item) . ' - ' . $item->get_content()->get_repeat_number() . ' ' . $this->lang['calendar.repeat.times'] : LangLoader::get_message('common.no', 'common-lang')),
 					$moderation_link_number ? new HTMLTableRowCell($edit_link . $delete_link, 'controls') : null
 				);
 
@@ -191,7 +191,7 @@ class CalendarItemsListController extends ModuleController
 			}
 
 			CalendarService::clear_cache();
-			AppContext::get_response()->redirect(CalendarUrlBuilder::display_items_list(), LangLoader::get_message('process.success', 'status-messages-common'));
+			AppContext::get_response()->redirect(CalendarUrlBuilder::display_items_list(), LangLoader::get_message('warning.process.success', 'warning-lang'));
 		}
 	}
 
@@ -211,19 +211,19 @@ class CalendarItemsListController extends ModuleController
 		switch ($item->get_content()->get_repeat_type())
 		{
 			case CalendarItemContent::DAILY :
-				$label = LangLoader::get_message('every_day', 'date-common');
+				$label = LangLoader::get_message('date.every.day', 'date-lang');
 				break;
 
 			case CalendarItemContent::WEEKLY :
-				$label = LangLoader::get_message('every_week', 'date-common');
+				$label = LangLoader::get_message('date.every.week', 'date-lang');
 				break;
 
 			case CalendarItemContent::MONTHLY :
-				$label = LangLoader::get_message('every_month', 'date-common');
+				$label = LangLoader::get_message('date.every.month', 'date-lang');
 				break;
 
 			case CalendarItemContent::YEARLY :
-				$label = LangLoader::get_message('every_year', 'date-common');
+				$label = LangLoader::get_message('date.every.year', 'date-lang');
 				break;
 		}
 
@@ -234,13 +234,13 @@ class CalendarItemsListController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['calendar.events.list'], $this->lang['module.title'], $page);
+		$graphical_environment->set_page_title($this->lang['calendar.items.list'], $this->lang['calendar.module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['calendar.seo.description.events.list'], array('site' => GeneralConfig::load()->get_site_name())));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::display_items_list());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::home());
-		$breadcrumb->add($this->lang['calendar.events.list'], CalendarUrlBuilder::display_items_list());
+		$breadcrumb->add($this->lang['calendar.module.title'], CalendarUrlBuilder::home());
+		$breadcrumb->add($this->lang['calendar.items.list'], CalendarUrlBuilder::display_items_list());
 
 		return $response;
 	}

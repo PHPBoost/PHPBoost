@@ -26,13 +26,13 @@
 			<a class="grouped-element bgc link-color" href="#" onclick="ChangeMonth(${escapejs(PREVIOUS_YEAR)}, ${escapejs(PREVIOUS_MONTH)});return false;" aria-label="{PREVIOUS_MONTH_TITLE}">
 				<i class="fa fa-caret-left" aria-hidden="true"></i>
 			</a>
-			<label for="CalendarAjaxCalendarController_month" class="sr-only">{@month}</label>
+			<label for="CalendarAjaxCalendarController_month" class="sr-only">{@date.month}</label>
 			<select class="grouped-element# IF C_MINI_MODULE # small# ENDIF #" name="CalendarAjaxCalendarController_month" id="CalendarAjaxCalendarController_month" onchange="ChangeMonth(jQuery('#CalendarAjaxCalendarController_year').val(), jQuery('#CalendarAjaxCalendarController_month').val());">
 				# START months #
 					<option value="{months.VALUE}"# IF months.SELECTED # selected="selected"# ENDIF #>{months.NAME}</option>
 				# END months #
 			</select>
-			<label for="CalendarAjaxCalendarController_year" class="sr-only">{@year}</label>
+			<label for="CalendarAjaxCalendarController_year" class="sr-only">{@date.year}</label>
 			<select class="grouped-element# IF C_MINI_MODULE # small# ENDIF #" name="CalendarAjaxCalendarController_year" id="CalendarAjaxCalendarController_year" onchange="ChangeMonth(jQuery('#CalendarAjaxCalendarController_year').val(), jQuery('#CalendarAjaxCalendarController_month').val());">
 				# START years #
 					<option value="{years.VALUE}"# IF years.SELECTED # selected="selected"# ENDIF #>{years.NAME}</option>
@@ -49,14 +49,14 @@
 	<table class="# IF C_MINI_MODULE #mini-calendar # ENDIF #calendar-table">
 		<thead>
 			<tr>
-				<th><span class="sr-only">{@week_mini}</span></th>
-				<th class="text-strong">{@monday_mini}</th>
-				<th class="text-strong">{@tuesday_mini}</th>
-				<th class="text-strong">{@wednesday_mini}</th>
-				<th class="text-strong">{@thursday_mini}</th>
-				<th class="text-strong">{@friday_mini}</th>
-				<th class="text-strong">{@saturday_mini}</th>
-				<th class="text-strong">{@sunday_mini}</th>
+				<th><span class="sr-only">{@date.week.mini}</span></th>
+				<th class="text-strong">{@date.monday.mini}</th>
+				<th class="text-strong">{@date.tuesday.mini}</th>
+				<th class="text-strong">{@date.wednesday.mini}</th>
+				<th class="text-strong">{@date.thursday.mini}</th>
+				<th class="text-strong">{@date.friday.mini}</th>
+				<th class="text-strong">{@date.saturday.mini}</th>
+				<th class="text-strong">{@date.sunday.mini}</th>
 			</tr>
 		</thead>
 		<tbody>

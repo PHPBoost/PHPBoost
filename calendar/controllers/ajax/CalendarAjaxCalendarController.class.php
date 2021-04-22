@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 05
+ * @version     PHPBoost 6.0 - last update: 2021 04 22
  * @since       PHPBoost 3.0 - 2012 11 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -49,6 +49,19 @@ class CalendarAjaxCalendarController extends AbstractController
 		return new SiteNodisplayResponse($this->view);
 	}
 
+	private function init(HTTPRequestCustom $request)
+	{
+		$this->lang = LangLoader::get('date-lang');
+		$this->view = new FileTemplate('calendar/CalendarAjaxCalendarController.tpl');
+		$this->view->add_lang($this->lang);
+
+		if ($request->has_getparameter('calendar_mini') && $request->get_getvalue('calendar_mini') == 1)
+			$this->set_mini_calendar();
+
+		if ($request->has_getparameter('id_category'))
+			$this->set_id_category($request->get_getvalue('id_category'));
+	}
+
 	private function build_view(HTTPRequestCustom $request)
 	{
 		$config = CalendarConfig::load();
@@ -59,7 +72,7 @@ class CalendarAjaxCalendarController extends AbstractController
 		$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 
 		$array_month = array(31, $bissextile, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
-		$array_l_month = array($this->lang['january'], $this->lang['february'], $this->lang['march'], $this->lang['april'], $this->lang['may'], $this->lang['june'], $this->lang['july'], $this->lang['august'], $this->lang['september'], $this->lang['october'], $this->lang['november'], $this->lang['december']);
+		$array_l_month = array($this->lang['date.january'], $this->lang['date.february'], $this->lang['date.march'], $this->lang['date.april'], $this->lang['date.may'], $this->lang['date.june'], $this->lang['date.july'], $this->lang['date.august'], $this->lang['date.september'], $this->lang['date.october'], $this->lang['date.november'], $this->lang['date.december']);
 
 		$month_days = $array_month[$month - 1];
 
@@ -72,8 +85,8 @@ class CalendarAjaxCalendarController extends AbstractController
 		for ($i = 1; $i <= 12; $i++)
 		{
 			$this->view->assign_block_vars('months', array(
-				'VALUE' => $i,
-				'NAME' => $array_l_month[$i - 1],
+				'VALUE'    => $i,
+				'NAME'     => $array_l_month[$i - 1],
 				'SELECTED' => $month == $i,
 			));
 		}
@@ -82,8 +95,8 @@ class CalendarAjaxCalendarController extends AbstractController
 		for ($i = 1970; $i <= 2521; $i++)
 		{
 			$this->view->assign_block_vars('years', array(
-				'VALUE' => $i,
-				'NAME' => $i,
+				'VALUE'    => $i,
+				'NAME'     => $i,
 				'SELECTED' => $year == $i,
 			));
 		}
@@ -129,9 +142,9 @@ class CalendarAjaxCalendarController extends AbstractController
 						$color = isset($array_items[$j]['color']) ? $array_items[$j]['color'] : array();
 						$color[] = ($item['type'] == 'BIRTHDAY' ? $config->get_birthday_color() : ($item['id_category'] != Category::ROOT_CATEGORY && isset($categories[$item['id_category']]) && $categories[$item['id_category']]->get_color() ? $categories[$item['id_category']]->get_color() : $config->get_event_color()));
 						$array_items[$j] = array(
-							'title' => $title . (!empty($title) ? '<br />' : '') . ($item['type'] != 'BIRTHDAY' ? (($j == $start_date->get_day() && $month == $start_date->get_month() && $year == $start_date->get_year()) ? $start_date->get_hours() . 'h' . $start_date->get_minutes() . ' : ' : '') : LangLoader::get_message('calendar.labels.birthday.of', 'common', 'calendar') . ' ') . $item['title'],
-							'type' => $item['type'],
-							'color' => $color,
+							'title'       => $title . (!empty($title) ? '<br />' : '') . ($item['type'] != 'BIRTHDAY' ? (($j == $start_date->get_day() && $month == $start_date->get_month() && $year == $start_date->get_year()) ? $start_date->get_hours() . 'h' . $start_date->get_minutes() . ' : ' : '') : LangLoader::get_message('calendar.birthday.of', 'common', 'calendar') . ' ') . $item['title'],
+							'type'        => $item['type'],
+							'color'       => $color,
 							'id_category' => $item['id_category'],
 						);
 
@@ -139,7 +152,7 @@ class CalendarAjaxCalendarController extends AbstractController
 						{
 							$items_legend_list[] = array(
 								'id_category' => Category::ROOT_CATEGORY,
-								'name'        => LangLoader::get_message('calendar.labels.birthday', 'common', 'calendar'),
+								'name'        => LangLoader::get_message('calendar.birthday', 'common', 'calendar'),
 								'color'       => $config->get_birthday_color()
 							);
 						}
@@ -147,7 +160,7 @@ class CalendarAjaxCalendarController extends AbstractController
 						{
 							$items_legend_list[] = array(
 								'id_category' => $item['id_category'],
-								'name'        => LangLoader::get_message('calendar.event', 'common', 'calendar'),
+								'name'        => LangLoader::get_message('calendar.item', 'common', 'calendar'),
 								'color'       => $config->get_event_color()
 							);
 						}
@@ -171,20 +184,20 @@ class CalendarAjaxCalendarController extends AbstractController
 		}
 
 		$this->view->put_all(array(
-			'C_MINI_MODULE' => $this->is_mini_calendar(),
-			'C_DISPLAY_LEGEND' => !empty($items_legend_list),
-			'DATE' => $array_l_month[$month - 1] . ' ' . $year,
-			'ID_CATEGORY' => $this->id_category,
-			'MINI_MODULE' => (int)$this->is_mini_calendar(),
+			'C_MINI_MODULE'        => $this->is_mini_calendar(),
+			'C_DISPLAY_LEGEND'     => !empty($items_legend_list),
+			'DATE'                 => $array_l_month[$month - 1] . ' ' . $year,
+			'ID_CATEGORY'          => $this->id_category,
+			'MINI_MODULE'          => (int)$this->is_mini_calendar(),
 			'PREVIOUS_MONTH_TITLE' => ($month == 1) ? $array_l_month[11] . ' ' . ($year - 1) : $array_l_month[$month - 2] . ' ' . $year,
-			'PREVIOUS_YEAR' => $previous_year,
-			'PREVIOUS_MONTH' => $previous_month,
-			'NEXT_MONTH_TITLE' => ($month == 12) ? $array_l_month[0] . ' ' . ($year + 1) : $array_l_month[$month] . ' ' . $year,
-			'NEXT_YEAR' => $next_year,
-			'NEXT_MONTH' => $next_month,
-			'LEGEND' => self::build_legend($items_legend_list),
-			'U_AJAX_CALENDAR' => CalendarUrlBuilder::ajax_month_calendar()->rel(),
-			'U_AJAX_EVENTS' => CalendarUrlBuilder::ajax_month_events()->rel()
+			'PREVIOUS_YEAR'        => $previous_year,
+			'PREVIOUS_MONTH'       => $previous_month,
+			'NEXT_MONTH_TITLE'     => ($month == 12) ? $array_l_month[0] . ' ' . ($year + 1) : $array_l_month[$month] . ' ' . $year,
+			'NEXT_YEAR'            => $next_year,
+			'NEXT_MONTH'           => $next_month,
+			'LEGEND'               => self::build_legend($items_legend_list),
+			'U_AJAX_CALENDAR'      => CalendarUrlBuilder::ajax_month_calendar()->rel(),
+			'U_AJAX_EVENTS'        => CalendarUrlBuilder::ajax_month_events()->rel()
 		));
 
 		// First day of the month
@@ -247,14 +260,14 @@ class CalendarAjaxCalendarController extends AbstractController
 
 			$today = $day - 1;
 			$this->view->assign_block_vars('day', array(
-				'C_MONTH_DAY' => ($i % 8) != 1 && $class != 'calendar-none',
-				'C_COLOR' => $color_list || $birthday_day,
+				'C_MONTH_DAY'  => ($i % 8) != 1 && $class != 'calendar-none',
+				'C_COLOR'      => $color_list || $birthday_day,
 				'C_WEEK_LABEL' => ($i % 8) == 1,
-				'DAY' => $content,
-				'C_HAS_TITLE' => !empty($array_items[$today]),
-				'TITLE' => !empty($array_items[$today]) ? $array_items[$today]['title'] : '',
-				'CLASS' => $class,
-				'CHANGE_LINE' => (($i % 8) == 0 && $i != 56),
+				'DAY'          => $content,
+				'C_HAS_TITLE'  => !empty($array_items[$today]),
+				'TITLE'        => !empty($array_items[$today]) ? $array_items[$today]['title'] : '',
+				'CLASS'        => $class,
+				'CHANGE_LINE'  => (($i % 8) == 0 && $i != 56),
 				'U_DAY_EVENTS' => $this->id_category != Category::ROOT_CATEGORY ? CalendarUrlBuilder::display_category($this->id_category, $categories[$this->id_category]->get_rewrited_name(), $year, $month, $today)->rel() : CalendarUrlBuilder::home($year, $month, $today, true)->rel()
 			));
 
@@ -282,19 +295,6 @@ class CalendarAjaxCalendarController extends AbstractController
 		}
 
 		return $legend_view;
-	}
-
-	private function init(HTTPRequestCustom $request)
-	{
-		$this->lang = LangLoader::get('date-common');
-		$this->view = new FileTemplate('calendar/CalendarAjaxCalendarController.tpl');
-		$this->view->add_lang($this->lang);
-
-		if ($request->has_getparameter('calendar_mini') && $request->get_getvalue('calendar_mini') == 1)
-			$this->set_mini_calendar();
-
-		if ($request->has_getparameter('id_category'))
-			$this->set_id_category($request->get_getvalue('id_category'));
 	}
 
 	public static function get_view($is_mini = false, $year = 0, $month = 0, $id_category = Category::ROOT_CATEGORY)

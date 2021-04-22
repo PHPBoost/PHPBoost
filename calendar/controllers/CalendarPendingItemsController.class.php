@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 06
+ * @version     PHPBoost 6.0 - last update: 2021 04 22
  * @since       PHPBoost 4.0 - 2013 09 29
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -29,9 +29,9 @@ class CalendarPendingItemsController extends ModuleController
 	{
 		$this->lang = LangLoader::get('common', 'calendar');
 		$this->view = new FileTemplate('calendar/CalendarSeveralItemsController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 		$this->items_view = new FileTemplate('calendar/CalendarAjaxEventsController.tpl');
-		$this->items_view->add_lang($this->lang);
+		$this->items_view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 	}
 
 	public function build_view(HTTPRequestCustom $request)
@@ -63,7 +63,7 @@ class CalendarPendingItemsController extends ModuleController
 		)));
 
 		$this->items_view->put_all(array(
-			'C_ITEMS' => $result->get_rows_count() > 0,
+			'C_ITEMS'         => $result->get_rows_count() > 0,
 			'C_PENDING_ITEMS' => true,
 		));
 
@@ -77,10 +77,10 @@ class CalendarPendingItemsController extends ModuleController
 		$result->dispose();
 
 		$this->view->put_all(array(
-			'EVENTS' => $this->items_view,
+			'EVENTS'          => $this->items_view,
 			'C_PENDING_ITEMS' => true,
-			'C_PAGINATION' => $pagination->has_several_pages(),
-			'PAGINATION' => $pagination->display()
+			'C_PAGINATION'    => $pagination->has_several_pages(),
+			'PAGINATION'      => $pagination->display()
 		));
 
 		return $this->view;
@@ -120,13 +120,13 @@ class CalendarPendingItemsController extends ModuleController
 
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['calendar.pending.events'], $this->lang['module.title'], $page);
+		$graphical_environment->set_page_title($this->lang['calendar.pending.items'], $this->lang['calendar.module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['calendar.seo.description.pending'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::display_pending_items($page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::home());
-		$breadcrumb->add($this->lang['calendar.pending.events'], CalendarUrlBuilder::display_pending_items($page));
+		$breadcrumb->add($this->lang['calendar.module.title'], CalendarUrlBuilder::home());
+		$breadcrumb->add($this->lang['calendar.pending.items'], CalendarUrlBuilder::display_pending_items($page));
 
 		return $response;
 	}

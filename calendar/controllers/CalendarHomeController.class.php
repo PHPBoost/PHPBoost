@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 24
+ * @version     PHPBoost 6.0 - last update: 2021 04 22
  * @since       PHPBoost 4.0 - 2013 08 21
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -30,7 +30,7 @@ class CalendarHomeController extends ModuleController
 	{
 		$this->lang = LangLoader::get('common', 'calendar');
 		$this->view = new FileTemplate('calendar/CalendarSeveralItemsController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 	}
 
 	private function build_view(HTTPRequestCustom $request)
@@ -98,15 +98,15 @@ class CalendarHomeController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 
 		if ($this->get_category()->get_id() != Category::ROOT_CATEGORY)
-			$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['module.title']);
+			$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['calendar.module.title']);
 		else
-			$graphical_environment->set_page_title($this->lang['module.title']);
+			$graphical_environment->set_page_title($this->lang['calendar.module.title']);
 
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['calendar.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name())));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::home());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::home());
+		$breadcrumb->add($this->lang['calendar.module.title'], CalendarUrlBuilder::home());
 
 		$categories = array_reverse(CategoriesService::get_categories_manager('calendar')->get_parents($this->get_category()->get_id(), true));
 		foreach ($categories as $id => $category)

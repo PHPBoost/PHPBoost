@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 09
+ * @version     PHPBoost 6.0 - last update: 2021 04 22
  * @since       PHPBoost 4.0 - 2014 03 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -103,7 +103,7 @@ class CalendarAjaxEventsController extends AbstractController
 		}
 		$result->dispose();
 
-		$alt_title_label = (isset($this->lang['calendar.events.of.month.alt']) && in_array(Url::encode_rewrite(TextHelper::mb_substr($array_l_month[$month - 1], 0, 1)), array('a', 'e', 'i', 'o', 'u', 'y')));
+		$alt_title_label = (isset($this->lang['calendar.items.of.month.alt']) && in_array(Url::encode_rewrite(TextHelper::mb_substr($array_l_month[$month - 1], 0, 1)), array('a', 'e', 'i', 'o', 'u', 'y')));
 
 		$this->view->put_all(array(
 			'C_CONTROLS'		  => $controls_displayed,
@@ -113,11 +113,12 @@ class CalendarAjaxEventsController extends AbstractController
 			'C_FULL_ITEM_DISPLAY' => $config->is_full_item_displayed(),
 			'C_COMMENTS_ENABLED'  => $comments_config->module_comments_is_enabled('calendar'),
 			'C_ITEMS'             => $items_number > 0,
+			'C_SEVERAL_ITEMS'	  => $items_number > 1,
 			'C_DAY'               => $day,
 
-			'ITEMS_PER_ROW'  => $config->get_items_per_row(),
-			'DATE_LABEL'     => ($day ? $this->lang['calendar.events.of'] : $this->lang['calendar.events.of.month' . ($alt_title_label ? '.alt' : '')]) . (!$alt_title_label ? ' ' : '') . ($day ? ' ' . $day . ' ' : '') . $array_l_month[$month - 1] . ' ' . $year,
-			'L_ITEMS_NUMBER' => $items_number > 1 ? StringVars::replace_vars($this->lang['calendar.labels.events.number'], array('items_number' => $items_number)) : $this->lang['calendar.labels.one.event'],
+			'ITEMS_PER_ROW' => $config->get_items_per_row(),
+			'DATE_LABEL'    => ($day ? $this->lang['calendar.items.of.day'] : $this->lang['calendar.items.of.month' . ($alt_title_label ? '.alt' : '')]) . (!$alt_title_label ? ' ' : '') . ($day ? ' ' . $day . ' ' : '') . $array_l_month[$month - 1] . ' ' . $year,
+			'ITEMS_NUMBER'  => $items_number,
 		));
 
 		if (!empty($items_list))
@@ -164,7 +165,7 @@ class CalendarAjaxEventsController extends AbstractController
 	{
 		$this->lang = LangLoader::get('common', 'calendar');
 		$this->view = new FileTemplate('calendar/CalendarAjaxEventsController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 
 		if ($request->has_getparameter('id_category'))
 			$this->set_id_category($request->get_getvalue('id_category'));

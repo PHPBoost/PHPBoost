@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 21
+ * @version     PHPBoost 6.0 - last update: 2021 04 22
  * @since       PHPBoost 4.0 - 2013 11 08
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -59,7 +59,7 @@ class CalendarUnsuscribeController extends ModuleController
 		}
 		if (time() > $this->item->get_start_date()->get_timestamp())
 		{
-			$error_controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('calendar.unsuscribe.notice.expired.event.date', 'common', 'calendar'));
+			$error_controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), LangLoader::get_message('calendar.unsuscribe.notice.expired.event.date', 'common', 'calendar'));
 			DispatchManager::redirect($error_controller);
 		}
 		if (AppContext::get_current_user()->is_readonly())

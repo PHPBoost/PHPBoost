@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 09
+ * @version     PHPBoost 6.0 - last update: 2021 04 22
  * @since       PHPBoost 4.0 - 2013 07 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -42,13 +42,13 @@ class CalendarItemsManagerController extends ModuleController
 		$config = CalendarConfig::load();
 
 		$columns = array(
-			new HTMLTableColumn(LangLoader::get_message('form.title', 'common'), 'title'),
-			new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category'),
-			new HTMLTableColumn(LangLoader::get_message('author', 'common'), 'display_name'),
-			new HTMLTableColumn(LangLoader::get_message('date', 'date-common'), 'start_date'),
+			new HTMLTableColumn(LangLoader::get_message('common.title', 'common-lang'), 'title'),
+			new HTMLTableColumn(LangLoader::get_message('category.category', 'category-lang'), 'id_category'),
+			new HTMLTableColumn(LangLoader::get_message('common.author', 'common-lang'), 'display_name'),
+			new HTMLTableColumn(LangLoader::get_message('date.date', 'date-lang'), 'start_date'),
 			new HTMLTableColumn($this->lang['calendar.repetition']),
-			new HTMLTableColumn(LangLoader::get_message('status.approved', 'common'), 'approved'),
-			new HTMLTableColumn(LangLoader::get_message('actions', 'admin-common'), '', array('sr-only' => true))
+			new HTMLTableColumn(LangLoader::get_message('common.status.approved', 'common-lang'), 'approved'),
+			new HTMLTableColumn(LangLoader::get_message('common.actions', 'common-lang'), '', array('sr-only' => true))
 		);
 
 		if (!$display_categories)
@@ -56,16 +56,16 @@ class CalendarItemsManagerController extends ModuleController
 
 		$table_model = new SQLHTMLTableModel(CalendarSetup::$calendar_events_table, 'items-manager', $columns, new HTMLTableSortingRule('start_date', HTMLTableSortingRule::DESC));
 
-		$table_model->set_layout_title($this->lang['calendar.config.events.management']);
+		$table_model->set_layout_title($this->lang['calendar.items.management']);
 		$table_model->add_permanent_filter('parent_id = 0');
 
-		$table_model->set_filters_menu_title($this->lang['filter.items']);
-		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('start_date', 'filter1', $this->lang['calendar.labels.start.date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('minimum', 'common'))));
-		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('start_date', 'filter2', $this->lang['calendar.labels.start.date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('maximum', 'common'))));
-		$table_model->add_filter(new HTMLTableAjaxUserAutoCompleteSQLFilter('display_name', 'filter3', LangLoader::get_message('author', 'common')));
+		$table_model->set_filters_menu_title($this->lang['calendar.filter.items']);
+		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('start_date', 'filter1', $this->lang['calendar.start.date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('common.minimum', 'common-lang'))));
+		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('start_date', 'filter2', $this->lang['calendar.start.date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('common.maximum', 'common-lang'))));
+		$table_model->add_filter(new HTMLTableAjaxUserAutoCompleteSQLFilter('display_name', 'filter3', LangLoader::get_message('common.author', 'common-lang')));
 		if ($display_categories)
 			$table_model->add_filter(new HTMLTableCategorySQLFilter('filter4'));
-		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('approved', 'filter5', LangLoader::get_message('status', 'common'), array(1 => LangLoader::get_message('status.approved', 'common'), 0 => LangLoader::get_message('status.unapproved', 'common'))));
+		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('approved', 'filter5', LangLoader::get_message('common.status', 'common-lang'), array(1 => LangLoader::get_message('common.status.approved', 'common-lang'), 0 => LangLoader::get_message('common.status.unapproved', 'common-lang'))));
 
 		$table = new HTMLTable($table_model);
 		$table->set_filters_fieldset_class_HTML();
@@ -95,11 +95,11 @@ class CalendarItemsManagerController extends ModuleController
 
 			$row = array(
 				new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()), $item->get_content()->get_title()), 'left'),
-				new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), ($category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('none_e', 'common') : $category->get_name()), array('data-color-surround' => $category->get_id() != Category::ROOT_CATEGORY && $category->get_color() ? $category->get_color() : ($category->get_id() == Category::ROOT_CATEGORY ? $config->get_event_color() : '')), 'pinned')),
+				new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), ($category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('common.none.e', 'common-lang') : $category->get_name()), array('data-color-surround' => $category->get_id() != Category::ROOT_CATEGORY && $category->get_color() ? $category->get_color() : ($category->get_id() == Category::ROOT_CATEGORY ? $config->get_event_color() : '')), 'pinned')),
 				new HTMLTableRowCell($author),
-				new HTMLTableRowCell(LangLoader::get_message('from_date', 'main') . ' ' . $item->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . $br->display() . LangLoader::get_message('to_date', 'main') . ' ' . $item->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
-				new HTMLTableRowCell($item->belongs_to_a_serie() ? $this->get_repeat_type_label($item) . ' - ' . $item->get_content()->get_repeat_number() . ' ' . $this->lang['calendar.labels.repeat.times'] : LangLoader::get_message('no', 'common')),
-				new HTMLTableRowCell($item->get_content()->is_approved() ? LangLoader::get_message('yes', 'common') : LangLoader::get_message('no', 'common')),
+				new HTMLTableRowCell(LangLoader::get_message('date.from.date', 'date-lang') . ' ' . $item->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR) . $br->display() . LangLoader::get_message('date.to.date', 'date-lang') . ' ' . $item->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR)),
+				new HTMLTableRowCell($item->belongs_to_a_serie() ? $this->get_repeat_type_label($item) . ' - ' . $item->get_content()->get_repeat_number() . ' ' . $this->lang['calendar.repeat.times'] : LangLoader::get_message('common.no', 'common-lang')),
+				new HTMLTableRowCell($item->get_content()->is_approved() ? LangLoader::get_message('common.yes', 'common-lang') : LangLoader::get_message('common.no', 'common-lang')),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display(), 'controls')
 			);
 
@@ -147,7 +147,7 @@ class CalendarItemsManagerController extends ModuleController
 
 			CalendarService::clear_cache();
 
-			AppContext::get_response()->redirect(CalendarUrlBuilder::manage_items(), LangLoader::get_message('process.success', 'status-messages-common'));
+			AppContext::get_response()->redirect(CalendarUrlBuilder::manage_items(), LangLoader::get_message('warning.process.success', 'warning-lang'));
 		}
 	}
 
@@ -158,19 +158,19 @@ class CalendarItemsManagerController extends ModuleController
 		switch ($item->get_content()->get_repeat_type())
 		{
 			case CalendarItemContent::DAILY :
-				$label = LangLoader::get_message('every_day', 'date-common');
+				$label = LangLoader::get_message('date.every.day', 'date-lang');
 				break;
 
 			case CalendarItemContent::WEEKLY :
-				$label = LangLoader::get_message('every_week', 'date-common');
+				$label = LangLoader::get_message('date.every.week', 'date-lang');
 				break;
 
 			case CalendarItemContent::MONTHLY :
-				$label = LangLoader::get_message('every_month', 'date-common');
+				$label = LangLoader::get_message('date.every.month', 'date-lang');
 				break;
 
 			case CalendarItemContent::YEARLY :
-				$label = LangLoader::get_message('every_year', 'date-common');
+				$label = LangLoader::get_message('date.every.year', 'date-lang');
 				break;
 		}
 
@@ -191,13 +191,13 @@ class CalendarItemsManagerController extends ModuleController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['calendar.config.events.management'], $this->lang['module.title'], $page);
+		$graphical_environment->set_page_title($this->lang['calendar.items.management'], $this->lang['calendar.module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::manage_items());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::home());
+		$breadcrumb->add($this->lang['calendar.module.title'], CalendarUrlBuilder::home());
 
-		$breadcrumb->add($this->lang['calendar.config.events.management'], CalendarUrlBuilder::manage_items());
+		$breadcrumb->add($this->lang['calendar.items.management'], CalendarUrlBuilder::manage_items());
 
 		return $response;
 	}

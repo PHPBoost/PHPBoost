@@ -217,8 +217,8 @@ class CalendarItem
 				'AUTHOR'                   => $author->get_display_name(),
 				'AUTHOR_LEVEL_CLASS'       => UserService::get_level_class($author->get_level()),
 				'AUTHOR_GROUP_COLOR'       => $author_group_color,
-				'L_MISSING_PARTICIPANTS'   => $missing_participants_number > 1 ? StringVars::replace_vars($lang['calendar.labels.remaining.places'], array('missing_number' => $missing_participants_number)) : $lang['calendar.labels.remaining.place'],
-				'L_REGISTRATION_DAYS_LEFT' => $registration_days_left > 1 ? StringVars::replace_vars($lang['calendar.labels.remaining.days'], array('days_left' => $registration_days_left)) : $lang['calendar.labels.remaining.day'],
+				'L_MISSING_PARTICIPANTS'   => $missing_participants_number > 1 ? StringVars::replace_vars($lang['calendar.remaining.places'], array('missing_number' => $missing_participants_number)) : $lang['calendar.remaining.place'],
+				'L_REGISTRATION_DAYS_LEFT' => $registration_days_left > 1 ? StringVars::replace_vars($lang['calendar.remaining.days'], array('days_left' => $registration_days_left)) : $lang['calendar.remaining.day'],
 
 				//Category
 				'C_ROOT_CATEGORY' => $category->get_id()   == Category::ROOT_CATEGORY,

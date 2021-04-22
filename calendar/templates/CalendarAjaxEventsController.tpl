@@ -1,7 +1,11 @@
 # IF NOT C_PENDING_ITEMS #
 	# IF NOT C_MEMBER_ITEMS #
 		<div class="calendar-event-day">{DATE_LABEL}</div>
-		# IF C_ITEMS #<div class="more align-center"><span class="pinned notice">{L_ITEMS_NUMBER}</span></div># ENDIF #
+		# IF C_ITEMS #
+			<div class="more align-center">
+				<span class="pinned notice"># IF C_SEVERAL_ITEMS #{ITEMS_NUMBER} {@calendar.items}# ELSE #{ITEMS_NUMBER} {@calendar.item}# ENDIF #</span>
+			</div>
+		# ENDIF #
 	# ENDIF #
 # ENDIF #
 
@@ -11,23 +15,23 @@
 			<table class="table">
 				<thead>
 					<tr>
-						<th>${LangLoader::get_message('form.title', 'common')}</th>
+						<th>{@common.title}</th>
 						<th aria-label="${LangLoader::get_message('category', 'categories-common')}">
 							<i class="far fa-folder" aria-hidden="true"></i>
 							<span class="hidden-large-screens">${LangLoader::get_message('category', 'categories-common')}</span>
 						</th>
-						<th aria-label="${LangLoader::get_message('author', 'common')}">
+						<th aria-label="{@common.author}">
 							<i class="fa fa-user" aria-hidden="true"></i>
-							<span class="hidden-large-screens">${LangLoader::get_message('author', 'common')}</span>
+							<span class="hidden-large-screens">{@common.author}</span>
 						</th>
-						<th aria-label="{@calendar.labels.dates}">
+						<th aria-label="{@calendar.dates}">
 							<i class="far fa-calendar-alt" aria-hidden="true"></i>
-							<span class="hidden-large-screens">{@calendar.labels.dates}</span>
+							<span class="hidden-large-screens">{@calendar.dates}</span>
 						</th>
 						# IF C_CONTROLS #
-							<th aria-label="${LangLoader::get_message('moderation', 'common')}">
+							<th aria-label="{@common.controls}">
 								<i class="fa fa-cog" aria-hidden="true"></i>
-								<span class="hidden-large-screens">${LangLoader::get_message('moderation', 'common')}</span>
+								<span class="hidden-large-screens">{@common.controls}</span>
 							</th>
 						# ENDIF #
 					</tr>
@@ -49,17 +53,17 @@
 								# ENDIF #
 							</td>
 							<td>
-								# IF items.C_DIFFERENT_DATE #${LangLoader::get_message('from_date', 'main')}# ENDIF #
+								# IF items.C_DIFFERENT_DATE #${LangLoader::get_message('date.from.date', 'date-lang')}# ENDIF #
 								<time datetime="{items.START_DATE_ISO8601}" itemprop="startDate">{items.START_DATE}</time>
-								# IF items.C_DIFFERENT_DATE #${LangLoader::get_message('to_date', 'main')} <time datetime="{items.END_DATE_ISO8601}" itemprop="endDate">{items.END_DATE}</time># ENDIF #
+								# IF items.C_DIFFERENT_DATE #${LangLoader::get_message('date.to.date', 'date-lang')} <time datetime="{items.END_DATE_ISO8601}" itemprop="endDate">{items.END_DATE}</time># ENDIF #
 							</td>
 							# IF items.C_CONTROLS #
 								<td>
 									# IF items.C_EDIT #
-										<a href="{items.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+										<a href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 									# ENDIF #
 									# IF items.C_DELETE #
-										<a href="{items.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}"# IF NOT items.C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+										<a href="{items.U_DELETE}" aria-label="{@common.delete}"# IF NOT items.C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 									# ENDIF #
 								</td>
 							# ENDIF #
@@ -71,23 +75,23 @@
 	# ELSE #
 		<div class="# IF C_GRID_VIEW #cell-flex cell-columns-{ITEMS_PER_ROW}# ELSE #cell-row# ENDIF #">
 			# START items #
-				<article itemscope="itemscope" itemtype="https://schema.org/Event" id="article-calendar-{items.ID}" class="calendar-item several-items category-{items.CATEGORY_ID} cell# IF items.C_NEW_CONTENT # new-content# ENDIF #">
+				<article itemscope="itemscope" itemtype="https://schema.org/Event" id="calendar-item-{items.ID}" class="calendar-item several-items category-{items.CATEGORY_ID} cell# IF items.C_NEW_CONTENT # new-content# ENDIF #">
 					<header class="cell-header">
 						<h2 class="cell-name" itemprop="name">
 							<a href="{items.U_ITEM}" itemprop="url">{items.TITLE}</a>
 						</h2>
-						<a href="{items.U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
+						<a href="{items.U_SYNDICATION}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 					</header>
 					<div class="cell-infos">
 						<div class="more">
 							# IF items.C_AUTHOR_EXIST #
-								<i class="fa fa-user"></i> <a itemprop="author" href="{items.U_AUTHOR_PROFILE}" class="pinned {items.AUTHOR_LEVEL_CLASS}" # IF items.C_AUTHOR_GROUP_COLOR # style="color:{items.AUTHOR_GROUP_COLOR}" # ENDIF #>{items.AUTHOR}</a>
+								<i class="fa fa-user"></i> <a itemprop="author" href="{items.U_AUTHOR_PROFILE}" class="pinned {items.AUTHOR_LEVEL_CLASS}" # IF items.C_AUTHOR_GROUP_COLOR # style="color:{items.AUTHOR_GROUP_COLOR}" # ENDIF # aria-label="{@common.author}">{items.AUTHOR}</a>
 							# ELSE #
 								<span class="pinned notice"><i class="fa fa-user"></i> {items.AUTHOR}</span>
 							# ENDIF #
 							# IF C_COMMENTS_ENABLED #<a class="pinned" href="{items.U_COMMENTS}"><i class="fa fa-comments" aria-hidden="true"></i> {items.L_COMMENTS}</a># ENDIF #
 							# IF items.C_LOCATION #
-								<span class="pinned" itemscope="itemscope" itemtype="https://schema.org/Place">
+								<span class="pinned" itemscope="itemscope" itemtype="https://schema.org/Place" aria-label="{@common.location}">
 									<i class="fa fa-fw fa-map-marker-alt"></i>
 									<span class="text-strong" itemprop="name">{items.LOCATION}</span>
 								</span>
@@ -96,10 +100,10 @@
 						# IF items.C_CONTROLS #
 							<div class="controls align-right">
 								# IF items.C_EDIT #
-									<a href="{items.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+									<a href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 								# ENDIF #
 								# IF items.C_DELETE #
-									<a href="{items.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}"# IF NOT items.C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+									<a href="{items.U_DELETE}" aria-label="{@common.delete}"# IF NOT items.C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 								# ENDIF #
 							</div>
 						# ENDIF #
@@ -109,17 +113,17 @@
 							# IF items.C_HAS_THUMBNAIL #
 								<div class="cell-thumbnail">
 									<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" />
-									<a class="cell-thumbnail-caption" href="{items.U_ITEM}" itemprop="thumbnailUrl" aria-label="{items.TITLE}"><i class="far fa-eye" aria-hidden="true"></i></a>
+									<a class="cell-thumbnail-caption" href="{items.U_ITEM}" itemprop="thumbnailUrl" aria-label="{@common.see.details}"><i class="far fa-eye" aria-hidden="true"></i></a>
 								</div>
 							# ENDIF #
 						# ENDIF #
 						<div class="cell-content" itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 							# IF items.C_CANCELLED #
-							<span class="message-helper bgc error">{@calendar.cancelled.event}</span>
+							<span class="message-helper bgc error">{@calendar.cancelled.item}</span>
 							# ENDIF #
 
 							<div class="more">
-								<span class="pinned" aria-label="{@calendar.labels.dates}">
+								<span class="pinned" aria-label="{@calendar.dates}">
 									<i class="far fa-fw fa-calendar"></i>
 									<time class="text-strong" datetime="{items.START_DATE_ISO8601}" itemprop="startDate">{items.START_DATE}</time>
 									# IF items.C_DIFFERENT_DATE #- <time class="text-strong" datetime="{items.END_DATE_ISO8601}" itemprop="endDate">{items.END_DATE}</time># ENDIF #
@@ -135,13 +139,13 @@
 														<a href="{items.participant.U_PROFILE}" class="{items.participant.LEVEL_CLASS}" # IF items.participant.C_GROUP_COLOR # style="color:{items.participant.GROUP_COLOR}" # ENDIF #>{items.participant.DISPLAY_NAME}</a># IF NOT items.participant.C_LAST_PARTICIPANT #,# ENDIF #
 													# END items.participant #
 												# ELSE #
-													{@calendar.labels.no.one}
+													{@calendar.no.one}
 												# ENDIF #
 											</span>
 										</span>
 									# ENDIF #
 									# IF items.C_PARTICIPATE #
-										<a href="{items.U_SUSCRIBE}" class="button submit small">{@calendar.labels.suscribe}</a>
+										<a href="{items.U_SUSCRIBE}" class="button submit small">{@calendar.suscribe}</a>
 										# IF items.C_MISSING_PARTICIPANTS #
 											<span class="small text-italic">({items.L_MISSING_PARTICIPANTS})</span>
 										# ENDIF #
@@ -151,12 +155,12 @@
 									# ENDIF #
 									# IF items.C_IS_PARTICIPANT #
 										# IF items.C_UNSUBSCRIBE #
-											<a href="{items.U_UNSUSCRIBE}" class="button alt-button">{@calendar.labels.unsuscribe}</a>
+											<a href="{items.U_UNSUSCRIBE}" class="button alt-button">{@calendar.unsuscribe}</a>
 										# ENDIF #
 									# ELSE #
-										# IF items.C_MAX_PARTICIPANTS_REACHED #<span class="small text-italic">{@calendar.labels.max.participants.reached}</span># ENDIF #
+										# IF items.C_MAX_PARTICIPANTS_REACHED #<span class="small text-italic">{@calendar.max.participants.reached}</span># ENDIF #
 									# ENDIF #
-									# IF items.C_REGISTRATION_CLOSED #<span class="small text-italic">{@calendar.labels.registration.closed}</span># ENDIF #
+									# IF items.C_REGISTRATION_CLOSED #<span class="small text-italic">{@calendar.registration.closed}</span># ENDIF #
 								# ENDIF #
 							</div>
 
@@ -189,6 +193,6 @@
 	# ENDIF #
 # ELSE #
 	<div class="content">
-		<div class="message-helper bgc notice"># IF C_PENDING_ITEMS #{@calendar.notice.no.pending.event}# ELSE #${LangLoader::get_message('no_item_now', 'common')}# ENDIF #</div>
+		<div class="message-helper bgc notice">{@common.no.item.now}</div>
 	</div>
 # ENDIF #

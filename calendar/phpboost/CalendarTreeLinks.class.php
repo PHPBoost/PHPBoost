@@ -30,8 +30,8 @@ class CalendarTreeLinks extends DefaultTreeLinks
 		$module_id = 'calendar';
 		$lang = LangLoader::get('common', $module_id);
 
-		$tree->add_link(new ModuleLink($lang['my.items'], CalendarUrlBuilder::display_member_items($current_user), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->write() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->contribution() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation()));
-		$tree->add_link(new ModuleLink($lang['calendar.events.list'], CalendarUrlBuilder::display_items_list($requested_date['year'], $requested_date['month'], $requested_date['day']), $this->get_authorizations()->read()));
+		$tree->add_link(new ModuleLink($lang['calendar.my.items'], CalendarUrlBuilder::display_member_items($current_user), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->write() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->contribution() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation()));
+		$tree->add_link(new ModuleLink($lang['calendar.items.list'], CalendarUrlBuilder::display_items_list($requested_date['year'], $requested_date['month'], $requested_date['day']), $this->get_authorizations()->read()));
 	}
 
 	private function get_requested_date()
