@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 06
+ * @version     PHPBoost 6.0 - last update: 2021 04 22
  * @since       PHPBoost 5.2 - 2020 08 28
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CalendarMemberItemsController extends ModuleController
@@ -29,9 +30,9 @@ class CalendarMemberItemsController extends ModuleController
 	{
 		$this->lang = LangLoader::get('common', 'calendar');
 		$this->view = new FileTemplate('calendar/CalendarSeveralItemsController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 		$this->items_view = new FileTemplate('calendar/CalendarAjaxEventsController.tpl');
-		$this->items_view->add_lang($this->lang);
+		$this->items_view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 	}
 
 	public function build_view(HTTPRequestCustom $request)
@@ -136,17 +137,17 @@ class CalendarMemberItemsController extends ModuleController
 	private function generate_response()
 	{
 		$page = AppContext::get_request()->get_getint('page', 1);
-		$page_title = $this->is_current_member_displayed() ? $this->lang['my.items'] : $this->lang['member.items'] . ' ' . $this->get_member()->get_display_name();
+		$page_title = $this->is_current_member_displayed() ? $this->lang['calendar.my.items'] : $this->lang['calendar.member.items'] . ' ' . $this->get_member()->get_display_name();
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($page_title, $this->lang['module.title'], $page);
+		$graphical_environment->set_page_title($page_title, $this->lang['calendar.module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['calendar.seo.description.member'], array('author' => AppContext::get_current_user()->get_display_name())), $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::display_member_items($this->get_member()->get_id(), $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'], CalendarUrlBuilder::home());
-		$breadcrumb->add($this->lang['my.items'], NewsUrlBuilder::display_member_items($this->get_member()->get_id(), $page));
+		$breadcrumb->add($this->lang['calendar.module.title'], CalendarUrlBuilder::home());
+		$breadcrumb->add($this->lang['calendar.my.items'], CalendarUrlBuilder::display_member_items($this->get_member()->get_id(), $page));
 
 		return $response;
 	}
