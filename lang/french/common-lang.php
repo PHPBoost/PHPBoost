@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 22
+ * @version     PHPBoost 6.0 - last update: 2021 04 23
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -33,6 +33,8 @@ $lang['common.status']      = 'Statut';
 
 $lang['common.participants'] = 'Participants';
 
+$LANG['common.xml.lang'] = 'fr';
+
 $lang['common.by']  = 'Par';
 $lang['common.the'] = 'Le';
 $lang['common.on']  = 'Le';
@@ -59,7 +61,6 @@ $lang['common.no']  = 'Non';
 
 $lang['common.all']     = 'Tous';
 $lang['common.always']  = 'Toujours';
-$lang['common.all']     = 'Tous';
 $lang['common.unknown'] = 'Inconnu';
 $lang['common.none']    = 'Aucun';
 $lang['common.none.e']  = 'Aucune';
@@ -75,19 +76,24 @@ $lang['common.reorder']    = 'Réorganiser';
 $lang['common.respond']    = 'Répondre';
 $lang['common.loading']    = 'Chargement';
 
-$lang['common.syndication'] = 'Syndication';
-$lang['common.syndication.rss'] = 'RSS';
+$lang['common.syndication']      = 'Syndication';
+$lang['common.syndication.rss']  = 'RSS';
 $lang['common.syndication.atom'] = 'ATOM';
 
-$lang['common.size'] = 'Taille';
+$lang['common.size']         = 'Taille';
 $lang['common.unknown.size'] = 'Taille inconnue';
 
 $lang['common.items.number'] = 'Nombre d\'éléments';
-$lang['common.no.item.now'] = 'Aucun élément n\'est disponible pour le moment';
-$lang['common.see.details'] = 'Voir les détails';
+$lang['common.no.item.now']  = 'Aucun élément n\'est disponible pour le moment';
+$lang['common.see.details']  = 'Voir les détails';
 
 $lang['common.views'] = 'vues';
-$lang['common.view'] = 'vue';
+$lang['common.view']  = 'vue';
+
+$lang['common.keyword']  = 'Mot clé';
+$lang['common.keywords'] = 'Mots clés';
+$lang['common.source']   = 'Source';
+$lang['common.sources']  = 'Sources';
 
 $lang['common.maximum'] = 'Maximum';
 $lang['common.minimum'] = 'Minimum';
@@ -96,6 +102,22 @@ $lang['common.filters']            = 'Filtres';
 $lang['common.filter.items']       = 'Filtrer les éléments';
 $lang['common.click.to.select']    = 'Cliquer pour sélectionner une option';
 $lang['common.table.footer.stats'] = 'Éléments :start à :end sur :total';
+
+// Constraint
+$lang['common.constraint.required'] = 'Requis';
+$lang['common.constraint.not.required'] = 'Non requis';
+
+// Formatter
+$lang['common.hidden.text']       = 'Ce texte est caché, cliquer ici pour afficher son contenu.';
+$lang['common.hide.text']         = 'Cliquer ici pour cacher le texte.';
+$lang['common.copy.to.clipboard'] = 'Copier vers le presse-papier';
+
+// List order
+$lang['common.listorder.item.start']   = '{startItem}';
+$lang['common.listorder.item.end']     = '{endItem}';
+$lang['common.listorder.items.number'] = '{itemsNumber}';
+$lang['common.listorder.page.number']  = '{pageNumber}';
+$lang['common.listorder.pages.number'] = '{pagesNumber}';
 
 // More
 $lang['common.author']        = 'Auteur';
@@ -112,6 +134,21 @@ $lang['common.next']     = 'Suivant';
 $lang['common.play']     = 'Lecture';
 $lang['common.pause']    = 'Pause';
 
+// Notes
+$lang['common.note']     = 'Note';
+$lang['common.notes']    = 'Notes';
+$lang['common.add.note'] = 'Noter';
+$lang['common.no.note']  = 'Aucune note';
+
+// Pagination
+$lang['common.pagination.first']    = 'Vers la première page';
+$lang['common.pagination.previous'] = 'Vers la page précédente';
+$lang['common.pagination.next']     = 'Vers la page suivante';
+$lang['common.pagination.last']     = 'Vers la dernière page';
+$lang['common.pagination.current']  = 'Page courante';
+$lang['common.pagination.page']     = 'Vers la page';
+$lang['common.pagination.per']      = ' par page';
+
 // Position
 $lang['common.position']        = 'Position';
 $lang['common.move']            = 'Déplacer';
@@ -121,9 +158,15 @@ $lang['common.move.down']       = 'Descendre';
 $lang['common.update.position'] = 'Valider les positions';
 $lang['common.drop.here']       = 'Déplacer ici';
 
-// Constraint
-$lang['common.constraint.required'] = 'Requis';
-$lang['common.constraint.not.required'] = 'Non requis';
+// Scroll to
+$lang['common.scroll.to.top']    = 'haut de la page';
+$lang['common.scroll.to.bottom'] = 'bas de la page';
+
+// Select
+$lang['common.select']              = 'Sélectionner';
+$lang['common.select.element']      = 'Sélectionner cet élément';
+$lang['common.select.elements']     = 'Sélectionner des éléments';
+$lang['common.select.all.elements'] = 'Sélectionner tous les éléments';
 
 // Sort
 $lang['common.filters']                 = 'Filtres';
@@ -132,7 +175,7 @@ $lang['common.sort.options']            = 'Options de tri';
 $lang['common.sort.by']                 = 'Trier par';
 $lang['common.sort.by.alphabetic']      = 'Alphabétique';
 $lang['common.sort.by.author']          = 'Auteur';
-$lang['common.sort.by.date']            = 'Date';
+$lang['common.sort.by.date']            = 'Date de creation';
 $lang['common.sort.by.update']          = 'Dernières modifications';
 $lang['common.sort.by.views.number']    = 'Nombre de vues';
 $lang['common.sort.by.best.note']       = 'Meilleure note';
@@ -141,26 +184,13 @@ $lang['common.sort.direction']          = 'Sens de tri';
 $lang['common.sort.asc']                = 'Croissant';
 $lang['common.sort.desc']               = 'Décroissant';
 
-// Units
-$lang['common.unit.gigabytes'] = 'Go';
-$lang['common.unit.megabytes'] = 'Mo';
-$lang['common.unit.kilobytes'] = 'Ko';
-$lang['common.unit.bytes']     = 'Octets';
-$lang['common.unit.pixels']    = 'px';
-
-// Notes
-$lang['common.note']     = 'Note';
-$lang['common.notes']    = 'Notes';
-$lang['common.add.note'] = 'Noter';
-$lang['common.no.note']  = 'Aucune note';
-
 // Status
 $lang['common.status']               = 'Statut';
 $lang['common.status.approved']      = 'Approuvé';
 $lang['common.status.unapproved']    = 'Non approuvé';
 $lang['common.status.draft']         = 'Brouillon';
-$lang['common.status.approved.now']  = 'Publié';
-$lang['common.status.approved.date'] = 'Publication différée';
+$lang['common.status.published']     = 'Publié';
+$lang['common.status.deffered.date'] = 'Publication différée';
 $lang['common.status.last.update']   = 'Dernière mise à jour le ';
 
 // Thumbnails
@@ -168,40 +198,10 @@ $lang['common.thumbnail.none']    = 'Aucune image';
 $lang['common.thumbnail.default'] = 'Image par défaut';
 $lang['common.thumbnail.custom']  = 'Image personnalisée';
 
-// Dead links
-$lang['common.deadlink']                   = 'Signaler un lien mort';
-$lang['common.deadlink.confirmation']      = 'Êtes-vous sûr de vouloir signaler ce lien comme étant mort ?';
-$lang['common.contribution.deadlink']      = 'Lien mort : :link_name';
-$lang['common.contribution.deadlink.clue'] = 'Un membre a signalé ce lien comme étant mort. Veuillez vérifier le lien et modifiez-le si nécessaire.';
-
-// Pagination
-$lang['common.pagination.first'] = 'Vers la première page';
-$lang['common.pagination.previous'] = 'Vers la page précédente';
-$lang['common.pagination.next'] = 'Vers la page suivante';
-$lang['common.pagination.last'] = 'Vers la dernière page';
-$lang['common.pagination.current'] = 'Page courante';
-$lang['common.pagination.page'] = 'Vers la page';
-$lang['common.pagination.per'] = ' par page';
-
-// List order
-$lang['common.listorder.item.start'] = '{startItem}';
-$lang['common.listorder.item.end'] = '{endItem}';
-$lang['common.listorder.items.number'] = '{itemsNumber}';
-$lang['common.listorder.page.number'] = '{pageNumber}';
-$lang['common.listorder.pages.number'] = '{pagesNumber}';
-
-// Multiple select
-$lang['common.select'] = 'Sélectionner';
-$lang['common.select.element'] = 'Sélectionner cet élément';
-$lang['common.select.elements'] = 'Sélectionner des éléments';
-$lang['common.select.all.elements'] = 'Sélectionner tous les éléments';
-
-// Formatter
-$lang['common.hidden.text']       = 'Ce texte est caché, cliquer ici pour afficher son contenu.';
-$lang['common.hide.text']         = 'Cliquer ici pour cacher le texte.';
-$lang['common.copy.to.clipboard'] = 'Copier vers le presse-papier';
-
-// Scroll to
-$lang['common.scroll.to.top']    = 'haut de la page';
-$lang['common.scroll.to.bottom'] = 'bas de la page';
+// Units
+$lang['common.unit.gigabytes'] = 'Go';
+$lang['common.unit.megabytes'] = 'Mo';
+$lang['common.unit.kilobytes'] = 'Ko';
+$lang['common.unit.bytes']     = 'Octets';
+$lang['common.unit.pixels']    = 'px';
 ?>

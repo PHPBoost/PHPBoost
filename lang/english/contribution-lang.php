@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 20
+ * @version     PHPBoost 6.0 - last update: 2021 04 23
  * @since       PHPBoost 6.0 - 2021 04 20
 */
 
@@ -45,7 +45,7 @@ $lang['contribution.extended.clue'] = '
 $lang['contribution.member.edition.clue'] = '
     You are about to modify your contribution. It will be sent back to the contribution panel to be treated
     and a new alert will be sent to approvers.';
-    
+
 $lang['contribution.description']                     = 'Additional contribution';
 $lang['contribution.description.clue']                = 'Explain the reasons of your contribution. This field is not required but it may help the moderator to make his decision.';
 $lang['contribution.member.edition.description']      = 'Additional modification';
@@ -66,4 +66,10 @@ $lang['contribution.pm.content'] = '
     </p>
     <a href=":contribution_url">See the contribution</a>
 ';
+
+// Dead link
+$lang['contribution.report.dead.link']       = 'Report a dead link';
+$lang['contribution.dead.link.confirmation'] = 'Do you really want to report this link as dead?';
+$lang['contribution.dead.link.name']         = 'Dead link : :link_name';
+$lang['contribution.dead.link.clue']         = 'One member reported this link as dead. Please check the link and change it if necessary.';
 ?>

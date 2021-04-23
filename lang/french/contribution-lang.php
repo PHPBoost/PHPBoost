@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 20
+ * @version     PHPBoost 6.0 - last update: 2021 04 23
  * @since       PHPBoost 6.0 - 2021 04 20
 */
 
@@ -69,4 +69,10 @@ $lang['contribution.pm.content'] = '
     </p>
     <a href=":contribution_url">Accéder à la contribution</a>
 ';
+
+// Dead link
+$lang['contribution.report.dead.link']       = 'Signaler un lien mort';
+$lang['contribution.dead.link.confirmation'] = 'Êtes-vous sûr de vouloir signaler ce lien comme étant mort ?';
+$lang['contribution.dead.link.name']         = 'Lien mort : :link_name';
+$lang['contribution.dead.link.clue']         = 'Un membre a signalé ce lien comme étant mort. Veuillez vérifier le lien et modifiez-le si nécessaire.';
 ?>
