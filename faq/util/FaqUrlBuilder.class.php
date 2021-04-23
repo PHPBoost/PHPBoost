@@ -49,12 +49,10 @@ class FaqUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function display_pending($sort_field = '', $sort_mode = '')
+	public static function display_pending()
 	{
 		$config = FaqConfig::load();
-		$sort_field = $sort_field !== $config->get_items_default_sort_field() ? $sort_field . '/' : '';
-		$sort_mode = $sort_mode !== $config->get_items_default_sort_mode() ? $sort_mode . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/pending/' . $sort_field . $sort_mode);
+		return DispatchManager::get_url(self::$dispatcher, '/pending/');
 	}
 
 	/**

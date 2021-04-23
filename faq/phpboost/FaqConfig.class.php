@@ -12,8 +12,8 @@ class FaqConfig extends AbstractConfigData
 {
 	const CATEGORIES_PER_PAGE       = 'categories_per_page';
 	const CATEGORIES_PER_ROW        = 'categories_per_row';
-	const ITEMS_DEFAULT_SORT_FIELD  = 'items_default_sort_field';
-	const ITEMS_DEFAULT_SORT_MODE   = 'items_default_sort_mode';
+	// const ITEMS_DEFAULT_SORT_FIELD  = 'items_default_sort_field';
+	// const ITEMS_DEFAULT_SORT_MODE   = 'items_default_sort_mode';
 	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
 	const AUTHORIZATIONS            = 'authorizations';
 
@@ -67,25 +67,25 @@ class FaqConfig extends AbstractConfigData
 		return $this->get_property(self::DISPLAY_CONTROLS);
 	}
 
-	public function get_items_default_sort_field()
-	{
-		return $this->get_property(self::ITEMS_DEFAULT_SORT_FIELD);
-	}
-
-	public function set_items_default_sort_field($value)
-	{
-		$this->set_property(self::ITEMS_DEFAULT_SORT_FIELD, $value);
-	}
-
-	public function get_items_default_sort_mode()
-	{
-		return $this->get_property(self::ITEMS_DEFAULT_SORT_MODE);
-	}
-
-	public function set_items_default_sort_mode($value)
-	{
-		$this->set_property(self::ITEMS_DEFAULT_SORT_MODE, $value);
-	}
+	// public function get_items_default_sort_field()
+	// {
+	// 	return $this->get_property(self::ITEMS_DEFAULT_SORT_FIELD);
+	// }
+	//
+	// public function set_items_default_sort_field($value)
+	// {
+	// 	$this->set_property(self::ITEMS_DEFAULT_SORT_FIELD, $value);
+	// }
+	//
+	// public function get_items_default_sort_mode()
+	// {
+	// 	return $this->get_property(self::ITEMS_DEFAULT_SORT_MODE);
+	// }
+	//
+	// public function set_items_default_sort_mode($value)
+	// {
+	// 	$this->set_property(self::ITEMS_DEFAULT_SORT_MODE, $value);
+	// }
 
 	public function get_root_category_description()
 	{
@@ -117,8 +117,8 @@ class FaqConfig extends AbstractConfigData
 			self::CATEGORIES_PER_ROW => 4,
 			self::DISPLAY_TYPE => self::BASIC_VIEW,
 			self::DISPLAY_CONTROLS => true,
-			self::ITEMS_DEFAULT_SORT_FIELD => FaqQuestion::SORT_ALPHABETIC,
-			self::ITEMS_DEFAULT_SORT_MODE => FaqQuestion::ASC,
+			// self::ITEMS_DEFAULT_SORT_FIELD => FaqQuestion::SORT_ALPHABETIC,
+			// self::ITEMS_DEFAULT_SORT_MODE => FaqQuestion::ASC,
 			self::ROOT_CATEGORY_DESCRIPTION => CategoriesService::get_default_root_category_description('faq', 2, 2),
 			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13)
 		);

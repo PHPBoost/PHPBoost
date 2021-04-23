@@ -92,7 +92,7 @@ class FaqItemsManagerController extends ModuleController
 				new HTMLTableRowCell(new LinkHTMLElement(FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $faq_question->get_id()), $faq_question->get_question()), 'left'),
 				new HTMLTableRowCell(new LinkHTMLElement(FaqUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), ($category->get_id() == Category::ROOT_CATEGORY ? $common_lang['common.none.e'] : $category->get_name()))),
 				new HTMLTableRowCell($author),
-				new HTMLTableRowCell($faq_question->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
+				new HTMLTableRowCell($faq_question->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR)),
 				new HTMLTableRowCell($faq_question->is_approved() ? $common_lang['common.yes'] : $common_lang['common.no']),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display(), 'controls')
 			);

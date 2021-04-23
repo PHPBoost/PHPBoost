@@ -82,10 +82,6 @@ class AdminFaqConfigController extends AdminModuleController
 			array('class' => 'custom-checkbox', 'description' => $this->lang['config.display.controls.explain'] )
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort', $this->form_lang['form.items.default.sort'], $this->config->get_items_default_sort_field() . '-' . $this->config->get_items_default_sort_mode(), $this->get_sort_options(),
-			array('description' => $this->lang['config.items.default.sort.explain'])
-		));
-
 		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->form_lang['form.root.category.description'], $this->config->get_root_category_description(),
 			array('rows' => 8, 'cols' => 47)
 		));
@@ -106,20 +102,6 @@ class AdminFaqConfigController extends AdminModuleController
 		$this->form = $form;
 	}
 
-	private function get_sort_options()
-	{
-		$common_lang = LangLoader::get('common-lang');
-
-		$sort_options = array(
-			new FormFieldSelectChoiceOption($common_lang['common.sort.by.date'] . ' - ' . $common_lang['common.sort.asc'], FaqQuestion::SORT_DATE . '-' . FaqQuestion::ASC),
-			new FormFieldSelectChoiceOption($common_lang['common.sort.by.date'] . ' - ' . $common_lang['common.sort.desc'], FaqQuestion::SORT_DATE . '-' . FaqQuestion::DESC),
-			new FormFieldSelectChoiceOption($common_lang['common.sort.by.alphabetic'] . ' - ' . $common_lang['common.sort.asc'], FaqQuestion::SORT_ALPHABETIC . '-' . FaqQuestion::ASC),
-			new FormFieldSelectChoiceOption($common_lang['common.sort.by.alphabetic'] . ' - ' . $common_lang['common.sort.desc'], FaqQuestion::SORT_ALPHABETIC . '-' . FaqQuestion::DESC)
-		);
-
-		return $sort_options;
-	}
-
 	private function save()
 	{
 		$this->config->set_categories_per_page($this->form->get_value('categories_per_page'));
@@ -129,11 +111,6 @@ class AdminFaqConfigController extends AdminModuleController
 			$this->config->display_control_buttons();
 		else
 			$this->config->hide_control_buttons();
-
-		$items_default_sort = $this->form->get_value('items_default_sort')->get_raw_value();
-		$items_default_sort = explode('-', $items_default_sort);
-		$this->config->set_items_default_sort_field($items_default_sort[0]);
-		$this->config->set_items_default_sort_mode(TextHelper::strtolower($items_default_sort[1]));
 
 		$this->config->set_root_category_description($this->form->get_value('root_category_description'));
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
