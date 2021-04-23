@@ -11,8 +11,8 @@
 #                       English                    #
 ####################################################
 
-$lang['default.cat.name'] = 'Test category';
-$lang['default.cat.description'] = 'Test files';
-$lang['default.downloadfile.name'] = 'Download module logo';
+$lang['default.cat.name']             = 'Test category';
+$lang['default.cat.description']      = 'Test files';
+$lang['default.downloadfile.name']    = 'Download module logo';
 $lang['default.downloadfile.content'] = 'PHPBoost download module logo';
 ?>

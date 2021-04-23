@@ -112,7 +112,7 @@ class DownloadItemFormController extends ModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('file_size_unit', $this->lang['download.form.file.size.unit'], $file_size_unit,
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('file_size_unit', $this->common_lang['common.unit'], $file_size_unit,
 			array(
 				new FormFieldSelectChoiceOption('', ''),
 				new FormFieldSelectChoiceOption($this->common_lang['common.unit.kilobytes'], $this->common_lang['common.unit.kilobytes']),

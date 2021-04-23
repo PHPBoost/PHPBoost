@@ -34,7 +34,7 @@
 						<div class="cell {sub_categories_list.CATEGORY_ID}">
 							<div class="cell-header">
 								<div class="cell-name"><a class="subcat-title" itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></div>
-								<span class="small pinned notice" role="contentinfo" aria-label="{sub_categories_list.ITEMS_NUMBER} # IF sub_categories_list.C_SEVERAL_ITEMS #${TextHelper::lcfirst(@items)}# ELSE #${TextHelper::lcfirst(@item)}# ENDIF #">
+								<span class="small pinned notice" role="contentinfo" aria-label="{sub_categories_list.ITEMS_NUMBER} # IF sub_categories_list.C_SEVERAL_ITEMS #${TextHelper::lcfirst(@download.items)}# ELSE #${TextHelper::lcfirst(@download.item)}# ENDIF #">
 									{sub_categories_list.ITEMS_NUMBER}
 								</span>
 							</div>
@@ -82,9 +82,9 @@
 										<span class="hidden-large-screens">{@download.downloads.number}</span>
 									</th>
 									# IF C_ENABLED_VIEWS_NUMBER #
-										<th class="col-small" aria-label="{@download.views.number}">
+										<th class="col-small" aria-label="{@common.views.number}">
 											<i class="fa fa-fw fa-eye hidden-small-screens" aria-hidden="true"></i>
-											<span class="hidden-large-screens">{@download.views.number}</span>
+											<span class="hidden-large-screens">{@common.views.number}</span>
 										</th>
 									# ENDIF #
 									# IF C_ENABLED_NOTATION #
@@ -188,7 +188,7 @@
 												# ENDIF #
 											# ENDIF #
 											<span class="pinned" role="contentinfo" aria-label="{@download.downloads.number}"><i class="fa fa-download" aria-hidden="true"></i> {items.DOWNLOADS_NUMBER}</span>
-											# IF C_ENABLED_VIEWS_NUMBER #<span class="pinned" role="contentinfo" aria-label="{items.VIEWS_NUMBER} {@download.view}"><i class="fa fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span># ENDIF #
+											# IF C_ENABLED_VIEWS_NUMBER #<span class="pinned" role="contentinfo" aria-label="{items.VIEWS_NUMBER} {@common.views.number}"><i class="fa fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span># ENDIF #
 											# IF C_ENABLED_COMMENTS #
 												<span class="pinned">
 													<i class="fa fa-comments" aria-hidden="true"></i>

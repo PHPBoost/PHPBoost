@@ -2,15 +2,15 @@
 	<table id="table-mini-download" class="table">
 		<thead>
 			<tr>
-				<th aria-label="# IF C_SORT_BY_DATE #{@download.sort.date}# ELSE #{@download.sort.trophy}# ENDIF #">
+				<th aria-label="# IF C_SORT_BY_DATE #{@common.sort.by.date}# ELSE #{@download.ranking}# ENDIF #">
 					<i class="fa# IF C_SORT_BY_DATE #r fa-calendar-alt# ELSE # fa-trophy# ENDIF # hidden-small-screens" aria-hidden="true"></i>
-					<span class="hidden-large-screens"># IF C_SORT_BY_DATE #{@download.sort.date}# ELSE #{@download.sort.trophy}# ENDIF #</span>
+					<span class="hidden-large-screens"># IF C_SORT_BY_DATE #{@common.sort.by.date}# ELSE #{@download.ranking}# ENDIF #</span>
 				</th>
 				<th>{@common.name}</th>
 				# IF NOT C_SORT_BY_DATE #
-					<th aria-label="# IF C_SORT_BY_DOWNLOADS_NUMBER #{@download.sort.downloads.number}# ELSE #{@download.sort.notes}# ENDIF #">
+					<th aria-label="# IF C_SORT_BY_DOWNLOADS_NUMBER #{@download.downloads.number}# ELSE #{@common.note}# ENDIF #">
 						<i class="fa# IF C_SORT_BY_DOWNLOADS_NUMBER # fa-download# ELSE #r fa-star# ENDIF # hidden-small-screens" aria-hidden="true"></i>
-						<span class="hidden-large-screens"># IF C_SORT_BY_DOWNLOADS_NUMBER #{@download.sort.downloads.number}# ELSE #{@download.sort.notes}# ENDIF #</span>
+						<span class="hidden-large-screens"># IF C_SORT_BY_DOWNLOADS_NUMBER #{@download.downloads.number}# ELSE #{@common.note}# ENDIF #</span>
 					</th>
 				# ENDIF #
 			</tr>

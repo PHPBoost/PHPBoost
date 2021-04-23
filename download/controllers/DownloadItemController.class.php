@@ -90,7 +90,7 @@ class DownloadItemController extends ModuleController
 			'C_KEYWORDS' => $has_keywords,
 			'C_DISPLAY_DOWNLOAD_LINK' => DownloadAuthorizationsService::check_authorizations()->display_download_link(),
 			'NOT_VISIBLE_MESSAGE' => MessageHelper::display(LangLoader::get_message('warning.element.not.visible', 'warning-lang'), MessageHelper::WARNING),
-			'UNAUTHORIZED_TO_DOWNLOAD_MESSAGE' => MessageHelper::display($this->lang['download.message.warning.unauthorized.to.download.file'], MessageHelper::WARNING)
+			'UNAUTHORIZED_TO_DOWNLOAD_MESSAGE' => MessageHelper::display($this->lang['download.message.warning.unauthorized.download'], MessageHelper::WARNING)
 		)));
 
 		if ($comments_config->module_comments_is_enabled('download'))
