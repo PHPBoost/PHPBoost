@@ -139,7 +139,7 @@ class CalendarItemsManagerController extends ModuleController
 
 							if (!$item->belongs_to_a_serie() || count($items_list) == 1)
 							{
-								CalendarService::delete_item_content('WHERE id = :id', array('id' => $item->get_id()));
+								CalendarService::delete_item_content($item->get_id());
 							}
 						}
 					}

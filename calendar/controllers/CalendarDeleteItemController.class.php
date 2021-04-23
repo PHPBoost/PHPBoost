@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 22
+ * @version     PHPBoost 6.0 - last update: 2021 04 23
  * @since       PHPBoost 3.0 - 2012 11 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -116,7 +116,7 @@ class CalendarDeleteItemController extends ModuleController
 		{
 			if (!$this->item->belongs_to_a_serie() || count($items_list) == 1)
 			{
-				CalendarService::delete_item_content('WHERE id = :id', array('id' => $this->item->get_id()));
+				CalendarService::delete_item_content($this->item->get_id());
 			}
 
 			// Delete item

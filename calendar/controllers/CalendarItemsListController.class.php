@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 22
+ * @version     PHPBoost 6.0 - last update: 2021 04 23
  * @since       PHPBoost 4.1 - 2015 04 13
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -171,11 +171,11 @@ class CalendarItemsListController extends ModuleController
 
 							if (!$item->belongs_to_a_serie() || count($items_list) == 1)
 							{
-								CalendarService::delete_item_content('WHERE id = :id', array('id' => $item->get_id()));
+								CalendarService::delete_item_content($item->get_id());
 							}
 
 							// Delete item
-							CalendarService::delete_item('WHERE id_event = :id', array('id' => $item->get_id()));
+							CalendarService::delete_item($item->get_id());
 
 							if (!$this->item->get_parent_id())
 								PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'calendar', 'id' => $item->get_id()));

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 05
+ * @version     PHPBoost 6.0 - last update: 2021 04 23
  * @since       PHPBoost 3.0 - 2012 11 20
  * @contributor Mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -79,10 +79,11 @@ class CalendarService
 
 	 /**
 	 * @desc Delete an item.
-	 * @param string $condition Restriction to apply to the list of items
-	 * @param string[] $parameters Parameters of the condition
+	 * @param int $id id of the item
+	 * @param bool $has_parent Complete delete if event doesn't have a parent (complete delete), false per default
+	 * @param string $id_label table column to take into consideration. id_event per default
 	 */
-	public static function delete_item(int $id, bool $has_parent)
+	public static function delete_item(int $id, bool $has_parent = false, $id_label = 'id_event')
 	{
 		if (AppContext::get_current_user()->is_readonly())
 		{
@@ -90,7 +91,7 @@ class CalendarService
 			DispatchManager::redirect($controller);
 		}
 
-		self::$db_querier->delete(CalendarSetup::$calendar_events_table, 'WHERE id_event=:id', array('id' => $id));
+		self::$db_querier->delete(CalendarSetup::$calendar_events_table, 'WHERE ' . $id_label . '=:id', array('id' => $id));
 
 		if (!$has_parent)
 			PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'calendar', 'id' => $id));
@@ -103,12 +104,11 @@ class CalendarService
 
 	 /**
 	 * @desc Delete the content of an item.
-	 * @param string $condition Restriction to apply to the list of items content
-	 * @param string[] $parameters Parameters of the condition
+	 * @param int $id id of the content of the item
 	 */
-	public static function delete_item_content($condition, array $parameters)
+	public static function delete_item_content($id)
 	{
-		self::$db_querier->delete(CalendarSetup::$calendar_events_content_table, $condition, $parameters);
+		self::$db_querier->delete(CalendarSetup::$calendar_events_content_table, 'WHERE id = :id', array('id' => $id));
 	}
 
 	 /**
@@ -117,13 +117,8 @@ class CalendarService
 	 */
 	public static function delete_all_serie_items($content_id)
 	{
-		self::delete_item_content('WHERE id = :id', array(
-			'id' => $content_id
-		));
-
-		self::delete_item('WHERE content_id = :id', array(
-			'id' => $content_id
-		));
+		self::delete_item_content($content_id);
+		self::delete_item($content_id, false, 'content_id');
 	}
 
 	 /**

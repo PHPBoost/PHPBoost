@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 22
+ * @version     PHPBoost 6.0 - last update: 2021 04 23
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -444,7 +444,7 @@ class CalendarItemFormController extends ModuleController
 						if ($i <= $item_content->get_repeat_number())
 							CalendarService::update_item($e);
 						else
-							CalendarService::delete_item('WHERE id_event = :id', array('id' => $e->get_id()));
+							CalendarService::delete_item($e->get_id());
 
 						$new_start_date = $e->get_start_date();
 						$new_end_date = $e->get_end_date();
