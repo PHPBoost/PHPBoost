@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 11
+ * @version     PHPBoost 6.0 - last update: 2021 04 23
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -20,7 +20,7 @@ class AdminFaqConfigController extends AdminModuleController
 	private $submit_button;
 
 	private $lang;
-	private $admin_common_lang;
+	private $form_lang;
 
 	/**
 	 * @var FaqConfig
@@ -33,25 +33,25 @@ class AdminFaqConfigController extends AdminModuleController
 
 		$this->build_form();
 
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
+		$view->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.message.success.config', 'warning-lang'), MessageHelper::SUCCESS, 5));
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$view->put('FORM', $this->form->display());
 
-		return new DefaultAdminDisplayResponse($tpl);
+		return new DefaultAdminDisplayResponse($view);
 	}
 
 	private function init()
 	{
 		$this->config = FaqConfig::load();
 		$this->lang = LangLoader::get('common', 'faq');
-		$this->admin_common_lang = LangLoader::get('admin-common');
+		$this->form_lang = LangLoader::get('form-lang');
 	}
 
 	private function build_form()
@@ -61,12 +61,12 @@ class AdminFaqConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars(LangLoader::get_message('configuration.module.title', 'admin-common'), array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldNumberEditor('categories_number_per_page', $this->admin_common_lang['config.categories.per.page'], $this->config->get_categories_number_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('categories_number_per_page', $this->form_lang['form.categories.per.page'], $this->config->get_categories_number_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('columns_number_per_line', $this->admin_common_lang['config.columns_number_per_line'], $this->config->get_columns_number_per_line(),
+		$fieldset->add_field(new FormFieldNumberEditor('columns_number_per_line', $this->form_lang['form.categories.per.row'], $this->config->get_columns_number_per_line(),
 			array('min' => 1, 'max' => 4, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
@@ -82,16 +82,16 @@ class AdminFaqConfigController extends AdminModuleController
 			array('class' => 'custom-checkbox', 'description' => $this->lang['config.display.controls.explain'] )
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort', $this->admin_common_lang['config.items_default_sort'], $this->config->get_items_default_sort_field() . '-' . $this->config->get_items_default_sort_mode(), $this->get_sort_options(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort', $this->form_lang['form.items.default.sort'], $this->config->get_items_default_sort_field() . '-' . $this->config->get_items_default_sort_mode(), $this->get_sort_options(),
 			array('description' => $this->lang['config.items.default.sort.explain'])
 		));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->admin_common_lang['config.root_category_description'], $this->config->get_root_category_description(),
+		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->form_lang['form.root.category.description'], $this->config->get_root_category_description(),
 			array('rows' => 8, 'cols' => 47)
 		));
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', LangLoader::get_message('authorizations', 'common'),
-			array('description' => $this->admin_common_lang['config.authorizations.explain'])
+			array('description' => $this->form_lang['form.authorizations.clue'])
 		);
 		$form->add_fieldset($fieldset_authorizations);
 
@@ -108,13 +108,13 @@ class AdminFaqConfigController extends AdminModuleController
 
 	private function get_sort_options()
 	{
-		$common_lang = LangLoader::get('common');
+		$common_lang = LangLoader::get('common-lang');
 
 		$sort_options = array(
-			new FormFieldSelectChoiceOption($common_lang['form.date.creation'] . ' - ' . $common_lang['sort.asc'], FaqQuestion::SORT_DATE . '-' . FaqQuestion::ASC),
-			new FormFieldSelectChoiceOption($common_lang['form.date.creation'] . ' - ' . $common_lang['sort.desc'], FaqQuestion::SORT_DATE . '-' . FaqQuestion::DESC),
-			new FormFieldSelectChoiceOption($common_lang['sort_by.alphabetic'] . ' - ' . $common_lang['sort.asc'], FaqQuestion::SORT_ALPHABETIC . '-' . FaqQuestion::ASC),
-			new FormFieldSelectChoiceOption($common_lang['sort_by.alphabetic'] . ' - ' . $common_lang['sort.desc'], FaqQuestion::SORT_ALPHABETIC . '-' . FaqQuestion::DESC)
+			new FormFieldSelectChoiceOption($common_lang['common.sort.by.date'] . ' - ' . $common_lang['common.sort.asc'], FaqQuestion::SORT_DATE . '-' . FaqQuestion::ASC),
+			new FormFieldSelectChoiceOption($common_lang['common.sort.by.date'] . ' - ' . $common_lang['common.sort.desc'], FaqQuestion::SORT_DATE . '-' . FaqQuestion::DESC),
+			new FormFieldSelectChoiceOption($common_lang['common.sort.by.alphabetic'] . ' - ' . $common_lang['common.sort.asc'], FaqQuestion::SORT_ALPHABETIC . '-' . FaqQuestion::ASC),
+			new FormFieldSelectChoiceOption($common_lang['common.sort.by.alphabetic'] . ' - ' . $common_lang['common.sort.desc'], FaqQuestion::SORT_ALPHABETIC . '-' . FaqQuestion::DESC)
 		);
 
 		return $sort_options;
