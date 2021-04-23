@@ -83,13 +83,13 @@ class FaqPendingItemsController extends ModuleController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['faq.questions.pending'], $this->lang['faq.module.title']);
+		$graphical_environment->set_page_title($this->lang['faq.pending.items'], $this->lang['faq.module.title']);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['faq.seo.description.pending']);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::display_pending_items());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['faq.module.title'], FaqUrlBuilder::home());
-		$breadcrumb->add($this->lang['faq.questions.pending'], FaqUrlBuilder::display_pending_items());
+		$breadcrumb->add($this->lang['faq.pending.items'], FaqUrlBuilder::display_pending_items());
 
 		return $response;
 	}

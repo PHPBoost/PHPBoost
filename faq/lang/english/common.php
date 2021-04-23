@@ -15,45 +15,40 @@
 
 $lang['faq.module.title'] = 'FAQ';
 
+$lang['faq.items'] = 'questions';
+$lang['faq.item']  = 'question';
+
+// Tree links
 $lang['items'] = 'questions';
-$lang['item'] = 'question';
+$lang['item']  = 'question';
 
-$lang['an.item'] = 'a question';
-
-$lang['faq.question.add'] = 'Add question';
-$lang['faq.question.edit'] = 'Question edition';
-$lang['faq.questions.pending'] = 'Pending questions';
-$lang['faq.questions.manager'] = 'Questions manager';
-
+// Titles
+$lang['faq.add.item']          = 'Add question';
+$lang['faq.edit.item']         = 'Question edition';
+$lang['faq.pending.items']     = 'Pending questions';
+$lang['faq.items.management']  = 'Questions manager';
 $lang['faq.questions.reorder'] = 'Reorder questions';
-$lang['faq.random.question'] = 'Random question';
-$lang['faq.questions'] = 'Questions';
-$lang['faq.show.answers'] = 'Show all answers';
-$lang['faq.hide.answers'] = 'Hide all answers';
+$lang['faq.random.items']      = 'Random question';
+$lang['faq.show.all.contents'] = 'Show all answers';
+$lang['faq.hide.all.contents'] = 'Hide all answers';
 
 //config
-$lang['config.display.type.accordion'] = 'Display type for the answers';
-$lang['config.display.type.basic'] = 'Independant display';
-$lang['config.display.type.siblings'] = 'Separated display';
-$lang['config.display.controls'] = 'Display full controls';
-$lang['config.display.controls.explain'] = 'Display buttons to show/hide all the answers';
-$lang['config.items.default.sort.explain'] = 'On page "Pending questions"';
+$lang['faq.config.accordion']             = 'Display type for the answers';
+$lang['faq.config.basic.view']            = 'Independant display';
+$lang['faq.config.siblings.view']         = 'Separated display';
+$lang['faq.config.display.controls']      = 'Display full controls';
+$lang['faq.config.display.controls.clue'] = 'Display buttons to show/hide all the answers';
 
-//SEO
-$lang['faq.seo.description.root'] = 'All :site\'s FAQ questions.';
+// S.E.O.
+$lang['faq.seo.description.root']    = 'All :site\'s FAQ questions.';
 $lang['faq.seo.description.pending'] = 'All pending questions.';
 
-//contribution
-$lang['faq.form.contribution.explain'] = 'You are not authorized to create a new question, however you can contribute by submitting one.';
-
-//form
+// Form
 $lang['faq.form.question'] = 'Question';
-$lang['faq.form.answer'] = 'Answer';
+$lang['faq.form.answer']   = 'Answer';
 
-//Messages
-$lang['faq.message.success.add'] = 'The question <b>:question</b> has been added';
-$lang['faq.message.success.edit'] = 'The question <b>:question</b> has been modified';
-$lang['faq.message.success.delete'] = 'The question <b>:question</b> has been deleted';
-$lang['faq.message.show.answer'] = 'Show the answer';
-$lang['faq.message.link.question'] = 'Question\'s Link';
+// Messages helper
+$lang['faq.message.success.add']    = 'The question <b>:title</b> has been added';
+$lang['faq.message.success.edit']   = 'The question <b>:title</b> has been modified';
+$lang['faq.message.success.delete'] = 'The question <b>:title</b> has been deleted';
 ?>

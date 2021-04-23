@@ -109,9 +109,10 @@ $lang['common.constraint.required']     = 'Required';
 $lang['common.constraint.not.required'] = 'Not required';
 
 // Formatter
-$lang['common.hidden.text']       = 'This text is hidden, click here to reveal its contents.';
-$lang['common.hide.text']         = 'Click here to hide this text.';
-$lang['common.copy.to.clipboard'] = 'Copy to Clipboard';
+$lang['common.hidden.text']            = 'This text is hidden, click here to reveal its contents.';
+$lang['common.hide.text']              = 'Click here to hide this text.';
+$lang['common.copy.to.clipboard']      = 'Copy to clipboard';
+$lang['common.copy.link.to.clipboard'] = 'Copy link to clipboard';
 
 // List order
 $lang['common.listorder.item.start']   = '{startItem}';

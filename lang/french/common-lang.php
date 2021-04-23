@@ -109,9 +109,10 @@ $lang['common.constraint.required'] = 'Requis';
 $lang['common.constraint.not.required'] = 'Non requis';
 
 // Formatter
-$lang['common.hidden.text']       = 'Ce texte est caché, cliquer ici pour afficher son contenu.';
-$lang['common.hide.text']         = 'Cliquer ici pour cacher le texte.';
-$lang['common.copy.to.clipboard'] = 'Copier vers le presse-papier';
+$lang['common.hidden.text']            = 'Ce texte est caché, cliquer ici pour afficher son contenu.';
+$lang['common.hide.text']              = 'Cliquer ici pour cacher le texte.';
+$lang['common.copy.to.clipboard']      = 'Copier vers le presse-papier';
+$lang['common.copy.link.to.clipboard'] = 'Copier le lien dans le presse-papier';
 
 // List order
 $lang['common.listorder.item.start']   = '{startItem}';

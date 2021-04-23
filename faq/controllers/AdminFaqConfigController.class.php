@@ -71,15 +71,15 @@ class AdminFaqConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['config.display.type.accordion'], $this->config->get_display_type(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['faq.config.accordion'], $this->config->get_display_type(),
 			array(
-				new FormFieldSelectChoiceOption($this->lang['config.display.type.basic'], FaqConfig::BASIC_VIEW),
-				new FormFieldSelectChoiceOption($this->lang['config.display.type.siblings'], FaqConfig::SIBLINGS_VIEW)
+				new FormFieldSelectChoiceOption($this->lang['faq.config.basic.view'], FaqConfig::BASIC_VIEW),
+				new FormFieldSelectChoiceOption($this->lang['faq.config.siblings.view'], FaqConfig::SIBLINGS_VIEW)
 			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('display_controls', $this->lang['config.display.controls'], $this->config->are_control_buttons_displayed(),
-			array('class' => 'custom-checkbox', 'description' => $this->lang['config.display.controls.explain'] )
+		$fieldset->add_field(new FormFieldCheckbox('display_controls', $this->lang['faq.config.display.controls'], $this->config->are_control_buttons_displayed(),
+			array('class' => 'custom-checkbox', 'description' => $this->lang['faq.config.display.controls.clue'] )
 		));
 
 		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->form_lang['form.root.category.description'], $this->config->get_root_category_description(),

@@ -45,7 +45,7 @@
 		</div>
 		<h1>
 			# IF C_PENDING_ITEMS #
-				{@faq.questions.pending}
+				{@faq.pending.items}
 			# ELSE #
 				# IF C_ROOT_CATEGORY #{@faq.module.title}# ELSE #{CATEGORY_NAME}# ENDIF #
 			# ENDIF #
@@ -95,8 +95,8 @@
 				<div class="accordion-container# IF C_DISPLY_BASIC # basic# ELSE # siblings# ENDIF #">
 					# IF C_DISPLAY_CONTROLS #
 						<div class="accordion-controls">
-							<span class="open-all-accordions" aria-label="{@faq.show.answers}"><i class="fa fa-fw fa-chevron-down"></i></span>
-							<span class="close-all-accordions" aria-label="{@faq.hide.answers}"><i class="fa fa-fw fa-chevron-up"></i></span>
+							<span class="open-all-accordions" aria-label="{@faq.show.all.contents}"><i class="fa fa-fw fa-chevron-down"></i></span>
+							<span class="close-all-accordions" aria-label="{@faq.hide.all.contents}"><i class="fa fa-fw fa-chevron-up"></i></span>
 						</div>
 					# ENDIF #
 					<nav class="accordion-nav">
@@ -113,7 +113,7 @@
 							<div class="content-panel faq-answer-container" itemprop="text">
 								<div class="controls align-right">
 									# IF C_PENDING_ITEMS #{items.ITEM_DATE} | # ENDIF #
-									<a href="{items.U_ITEM}" onclick="copy_to_clipboard('{items.U_ABSOLUTE_LINK}');return false;" aria-label="{@faq.message.link.question}"><i class="fa fa-fw fa-anchor" aria-hidden="true"></i></a>
+									<a href="{items.U_ITEM}" onclick="copy_to_clipboard('{items.U_ABSOLUTE_LINK}');return false;" aria-label="{@common.copy.link.to.clipboard}"><i class="fa fa-fw fa-anchor" aria-hidden="true"></i></a>
 									# IF items.C_EDIT #
 										<a href="{items.U_EDIT}"aria-label="{@common.edit}"><i class="far fa-fw fa-edit fa-fw" aria-hidden="true"></i> </a>
 									# ENDIF #

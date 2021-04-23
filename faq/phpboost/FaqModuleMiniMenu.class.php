@@ -21,7 +21,7 @@ class FaqModuleMiniMenu extends ModuleMiniMenu
 
 	public function get_menu_title()
 	{
-		return LangLoader::get_message('faq.random.question', 'common', 'faq');
+		return LangLoader::get_message('faq.random.items', 'common', 'faq');
 	}
 
 	public function is_displayed()

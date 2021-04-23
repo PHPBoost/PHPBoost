@@ -22,7 +22,7 @@ class FaqDeleteItemController extends ModuleController
         FaqService::delete($question->get_id());
         FaqService::clear_cache();
 
-		AppContext::get_response()->redirect(($request->get_url_referrer() ? $request->get_url_referrer() : FaqUrlBuilder::home()), StringVars::replace_vars(LangLoader::get_message('faq.message.success.delete', 'common', 'faq'), array('question' => $question->get_question())));
+		AppContext::get_response()->redirect(($request->get_url_referrer() ? $request->get_url_referrer() : FaqUrlBuilder::home()), StringVars::replace_vars(LangLoader::get_message('faq.message.success.delete', 'common', 'faq'), array('title' => $question->get_title())));
 	}
 
 	private function get_faq_question(HTTPRequestCustom $request)
@@ -32,7 +32,7 @@ class FaqDeleteItemController extends ModuleController
 		if (!empty($id))
 		{
 			try {
-				return FaqService::get_question('WHERE id=:id', array('id' => $id));
+				return FaqService::get_item('WHERE id=:id', array('id' => $id));
 			} catch (RowNotFoundException $e) {
 				$error_controller = PHPBoostErrors::unexisting_page();
 				DispatchManager::redirect($error_controller);

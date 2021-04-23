@@ -15,51 +15,40 @@
 
 $lang['faq.module.title'] = 'FAQ';
 
-$lang['items'] = 'questions';
-$lang['item'] = 'question';
-
 $lang['faq.items'] = 'questions';
-$lang['faq.item'] = 'question';
+$lang['faq.item']  = 'question';
 
-$lang['all.items'] = 'Toutes les questions';
-$lang['last.items'] = 'Dernières questions';
-$lang['an.item'] = 'Une question';
-$lang['the.item'] = 'La question';
+// Tree links
+$lang['items'] = 'questions';
+$lang['item']  = 'question';
 
-$lang['faq.question.add'] = 'Ajouter une question';
-$lang['faq.question.edit'] = 'Modifier la question';
-$lang['faq.questions.pending'] = 'Questions en attente';
-$lang['faq.questions.manager'] = 'Gestion des questions';
-
+// Titles
+$lang['faq.add.item']          = 'Ajouter une question';
+$lang['faq.edit.item']         = 'Modifier la question';
+$lang['faq.pending.items']     = 'Questions en attente';
+$lang['faq.items.management']  = 'Gestion des questions';
 $lang['faq.questions.reorder'] = 'Changer l\'ordre des questions';
-$lang['faq.random.question'] = 'Question aléatoire';
-$lang['faq.questions'] = 'Questions';
-$lang['faq.show.answers'] = 'Montrer toutes les réponses';
-$lang['faq.hide.answers'] = 'Cacher toutes les réponses';
+$lang['faq.random.items']      = 'Question aléatoire';
+$lang['faq.show.all.contents'] = 'Montrer toutes les réponses';
+$lang['faq.hide.all.contents'] = 'Cacher toutes les réponses';
 
 //config
-$lang['config.display.type.accordion'] = 'Type d\'affichage des réponses';
-$lang['config.display.type.basic'] = 'Affichage indépendant';
-$lang['config.display.type.siblings'] = 'Affichage séparé';
-$lang['config.display.controls'] = 'Afficher le contrôle total';
-$lang['config.display.controls.explain'] = 'Afficher les boutons pour ouvrir/fermer toutes les réponses';
-$lang['config.items.default.sort.explain'] = 'Sur la page "Questions en attente"';
+$lang['faq.config.accordion']             = 'Type d\'affichage des réponses';
+$lang['faq.config.basic.view']            = 'Affichage indépendant';
+$lang['faq.config.siblings.view']         = 'Affichage séparé';
+$lang['faq.config.display.controls']      = 'Afficher le contrôle total';
+$lang['faq.config.display.controls.clue'] = 'Afficher les boutons pour ouvrir/fermer toutes les réponses';
 
-//SEO
-$lang['faq.seo.description.root'] = 'Toutes les questions de la Foire Aux Questions du site :site.';
+// S.E.O.
+$lang['faq.seo.description.root']    = 'Toutes les questions de la Foire Aux Questions du site :site.';
 $lang['faq.seo.description.pending'] = 'Toutes les questions en attente.';
 
-//contribution
-$lang['faq.form.contribution.explain'] = 'Vous n\'êtes pas autorisé à ajouter une question, cependant vous pouvez en proposer une.';
-
-//form
+// Form
 $lang['faq.form.question'] = 'Question';
-$lang['faq.form.answer'] = 'Réponse';
+$lang['faq.form.answer']   = 'Réponse';
 
-//Messages
-$lang['faq.message.success.add'] = 'La question <b>:question</b> a été ajoutée';
-$lang['faq.message.success.edit'] = 'La question <b>:question</b> a été modifiée';
-$lang['faq.message.success.delete'] = 'La question <b>:question</b> a été supprimée';
-$lang['faq.message.show.answer'] = 'Voir la réponse';
-$lang['faq.message.link.question'] = 'Copier le lien vers la question';
+// Messages helper
+$lang['faq.message.success.add']    = 'La question <b>:title</b> a été ajoutée';
+$lang['faq.message.success.edit']   = 'La question <b>:title</b> a été modifiée';
+$lang['faq.message.success.delete'] = 'La question <b>:title</b> a été supprimée';
 ?>

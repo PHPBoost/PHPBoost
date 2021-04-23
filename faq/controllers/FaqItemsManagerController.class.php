@@ -56,7 +56,7 @@ class FaqItemsManagerController extends ModuleController
 
 		$table_model = new SQLHTMLTableModel(FaqSetup::$faq_table, 'items-manager', $columns, new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
 
-		$table_model->set_layout_title($this->lang['faq.questions.manager']);
+		$table_model->set_layout_title($this->lang['faq.items.management']);
 
 		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('creation_date', 'filter1', $common_lang['common.sort.by.date'] . ' ' . TextHelper::lcfirst($common_lang['common.minimum'])));
 		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('creation_date', 'filter2', $common_lang['common.sort.by.date'] . ' ' . TextHelper::lcfirst($common_lang['common.maximum'])));
@@ -144,13 +144,13 @@ class FaqItemsManagerController extends ModuleController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['faq.questions.manager'], $this->lang['faq.module.title'], $page);
+		$graphical_environment->set_page_title($this->lang['faq.items.management'], $this->lang['faq.module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::manage());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['faq.module.title'], FaqUrlBuilder::home());
 
-		$breadcrumb->add($this->lang['faq.questions.manager'], FaqUrlBuilder::manage());
+		$breadcrumb->add($this->lang['faq.items.management'], FaqUrlBuilder::manage());
 
 		return $response;
 	}
