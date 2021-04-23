@@ -257,23 +257,23 @@ class DownloadItemFormController extends ModuleController
 
 	private function build_contribution_fieldset($form)
 	{
-		$user_common = LangLoader::get('user-common');
+		$contribution = LangLoader::get('contribution-lang');
 		if ($this->get_item()->get_id() === null && $this->is_contributor_member())
 		{
-			$fieldset = new FormFieldsetHTML('contribution', $user_common['contribution']);
-			$fieldset->set_description(MessageHelper::display($user_common['contribution.extended.explain'], MessageHelper::WARNING)->render());
+			$fieldset = new FormFieldsetHTML('contribution', $contribution['contribution.contribution']);
+			$fieldset->set_description(MessageHelper::display($contribution['contribution.extended.clue'], MessageHelper::WARNING)->render());
 			$form->add_fieldset($fieldset);
 
-			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $user_common['contribution.description'], '', array('description' => LangLoader::get_message('contribution.description.explain', 'user-common'))));
+			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $contribution['contribution.description'], '', array('description' => LangLoader::get_message('contribution.description.explain', 'user-common'))));
 		}
 		elseif ($this->get_item()->is_published() && $this->get_item()->is_authorized_to_edit() && !AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 		{
-			$fieldset = new FormFieldsetHTML('member_edition', $user_common['contribution.member.edition']);
-			$fieldset->set_description(MessageHelper::display($user_common['contribution.member.edition.explain'], MessageHelper::WARNING)->render());
+			$fieldset = new FormFieldsetHTML('member_edition', $contribution['contribution.member.edition']);
+			$fieldset->set_description(MessageHelper::display($contribution['contribution.member.edition.clue'], MessageHelper::WARNING)->render());
 			$form->add_fieldset($fieldset);
 
-			$fieldset->add_field(new FormFieldRichTextEditor('edition_description', $user_common['contribution.member.edition.description'], '',
-				array('description' => $user_common['contribution.member.edition.description.desc'])
+			$fieldset->add_field(new FormFieldRichTextEditor('edition_description', $contribution['contribution.member.edition.description'], '',
+				array('description' => $contribution['contribution.member.edition.description.clue'])
 			));
 		}
 	}
