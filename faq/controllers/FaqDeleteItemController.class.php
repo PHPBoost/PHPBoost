@@ -40,7 +40,7 @@ class FaqDeleteItemController extends ModuleController
 		}
 	}
 
-	private function check_authorizations(FaqQuestion $question)
+	private function check_authorizations(FaqItem $question)
 	{
 		if (!$question->is_authorized_to_delete())
 		{

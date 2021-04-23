@@ -36,7 +36,7 @@
 			# IF NOT C_ROOT_CATEGORY #{@faq.module.title}# ENDIF #
 			# IF C_CATEGORY #
 				# IF C_DISPLAY_REORDER_LINK #
-					<a href="{U_REORDER_QUESTIONS}" aria-label="{@faq.questions.reorder}"><i class="fa fa-fw fa-exchange-alt" aria-hidden="true"></i></a>
+					<a href="{U_REORDER_ITEMS}" aria-label="{@faq.questions.reorder}"><i class="fa fa-fw fa-exchange-alt" aria-hidden="true"></i></a>
 				# ENDIF #
 				# IF IS_ADMIN #
 					<a href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
@@ -103,7 +103,7 @@
 						<ul class="accordion-bordered">
 							# START items #
 								<li id="question-title-{items.ID}" class="category-{items.CATEGORY_ID}">
-									<a href="#" data-accordion data-target="question{items.ID}">{items.QUESTION}</a>
+									<a href="#" data-accordion data-target="question{items.ID}">{items.TITLE}</a>
 								</li>
 							# END items #
 						</ul>
@@ -112,6 +112,7 @@
 						<article id="question{items.ID}" itemscope="itemscope" itemtype="https://schema.org/CreativeWork" class="accordion accordion-animation faq-item several-items# IF items.C_NEW_CONTENT # new-content# ENDIF #">
 							<div class="content-panel faq-answer-container" itemprop="text">
 								<div class="controls align-right">
+									# IF C_PENDING_ITEMS #{items.ITEM_DATE} | # ENDIF #
 									<a href="{items.U_ITEM}" onclick="copy_to_clipboard('{items.U_ABSOLUTE_LINK}');return false;" aria-label="{@faq.message.link.question}"><i class="fa fa-fw fa-anchor" aria-hidden="true"></i></a>
 									# IF items.C_EDIT #
 										<a href="{items.U_EDIT}"aria-label="{@common.edit}"><i class="far fa-fw fa-edit fa-fw" aria-hidden="true"></i> </a>
@@ -120,7 +121,7 @@
 										<a href="#"aria-label="{@common.delete}" onclick="delete_question({items.ID});return false;"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i> </a>
 									# ENDIF #
 								</div>
-								<div class="content">{items.ANSWER}</div>
+								<div class="content">{items.CONTENT}</div>
 							</div>
 
 							<footer></footer>

@@ -12,12 +12,12 @@ class FaqSearchable extends DefaultSearchable
 	public function __construct()
 	{
 		parent::__construct('faq', "'#question', faq_table_name.id");
-		
+
 		$this->table_name = FaqSetup::$faq_table;
-		
-		$this->field_title = 'question';
-		$this->field_content = 'answer';
-		
+
+		$this->field_title = 'title';
+		$this->field_content = 'content';
+
 		$this->field_published = 'approved';
 	}
 }

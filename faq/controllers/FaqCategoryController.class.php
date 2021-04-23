@@ -99,15 +99,15 @@ class FaqCategoryController extends ModuleController
 
 			'U_CATEGORY_THUMBNAIL' => $this->get_category()->get_thumbnail()->rel(),
 			'U_EDIT_CATEGORY'      => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? FaqUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->get_category()->get_id())->rel(),
-			'U_REORDER_QUESTIONS'  => FaqUrlBuilder::reorder_questions($this->get_category()->get_id(), $this->get_category()->get_rewrited_name())->rel(),
+			'U_REORDER_ITEMS'      => FaqUrlBuilder::reorder_items($this->get_category()->get_id(), $this->get_category()->get_rewrited_name())->rel(),
 		));
 
 		while ($row = $result->fetch())
 		{
-			$faq_question = new FaqQuestion();
-			$faq_question->set_properties($row);
+			$item = new FaqItem();
+			$item->set_properties($row);
 
-			$this->view->assign_block_vars('items', $faq_question->get_array_tpl_vars());
+			$this->view->assign_block_vars('items', $item->get_array_tpl_vars());
 		}
 		$result->dispose();
 	}

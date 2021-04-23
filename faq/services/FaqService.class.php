@@ -28,9 +28,9 @@ class FaqService
 
 	 /**
 	 * @desc Create a new entry in the database table.
-	 * @param string[] $faq_question : new FaqQuestion
+	 * @param string[] $faq_question : new FaqItem
 	 */
-	public static function add(FaqQuestion $faq_question)
+	public static function add(FaqItem $faq_question)
 	{
 		$result = self::$db_querier->insert(FaqSetup::$faq_table, $faq_question->get_properties());
 
@@ -41,7 +41,7 @@ class FaqService
 	 * @desc Update an entry.
 	 * @param string[] $faq_question : FaqQuestion to update
 	 */
-	public static function update(FaqQuestion $faq_question)
+	public static function update(FaqItem $faq_question)
 	{
 		self::$db_querier->update(FaqSetup::$faq_table, $faq_question->get_properties(), 'WHERE id=:id', array('id' => $faq_question->get_id()));
 	}
@@ -76,7 +76,7 @@ class FaqService
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = faq.author_user_id
 		' . $condition, $parameters);
 
-		$faq_question = new FaqQuestion();
+		$faq_question = new FaqItem();
 		$faq_question->set_properties($row);
 		return $faq_question;
 	}

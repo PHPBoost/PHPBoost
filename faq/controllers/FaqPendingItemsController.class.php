@@ -44,7 +44,7 @@ class FaqPendingItemsController extends ModuleController
 		WHERE approved = 0
 		AND faq.id_category IN :authorized_categories
 		' . (!CategoriesAuthorizationsService::check_authorizations()->moderation() ? ' AND faq.author_user_id = :user_id' : '') . '
-		ORDER BY question', array(
+		ORDER BY q_order ASC', array(
 			'authorized_categories' => $authorized_categories,
 			'user_id' => AppContext::get_current_user()->get_id()
 		));
@@ -61,10 +61,10 @@ class FaqPendingItemsController extends ModuleController
 
 		while ($row = $result->fetch())
 		{
-			$faq_question = new FaqQuestion();
-			$faq_question->set_properties($row);
+			$item = new FaqItem();
+			$item->set_properties($row);
 
-			$this->view->assign_block_vars('items', $faq_question->get_array_tpl_vars());
+			$this->view->assign_block_vars('items', $item->get_array_tpl_vars());
 		}
 		$result->dispose();
 	}
@@ -85,11 +85,11 @@ class FaqPendingItemsController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['faq.questions.pending'], $this->lang['faq.module.title']);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['faq.seo.description.pending']);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::display_pending());
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::display_pending_items());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['faq.module.title'], FaqUrlBuilder::home());
-		$breadcrumb->add($this->lang['faq.questions.pending'], FaqUrlBuilder::display_pending());
+		$breadcrumb->add($this->lang['faq.questions.pending'], FaqUrlBuilder::display_pending_items());
 
 		return $response;
 	}

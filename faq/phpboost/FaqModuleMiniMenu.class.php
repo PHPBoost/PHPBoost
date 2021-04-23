@@ -53,8 +53,8 @@ class FaqModuleMiniMenu extends ModuleMiniMenu
 		if (!empty($categories))
 		{
 			$id_category = $categories[array_rand($categories)];
-			$category_questions = $faq_cache->get_category_questions($id_category);
-			$random_question = $category_questions[array_rand($category_questions)];
+			$category_items = $faq_cache->get_category_items($id_category);
+			$random_question = $category_items[array_rand($category_items)];
 
 			if (!empty($random_question))
 			{
@@ -62,7 +62,7 @@ class FaqModuleMiniMenu extends ModuleMiniMenu
 
 				$view->put_all(array(
 					'C_ITEMS' => true,
-					'QUESTION' => $random_question['question'],
+					'TITLE' => $random_question['title'],
 					'U_ITEM' => FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $random_question['id'])->rel()
 				));
 			}

@@ -124,7 +124,7 @@ class FaqItemFormController extends ModuleController
 			else
 			{
 				$this->is_new_faq_question = true;
-				$this->faq_question = new FaqQuestion();
+				$this->faq_question = new FaqItem();
 				$this->faq_question->init_default_properties(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY));
 			}
 		}
@@ -201,7 +201,7 @@ class FaqItemFormController extends ModuleController
 		FaqService::clear_cache();
 	}
 
-	private function contribution_actions(FaqQuestion $faq_question, $id)
+	private function contribution_actions(FaqItem $faq_question, $id)
 	{
 		if ($faq_question->get_id() === null)
 		{
@@ -257,9 +257,9 @@ class FaqItemFormController extends ModuleController
 		else
 		{
 			if ($this->is_new_faq_question)
-				AppContext::get_response()->redirect(FaqUrlBuilder::display_pending(), StringVars::replace_vars($this->lang['faq.message.success.add'], array('question' => $faq_question->get_question())));
+				AppContext::get_response()->redirect(FaqUrlBuilder::display_pending_items(), StringVars::replace_vars($this->lang['faq.message.success.add'], array('question' => $faq_question->get_question())));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : FaqUrlBuilder::display_pending()), StringVars::replace_vars($this->lang['faq.message.success.edit'], array('question' => $faq_question->get_question())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : FaqUrlBuilder::display_pending_items()), StringVars::replace_vars($this->lang['faq.message.success.edit'], array('question' => $faq_question->get_question())));
 		}
 	}
 

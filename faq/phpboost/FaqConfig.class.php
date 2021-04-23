@@ -117,8 +117,6 @@ class FaqConfig extends AbstractConfigData
 			self::CATEGORIES_PER_ROW => 4,
 			self::DISPLAY_TYPE => self::BASIC_VIEW,
 			self::DISPLAY_CONTROLS => true,
-			// self::ITEMS_DEFAULT_SORT_FIELD => FaqQuestion::SORT_ALPHABETIC,
-			// self::ITEMS_DEFAULT_SORT_MODE => FaqQuestion::ASC,
 			self::ROOT_CATEGORY_DESCRIPTION => CategoriesService::get_default_root_category_description('faq', 2, 2),
 			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13)
 		);

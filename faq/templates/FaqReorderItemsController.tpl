@@ -1,17 +1,17 @@
 # IF C_ITEMS #
 	<script>
-		var FaqQuestions = function(id){
+		var FaqItem = function(id){
 			this.id = id;
-			this.questions_number = {ITEMS_NUMBER};
+			this.items_number = {ITEMS_NUMBER};
 		};
 
-		FaqQuestions.prototype = {
+		FaqItem.prototype = {
 			init_sortable : function() {
 				jQuery("ul#questions-list").sortable({
 					handle: '.sortable-selector',
 					placeholder: '<div class="dropzone">' + ${escapejs(@common.drop.here)} + '</div>',
 					onDrop: function ($item, container, _super, event) {
-						FaqQuestions.change_reposition_pictures();
+						FaqItem.change_reposition_pictures();
 						$item.removeClass(container.group.options.draggedClass).removeAttr("style");
 						$("body").removeClass(container.group.options.bodyClass);
 					}
@@ -42,12 +42,12 @@
 			}
 		};
 
-		var FaqQuestion = function(id, faq_questions){
+		var FaqQuestion = function(id, faq_item){
 			this.id = id;
-			this.FaqQuestions = faq_questions;
+			this.FaqItem = faq_item;
 
-			if (FaqQuestions.questions_number > 1)
-				FaqQuestions.change_reposition_pictures();
+			if (FaqItem.items_number > 1)
+				FaqItem.change_reposition_pictures();
 		};
 
 		FaqQuestion.prototype = {
@@ -63,13 +63,13 @@
 							if(returnData.code > 0) {
 								jQuery("#list-" + returnData.code).remove();
 
-								FaqQuestions.init_sortable();
-								FaqQuestions.questions_number--;
+								FaqItem.init_sortable();
+								FaqItem.items_number--;
 
-								FaqQuestions.change_reposition_pictures();
-								if (FaqQuestions.questions_number == 1) {
+								FaqItem.change_reposition_pictures();
+								if (FaqItem.items_number == 1) {
 									jQuery("#position-update-button").hide();
-								} else if (FaqQuestions.questions_number == 0) {
+								} else if (FaqItem.items_number == 0) {
 									jQuery("#position-update-form").hide();
 									jQuery("#no-item-message").show();
 								}
@@ -80,9 +80,9 @@
 			}
 		};
 
-		var FaqQuestions = new FaqQuestions('questions-list');
+		var FaqItem = new FaqItem('questions-list');
 		jQuery(document).ready(function() {
-			FaqQuestions.init_sortable();
+			FaqItem.init_sortable();
 		});
 	</script>
 # ENDIF #
@@ -112,14 +112,14 @@
 		<div class="content-container">
 			<div class="content">
 				# IF C_ITEMS #
-					<form action="{REWRITED_SCRIPT}" method="post" id="position-update-form" onsubmit="FaqQuestions.serialize_sortable();" class="faq-reorder-form">
+					<form action="{REWRITED_SCRIPT}" method="post" id="position-update-form" onsubmit="FaqItem.serialize_sortable();" class="faq-reorder-form">
 						<fieldset id="questions-management">
 							<ul id="questions-list" class="sortable-block">
 								# START items #
 									<li class="sortable-element# IF items.C_NEW_CONTENT # new-content# ENDIF #" id="list-{items.ID}" data-id="{items.ID}">
 										<div class="sortable-selector" aria-label="{@common.move}"></div>
 										<div class="sortable-title">
-											<span class="question-title">{items.QUESTION}</span>
+											<span class="question-title">{items.TITLE}</span>
 										</div>
 										<div class="sortable-actions">
 											# IF C_SEVERAL_ITEMS #
@@ -132,22 +132,22 @@
 
 										<script>
 											jQuery(document).ready(function() {
-												var faq_question = new FaqQuestion({items.ID}, FaqQuestions);
+												var faq_question = new FaqItem({items.ID}, FaqItem);
 
 												jQuery('#delete-{items.ID}').on('click',function(){
 													faq_question.delete();
 												});
 
-												if (FaqQuestions.questions_number > 1) {
+												if (FaqItem.items_number > 1) {
 													jQuery('#move-up-{items.ID}').on('click',function(){
 														var li = jQuery(this).closest('li');
 														li.insertBefore( li.prev() );
-														FaqQuestions.change_reposition_pictures();
+														FaqItem.change_reposition_pictures();
 													});
 													jQuery('#move-down-{items.ID}').on('click',function(){
 														var li = jQuery(this).closest('li');
 														li.insertAfter( li.next() );
-														FaqQuestions.change_reposition_pictures();
+														FaqItem.change_reposition_pictures();
 													});
 												}
 											});

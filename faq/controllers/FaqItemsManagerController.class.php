@@ -74,7 +74,7 @@ class FaqItemsManagerController extends ModuleController
 		$result = $table_model->get_sql_results('faq LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = faq.author_user_id');
 		foreach ($result as $row)
 		{
-			$faq_question = new FaqQuestion();
+			$faq_question = new FaqItem();
             $faq_question->set_properties($row);
             $category = $faq_question->get_category();
             $user = $faq_question->get_author_user();

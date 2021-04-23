@@ -40,7 +40,7 @@ class FaqUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function reorder_questions($id_category, $rewrited_name)
+	public static function reorder_items($id_category, $rewrited_name)
 	{
 		$category = $id_category > 0 ? $id_category . '-' . $rewrited_name . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/reorder/' . $category);
@@ -49,7 +49,7 @@ class FaqUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function display_pending()
+	public static function display_pending_items()
 	{
 		$config = FaqConfig::load();
 		return DispatchManager::get_url(self::$dispatcher, '/pending/');

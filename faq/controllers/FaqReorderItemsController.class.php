@@ -72,10 +72,10 @@ class FaqReorderItemsController extends ModuleController
 
 		while ($row = $result->fetch())
 		{
-			$faq_question = new FaqQuestion();
-			$faq_question->set_properties($row);
+			$item = new FaqItem();
+			$item->set_properties($row);
 
-			$this->view->assign_block_vars('items', $faq_question->get_array_tpl_vars());
+			$this->view->assign_block_vars('items', $item->get_array_tpl_vars());
 		}
 		$result->dispose();
 	}
@@ -148,7 +148,7 @@ class FaqReorderItemsController extends ModuleController
 				$breadcrumb->add($category->get_name(), FaqUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
 		}
 
-		$breadcrumb->add($this->lang['faq.questions.reorder'], FaqUrlBuilder::reorder_questions($this->get_category()->get_id(), $this->get_category()->get_rewrited_name()));
+		$breadcrumb->add($this->lang['faq.questions.reorder'], FaqUrlBuilder::reorder_items($this->get_category()->get_id(), $this->get_category()->get_rewrited_name()));
 
 		return $response;
 	}

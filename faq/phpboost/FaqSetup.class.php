@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 21
+ * @version     PHPBoost 6.0 - last update: 2021 04 23
  * @since       PHPBoost 4.0 - 2014 09 02
 */
 
@@ -54,8 +54,8 @@ class FaqSetup extends DefaultModuleSetup
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'q_order' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'question' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'answer' => array('type' => 'text', 'length' => 65000),
+			'title' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'content' => array('type' => 'text', 'length' => 65000),
 			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'approved' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0)
@@ -64,7 +64,7 @@ class FaqSetup extends DefaultModuleSetup
 			'primary' => array('id'),
 			'indexes' => array(
 				'id_category' => array('type' => 'key', 'fields' => 'id_category'),
-				'title' => array('type' => 'fulltext', 'fields' => 'question'),
+				'title' => array('type' => 'fulltext', 'fields' => 'title'),
 				'content' => array('type' => 'fulltext', 'fields' => 'answer')
 			)
 		);
@@ -114,8 +114,8 @@ class FaqSetup extends DefaultModuleSetup
 			'id' => 1,
 			'id_category' => 1,
 			'q_order' => 1,
-			'question' => $this->messages['default.question.what.is.phpboost'],
-			'answer' => $this->messages['default.answer.what.is.phpboost'],
+			'title' => $this->messages['default.title.what.is.phpboost'],
+			'content' => $this->messages['default.content.what.is.phpboost'],
 			'creation_date' => time(),
 			'author_user_id' => 1,
 			'approved' => 1
@@ -125,8 +125,8 @@ class FaqSetup extends DefaultModuleSetup
 			'id' => 2,
 			'id_category' => 2,
 			'q_order' => 1,
-			'question' => $this->messages['default.question.what.is.a.cms'],
-			'answer' => $this->messages['default.answer.what.is.a.cms'],
+			'title' => $this->messages['default.title.what.is.a.cms'],
+			'content' => $this->messages['default.content.what.is.a.cms'],
 			'creation_date' => time(),
 			'author_user_id' => 1,
 			'approved' => 1

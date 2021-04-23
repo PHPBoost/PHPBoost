@@ -9,7 +9,7 @@
 
 class FaqCache implements CacheData
 {
-	private $questions = array();
+	private $items = array();
 	private $categories = array();
 
 	/**
@@ -17,10 +17,10 @@ class FaqCache implements CacheData
 	 */
 	public function synchronize()
 	{
-		$this->questions = $this->categories = array();
+		$this->items = $this->categories = array();
 
 		$result = PersistenceContext::get_querier()->select('
-			SELECT id, id_category, question
+			SELECT id, id_category, title
 			FROM ' . FaqSetup::$faq_table . ' faq
 			WHERE approved = 1
 			ORDER BY RAND()
@@ -31,22 +31,22 @@ class FaqCache implements CacheData
 		{
 			$this->categories[] = $row['id_category'];
 
-			$this->questions[$row['id_category']][] = array(
+			$this->items[$row['id_category']][] = array(
 				'id' => $row['id'],
-				'question' => $row['question']
+				'title' => $row['title']
 			);
 		}
 		$result->dispose();
 	}
 
-	public function get_questions()
+	public function get_items()
 	{
-		return $this->questions;
+		return $this->items;
 	}
 
-	public function get_category_questions($id_category)
+	public function get_category_items($id_category)
 	{
-		return $this->questions[$id_category];
+		return $this->items[$id_category];
 	}
 
 	public function get_categories()

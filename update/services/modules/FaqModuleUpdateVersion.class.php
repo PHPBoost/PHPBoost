@@ -30,6 +30,7 @@ class FaqModuleUpdateVersion extends ModuleUpdateVersion
 			'/phpboost/FaqSitemapExtensionPoint.class.php',
 			'/phpboost/FaqHomePageExtensionPoint.class.php',
 			'/services/FaqAuthorizationsService.class.php',
+			'/services/FaqQuestion.class.php',
 			'/templates/FaqReorderCategoryQuestionsController.class.php',
 			'/templates/FaqDisplaySeveralFaqQuestionsController.class.php',
 			'/util/AdminFaqDisplayResponse.class.php'
@@ -42,7 +43,9 @@ class FaqModuleUpdateVersion extends ModuleUpdateVersion
 			array(
 				'table_name' => PREFIX . 'faq_cats',
 				'columns' => array(
-					'image' => 'thumbnail VARCHAR(255) NOT NULL DEFAULT ""'
+					'image'    => 'thumbnail VARCHAR(255) NOT NULL DEFAULT ""',
+					'question' => 'title TEXT',
+					'answer'   => 'content MEDIUMTEXT',
 				)
 			)
 		);
