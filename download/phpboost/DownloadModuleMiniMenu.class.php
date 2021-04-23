@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 04
+ * @version     PHPBoost 6.0 - last update: 2021 04 23
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -36,7 +36,7 @@ class DownloadModuleMiniMenu extends ModuleMiniMenu
 		$view = new FileTemplate('download/DownloadModuleMiniMenu.tpl');
 
 		// Assign the lang file to the tpl
-		$view->add_lang(LangLoader::get('common', 'download'));
+		$view->add_lang(array_merge(LangLoader::get('common', 'download'), LangLoader::get('common-lang')));
 
 		// Assign common menu variables to the tpl
 		MenuService::assign_positions_conditions($view, $this->get_block());
@@ -53,11 +53,11 @@ class DownloadModuleMiniMenu extends ModuleMiniMenu
 		$items = $download_cache->get_items();
 
 		$view->put_all(array(
-			'C_ITEMS' => !empty($items),
-			'C_SORT_BY_DATE' => $config->is_sort_type_date(),
-			'C_SORT_BY_NOTATION' => $config->is_sort_type_notation(),
+			'C_ITEMS'                    => !empty($items),
+			'C_SORT_BY_DATE'             => $config->is_sort_type_date(),
+			'C_SORT_BY_NOTATION'         => $config->is_sort_type_notation(),
 			'C_SORT_BY_DOWNLOADS_NUMBER' => $config->is_sort_type_downloads_number(),
-			'C_SORT_BY_VIEWS_NUMBERS' => $config->is_sort_type_views_numbers()
+			'C_SORT_BY_VIEWS_NUMBERS'    => $config->is_sort_type_views_numbers()
 		));
 
 		$displayed_position = 1;

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 06
+ * @version     PHPBoost 6.0 - last update: 2021 04 23
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -37,9 +37,9 @@ class DownloadDeadLinkController extends AbstractController
 			{
 				$contribution = new Contribution();
 				$contribution->set_id_in_module($this->item->get_id());
-				$contribution->set_entitled(StringVars::replace_vars(LangLoader::get_message('contribution.deadlink', 'common'), array('link_name' => $this->item->get_title())));
+				$contribution->set_entitled(StringVars::replace_vars(LangLoader::get_message('contribution.dead.link.name', 'contribution-lang'), array('link_name' => $this->item->get_title())));
 				$contribution->set_fixing_url(DownloadUrlBuilder::edit($this->item->get_id())->relative());
-				$contribution->set_description(LangLoader::get_message('contribution.deadlink_explain', 'common'));
+				$contribution->set_description(LangLoader::get_message('contribution.dead.link.clue', 'contribution-lang'));
 				$contribution->set_poster_id(AppContext::get_current_user()->get_id());
 				$contribution->set_module('download');
 				$contribution->set_type('alert');

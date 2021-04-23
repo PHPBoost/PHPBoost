@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 05
+ * @version     PHPBoost 6.0 - last update: 2021 04 23
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -23,6 +23,7 @@ class DownloadItemFormController extends ModuleController
 
 	private $lang;
 	private $common_lang;
+	private $form_lang;
 
 	private $config;
 
@@ -57,28 +58,29 @@ class DownloadItemFormController extends ModuleController
 	{
 		$this->config = DownloadConfig::load();
 		$this->lang = LangLoader::get('common', 'download');
-		$this->common_lang = LangLoader::get('common');
+		$this->common_lang = LangLoader::get('common-lang');
+		$this->form_lang = LangLoader::get('form-lang');
 	}
 
 	private function build_form(HTTPRequestCustom $request)
 	{
 		$form = new HTMLForm(__CLASS__);
-		$form->set_layout_title($this->get_item()->get_id() === null ? $this->lang['download.add.item'] : ($this->lang['download.edit.item'] . ': ' . $this->get_item()->get_title()));
+		$form->set_layout_title($this->get_item()->get_id() === null ? $this->lang['download.add.item'] : ($this->lang['download.edit.item']));
 
-		$fieldset = new FormFieldsetHTML('download', $this->common_lang['form.parameters']);
+		$fieldset = new FormFieldsetHTML('download', $this->form_lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('title', $this->common_lang['form.name'], $this->get_item()->get_title(), array('required' => true)));
+		$fieldset->add_field(new FormFieldTextEditor('title', $this->form_lang['form.title'], $this->get_item()->get_title(), array('required' => true)));
 
 		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
 		{
 			$search_category_children_options = new SearchCategoryChildrensOptions();
 			$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
 			$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], $this->get_item()->get_id_category(), $search_category_children_options));
+			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->form_lang['form.category'], $this->get_item()->get_id_category(), $search_category_children_options));
 		}
 
-		$fieldset->add_field(new FormFieldUploadFile('file_url', $this->common_lang['form.url'], $this->get_item()->get_file_url()->relative(), array('required' => true)));
+		$fieldset->add_field(new FormFieldUploadFile('file_url', $this->form_lang['form.url'], $this->get_item()->get_file_url()->relative(), array('required' => true)));
 
 		$fieldset->add_field(new FormFieldCheckbox('determine_file_size_automatically_enabled', $this->lang['download.form.file.size.auto'], $this->is_file_size_automatic(),
 			array(
@@ -113,9 +115,9 @@ class DownloadItemFormController extends ModuleController
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('file_size_unit', $this->lang['download.form.file.size.unit'], $file_size_unit,
 			array(
 				new FormFieldSelectChoiceOption('', ''),
-				new FormFieldSelectChoiceOption($this->common_lang['unit.kilobytes'], $this->common_lang['unit.kilobytes']),
-				new FormFieldSelectChoiceOption($this->common_lang['unit.megabytes'], $this->common_lang['unit.megabytes']),
-				new FormFieldSelectChoiceOption($this->common_lang['unit.gigabytes'], $this->common_lang['unit.gigabytes'])
+				new FormFieldSelectChoiceOption($this->common_lang['common.unit.kilobytes'], $this->common_lang['common.unit.kilobytes']),
+				new FormFieldSelectChoiceOption($this->common_lang['common.unit.megabytes'], $this->common_lang['common.unit.megabytes']),
+				new FormFieldSelectChoiceOption($this->common_lang['common.unit.gigabytes'], $this->common_lang['common.unit.gigabytes'])
 			),
 			array(
 				'required' => true,
@@ -128,11 +130,11 @@ class DownloadItemFormController extends ModuleController
 			$fieldset->add_field(new FormFieldCheckbox('reset_downloads_number', $this->lang['download.form.reset.downloads.number']));
 		}
 
-		$fieldset->add_field(new FormFieldRichTextEditor('content', $this->common_lang['form.description'], $this->get_item()->get_content(), array('rows' => 15, 'required' => true)));
+		$fieldset->add_field(new FormFieldRichTextEditor('content', $this->form_lang['form.description'], $this->get_item()->get_content(), array('rows' => 15, 'required' => true)));
 
-		$fieldset->add_field(new FormFieldCheckbox('summary_enabled', $this->common_lang['form.short_contents.enabled'], $this->get_item()->is_summary_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('summary_enabled', $this->form_lang['form.enable.summary'], $this->get_item()->is_summary_enabled(),
 			array(
-				'description' => StringVars::replace_vars($this->common_lang['form.short_contents.enabled.description'], array('number' => DownloadConfig::load()->get_auto_cut_characters_number())),
+				'description' => StringVars::replace_vars($this->form_lang['form.summary.clue'], array('number' => DownloadConfig::load()->get_auto_cut_characters_number())),
 				'events' => array('click' => '
 					if (HTMLForms.getField("summary_enabled").getValue()) {
 						HTMLForms.getField("summary").enable();
@@ -143,13 +145,13 @@ class DownloadItemFormController extends ModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->common_lang['form.description'], $this->get_item()->get_summary(),
+		$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->form_lang['form.summary'], $this->get_item()->get_summary(),
 			array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_summary_enabled', false) : !$this->get_item()->is_summary_enabled()))
 		));
 
 		if ($this->config->is_author_displayed())
 		{
-			$fieldset->add_field(new FormFieldCheckbox('author_custom_name_enabled', $this->common_lang['form.author_custom_name_enabled'], $this->get_item()->is_author_custom_name_enabled(),
+			$fieldset->add_field(new FormFieldCheckbox('author_custom_name_enabled', $this->form_lang['form.enable.author.custom.name'], $this->get_item()->is_author_custom_name_enabled(),
 				array(
 					'events' => array('click' => '
 						if (HTMLForms.getField("author_custom_name_enabled").getValue()) {
@@ -161,45 +163,45 @@ class DownloadItemFormController extends ModuleController
 				)
 			));
 
-			$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->common_lang['form.author_custom_name'], $this->get_item()->get_author_custom_name(),
+			$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->form_lang['form.author.custom.name'], $this->get_item()->get_author_custom_name(),
 				array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_author_custom_name_enabled', false) : !$this->get_item()->is_author_custom_name_enabled()))
 			));
 		}
 
-		$options_fieldset = new FormFieldsetHTML('options', $this->common_lang['form.options']);
+		$options_fieldset = new FormFieldsetHTML('options', $this->form_lang['form.options']);
 		$form->add_fieldset($options_fieldset);
 
-		$options_fieldset->add_field(new FormFieldThumbnail('thumbnail', $this->common_lang['form.picture'], $this->get_item()->get_thumbnail()->relative(), DownloadItem::THUMBNAIL_URL));
+		$options_fieldset->add_field(new FormFieldThumbnail('thumbnail', $this->form_lang['form.thumbnail'], $this->get_item()->get_thumbnail()->relative(), DownloadItem::THUMBNAIL_URL));
 
 		$options_fieldset->add_field(new FormFieldTextEditor('version_number', $this->lang['download.version'], $this->get_item()->get_version_number()));
 
-		$options_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_item()->get_id(), 'keywords', $this->common_lang['form.keywords'],
-			array('description' => $this->common_lang['form.keywords.description'])
+		$options_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_item()->get_id(), 'keywords', $this->form_lang['form.keywords'],
+			array('description' => $this->form_lang['form.keywords.clue'])
 		));
 
-		$options_fieldset->add_field(new FormFieldSelectSources('sources', $this->common_lang['form.sources'], $this->get_item()->get_sources()));
+		$options_fieldset->add_field(new FormFieldSelectSources('sources', $this->form_lang['form.sources'], $this->get_item()->get_sources()));
 
 		if (DownloadAuthorizationsService::check_authorizations($this->get_item()->get_id_category())->moderation())
 		{
-			$publication_fieldset = new FormFieldsetHTML('publication', $this->common_lang['form.approbation']);
+			$publication_fieldset = new FormFieldsetHTML('publication', $this->form_lang['form.publication']);
 			$form->add_fieldset($publication_fieldset);
 
-			$publication_fieldset->add_field(new FormFieldDateTime('creation_date', $this->common_lang['form.date.creation'], $this->get_item()->get_creation_date(),
+			$publication_fieldset->add_field(new FormFieldDateTime('creation_date', $this->form_lang['form.creation.date'], $this->get_item()->get_creation_date(),
 				array('required' => true)
 			));
 
 			if (!$this->get_item()->is_published())
 			{
-				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->common_lang['form.update.date.creation'], false,
+				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->form_lang['form.update.creation.date'], false,
 					array('hidden' => $this->get_item()->get_publishing_state() != DownloadItem::NOT_PUBLISHED)
 				));
 			}
 
-			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('published', $this->common_lang['form.approbation'], $this->get_item()->get_publishing_state(),
+			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('published', $this->form_lang['form.publication'], $this->get_item()->get_publishing_state(),
 				array(
-					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.not'], DownloadItem::NOT_PUBLISHED),
-					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.now'], DownloadItem::PUBLISHED),
-					new FormFieldSelectChoiceOption($this->common_lang['status.approved.date'], DownloadItem::DEFERRED_PUBLICATION),
+					new FormFieldSelectChoiceOption($this->form_lang['form.publication.draft'], DownloadItem::NOT_PUBLISHED),
+					new FormFieldSelectChoiceOption($this->form_lang['form.publication.now'], DownloadItem::PUBLISHED),
+					new FormFieldSelectChoiceOption($this->form_lang['form.publication.deffered'], DownloadItem::DEFERRED_PUBLICATION),
 				),
 				array(
 					'events' => array('change' => '
@@ -218,11 +220,11 @@ class DownloadItemFormController extends ModuleController
 				)
 			));
 
-			$publication_fieldset->add_field($publishing_start_date = new FormFieldDateTime('publishing_start_date', $this->common_lang['form.date.start'], ($this->get_item()->get_publishing_start_date() === null ? new Date() : $this->get_item()->get_publishing_start_date()),
+			$publication_fieldset->add_field($publishing_start_date = new FormFieldDateTime('publishing_start_date', $this->form_lang['form.start.date'], ($this->get_item()->get_publishing_start_date() === null ? new Date() : $this->get_item()->get_publishing_start_date()),
 				array('hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_publication_state', 0) != DownloadItem::DEFERRED_PUBLICATION) : ($this->get_item()->get_publishing_state() != DownloadItem::DEFERRED_PUBLICATION)))
 			));
 
-			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->common_lang['form.date.end.enable'], $this->get_item()->is_end_date_enabled(),
+			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->form_lang['form.enable.end.date'], $this->get_item()->is_end_date_enabled(),
 				array(
 					'hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_publication_state', 0) != DownloadItem::DEFERRED_PUBLICATION) : ($this->get_item()->get_publishing_state() != DownloadItem::DEFERRED_PUBLICATION)),
 					'events' => array('click' => '
@@ -235,7 +237,7 @@ class DownloadItemFormController extends ModuleController
 				)
 			));
 
-			$publication_fieldset->add_field($publishing_end_date = new FormFieldDateTime('publishing_end_date', $this->common_lang['form.date.end'], ($this->get_item()->get_publishing_end_date() === null ? new Date() : $this->get_item()->get_publishing_end_date()),
+			$publication_fieldset->add_field($publishing_end_date = new FormFieldDateTime('publishing_end_date', $this->form_lang['form.end.date'], ($this->get_item()->get_publishing_end_date() === null ? new Date() : $this->get_item()->get_publishing_end_date()),
 				array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_end_date_enabled', false) : !$this->get_item()->is_end_date_enabled()))
 			));
 
@@ -526,12 +528,12 @@ class DownloadItemFormController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'], DownloadUrlBuilder::home());
+		$breadcrumb->add($this->lang['download.module.title'], DownloadUrlBuilder::home());
 
 		if ($item->get_id() === null)
 		{
 			$breadcrumb->add($this->lang['download.add.item'], DownloadUrlBuilder::add($item->get_id_category()));
-			$graphical_environment->set_page_title($this->lang['download.add.item'], $this->lang['module.title']);
+			$graphical_environment->set_page_title($this->lang['download.add.item'], $this->lang['download.module.title']);
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['download.add.item']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::add($item->get_id_category()));
 		}
@@ -540,7 +542,7 @@ class DownloadItemFormController extends ModuleController
 			if (!AppContext::get_session()->location_id_already_exists($location_id))
 				$graphical_environment->set_location_id($location_id);
 
-			$graphical_environment->set_page_title($this->lang['download.edit.item'], $this->lang['module.title']);
+			$graphical_environment->set_page_title($this->lang['download.edit.item'], $this->lang['download.module.title']);
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['download.edit.item']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::edit($item->get_id()));
 

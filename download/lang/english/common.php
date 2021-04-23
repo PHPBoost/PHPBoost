@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 09
+ * @version     PHPBoost 6.0 - last update: 2021 04 23
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -14,7 +14,7 @@
 ####################################################
 
 // Module titles
-$lang['module.title'] = 'Downloads';
+$lang['download.module.title'] = 'Downloads';
 
 $lang['items'] = 'files';
 $lang['item'] = 'file';
@@ -33,7 +33,7 @@ $lang['download.items.management'] = 'Files management';
 // Items
 $lang['download.download'] = 'Download';
 $lang['download.times'] = 'Downloaded :downloads_number times';
-$lang['downloads.number'] = 'Downloads number';
+$lang['download.downloads.number'] = 'Downloads number';
 $lang['download.item.infos'] = 'File informations';
 $lang['download.version'] = 'Version';
 $lang['download.view'] = 'views';

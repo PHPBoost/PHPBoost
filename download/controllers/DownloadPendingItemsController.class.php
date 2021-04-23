@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 15
+ * @version     PHPBoost 6.0 - last update: 2021 04 23
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -14,6 +14,7 @@ class DownloadPendingItemsController extends ModuleController
 {
 	private $view;
 	private $lang;
+	private $common_lang;
 	private $config;
 
 	public function execute(HTTPRequestCustom $request)
@@ -30,8 +31,9 @@ class DownloadPendingItemsController extends ModuleController
 	public function init()
 	{
 		$this->lang = LangLoader::get('common', 'download');
+		$this->common_lang = LangLoader::get('common-lang');
 		$this->view = new FileTemplate('download/DownloadSeveralItemsController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->view->add_lang(array_merge($this->lang, $this->common_lang));
 		$this->config = DownloadConfig::load();
 	}
 
@@ -122,27 +124,25 @@ class DownloadPendingItemsController extends ModuleController
 
 	private function build_sorting_form($field, $mode)
 	{
-		$common_lang = LangLoader::get('common');
-
 		$form = new HTMLForm(__CLASS__, '', false);
 		$form->set_css_class('options');
 
-		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $common_lang['sort_by']));
+		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $this->common_lang['common.sort.by']));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field,
 			array(
-				new FormFieldSelectChoiceOption($common_lang['form.date.creation'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_DATE]),
-				new FormFieldSelectChoiceOption($common_lang['form.name'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_ALPHABETIC]),
-				new FormFieldSelectChoiceOption($common_lang['author'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_AUTHOR])
+				new FormFieldSelectChoiceOption($this->common_lang['common.sort.by.date'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_DATE]),
+				new FormFieldSelectChoiceOption($this->common_lang['common.sort.by.alphabetic'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_ALPHABETIC]),
+				new FormFieldSelectChoiceOption($this->common_lang['common.sort.by.author'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_AUTHOR])
 			),
 			array('events' => array('change' => 'document.location = "'. DownloadUrlBuilder::display_pending()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
 			array(
-				new FormFieldSelectChoiceOption($common_lang['sort.asc'], 'asc'),
-				new FormFieldSelectChoiceOption($common_lang['sort.desc'], 'desc')
+				new FormFieldSelectChoiceOption($this->common_lang['common.sort.asc'], 'asc'),
+				new FormFieldSelectChoiceOption($this->common_lang['common.sort.desc'], 'desc')
 			),
 			array('events' => array('change' => 'document.location = "' . DownloadUrlBuilder::display_pending()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
@@ -199,12 +199,12 @@ class DownloadPendingItemsController extends ModuleController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['download.pending.items'], $this->lang['module.title'], $page);
+		$graphical_environment->set_page_title($this->lang['download.pending.items'], $this->lang['download.module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['download.seo.description.pending'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::display_pending($sort_field, $sort_mode, $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'], DownloadUrlBuilder::home());
+		$breadcrumb->add($this->lang['download.module.title'], DownloadUrlBuilder::home());
 		$breadcrumb->add($this->lang['download.pending.items'], DownloadUrlBuilder::display_pending($sort_field, $sort_mode, $page));
 
 		return $response;

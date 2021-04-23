@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 05
+ * @version     PHPBoost 6.0 - last update: 2021 04 23
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -204,13 +204,13 @@ class DownloadItem
 	{
 		switch ($this->published) {
 			case self::PUBLISHED:
-				return LangLoader::get_message('status.approved.now', 'common');
+				return LangLoader::get_message('common.status.published', 'common-lang');
 			break;
 			case self::DEFERRED_PUBLICATION:
-				return LangLoader::get_message('status.approved.date', 'common');
+				return LangLoader::get_message('common.status.deffered.date', 'common-lang');
 			break;
 			case self::NOT_PUBLISHED:
-				return LangLoader::get_message('status.approved.not', 'common');
+				return LangLoader::get_message('common.status.draft', 'common-lang');
 			break;
 		}
 	}
@@ -547,7 +547,6 @@ class DownloadItem
 				'VERSION_NUMBER'      => $this->version_number,
 				'DOWNLOADS_NUMBER'    => $this->downloads_number,
 				'VIEWS_NUMBER'        => $this->get_views_number(),
-				'L_DOWNLOADED_TIMES'  => StringVars::replace_vars(LangLoader::get_message('download.times', 'common', 'download'), array('downloads_number' => $this->downloads_number)),
 				'STATIC_NOTATION'     => NotationService::display_static_image($this->get_notation()),
 				'NOTATION'            => NotationService::display_active_image($this->get_notation()),
 

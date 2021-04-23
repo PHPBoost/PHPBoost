@@ -1,9 +1,9 @@
 <section id="module-download" class="category-{CATEGORY_ID}">
 	<header class="section-header">
 		<div class="controls align-right">
-			<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
-			{@module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
-			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
+			<a href="{U_SYNDICATION}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
+			{@download.module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
+			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1><span id="name" itemprop="name">{TITLE}</span></h1>
 	</header>
@@ -17,8 +17,8 @@
 			<article itemscope="itemscope" itemtype="https://schema.org/CreativeWork" id="download-item-{ID}" class="download-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #">
 				# IF C_CONTROLS #
 					<div class="controls align-right">
-						# IF C_EDIT #<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
-						# IF C_DELETE #<a href="{U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
+						# IF C_EDIT #<a href="{U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
+						# IF C_DELETE #<a href="{U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
 					</div>
 				# ENDIF #
 
@@ -43,7 +43,7 @@
 												<i class="fa fa-download" aria-hidden="true"></i> {@download.download}
 											</a>
 											# IF IS_USER_CONNECTED #
-												<a href="{U_DEADLINK}" data-confirmation="${LangLoader::get_message('deadlink.confirmation', 'common')}" class="button bgc-full warning" aria-label="${LangLoader::get_message('deadlink', 'common')}">
+												<a href="{U_DEADLINK}" data-confirmation="${LangLoader::get_message('contribution.dead.link.confirmation', 'contribution-lang')}" class="button bgc-full warning" aria-label="${LangLoader::get_message('contribution.report.dead.link', 'contribution-lang')}">
 													<i class="fa fa-unlink" aria-hidden="true"></i>
 												</a>
 											# ENDIF #
@@ -53,15 +53,15 @@
 									# ENDIF #
 								# ENDIF #
 								# IF C_VERSION_NUMBER #<li class="li-stretch"><span class="text-strong">{@download.version} : </span><span>{VERSION_NUMBER}</span></li># ENDIF #
-								<li class="li-stretch"><span class="text-strong">${LangLoader::get_message('size', 'common')} : </span><span># IF C_SIZE #{SIZE}# ELSE #${LangLoader::get_message('unknown_size', 'common')}# ENDIF #</span></li>
-								<li class="li-stretch"><span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} : </span><time datetime="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT C_DIFFERED #{DATE}# ELSE #{DIFFERED_START_DATE}# ENDIF #</time></li>
-								# IF C_HAS_UPDATE_DATE #<li class="li-stretch"><span class="text-strong">${LangLoader::get_message('status.last.update', 'common')} : </span><time datetime="{UPDATED_DATE_ISO8601}" itemprop="dateModified">{UPDATE_DATE}</time></li># ENDIF #
-								<li class="li-stretch"><span class="text-strong">{@downloads.number} : </span><span>{DOWNLOADS_NUMBER}</span></li>
+								<li class="li-stretch"><span class="text-strong">{@common.size} : </span><span># IF C_SIZE #{SIZE}# ELSE #{@common.unknown.size}# ENDIF #</span></li>
+								<li class="li-stretch"><span class="text-strong">{@common.creation.date} : </span><time datetime="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT C_DIFFERED #{DATE}# ELSE #{DIFFERED_START_DATE}# ENDIF #</time></li>
+								# IF C_HAS_UPDATE_DATE #<li class="li-stretch"><span class="text-strong">{@common.status.last.update} : </span><time datetime="{UPDATED_DATE_ISO8601}" itemprop="dateModified">{UPDATE_DATE}</time></li># ENDIF #
+								<li class="li-stretch"><span class="text-strong">{@download.downloads.number} : </span><span>{DOWNLOADS_NUMBER}</span></li>
 								# IF C_ENABLED_VIEWS_NUMBER #<li class="li-stretch"><span class="text-strong">{@download.views.number} : </span><span>{VIEWS_NUMBER}</span></li># ENDIF #
-								<li class="li-stretch"><span class="text-strong">${LangLoader::get_message('category', 'categories-common')} : </span><a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a></li>
+								<li class="li-stretch"><span class="text-strong">${LangLoader::get_message('category.category', 'category-lang')} : </span><a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a></li>
 								# IF C_AUTHOR_DISPLAYED #
 									<li class="li-stretch">
-										<span class="text-strong">${LangLoader::get_message('author', 'common')} : </span>
+										<span class="text-strong">{@common.author} : </span>
 										<span>
 											# IF C_AUTHOR_CUSTOM_NAME #
 												<span class="custom-author">{AUTHOR_CUSTOM_NAME}</span>
@@ -89,7 +89,7 @@
 
 				# IF C_SOURCES #
 					<aside class="sources-container">
-						<span class="text-strong"><i class="fa fa-map-signs" aria-hidden="true"></i> ${LangLoader::get_message('form.sources', 'common')}</span> :
+						<span class="text-strong"><i class="fa fa-map-signs" aria-hidden="true"></i> {@common.sources}</span> :
 						# START sources #
 							<a itemprop="isBasedOnUrl" href="{sources.URL}" class="pinned link-color" rel="nofollow">{sources.NAME}</a># IF sources.C_SEPARATOR ## ENDIF #
 						# END sources #
@@ -97,7 +97,7 @@
 				# ENDIF #
 				# IF C_KEYWORDS #
 					<aside class="tags-container">
-						<span class="text-strong"><i class="fa fa-tags" aria-hidden="true"></i> ${LangLoader::get_message('form.keywords', 'common')} : </span>
+						<span class="text-strong"><i class="fa fa-tags" aria-hidden="true"></i> {@common.keywords} : </span>
 						# START keywords #
 							<a itemprop="pinned link-color" href="{keywords.URL}">{keywords.NAME}</a># IF keywords.C_SEPARATOR #, # ENDIF #
 						# END keywords #

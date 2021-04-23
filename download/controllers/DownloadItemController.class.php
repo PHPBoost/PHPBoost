@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 12
+ * @version     PHPBoost 6.0 - last update: 2021 04 23
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -33,7 +33,7 @@ class DownloadItemController extends ModuleController
 	{
 		$this->lang = LangLoader::get('common', 'download');
 		$this->view = new FileTemplate('download/DownloadItemController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 	}
 
 	private function get_item()
@@ -60,7 +60,7 @@ class DownloadItemController extends ModuleController
 	{
 		if (!$this->item->is_published())
 		{
-			$this->view->put('NOT_VISIBLE_MESSAGE', MessageHelper::display(LangLoader::get_message('element.not_visible', 'status-messages-common'), MessageHelper::WARNING));
+			$this->view->put('NOT_VISIBLE_MESSAGE', MessageHelper::display(LangLoader::get_message('warning.element.not.visible', 'warning-lang'), MessageHelper::WARNING));
 		}
 		else
 		{
@@ -89,7 +89,7 @@ class DownloadItemController extends ModuleController
 			'C_ENABLED_NOTATION' => $content_management_config->module_notation_is_enabled('download'),
 			'C_KEYWORDS' => $has_keywords,
 			'C_DISPLAY_DOWNLOAD_LINK' => DownloadAuthorizationsService::check_authorizations()->display_download_link(),
-			'NOT_VISIBLE_MESSAGE' => MessageHelper::display(LangLoader::get_message('element.not_visible', 'status-messages-common'), MessageHelper::WARNING),
+			'NOT_VISIBLE_MESSAGE' => MessageHelper::display(LangLoader::get_message('warning.element.not.visible', 'warning-lang'), MessageHelper::WARNING),
 			'UNAUTHORIZED_TO_DOWNLOAD_MESSAGE' => MessageHelper::display($this->lang['download.message.warning.unauthorized.to.download.file'], MessageHelper::WARNING)
 		)));
 
@@ -170,7 +170,7 @@ class DownloadItemController extends ModuleController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($item->get_title(), ($category->get_id() != Category::ROOT_CATEGORY ? $category->get_name() . ' - ' : '') . $this->lang['module.title']);
+		$graphical_environment->set_page_title($item->get_title(), ($category->get_id() != Category::ROOT_CATEGORY ? $category->get_name() . ' - ' : '') . $this->lang['download.module.title']);
 		$graphical_environment->get_seo_meta_data()->set_description($item->get_real_summary());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()));
 
@@ -178,7 +178,7 @@ class DownloadItemController extends ModuleController
 			$graphical_environment->get_seo_meta_data()->set_picture_url($item->get_thumbnail());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'],DownloadUrlBuilder::home());
+		$breadcrumb->add($this->lang['download.module.title'],DownloadUrlBuilder::home());
 
 		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($item->get_id_category(), true));
 		foreach ($categories as $id => $category)

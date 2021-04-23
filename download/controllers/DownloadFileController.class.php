@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 12
+ * @version     PHPBoost 6.0 - last update: 2021 04 23
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor janus57 <janus57@janus57.fr>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -50,7 +50,7 @@ class DownloadFileController extends AbstractController
 			}
 			else
 			{
-				$error_controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('download.message.error.file.not.found', 'common', 'download'), UserErrorController::WARNING);
+				$error_controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), LangLoader::get_message('download.message.error.file.not.found', 'common', 'download'), UserErrorController::WARNING);
 				DispatchManager::redirect($error_controller);
 			}
 		}
@@ -66,7 +66,7 @@ class DownloadFileController extends AbstractController
 		$response = new SiteDisplayResponse(new StringTemplate(''));
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->item->get_title(), LangLoader::get_message('module.title', 'common', 'download'));
+		$graphical_environment->set_page_title($this->item->get_title(), LangLoader::get_message('download.module.title', 'common', 'download'));
 		$graphical_environment->get_seo_meta_data()->set_description($this->item->get_real_summary());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::download($this->item->get_id()));
 

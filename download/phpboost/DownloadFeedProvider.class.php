@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 16
+ * @version     PHPBoost 6.0 - last update: 2021 04 23
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -26,14 +26,14 @@ class DownloadFeedProvider implements FeedProvider
 			$site_name = GeneralConfig::load()->get_site_name();
 			$site_name = $idcat != Category::ROOT_CATEGORY ? $site_name . ' : ' . $category->get_name() : $site_name;
 
-			$feed_module_name = LangLoader::get_message('module.title', 'common', 'download');
+			$feed_module_name = LangLoader::get_message('download.module.title', 'common', 'download');
 			$data = new FeedData();
 			$data->set_title($feed_module_name . ' - ' . $site_name);
 			$data->set_date(new Date());
 			$data->set_link(SyndicationUrlBuilder::rss('download', $idcat));
 			$data->set_host(HOST);
 			$data->set_desc($feed_module_name . ' - ' . $site_name);
-			$data->set_lang(LangLoader::get_message('xml_lang', 'main'));
+			$data->set_lang(LangLoader::get_message('common.xml.lang', 'common-lang'));
 			$data->set_auth_bit(Category::READ_AUTHORIZATIONS);
 
 			$categories = CategoriesService::get_categories_manager($module_id)->get_children($idcat, new SearchCategoryChildrensOptions(), true);

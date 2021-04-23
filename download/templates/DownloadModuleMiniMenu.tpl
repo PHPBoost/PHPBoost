@@ -6,7 +6,7 @@
 					<i class="fa# IF C_SORT_BY_DATE #r fa-calendar-alt# ELSE # fa-trophy# ENDIF # hidden-small-screens" aria-hidden="true"></i>
 					<span class="hidden-large-screens"># IF C_SORT_BY_DATE #{@download.sort.date}# ELSE #{@download.sort.trophy}# ENDIF #</span>
 				</th>
-				<th>${LangLoader::get_message('form.name', 'common')}</th>
+				<th>{@common.name}</th>
 				# IF NOT C_SORT_BY_DATE #
 					<th aria-label="# IF C_SORT_BY_DOWNLOADS_NUMBER #{@download.sort.downloads.number}# ELSE #{@download.sort.notes}# ENDIF #">
 						<i class="fa# IF C_SORT_BY_DOWNLOADS_NUMBER # fa-download# ELSE #r fa-star# ENDIF # hidden-small-screens" aria-hidden="true"></i>
@@ -37,7 +37,7 @@
 				# END items #
 			# ELSE #
 				<tr>
-					<td colspan="# IF C_SORT_BY_DATE #2# ELSE #3# ENDIF #">${LangLoader::get_message('no_item_now', 'common')}</td>
+					<td colspan="# IF C_SORT_BY_DATE #2# ELSE #3# ENDIF #">{@common.no.item.now}</td>
 				</tr>
 			# ENDIF #
 		</tbody>

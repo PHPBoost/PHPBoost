@@ -13,27 +13,28 @@
 #                       French                     #
 ####################################################
 
-// Module titles
-$lang['module.title'] = 'Téléchargements';
+$lang['download.module.title'] = 'Téléchargements';
 
+$lang['download.items'] = 'fichiers';
+$lang['download.item'] = 'fichier';
+
+// TreeLinks
 $lang['items'] = 'fichiers';
 $lang['item'] = 'fichier';
 
-$lang['an.item'] = 'un fichier';
-$lang['the.item'] = 'le fichier';
-$lang['my.items'] = 'Mes fichiers';
-$lang['member.items'] = 'Fichiers publiés par';
-
+// Titles
 $lang['download.add.item'] = 'Ajouter un fichier';
 $lang['download.edit.item'] = 'Modifier un fichier';
+$lang['download.my.items'] = 'Mes fichiers';
+$lang['download.member.items'] = 'Fichiers publiés par';
 $lang['download.pending.items'] = 'Fichiers en attente';
+$lang['download.filter.items'] = 'Filtrer les fichiers';
 $lang['download.items.management'] = 'Gestion des fichiers';
-$lang['filter.items'] = 'Filtrer les fichiers';
 
 // Items
 $lang['download.download'] = 'Télécharger';
 $lang['download.times'] = 'Téléchargé :downloads_number fois';
-$lang['downloads.number'] = 'Nombre de téléchargements';
+$lang['download.downloads.number'] = 'Nombre de téléchargements';
 $lang['download.item.infos'] = 'Informations sur le fichier';
 $lang['download.version'] = 'Version';
 $lang['download.view'] = 'vues';

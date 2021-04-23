@@ -3,17 +3,18 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 15
+ * @version     PHPBoost 6.0 - last update: 2021 04 23
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class DownloadDisplayDownloadItemTagController extends ModuleController
+class DownloadTagController extends ModuleController
 {
 	private $view;
 	private $lang;
+	private $common_lang;
 
 	private $keyword;
 
@@ -35,8 +36,9 @@ class DownloadDisplayDownloadItemTagController extends ModuleController
 	public function init()
 	{
 		$this->lang = LangLoader::get('common', 'download');
+		$this->common_lang = LangLoader::get('common-lang');
 		$this->view = new FileTemplate('download/DownloadSeveralItemsController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->view->add_lang(array_merge($this->lang, $this->common_lang));
 		$this->config = DownloadConfig::load();
 		$this->comments_config = CommentsConfig::load();
 		$this->content_management_config = ContentManagementConfig::load();
@@ -86,22 +88,24 @@ class DownloadDisplayDownloadItemTagController extends ModuleController
 		)));
 
 		$this->view->put_all(array(
-			'C_ITEMS' => $result->get_rows_count() > 0,
-			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
-			'C_GRID_VIEW' => $this->config->get_display_type() == DownloadConfig::GRID_VIEW,
-			'C_LIST_VIEW' => $this->config->get_display_type() == DownloadConfig::LIST_VIEW,
-			'C_TABLE_VIEW' => $this->config->get_display_type() == DownloadConfig::TABLE_VIEW,
+			'C_TAG_ITEMS'         => true,
+			'C_ITEMS'             => $result->get_rows_count() > 0,
+			'C_SEVERAL_ITEMS'     => $result->get_rows_count() > 1,
+			'C_GRID_VIEW'         => $this->config->get_display_type() == DownloadConfig::GRID_VIEW,
+			'C_LIST_VIEW'         => $this->config->get_display_type() == DownloadConfig::LIST_VIEW,
+			'C_TABLE_VIEW'        => $this->config->get_display_type() == DownloadConfig::TABLE_VIEW,
 			'C_FULL_ITEM_DISPLAY' => $this->config->is_full_item_displayed(),
+			'ITEMS_PER_ROW'       => $this->config->get_items_per_row(),
+			'C_ENABLED_COMMENTS'  => $this->comments_config->module_comments_is_enabled('download'),
+			'C_ENABLED_NOTATION'  => $this->content_management_config->module_notation_is_enabled('download'),
+			'C_AUTHOR_DISPLAYED'  => $this->config->is_author_displayed(),
+			'C_PAGINATION'        => $pagination->has_several_pages(),
+
 			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
-			'CATEGORIES_PER_ROW' => $this->config->get_categories_per_row(),
-			'ITEMS_PER_ROW' => $this->config->get_items_per_row(),
-			'C_ENABLED_COMMENTS' => $this->comments_config->module_comments_is_enabled('download'),
-			'C_ENABLED_NOTATION' => $this->content_management_config->module_notation_is_enabled('download'),
-			'C_AUTHOR_DISPLAYED' => $this->config->is_author_displayed(),
-			'C_PAGINATION' => $pagination->has_several_pages(),
-			'PAGINATION' => $pagination->display(),
-			'TABLE_COLSPAN' => 4 + (int)$this->comments_config->module_comments_is_enabled('download') + (int)$this->content_management_config->module_notation_is_enabled('download'),
-			'CATEGORY_NAME' => $this->get_keyword()->get_name()
+			'CATEGORIES_PER_ROW'     => $this->config->get_categories_per_row(),
+			'PAGINATION'             => $pagination->display(),
+			'TABLE_COLSPAN'          => 4 + (int)$this->comments_config->module_comments_is_enabled('download') + (int)$this->content_management_config->module_notation_is_enabled('download'),
+			'CATEGORY_NAME'          => $this->get_keyword()->get_name()
 		));
 
 		while ($row = $result->fetch())
@@ -130,39 +134,37 @@ class DownloadDisplayDownloadItemTagController extends ModuleController
 
 	private function build_sorting_form($field, $mode)
 	{
-		$common_lang = LangLoader::get('common');
-
 		$form = new HTMLForm(__CLASS__, '', false);
 		$form->set_css_class('options');
 
-		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $common_lang['sort_by']));
+		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $this->common_lang['common.sort.by']));
 		$form->add_fieldset($fieldset);
 
 		$sort_options = array(
-			new FormFieldSelectChoiceOption($common_lang['form.date.update'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_UPDATE_DATE]),
-			new FormFieldSelectChoiceOption($common_lang['form.date.creation'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_DATE]),
-			new FormFieldSelectChoiceOption($common_lang['form.name'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_ALPHABETIC]),
-			new FormFieldSelectChoiceOption($common_lang['author'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_AUTHOR]),
-			new FormFieldSelectChoiceOption($this->lang['downloads.number'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_DOWNLOADS_NUMBER]),
-			new FormFieldSelectChoiceOption($common_lang['sort_by.views.number'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_VIEWS_NUMBERS])
+			new FormFieldSelectChoiceOption($this->common_lang['common.sort.by.update'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_UPDATE_DATE], array('data_option_icon' => 'far fa-calendar-plus')),
+			new FormFieldSelectChoiceOption($this->common_lang['common.sort.by.date'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_DATE], array('data_option_icon' => 'far fa-calendar-alt')),
+			new FormFieldSelectChoiceOption($this->common_lang['common.sort.by.alphabetic'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_ALPHABETIC], array('data_option_icon' => 'fa fa-sort-alpha-up')),
+			new FormFieldSelectChoiceOption($this->common_lang['common.sort.by.author'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_AUTHOR], array('data_option_icon' => 'fa fa-user')),
+			new FormFieldSelectChoiceOption($this->lang['download.downloads.number'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_DOWNLOADS_NUMBER], array('data_option_icon' => 'fa fa-download')),
+			new FormFieldSelectChoiceOption($this->common_lang['common.sort.by.views.number'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_VIEWS_NUMBERS], array('data_option_icon' => 'far fa-eye'))
 		);
 
 		if ($this->comments_config->module_comments_is_enabled('download'))
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.comments.number'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_COMMENTS_NUMBER]);
+			$sort_options[] = new FormFieldSelectChoiceOption($this->common_lang['common.sort.by.comments.number'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_COMMENTS_NUMBER], array('data_option_icon' => 'far fa-comments'));
 
 		if ($this->content_management_config->module_notation_is_enabled('download'))
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best.note'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_NOTATION]);
+			$sort_options[] = new FormFieldSelectChoiceOption($this->common_lang['common.sort.by.best.note'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_NOTATION], array('data_option_icon' => 'far fa-star'));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_options,
-			array('events' => array('change' => 'document.location = "'. DownloadUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			array('select_to_list' => true, 'events' => array('change' => 'document.location = "'. DownloadUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
 			array(
-				new FormFieldSelectChoiceOption($common_lang['sort.asc'], 'asc'),
-				new FormFieldSelectChoiceOption($common_lang['sort.desc'], 'desc')
+				new FormFieldSelectChoiceOption($this->common_lang['common.sort.asc'], 'asc'),
+				new FormFieldSelectChoiceOption($this->common_lang['common.sort.desc'], 'desc')
 			),
-			array('events' => array('change' => 'document.location = "' . DownloadUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			array('select_to_list' => true, 'events' => array('change' => 'document.location = "' . DownloadUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 
 		$this->view->put('SORT_FORM', $form->display());
@@ -243,12 +245,12 @@ class DownloadDisplayDownloadItemTagController extends ModuleController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->get_keyword()->get_name(), $this->lang['module.title'], $page);
+		$graphical_environment->set_page_title($this->get_keyword()->get_name(), $this->lang['download.module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['download.seo.description.tag'], array('subject' => $this->get_keyword()->get_name())), $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $sort_field, $sort_mode, $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'], DownloadUrlBuilder::home());
+		$breadcrumb->add($this->lang['download.module.title'], DownloadUrlBuilder::home());
 		$breadcrumb->add($this->get_keyword()->get_name(), DownloadUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $sort_field, $sort_mode, $page));
 
 		return $response;
