@@ -97,7 +97,7 @@ class DownloadItemsManagerController extends ModuleController
 
 			$row = array(
 				new HTMLTableRowCell(new LinkHTMLElement(DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()), $item->get_title()), 'left'),
-				new HTMLTableRowCell(new LinkHTMLElement(DownloadUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), ($category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('none_e', 'common') : $category->get_name()))),
+				new HTMLTableRowCell(new LinkHTMLElement(DownloadUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), ($category->get_id() == Category::ROOT_CATEGORY ? $common_lang['none_e'] : $category->get_name()))),
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell($item->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
 				new HTMLTableRowCell($item->get_status()),
@@ -132,7 +132,7 @@ class DownloadItemsManagerController extends ModuleController
             }
             DownloadService::clear_cache();
 
-            AppContext::get_response()->redirect(DownloadUrlBuilder::manage(), LangLoader::get_message('process.success', 'status-messages-common'));
+            AppContext::get_response()->redirect(DownloadUrlBuilder::manage(), LangLoader::get_message('warning.process.success', 'warning-lang'));
         }
     }
 
