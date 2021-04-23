@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 22
+ * @version     PHPBoost 6.0 - last update: 2021 04 23
  * @since       PHPBoost 6.0 - 2021 04 18
 */
 
@@ -14,16 +14,16 @@
 $lang['form.required.fields'] = 'The fields marked with a * are required !';
 
 // Autorisations
-$lang['form.authorizations']                       = 'Permissions';
-$lang['form.authorizations.read']                  = 'Read permission';
-$lang['form.authorizations.write']                 = 'Write permission';
-$lang['form.authorizations.contribution']          = 'Contribution permission';
-$lang['form.authorizations.moderation']            = 'Moderation permission';
-$lang['form.authorizations.categories.management'] = 'Categories management permission';
-$lang['form.authorizations.menu']                  = 'Permission to display menu';
-$lang['form.authorizations.specials']              = 'Special authorizations';
-$lang['form.authorizations.default']               = 'Default authorisations';
-$lang['form.authorizations.clue']                  = 'Global module authorizations. You can change these authorizations on each category.';
+$lang['form.authorizations']              = 'Permissions';
+$lang['form.authorizations.read']         = 'Read permission';
+$lang['form.authorizations.write']        = 'Write permission';
+$lang['form.authorizations.contribution'] = 'Contribution permission';
+$lang['form.authorizations.moderation']   = 'Moderation permission';
+$lang['form.authorizations.categories']   = 'Categories management permission';
+$lang['form.authorizations.menu']         = 'Permission to display menu';
+$lang['form.authorizations.specials']     = 'Special authorizations';
+$lang['form.authorizations.default']      = 'Default authorisations';
+$lang['form.authorizations.clue']         = 'Module global authorizations. You can change these authorizations on each category.';
 
 // Buttons
 $lang['form.submit']  = 'Submit';
@@ -38,6 +38,7 @@ $lang['form.save']    = 'Save';
 $lang['form.go']      = 'Go';
 $lang['form.ok']      = 'OK';
 $lang['form.refresh'] = 'Refresh';
+$lang['form.apply']   = 'Apply';
 
 // Configuration
 $lang['form.documentation']             = 'Documentation';
@@ -141,7 +142,7 @@ $lang['form.enable.end.date']             = 'Define a publication end date';
 $lang['form.end.date']                    = 'Until';
 $lang['form.creation.date']               = 'Creation date';
 $lang['form.update.creation.date']        = 'Update creation date with today\'s date';
-$lang['form.last.update']            = 'Last update';
+$lang['form.last.update']                 = 'Last update';
 $lang['form.url']                         = 'Address';
 $lang['form.other']                       = 'Other';
 $lang['form.parameters']                  = 'Parameters';

@@ -40,31 +40,31 @@ class FaqCategoryController extends ModuleController
 		$subcategories_page = $request->get_getint('subcategories_page', 1);
 
 		$subcategories = CategoriesService::get_categories_manager('faq')->get_categories_cache()->get_children($this->get_category()->get_id(), CategoriesService::get_authorized_categories($this->get_category()->get_id(), true, 'faq'));
-		$subcategories_pagination = $this->get_subcategories_pagination(count($subcategories), $config->get_categories_number_per_page(), $subcategories_page);
+		$subcategories_pagination = $this->get_subcategories_pagination(count($subcategories), $config->get_categories_per_page(), $subcategories_page);
 
-		$nbr_cat_displayed = 0;
+		$categories_number = 0;
 		foreach ($subcategories as $id => $category)
 		{
-			$nbr_cat_displayed++;
+			$categories_number++;
 
-			if ($nbr_cat_displayed > $subcategories_pagination->get_display_from() && $nbr_cat_displayed <= ($subcategories_pagination->get_display_from() + $subcategories_pagination->get_number_items_per_page()))
+			if ($categories_number > $subcategories_pagination->get_display_from() && $categories_number <= ($subcategories_pagination->get_display_from() + $subcategories_pagination->get_number_items_per_page()))
 			{
-				$category_thumbnail = $category->get_thumbnail()->rel();
-
 				$this->view->assign_block_vars('sub_categories_list', array(
-					'C_CATEGORY_THUMBNAIL'     => !empty($category_thumbnail),
-					'C_MORE_THAN_ONE_QUESTION' => $category->get_elements_number() > 1,
-					'CATEGORY_ID'              => $category->get_id(),
-					'CATEGORY_NAME'            => $category->get_name(),
-					'U_CATEGORY_THUMBNAIL'     => $category_thumbnail,
-					'QUESTIONS_NUMBER'         => $category->get_elements_number(),
-					'U_CATEGORY'               => FaqUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel()
+					'C_CATEGORY_THUMBNAIL' => !empty($category_thumbnail),
+					'C_SEVERAL_ITEMS'      => $category->get_elements_number() > 1,
+
+					'CATEGORY_ID'      => $category->get_id(),
+					'CATEGORY_NAME'    => $category->get_name(),
+					'ITEMS_NUMBER' => $category->get_elements_number(),
+
+					'U_CATEGORY_THUMBNAIL' => $category->get_thumbnail()->rel(),
+					'U_CATEGORY'           => FaqUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel()
 				));
 			}
 		}
 
-		$nbr_column_cats_per_line = ($nbr_cat_displayed > $config->get_columns_number_per_line()) ? $config->get_columns_number_per_line() : $nbr_cat_displayed;
-		$nbr_column_cats_per_line = !empty($nbr_column_cats_per_line) ? $nbr_column_cats_per_line : 1;
+		$categories_per_row = ($categories_number > $config->get_categories_per_row()) ? $config->get_categories_per_row() : $categories_number;
+		$categories_per_row = !empty($categories_per_row) ? $categories_per_row : 1;
 
 		$result = PersistenceContext::get_querier()->select('SELECT *
 		FROM '. FaqSetup::$faq_table .' faq
@@ -78,27 +78,28 @@ class FaqCategoryController extends ModuleController
 		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
 
 		$this->view->put_all(array(
-			'C_CATEGORY'      => true,
-			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
-			'C_HIDE_NO_ITEM_MESSAGE'     => $this->get_category()->get_id() == Category::ROOT_CATEGORY && ($nbr_cat_displayed != 0 || !empty($category_description)),
+			'C_CATEGORY'                 => true,
+			'C_ROOT_CATEGORY'            => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
+			'C_HIDE_NO_ITEM_MESSAGE'     => $this->get_category()->get_id() == Category::ROOT_CATEGORY && ($categories_number != 0 || !empty($category_description)),
 			'C_CATEGORY_DESCRIPTION'     => !empty($category_description),
-			'C_SUB_CATEGORIES'           => $nbr_cat_displayed > 0,
-			'C_QUESTIONS'                => $result->get_rows_count() > 0,
-			'C_MORE_THAN_ONE_QUESTION'   => $result->get_rows_count() > 1,
-			'C_DISPLAY_TYPE_BASIC'       => $config->get_display_type() == FaqConfig::DISPLAY_TYPE_BASIC,
+			'C_SUB_CATEGORIES'           => $categories_number > 0,
+			'C_ITEMS'                    => $result->get_rows_count() > 0,
+			'C_SEVERAL_ITEMS'            => $result->get_rows_count() > 1,
+			'C_BASIC_VIEW'               => $config->get_display_type() == FaqConfig::BASIC_VIEW,
 			'C_DISPLAY_CONTROLS'         => $config->are_control_buttons_displayed(),
 			'C_DISPLAY_REORDER_LINK'     => $result->get_rows_count() > 1 && CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_SUBCATEGORIES_PAGINATION' => $subcategories_pagination->has_several_pages(),
-			'SUBCATEGORIES_PAGINATION'   => $subcategories_pagination->display(),
-			'C_SEVERAL_CATS_COLUMNS'     => $nbr_column_cats_per_line > 1,
-			'NUMBER_CATS_COLUMNS'        => $nbr_column_cats_per_line,
-			'ID_CAT'                     => $this->get_category()->get_id(),
-			'CATEGORY_NAME'              => $this->get_category()->get_name(),
-			'U_CATEGORY_THUMBNAIL'       => $this->get_category()->get_thumbnail()->rel(),
-			'CATEGORY_DESCRIPTION'       => $category_description,
-			'U_EDIT_CATEGORY'            => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? FaqUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->get_category()->get_id())->rel(),
-			'U_REORDER_QUESTIONS'        => FaqUrlBuilder::reorder_questions($this->get_category()->get_id(), $this->get_category()->get_rewrited_name())->rel(),
-			'QUESTIONS_NUMBER'           => $result->get_rows_count()
+
+			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
+			'CATEGORIES_NUMBER'        => $categories_per_row,
+			'ID_CAT'                   => $this->get_category()->get_id(),
+			'CATEGORY_NAME'            => $this->get_category()->get_name(),
+			'CATEGORY_DESCRIPTION'     => $category_description,
+			'ITEMS_NUMBER'             => $result->get_rows_count(),
+
+			'U_CATEGORY_THUMBNAIL' => $this->get_category()->get_thumbnail()->rel(),
+			'U_EDIT_CATEGORY'      => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? FaqUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->get_category()->get_id())->rel(),
+			'U_REORDER_QUESTIONS'  => FaqUrlBuilder::reorder_questions($this->get_category()->get_id(), $this->get_category()->get_rewrited_name())->rel(),
 		));
 
 		while ($row = $result->fetch())
@@ -106,14 +107,14 @@ class FaqCategoryController extends ModuleController
 			$faq_question = new FaqQuestion();
 			$faq_question->set_properties($row);
 
-			$this->view->assign_block_vars('questions', $faq_question->get_array_tpl_vars());
+			$this->view->assign_block_vars('items', $faq_question->get_array_tpl_vars());
 		}
 		$result->dispose();
 	}
 
-	private function get_subcategories_pagination($subcategories_number, $categories_number_per_page, $subcategories_page)
+	private function get_subcategories_pagination($subcategories_number, $categories_per_page, $subcategories_page)
 	{
-		$pagination = new ModulePagination($subcategories_page, $subcategories_number, (int)$categories_number_per_page);
+		$pagination = new ModulePagination($subcategories_page, $subcategories_number, (int)$categories_per_page);
 		$pagination->set_url(FaqUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), '%d'));
 
 		if ($pagination->current_page_is_empty() && $subcategories_page > 1)

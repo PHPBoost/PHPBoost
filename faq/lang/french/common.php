@@ -18,6 +18,9 @@ $lang['faq.module.title'] = 'FAQ';
 $lang['items'] = 'questions';
 $lang['item'] = 'question';
 
+$lang['faq.items'] = 'questions';
+$lang['faq.item'] = 'question';
+
 $lang['all.items'] = 'Toutes les questions';
 $lang['last.items'] = 'Dernières questions';
 $lang['an.item'] = 'Une question';

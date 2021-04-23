@@ -10,7 +10,7 @@
 
 class FaqPendingItemsController extends ModuleController
 {
-	private $tpl;
+	private $view;
 	private $lang;
 	private $config;
 
@@ -28,8 +28,8 @@ class FaqPendingItemsController extends ModuleController
 	public function init()
 	{
 		$this->lang = LangLoader::get('common', 'faq');
-		$this->tpl = new FileTemplate('faq/FaqSeveralItemsController.tpl');
-		$this->tpl->add_lang($this->lang);
+		$this->view = new FileTemplate('faq/FaqSeveralItemsController.tpl');
+		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 		$this->config = FaqConfig::load();
 	}
 
@@ -37,16 +37,6 @@ class FaqPendingItemsController extends ModuleController
 	{
 		$config = FaqConfig::load();
 		$authorized_categories = CategoriesService::get_authorized_categories();
-		$mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
-		$field = $request->get_getstring('field', FaqQuestion::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
-
-		$sort_mode = TextHelper::strtoupper($mode);
-		$sort_mode = (in_array($sort_mode, array(FaqQuestion::ASC, FaqQuestion::DESC)) ? $sort_mode : $this->config->get_items_default_sort_mode());
-
-		if (in_array($field, FaqQuestion::SORT_FIELDS_URL_VALUES))
-			$sort_field = array_search($field, FaqQuestion::SORT_FIELDS_URL_VALUES);
-		else
-			$sort_field = FaqQuestion::SORT_DATE;
 
 		$result = PersistenceContext::get_querier()->select('SELECT *
 		FROM '. FaqSetup::$faq_table .' faq
@@ -54,18 +44,19 @@ class FaqPendingItemsController extends ModuleController
 		WHERE approved = 0
 		AND faq.id_category IN :authorized_categories
 		' . (!CategoriesAuthorizationsService::check_authorizations()->moderation() ? ' AND faq.author_user_id = :user_id' : '') . '
-		ORDER BY ' . $sort_field . ' ' . $sort_mode, array(
+		ORDER BY question', array(
 			'authorized_categories' => $authorized_categories,
 			'user_id' => AppContext::get_current_user()->get_id()
 		));
 
-		$this->tpl->put_all(array(
-			'C_QUESTIONS' => $result->get_rows_count() > 0,
-			'C_PENDING'   => true,
-			'C_MORE_THAN_ONE_QUESTION' => $result->get_rows_count() > 1,
-			'C_DISPLAY_TYPE_BASIC'     => $config->get_display_type() == FaqConfig::DISPLAY_TYPE_BASIC,
-			'C_DISPLAY_CONTROLS'       => $config->are_control_buttons_displayed(),
-			'QUESTIONS_NUMBER'         => $result->get_rows_count()
+		$this->view->put_all(array(
+			'C_ITEMS'            => $result->get_rows_count() > 0,
+			'C_PENDING_ITEMS'    => true,
+			'C_SEVERAL_ITEMS'    => $result->get_rows_count() > 1,
+			'C_BASIC_VIEW'       => $config->get_display_type() == FaqConfig::BASIC_VIEW,
+			'C_DISPLAY_CONTROLS' => $config->are_control_buttons_displayed(),
+
+			'ITEMS_NUMBER' => $result->get_rows_count()
 		));
 
 		while ($row = $result->fetch())
@@ -73,39 +64,9 @@ class FaqPendingItemsController extends ModuleController
 			$faq_question = new FaqQuestion();
 			$faq_question->set_properties($row);
 
-			$this->tpl->assign_block_vars('questions', $faq_question->get_array_tpl_vars());
+			$this->view->assign_block_vars('items', $faq_question->get_array_tpl_vars());
 		}
 		$result->dispose();
-		$this->build_sorting_form($field, TextHelper::strtolower($sort_mode));
-	}
-
-	private function build_sorting_form($field, $mode)
-	{
-		$common_lang = LangLoader::get('common');
-
-		$form = new HTMLForm(__CLASS__, '', false);
-		$form->set_css_class('options');
-
-		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $common_lang['sort_by']));
-		$form->add_fieldset($fieldset);
-
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field,
-			array(
-				new FormFieldSelectChoiceOption($common_lang['form.date.creation'], FaqQuestion::SORT_FIELDS_URL_VALUES[FaqQuestion::SORT_DATE]),
-				new FormFieldSelectChoiceOption($this->lang['faq.form.question'], FaqQuestion::SORT_FIELDS_URL_VALUES[FaqQuestion::SORT_ALPHABETIC])
-			),
-			array('events' => array('change' => 'document.location = "'. FaqUrlBuilder::display_pending()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
-		));
-
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
-			array(
-				new FormFieldSelectChoiceOption($common_lang['sort.asc'], 'asc'),
-				new FormFieldSelectChoiceOption($common_lang['sort.desc'], 'desc')
-			),
-			array('events' => array('change' => 'document.location = "' . FaqUrlBuilder::display_pending()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
-		));
-
-		$this->tpl->put('SORT_FORM', $form->display());
 	}
 
 	private function check_authorizations()
@@ -119,18 +80,16 @@ class FaqPendingItemsController extends ModuleController
 
 	private function generate_response(HTTPRequestCustom $request)
 	{
-		$sort_field = $request->get_getstring('field', FaqQuestion::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
-		$sort_mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
-		$response = new SiteDisplayResponse($this->tpl);
+		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['faq.questions.pending'], $this->lang['faq.module.title']);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['faq.seo.description.pending']);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::display_pending($sort_field, $sort_mode));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::display_pending());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['faq.module.title'], FaqUrlBuilder::home());
-		$breadcrumb->add($this->lang['faq.questions.pending'], FaqUrlBuilder::display_pending($sort_field, $sort_mode));
+		$breadcrumb->add($this->lang['faq.questions.pending'], FaqUrlBuilder::display_pending());
 
 		return $response;
 	}

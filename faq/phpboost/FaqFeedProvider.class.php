@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 12
+ * @version     PHPBoost 6.0 - last update: 2021 04 23
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -33,7 +33,7 @@ class FaqFeedProvider implements FeedProvider
 			$data->set_link(SyndicationUrlBuilder::rss('faq', $idcat));
 			$data->set_host(HOST);
 			$data->set_desc($feed_module_name . ' - ' . $site_name);
-			$data->set_lang(LangLoader::get_message('xml_lang', 'main'));
+			$data->set_lang(LangLoader::get_message('common.xml.lang', 'common-lang'));
 			$data->set_auth_bit(Category::READ_AUTHORIZATIONS);
 
 			$categories = CategoriesService::get_categories_manager($module_id)->get_children($idcat, new SearchCategoryChildrensOptions(), true);

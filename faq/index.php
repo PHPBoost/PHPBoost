@@ -22,7 +22,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('DefaultDeleteCategoryController', '`^/categories/([0-9]+)/delete/?$`', array('id')),
 
 	//Management
-	new UrlControllerMapper('FaqItemsManageController', '`^/manage/?$`'),
+	new UrlControllerMapper('FaqItemsManagerController', '`^/manage/?$`'),
 	new UrlControllerMapper('FaqItemFormController', '`^/add/?([0-9]+)?/?$`', array('id_category')),
 	new UrlControllerMapper('FaqItemFormController', '`^/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('FaqDeleteItemController', '`^/([0-9]+)/delete/?$`', array('id')),

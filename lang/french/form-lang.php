@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 22
+ * @version     PHPBoost 6.0 - last update: 2021 04 23
  * @since       PHPBoost 6.0 - 2021 04 18
 */
 
@@ -14,16 +14,16 @@
 $lang['form.required.fields'] = 'Les champs marqués * sont obligatoires !';
 
 // Autorisations
-$lang['form.authorizations']                       = 'Autorisations';
-$lang['form.authorizations.read']                  = 'Autorisation de lecture';
-$lang['form.authorizations.write']                 = 'Autorisation d\'écriture';
-$lang['form.authorizations.contribution']          = 'Autorisation de contribution';
-$lang['form.authorizations.moderation']            = 'Autorisation de modération';
-$lang['form.authorizations.categories.management'] = 'Autorisation de gérer les catégories';
-$lang['form.authorizations.menu']                  = 'Autorisation d\'afficher le menu';
-$lang['form.authorizations.specials']              = 'Autorisations spéciales';
-$lang['form.authorizations.default']               = 'Autorisations par défaut';
-$lang['form.authorizations.clue']                  = 'Autorisations globales du module. Vous pouvez changer ces autorisations localement sur chaque catégorie.';
+$lang['form.authorizations']              = 'Autorisations';
+$lang['form.authorizations.read']         = 'Autorisation de lecture';
+$lang['form.authorizations.write']        = 'Autorisation d\'écriture';
+$lang['form.authorizations.contribution'] = 'Autorisation de contribution';
+$lang['form.authorizations.moderation']   = 'Autorisation de modération';
+$lang['form.authorizations.categories']   = 'Autorisation de gérer les catégories';
+$lang['form.authorizations.menu']         = 'Autorisation d\'afficher le menu';
+$lang['form.authorizations.specials']     = 'Autorisations spéciales';
+$lang['form.authorizations.default']      = 'Autorisations par défaut';
+$lang['form.authorizations.clue']         = 'Autorisations globales du module. Vous pouvez changer ces autorisations localement sur chaque catégorie.';
 
 // Buttons
 $lang['form.submit']  = 'Valider';
@@ -38,6 +38,7 @@ $lang['form.save']    = 'Sauvegarder';
 $lang['form.go']      = 'Go';
 $lang['form.ok']      = 'OK';
 $lang['form.refresh'] = 'Rafraichir';
+$lang['form.apply']   = 'Appliquer';
 
 // Configuration
 $lang['form.documentation']             = 'Documentation';

@@ -3,43 +3,43 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 09
+ * @version     PHPBoost 6.0 - last update: 2021 04 23
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FaqConfig extends AbstractConfigData
 {
-	const CATEGORIES_NUMBER_PER_PAGE = 'categories_number_per_page';
-	const COLUMNS_NUMBER_PER_LINE = 'columns_number_per_line';
-	const ITEMS_DEFAULT_SORT_FIELD = 'items_default_sort_field';
-	const ITEMS_DEFAULT_SORT_MODE = 'items_default_sort_mode';
+	const CATEGORIES_PER_PAGE       = 'categories_per_page';
+	const CATEGORIES_PER_ROW        = 'categories_per_row';
+	const ITEMS_DEFAULT_SORT_FIELD  = 'items_default_sort_field';
+	const ITEMS_DEFAULT_SORT_MODE   = 'items_default_sort_mode';
 	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
-	const AUTHORIZATIONS = 'authorizations';
+	const AUTHORIZATIONS            = 'authorizations';
 
-	const DISPLAY_TYPE = 'display_type';
-	const DISPLAY_TYPE_BASIC = 'display_type_basic';
-	const DISPLAY_TYPE_SIBLINGS = 'display_type_siblings';
+	const DISPLAY_TYPE     = 'display_type';
+	const BASIC_VIEW       = 'basic_view';
+	const SIBLINGS_VIEW    = 'siblings_view';
 	const DISPLAY_CONTROLS = 'display_controls';
 
-	public function get_categories_number_per_page()
+	public function get_categories_per_page()
 	{
-		return $this->get_property(self::CATEGORIES_NUMBER_PER_PAGE);
+		return $this->get_property(self::CATEGORIES_PER_PAGE);
 	}
 
-	public function set_categories_number_per_page($value)
+	public function set_categories_per_page($value)
 	{
-		$this->set_property(self::CATEGORIES_NUMBER_PER_PAGE, $value);
+		$this->set_property(self::CATEGORIES_PER_PAGE, $value);
 	}
 
-	public function get_columns_number_per_line()
+	public function get_categories_per_row()
 	{
-		return $this->get_property(self::COLUMNS_NUMBER_PER_LINE);
+		return $this->get_property(self::CATEGORIES_PER_ROW);
 	}
 
-	public function set_columns_number_per_line($value)
+	public function set_categories_per_row($value)
 	{
-		$this->set_property(self::COLUMNS_NUMBER_PER_LINE, $value);
+		$this->set_property(self::CATEGORIES_PER_ROW, $value);
 	}
 
 	public function get_display_type()
@@ -113,9 +113,9 @@ class FaqConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::CATEGORIES_NUMBER_PER_PAGE => 10,
-			self::COLUMNS_NUMBER_PER_LINE => 4,
-			self::DISPLAY_TYPE => self::DISPLAY_TYPE_BASIC,
+			self::CATEGORIES_PER_PAGE => 10,
+			self::CATEGORIES_PER_ROW => 4,
+			self::DISPLAY_TYPE => self::BASIC_VIEW,
 			self::DISPLAY_CONTROLS => true,
 			self::ITEMS_DEFAULT_SORT_FIELD => FaqQuestion::SORT_ALPHABETIC,
 			self::ITEMS_DEFAULT_SORT_MODE => FaqQuestion::ASC,

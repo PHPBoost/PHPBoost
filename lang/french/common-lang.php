@@ -87,8 +87,9 @@ $lang['common.items.number'] = 'Nombre d\'éléments';
 $lang['common.no.item.now']  = 'Aucun élément n\'est disponible pour le moment';
 $lang['common.see.details']  = 'Voir les détails';
 
-$lang['common.views'] = 'vues';
-$lang['common.view']  = 'vue';
+$lang['common.views']        = 'vues';
+$lang['common.view']         = 'vue';
+$lang['common.views.number'] = 'Nombre de vues';
 
 $lang['common.keyword']  = 'Mot clé';
 $lang['common.keywords'] = 'Mots clés';
@@ -199,6 +200,8 @@ $lang['common.thumbnail.default'] = 'Image par défaut';
 $lang['common.thumbnail.custom']  = 'Image personnalisée';
 
 // Units
+$lang['common.unit']           = 'Unité';
+$lang['common.units']          = 'Unités';
 $lang['common.unit.gigabytes'] = 'Go';
 $lang['common.unit.megabytes'] = 'Mo';
 $lang['common.unit.kilobytes'] = 'Ko';

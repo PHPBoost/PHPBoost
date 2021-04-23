@@ -89,6 +89,7 @@ $lang['common.see.details']  = 'See details';
 
 $lang['common.views'] = 'views';
 $lang['common.view']  = 'view';
+$lang['common.views.number'] = 'Views number';
 
 $lang['common.keyword']  = 'Keyword';
 $lang['common.keywords'] = 'Keywords';
@@ -151,12 +152,12 @@ $lang['common.pagination.per']      = ' per page';
 
 // Position
 $lang['common.position']        = 'Position';
-$lang['common..move']           = 'Move';
+$lang['common.move']           = 'Move';
 $lang['common.move.to']         = 'Move to';
-$lang['common..move.up']        = 'Move up';
-$lang['common..move.down']      = 'Move down';
+$lang['common.move.up']        = 'Move up';
+$lang['common.move.down']      = 'Move down';
 $lang['common.update.position'] = 'Change positions';
-$lang['common..drop.here']      = 'Drop here';
+$lang['common.drop.here']      = 'Drop here';
 
 // Scroll to
 $lang['common.scroll.to.top']    = 'Scroll to Top';
@@ -199,6 +200,8 @@ $lang['common.thumbnail.default'] = 'Default thumbnail';
 $lang['common.thumbnail.custom']  = 'Custom thumbnail';
 
 // Units
+$lang['common.unit']           = 'Unit';
+$lang['common.units']          = 'Units';
 $lang['common.unit.gigabytes'] = 'Gb';
 $lang['common.unit.megabytes'] = 'Mb';
 $lang['common.unit.kilobytes'] = 'Kb';

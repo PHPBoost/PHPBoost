@@ -1,10 +1,10 @@
-# IF C_QUESTIONS #
+# IF C_ITEMS #
 	<script>
-		var questions_number = {QUESTIONS_NUMBER};
+		var questions_number = {ITEMS_NUMBER};
 
 		function delete_question(id_question)
 		{
-			if (confirm(${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))}))
+			if (confirm(${escapejs(LangLoader::get_message('warning.confirm.delete', 'warning-lang'))}))
 			{
 				jQuery.ajax({
 					url: '${relative_url(FaqUrlBuilder::ajax_delete())}',
@@ -32,19 +32,19 @@
 <section id="module-faq">
 	<header class="section-header">
 		<div class="controls align-right">
-			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 			# IF NOT C_ROOT_CATEGORY #{@faq.module.title}# ENDIF #
 			# IF C_CATEGORY #
 				# IF C_DISPLAY_REORDER_LINK #
 					<a href="{U_REORDER_QUESTIONS}" aria-label="{@faq.questions.reorder}"><i class="fa fa-fw fa-exchange-alt" aria-hidden="true"></i></a>
 				# ENDIF #
 				# IF IS_ADMIN #
-					<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+					<a href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 				# ENDIF #
 			# ENDIF #
 		</div>
 		<h1>
-			# IF C_PENDING #
+			# IF C_PENDING_ITEMS #
 				{@faq.questions.pending}
 			# ELSE #
 				# IF C_ROOT_CATEGORY #{@faq.module.title}# ELSE #{CATEGORY_NAME}# ENDIF #
@@ -64,19 +64,19 @@
 	# IF C_SUB_CATEGORIES #
 		<div class="sub-section">
 			<div class="content-container">
-				<div class="cell-flex cell-tile cell-columns-{NUMBER_CATS_COLUMNS}">
+				<div class="cell-flex cell-tile cell-columns-{CATEGORIES_NUMBER}">
 					# START sub_categories_list #
 						<div class="cell category-{sub_categories_list.CATEGORY_ID}">
 							<div class="cell-header">
 								<h5 class="cell-name"><a class="subcat-title" itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
-								<span class="small pinned notice" aria-label="# IF sub_categories_list.C_MORE_THAN_ONE_QUESTION #${TextHelper::lcfirst(LangLoader::get_message('faq.questions', 'common', 'faq'))}# ELSE #${TextHelper::lcfirst(LangLoader::get_message('faq.form.question', 'common', 'faq'))}# ENDIF #">{sub_categories_list.QUESTIONS_NUMBER}</span>
+								<span class="small pinned notice" aria-label="# IF sub_categories_list.C_SEVERAL_ITEMS #${TextHelper::lcfirst(@faq.items)}# ELSE #${TextHelper::lcfirst(@faq.item)}# ENDIF #">{sub_categories_list.ITEMS_NUMBER}</span>
 							</div>
 							<div class="cell-body">
 								# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
 									<div class="cell-thumbnail cell-landscape cell-center">
 										<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
 										<a class="cell-thumbnail-caption" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
-											${LangLoader::get_message('see.category', 'categories-common')}
+											${LangLoader::get_message('category.see.category', 'category-lang')}
 										</a>
 									</div>
 								# ENDIF #
@@ -89,17 +89,7 @@
 		</div>
 	# ENDIF #
 
-	# IF C_QUESTIONS #
-		# IF C_PENDING #
-			# IF C_MORE_THAN_ONE_QUESTION #
-				<div class="sub-section">
-					<div class="content-container">
-						# INCLUDE SORT_FORM #
-						<div class="spacer"></div>
-					</div>
-				</div>
-			# ENDIF #
-		# ENDIF #
+	# IF C_ITEMS #
 		<div class="sub-section">
 			<div class="content-container">
 				<div class="accordion-container# IF C_DISPLY_BASIC # basic# ELSE # siblings# ENDIF #">
@@ -111,31 +101,31 @@
 					# ENDIF #
 					<nav class="accordion-nav">
 						<ul class="accordion-bordered">
-							# START questions #
-								<li id="question-title-{questions.ID}" class="category-{questions.CATEGORY_ID}">
-									<a href="#" data-accordion data-target="question{questions.ID}">{questions.QUESTION}</a>
+							# START items #
+								<li id="question-title-{items.ID}" class="category-{items.CATEGORY_ID}">
+									<a href="#" data-accordion data-target="question{items.ID}">{items.QUESTION}</a>
 								</li>
-							# END questions #
+							# END items #
 						</ul>
 					</nav>
-					# START questions #
-						<article id="question{questions.ID}" itemscope="itemscope" itemtype="https://schema.org/CreativeWork" class="accordion accordion-animation faq-item several-items# IF questions.C_NEW_CONTENT # new-content# ENDIF #">
+					# START items #
+						<article id="question{items.ID}" itemscope="itemscope" itemtype="https://schema.org/CreativeWork" class="accordion accordion-animation faq-item several-items# IF items.C_NEW_CONTENT # new-content# ENDIF #">
 							<div class="content-panel faq-answer-container" itemprop="text">
 								<div class="controls align-right">
-									<a href="{questions.U_LINK}" onclick="copy_to_clipboard('{questions.U_ABSOLUTE_LINK}');return false;" aria-label="{questions.L_LINK_QUESTION}"><i class="fa fa-fw fa-anchor" aria-hidden="true"></i></a>
-									# IF questions.C_EDIT #
-										<a href="{questions.U_EDIT}"aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit fa-fw" aria-hidden="true"></i> </a>
+									<a href="{items.U_ITEM}" onclick="copy_to_clipboard('{items.U_ABSOLUTE_LINK}');return false;" aria-label="{@faq.message.link.question}"><i class="fa fa-fw fa-anchor" aria-hidden="true"></i></a>
+									# IF items.C_EDIT #
+										<a href="{items.U_EDIT}"aria-label="{@common.edit}"><i class="far fa-fw fa-edit fa-fw" aria-hidden="true"></i> </a>
 									# ENDIF #
-									# IF questions.C_DELETE #
-										<a href="#"aria-label="${LangLoader::get_message('delete', 'common')}" onclick="delete_question({questions.ID});return false;"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i> </a>
+									# IF items.C_DELETE #
+										<a href="#"aria-label="{@common.delete}" onclick="delete_question({items.ID});return false;"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i> </a>
 									# ENDIF #
 								</div>
-								<div class="content">{questions.ANSWER}</div>
+								<div class="content">{items.ANSWER}</div>
 							</div>
 
 							<footer></footer>
 						</article>
-					# END questions #
+					# END items #
 				</div>
 			</div>
 		</div>
@@ -144,8 +134,8 @@
 			<div class="sub-section">
 				<div class="content-container">
 					<div class="content">
-						<div id="no-item-message" class="message-helper bgc notice align-center"# IF C_QUESTIONS # style="display: none;"# ENDIF #>
-							${LangLoader::get_message('no_item_now', 'common')}
+						<div id="no-item-message" class="message-helper bgc notice align-center"# IF C_ITEMS # style="display: none;"# ENDIF #>
+							{@common.no.item.now}
 						</div>
 					</div>
 				</div>

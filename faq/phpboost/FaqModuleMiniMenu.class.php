@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 11 08
+ * @version     PHPBoost 6.0 - last update: 2021 04 23
  * @since       PHPBoost 4.0 - 2014 09 02
 */
 
@@ -34,13 +34,13 @@ class FaqModuleMiniMenu extends ModuleMiniMenu
 		$module_id = 'faq';
 
 		//Create file template
-		$tpl = new FileTemplate('faq/FaqModuleMiniMenu.tpl');
+		$view = new FileTemplate('faq/FaqModuleMiniMenu.tpl');
 
 		//Assign the lang file to the tpl
-		$tpl->add_lang(LangLoader::get('common', $module_id));
+		$view->add_lang(LangLoader::get('common', $module_id));
 
 		//Assign common menu variables to the tpl
-		MenuService::assign_positions_conditions($tpl, $this->get_block());
+		MenuService::assign_positions_conditions($view, $this->get_block());
 
 		//Load module cache
 		$faq_cache = FaqCache::load();
@@ -60,15 +60,15 @@ class FaqModuleMiniMenu extends ModuleMiniMenu
 			{
 				$category = CategoriesService::get_categories_manager($module_id)->get_categories_cache()->get_category($id_category);
 
-				$tpl->put_all(array(
-					'C_QUESTION' => true,
+				$view->put_all(array(
+					'C_ITEMS' => true,
 					'QUESTION' => $random_question['question'],
-					'U_LINK' => FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $random_question['id'])->rel()
+					'U_ITEM' => FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $random_question['id'])->rel()
 				));
 			}
 		}
 
-		return $tpl->render();
+		return $view->render();
 	}
 }
 ?>

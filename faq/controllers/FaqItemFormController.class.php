@@ -21,7 +21,7 @@ class FaqItemFormController extends ModuleController
 	private $submit_button;
 
 	private $lang;
-	private $common_lang;
+	private $form_lang;
 
 	private $faq_question;
 	private $is_new_faq_question;
@@ -51,15 +51,15 @@ class FaqItemFormController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'faq');
-		$this->common_lang = LangLoader::get('common');
+		$this->form_lang = LangLoader::get('form-lang');
 	}
 
 	private function build_form(HTTPRequestCustom $request)
 	{
 		$form = new HTMLForm(__CLASS__);
-		$form->set_layout_title($this->get_faq_question()->get_id() === null ? $this->lang['faq.question.add'] : ($this->lang['faq.question.edit'] . ': ' . $this->get_faq_question()->get_question()));
+		$form->set_layout_title($this->get_faq_question()->get_id() === null ? $this->lang['faq.question.add'] : ($this->lang['faq.question.edit']));
 
-		$fieldset = new FormFieldsetHTML('faq', $this->common_lang['form.parameters']);
+		$fieldset = new FormFieldsetHTML('faq', $this->form_lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('question', $this->lang['faq.form.question'], $this->get_faq_question()->get_question(), array('required' => true)));
@@ -69,14 +69,14 @@ class FaqItemFormController extends ModuleController
 			$search_category_children_options = new SearchCategoryChildrensOptions();
 			$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
 			$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], $this->get_faq_question()->get_id_category(), $search_category_children_options));
+			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->form_lang['form.category'], $this->get_faq_question()->get_id_category(), $search_category_children_options));
 		}
 
 		$fieldset->add_field(new FormFieldRichTextEditor('answer', $this->lang['faq.form.answer'], $this->get_faq_question()->get_answer(), array('rows' => 15, 'required' => true)));
 
 		if (CategoriesAuthorizationsService::check_authorizations($this->get_faq_question()->get_id_category())->moderation())
 		{
-			$fieldset->add_field(new FormFieldCheckbox('approved', $this->common_lang['form.approve'], $this->get_faq_question()->is_approved()));
+			$fieldset->add_field(new FormFieldCheckbox('approved', $this->form_lang['form.approve'], $this->get_faq_question()->is_approved()));
 		}
 
 		$this->build_contribution_fieldset($form);

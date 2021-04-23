@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 15
+ * @version     PHPBoost 6.0 - last update: 2021 04 23
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -18,22 +18,10 @@ class FaqQuestion
 	private $question;
 	private $rewrited_question;
 	private $answer;
-	private $lang;
 
 	private $creation_date;
 	private $author_user;
 	private $approved;
-
-	const SORT_ALPHABETIC = 'question';
-	const SORT_DATE = 'creation_date';
-
-	const SORT_FIELDS_URL_VALUES = array(
-		self::SORT_ALPHABETIC => 'question',
-		self::SORT_DATE => 'date'
-	);
-
-	const ASC = 'ASC';
-	const DESC = 'DESC';
 
 	public function get_id()
 	{
@@ -201,7 +189,6 @@ class FaqQuestion
 		$category = $this->get_category();
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
-		$this->lang = LangLoader::get('common', 'faq');
 
 		return array_merge(
 			Date::get_array_tpl_vars($this->creation_date, 'date'),
@@ -213,7 +200,7 @@ class FaqQuestion
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			'C_NEW_CONTENT' => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('faq', $this->get_creation_date()->get_timestamp()),
 
-			//Question
+			// Question
 			'ID' => $this->id,
 			'QUESTION' => $this->question,
 			'ANSWER' => FormatingHelper::second_parse($this->answer),
@@ -221,10 +208,8 @@ class FaqQuestion
 			'PSEUDO' => $user->get_display_name(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR' => $user_group_color,
-			'L_SHOW_ANSWER' => $this->lang['faq.message.show.answer'],
-			'L_LINK_QUESTION' => $this->lang['faq.message.link.question'],
 
-			//Category
+			// Category
 			'C_ROOT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY,
 			'CATEGORY_ID' => $category->get_id(),
 			'CATEGORY_NAME' => $category->get_name(),
@@ -234,7 +219,7 @@ class FaqQuestion
 
 			'U_SYNDICATION' => SyndicationUrlBuilder::rss('faq', $this->id_category)->rel(),
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
-			'U_LINK' => FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->id)->rel(),
+			'U_ITEM' => FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->id)->rel(),
 			'U_ABSOLUTE_LINK' => FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->id)->absolute(),
 			'U_CATEGORY' => FaqUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
 			'U_EDIT' => FaqUrlBuilder::edit($this->id)->rel(),

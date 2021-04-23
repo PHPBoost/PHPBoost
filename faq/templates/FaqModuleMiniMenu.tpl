@@ -1,7 +1,7 @@
-# IF C_QUESTION #
+# IF C_ITEMS #
 	<div class="cell-infos">
 		<i class="far fa-question-circle fa-2x"></i>
-		<a class="small mini-faq-question" href="{U_LINK}">{QUESTION}</a>
+		<a class="small mini-faq-question" href="{U_ITEM}">{QUESTION}</a>
 	</div>
 # ELSE #
 	<div class="cell-alert">

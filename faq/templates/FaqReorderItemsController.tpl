@@ -1,15 +1,15 @@
-# IF C_QUESTIONS #
+# IF C_ITEMS #
 	<script>
 		var FaqQuestions = function(id){
 			this.id = id;
-			this.questions_number = {QUESTIONS_NUMBER};
+			this.questions_number = {ITEMS_NUMBER};
 		};
 
 		FaqQuestions.prototype = {
 			init_sortable : function() {
 				jQuery("ul#questions-list").sortable({
 					handle: '.sortable-selector',
-					placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>',
+					placeholder: '<div class="dropzone">' + ${escapejs(@common.drop.here)} + '</div>',
 					onDrop: function ($item, container, _super, event) {
 						FaqQuestions.change_reposition_pictures();
 						$item.removeClass(container.group.options.draggedClass).removeAttr("style");
@@ -52,7 +52,7 @@
 
 		FaqQuestion.prototype = {
 			delete : function() {
-				if (confirm(${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))}))
+				if (confirm(${escapejs(LangLoader::get_message('warning.confirm.delete', 'warning-lang'))}))
 				{
 					jQuery.ajax({
 						url: '${relative_url(FaqUrlBuilder::ajax_delete())}',
@@ -90,9 +90,9 @@
 <section id="module-faq">
 	<header class="section-header">
 		<div class="controls align-right">
-			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 			# IF NOT C_ROOT_CATEGORY #{@faq.module.title}# ENDIF #
-			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
+			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1>
 			# IF C_ROOT_CATEGORY #{@faq.module.title}# ELSE #{CATEGORY_NAME}# ENDIF #
@@ -111,40 +111,40 @@
 	<div class="sub-section">
 		<div class="content-container">
 			<div class="content">
-				# IF C_QUESTIONS #
+				# IF C_ITEMS #
 					<form action="{REWRITED_SCRIPT}" method="post" id="position-update-form" onsubmit="FaqQuestions.serialize_sortable();" class="faq-reorder-form">
 						<fieldset id="questions-management">
 							<ul id="questions-list" class="sortable-block">
-								# START questions #
-									<li class="sortable-element# IF questions.C_NEW_CONTENT # new-content# ENDIF #" id="list-{questions.ID}" data-id="{questions.ID}">
-										<div class="sortable-selector" aria-label="${LangLoader::get_message('position.move', 'common')}"></div>
+								# START items #
+									<li class="sortable-element# IF items.C_NEW_CONTENT # new-content# ENDIF #" id="list-{items.ID}" data-id="{items.ID}">
+										<div class="sortable-selector" aria-label="{@common.move}"></div>
 										<div class="sortable-title">
-											<span class="question-title">{questions.QUESTION}</span>
+											<span class="question-title">{items.QUESTION}</span>
 										</div>
 										<div class="sortable-actions">
-											# IF C_MORE_THAN_ONE_QUESTION #
-											<a href="#" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{questions.ID}" onclick="return false;"><i class="fa fa-fw fa-arrow-up" aria-hidden="true"></i></a>
-											<a href="#" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{questions.ID}" onclick="return false;"><i class="fa fa-fw fa-arrow-down" aria-hidden="true"></i></a>
+											# IF C_SEVERAL_ITEMS #
+											<a href="#" aria-label="{@common.move.up}" id="move-up-{items.ID}" onclick="return false;"><i class="fa fa-fw fa-arrow-up" aria-hidden="true"></i></a>
+											<a href="#" aria-label="{@common.move.down}" id="move-down-{items.ID}" onclick="return false;"><i class="fa fa-fw fa-arrow-down" aria-hidden="true"></i></a>
 											# ENDIF #
-											<a href="{questions.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
-											<a href="#" onclick="return false;" aria-label="${LangLoader::get_message('delete', 'common')}" id="delete-{questions.ID}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+											<a href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+											<a href="#" onclick="return false;" aria-label="{@common.delete}" id="delete-{items.ID}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 										</div>
 
 										<script>
 											jQuery(document).ready(function() {
-												var faq_question = new FaqQuestion({questions.ID}, FaqQuestions);
+												var faq_question = new FaqQuestion({items.ID}, FaqQuestions);
 
-												jQuery('#delete-{questions.ID}').on('click',function(){
+												jQuery('#delete-{items.ID}').on('click',function(){
 													faq_question.delete();
 												});
 
 												if (FaqQuestions.questions_number > 1) {
-													jQuery('#move-up-{questions.ID}').on('click',function(){
+													jQuery('#move-up-{items.ID}').on('click',function(){
 														var li = jQuery(this).closest('li');
 														li.insertBefore( li.prev() );
 														FaqQuestions.change_reposition_pictures();
 													});
-													jQuery('#move-down-{questions.ID}').on('click',function(){
+													jQuery('#move-down-{items.ID}').on('click',function(){
 														var li = jQuery(this).closest('li');
 														li.insertAfter( li.next() );
 														FaqQuestions.change_reposition_pictures();
@@ -153,12 +153,12 @@
 											});
 										</script>
 									</li>
-								# END questions #
+								# END items #
 							</ul>
 						</fieldset>
-						# IF C_MORE_THAN_ONE_QUESTION #
+						# IF C_SEVERAL_ITEMS #
 						<fieldset class="fieldset-submit" id="position-update-button">
-							<button type="submit" name="submit" value="true" class="button submit">${LangLoader::get_message('position.update', 'common')}</button>
+							<button type="submit" name="submit" value="true" class="button submit">{@common.update.position}</button>
 							<input type="hidden" name="token" value="{TOKEN}">
 							<input type="hidden" name="tree" id="tree" value="">
 						</fieldset>
@@ -167,7 +167,7 @@
 				# ELSE #
 					# IF NOT C_HIDE_NO_ITEM_MESSAGE #
 						<div class="message-helper bgc notice align-center">
-							${LangLoader::get_message('no_item_now', 'common')}
+							{@common.no_item_now}
 						</div>
 					# ENDIF #
 				# ENDIF #

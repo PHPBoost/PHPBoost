@@ -11,7 +11,7 @@
 class FaqReorderItemsController extends ModuleController
 {
 	private $lang;
-	private $tpl;
+	private $view;
 
 	private $category;
 
@@ -24,7 +24,7 @@ class FaqReorderItemsController extends ModuleController
 		if ($request->get_value('submit', false))
 		{
 			$this->update_position($request);
-			AppContext::get_response()->redirect(FaqUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name()), LangLoader::get_message('message.success.position.update', 'status-messages-common'));
+			AppContext::get_response()->redirect(FaqUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name()), LangLoader::get_message('warning.message.success.position.update', 'warning-lang'));
 		}
 
 		$this->build_view($request);
@@ -35,8 +35,8 @@ class FaqReorderItemsController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'faq');
-		$this->tpl = new FileTemplate('faq/FaqReorderItemsController.tpl');
-		$this->tpl->add_lang($this->lang);
+		$this->view = new FileTemplate('faq/FaqReorderItemsController.tpl');
+		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 	}
 
 	private function build_view(HTTPRequestCustom $request)
@@ -54,18 +54,20 @@ class FaqReorderItemsController extends ModuleController
 
 		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
 
-		$this->tpl->put_all(array(
-			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
+		$this->view->put_all(array(
+			'C_ROOT_CATEGORY'        => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
 			'C_HIDE_NO_ITEM_MESSAGE' => $this->get_category()->get_id() == Category::ROOT_CATEGORY && !empty($category_description),
 			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
-			'C_QUESTIONS' => $result->get_rows_count() > 0,
-			'C_MORE_THAN_ONE_QUESTION' => $result->get_rows_count() > 1,
-			'ID_CAT' => $this->get_category()->get_id(),
-			'CATEGORY_NAME' => $this->get_category()->get_name(),
-			'U_CATEGORY_THUMBNAIL' => $this->get_category()->get_thumbnail()->rel(),
+			'C_ITEMS'                => $result->get_rows_count() > 0,
+			'C_SEVERAL_ITEMS'        => $result->get_rows_count() > 1,
+
+			'ID_CAT'               => $this->get_category()->get_id(),
+			'CATEGORY_NAME'        => $this->get_category()->get_name(),
 			'CATEGORY_DESCRIPTION' => $category_description,
-			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? FaqUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->get_category()->get_id())->rel(),
-			'QUESTIONS_NUMBER' => $result->get_rows_count()
+			'ITEMS_NUMBER'         => $result->get_rows_count(),
+
+			'U_CATEGORY_THUMBNAIL' => $this->get_category()->get_thumbnail()->rel(),
+			'U_EDIT_CATEGORY'      => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? FaqUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->get_category()->get_id())->rel()
 		));
 
 		while ($row = $result->fetch())
@@ -73,7 +75,7 @@ class FaqReorderItemsController extends ModuleController
 			$faq_question = new FaqQuestion();
 			$faq_question->set_properties($row);
 
-			$this->tpl->assign_block_vars('questions', $faq_question->get_array_tpl_vars());
+			$this->view->assign_block_vars('items', $faq_question->get_array_tpl_vars());
 		}
 		$result->dispose();
 	}
@@ -121,7 +123,7 @@ class FaqReorderItemsController extends ModuleController
 
 	private function generate_response()
 	{
-		$response = new SiteDisplayResponse($this->tpl);
+		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
 
@@ -132,7 +134,7 @@ class FaqReorderItemsController extends ModuleController
 
 		$description = $this->get_category()->get_description() . ' ' . $this->lang['faq.questions.reorder'];
 		if (empty($description))
-			$description = StringVars::replace_vars(LangLoader::get_message('faq.seo.description.root', 'common', 'faq'), array('site' => GeneralConfig::load()->get_site_name())) . ($this->get_category()->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category', 'categories-common') . ' ' . $this->get_category()->get_name() : '') . ' ' . $this->lang['faq.questions.reorder'];
+			$description = StringVars::replace_vars($this->lang['faq.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->get_category()->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category.category', 'category-lang') . ' ' . $this->get_category()->get_name() : '') . ' ' . $this->lang['faq.questions.reorder'];
 		$graphical_environment->get_seo_meta_data()->set_description($description);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name()));
 

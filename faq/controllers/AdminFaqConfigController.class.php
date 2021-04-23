@@ -61,20 +61,20 @@ class AdminFaqConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars(LangLoader::get_message('configuration.module.title', 'admin-common'), array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldNumberEditor('categories_number_per_page', $this->form_lang['form.categories.per.page'], $this->config->get_categories_number_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('categories_per_page', $this->form_lang['form.categories.per.page'], $this->config->get_categories_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('columns_number_per_line', $this->form_lang['form.categories.per.row'], $this->config->get_columns_number_per_line(),
+		$fieldset->add_field(new FormFieldNumberEditor('categories_per_row', $this->form_lang['form.categories.per.row'], $this->config->get_categories_per_row(),
 			array('min' => 1, 'max' => 4, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['config.display.type.accordion'], $this->config->get_display_type(),
 			array(
-				new FormFieldSelectChoiceOption($this->lang['config.display.type.basic'], FaqConfig::DISPLAY_TYPE_BASIC),
-				new FormFieldSelectChoiceOption($this->lang['config.display.type.siblings'], FaqConfig::DISPLAY_TYPE_SIBLINGS)
+				new FormFieldSelectChoiceOption($this->lang['config.display.type.basic'], FaqConfig::BASIC_VIEW),
+				new FormFieldSelectChoiceOption($this->lang['config.display.type.siblings'], FaqConfig::SIBLINGS_VIEW)
 			)
 		));
 
@@ -122,8 +122,8 @@ class AdminFaqConfigController extends AdminModuleController
 
 	private function save()
 	{
-		$this->config->set_categories_number_per_page($this->form->get_value('categories_number_per_page'));
-		$this->config->set_columns_number_per_line($this->form->get_value('columns_number_per_line'));
+		$this->config->set_categories_per_page($this->form->get_value('categories_per_page'));
+		$this->config->set_categories_per_row($this->form->get_value('categories_per_row'));
 		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
 		if($this->form->get_value('display_controls'))
 			$this->config->display_control_buttons();
