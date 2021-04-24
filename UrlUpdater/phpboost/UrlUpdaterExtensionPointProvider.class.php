@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 21
+ * @version     PHPBoost 6.0 - last update: 2021 04 24
  * @since       PHPBoost 4.0 - 2014 07 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -45,6 +45,12 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 				if ($id != Category::ROOT_CATEGORY && $category instanceof Category)
 					$this->urls_mappings[] = new UrlMapping('^pages/' . $category->get_rewrited_name() . '$', '/pages/' . $id . '-' . $category->get_rewrited_name() . '/', 'L,R=301');
 			}
+		}
+
+		// Poll
+		if (ModulesManager::is_module_installed('poll') && ModulesManager::is_module_activated('poll') && $actual_major_version >= '6.0')
+		{
+			$this->urls_mappings[] = new UrlMapping('^poll/poll\.php$', '/poll/', 'L,R=301');
 		}
 
 		//Old user rewrited urls replacement

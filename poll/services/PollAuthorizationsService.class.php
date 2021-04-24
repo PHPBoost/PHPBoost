@@ -2,35 +2,21 @@
 /**
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
- * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 02 11
- * @since       PHPBoost 4.0 - 2013 07 30
+ * @author      xela <xela@phpboost.com>
+ * @version     PHPBoost 6.0 - last update: 2020 12 27
+ * @since       PHPBoost 6.0 - 2020 05 14
 */
 
-class PollAuthorizationsService
+class PollAuthorizationsService extends ItemsAuthorizationsService
 {
-	const READ_AUTHORIZATIONS = 1;
-	const WRITE_AUTHORIZATIONS = 2;
-
-	public static function check_authorizations()
+	public function vote()
 	{
-		$instance = new self();
-		return $instance;
+		return $this->is_authorized(PollConfig::VOTE_AUTHORIZATIONS);
 	}
 
-	public function read()
+	public function display_votes_result()
 	{
-		return $this->get_authorizations(self::READ_AUTHORIZATIONS);
-	}
-
-	public function write()
-	{
-		return $this->get_authorizations(self::WRITE_AUTHORIZATIONS);
-	}
-
-	private function get_authorizations($bit)
-	{
-		return AppContext::get_current_user()->check_auth(PollConfig::load()->get_authorizations(), $bit);
+		return $this->is_authorized(PollConfig::DISPLAY_VOTES_RESULT_AUTHORIZATIONS);
 	}
 }
 ?>
