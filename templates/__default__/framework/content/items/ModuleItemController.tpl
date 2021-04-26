@@ -146,12 +146,14 @@
 										</li>
 									# ENDIF #
 									# IF C_ENABLED_UPDATE_DATE #
+										# IF C_HAS_UPDATE_DATE #
 										<li class="li-stretch">
 											<span class="text-strong">{@form.date.update} : </span>
 											<time datetime="{UPDATE_DATE_ISO8601}" itemprop="dateModified">
 												{UPDATE_DATE}
 											</time>
 										</li>
+										# ENDIF #
 									# ENDIF #
 									# IF C_HAS_CATEGORY #
 										# IF NOT C_ROOT_CATEGORY #

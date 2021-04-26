@@ -38,14 +38,6 @@
 									</time>
 								</span>
 							# ENDIF #
-							# IF C_ENABLED_UPDATE_DATE #
-								<span class="pinned">
-									<i class="far fa-calendar-plus" aria-hidden="true"></i>
-									<time datetime="{UPDATE_DATE_ISO8601}" itemprop="dateModified">
-										{UPDATE_DATE}
-									</time>
-								</span>
-							# ENDIF #
 							# IF C_ENABLED_CATEGORY #
 								<span class="pinned">
 									<a itemprop="about" href="{U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {CATEGORY_NAME}</a>
@@ -78,6 +70,7 @@
 						</div>
 					# ENDIF #
 				</div>
+				# IF C_HAS_UPDATE_DATE #<span class="pinned notice small text-italic modified-date">{@status.last.update} <time datetime="{UPDATE_DATE_ISO8601}" itemprop="dateModified">{UPDATE_DATE_FULL}</time></span># ENDIF #
 
 				<div class="content">
 					# IF C_ENABLED_COUNTDOWN #
@@ -155,12 +148,14 @@
 										</li>
 									# ENDIF #
 									# IF C_ENABLED_UPDATE_DATE #
+										# IF C_HAS_UPDATE_DATE #
 										<li class="li-stretch">
 											<span class="text-strong">${LangLoader::get_message('form.date.update', 'common')} : </span>
 											<time datetime="{UPDATE_DATE_ISO8601}" itemprop="dateModified">
 												{UPDATE_DATE}
 											</time>
 										</li>
+										# ENDIF #
 									# ENDIF #
 									# IF C_ENABLED_CATEGORY #
 										<li class="li-stretch">
