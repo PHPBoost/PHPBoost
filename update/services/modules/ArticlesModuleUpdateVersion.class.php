@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 31
+ * @version     PHPBoost 6.0 - last update: 2021 04 28
  * @since       PHPBoost 4.0 - 2014 02 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -18,11 +18,12 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 		self::$delete_old_files_list = array(
 			'/controllers/AdminArticlesConfigController.class.php',
 			'/controllers/ArticlesDeleteController.class.php',
-			//'/controllers/ArticlesDisplayArticlesController.class.php',
+			'/controllers/ArticlesDisplayArticlesController.class.php',
 			'/controllers/ArticlesDisplayArticlesTagController.class.php',
 			'/controllers/ArticlesDisplayCategoryController.class.php',
 			'/controllers/ArticlesDisplayPendingArticlesController.class.php',
 			'/controllers/ArticlesManageController.class.php',
+			'/controllers/ArticlesPrintArticlesController.class.php',
 			'/lang/english/config.php',
 			'/lang/french/config.php',
 			'/phpboost/ArticlesComments.class.php',
@@ -37,6 +38,7 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 			'/phpboost/ArticlesSetup.class.php',
 			'/phpboost/ArticlesSitemapExtensionPoint.class.php',
 			'/phpboost/ArticlesTreeLinks.class.php',
+			'/templates/ArticlesDisplayArticlesController.tpl',
 			'/templates/ArticlesDisplaySeveralArticlesController.tpl',
 			'/templates/ArticlesFormFieldSelectSources.tpl'
 		);
