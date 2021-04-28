@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 01
+ * @version     PHPBoost 6.0 - last update: 2021 04 28
  * @since       PHPBoost 5.2 - 2019 04 23
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -20,9 +20,9 @@ class IdcardService
 
 	public static function display_idcard(User $user)
 	{
-		$lang = LangLoader::get('user-common');
-		$tpl = new FileTemplate('framework/content/idcard/idcard.tpl');
-		$tpl->add_lang($lang);
+		$lang = LangLoader::get('user-lang');
+		$view = new FileTemplate('framework/content/idcard/idcard.tpl');
+		$view->add_lang($lang);
 		$user_accounts_config = UserAccountsConfig::load();
 
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
@@ -34,17 +34,17 @@ class IdcardService
 			} catch (RowNotFoundException $e) {
 				$user_extended_fields = array();
 			}
-			
+
 			$avatar = !empty($user_extended_fields) && $user_extended_fields['user_avatar'] ? Url::to_rel($user_extended_fields['user_avatar']) : $user_accounts_config->get_default_avatar();
-			$biography = !empty($user_extended_fields) && $user_extended_fields['user_biography'] ? $user_extended_fields['user_biography'] : $lang['extended-field.field.no-biography'];
+			$biography = !empty($user_extended_fields) && $user_extended_fields['user_biography'] ? $user_extended_fields['user_biography'] : $lang['user.extended.field.no.biography'];
 		}
 		else
 		{
 			$avatar = $user_accounts_config->get_default_avatar();
-			$biography = $lang['extended-field.field.no-member'];
+			$biography = $lang['user.extended.field.no.member'];
 		}
 
-		$tpl->put_all(array(
+		$view->put_all(array(
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			'C_AUTHOR_IS_MEMBER' => !$user->is_guest(),
 			'C_AVATAR'           => $avatar || $user_accounts_config->is_default_avatar_enabled(),
@@ -58,7 +58,7 @@ class IdcardService
 			'U_AVATAR'           => $avatar
 		));
 
-		return $tpl->render();
+		return $view->render();
 	}
 }
 

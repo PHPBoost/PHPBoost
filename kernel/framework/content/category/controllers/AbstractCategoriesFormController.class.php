@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 21
+ * @version     PHPBoost 6.0 - last update: 2021 04 28
  * @since       PHPBoost 4.0 - 2013 02 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -26,6 +26,8 @@ abstract class AbstractCategoriesFormController extends ModuleController
 
 	protected static $lang;
 	protected static $common_lang;
+	protected static $form_lang;
+	protected static $category_lang;
 	protected static $categories_manager;
 
 	/**
@@ -38,6 +40,8 @@ abstract class AbstractCategoriesFormController extends ModuleController
 	{
 		self::$lang = LangLoader::get('categories-common');
 		self::$common_lang = LangLoader::get('common');
+		self::$form_lang = LangLoader::get('form-lang');
+		self::$category_lang = LangLoader::get('category-lang');
 	}
 
 	public function execute(HTTPRequestCustom $request)
@@ -71,7 +75,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		$form = new HTMLForm(__CLASS__);
 		$form->set_layout_title($this->get_title());
 
-		$fieldset = new FormFieldsetHTML('category', LangLoader::get_message('form.parameters', 'common'));
+		$fieldset = new FormFieldsetHTML('category', LangLoader::get_message('form.parameters', 'form-lang'));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('name', self::$common_lang['form.name'], $this->get_category()->get_name(), array('required' => true)));
