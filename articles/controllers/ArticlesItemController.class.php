@@ -7,7 +7,7 @@
  * @since       PHPBoost 6.0 - 2021 03 15
 */
 
-class ArticlesDisplayItemController extends DefaultDisplayItemController
+class ArticlesItemController extends DefaultDisplayItemController
 {
 	protected function build_view()
 	{
@@ -128,11 +128,6 @@ class ArticlesDisplayItemController extends DefaultDisplayItemController
 		}
 
 		return $pagination;
-	}
-
-	protected function get_template_to_use()
-	{
-		return new FileTemplate('articles/ArticlesDisplayItemController.tpl');
 	}
 
 	protected function get_additionnal_seo_properties()
