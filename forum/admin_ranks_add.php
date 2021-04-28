@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 14
+ * @version     PHPBoost 6.0 - last update: 2021 04 28
  * @since       PHPBoost 1.2 - 2005 10 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -20,7 +20,14 @@ $request = AppContext::get_request();
 
 $add = $request->get_postbool('add', false);
 
-$template = new FileTemplate('forum/admin_ranks_add.tpl');
+$view = new FileTemplate('forum/admin_ranks_add.tpl');
+$view->add_lang(array_merge(
+	LangLoader::get('common', 'forum'),
+	LangLoader::get('common-lang'),
+	LangLoader::get('form-lang'),
+	LangLoader::get('upload-lang'),
+	LangLoader::get('warning-lang'),
+));
 
 //Ajout du rang.
 if ($add)
@@ -37,10 +44,10 @@ if ($add)
 		###### Régénération du cache des rangs #######
 		ForumRanksCache::invalidate();
 
-		$template->put('message_helper', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+		$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
 	}
 	else
-		$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
+		$view->put('MESSAGE_HELPER', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
 }
 elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 {
@@ -69,9 +76,9 @@ elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 		$error = 'e_upload_failed_unwritable';
 
 	if (!empty($error))
-		$template->put('message_helper', MessageHelper::display($LANG[$error], MessageHelper::WARNING));
+		$view->put('MESSAGE_HELPER', MessageHelper::display($LANG[$error], MessageHelper::WARNING));
 	else
-		$template->put('message_helper', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+		$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
 }
 
 //On recupère les images des groupes
@@ -85,22 +92,23 @@ foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`iu') as $image)
 	$rank_options .= '<option value="' . $file . '">' . $file . '</option>';
 }
 
-$template->put_all(array(
+$view->put_all(array(
 	'RANK_OPTIONS'             => $rank_options,
 	'MAX_FILE_SIZE' 		   => ServerConfiguration::get_upload_max_filesize(),
 	'MAX_FILE_SIZE_TEXT'       => File::get_formated_size(ServerConfiguration::get_upload_max_filesize()),
 	'ALLOWED_EXTENSIONS'       => implode('", "',FileUploadConfig::load()->get_authorized_picture_extensions()),
+	//
 	'L_REQUIRE'                => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 	'L_REQUIRE_RANK_NAME'      => $LANG['require_rank_name'],
-	'L_REQUIRE_NBR_MSG_RANK'   => $LANG['require_nbr_msg_rank'],
+	'L_REQUIRE_MESSAGES_NUMBER_RANK'   => $LANG['require_nbr_msg_rank'],
 	'L_FORUM_MANAGEMENT'       => $LANG['config.ranks.manager'],
-	'L_FORUM_RANKS_MANAGEMENT' => LangLoader::get_message('forum.ranks.manager', 'common', 'forum'),
+	'L_FORUM_RANKS_MANAGEMENT' => LangLoader::get_message('forum.ranks.management', 'common', 'forum'),
 	'L_FORUM_ADD_RANKS'        => LangLoader::get_message('forum.rank.add', 'common', 'forum'),
 	'L_UPLOAD_RANKS'           => $LANG['upload_rank'],
 	'L_UPLOAD_FORMAT'          => $LANG['explain_upload_img'],
 	'L_UPLOAD'                 => $LANG['upload'],
 	'L_RANK_NAME'              => $LANG['rank_name'],
-	'L_NBR_MSG'                => $LANG['nbr_msg'],
+	'L_MESSAGES_NUMBER'                => $LANG['nbr_msg'],
 	'L_IMG_ASSOC'              => $LANG['img_assoc'],
 	'L_DELETE'                 => LangLoader::get_message('delete', 'common'),
 	'L_UPDATE'                 => $LANG['validate'],
@@ -108,7 +116,7 @@ $template->put_all(array(
 	'L_ADD'                    => LangLoader::get_message('add', 'common')
 ));
 
-$template->display();
+$view->display();
 
 require_once('../admin/admin_footer.php');
 ?>

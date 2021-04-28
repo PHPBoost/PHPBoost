@@ -8,44 +8,44 @@
 
 <nav id="admin-quick-menu">
 	<a href="#" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;">
-		<i class="fa fa-bars" aria-hidden="true"></i> {L_FORUM_MANAGEMENT}
+		<i class="fa fa-bars" aria-hidden="true"></i> {@forum.ranks.management}
 	</a>
 	<ul>
 		<li>
-			<a href="{PATH_TO_ROOT}/forum" class="quick-link">${LangLoader::get_message('home', 'main')}</a>
+			<a href="{PATH_TO_ROOT}/forum" class="quick-link">{@common.home}</a>
 		</li>
 		<li>
-			<a href="admin_ranks.php" class="quick-link">{L_FORUM_RANKS_MANAGEMENT}</a>
+			<a href="admin_ranks.php" class="quick-link">{@forum.ranks.management}</a>
 		</li>
 		<li>
-			<a href="admin_ranks_add.php" class="quick-link">{L_FORUM_ADD_RANKS}</a>
+			<a href="admin_ranks_add.php" class="quick-link">{@forum.rank.add}</a>
 		</li>
 		<li>
-			<a href="${relative_url(ForumUrlBuilder::configuration())}" class="quick-link">${LangLoader::get_message('configuration', 'admin-common')}</a>
+			<a href="${relative_url(ForumUrlBuilder::configuration())}" class="quick-link">{@form.configuration}</a>
 		</li>
 	</ul>
 </nav>
 
 <div id="admin-contents">
 
-	# INCLUDE message_helper #
+	# INCLUDE MESSAGE_HELPER #
 
 	<form action="admin_ranks.php" method="post">
 		<table class="table">
-			<caption>{L_FORUM_RANKS_MANAGEMENT}</caption>
+			<caption>{@forum.ranks.management}</caption>
 			<thead>
 				<tr>
 					<th>
-						{L_RANK_NAME}
+						{@forum.rank.name}
 					</th>
 					<th>
-						{L_NBR_MSG}
+						{@forum.rank.messages.number}
 					</th>
 					<th>
-						{L_IMG_ASSOC}
+						{@forum.rank.thumbnail}
 					</th>
 					<th>
-						{L_DELETE}
+						{@common.delete}
 					</th>
 				</tr>
 			</thead>
@@ -56,30 +56,30 @@
 							<input type="text" maxlength="30" name="{rank.ID}name" value="{rank.RANK}">
 						</td>
 						<td>
-							# IF rank.C_SPECIAL_RANK #<input type="number" min="0" name="{rank.ID}msg" value="{rank.MSG}"># ELSE #{rank.L_SPECIAL_RANK}# ENDIF #
+							# IF rank.C_CUSTOM_RANK #<input type="number" min="0" name="{rank.ID}msg" value="{rank.MESSAGE}"># ELSE #{@forum.special.rank}# ENDIF #
 						</td>
 						<td>
 							<select name="{rank.ID}icon" onchange="img_change('icon{rank.ID}', '{rank.JS_PATH_RANKS}', this.options[selectedIndex].value)">
 								{rank.RANK_OPTIONS}
 							</select>
-							# IF rank.IMG_RANK #
+							# IF rank.RANK_THUMBNAIL #
 								<span class="field-description">
-									<img src="{rank.U_IMG_RANK}" id="icon{rank.ID}" alt="{rank.IMG_RANK}" />
+									<img src="{rank.U_RANK_THUMBNAIL}" id="icon{rank.ID}" alt="{rank.RANK_THUMBNAIL}" />
 								</span>
 							# ENDIF #
 						</td>
 						<td>
-							# IF rank.C_SPECIAL_RANK #<a href="{rank.U_DELETE}" class="far fa-trash-alt" data-confirmation="delete-element"></a># ELSE #{rank.L_SPECIAL_RANK}# ENDIF #
+							# IF rank.C_CUSTOM_RANK #<a href="{rank.U_DELETE}" class="far fa-trash-alt" data-confirmation="delete-element"></a># ELSE #{@forum.special.rank}# ENDIF #
 						</td>
 					</tr>
 				# END rank #
 			</tbody>
 		</table>
 		<fieldset class="fieldset-submit">
-			<legend>{L_UPDATE}</legend>
+			<legend>{@form.submit}</legend>
 			<div class="fieldset-inset">
-				<button type="submit" name="valid" value="true" class="button submit">{L_UPDATE}</button>
-				<button type="reset" class="button reset-button" value="true">{L_RESET}</button>
+				<button type="submit" name="valid" value="true" class="button submit">{@form.submit}</button>
+				<button type="reset" class="button reset-button" value="true">{@form.reset}</button>
 				<input type="hidden" name="token" value="{TOKEN}">
 			</div>
 		</fieldset>

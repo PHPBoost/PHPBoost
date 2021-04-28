@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 29
+ * @version     PHPBoost 6.0 - last update: 2021 04 28
  * @since       PHPBoost 1.6 - 2007 03 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -13,13 +13,19 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
+$lang = LangLoader::get('common', 'forum');
+
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
-$Bread_crumb->add($LANG['stats'], '');
-define('TITLE', $LANG['stats']);
-define('DESCRIPTION', $LANG['stats_seo']);
+$Bread_crumb->add($lang['forum.stats'], '');
+define('TITLE', $lang['forum.stats']);
+define('DESCRIPTION', $lang['forum.stats.seo']);
 require_once('../kernel/header.php');
 
-$tpl = new FileTemplate('forum/forum_stats.tpl');
+$view = new FileTemplate('forum/forum_stats.tpl');
+$view->add_lang(array_merge(
+	LangLoader::get('common', 'forum'),
+	LangLoader::get('common-lang')
+));
 
 $total_day = NumberHelper::round((time() - GeneralConfig::load()->get_site_install_date()->get_timestamp())/(3600*24), 0);
 $timestamp_today = @mktime(0, 0, 1, Date::to_format(Date::DATE_NOW, 'm'), Date::to_format(Date::DATE_NOW, 'd'), Date::to_format(Date::DATE_NOW, 'y'));
@@ -46,25 +52,27 @@ try {
 $nbr_msg_today = PersistenceContext::get_querier()->count(ForumSetup::$forum_message_table, 'WHERE timestamp > :timestamp', array('timestamp' => $timestamp_today));
 
 $vars_tpl = array(
-	'FORUM_NAME'         => $config->get_forum_name(),
-	'NBR_TOPICS'         => $total_topics,
-	'NBR_MSG'            => $total_messages,
-	'NBR_TOPICS_DAY'     => $nbr_topics_day,
-	'NBR_MSG_DAY'        => $nbr_msg_day,
-	'NBR_TOPICS_TODAY'   => $nbr_topics_today,
-	'NBR_MSG_TODAY'      => $nbr_msg_today,
-	'L_FORUM_INDEX'      => $LANG['forum_index'],
-	'L_FORUM'            => $LANG['forum'],
-	'L_STATS'            => $LANG['stats'],
-	'L_NBR_TOPICS'       => ($total_topics > 1) ? $LANG['topic_s'] : $LANG['topic'],
-	'L_NBR_MSG'          => ($total_messages > 1) ? $LANG['message_s'] : $LANG['message'],
-	'L_NBR_TOPICS_DAY'   => $LANG['nbr_topics_day'],
-	'L_NBR_MSG_DAY'      => $LANG['nbr_msg_day'],
-	'L_NBR_TOPICS_TODAY' => $LANG['nbr_topics_today'],
-	'L_NBR_MSG_TODAY'    => $LANG['nbr_msg_today'],
-	'L_LAST_MSG'         => $LANG['forum_last_msg'],
-	'L_POPULAR'          => $LANG['forum_popular'],
-	'L_ANSWERS'          => $LANG['forum_nbr_answers'],
+	'FORUM_NAME'            => $config->get_forum_name(),
+	'TOPICS_NUMBERS'        => $total_topics,
+	'MESSAGES_NUMBER'       => $total_messages,
+	'TOPICS_NUMBERS_DAY'    => $nbr_topics_day,
+	'MESSAGES_NUMBER_DAY'   => $nbr_msg_day,
+	'TOPICS_NUMBERS_TODAY'  => $nbr_topics_today,
+	'MESSAGES_NUMBER_TODAY' => $nbr_msg_today,
+
+	'L_TOPICS_NUMBERS'  => ($total_topics > 1) ? $LANG['topic_s']     : $LANG['topic'],
+	'L_MESSAGES_NUMBER' => ($total_messages > 1) ? $LANG['message_s'] : $LANG['message'],
+	//
+	'L_FORUM_INDEX'           => $LANG['forum_index'],
+	'L_FORUM'                 => $LANG['forum'],
+	'L_STATS'                 => $LANG['stats'],
+	'L_TOPICS_NUMBERS_DAY'    => $LANG['nbr_topics_day'],
+	'L_MESSAGES_NUMBER_DAY'   => $LANG['nbr_msg_day'],
+	'L_TOPICS_NUMBERS_TODAY'  => $LANG['nbr_topics_today'],
+	'L_MESSAGES_NUMBER_TODAY' => $LANG['nbr_msg_today'],
+	'L_LAST_MESSAGE'          => $LANG['forum_last_msg'],
+	'L_POPULAR'               => $LANG['forum_popular'],
+	'L_ANSWERS'               => $LANG['forum_nbr_answers'],
 );
 
 //Vérification des autorisations.
@@ -81,7 +89,7 @@ LIMIT 10", array(
 ));
 while ($row = $result->fetch())
 {
-	$tpl->assign_block_vars('last_msg', array(
+	$view->assign_block_vars('last_msg', array(
 		'U_TOPIC_ID' => url('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
 		'TITLE' => stripslashes($row['title'])
 	));
@@ -99,9 +107,9 @@ LIMIT 10", array(
 ));
 while ($row = $result->fetch())
 {
-	$tpl->assign_block_vars('popular', array(
+	$view->assign_block_vars('popular', array(
+		'TITLE' => stripslashes($row['title']),
 		'U_TOPIC_ID' => url('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
-		'TITLE' => stripslashes($row['title'])
 	));
 }
 $result->dispose();
@@ -117,9 +125,9 @@ LIMIT 10", array(
 ));
 while ($row = $result->fetch())
 {
-	$tpl->assign_block_vars('answers', array(
+	$view->assign_block_vars('answers', array(
+		'TITLE' => stripslashes($row['title']),
 		'U_TOPIC_ID' => url('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
-		'TITLE' => stripslashes($row['title'])
 	));
 }
 $result->dispose();
@@ -129,30 +137,33 @@ list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total
 
 $vars_tpl = array_merge($vars_tpl, array(
 	'C_USER_CONNECTED' => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
-	'TOTAL_ONLINE'     => $total_online,
 	'C_NO_USER_ONLINE' => (($total_online - $total_visit) == 0),
-	'USERS_ONLINE'     => $users_list,
-	'ADMIN'            => $total_admin,
-	'MODO'             => $total_modo,
-	'MEMBER'           => $total_member,
-	'GUEST'            => $total_visit,
-	'L_USER'           => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
-	'L_ADMIN'          => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
-	'L_MODO'           => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],
-	'L_MEMBER'         => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
-	'L_GUEST'          => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
+	'TOTAL_ONLINE'     => $total_online,
+
+	'ONLINE_USERS_LIST'     => $users_list,
+	'ADMINISTRATORS_NUMBER' => $total_admin,
+	'MODERATORS_NUMBER'     => $total_modo,
+	'MEMBERS_NUMBER'        => $total_member,
+	'GUESTS_NUMBER'         => $total_visit,
+
+	'L_USER'   => ($total_online > 1) ? $LANG['user_s']   : $LANG['user'],
+	'L_ADMIN'  => ($total_admin > 1) ? $LANG['admin_s']   : $LANG['admin'],
+	'L_MODO'   => ($total_modo > 1) ? $LANG['modo_s']     : $LANG['modo'],
+	'L_MEMBER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
+	'L_GUEST'  => ($total_visit > 1) ? $LANG['guest_s']   : $LANG['guest'],
+	//
 	'L_AND'            => $LANG['and'],
 	'L_ONLINE'         => TextHelper::strtolower($LANG['online'])
 ));
 
-$tpl->put_all($vars_tpl);
-$tpl_top->put_all($vars_tpl);
-$tpl_bottom->put_all($vars_tpl);
+$view->put_all($vars_tpl);
+$top_view->put_all($vars_tpl);
+$bottom_view->put_all($vars_tpl);
 
-$tpl->put('forum_top', $tpl_top);
-$tpl->put('forum_bottom', $tpl_bottom);
+$view->put('FORUM_TOP', $top_view);
+$view->put('FORUM_BOTTOM', $bottom_view);
 
-$tpl->display();
+$view->display();
 
 include('../kernel/footer.php');
 

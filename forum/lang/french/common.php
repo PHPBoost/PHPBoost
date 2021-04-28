@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 10
+ * @version     PHPBoost 6.0 - last update: 2021 04 28
  * @since       PHPBoost 4.1 - 2015 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -14,53 +14,262 @@
 ####################################################
 
 $lang['forum.module.title'] = 'Forum';
-$lang['forum.config.title'] = 'Configuration du module Forum';
 
-$lang['forum.rank.add'] = 'Ajouter un rang';
-$lang['forum.ranks.manager'] = 'Gestion des rangs';
-$lang['forum.no.answer'] = 'Sujets sans réponse';
+$lang['forum.my.items'] = 'Mes messages';
+$lang['forum.member.items'] = 'Messages publiés par';
 
-$lang['forum.last.thread'] = 'Derniers sujets du forum';
-$lang['forum.connected.mbr.yes'] = 'Membre connecté';
-$lang['forum.connected.mbr.no'] = 'Membre non connecté';
-
-$lang['forum.links'] = 'Liens';
-$lang['forum.message.options'] = 'Options du message';
-$lang['forum.messages'] = 'Messages sur le forum';
-$lang['my.items'] = 'Mes messages';
-$lang['member.items'] = 'Messages publiés par';
-
-// Configuration
-$lang['config.forum.name'] = 'Nom du forum';
-$lang['config.number.topics.per.page'] = 'Nombre de sujets par page';
-$lang['config.number.messages.per.page'] = 'Nombre de messages par page';
-$lang['config.read.messages.storage.duration'] = 'Durée pour laquelle les messages lus par les membres sont stockés';
-$lang['config.read.messages.storage.duration.explain'] = 'En jours. A régler suivant le nombre de messages par jour.';
-$lang['config.max.topic.number.in.favorite'] = 'Nombre de sujets maximum en favoris pour chaque membre';
-$lang['config.edit.mark.enabled'] = 'Marqueurs d\'édition des messages';
-$lang['config.multiple.posts.allowed'] = 'Autoriser les utilisateurs à poster plusieurs messages consécutifs';
-$lang['config.multiple.posts.allowed.explain'] = 'Si l\'option est désactivée, le dernier message de l\'utilisateur sera automatiquement complété avec le nouveau contenu lors de l\'ajout d\'un message';
-$lang['config.connexion.form.displayed'] = 'Afficher le formulaire de connexion';
-$lang['config.message.before.topic.title.displayed'] = 'Afficher le message devant le titre du topic';
-$lang['config.message.before.topic.title'] = 'Message devant le titre du topic';
-$lang['config.message.when.topic.is.unsolved'] = 'Message devant le titre du topic si statut non changé';
-$lang['config.message.when.topic.is.solved'] = 'Message devant le titre du topic si statut changé';
-$lang['config.message.before.topic.title.icon.displayed'] = 'Afficher l\'icône associée';
+// Authorizations
+$lang['forum.authorizations.read.topics.content']       = 'Autorisation d\'afficher le contenu des topics';
+$lang['forum.authorizations.flood']                     = 'Autorisation de flooder';
+$lang['forum.authorizations.hide.edition.mark']         = 'Désactivation du marqueur d\'édition des messages';
+$lang['forum.authorizations.unlimited.topics.tracking'] = 'Désactivation de la limite de sujets suivis';
+$lang['forum.authorizations.multiple.posts']            = 'Utilisateurs autorisés à poster plusieurs messages consécutifs';
 
 // Categories
-$lang['category.status.locked'] = 'Verrouillé';
+$lang['forum.category.status.locked'] = 'Verrouillé';
 
-//Extended Field
-$lang['extended.field.skype'] = 'Skype';
-$lang['extended.field.skype.explain'] = '';
+// Email
+$lang['forum.email.title.new.post'] = 'Nouveau message sur le forum';
+$lang['forum.email.new.post'] = 'Cher.e %s
 
-$lang['extended.field.signing'] = 'Signature';
-$lang['extended.field.signing.explain'] = 'Apparaît sous chacun de vos messages';
+Vous suivez le sujet: %s
 
-//authorizations
-$lang['authorizations.read.topics.content'] = 'Autorisation d\'afficher le contenu des topics';
-$lang['authorizations.flood'] = 'Autorisation de flooder';
-$lang['authorizations.hide.edition.mark'] = 'Désactivation du marqueur d\'édition des messages';
-$lang['authorizations.unlimited.topics.tracking'] = 'Désactivation de la limite de sujets suivis';
-$lang['authorizations.multiple.posts'] = 'Utilisateurs autorisés à poster plusieurs messages consécutifs';
+Vous avez demandé à être averti lors d\'une réponse à celui-ci.
+
+%s a répondu sur le sujet:
+%s
+
+[Suite du message : %s]
+
+
+
+
+Si vous ne désirez plus être averti des réponses de ce sujet, cliquez sur le lien ci-dessous.
+%s
+
+' . MailServiceConfig::load()->get_mail_signature();
+
+// Extended fields
+$lang['forum.extended.field.skype']      = 'Skype';
+$lang['forum.extended.field.skype.clue'] = '';
+
+$lang['forum.extended.field.signing']      = 'Signature';
+$lang['forum.extended.field.signing.clue'] = 'Apparaît sous chacun de vos messages';
+
+// Forum table (index | categories | forums | specials)
+$lang['forum.post.new.topic']  = 'Poster un nouveau sujet';
+$lang['forum.forum']           = 'Forum';
+$lang['forum.forums']          = 'Forums';
+$lang['forum.topic.status']    = 'État du sujet';
+$lang['forum.popular.topic']   = 'Sujet populaire';
+$lang['forum.new.topic']       = 'Nouveau sujet';
+$lang['forum.topic.options']   = 'Options du message';
+$lang['forum.topic.author']    = 'Auteur du sujet';
+$lang['forum.topics.number']   = 'Nombre de sujets';
+$lang['forum.messages.number'] = 'Nombre de messages';
+$lang['forum.answers.number']  = 'Nombre de réponses';
+$lang['forum.views.number']    = 'Nombre de vues';
+$lang['forum.sub.forums']      = 'Sous-forums';
+$lang['forum.topic']           = 'Sujet';
+$lang['forum.topics']          = 'Sujets';
+$lang['forum.last.message']    = 'Dernier message';
+$lang['forum.last.messages']   = 'Derniers messages';
+$lang['forum.see.message']     = 'Voir ce message';
+    // bottom
+$lang['forum.distributed']    = 'répartis en';
+$lang['forum.online.users']   = 'Utilisateurs en ligne';
+$lang['forum.no.online.user'] = 'Aucun membre connecté';
+$lang['forum.statistics']     = 'Statistiques du forum';
+    // no item
+$lang['forum.no.topic']          = 'Aucun sujet à afficher';
+$lang['forum.no.message.now']    = 'Il n\'y a aucun message pour l\'instant';
+$lang['forum.no.unread.message'] = 'Aucun message non lu';
+
+// History
+$lang['forum.history']          = 'Historique des actions';
+$lang['forum.concerned.user']   = 'Membre concerné';
+$lang['forum.no.action']        = 'Aucune action enregistrée';
+$lang['forum.delete.message']   = 'Suppression d\'un message';
+$lang['forum.delete.topic']     = 'Suppression d\'un sujet';
+$lang['forum.lock.topic']       = 'Verrouillage d\'un sujet';
+$lang['forum.unlock.topic']     = 'Déverrouillage d\'un sujet';
+$lang['forum.move.topic']       = 'Déplacement d\'un sujet';
+$lang['forum.cut.topic']        = 'Scindement d\'un sujet';
+$lang['forum.warning.on.user']  = '+10% à un membre';
+$lang['forum.warning.off.user'] = '-10% à un membre';
+$lang['forum.set.warning.user'] = 'Modification pourcentage avertissement';
+$lang['forum.more.action']      = 'Voir 100 actions en plus';
+$lang['forum.ban.user']         = 'Bannissement d\'un membre';
+$lang['forum.edit.message']     = 'Edition message d\'un membre';
+$lang['forum.edit.topic']       = 'Edition sujet d\'un membre';
+$lang['forum.solve.alert']      = 'Résolution d\'une alerte';
+$lang['forum.wait.alert']       = 'Mise en attente d\'une alerte';
+$lang['forum.del.alert']        = 'Suppression d\'une alerte';
+
+// Links (top | bottom)
+$lang['forum.links']                  = 'Liens';
+$lang['forum.index']                  = 'Index';
+$lang['forum.unanswered.topics']      = 'Sujets sans réponse';
+$lang['forum.tracked.topics']         = 'Sujets suivis';
+$lang['forum.last.read.messages']     = 'Derniers messages lus';
+$lang['forum.unread.messages']        = 'Messages non lus';
+$lang['forum.reload.unread.messages'] = 'Réactualiser les messages non lus';
+$lang['forum.mark.topics.as.read']    = 'Marquer tous les sujets comme lu';
+
+// Moderation
+$lang['forum.moderation.forum'] = 'Modération du forum';
+$lang['forum.for.selection'] = 'Pour la sélection';
+$lang['forum.change.issue.status.to'] = 'Mettre le statut: %s';
+$lang['forum.default.issue.status'] = 'Mettre le statut par défaut';
+$lang['forum.no.moderation'] = 'Aucune action';
+    // Warnings
+$lang['forum.warnings.management'] = 'Aucune action';
+    // Reports
+        // User reports
+$lang['forum.reports.management']        = 'Gestion des signalement';
+$lang['forum.report.topic']              = 'Signaler ce sujet';
+$lang['forum.report.concerned.topic']    = 'Sujet concerné';
+$lang['forum.report.concerned.cat']      = 'Catégorie du sujet concerné';
+$lang['forum.report.author']             = 'Posteur du signalement';
+$lang['forum.report.message']            = 'Précisions';
+$lang['forum.report.unsolved']           = 'En attente de traitement';
+$lang['forum.report.solved']             = 'Résolue par ';
+$lang['forum.report.change.to.unsolved'] = 'Mettre en attente de traitement';
+$lang['forum.report.change.to.solved']   = 'Mettre en résolu';
+$lang['forum.report.not.auth']           = 'Ce signalement a été posté dans un forum dans lequel vous n\'êtes pas modérateur.';
+$lang['forum.delete.several.reports']    = 'Etes vous sur de vouloir supprimer les signalement sélectionnés ?';
+$lang['forum.new.report']                = 'nouveau signalement';
+$lang['forum.new.reports']               = 'nouveaux signalements';
+$lang['forum.report.clue'] = '
+    Vous êtes sur le point de signaler un sujet aux modérateurs.
+    <br />Vous aidez l\'équipe modératrice en lui signalant des sujets qui ne respectent pas certaines règles,
+    mais sachez que lorsque vous alertez un modérateur votre pseudo est enregistré.
+    <br />Il est donc nécessaire que votre demande soit justifiée sans quoi vous risquez des sanctions de la part de l\'équipe des modérateurs et administrateurs en cas d\'abus. Afin d\'aider l\'équipe, merci d\'expliquer ce qui ne respecte pas les conditions dans ce sujet.
+    <br /><br />
+    Vous désirez alerter les modérateurs d\'un problème sur le sujet suivant:
+';
+$lang['forum.report.title'] = 'Brève description';
+$lang['forum.report.content'] = 'Merci de détailler davantage le problème afin d\'aider l\'équipe modératrice';
+$lang['forum.report.success'] = 'Vous avez signalé avec succès la non-conformité du sujet <em>%title</em>, l\'équipe modératrice vous remercie de l\'avoir aidée.';
+$lang['forum.report.topic.already.done'] = 'Nous vous remercions d\'avoir pris l\'initiative d\'aider l\'équipe modératrice, mais un membre a déjà signalé une non-conformité de ce sujet.';
+$lang['forum.report.back'] = 'Retour au sujet';
+        // Report moderation
+
+// Poll
+$lang['forum.poll']               = 'Sondage';
+$lang['forum.mini.poll']          = 'Mini Sondage';
+$lang['forum.poll.main']          = 'Voilà l\'espace de sondage du site, profitez en pour donner votre avis, ou tout simplement répondre aux sondages.';
+$lang['forum.poll.back']          = 'Retour au(x) sondage(s)';
+$lang['forum.redirect.none']      = 'Aucun sondage disponible';
+$lang['forum.confirm.vote']       = 'Votre vote a bien été pris en compte';
+$lang['forum.already.vote']       = 'Vous avez déjà voté';
+$lang['forum.no.vote']            = 'Votre vote nul a été considéré';
+$lang['forum.poll.vote']          = 'Vote';
+$lang['forum.poll.votes']         = 'Votes';
+$lang['forum.poll.result']        = 'Résultats';
+$lang['forum.alert.delete.poll']  = 'Supprimer ce sondage ?';
+$lang['forum.unauthorized.poll']  = 'Vous n\'êtes pas autorisé à voter !';
+$lang['forum.question']           = 'Question';
+$lang['forum.answers']            = 'Réponses';
+$lang['forum.poll.type']          = 'Type de sondage';
+$lang['forum.open.menu.poll']     = 'Ouvrir le menu sondage';
+$lang['forum.simple.answer']      = 'Réponse simple';
+$lang['forum.multiple.answer']    = 'Réponses multiples';
+$lang['forum.delete.poll']        = 'Supprimer le sondage';
+$lang['forum.require.title.poll'] = 'Veuillez entrer un titre pour le sondage !';
+
+// Ranks
+$lang['forum.ranks.management']             = 'Gestion des rangs du forum';
+$lang['forum.rank.add']                     = 'Ajouter un rang';
+$lang['forum.upload.rank.thumbnail']        = 'Uploader une image pour le rang';
+$lang['forum.upload.rank.thumbnail.clue']   = 'JPG, GIF, PNG, BMP autorisés';
+$lang['forum.rank']                         = 'Rang';
+$lang['forum.special.rank']                 = 'Rang spécial';
+$lang['forum.rank.name']                    = 'Nom du Rang';
+$lang['forum.rank.messages.number']         = 'Nombre de messages nécessaires pour atteindre ce rang';
+$lang['forum.rank.thumbnail']               = 'Image associée';
+$lang['forum.require.rank.name']            = 'Veuillez entrer un nom pour le rang !';
+$lang['forum.require.rank.messages.number'] = 'Veuillez entrer un nombre de messages pour le rang !';
+
+
+// S.E.O.
+$lang['forum.member.messages.seo']  = 'Tous les messages de :author.';
+$lang['forum.root.description.seo'] = 'Toutes les catégories du forum du site :site.';
+$lang['forum.show.no.answer.seo']   = 'Liste des messages sans réponse';
+$lang['forum.stats.seo']            = 'Toutes les statistiques du forum';
+$lang['forum.topic.title.seo']      = 'Sujet :title du forum :forum';
+
+// Search
+$lang['forum.no.result'] = 'Aucun résultat';
+
+// Stats
+$lang['forum.stats']                   = 'Statistiques du forum';
+$lang['forum.topics.number.per.day']   = 'Nombre de sujets par jour';
+$lang['forum.messages.number.per.day'] = 'Nombre de messages par jour';
+$lang['forum.topics.number.today']     = 'Nombre de sujets aujourd\'hui';
+$lang['forum.messages.number.today']   = 'Nombre de messages aujourd\'hui';
+$lang['forum.last.10.active.topics']   = 'Les 10 derniers sujets ayant eu une réponse';
+$lang['forum.10.most.popular.topics']  = 'Les 10 sujets les plus populaires';
+$lang['forum.10.most.active.topics']   = 'Les 10 sujets ayant eu le plus de réponses';
+
+// Topics
+$lang['forum.last.forum.topics']    = 'Derniers sujets du forum';
+$lang['forum.connected.member']     = 'Membre connecté';
+$lang['forum.not.connected.member'] = 'Membre non connecté';
+
+$lang['forum.forum.message']   = 'Message sur le forum';
+$lang['forum.forum.messages']  = 'Messages sur le forum';
+
+$lang['forum.quote.last.message'] = 'Reprise du message précédent';
+$lang['forum.show.member.messages'] = 'Voir tous les messages du membre';
+$lang['forum.new.topic'] = 'Nouveau sujet';
+$lang['forum.edit.topic'] = 'Editer le sujet';
+$lang['forum.move.topic'] = 'Déplacer le sujet';
+$lang['forum.edit.message'] = 'Editer le message';
+$lang['forum.edit.by'] = 'Edité par';
+$lang['forum.edit.on'] = 'Edité le';
+$lang['forum.cut.topic'] = 'Scinder le sujet à partir de ce message';
+$lang['forum.cut.topic.warning'] = 'Voulez-vous scinder le sujet à partir de ce message ?';
+$lang['forum.add.to.favorites'] = 'Ajouter aux favoris';
+$lang['forum.link.to.topic'] = 'Lien vers le sujet';
+
+// Track
+$lang['forum.track.topic']         = 'Mettre en favori';
+$lang['forum.untrack.topic']       = 'Retirer des favoris';
+$lang['forum.no.tracked.topic']    = 'Il n\y a pas de sujet suivi pour l\'instant';
+$lang['forum.track.topic.pm']      = 'Suivre par message privé';
+$lang['forum.untrack.topic.pm']    = 'Arrêter le suivi par message privé';
+$lang['forum.track.topic.email']   = 'Suivre par email';
+$lang['forum.untrack.topic.email'] = 'Arrêter le suivi par email';
+$lang['forum.untrack.topic.email'] = 'Arrêter le suivi par email';
+$lang['forum.track.clue'] = '
+    Cocher la case MP (<i class="fa fa-people-arrows"></i>) pour un message privé,
+    Email (<i class="fa iboost fa-iboost-email"></i>) pour un email, lorsque le sujet suivi reçoit une réponse.
+    <br />Cocher la case Supprimer (<i class="far fa-trash-alt"></i>) pour ne plus suivre le sujet.
+';
+
+// Types
+$lang['forum.announce'] = 'Annonce';
+$lang['forum.pinned']   = 'Épinglé';
+$lang['forum.lock']     = 'Verrouiller';
+$lang['forum.locked']   = 'Verrouillé';
+$lang['forum.unlock']   = 'Déverrouiller';
+
+// Warnings
+    // errors
+$lang['forum.error.locked.topic']       = 'Sujet verrouillé, vous ne pouvez pas poster de message';
+$lang['forum.error.non.existent.topic'] = 'Le sujet que vous demandez n\'existe pas';
+$lang['forum.error.non.cuttable.topic'] = 'Vous ne pouvez pas scinder le sujet à partir de ce message';
+$lang['forum.error.locked.category']    = 'Forum verrouillé, création de nouveau sujet/message impossible';
+$lang['forum.error.category.right']     = 'Vous n\'êtes pas autorisé à écrire dans cette catégorie';
+    // alerts
+$lang['forum.alert.delete.topic']   = 'Supprimer ce sujet ?';
+$lang['forum.alert.lock.topic']     = 'Verrouiller ce sujet ?';
+$lang['forum.alert.unlock.topic']   = 'Déverrouiller ce sujet ?';
+$lang['forum.alert.move.topic']     = 'Déplacer ce sujet ?';
+$lang['forum.alert.warning']        = 'Avertir ce membre ?';
+$lang['forum.alert.history']        = 'Supprimer l\'historique ?';
+$lang['forum.confirm.mark.as.read'] = 'Marquer tous les sujets comme lus ?';
+$lang['forum.non.compliant.topic']  = 'Sujet non conforme aux règles du forum : %s';
+
 ?>

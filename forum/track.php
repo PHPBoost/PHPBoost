@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 02
+ * @version     PHPBoost 6.0 - last update: 2021 04 28
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -14,6 +14,8 @@
 require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
+
+$lang = LangLoader::get('common', 'forum');
 
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
 $Bread_crumb->add($LANG['show_topic_track'], '');
@@ -60,7 +62,11 @@ if ($request->get_postvalue('valid', false))
 }
 elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage des message()s non lu(s) du membre.
 {
-	$tpl = new FileTemplate('forum/forum_track.tpl');
+	$view = new FileTemplate('forum/forum_track.tpl');
+	$view->add_lang(array_merge(
+		LangLoader::get('common', 'forum'),
+		LangLoader::get('common-lang')
+	));
 
 	$nbr_topics = 0;
 
@@ -119,21 +125,21 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 		$type = array('2' => $LANG['forum_announce'] . ':', '1' => $LANG['forum_postit'] . ':', '0' => '');
 
 		//Vérifications des topics Lu/non Lus.
-		$img_announce = 'fa-announce';
+		$topic_icon = 'fa-announce';
 		$new_msg = false;
 		$blink = false;
 		if (!$is_guest) //Non visible aux invités.
 		{
 			if ($row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg) //Nouveau message (non lu).
 			{
-				$img_announce = $img_announce . '-new'; //Image affiché aux visiteurs.
+				$topic_icon = $topic_icon . '-new'; //Image affiché aux visiteurs.
 				$new_msg = true;
 				$blink = true;
 			}
 		}
-		$img_announce .= ($row['type'] == '1') ? '-post' : '';
-		$img_announce .= ($row['type'] == '2') ? '-top' : '';
-		$img_announce .= ($row['status'] == '0' && $row['type'] == '0') ? '-lock' : '';
+		$topic_icon .= ($row['type'] == '1') ? '-post' : '';
+		$topic_icon .= ($row['type'] == '2') ? '-top' : '';
+		$topic_icon .= ($row['status'] == '0' && $row['type'] == '0') ? '-lock' : '';
 
 		//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
 		//Puis calcul de la page du last_msg_id ou du last_view_id.
@@ -155,7 +161,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 		$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['title']) : '';
 
 		//Ancre ajoutée aux messages non lus.
-		$new_ancre = ($new_msg === true && AppContext::get_current_user()->get_id() !== -1) ? 'topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id : '';
+		$new_anchor = ($new_msg === true && AppContext::get_current_user()->get_id() !== -1) ? 'topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id : '';
 
 		//On crée une pagination (si activé) si le nombre de topics est trop important.
 		$page = AppContext::get_request()->get_getint('pt', 1);
@@ -167,43 +173,47 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 
 		$last_msg_date = new Date($row['last_timestamp'], Timezone::SERVER_TIMEZONE);
 
-		$tpl->assign_block_vars('topics', array_merge(
-			Date::get_array_tpl_vars($last_msg_date, 'last_msg_date'),
+		$view->assign_block_vars('topics', array_merge(
+			Date::get_array_tpl_vars($last_msg_date, 'last_message_date'),
 			array(
-			'C_HOT_TOPIC'                 => ($row['type'] == '0' && $row['status'] != '0' && ($row['nbr_msg'] > $config->get_number_messages_per_page())),
-			'C_POLL'                      => !empty($row['question']),
-			'C_BLINK'                     => $blink,
-			'ID'                          => $row['id'],
-			'INCR'                        => $nbr_topics_compt,
-			'CHECKED_PM'                  => ($row['pm'] == 1) ? 'checked="checked"' : '',
-			'CHECKED_MAIL'                => ($row['mail'] == 1) ? 'checked="checked"' : '',
-			'IMG_ANNOUNCE'                => $img_announce,
-			'U_ANCRE'                     => $new_ancre,
-			'C_ANCRE'                     => !empty($new_ancre),
-			'C_DISPLAY_MSG'               => ($config->is_message_before_topic_title_displayed() && $config->is_message_before_topic_title_icon_displayed() && $row['display_msg']),
-			'TYPE'                        => $type[$row['type']],
-			'CATEGORY_ID'                 => $row['id_category'],
-			'TITLE'                       => stripslashes($row['title']),
-			'C_AUTHOR'                    => !empty($row['login']),
-			'U_AUTHOR'                    => UserUrlBuilder::profile($row['user_id'])->rel(),
-			'AUTHOR_LEVEL'                => UserService::get_level_class($row['user_level']),
-			'AUTHOR'                      => $row['login'],
-			'C_GROUP_COLOR'               => !empty($group_color),
-			'GROUP_COLOR'                 => $group_color,
-			'L_GUEST'                     => $LANG['guest'],
-			'DESC'                        => stripslashes($row['subtitle']),
-			'PAGINATION'                  => $topic_pagination->display(),
-			'MSG'                         => ($row['nbr_msg'] - 1),
-			'VUS'                         => $row['nbr_views'],
-			'U_TOPIC_VARS'                => url('.php?id=' . $row['id'], '-' . $row['id'] . $rewrited_title . '.php'),
-			'L_DISPLAY_MSG'               => ($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '',
-			'LAST_MSG_URL'                => "topic" . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id,
-			'C_LAST_MSG_GUEST'            => !empty($row['last_login']),
-			'LAST_MSG_USER_PROFIL'        => UserUrlBuilder::profile($row['last_user_id'])->rel(),
-			'LAST_MSG_USER_LOGIN'         => $row['last_login'],
-			'LAST_MSG_USER_LEVEL'         => UserService::get_level_class($row['last_user_level']),
-			'C_LAST_MSG_USER_GROUP_COLOR' => !empty($last_group_color),
-			'LAST_MSG_USER_GROUP_COLOR'   => $last_group_color
+			'C_HOT_TOPIC'             => ($row['type'] == '0' && $row['status'] != '0' && ($row['nbr_msg'] > $config->get_number_messages_per_page())),
+			'C_POLL'                  => !empty($row['question']),
+			'C_BLINK'                 => $blink,
+			'C_ANCHOR'                => !empty($new_anchor),
+			'C_DISPLAY_ISSUE_STATUS'           => ($config->is_message_before_topic_title_displayed() && $config->is_message_before_topic_title_icon_displayed() && $row['display_msg']),
+			'C_GROUP_COLOR'           => !empty($group_color),
+			'C_AUTHOR'                => !empty($row['login']),
+			'C_LAST_USER_GROUP_COLOR' => !empty($last_group_color),
+			'C_LAST_MESSAGE_GUEST'    => !empty($row['last_login']),
+
+			'ID'                    => $row['id'],
+			'INCR'                  => $nbr_topics_compt,
+			'CHECKED_PM'            => ($row['pm'] == 1) ? 'checked="checked"' : '',
+			'CHECKED_MAIL'          => ($row['mail'] == 1) ? 'checked="checked"' : '',
+			'TOPIC_ICON'            => $topic_icon,
+			'TYPE'                  => $type[$row['type']],
+			'CATEGORY_ID'           => $row['id_category'],
+			'TITLE'                 => stripslashes($row['title']),
+			'AUTHOR_LEVEL'          => UserService::get_level_class($row['user_level']),
+			'AUTHOR'                => $row['login'],
+			'GROUP_COLOR'           => $group_color,
+			'DESCRIPTION'           => stripslashes($row['subtitle']),
+			'PAGINATION'            => $topic_pagination->display(),
+			'MESSAGES_NUMBER'       => ($row['nbr_msg'] - 1),
+			'VIEWS_NUMBER'          => $row['nbr_views'],
+			'LAST_USER_LOGIN'       => $row['last_login'],
+			'LAST_USER_LEVEL'       => UserService::get_level_class($row['last_user_level']),
+			'LAST_USER_GROUP_COLOR' => $last_group_color,
+
+			'U_ANCHOR'           => $new_anchor,
+			'U_AUTHOR'           => UserUrlBuilder::profile($row['user_id'])->rel(),
+			'U_TOPIC'            => url('.php?id=' . $row['id'], '-' . $row['id'] . $rewrited_title . '.php'),
+			'U_LAST_MESSAGE'     => "topic" . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id,
+			'U_LAST_USER_PROFILE' => UserUrlBuilder::profile($row['last_user_id'])->rel(),
+
+			'L_ISSUE_STATUS_MESSAGE' => ($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '',
+			//
+			'L_GUEST' => $LANG['guest'],
 			)
 		));
 		$nbr_topics_compt++;
@@ -213,39 +223,41 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 	//Le membre a déjà lu tous les messages.
 	if ($nbr_topics == 0)
 	{
-		$tpl->put_all(array(
+		$view->put_all(array(
 			'C_NO_TRACKED_TOPICS' => true,
 			'L_NO_TRACKED_TOPICS' => '0 ' . $LANG['show_topic_track']
 		));
 	}
 
-	$l_topic = ($nbr_topics > 1) ? $LANG['topic_s'] : $LANG['topic'];
-
 	$vars_tpl = array(
-		'C_PAGINATION'       => $pagination->has_several_pages(),
-		'NBR_TOPICS'         => $nbr_topics,
-		'FORUM_NAME'         => $config->get_forum_name(),
-		'PAGINATION'         => $pagination->display(),
-		'U_MSG_SET_VIEW'     => Url::to_rel('/forum/action' . url('.php?read=1&amp;favorite=1', '')),
+		'C_PAGINATION' => $pagination->has_several_pages(),
+
+		'TOPICS_NUMBERS' => $nbr_topics,
+		'FORUM_NAME'     => $config->get_forum_name(),
+		'PAGINATION'     => $pagination->display(),
+
+		'U_MARK_AS_READ'     => Url::to_rel('/forum/action' . url('.php?read=1&amp;favorite=1', '')),
 		'U_CHANGE_CAT'       => 'track.php' . '&amp;token=' . AppContext::get_session()->get_token(),
 		'U_ONCHANGE'         => url(".php?id=' + this.options[this.selectedIndex].value + '", "forum-' + this.options[this.selectedIndex].value + '.php"),
 		'U_ONCHANGE_CAT'     => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
-		'U_FORUM_CAT'        => PATH_TO_ROOT . '/forum/track.php',
+		'U_CATEGORY'        => PATH_TO_ROOT . '/forum/track.php',
 		'U_POST_NEW_SUBJECT' => '',
 		'U_TRACK_ACTION'     => url('.php?p=' . $page . '&amp;token=' . AppContext::get_session()->get_token()),
-		'FORUM_CAT'          => $LANG['show_topic_track'],
-		'L_FORUM_INDEX'      => $LANG['forum_index'],
-		'L_AUTHOR'           => $LANG['author'],
-		'L_FORUM'            => $LANG['forum'],
-		'L_DELETE'           => LangLoader::get_message('delete', 'common'),
-		'L_MAIL'             => $LANG['mail'],
-		'L_PM'               => $LANG['pm'],
-		'L_EXPLAIN_TRACK'    => $LANG['explain_track'],
-		'L_TOPIC'            => $l_topic,
-		'L_MESSAGE'          => $LANG['replies'],
-		'L_VIEW'             => $LANG['views'],
-		'L_LAST_MESSAGE'     => $LANG['last_message'],
-		'L_SUBMIT'           => $LANG['submit']
+
+		'L_TOPIC' => ($nbr_topics > 1) ? $LANG['topic_s'] : $LANG['topic'],
+		//
+		'CATEGORY_NAME'       => $LANG['show_topic_track'],
+		'L_FORUM_INDEX'   => $LANG['forum_index'],
+		'L_AUTHOR'        => $LANG['author'],
+		'L_FORUM'         => $LANG['forum'],
+		'L_DELETE'        => LangLoader::get_message('delete', 'common'),
+		'L_MAIL'          => $LANG['mail'],
+		'L_PM'            => $LANG['pm'],
+		'L_EXPLAIN_TRACK' => $LANG['explain_track'],
+		'L_MESSAGE'       => $LANG['replies'],
+		'L_VIEW'          => $LANG['views'],
+		'L_LAST_MESSAGE'  => $LANG['last_message'],
+		'L_SUBMIT'        => $LANG['submit']
 	);
 
 	//Listes les utilisateurs en ligne.
@@ -271,31 +283,34 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 
 	$vars_tpl = array_merge($vars_tpl, array(
 		'C_USER_CONNECTED' => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
-		'TOTAL_ONLINE'     => $total_online,
 		'C_NO_USER_ONLINE' => (($total_online - $total_visit) == 0),
-		'USERS_ONLINE'     => $users_list,
-		'ADMIN'            => $total_admin,
-		'MODO'             => $total_modo,
-		'MEMBER'           => $total_member,
-		'GUEST'            => $total_visit,
-		'SELECT_CAT'       => $cat_list, //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
-		'L_USER'           => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
-		'L_ADMIN'          => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
-		'L_MODO'           => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],
-		'L_MEMBER'         => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
-		'L_GUEST'          => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
-		'L_AND'            => $LANG['and'],
-		'L_ONLINE'         => TextHelper::strtolower($LANG['online'])
+
+		'TOTAL_ONLINE'          => $total_online,
+		'ONLINE_USERS_LIST'     => $users_list,
+		'ADMINISTRATORS_NUMBER' => $total_admin,
+		'MODERATORS_NUMBER'     => $total_modo,
+		'MEMBERS_NUMBER'        => $total_member,
+		'GUESTS_NUMBER'         => $total_visit,
+		'SELECT_CAT'            => $cat_list, //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
+
+		'L_USER'   => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
+		'L_ADMIN'  => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
+		'L_MODO'   => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],
+		'L_MEMBER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
+		'L_GUEST'  => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
+		//
+		'L_AND'    => $LANG['and'],
+		'L_ONLINE' => TextHelper::strtolower($LANG['online'])
 	));
 
-	$tpl->put_all($vars_tpl);
-	$tpl_top->put_all($vars_tpl);
-	$tpl_bottom->put_all($vars_tpl);
+	$view->put_all($vars_tpl);
+	$top_view->put_all($vars_tpl);
+	$bottom_view->put_all($vars_tpl);
 
-	$tpl->put('forum_top', $tpl_top);
-	$tpl->put('forum_bottom', $tpl_bottom);
+	$view->put('FORUM_TOP', $top_view);
+	$view->put('FORUM_BOTTOM', $bottom_view);
 
-	$tpl->display();
+	$view->display();
 }
 else
 	AppContext::get_response()->redirect('/forum/index.php');

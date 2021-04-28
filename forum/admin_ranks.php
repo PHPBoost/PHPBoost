@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 14
+ * @version     PHPBoost 6.0 - last update: 2021 04 28
  * @since       PHPBoost 1.2 - 2005 10 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -12,7 +12,10 @@
 
 require_once('../admin/admin_begin.php');
 load_module_lang('forum'); //Chargement de la langue du module.
-define('TITLE', $LANG['administration']);
+
+$lang = LangLoader::get('common', 'forum');
+
+define('TITLE', $lang['forum.ranks.management']);
 require_once('../admin/admin_header.php');
 
 $request = AppContext::get_request();
@@ -22,7 +25,12 @@ $del = $request->get_getint('del', 0);
 
 $valid = $request->get_postbool('valid', false);
 
-$template = new FileTemplate('forum/admin_ranks.tpl');
+$view = new FileTemplate('forum/admin_ranks.tpl');
+$view->add_lang(array_merge(
+	$lang,
+	LangLoader::get('common-lang'),
+	LangLoader::get('form-lang'),
+));
 
 //Si c'est confirmé on execute
 if ($valid)
@@ -44,7 +52,7 @@ if ($valid)
 
 	ForumRanksCache::invalidate();
 
-	$template->put('message_helper', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+	$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 }
 elseif (!empty($del) && !empty($get_id)) //Suppression du rang.
 {
@@ -54,23 +62,23 @@ elseif (!empty($del) && !empty($get_id)) //Suppression du rang.
 	###### Régénération du cache des rangs #######
 	ForumRanksCache::invalidate();
 
-	$template->put('message_helper', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+	$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 }
 
-$template->put_all(array(
-	'L_REQUIRE_RANK_NAME'      => $LANG['require_rank_name'],
-	'L_REQUIRE_NBR_MSG_RANK'   => $LANG['require_nbr_msg_rank'],
-	'L_CONFIRM_DEL_RANK'       => LangLoader::get_message('confirm.delete', 'status-messages-common'),
-	'L_FORUM_MANAGEMENT'       => $LANG['config.ranks.manager'],
-	'L_FORUM_RANKS_MANAGEMENT' => LangLoader::get_message('forum.ranks.manager', 'common', 'forum'),
-	'L_FORUM_ADD_RANKS'        => LangLoader::get_message('forum.rank.add', 'common', 'forum'),
-	'L_RANK_NAME'              => $LANG['rank_name'],
-	'L_NBR_MSG'                => $LANG['nbr_msg'],
-	'L_IMG_ASSOC'              => $LANG['img_assoc'],
-	'L_DELETE'                 => LangLoader::get_message('delete', 'common'),
-	'L_UPDATE'                 => $LANG['validate'],
-	'L_RESET'                  => $LANG['reset'],
-	'L_ADD'                    => LangLoader::get_message('add', 'common')
+$view->put_all(array(
+	'L_REQUIRE_RANK_NAME'            => $LANG['require_rank_name'],
+	'L_REQUIRE_MESSAGES_NUMBER_RANK' => $LANG['require_nbr_msg_rank'],
+	'L_CONFIRM_DEL_RANK'             => LangLoader::get_message('confirm.delete', 'status-messages-common'),
+	'L_FORUM_MANAGEMENT'             => $LANG['config.ranks.manager'],
+	'L_FORUM_RANKS_MANAGEMENT'       => LangLoader::get_message('forum.ranks.management', 'common', 'forum'),
+	'L_FORUM_ADD_RANKS'              => LangLoader::get_message('forum.rank.add', 'common', 'forum'),
+	'L_RANK_NAME'                    => $LANG['rank_name'],
+	'L_MESSAGES_NUMBER'              => $LANG['nbr_msg'],
+	'L_IMG_ASSOC'                    => $LANG['img_assoc'],
+	'L_DELETE'                       => LangLoader::get_message('delete', 'common'),
+	'L_UPDATE'                       => $LANG['validate'],
+	'L_RESET'                        => $LANG['reset'],
+	'L_ADD'                          => LangLoader::get_message('add', 'common')
 ));
 
 //On recupère les images des groupes
@@ -101,21 +109,22 @@ foreach($ranks_cache as $msg => $row)
 		$rank_options .= '<option value="' . $icon . '"' . $selected . '>' . $icon . '</option>';
 	}
 
-	$template->assign_block_vars('rank', array(
+	$view->assign_block_vars('rank', array(
 		'ID'             => $row['id'],
 		'RANK'           => $row['name'],
-		'MSG'            => $msg,
+		'MESSAGE'            => $msg,
 		'RANK_OPTIONS'   => $rank_options,
-		'IMG_RANK'       => $row['icon'],
-		'U_IMG_RANK'     => $rank_folder . '/' . $row['icon'],
+		'RANK_THUMBNAIL'       => $row['icon'],
+		'U_RANK_THUMBNAIL'     => $rank_folder . '/' . $row['icon'],
 		'JS_PATH_RANKS'  => $rank_folder . '/',
 		'U_DELETE'       => 'admin_ranks.php?del=1&amp;id=' . $row['id'],
-		'C_SPECIAL_RANK' => $row['special'] == 0,
+		'C_CUSTOM_RANK' => $row['special'] == 0,
+		//
 		'L_SPECIAL_RANK' => $LANG['special_rank']
 	));
 }
 
-$template->display();
+$view->display();
 
 require_once('../admin/admin_footer.php');
 ?>

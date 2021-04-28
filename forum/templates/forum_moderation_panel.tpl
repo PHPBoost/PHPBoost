@@ -1,11 +1,11 @@
-# INCLUDE forum_top #
+# INCLUDE FORUM_TOP #
 
 <article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-moderation-panel" class="forum-content">
 	<header>
 		<h2>
 			<a href="index.php">{FORUM_NAME}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-			<a href="moderation_forum.php">{L_MODERATION_FORUM}</a># IF NOT C_HOME # <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-			<a href="{U_MODERATION_FORUM_ACTION}">{L_ALERT}</a># ENDIF #
+			<a href="moderation_forum.php">{@forum.moderation.forum}</a>
+			# IF NOT C_HOME # <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_MODERATION_FORUM_ACTION}">{L_ALERT}</a># ENDIF #
 		</h2>
 	</header>
 	<div class="content">
@@ -15,7 +15,7 @@
 					<div class="cell-content align-center">
 						<a href="moderation_forum.php?action=warning" class="moderation-type-block">
 							<i class="fa fa-exclamation-triangle fa-2x warning" aria-hidden="true"></i>
-							<span class="d-block">{L_USERS_WARNING}</span>
+							<span class="d-block">{@user.warnings.management}</span>
 						</a>
 					</div>
 				</div>
@@ -25,7 +25,7 @@
 					<div class="cell-content align-center">
 						<a href="moderation_forum.php?action=punish" class="moderation-type-block">
 							<i class="fa fa-times fa-2x error" aria-hidden="true"></i>
-							<span class="d-block">{L_USERS_PUNISHMENT}</span>
+							<span class="d-block">{@user.punishments.management}</span>
 						</a>
 					</div>
 				</div>
@@ -35,7 +35,7 @@
 					<div class="cell-content align-center">
 						<a href="moderation_forum.php?action=alert" class="moderation-type-block">
 							<i class="fa fa-minus-circle fa-2x error" aria-hidden="true"></i>
-							<span class="d-block">{L_ALERT_MANAGEMENT}</span>
+							<span class="d-block">{@forum.reports.management}</span>
 						</a>
 					</div>
 				</div>
@@ -51,28 +51,28 @@
 			<form action="moderation_forum{U_ACTION_HISTORY}" method="post" onsubmit="javascript:return Confirm_history();">
 				<table class="table">
 					<caption>
-						{L_HISTORY}
+						{@forum.history}
 					</caption>
 					<thead>
 						<tr>
 							<th>
-								{L_MODO}
+								{@user.moderator}
 							</th>
 							<th>
-								{L_ACTION}
+								{@common.actions}
 							</th>
 							<th>
-								{L_USER_CONCERN}
+								{@forum.concerned.user}
 							</th>
 							<th class="forum-last-topic">
-								{L_DATE}
+								${LangLoader::get_message('date.date', 'date-lang')}
 							</th>
 						</tr>
 					</thead>
 					<tbody>
 					# START action_list #
 						<tr>
-							<td class="forum-last-topic">
+							<td>
 								<a href="{action_list.U_USER_PROFILE}" class="{action_list.LEVEL_CLASS}" # IF action_list.C_GROUP_COLOR # style="color: {action_list.GROUP_COLOR};"# ENDIF #>{action_list.LOGIN}</a>
 							</td>
 							<td>
@@ -82,14 +82,14 @@
 									{action_list.L_ACTION}
 								# ENDIF #
 							</td>
-							<td class="forum-last-topic">
+							<td>
 								# IF action_list.C_USER_CONCERN #
 									<a href="{action_list.U_USER_CONCERN}" class="{action_list.USER_CONCERN_CSSCLASS}"# IF action_list.C_USER_CONCERN_GROUP_COLOR # style="color: {action_list.USER_CONCERN_GROUP_COLOR};"# ENDIF #>{action_list.USER_LOGIN}</a>
 								# ELSE #
 									-
 								# ENDIF #
 							</td>
-							<td class="forum-last-topic">
+							<td>
 								{action_list.DATE_FULL}
 							</td>
 						</tr>
@@ -437,4 +437,4 @@
 	</footer>
 </article>
 
-# INCLUDE forum_bottom #
+# INCLUDE FORUM_BOTTOM #

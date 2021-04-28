@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 19
+ * @version     PHPBoost 6.0 - last update: 2021 04 28
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -27,6 +27,15 @@ $lang['user.sign.out']           = 'Déconnexion';
 $lang['user.sign.up']            = 'S\'inscrire';
 $lang['user.forgotten.password'] = 'Mot de passe oublié';
 
+// Dashboard
+$lang['user.private.messaging']  = 'Messagerie privée';
+$lang['user.admin.panel']        = 'Panneau d\'administration';
+$lang['user.moderation.panel']   = 'Panneau de modération';
+$lang['user.contribution.panel'] = 'Panneau de contribution';
+$lang['user.dashboard']          = 'Tableau de bord';
+$lang['user.my.account']         = 'Mon compte';
+$lang['user.my.profile']         = 'Mon profil';
+
 // Forgotten password
 $lang['user.change.password']            = 'Changement de mot de passe';
 $lang['user.forgotten.password.select']  = 'Sélectionnez le champ que vous voulez renseigner (email ou pseudo)';
@@ -45,34 +54,17 @@ Si vous rencontrez des difficultés, veuillez contacter l\'administrateur du sit
 
 :signature';
 
-// Dashboard
-$lang['user.private.messaging']  = 'Messagerie privée';
-$lang['user.admin.panel']        = 'Panneau d\'administration';
-$lang['user.moderation.panel']   = 'Panneau de modération';
-$lang['user.contribution.panel'] = 'Panneau de contribution';
-$lang['user.dashboard']          = 'Tableau de bord';
-$lang['user.my.account']         = 'Mon compte';
-$lang['user.my.profile']         = 'Mon profil';
-
-// Ranks
-$lang['user.rank']               = 'Rang';
-$lang['user.rank.robot']         = 'Robot';
-$lang['user.rank.visitor']       = 'Visiteur';
-$lang['user.rank.member']        = 'Membre';
-$lang['user.rank.moderator']     = 'Modérateur';
-$lang['user.rank.administrator'] = 'Administrateur';
-
-// S.E.O.
-$lang['user.seo.profile']            = 'Toutes les informations de profil de    :name.';
-$lang['user.seo.list']               = 'Tableau de la liste des utilisateurs du site.';
-$lang['user.seo.groups']             = 'Utilisateurs de chaque groupe du site.';
-$lang['user.seo.comments']           = 'Tous les commentaires.';
-$lang['user.seo.comments.user']      = 'Tous les commentaires de l\'utilisateur :name.';
-$lang['user.seo.messages']           = 'Tous les messages de l\'utilisateur     :name.';
-$lang['user.seo.registration']       = 'Renseignez toutes les informations demandées pour créer un compte.';
-$lang['user.seo.login']              = 'Connectez-vous au site pour accéder au contenu protégé.';
-$lang['user.seo.forgotten.password'] = 'Renseignez toutes les informations demandées pour recevoir un lien pour changer de mot de passe.';
-$lang['user.seo.about.cookie']       = 'Toutes les informations relatives aux cookies sur le site.';
+// Groups
+$lang['user.groups']         = 'Groupes';
+$lang['user.groups.list']    = 'Liste des groupes';
+$lang['user.groups.select']  = 'Sélectionner un groupe';
+$lang['user.groups.all']     = 'Tous les groupes';
+$lang['user.group.of.group'] = 'du groupe :';
+$lang['user.admins.list']    = 'Liste des administrateurs';
+$lang['user.modos.list']     = 'Liste des modérateurs';
+$lang['user.no.member']      = 'Aucun membre dans ce groupe';
+$lang['user.group.view.list.members'] = 'Voir les membres du groupe';
+$lang['user.group.hide.list.members'] = 'Masquer les membres du groupe';
 
 // Labels
 $lang['user.user']           = 'Utilisateur';
@@ -116,6 +108,26 @@ $lang['user.external.auth.account.exists']      = 'Vous avez déjà un compte su
 $lang['user.external.auth.email.not.found']     = 'L\'adresse email de votre compte n\'a pas pu être récupérée, votre compte ne peut pas être associé.';
 $lang['user.external.auth.user.data.not.found'] = 'Les informations de votre compte n\'ont pas pu être récupérées, votre compte ne peut pas être créé.';
 
+// Ranks
+$lang['user.rank']               = 'Rang';
+$lang['user.rank.robot']         = 'Robot';
+$lang['user.rank.visitor']       = 'Visiteur';
+$lang['user.rank.member']        = 'Membre';
+$lang['user.rank.moderator']     = 'Modérateur';
+$lang['user.rank.administrator'] = 'Administrateur';
+
+// S.E.O.
+$lang['user.seo.profile']            = 'Toutes les informations de profil de    :name.';
+$lang['user.seo.list']               = 'Tableau de la liste des utilisateurs du site.';
+$lang['user.seo.groups']             = 'Utilisateurs de chaque groupe du site.';
+$lang['user.seo.comments']           = 'Tous les commentaires.';
+$lang['user.seo.comments.user']      = 'Tous les commentaires de l\'utilisateur :name.';
+$lang['user.seo.messages']           = 'Tous les messages de l\'utilisateur     :name.';
+$lang['user.seo.registration']       = 'Renseignez toutes les informations demandées pour créer un compte.';
+$lang['user.seo.login']              = 'Connectez-vous au site pour accéder au contenu protégé.';
+$lang['user.seo.forgotten.password'] = 'Renseignez toutes les informations demandées pour recevoir un lien pour changer de mot de passe.';
+$lang['user.seo.about.cookie']       = 'Toutes les informations relatives aux cookies sur le site.';
+
 // User fields
 $lang['user.display.name']         = 'Nom d\'affichage';
 $lang['user.display.name.clue']    = 'Nom affiché sur chacun des éléments que vous ajoutez.';
@@ -152,18 +164,6 @@ $lang['user.private.message']     = 'Message privé';
 $lang['user.delete.account']      = 'Supprimer le compte';
 $lang['user.delete.account.confirmation.member'] = 'Etes-vous sûr de vouloir supprimer votre compte ?';
 $lang['user.delete.account.confirmation.admin']  = 'Etes-vous sûr de vouloir supprimer le compte ?';
-
-//Groups
-$lang['user.groups']         = 'Groupes';
-$lang['user.groups.list']    = 'Liste des groupes';
-$lang['user.groups.select']  = 'Sélectionner un groupe';
-$lang['user.groups.all']     = 'Tous les groupes';
-$lang['user.group.of.group'] = 'du groupe :';
-$lang['user.admins.list']    = 'Liste des administrateurs';
-$lang['user.modos.list']     = 'Liste des modérateurs';
-$lang['user.no.member']      = 'Aucun membre dans ce groupe';
-$lang['user.group.view.list.members'] = 'Voir les membres du groupe';
-$lang['user.group.hide.list.members'] = 'Masquer les membres du groupe';
 
 // Other
 $lang['user.caution']  = 'Avertissement';
@@ -295,39 +295,13 @@ $lang['user.extended.field.no.member']      = 'Ce membre n\'est plus inscrit';
 $lang['user.extended.field.website']      = 'Site internet';
 $lang['user.extended.field.website.clue'] = 'Veuillez renseigner un site web valide (ex : https://www.phpboost.com)';
 
-// Moderation panel
+// Moderation
+    // Moderation panel
 $lang['user.contact.pm']          = 'Contacter par message privé';
 $lang['user.alternative.pm']      = 'Message privé envoyé au membre';
 $lang['user.alternative.pm.clue'] = 'Laisser vide pour aucun message privé. <br />Le membre averti ne pourra pas répondre à ce message, et ne connaîtra pas l\'expéditeur.';
 
-// Punishments management
-$lang['user.punishments']           = 'Sanctions';
-$lang['user.punishment.management'] = 'Gestion des sanctions';
-$lang['user.punish.until']          = 'Sanction jusqu\'au';
-$lang['user.no.punish']             = 'Il n\'y a aucun utilisateur sanctionné.';
-$lang['user.life']                  = 'A vie';
-$lang['user.readonly']              = 'Membre en lecture seule';
-$lang['user.readonly.clue']         = 'Celui-ci peut lire mais ne peut plus poster sur la totalité du site (commentaires, etc.)';
-$lang['user.read.only.title']       = 'Sanction';
-$lang['user.readonly.changed']      = 'Vous avez été mis en lecture seule par un membre de l\'équipe de modération, vous ne pourrez plus poster pendant %date%.
-
-
-Ceci est un message semi-automatique.';
-
-// Warning management
-$lang['user.warning']            = 'Avertissement';
-$lang['user.warnings']           = 'Avertissements';
-$lang['user.warning.management'] = 'Gestion des avertissements';
-$lang['user.warning.level']      = 'Niveau d\'avertissement';
-$lang['user.no.user.warning']    = 'Il n\'y a aucun utilisateur averti.';
-$lang['user.warning.clue']       = 'Niveau d\'avertissement du membre. Vous pouvez le modifier, mais sachez qu\'à 100% le membre est banni.';
-$lang['user.warning.user']       = 'Membre averti';
-$lang['user.warning.level.changed'] = 'Vous avez été averti par un membre de l\'équipe de modération, votre niveau d\'avertissement est passé à %level%%. Attention à votre comportement, si vous atteignez 100% vous serez banni définitivement.
-
-
-Ceci est un message semi-automatique.';
-
-// Bans management.
+    // Bans management.
 $lang['user.ban']             = 'Bannissement';
 $lang['user.bans']            = 'Bannissements';
 $lang['user.ban.management']  = 'Gestion des bannissements';
@@ -342,6 +316,35 @@ S\'il s\'agit d\'une erreur veuillez contacter l\'administrateur du site.
 
 
 %s';
+
+    // Punishments management
+$lang['user.punishments']            = 'Sanctions';
+$lang['user.punishment.management']  = 'Gestion des sanctions';
+$lang['user.punishments.management'] = 'Gestion des sanctions';
+$lang['user.punish.until']           = 'Sanction jusqu\'au';
+$lang['user.no.punish']              = 'Il n\'y a aucun utilisateur sanctionné.';
+$lang['user.life']                   = 'A vie';
+$lang['user.readonly']               = 'Membre en lecture seule';
+$lang['user.readonly.clue']          = 'Celui-ci peut lire mais ne peut plus poster sur la totalité du site (commentaires, etc.)';
+$lang['user.read.only.title']        = 'Sanction';
+$lang['user.readonly.changed']       = 'Vous avez été mis en lecture seule par un membre de l\'équipe de modération, vous ne pourrez plus poster pendant %date%.
+
+
+Ceci est un message semi-automatique.';
+
+    // Warning management
+$lang['user.warning']               = 'Avertissement';
+$lang['user.warnings']              = 'Avertissements';
+$lang['user.warning.management']    = 'Gestion des avertissements';
+$lang['user.warnings.management']   = 'Gestion des avertissements';
+$lang['user.warning.level']         = 'Niveau d\'avertissement';
+$lang['user.no.user.warning']       = 'Il n\'y a aucun utilisateur averti.';
+$lang['user.warning.clue']          = 'Niveau d\'avertissement du membre. Vous pouvez le modifier, mais sachez qu\'à 100% le membre est banni.';
+$lang['user.warning.user']          = 'Membre averti';
+$lang['user.warning.level.changed'] = 'Vous avez été averti par un membre de l\'équipe de modération, votre niveau d\'avertissement est passé à %level%%. Attention à votre comportement, si vous atteignez 100% vous serez banni définitivement.
+
+
+Ceci est un message semi-automatique.';
 
 // Private messaging
 $lang['user.private.message']       = 'Message privé';

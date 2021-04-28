@@ -1,6 +1,6 @@
 <script>
 	function Confirm_read_topics() {
-		return confirm("{L_CONFIRM_READ_TOPICS}");
+		return confirm("{@forum.confirm.mark.as.read}");
 	}
 
 	// Refresh unread topics
@@ -29,7 +29,7 @@
 				document.getElementById('forum_block_' + divID).innerHTML = array_unread_topics[2];
 			} else if (xhr_object.readyState == 4 && xhr_object.responseText == '')
 			{
-				alert("{L_AUTH_ERROR}");
+				alert("${LangLoader::get_message('warning.error', 'warning-lang')}");
 				if (document.getElementById('refresh_' + divID))
 					document.getElementById('refresh_' + divID).className = 'fa fa-fw fa-sync';
 			}
@@ -79,49 +79,49 @@
 	<header class="section-header" id="forum-top">
 
 		<div class="forum-links">
-			# IF C_USER_CONNECTED #
+			# IF IS_USER_CONNECTED #
 				<nav itemscope itemtype="https://schema.org/SiteNavigationElement" class="cssmenu cssmenu-group float-right" id="cssmenu-forum-top-link">
 					<ul>
 						<li>
 							<span class="cssmenu-title">
-								<a href="index.php" aria-label="{L_FORUM_INDEX}"><i class="fa fa-fw fa-home" aria-hidden="true"></i> <span class="hidden-large-screens">{L_FORUM_INDEX}</span></a>
+								<a href="index.php" aria-label="{@forum.index}"><i class="fa fa-fw fa-home" aria-hidden="true"></i> <span class="hidden-large-screens">{@forum.index}</span></a>
 							</span>
 						</li>
 						<li>
 							<span class="cssmenu-title">
-								<a href="{U_MSG_NO_ANSWER}" aria-label="{L_SHOW_NO_ANSWER}"><i class="fa fa-fw fa-comment-slash" aria-hidden="true"></i> <span class="hidden-large-screens">{L_SHOW_NO_ANSWER}</span></a>
+								<a href="{U_UNANSWERED_TOPICS}" aria-label="{@forum.unanswered.topics}"><i class="fa fa-fw fa-comment-slash" aria-hidden="true"></i> <span class="hidden-large-screens">{@forum.unanswered.topics}</span></a>
 							</span>
 						</li>
 						<li>
 							<span class="cssmenu-title">
-							<a href="{U_TOPIC_TRACK}" aria-label="{L_SHOW_TOPIC_TRACK}"><i class="fa fa-fw fa-heart error" aria-hidden="true"></i> <span class="hidden-large-screens">{L_SHOW_TOPIC_TRACK}</span></a>
+							<a href="{U_TRACKED_TOPICS}" aria-label="{@forum.tracked.topics}"><i class="fa fa-fw fa-heart error" aria-hidden="true"></i> <span class="hidden-large-screens">{@forum.tracked.topics}</span></a>
 							</span>
 						</li>
 						<li class="forum-index">
 							<span class="cssmenu-title">
-								<a href="{U_LAST_MSG_READ}" aria-label="{L_SHOW_LAST_READ}"><i class="far fa-fw fa-clock" aria-hidden="true"></i> <span class="hidden-large-screens">{L_SHOW_LAST_READ}</span></a>
+								<a href="{U_LAST_MESSAGE_READ}" aria-label="{@forum.last.read.messages}"><i class="far fa-fw fa-clock" aria-hidden="true"></i> <span class="hidden-large-screens">{@forum.last.read.messages}</span></a>
 							</span>
 						</li>
 						<li>
 							<div class="cssmenu-title">
-								<a href="{U_MSG_NOT_READ}" aria-label="{L_SHOW_NOT_READS}"><i class="far fa-fw fa-file-alt" aria-hidden="true"></i><span id="nbr_unread_topics_top">{NBR_MSG_NOT_READ}</span><span class="hidden-large-screens">{L_SHOW_NOT_READS}</span></a>
+								<a href="{U_UNREAD_MESSAGES}" aria-label="{@forum.unread.messages}"><i class="far fa-fw fa-file-alt" aria-hidden="true"></i><span id="nbr_unread_topics_top">{UNREAD_MESSAGES_NUMBER}</span><span class="hidden-large-screens">{@forum.unread.messages}</span></a>
 								<div class="forum-refresh">
 									<div id="forum_block_forum_unread_top" style="display: none;"></div>
 								</div>
-								<a href="#" class="reload-unread" onclick="XMLHttpRequest_unread_topics('forum_unread_top');return false;" onmouseover="forum_hide_block('forum_unread_top', 1);" onmouseout="forum_hide_block('forum_unread_top', 0);"><i class="fa fa-fw fa-sync" aria-hidden="true" id="refresh_forum_unread_top"></i><span class="sr-only">${LangLoader::get_message('forum.links', 'common', 'forum')}</span></a>
+								<a href="#" class="reload-unread" onclick="XMLHttpRequest_unread_topics('forum_unread_top');return false;" onmouseover="forum_hide_block('forum_unread_top', 1);" onmouseout="forum_hide_block('forum_unread_top', 0);" aria-label="{@forum.reload.unread.messages}"><i class="fa fa-fw fa-sync" aria-hidden="true" id="refresh_forum_unread_top"></i><span class="sr-only">{@forum.reload.unread.messages}</span></a>
 							</div>
 						</li>
 						<li>
 							<span class="cssmenu-title">
-								<a href="{U_MSG_SET_VIEW}" onclick="javascript:return Confirm_read_topics();" aria-label="{L_MARK_AS_READ}"><i class="fa fa-fw fa-eraser" aria-hidden="true"></i> <span class="hidden-large-screens">{L_MARK_AS_READ}</span></a>
+								<a href="{U_MARK_AS_READ}" onclick="javascript:return Confirm_read_topics();" aria-label="{@forum.mark.topics.as.read}"><i class="fa fa-fw fa-eraser" aria-hidden="true"></i> <span class="hidden-large-screens">{@forum.mark.topics.as.read}</span></a>
 							</span>
 						</li>
 						# IF C_FORUM_CONNEXION #
-						<li>
-							<span class="cssmenu-title">
-								<a href="${relative_url(UserUrlBuilder::disconnect())}" aria-label="{L_DISCONNECT}"><i class="fa fa-fw fa-sign-out-alt"></i> <span class="hidden-large-screens">{L_DISCONNECT}</span></a>
-							</span>
-						</li>
+							<li>
+								<span class="cssmenu-title">
+									<a href="${relative_url(UserUrlBuilder::disconnect())}" aria-label="{@user.sign.out}"><i class="fa fa-fw fa-sign-out-alt"></i> <span class="hidden-large-screens">{@user.sign.out}</span></a>
+								</span>
+							</li>
 						# ENDIF #
 					</ul>
 				</nav>
@@ -131,12 +131,12 @@
 						<ul>
 							<li>
 								<span class="cssmenu-title">
-									<a href="${relative_url(UserUrlBuilder::connect())}" aria-label="{L_CONNECT}"><i class="fa fa-fw fa-sign-in-alt" aria-hidden="true"></i> <span class="hidden-large-screens">{L_CONNECT}</span></a>
+									<a href="${relative_url(UserUrlBuilder::connect())}" aria-label="{@user.sing.in}"><i class="fa fa-fw fa-sign-in-alt" aria-hidden="true"></i> <span class="hidden-large-screens">{@user.sing.in}</span></a>
 								</span>
 							</li>
 							<li>
 								<span class="cssmenu-title">
-									<a href="${relative_url(UserUrlBuilder::registration())}" aria-label="{L_REGISTER}"><i class="fa fa-fw fa-ticket-alt" aria-hidden="true"></i> <span class="hidden-large-screens">{L_REGISTER}</span></a>
+									<a href="${relative_url(UserUrlBuilder::registration())}" aria-label="{@user.sign.up}"><i class="fa fa-fw fa-ticket-alt" aria-hidden="true"></i> <span class="hidden-large-screens">{@user.sign.up}</span></a>
 								</span>
 							</li>
 						</ul>
@@ -145,8 +145,8 @@
 			# ENDIF #
 		</div>
 		<script>
-			jQuery("#cssmenu-forum-top-link").menumaker({title: " ${LangLoader::get_message('forum.links', 'common', 'forum')} ", format: "multitoggle", breakpoint: 768, menu_static: false});
-			# IF C_FORUM_CONNEXION #jQuery("#cssmenu-sign-in-top-link").menumaker({title: " ${LangLoader::get_message('forum.links', 'common', 'forum')} ", format: "multitoggle", breakpoint: 768, menu_static: false});# ENDIF #
+			jQuery("#cssmenu-forum-top-link").menumaker({title: " {@forum.links} ", format: "multitoggle", breakpoint: 768, menu_static: false});
+			# IF C_FORUM_CONNEXION #jQuery("#cssmenu-sign-in-top-link").menumaker({title: " {@forum.links} ", format: "multitoggle", breakpoint: 768, menu_static: false});# ENDIF #
 		</script>
 
 		<h1>{FORUM_NAME}</h1>

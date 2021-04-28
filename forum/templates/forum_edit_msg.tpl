@@ -1,4 +1,4 @@
-# INCLUDE forum_top #
+# INCLUDE FORUM_TOP #
 
 <script>
 	function check_form_post(){
@@ -12,13 +12,13 @@
 	<header>
 		<h2>
 			<a href="index.php">{L_FORUM_INDEX}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-			<a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-			<a href="{U_TITLE_T}">{TITLE_T}</a> <span><em>{DESC}</em></span>
+			<a href="{U_CATEGORY}">{CATEGORY_NAME}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+			<a href="{U_TITLE_T}">{TITLE_T}</a> <span><em>{DESCRIPTION}</em></span>
 		</h2>
 	</header>
 	<div class="content">
 		<form action="{U_ACTION}" method="post" onsubmit="return check_form_post();">
-			# INCLUDE message_helper #
+			# INCLUDE MESSAGE_HELPER #
 
 			<div class="fieldset-content">
 				<p class="align-center small text-italic">{L_REQUIRE}</p>
@@ -46,9 +46,9 @@
 	</div>
 	<footer>
 		<a href="index.php">{L_FORUM_INDEX}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-		<a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-		<a href="{U_TITLE_T}">{TITLE_T}</a> <span><em>{DESC}</em></span>
+		<a href="{U_CATEGORY}">{CATEGORY_NAME}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+		<a href="{U_TITLE_T}">{TITLE_T}</a> <span><em>{DESCRIPTION}</em></span>
 	</footer>
 </article>
 
-# INCLUDE forum_bottom #
+# INCLUDE FORUM_BOTTOM #

@@ -30,7 +30,7 @@ $lang['category.edit']                  = 'Modifier une catégorie';
 $lang['category.delete']                = 'Supprimer une catégorie';
 
 // Form
-$lang['category.form.authorizations.description'] = 'Les autorisations générales du module s\'appliquent par défaut. Vous pouvez appliquer des permissions particulières.';
+$lang['category.form.authorizations.clue'] = 'Les autorisations générales du module s\'appliquent par défaut. Vous pouvez appliquer des permissions particulières.';
 
 // Delete category
 $lang['category.delete.clue']        = 'Vous êtes sur le point de supprimer la catégorie. Deux solutions s\'offrent à vous : soit déplacer l\'ensemble de son contenu (éléments et sous catégories) dans une autre catégorie soit supprimer l\'ensemble de la catégorie. <strong>Attention, cette action est irréversible !</strong>';

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 04 28
  * @since       PHPBoost 4.1 - 2015 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -21,6 +21,7 @@ class AdminForumConfigController extends AdminModuleController
 	private $submit_button;
 
 	private $lang;
+	private $form_lang;
 	private $config_lang;
 
 	/**
@@ -34,8 +35,7 @@ class AdminForumConfigController extends AdminModuleController
 
 		$this->build_form();
 
-		$view = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$view->add_lang($this->lang);
+		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -44,75 +44,76 @@ class AdminForumConfigController extends AdminModuleController
 			$this->form->get_field_by_id('message_when_topic_is_unsolved')->set_hidden(!$this->config->is_message_before_topic_title_displayed());
 			$this->form->get_field_by_id('message_when_topic_is_solved')->set_hidden(!$this->config->is_message_before_topic_title_displayed());
 			$this->form->get_field_by_id('message_before_topic_title_icon_displayed')->set_hidden(!$this->config->is_message_before_topic_title_displayed());
-			$view->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 
 		$view->put('FORM', $this->form->display());
 
-		return new AdminForumDisplayResponse($view, $this->lang['forum.config.title']);
+		return new AdminForumDisplayResponse($view, $this->form_lang['form.configuration'] . ': ' . $this->lang['forum.module.title']);
 	}
 
 	private function init()
 	{
 		$this->config = ForumConfig::load();
 		$this->lang = LangLoader::get('common', 'forum');
-		$this->config_lang = LangLoader::get('admin-common');
+		$this->form_lang = LangLoader::get('form-lang');
+		$this->config_lang = LangLoader::get('config', 'forum');
 	}
 
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('config', $this->config_lang['configuration'] . ': ' . $this->lang['forum.module.title']);
+		$fieldset = new FormFieldsetHTML('config', $this->form_lang['form.configuration'] . ': ' . $this->lang['forum.module.title']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('forum_name', $this->lang['config.forum.name'], $this->config->get_forum_name(),
+		$fieldset->add_field(new FormFieldTextEditor('forum_name', $this->config_lang['forum.config.forum.name'], $this->config->get_forum_name(),
 			array('maxlength' => 255, 'required' => true)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('number_topics_per_page', $this->lang['config.number.topics.per.page'], $this->config->get_number_topics_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('number_topics_per_page', $this->config_lang['forum.config.topics.per.page'], $this->config->get_number_topics_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('number_messages_per_page', $this->lang['config.number.messages.per.page'], $this->config->get_number_messages_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('number_messages_per_page', $this->config_lang['forum.config.messages.per.page'], $this->config->get_number_messages_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('read_messages_storage_duration', $this->lang['config.read.messages.storage.duration'], $this->config->get_read_messages_storage_duration(),
-			array('min' => 1, 'max' => 365, 'required' => true, 'description' => $this->lang['config.read.messages.storage.duration.explain']),
+		$fieldset->add_field(new FormFieldNumberEditor('read_messages_storage_duration', $this->config_lang['forum.config.read.messages.storage'], $this->config->get_read_messages_storage_duration(),
+			array('min' => 1, 'max' => 365, 'required' => true, 'description' => $this->config_lang['forum.config.read.messages.storage.clue']),
 			array(new FormFieldConstraintIntegerRange(1, 365))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('max_topic_number_in_favorite', $this->lang['config.max.topic.number.in.favorite'], $this->config->get_max_topic_number_in_favorite(),
+		$fieldset->add_field(new FormFieldNumberEditor('max_topic_number_in_favorite', $this->config_lang['forum.config.favorite.topics.number'], $this->config->get_max_topic_number_in_favorite(),
 			array('min' => 1, 'max' => 500, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 500))
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('edit_mark_enabled', $this->lang['config.edit.mark.enabled'], $this->config->is_edit_mark_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('edit_mark_enabled', $this->config_lang['forum.config.enable.edit.marker'], $this->config->is_edit_mark_enabled(),
 			array('class' => 'custom-checkbox')
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('multiple_posts_allowed', $this->lang['config.multiple.posts.allowed'], $this->config->are_multiple_posts_allowed(),
+		$fieldset->add_field(new FormFieldCheckbox('multiple_posts_allowed', $this->config_lang['forum.config.enable.multiple.posts'], $this->config->are_multiple_posts_allowed(),
 			array(
 				'class' => 'custom-checkbox',
-				'description' => $this->lang['config.multiple.posts.allowed.explain'])
+				'description' => $this->config_lang['forum.config.enable.multiple.posts.clue'])
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('connexion_form_displayed', $this->lang['config.connexion.form.displayed'], $this->config->is_connexion_form_displayed(),
+		$fieldset->add_field(new FormFieldCheckbox('connexion_form_displayed', $this->config_lang['forum.config.display.connexion.form'], $this->config->is_connexion_form_displayed(),
 			array('class' => 'custom-checkbox')
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('left_column_disabled', StringVars::replace_vars(LangLoader::get_message('config.hide_left_column', 'admin-common'), array('module' => "forum")), $this->config->is_left_column_disabled(),
+		$fieldset->add_field(new FormFieldCheckbox('left_column_disabled', StringVars::replace_vars($this->form_lang['form.hide.left.column'], array('module' => "forum")), $this->config->is_left_column_disabled(),
 			array('class' => 'custom-checkbox')
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('right_column_disabled', StringVars::replace_vars(LangLoader::get_message('config.hide_right_column', 'admin-common'), array('module' => "forum")), $this->config->is_right_column_disabled(),
+		$fieldset->add_field(new FormFieldCheckbox('right_column_disabled', StringVars::replace_vars($this->form_lang['form.hide.right.column'], array('module' => "forum")), $this->config->is_right_column_disabled(),
 			array('class' => 'custom-checkbox')
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('message_before_topic_title_displayed', $this->lang['config.message.before.topic.title.displayed'], $this->config->is_message_before_topic_title_displayed(),
+		$fieldset->add_field(new FormFieldCheckbox('message_before_topic_title_displayed', $this->config_lang['forum.config.display.message.before.topic'], $this->config->is_message_before_topic_title_displayed(),
 			array(
 				'class' => 'custom-checkbox',
 				'events' => array('click' => '
@@ -133,19 +134,19 @@ class AdminForumConfigController extends AdminModuleController
 
 		$fieldset->add_field(new FormFieldSpacer('1_separator', ''));
 
-		$fieldset->add_field(new FormFieldTextEditor('message_before_topic_title', $this->lang['config.message.before.topic.title'], $this->config->get_message_before_topic_title(),
+		$fieldset->add_field(new FormFieldTextEditor('message_before_topic_title', $this->config_lang['forum.config.message.before.topic'], $this->config->get_message_before_topic_title(),
 			array('maxlength' => 255, 'required' => true)
 		));
 
-		$fieldset->add_field(new FormFieldTextEditor('message_when_topic_is_unsolved', $this->lang['config.message.when.topic.is.unsolved'], $this->config->get_message_when_topic_is_unsolved(),
+		$fieldset->add_field(new FormFieldTextEditor('message_when_topic_is_unsolved', $this->config_lang['forum.config.status.message.unsolved'], $this->config->get_message_when_topic_is_unsolved(),
 			array('maxlength' => 255, 'required' => true)
 		));
 
-		$fieldset->add_field(new FormFieldTextEditor('message_when_topic_is_solved', $this->lang['config.message.when.topic.is.solved'], $this->config->get_message_when_topic_is_solved(),
+		$fieldset->add_field(new FormFieldTextEditor('message_when_topic_is_solved', $this->config_lang['forum.config.status.message.solved'], $this->config->get_message_when_topic_is_solved(),
 			array('maxlength' => 255, 'required' => true)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('message_before_topic_title_icon_displayed', $this->lang['config.message.before.topic.title.icon.displayed'], $this->config->is_message_before_topic_title_icon_displayed(),
+		$fieldset->add_field(new FormFieldCheckbox('message_before_topic_title_icon_displayed', $this->config_lang['forum.config.display.issue.status.icon'], $this->config->is_message_before_topic_title_icon_displayed(),
 			array(
 				'class' => 'custom-checkbox',
 				'description' => '<i class="fa fa-check success"></i> / <i class="fa fa-times error"></i>'
@@ -160,12 +161,12 @@ class AdminForumConfigController extends AdminModuleController
 			new ActionAuthorization($common_lang['authorizations.read'], Category::READ_AUTHORIZATIONS),
 			new VisitorDisabledActionAuthorization($common_lang['authorizations.write'], Category::WRITE_AUTHORIZATIONS),
 			new MemberDisabledActionAuthorization($common_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
-			new ActionAuthorization($this->lang['authorizations.read.topics.content'], ForumAuthorizationsService::READ_TOPICS_CONTENT_AUTHORIZATIONS),
-			new ActionAuthorization($this->lang['authorizations.flood'], ForumAuthorizationsService::FLOOD_AUTHORIZATIONS),
-			new ActionAuthorization($this->lang['authorizations.hide.edition.mark'], ForumAuthorizationsService::HIDE_EDITION_MARK_AUTHORIZATIONS),
-			new ActionAuthorization($this->lang['authorizations.unlimited.topics.tracking'], ForumAuthorizationsService::UNLIMITED_TOPICS_TRACKING_AUTHORIZATIONS),
+			new ActionAuthorization($this->lang['forum.authorizations.read.topics.content'], ForumAuthorizationsService::READ_TOPICS_CONTENT_AUTHORIZATIONS),
+			new ActionAuthorization($this->lang['forum.authorizations.flood'], ForumAuthorizationsService::FLOOD_AUTHORIZATIONS),
+			new ActionAuthorization($this->lang['forum.authorizations.hide.edition.mark'], ForumAuthorizationsService::HIDE_EDITION_MARK_AUTHORIZATIONS),
+			new ActionAuthorization($this->lang['forum.authorizations.unlimited.topics.tracking'], ForumAuthorizationsService::UNLIMITED_TOPICS_TRACKING_AUTHORIZATIONS),
 			new MemberDisabledActionAuthorization($common_lang['authorizations.categories_management'], ForumAuthorizationsService::CATEGORIES_MANAGEMENT_AUTHORIZATIONS),
-			new VisitorDisabledActionAuthorization($this->lang['authorizations.multiple.posts'], ForumAuthorizationsService::MULTIPLE_POSTS_AUTHORIZATIONS)
+			new VisitorDisabledActionAuthorization($this->lang['forum.authorizations.multiple.posts'], ForumAuthorizationsService::MULTIPLE_POSTS_AUTHORIZATIONS)
 		));
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());

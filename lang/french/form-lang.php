@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 23
+ * @version     PHPBoost 6.0 - last update: 2021 04 28
  * @since       PHPBoost 6.0 - 2021 04 18
 */
 
@@ -113,10 +113,6 @@ $lang['form.default.value']                  = 'Valeur par défaut';
 $lang['form.read.authorizations']            = 'Autorisations de lecture du champ dans le profil';
 $lang['form.actions.authorizations']         = 'Autorisations de lecture du champ dans la création ou la modification d\'un profil';
 
-// Messages
-$lang['form.message.success.add']  = 'Le champ du profil <b>:name</b> a été ajouté';
-$lang['form.message.success.edit'] = 'Le champ du profil <b>:name</b> a été modifié';
-
 // Labels
 $lang['form.name']                      = 'Nom';
 $lang['form.title']                     = 'Titre';
@@ -159,6 +155,18 @@ $lang['form.del.source']                = 'Supprimer la source';
 $lang['form.source.name']               = 'Nom de la source';
 $lang['form.source.url']                = 'Adresse de la source';
 $lang['form.captcha']                   = 'Code de vérification';
+
+// Messages
+$lang['form.message.success.add']  = 'Le champ du profil <b>:name</b> a été ajouté';
+$lang['form.message.success.edit'] = 'Le champ du profil <b>:name</b> a été modifié';
+
+// Modules
+$lang['form.forbidden.module'] = 'Modules interdits';
+$lang['form.comments.forbidden.module.clue'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer les commentaires';
+$lang['form.notation.forbidden.module.clue'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer la notation';
+$lang['form.new.content.forbidden.module.clue'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer les tags de nouveau contenu';
+$lang['form.hide.left.column'] = 'Masquer les blocs de gauche du site sur le module :module';
+$lang['form.hide.right.column'] = 'Masquer les blocs de droite du site sur le module :module';
 
 // Regex
 $lang['form.regex']            = 'Contrôle de la forme de l\'entrée';

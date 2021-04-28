@@ -1,4 +1,4 @@
-# INCLUDE forum_top #
+# INCLUDE FORUM_TOP #
 
 <script>
 	function check_form_post(){
@@ -70,13 +70,13 @@
 <article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-post" class="forum-content">
 	<header>
 		<h2>
-			<a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_TITLE_T}">{L_NEW_SUBJECT}</a> <span class="small"><em>{DESC}</em></span>
+			<a href="{U_CATEGORY}">{CATEGORY_NAME}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_TITLE_T}">{L_NEW_SUBJECT}</a> <span class="small"><em>{DESCRIPTION}</em></span>
 		</h2>
 	</header>
 
 	<div class="content">
 		<form action="{U_ACTION}" method="post" onsubmit="return check_form_post();">
-			# INCLUDE message_helper #
+			# INCLUDE MESSAGE_HELPER #
 
 			<div class="fieldset-content">
 				<p class="align-center">{L_REQUIRE}</p>
@@ -97,8 +97,8 @@
 						<div class="form-field"><input type="text" id="title" name="title" value="{TITLE}"></div>
 					</div>
 					<div class="form-element">
-						<label for="desc">{L_DESC}</label>
-						<div class="form-field"><input type="text" id="desc" name="desc" value="{DESC}"></div>
+						<label for="desc">{L_DESCRIPTION}</label>
+						<div class="form-field"><input type="text" id="desc" name="desc" value="{DESCRIPTION}"></div>
 					</div>
 					<div class="form-element form-element-textarea">
 						<label for="content">* {L_MESSAGE}</label>
@@ -192,9 +192,9 @@
 					<button type="button" class="button preview-button" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
 					<button type="reset" class="button reset-button" value="true">{L_RESET}</button>
 
-					# IF C_DISPLAY_MSG #
+					# IF C_DISPLAY_ISSUE_STATUS #
 						<p>
-							<a href="#" onclick="XMLHttpRequest_change_statut();return false;" id="forum_change_img"># IF C_ICON_DISPLAY_MSG #<i class="{ICON_DISPLAY_MSG}" aria-hidden="true"></i># ENDIF #</a> <a href="#" onclick="XMLHttpRequest_change_statut();return false;"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>
+							<a href="#" onclick="XMLHttpRequest_change_statut();return false;" id="forum_change_img"># IF C_DISPLAY_ISSUE_ICON #<i class="{ISSUE_ICON}" aria-hidden="true"></i># ENDIF #</a> <a href="#" onclick="XMLHttpRequest_change_statut();return false;"><span id="forum_change_msg">{L_DEFAULT_ISSUE_STATUS}</span></a>
 						</p>
 					# ENDIF #
 				</fieldset>
@@ -202,8 +202,8 @@
 		</form>
 	</div>
 	<footer class="footer-forum">
-		<a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_TITLE_T}">{L_NEW_SUBJECT}</a> <span class="small"><em>{DESC}</em></span>
+		<a href="{U_CATEGORY}">{CATEGORY_NAME}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_TITLE_T}">{L_NEW_SUBJECT}</a> <span class="small"><em>{DESCRIPTION}</em></span>
 	</footer>
 </article>
 
-# INCLUDE forum_bottom #
+# INCLUDE FORUM_BOTTOM #

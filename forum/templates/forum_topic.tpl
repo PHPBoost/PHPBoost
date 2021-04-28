@@ -1,4 +1,4 @@
-# INCLUDE forum_top #
+# INCLUDE FORUM_TOP #
 
 <script>
 	function check_form_msg(){
@@ -118,7 +118,7 @@
 </script>
 
 <span id="go-top"></span>
-<article id="article-forum-{ID}" class="forum-item forum-content category-{IDCAT}" itemscope="itemscope" itemtype="https://schema.org/Creativework">
+<article id="article-forum-{ID}" class="forum-item forum-content category-{CATEGORY_ID}" itemscope="itemscope" itemtype="https://schema.org/Creativework">
 	<header>
 		# IF C_PAGINATION #<span class="float-left"># INCLUDE PAGINATION #</span># ENDIF #
 		# IF C_FORUM_MODERATOR #
@@ -133,7 +133,7 @@
 			</div>
 		# ENDIF #
 		<h2>
-			{U_FORUM_CAT} <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a itemscope="name" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
+			{U_CATEGORY} <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a itemscope="name" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESCRIPTION}</em></span>
 		</h2>
 	</header>
 
@@ -215,7 +215,7 @@
 							# IF msg.C_USER_PM #
 								<a href="{msg.U_USER_PM}" class="button submit smaller user-pm" aria-label="${LangLoader::get_message('pm', 'main')}"><i class="fa fa-people-arrows fa-fw"></i></a>
 							# ENDIF #
-							# IF msg.C_USER_MAIL #
+							# IF msg.C_USER_EMAIL #
 								<a href="{msg.U_USER_MAIL}" class="button submit smaller user-mail" aria-label="${LangLoader::get_message('mail', 'main')}"><i class="fa iboost fa-iboost-email fa-fw"></i></a>
 							# ENDIF #
 							# START msg.ext_fields #
@@ -259,12 +259,12 @@
 					</div>
 					<div class="message-infos">
 						<time datetime="{msg.TOPIC_DATE_FULL}" itemprop="datePublished">${LangLoader::get_message('on', 'main')} {msg.TOPIC_DATE_FULL}</time>
-						<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" aria-label="${LangLoader::get_message('link.to.anchor', 'comments-common')}">\#{msg.ID}</i></a>
+						<a href="topic{msg.U_VARS_ANCHOR}#m{msg.ID}" aria-label="${LangLoader::get_message('link.to.anchor', 'comments-common')}">\#{msg.ID}</i></a>
 					</div>
 				</div>
 			</div>
 			<div class="message-content" >
-				# IF msg.L_FORUM_QUOTE_LAST_MSG # <p class="text-strong">{msg.L_FORUM_QUOTE_LAST_MSG}</p> # ENDIF #
+				# IF msg.L_FORUM_QUOTE_LAST_MESSAGE # <p class="text-strong">{msg.L_FORUM_QUOTE_LAST_MESSAGE}</p> # ENDIF #
 
 				{msg.FORUM_MSG_CONTENT}
 
@@ -298,7 +298,7 @@
 					</div>
 					<div class="message-user-rank">
 						# IF msg.C_USER_RANK #<span class="pinned {msg.FORUM_USER_LEVEL}">{msg.USER_RANK}</span># ELSE #${LangLoader::get_message('banned', 'user-common')}# ENDIF #
-						# IF msg.C_USER_IMG_ASSOC #<img class="valign-middle" src="{msg.USER_IMG_ASSOC}" alt="${LangLoader::get_message('rank', 'main')}" /># ENDIF #
+						# IF msg.C_USER_RANK_ICON #<img class="valign-middle" src="{msg.USER_RANK_ICON}" alt="${LangLoader::get_message('rank', 'main')}" /># ENDIF #
 					</div>
 				</div>
 				<div class="message-user-management">
@@ -318,7 +318,7 @@
 		# IF C_PAGINATION ## INCLUDE PAGINATION ## ENDIF #
 	</div>
 	<footer class="footer-forum flex-between">
-		<div>{U_FORUM_CAT} <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a itemscope="name" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span></div>
+		<div>{U_CATEGORY} <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a itemscope="name" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESCRIPTION}</em></span></div>
 		<div class="controls">
 			<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 			# IF C_FORUM_MODERATOR #
@@ -363,4 +363,4 @@
 	# ENDIF #
 </article>
 
-# INCLUDE forum_bottom #
+# INCLUDE FORUM_BOTTOM #

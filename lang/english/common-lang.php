@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 22
+ * @version     PHPBoost 6.0 - last update: 2021 04 28
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,27 +13,21 @@
 #                     English                      #
 ####################################################
 
-$lang['common.title']       = 'Title';
-$lang['common.name']        = 'Name';
-$lang['common.avatar']      = 'Avatar';
-$lang['common.options']     = 'Options';
-$lang['common.other']       = 'Other';
-$lang['common.back']        = 'Back';
-$lang['common.root']        = 'Root';
-$lang['common.description'] = 'Description';
-$lang['common.module']      = 'Module';
-$lang['common.actions']     = 'Actions';
-$lang['common.controls']    = 'Controls';
-$lang['common.syndication'] = 'Syndication';
-
-$lang['common.update']      = 'Update';
-$lang['common.unspecified'] = 'Unspecified';
-$lang['common.unlimited']   = 'Unlimited';
-$lang['common.status']      = 'Status';
-
+$lang['common.title']        = 'Title';
+$lang['common.name']         = 'Name';
+$lang['common.home']         = 'Home';
+$lang['common.avatar']       = 'Avatar';
+$lang['common.options']      = 'Options';
+$lang['common.other']        = 'Other';
+$lang['common.back']         = 'Back';
+$lang['common.root']         = 'Root';
+$lang['common.description']  = 'Description';
+$lang['common.content']      = 'Content';
+$lang['common.module']       = 'Module';
+$lang['common.controls']     = 'Controls';
 $lang['common.participants'] = 'Participants';
-
-$LANG['common.xml.lang'] = 'en';
+$lang['common.suggestions']  = 'Suggestions';
+$lang['common.update']       = 'Update';
 
 $lang['common.by']  = 'By';
 $lang['common.the'] = 'The';
@@ -41,72 +35,60 @@ $lang['common.on']  = 'on';
 $lang['common.in']  = 'In';
 $lang['common.of']  = 'Of';
 $lang['common.and'] = 'And';
-
-$lang['common.read.more']      = 'Read more';
-$lang['common.suggestions']    = 'Suggestions';
-$lang['common.link.to.anchor'] = 'Link to anchor';
-
-$lang['common.enable']   = 'Enable';
-$lang['common.disable']  = 'Disable';
-$lang['common.enabled']  = 'Enabled';
-$lang['common.disabled'] = 'Disabled';
-
-$lang['common.display']   = 'Display';
-$lang['common.displayed'] = 'Displayed';
-$lang['common.hide']      = 'Hide';
-$lang['common.hidden']    = 'Hidden';
-
 $lang['common.yes'] = 'Yes';
 $lang['common.no']  = 'No';
 
-$lang['common.all']     = 'All';
-$lang['common.always']  = 'Always';
-$lang['common.unknown'] = 'Unknown';
-$lang['common.none']    = 'None';
-$lang['common.none.e']  = 'None';
-$lang['common.never']   = 'Never';
+$lang['common.always']      = 'Always';
+$lang['common.unknown']     = 'Unknown';
+$lang['common.never']       = 'Never';
+$lang['common.unspecified'] = 'Unspecified';
 
-$lang['common.add']        = 'Add';
-$lang['common.delete']     = 'Delete';
-$lang['common.edit']       = 'Edit';
-$lang['common.apply']      = 'Apply';
-$lang['common.validation'] = 'Validation';
-$lang['common.moderation'] = 'Moderation';
-$lang['common.reorder']    = 'Reorder';
-$lang['common.respond']    = 'Respond';
-$lang['common.loading']    = 'Loading';
-
-$lang['common.syndication']      = 'Syndication';
-$lang['common.syndication.rss']  = 'RSS';
-$lang['common.syndication.atom'] = 'ATOM';
-
-$lang['common.size']         = 'Size';
-$lang['common.unknown.size'] = 'Unknown size';
-
-$lang['common.items.number'] = 'Items number';
-$lang['common.no.item.now']  = 'No item is available for the moment';
-$lang['common.see.details']  = 'See details';
-
-$lang['common.views'] = 'views';
-$lang['common.view']  = 'view';
-$lang['common.views.number'] = 'Views number';
-
-$lang['common.keyword']  = 'Keyword';
-$lang['common.keywords'] = 'Keywords';
-$lang['common.source']   = 'Source';
-$lang['common.sources']  = 'Sources';
-
-$lang['common.maximum'] = 'Maximum';
-$lang['common.minimum'] = 'Minimum';
-
-$lang['common.filters']            = 'Filters';
-$lang['common.filter.items']       = 'Filter items';
-$lang['common.click.to.select']    = 'Click to select an option';
-$lang['common.table.footer.stats'] = ':start to :end of :total elements';
+// Actions
+$lang['common.read.more']    = 'Read more';
+$lang['common.add']          = 'Add';
+$lang['common.delete']       = 'Delete';
+$lang['common.edit']         = 'Edit';
+$lang['common.apply']        = 'Apply';
+$lang['common.validation']   = 'Validation';
+$lang['common.moderation']   = 'Moderation';
+$lang['common.reorder']      = 'Reorder';
+$lang['common.respond']      = 'Respond';
+$lang['common.loading']      = 'Loading';
+$lang['common.filter']       = 'Filter';
+$lang['common.filters']      = 'Filters';
+$lang['common.filter.items'] = 'Filter items';
+$lang['common.actions']      = 'Actions';
+$lang['common.enable']       = 'Enable';
+$lang['common.disable']      = 'Disable';
+$lang['common.enabled']      = 'Enabled';
+$lang['common.disabled']     = 'Disabled';
+$lang['common.display']      = 'Display';
+$lang['common.displayed']    = 'Displayed';
+$lang['common.hide']         = 'Hide';
+$lang['common.hidden']       = 'Hidden';
+$lang['common.close']        = 'Close';
 
 // Constraint
 $lang['common.constraint.required']     = 'Required';
 $lang['common.constraint.not.required'] = 'Not required';
+
+// Count
+$lang['common.items.number'] = 'Items number';
+$lang['common.no.item.now']  = 'No item is available for the moment';
+$lang['common.see.details']  = 'See details';
+$lang['common.views']        = 'views';
+$lang['common.view']         = 'view';
+$lang['common.views.number'] = 'Views number';
+$lang['common.maximum']      = 'Maximum';
+$lang['common.minimum']      = 'Minimum';
+$lang['common.size']         = 'Size';
+$lang['common.unknown.size'] = 'Unknown size';
+$lang['common.unlimited']    = 'Unlimited';
+$lang['common.all']          = 'All';
+$lang['common.all.e']        = 'All';
+$lang['common.none']         = 'None';
+$lang['common.none.e']       = 'None';
+$lang['common.item.rate']    = ':start to :end of :total elements';
 
 // Formatter
 $lang['common.hidden.text']            = 'This text is hidden, click here to reveal its contents.';
@@ -114,12 +96,23 @@ $lang['common.hide.text']              = 'Click here to hide this text.';
 $lang['common.copy.to.clipboard']      = 'Copy to clipboard';
 $lang['common.copy.link.to.clipboard'] = 'Copy link to clipboard';
 
+// Links
+$lang['common.link'] = 'Link';
+$lang['common.link.to.anchor'] = 'Link to anchor';
+$lang['common.keyword']  = 'Keyword';
+$lang['common.keywords'] = 'Keywords';
+$lang['common.source']   = 'Source';
+$lang['common.sources']  = 'Sources';
+
 // List order
 $lang['common.listorder.item.start']   = '{startItem}';
 $lang['common.listorder.item.end']     = '{endItem}';
 $lang['common.listorder.items.number'] = '{itemsNumber}';
 $lang['common.listorder.page.number']  = '{pageNumber}';
 $lang['common.listorder.pages.number'] = '{pagesNumber}';
+
+// Locale
+$lang['common.xml.lang'] = 'en';
 
 // More
 $lang['common.author']        = 'Author';
@@ -169,6 +162,7 @@ $lang['common.select']              = 'Select';
 $lang['common.select.element']      = 'Select this element';
 $lang['common.select.elements']     = 'Select elements';
 $lang['common.select.all.elements'] = 'Select all elements';
+$lang['common.click.to.select'] = 'Click to select an option';
 
 // Sort
 $lang['common.filters']                 = 'Filters';
@@ -194,6 +188,11 @@ $lang['common.status.draft']         = 'Draft';
 $lang['common.status.published']     = 'Published';
 $lang['common.status.deffered.date'] = 'Differed publication';
 $lang['common.status.last.update']   = 'Last updated on ';
+
+// Syndication
+$lang['common.syndication']      = 'Syndication';
+$lang['common.syndication.rss']  = 'RSS';
+$lang['common.syndication.atom'] = 'ATOM';
 
 // Thumbnails
 $lang['common.thumbnail.none']    = 'No thumbnail';

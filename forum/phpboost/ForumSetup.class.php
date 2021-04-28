@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 10
+ * @version     PHPBoost 6.0 - last update: 2021 04 28
  * @since       PHPBoost 3.0 - 2010 05 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -28,7 +28,7 @@ class ForumSetup extends DefaultModuleSetup
 	/**
 	 * @var string[string] localized messages
 	 */
-	private $messages;
+	private $install_lang;
 
 	public static function __static()
 	{
@@ -258,7 +258,7 @@ class ForumSetup extends DefaultModuleSetup
 
 	private function insert_data()
 	{
-		$this->messages = LangLoader::get('install', 'forum');
+		$this->install_lang = LangLoader::get('install', 'forum');
 		$this->create_member_extended_field();
 		$this->insert_forum_cats_data();
 		$this->insert_forum_topics_data();
@@ -281,9 +281,9 @@ class ForumSetup extends DefaultModuleSetup
 
 		//Skype
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['extended.field.skype']);
+		$extended_field->set_name($lang['forum.extended.field.skype']);
 		$extended_field->set_field_name('user_skype');
-		$extended_field->set_description($lang['extended.field.skype.explain']);
+		$extended_field->set_description($lang['forum.extended.field.skype.clue']);
 		$extended_field->set_field_type('MemberShortTextExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(false);
@@ -293,9 +293,9 @@ class ForumSetup extends DefaultModuleSetup
 
 		//Sign
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['extended.field.signing']);
+		$extended_field->set_name($lang['forum.extended.field.signing']);
 		$extended_field->set_field_name('user_sign');
-		$extended_field->set_description($lang['extended.field.signing.explain']);
+		$extended_field->set_description($lang['forum.extended.field.signing.clue']);
 		$extended_field->set_field_type('MemberLongTextExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(false);
@@ -307,9 +307,9 @@ class ForumSetup extends DefaultModuleSetup
 	{
 		$this->querier->insert(self::$forum_cats_table, array(
 			'id' => 1,
-			'name' => $this->messages['default.category.name'],
-			'rewrited_name' => Url::encode_rewrite($this->messages['default.category.name']),
-			'description' => $this->messages['default.category.description'],
+			'name' => $this->install_lang['forum.default.category.name'],
+			'rewrited_name' => Url::encode_rewrite($this->install_lang['forum.default.category.name']),
+			'description' => $this->install_lang['forum.default.category.description'],
 			'c_order' => 1,
 			'auth' => '',
 			'id_parent' => 0,
@@ -319,9 +319,9 @@ class ForumSetup extends DefaultModuleSetup
 
 		$this->querier->insert(self::$forum_cats_table, array(
 			'id' => 2,
-			'name' => $this->messages['default.board.name'],
-			'rewrited_name' => Url::encode_rewrite($this->messages['default.board.name']),
-			'description' => $this->messages['default.board.description'],
+			'name' => $this->install_lang['forum.default.board.name'],
+			'rewrited_name' => Url::encode_rewrite($this->install_lang['forum.default.board.name']),
+			'description' => $this->install_lang['forum.default.board.description'],
 			'c_order' => 1,
 			'auth' => '',
 			'id_parent' => 1,
@@ -335,8 +335,8 @@ class ForumSetup extends DefaultModuleSetup
 		$this->querier->insert(self::$forum_topics_table, array(
 			'id' => 1,
 			'id_category' => 2,
-			'title' => $this->messages['sample.thread.title'],
-			'subtitle' => $this->messages['sample.thread.subtitle'],
+			'title' => $this->install_lang['forum.sample.thread.title'],
+			'subtitle' => $this->install_lang['forum.sample.thread.subtitle'],
 			'user_id' => 1,
 			'nbr_msg' => 1,
 			'nbr_views' => 0,
@@ -357,7 +357,7 @@ class ForumSetup extends DefaultModuleSetup
 			'id' => 1,
 		 	'idtopic' => 1,
 			'user_id' => 1,
-			'content' => $this->messages['sample.thread.message.content'],
+			'content' => $this->install_lang['forum.sample.thread.message.content'],
 			'timestamp' => time(),
 			'timestamp_edit' => 0,
 			'user_id_edit' => 0,
@@ -372,77 +372,77 @@ class ForumSetup extends DefaultModuleSetup
 	{
 		$this->querier->insert(self::$forum_ranks_table, array(
 			'id' => 1,
-			'name' => $this->messages['rank.admin'],
+			'name' => $this->install_lang['forum.rank.administrator'],
 			'msg' => -2,
 			'icon' => 'rank_admin.png',
 			'special' => 1
 		));
 		$this->querier->insert(self::$forum_ranks_table, array(
 			'id' => 2,
-			'name' => $this->messages['rank.modo'],
+			'name' => $this->install_lang['forum.rank.moderator'],
 			'msg' => -1,
 			'icon' => 'rank_modo.png',
 			'special' => 1
 		));
 		$this->querier->insert(self::$forum_ranks_table, array(
 			'id' => 3,
-			'name' => $this->messages['rank.inactiv'],
+			'name' => $this->install_lang['forum.rank.inactiv'],
 			'msg' => 0,
 			'icon' => 'rank_0.png',
 			'special' => 0
 		));
 		$this->querier->insert(self::$forum_ranks_table, array(
 			'id' => 4,
-			'name' => $this->messages['rank.fronde'],
+			'name' => $this->install_lang['forum.rank.slingshot'],
 			'msg' => 1,
 			'icon' => 'rank_0.png',
 			'special' => 0
 		));
 		$this->querier->insert(self::$forum_ranks_table, array(
 			'id' => 5,
-			'name' => $this->messages['rank.minigun'],
+			'name' => $this->install_lang['forum.rank.minigun'],
 			'msg' => 25,
 			'icon' => 'rank_1.png',
 			'special' => 0
 		));
 		$this->querier->insert(self::$forum_ranks_table, array(
 			'id' => 6,
-			'name' => $this->messages['rank.fuzil'],
+			'name' => $this->install_lang['forum.rank.fuzil'],
 			'msg' => 50,
 			'icon' => 'rank_2.png',
 			'special' => 0
 		));
 		$this->querier->insert(self::$forum_ranks_table, array(
 			'id' => 7,
-			'name' => $this->messages['rank.bazooka'],
+			'name' => $this->install_lang['forum.rank.bazooka'],
 			'msg' => 100,
 			'icon' => 'rank_3.png',
 			'special' => 0
 		));
 		$this->querier->insert(self::$forum_ranks_table, array(
 			'id' => 8,
-			'name' => $this->messages['rank.roquette'],
+			'name' => $this->install_lang['forum.rank.rocket'],
 			'msg' => 250,
 			'icon' => 'rank_4.png',
 			'special' => 0
 		));
 		$this->querier->insert(self::$forum_ranks_table, array(
 			'id' => 9,
-			'name' => $this->messages['rank.mortier'],
+			'name' => $this->install_lang['forum.rank.mortar'],
 			'msg' => 500,
 			'icon' => 'rank_5.png',
 			'special' => 0
 		));
 		$this->querier->insert(self::$forum_ranks_table, array(
 			'id' => 10,
-			'name' => $this->messages['rank.missile'],
+			'name' => $this->install_lang['forum.rank.missile'],
 			'msg' => 1000,
 			'icon' => 'rank_6.png',
 			'special' => 0
 		));
 		$this->querier->insert(self::$forum_ranks_table, array(
 			'id' => 11,
-			'name' => $this->messages['rank.fusee'],
+			'name' => $this->install_lang['forum.rank.spaceship'],
 			'msg' => 1500,
 			'icon' => 'rank_special.png',
 			'special' => 0
