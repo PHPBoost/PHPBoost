@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 10 10
+ * @version     PHPBoost 6.0 - last update: 2021 04 29
  * @since       PHPBoost 3.0 - 2011 04 10
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -30,6 +30,7 @@ class ThemeConfiguration
 	private $variable_width;
 	private $width;
 	private $pictures;
+	private $parent_theme;
 	private $repository;
 
 	public function __construct($config_ini_file, $desc_ini_file)
@@ -132,6 +133,11 @@ class ThemeConfiguration
 		return '';
 	}
 
+	public function get_parent_theme()
+	{
+		return $this->parent_theme;
+	}
+
 	public function get_repository()
 	{
 		return $this->repository;
@@ -162,6 +168,7 @@ class ThemeConfiguration
 		$this->variable_width    = (bool)$config['variable_width'];
 		$this->width             = isset($config['width']) ? $config['width'] : '';
 		$this->pictures          = isset($config['pictures']) ? $this->parse_pictures_array($config['pictures']) : array();
+		$this->parent_theme      = !empty($config['parent_theme']) ? $config['parent_theme'] : '__default__';
 		$this->repository        = !empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
 
 	}

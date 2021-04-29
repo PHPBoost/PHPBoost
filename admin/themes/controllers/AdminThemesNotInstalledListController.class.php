@@ -152,7 +152,7 @@ class AdminThemesNotInstalledListController extends AdminController
 		$error = ThemesManager::get_error();
 		if ($error !== null)
 		{
-			$this->view->put('MSG', MessageHelper::display($error, MessageHelper::WARNING, 10));
+			$this->view->put('MSG', MessageHelper::display($error, MessageHelper::WARNING));
 		}
 		else
 		{

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 04 15
+ * @version     PHPBoost 6.0 - last update: 2021 04 29
  * @since       PHPBoost 3.0 - 2011 04 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -40,6 +40,11 @@ $lang['themes.select_all_themes'] = 'Select all themes';
 //Warnings
 $lang['themes.warning_before_delete'] = '<span class="message-helper bgc warning">A theme must be enabled, disabled or deleted only from this page. <br />Don\'t remove it directly from the FTP and/or the database.</span><span class="message-helper bgc notice">The installed themes are automatically enabled. Do not forget to disable them if necessary.</span>';
 $lang['themes.add.warning_before_install'] = '<span class="message-helper bgc notice">The installed themes are automatically enabled. Do not forget to disable them if necessary.</span>';
+$lang['themes.default.theme.not.removable'] = 'Default theme cannot be uninstalled';
+$lang['themes.parent.theme.not.installed'] = 'Parent theme (<b>:id_parent</b>) of this theme is not installed, please install it before this one';
+$lang['themes.parent.of.default.theme'] = 'The theme <b>:name</b> is the parent of the site\'s default theme (<b>:default_theme</b>), it cannot be uninstalled';
+$lang['themes.theme.childs.list.uninstallation.warning'] = 'Themes <b>:themes_names</b>, childs of theme <b>:name</b> will be uninstalled too';
+$lang['themes.theme.child.uninstallation.warning'] = 'Theme <b>:theme_name</b>, child of theme <b>:name</b> will be uninstalled too';
 
 //Upload
 $lang['themes.upload_theme'] = 'Upload theme';

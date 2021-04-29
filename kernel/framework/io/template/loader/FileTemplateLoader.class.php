@@ -12,7 +12,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 04 29
  * @since       PHPBoost 3.0 - 2009 06 18
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -31,6 +31,7 @@ class FileTemplateLoader implements TemplateLoader
 
 	private $templates_folder;
 	private $default_templates_folder;
+	private $parent_theme_templates_folder;
 	private $theme_templates_folder;
 
 	/**
@@ -149,6 +150,7 @@ class FileTemplateLoader implements TemplateLoader
 
 		$this->templates_folder = PATH_TO_ROOT . '/templates/';
 		$this->default_templates_folder = $this->templates_folder . '__default__/';
+		$this->parent_theme_templates_folder = $this->templates_folder . ThemesManager::get_theme(AppContext::get_current_user()->get_theme())->get_configuration()->get_parent_theme() . '/';
 		$this->theme_templates_folder = $this->templates_folder . AppContext::get_current_user()->get_theme() . '/';
 
 		if (empty($this->module) || !TextHelper::strpos($this->filepath, '/'))
@@ -175,6 +177,7 @@ class FileTemplateLoader implements TemplateLoader
 	{
 		$this->get_template_real_filepaths_and_data_path(array(
 			$this->theme_templates_folder . $this->filepath,
+			$this->parent_theme_templates_folder . $this->filepath,
 			$this->default_templates_folder . $this->filepath
 		));
 	}
@@ -183,6 +186,7 @@ class FileTemplateLoader implements TemplateLoader
 	{
 		$this->get_template_real_filepaths_and_data_path(array(
 			$this->theme_templates_folder . $this->filepath,
+			$this->parent_theme_templates_folder . $this->filepath,
 			($this->module == '__default__' ? $this->templates_folder : $this->default_templates_folder) . $this->filepath
 		));
 	}
@@ -191,6 +195,7 @@ class FileTemplateLoader implements TemplateLoader
 	{
 		$this->get_template_real_filepaths_and_data_path(array(
 			$this->theme_templates_folder . 'modules/' . $this->module . '/' . $this->file,
+			$this->parent_theme_templates_folder . 'modules/' . $this->module . '/' . $this->file,
 			PATH_TO_ROOT . '/' . $this->module . '/templates/' . $this->file
 		));
 	}

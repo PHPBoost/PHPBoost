@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 18
+ * @version     PHPBoost 6.0 - last update: 2021 04 29
  * @since       PHPBoost 3.0 - 2011 04 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -138,6 +138,10 @@ class ThemesManager
 			{
 				self::$error = LangLoader::get_message('misfit.phpboost', 'status-messages-common');
 			}
+			else if (!in_array($configuration->get_parent_theme(), $this->get_themes_list()))
+			{
+				self::$error = StringVars::replace_vars(LangLoader::get_message('themes.parent.theme.not.installed', 'admin-themes-common'), array('id_parent' => $configuration->get_parent_theme()));
+			}
 			else
 			{
 				ThemesConfig::load()->add_theme($theme);
@@ -157,15 +161,27 @@ class ThemesManager
 			$default_theme = self::get_default_theme();
 			if (self::get_theme($theme_id)->get_id() !== $default_theme)
 			{
+				$theme_childs_list = self::get_theme_childs_list($theme_id);
+
 				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('theme' => $default_theme),
-					'WHERE theme=:old_theme', array('old_theme' => $theme_id
+					'WHERE theme IN :old_theme', array('old_theme' => array_merge(array($theme_id), $theme_childs_list)
 				));
 
+				foreach ($theme_childs_list as $id)
+				{
+					ThemesConfig::load()->remove_theme_by_id($id);
+				}
 				ThemesConfig::load()->remove_theme_by_id($theme_id);
 				ThemesConfig::save();
 
 				if ($drop_files)
 				{
+					foreach ($theme_childs_list as $id)
+					{
+						$folder = new Folder(PATH_TO_ROOT . '/templates/' . $id);
+						$folder->delete();
+					}
+
 					$folder = new Folder(PATH_TO_ROOT . '/templates/' . $theme_id);
 					$folder->delete();
 				}
@@ -239,6 +255,31 @@ class ThemesManager
 			ThemesConfig::load()->update($theme);
 			ThemesConfig::save();
 		}
+	}
+
+	private function get_themes_list()
+	{
+		$themes_list = array();
+		$folder_containing_phpboost_themes = new Folder(PATH_TO_ROOT .'/templates/');
+		foreach ($folder_containing_phpboost_themes->get_folders() as $folder)
+		{
+			$themes_list[] = $folder->get_name();
+		}
+
+		return $themes_list;
+	}
+
+	public static function get_theme_childs_list($theme_id)
+	{
+		$themes_childs_list = array();
+		$folder_containing_phpboost_themes = new Folder(PATH_TO_ROOT .'/templates/');
+		foreach ($folder_containing_phpboost_themes->get_folders() as $folder)
+		{
+			if (self::get_theme_existed($theme_id) && ThemesManager::get_theme($folder->get_name())->get_configuration()->get_parent_theme() == $theme_id)
+				$themes_childs_list[] = $folder->get_name();
+		}
+
+		return $themes_childs_list;
 	}
 
 	public static function get_error()

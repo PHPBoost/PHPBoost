@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 04 29
  * @since       PHPBoost 3.0 - 2011 04 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -37,6 +37,7 @@ class AdminThemeDeleteController extends AdminController
 
 		if ($this->theme_exists())
 		{
+			$this->check_requested_theme();
 			$this->build_form();
 			if ($this->submit_button->has_been_submited() && $this->form->validate())
 			{
@@ -44,6 +45,27 @@ class AdminThemeDeleteController extends AdminController
 				$this->delete_theme($drop_files);
 
 				AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), LangLoader::get_message('process.success', 'status-messages-common'));
+			}
+
+			if (!$this->multiple)
+			{
+				$theme_childs_list = ThemesManager::get_theme_childs_list($this->theme_id);
+				if ($theme_childs_list)
+				{
+					$requested_theme_name = ThemesManager::get_theme($this->theme_id)->get_configuration()->get_name();
+					$theme_childs_list_names = array();
+					foreach ($theme_childs_list as $id)
+					{
+						$theme_childs_list_names[] = ThemesManager::get_theme($id)->get_configuration()->get_name();
+					}
+
+					if (count($theme_childs_list_names) > 1)
+						$warning_message = StringVars::replace_vars($this->lang['themes.theme.childs.list.uninstallation.warning'], array('themes_names' => implode('</b>, <b>', $theme_childs_list_names), 'name' => $requested_theme_name));
+					else
+						$warning_message = StringVars::replace_vars($this->lang['themes.theme.child.uninstallation.warning'], array('theme_name' => $theme_childs_list_names[0], 'name' => $requested_theme_name));
+					
+					$this->tpl->put('MSG', MessageHelper::display($warning_message, MessageHelper::WARNING));
+				}
 			}
 
 			$this->tpl->put('FORM', $this->form->display());
@@ -60,7 +82,7 @@ class AdminThemeDeleteController extends AdminController
 	private function init()
 	{
 		$this->lang = LangLoader::get('admin-themes-common');
-		$this->tpl = new StringTemplate('# INCLUDE FORM #');
+		$this->tpl = new StringTemplate('# INCLUDE MSG ## INCLUDE FORM #');
 		$this->tpl->add_lang($this->lang);
 	}
 
@@ -83,6 +105,37 @@ class AdminThemeDeleteController extends AdminController
 		$form->add_button($this->submit_button);
 
 		$this->form = $form;
+	}
+
+	private function check_requested_theme()
+	{
+		$try_to_delete_default = $try_to_delete_default_parent = false;
+		$default_theme_parent = ThemesManager::get_theme(ThemesManager::get_default_theme())->get_configuration()->get_parent_theme();
+		$default_theme_parent_name = ThemesManager::get_theme($default_theme_parent)->get_configuration()->get_name();
+		$default_theme_name = ThemesManager::get_theme(ThemesManager::get_default_theme())->get_configuration()->get_name();
+		$default_theme_parent_error = StringVars::replace_vars($this->lang['themes.parent.of.default.theme'], array('name' => $default_theme_parent_name, 'default_theme' => $default_theme_name));
+		if ($this->multiple)
+		{
+			foreach ($this->theme_id as $id)
+			{
+				if ($id == ThemesManager::get_default_theme())
+					$try_to_delete_default = true;
+				else if ($id == $default_theme_parent)
+					$try_to_delete_default_parent = true;
+			}
+		}
+		else
+		{
+			if ($this->theme_id == ThemesManager::get_default_theme())
+				$try_to_delete_default = true;
+			else if ($this->theme_id == $default_theme_parent)
+				$try_to_delete_default_parent = true;
+		}
+
+		if ($try_to_delete_default)
+			AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), $this->lang['themes.default.theme.not.removable'], MessageHelper::WARNING);
+		else if ($try_to_delete_default_parent)
+			AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), $default_theme_parent_error, MessageHelper::WARNING);
 	}
 
 	private function delete_theme($drop_files)
