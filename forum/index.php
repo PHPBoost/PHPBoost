@@ -24,8 +24,9 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('ForumCategoriesFormController', '`^/categories/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('DefaultDeleteCategoryController', '`^/categories/([0-9]+)/delete/?$`', array('id')),
 
+	//Home
 	new UrlControllerMapper('ForumHomeController',  '`^/([0-9]+)-([a-z0-9-_]+)/?$`', array('cat', 'rewrited_name')),
-	new UrlControllerMapper('ForumHomeController', '`^/?$`'),
+	new UrlControllerMapper('ForumHomeController', '`^/?$`')
 );
 DispatchManager::dispatch($url_controller_mappers);
 ?>

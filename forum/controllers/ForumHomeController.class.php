@@ -35,6 +35,7 @@ class ForumHomeController extends ModuleController
 		));
 
 	}
+
 	private function build_view()
 	{
 		global $LANG, $nbr_msg_not_read, $top_view, $bottom_view;
@@ -117,10 +118,10 @@ class ForumHomeController extends ModuleController
 			if ($row['id_parent'] == Category::ROOT_CATEGORY) //Si c'est une catégorie
 			{
 				$this->view->assign_block_vars('forums_list.cats', array(
-					'CATEGORY_ID'         => $row['cid'],
-					'CATEGORY_NAME'          => $row['name'],
+					'CATEGORY_ID'   => $row['cid'],
+					'CATEGORY_NAME' => $row['name'],
 					'REWRITED_NAME' => $row['rewrited_name'],
-					'U_CATEGORY'  => ForumUrlBuilder::display_category($row['cid'], $row['rewrited_name'])->rel()
+					'U_CATEGORY'    => ForumUrlBuilder::display_category($row['cid'], $row['rewrited_name'])->rel()
 				));
 				$display_sub_cats = $row['cat_status'] == ForumCategory::STATUS_UNLOCKED;
 			}
@@ -134,10 +135,10 @@ class ForumHomeController extends ModuleController
 					if ($display_cat) //Affichage des forums d'une catégorie, ajout de la catégorie.
 					{
 						$this->view->assign_block_vars('forums_list.cats', array(
-							'CATEGORY_ID'         => $this->category->get_id(),
-							'CATEGORY_NAME'          => $this->category->get_name(),
+							'CATEGORY_ID'   => $this->category->get_id(),
+							'CATEGORY_NAME' => $this->category->get_name(),
 							'REWRITED_NAME' => $this->category->get_rewrited_name(),
-							'U_CATEGORY'  => PATH_TO_ROOT . '/forum/' . url('index.php?id=' . $this->category->get_id(), 'cat-' . $this->category->get_id() . '+' . $this->category->get_rewrited_name() . '.php')
+							'U_CATEGORY'    => PATH_TO_ROOT . '/forum/' . url('index.php?id=' . $this->category->get_id(), 'cat-' . $this->category->get_id() . '+' . $this->category->get_rewrited_name() . '.php')
 						));
 						$display_cat = false;
 					}
@@ -215,27 +216,27 @@ class ForumHomeController extends ModuleController
 						'C_LAST_TOPIC_MSG'        => !empty($row['last_topic_id']),
 						'C_LAST_MESSAGE_GUEST'    => ($row['last_user_id']) != '-1',
 
-						'TOPIC_ICON'            => $topic_icon,
-						'CATEGORY_ID'           => $row['cid'],
-						'CATEGORY_NAME'         => $row['name'],
-						'REWRITED_NAME'         => $row['rewrited_name'],
-						'DESCRIPTION'           => FormatingHelper::second_parse($row['subname']),
-						'SUBFORUMS'             => $subforums,
-						'TOPICS_NUMBER'         => $row['nbr_topic'],
-						'MESSAGES_NUMBER'       => $row['nbr_msg'],
-						'LAST_TOPIC_TITLE'      => !empty($row['last_topic_id']) ? stripslashes($last_topic_title) : '',
-						'LAST_USER_LOGIN'       => $row['login'],
-						'LAST_USER_LEVEL'       => UserService::get_level_class($row['user_level']),
-						'LAST_USER_GROUP_COLOR' => $last_group_color,
+						'TOPIC_ICON'              => $topic_icon,
+						'CATEGORY_ID'             => $row['cid'],
+						'CATEGORY_NAME'           => $row['name'],
+						'REWRITED_NAME'           => $row['rewrited_name'],
+						'DESCRIPTION'             => FormatingHelper::second_parse($row['subname']),
+						'SUBFORUMS'               => $subforums,
+						'TOPICS_NUMBER'           => $row['nbr_topic'],
+						'MESSAGES_NUMBER'         => $row['nbr_msg'],
+						'LAST_TOPIC_TITLE'        => !empty($row['last_topic_id']) ? stripslashes($last_topic_title) : '',
+						'LAST_USER_LOGIN'         => $row['login'],
+						'LAST_USER_LEVEL'         => UserService::get_level_class($row['user_level']),
+						'LAST_USER_GROUP_COLOR'   => $last_group_color,
 
-						'U_LAST_TOPIC'        => PATH_TO_ROOT . "/forum/topic" . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
-						'U_LAST_MESSAGE'      => !empty($row['last_topic_id']) ? PATH_TO_ROOT . "/forum/topic" . url('.php?' . $last_page . 'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title']) . '.php') . '#m' . $last_msg_id : '',
-						'U_LAST_USER_PROFILE' => UserUrlBuilder::profile($row['last_user_id'])->rel(),
-						'U_LINK'              => $row['url'],
-						'U_CATEGORY'          => ForumUrlBuilder::display_forum($row['cid'], $row['rewrited_name'])->rel(),
+						'U_LAST_TOPIC'            => PATH_TO_ROOT . "/forum/topic" . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
+						'U_LAST_MESSAGE'          => !empty($row['last_topic_id']) ? PATH_TO_ROOT . "/forum/topic" . url('.php?' . $last_page . 'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title']) . '.php') . '#m' . $last_msg_id : '',
+						'U_LAST_USER_PROFILE'     => UserUrlBuilder::profile($row['last_user_id'])->rel(),
+						'U_LINK'                  => $row['url'],
+						'U_CATEGORY'              => ForumUrlBuilder::display_forum($row['cid'], $row['rewrited_name'])->rel(),
 
-						'L_NO_MSG'    => $LANG['no_message'],
-						'L_SUBFORUMS' => $LANG['subforum_s'],
+						'L_NO_MSG'                => $LANG['no_message'],
+						'L_SUBFORUMS'             => $LANG['subforum_s']
 					)));
 				}
 			}
@@ -283,42 +284,42 @@ class ForumHomeController extends ModuleController
 		}
 
 		$vars_tpl = array(
-			'C_TOTAL_POST'     => true,
-			'C_USER_CONNECTED' => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
-			'C_NO_USER_ONLINE' => (($total_online - $total_visit) == 0),
+			'C_TOTAL_POST'          => true,
+			'C_USER_CONNECTED'      => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
+			'C_NO_USER_ONLINE'      => (($total_online - $total_visit) == 0),
 
 			'FORUM_NAME'            => $this->config->get_forum_name(),
 			'MESSAGES_NUMBER'       => $total_msg,
 			'TOPICS_NUMBER'         => $total_topic,
 			'TOTAL_ONLINE'          => $total_online,
-			'ONLINE_USERS_LIST'          => $users_list,
+			'ONLINE_USERS_LIST'     => $users_list,
 			'ADMINISTRATORS_NUMBER' => $total_admin,
 			'MODERATORS_NUMBER'     => $total_modo,
 			'MEMBERS_NUMBER'        => $total_member,
 			'GUESTS_NUMBER'         => $total_visit,
 			'SELECT_CAT'            => !empty($id_get) ? $cat_list : '', //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 
-			'U_ONCHANGE'           => PATH_TO_ROOT ."/forum/" . url("index.php?id=' + this.options[this.selectedIndex].value + '", "forum-' + this.options[this.selectedIndex].value + '.php"),
-			'U_ONCHANGE_CAT'       => PATH_TO_ROOT ."/forum/" . url("/index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
+			'U_ONCHANGE'            => PATH_TO_ROOT ."/forum/" . url("index.php?id=' + this.options[this.selectedIndex].value + '", "forum-' + this.options[this.selectedIndex].value + '.php"),
+			'U_ONCHANGE_CAT'        => PATH_TO_ROOT ."/forum/" . url("/index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
 
-			'L_TOPIC'              => ($total_topic > 1) ? $LANG['topic_s'] : $LANG['topic'],
-			'L_MESSAGE'            => ($total_msg > 1) ? $LANG['message_s'] : $LANG['message'],
-			'L_USER'               => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
-			'L_ADMIN'              => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
-			'L_MODO'               => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],
-			'L_MEMBER'             => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
-			'L_GUEST'              => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
+			'L_TOPIC'               => ($total_topic > 1) ? $LANG['topic_s'] : $LANG['topic'],
+			'L_MESSAGE'             => ($total_msg > 1) ? $LANG['message_s'] : $LANG['message'],
+			'L_USER'                => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
+			'L_ADMIN'               => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
+			'L_MODO'                => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],
+			'L_MEMBER'              => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
+			'L_GUEST'               => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
 			//
-			'L_FORUM_INDEX'        => $LANG['forum_index'],
-			'L_FORUM'              => $LANG['forum'],
-			'L_LAST_MESSAGE'       => $LANG['last_message'],
-			'L_STATS'              => $LANG['stats'],
-			'L_DISPLAY_UNREAD_MSG' => $LANG['show_not_reads'],
-			'L_MARK_AS_READ'       => $LANG['mark_as_read'],
-			'L_TOTAL_POST'         => $LANG['nbr_message'],
-			'L_DISTRIBUTED'        => TextHelper::strtolower($LANG['distributed']),
-			'L_AND'                => $LANG['and'],
-			'L_ONLINE'             => TextHelper::strtolower($LANG['online'])
+			'L_FORUM_INDEX'         => $LANG['forum_index'],
+			'L_FORUM'               => $LANG['forum'],
+			'L_LAST_MESSAGE'        => $LANG['last_message'],
+			'L_STATS'               => $LANG['stats'],
+			'L_DISPLAY_UNREAD_MSG'  => $LANG['show_not_reads'],
+			'L_MARK_AS_READ'        => $LANG['mark_as_read'],
+			'L_TOTAL_POST'          => $LANG['nbr_message'],
+			'L_DISTRIBUTED'         => TextHelper::strtolower($LANG['distributed']),
+			'L_AND'                 => $LANG['and'],
+			'L_ONLINE'              => TextHelper::strtolower($LANG['online'])
 		);
 
 		$this->view->put_all($vars_tpl);
