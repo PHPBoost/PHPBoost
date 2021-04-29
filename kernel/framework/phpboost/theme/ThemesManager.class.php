@@ -273,10 +273,13 @@ class ThemesManager
 	{
 		$themes_childs_list = array();
 		$folder_containing_phpboost_themes = new Folder(PATH_TO_ROOT .'/templates/');
-		foreach ($folder_containing_phpboost_themes->get_folders() as $folder)
+		if (self::get_theme_existed($theme_id))
 		{
-			if (self::get_theme_existed($theme_id) && ThemesManager::get_theme($folder->get_name())->get_configuration()->get_parent_theme() == $theme_id)
-				$themes_childs_list[] = $folder->get_name();
+			foreach ($folder_containing_phpboost_themes->get_folders() as $folder)
+			{
+				if ($folder->get_name() != '__default__' && ThemesManager::get_theme($folder->get_name())->get_configuration()->get_parent_theme() == $theme_id)
+					$themes_childs_list[] = $folder->get_name();
+			}
 		}
 
 		return $themes_childs_list;
