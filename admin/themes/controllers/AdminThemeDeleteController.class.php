@@ -111,9 +111,13 @@ class AdminThemeDeleteController extends AdminController
 	{
 		$try_to_delete_default = $try_to_delete_default_parent = false;
 		$default_theme_parent = ThemesManager::get_theme(ThemesManager::get_default_theme())->get_configuration()->get_parent_theme();
-		$default_theme_parent_name = ThemesManager::get_theme($default_theme_parent)->get_configuration()->get_name();
-		$default_theme_name = ThemesManager::get_theme(ThemesManager::get_default_theme())->get_configuration()->get_name();
-		$default_theme_parent_error = StringVars::replace_vars($this->lang['themes.parent.of.default.theme'], array('name' => $default_theme_parent_name, 'default_theme' => $default_theme_name));
+		if ($default_theme_parent != '__default__')
+		{
+			$default_theme_parent_name = ThemesManager::get_theme($default_theme_parent)->get_configuration()->get_name();
+			$default_theme_name = ThemesManager::get_theme(ThemesManager::get_default_theme())->get_configuration()->get_name();
+			$default_theme_parent_error = StringVars::replace_vars($this->lang['themes.parent.of.default.theme'], array('name' => $default_theme_parent_name, 'default_theme' => $default_theme_name));
+		}
+
 		if ($this->multiple)
 		{
 			foreach ($this->theme_id as $id)
@@ -134,7 +138,7 @@ class AdminThemeDeleteController extends AdminController
 
 		if ($try_to_delete_default)
 			AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), $this->lang['themes.default.theme.not.removable'], MessageHelper::WARNING);
-		else if ($try_to_delete_default_parent)
+		else if ($default_theme_parent != '__default__' && $try_to_delete_default_parent)
 			AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), $default_theme_parent_error, MessageHelper::WARNING);
 	}
 
