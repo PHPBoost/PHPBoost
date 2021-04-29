@@ -138,7 +138,7 @@ class ThemesManager
 			{
 				self::$error = LangLoader::get_message('misfit.phpboost', 'status-messages-common');
 			}
-			else if (!in_array($configuration->get_parent_theme(), $this->get_themes_list()))
+			else if (!in_array($configuration->get_parent_theme(), self::get_themes_list()))
 			{
 				self::$error = StringVars::replace_vars(LangLoader::get_message('themes.parent.theme.not.installed', 'admin-themes-common'), array('id_parent' => $configuration->get_parent_theme()));
 			}
@@ -257,7 +257,7 @@ class ThemesManager
 		}
 	}
 
-	private function get_themes_list()
+	private static function get_themes_list()
 	{
 		$themes_list = array();
 		$folder_containing_phpboost_themes = new Folder(PATH_TO_ROOT .'/templates/');
