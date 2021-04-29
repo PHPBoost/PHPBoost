@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 28
+ * @version     PHPBoost 6.0 - last update: 2021 04 29
  * @since       PHPBoost 1.2 - 2005 10 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,6 +15,7 @@ require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
 $lang = LangLoader::get('common', 'forum');
+$warning_lang = LangLoader::get('warning-lang');
 
 $id_get = (int)retrieve(GET, 'id', 0);
 
@@ -167,7 +168,13 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			}
 
 			$view = new FileTemplate('forum/forum_post.tpl');
-			$view->add_lang(array_merge(LangLoader::get('common', 'forum'), LangLoader::get('common-lang'), LangLoader::get('form-lang')));
+			$view->add_lang(array_merge(
+				$lang,
+				LangLoader::get('common-lang'),
+				LangLoader::get('form-lang'),
+				LangLoader::get('user-lang'),
+				$warning_lang,
+			));
 
 			if (ForumAuthorizationsService::check_authorizations($id_get)->moderation())
 			{
@@ -197,7 +204,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				'C_ADD_POLL_FIELD' => true,
 
 				'FORUM_NAME'      => $config->get_forum_name(),
-				'CATEGORY_NAME'       => $category->get_name(),
+				'CATEGORY_NAME'   => $category->get_name(),
 				'TITLE'           => '',
 				'DESCRIPTION'     => '',
 				'SELECTED_SIMPLE' => 'checked="ckecked"',
@@ -206,12 +213,13 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				'NO_DISPLAY_POLL' => 'true',
 				'NBR_POLL_FIELD'  => $nbr_poll_field,
 
-				'U_ACTION'    => 'post.php' . url('?new=topic&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
+				'U_ACTION'   => 'post.php' . url('?new=topic&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
 				'U_CATEGORY' => 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php'),
-				'U_TITLE_T'   => 'post' . url('.php?new=topic&amp;id=' . $id_get),
+				'U_TITLE_T'  => 'post' . url('.php?new=topic&amp;id=' . $id_get),
+
+				'L_ACTION'             => $lang['forum.new.subject'],
 				//
 				'L_NEW_SUBJECT'        => $LANG['post_new_subject'],
-				'L_ACTION'             => $LANG['forum_new_subject'],
 				'L_REQUIRE'            => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 				'L_REQUIRE_TEXT'       => $LANG['require_text'],
 				'L_REQUIRE_TITLE'      => $LANG['require_title'],
@@ -425,7 +433,13 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			else
 			{
 				$view = new FileTemplate('forum/forum_post.tpl');
-				$view->add_lang(array_merge(LangLoader::get('common', 'forum'), LangLoader::get('common-lang'), LangLoader::get('form-lang')));
+				$view->add_lang(array_merge(
+					$lang,
+					LangLoader::get('common-lang'),
+					LangLoader::get('form-lang'),
+					LangLoader::get('user-lang'),
+					$warning_lang,
+				));
 
 				$content = '';
 				try {
@@ -476,8 +490,8 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 						'ISSUE_ICON' => $img_display,
 
 						'L_DEFAULT_ISSUE_STATUS' => $topic['display_msg'] ? $config->get_message_when_topic_is_solved() : $config->get_message_when_topic_is_unsolved(),
-						'L_EXPLAIN_DISPLAY_MSG'         => $config->get_message_when_topic_is_unsolved(),
-						'L_EXPLAIN_DISPLAY_MSG_BIS'     => $config->get_message_when_topic_is_solved()
+						'L_UNSOLVED_TOPIC'         => $config->get_message_when_topic_is_unsolved(),
+						'L_SOLVED_TOPIC'     => $config->get_message_when_topic_is_solved()
 					));
 					$view->put_all(array(
 						'C_DISPLAY_ISSUE_STATUS'      => true,
@@ -486,8 +500,8 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 						'ISSUE_ICON' => $img_display,
 
 						'L_DEFAULT_ISSUE_STATUS' => $topic['display_msg'] ? $config->get_message_when_topic_is_solved() : $config->get_message_when_topic_is_unsolved(),
-						'L_EXPLAIN_DISPLAY_MSG'         => $config->get_message_when_topic_is_unsolved(),
-						'L_EXPLAIN_DISPLAY_MSG_BIS'     => $config->get_message_when_topic_is_solved()
+						'L_UNSOLVED_TOPIC'         => $config->get_message_when_topic_is_unsolved(),
+						'L_SOLVED_TOPIC'     => $config->get_message_when_topic_is_solved()
 					));
 				}
 
@@ -539,8 +553,8 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					'U_TITLE_T'   => 'topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php'),
 
 					'L_NEW_SUBJECT' => stripslashes($topic['title']),
+					'L_ACTION'             => $lang['forum.edit.topic'],
 					//
-					'L_ACTION'             => $LANG['forum_edit_subject'],
 					'L_REQUIRE'            => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 					'L_REQUIRE_TEXT'       => $LANG['require_text'],
 					'L_REQUIRE_TITLE'      => $LANG['require_title'],
@@ -625,7 +639,13 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			else
 			{
 				$view = new FileTemplate('forum/forum_edit_msg.tpl');
-				$view->add_lang(array_merge(LangLoader::get('common', 'forum'), LangLoader::get('common-lang'), LangLoader::get('form-lang')));
+				$view->add_lang(array_merge(
+					$lang,
+					LangLoader::get('common-lang'),
+					LangLoader::get('form-lang'),
+					LangLoader::get('user-lang'),
+					$warning_lang,
+				));
 
 				$content = '';
 				try {
@@ -644,6 +664,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					'DESCRIPTION'           => stripslashes($topic['subtitle']),
 					'CONTENT'       => FormatingHelper::unparse($content),
 					'KERNEL_EDITOR'  => $editor->display(),
+					'TITLE_T'          => stripslashes($topic['title']),
 
 					'U_ACTION'       => 'post.php' . url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m . '&amp;token=' . AppContext::get_session()->get_token()),
 					'U_CATEGORY'    => 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php'),
@@ -663,8 +684,8 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
 				$view->put_all($vars_tpl);
 
-				$view->put('FORUM_TOP', $top_view->display());
 				$view->display();
+				$view->put('FORUM_TOP', $top_view->display());
 				$view->put('FORUM_BOTTOM', $bottom_view->display());
 			}
 		}
@@ -687,21 +708,27 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			}
 
 			$view = new FileTemplate('forum/forum_edit_msg.tpl');
-			$view->add_lang(array_merge(LangLoader::get('common', 'forum'), LangLoader::get('common-lang'), LangLoader::get('form-lang')));
+			$view->add_lang(array_merge(
+				$lang,
+				LangLoader::get('common-lang'),
+				LangLoader::get('form-lang'),
+				LangLoader::get('user-lang'),
+				$warning_lang,
+			));
 
 			//Gestion erreur.
 			switch ($error_get)
 			{
 				case 'flood':
-				$errstr = $LANG['e_flood'];
+				$errstr = $warning_lang['warning.flood'];
 				$type = MessageHelper::WARNING;
 				break;
 				case 'incomplete':
-				$errstr = $LANG['e_incomplete'];
+				$errstr = $warning_lang['warning.incomplete'];
 				$type = MessageHelper::NOTICE;
 				break;
 				case 'locked':
-				$errstr = $LANG['e.forum.topic.locked'];
+				$errstr = $lang['forum.error.locked.topic'];
 				$type = MessageHelper::WARNING;
 				break;
 				default:
@@ -716,6 +743,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				'CATEGORY_NAME'     => $category->get_name(),
 				'DESCRIPTION'   => stripslashes($topic['subtitle']),
 				'KERNEL_EDITOR' => $editor->display(),
+				'TITLE_T'          => stripslashes($topic['title']),
 
 				'U_ACTION'    => 'post.php' . url('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
 				'U_CATEGORY' => 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php'),
@@ -737,7 +765,13 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 		elseif (!empty($id_get) && ($error_get === 'c_locked' || $error_get === 'c_write' || $error_get === 'incomplete_t' || $error_get === 'false_t'))
 		{
 			$view = new FileTemplate('forum/forum_post.tpl');
-			$view->add_lang(array_merge(LangLoader::get('common', 'forum'), LangLoader::get('common-lang'), LangLoader::get('form-lang')));
+			$view->add_lang(array_merge(
+				$lang,
+				LangLoader::get('common-lang'),
+				LangLoader::get('form-lang'),
+				LangLoader::get('user-lang'),
+				$warning_lang,
+			));
 
 
 			if (ForumAuthorizationsService::check_authorizations($id_get)->moderation())
@@ -804,9 +838,10 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				'U_ACTION'    => 'post.php' . url('?new =topic&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
 				'U_CATEGORY' => 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php'),
 				'U_TITLE_T'   => 'post' . url('.php?new=topic&amp;id=' . $id_get),
+
+				'L_ACTION'             => $lang['forum.new.subject'],
 				//
 				'L_NEW_SUBJECT'        => $LANG['post_new_subject'],
-				'L_ACTION'             => $LANG['forum_new_subject'],
 				'L_REQUIRE'            => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 				'L_REQUIRE_TEXT'       => $LANG['require_text'],
 				'L_REQUIRE_TITLE'      => $LANG['require_title'],

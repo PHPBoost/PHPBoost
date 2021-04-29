@@ -3,7 +3,7 @@
 <script>
 	function check_form_move(){
 		if(document.getElementById('to').value == "") {
-			alert("{L_SELECT_SUBCAT}");
+			alert("{@warning.subcat}");
 			return false;
 		}
 		return true;
@@ -19,7 +19,7 @@
 		<form method="post" action="move.php" onsubmit="javascript:return check_form_move();" class="fieldset-content">
 			<fieldset>
 				<div class="form-element">
-					<label for="to">{L_CAT}</label>
+					<label for="to">{@category.category}</label>
 					<div class="form-field">
 					   <select id="to" name="to">
 							{CATEGORIES}
@@ -29,9 +29,10 @@
 			</fieldset>
 
 			<fieldset class="fieldset-submit">
+				<legend>{@form.submit}</legend>
 				<input type="hidden" name="id" value="{ID}">
 				<input type="hidden" name="token" value="{TOKEN}">
-				<button type="submit" name="submit" value="true" class="button submit">{L_SUBMIT}</button>
+				<button type="submit" name="submit" value="true" class="button submit">{@form.submit}</button>
 			</fieldset>
 		</form>
 	</div>

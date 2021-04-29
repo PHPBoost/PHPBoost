@@ -94,7 +94,7 @@
 						</li>
 						<li>
 							<span class="cssmenu-title">
-							<a href="{U_TRACKED_TOPICS}" aria-label="{@forum.tracked.topics}"><i class="fa fa-fw fa-heart error" aria-hidden="true"></i> <span class="hidden-large-screens">{@forum.tracked.topics}</span></a>
+							<a href="{U_TRACKED_TOPICS}" aria-label="{@forum.tracked.topics}"><i class="fa fa-fw fa-heartbeat error" aria-hidden="true"></i> <span class="hidden-large-screens">{@forum.tracked.topics}</span></a>
 							</span>
 						</li>
 						<li class="forum-index">

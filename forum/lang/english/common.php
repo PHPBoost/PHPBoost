@@ -93,8 +93,8 @@ $lang['forum.delete.message']   = 'Delete message';
 $lang['forum.delete.topic']     = 'Delete topic';
 $lang['forum.lock.topic']       = 'Lock topic';
 $lang['forum.unlock.topic']     = 'Unlock topic';
-$lang['forum.move.topic']       = 'Move topic';
-$lang['forum.cut.topic']        = 'Cut topic';
+$lang['forum.moving.topic']     = 'Moving topic';
+$lang['forum.cutting.topic']        = 'Cut topic';
 $lang['forum.warning.on.user']  = '+10% to member';
 $lang['forum.warning.off.user'] = '-10% to member';
 $lang['forum.set.warning.user'] = 'Warning percent modification';
@@ -165,6 +165,7 @@ $lang['forum.redirect.none']      = 'No polls available';
 $lang['forum.confirm.vote']       = 'Your vote was taken into account';
 $lang['forum.already.vote']       = 'You have already voted';
 $lang['forum.no.vote']            = 'Your null vote has been considered';
+$lang['forum.poll.cast.vote']     = 'Vote';
 $lang['forum.poll.vote']          = 'Vote';
 $lang['forum.poll.votes']         = 'Votes';
 $lang['forum.poll.result']        = 'Results';
@@ -173,11 +174,12 @@ $lang['forum.unauthorized.poll']  = 'You aren\'t authorized to vote !';
 $lang['forum.question']           = 'Question';
 $lang['forum.answers']            = 'Answers';
 $lang['forum.poll.type']          = 'Kind of poll';
-$lang['forum.open.menu.poll']     = 'Open poll menu';
+$lang['forum.open.poll.menu']     = 'Open poll menu';
+$lang['forum.close.poll.menu']     = 'Close poll menu if it is empty';
 $lang['forum.simple.answer']      = 'Single answer';
 $lang['forum.multiple.answer']    = 'Multiple answer';
 $lang['forum.delete.poll']        = 'Delete poll';
-$lang['forum.require.title.poll'] = 'Please set a title for the poll!';
+$lang['forum.require.poll.title'] = 'Please set a title for the poll!';
 
 // Ranks
 $lang['forum.ranks.management']             = 'Gestion des rangs du forum';
@@ -217,22 +219,26 @@ $lang['forum.last.forum.topics']    = 'Last forum topics';
 $lang['forum.connected.member']     = 'Connected member';
 $lang['forum.not.connected.member'] = 'Not connected member';
 
-$lang['forum.message.options'] = 'Message options';
-$lang['forum.forum.message']   = 'Forum message';
-$lang['forum.forum.messages']  = 'Forum messages';
+$lang['forum.messages']       = 'Messages';
+$lang['forum.forum.message']  = 'Forum message';
+$lang['forum.forum.messages'] = 'Forum messages';
 
-$lang['forum.quote.last.message'] = 'Resuming the previous message ';
+$lang['forum.registred.on'] = 'Registred on';
+$lang['forum.quote.message'] = 'Quote this message';
+$lang['forum.quote.last.message'] = 'Resuming the previous message';
 $lang['forum.show.member.messages'] = 'Show all member\'s messages';
 $lang['forum.new.topic'] = 'New topic';
 $lang['forum.edit.topic'] = 'Edit topic';
+$lang['forum.edit.in.topic'] = 'Edit a message in the topic';
 $lang['forum.move.topic'] = 'Move topic';
 $lang['forum.edit.message'] = 'Edit Message';
 $lang['forum.edit.by'] = 'Edit by';
 $lang['forum.edit.on'] = 'Edit on';
 $lang['forum.cut.topic'] = 'Divide this topic starting from this message';
-$lang['forum.cut.topic.warning'] = 'Do you want to cut the topic from this message?';
+$lang['forum.alert.cut.topic'] = 'Do you want to cut the topic from this message?';
 $lang['forum.add.to.favorites'] = 'Add to favorite';
 $lang['forum.link.to.topic'] = 'Link to topic';
+$lang['forum.reply'] = 'Reply';
 
 // Track
 $lang['forum.track.topic']         = 'Set to favorite';
@@ -263,6 +269,7 @@ $lang['forum.error.non.cuttable.topic'] = 'You can\'t split this topic from this
 $lang['forum.error.locked.category']    = 'Locked forum, you can\'t post new topic/post';
 $lang['forum.error.category.right']     = 'You aren\'t allowed to write in this category';
     // alerts
+$lang['forum.alert.delete.message'] = 'Are you sure you want to delete this message ?';
 $lang['forum.alert.delete.topic']   = 'Are you sure you want to delete this topic ?';
 $lang['forum.alert.lock.topic']     = 'Are you sure you want to lock this topic ?';
 $lang['forum.alert.unlock.topic']   = 'Are you sure you want to unlock this topic ?';

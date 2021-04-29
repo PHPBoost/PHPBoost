@@ -15,7 +15,7 @@
 
 $lang['forum.module.title'] = 'Forum';
 
-$lang['forum.my.items'] = 'Mes messages';
+$lang['forum.my.items']     = 'Mes messages';
 $lang['forum.member.items'] = 'Messages publiés par';
 
 // Authorizations
@@ -93,8 +93,8 @@ $lang['forum.delete.message']   = 'Suppression d\'un message';
 $lang['forum.delete.topic']     = 'Suppression d\'un sujet';
 $lang['forum.lock.topic']       = 'Verrouillage d\'un sujet';
 $lang['forum.unlock.topic']     = 'Déverrouillage d\'un sujet';
-$lang['forum.move.topic']       = 'Déplacement d\'un sujet';
-$lang['forum.cut.topic']        = 'Scindement d\'un sujet';
+$lang['forum.moving.topic']       = 'Déplacement d\'un sujet';
+$lang['forum.cutting.topic']        = 'Scindement d\'un sujet';
 $lang['forum.warning.on.user']  = '+10% à un membre';
 $lang['forum.warning.off.user'] = '-10% à un membre';
 $lang['forum.set.warning.user'] = 'Modification pourcentage avertissement';
@@ -148,11 +148,11 @@ $lang['forum.report.clue'] = '
     <br /><br />
     Vous désirez alerter les modérateurs d\'un problème sur le sujet suivant:
 ';
-$lang['forum.report.title'] = 'Brève description';
-$lang['forum.report.content'] = 'Merci de détailler davantage le problème afin d\'aider l\'équipe modératrice';
-$lang['forum.report.success'] = 'Vous avez signalé avec succès la non-conformité du sujet <em>%title</em>, l\'équipe modératrice vous remercie de l\'avoir aidée.';
+$lang['forum.report.title']              = 'Brève description';
+$lang['forum.report.content']            = 'Merci de détailler davantage le problème afin d\'aider l\'équipe modératrice';
+$lang['forum.report.success']            = 'Vous avez signalé avec succès la non-conformité du sujet <em>%title</em>, l\'équipe modératrice vous remercie de l\'avoir aidée.';
 $lang['forum.report.topic.already.done'] = 'Nous vous remercions d\'avoir pris l\'initiative d\'aider l\'équipe modératrice, mais un membre a déjà signalé une non-conformité de ce sujet.';
-$lang['forum.report.back'] = 'Retour au sujet';
+$lang['forum.report.back']               = 'Retour au sujet';
         // Report moderation
 
 // Poll
@@ -164,6 +164,7 @@ $lang['forum.redirect.none']      = 'Aucun sondage disponible';
 $lang['forum.confirm.vote']       = 'Votre vote a bien été pris en compte';
 $lang['forum.already.vote']       = 'Vous avez déjà voté';
 $lang['forum.no.vote']            = 'Votre vote nul a été considéré';
+$lang['forum.poll.cast.vote']     = 'Voter';
 $lang['forum.poll.vote']          = 'Vote';
 $lang['forum.poll.votes']         = 'Votes';
 $lang['forum.poll.result']        = 'Résultats';
@@ -172,11 +173,12 @@ $lang['forum.unauthorized.poll']  = 'Vous n\'êtes pas autorisé à voter !';
 $lang['forum.question']           = 'Question';
 $lang['forum.answers']            = 'Réponses';
 $lang['forum.poll.type']          = 'Type de sondage';
-$lang['forum.open.menu.poll']     = 'Ouvrir le menu sondage';
+$lang['forum.open.poll.menu']     = 'Ouvrir le menu sondage';
+$lang['forum.close.poll.menu']    = 'Fermer le menu sondage s\'il est vide';
 $lang['forum.simple.answer']      = 'Réponse simple';
 $lang['forum.multiple.answer']    = 'Réponses multiples';
 $lang['forum.delete.poll']        = 'Supprimer le sondage';
-$lang['forum.require.title.poll'] = 'Veuillez entrer un titre pour le sondage !';
+$lang['forum.require.poll.title'] = 'Veuillez entrer un titre pour le sondage !';
 
 // Ranks
 $lang['forum.ranks.management']             = 'Gestion des rangs du forum';
@@ -190,7 +192,6 @@ $lang['forum.rank.messages.number']         = 'Nombre de messages nécessaires p
 $lang['forum.rank.thumbnail']               = 'Image associée';
 $lang['forum.require.rank.name']            = 'Veuillez entrer un nom pour le rang !';
 $lang['forum.require.rank.messages.number'] = 'Veuillez entrer un nombre de messages pour le rang !';
-
 
 // S.E.O.
 $lang['forum.member.messages.seo']  = 'Tous les messages de :author.';
@@ -217,21 +218,26 @@ $lang['forum.last.forum.topics']    = 'Derniers sujets du forum';
 $lang['forum.connected.member']     = 'Membre connecté';
 $lang['forum.not.connected.member'] = 'Membre non connecté';
 
+$lang['forum.messages']   = 'Messages';
 $lang['forum.forum.message']   = 'Message sur le forum';
 $lang['forum.forum.messages']  = 'Messages sur le forum';
 
+$lang['forum.registred.on'] = 'Inscrit le';
+$lang['forum.quote.message'] = 'Citer ce message';
 $lang['forum.quote.last.message'] = 'Reprise du message précédent';
 $lang['forum.show.member.messages'] = 'Voir tous les messages du membre';
 $lang['forum.new.topic'] = 'Nouveau sujet';
 $lang['forum.edit.topic'] = 'Editer le sujet';
+$lang['forum.edit.in.topic'] = 'Editer un message dans le sujet';
 $lang['forum.move.topic'] = 'Déplacer le sujet';
 $lang['forum.edit.message'] = 'Editer le message';
 $lang['forum.edit.by'] = 'Edité par';
 $lang['forum.edit.on'] = 'Edité le';
 $lang['forum.cut.topic'] = 'Scinder le sujet à partir de ce message';
-$lang['forum.cut.topic.warning'] = 'Voulez-vous scinder le sujet à partir de ce message ?';
+$lang['forum.alert.cut.topic'] = 'Voulez-vous scinder le sujet à partir de ce message ?';
 $lang['forum.add.to.favorites'] = 'Ajouter aux favoris';
 $lang['forum.link.to.topic'] = 'Lien vers le sujet';
+$lang['forum.reply'] = 'Répondre';
 
 // Track
 $lang['forum.track.topic']         = 'Mettre en favori';
@@ -263,6 +269,7 @@ $lang['forum.error.non.cuttable.topic'] = 'Vous ne pouvez pas scinder le sujet �
 $lang['forum.error.locked.category']    = 'Forum verrouillé, création de nouveau sujet/message impossible';
 $lang['forum.error.category.right']     = 'Vous n\'êtes pas autorisé à écrire dans cette catégorie';
     // alerts
+$lang['forum.alert.delete.message'] = 'Supprimer ce message ?';
 $lang['forum.alert.delete.topic']   = 'Supprimer ce sujet ?';
 $lang['forum.alert.lock.topic']     = 'Verrouiller ce sujet ?';
 $lang['forum.alert.unlock.topic']   = 'Déverrouiller ce sujet ?';

@@ -142,6 +142,10 @@ a.pinned { cursor: pointer; }
 	align-items: center;
 }
 
+.flex-between.flex-between-large { flex-direction: column; }
+
+@media (min-width: 769px) { .flex-between.flex-between-large { flex-direction: row; }}
+
 /* --- Display --- */
 .d-flex         { display: flex; }
 .d-inline 	    { display: inline; }
@@ -284,6 +288,6 @@ strong,
 .fa-announce-lock:before,
 .fa-announce-new-lock:before 	{ content: "\f023"; } /* copy lock */
 .fa-announce-post:before,
-.fa-announce-new-post:before 	{ content: "\f071"; } /* copy exclamation-triangle */
+.fa-announce-new-post:before 	{ content: "\f08d"; } /* copy exclamation-triangle */
 .fa-announce-top:before,
-.fa-announce-new-top:before 	{ content: "\f06a"; } /* copy exclamation-circle */
+.fa-announce-new-top:before 	{ content: "\f0a1"; } /* copy exclamation-circle */

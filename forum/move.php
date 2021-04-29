@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 28
+ * @version     PHPBoost 6.0 - last update: 2021 04 29
  * @since       PHPBoost 1.2 - 2005 10 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -32,7 +32,11 @@ $post_topic = $request->get_postvalue('post_topic', ''); //Création du topic sc
 if (!empty($id_get)) //Déplacement du sujet.
 {
 	$view = new FileTemplate('forum/forum_move.tpl');
-	$view->add_lang(array_merge(LangLoader::get('common', 'forum'), LangLoader::get('common-lang')));
+	$view->add_lang(array_merge(
+		LangLoader::get('category-lang'),
+		LangLoader::get('form-lang'),
+		LangLoader::get('warning-lang'),
+	));
 
 	try {
 		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id_category', 'title'), 'WHERE id=:id', array('id' => $id_get));

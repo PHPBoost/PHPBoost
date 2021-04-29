@@ -145,15 +145,15 @@
 						# ENDIF #
 						<td class="forum-announce-topic">
 							# IF NOT topics.C_HOT_TOPIC #
-								<i class="far {topics.TOPIC_ICON}" aria-hidden="true"></i>
+								<i class="fa {topics.TOPIC_ICON}" aria-hidden="true"></i>
 							# ELSE #
-								<i class="far # IF topics.C_BLINK #blink # ENDIF #{topics.TOPIC_ICON}-hot" aria-hidden="true"></i>
+								<i class="fa # IF topics.C_BLINK #blink # ENDIF #{topics.TOPIC_ICON}-hot" aria-hidden="true"></i>
 							# ENDIF #
 						</td>
 						<td class="forum-fixed-topic">
 							# IF topics.C_DISPLAY_ISSUE_STATUS #<i class="fa fa-check success" aria-hidden="true"></i># ENDIF #
 							# IF topics.C_IMG_POLL #<i class="fa fa-poll-h" aria-hidden="true"></i># ENDIF #
-							# IF topics.C_IMG_TRACK #<i class="fa fa-heart error" aria-hidden="true"></i># ENDIF #
+							# IF topics.C_IMG_TRACK #<i class="fa fa-heartbeat error" aria-hidden="true"></i># ENDIF #
 						</td>
 						<td class="forum-topic">
 							# IF topics.C_ANCHOR #<a href="{topics.U_ANCHOR}"><i class="fa fa-hand-point-right" aria-hidden="true"></i></a># ENDIF #
@@ -201,7 +201,7 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<th colspan="7">
+					<th colspan="# IF C_CONTROLS #8# ELSE #7# ENDIF #">
 						<div class="footer-forum">
 							<a href="${relative_url(SyndicationUrlBuilder::rss('forum',CATEGORY_ID))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 							# START syndication_cats #

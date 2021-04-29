@@ -56,7 +56,7 @@
 							</td>
 						# ELSE #
 							<td class="forum-announce-topic">
-								<i class="far # IF forums_list.subcats.C_BLINK #blink # ENDIF #{forums_list.subcats.TOPIC_ICON}" aria-hidden="true"></i>
+								<i class="fa # IF forums_list.subcats.C_BLINK #blink # ENDIF #{forums_list.subcats.TOPIC_ICON}" aria-hidden="true"></i>
 							</td>
 							<td class="forum-topic">
 								<a href="{forums_list.subcats.U_CATEGORY}">{forums_list.subcats.CATEGORY_NAME}</a>

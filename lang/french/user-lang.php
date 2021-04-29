@@ -73,6 +73,7 @@ $lang['user.profile']        = 'Profil';
 $lang['user.profile.of']     = 'Profil de :name';
 $lang['user.profile.edit']   = 'Edition du profil';
 $lang['user.contact']        = 'Contact';
+$lang['user.contact.email']  = 'Contacter par email';
 $lang['user.message']        = 'Message';
 $lang['user.messages']       = 'Messages';
 $lang['user.last.message']   = 'Dernier message';

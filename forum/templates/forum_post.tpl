@@ -3,15 +3,15 @@
 <script>
 	function check_form_post(){
 		if(document.getElementById('content').value == "") {
-			alert("{L_REQUIRE_TEXT}");
+			alert("{@warning.text}");
 			return false;
 	    }
 		if(document.getElementById('title').value == "") {
-			alert("{L_REQUIRE_TITLE}");
+			alert("{@warning.title}");
 			return false;
 	    }
 		if(!poll_hidded && document.getElementById('question').value == "") {
-			alert("{L_REQUIRE_TITLE_POLL}");
+			alert("{@forum.require.poll.title}");
 			return false;
 		}
 		return true;
@@ -60,7 +60,7 @@
 				if( document.getElementById('forum_change_img') )
 					document.getElementById('forum_change_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-times error"></i>' : '<i class="fa fa-check success"></i>';
 				if( document.getElementById('forum_change_msg') )
-					document.getElementById('forum_change_msg').innerHTML = xhr_object.responseText == '1' ? "{L_EXPLAIN_DISPLAY_MSG_BIS}" : "{L_EXPLAIN_DISPLAY_MSG}";
+					document.getElementById('forum_change_msg').innerHTML = xhr_object.responseText == '1' ? "{L_SOLVED_TOPIC}" : "{L_UNSOLVED_TOPIC}";
 			}
 		}
 		xmlhttprequest_sender(xhr_object, null);
@@ -79,7 +79,7 @@
 			# INCLUDE MESSAGE_HELPER #
 
 			<div class="fieldset-content">
-				<p class="align-center">{L_REQUIRE}</p>
+				<p class="align-center small text-italic">{@form.required.fields}</p>
 				<fieldset>
 					<legend>{L_ACTION}</legend>
 					# IF C_FORUM_CUT_CAT #
@@ -130,7 +130,7 @@
 
 				<fieldset>
 					<legend>{L_POLL}</legend>
-					<p id="hidepoll_link" class="align-center"><a href="#" onclick="hide_poll('hidepoll');return false;">{L_OPEN_MENU_POLL}</a></p>
+					<p id="hidepoll_link" class="align-center"><a href="#" onclick="hide_poll('hidepoll');return false;">{@forum.open.poll.menu}</a></p>
 					<div id="hidepoll">
 						<div class="form-element">
 							<label for="question">* {L_QUESTION}</label>
@@ -175,6 +175,15 @@
 								</p>
 							</div>
 						</div>
+						<p class="align-center">
+							<a href="#" onclick="
+								document.getElementById('hidepoll').style.display = 'none';
+								document.getElementById('hidepoll_link').style.display = 'block';
+								poll_hidded = true;
+								return false;">
+								{@forum.close.poll.menu}
+							</a>
+						</p>
 					</div>
 					<script>
 						if( {NO_DISPLAY_POLL} )
@@ -185,12 +194,12 @@
 				</fieldset>
 
 				<fieldset class="fieldset-submit">
-				<legend>{L_SUBMIT}</legend>
+				<legend>{@form.submit}</legend>
 					<input type="hidden" name="idm" value="{IDM}">
 					<input type="hidden" name="token" value="{TOKEN}">
-					<button type="submit" class="button submit" name="post_topic" value="true">{L_SUBMIT}</button>
-					<button type="button" class="button preview-button" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
-					<button type="reset" class="button reset-button" value="true">{L_RESET}</button>
+					<button type="submit" class="button submit" name="post_topic" value="true">{@form.submit}</button>
+					<button type="button" class="button preview-button" onclick="XMLHttpRequest_preview();">{@form.preview}</button>
+					<button type="reset" class="button reset-button" value="true">{@form.reset}</button>
 
 					# IF C_DISPLAY_ISSUE_STATUS #
 						<p>

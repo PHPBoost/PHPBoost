@@ -19,7 +19,7 @@
 								</li>
 								<li>
 									<span class="cssmenu-title">
-										<a href="{U_TRACKED_TOPICS}" aria-label="{@forum.tracked.topics}"><i class="fa fa-fw fa-heart error" aria-hidden="true"></i> <span class="hidden-large-screens">{@forum.tracked.topics}</span></a>
+										<a href="{U_TRACKED_TOPICS}" aria-label="{@forum.tracked.topics}"><i class="fa fa-fw fa-heartbeat error" aria-hidden="true"></i> <span class="hidden-large-screens">{@forum.tracked.topics}</span></a>
 									</span>
 								</li>
 								<li class="forum-index">
@@ -96,7 +96,7 @@
 
 				<div class="forum-online">
 					# IF ONLINE_USERS_LIST #
-						<div class="flex-between">
+						<div class="flex-between flex-between-large">
 							<div class="forum-online-users">
 								{TOTAL_ONLINE} {L_USER} {L_ONLINE} : {ADMINISTRATORS_NUMBER} {L_ADMIN}, {MODERATORS_NUMBER} {L_MODO}, {MEMBERS_NUMBER} {L_MEMBER} {L_AND} {GUESTS_NUMBER} {L_GUEST}
 								<div class="spacer"></div>
@@ -167,7 +167,7 @@
 							</nav>
 						</div>
 						<script>
-							jQuery("#cssmenu-forum-action").menumaker({ title: "{@forum.message.options}", format: "multitoggle", breakpoint: 768, menu_static: false });
+							jQuery("#cssmenu-forum-action").menumaker({ title: "{@forum.topic.options}", format: "multitoggle", breakpoint: 768, menu_static: false });
 						</script>
 					#  ENDIF #
 				</div>
