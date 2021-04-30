@@ -30,7 +30,8 @@ abstract class AbstractAdminItemController extends AdminModuleController
 		$this->lang = array_merge(
 			LangLoader::get('admin-common'), // to be deleted
 			LangLoader::get('form-lang'),
-			(LangLoader::filename_exists('common', self::get_module()->get_id()) ? LangLoader::get('common', self::get_module()->get_id()) : array()), ItemsService::get_items_lang(self::get_module()->get_id())
+			LangLoader::filename_exists('common', self::get_module()->get_id()) ? LangLoader::get('common', self::get_module()->get_id()) : array(), 
+			ItemsService::get_items_lang(self::get_module()->get_id())
 		);
 		$this->view = $this->get_template_to_use();
 
