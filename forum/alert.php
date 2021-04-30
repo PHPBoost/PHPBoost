@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 28
+ * @version     PHPBoost 6.0 - last update: 2021 04 30
  * @since       PHPBoost 1.5 - 2006 08 07
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -69,7 +69,6 @@ if (!empty($alert) && empty($alert_post))
 
 		$view->put_all(array(
 			'KERNEL_EDITOR'    => $editor->display(),
-
 			'L_ALERT'          => $LANG['alert_topic'],
 			'L_ALERT_EXPLAIN'  => $LANG['alert_modo_explain'],
 			'L_ALERT_TITLE'    => $LANG['alert_title'],
@@ -80,18 +79,17 @@ if (!empty($alert) && empty($alert_post))
 		));
 
 		$view->assign_block_vars('alert_form', array(
-			'TITLE'    => $topic_name,
-			'U_TOPIC'  => 'topic' . url('.php?id=' . $alert, '-' . $alert . '-' . Url::encode_rewrite($topic_name) . '.php'),
-			'REPORT_ID' => $alert,
+			'TITLE'     => $topic_name,
+			'U_TOPIC'   => 'topic' . url('.php?id=' . $alert, '-' . $alert . '-' . Url::encode_rewrite($topic_name) . '.php'),
+			'REPORT_ID' => $alert
 		));
 	}
 	else //Une alerte a déjà été postée
 	{
 		$view->put_all(array(
 			'URL_TOPIC'    => 'topic' . url('.php?id=' . $alert, '-' . $alert . '-' . Url::encode_rewrite($topic_name) . '.php'),
-
 			'L_ALERT'      => $LANG['alert_topic'],
-			'L_BACK_TOPIC' => $LANG['alert_back'],
+			'L_BACK_TOPIC' => $LANG['alert_back']
 		));
 
 		$view->assign_block_vars('alert_confirm', array(
@@ -105,9 +103,8 @@ if (!empty($alert_post))
 {
 	$view->put_all(array(
 		'URL_TOPIC'    => 'topic' . url('.php?id=' . $alert_post, '-' . $alert_post . '-' . Url::encode_rewrite($topic_name) . '.php'),
-
 		'L_ALERT'      => $LANG['alert_topic'],
-		'L_BACK_TOPIC' => $LANG['alert_back'],
+		'L_BACK_TOPIC' => $LANG['alert_back']
 	));
 
 	//On vérifie qu'une alerte sur le même sujet n'ait pas été postée
@@ -139,34 +136,34 @@ if (!empty($alert_post))
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '/forum/%'");
 
 $vars_tpl = array(
-	'C_USER_CONNECTED' => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
-	'C_NO_USER_ONLINE' => (($total_online - $total_visit) == 0),
+	'C_USER_CONNECTED'      => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
+	'C_NO_USER_ONLINE'      => (($total_online - $total_visit) == 0),
 
-	'CATEGORY_NAME'        => $category->get_name(),
-	'FORUM_NAME'       => $config->get_forum_name() . ' : ' . $LANG['alert_topic'],
-	'TITLE_T'          => stripslashes($topic['title']),
-	'TOTAL_ONLINE'     => $total_online,
+	'CATEGORY_NAME'         => $category->get_name(),
+	'FORUM_NAME'            => $config->get_forum_name() . ' : ' . $LANG['alert_topic'],
+	'TITLE_T'               => stripslashes($topic['title']),
+	'TOTAL_ONLINE'          => $total_online,
 	'ONLINE_USERS_LIST'     => $users_list,
-	'ADMINISTRATORS_NUMBER'            => $total_admin,
-	'MODERATORS_NUMBER'             => $total_modo,
-	'MEMBERS_NUMBER'           => $total_member,
-	'GUESTS_NUMBER'            => $total_visit,
+	'ADMINISTRATORS_NUMBER' => $total_admin,
+	'MODERATORS_NUMBER'     => $total_modo,
+	'MEMBERS_NUMBER'        => $total_member,
+	'GUESTS_NUMBER'         => $total_visit,
 
-	'U_CATEGORY'      => 'forum' . url('.php?id=' . $topic['id_category'], '-' . $topic['id_category'] . '.php'),
-	'U_TITLE_T'        => 'topic' . url('.php?id=' . $topic_id, '-' . $topic_id . '.php'),
+	'U_CATEGORY'            => 'forum' . url('.php?id=' . $topic['id_category'], '-' . $topic['id_category'] . '.php'),
+	'U_TITLE_T'             => 'topic' . url('.php?id=' . $topic_id, '-' . $topic_id . '.php'),
 
-	'L_USER'           => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
-	'L_ADMIN'          => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
-	'L_MODO'           => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],
-	'L_MEMBER'         => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
-	'L_GUEST'          => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
+	'L_USER'                => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
+	'L_ADMIN'               => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
+	'L_MODO'                => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],
+	'L_MEMBER'              => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
+	'L_GUEST'               => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
 	//
-	'L_FORUM_INDEX'    => $LANG['forum_index'],
-	'L_SUBMIT'         => $LANG['submit'],
-	'L_PREVIEW'        => $LANG['preview'],
-	'L_RESET'          => $LANG['reset'],
-	'L_AND'            => $LANG['and'],
-	'L_ONLINE'         => TextHelper::strtolower($LANG['online'])
+	'L_FORUM_INDEX'         => $LANG['forum_index'],
+	'L_SUBMIT'              => $LANG['submit'],
+	'L_PREVIEW'             => $LANG['preview'],
+	'L_RESET'               => $LANG['reset'],
+	'L_AND'                 => $LANG['and'],
+	'L_ONLINE'              => TextHelper::strtolower($LANG['online'])
 );
 
 $view->put_all($vars_tpl);

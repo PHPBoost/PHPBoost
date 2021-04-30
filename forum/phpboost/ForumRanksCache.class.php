@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2015 12 17
+ * @version     PHPBoost 6.0 - last update: 2020 04 30
  * @since       PHPBoost 3.0 - 2010 08 09
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
 
 class ForumRanksCache implements CacheData
@@ -22,9 +23,9 @@ class ForumRanksCache implements CacheData
 		while ($row = $result->fetch())
 		{
 			$this->ranks[$row['msg']] = array(
-				'id' => $row['id'],
-				'name' => $row['name'],
-				'icon' => $row['icon'],
+				'id'      => $row['id'],
+				'name'    => $row['name'],
+				'icon'    => $row['icon'],
 				'special' => $row['special']
 			);
 		}

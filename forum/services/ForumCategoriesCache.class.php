@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 29
+ * @version     PHPBoost 6.0 - last update: 2021 04 30
  * @since       PHPBoost 4.1 - 2015 02 25
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
 
 class ForumCategoriesCache extends CategoriesCache
@@ -94,7 +95,7 @@ class ForumCategoriesCache extends CategoriesCache
 		$messages_number = ForumService::count_messages('WHERE id_category = :id_category', array('id_category' => $id_category));
 
 		return array(
-			'topics_number' => (int)$topics_number,
+			'topics_number'   => (int)$topics_number,
 			'messages_number' => (int)$messages_number
 		);
 	}

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 28
+ * @version     PHPBoost 6.0 - last update: 2021 04 30
  * @since       PHPBoost 1.2 - 2005 10 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -29,7 +29,7 @@ $view = new FileTemplate('forum/admin_ranks.tpl');
 $view->add_lang(array_merge(
 	$lang,
 	LangLoader::get('common-lang'),
-	LangLoader::get('form-lang'),
+	LangLoader::get('form-lang')
 ));
 
 //Si c'est confirmé on execute
@@ -39,9 +39,9 @@ if ($valid)
 	FROM " . PREFIX . "forum_ranks");
 	while ($row = $result->fetch())
 	{
-		$name = $request->get_poststring($row['id'] . 'name', '');
+		$name       = $request->get_poststring($row['id'] . 'name', '');
 		$msg_number = $request->get_postint($row['id'] . 'msg', 0);
-		$icon = $request->get_poststring($row['id'] . 'icon', '');
+		$icon       = $request->get_poststring($row['id'] . 'icon', '');
 
 		if (!empty($name) && $row['special'] != 1)
 			PersistenceContext::get_querier()->update(PREFIX . "forum_ranks", array('name' => $name, 'msg' => $msg_number, 'icon' => $icon), ' WHERE id = :id', array('id' => $row['id']));
@@ -110,17 +110,16 @@ foreach($ranks_cache as $msg => $row)
 	}
 
 	$view->assign_block_vars('rank', array(
-		'ID'             => $row['id'],
-		'RANK'           => $row['name'],
-		'MESSAGE'            => $msg,
-		'RANK_OPTIONS'   => $rank_options,
-		'RANK_THUMBNAIL'       => $row['icon'],
-		'U_RANK_THUMBNAIL'     => $rank_folder . '/' . $row['icon'],
-		'JS_PATH_RANKS'  => $rank_folder . '/',
-		'U_DELETE'       => 'admin_ranks.php?del=1&amp;id=' . $row['id'],
-		'C_CUSTOM_RANK' => $row['special'] == 0,
-		//
-		'L_SPECIAL_RANK' => $LANG['special_rank']
+		'ID'               => $row['id'],
+		'RANK'             => $row['name'],
+		'MESSAGE'          => $msg,
+		'RANK_OPTIONS'     => $rank_options,
+		'RANK_THUMBNAIL'   => $row['icon'],
+		'U_RANK_THUMBNAIL' => $rank_folder . '/' . $row['icon'],
+		'JS_PATH_RANKS'    => $rank_folder . '/',
+		'U_DELETE'         => 'admin_ranks.php?del=1&amp;id=' . $row['id'],
+		'C_CUSTOM_RANK'    => $row['special'] == 0,
+		'L_SPECIAL_RANK'   => $LANG['special_rank']
 	));
 }
 

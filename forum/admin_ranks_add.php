@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 28
+ * @version     PHPBoost 6.0 - last update: 2021 04 30
  * @since       PHPBoost 1.2 - 2005 10 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -26,7 +26,7 @@ $view->add_lang(array_merge(
 	LangLoader::get('common-lang'),
 	LangLoader::get('form-lang'),
 	LangLoader::get('upload-lang'),
-	LangLoader::get('warning-lang'),
+	LangLoader::get('warning-lang')
 ));
 
 //Ajout du rang.
@@ -93,27 +93,26 @@ foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`iu') as $image)
 }
 
 $view->put_all(array(
-	'RANK_OPTIONS'             => $rank_options,
-	'MAX_FILE_SIZE' 		   => ServerConfiguration::get_upload_max_filesize(),
-	'MAX_FILE_SIZE_TEXT'       => File::get_formated_size(ServerConfiguration::get_upload_max_filesize()),
-	'ALLOWED_EXTENSIONS'       => implode('", "',FileUploadConfig::load()->get_authorized_picture_extensions()),
-	//
-	'L_REQUIRE'                => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
-	'L_REQUIRE_RANK_NAME'      => $LANG['require_rank_name'],
-	'L_REQUIRE_MESSAGES_NUMBER_RANK'   => $LANG['require_nbr_msg_rank'],
-	'L_FORUM_MANAGEMENT'       => $LANG['config.ranks.manager'],
-	'L_FORUM_RANKS_MANAGEMENT' => LangLoader::get_message('forum.ranks.management', 'common', 'forum'),
-	'L_FORUM_ADD_RANKS'        => LangLoader::get_message('forum.rank.add', 'common', 'forum'),
-	'L_UPLOAD_RANKS'           => $LANG['upload_rank'],
-	'L_UPLOAD_FORMAT'          => $LANG['explain_upload_img'],
-	'L_UPLOAD'                 => $LANG['upload'],
-	'L_RANK_NAME'              => $LANG['rank_name'],
-	'L_MESSAGES_NUMBER'                => $LANG['nbr_msg'],
-	'L_IMG_ASSOC'              => $LANG['img_assoc'],
-	'L_DELETE'                 => LangLoader::get_message('delete', 'common'),
-	'L_UPDATE'                 => $LANG['validate'],
-	'L_RESET'                  => $LANG['reset'],
-	'L_ADD'                    => LangLoader::get_message('add', 'common')
+	'RANK_OPTIONS'                   => $rank_options,
+	'MAX_FILE_SIZE' 		         => ServerConfiguration::get_upload_max_filesize(),
+	'MAX_FILE_SIZE_TEXT'             => File::get_formated_size(ServerConfiguration::get_upload_max_filesize()),
+	'ALLOWED_EXTENSIONS'             => implode('", "',FileUploadConfig::load()->get_authorized_picture_extensions()),
+	'L_REQUIRE'                      => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
+	'L_REQUIRE_RANK_NAME'            => $LANG['require_rank_name'],
+	'L_REQUIRE_MESSAGES_NUMBER_RANK' => $LANG['require_nbr_msg_rank'],
+	'L_FORUM_MANAGEMENT'             => $LANG['config.ranks.manager'],
+	'L_FORUM_RANKS_MANAGEMENT'       => LangLoader::get_message('forum.ranks.management', 'common', 'forum'),
+	'L_FORUM_ADD_RANKS'              => LangLoader::get_message('forum.rank.add', 'common', 'forum'),
+	'L_UPLOAD_RANKS'                 => $LANG['upload_rank'],
+	'L_UPLOAD_FORMAT'                => $LANG['explain_upload_img'],
+	'L_UPLOAD'                       => $LANG['upload'],
+	'L_RANK_NAME'                    => $LANG['rank_name'],
+	'L_MESSAGES_NUMBER'              => $LANG['nbr_msg'],
+	'L_IMG_ASSOC'                    => $LANG['img_assoc'],
+	'L_DELETE'                       => LangLoader::get_message('delete', 'common'),
+	'L_UPDATE'                       => $LANG['validate'],
+	'L_RESET'                        => $LANG['reset'],
+	'L_ADD'                          => LangLoader::get_message('add', 'common')
 ));
 
 $view->display();

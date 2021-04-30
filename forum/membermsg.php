@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 28
+ * @version     PHPBoost 6.0 - last update: 2021 04 30
  * @since       PHPBoost 1.6 - 2007 04 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -50,7 +50,7 @@ $view = new FileTemplate('forum/forum_membermsg.tpl');
 $view->add_lang(array_merge(
 	LangLoader::get('common', 'forum'),
 	LangLoader::get('common-lang'),
-	LangLoader::get('user-lang'),
+	LangLoader::get('user-lang')
 ));
 
 $authorized_categories = CategoriesService::get_authorized_categories();
@@ -80,16 +80,16 @@ if (ForumAuthorizationsService::check_authorizations()->read_topics_content())
 		DispatchManager::redirect($error_controller);
 	}
 	$view->put_all(array(
-		'C_ITEMS' => $nbr_msg > 0,
-		'C_PAGINATION' => $pagination->has_several_pages(),
+		'C_ITEMS'         => $nbr_msg > 0,
+		'C_PAGINATION'    => $pagination->has_several_pages(),
 
-		'FORUM_NAME' => $config->get_forum_name(),
-		'PAGINATION' => $pagination->display(),
+		'FORUM_NAME'      => $config->get_forum_name(),
+		'PAGINATION'      => $pagination->display(),
 
 		'L_VIEW_MSG_USER' => $page_title,
-		//
-		'L_BACK'           => $LANG['back'],
-		'L_FORUM_INDEX'    => $LANG['forum_index']
+
+		'L_BACK'          => $LANG['back'],
+		'L_FORUM_INDEX'   => $LANG['forum_index']
 	));
 
 	$result = PersistenceContext::get_querier()->select("SELECT
@@ -205,26 +205,26 @@ if (ForumAuthorizationsService::check_authorizations()->read_topics_content())
 			'C_USER_AVATAR'    => $row['user_avatar'] || $user_accounts_config->is_default_avatar_enabled(),
 			'C_USER_GROUPS'    => !empty($row['user_groups']),
 			'C_USER_MSG'       => $row['posted_msg'] >= 1,
-			'C_USER_EMAIL'      => (!empty($row['email']) && ($row['show_email'] == '1')),
+			'C_USER_EMAIL'     => (!empty($row['email']) && ($row['show_email'] == '1')),
 			'C_USER_SIGN'      => (!empty($row['user_sign']) && !empty($user_sign_field) && $user_sign_field['display']),
 			'C_USER_PM'        => !$is_guest && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 			'C_USER_ONLINE'    => !empty($row['connect']),
 			'C_GUEST'          => empty($row['display_name']),
 			'C_GROUP_COLOR'    => !empty($group_color),
 
-			'CATEGORY_NAME'      => $row['name'],
-			'CATEGORY_ID'    => $row['id_category'],
-			'CONTENT'        => FormatingHelper::second_parse(stripslashes($row['content'])),
-			'ID'             => $row['id'],
-			'TITLE_T'        => stripslashes($row['title']),
-			'USER_RANK'      => $user_rank,
-			'USER_RANK_ICON' => $rank_img,
-			'USER_MSG'       => $row['posted_msg'],
-			'USER_SIGN'      => FormatingHelper::second_parse($row['user_sign']),
-			'USER_WARNING'   => $row['warning_percentage'],
-			'USER_PSEUDO'    => TextHelper::utf8_wordwrap(TextHelper::html_entity_decode($row['display_name']), 13, '<br />'),
-			'LEVEL_CLASS'    => UserService::get_level_class($row['level']),
-			'GROUP_COLOR'    => $group_color,
+			'CATEGORY_NAME'    => $row['name'],
+			'CATEGORY_ID'      => $row['id_category'],
+			'CONTENT'          => FormatingHelper::second_parse(stripslashes($row['content'])),
+			'ID'               => $row['id'],
+			'TITLE_T'          => stripslashes($row['title']),
+			'USER_RANK'        => $user_rank,
+			'USER_RANK_ICON'   => $rank_img,
+			'USER_MSG'         => $row['posted_msg'],
+			'USER_SIGN'        => FormatingHelper::second_parse($row['user_sign']),
+			'USER_WARNING'     => $row['warning_percentage'],
+			'USER_PSEUDO'      => TextHelper::utf8_wordwrap(TextHelper::html_entity_decode($row['display_name']), 13, '<br />'),
+			'LEVEL_CLASS'      => UserService::get_level_class($row['level']),
+			'GROUP_COLOR'      => $group_color,
 
 			'U_USER_AVATAR'    => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : $user_accounts_config->get_default_avatar(),
 			'U_USER_MSG'       => UserUrlBuilder::publications($row['user_id'])->rel(),
@@ -232,9 +232,9 @@ if (ForumAuthorizationsService::check_authorizations()->read_topics_content())
 			'U_USER_MAIL'      => 'mailto:' . $row['email'],
 			'U_USER_PM'        => UserUrlBuilder::personnal_message($row['user_id'])->rel(),
 			'U_USER_PROFILE'   => UserUrlBuilder::profile($row['user_id'])->rel(),
-			'U_VARS_ANCHOR'     => url('.php?' . ($topic_page > 1 ? 'pt=' . $topic_page . '&amp;' : '') . 'id=' . $row['idtopic'], '-' . $row['idtopic'] . ($topic_page > 1 ? '-' . $topic_page : '') . $rewrited_title . '.php'),
-			'U_CATEGORY'      => PATH_TO_ROOT . '/forum/forum' . url('.php?id=' . $row['id_category'], '-' . $row['id_category'] . $rewrited_cat_title . '.php'),
-			'U_TITLE_T'        => PATH_TO_ROOT . '/forum/topic' . url('.php?' . ($topic_page > 1 ? 'pt=' . $topic_page . '&amp;' : '') . 'id=' . $row['idtopic'], '-' . $row['idtopic'] . ($topic_page > 1 ? '-' . $topic_page : '') . $rewrited_title . '.php'),
+			'U_VARS_ANCHOR'    => url('.php?' . ($topic_page > 1 ? 'pt=' . $topic_page . '&amp;' : '') . 'id=' . $row['idtopic'], '-' . $row['idtopic'] . ($topic_page > 1 ? '-' . $topic_page : '') . $rewrited_title . '.php'),
+			'U_CATEGORY'       => PATH_TO_ROOT . '/forum/forum' . url('.php?id=' . $row['id_category'], '-' . $row['id_category'] . $rewrited_cat_title . '.php'),
+			'U_TITLE_T'        => PATH_TO_ROOT . '/forum/topic' . url('.php?' . ($topic_page > 1 ? 'pt=' . $topic_page . '&amp;' : '') . 'id=' . $row['idtopic'], '-' . $row['idtopic'] . ($topic_page > 1 ? '-' . $topic_page : '') . $rewrited_title . '.php')
 		)));
 
 		//Affichage des groupes du membre.
@@ -252,14 +252,14 @@ if (ForumAuthorizationsService::check_authorizations()->read_topics_content())
 						'C_IMG_USERGROUP'   => !empty($array_group_info['img']),
 						'C_USERGROUP_COLOR' => !empty($group_color),
 
-						'USERGROUP_COLOR' => $group_color,
-						'USERGROUP_NAME'  => $array_group_info['name'],
-						'USERGROUP_ID'    => $idgroup,
+						'USERGROUP_COLOR'   => $group_color,
+						'USERGROUP_NAME'    => $array_group_info['name'],
+						'USERGROUP_ID'      => $idgroup,
 
-						'U_IMG_USERGROUP' => $array_group_info['img'],
-						'U_USERGROUP'     => UserUrlBuilder::group($idgroup)->rel(),
-						//
-						'L_USER_GROUP' => $LANG['group'],
+						'U_IMG_USERGROUP'   => $array_group_info['img'],
+						'U_USERGROUP'       => UserUrlBuilder::group($idgroup)->rel(),
+
+						'L_USER_GROUP'      => $LANG['group']
 					));
 				}
 			}
@@ -340,8 +340,8 @@ else
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" ."/forum/membermsg.php%'");
 
 $vars_tpl = array(
-	'C_USER_CONNECTED' => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
-	'C_NO_USER_ONLINE' => (($total_online - $total_visit) == 0),
+	'C_USER_CONNECTED'      => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
+	'C_NO_USER_ONLINE'      => (($total_online - $total_visit) == 0),
 
 	'TOTAL_ONLINE'          => $total_online,
 	'ONLINE_USERS_LIST'     => $users_list,
@@ -351,15 +351,15 @@ $vars_tpl = array(
 	'GUESTS_NUMBER'         => $total_visit,
 	'FORUM_NAME'            => $config->get_forum_name(),
 
-	'L_USER'   => ($total_online > 1) ? $LANG['user_s']   : $LANG['user'],
-	'L_ADMIN'  => ($total_admin > 1) ? $LANG['admin_s']   : $LANG['admin'],
-	'L_MODO'   => ($total_modo > 1) ? $LANG['modo_s']     : $LANG['modo'],
-	'L_MEMBER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
-	'L_GUEST'  => ($total_visit > 1) ? $LANG['guest_s']   : $LANG['guest'],
-	//
-	'L_FORUM_INDEX' => $LANG['forum_index'],
-	'L_AND'         => $LANG['and'],
-	'L_ONLINE'      => TextHelper::strtolower($LANG['online'])
+	'L_USER'                => ($total_online > 1) ? $LANG['user_s']   : $LANG['user'],
+	'L_ADMIN'               => ($total_admin > 1) ? $LANG['admin_s']   : $LANG['admin'],
+	'L_MODO'                => ($total_modo > 1) ? $LANG['modo_s']     : $LANG['modo'],
+	'L_MEMBER'              => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
+	'L_GUEST'               => ($total_visit > 1) ? $LANG['guest_s']   : $LANG['guest'],
+
+	'L_FORUM_INDEX'         => $LANG['forum_index'],
+	'L_AND'                 => $LANG['and'],
+	'L_ONLINE'              => TextHelper::strtolower($LANG['online'])
 );
 
 $view->put_all($vars_tpl);

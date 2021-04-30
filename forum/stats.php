@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 28
+ * @version     PHPBoost 6.0 - last update: 2021 04 30
  * @since       PHPBoost 1.6 - 2007 03 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -52,17 +52,16 @@ try {
 $nbr_msg_today = PersistenceContext::get_querier()->count(ForumSetup::$forum_message_table, 'WHERE timestamp > :timestamp', array('timestamp' => $timestamp_today));
 
 $vars_tpl = array(
-	'FORUM_NAME'            => $config->get_forum_name(),
-	'TOPICS_NUMBERS'        => $total_topics,
-	'MESSAGES_NUMBER'       => $total_messages,
-	'TOPICS_NUMBERS_DAY'    => $nbr_topics_day,
-	'MESSAGES_NUMBER_DAY'   => $nbr_msg_day,
-	'TOPICS_NUMBERS_TODAY'  => $nbr_topics_today,
-	'MESSAGES_NUMBER_TODAY' => $nbr_msg_today,
+	'FORUM_NAME'              => $config->get_forum_name(),
+	'TOPICS_NUMBERS'          => $total_topics,
+	'MESSAGES_NUMBER'         => $total_messages,
+	'TOPICS_NUMBERS_DAY'      => $nbr_topics_day,
+	'MESSAGES_NUMBER_DAY'     => $nbr_msg_day,
+	'TOPICS_NUMBERS_TODAY'    => $nbr_topics_today,
+	'MESSAGES_NUMBER_TODAY'   => $nbr_msg_today,
 
-	'L_TOPICS_NUMBERS'  => ($total_topics > 1) ? $LANG['topic_s']     : $LANG['topic'],
-	'L_MESSAGES_NUMBER' => ($total_messages > 1) ? $LANG['message_s'] : $LANG['message'],
-	//
+	'L_TOPICS_NUMBERS'        => ($total_topics > 1) ? $LANG['topic_s'] : $LANG['topic'],
+	'L_MESSAGES_NUMBER'       => ($total_messages > 1) ? $LANG['message_s'] : $LANG['message'],
 	'L_FORUM_INDEX'           => $LANG['forum_index'],
 	'L_FORUM'                 => $LANG['forum'],
 	'L_STATS'                 => $LANG['stats'],
@@ -72,7 +71,7 @@ $vars_tpl = array(
 	'L_MESSAGES_NUMBER_TODAY' => $LANG['nbr_msg_today'],
 	'L_LAST_MESSAGE'          => $LANG['forum_last_msg'],
 	'L_POPULAR'               => $LANG['forum_popular'],
-	'L_ANSWERS'               => $LANG['forum_nbr_answers'],
+	'L_ANSWERS'               => $LANG['forum_nbr_answers']
 );
 
 //Vérification des autorisations.
@@ -136,9 +135,9 @@ $result->dispose();
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script = '" ."/forum/stats.php'");
 
 $vars_tpl = array_merge($vars_tpl, array(
-	'C_USER_CONNECTED' => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
-	'C_NO_USER_ONLINE' => (($total_online - $total_visit) == 0),
-	'TOTAL_ONLINE'     => $total_online,
+	'C_USER_CONNECTED'      => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
+	'C_NO_USER_ONLINE'      => (($total_online - $total_visit) == 0),
+	'TOTAL_ONLINE'          => $total_online,
 
 	'ONLINE_USERS_LIST'     => $users_list,
 	'ADMINISTRATORS_NUMBER' => $total_admin,
@@ -146,14 +145,14 @@ $vars_tpl = array_merge($vars_tpl, array(
 	'MEMBERS_NUMBER'        => $total_member,
 	'GUESTS_NUMBER'         => $total_visit,
 
-	'L_USER'   => ($total_online > 1) ? $LANG['user_s']   : $LANG['user'],
-	'L_ADMIN'  => ($total_admin > 1) ? $LANG['admin_s']   : $LANG['admin'],
-	'L_MODO'   => ($total_modo > 1) ? $LANG['modo_s']     : $LANG['modo'],
-	'L_MEMBER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
-	'L_GUEST'  => ($total_visit > 1) ? $LANG['guest_s']   : $LANG['guest'],
-	//
-	'L_AND'            => $LANG['and'],
-	'L_ONLINE'         => TextHelper::strtolower($LANG['online'])
+	'L_USER'                => ($total_online > 1) ? $LANG['user_s']   : $LANG['user'],
+	'L_ADMIN'               => ($total_admin > 1) ? $LANG['admin_s']   : $LANG['admin'],
+	'L_MODO'                => ($total_modo > 1) ? $LANG['modo_s']     : $LANG['modo'],
+	'L_MEMBER'              => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
+	'L_GUEST'               => ($total_visit > 1) ? $LANG['guest_s']   : $LANG['guest'],
+
+	'L_AND'                 => $LANG['and'],
+	'L_ONLINE'              => TextHelper::strtolower($LANG['online'])
 ));
 
 $view->put_all($vars_tpl);

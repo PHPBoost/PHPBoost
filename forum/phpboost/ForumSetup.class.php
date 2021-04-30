@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 28
+ * @version     PHPBoost 6.0 - last update: 2021 04 30
  * @since       PHPBoost 3.0 - 2010 05 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
 
 class ForumSetup extends DefaultModuleSetup
@@ -32,15 +33,15 @@ class ForumSetup extends DefaultModuleSetup
 
 	public static function __static()
 	{
-		self::$forum_alerts_table = PREFIX . 'forum_alerts';
-		self::$forum_cats_table = PREFIX . 'forum_cats';
+		self::$forum_alerts_table  = PREFIX . 'forum_alerts';
+		self::$forum_cats_table    = PREFIX . 'forum_cats';
 		self::$forum_history_table = PREFIX . 'forum_history';
 		self::$forum_message_table = PREFIX . 'forum_msg';
-		self::$forum_poll_table = PREFIX . 'forum_poll';
-		self::$forum_topics_table = PREFIX . 'forum_topics';
-		self::$forum_track_table = PREFIX . 'forum_track';
-		self::$forum_view_table = PREFIX . 'forum_view';
-		self::$forum_ranks_table = PREFIX . 'forum_ranks';
+		self::$forum_poll_table    = PREFIX . 'forum_poll';
+		self::$forum_topics_table  = PREFIX . 'forum_topics';
+		self::$forum_track_table   = PREFIX . 'forum_track';
+		self::$forum_view_table    = PREFIX . 'forum_view';
+		self::$forum_ranks_table   = PREFIX . 'forum_ranks';
 	}
 
 	public function __construct()
@@ -306,62 +307,62 @@ class ForumSetup extends DefaultModuleSetup
 	private function insert_forum_cats_data()
 	{
 		$this->querier->insert(self::$forum_cats_table, array(
-			'id' => 1,
-			'name' => $this->install_lang['forum.default.category.name'],
+			'id'            => 1,
+			'name'          => $this->install_lang['forum.default.category.name'],
 			'rewrited_name' => Url::encode_rewrite($this->install_lang['forum.default.category.name']),
-			'description' => $this->install_lang['forum.default.category.description'],
-			'c_order' => 1,
-			'auth' => '',
-			'id_parent' => 0,
+			'description'   => $this->install_lang['forum.default.category.description'],
+			'c_order'       => 1,
+			'auth'          => '',
+			'id_parent'     => 0,
 			'last_topic_id' => 1,
-			'url' => ''
+			'url'           => ''
 		));
 
 		$this->querier->insert(self::$forum_cats_table, array(
-			'id' => 2,
-			'name' => $this->install_lang['forum.default.board.name'],
+			'id'            => 2,
+			'name'          => $this->install_lang['forum.default.board.name'],
 			'rewrited_name' => Url::encode_rewrite($this->install_lang['forum.default.board.name']),
-			'description' => $this->install_lang['forum.default.board.description'],
-			'c_order' => 1,
-			'auth' => '',
-			'id_parent' => 1,
+			'description'   => $this->install_lang['forum.default.board.description'],
+			'c_order'       => 1,
+			'auth'          => '',
+			'id_parent'     => 1,
 			'last_topic_id' => 1,
-			'url' => ''
+			'url'           => ''
 		));
 	}
 
 	private function insert_forum_topics_data()
 	{
 		$this->querier->insert(self::$forum_topics_table, array(
-			'id' => 1,
-			'id_category' => 2,
-			'title' => $this->install_lang['forum.sample.thread.title'],
-			'subtitle' => $this->install_lang['forum.sample.thread.subtitle'],
-			'user_id' => 1,
-			'nbr_msg' => 1,
-			'nbr_views' => 0,
-			'last_user_id' => 1,
-			'last_msg_id' => 1,
+			'id'             => 1,
+			'id_category'    => 2,
+			'title'          => $this->install_lang['forum.sample.thread.title'],
+			'subtitle'       => $this->install_lang['forum.sample.thread.subtitle'],
+			'user_id'        => 1,
+			'nbr_msg'        => 1,
+			'nbr_views'      => 0,
+			'last_user_id'   => 1,
+			'last_msg_id'    => 1,
 			'last_timestamp' => time(),
-			'first_msg_id' => 1,
-			'type' => 0,
-			'status' => 1,
-			'aprob' => 0,
-			'display_msg' => 0
+			'first_msg_id'   => 1,
+			'type'           => 0,
+			'status'         => 1,
+			'aprob'          => 0,
+			'display_msg'    => 0
 		));
 	}
 
 	private function insert_forum_msg_data()
 	{
 		$this->querier->insert(self::$forum_message_table, array(
-			'id' => 1,
-		 	'idtopic' => 1,
-			'user_id' => 1,
-			'content' => $this->install_lang['forum.sample.thread.message.content'],
-			'timestamp' => time(),
+			'id'             => 1,
+		 	'idtopic'        => 1,
+			'user_id'        => 1,
+			'content'        => $this->install_lang['forum.sample.thread.message.content'],
+			'timestamp'      => time(),
 			'timestamp_edit' => 0,
-			'user_id_edit' => 0,
-			'user_ip' => AppContext::get_request()->get_ip_address()
+			'user_id_edit'   => 0,
+			'user_ip'        => AppContext::get_request()->get_ip_address()
 		));
 
 		//Mise à jour du nombre de messages du membre.
@@ -371,80 +372,80 @@ class ForumSetup extends DefaultModuleSetup
 	private function insert_forum_ranks_data()
 	{
 		$this->querier->insert(self::$forum_ranks_table, array(
-			'id' => 1,
-			'name' => $this->install_lang['forum.rank.administrator'],
-			'msg' => -2,
-			'icon' => 'rank_admin.png',
+			'id'      => 1,
+			'name'    => $this->install_lang['forum.rank.administrator'],
+			'msg'     => -2,
+			'icon'    => 'rank_admin.png',
 			'special' => 1
 		));
 		$this->querier->insert(self::$forum_ranks_table, array(
-			'id' => 2,
-			'name' => $this->install_lang['forum.rank.moderator'],
-			'msg' => -1,
-			'icon' => 'rank_modo.png',
+			'id'      => 2,
+			'name'    => $this->install_lang['forum.rank.moderator'],
+			'msg'     => -1,
+			'icon'    => 'rank_modo.png',
 			'special' => 1
 		));
 		$this->querier->insert(self::$forum_ranks_table, array(
-			'id' => 3,
-			'name' => $this->install_lang['forum.rank.inactiv'],
-			'msg' => 0,
-			'icon' => 'rank_0.png',
+			'id'      => 3,
+			'name'    => $this->install_lang['forum.rank.inactiv'],
+			'msg'     => 0,
+			'icon'    => 'rank_0.png',
 			'special' => 0
 		));
 		$this->querier->insert(self::$forum_ranks_table, array(
-			'id' => 4,
-			'name' => $this->install_lang['forum.rank.slingshot'],
-			'msg' => 1,
-			'icon' => 'rank_0.png',
+			'id'      => 4,
+			'name'    => $this->install_lang['forum.rank.slingshot'],
+			'msg'     => 1,
+			'icon'    => 'rank_0.png',
 			'special' => 0
 		));
 		$this->querier->insert(self::$forum_ranks_table, array(
-			'id' => 5,
-			'name' => $this->install_lang['forum.rank.minigun'],
-			'msg' => 25,
-			'icon' => 'rank_1.png',
+			'id'      => 5,
+			'name'    => $this->install_lang['forum.rank.minigun'],
+			'msg'     => 25,
+			'icon'    => 'rank_1.png',
 			'special' => 0
 		));
 		$this->querier->insert(self::$forum_ranks_table, array(
-			'id' => 6,
-			'name' => $this->install_lang['forum.rank.fuzil'],
-			'msg' => 50,
-			'icon' => 'rank_2.png',
+			'id'      => 6,
+			'name'    => $this->install_lang['forum.rank.fuzil'],
+			'msg'     => 50,
+			'icon'    => 'rank_2.png',
 			'special' => 0
 		));
 		$this->querier->insert(self::$forum_ranks_table, array(
-			'id' => 7,
-			'name' => $this->install_lang['forum.rank.bazooka'],
-			'msg' => 100,
-			'icon' => 'rank_3.png',
+			'id'      => 7,
+			'name'    => $this->install_lang['forum.rank.bazooka'],
+			'msg'     => 100,
+			'icon'    => 'rank_3.png',
 			'special' => 0
 		));
 		$this->querier->insert(self::$forum_ranks_table, array(
-			'id' => 8,
-			'name' => $this->install_lang['forum.rank.rocket'],
-			'msg' => 250,
-			'icon' => 'rank_4.png',
+			'id'      => 8,
+			'name'    => $this->install_lang['forum.rank.rocket'],
+			'msg'     => 250,
+			'icon'    => 'rank_4.png',
 			'special' => 0
 		));
 		$this->querier->insert(self::$forum_ranks_table, array(
-			'id' => 9,
-			'name' => $this->install_lang['forum.rank.mortar'],
-			'msg' => 500,
-			'icon' => 'rank_5.png',
+			'id'      => 9,
+			'name'    => $this->install_lang['forum.rank.mortar'],
+			'msg'     => 500,
+			'icon'    => 'rank_5.png',
 			'special' => 0
 		));
 		$this->querier->insert(self::$forum_ranks_table, array(
-			'id' => 10,
-			'name' => $this->install_lang['forum.rank.missile'],
-			'msg' => 1000,
-			'icon' => 'rank_6.png',
+			'id'      => 10,
+			'name'    => $this->install_lang['forum.rank.missile'],
+			'msg'     => 1000,
+			'icon'    => 'rank_6.png',
 			'special' => 0
 		));
 		$this->querier->insert(self::$forum_ranks_table, array(
-			'id' => 11,
-			'name' => $this->install_lang['forum.rank.spaceship'],
-			'msg' => 1500,
-			'icon' => 'rank_special.png',
+			'id'      => 11,
+			'name'    => $this->install_lang['forum.rank.spaceship'],
+			'msg'     => 1500,
+			'icon'    => 'rank_special.png',
 			'special' => 0
 		));
 

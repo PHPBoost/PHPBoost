@@ -3,20 +3,21 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 07
+ * @version     PHPBoost 6.0 - last update: 2021 04 30
  * @since       PHPBoost 4.1 - 2015 02 25
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
 
 class ForumCategory extends Category
 {
 	private $type;
 
-	const TYPE_CATEGORY = 0;
-	const TYPE_FORUM = 1;
-	const TYPE_URL = 2;
+	const TYPE_CATEGORY   = 0;
+	const TYPE_FORUM      = 1;
+	const TYPE_URL        = 2;
 
 	const STATUS_UNLOCKED = 0;
-	const STATUS_LOCKED = 1;
+	const STATUS_LOCKED   = 1;
 
 	public function __construct()
 	{
@@ -65,7 +66,7 @@ class ForumCategory extends Category
 	{
 		return $this->get_additional_property('url');
 	}
-	
+
 	protected function set_additional_properties(array $properties)
 	{
 		if (!empty($properties['url']))
@@ -74,7 +75,7 @@ class ForumCategory extends Category
 			$this->set_type(self::TYPE_FORUM);
 		else
 			$this->set_type(self::TYPE_CATEGORY);
-		
+
 		parent::set_additional_properties($properties);
 	}
 }

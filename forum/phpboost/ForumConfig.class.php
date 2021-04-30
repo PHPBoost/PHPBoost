@@ -3,29 +3,30 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 28
+ * @version     PHPBoost 6.0 - last update: 2021 04 30
  * @since       PHPBoost 4.1 - 2014 09 11
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
 
 class ForumConfig extends AbstractConfigData
 {
-	const FORUM_NAME = 'forum_name';
-	const NUMBER_TOPICS_PER_PAGE = 'number_topics_per_page';
-	const NUMBER_MESSAGES_PER_PAGE = 'number_messages_per_page';
-	const READ_MESSAGES_STORAGE_DURATION = 'read_messages_storage_duration';
-	const MAX_TOPIC_NUMBER_IN_FAVORITE = 'max_topic_number_in_favorite';
-	const EDIT_MARK_ENABLED = 'edit_mark_enabled';
-	const MULTIPLE_POSTS_ALLOWED = 'multiple_posts_allowed';
-	const CONNEXION_FORM_DISPLAYED = 'connexion_form_displayed';
-	const LEFT_COLUMN_DISABLED = 'left_column_disabled';
-	const RIGHT_COLUMN_DISABLED = 'right_column_disabled';
-	const MESSAGE_BEFORE_TOPIC_TITLE_DISPLAYED = 'message_before_topic_title_displayed';
-	const MESSAGE_BEFORE_TOPIC_TITLE = 'message_before_topic_title';
-	const MESSAGE_WHEN_TOPIC_IS_UNSOLVED = 'message_when_topic_is_unsolved';
-	const MESSAGE_WHEN_TOPIC_IS_SOLVED = 'message_when_topic_is_solved';
+	const FORUM_NAME                                = 'forum_name';
+	const NUMBER_TOPICS_PER_PAGE                    = 'number_topics_per_page';
+	const NUMBER_MESSAGES_PER_PAGE                  = 'number_messages_per_page';
+	const READ_MESSAGES_STORAGE_DURATION            = 'read_messages_storage_duration';
+	const MAX_TOPIC_NUMBER_IN_FAVORITE              = 'max_topic_number_in_favorite';
+	const EDIT_MARK_ENABLED                         = 'edit_mark_enabled';
+	const MULTIPLE_POSTS_ALLOWED                    = 'multiple_posts_allowed';
+	const CONNEXION_FORM_DISPLAYED                  = 'connexion_form_displayed';
+	const LEFT_COLUMN_DISABLED                      = 'left_column_disabled';
+	const RIGHT_COLUMN_DISABLED                     = 'right_column_disabled';
+	const MESSAGE_BEFORE_TOPIC_TITLE_DISPLAYED      = 'message_before_topic_title_displayed';
+	const MESSAGE_BEFORE_TOPIC_TITLE                = 'message_before_topic_title';
+	const MESSAGE_WHEN_TOPIC_IS_UNSOLVED            = 'message_when_topic_is_unsolved';
+	const MESSAGE_WHEN_TOPIC_IS_SOLVED              = 'message_when_topic_is_solved';
 	const MESSAGE_BEFORE_TOPIC_TITLE_ICON_DISPLAYED = 'message_before_topic_title_icon_displayed';
-	const AUTHORIZATIONS = 'authorizations';
+	const AUTHORIZATIONS                            = 'authorizations';
 
 	public function get_forum_name()
 	{
@@ -225,22 +226,22 @@ class ForumConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::FORUM_NAME => LangLoader::get_message('forum.default.forum.name', 'config', 'forum'),
-			self::NUMBER_TOPICS_PER_PAGE => 20,
-			self::NUMBER_MESSAGES_PER_PAGE => 15,
-			self::READ_MESSAGES_STORAGE_DURATION => 30,
-			self::MAX_TOPIC_NUMBER_IN_FAVORITE => 40,
-			self::EDIT_MARK_ENABLED => true,
-			self::MULTIPLE_POSTS_ALLOWED => true,
-			self::CONNEXION_FORM_DISPLAYED => false,
-			self::LEFT_COLUMN_DISABLED => false,
-			self::RIGHT_COLUMN_DISABLED => false,
-			self::MESSAGE_BEFORE_TOPIC_TITLE_DISPLAYED => true,
-			self::MESSAGE_BEFORE_TOPIC_TITLE => LangLoader::get_message('forum.config.issue.status', 'config', 'forum'),
-			self::MESSAGE_WHEN_TOPIC_IS_UNSOLVED => LangLoader::get_message('forum.config.issue.status.unsolved', 'config', 'forum'),
-			self::MESSAGE_WHEN_TOPIC_IS_SOLVED => LangLoader::get_message('forum.config.issue.status.solved', 'config', 'forum'),
+			self::FORUM_NAME                                => LangLoader::get_message('forum.default.forum.name', 'config', 'forum'),
+			self::NUMBER_TOPICS_PER_PAGE                    => 20,
+			self::NUMBER_MESSAGES_PER_PAGE                  => 15,
+			self::READ_MESSAGES_STORAGE_DURATION            => 30,
+			self::MAX_TOPIC_NUMBER_IN_FAVORITE              => 40,
+			self::EDIT_MARK_ENABLED                         => true,
+			self::MULTIPLE_POSTS_ALLOWED                    => true,
+			self::CONNEXION_FORM_DISPLAYED                  => false,
+			self::LEFT_COLUMN_DISABLED                      => false,
+			self::RIGHT_COLUMN_DISABLED                     => false,
+			self::MESSAGE_BEFORE_TOPIC_TITLE_DISPLAYED      => true,
+			self::MESSAGE_BEFORE_TOPIC_TITLE                => LangLoader::get_message('forum.config.issue.status', 'config', 'forum'),
+			self::MESSAGE_WHEN_TOPIC_IS_UNSOLVED            => LangLoader::get_message('forum.config.issue.status.unsolved', 'config', 'forum'),
+			self::MESSAGE_WHEN_TOPIC_IS_SOLVED              => LangLoader::get_message('forum.config.issue.status.solved', 'config', 'forum'),
 			self::MESSAGE_BEFORE_TOPIC_TITLE_ICON_DISPLAYED => true,
-			self::AUTHORIZATIONS => array('r-1' => 129, 'r0' => 131, 'r1' => 139)
+			self::AUTHORIZATIONS                            => array('r-1' => 129, 'r0' => 131, 'r1' => 139)
 		);
 	}
 

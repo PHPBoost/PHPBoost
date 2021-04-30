@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 28
+ * @version     PHPBoost 6.0 - last update: 2021 04 30
  * @since       PHPBoost 1.6 - 2007 04 02
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -43,7 +43,7 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 	$view = new FileTemplate('forum/forum_forum.tpl');
 	$view->add_lang(array_merge(
 		LangLoader::get('common', 'forum'),
-		LangLoader::get('common-lang'),
+		LangLoader::get('common-lang')
 	));
 
 	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
@@ -149,7 +149,7 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 			'C_PAGINATION'            => $topic_pagination->has_several_pages(),
 			'C_IMG_POLL'              => !empty($row['question']),
 			'C_IMG_TRACK'             => !empty($row['idtrack']),
-			'C_DISPLAY_ISSUE_STATUS'           => ($config->is_message_before_topic_title_displayed() && $config->is_message_before_topic_title_icon_displayed() && $row['display_msg']),
+			'C_DISPLAY_ISSUE_STATUS'  => ($config->is_message_before_topic_title_displayed() && $config->is_message_before_topic_title_icon_displayed() && $row['display_msg']),
 			'C_HOT_TOPIC'             => ($row['type'] == '0' && $row['status'] != '0' && ($row['nbr_msg'] > $config->get_number_messages_per_page())),
 			'C_BLINK'                 => $blink,
 			'C_AUTHOR'                => !empty($row['login']),
@@ -157,30 +157,30 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 			'C_LAST_MESSAGE_GUEST'    => !empty($row['last_login']),
 			'C_LAST_USER_GROUP_COLOR' => !empty($last_group_color),
 
-			'CATEGORY_ID'           => $row['id_category'],
-			'TITLE'                 => stripslashes($row['title']),
-			'TOPIC_ICON'            => $topic_icon,
-			'TYPE'                  => $type[$row['type']],
-			'AUTHOR_LEVEL'          => UserService::get_level_class($row['user_level']),
-			'AUTHOR'                => $row['login'],
-			'GROUP_COLOR'           => $group_color,
-			'DESCRIPTION'           => stripslashes($row['subtitle']),
-			'PAGINATION'            => $topic_pagination->display(),
-			'MESSAGES_NUMBER'       => ($row['nbr_msg'] - 1),
-			'VIEWS_NUMBER'          => $row['nbr_views'],
-			'LAST_USER_LOGIN'       => $row['last_login'],
-			'LAST_USER_LEVEL'       => UserService::get_level_class($row['last_user_level']),
-			'LAST_USER_GROUP_COLOR' => $last_group_color,
+			'CATEGORY_ID'             => $row['id_category'],
+			'TITLE'                   => stripslashes($row['title']),
+			'TOPIC_ICON'              => $topic_icon,
+			'TYPE'                    => $type[$row['type']],
+			'AUTHOR_LEVEL'            => UserService::get_level_class($row['user_level']),
+			'AUTHOR'                  => $row['login'],
+			'GROUP_COLOR'             => $group_color,
+			'DESCRIPTION'             => stripslashes($row['subtitle']),
+			'PAGINATION'              => $topic_pagination->display(),
+			'MESSAGES_NUMBER'         => ($row['nbr_msg'] - 1),
+			'VIEWS_NUMBER'            => $row['nbr_views'],
+			'LAST_USER_LOGIN'         => $row['last_login'],
+			'LAST_USER_LEVEL'         => UserService::get_level_class($row['last_user_level']),
+			'LAST_USER_GROUP_COLOR'   => $last_group_color,
 
-			'U_ANCHOR'           => $new_anchor,
-			'U_AUTHOR'           => UserUrlBuilder::profile($row['user_id'])->rel(),
-			'U_TOPIC'            => url('.php?id=' . $row['id'], '-' . $row['id'] . $rewrited_title . '.php'),
-			'U_LAST_MESSAGE'     => "topic" . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id,
-			'U_LAST_USER_PROFILE' => UserUrlBuilder::profile($row['last_user_id'])->rel(),
+			'U_ANCHOR'                => $new_anchor,
+			'U_AUTHOR'                => UserUrlBuilder::profile($row['user_id'])->rel(),
+			'U_TOPIC'                 => url('.php?id=' . $row['id'], '-' . $row['id'] . $rewrited_title . '.php'),
+			'U_LAST_MESSAGE'          => "topic" . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id,
+			'U_LAST_USER_PROFILE'     => UserUrlBuilder::profile($row['last_user_id'])->rel(),
 
-			'L_ISSUE_STATUS_MESSAGE' => ($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '',
-			//
-			'L_GUEST' => $LANG['guest'],
+			'L_ISSUE_STATUS_MESSAGE'  => ($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '',
+
+			'L_GUEST'                 => $LANG['guest']
 			)
 		));
 	}
@@ -222,9 +222,9 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 	));
 
 	$vars_tpl = array(
-		'C_USER_CONNECTED' => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
-		'C_NO_USER_ONLINE' => (($total_online - $total_visit) == 0),
-		'C_PAGINATION'     => $pagination->has_several_pages(),
+		'C_USER_CONNECTED'      => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
+		'C_NO_USER_ONLINE'      => (($total_online - $total_visit) == 0),
+		'C_PAGINATION'          => $pagination->has_several_pages(),
 
 		'FORUM_NAME'            => $config->get_forum_name(),
 		'PAGINATION'            => $pagination->display(),
@@ -235,29 +235,29 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 		'MEMBERS_NUMBER'        => $total_member,
 		'GUESTS_NUMBER'         => $total_visit,
 		'SELECT_CAT'            => $cat_list, //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
-		'CATEGORY_NAME'             => $LANG['show_last_read'],
+		'CATEGORY_NAME'         => $LANG['show_last_read'],
 
-		'U_CHANGE_CAT'       => 'lastread.php' . '&amp;token=' . AppContext::get_session()->get_token(),
-		'U_ONCHANGE'         => url(".php?id=' + this.options[this.selectedIndex].value + '", "forum-' + this.options[this.selectedIndex].value + '.php"),
-		'U_ONCHANGE_CAT'     => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
-		'U_POST_NEW_SUBJECT' => '',
+		'U_CHANGE_CAT'          => 'lastread.php' . '&amp;token=' . AppContext::get_session()->get_token(),
+		'U_ONCHANGE'            => url(".php?id=' + this.options[this.selectedIndex].value + '", "forum-' + this.options[this.selectedIndex].value + '.php"),
+		'U_ONCHANGE_CAT'        => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
+		'U_POST_NEW_SUBJECT'    => '',
 
-		'L_USER'   => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
-		'L_ADMIN'  => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
-		'L_MODO'   => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],
-		'L_MEMBER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
-		'L_GUEST'  => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
-		'L_TOPIC'  => ($nbr_topics > 1) ? $LANG['topic_s'] : $LANG['topic'],
+		'L_USER'                => ($total_online > 1) ? $LANG['user_s']      : $LANG['user'],
+		'L_ADMIN'               => ($total_admin > 1) ? $LANG['admin_s']      : $LANG['admin'],
+		'L_MODO'                => ($total_modo > 1) ? $LANG['modo_s']        : $LANG['modo'],
+		'L_MEMBER'              => ($total_member > 1) ? $LANG['member_s']    : $LANG['member'],
+		'L_GUEST'               => ($total_visit > 1) ? $LANG['guest_s']      : $LANG['guest'],
+		'L_TOPIC'               => ($nbr_topics > 1) ? $LANG['topic_s']       : $LANG['topic'],
 		//
-		'L_AND'          => $LANG['and'],
-		'L_ONLINE'       => TextHelper::strtolower($LANG['online']),
-		'L_FORUM_INDEX'  => $LANG['forum_index'],
-		'L_FORUM'        => $LANG['forum'],
-		'L_AUTHOR'       => $LANG['author'],
-		'L_MESSAGE'      => $LANG['replies'],
-		'L_ANSWERS'      => $LANG['answers'],
-		'L_VIEW'         => $LANG['views'],
-		'L_LAST_MESSAGE' => $LANG['last_message'],
+		'L_AND'                 => $LANG['and'],
+		'L_ONLINE'              => TextHelper::strtolower($LANG['online']),
+		'L_FORUM_INDEX'         => $LANG['forum_index'],
+		'L_FORUM'               => $LANG['forum'],
+		'L_AUTHOR'              => $LANG['author'],
+		'L_MESSAGE'             => $LANG['replies'],
+		'L_ANSWERS'             => $LANG['answers'],
+		'L_VIEW'                => $LANG['views'],
+		'L_LAST_MESSAGE'        => $LANG['last_message']
 	);
 
 	$view->put_all($vars_tpl);

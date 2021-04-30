@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 21
+ * @version     PHPBoost 6.0 - last update: 2021 04 30
  * @since       PHPBoost 1.6 - 2007 02 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,13 +15,13 @@ AppContext::get_session()->no_session_location(); //Permet de ne pas mettre jour
 require_once('../forum/forum_begin.php');
 require_once('../kernel/header_no_display.php');
 
-$track = retrieve(GET, 't', '');
-$untrack = retrieve(GET, 'ut', '');
-$track_pm = retrieve(GET, 'tp', '');
-$untrack_pm = retrieve(GET, 'utp', '');
-$track_mail = retrieve(GET, 'tm', '');
+$track        = retrieve(GET, 't', '');
+$untrack      = retrieve(GET, 'ut', '');
+$track_pm     = retrieve(GET, 'tp', '');
+$untrack_pm   = retrieve(GET, 'utp', '');
+$track_mail   = retrieve(GET, 'tm', '');
 $untrack_mail = retrieve(GET, 'utm', '');
-$msg_d = retrieve(GET, 'msg_d', '');
+$msg_d        = retrieve(GET, 'msg_d', '');
 
 if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 {

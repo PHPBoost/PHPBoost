@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 28
+ * @version     PHPBoost 6.0 - last update: 2021 04 30
  * @since       PHPBoost 3.0 - 2012 02 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -239,14 +239,14 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			'C_USER_AVATAR' 	 => $user_accounts_config->is_default_avatar_enabled() || !empty($result_data['avatar']),
 			'C_USER_HAS_AVATAR'  => !empty($result_data['avatar']),
 
-			'USER_PSEUDO' => $result_data['display_name'],
-			'TITLE'       => stripslashes($result_data['title']),
-			'CONTENT'     => FormatingHelper::second_parse(stripslashes($result_data['content'])),
+			'USER_PSEUDO'        => $result_data['display_name'],
+			'TITLE'              => stripslashes($result_data['title']),
+			'CONTENT'            => FormatingHelper::second_parse(stripslashes($result_data['content'])),
 
-			'U_USER_PROFILE'   => !empty($result_data['user_id']) ? UserUrlBuilder::profile($result_data['user_id'])->rel() : '',
-			'U_TOPIC'          => PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $result_data['topic_id'], '-' . $result_data['topic_id'] . $rewrited_title . '.php') . '#m' . $result_data['msg_id'],
-			'U_DEFAULT_AVATAR' => $user_accounts_config->get_default_avatar(),
-			'U_USER_AVATAR'    => Url::to_rel($result_data['avatar'])
+			'U_USER_PROFILE'     => !empty($result_data['user_id']) ? UserUrlBuilder::profile($result_data['user_id'])->rel() : '',
+			'U_TOPIC'            => PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $result_data['topic_id'], '-' . $result_data['topic_id'] . $rewrited_title . '.php') . '#m' . $result_data['msg_id'],
+			'U_DEFAULT_AVATAR'   => $user_accounts_config->get_default_avatar(),
+			'U_USER_AVATAR'      => Url::to_rel($result_data['avatar'])
 		)));
 
 		return $view->render();

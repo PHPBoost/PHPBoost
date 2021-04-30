@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 29
+ * @version     PHPBoost 6.0 - last update: 2021 04 30
  * @since       PHPBoost 1.2 - 2005 10 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -35,7 +35,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 	$view->add_lang(array_merge(
 		LangLoader::get('category-lang'),
 		LangLoader::get('form-lang'),
-		LangLoader::get('warning-lang'),
+		LangLoader::get('warning-lang')
 	));
 
 	try {
@@ -88,11 +88,11 @@ if (!empty($id_get)) //Déplacement du sujet.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '" ."/forum/%'");
 
 	$vars_tpl = array(
-		'C_USER_CONNECTED' => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
-		'C_NO_USER_ONLINE' => (($total_online - $total_visit) == 0),
+		'C_USER_CONNECTED'      => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
+		'C_NO_USER_ONLINE'      => (($total_online - $total_visit) == 0),
 
 		'FORUM_NAME'            => $config->get_forum_name() . ' : ' . $LANG['move_topic'],
-		'CATEGORY_NAME'             => $cat['name'],
+		'CATEGORY_NAME'         => $cat['name'],
 		'CATEGORIES'            => $cat_list,
 		'ID'                    => $id_get,
 		'TITLE'                 => stripslashes($topic['title']),
@@ -104,22 +104,22 @@ if (!empty($id_get)) //Déplacement du sujet.
 		'MEMBERS_NUMBER'        => $total_member,
 		'GUESTS_NUMBER'         => $total_visit,
 
-		'U_CATEGORY' => 'forum' . url('.php?id=' . $cat['id'], '-' . $cat['id'] . '.php'),
-		'U_TITLE_T'   => 'topic' . url('.php?id=' . $id_get, '-' . $id_get . '.php'),
+		'U_CATEGORY'            => 'forum' . url('.php?id=' . $cat['id'], '-' . $cat['id'] . '.php'),
+		'U_TITLE_T'             => 'topic' . url('.php?id=' . $id_get, '-' . $id_get . '.php'),
 
-		'L_USER'   => ($total_online > 1) ? $LANG['user_s']   : $LANG['user'],
-		'L_ADMIN'  => ($total_admin > 1) ? $LANG['admin_s']   : $LANG['admin'],
-		'L_MODO'   => ($total_modo > 1) ? $LANG['modo_s']     : $LANG['modo'],
-		'L_MEMBER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
-		'L_GUEST'  => ($total_visit > 1) ? $LANG['guest_s']   : $LANG['guest'],
+		'L_USER'                => ($total_online > 1) ? $LANG['user_s']   : $LANG['user'],
+		'L_ADMIN'               => ($total_admin > 1) ? $LANG['admin_s']   : $LANG['admin'],
+		'L_MODO'                => ($total_modo > 1) ? $LANG['modo_s']     : $LANG['modo'],
+		'L_MEMBER'              => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
+		'L_GUEST'               => ($total_visit > 1) ? $LANG['guest_s']   : $LANG['guest'],
 		//
-		'L_AND'           => $LANG['and'],
-		'L_ONLINE'        => TextHelper::strtolower($LANG['online']),
-		'L_SELECT_SUBCAT' => $LANG['require_subcat'],
-		'L_MOVE_SUBJECT'  => $LANG['forum_move_subject'],
-		'L_CAT'           => $LANG['category'],
-		'L_FORUM_INDEX'   => $LANG['forum_index'],
-		'L_SUBMIT'        => $LANG['submit']
+		'L_AND'                 => $LANG['and'],
+		'L_ONLINE'              => TextHelper::strtolower($LANG['online']),
+		'L_SELECT_SUBCAT'       => $LANG['require_subcat'],
+		'L_MOVE_SUBJECT'        => $LANG['forum_move_subject'],
+		'L_CAT'                 => $LANG['category'],
+		'L_FORUM_INDEX'         => $LANG['forum_index'],
+		'L_SUBMIT'              => $LANG['submit']
 	);
 
 	$view->put_all($vars_tpl);
@@ -237,17 +237,17 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	$editor->set_identifier('content');
 
 	$vars_tpl = array(
-		'C_FORUM_CUT_CAT' => true,
+		'C_FORUM_CUT_CAT'  => true,
 
-		'FORUM_NAME'    => $config->get_forum_name() . ' : ' . $LANG['cut_topic'],
-		'CATEGORY_NAME'     => $cat['name'],
-		'CATEGORIES'    => $cat_list,
-		'KERNEL_EDITOR' => $editor->display(),
-		'IDTOPIC'       => 0,
-		'TITLE_T'       => stripslashes($topic['title']),
+		'FORUM_NAME'       => $config->get_forum_name() . ' : ' . $LANG['cut_topic'],
+		'CATEGORY_NAME'    => $cat['name'],
+		'CATEGORIES'       => $cat_list,
+		'KERNEL_EDITOR'    => $editor->display(),
+		'IDTOPIC'          => 0,
+		'TITLE_T'          => stripslashes($topic['title']),
 
-		'U_CATEGORY' => 'forum' . url('.php?id=' . $cat['id'], '-' . $cat['id'] . '.php'),
-		'U_TITLE_T'   => 'topic' . url('.php?id=' . $msg['idtopic'], '-' . $msg['idtopic'] . '.php'),
+		'U_CATEGORY'       => 'forum' . url('.php?id=' . $cat['id'], '-' . $cat['id'] . '.php'),
+		'U_TITLE_T'        => 'topic' . url('.php?id=' . $msg['idtopic'], '-' . $msg['idtopic'] . '.php'),
 		//
 		'L_ACTION'         => $LANG['forum_cut_subject'] . ' : ' . $topic['title'],
 		'L_FORUM_INDEX'    => $LANG['forum_index'],
@@ -284,19 +284,19 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 			'C_FORUM_POST_TYPE' => true,
 			'C_ADD_POLL_FIELD'  => true,
 
-			'TITLE'           => '',
-			'DESCRIPTION'     => '',
-			'CONTENT'         => FormatingHelper::unparse(stripslashes($msg['content'])),
-			'IDM'             => $id_get_msg,
-			'CHECKED_NORMAL'  => 'checked="checked"',
-			'SELECTED_SIMPLE' => 'checked="checked"',
-			'NO_DISPLAY_POLL' => 'true',
-			'NBR_POLL_FIELD'  => $nbr_poll_field,
+			'TITLE'             => '',
+			'DESCRIPTION'       => '',
+			'CONTENT'           => FormatingHelper::unparse(stripslashes($msg['content'])),
+			'IDM'               => $id_get_msg,
+			'CHECKED_NORMAL'    => 'checked="checked"',
+			'SELECTED_SIMPLE'   => 'checked="checked"',
+			'NO_DISPLAY_POLL'   => 'true',
+			'NBR_POLL_FIELD'    => $nbr_poll_field,
 			//
-			'L_TYPE'    => '* ' . $LANG['type'],
-			'L_DEFAULT' => $LANG['default'],
-			'L_POST_IT' => $LANG['forum_postit'],
-			'L_ANOUNCE' => $LANG['forum_announce'],
+			'L_TYPE'            => '* ' . $LANG['type'],
+			'L_DEFAULT'         => $LANG['default'],
+			'L_POST_IT'         => $LANG['forum_postit'],
+			'L_ANOUNCE'         => $LANG['forum_announce']
 		));
 	}
 
@@ -304,7 +304,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '" ."/forum/%'");
 
 	$vars_tpl = array_merge($vars_tpl, array(
-		'C_USER_CONNECTED' => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
+		'C_USER_CONNECTED'      => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 
 		'TOTAL_ONLINE'          => $total_online,
 		'C_NO_USER_ONLINE'      => (($total_online - $total_visit) == 0),
@@ -314,14 +314,14 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		'MEMBERS_NUMBER'        => $total_member,
 		'GUESTS_NUMBER'         => $total_visit,
 
-		'L_USER'   => ($total_online > 1) ? $LANG['user_s']   : $LANG['user'],
-		'L_ADMIN'  => ($total_admin > 1) ? $LANG['admin_s']   : $LANG['admin'],
-		'L_MODO'   => ($total_modo > 1) ? $LANG['modo_s']     : $LANG['modo'],
-		'L_MEMBER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
-		'L_GUEST'  => ($total_visit > 1) ? $LANG['guest_s']   : $LANG['guest'],
-		//
-		'L_AND'    => $LANG['and'],
-		'L_ONLINE' => TextHelper::strtolower($LANG['online'])
+		'L_USER'                => ($total_online > 1) ? $LANG['user_s']   : $LANG['user'],
+		'L_ADMIN'               => ($total_admin > 1) ? $LANG['admin_s']   : $LANG['admin'],
+		'L_MODO'                => ($total_modo > 1) ? $LANG['modo_s']     : $LANG['modo'],
+		'L_MEMBER'              => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
+		'L_GUEST'               => ($total_visit > 1) ? $LANG['guest_s']   : $LANG['guest'],
+
+		'L_AND'                 => $LANG['and'],
+		'L_ONLINE'              => TextHelper::strtolower($LANG['online'])
 	));
 
 	$view->put_all($vars_tpl);

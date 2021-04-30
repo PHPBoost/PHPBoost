@@ -3,18 +3,19 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 29
+ * @version     PHPBoost 6.0 - last update: 2021 04 30
  * @since       PHPBoost 4.1 - 2015 02 25
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
 
 class ForumAuthorizationsService extends CategoriesAuthorizationsService
 {
-	const FLOOD_AUTHORIZATIONS = 16;
-	const HIDE_EDITION_MARK_AUTHORIZATIONS = 32;
+	const FLOOD_AUTHORIZATIONS                     = 16;
+	const HIDE_EDITION_MARK_AUTHORIZATIONS         = 32;
 	const UNLIMITED_TOPICS_TRACKING_AUTHORIZATIONS = 64;
-	const READ_TOPICS_CONTENT_AUTHORIZATIONS = 128;
-	const CATEGORIES_MANAGEMENT_AUTHORIZATIONS = 256;
-	const MULTIPLE_POSTS_AUTHORIZATIONS = 512;
+	const READ_TOPICS_CONTENT_AUTHORIZATIONS       = 128;
+	const CATEGORIES_MANAGEMENT_AUTHORIZATIONS     = 256;
+	const MULTIPLE_POSTS_AUTHORIZATIONS            = 512;
 
 	public function flood()
 	{
