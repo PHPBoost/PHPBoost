@@ -31,9 +31,8 @@ class ForumHomeController extends ModuleController
 		$this->view->add_lang(array_merge(
 			LangLoader::get('common', 'forum'),
 			LangLoader::get('common-lang'),
-			LangLoader::get('user-lang'),
+			LangLoader::get('user-lang')
 		));
-
 	}
 
 	private function build_view()

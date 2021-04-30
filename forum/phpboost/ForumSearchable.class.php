@@ -31,17 +31,17 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		$view->add_lang(array_merge(
 			LangLoader::get('common', 'forum'),
 			LangLoader::get('common-lang'),
-			LangLoader::get('date-lang'),
+			LangLoader::get('date-lang')
 		));
 
 		require_once(PATH_TO_ROOT . '/forum/forum_functions.php');
 		require_once(PATH_TO_ROOT . '/forum/forum_defines.php');
 		load_module_lang('forum'); //Chargement de la langue du module.
 
-		$search = $args['search'];
+		$search      = $args['search'];
 		$id_category = !empty($args['ForumIdcat']) ? NumberHelper::numeric($args['ForumIdcat']) : -1;
-		$time = !empty($args['ForumTime']) ? NumberHelper::numeric($args['ForumTime']) : 0;
-		$where = !empty($args['ForumWhere']) ? TextHelper::strprotect($args['ForumWhere']) : 'all';
+		$time        = !empty($args['ForumTime']) ? NumberHelper::numeric($args['ForumTime']) : 0;
+		$where       = !empty($args['ForumWhere']) ? TextHelper::strprotect($args['ForumWhere']) : 'all';
 
 		//Liste des catégories.
 		$search_category_children_options = new SearchCategoryChildrensOptions();
@@ -88,7 +88,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			'L_CONTENT'   => $LANG['content'],
 			'L_CATEGORY'  => $LANG['category'],
 			'L_ALL_CATS'  => $LANG['all'],
-			'L_ALL_DATES' => $LANG['all'],
+			'L_ALL_DATES' => $LANG['all']
 		));
 		return $view->render();
 	}
@@ -218,7 +218,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		$view = new FileTemplate('forum/forum_generic_results.tpl');
 		$view->add_lang(array_merge(
 			LangLoader::get('common', 'forum'),
-			LangLoader::get('common-lang'),
+			LangLoader::get('common-lang')
 		));
 
 		$view->put_all(Array(
@@ -246,7 +246,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			'U_USER_PROFILE'   => !empty($result_data['user_id']) ? UserUrlBuilder::profile($result_data['user_id'])->rel() : '',
 			'U_TOPIC'          => PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $result_data['topic_id'], '-' . $result_data['topic_id'] . $rewrited_title . '.php') . '#m' . $result_data['msg_id'],
 			'U_DEFAULT_AVATAR' => $user_accounts_config->get_default_avatar(),
-			'U_USER_AVATAR'    => Url::to_rel($result_data['avatar']),
+			'U_USER_AVATAR'    => Url::to_rel($result_data['avatar'])
 		)));
 
 		return $view->render();
