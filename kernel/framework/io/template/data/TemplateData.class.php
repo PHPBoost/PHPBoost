@@ -14,7 +14,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 19
+ * @version     PHPBoost 6.0 - last update: 2021 04 30
  * @since       PHPBoost 3.0 - 2010 02 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -36,7 +36,9 @@ interface TemplateData
 	/**
 	 * Loads the most common vars which are useful in the whole PHPBoost templates. The variables are:
 	 * <ul>
+	 * 	<li>C_CSS_CACHE_ENABLED tells whether the css cache is enabled</li>
 	 * 	<li>THEME the theme used by the current user</li>
+	 * 	<li>PARENT_THEME the theme parent of the theme used by the current user</li>
 	 * 	<li>LANG the lang used by the current user</li>
 	 * 	<li>IS_USER_CONNECTED tells whether the user is connected (member, moderator or administrator)</li>
 	 * 	<li>IS_ADMIN tells whether the user is administrator</li>
