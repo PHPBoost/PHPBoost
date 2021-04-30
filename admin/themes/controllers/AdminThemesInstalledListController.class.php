@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 10 21
+ * @version     PHPBoost 6.0 - last update: 2021 04 30
  * @since       PHPBoost 3.0 - 2011 04 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -52,6 +52,7 @@ class AdminThemesInstalledListController extends AdminController
 				'C_IS_DEFAULT_THEME' => $theme->get_id() == ThemesManager::get_default_theme(),
 				'C_IS_ACTIVATED'     => $theme->is_activated(),
 				'C_PICTURES'         => count($pictures) > 0,
+				'C_PARENT_THEME'     => $configuration->get_parent_theme() != '' && $configuration->get_parent_theme() != '__default__',
 				'THEME_NUMBER'       => $theme_number,
 				'ID'                 => $theme->get_id(),
 				'NAME'               => $configuration->get_name(),
@@ -68,7 +69,8 @@ class AdminThemesInstalledListController extends AdminController
 				'HTML_VERSION'       => $configuration->get_html_version() !== '' ? $configuration->get_html_version() : $this->lang['themes.bot_informed'],
 				'CSS_VERSION'        => $configuration->get_css_version() !== '' ? $configuration->get_css_version() : $this->lang['themes.bot_informed'],
 				'MAIN_COLOR'         => $configuration->get_main_color() !== '' ? $configuration->get_main_color() : $this->lang['themes.bot_informed'],
-				'WIDTH'              => $configuration->get_variable_width() ? $this->lang['themes.variable-width'] : $configuration->get_width()
+				'WIDTH'              => $configuration->get_variable_width() ? $this->lang['themes.variable-width'] : $configuration->get_width(),
+				'PARENT_THEME'       => $configuration->get_parent_theme() != '' && $configuration->get_parent_theme() != '__default__' ? (ThemesManager::get_theme_existed($configuration->get_parent_theme()) ? ThemesManager::get_theme($configuration->get_parent_theme())->get_configuration()->get_name() : $configuration->get_parent_theme()) : '',
 			));
 
 			if (count($pictures) > 0)

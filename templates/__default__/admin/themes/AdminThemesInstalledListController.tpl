@@ -108,6 +108,12 @@
 								<span class="text-strong">{@themes.width} :</span>
 								{themes_installed.WIDTH}
 							</li>
+							# IF themes_installed.C_PARENT_THEME #
+							<li class="li-stretch">
+								<span class="text-strong">{@themes.parent.theme} :</span>
+								{themes_installed.PARENT_THEME}
+							</li>
+							# ENDIF #
 						</ul>
 					</div>
 					<footer class="cell-footer">

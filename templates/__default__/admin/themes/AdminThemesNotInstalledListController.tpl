@@ -89,6 +89,12 @@
 							<span class="text-strong">{@themes.width} :</span>
 							{themes_not_installed.WIDTH}
 						</li>
+						# IF themes_not_installed.C_PARENT_THEME #
+						<li class="li-stretch">
+							<span class="text-strong">{@themes.parent.theme} :</span>
+							{themes_not_installed.PARENT_THEME}
+						</li>
+						# ENDIF #
 					</ul>
 				</div>
 

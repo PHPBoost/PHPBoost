@@ -31,6 +31,7 @@ $lang['themes.css_version'] = 'CSS version';
 $lang['themes.main_color'] = 'Main colors';
 $lang['themes.variable-width'] = 'Variable width';
 $lang['themes.width'] = 'Width';
+$lang['themes.parent.theme'] = 'Parent theme';
 $lang['themes.bot_informed'] = 'Not specified';
 $lang['themes.view_real_preview'] = 'View full size';
 
