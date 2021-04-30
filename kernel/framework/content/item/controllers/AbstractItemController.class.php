@@ -8,6 +8,7 @@
  * @version     PHPBoost 6.0 - last update: 2021 04 30
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
 
 abstract class AbstractItemController extends ModuleController
@@ -34,7 +35,8 @@ abstract class AbstractItemController extends ModuleController
 			LangLoader::get('comment-lang'),
 			LangLoader::get('common-lang'),
 			LangLoader::get('contribution-lang'),
-			(LangLoader::filename_exists('common', self::get_module()->get_id()) ? LangLoader::get('common', self::get_module()->get_id()) : array()),ItemsService::get_items_lang(self::get_module()->get_id()),
+			LangLoader::filename_exists('common', self::get_module()->get_id()) ? LangLoader::get('common', self::get_module()->get_id()) : array(),
+			ItemsService::get_items_lang(self::get_module()->get_id())
 		);
 		$this->view = $this->get_template_to_use();
 
