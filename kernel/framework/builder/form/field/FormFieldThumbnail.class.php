@@ -73,7 +73,7 @@ class FormFieldThumbnail extends AbstractFormField
 
 		if ($file_name && $module_theme_file->exists())
 			return $module_theme_url;
-		else if ($file_name && $module_parent_theme_url->exists())
+		else if ($file_name && $module_parent_theme_file->exists())
 			return $module_parent_theme_url;
 		else if ($file_name && $theme_file->exists())
 			return '/templates/' . AppContext::get_current_user()->get_theme() . '/images/' . $file_name;
