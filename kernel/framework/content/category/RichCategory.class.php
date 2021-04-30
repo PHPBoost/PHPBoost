@@ -20,16 +20,20 @@ class RichCategory extends Category
 	{
 		$this->add_additional_attribute('description', array('type' => 'text', 'length' => 65000, 'attribute_field_parameters' => array(
 			'field_class' => 'FormFieldRichTextEditor',
-			'label' => LangLoader::get_message('form.description', 'common')
+			'label'       => LangLoader::get_message('form.description', 'common')
 			)
 		));
-		$this->add_additional_attribute('thumbnail', array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''", 'attribute_field_parameters' => array(
-			'field_class' => 'FormFieldThumbnail',
-			'label' => LangLoader::get_message('form.picture', 'common'),
-			'default_value' => FormFieldThumbnail::DEFAULT_VALUE,
-			'default_picture' => self::THUMBNAIL_URL
-			)
-		));
+		$this->add_additional_attribute('thumbnail', array(
+			'type' => 'string',
+			'length' => 255,
+			'notnull' => 1,
+			'default' => "''",
+			'attribute_field_parameters' => array(
+				'field_class'     => 'FormFieldThumbnail',
+				'label'           => LangLoader::get_message('form.picture', 'common'),
+				'default_value'   => FormFieldThumbnail::DEFAULT_VALUE,
+				'default_picture' => self::THUMBNAIL_URL
+			)));
 	}
 
 	public function set_description($description)
