@@ -3,7 +3,7 @@
 		if (jQuery('ul#categories')[0]) {
 			jQuery('ul#categories').sortable({
 				handle: '.sortable-selector',
-				placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>',
+				placeholder: '<div class="dropzone">' + ${escapejs(@common.drop.here)} + '</div>',
 				onDrop: function ($item, container, _super, event) {
 					change_reposition_pictures();
 					$item.removeClass(container.group.options.draggedClass).removeAttr("style");
@@ -53,7 +53,7 @@
 		change_children_reposition_pictures(get_sortable_sequence());
 	}
 </script>
-# INCLUDE MSG #
+# INCLUDE MESSAGE_HELPER #
 <section id="module-{MODULE_ID}">
 	<header class="section-header">
 		<h1>{FIELDSET_TITLE}</h1>
@@ -62,7 +62,7 @@
 		<div class="content-container">
 			<div class="content">
 				# IF C_NO_CATEGORY #
-					<div class="message-helper bgc notice">${LangLoader::get_message('category.no.element', 'categories-common')}</div>
+					<div class="message-helper bgc notice">{@category.no.element}</div>
 				# ELSE #
 					<form action="{REWRITED_SCRIPT}" method="post" onsubmit="serialize_sortable();">
 						<fieldset>
@@ -76,7 +76,8 @@
 						</fieldset>
 						# IF C_SEVERAL_CATEGORIES #
 							<fieldset class="fieldset-submit">
-								<button type="submit" class="button submit" name="submit" value="true">${LangLoader::get_message('position.update', 'common')}</button>
+								<legend class="sr-only">{@common.update.position}</legend>
+								<button type="submit" class="button submit" name="submit" value="true">{@common.update.position}</button>
 								<input type="hidden" name="token" value="{TOKEN}">
 								<input type="hidden" name="tree" id="tree" value="">
 							</fieldset>

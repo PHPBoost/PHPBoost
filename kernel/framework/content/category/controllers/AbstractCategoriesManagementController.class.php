@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 21
+ * @version     PHPBoost 6.0 - last update: 2021 04 30
  * @since       PHPBoost 4.0 - 2013 02 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -16,7 +16,7 @@
 abstract class AbstractCategoriesManagementController extends ModuleController
 {
 	protected $lang;
-	protected $tpl;
+	protected $view;
 
 	protected static $categories_manager;
 
@@ -30,7 +30,7 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 
 		$this->build_view();
 
-		return $this->generate_response($this->tpl);
+		return $this->generate_response($this->view);
 	}
 
 	private function init()
@@ -39,8 +39,8 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 		self::$categories_manager = $class_name::get_categories_manager();
 
 		$this->lang = LangLoader::get('categories-common');
-		$this->tpl = new FileTemplate('__default__/framework/content/categories/manage.tpl');
-		$this->tpl->add_lang($this->lang);
+		$this->view = new FileTemplate('__default__/framework/content/categories/manage.tpl');
+		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 	}
 
 	private function build_view()
@@ -50,13 +50,13 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 
 		$number_categories = count($categories);
 
-		$this->tpl->put_all(array(
+		$this->view->put_all(array(
 			'C_NO_CATEGORY'        => $number_categories <= 1, // Root category is not considered as a category
 			'C_SEVERAL_CATEGORIES' => $number_categories > 2, // Root category is not displayed, but taken into account in the calculation
 			'FIELDSET_TITLE'       => $this->get_title(),
 			'MODULE_ID'			   => Environment::get_running_module_name(),
 		));
-		$this->build_children_view($this->tpl, $categories, Category::ROOT_CATEGORY);
+		$this->build_children_view($this->view, $categories, Category::ROOT_CATEGORY);
 	}
 
 	private function build_children_view($template, $categories, $id_parent)
@@ -79,7 +79,7 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 				}
 
 				$category_view = new FileTemplate('__default__/framework/content/categories/category.tpl');
-				$category_view->add_lang($this->lang);
+				$category_view->add_lang(array_merge($this->lang, LangLoader::get('form-lang'), LangLoader::get('common-lang')));
 				$category_view->put_all(array(
 					'C_DESCRIPTION'               => !empty($description),
 					'C_COLOR'                     => !empty($color),
@@ -121,7 +121,7 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 
 			$categories_cache::invalidate();
 
-			$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.position.update', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+			$this->tpl->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.position.update', 'warning-lang'), MessageHelper::SUCCESS, 5));
 		}
 	}
 
