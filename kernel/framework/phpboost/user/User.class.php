@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 30
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 3.0 - 2012 03 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -32,6 +32,7 @@ class User
 	protected $email;
 	protected $show_email = false;
 	protected $unread_pm = 0;
+	protected $registration_date = 0;
 
 	protected $locale;
 	protected $theme;
@@ -133,6 +134,21 @@ class User
 	public function get_unread_pm()
 	{
 		return $this->unread_pm;
+	}
+
+	public function set_registration_date($date)
+	{
+		return $this->registration_date = $date;
+	}
+
+	public function get_registration_date()
+	{
+		return $this->registration_date;
+	}
+
+	public function get_formated_registration_date()
+	{
+		return Date::to_format($this->registration_date, Date::FORMAT_DAY_MONTH_YEAR);
 	}
 
 	public function set_locale($locale)
@@ -266,6 +282,7 @@ class User
 			$this->theme = $properties['theme'];
 			$this->timezone = $properties['timezone'];
 			$this->editor = $properties['editor'];
+			$this->registration_date = $properties['registration_date'];
 
 			$this->delay_banned = $properties['delay_banned'];
 			$this->delay_readonly = $properties['delay_readonly'];

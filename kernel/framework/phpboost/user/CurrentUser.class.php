@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 02 10
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 3.0 - 2012 03 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -40,6 +40,7 @@ class CurrentUser extends User
 		$this->email = $session->get_cached_data('email', null);
 		$this->show_email = $session->get_cached_data('show_email', false);
 		$this->unread_pm = $session->get_cached_data('unread_pm', 0);
+		$this->registration_date = $session->get_cached_data('registration_date', 0);
 		$this->timestamp = $session->get_cached_data('timestamp', time());
 		$this->warning_percentage = $session->get_cached_data('warning_percentage', 0);
 		$this->delay_banned = $session->get_cached_data('delay_banned', 0);
