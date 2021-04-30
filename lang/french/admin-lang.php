@@ -27,7 +27,5 @@ $lang['admin.forbidden.module']                  = 'Modules interdits';
 $lang['admin.comments.forbidden.module.clue']    = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer les commentaires';
 $lang['admin.notation.forbidden.module.clue']    = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer la notation';
 $lang['admin.new.content.forbidden.module.clue'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer les tags de nouveau contenu';
-$lang['admin.hide.left.column']                  = 'Masquer les blocs de gauche du site sur le module :module';
-$lang['admin.hide.right.column']                 = 'Masquer les blocs de droite du site sur le module :module';
 
 ?>
