@@ -55,14 +55,14 @@ Si vous rencontrez des difficultés, veuillez contacter l\'administrateur du sit
 :signature';
 
 // Groups
-$lang['user.groups']         = 'Groupes';
-$lang['user.groups.list']    = 'Liste des groupes';
-$lang['user.groups.select']  = 'Sélectionner un groupe';
-$lang['user.groups.all']     = 'Tous les groupes';
-$lang['user.group.of.group'] = 'du groupe :';
-$lang['user.admins.list']    = 'Liste des administrateurs';
-$lang['user.modos.list']     = 'Liste des modérateurs';
-$lang['user.no.member']      = 'Aucun membre dans ce groupe';
+$lang['user.groups']                  = 'Groupes';
+$lang['user.groups.list']             = 'Liste des groupes';
+$lang['user.groups.select']           = 'Sélectionner un groupe';
+$lang['user.groups.all']              = 'Tous les groupes';
+$lang['user.group.of.group']          = 'du groupe :';
+$lang['user.admins.list']             = 'Liste des administrateurs';
+$lang['user.modos.list']              = 'Liste des modérateurs';
+$lang['user.no.member']               = 'Aucun membre dans ce groupe';
 $lang['user.group.view.list.members'] = 'Voir les membres du groupe';
 $lang['user.group.hide.list.members'] = 'Masquer les membres du groupe';
 
@@ -333,7 +333,7 @@ $lang['user.readonly.changed']       = 'Vous avez été mis en lecture seule par
 
 Ceci est un message semi-automatique.';
 
-    // Warning management
+    // Warnings management
 $lang['user.warning']               = 'Avertissement';
 $lang['user.warnings']              = 'Avertissements';
 $lang['user.warning.management']    = 'Gestion des avertissements';

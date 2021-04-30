@@ -1,11 +1,11 @@
 <section id="module-{MODULE_ID}" class="category-{CATEGORY_ID}">
 	<header class="section-header">
 		<div class="controls align-right">
-			# IF C_SYNDICATION #<a href="{U_SYNDICATION}" aria-label="{@syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a># ENDIF #
+			# IF C_SYNDICATION #<a href="{U_SYNDICATION}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a># ENDIF #
 			{MODULE_NAME}
 			# IF C_HAS_CATEGORIES #
 				# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
-				# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="{@edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
+				# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 			# ENDIF #
 		</div>
 		<h1 itemprop="name">{TITLE}</h1>
@@ -31,7 +31,7 @@
 								# ENDIF #
 							# ENDIF #
 							# IF C_ENABLED_DATE #
-								<span class="pinned" aria-label="{@form.date.creation}">
+								<span class="pinned" aria-label="{@common.creation.date}">
 									<i class="far fa-calendar-alt" aria-hidden="true"></i>
 									<time datetime="# IF C_DEFFERED_PUBLISHING #{DEFFERED_PUBLISHING_START_DATE_ISO8601}# ELSE #{DATE_ISO8601}# ENDIF #" itemprop="datePublished">
 										# IF C_DEFFERED_PUBLISHING #{DEFFERED_PUBLISHING_START_DATE}# ELSE #{DATE}# ENDIF #
@@ -47,8 +47,8 @@
 							# ENDIF #
 							# IF C_PUBLISHED #
 								# IF C_ENABLED_VIEWS #
-									<span class="pinned" role="contentinfo" aria-label="{VIEWS_NUMBER} # IF C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #">
-										<i class="fa fa-eye" aria-hidden="true"></i> {VIEWS_NUMBER} # IF C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #
+									<span class="pinned" role="contentinfo" aria-label="{VIEWS_NUMBER} # IF C_SEVERAL_VIEWS #{@common.views}# ELSE #{@common.view}# ENDIF #">
+										<i class="fa fa-eye" aria-hidden="true"></i> {VIEWS_NUMBER}
 									</span>
 								# ENDIF #
 								# IF C_ENABLED_NOTATION #
@@ -69,12 +69,12 @@
 
 					# IF C_CONTROLS #
 						<div class="controls align-right">
-							# IF C_EDIT #<a href="{U_EDIT}" aria-label="{@edit}"><i class="far fa-fw fa-edit"></i></a># ENDIF #
-							# IF C_DELETE #<a href="{U_DELETE}" data-confirmation="delete-element" aria-label="{@delete}"><i class="far fa-fw fa-trash-alt"></i></a># ENDIF #
+							# IF C_EDIT #<a href="{U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit"></i></a># ENDIF #
+							# IF C_DELETE #<a href="{U_DELETE}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt"></i></a># ENDIF #
 						</div>
 					# ENDIF #
 				</div>
-				# IF C_HAS_UPDATE_DATE #<span class="pinned notice small text-italic modified-date">{@status.last.update} <time datetime="{UPDATE_DATE_ISO8601}" itemprop="dateModified">{UPDATE_DATE_FULL}</time></span># ENDIF #
+				# IF C_HAS_UPDATE_DATE #<span class="pinned notice small text-italic modified-date">{@common.last.update}: <time datetime="{UPDATE_DATE_ISO8601}" itemprop="dateModified">{UPDATE_DATE_FULL}</time></span># ENDIF #
 
 				<div class="content cell-tile">
 					# IF C_CELL_OPTIONS #
@@ -94,39 +94,39 @@
 									# IF C_ENABLED_VISIT #
 										<li class="li-stretch">
 											<a href="{U_VISIT}" class="button submit">
-												<i class="fa fa-globe" aria-hidden="true"></i> {@go.visit}
+												<i class="fa fa-globe" aria-hidden="true"></i> {@common.visit}
 											</a>
 											# IF IS_USER_CONNECTED #
-												<a href="{U_DEADLINK}" data-confirmation="{@deadlink.confirmation}" class="button bgc-full warning" aria-label="{@deadlink}">
+												<a href="{U_DEADLINK}" data-confirmation="{@contribution.dead.link.confirmation}" class="button bgc-full warning" aria-label="{@contribution.dead.link}">
 													<i class="fa fa-unlink" aria-hidden="true"></i>
 												</a>
 											# ENDIF #
 										</li>
 										<li class="li-stretch">
-											<span class="text-strong">{@visits.number} : </span>
+											<span class="text-strong">{@common.visits.number} : </span>
 											<span>{VISITS_NUMBER}</span>
 										</li>
 									# ENDIF #
 									# IF C_ENABLED_DOWNLOAD #
 										<li class="li-stretch">
 											<a href="{U_DOWNLOAD}" class="button submit">
-												<i class="fa fa-globe" aria-hidden="true"></i> {@go.download}
+												<i class="fa fa-globe" aria-hidden="true"></i> {@common.download}
 											</a>
 											# IF IS_USER_CONNECTED #
-												<a href="{U_DEADLINK}" data-confirmation="{@deadlink.confirmation}" class="button bgc-full warning" aria-label="{@deadlink}">
+												<a href="{U_DEADLINK}" data-confirmation="{@contribution.dead.link.confirmation}" class="button bgc-full warning" aria-label="{@contribution.dead.link}">
 													<i class="fa fa-unlink" aria-hidden="true"></i>
 												</a>
 											# ENDIF #
 										</li>
 										<li class="li-stretch">
-											<span class="text-strong">{@downloads.number} : </span>
+											<span class="text-strong">{@common.downloads.number} : </span>
 											<span>{DOWNLOADS_NUMBER}</span>
 										</li>
 									# ENDIF #
 									# IF C_AUTHOR_DISPLAYED #
 										# IF NOT C_ID_CARD #
 											<li class="li-stretch">
-												<span class="text-strong">${TextHelper::ucfirst(@author)} : </span>
+												<span class="text-strong">{@common.author} : </span>
 												# IF C_AUTHOR_CUSTOM_NAME #
 													<span class="pinned"><i class="far fa-user" aria-hidden="true"></i> <span class="custom-author">{AUTHOR_CUSTOM_NAME}</span></span>
 												# ELSE #
@@ -139,7 +139,7 @@
 									# ENDIF #
 									# IF C_ENABLED_DATE #
 										<li class="li-stretch">
-											<span class="text-strong">{@form.date.creation} : </span>
+											<span class="text-strong">{@common.creation.date} : </span>
 											<time datetime="# IF C_DEFFERED_PUBLISHING #{DEFFERED_PUBLISHING_START_DATE_ISO8601}# ELSE #{DATE_ISO8601}# ENDIF #" itemprop="datePublished">
 												# IF C_DEFFERED_PUBLISHING #{DEFFERED_PUBLISHING_START_DATE}# ELSE #{DATE}# ENDIF #
 											</time>
@@ -148,7 +148,7 @@
 									# IF C_ENABLED_UPDATE_DATE #
 										# IF C_HAS_UPDATE_DATE #
 										<li class="li-stretch">
-											<span class="text-strong">{@form.date.update} : </span>
+											<span class="text-strong">{@common.last.update} : </span>
 											<time datetime="{UPDATE_DATE_ISO8601}" itemprop="dateModified">
 												{UPDATE_DATE}
 											</time>
@@ -157,16 +157,16 @@
 									# ENDIF #
 									# IF C_HAS_CATEGORY #
 										# IF NOT C_ROOT_CATEGORY #
-										<li class="li-stretch">
-											<span class="text-strong">${LangLoader::get_message('category', 'categories-common')} : </span>
-											<span><a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a></span>
-										</li>
+											<li class="li-stretch">
+												<span class="text-strong">{@category.category} : </span>
+												<span><a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a></span>
+											</li>
 										# ENDIF #
 									# ENDIF #
 									# IF C_PUBLISHED #
 										# IF C_ENABLED_VIEWS #
 											<li class="li-stretch">
-												<span><i class="fa fa-eye" aria-hidden="true"></i>${LangLoader::get_message('sort_by.views.number', 'common')} </span>
+												<span><i class="fa fa-eye" aria-hidden="true"></i>{@common.views.number} </span>
 												<span>{VIEWS_NUMBER}</span>
 											</li>
 										# ENDIF #
@@ -207,7 +207,7 @@
 
 				# IF C_KEYWORDS #
 					<aside class="tags-container">
-						<span class="text-strong"><i class="fa fa-tags" aria-hidden="true"></i> {@form.keywords}</span> :
+						<span class="text-strong"><i class="fa fa-tags" aria-hidden="true"></i> {@common.keywords}</span> :
 						# START keywords #
 							<a class="pinned question" href="{keywords.URL}" itemprop="keywords" rel="tag">{keywords.NAME}</a>
 						# END keywords #
@@ -216,7 +216,7 @@
 
 				# IF C_SOURCES #
 					<aside class="sources-container">
-						<span class="text-strong"><i class="fa fa-map-signs" aria-hidden="true"></i> {@form.sources}</span> :
+						<span class="text-strong"><i class="fa fa-map-signs" aria-hidden="true"></i> {@common.sources}</span> :
 						# START sources #
 							<a class="pinned question" href="{sources.URL}" itemprop="isBasedOnUrl" rel="nofollow">{sources.NAME}</a>
 							# IF sources.C_SEPARATOR ## ENDIF #

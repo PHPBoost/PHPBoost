@@ -55,16 +55,16 @@ If you have problems, please contact the site administrator.
 :signature';
 
 // Groups
-$lang['user.groups']         = 'Groups';
-$lang['user.groups.list']    = 'Groups list';
-$lang['user.groups.select']  = 'Group select';
-$lang['user.groups.all']     = 'All groups';
-$lang['user.group.of_group'] = 'of group :';
-$lang['user.admins.list']    = 'Administrators list';
-$lang['user.modos.list']     = 'Moderators list';
-$lang['user.no_member']      = 'No member in this group';
-$lang['user.group.view_list_members'] = 'View members of group';
-$lang['user.group.hide_list_members'] = 'Hide members of group';
+$lang['user.groups']                  = 'Groups';
+$lang['user.groups.list']             = 'Groups list';
+$lang['user.groups.select']           = 'Group select';
+$lang['user.groups.all']              = 'All groups';
+$lang['user.group.of.group']          = 'of group :';
+$lang['user.admins.list']             = 'Administrators list';
+$lang['user.modos.list']              = 'Moderators list';
+$lang['user.no.member']               = 'No member in this group';
+$lang['user.group.view.list.members'] = 'View members of group';
+$lang['user.group.hide.list.members'] = 'Hide members of group';
 
 // Labels
 $lang['user.user']           = 'User';
@@ -100,7 +100,7 @@ $lang['user.members.config']     = 'Members configuration';
 $lang['user.members.punishment'] = 'Members punishment';
 $lang['user.add.member']         = 'Add a member';
 $lang['user.members.all']        = 'All members';
-$lang['user.members_list']       = 'Members list';
+$lang['user.members.list']       = 'Members list';
 $lang['user.member.management']  = 'Member management';
 $lang['user.search.member']      = 'Search member';
 
@@ -156,12 +156,12 @@ $lang['user.approbation']          = 'Approbation';
 $lang['user.unlimited']            = 'Unlimited';
 
 $lang['user.avatar']              = 'Avatar';
-$lang['user.registration_date']   = 'Registration date';
-$lang['user.last_connection']     = 'Last connection';
+$lang['user.registration.date']   = 'Registration date';
+$lang['user.last.connection']     = 'Last connection';
 $lang['user.my.publications']     = 'My publications';
 $lang['user.publications']        = 'Publications';
 $lang['user.view.publications']   = 'View user\'s publications';
-$lang['user.private_message']     = 'Private message';
+$lang['user.private.message']     = 'Private message';
 $lang['user.delete.account']      = 'Delete account';
 $lang['user.delete.account.confirmation.member'] = 'Are you sure you want to delete your account?';
 $lang['user.delete.account.confirmation.admin']  = 'Are you sure you want to delete the account?';
@@ -171,17 +171,17 @@ $lang['user.caution']  = 'Caution';
 $lang['user.readonly'] = 'Read only';
 $lang['user.banned']   = 'Banned';
 
-$lang['user.internal_connection']        = 'Internal connection';
-$lang['user.create_internal_connection'] = 'Create internal connection';
-$lang['user.edit_internal_connection']   = 'Edit your internal connection';
-$lang['user.associate_account']          = 'Associate your account';
-$lang['user.associate_account_admin']    = 'Associate an account';
-$lang['user.dissociate_account']         = 'Dissociate your account';
-$lang['user.dissociate_account_admin']   = 'Dissociate the account';
+$lang['user.internal.connection']        = 'Internal connection';
+$lang['user.create.internal.connection'] = 'Create internal connection';
+$lang['user.edit.internal.connection']   = 'Edit your internal connection';
+$lang['user.associate.account']          = 'Associate your account';
+$lang['user.associate.account.admin']    = 'Associate an account';
+$lang['user.dissociate.account']         = 'Dissociate your account';
+$lang['user.dissociate.account.admin']   = 'Dissociate the account';
 
 $lang['user.share']      = 'Share';
-$lang['user.share_on']   = 'Share on';
-$lang['user.share_by']   = 'Share by';
+$lang['user.share.on']   = 'Share on';
+$lang['user.share.by']   = 'Share by';
 $lang['user.share.menu'] = 'Social network menu';
 $lang['user.share.sms']  = 'SMS';
 
@@ -271,13 +271,13 @@ $lang['user.extended.field.date.birth.clue'] = '';
 
 $lang['user.extended.field.avatar']                    = 'Avatar';
 $lang['user.extended.field.avatar.clue']               = '';
-$lang['user.extended.field.avatar.current_avatar']     = 'Current avatar';
-$lang['user.extended.field.avatar.upload_avatar']      = 'Upload an avatar';
-$lang['user.extended.field.avatar.upload_avatar.clue'] = 'Avatar hosted on the server';
+$lang['user.extended.field.avatar.current.avatar']     = 'Current avatar';
+$lang['user.extended.field.avatar.upload.avatar']      = 'Upload an avatar';
+$lang['user.extended.field.avatar.upload.avatar.clue'] = 'Avatar hosted on the server';
 $lang['user.extended.field.avatar.link']               = 'Avatar link';
 $lang['user.extended.field.avatar.link.clue']          = 'Url of the avatar';
 $lang['user.extended.field.avatar.delete']             = 'Delete current avatar';
-$lang['user.extended.field.avatar.no_avatar']          = 'No avatar';
+$lang['user.extended.field.avatar.no.avatar']          = 'No avatar';
 
 $lang['user.extended.field.location']      = 'Location';
 $lang['user.extended.field.location.clue'] = '';
@@ -302,7 +302,7 @@ $lang['user.contact.pm']          = 'Contact by private message';
 $lang['user.alternative.pm']      = 'Private message sent to the member';
 $lang['user.alternative.pm.clue'] = 'Leave empty for no private message. The member won\'t be able to reply to this message, he won\'t know who sent it';
 
-    // Ban management.
+    // Bans management.
 $lang['user.ban']             = 'Ban';
 $lang['user.bans']            = 'Bans';
 $lang['user.ban.management']  = 'Ban management';
@@ -318,7 +318,7 @@ It may be an error, if you think it is, you can contact the administrator of the
 
 %s';
 
-    // Punishment management
+    // Punishments management
 $lang['user.punishments']            = 'Punishment';
 $lang['user.punishment.management']  = 'Punishment management';
 $lang['user.punishments.management'] = 'Punishments management';
@@ -333,7 +333,7 @@ $lang['user.readonly.changed']       = 'You have been set on read only status by
 
 This is a semi-automatic message.';
 
-    // Warning management
+    // Warnings management
 $lang['user.warning']               = 'Warning';
 $lang['user.warnings']              = 'Warnings';
 $lang['user.warning.management']    = 'Warning management';
@@ -366,7 +366,7 @@ $lang['user.participants']          = 'Participant(s)';
 $lang['user.quote.last.message']    = 'Repost of the preceding message';
 $lang['user.select.all.messages']   = 'Select all messages';
 
-//Cookies Bar
+// Cookies bar
 $lang['user.cookiebar.cookie']                    = 'Cookie';
 $lang['user.cookiebar.cookie.management']         = 'Cookies management';
 $lang['user.cookiebar.message.notracking']        = 'If you continue your visit to this website, you agree to use Cookies to manage your connection, your preferences, and to save anonymous visits statistics.';
@@ -401,6 +401,6 @@ $lang['user.cookiebar.more']          = 'Learn more';
 $lang['user.cookiebar.cookies']       = 'Cookies';
 $lang['user.cookiebar.change.choice'] = 'Change your preferences';
 
-//Menu
+// Menu
 $lang['user.menu.link.to'] = 'Link to page ';
 ?>

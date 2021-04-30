@@ -161,12 +161,12 @@ $lang['form.message.success.add']  = 'The profile field <b>:name</b> has been ad
 $lang['form.message.success.edit'] = 'The profile field <b>:name</b> has been modified';
 
 // Modules
-$lang['form.forbidden.module'] = 'Forbidden modules';
-$lang['form.comments.forbidden.module.clue'] = 'Select modules in which you do not want to enable comments';
-$lang['form.notation.forbidden.module.clue'] = 'Select modules in which you do not want to enable notation';
+$lang['form.forbidden.module']                  = 'Forbidden modules';
+$lang['form.comments.forbidden.module.clue']    = 'Select modules in which you do not want to enable comments';
+$lang['form.notation.forbidden.module.clue']    = 'Select modules in which you do not want to enable notation';
 $lang['form.new.content.forbidden.module.clue'] = 'Select modules in which you do not want to enable new-content tag';
-$lang['form.hide.left.column'] = 'Hide left column in module :module';
-$lang['form.hide.right.column'] = 'Hide right column in module :module';
+$lang['form.hide.left.column']                  = 'Hide left column in module :module';
+$lang['form.hide.right.column']                 = 'Hide right column in module :module';
 
 // Regex
 $lang['form.regex']            = 'Entry form control';
@@ -183,5 +183,4 @@ $lang['form.regex.clue'] = '
     You can control the form of input used. For instance, if an email address is expected, you can verify that its form is correct.<br />
     For advanced users, it is possible to write your own regular expression (<acronym="Perl Compatible Regular Expression">PCRE</acronym>) to control the user input.
 ';
-
 ?>

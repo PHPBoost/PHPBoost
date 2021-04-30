@@ -7,6 +7,7 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.0 - last update: 2021 04 30
  * @since       PHPBoost 6.0 - 2020 02 08
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class AbstractAdminItemController extends AdminModuleController
@@ -15,7 +16,7 @@ abstract class AbstractAdminItemController extends AdminModuleController
 	 * @var HTTPRequestCustom
 	 */
 	protected $request;
-	
+
 	protected $config;
 	protected $lang;
 	protected $view;
@@ -26,18 +27,22 @@ abstract class AbstractAdminItemController extends AdminModuleController
 		parent::__construct($module_id);
 		$this->request = AppContext::get_request();
 		$this->config = self::get_module_configuration()->get_configuration_parameters();
-		$this->lang = array_merge(LangLoader::get('admin-common'), (LangLoader::filename_exists('common', self::get_module()->get_id()) ? LangLoader::get('common', self::get_module()->get_id()) : array()), ItemsService::get_items_lang(self::get_module()->get_id()));
+		$this->lang = array_merge(
+			LangLoader::get('admin-common'), // to be deleted
+			LangLoader::get('form-lang'),
+			(LangLoader::filename_exists('common', self::get_module()->get_id()) ? LangLoader::get('common', self::get_module()->get_id()) : array()), ItemsService::get_items_lang(self::get_module()->get_id())
+		);
 		$this->view = $this->get_template_to_use();
-		
+
 		$this->view->add_lang($this->lang);
-		
+
 		$this->view->put_all(array(
 			'MODULE_ID'   => self::get_module()->get_id(),
 			'MODULE_NAME' => self::get_module_configuration()->get_name()
 		));
-		
+
 		$this->view->put_all($this->get_additional_view_parameters());
-		
+
 		$item_class_name = self::get_module_configuration()->get_item_name();
 		$this->module_item = new $item_class_name(self::$module_id);
 	}

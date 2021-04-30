@@ -67,6 +67,8 @@ $lang['common.displayed']    = 'Affiché';
 $lang['common.hide']         = 'Cacher';
 $lang['common.hidden']       = 'Caché';
 $lang['common.close']        = 'Fermer';
+$lang['common.visit']        = 'Visiter';
+$lang['common.download']        = 'Télécharger';
 
 // Constraint
 $lang['common.constraint.required']     = 'Requis';
@@ -79,6 +81,8 @@ $lang['common.see.details']  = 'Voir les détails';
 $lang['common.views']        = 'vues';
 $lang['common.view']         = 'vue';
 $lang['common.views.number'] = 'Nombre de vues';
+$lang['common.visits.number'] = 'Nombre de visites';
+$lang['common.downloads.number'] = 'Nombre de téléchargement';
 $lang['common.maximum']      = 'Maximum';
 $lang['common.minimum']      = 'Minimum';
 $lang['common.size']         = 'Taille';
