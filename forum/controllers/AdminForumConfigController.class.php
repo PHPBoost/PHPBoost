@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 28
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 4.1 - 2015 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -22,7 +22,6 @@ class AdminForumConfigController extends AdminModuleController
 
 	private $lang;
 	private $form_lang;
-	private $config_lang;
 
 	/**
 	 * @var ForumConfig
@@ -57,7 +56,6 @@ class AdminForumConfigController extends AdminModuleController
 		$this->config = ForumConfig::load();
 		$this->lang = LangLoader::get('common', 'forum');
 		$this->form_lang = LangLoader::get('form-lang');
-		$this->config_lang = LangLoader::get('config', 'forum');
 	}
 
 	private function build_form()
@@ -67,41 +65,41 @@ class AdminForumConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTML('config', $this->form_lang['form.configuration'] . ': ' . $this->lang['forum.module.title']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('forum_name', $this->config_lang['forum.config.forum.name'], $this->config->get_forum_name(),
+		$fieldset->add_field(new FormFieldTextEditor('forum_name', $this->lang['forum.config.forum.name'], $this->config->get_forum_name(),
 			array('maxlength' => 255, 'required' => true)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('number_topics_per_page', $this->config_lang['forum.config.topics.per.page'], $this->config->get_number_topics_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('number_topics_per_page', $this->lang['forum.config.topics.per.page'], $this->config->get_number_topics_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('number_messages_per_page', $this->config_lang['forum.config.messages.per.page'], $this->config->get_number_messages_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('number_messages_per_page', $this->lang['forum.config.messages.per.page'], $this->config->get_number_messages_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('read_messages_storage_duration', $this->config_lang['forum.config.read.messages.storage'], $this->config->get_read_messages_storage_duration(),
-			array('min' => 1, 'max' => 365, 'required' => true, 'description' => $this->config_lang['forum.config.read.messages.storage.clue']),
+		$fieldset->add_field(new FormFieldNumberEditor('read_messages_storage_duration', $this->lang['forum.config.read.messages.storage'], $this->config->get_read_messages_storage_duration(),
+			array('min' => 1, 'max' => 365, 'required' => true, 'description' => $this->lang['forum.config.read.messages.storage.clue']),
 			array(new FormFieldConstraintIntegerRange(1, 365))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('max_topic_number_in_favorite', $this->config_lang['forum.config.favorite.topics.number'], $this->config->get_max_topic_number_in_favorite(),
+		$fieldset->add_field(new FormFieldNumberEditor('max_topic_number_in_favorite', $this->lang['forum.config.favorite.topics.number'], $this->config->get_max_topic_number_in_favorite(),
 			array('min' => 1, 'max' => 500, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 500))
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('edit_mark_enabled', $this->config_lang['forum.config.enable.edit.marker'], $this->config->is_edit_mark_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('edit_mark_enabled', $this->lang['forum.config.enable.edit.marker'], $this->config->is_edit_mark_enabled(),
 			array('class' => 'custom-checkbox')
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('multiple_posts_allowed', $this->config_lang['forum.config.enable.multiple.posts'], $this->config->are_multiple_posts_allowed(),
+		$fieldset->add_field(new FormFieldCheckbox('multiple_posts_allowed', $this->lang['forum.config.enable.multiple.posts'], $this->config->are_multiple_posts_allowed(),
 			array(
 				'class' => 'custom-checkbox',
-				'description' => $this->config_lang['forum.config.enable.multiple.posts.clue'])
+				'description' => $this->lang['forum.config.enable.multiple.posts.clue'])
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('connexion_form_displayed', $this->config_lang['forum.config.display.connexion.form'], $this->config->is_connexion_form_displayed(),
+		$fieldset->add_field(new FormFieldCheckbox('connexion_form_displayed', $this->lang['forum.config.display.connexion.form'], $this->config->is_connexion_form_displayed(),
 			array('class' => 'custom-checkbox')
 		));
 
@@ -113,7 +111,7 @@ class AdminForumConfigController extends AdminModuleController
 			array('class' => 'custom-checkbox')
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('message_before_topic_title_displayed', $this->config_lang['forum.config.display.message.before.topic'], $this->config->is_message_before_topic_title_displayed(),
+		$fieldset->add_field(new FormFieldCheckbox('message_before_topic_title_displayed', $this->lang['forum.config.display.message.before.topic'], $this->config->is_message_before_topic_title_displayed(),
 			array(
 				'class' => 'custom-checkbox',
 				'events' => array('click' => '
@@ -134,19 +132,19 @@ class AdminForumConfigController extends AdminModuleController
 
 		$fieldset->add_field(new FormFieldSpacer('1_separator', ''));
 
-		$fieldset->add_field(new FormFieldTextEditor('message_before_topic_title', $this->config_lang['forum.config.message.before.topic'], $this->config->get_message_before_topic_title(),
+		$fieldset->add_field(new FormFieldTextEditor('message_before_topic_title', $this->lang['forum.config.message.before.topic'], $this->config->get_message_before_topic_title(),
 			array('maxlength' => 255, 'required' => true)
 		));
 
-		$fieldset->add_field(new FormFieldTextEditor('message_when_topic_is_unsolved', $this->config_lang['forum.config.status.message.unsolved'], $this->config->get_message_when_topic_is_unsolved(),
+		$fieldset->add_field(new FormFieldTextEditor('message_when_topic_is_unsolved', $this->lang['forum.config.status.message.unsolved'], $this->config->get_message_when_topic_is_unsolved(),
 			array('maxlength' => 255, 'required' => true)
 		));
 
-		$fieldset->add_field(new FormFieldTextEditor('message_when_topic_is_solved', $this->config_lang['forum.config.status.message.solved'], $this->config->get_message_when_topic_is_solved(),
+		$fieldset->add_field(new FormFieldTextEditor('message_when_topic_is_solved', $this->lang['forum.config.status.message.solved'], $this->config->get_message_when_topic_is_solved(),
 			array('maxlength' => 255, 'required' => true)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('message_before_topic_title_icon_displayed', $this->config_lang['forum.config.display.issue.status.icon'], $this->config->is_message_before_topic_title_icon_displayed(),
+		$fieldset->add_field(new FormFieldCheckbox('message_before_topic_title_icon_displayed', $this->lang['forum.config.display.issue.status.icon'], $this->config->is_message_before_topic_title_icon_displayed(),
 			array(
 				'class' => 'custom-checkbox',
 				'description' => '<i class="fa fa-check success"></i> / <i class="fa fa-times error"></i>'
