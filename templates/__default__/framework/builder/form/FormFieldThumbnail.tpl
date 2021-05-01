@@ -3,21 +3,21 @@
 		<div class="form-field-radio">
 			<label class="radio" for="${escape(ID)}_none">
 				<input id="${escape(ID)}_none" type="radio" name="${escape(NAME)}" value="none" # IF C_NONE_CHECKED # checked="checked" # ENDIF #>
-				<span> {@thumbnail.none}</span>
+				<span> {@form.thumbnail.none}</span>
 			</label>
 		</div>
-		# IF C_DEFAULT_PICTURE_URL #
-		<div class="form-field-radio">
-			<label class="radio" for="${escape(ID)}_default">
-				<input id="${escape(ID)}_default" type="radio" name="${escape(NAME)}" value="default" # IF C_DEFAULT_CHECKED # checked="checked" # ENDIF #>
-				<span> {@thumbnail.default}</span>
-			</label>
-		</div>
+		# IF C_DEFAULT_THUMBNAIL_URL #
+			<div class="form-field-radio">
+				<label class="radio" for="${escape(ID)}_default">
+					<input id="${escape(ID)}_default" type="radio" name="${escape(NAME)}" value="default" # IF C_DEFAULT_CHECKED # checked="checked" # ENDIF #>
+					<span> {@form.thumbnail.default}</span>
+				</label>
+			</div>
 		# ENDIF #
 		<div class="form-field-radio">
 			<label class="radio" for="${escape(ID)}_custom">
 				<input id="${escape(ID)}_custom" type="radio" name="${escape(NAME)}" value="custom" # IF C_CUSTOM_CHECKED # checked="checked" # ENDIF #>
-				<span> {@thumbnail.custom}</span>
+				<span> {@form.thumbnail.custom}</span>
 			</label>
 		</div>
 	</div>
@@ -34,11 +34,11 @@
 
 <div id="${escape(HTML_ID)}_preview"# IF C_PREVIEW_HIDDEN # style="display: none;"# ENDIF # class="form-field-thumbnail-preview# IF C_HAS_FIELD_CLASS # {FIELD_CLASS}# ENDIF #">
 	<label for="${escape(HTML_ID)}_preview">
-		${LangLoader::get_message('form.picture.preview', 'common')}
+		{@form.thumbnail.preview}
 	</label>
 
 	<div class="form-field-preview">
-		<img id="${escape(HTML_ID)}_preview_picture" src="# IF NOT C_PREVIEW_HIDDEN #{PREVIEW_FILE_PATH}# ENDIF #" alt="${LangLoader::get_message('form.picture.preview', 'common')}" style="vertical-align:top" />
+		<img id="${escape(HTML_ID)}_preview_picture" src="# IF NOT C_PREVIEW_HIDDEN #{PREVIEW_FILE_PATH}# ENDIF #" alt="{@form.thumbnail.preview}" style="vertical-align:top" />
 	</div>
 </div>
 
@@ -59,7 +59,7 @@
 			}
 		} else if (option == 'default') {
 			jQuery("#onblurContainerResponse" + ${escapejs(HTML_ID)} + "_custom_file").hide();
-			jQuery('#${escape(HTML_ID)}_preview_picture').attr("src", ${escapejs(DEFAULT_PICTURE_URL)});
+			jQuery('#${escape(HTML_ID)}_preview_picture').attr("src", ${escapejs(DEFAULT_THUMBNAIL_URL)});
 			jQuery('#${escape(HTML_ID)}_preview_picture').show();
 			jQuery('#${escape(HTML_ID)}_preview').show();
 		} else {

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 28
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -197,11 +197,6 @@ $lang['common.status.last.update']   = 'Dernière mise à jour le ';
 $lang['common.syndication']      = 'Syndication';
 $lang['common.syndication.rss']  = 'RSS';
 $lang['common.syndication.atom'] = 'ATOM';
-
-// Thumbnails
-$lang['common.thumbnail.none']    = 'Aucune image';
-$lang['common.thumbnail.default'] = 'Image par défaut';
-$lang['common.thumbnail.custom']  = 'Image personnalisée';
 
 // Units
 $lang['common.unit']           = 'Unité';

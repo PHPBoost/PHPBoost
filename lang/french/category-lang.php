@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 21
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -25,6 +25,7 @@ $lang['category.sub.categories'] = 'Sous-catégories';
 // Management
 $lang['category.categories.management'] = 'Gestion des catégories';
 $lang['category.categories.manage']     = 'Gérer les catégories';
+$lang['category.location']              = 'À placer dans la catégorie';
 $lang['category.add']                   = 'Ajouter une catégorie';
 $lang['category.edit']                  = 'Modifier une catégorie';
 $lang['category.delete']                = 'Supprimer une catégorie';

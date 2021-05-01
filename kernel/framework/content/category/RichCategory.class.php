@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 30
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 4.0 - 2013 01 29
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -20,20 +20,21 @@ class RichCategory extends Category
 	{
 		$this->add_additional_attribute('description', array('type' => 'text', 'length' => 65000, 'attribute_field_parameters' => array(
 			'field_class' => 'FormFieldRichTextEditor',
-			'label'       => LangLoader::get_message('form.description', 'common')
+			'label'       => LangLoader::get_message('form.description', 'form-lang')
 			)
 		));
 		$this->add_additional_attribute('thumbnail', array(
-			'type' => 'string',
-			'length' => 255,
+			'type'    => 'string',
+			'length'  => 255,
 			'notnull' => 1,
 			'default' => "''",
 			'attribute_field_parameters' => array(
 				'field_class'     => 'FormFieldThumbnail',
-				'label'           => LangLoader::get_message('form.picture', 'common'),
+				'label'           => LangLoader::get_message('form.thumbnail', 'form-lang'),
 				'default_value'   => FormFieldThumbnail::DEFAULT_VALUE,
 				'default_picture' => self::THUMBNAIL_URL
-			)));
+			)
+		));
 	}
 
 	public function set_description($description)

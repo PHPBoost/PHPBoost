@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 28
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -150,12 +150,12 @@ $lang['common.pagination.per']      = ' per page';
 
 // Position
 $lang['common.position']        = 'Position';
-$lang['common.move']           = 'Move';
+$lang['common.move']            = 'Move';
 $lang['common.move.to']         = 'Move to';
-$lang['common.move.up']        = 'Move up';
-$lang['common.move.down']      = 'Move down';
+$lang['common.move.up']         = 'Move up';
+$lang['common.move.down']       = 'Move down';
 $lang['common.update.position'] = 'Change positions';
-$lang['common.drop.here']      = 'Drop here';
+$lang['common.drop.here']       = 'Drop here';
 
 // Scroll to
 $lang['common.scroll.to.top']    = 'Scroll to Top';
@@ -197,11 +197,6 @@ $lang['common.status.last.update']   = 'Last updated on ';
 $lang['common.syndication']      = 'Syndication';
 $lang['common.syndication.rss']  = 'RSS';
 $lang['common.syndication.atom'] = 'ATOM';
-
-// Thumbnails
-$lang['common.thumbnail.none']    = 'No thumbnail';
-$lang['common.thumbnail.default'] = 'Default thumbnail';
-$lang['common.thumbnail.custom']  = 'Custom thumbnail';
 
 // Units
 $lang['common.unit']           = 'Unit';

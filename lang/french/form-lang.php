@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 28
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 6.0 - 2021 04 18
 */
 
@@ -13,7 +13,7 @@
 
 $lang['form.required.fields'] = 'Les champs marqués * sont obligatoires !';
 
-// Autorisations
+// Autorizations
 $lang['form.authorizations']              = 'Autorisations';
 $lang['form.authorizations.read']         = 'Autorisation de lecture';
 $lang['form.authorizations.write']        = 'Autorisation d\'écriture';
@@ -183,4 +183,12 @@ $lang['form.regex.clue'] = '
     Permet d\'effectuer un contrôle sur la saisie faite par l\'utilisateur. Par exemple, s\'il s\'agit d\'une adresse email, on peut contrôler que sa forme est correcte. <br />
     Vous pouvez effectuer un contrôle personnalisé en tapant une expression régulière (utilisateurs expérimentés seulement).
 ';
+
+// Thumbnails
+$lang['form.image']             = 'Image';
+$lang['form.thumbnail']         = 'Vignette';
+$lang['form.thumbnail.none']    = 'Aucune vignette';
+$lang['form.thumbnail.default'] = 'Vignette par défaut';
+$lang['form.thumbnail.custom']  = 'Vignette personnalisée';
+$lang['form.thumbnail.preview'] = 'Previsualisation de la vignette';
 ?>

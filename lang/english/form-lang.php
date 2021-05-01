@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 28
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 6.0 - 2021 04 18
 */
 
@@ -13,7 +13,7 @@
 
 $lang['form.required.fields'] = 'The fields marked with a * are required !';
 
-// Autorisations
+// Autorizations
 $lang['form.authorizations']              = 'Permissions';
 $lang['form.authorizations.read']         = 'Read permission';
 $lang['form.authorizations.write']        = 'Write permission';
@@ -183,4 +183,12 @@ $lang['form.regex.clue'] = '
     You can control the form of input used. For instance, if an email address is expected, you can verify that its form is correct.<br />
     For advanced users, it is possible to write your own regular expression (<acronym="Perl Compatible Regular Expression">PCRE</acronym>) to control the user input.
 ';
+
+// Thumbnails
+$lang['form.image']             = 'Image';
+$lang['form.thumbnail']         = 'Thumbnail';
+$lang['form.thumbnail.none']    = 'No thumbnail';
+$lang['form.thumbnail.default'] = 'Default thumbnail';
+$lang['form.thumbnail.custom']  = 'Custom thumbnail';
+$lang['form.thumbnail.preview'] = 'Thumbnail preview';
 ?>
