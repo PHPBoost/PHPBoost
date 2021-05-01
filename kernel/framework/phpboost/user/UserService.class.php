@@ -6,10 +6,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 02
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 3.0 - 2012 03 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
 
 class UserService
@@ -32,15 +33,15 @@ class UserService
 		if (!self::user_exists('WHERE display_name = :display_name', array('display_name' => TextHelper::htmlspecialchars($user->get_display_name()))))
 		{
 			$result = self::$querier->insert(DB_TABLE_MEMBER, array(
-				'display_name' => TextHelper::htmlspecialchars($user->get_display_name()),
-				'level' => $user->get_level(),
-				'user_groups' => implode('|', $user->get_groups()),
-				'email' => $user->get_email(),
-				'show_email' => (int)$user->get_show_email(),
-				'locale' => $user->get_locale(),
-				'timezone' => $user->get_timezone(),
-				'theme' => $user->get_theme(),
-				'editor' => $user->get_editor(),
+				'display_name'      => TextHelper::htmlspecialchars($user->get_display_name()),
+				'level'             => $user->get_level(),
+				'user_groups'       => implode('|', $user->get_groups()),
+				'email'             => $user->get_email(),
+				'show_email'        => (int)$user->get_show_email(),
+				'locale'            => $user->get_locale(),
+				'timezone'          => $user->get_timezone(),
+				'theme'             => $user->get_theme(),
+				'editor'            => $user->get_editor(),
 				'registration_date' => time()
 			));
 
@@ -113,14 +114,14 @@ class UserService
 		$parameters = array('user_id' => $user->get_id());
 		self::$querier->update(DB_TABLE_MEMBER, array(
 			'display_name' => TextHelper::htmlspecialchars($user->get_display_name()),
-			'level' => $user->get_level(),
-			'user_groups' => implode('|', $user->get_groups()),
-			'email' => $user->get_email(),
-			'show_email' => (int)$user->get_show_email(),
-			'locale' => $user->get_locale(),
-			'timezone' => $user->get_timezone(),
-			'theme' => $user->get_theme(),
-			'editor' => $user->get_editor()
+			'level'        => $user->get_level(),
+			'user_groups'  => implode('|', $user->get_groups()),
+			'email'        => $user->get_email(),
+			'show_email'   => (int)$user->get_show_email(),
+			'locale'       => $user->get_locale(),
+			'timezone'     => $user->get_timezone(),
+			'theme'        => $user->get_theme(),
+			'editor'       => $user->get_editor()
 		), $condition, $parameters);
 
 		if ($extended_fields !== null)
@@ -151,8 +152,8 @@ class UserService
 	{
 		self::$querier->update(DB_TABLE_MEMBER, array(
 			'warning_percentage' => $user->get_warning_percentage(),
-			'delay_readonly' => $user->get_delay_readonly(),
-			'delay_banned' => $user->get_delay_banned(),
+			'delay_readonly'     => $user->get_delay_readonly(),
+			'delay_banned'       => $user->get_delay_banned(),
 		), 'WHERE user_id=:user_id', array('user_id' => $user->get_id()));
 	}
 

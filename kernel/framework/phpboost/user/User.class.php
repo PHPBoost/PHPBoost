@@ -18,11 +18,11 @@ define('USER_TYPE', 3);
 
 class User
 {
-	const ROBOT_LEVEL = -2;
-	const VISITOR_LEVEL = -1;
-	const MEMBER_LEVEL = 0;
+	const ROBOT_LEVEL     = -2;
+	const VISITOR_LEVEL   = -1;
+	const MEMBER_LEVEL    = 0;
 	const MODERATOR_LEVEL = 1;
-	const ADMIN_LEVEL = 2;
+	const ADMIN_LEVEL     = 2;
 
 	protected $id = -1;
 	protected $level = -1;
@@ -268,22 +268,20 @@ class User
 			$this->init_visitor_user();
 		else
 		{
-			$this->id = $properties['user_id'];
-			$this->level = $properties['level'];
-
-			$this->email = $properties['email'];
-			$this->show_email = $properties['show_email'];
-			$this->locale = $properties['locale'];
-			$this->theme = $properties['theme'];
-			$this->timezone = $properties['timezone'];
-			$this->editor = $properties['editor'];
-			$this->registration_date = $properties['registration_date'];
-
-			$this->delay_banned = $properties['delay_banned'];
-			$this->delay_readonly = $properties['delay_readonly'];
+			$this->id                 = $properties['user_id'];
+			$this->level              = $properties['level'];
+			$this->email              = $properties['email'];
+			$this->show_email         = $properties['show_email'];
+			$this->locale             = $properties['locale'];
+			$this->theme              = $properties['theme'];
+			$this->timezone           = $properties['timezone'];
+			$this->editor             = $properties['editor'];
+			$this->registration_date  = $properties['registration_date'];
+			$this->delay_banned       = $properties['delay_banned'];
+			$this->delay_readonly     = $properties['delay_readonly'];
 			$this->warning_percentage = $properties['warning_percentage'];
+			$this->display_name       = $properties['display_name'];
 
-			$this->display_name = $properties['display_name'];
 			$this->set_groups($properties['user_groups']);
 		}
 	}
@@ -301,22 +299,22 @@ class User
 	public static function get_visitor_properties($display_name = null, $level = self::VISITOR_LEVEL)
 	{
 		return array(
-			'user_id' => Session::VISITOR_SESSION_ID,
-			'display_name' => $display_name !== null ? $display_name : LangLoader::get_message('guest', 'main'),
-			'level' => $level,
-			'email' => null,
-			'show_email' => false,
-			'locale' => UserAccountsConfig::load()->get_default_lang(),
-			'theme' => UserAccountsConfig::load()->get_default_theme(),
-			'timezone' => GeneralConfig::load()->get_site_timezone(),
-			'editor' => ContentFormattingConfig::load()->get_default_editor(),
-			'unread_pm' => 0,
-			'registration_date' => 0,
+			'user_id'              => Session::VISITOR_SESSION_ID,
+			'display_name'         => $display_name !== null ? $display_name : LangLoader::get_message('guest', 'main'),
+			'level'                => $level,
+			'email'                => null,
+			'show_email'           => false,
+			'locale'               => UserAccountsConfig::load()->get_default_lang(),
+			'theme'                => UserAccountsConfig::load()->get_default_theme(),
+			'timezone'             => GeneralConfig::load()->get_site_timezone(),
+			'editor'               => ContentFormattingConfig::load()->get_default_editor(),
+			'unread_pm'            => 0,
+			'registration_date'    => 0,
 			'last_connection_date' => time(),
-			'user_groups' => '',
-			'warning_percentage' => 0,
-			'delay_banned' => 0,
-			'delay_readonly' => 0
+			'user_groups'          => '',
+			'warning_percentage'   => 0,
+			'delay_banned'         => 0,
+			'delay_readonly'       => 0
 		);
 	}
 }
