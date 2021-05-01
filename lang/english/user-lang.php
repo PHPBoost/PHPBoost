@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 28
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -186,6 +186,7 @@ $lang['user.share.menu'] = 'Social network menu';
 $lang['user.share.sms']  = 'SMS';
 
 // Registration
+$lang['user.registered']   = 'Registered';
 $lang['user.register']     = 'Register';
 $lang['user.registration'] = 'Registration';
 

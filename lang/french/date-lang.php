@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 10 09
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 3.0 - 2012 10 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -90,4 +90,5 @@ $lang['date.year']      = 'an';
 $lang['date.years']     = 'ans';
 
 $lang['date.ago']       = 'il y a :time';
+$lang['date.since']     = 'depuis :time';
 ?>

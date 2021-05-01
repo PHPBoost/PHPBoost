@@ -11,7 +11,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 03 23
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 2.0 - 2008 06 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -22,18 +22,19 @@ class Date
 {
 	const DATE_NOW = 'now';
 
-	const FORMAT_TIMESTAMP = 0;
-	const FORMAT_DAY_MONTH = 1;
-	const FORMAT_DAY_MONTH_YEAR = 2;
-	const FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE = 3;
-	const FORMAT_RFC2822 = 4;
-	const FORMAT_ISO8601 = 5;
-	const FORMAT_DAY_MONTH_YEAR_LONG = 6;
-	const FORMAT_DAY_MONTH_YEAR_TEXT = 7;
+	const FORMAT_TIMESTAMP                       = 0;
+	const FORMAT_DAY_MONTH                       = 1;
+	const FORMAT_DAY_MONTH_YEAR                  = 2;
+	const FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE      = 3;
+	const FORMAT_RFC2822                         = 4;
+	const FORMAT_ISO8601                         = 5;
+	const FORMAT_DAY_MONTH_YEAR_LONG             = 6;
+	const FORMAT_DAY_MONTH_YEAR_TEXT             = 7;
 	const FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT = 8;
-	const FORMAT_RELATIVE = 9;
-	const FORMAT_ISO_DAY_MONTH_YEAR = 10;
-	const FORMAT_DIFF_NOW = 11;
+	const FORMAT_RELATIVE                        = 9;
+	const FORMAT_ISO_DAY_MONTH_YEAR              = 10;
+	const FORMAT_AGO                             = 11;
+	const FORMAT_SINCE                           = 12;
 
 	/**
 	 * @var DateTime Representation of date and time.
@@ -85,7 +86,8 @@ class Date
 	 * 	<li>Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT</li>
 	 * 	<li>Date::FORMAT_RELATIVE</li>
 	 * 	<li>Date::FORMAT_ISO_DAY_MONTH_YEAR</li>
-	 * 	<li>Date::FORMAT_DIFF_NOW</li>
+	 * 	<li>Date::FORMAT_AGO</li>
+	 *  <li>Date::FORMAT_SINCE</li>
 	 * </ul>
 	 * @param int $referencial_timezone One of the following enumeration:
 	 * <ul>
@@ -150,10 +152,17 @@ class Date
 				return $this->date_time->format('Y-m-d');
 				break;
 
-			case self::FORMAT_DIFF_NOW:
+			case self::FORMAT_AGO:
 				$time = self::get_date_relative($this->get_timestamp(), $referencial_timezone);
-				if ($time !== LangLoader::get_message('instantly', 'date-common'))
-					$time = StringVars::replace_vars(LangLoader::get_message('ago', 'date-common'), array('time' => $time));
+				if ($time !== LangLoader::get_message('date.instantly', 'date-lang'))
+					$time = StringVars::replace_vars(LangLoader::get_message('ago', 'date-lang'), array('time' => $time));
+				return $time;
+				break;
+
+			case self::FORMAT_SINCE:
+				$time = self::get_date_relative($this->get_timestamp(), $referencial_timezone);
+				if ($time !== LangLoader::get_message('date.instantly', 'date-lang'))
+					$time = StringVars::replace_vars(LangLoader::get_message('since', 'date-lang'), array('time' => $time));
 				return $time;
 				break;
 
@@ -186,21 +195,21 @@ class Date
 		$years    = round($time_diff/29030400);
 
 		if ($secondes == 1)
-			return LangLoader::get_message('instantly', 'date-common');
+			return LangLoader::get_message('date.instantly', 'date-lang');
 		elseif ($secondes < 60)
-			return $secondes . ' ' . LangLoader::get_message('seconds', 'date-common');
+			return $secondes . ' ' . LangLoader::get_message('date.seconds', 'date-lang');
 		elseif ($minutes < 60)
-			return $minutes . ' ' . ($minutes > 1 ? LangLoader::get_message('minutes', 'date-common') : LangLoader::get_message('minute', 'date-common'));
+			return $minutes . ' ' . ($minutes > 1 ? LangLoader::get_message('date.minutes', 'date-lang') : LangLoader::get_message('date.minute', 'date-lang'));
 		elseif ($hours < 24)
-			return $hours . ' ' . ($hours > 1 ? LangLoader::get_message('hours', 'date-common') : LangLoader::get_message('hour', 'date-common'));
+			return $hours . ' ' . ($hours > 1 ? LangLoader::get_message('date.hours', 'date-lang') : LangLoader::get_message('date.hour', 'date-lang'));
 		elseif ($days < 7)
-			return $days . ' ' . ($days > 1 ? LangLoader::get_message('days', 'date-common') : LangLoader::get_message('day', 'date-common'));
+			return $days . ' ' . ($days > 1 ? LangLoader::get_message('date.days', 'date-lang') : LangLoader::get_message('date.day', 'date-lang'));
 		elseif ($weeks < 4)
-			return $weeks . ' ' . ($weeks > 1 ? LangLoader::get_message('weeks', 'date-common') : LangLoader::get_message('week', 'date-common'));
+			return $weeks . ' ' . ($weeks > 1 ? LangLoader::get_message('date.weeks', 'date-lang') : LangLoader::get_message('date.week', 'date-lang'));
 		elseif ($months < 12)
-			return $months . ' ' . ($months > 1 ? LangLoader::get_message('months', 'date-common') : LangLoader::get_message('month', 'date-common'));
+			return $months . ' ' . ($months > 1 ? LangLoader::get_message('date.months', 'date-lang') : LangLoader::get_message('date.month', 'date-lang'));
 		else
-			return $years . ' ' . ($years > 1 ? LangLoader::get_message('years', 'date-common') : LangLoader::get_message('year', 'date-common'));
+			return $years . ' ' . ($years > 1 ? LangLoader::get_message('date.years', 'date-lang') : LangLoader::get_message('date.year', 'date-lang'));
 	}
 
 	/**
@@ -514,7 +523,8 @@ class Date
 			$date_label . '_MINUTE'           => $date->get_minutes(),
 			$date_label . '_SECONDS'          => $date->get_seconds(),
 			$date_label . '_ISO8601'          => $date->format(Date::FORMAT_ISO8601),
-			$date_label . '_DIFF_NOW'         => $date->format(Date::FORMAT_DIFF_NOW),
+			$date_label . '_AGO'              => $date->format(Date::FORMAT_AGO),
+			$date_label . '_SINCE'            => $date->format(Date::FORMAT_SINCE),
 			$date_label . '_RELATIVE'         => $date->format(Date::FORMAT_RELATIVE)
 		);
 	}
