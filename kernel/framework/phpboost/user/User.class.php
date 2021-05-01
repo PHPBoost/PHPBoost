@@ -18,11 +18,11 @@ define('USER_TYPE', 3);
 
 class User
 {
-	const ROBOT_LEVEL     = -2;
-	const VISITOR_LEVEL   = -1;
-	const MEMBER_LEVEL    = 0;
-	const MODERATOR_LEVEL = 1;
-	const ADMIN_LEVEL     = 2;
+	const ROBOT_LEVEL         = -2;
+	const VISITOR_LEVEL       = -1;
+	const MEMBER_LEVEL        = 0;
+	const MODERATOR_LEVEL     = 1;
+	const ADMINISTRATOR_LEVEL = 2;
 
 	protected $id = -1;
 	protected $level = -1;
@@ -80,7 +80,7 @@ class User
 
 	public function is_admin()
 	{
-		return $this->level == self::ADMIN_LEVEL;
+		return $this->level == self::ADMINISTRATOR_LEVEL;
 	}
 
 	public function set_groups($groups)
