@@ -155,14 +155,14 @@ class Date
 			case self::FORMAT_AGO:
 				$time = self::get_date_relative($this->get_timestamp(), $referencial_timezone);
 				if ($time !== LangLoader::get_message('date.instantly', 'date-lang'))
-					$time = StringVars::replace_vars(LangLoader::get_message('ago', 'date-lang'), array('time' => $time));
+					$time = StringVars::replace_vars(LangLoader::get_message('date.ago', 'date-lang'), array('time' => $time));
 				return $time;
 				break;
 
 			case self::FORMAT_SINCE:
 				$time = self::get_date_relative($this->get_timestamp(), $referencial_timezone);
 				if ($time !== LangLoader::get_message('date.instantly', 'date-lang'))
-					$time = StringVars::replace_vars(LangLoader::get_message('since', 'date-lang'), array('time' => $time));
+					$time = StringVars::replace_vars(LangLoader::get_message('date.since', 'date-lang'), array('time' => $time));
 				return $time;
 				break;
 
