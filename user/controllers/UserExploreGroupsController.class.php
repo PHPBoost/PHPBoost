@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 17
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -64,7 +64,7 @@ class UserExploreGroupsController extends AbstractController
 				'C_ONE_GROUP'    => true,
 				'C_NO_MEMBERS'   => $number_member == 0,
 				'U_GROUP_LIST'   => UserUrlBuilder::groups()->rel(),
-				'C_ADMIN'        => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
+				'C_ADMIN'        => AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL),
 				'U_ADMIN_GROUPS' => TPL_PATH_TO_ROOT .'/admin/admin_groups.php?id=' . $group_id,
 				'GROUP_NAME'     => $group['name'],
 				'NUMBER_MEMBERS' => $number_member,
@@ -133,7 +133,7 @@ class UserExploreGroupsController extends AbstractController
 					'U_GROUP_IMG'     => Url::to_rel('/images/group/' . $group['img']),
 					'C_HAS_MEMBERS'   => $number_member > 0,
 					'NUMBER_MEMBERS'  => $number_member,
-					'C_ADMIN'         => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
+					'C_ADMIN'         => AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL),
 					'U_ADMIN_GROUPS'  => TPL_PATH_TO_ROOT .'/admin/admin_groups.php?id=' . $group_id,
 				));
 

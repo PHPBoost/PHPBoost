@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 08
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 5.1 - 2017 09 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -51,9 +51,9 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 
 		$user = AppContext::get_current_user();
 		if($config->get_superadmin_enabled() == true)
-			$is_superadmin = $user->get_display_name() == $config->get_superadmin_name() && User::ADMIN_LEVEL;
+			$is_superadmin = $user->get_display_name() == $config->get_superadmin_name() && User::ADMINISTRATOR_LEVEL;
 		else
-			$is_superadmin = $user->get_level() == User::ADMIN_LEVEL;
+			$is_superadmin = $user->get_level() == User::ADMINISTRATOR_LEVEL;
 
 		$this->build_enable_css_cache();
 		if ($this->enable_css_button->has_been_submited() && $this->enable_css_cache->validate())

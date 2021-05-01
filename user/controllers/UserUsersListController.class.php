@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 19
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
 
 class UserUsersListController extends AbstractController
@@ -89,7 +90,7 @@ class UserUsersListController extends AbstractController
 				'C_IS_GROUP'	  => !empty(User::get_group_color($row['user_groups'], $row['level'])),
 				'C_HAS_GROUP'	  => !empty(User::get_group_color($row['user_groups'])),
 				'C_CONTROLS' 	  => $row['level'] >= 1,
-				'C_DELETE'		  => $row['level'] != User::ADMIN_LEVEL || ($row['level'] == User::ADMIN_LEVEL && $number_admins > 1),
+				'C_DELETE'		  => $row['level'] != User::ADMINISTRATOR_LEVEL || ($row['level'] == User::ADMINISTRATOR_LEVEL && $number_admins > 1),
 
 				'DISPLAYED_NAME'              => $row['display_name'],
 				'REGISTRATION_DATE'           => Date::to_format($row['registration_date'], Date::FORMAT_DAY_MONTH_YEAR),

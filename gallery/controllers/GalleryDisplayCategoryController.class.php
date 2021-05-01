@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 16
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -101,7 +101,7 @@ class GalleryDisplayCategoryController extends ModuleController
 		$nbr_column_pics = !empty($nbr_column_pics) ? $nbr_column_pics : 1;
 		$column_width_pics = floor(100/$nbr_column_pics);
 
-		$is_admin = AppContext::get_current_user()->check_level(User::ADMIN_LEVEL);
+		$is_admin = AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL);
 		$is_modo = CategoriesAuthorizationsService::check_authorizations($category->get_id())->moderation();
 
 		$module_data_path = $this->tpl->get_pictures_data_path();

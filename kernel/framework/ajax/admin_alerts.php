@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 03 26
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 2.0 - 2008 08 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -19,7 +19,7 @@ require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 //On vérifie la validité du jeton
 AppContext::get_session()->csrf_get_protect();
 
-if (!AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
+if (!AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL))
 {
 	exit;
 }

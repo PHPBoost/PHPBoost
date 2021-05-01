@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 16
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 3.0 - 2010 02 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -89,7 +89,7 @@ class AdminViewAllMembersController extends AdminController
 
 			$edit_link = new EditLinkHTMLElement(UserUrlBuilder::edit_profile($user->get_id()));
 
-			if ($user->get_level() != User::ADMIN_LEVEL || ($user->get_level() == User::ADMIN_LEVEL && $number_admins > 1))
+			if ($user->get_level() != User::ADMINISTRATOR_LEVEL || ($user->get_level() == User::ADMINISTRATOR_LEVEL && $number_admins > 1))
 				$delete_link = new DeleteLinkHTMLElement(AdminMembersUrlBuilder::delete($user->get_id()));
 			else
 				$delete_link = new DeleteLinkHTMLElement('', '', array('disabled' => true));

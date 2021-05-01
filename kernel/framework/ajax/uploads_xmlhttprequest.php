@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2015 11 27
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 1.6 - 2007 01 25
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -35,7 +35,7 @@ if (!empty($new_folder)) //Ajout d'un dossier dans la gestion des fichiers.
 
 	if (!empty($user_id) && $user->get_id() != $user_id)
 	{
-		if ($user->check_level(User::ADMIN_LEVEL))
+		if ($user->check_level(User::ADMINISTRATOR_LEVEL))
 		{
 			echo Uploads::Add_folder($id_parent, $user_id, $name);
 		}
@@ -57,7 +57,7 @@ elseif (!empty($rename_folder)) //Renomme un dossier dans la gestion des fichier
 	{
 		if ($user->get_id() != $user_id)
 		{
-			if ($user->check_level(User::ADMIN_LEVEL))
+			if ($user->check_level(User::ADMINISTRATOR_LEVEL))
 			{
 				echo Uploads::Rename_folder($id_folder, $name, $previous_name, $user_id, Uploads::ADMIN_NO_CHECK);
 			}
@@ -82,7 +82,7 @@ elseif (!empty($rename_file)) //Renomme un fichier d'un dossier dans la gestion 
 	{
 		if ($user->get_id() != $user_id)
 		{
-			if ($user->check_level(User::ADMIN_LEVEL))
+			if ($user->check_level(User::ADMINISTRATOR_LEVEL))
 			{
 				echo Uploads::Rename_file($id_file, $name, $previous_name, $user_id, Uploads::ADMIN_NO_CHECK);
 			}

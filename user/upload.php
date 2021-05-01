@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 20
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 1.6 - 2007 07 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -92,7 +92,7 @@ if (!empty($parent_folder))
         DispatchManager::redirect($error_controller);
     }
 
-    if ($info_folder['id_parent'] != 0 || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
+    if ($info_folder['id_parent'] != 0 || AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL))
     {
         if ($parent_folder['user_id'] == -1)
             AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?showm=1', '', '&'));
@@ -111,7 +111,7 @@ elseif (!empty($_FILES['upload_file']['name']) && AppContext::get_request()->has
 
     // Groups upload authorizations
     $group_limit = AppContext::get_current_user()->check_max_value(DATA_GROUP_LIMIT, $files_upload_config->get_maximum_size_upload());
-    $unlimited_data = ($group_limit === -1) || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL);
+    $unlimited_data = ($group_limit === -1) || AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL);
 
     $member_memory_used = Uploads::Member_memory_used(AppContext::get_current_user()->get_id());
     if ($member_memory_used >= $group_limit && !$unlimited_data)
@@ -159,7 +159,7 @@ elseif (!empty($del_folder))
 { // delete one folder
     AppContext::get_session()->csrf_get_protect(); // csrf protection
 
-    if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
+    if (AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL))
         Uploads::Del_folder($del_folder);
     else
     {
@@ -189,7 +189,7 @@ elseif (!empty($del_file))
     // File delete
     AppContext::get_session()->csrf_get_protect(); // csrf protection
 
-    if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
+    if (AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL))
     {
         Uploads::Del_file($del_file, AppContext::get_current_user()->get_id(), Uploads::ADMIN_NO_CHECK);
     }
@@ -368,7 +368,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 }
 else
 {
-    $is_admin = AppContext::get_current_user()->check_level(User::ADMIN_LEVEL);
+    $is_admin = AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL);
 
     $view = new FileTemplate('user/upload.tpl');
     $view->add_lang(array_merge(LangLoader::get('common-lang'), LangLoader::get('form-lang'),  LangLoader::get('upload-lang'), LangLoader::get('warning-lang')));
@@ -518,7 +518,7 @@ else
     }
     // Authorization to upload without limit to groups.
     $group_limit = AppContext::get_current_user()->check_max_value(DATA_GROUP_LIMIT, $files_upload_config->get_maximum_size_upload());
-    $unlimited_data = ($group_limit === -1) || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL);
+    $unlimited_data = ($group_limit === -1) || AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL);
 
     $total_size = 0;
     try {

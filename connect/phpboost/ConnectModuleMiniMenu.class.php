@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 17
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -35,7 +35,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 				// = -1 if user has at least one contribution but unknown number of contribution because of the overlap between groups
 				$contribution_number = 0;
 
-				if ($user->check_level(User::ADMIN_LEVEL))
+				if ($user->check_level(User::ADMINISTRATOR_LEVEL))
 				{
 					$contribution_number = $unread_contributions->get_admin_unread_contributions_number();
 				}
@@ -72,7 +72,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 				$user_accounts_config = UserAccountsConfig::load();
 				$user_avatar = AppContext::get_session()->get_cached_data('user_avatar');
 
-				$total_alert = $user->get_unread_pm() + $contribution_number + ($user->check_level(User::ADMIN_LEVEL) ? AdministratorAlertService::get_number_unread_alerts() : 0);
+				$total_alert = $user->get_unread_pm() + $contribution_number + ($user->check_level(User::ADMINISTRATOR_LEVEL) ? AdministratorAlertService::get_number_unread_alerts() : 0);
 
 				$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 

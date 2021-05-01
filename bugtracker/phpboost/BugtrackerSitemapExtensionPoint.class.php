@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 10 09
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 4.0 - 2014 01 22
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
 
 class BugtrackerSitemapExtensionPoint implements SitemapExtensionPoint
@@ -34,7 +35,7 @@ class BugtrackerSitemapExtensionPoint implements SitemapExtensionPoint
 		}
 		else if ($auth_mode == Sitemap::AUTH_USER)
 		{
-			if ($current_user->get_level() == User::ADMIN_LEVEL)
+			if ($current_user->get_level() == User::ADMINISTRATOR_LEVEL)
 				$this_auth = true;
 			else
 				$this_auth = Authorizations::check_auth(RANK_TYPE, $current_user->get_level(), $config->get_authorizations(), BugtrackerAuthorizationsService::READ_AUTHORIZATIONS);

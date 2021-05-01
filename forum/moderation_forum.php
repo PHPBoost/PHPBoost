@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 30
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 1.5 - 2006 08 08
  * @contributor Regis VIARRE <crowkait@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -304,7 +304,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		}
 
 		//Modérateur ne peux avertir l'admin (logique non?).
-		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)))
+		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL)))
 		{
 			PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('delay_readonly' => $readonly), ' WHERE user_id = :user_id', array('user_id' => $info_mbr['user_id']));
 
@@ -509,7 +509,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		}
 
 		//Modérateur ne peux avertir l'admin (logique non?).
-		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)))
+		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL)))
 		{
 			if ($new_warning_level < 100) //Ne peux pas mettre des avertissements supérieurs à 100.
 			{
@@ -673,7 +673,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		));
 	}
 }
-elseif (retrieve(GET, 'del_h', false) && AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Suppression de l'historique.
+elseif (retrieve(GET, 'del_h', false) && AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL)) //Suppression de l'historique.
 {
 	PersistenceContext::get_dbms_utils()->truncate(PREFIX . 'forum_history');
 
@@ -692,7 +692,7 @@ else //Panneau de modération
 	));
 
 	//Bouton de suppression de l'historique, visible uniquement pour l'admin.
-	if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
+	if (AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL))
 	{
 		$view->put_all(array(
 			'C_FORUM_ADMIN' => true

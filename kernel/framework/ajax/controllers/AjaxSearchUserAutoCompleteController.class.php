@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 02
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 4.0 - 2013 06 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -17,7 +17,7 @@ class AjaxSearchUserAutoCompleteController extends AbstractController
 	public function execute(HTTPRequestCustom $request)
 	{
 		$lang = LangLoader::get('common');
-		$is_admin = AppContext::get_current_user()->check_level(User::ADMIN_LEVEL);
+		$is_admin = AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL);
 		$number_admins = UserService::count_admin_members();
 		$suggestions = array();
 
@@ -34,7 +34,7 @@ class AjaxSearchUserAutoCompleteController extends AbstractController
 				{
 					$edit_link = new EditLinkHTMLElement(UserUrlBuilder::edit_profile($row['user_id']));
 
-					if ($row['level'] != User::ADMIN_LEVEL || ($row['level'] == User::ADMIN_LEVEL && $number_admins > 1))
+					if ($row['level'] != User::ADMINISTRATOR_LEVEL || ($row['level'] == User::ADMINISTRATOR_LEVEL && $number_admins > 1))
 						$delete_link = new DeleteLinkHTMLElement($row['user_id']);
 					else
 						$delete_link = new DeleteLinkHTMLElement('', '', array('onclick' => 'return false;'), 'icon-disabled');

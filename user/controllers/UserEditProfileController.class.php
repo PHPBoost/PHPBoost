@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 19
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -79,7 +79,7 @@ class UserEditProfileController extends AbstractController
 
 		$this->build_form();
 
-		if ($this->user->get_level() != User::ADMIN_LEVEL || ($this->user->get_level() == User::ADMIN_LEVEL && $this->user->get_id() != AppContext::get_current_user()->get_id()) || ($this->user->get_level() == User::ADMIN_LEVEL && $this->user->get_id() == AppContext::get_current_user()->get_id() && UserService::count_admin_members() > 1))
+		if ($this->user->get_level() != User::ADMINISTRATOR_LEVEL || ($this->user->get_level() == User::ADMINISTRATOR_LEVEL && $this->user->get_id() != AppContext::get_current_user()->get_id()) || ($this->user->get_level() == User::ADMINISTRATOR_LEVEL && $this->user->get_id() == AppContext::get_current_user()->get_id() && UserService::count_admin_members() > 1))
 		{
 			if ($request->has_getparameter('delete-account') && $request->get_getvalue('delete-account'))
 				$this->delete_account();
@@ -105,7 +105,7 @@ class UserEditProfileController extends AbstractController
 
 	private function check_authorizations()
 	{
-		return AppContext::get_current_user()->get_id() == $this->user->get_id() || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL);
+		return AppContext::get_current_user()->get_id() == $this->user->get_id() || AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL);
 	}
 
 	private function build_form()
@@ -285,7 +285,7 @@ class UserEditProfileController extends AbstractController
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
 
-		if ($this->user->get_level() != User::ADMIN_LEVEL || ($this->user->get_level() == User::ADMIN_LEVEL && $this->user->get_id() != AppContext::get_current_user()->get_id()) || ($this->user->get_level() == User::ADMIN_LEVEL && $this->user->get_id() == AppContext::get_current_user()->get_id() && UserService::count_admin_members() > 1))
+		if ($this->user->get_level() != User::ADMINISTRATOR_LEVEL || ($this->user->get_level() == User::ADMINISTRATOR_LEVEL && $this->user->get_id() != AppContext::get_current_user()->get_id()) || ($this->user->get_level() == User::ADMINISTRATOR_LEVEL && $this->user->get_id() == AppContext::get_current_user()->get_id() && UserService::count_admin_members() > 1))
 		{
 			$form->add_button(new FormButtonLink($this->lang['user.delete.account'], UserUrlBuilder::edit_profile($this->user->get_id(), 'delete-account')->relative(), '', 'delete-account warning', ($this->user->get_id() != AppContext::get_current_user()->get_id() ? $this->lang['user.delete.account.confirmation.admin'] : $this->lang['user.delete.account.confirmation.member'])));
 		}
@@ -295,7 +295,7 @@ class UserEditProfileController extends AbstractController
 
 	private function delete_account()
 	{
-		if ($this->user->get_level() != User::ADMIN_LEVEL || ($this->user->get_level() == User::ADMIN_LEVEL && $this->user->get_id() != AppContext::get_current_user()->get_id()) || ($this->user->get_level() == User::ADMIN_LEVEL && $this->user->get_id() == AppContext::get_current_user()->get_id() && UserService::count_admin_members() > 1))
+		if ($this->user->get_level() != User::ADMINISTRATOR_LEVEL || ($this->user->get_level() == User::ADMINISTRATOR_LEVEL && $this->user->get_id() != AppContext::get_current_user()->get_id()) || ($this->user->get_level() == User::ADMINISTRATOR_LEVEL && $this->user->get_id() == AppContext::get_current_user()->get_id() && UserService::count_admin_members() > 1))
 		{
 			UserService::delete_by_id($this->user->get_id());
 		}

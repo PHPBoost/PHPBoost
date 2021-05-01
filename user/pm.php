@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 20
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 1.5 - 2006 07 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -941,7 +941,7 @@ else // Conversation list in the user email box
 		switch ($author)
 		{
 			case $lang['user.administrator']:
-				$participants_level_class = UserService::get_level_class(User::ADMIN_LEVEL);
+				$participants_level_class = UserService::get_level_class(User::ADMINISTRATOR_LEVEL);
 				break;
 
 			case '<del>' . $lang['user.guest'] . '</del>':

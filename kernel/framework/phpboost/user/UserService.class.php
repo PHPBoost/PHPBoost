@@ -257,7 +257,7 @@ class UserService
 			case User::MODERATOR_LEVEL:
 			 	return $lang['moderator'];
 			break;
-			case User::ADMIN_LEVEL:
+			case User::ADMINISTRATOR_LEVEL:
 				return $lang['administrator'];
 			break;
 		}
@@ -281,7 +281,7 @@ class UserService
 			case User::MODERATOR_LEVEL:
 				return 'moderator';
 			break;
-			case User::ADMIN_LEVEL:
+			case User::ADMINISTRATOR_LEVEL:
 				return 'administrator';
 			break;
 			default:
@@ -307,7 +307,7 @@ class UserService
 
 	public static function count_admin_members()
 	{
-		return self::$querier->count(DB_TABLE_MEMBER, 'WHERE level = :level', array('level' => User::ADMIN_LEVEL));
+		return self::$querier->count(DB_TABLE_MEMBER, 'WHERE level = :level', array('level' => User::ADMINISTRATOR_LEVEL));
 	}
 
 	public static function display_user_profile_link($user_id)
