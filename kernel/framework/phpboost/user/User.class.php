@@ -146,11 +146,6 @@ class User
 		return $this->registration_date;
 	}
 
-	public function get_formated_registration_date()
-	{
-		return Date::to_format($this->registration_date, Date::FORMAT_DAY_MONTH_YEAR);
-	}
-
 	public function set_locale($locale)
 	{
 		$this->locale = $locale;
