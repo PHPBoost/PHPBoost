@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 18
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -43,29 +43,44 @@ class UserHomeProfileController extends AbstractController
 		$user_accounts_config = UserAccountsConfig::load();
 		$contribution_number = $this->get_unread_contributions_number();
 		$is_authorized_files_panel = $this->user->check_auth(FileUploadConfig::load()->get_authorization_enable_interface_files(), FileUploadConfig::AUTH_FILES_BIT);
+		$group_color = User::get_group_color($this->user->get_groups(), $this->user->get_level());
+
+		$registration_since = !empty($this->user->get_registration_date()) ? Date::to_format($this->user->get_registration_date(), Date::FORMAT_SINCE) : LangLoader::get_message('common.unknown', 'common-lang');
+
 		$this->view->put_all(array(
-			'C_USER_AUTH_FILES'     => $is_authorized_files_panel,
-			'C_USER_INDEX'          => true,
-			'C_IS_MODERATOR'        => $this->user->get_level() >= User::MODERATOR_LEVEL,
-			'C_UNREAD_CONTRIBUTION' => $contribution_number != 0,
-			'C_UNREAD_ALERT'        => (bool)AdministratorAlertService::get_number_unread_alerts(),
-			'C_HAS_PM'              => $this->user->get_unread_pm() > 0,
-			'C_AVATAR_IMG'          => !empty($user_avatar) || $user_accounts_config->is_default_avatar_enabled(),
+			'C_USER_AUTH_FILES'                     => $is_authorized_files_panel,
+			'C_USER_INDEX'                          => true,
+			'C_UNREAD_CONTRIBUTION'                 => $contribution_number != 0,
+			'C_UNREAD_ALERT'                        => (bool)AdministratorAlertService::get_number_unread_alerts(),
+			'C_HAS_PM'                              => $this->user->get_unread_pm() > 0,
 			'C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION' => $contribution_number > 0,
 
-			'COLSPAN'              => $is_authorized_files_panel ? 3 : 2,
-			'PSEUDO'               => $this->user->get_display_name(),
-			'NUMBER_PM'            => $this->user->get_unread_pm(),
-			'MSG_MBR'              => FormatingHelper::second_parse(UserAccountsConfig::load()->get_welcome_message()),
-			'NUMBER_UNREAD_ALERTS' => AdministratorAlertService::get_number_unread_alerts(),
-			'NUMBER_UNREAD_CONTRIBUTIONS' => $contribution_number,
+			'IS_MODERATOR'                          => $this->user->get_level() >= User::MODERATOR_LEVEL,
+			'IS_ADMINISTRATOR'                      => $this->user->get_level() >= User::ADMINISTRATOR_LEVEL,
 
-			'U_USER_PM'            => UserUrlBuilder::personnal_message($this->user->get_id())->rel(),
-			'U_CONTRIBUTION_PANEL' => UserUrlBuilder::contribution_panel()->rel(),
-			'U_MODERATION_PANEL'   => UserUrlBuilder::moderation_panel()->rel(),
-			'U_UPLOAD'             => UserUrlBuilder::upload_files_panel()->rel(),
-			'U_AVATAR_IMG'         => $user_avatar ? Url::to_rel($user_avatar) : $user_accounts_config->get_default_avatar(),
-			'U_VIEW_PROFILE'       => UserUrlBuilder::profile($this->user->get_id())->rel()
+			'COLSPAN'                               => $is_authorized_files_panel ? 3 : 2,
+			'PSEUDO'                                => $this->user->get_display_name(),
+			'NUMBER_PM'                             => $this->user->get_unread_pm(),
+			'MSG_MBR'                               => FormatingHelper::second_parse(UserAccountsConfig::load()->get_welcome_message()),
+			'NUMBER_UNREAD_ALERTS'                  => AdministratorAlertService::get_number_unread_alerts(),
+			'NUMBER_UNREAD_CONTRIBUTIONS'           => $contribution_number,
+
+			'U_USER_PM'                             => UserUrlBuilder::personnal_message($this->user->get_id())->rel(),
+			'U_CONTRIBUTION_PANEL'                  => UserUrlBuilder::contribution_panel()->rel(),
+			'U_MODERATION_PANEL'                    => UserUrlBuilder::moderation_panel()->rel(),
+			'U_UPLOAD'                              => UserUrlBuilder::upload_files_panel()->rel(),
+			'U_VIEW_PROFILE'                        => UserUrlBuilder::profile($this->user->get_id())->rel(),
+
+			'C_AVATAR_IMG'                          => !empty($user_avatar) || $user_accounts_config->is_default_avatar_enabled(),
+			'U_AVATAR_IMG'                          => $user_avatar ? Url::to_rel($user_avatar) : $user_accounts_config->get_default_avatar(),
+
+			'C_USER_GROUP_COLOR'         			=> !empty($group_color),
+			'USER_GROUP_COLOR'                      => $group_color,
+
+			'USER_LEVEL_NAME'                       => UserService::get_level_lang($this->user->get_level()),
+			'USER_LEVEL_CLASS'                      => UserService::get_level_class($this->user->get_level()),
+
+			'USER_SUBSCRIBE_DATE'					=> LangLoader::get_message('user.registered', 'user-lang') . " " . $registration_since
 		));
 
 		$modules_with_publications = AppContext::get_extension_provider_service()->get_extension_point(UserExtensionPoint::EXTENSION_POINT);
@@ -105,7 +120,7 @@ class UserHomeProfileController extends AbstractController
 		// Worth -1 if the user has at least one contribution (but we do not know how much because of the overlaps between the groups)
 		$contribution_number = 0;
 
-		if ($this->user->check_level(User::ADMIN_LEVEL))
+		if ($this->user->check_level(User::ADMINISTRATOR_LEVEL))
 		{
 			$contribution_number = $unread_contributions->get_admin_unread_contributions_number();
 		}

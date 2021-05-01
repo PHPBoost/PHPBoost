@@ -72,7 +72,7 @@
 						</div>
 					</article>
 				# ENDIF #
-				# IF C_IS_MODERATOR #
+				# IF IS_MODERATOR #
 					<article class="dashboard-item several-items cell">
 						<div class="cell-body">
 							<div class="cell-content align-center">
