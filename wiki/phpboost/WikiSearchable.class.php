@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 08 20
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 3.0 - 2012 01 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class WikiSearchable extends AbstractSearchableExtensionPoint
@@ -15,27 +16,23 @@ class WikiSearchable extends AbstractSearchableExtensionPoint
 		parent::__construct(true, false);
 	}
 
-	public function get_search_form($args=null)
+	public function get_search_form($args = null)
 	{
 		require_once(PATH_TO_ROOT . '/kernel/begin.php');
-		load_module_lang('wiki');
-		global $LANG;
 
-		$tpl = new FileTemplate('wiki/wiki_search_form.tpl');
+		$view = new FileTemplate('wiki/wiki_search_form.tpl');
+		$view->add_lang(LangLoader::get('common-lang'));
 
 		if ( !isset($args['WikiWhere']) || !in_array($args['WikiWhere'], array('title', 'contents', 'all')) )
 		$args['WikiWhere'] = 'all';
 
-		$tpl->put_all(Array(
-			'L_WHERE' => $LANG['wiki_search_where'],
-			'IS_TITLE_SELECTED' => $args['WikiWhere'] == 'title'? ' selected="selected"': '',
-			'IS_CONTENTS_SELECTED' => $args['WikiWhere'] == 'contents'? ' selected="selected"': '',
-			'IS_ALL_SELECTED' => $args['WikiWhere'] == 'all'? ' selected="selected"': '',
-			'L_TITLE' => $LANG['wiki_search_where_title'],
-			'L_CONTENTS' => $LANG['wiki_search_where_contents']
+		$view->put_all(Array(
+			'IS_TITLE_SELECTED'   => $args['WikiWhere'] == 'title'? ' selected="selected"': '',
+			'IS_CONTENT_SELECTED' => $args['WikiWhere'] == 'contents'? ' selected="selected"': '',
+			'IS_ALL_SELECTED'     => $args['WikiWhere'] == 'all'? ' selected="selected"': '',
 		));
 
-		return $tpl->render();
+		return $view->render();
 	}
 
 	public function get_search_args()

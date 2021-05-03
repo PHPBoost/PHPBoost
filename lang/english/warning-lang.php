@@ -24,6 +24,11 @@ $lang['warning.subcat']    = 'Please select a sub-category !';
 $lang['warning.url']       = 'Please enter a valid URL !';
 $lang['warning.recipient'] = 'Please enter the recipient !';
 
+// Captcha
+$lang['warning.captcha.validation.error'] = 'The visual confirmation field has not been properly filled!';
+$lang['warning.captcha.is.default'] = 'The captcha you want to uninstall or disable is set on your site, you must select another captcha in the content management first.';
+$lang['warning.captcha.last.installed'] = 'Last captcha, you can not delete or disable it. Please install another one first.';
+
 // Contributions
 $lang['warning.delete.contribution'] = 'Do you really want to delete this contribution?';
 

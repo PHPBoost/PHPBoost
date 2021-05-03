@@ -12,7 +12,10 @@
 */
 
 require_once('../kernel/begin.php');
-load_module_lang('wiki');
+load_module_lang('wiki'); // to be deleted
+
+$lang = LangLoader::get('common', 'wiki');
+
 $config = WikiConfig::load();
 
 $id_article = (int)retrieve(GET, 'id', 0);
@@ -41,13 +44,13 @@ require_once('../kernel/header.php');
 
 if (!empty($id_article))
 {
-	$tpl = new FileTemplate('wiki/history.tpl');
+	$view = new FileTemplate('wiki/history.tpl');
+	$view->add_lang(array_merge($lang, LangLoader::get('common-lang')));
 
-	$tpl->put_all(array(
-		'C_ARTICLE' => true,
-		'L_HISTORY' => $LANG['wiki_history'],
+	$view->put_all(array(
+		'C_ITEM' => true,
 		'TITLE' => stripslashes($article_infos['title']),
-		'U_ARTICLE' => url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'])
+		'U_ITEM' => url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'])
 	));
 
 	$general_auth = empty($article_infos['auth']);
@@ -71,26 +74,30 @@ if (!empty($id_article))
 	while ($row = $result->fetch())
 	{
 		//Restauration
-		$actions = ($row['activ'] != 1 && $restore_auth) ? '<a href="' . url('action.php?restore=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()) . '" aria-label="' . $LANG['wiki_restore_version'] . '"><i class="fa fa-undo" aria-hidden="true"></i></a> &nbsp; ' : '';
-
+		$actions = ($row['activ'] != 1 && $restore_auth) ? '<a href="' . url('action.php?restore=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()) . '" aria-label="' . $lang['wiki.restore.version'] . '"><i class="fa fa-undo" aria-hidden="true"></i></a> &nbsp; ' : '';
+		$restore_link =
 		//Suppression
-		$actions .= ($row['activ'] != 1 && $delete_auth) ? '<a href="' . url('action.php?del_contents=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()) . '" aria-label="' . LangLoader::get_message('delete', 'common') . '" data-confirmation="' . $LANG['wiki_confirm_delete_archive'] . '"><i class="far fa-trash-alt" aria-hidden="true"></i></a>' : '';
+		$actions .= ($row['activ'] != 1 && $delete_auth) ? '<a href="' . url('action.php?del_contents=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()) . '" aria-label="' . LangLoader::get_message('common.delete', 'common-lang') . '" data-confirmation="' . $lang['wiki.confirm.delete.archive'] . '"><i class="far fa-trash-alt" aria-hidden="true"></i></a>' : '';
 
 		$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
-		$tpl->assign_block_vars('list', array(
-			'TITLE' => $LANG['wiki_consult_article'],
-			'AUTHOR' => !empty($row['display_name']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>' : $row['user_ip'],
-			'DATE' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-			'U_ARTICLE' => $row['activ'] == 1 ? url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']) : url('wiki.php?id_contents=' . $row['id_contents']),
-			'CURRENT_RELEASE' => $row['activ'] == 1 ? '(' . $LANG['wiki_current_version'] . ')' : '',
-			'ACTIONS' => !empty($actions) ? $actions : $LANG['wiki_no_possible_action'],
-			'CHANGE_REASON' => $row['change_reason']
+		$view->assign_block_vars('list', array(
+			'C_ACTIONS'         => $row['activ'] != 1 && $restore_auth || $row['activ'] != 1 && $delete_auth,
+			'C_RESTORE'         => $row['activ'] != 1 && $restore_auth,
+			'C_DELETE'          => $row['activ'] != 1 && $delete_auth,
+			'C_CURRENT_VERSION' => $row['activ'] == 1,
+			'TITLE'           => $LANG['wiki_consult_article'],
+			'AUTHOR'          => !empty($row['display_name']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>' : $row['user_ip'],
+			'DATE'            => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
+			'U_ARTICLE'       => $row['activ'] == 1 ? url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']) : url('wiki.php?id_contents=' . $row['id_contents']),
+			'U_RESTORE'       => url('action.php?restore=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()),
+			'U_DELETE'        => url('action.php?del_contents=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()),
+			'L_CHANGE_REASON' => $row['change_reason']
 		));
 	}
 	$result->dispose();
 
-	$tpl->put_all(array(
+	$view->put_all(array(
 		'L_VERSIONS' => $LANG['wiki_version_list'],
 		'L_DATE' => LangLoader::get_message('date', 'date-common'),
 		'L_AUTHOR' => $LANG['wiki_author'],
@@ -98,7 +105,7 @@ if (!empty($id_article))
 		'L_CHANGE_REASON' => $LANG['wiki_change_reason']
 		));
 
-	$tpl->display();
+	$view->display();
 }
 else //On affiche la liste des modifications
 {
@@ -122,9 +129,10 @@ else //On affiche la liste des modifications
 		DispatchManager::redirect($error_controller);
 	}
 
-	$tpl = new FileTemplate('wiki/history.tpl');
+	$view = new FileTemplate('wiki/history.tpl');
+	$view->add_lang(array_merge($lang, LangLoader::get('common-lang')));
 
-	$tpl->put_all(array(
+	$view->put_all(array(
 		'C_PAGINATION' => $pagination->has_several_pages(),
 		'L_HISTORY' => $LANG['wiki_history'],
 		'L_TITLE' => $LANG['wiki_article_title'],
@@ -157,16 +165,16 @@ else //On affiche la liste des modifications
 	{
 		$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
-		$tpl->assign_block_vars('list', array(
-			'TITLE' => stripslashes($row['title']),
-			'AUTHOR' => !empty($row['display_name']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>' : $row['user_ip'],
-			'DATE' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-			'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
+		$view->assign_block_vars('list', array(
+			'TITLE'       => stripslashes($row['title']),
+			'AUTHOR'      => !empty($row['display_name']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>' : $row['user_ip'],
+			'LAST_UPDATE' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
+			'U_ITEM'      => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
 		));
 	}
 	$result->dispose();
 
-	$tpl->display();
+	$view->display();
 }
 
 require_once('../kernel/footer.php');

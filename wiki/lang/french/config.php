@@ -3,13 +3,15 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 12 24
+ * @version     PHPBoost 6.0 - last update: 2021 05 01
  * @since       PHPBoost 4.0 - 2013 06 30
 */
 
 ####################################################
 #                     French                       #
 ####################################################
+
+// to be deleted
 
 $lang['wiki_name'] = 'Wiki ' . GeneralConfig::load()->get_site_name();
 $lang['index_text'] = 'Bienvenue sur le module wiki !<br /><br />

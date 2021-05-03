@@ -11,7 +11,9 @@
 
 require_once('../kernel/begin.php');
 include_once('../wiki/wiki_functions.php');
-load_module_lang('wiki');
+load_module_lang('wiki'); // to be deleted
+
+$lang = LangLoader::get('common', 'wiki');
 
 define('TITLE', $LANG['wiki_explorer']);
 define('DESCRIPTION', $LANG['wiki_explorer_seo']);
@@ -25,16 +27,17 @@ $cat = $request->get_getint('cat', 0);
 
 require_once('../kernel/header.php');
 
-$template = new FileTemplate('wiki/explorer.tpl');
+$view = new FileTemplate('wiki/explorer.tpl');
+$view->add_lang(array_merge($lang, LangLoader::get('common-lang')));
 
-$module_data_path = $template->get_pictures_data_path();
+$module_data_path = $view->get_pictures_data_path();
 
 //Contenu de la racine:
 foreach (WikiCategoriesCache::load()->get_categories() as $key => $cat)
 {
 	if ($cat['id_parent'] == 0)
 	{
-		$template->assign_block_vars('list_cats', array(
+		$view->assign_block_vars('list_cats', array(
 			'KEY'       =>  $key,
 			'ID_PARENT' => $cat['id_parent'],
 			'TITLE'     => stripslashes($cat['title'])
@@ -48,20 +51,14 @@ $result = PersistenceContext::get_querier()->select("SELECT title, id, encoded_t
 	ORDER BY is_cat DESC, title ASC");
 while ($row = $result->fetch())
 {
-	$template->assign_block_vars('list_files', array(
+	$view->assign_block_vars('list_files', array(
 		'TITLE' => stripslashes($row['title']),
 		'URL_FILE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
 	));
 }
 $result->dispose();
 
-$template->put_all(array(
-	'TITLE'        => $LANG['wiki_explorer'],
-	'L_ROOT'       => $LANG['wiki_root'],
-	'SELECTED_CAT' => $cat > 0 ? $cat : 0,
-	'L_CATS'       => $LANG['wiki_cats_tree'],
-	'L_CONTENTS'   => $LANG['wiki_contents'],
-));
+$view->put('SELECTED_CAT', $cat > 0 ? $cat : 0);
 
 $result = PersistenceContext::get_querier()->select("SELECT c.id, a.title, a.encoded_title
 FROM " . PREFIX . "wiki_cats c
@@ -72,21 +69,20 @@ while ($row = $result->fetch())
 {
 	$sub_cats_number = PersistenceContext::get_querier()->count(PREFIX . "wiki_cats", 'WHERE id_parent = :id', array('id' => $row['id']));
 
-	$template->assign_block_vars('list', array(
+	$view->assign_block_vars('list', array(
 		'ID' => $row['id'],
 		'TITLE' => stripslashes($row['title']),
 		'U_FOLDER' => $sub_cats_number > 0
 	));
 }
 $result->dispose();
-$template->put_all(array(
+$view->put_all(array(
 	'SELECTED_CAT' => 0,
 	'CAT_0'        => 'selected',
-	'CAT_LIST'     => '',
-	'CURRENT_CAT'  => $LANG['wiki_no_selected_cat']
+	'CAT_LIST'     => ''
 ));
 
-echo $template->render();
+echo $view->render();
 
 
 require_once('../kernel/footer.php');

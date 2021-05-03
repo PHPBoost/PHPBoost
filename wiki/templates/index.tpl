@@ -1,50 +1,50 @@
 <section id="module-wiki">
 	<header class="section-header">
 		<div class="controls align-right">
-			<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 		</div>
 		<h1>
 			{TITLE}
 		</h1>
 	</header>
 
-	# INCLUDE wiki_tools #
+	# INCLUDE WIKI_TOOLS #
 
 	<div class="sub-section">
 		<div class="content-container">
 			<div class="content">
 				{INDEX_TEXT}
-				<div class="options">
-					<a href="{PATH_TO_ROOT}/wiki/{U_EXPLORER}">
-						<i class="fa fa-folder-open" aria-hidden="true"></i>
-						{L_EXPLORER}
-					</a>
-				</div>
 			</div>
 		</div>
 	</div>
 
 	<div class="sub-section">
 		<div class="content-container">
+			<div class="align-center">
+				<a href="{PATH_TO_ROOT}/wiki/{U_EXPLORER}" class="button bgc-full link-color">
+					<i class="fa fa-folder-open" aria-hidden="true"></i>
+					{@wiki.explorer}
+				</a>
+			</div>
 			<div class="cell-flex cell-columns-2 cell-tile">
 				# START cat_list #
 					<aside class="cell">
 						<div class="cell-header">
-							<h6 class="cell-name">{cat_list.L_CATS}</h6>
+							<h6 class="cell-name">{@wiki.categories.list}</h6>
 						</div>
-						# IF C_NO_CATEGORY #
-							<div class="cell-body">
-								<div class="cell-content">{L_NO_CATEGORY}</div>
-							</div>
-						# ELSE #
+						# IF cat_list.C_CATEGORIES #
 							<div class="cell-list">
 								<ul>
 									# START cat_list.list #
 										<li>
-											<i class="fa fa-folder small" aria-hidden="true"></i> <a href="{PATH_TO_ROOT}/wiki/{cat_list.list.U_CAT}">{cat_list.list.CAT}</a>
+											<i class="fa fa-folder small" aria-hidden="true"></i> <a href="{PATH_TO_ROOT}/wiki/{cat_list.list.U_CATEGORY}">{cat_list.list.CATEGORY_NAME}</a>
 										</li>
 									# END cat_list.list #
 								</ul>
+							</div>
+						# ELSE #
+							<div class="cell-body">
+								<div class="cell-content">{@wiki.no.category}</div>
 							</div>
 						# ENDIF #
 					</aside>
@@ -53,32 +53,32 @@
 					<aside class="cell">
 						<div class="cell-header">
 							<h6 class="cell-name">
-								{last_articles.L_ARTICLES}
+								{@wiki.last.articles.list}
 							</h6>
-							# IF last_articles.C_ARTICLES #
-								<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" aria-label="${LangLoader::get_message('syndication', 'common')}">
+							# IF last_articles.C_ITEMS #
+								<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" aria-label="{@common.syndication}">
 									<i class="fa fa-rss warning" aria-hidden="true"></i>
 								</a>
 							# ENDIF #
 						</div>
-						# IF C_NO_ITEM #
-							<div class="cell-body">
-								<div class="cell-content">{L_NO_ITEM}</div>
-							</div>
-						# ELSE #
+						# IF last_articles.C_ITEMS #
 							<div class="cell-list">
 								<ul>
 									# START last_articles.list #
 										<li>
-											<i class="fa fa-file-alt small" aria-hidden="true"></i> <a href="{PATH_TO_ROOT}/wiki/{last_articles.list.U_ARTICLE}" class="wiki-list-element">{last_articles.list.ARTICLE}</a>
+											<i class="fa fa-file-alt small" aria-hidden="true"></i> <a href="{PATH_TO_ROOT}/wiki/{last_articles.list.U_ITEM}" class="wiki-list-element">{last_articles.list.ITEM_TITLE}</a>
 										</li>
 									# END last_articles.list #
 								</ul>
 							</div>
+						# ELSE #
+							<div class="cell-body">
+								<div class="cell-content">{@wiki.no.article}</div>
+							</div>
 						# ENDIF #
 					</aside>
 				# END last_articles #
-			</div>			
+			</div>
 		</div>
 	</div>
 	<footer></footer>

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 08 02
+ * @version     PHPBoost 6.0 - last update: 2021 05 02
  * @since       PHPBoost 1.6 - 2007 05 24
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -11,7 +11,9 @@
 */
 
 require_once('../kernel/begin.php');
-load_module_lang('wiki');
+load_module_lang('wiki'); // to be deleted
+
+$lang = LangLoader::get('common', 'wiki');
 
 define('TITLE' , $LANG['wiki_favorites']);
 define('DESCRIPTION', $LANG['wiki_favorites_seo']);
@@ -83,7 +85,8 @@ elseif ($remove_favorite > 0)
 }
 else
 {
-	$tpl = new FileTemplate('wiki/favorites.tpl');
+	$view = new FileTemplate('wiki/favorites.tpl');
+	$view->add_lang($lang);
 
 	//Gestion des erreurs
 	$error = AppContext::get_request()->get_getvalue('error', '');
@@ -95,7 +98,7 @@ else
 	else
 		$errstr = '';
 	if (!empty($errstr))
-		$tpl->put('message_helper', MessageHelper::display($errstr, MessageHelper::WARNING));
+		$view->put('MESSAGE_HELPER', MessageHelper::display($errstr, MessageHelper::WARNING));
 
 	//on liste les favoris
 	$result = PersistenceContext::get_querier()->select("SELECT f.id, a.id, a.title, a.encoded_title
@@ -105,27 +108,27 @@ else
 		'id' => AppContext::get_current_user()->get_id()
 	));
 
-	$tpl->put_all(array(
-		'NO_FAVORITE' => $result->get_rows_count() == 0,
+	$view->put_all(array(
+		'C_TRACKED_ITEMS' => $result->get_rows_count() > 0,
 		'L_FAVORITES' => $LANG['wiki_favorites'],
 		'L_NO_FAVORITE' => $LANG['wiki_no_favorite'],
 		'L_TITLE' => $LANG['title'],
 		'L_UNTRACK' => $LANG['wiki_unwatch']
 	));
 
-	$module_data_path = $tpl->get_pictures_data_path();
+	$module_data_path = $view->get_pictures_data_path();
 	while ($row = $result->fetch())
 	{
-		$tpl->assign_block_vars('list', array(
-			'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']),
-			'ARTICLE' => stripslashes($row['title']),
+		$view->assign_block_vars('list', array(
+			'U_ITEM' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']),
+			'TITLE' => stripslashes($row['title']),
 			'ID' => $row['id'],
-			'ACTIONS' => '<a href="' . url('favorites.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()) . '" aria-label="' . $LANG['wiki_unwatch_this_topic'] . '" data-confirmation="' . str_replace('\'', '\\\'', $LANG['wiki_confirm_unwatch_this_topic']) . '"><i class="far fa-trash-alt" aria-hidden="true"></i></a>'
+			'U_UNTRACK' => url('favorites.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
 		));
 	}
 	$result->dispose();
 
-	$tpl->display();
+	$view->display();
 }
 
 require_once('../kernel/footer.php');

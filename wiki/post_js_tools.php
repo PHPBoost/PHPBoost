@@ -12,22 +12,24 @@
 if (defined('PHPBOOST') !== true) exit;
 
 //On charge le template associé
+$lang = LangLoader::get('common', 'wiki');
 $jstools_tpl = new FileTemplate('wiki/wiki_js_tools.tpl');
+$jstools_tpl->add_lang(array_merge($lang, LangLoader::get('common-lang'), LangLoader::get('form-lang')));
 
 $jstools_tpl->put_all(array(
-	'L_PLEASE_ENTER_A_TITLE' => $LANG['wiki_please_enter_a_link_name'],
-	'L_INSERT_LINK' => $LANG['wiki_insert_a_link'],
-	'L_INSERT' => $LANG['wiki_insert_link'],
-	'L_TITLE_LINK' => $LANG['wiki_title_link'],
-	'L_NO_JS' => $LANG['wiki_no_js_insert_link'],
-	'L_EXPLAIN_PARAGRAPH_1' => sprintf($LANG['wiki_explain_paragraph'], 1),
-	'L_EXPLAIN_PARAGRAPH_2' => sprintf($LANG['wiki_explain_paragraph'], 2),
-	'L_EXPLAIN_PARAGRAPH_3' => sprintf($LANG['wiki_explain_paragraph'], 3),
-	'L_EXPLAIN_PARAGRAPH_4' => sprintf($LANG['wiki_explain_paragraph'], 4),
-	'L_EXPLAIN_PARAGRAPH_5' => sprintf($LANG['wiki_explain_paragraph'], 5),
-	'L_HELP_WIKI_TAGS' => $LANG['wiki_help_tags'],
-	'L_PARAGRAPH_NAME' => $LANG['wiki_paragraph_name'],
-	'PARAGRAPH_NAME' => $LANG['wiki_paragraph_name_example'],
+	'L_PARAGRAPH_1' => sprintf($lang['wiki.paragraph'], 1),
+	'L_PARAGRAPH_2' => sprintf($lang['wiki.paragraph'], 2),
+	'L_PARAGRAPH_3' => sprintf($lang['wiki.paragraph'], 3),
+	'L_PARAGRAPH_4' => sprintf($lang['wiki.paragraph'], 4),
+	'L_PARAGRAPH_5' => sprintf($lang['wiki.paragraph'], 5),
+	//
+	'L_HELP_WIKI_TAGS' => $lang['wiki.help.tags'],
+	'L_PARAGRAPH_NAME' => $lang['wiki.warning.paragraph.name'],
+	'PARAGRAPH_NAME' => $lang['wiki.paragraph.name'],
+	'L_PLEASE_ENTER_A_TITLE' => $lang['wiki.link.name.add'],
+	'L_INSERT_LINK' => $lang['wiki.insert.link'],
+	'L_TITLE_LINK' => $lang['wiki.link.title'],
+	'L_NO_JS' => $lang['wiki.no.js.insert.link'],
 ));
 
 

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 14
+ * @version     PHPBoost 6.0 - last update: 2021 05 02
  * @since       PHPBoost 1.6 - 2006 11 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -11,7 +11,10 @@
 */
 
 require_once('../admin/admin_begin.php');
-load_module_lang('wiki');
+load_module_lang('wiki'); // to be deleted
+
+$lang = LangLoader::get('common', 'wiki');
+
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 include_once('../wiki/wiki_functions.php');
@@ -26,9 +29,11 @@ $sticky_menu = $request->get_postvalue('sticky_menu', false);
 
 $index_text = stripslashes(wiki_parse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED)));
 
-$tpl = new FileTemplate('wiki/admin_wiki.tpl');
+$view = new FileTemplate('wiki/admin_wiki.tpl');
+$view->add_lang(array_merge($lang, LangLoader::get('form-lang')));
 
-if ($update) //Mise à jour
+// Execute on validation
+if ($update)
 {
 	$config->set_wiki_name(TextHelper::strprotect(retrieve(POST, 'wiki_name', $LANG['wiki'], TSTRING_AS_RECEIVED), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE));
 	$config->set_number_articles_on_index(retrieve(POST, 'number_articles_on_index', 0));
@@ -51,7 +56,7 @@ if ($update) //Mise à jour
 	//Régénération du cache
 	WikiCategoriesCache::invalidate();
 
-	$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+	$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 }
 
 //On travaille uniquement en BBCode, on force le langage de l'éditeur
@@ -59,15 +64,16 @@ $content_editor = AppContext::get_content_formatting_service()->get_default_fact
 $editor = $content_editor->get_editor();
 $editor->set_identifier('contents');
 
-$tpl->put_all(array(
-	'KERNEL_EDITOR' => $editor->display(),
-	'HITS_SELECTED' => $config->is_hits_counter_enabled() ? 'checked="checked"' : '',
-	'STICKY_MENU_SELECTED' => $config->is_sticky_menu_enabled() ? 'checked="checked"' : '',
-	'WIKI_NAME' => $config->get_wiki_name(),
-	'HIDE_CATEGORIES_ON_INDEX' => !$config->are_categories_displayed_on_index() ? 'checked="checked"' : '',
+$view->put_all(array(
+	'KERNEL_EDITOR'               => $editor->display(),
+	'HITS_SELECTED'               => $config->is_hits_counter_enabled() ? 'checked="checked"' : '',
+	'STICKY_MENU_SELECTED'        => $config->is_sticky_menu_enabled() ? 'checked="checked"' : '',
+	'WIKI_NAME'                   => $config->get_wiki_name(),
+	'HIDE_CATEGORIES_ON_INDEX'    => !$config->are_categories_displayed_on_index() ? 'checked="checked"' : '',
 	'DISPLAY_CATEGORIES_ON_INDEX' => $config->are_categories_displayed_on_index() ? 'checked="checked"' : '',
-	'NUMBER_ARTICLES_ON_INDEX' => $config->get_number_articles_on_index(),
-	'DESCRIPTION' => FormatingHelper::unparse($config->get_index_text()),
+	'NUMBER_ARTICLES_ON_INDEX'    => $config->get_number_articles_on_index(),
+	'DESCRIPTION'                 => FormatingHelper::unparse($config->get_index_text()),
+	//
 	'L_UPDATE' => $LANG['validate'],
 	'L_RESET' => $LANG['reset'],
 	'L_PREVIEW' => $LANG['preview'],
@@ -87,7 +93,7 @@ $tpl->put_all(array(
 	'L_DESCRIPTION' => $LANG['wiki_desc']
 ));
 
-$tpl->display();
+$view->display();
 
 require_once('../admin/admin_footer.php');
 

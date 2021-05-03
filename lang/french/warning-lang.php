@@ -24,6 +24,11 @@ $lang['warning.subcat']    = 'Veuillez sélectionner une sous-catégorie !';
 $lang['warning.url']       = 'Veuillez entrer une url valide !';
 $lang['warning.recipient'] = 'Veuillez entrer le destinataire du message !';
 
+// Captcha
+$lang['warning.captcha.validation.error'] = 'Le champ de vérification visuel n\'a pas été saisi correctement !';
+$lang['warning.captcha.is.default']       = 'Le captcha que vous souhaitez désinstaller ou désactiver est défini sur le site, veuillez d\'abord sélectionner un autre captcha dans la configuration du contenu.';
+$lang['warning.captcha.last.installed']   = 'Dernier captcha, vous ne pouvez pas le supprimer ou le désactiver. Veuillez d\'abord en installer un autre.';
+
 // Contributions
 $lang['warning.delete.contribution'] = 'Etes-vous sûr de vouloir supprimer cette contribution ?';
 

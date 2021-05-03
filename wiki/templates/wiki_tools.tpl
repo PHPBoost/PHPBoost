@@ -1,18 +1,18 @@
 <div class="wiki-tools-container">
 	<nav id="cssmenu-wikitools" class="cssmenu cssmenu-right cssmenu-actionslinks cssmenu-tools">
 		<ul class="level-0 hidden">
-			# IF C_ACTIV_COM #
+			# IF C_ACTIVE_COMMENTS #
 				<li>
-					<a href="{U_COM}" class="cssmenu-title">
+					<a href="{U_COMMENTS}" class="cssmenu-title">
 						<i class="fa fa-fw fa-comments" aria-hidden="true"></i>
-						<span>{L_COM} {COM_NB}</span>
+						<span>{@common.comments} ({COMMENTS_NUMBER})</span>
 					</a>
 				</li>
 			# ENDIF #
 			<li>
 				<a href="{U_HISTORY}" class="cssmenu-title">
 					<i class="fa fa-fw fa-reply" aria-hidden="true"></i>
-					<span>{L_HISTORY}</span>
+					<span>{@wiki.history}</span>
 				</a>
 			</li>
 			# IF C_INDEX_PAGE #
@@ -20,17 +20,22 @@
 					<li>
 						<a href="{U_EDIT_INDEX}" class="cssmenu-title">
 							<i class="far fa-fw fa-edit" aria-hidden="true"></i>
-							<span>{L_EDIT_INDEX}</span>
+							<span>{@wiki.update.index}</span>
 						</a>
 					</li>
 				# ENDIF #
-			# ENDIF #
-			# IF NOT C_INDEX_PAGE #
+				<li>
+					<a href="{U_RANDOM}" class="cssmenu-title">
+						<i class="fa fa-fw fa-random" aria-hidden="true"></i>
+						<span>{@wiki.random.page}</span>
+					</a>
+				</li>
+			# ELSE #
 				# IF C_EDIT #
 				<li>
 					<a href="{U_EDIT}" class="cssmenu-title">
 						<i class="far fa-fw fa-edit" aria-hidden="true"></i>
-						<span>{L_EDIT}</span>
+						<span>{@common.modify}</span>
 					</a>
 				</li>
 				# ENDIF #
@@ -38,7 +43,7 @@
 				<li>
 					<a href="{U_DELETE}" data-confirmation="delete-element" class="cssmenu-title">
 						<i class="far fa-fw fa-trash-alt" aria-hidden="true"></i>
-						<span>{L_DELETE}</span>
+						<span>{@common.delete}</span>
 					</a>
 				</li>
 				# ENDIF #
@@ -46,7 +51,7 @@
 				<li>
 					<a href="{U_RENAME}" class="cssmenu-title">
 						<i class="fa fa-fw fa-magic" aria-hidden="true"></i>
-						<span>{L_RENAME}</span>
+						<span>{@common.rename}</span>
 					</a>
 				</li>
 				# ENDIF #
@@ -54,7 +59,7 @@
 				<li>
 					<a href="{U_REDIRECT}" class="cssmenu-title">
 						<i class="fa fa-fw fa-fast-forward" aria-hidden="true"></i>
-						<span>{L_REDIRECT}</span>
+						<span>{@wiki.redirections}</span>
 					</a>
 				</li>
 				# ENDIF #
@@ -62,7 +67,7 @@
 				<li>
 					<a href="{U_MOVE}" class="cssmenu-title">
 						<i class="fa fa-fw fa-share" aria-hidden="true"></i>
-						<span>{L_MOVE}</span>
+						<span>{@common.move}</span>
 					</a>
 				</li>
 				# ENDIF #
@@ -70,7 +75,7 @@
 				<li>
 					<a href="{U_STATUS}" class="cssmenu-title">
 						<i class="fa fa-fw fa-tasks" aria-hidden="true"></i>
-						<span>{L_STATUS}</span>
+						<span>{@wiki.define.status}</span>
 					</a>
 				</li>
 				# ENDIF #
@@ -78,32 +83,22 @@
 					<li>
 						<a href="{U_RESTRICTION}" class="cssmenu-title">
 							<i class="fa fa-fw fa-lock" aria-hidden="true"></i>
-							<span>{L_RESTRICTION}</span>
+							<span>{@wiki.restriction.level}</span>
 						</a>
 					</li>
 				# ENDIF #
 				# IF IS_USER_CONNECTED #
 					<li>
-						<a href="{U_WATCH}" class="cssmenu-title">
+						<a href="{U_TRACK}" class="cssmenu-title">
 							<i class="fa fa-fw fa-heart" aria-hidden="true"></i>
-							<span>{L_WATCH}</span>
+							<span>{L_TRACK}</span>
 						</a>
 					</li>
 				# ENDIF #
-			# ENDIF #
-			# IF C_INDEX_PAGE #
-				<li>
-					<a href="{U_RANDOM}" class="cssmenu-title">
-						<i class="fa fa-fw fa-random" aria-hidden="true"></i>
-						<span>{L_RANDOM}</span>
-					</a>
-				</li>
-			# ENDIF #
-			# IF NOT C_INDEX_PAGE #
 				<li>
 					<a href="{U_PRINT}" class="cssmenu-title">
 						<i class="fa fa-fw fa-print" aria-hidden="true"></i>
-						<span>{L_PRINT}</span>
+						<span>{@common.print}</span>
 					</a>
 				</li>
 			# ENDIF #
@@ -111,7 +106,7 @@
 	</nav>
 	<script>
 		jQuery("#cssmenu-wikitools").menumaker({
-			title: "{L_OTHER_TOOLS}",
+			title: "{@wiki.tools}",
 			format: "multitoggle",
 			breakpoint: 768
 		});

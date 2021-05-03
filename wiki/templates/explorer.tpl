@@ -6,19 +6,22 @@
 
 <section id="module-wiki-explorer" class="explorer">
 	<header class="section-header">
-		<h1>{TITLE}</h1>
+		<h1>{@wiki.explorer}</h1>
 	</header>
 	<div class="sub-section">
 		<div class="content-container">
-			<div class="content">
-				<div class="cats">
-					<h2>{L_CATS}</h2>
-					<div class="content no-list">
+			<div class="cell-flex cell-tile cell-columns-2">
+				<div class="cats cell">
+					<div class="cell-header">
+						<h6 class="cell-name">{@wiki.cats.tree}</h6>
+					</div>
+					<div class="cell-list no-list">
 						<ul>
-							<li><a id="class-0" class="{CAT_0}" href="javascript:open_cat(0);"><i class="fa fa-fw fa-folder" aria-hidden="true"></i> {L_ROOT}</a>
+							<li>
+								<a id="class-0" class="{CAT_0}" href="javascript:open_cat(0);"><i class="fa fa-fw fa-folder" aria-hidden="true"></i> {@common.root}</a>
 								<ul>
 									# START list #
-										<li class="sub">
+										<li class="sub-cat-tree">
 											# IF list.U_FOLDER #
 												<a class="parent" href="javascript:show_wiki_cat_contents({list.ID}, 0);">
 													<i class="far fa-fw fa-plus-square" id="img-subfolder-{list.ID}"></i>
@@ -37,9 +40,11 @@
 						</ul>
 					</div>
 				</div>
-				<div class="files">
-					<h2>{L_CONTENTS}</h2>
-					<div class="content no-list" id="cat-contents">
+				<div class="files cell">
+					<div class="cell-header">
+						<h6 class="cell-name">{@wiki.content}</h6>
+					</div>
+					<div class="cell-list" id="cat-contents">
 						<ul>
 							# START list_cats #
 								<li>
@@ -58,7 +63,7 @@
 						</ul>
 					</div>
 				</div>
-			</div>			
+			</div>
 		</div>
 	</div>
 	<footer></footer>

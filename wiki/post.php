@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 14
+ * @version     PHPBoost 6.0 - last update: 2021 05 03
  * @since       PHPBoost 1.6 - 2006 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -12,7 +12,10 @@
 
 require_once('../kernel/begin.php');
 include_once('../wiki/wiki_functions.php');
-load_module_lang('wiki');
+load_module_lang('wiki'); // To be deleted
+
+$lang = LangLoader::get('common', 'wiki');
+
 $config = WikiConfig::load();
 
 if (AppContext::get_current_user()->is_readonly())
@@ -34,7 +37,7 @@ $title = retrieve(POST, 'title', '');
 $encoded_title = retrieve(GET, 'title', '');
 $contents = wiki_parse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED));
 $contents_preview = retrieve(POST, 'contents', '', TSTRING_PARSE);
-$change_reason = $id_edit > 0 ? wiki_parse(retrieve(POST, 'change_reason', '', TSTRING_AS_RECEIVED)) : $LANG['wiki_article_init'];
+$change_reason = $id_edit > 0 ? wiki_parse(retrieve(POST, 'change_reason', '', TSTRING_AS_RECEIVED)) : $lang['wiki.item.init'];
 $change_reason_preview = retrieve(POST, 'change_reason', '', TSTRING_PARSE);
 $id_cat = (int)retrieve(GET, 'id_parent', 0);
 $new_id_cat = (int)retrieve(POST, 'id_cat', 0);
@@ -52,7 +55,8 @@ $categories = WikiCategoriesCache::load()->get_categories();
 //Variable d'erreur
 $error = '';
 
-$tpl = new FileTemplate('wiki/post.tpl');
+$view = new FileTemplate('wiki/post.tpl');
+$view->add_lang(array_merge($lang, LangLoader::get('form-lang'), LangLoader::get('warning-lang')));
 
 $captcha = AppContext::get_captcha_service()->get_default_factory();
 if (!empty($contents)) //On enregistre un article
@@ -72,13 +76,14 @@ if (!empty($contents)) //On enregistre un article
 	{
 		$preview_contents = preg_replace('`action="(.*)"`suU', '', $contents); // suppression des actions des formulaires HTML pour eviter les problemes de parsing
 
-		$tpl->assign_block_vars('preview', array(
-			'CONTENTS' => FormatingHelper::second_parse(wiki_no_rewrite(stripslashes($preview_contents))),
-			'TITLE' => stripslashes($title)
+		$view->put('C_PREVIEW', true);
+		$view->assign_block_vars('preview', array(
+			'CONTENT' => FormatingHelper::second_parse(wiki_no_rewrite(stripslashes($preview_contents))),
+			'TITLE'   => stripslashes($title)
 		));
 		if (!empty($menu))
 		{
-			$tpl->assign_block_vars('preview.menu', array(
+			$view->assign_block_vars('preview.menu', array(
 				'MENU' => $menu
 			));
 		}
@@ -221,8 +226,8 @@ if ($id_edit > 0)//On édite
 
 	$l_action_submit = $LANG['validate'];
 
-	$tpl->put_all(array(
-		'SELECTED_CAT' => $id_edit,
+	$view->put_all(array(
+		'SELECTED_CATEGORY' => $id_edit,
 	));
 }
 else
@@ -240,11 +245,11 @@ else
 	}
 
 	if (!empty($encoded_title))
-		$tpl->put('message_helper', MessageHelper::display($LANG['wiki_article_does_not_exist'], MessageHelper::WARNING));
+		$view->put('MESSAGE_HELPER', MessageHelper::display($LANG['wiki_article_does_not_exist'], MessageHelper::WARNING));
 
 	if ($id_cat > 0 && array_key_exists($id_cat, $categories)) //Catégorie préselectionnée
 	{
-		$tpl->assign_block_vars('create', array());
+		$view->assign_block_vars('create', array());
 		$cats = array();
 		$cat_list = display_wiki_cat_explorer($id_cat, $cats, 1);
 		$cats = array_reverse($cats);
@@ -259,16 +264,16 @@ else
 			$i++;
 		}
 		$current_cat .= ($nbr_cats > 0 ? ' / ' : '') . stripslashes($categories[$id_cat]['title']);
-		$tpl->put_all(array(
-			'SELECTED_CAT' => $id_cat,
-			'CAT_0' => '',
-			'CAT_LIST' => $cat_list,
-			'CURRENT_CAT' => $current_cat
+		$view->put_all(array(
+			'SELECTED_CATEGORY' => $id_cat,
+			'CATEGORY_0'        => '',
+			'CATEGORY_LIST'     => $cat_list,
+			'CURRENT_CATEGORY'  => $current_cat
 		));
 	}
 	else //Si il n'a pas de catégorie parente
 	{
-		$tpl->assign_block_vars('create', array());
+		$view->assign_block_vars('create', array());
 		$contents = '';
 		$result = PersistenceContext::get_querier()->select("SELECT c.id, a.title, a.encoded_title
 		FROM " . PREFIX . "wiki_cats c
@@ -279,7 +284,7 @@ else
 		{
 			$module_data_path = PATH_TO_ROOT . '/wiki/templates';
 			$sub_cats_number = PersistenceContext::get_querier()->count(PREFIX . "wiki_cats", 'WHERE id_parent = :id', array('id' => $row['id']));
-			$tpl->assign_block_vars('create.list', array(
+			$view->assign_block_vars('create.list', array(
 				'ID' => $row['id'],
 				'TITLE' => stripslashes($row['title']),
 				'C_SUB_CAT' => $sub_cats_number > 0
@@ -287,11 +292,11 @@ else
 
 		}
 		$result->dispose();
-		$tpl->put_all(array(
-			'SELECTED_CAT' => 0,
-			'CAT_0' => 'selected',
-			'CAT_LIST' => '',
-			'CURRENT_CAT' => $LANG['wiki_no_selected_cat']
+		$view->put_all(array(
+			'SELECTED_CATEGORY' => 0,
+			'CATEGORY_0'        => 'selected',
+			'CATEGORY_LIST'     => '',
+			'CURRENT_CATEGORY'  => $LANG['wiki_no_selected_cat']
 		));
 	}
 	$l_action_submit = $LANG['submit'];
@@ -301,22 +306,27 @@ else
 $content_editor = AppContext::get_content_formatting_service()->get_default_factory();
 $editor = $content_editor->get_editor();
 $editor->set_identifier('contents');
+// Debug::dump($is_cat);
+$view->put_all(array(
+	'C_CAPTCHA' => !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
+	'C_IS_CATEGORY' => $is_cat == 1,
+	'C_EDIT_CATEGORY' => $is_cat == 1 && $id_edit > 1,
+	'C_EDIT_ITEM' => $is_cat == 0 && $id_edit > 0,
+	'C_EDIT' => $id_edit > 0,
 
-$tpl->put_all(array(
-	'C_VERIF_CODE' => !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
-	'TITLE' => $is_cat == 1 ? ($id_edit == 0 ? $LANG['wiki_create_cat'] : sprintf($LANG['wiki_edit_cat'], stripslashes($article_infos['title']))) : ($id_edit == 0 ? $LANG['wiki_create_article'] : sprintf($LANG['wiki_edit_article'], stripslashes($article_infos['title']))),
+	'TITLE' => $id_edit = 0 ? stripslashes($article_infos['title']) : '',
+	'EDIT_TITLE' => ($id_edit == 0 ? (!empty($encoded_title) ? $encoded_title : stripslashes($title)) : stripslashes($article_infos['title'])),
 	'KERNEL_EDITOR' => $editor->display(),
-	'ID_CAT' => $id_edit ? $article_infos['id_cat'] : '',
-	'CONTENTS' => ($id_edit && $contents_preview) || !$id_edit ? wiki_unparse(stripslashes($contents_preview)) : wiki_unparse($contents),
+	'ID_CATEGORY' => $id_edit ? $article_infos['id_cat'] : '',
+	'CONTENT' => ($id_edit && $contents_preview) || !$id_edit ? wiki_unparse(stripslashes($contents_preview)) : wiki_unparse($contents),
     'CHANGE_REASON' => $id_edit ? wiki_unparse(stripslashes($change_reason_preview)) : wiki_unparse($change_reason),
 	'ID_EDIT' => $id_edit,
-	'C_EDIT' => $id_edit > 0,
 	'IS_CAT' => $is_cat,
 	'ID_CAT' => $id_cat,
-	'VERIF_CODE' => $captcha->display(),
-	'ARTICLE_TITLE' => ($id_edit == 0 ? (!empty($encoded_title) ? $encoded_title : stripslashes($title)) : stripslashes($article_infos['title'])),
-	'L_TITLE_FIELD' => $LANG['title'],
+	'CAPTCHA' => $captcha->display(),
 	'TARGET' => url('post.php' . ($is_cat == 1 ? '?type=cat' : '')),
+	//
+	'L_TITLE_FIELD' => $LANG['title'],
 	'L_CONTENTS' => $LANG['wiki_contents'],
 	'L_ALERT_CONTENTS' => $LANG['require_text'],
 	'L_ALERT_TITLE' => $LANG['require_title'],
@@ -335,13 +345,13 @@ $tpl->put_all(array(
 
 //outils BBcode en javascript
 include_once('../wiki/post_js_tools.php');
-$tpl->put('post_js_tools', $jstools_tpl);
+$view->put('POST_JS_TOOLS', $jstools_tpl);
 
 //Eventuelles erreurs
 if (!empty($errstr))
-	$tpl->put('message_helper', MessageHelper::display($errstr, MessageHelper::WARNING));
+	$view->put('MESSAGE_HELPER', MessageHelper::display($errstr, MessageHelper::WARNING));
 
-$tpl->display();
+$view->display();
 
 
 require_once('../kernel/footer.php');

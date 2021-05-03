@@ -1,7 +1,7 @@
 <section id="module-wiki">
 	<header class="section-header">
 		<div class="controls align-right">
-			<a href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 			{CATEGORY_TITLE}
 		</div>
 		<h1 itemprop="name">{TITLE}</h1>
@@ -13,7 +13,7 @@
 					# IF cat.list_cats #
 						<aside class="cell">
 							<div class="cell-header">
-								<h6 class="cell-name">{L_SUB_CATS}</h6>
+								<h6 class="cell-name">{@wiki.sub.categories.in.category}</h6>
 							</div>
 							<div class="cell-list">
 								<ul>
@@ -24,14 +24,11 @@
 									# END cat.list_cats #
 								</ul>
 							</div>
-							# START cat.no_sub_cat #
-								<div class="cell-body"><div class="cell-content">{cat.no_sub_cat.NO_SUB_CAT}</div></div>
-							# END cat.no_sub_cat #
 						</aside>
 					# ENDIF #
 					<aside class="cell">
 						<div class="cell-header">
-							<h6 class="cell-name">{L_SUB_ARTICLES}</h6>
+							<h6 class="cell-name">{@wiki.items.in.category}</h6>
 						</div>
 						<div class="cell-list">
 							<ul>
@@ -55,27 +52,22 @@
 		<div class="content-container">
 			<article id="article-wiki-{ID}" class="wiki-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #">
 
-				# INCLUDE wiki_tools #
+				# INCLUDE WIKI_TOOLS #
 
 				<div class="content">
-					# START warning #
-					<div class="message-helper bgc warning">{warning.UPDATED_ARTICLE}</div>
-					# END warning #
+					# IF C_WARNING_UPDATE #
+						<div class="message-helper bgc warning">{@wiki.warning.update}</div>
+					# ENDIF #
 
 					# START redirect #
-						<div style="width:30%;">
 						{redirect.REDIRECTED}
-							# START redirect.remove_redirection #
-								<a href="{redirect.remove_redirection.U_REMOVE_REDIRECTION}" data-confirmation="{redirect.remove_redirection.L_ALERT_REMOVE_REDIRECTION}" aria-label="{redirect.remove_redirection.L_REMOVE_REDIRECTION}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
-							# END redirect.remove_redirection #
-						</div>
-						<div class="spacer"></div>
+						# START redirect.remove_redirection #
+							<a href="{redirect.remove_redirection.U_REMOVE_REDIRECTION}" data-confirmation="{redirect.remove_redirection.L_ALERT_REMOVE_REDIRECTION}" aria-label="{redirect.remove_redirection.L_REMOVE_REDIRECTION}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+						# END redirect.remove_redirection #
 					# END redirect #
 
 					# START status #
-						<div class="spacer"></div>
-						<div class="blockquote">{status.ARTICLE_STATUS}</div>
-						<div class="spacer"></div>
+						{status.ARTICLE_STATUS}
 					# END status #
 
 					# START menu #
@@ -91,8 +83,7 @@
 							</div>
 						# ENDIF #
 					# END menu #
-					<div class="spacer"></div>
-					{CONTENTS}
+					{CONTENT}
 				</div>
 				<div class="spacer"></div>
 				${ContentSharingActionsMenuService::display()}

@@ -20,18 +20,15 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 
 	private function get_title()
 	{
-		global $LANG;
-
-		load_module_lang('wiki');
-
-		return $LANG['wiki'];
+		return LangLoader::get_message('wiki.module.title', 'common', 'wiki');
 	}
 
 	private function get_view()
 	{
+		$lang = LangLoader::get('common', 'wiki');
+
 		global $Bread_crumb, $LANG, $encoded_title, $id_article, $article_infos, $id_cat;
 
-		load_module_lang('wiki');
 		include_once(PATH_TO_ROOT . '/wiki/wiki_functions.php');
 		$bread_crumb_key = 'wiki';
 		require_once(PATH_TO_ROOT . '/wiki/wiki_bread_crumb.php');
@@ -45,8 +42,10 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 			DispatchManager::redirect($error_controller);
 		}
 
-		$tpl = new FileTemplate('wiki/index.tpl');
+		$view = new FileTemplate('wiki/index.tpl');
+		$view->add_lang(array_merge($lang, LangLoader::get('common-lang')));
 
+		// If it's active, display last items
 		if ($config->get_number_articles_on_index() > 1)
 		{
 			$result = PersistenceContext::get_querier()->select("SELECT a.title, a.encoded_title, a.id
@@ -58,68 +57,53 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 				'number_articles_on_index' => $config->get_number_articles_on_index()
 			));
 
-			$tpl->assign_block_vars('last_articles', array(
-				'C_ARTICLES' => $result->get_rows_count(),
-				'L_ARTICLES' => $LANG['wiki_last_articles_list'],
+			$view->assign_block_vars('last_articles', array(
+				'C_ITEMS' => $result->get_rows_count() > 0,
 			));
 
 			$i = 0;
 			while ($row = $result->fetch())
 			{
-				$tpl->assign_block_vars('last_articles.list', array(
-					'ARTICLE' => stripslashes($row['title']),
-					'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
+				$view->assign_block_vars('last_articles.list', array(
+					'ITEM_TITLE' => stripslashes($row['title']),
+					'U_ITEM'     => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
 				));
 				$i++;
 			}
 			$result->dispose();
-
-			if ($i == 0)
-			{
-				$tpl->put_all(array(
-					'C_NO_ITEM' => true,
-					'L_NO_ITEM' => $LANG['wiki_no_article'],
-				));
-			}
 		}
-		//Affichage de toutes les catégories si c'est activé
+
+		// If it's active, display categories at the root
 		if ($config->are_categories_displayed_on_index())
 		{
-			$tpl->assign_block_vars('cat_list', array(
-			'L_CATS' => $LANG['wiki_cats_list']
+			$view->assign_block_vars('cat_list', array(
+				'C_CATEGORIES' => WikiCategoriesCache::load()->get_number_categories() > 0
 			));
 			$i = 0;
 			foreach (WikiCategoriesCache::load()->get_categories() as $id => $cat)
 			{
-				//Si c'est une catégorie mère
 				if ($cat['id_parent'] == 0)
 				{
-					$tpl->assign_block_vars('cat_list.list', array(
-						'CAT' => stripslashes($cat['title']),
-						'U_CAT' => url('wiki.php?title=' . $cat['encoded_title'], $cat['encoded_title'])
+					$view->assign_block_vars('cat_list.list', array(
+						'CATEGORY_NAME' => stripslashes($cat['title']),
+						'U_CATEGORY'    => url('wiki.php?title=' . $cat['encoded_title'], $cat['encoded_title'])
 					));
 					$i++;
 				}
 			}
-			if ($i == 0)
-			$tpl->put_all(array(
-				'C_NO_CATEGORY' => true,
-				'L_NO_CATEGORY' => $LANG['wiki_no_cat'],
-			));
 		}
 
-		$tpl->put_all(array(
-			'TITLE' => $config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki'],
-			'INDEX_TEXT' => $config->get_index_text() ? FormatingHelper::second_parse(wiki_no_rewrite($config->get_index_text())) : $LANG['wiki_empty_index'],
-			'L_EXPLORER' => $LANG['wiki_explorer'],
+		$view->put_all(array(
+			'TITLE'      => $config->get_wiki_name() ? $config->get_wiki_name() : $lang['wiki.module.title'],
+			'INDEX_TEXT' => $config->get_index_text() ? FormatingHelper::second_parse(wiki_no_rewrite($config->get_index_text())) : $lang['wiki.empty.index'],
 			'U_EXPLORER' => url('explorer.php'),
 		));
 
 		$page_type = 'index';
 		include(PATH_TO_ROOT . '/wiki/wiki_tools.php');
-		$tpl->put('wiki_tools', $tools_tpl);
+		$view->put('WIKI_TOOLS', $tools_view);
 
-		return new StringTemplate($tpl->render());
+		return new StringTemplate($view->render());
 	}
 }
 ?>

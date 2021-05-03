@@ -1,31 +1,41 @@
-# INCLUDE message_helper #
-
-# IF NO_FAVORITE #
-	<div class="message-helper bgc notice">{L_NO_FAVORITE}</div>
-# ELSE #
-	{L_FAVORITES}
-	<table class="table">
-		<thead>
-			<tr>
-				<th>
-					{L_TITLE}
-				</th>
-				<th>
-					{L_UNTRACK}
-				</th>
-			</tr>
-		</thead>
-		<tbody>
-			# START list #
-			<tr>
-				<td>
-					<a href="{list.U_ARTICLE}">{list.ARTICLE}</a>
-				</td>
-				<td>
-					{list.ACTIONS}
-				</td>
-			</tr>
-			# END list #
-		</tbody>
-	</table>
-# ENDIF #
+<section id="module-wiki">
+	<header class="section-header">
+		<h1>{@wiki.tracked.items}</h1>
+	</header>
+	<div class="sub-section">
+		<div class="content-container">
+			# INCLUDE MESSAGE_HELPER #
+			# IF C_TRACKED_ITEMS #
+				<table class="table">
+					<thead>
+						<tr>
+							<th>
+								${LangLoader::get_message('common.title', 'common-lang')}
+							</th>
+							<th class="col-large">
+								{@wiki.untrack}
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						# START list #
+							<tr>
+								<td>
+									<a href="{list.U_ITEM}">{list.TITLE}</a>
+								</td>
+								<td>
+									<a href="{list.U_UNTRACK}" aria-label="{@wiki.untrack}" data-confirmation="{@wiki.confirm.untrack}">
+										<i class="fa fa-heart-broken" aria-hidden="true"></i>
+									</a>
+								</td>
+							</tr>
+						# END list #
+					</tbody>
+				</table>
+			# ELSE #
+				<div class="content"><div class="message-helper bgc notice">{@wiki.no.tracked.items}</div></div>
+			# ENDIF #
+		</div>
+	</div>
+	<footer></footer>
+</section>

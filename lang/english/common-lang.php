@@ -46,8 +46,11 @@ $lang['common.unspecified'] = 'Unspecified';
 // Actions
 $lang['common.read.more']    = 'Read more';
 $lang['common.add']          = 'Add';
+$lang['common.contribute']   = 'Contribute';
 $lang['common.delete']       = 'Delete';
 $lang['common.edit']         = 'Edit';
+$lang['common.modify']       = 'Modify';
+$lang['common.rename']       = 'Rename';
 $lang['common.apply']        = 'Apply';
 $lang['common.validation']   = 'Validation';
 $lang['common.moderation']   = 'Moderation';
@@ -68,7 +71,9 @@ $lang['common.hide']         = 'Hide';
 $lang['common.hidden']       = 'Hidden';
 $lang['common.close']        = 'Close';
 $lang['common.visit']        = 'Visit';
-$lang['common.download']        = 'Download';
+$lang['common.download']     = 'Download';
+$lang['common.upload']       = 'Upload';
+$lang['common.print']        = 'print';
 
 // Constraint
 $lang['common.constraint.required']     = 'Required';

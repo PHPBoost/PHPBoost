@@ -46,8 +46,11 @@ $lang['common.unspecified'] = 'Non précisé';
 // Actions
 $lang['common.read.more']    = 'Lire la suite';
 $lang['common.add']          = 'Ajouter';
+$lang['common.contribute']   = 'Contribuer';
 $lang['common.delete']       = 'Supprimer';
 $lang['common.edit']         = 'Éditer';
+$lang['common.modify']       = 'Modifier';
+$lang['common.rename']       = 'Renommer';
 $lang['common.apply']        = 'Appliquer';
 $lang['common.validation']   = 'Validation';
 $lang['common.moderation']   = 'Modération';
@@ -68,7 +71,9 @@ $lang['common.hide']         = 'Cacher';
 $lang['common.hidden']       = 'Caché';
 $lang['common.close']        = 'Fermer';
 $lang['common.visit']        = 'Visiter';
-$lang['common.download']        = 'Télécharger';
+$lang['common.download']     = 'Télécharger';
+$lang['common.upload']       = 'Uploader';
+$lang['common.print']        = 'Imprimer';
 
 // Constraint
 $lang['common.constraint.required']     = 'Requis';

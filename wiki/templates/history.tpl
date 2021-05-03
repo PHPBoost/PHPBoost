@@ -1,102 +1,109 @@
-	<section id="module-wiki-history" class="wiki-history">
-		# IF C_ARTICLE #
-			<header class="section-header">
-				<h1>{L_HISTORY} : <a href="{U_ARTICLE}">{TITLE}</a></h1>
-			</header>
-			<div class="sub-section">
-				<div class="content-container">
-					<div class="content">
-						<div class="responsive-table">
-							<table class="table">
-								<thead>
-									<tr>
-										<th>
-											{L_VERSIONS}
-										</th>
-										<th>
-											{L_DATE}
-										</th>
-										<th>
-											{L_CHANGE_REASON}
-										</th>
-										<th>
-											{L_AUTHOR}
-										</th>
-										<th>
-											{L_ACTIONS}
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-									# START list #
-									<tr>
+<section id="module-wiki-history" class="wiki-history">
+	# IF C_ITEM #
+		<header class="section-header">
+			<h1>{@wiki.history} : <a href="{U_ITEM}">{TITLE}</a></h1>
+		</header>
+		<div class="sub-section">
+			<div class="content-container">
+				<div class="content">
+					<div class="responsive-table">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>
+										{@wiki.versions}
+									</th>
+									<th>
+										{@wiki.version.date}
+									</th>
+									<th>
+										{@common.author}
+									</th>
+									<th>
+										{@wiki.changing.reason}
+									</th>
+									<th class="col-large">
+										{@common.actions}
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								# START list #
+									<tr# IF list.C_CURRENT_VERSION # class="bgc visitor"# ENDIF #>
 										<td>
 											<a href="{list.U_ARTICLE}">{list.TITLE}</a>
-											<span>{list.CURRENT_RELEASE}</span>
 										</td>
 										<td>
 											{list.DATE}
-										</td>
-										<td class="col-max">
-											{list.CHANGE_REASON}
 										</td>
 										<td>
 											{list.AUTHOR}
 										</td>
 										<td>
-											{list.ACTIONS}
+											{list.L_CHANGE_REASON}
+										</td>
+										<td>
+											# IF list.C_ACTIONS #
+												# IF list.C_RESTORE #
+													<a href="{list.U_RESTORE}" aria-label="{@wiki.restore.version}"><i class="fa fa-fw fa-undo" aria-hidden="true"></i></a>
+												# ENDIF #
+												# IF list.C_DELETE #
+													<a href="{list.U_DELETE}" aria-label="{@common.delete}" data-confirmation="{@wiki.confirm.delete.archive}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+												# ENDIF #
+											# ELSE #
+												<span class="d-block small text-italic">{@wiki.current.version}</span>
+											# ENDIF #
 										</td>
 									</tr>
-									# END list #
-								</tbody>
-							</table>
-						</div>
+								# END list #
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
-		# ELSE #
-			<header class="section-header">
-				<h1>{L_HISTORY}</h1>
-			</header>
-			<div class="sub-section">
-				<div class="content-container">
-					<div class="content">
-						<div class="responsive-table">
-							<table class="table">
-								<caption>{L_HISTORY}</caption>
-								<thead>
-									<tr>
-										<th>
-											<a href="{TOP_TITLE}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
-											{L_TITLE}
-											<a href="{BOTTOM_TITLE}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
-										</th>
-										<th>
-											<a href="{TOP_DATE}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
-											{L_DATE}
-											<a href="{BOTTOM_DATE}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
-										</th>
-										<th>
-											{L_AUTHOR}
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-									# START list #
+		</div>
+	# ELSE #
+		<header class="section-header">
+			<h1>{@wiki.history}</h1>
+		</header>
+		<div class="sub-section">
+			<div class="content-container">
+				<div class="content">
+					<div class="responsive-table">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>
+										<a href="{TOP_TITLE}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+										{@common.title}
+										<a href="{BOTTOM_TITLE}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
+									</th>
+									<th>
+										<a href="{TOP_DATE}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+										{@common.last.update}
+										<a href="{BOTTOM_DATE}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
+									</th>
+									<th>
+										{@common.author}
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								# START list #
 									<tr>
 										<td>
-											<a href="{list.U_ARTICLE}">{list.TITLE}</a>
+											<a href="{list.U_ITEM}" aria-label="{@common.see.details}">{list.TITLE}</a>
 										</td>
 										<td>
-											{list.DATE}
+											{list.LAST_UPDATE}
 										</td>
 										<td>
 											{list.AUTHOR}
 										</td>
 									</tr>
-									# END list #
-								</tbody>
-								# IF C_PAGINATION #
+								# END list #
+							</tbody>
+							# IF C_PAGINATION #
 								<tfoot>
 									<tr>
 										<td colspan="3">
@@ -104,12 +111,12 @@
 										</td>
 									</tr>
 								</tfoot>
-								# ENDIF #
-							</table>
-						</div>
-					</div>					
+							# ENDIF #
+						</table>
+					</div>
 				</div>
 			</div>
-		# END IF #
-		<footer></footer>
-	</section>
+		</div>
+	# END IF #
+	<footer></footer>
+</section>
