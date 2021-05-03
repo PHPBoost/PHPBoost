@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2021 05 03
  * @since       PHPBoost 4.1 - 2015 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -255,8 +255,8 @@ $lang['forum.edit.topic'] = 'Edit topic';
 $lang['forum.edit.in.topic'] = 'Edit a message in the topic';
 $lang['forum.move.topic'] = 'Move topic';
 $lang['forum.edit.message'] = 'Edit Message';
-$lang['forum.edit.by'] = 'Edit by';
-$lang['forum.edit.on'] = 'Edit on';
+$lang['forum.edited.by'] = 'Edited by';
+$lang['forum.edited.on'] = 'Edited on';
 $lang['forum.cut.topic'] = 'Divide this topic starting from this message';
 $lang['forum.alert.cut.topic'] = 'Do you want to cut the topic from this message?';
 $lang['forum.add.to.favorites'] = 'Add to favorite';
