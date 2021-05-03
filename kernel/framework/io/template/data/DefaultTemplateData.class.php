@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2021 05 03
  * @since       PHPBoost 3.0 - 2010 02 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -44,7 +44,7 @@ class DefaultTemplateData implements TemplateData
 		$this->put_all(array(
 			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
 			'THEME'               => $user->get_theme(),
-			'PARENT_THEME'        => ThemesManager::get_theme($user->get_theme())->get_configuration()->get_parent_theme(),
+			'PARENT_THEME'        => ThemesManager::get_theme($user->get_theme()) ? ThemesManager::get_theme($user->get_theme())->get_configuration()->get_parent_theme() : '',
 			'LANG'                => $user->get_locale(),
 			'IS_USER_CONNECTED'   => $user->check_level(User::MEMBER_LEVEL),
 			'IS_ADMIN'            => $user->check_level(User::ADMINISTRATOR_LEVEL),
