@@ -15,107 +15,6 @@
 #                     French                       #
 ####################################################
 
-// Labels
-$lang['user.user']         = 'Utilisateur';
-$lang['user.users']        = 'Utilisateurs';
-$lang['user.profile']      = 'Profil';
-$lang['user.profil._of']   = 'Profil de :name';
-$lang['user.profile.edit'] = 'Edition du profil';
-$lang['user.messages']     = 'Messages de l\'utilisateur';
-$lang['user.maintain']     = 'Maintenance';
-$lang['user.welcome']      = 'Bienvenue';
-
-$lang['user.displayed.name'] = 'Nom d\'affichage';
-$lang['user.displayed_name.clue'] = 'Nom affiché sur chacun des éléments que vous ajoutez.';
-$lang['user.login'] = 'Identifiant de connexion'; // ###
-$lang['user.login.clue'] = 'Adresse email ou votre login personnalisé si vous en avez choisi un.';
-$lang['user.login.custom'] = 'Choisir un identifiant de connexion';
-$lang['user.login.custom.clue'] = '<span class="error">Si non coché, vous devrez vous connecter avec votre adresse email</span>';
-$lang['user.login.tooltip'] = 'Si vous n\'avez pas coché "Choisir un identifiant de connexion" dans votre profil, connectez-vous avec l\'adresse email que vous avez déclarée.'; // ###
-$lang['user.password.custom'] = 'Définir un mot de passe';
-$lang['user.password.custom.clue'] = 'Par défaut un mot de passe est généré automatiquement';
-$lang['user.password.new'] = 'Nouveau mot de passe';
-$lang['user.password.old'] = 'Ancien mot de passe';
-$lang['user.password.old.clue'] = 'Remplir seulement en cas de modification';
-$lang['user.password.confirm'] = 'Confirmer le mot de passe';
-$lang['user.password.clue'] = 'Longueur minimale du mot de passe : :number caractères';
-$lang['user.email'] = 'Email';
-$lang['user.email.hide'] = 'Cacher l\'email';
-$lang['user.theme'] = 'Thème';
-$lang['user.theme.preview'] = 'Prévisualiser le thème';
-$lang['user.text.editor'] = 'Editeur de texte';
-$lang['user.lang'] = 'Langue';
-$lang['user.timezone.'] = 'Fuseau horaire';
-$lang['user.timezone.choice'] = 'Choix du fuseau horaire';
-$lang['user.timezone.choice.clue'] = 'Permet d\'ajuster l\'heure à votre localisation';
-$lang['user.level'] = 'Rang';
-$lang['user.approbation'] = 'Approbation';
-
-// Form alerts
-$lang['user.required.username'] = 'Veuillez entrer un nom d\'utilisateur !';
-$lang['user.required.password'] = 'Veuillez entrer un mot de passe !';
-
-// Connexion panel
-$lang['user.username']           = 'Identifiant de connexion';
-$lang['user.username.tooltip']   = 'Si vous n\'avez pas coché "Choisir un identifiant de connexion" dans votre profil, connectez-vous avec l\'adresse email que vous avez déclarée.';
-$lang['user.password']           = 'Mot de passe';
-$lang['user.sign.in']            = 'Connexion';
-$lang['user.auto.connect']        = 'Connexion automatique';
-$lang['user.sign.out']           = 'Déconnexion';
-$lang['user.sign.up']            = 'S\'inscrire';
-$lang['user.forgotten.password'] = 'Mot de passe oublié';
-
-// Forgotten password
-$lang['user.change.password']            = 'Changement de mot de passe';
-$lang['user.forgotten.password.select']  = 'Sélectionnez le champ que vous voulez renseigner (email ou pseudo)';
-$lang['user.forgotten.password.success'] = 'Un email vous a été envoyé avec un lien pour changer votre mot de passe';
-$lang['user.forgotten.password.error']   = 'Les informations fournies ne sont pas correctes, veuillez les rectifier et réessayer';
-$lang['user.forgotten.password.mail.content'] = 'Cher(e) :pseudo,
-
-Vous recevez cet e-mail parce que vous (ou quelqu\'un qui prétend l\'être) avez demandé à ce qu\'un nouveau mot de passe vous soit envoyé pour votre compte sur :host.
-Si vous n\'avez pas demandé de changement de mot de passe, veuillez l\'ignorer. Si vous continuez à le recevoir, veuillez contacter l\'administrateur du site.
-
-Pour changer de mot de passe, cliquez sur le lien fourni ci-dessous et suivez les indications sur le site.
-
-:change_password_link
-
-Si vous rencontrez des difficultés, veuillez contacter l\'administrateur du site.
-
-:signature';
-
-// Dashboard
-$lang['user.private.messaging']  = 'Messagerie privée';
-$lang['user.admin.panel']        = 'Panneau d\'administration';
-$lang['user.moderation.panel']   = 'Panneau de modération';
-$lang['user.contribution.panel'] = 'Panneau de contribution';
-$lang['user.dashboard']          = 'Tableau de bord';
-$lang['user.my.account']         = 'Mon compte';
-$lang['user.my.profile']         = 'Mon profil';
-
-// Ranks
-$lang['user.rank.rank']          = 'Rang';
-$lang['user.rank.robot']         = 'Robot';
-$lang['user.rank.visitor']       = 'Visiteur';
-$lang['user.rank.member']        = 'Membre';
-$lang['user.rank.moderator']     = 'Modérateur';
-$lang['user.rank.administrator'] = 'Administrateur';
-
-// S.E.O.
-$lang['user.seo.profile'] = 'Toutes les informations de profil de :name.';
-$lang['user.seo.list'] = 'Tableau de la liste des utilisateurs du site.';
-$lang['user.seo.groups'] = 'Utilisateurs de chaque groupe du site.';
-$lang['user.seo.comments'] = 'Tous les commentaires.';
-$lang['user.seo.comments.user'] = 'Tous les commentaires de l\'utilisateur :name.';
-$lang['user.seo.messages'] = 'Tous les messages de l\'utilisateur :name.';
-$lang['user.seo.registration'] = 'Renseignez toutes les informations demandées pour créer un compte.';
-$lang['user.seo.login'] = 'Connectez-vous au site pour accéder au contenu protégé.';
-$lang['user.seo.forgotten.password'] = 'Renseignez toutes les informations demandées pour recevoir un lien pour changer de mot de passe.';
-$lang['user.seo.about.cookie'] = 'Toutes les informations relatives aux cookies sur le site.';
-
-// ###################### To be rearranged
-// Old method
-
-// ###
 $lang['user'] = 'Utilisateur';
 $lang['users'] = 'Utilisateurs';
 $lang['profile'] = 'Profil';
@@ -125,7 +24,6 @@ $lang['dashboard'] = 'Tableau de bord';
 $lang['messages'] = 'Messages de l\'utilisateur';
 $lang['maintain'] = 'Maintenance';
 $lang['welcome'] = 'Bienvenue';
-
 $lang['about.author'] = 'À propos de l\'auteur';
 
 $lang['members.all'] = 'Tous les membres';
@@ -169,18 +67,17 @@ Commentaire :<br />
 <br />
 <a href=":contribution_url">Accéder à la contribution</a>';
 
-// User fields
-// ###
+//User fields
 $lang['display_name'] = 'Nom d\'affichage';
 $lang['display_name.explain'] = 'Nom affiché sur chacun des éléments que vous ajoutez.';
-$lang['login'] = 'Identifiant de connexion'; // ###
+$lang['login'] = 'Identifiant de connexion';
 $lang['login.explain'] = 'Adresse email ou votre login personnalisé si vous en avez choisi un.';
 $lang['login.custom'] = 'Choisir un identifiant de connexion';
 $lang['login.custom.explain'] = '<span class="error">Si non coché, vous devrez vous connecter avec votre adresse email</span>';
-$lang['login.tooltip'] = 'Si vous n\'avez pas coché "Choisir un identifiant de connexion" dans votre profil, connectez-vous avec l\'adresse email que vous avez déclarée.'; // ###
+$lang['login.tooltip'] = 'Si vous n\'avez pas coché "Choisir un identifiant de connexion" dans votre profil, connectez-vous avec l\'adresse email que vous avez déclarée.';
 $lang['password.custom'] = 'Définir un mot de passe';
 $lang['password.custom.explain'] = 'Par défaut un mot de passe est généré automatiquement';
-$lang['password'] = 'Mot de passe'; // ###
+$lang['password'] = 'Mot de passe';
 $lang['password.new'] = 'Nouveau mot de passe';
 $lang['password.old'] = 'Ancien mot de passe';
 $lang['password.old.explain'] = 'Remplir seulement en cas de modification';
@@ -192,7 +89,7 @@ $lang['theme'] = 'Thème';
 $lang['theme.preview'] = 'Prévisualiser le thème';
 $lang['text-editor'] = 'Editeur de texte';
 $lang['lang'] = 'Langue';
-$lang['timezone.'] = 'Fuseau horaire';
+$lang['timezone'] = 'Fuseau horaire';
 $lang['timezone.choice'] = 'Choix du fuseau horaire';
 $lang['timezone.choice.explain'] = 'Permet d\'ajuster l\'heure à votre localisation';
 $lang['level'] = 'Rang';
@@ -226,9 +123,9 @@ $lang['no_member'] = 'Aucun membre dans ce groupe';
 $lang['caution'] = 'Avertissement';
 $lang['readonly'] = 'Lecture seule';
 $lang['banned'] = 'Banni';
-$lang['connection'] = 'Connexion'; // ###
-$lang['autoconnect'] = 'Connexion auto'; // ###
-$lang['disconnect'] = 'Se déconnecter'; // ###
+$lang['connection'] = 'Connexion';
+$lang['autoconnect'] = 'Connexion auto';
+$lang['disconnect'] = 'Se déconnecter';
 
 $lang['internal_connection'] = 'Connexion interne';
 $lang['create_internal_connection'] = 'Créer un compte interne';
@@ -244,7 +141,7 @@ $lang['share_by'] = 'Partager par';
 $lang['share.menu'] = 'Menu réseaux sociaux';
 $lang['share.sms'] = 'SMS';
 
-// Ranks #######################################
+// Ranks
 $lang['rank'] = 'Rang';
 $lang['robot'] = 'Robot';
 $lang['visitor'] = 'Visiteur';
@@ -252,7 +149,7 @@ $lang['member'] = 'Membre';
 $lang['moderator'] = 'Modérateur';
 $lang['administrator'] = 'Administrateur';
 
-//Forget password #################################
+//Forget password
 $lang['forget-password'] = 'Mot de passe oublié';
 $lang['forget-password.select'] = 'Sélectionnez le champ que vous voulez renseigner (email ou pseudo)';
 $lang['forget-password.success'] = 'Un email vous a été envoyé avec un lien pour changer votre mot de passe';
@@ -346,7 +243,6 @@ $lang['user.message.success.delete'] = 'L\'utilisateur <b>:name</b> a été supp
 $lang['user.message.success.delete.member'] = 'Votre compte a été supprimé';
 
 //SEO
-// ###
 $lang['seo.user.profile'] = 'Toutes les informations de profil de :name.';
 $lang['seo.user.list'] = 'Tableau de la liste des utilisateurs du site.';
 $lang['seo.user.groups'] = 'Utilisateurs de chaque groupe du site.';
@@ -394,13 +290,13 @@ $lang['extended-field.field.no-biography'] = 'Ce membre n\'a pas renseigné la b
 $lang['extended-field.field.no-member'] = 'Ce membre n\'est plus inscrit';
 
 $lang['extended.field.website'] = 'Site internet';
-$lang['extended.field.website.explain'] = 'Veuillez renseigner un site web valide (ex : https://www.phpboost.com)';
+$lang['extended.field.website-explain'] = 'Veuillez renseigner un site web valide (ex : https://www.phpboost.com)';
 
 //Scroll to
 $lang['scroll-to.top'] = 'haut de la page';
 $lang['scroll-to.bottom'] = 'bas de la page';
 
-//Cookies bar
+//Cookies Bar
 $lang['cookiebar.cookie'] = 'Cookie';
 $lang['cookiebar.cookie.management'] = 'Gestion des Cookies';
 $lang['cookiebar-message.notracking']  = 'En poursuivant votre navigation sur ce site internet, vous acceptez l\'utilisation de Cookies afin de gérer votre connexion, vos préférences, ainsi que l\'enregistrement de statistiques anonymes des visites.';
