@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 20
+ * @version     PHPBoost 6.0 - last update: 2021 05 04
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -37,7 +37,7 @@ class PollItem extends RichItem
 
 	protected function set_additional_attributes_list()
 	{
-		$this->add_additional_attribute('question', array('type' => 'text', 'length' => 65000, 'notnull' => 1, 'default' => "''", 'attribute_pre_content_field_parameters' => array(
+		$this->add_additional_attribute('question', array('type' => 'text', 'length' => 65000, 'notnull' => 1, 'attribute_pre_content_field_parameters' => array(
 		    'field_class' => 'FormFieldRichTextEditor',
 		    'label'       => LangLoader::get_message('poll.form.question', 'common', 'poll'),
 		    'value'       => self::DEFAULT_VALUE_QUESTION,
@@ -57,7 +57,7 @@ class PollItem extends RichItem
 		    )
 		));
 
-		$this->add_additional_attribute('answers', array('type' => 'text', 'length' => 65000, 'notnull' => 1, 'default' => "''", 'is_array' => true, 'attribute_pre_content_field_parameters' => array(
+		$this->add_additional_attribute('answers', array('type' => 'text', 'length' => 65000, 'notnull' => 1, 'is_array' => true, 'attribute_pre_content_field_parameters' => array(
 		    'field_class' => 'FormFieldPossibleValues',
 		    'label'       => LangLoader::get_message('poll.form.answers', 'common', 'poll'),
 		    'value'       => self::DEFAULT_VALUE_ANSWERS,
@@ -65,7 +65,7 @@ class PollItem extends RichItem
 		    )
 		));
 
-		$this->add_additional_attribute('votes', array('type' => 'text', 'length' => 65000, 'notnull' => 1, 'default' => "''"));
+		$this->add_additional_attribute('votes', array('type' => 'text', 'length' => 65000, 'notnull' => 1));
 
 		$this->add_additional_attribute('votes_number', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
 
