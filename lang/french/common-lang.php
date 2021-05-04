@@ -117,6 +117,7 @@ $lang['common.keywords']               = 'Mots clés';
 $lang['common.source']                 = 'Source';
 $lang['common.sources']                = 'Sources';
 $lang['common.copy.link.to.clipboard'] = 'Copier le lien dans le presse-papier';
+$lang['common.copied.to.clipboard']    = 'Copié dans le presse-papier';
 
 // List order
 $lang['common.listorder.item.start']   = '{startItem}';

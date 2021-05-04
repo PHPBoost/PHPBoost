@@ -109,7 +109,7 @@ $lang['common.copy.to.clipboard']      = 'Copy to clipboard';
 $lang['common.see.details']            = 'See details';
 $lang['common.see.category']           = 'See category';
 $lang['common.see.profile']            = 'See member profile';
-$lang['common.see.profile.datas']    = 'See member datas';
+$lang['common.see.profile.datas']      = 'See member datas';
 $lang['common.link']                   = 'Link';
 $lang['common.link.to.anchor']         = 'Link to anchor';
 $lang['common.keyword']                = 'Keyword';
@@ -117,6 +117,7 @@ $lang['common.keywords']               = 'Keywords';
 $lang['common.source']                 = 'Source';
 $lang['common.sources']                = 'Sources';
 $lang['common.copy.link.to.clipboard'] = 'Copy link to clipboard';
+$lang['common.copied.to.clipboard']    = 'Copied to clipboard';
 
 // List order
 $lang['common.listorder.item.start']   = '{startItem}';

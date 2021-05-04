@@ -546,5 +546,5 @@ function copy_to_clipboard(tocopy)
 		}, true);
 
 		document.execCommand('copy');
-		alert(hrefValue);
+		alert(COPIED_TO_CLIPBOARD +'\n' + hrefValue);
 	});

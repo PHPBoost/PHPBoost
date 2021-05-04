@@ -4,6 +4,7 @@
 	var TOKEN        = "{TOKEN}";
 	var THEME        = "{THEME}";
 	var LANG         = "{LANG}";
+	var COPIED_TO_CLIPBOARD = ${escapejs(LangLoader::get_message('common.copied.to.clipboard', 'common-lang'))}
 
 	// BBCode Variables
 	var L_HIDE_MESSAGE    = ${escapejs(LangLoader::get_message('tag_hide_message', 'editor-common'))};
