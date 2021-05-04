@@ -54,7 +54,7 @@ class FaqFeedProvider implements FeedProvider
 				$link = FaqUrlBuilder::display($row['id_category'], $row['rewrited_name_cat'], $row['id']);
 
 				$item = new FeedItem();
-				$item->set_title($row['question']);
+				$item->set_title($row['title']);
 				$item->set_link($link);
 				$item->set_guid($link);
 				$item->set_desc(FormatingHelper::second_parse($row['content']));
