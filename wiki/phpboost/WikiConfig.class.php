@@ -111,7 +111,7 @@ class WikiConfig extends AbstractConfigData
 			self::NUMBER_ARTICLES_ON_INDEX => 0,
 			self::DISPLAY_CATEGORIES_ON_INDEX => false,
 			self::HITS_COUNTER => true,
-			self::INDEX_TEXT => LangLoader::get_message('wiki.index_text', 'common', 'wiki'),
+			self::INDEX_TEXT => LangLoader::get_message('wiki.index.text', 'common', 'wiki'),
 			self::AUTHORIZATIONS => array('r-1' => 5137, 'r0' => 5395, 'r1' => 8191)
 		);
 	}
