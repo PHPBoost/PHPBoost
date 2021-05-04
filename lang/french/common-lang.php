@@ -13,6 +13,7 @@
 #                     French                       #
 ####################################################
 
+$lang['common.id']           = 'ID';
 $lang['common.title']        = 'Titre';
 $lang['common.name']         = 'Nom';
 $lang['common.home']         = 'Accueil';
@@ -80,38 +81,42 @@ $lang['common.constraint.required']     = 'Requis';
 $lang['common.constraint.not.required'] = 'Non requis';
 
 // Count
-$lang['common.items.number'] = 'Nombre d\'éléments';
-$lang['common.no.item.now']  = 'Aucun élément n\'est disponible pour le moment';
-$lang['common.see.details']  = 'Voir les détails';
-$lang['common.views']        = 'vues';
-$lang['common.view']         = 'vue';
-$lang['common.views.number'] = 'Nombre de vues';
-$lang['common.visits.number'] = 'Nombre de visites';
+$lang['common.items.number']     = 'Nombre d\'éléments';
+$lang['common.no.item.now']      = 'Aucun élément n\'est disponible pour le moment';
+$lang['common.views']            = 'vues';
+$lang['common.view']             = 'vue';
+$lang['common.views.number']     = 'Nombre de vues';
+$lang['common.visits.number']    = 'Nombre de visites';
 $lang['common.downloads.number'] = 'Nombre de téléchargement';
-$lang['common.maximum']      = 'Maximum';
-$lang['common.minimum']      = 'Minimum';
-$lang['common.size']         = 'Taille';
-$lang['common.unknown.size'] = 'Taille inconnue';
-$lang['common.unlimited']    = 'Illimité';
-$lang['common.all']          = 'Tous';
-$lang['common.all.e']        = 'Toutes';
-$lang['common.none']         = 'Aucun';
-$lang['common.none.e']       = 'Aucune';
-$lang['common.item.rate']    = 'Éléments :start à :end sur :total';
+$lang['common.maximum']          = 'Maximum';
+$lang['common.minimum']          = 'Minimum';
+$lang['common.size']             = 'Taille';
+$lang['common.unknown.size']     = 'Taille inconnue';
+$lang['common.unlimited']        = 'Illimité';
+$lang['common.all']              = 'Tous';
+$lang['common.all.e']            = 'Toutes';
+$lang['common.nobody']           = 'Personne';
+$lang['common.none']             = 'Aucun';
+$lang['common.none.e']           = 'Aucune';
+$lang['common.item.rate']        = 'Éléments :start à :end sur :total';
 
 // Formatter
 $lang['common.hidden.text']            = 'Ce texte est caché, cliquer ici pour afficher son contenu.';
 $lang['common.hide.text']              = 'Cliquer ici pour cacher le texte.';
 $lang['common.copy.to.clipboard']      = 'Copier vers le presse-papier';
-$lang['common.copy.link.to.clipboard'] = 'Copier le lien dans le presse-papier';
 
 // Links
-$lang['common.link'] = 'Lien';
-$lang['common.link.to.anchor'] = 'Lien vers l\'ancre';
-$lang['common.keyword']  = 'Mot clé';
-$lang['common.keywords'] = 'Mots clés';
-$lang['common.source']   = 'Source';
-$lang['common.sources']  = 'Sources';
+$lang['common.see.details']            = 'Voir les détails';
+$lang['common.see.category']           = 'Voir la category';
+$lang['common.see.profile']            = 'Voir le profil du membre';
+$lang['common.see.profile.datas']      = 'Voir les infos du membre';
+$lang['common.link']                   = 'Lien';
+$lang['common.link.to.anchor']         = 'Lien vers l\'ancre';
+$lang['common.keyword']                = 'Mot clé';
+$lang['common.keywords']               = 'Mots clés';
+$lang['common.source']                 = 'Source';
+$lang['common.sources']                = 'Sources';
+$lang['common.copy.link.to.clipboard'] = 'Copier le lien dans le presse-papier';
 
 // List order
 $lang['common.listorder.item.start']   = '{startItem}';

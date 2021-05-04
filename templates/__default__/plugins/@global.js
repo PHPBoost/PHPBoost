@@ -534,3 +534,17 @@ function copy_to_clipboard(tocopy)
 			}
 		});
 	});
+
+// Copy link to clipboard
+	$('.copy-link-to-clipboard').click(function (e) {
+		e.preventDefault();
+		var hrefValue = $(this).attr('href');
+
+		document.addEventListener('copy', function(e) {
+		  e.clipboardData.setData('text/plain', hrefValue);
+		  e.preventDefault();
+		}, true);
+
+		document.execCommand('copy');
+		alert(hrefValue);
+	});

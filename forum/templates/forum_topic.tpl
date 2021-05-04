@@ -198,74 +198,147 @@
 		</div>
 	# ENDIF #
 	# START msg #
-		<div id="d{msg.ID}" class="message-container" itemscope="itemscope" itemtype="https://schema.org/Comment">
+		<div id="d{msg.ID}" class="message-container cell-tile cell-modal modal-container" itemscope="itemscope" itemtype="https://schema.org/Comment">
 			<span id="m{msg.ID}"></span>
 			<div class="message-header-container">
 				# IF msg.C_USER_AVATAR #<img class="message-user-avatar" src="{msg.U_USER_AVATAR}" alt="{@common.avatar}"># ENDIF #
 				<div class="message-header-infos">
-					<div class="message-user-infos hidden-small-screens">
-						<div>
-							<i class="fa # IF msg.C_USER_ONLINE #fa-user-check success# ELSE #fa-user-times error# ENDIF #" aria-hidden="true"></i>
-							{@forum.registred.on} : {msg.USER_REGISTERED_DATE}
-							# IF IS_USER_CONNECTED #
-								# IF msg.C_USER_HAS_MESSAGE #
-									| <a href="{msg.U_USER_MEMBERMSG}" aria-label="{@forum.show.member.messages}">{@forum.messages}</a>: {msg.USER_MSG}
-								# ENDIF #
-							# ENDIF #
-						</div>
-						<div class="message-user-links">
-							# IF msg.C_USER_PM #
-								<a href="{msg.U_USER_PM}" class="button submit smaller user-pm" aria-label="{@user.contact.pm}"><i class="fa fa-people-arrows fa-fw"></i></a>
-							# ENDIF #
-							# IF msg.C_USER_EMAIL #
-								<a href="{msg.U_USER_MAIL}" class="button submit smaller user-mail" aria-label="{@user.contact.email}"><i class="fa iboost fa-iboost-email fa-fw"></i></a>
-							# ENDIF #
-							# START msg.ext_fields #
-								{msg.ext_fields.BUTTON}
-							# END msg.ext_fields #
-						</div>
-					</div>
-					<div class="message-user">
-						<h3 class="message-user-pseudo">
+					<div class="message-user-container">
+						<h3 class="message-user-name">
+							<span class="smaller"><i class="fa # IF msg.C_USER_ONLINE #fa-user-check success# ELSE #fa-user-times error# ENDIF #" aria-hidden="true"></i></span>
 							# IF msg.C_FORUM_USER_LOGIN #
-								<a class="msg-link-pseudo {msg.FORUM_USER_LEVEL}" href="{msg.U_FORUM_USER_PROFILE}"# IF msg.FORUM_USER_GROUP_COLOR # style="color:{msg.FORUM_USER_GROUP_COLOR}"# ENDIF #>
+								<span aria-label="{@common.see.profile.datas}" data-modal data-target="message-user-datas-{msg.ID}" class="{msg.FORUM_USER_LEVEL}" # IF msg.FORUM_USER_GROUP_COLOR # style="color:{msg.FORUM_USER_GROUP_COLOR}"# ENDIF #>
 									{msg.FORUM_USER_LOGIN}
-								</a>
+								</span>
 								<span class="sr-only"># IF C_USER_ONLINE #{@forum.connected.member}# ELSE #{@forum.not.connected.member}# ENDIF #</span>
 							# ELSE #
-								<em>{@user.guest}</em>
+								<span>{@user.guest}</span>
 							# ENDIF #
 						</h3>
-						<div class="message-actions">
-							# IF C_AUTH_POST #<a href="topic{msg.U_QUOTE}#go-bottom" aria-label="{@forum.quote.message}"><i class="fa fa-quote-right" aria-hidden="true"></i></a># ENDIF #
-							# IF msg.C_FORUM_MSG_EDIT #<a href="post{msg.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
-
-							# IF msg.C_DELETE #
-								# IF msg.C_DELETE_MESSAGE #
-									<a href="action{msg.U_DELETE}" aria-label="{@common.delete}" id="dimgnojs{msg.ID}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
-									<a onclick="del_msg('{msg.ID}');" id="dimg{msg.ID}" aria-label="{@common.delete}" class="delete-message" data-confirmation="{@forum.alert.delete.message}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
-									<script>
-										document.getElementById('dimgnojs{msg.ID}').style.display = 'none';
-										document.getElementById('dimg{msg.ID}').style.display = 'inline';
-									</script>
-								# ELSE #
-									<a href="action{msg.U_DELETE}" aria-label="{@common.delete}" data-confirmation="{@forum.alert.delete.topic}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
-								# ENDIF #
+						<div class="controls message-user-infos-preview">
+							# IF msg.C_USER_GROUPS #
+								# START msg.usergroups #
+									<a href="{msg.usergroups.U_USERGROUP}" class="user-group small group-{msg.usergroups.USERGROUP_ID}"# IF msg.usergroups.C_USERGROUP_COLOR # style="color: {msg.usergroups.USERGROUP_COLOR}"# ENDIF #>{msg.usergroups.USERGROUP_NAME}</a>
+								# END msg.usergroups #
 							# ENDIF #
-
-							# IF msg.C_CUT # <a href="move{msg.U_CUT_TOPIC}" aria-label="{@forum.cut.topic}" data-confirmation="{@forum.alert.cut.topic}"><i class="fa fa-cut" aria-hidden="true"></i></a> # ENDIF #
-
-							<a aria-label="{@common.scroll.to.top}" href="{U_TITLE_T}#go-top" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-top').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
-							<a aria-label="{@common.scroll.to.bottom}" href="{U_TITLE_T}#go-bottom" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-bottom').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
+							# IF msg.C_USER_RANK #<span class="pinned {msg.FORUM_USER_LEVEL} small">{msg.USER_RANK}</span># ELSE #<span class="error">{@user.banned}</span># ENDIF #
 						</div>
 					</div>
 					<div class="message-infos">
-						<time datetime="{msg.TOPIC_DATE_FULL}" itemprop="datePublished">{@common.on} {msg.TOPIC_DATE_FULL}</time>
-						<a href="topic{msg.U_VARS_ANCHOR}#m{msg.ID}" aria-label="{@forum.link.to.topic}">\#{msg.ID}</i></a>
+						<div class="message-date small">
+							<time datetime="{msg.TOPIC_DATE_FULL}" itemprop="datePublished">{@common.on} {msg.TOPIC_DATE_FULL}</time>
+						</div>
+						<div class="message-actions">
+							<div class="message-actions-container-{msg.ID}">
+								<a href="" class="message-actions-toggle-{msg.ID}" aria-label="{@forum.message.controls}">
+									<i class="fa fa-ellipsis-v"></i>
+								</a>
+								<div class="message-actions-content-{msg.ID} controls">
+									# IF C_AUTH_POST #<a href="topic{msg.U_QUOTE}#go-bottom" aria-label="{@forum.quote.message}"><i class="fa fa-quote-right" aria-hidden="true"></i></a># ENDIF #
+									# IF msg.C_FORUM_MSG_EDIT #<a href="post{msg.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
+
+									# IF msg.C_DELETE #
+										# IF msg.C_DELETE_MESSAGE #
+											<a href="action{msg.U_DELETE}" aria-label="{@common.delete}" id="dimgnojs{msg.ID}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+											<a onclick="del_msg('{msg.ID}');" id="dimg{msg.ID}" aria-label="{@common.delete}" class="delete-message" data-confirmation="{@forum.alert.delete.message}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+											<script>
+												document.getElementById('dimgnojs{msg.ID}').style.display = 'none';
+												document.getElementById('dimg{msg.ID}').style.display = 'inline';
+											</script>
+										# ELSE #
+											<a href="action{msg.U_DELETE}" aria-label="{@common.delete}" data-confirmation="{@forum.alert.delete.topic}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+										# ENDIF #
+									# ENDIF #
+
+									# IF msg.C_CUT # <a href="move{msg.U_CUT_TOPIC}" aria-label="{@forum.cut.topic}" data-confirmation="{@forum.alert.cut.topic}"><i class="fa fa-cut" aria-hidden="true"></i></a> # ENDIF #
+
+									<a aria-label="{@common.scroll.to.top}" href="{U_TITLE_T}#go-top" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-top').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+									<a aria-label="{@common.scroll.to.bottom}" href="{U_TITLE_T}#go-bottom" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-bottom').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
+									<a href="{U_SITE}{msg.U_VARS_ANCHOR}#m{msg.ID}" class="copy-link-to-clipboard" aria-label="{@common.copy.link.to.clipboard}">\#{msg.ID}</i></a>
+								</div>
+							</div>
+							<script>
+								jQuery('.message-actions-toggle-{msg.ID}').opensubmenu({
+									osmTarget: '.message-actions-container-{msg.ID}',
+									osmCloseExcept : '.message-actions-content-{msg.ID} *'
+								});
+							</script>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="message-user-datas-{msg.ID}" class="modal modal-animation">
+				<div class="close-modal">{@common.close}</div>
+				<div class="content-panel cell">
+					<div class="cell-list">
+						<ul>
+							<li class="li-stretch">
+								# IF msg.C_USER_RANK #<span class="pinned {msg.FORUM_USER_LEVEL}">{msg.USER_RANK}</span># ELSE #<span class="error">{@user.banned}</span># ENDIF #
+								# IF msg.C_USER_RANK_ICON #<img class="valign-middle" src="{msg.USER_RANK_ICON}" alt="{@user.rank}" /># ENDIF #
+							</li>
+							<li class="li-stretch">
+								<span>{@common.see.profile}</span>
+								<a href="{msg.U_FORUM_USER_PROFILE}" class="msg-link-pseudo {msg.FORUM_USER_LEVEL}" # IF msg.FORUM_USER_GROUP_COLOR # style="color:{msg.FORUM_USER_GROUP_COLOR}"# ENDIF #>{msg.FORUM_USER_LOGIN}</a>
+							</li>
+							<li class="li-stretch">
+								<span>{@forum.registred.on} :</span>
+								<span>{msg.USER_REGISTERED_DATE}</span>
+							</li>
+							# IF IS_USER_CONNECTED #
+								# IF msg.C_USER_HAS_MESSAGE #
+									<li class="li-stretch">
+										<span>{@forum.messages} :</span>
+										<a href="{msg.U_USER_MEMBERMSG}" class="button submit smaller" aria-label="{@forum.show.member.messages}">{msg.USER_MSG}</a>
+									</li>
+								# ENDIF #
+							# ENDIF #
+							# IF msg.C_USER_PM #
+								<li class="li-stretch">
+									<span>{@user.pm} :</span>
+									<a href="{msg.U_USER_PM}" class="button submit smaller user-pm" aria-label="{@user.contact.pm}"><i class="fa fa-people-arrows fa-fw"></i></a>
+								</li>
+							# ENDIF #
+							# IF msg.C_USER_EMAIL #
+								<li class="li-stretch">
+									<span>{@user.email}</span>
+									<a href="{msg.U_USER_MAIL}" class="button submit smaller user-mail" aria-label="{@user.contact.email}"><i class="fa iboost fa-iboost-email fa-fw"></i></a>
+								</li>
+							# ENDIF #
+							# START msg.ext_fields #
+								<li>
+									{msg.ext_fields.BUTTON}
+								</li>
+							# END msg.ext_fields #
+							# IF msg.C_USER_GROUPS #
+								<li class="li-stretch">
+									<span>{@user.groups} :</span>
+								</li>
+									# START msg.usergroups #
+										<li class="li-stretch">
+											<a href="{msg.usergroups.U_USERGROUP}" class="user-group group-{msg.usergroups.USERGROUP_ID}"# IF msg.usergroups.C_USERGROUP_COLOR # style="color: {msg.usergroups.USERGROUP_COLOR}"# ENDIF #>{msg.usergroups.USERGROUP_NAME}</a>
+											# IF msg.usergroups.C_IMG_USERGROUP #
+												<a href="{msg.usergroups.U_USERGROUP}" class="user-group user-group-img group-{msg.usergroups.USERGROUP_ID} "# IF msg.usergroups.C_USERGROUP_COLOR # style="color: {msg.usergroups.USERGROUP_COLOR}"# ENDIF #><img src="{PATH_TO_ROOT}/images/group/{msg.usergroups.U_IMG_USERGROUP}" alt="{msg.usergroups.USERGROUP_NAME}" /></a>
+											# ENDIF #
+										</li>
+									# END msg.usergroups #
+								</li>
+							# ENDIF #
+							# IF msg.C_USER_SIGN #<li>{msg.USER_SIGN}</li># ENDIF #
+							# IF msg.C_CONTROLS #
+								<li class="li-stretch">
+									<span>Sanctions: {msg.USER_WARNING}%</span>
+									<span>
+										<a href="moderation_forum{msg.U_FORUM_WARNING}" aria-label="{@user.warnings.management}"><i class="fa fa-exclamation-triangle warning" aria-hidden="true"></i></a>
+										<a href="moderation_forum{msg.U_FORUM_PUNISHEMENT}" aria-label="{@user.punishments.management}"><i class="fa fa-user-lock" aria-hidden="true"></i></a>
+									</span>
+								</li>
+							# ENDIF #
+						</ul>
 					</div>
 				</div>
 			</div>
 			<div class="message-content" >
+
 				# IF msg.C_QUOTE_LAST_MESSAGE # <p class="message-helper bgc notice">{@forum.quote.last.message}</p> # ENDIF #
 
 				{msg.FORUM_MSG_CONTENT}
@@ -281,37 +354,6 @@
 						{@common.on} {msg.TOPIC_EDIT_DATE_FULL}
 					</p>
 				# ENDIF #
-			</div>
-			# IF msg.C_USER_SIGN #
-				<div class="message-user-sign# IF msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">{msg.USER_SIGN}</div>
-			# ENDIF #
-			<div class="message-footer-container# IF msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
-				<div class="message-user-assoc">
-					<div class="message-group-level">
-						# IF msg.C_USER_GROUPS #
-							# START msg.usergroups #
-								# IF msg.usergroups.C_IMG_USERGROUP #
-									<a href="{msg.usergroups.U_USERGROUP}" class="user-group user-group-img group-{msg.usergroups.USERGROUP_ID} "# IF msg.usergroups.C_USERGROUP_COLOR # style="color: {msg.usergroups.USERGROUP_COLOR}"# ENDIF #><img src="{PATH_TO_ROOT}/images/group/{msg.usergroups.U_IMG_USERGROUP}" alt="{msg.usergroups.USERGROUP_NAME}" /></a>
-								# ELSE #
-									{@user.groups} : <a href="{msg.usergroups.U_USERGROUP}" class="user-group group-{msg.usergroups.USERGROUP_ID}"# IF msg.usergroups.C_USERGROUP_COLOR # style="color: {msg.usergroups.USERGROUP_COLOR}"# ENDIF #>{msg.usergroups.USERGROUP_NAME}</a>
-								# ENDIF #
-							# END msg.usergroups #
-						# ENDIF #
-					</div>
-					<div class="message-user-rank">
-						# IF msg.C_USER_RANK #<span class="pinned {msg.FORUM_USER_LEVEL}">{msg.USER_RANK}</span># ELSE #{@user.banned}# ENDIF #
-						# IF msg.C_USER_RANK_ICON #<img class="valign-middle" src="{msg.USER_RANK_ICON}" alt="{@user.rank}" /># ENDIF #
-					</div>
-				</div>
-				<div class="message-user-management">
-					<div class="message-moderation-level">
-						# IF msg.C_CONTROLS #
-							{msg.USER_WARNING}%
-							<a href="moderation_forum{msg.U_FORUM_WARNING}" aria-label="{@user.warnings.management}"><i class="fa fa-exclamation-triangle warning" aria-hidden="true"></i></a>
-							<a href="moderation_forum{msg.U_FORUM_PUNISHEMENT}" aria-label="{@user.punishments.management}"><i class="fa fa-user-lock" aria-hidden="true"></i></a>
-						# ENDIF #
-					</div>
-				</div>
 			</div>
 		</div>
 	# END msg #

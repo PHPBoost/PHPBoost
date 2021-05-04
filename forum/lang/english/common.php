@@ -241,27 +241,31 @@ $lang['forum.10.most.active.topics']   = 'The 10 topics with the highest number 
 $lang['forum.last.forum.topics']    = 'Last forum topics';
 $lang['forum.connected.member']     = 'Connected member';
 $lang['forum.not.connected.member'] = 'Not connected member';
+$lang['forum.link.to.topic']        = 'Link to topic';
 
 $lang['forum.messages']       = 'Messages';
 $lang['forum.forum.message']  = 'Forum message';
 $lang['forum.forum.messages'] = 'Forum messages';
 
-$lang['forum.registred.on'] = 'Registred on';
-$lang['forum.quote.message'] = 'Quote this message';
 $lang['forum.quote.last.message'] = 'Resuming the previous message';
+$lang['forum.edit.message']       = 'Edit Message';
+$lang['forum.edited.by']          = 'Edited by';
+$lang['forum.edited.on']          = 'Edited on';
+$lang['forum.new.topic']          = 'New topic';
+$lang['forum.edit.in.topic']      = 'Edit a message in the topic';
+$lang['forum.reply']              = 'Reply';
+
+    // Profile
+$lang['forum.see.member.datas']     = 'See member\'s datas';
+$lang['forum.registred.on']         = 'Registred on';
 $lang['forum.show.member.messages'] = 'Show all member\'s messages';
-$lang['forum.new.topic'] = 'New topic';
-$lang['forum.edit.topic'] = 'Edit topic';
-$lang['forum.edit.in.topic'] = 'Edit a message in the topic';
-$lang['forum.move.topic'] = 'Move topic';
-$lang['forum.edit.message'] = 'Edit Message';
-$lang['forum.edited.by'] = 'Edited by';
-$lang['forum.edited.on'] = 'Edited on';
-$lang['forum.cut.topic'] = 'Divide this topic starting from this message';
+    // Controls
+$lang['forum.message.controls']   = 'Message management';
+$lang['forum.quote.message']   = 'Quote this message';
+$lang['forum.edit.topic']      = 'Edit topic';
+$lang['forum.move.topic']      = 'Move topic';
+$lang['forum.cut.topic']       = 'Divide this topic starting from this message';
 $lang['forum.alert.cut.topic'] = 'Do you want to cut the topic from this message?';
-$lang['forum.add.to.favorites'] = 'Add to favorite';
-$lang['forum.link.to.topic'] = 'Link to topic';
-$lang['forum.reply'] = 'Reply';
 
 // Track
 $lang['forum.track.topic']         = 'Set to favorite';

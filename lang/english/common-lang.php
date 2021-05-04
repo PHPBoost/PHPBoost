@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2021 05 03
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,6 +13,7 @@
 #                     English                      #
 ####################################################
 
+$lang['common.id']           = 'ID';
 $lang['common.title']        = 'Title';
 $lang['common.name']         = 'Name';
 $lang['common.home']         = 'Home';
@@ -80,38 +81,42 @@ $lang['common.constraint.required']     = 'Required';
 $lang['common.constraint.not.required'] = 'Not required';
 
 // Count
-$lang['common.items.number'] = 'Items number';
-$lang['common.no.item.now']  = 'No item is available for the moment';
-$lang['common.see.details']  = 'See details';
-$lang['common.views']        = 'views';
-$lang['common.view']         = 'view';
-$lang['common.views.number'] = 'Views number';
-$lang['common.visits.number'] = 'Visits number';
+$lang['common.items.number']     = 'Items number';
+$lang['common.no.item.now']      = 'No item is available for the moment';
+$lang['common.views']            = 'views';
+$lang['common.view']             = 'view';
+$lang['common.views.number']     = 'Views number';
+$lang['common.visits.number']    = 'Visits number';
 $lang['common.downloads.number'] = 'Downloads number';
-$lang['common.maximum']      = 'Maximum';
-$lang['common.minimum']      = 'Minimum';
-$lang['common.size']         = 'Size';
-$lang['common.unknown.size'] = 'Unknown size';
-$lang['common.unlimited']    = 'Unlimited';
-$lang['common.all']          = 'All';
-$lang['common.all.e']        = 'All';
-$lang['common.none']         = 'None';
-$lang['common.none.e']       = 'None';
-$lang['common.item.rate']    = ':start to :end of :total elements';
+$lang['common.maximum']          = 'Maximum';
+$lang['common.minimum']          = 'Minimum';
+$lang['common.size']             = 'Size';
+$lang['common.unknown.size']     = 'Unknown size';
+$lang['common.unlimited']        = 'Unlimited';
+$lang['common.all']              = 'All';
+$lang['common.all.e']            = 'All';
+$lang['common.nobody']           = 'Nobody';
+$lang['common.none']             = 'None';
+$lang['common.none.e']           = 'None';
+$lang['common.item.rate']        = ':start to :end of :total elements';
 
 // Formatter
 $lang['common.hidden.text']            = 'This text is hidden, click here to reveal its contents.';
 $lang['common.hide.text']              = 'Click here to hide this text.';
 $lang['common.copy.to.clipboard']      = 'Copy to clipboard';
-$lang['common.copy.link.to.clipboard'] = 'Copy link to clipboard';
 
 // Links
-$lang['common.link'] = 'Link';
-$lang['common.link.to.anchor'] = 'Link to anchor';
-$lang['common.keyword']  = 'Keyword';
-$lang['common.keywords'] = 'Keywords';
-$lang['common.source']   = 'Source';
-$lang['common.sources']  = 'Sources';
+$lang['common.see.details']            = 'See details';
+$lang['common.see.category']           = 'See category';
+$lang['common.see.profile']            = 'See member profile';
+$lang['common.see.profile.datas']    = 'See member datas';
+$lang['common.link']                   = 'Link';
+$lang['common.link.to.anchor']         = 'Link to anchor';
+$lang['common.keyword']                = 'Keyword';
+$lang['common.keywords']               = 'Keywords';
+$lang['common.source']                 = 'Source';
+$lang['common.sources']                = 'Sources';
+$lang['common.copy.link.to.clipboard'] = 'Copy link to clipboard';
 
 // List order
 $lang['common.listorder.item.start']   = '{startItem}';

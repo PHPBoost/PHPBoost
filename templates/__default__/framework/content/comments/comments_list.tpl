@@ -3,7 +3,7 @@
 		<header class="message-header-container">
 			# IF comments.C_AVATAR #<img src="{comments.U_AVATAR}" alt="{@common.avatar}" class="message-user-avatar" /># ENDIF #
 			<div class="message-header-infos">
-				<div class="message-user">
+				<div class="message-user-container">
 					<h3 class="message-user-pseudo">
 						# IF comments.C_VISITOR #
 							<span itemprop="author">{comments.PSEUDO}</span>
@@ -13,6 +13,12 @@
 							</a>
 						# ENDIF #
 					</h3>
+					<div class="controls message-user-infos-preview">
+						{comments.L_LEVEL}
+					</div>
+				</div>
+				<div class="message-infos">
+					<time datetime="{comments.DATE_ISO8601}" itemprop="datePublished">{comments.DATE_FULL}</time>
 					<div class="message-actions">
 						# IF comments.C_MODERATOR #
 							<label class="checkbox" for="multiple-checkbox-{comments.COMMENT_NUMBER}" aria-label="{@common.select.element}">
@@ -22,29 +28,19 @@
 							<a href="{comments.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 							<a href="{comments.U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 						# ENDIF #
+						<a href="\#com{comments.ID_COMMENT}" class="hidden-small-screens" itemprop="url" aria-label="${LangLoader::get_message('link.to.anchor', 'comments-common')}">\#{comments.ID_COMMENT}</a>
+						# IF comments.C_VIEW_TOPIC #
+							<a href="{comments.U_TOPIC}\#com{comments.ID_COMMENT}" aria-label="{L_VIEW_TOPIC}">
+								<i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+							</a>
+						# ENDIF #
 					</div>
-				</div>
-				<div class="message-infos">
-					<time datetime="{comments.DATE_ISO8601}" itemprop="datePublished">{comments.DATE_FULL}</time>
-					<a href="\#com{comments.ID_COMMENT}" class="hidden-small-screens" itemprop="url">\#{comments.ID_COMMENT}</a>
+
 				</div>
 			</div>
 		</header>
 		<div class="message-content# IF comments.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
 			{comments.MESSAGE}
-			# IF comments.C_VIEW_TOPIC #
-				<div class="view-topic">
-					<a href="{comments.U_TOPIC}\#com{comments.ID_COMMENT}">
-						{L_VIEW_TOPIC}
-						<i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
-					</a>
-				</div>
-			# ENDIF #
 		</div>
-		<footer class="message-footer-container# IF comments.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
-			<div class="message-user-management">
-				<span class="message-user-level small">{comments.L_LEVEL}</span>
-			</div>
-		</footer>
 	</article>
 # END comments #

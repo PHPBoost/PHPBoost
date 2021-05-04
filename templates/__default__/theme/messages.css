@@ -10,21 +10,17 @@
     margin: 0.809em 0;
 }
 
-.message-user-avatar,
-.message-small .message-user-avatar { max-height: 61px; }
+/* Message header */
+.message-user-avatar { max-height: 65px; }
 
-.message-header-container h3 { font-size: 1.618em; }
+.message-header-container h3 { font-size: 1.456em; }
 
 .message-header-container,
-.message-content,
-.message-footer-container,
-.message-user-sign {
+.message-content {
     border-width: 1px;
     border-style: solid;
     border-color: transparent;
 }
-
-.message-user-sign { border-width: 0 1px; }
 
 .message-header-container {
     display: flex;
@@ -34,26 +30,66 @@
     position: relative;
 }
 
+.message-header-infos { padding: 0.309em 0.618em; }
+
 .message-header-infos,
-.message-content,
-.message-user-sign,
-.message-footer-container { padding: 0.309em 0.618em; }
-
-.message-user-infos,
-.message-actions a,
-.message-user-sign,
-.message-footer-container { font-size: 0.809em; }
-
-.message-header-infos {
+.message-user-container,
+.message-infos {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     flex: 1 1 auto;
 }
 
+.message-user-infos-preview,
+.message-infos { text-align: right; }
+
+@media (min-width: 769px) {
+    .message-user-container,
+    .message-infos { flex-direction: row; }
+}
+
+
+.message-container .checkbox input { margin-top: -0.228em; }
+
+/* message actions */
+.message-actions a,
+.message-actions .checkbox { padding: 0 0.309em; }
+
+[class^="message-actions-container"] { position: relative; }
+
+[class^="message-actions-toggle"] {
+	border-radius: 50%;
+	padding: 0.228em 0.809em;
+	font-size: 0.809em;
+}
+
+[class^="message-actions-content"] {
+	position: absolute;
+	right: -0.618em;
+	top: calc(100% + 2em);
+	display: flex;
+	flex-direction: row;
+	background-color: var(--bgc-alt);
+	opacity: 0;
+	visibility: hidden;
+}
+
+[class^="message-actions-container"].opened [class^="message-actions-content"] {
+	opacity: 1;
+	visibility: visible;
+	z-index: 2;
+	top: calc(100% + 0.456em);
+}
+
+/* User datas */
+.message-container .button { width: auto; }
+
+/* Message content */
 .message-content {
     border-width: 0 1px 1px;
     flex: 1 1 auto;
+    padding: 1em 0.618em;
 }
 
 .message-edition {
@@ -64,61 +100,25 @@
 	display: block;
 }
 
-.message-user,
-.message-infos,
-.message-user-management,
-.message-user-infos,
-.message-user-assoc {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-
-@media (min-width: 769px) {
-    .message-user-avatar { max-height: 120px; }
-    .message-small .message-user-avatar { max-height: 80px; }
-
-    .message-header-container h3 { font-size: 2em; }
-}
-
-.message-user-sign {
-    max-height: 75px;
-    overflow: hidden;
-}
-
-.message-actions,
-.message-infos { text-align: right; }
-
-.message-actions a { padding: 0 0.228em; }
-
-.message-actions .checkbox input { margin-top: -0.1618em; }
-
-.message-footer-container {
-    border-width: 0 1px 1px;
-    padding: 0.309em 0.618em;
-    margin: 0;
-}
-
-.message-user-management { justify-content: flex-end; }
-
 /* --- Current user --- */
 .current-user-message .message-user-avatar { order: 2 }
 .current-user-message .message-header-infos { order: 1 }
 
-.current-user-message .message-user,
-.current-user-message .message-infos { flex-direction: row-reverse; }
+@media (min-width: 769px) {
+    .current-user-message .message-infos { flex-direction: row-reverse; }
+}
+
+.current-user-message .message-user-infos-preview,
+.current-user-message .message-infos { text-align: left; }
 
 /* --- message offset --- */
 .message-container.message-offset { justify-content: flex-start; }
 
 .message-offset .message-header-container,
-.message-offset .message-content,
-.message-offset .message-footer-container { width: 90%; }
+.message-offset .message-content{ width: 90%; }
 
 .message-offset .current-user-message.message-header-container,
-.message-offset .current-user-message.message-content,
-.message-offset .current-user-message.message-footer-container { align-self: flex-end; }
+.message-offset .current-user-message.message-content{ align-self: flex-end; }
 
 /* --- view message --- */
 .view-topic { padding: 0.809em 0; }

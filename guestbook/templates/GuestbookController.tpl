@@ -32,7 +32,7 @@
 												<img class="message-user-avatar" src="{messages.U_AVATAR}" alt="${LangLoader::get_message('avatar', 'user-common')}" />
 											# ENDIF #
 											<div class="message-header-infos">
-												<div class="message-user">
+												<div class="message-user-container">
 													<h3 class="message-user-pseudo">
 														# IF messages.C_AUTHOR_EXIST #
 															<a href="{messages.U_AUTHOR_PROFILE}" class="{messages.USER_LEVEL_CLASS}" # IF messages.C_USER_GROUP_COLOR # style="color:{messages.USER_GROUP_COLOR}" # ENDIF #>{messages.PSEUDO}</a>
@@ -40,6 +40,16 @@
 															<span class="visitor">{messages.PSEUDO}</span>
 														# ENDIF #
 													</h3>
+													<div class="controls message-user-infos-preview">
+														# IF messages.C_USER_GROUPS #
+															# START messages.usergroups #
+																{messages.usergroups.GROUP_NAME}
+															# END usergroups #
+														# ENDIF #
+													</div>
+												</div>
+												<div class="message-infos">
+													<time datetime="{messages.DATE}">${LangLoader::get_message('the', 'common')} {messages.DATE}</time>
 													<div class="message-actions">
 														# IF messages.C_DELETE #
 															<label for="multiple-checkbox-{messages.MESSAGE_NUMBER}" class="checkbox" aria-label="${LangLoader::get_message('select.element', 'common')}">
@@ -53,32 +63,14 @@
 														# IF messages.C_DELETE #
 															<a href="{messages.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 														# ENDIF #
-													</div>
-												</div>
-												<div class="message-infos">
-													<time datetime="{messages.DATE}">${LangLoader::get_message('the', 'common')} {messages.DATE}</time>
-													<a href="{messages.U_ANCHOR}" aria-label="${LangLoader::get_message('link.to.anchor', 'comments-common')}">\#{messages.ID}</a>
+														<a href="{U_SITE}{messages.U_ANCHOR}" class="copy-link-to-clipboard" aria-label="${LangLoader::get_message('common.copy.link.to.clipboard', 'common-lang')}">\#{messages.ID}</a>
+												<	/div>
 												</div>
 											</div>
 										</header>
 										<div class="message-content# IF messages.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
 											{messages.CONTENT}
 										</div>
-										# IF messages.C_USER_GROUPS #
-											<footer class="message-footer-container# IF messages.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
-												<div class="message-user-infos">
-													# START messages.usergroups #
-														<div class="message-group-level">
-															# IF messages.usergroups.C_GROUP_PICTURE #
-																<img src="{PATH_TO_ROOT}/images/group/{messages.usergroups.GROUP_PICTURE}" alt="{messages.usergroups.GROUP_NAME}" class="message-user-group" />
-															# ELSE #
-																${LangLoader::get_message('group', 'main')}: {messages.usergroups.GROUP_NAME}
-															# ENDIF #
-														</div>
-													# END usergroups #
-												</div>
-											</footer>
-										# ENDIF #
 									</article>
 								# END messages #
 								# IF C_MULTIPLE_DELETE_DISPLAYED #
@@ -103,7 +95,7 @@
 							</div>
 						</div>
 					# ENDIF #
-				</div>				
+				</div>
 			</div>
 		</div>
 	</div>

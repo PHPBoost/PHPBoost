@@ -239,27 +239,31 @@ $lang['forum.10.most.active.topics']   = 'Les 10 sujets ayant eu le plus de rép
 $lang['forum.last.forum.topics']    = 'Derniers sujets du forum';
 $lang['forum.connected.member']     = 'Membre connecté';
 $lang['forum.not.connected.member'] = 'Membre non connecté';
+$lang['forum.link.to.topic']        = 'Lien vers le sujet';
 
-$lang['forum.messages']   = 'Messages';
-$lang['forum.forum.message']   = 'Message sur le forum';
-$lang['forum.forum.messages']  = 'Messages sur le forum';
+$lang['forum.messages']       = 'Messages';
+$lang['forum.forum.message']  = 'Message sur le forum';
+$lang['forum.forum.messages'] = 'Messages sur le forum';
 
-$lang['forum.registred.on'] = 'Inscrit le';
-$lang['forum.quote.message'] = 'Citer ce message';
-$lang['forum.quote.last.message'] = 'Reprise du message précédent';
+$lang['forum.quote.last.message']   = 'Reprise du message précédent';
+$lang['forum.edit.message']         = 'Editer le message';
+$lang['forum.edited.by']            = 'Edité par';
+$lang['forum.edited.on']            = 'Edité le';
+$lang['forum.new.topic']            = 'Nouveau sujet';
+$lang['forum.edit.in.topic']        = 'Editer un message dans le sujet';
+$lang['forum.reply']                = 'Répondre';
+
+    // Profile
+$lang['forum.see.member.datas']     = 'Voir les infos du membre';
+$lang['forum.registred.on']         = 'Inscrit le';
 $lang['forum.show.member.messages'] = 'Voir tous les messages du membre';
-$lang['forum.new.topic'] = 'Nouveau sujet';
-$lang['forum.edit.topic'] = 'Editer le sujet';
-$lang['forum.edit.in.topic'] = 'Editer un message dans le sujet';
-$lang['forum.move.topic'] = 'Déplacer le sujet';
-$lang['forum.edit.message'] = 'Editer le message';
-$lang['forum.edited.by'] = 'Edité par';
-$lang['forum.edited.on'] = 'Edité le';
-$lang['forum.cut.topic'] = 'Scinder le sujet à partir de ce message';
-$lang['forum.alert.cut.topic'] = 'Voulez-vous scinder le sujet à partir de ce message ?';
-$lang['forum.add.to.favorites'] = 'Ajouter aux favoris';
-$lang['forum.link.to.topic'] = 'Lien vers le sujet';
-$lang['forum.reply'] = 'Répondre';
+    // Controls
+$lang['forum.message.controls']     = 'Gestion du message';
+$lang['forum.quote.message']        = 'Citer ce message';
+$lang['forum.edit.topic']           = 'Editer le sujet';
+$lang['forum.move.topic']           = 'Déplacer le sujet';
+$lang['forum.cut.topic']            = 'Scinder le sujet à partir de ce message';
+$lang['forum.alert.cut.topic']      = 'Voulez-vous scinder le sujet à partir de ce message ?';
 
 // Track
 $lang['forum.track.topic']         = 'Mettre en favori';
