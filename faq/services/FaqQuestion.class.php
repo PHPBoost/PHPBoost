@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 23
+ * @version     PHPBoost 6.0 - last update: 2021 05 04
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -144,8 +144,8 @@ class FaqQuestion
 			'id' => $this->get_id(),
 			'id_category' => $this->get_id_category(),
 			'q_order' => $this->get_q_order(),
-			'question' => $this->get_question(),
-			'answer' => $this->get_answer(),
+			'title' => $this->get_question(),
+			'content' => $this->get_answer(),
 			'creation_date' => $this->get_creation_date()->get_timestamp(),
 			'author_user_id' => $this->get_author_user()->get_id(),
 			'approved' => (int)$this->is_approved()
@@ -157,9 +157,9 @@ class FaqQuestion
 		$this->id = $properties['id'];
 		$this->id_category = $properties['id_category'];
 		$this->q_order = $properties['q_order'];
-		$this->question = $properties['question'];
-		$this->rewrited_question = Url::encode_rewrite($properties['question']);
-		$this->answer = $properties['answer'];
+		$this->question = $properties['title'];
+		$this->rewrited_question = Url::encode_rewrite($properties['title']);
+		$this->answer = $properties['content'];
 		$this->creation_date = new Date($properties['creation_date'], Timezone::SERVER_TIMEZONE);
 		$this->approved = (bool)$properties['approved'];
 

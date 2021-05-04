@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 23
+ * @version     PHPBoost 6.0 - last update: 2021 05 04
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -39,7 +39,7 @@ class FaqFeedProvider implements FeedProvider
 			$categories = CategoriesService::get_categories_manager($module_id)->get_children($idcat, new SearchCategoryChildrensOptions(), true);
 			$ids_categories = array_keys($categories);
 
-			$results = $querier->select('SELECT faq.id, faq.id_category, faq.question, faq.answer, faq.creation_date, cat.rewrited_name AS rewrited_name_cat
+			$results = $querier->select('SELECT faq.id, faq.id_category, faq.title, faq.content, faq.creation_date, cat.rewrited_name AS rewrited_name_cat
 				FROM ' . FaqSetup::$faq_table . ' faq
 				LEFT JOIN '. FaqSetup::$faq_cats_table .' cat ON cat.id = faq.id_category
 				WHERE approved = 1
@@ -57,7 +57,7 @@ class FaqFeedProvider implements FeedProvider
 				$item->set_title($row['question']);
 				$item->set_link($link);
 				$item->set_guid($link);
-				$item->set_desc(FormatingHelper::second_parse($row['answer']));
+				$item->set_desc(FormatingHelper::second_parse($row['content']));
 				$item->set_date(new Date($row['creation_date'], Timezone::SERVER_TIMEZONE));
 				$item->set_auth(CategoriesService::get_categories_manager($module_id)->get_heritated_authorizations($row['id_category'], Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
 				$data->add_item($item);
