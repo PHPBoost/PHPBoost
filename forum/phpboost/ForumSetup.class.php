@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 30
+ * @version     PHPBoost 6.0 - last update: 2021 05 04
  * @since       PHPBoost 3.0 - 2010 05 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -320,9 +320,9 @@ class ForumSetup extends DefaultModuleSetup
 
 		$this->querier->insert(self::$forum_cats_table, array(
 			'id'            => 2,
-			'name'          => $this->install_lang['forum.default.board.name'],
-			'rewrited_name' => Url::encode_rewrite($this->install_lang['forum.default.board.name']),
-			'description'   => $this->install_lang['forum.default.board.description'],
+			'name'          => $this->install_lang['forum.default.forum.name'],
+			'rewrited_name' => Url::encode_rewrite($this->install_lang['forum.default.forum.name']),
+			'description'   => $this->install_lang['forum.default.forum.description'],
 			'c_order'       => 1,
 			'auth'          => '',
 			'id_parent'     => 1,
