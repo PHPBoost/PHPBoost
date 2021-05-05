@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 03
+ * @version     PHPBoost 6.0 - last update: 2021 05 05
  * @since       PHPBoost 4.1 - 2015 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -47,7 +47,7 @@ $lang['forum.config.display.issue.status.icon']    = 'Afficher l\'icône associ�
     // Default
 $lang['forum.config.default.forum.name']   = GeneralConfig::load()->get_site_name() . ' forum';
 $lang['forum.config.issue.status']         = '[Réglé]';
-$lang['forum.configissue.status.unsolved'] = 'Sujet réglé ?';
+$lang['forum.config.issue.status.unsolved'] = 'Sujet réglé ?';
 $lang['forum.config.issue.status.solved']  = 'Sujet non réglé ?';
 
 // Email
