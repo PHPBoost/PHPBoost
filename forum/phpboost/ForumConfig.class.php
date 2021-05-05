@@ -226,7 +226,7 @@ class ForumConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::FORUM_NAME                                => LangLoader::get_message('forum.default.forum.name', 'common', 'forum'),
+			self::FORUM_NAME                                => LangLoader::get_message('forum.default.forum.name', 'install', 'forum'),
 			self::NUMBER_TOPICS_PER_PAGE                    => 20,
 			self::NUMBER_MESSAGES_PER_PAGE                  => 15,
 			self::READ_MESSAGES_STORAGE_DURATION            => 30,
