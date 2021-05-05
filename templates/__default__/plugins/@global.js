@@ -536,7 +536,7 @@ function copy_to_clipboard(tocopy)
 	});
 
 // Copy link to clipboard
-	$('.copy-link-to-clipboard').on('click', function (e) {
+	jQuery('.copy-link-to-clipboard').on('click', function (e) {
 		e.preventDefault();
 		var hrefValue = $(this).attr('href');
 
