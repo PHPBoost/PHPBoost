@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 10
+ * @version     PHPBoost 6.0 - last update: 2021 05 05
  * @since       PHPBoost 3.0 - 2011 04 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -89,7 +89,7 @@ class AdminLangsNotInstalledListController extends AdminController
 		foreach($folder_containing_phpboost_langs->get_folders() as $folder)
 		{
 			$folder_name = $folder->get_name();
-			if (!LangsManager::get_lang_existed($folder_name))
+			if ($folder->get_files('/config\.ini/') && !LangsManager::get_lang_existed($folder_name))
 			{
 				try
 				{

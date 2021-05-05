@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2021 05 05
  * @since       PHPBoost 3.0 - 2010 02 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -272,7 +272,7 @@ class InstallationServices
 		foreach ($modules_folder->get_folders() as $folder)
 		{
 			$folder_name = $folder->get_name();
-			if (!in_array($folder_name, array('admin', 'cache', 'images', 'install', 'kernel', 'lang', 'syndication', 'templates', 'update', 'upload', 'user')) && !ModulesManager::is_module_installed($folder_name))
+			if (!in_array($folder_name, array('admin', 'cache', 'images', 'install', 'kernel', 'lang', 'syndication', 'templates', 'update', 'upload', 'user')) && $folder->get_files('/config\.ini/') && !ModulesManager::is_module_installed($folder_name))
 			{
 				try
 				{
@@ -320,7 +320,7 @@ class InstallationServices
 		foreach ($folder_containing_phpboost_themes->get_folders() as $folder)
 		{
 			$folder_name = $folder->get_name();
-			if ($folder_name != '__default__' && !ThemesManager::get_theme_existed($folder_name))
+			if ($folder_name != '__default__' && $folder->get_files('/config\.ini/') && !ThemesManager::get_theme_existed($folder_name))
 			{
 				try
 				{
@@ -362,7 +362,7 @@ class InstallationServices
 		foreach($folder_containing_phpboost_langs->get_folders() as $folder)
 		{
 			$folder_name = $folder->get_name();
-			if (!LangsManager::get_lang_existed($folder_name))
+			if ($folder->get_files('/config\.ini/') && !LangsManager::get_lang_existed($folder_name))
 			{
 				try
 				{
