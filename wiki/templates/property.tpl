@@ -310,7 +310,7 @@
 								<th>
 									{@wiki.redirection.name}
 								</th>
-								<th class="col-larger">
+								<th class="col-large">
 									{@wiki.actions}
 								</th>
 							</tr>

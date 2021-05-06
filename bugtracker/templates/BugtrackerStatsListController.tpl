@@ -27,7 +27,7 @@
 	</header>
 	<div class="content align-center">
 		# IF C_BUGS #
-			<div id="status-chart"></div>
+			<div id="status-chart" class="col-90P"></div>
 		# ELSE #
 			<div class="message-helper bgc notice">{@notice.no_bug}</div>
 		# ENDIF #

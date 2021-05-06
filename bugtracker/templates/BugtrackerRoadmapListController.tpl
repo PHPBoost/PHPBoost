@@ -15,7 +15,7 @@
 								<a href="{LINK_BUG_ID_BOTTOM}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
 							</span>
 						</th>
-						<th class="title-column">
+						<th class="col-30P">
 							<span class="html-table-header-sortable">
 								<a href="{LINK_BUG_TITLE_TOP}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
 							</span>

@@ -22,7 +22,7 @@
 									<th>
 										{@wiki.changing.reason}
 									</th>
-									<th class="col-large">
+									<th class="col-medium">
 										{@common.actions}
 									</th>
 								</tr>

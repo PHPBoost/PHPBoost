@@ -12,7 +12,7 @@
 							<th>
 								${LangLoader::get_message('common.title', 'common-lang')}
 							</th>
-							<th class="col-large">
+							<th class="col-medium">
 								{@wiki.untrack}
 							</th>
 						</tr>

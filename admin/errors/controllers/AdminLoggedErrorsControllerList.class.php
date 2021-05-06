@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 29
+ * @version     PHPBoost 6.0 - last update: 2021 05 06
  * @since       PHPBoost 4.0 - 2014 01 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -42,7 +42,7 @@ class AdminLoggedErrorsControllerList extends AdminController
 		);
 
 		$table_model = new HTMLTableModel('error-list', array(
-			new HTMLTableColumn(LangLoader::get_message('date', 'date-common'), '', array('css_class' => 'col-large')),
+			new HTMLTableColumn(LangLoader::get_message('date', 'date-common'), '', array('css_class' => 'col-medium')),
 			new HTMLTableColumn(LangLoader::get_message('description', 'main'))
 		), new HTMLTableSortingRule(''), self::NUMBER_ITEMS_PER_PAGE);
 
@@ -138,7 +138,7 @@ class AdminLoggedErrorsControllerList extends AdminController
 			}
 		}
 
-		return array_reverse($array_errinfo); // Sorting in reverse order because recording in the log file 
+		return array_reverse($array_errinfo); // Sorting in reverse order because recording in the log file
 	}
 }
 ?>
