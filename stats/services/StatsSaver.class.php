@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 15
+ * @version     PHPBoost 6.0 - last update: 2021 05 06
  * @since       PHPBoost 2.0 - 2008 08 23
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -227,10 +227,17 @@ class StatsSaver
 	 */
 	public static function retrieve_stats($file_path)
 	{
+		$stats_array = array();
+		
 		$file = @fopen(PATH_TO_ROOT . '/stats/cache/' . $file_path . '.txt', 'r');
-		$stats_array = @fgets($file);
-		$stats_array = !empty($stats_array) ? TextHelper::unserialize($stats_array) : array();
-		@fclose($file);
+		if ($file)
+		{
+			$file_content = @fgets($file);
+			if ($file_content)
+				$stats_array = TextHelper::unserialize($file_content);
+			
+			@fclose($file);
+		}
 
 		return $stats_array;
 	}
