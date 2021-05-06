@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 05 06
  * @since       PHPBoost 3.0 - 2012 10 18
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -331,11 +331,11 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('type_mandatory', $this->lang['labels.type_mandatory'], $this->config->is_type_mandatory(),
-			array('class' => 'custom-checkbox')
+			array('class' => 'custom-checkbox half-field')
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_type_column', $this->lang['config.display_type_column'], $this->config->is_type_column_displayed(),
-			array('class' => 'custom-checkbox')
+			array('class' => 'custom-checkbox half-field')
 		));
 
 		$fieldset->add_field(new FormFieldHTML('types_table', $this->build_types_table()->render(), array('class' => 'full-field')));
@@ -345,11 +345,11 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('category_mandatory', $this->lang['labels.category_mandatory'], $this->config->is_category_mandatory(),
-			array('class' => 'custom-checkbox')
+			array('class' => 'custom-checkbox half-field')
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_category_column', $this->lang['config.display_category_column'], $this->config->is_category_column_displayed(),
-			array('class' => 'custom-checkbox')
+			array('class' => 'custom-checkbox half-field')
 		));
 
 		$fieldset->add_field(new FormFieldHTML('categories_table', $this->build_categories_table()->render(), array('class' => 'full-field')));
@@ -359,7 +359,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('severity_mandatory', $this->lang['labels.severity_mandatory'], $this->config->is_severity_mandatory(),
-			array('class' => 'custom-checkbox')
+			array('class' => 'custom-checkbox half-field')
 		));
 
 		$fieldset->add_field(new FormFieldHTML('severities_table', $this->build_severities_table()->render(), array('class' => 'full-field')));
@@ -369,11 +369,11 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('priority_mandatory', $this->lang['labels.priority_mandatory'], $this->config->is_priority_mandatory(),
-			array('class' => 'custom-checkbox')
+			array('class' => 'custom-checkbox half-field')
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_priority_column', $this->lang['config.display_priority_column'], $this->config->is_priority_column_displayed(),
-			array('class' => 'custom-checkbox')
+			array('class' => 'custom-checkbox half-field')
 		));
 
 		$fieldset->add_field(new FormFieldHTML('priorities_table', $this->build_priorities_table()->render(), array('class' => 'full-field')));
@@ -383,11 +383,11 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('detected_in_version_mandatory', $this->lang['labels.detected_in_mandatory'], $this->config->is_detected_in_version_mandatory(),
-			array('class' => 'custom-checkbox')
+			array('class' => 'custom-checkbox half-field')
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_detected_in_column', $this->lang['config.display_detected_in_column'], $this->config->is_detected_in_column_displayed(),
-			array('class' => 'custom-checkbox')
+			array('class' => 'custom-checkbox half-field')
 		));
 
 		$fieldset->add_field(new FormFieldHTML('versions_table', $this->build_versions_table()->render(), array('class' => 'full-field')));
@@ -416,7 +416,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$types = $this->config->get_types();
 
 		$types_table = new FileTemplate('bugtracker/AdminBugtrackerTypesListController.tpl');
-		$types_table->add_lang($this->lang);
+		$types_table->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 
 		$key = 0;
 		foreach ($types as $key => $type)
@@ -445,7 +445,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$categories = $this->config->get_categories();
 
 		$categories_table = new FileTemplate('bugtracker/AdminBugtrackerCategoriesListController.tpl');
-		$categories_table->add_lang($this->lang);
+		$categories_table->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 
 		$key = 0;
 		foreach ($categories as $key => $category)
@@ -474,7 +474,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$severities = $this->config->get_severities();
 
 		$severities_table = new FileTemplate('bugtracker/AdminBugtrackerSeveritiesListController.tpl');
-		$severities_table->add_lang($this->lang);
+		$severities_table->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 
 		$key = 0;
 		foreach ($severities as $key => $severity)
@@ -501,7 +501,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$priorities = $this->config->get_priorities();
 
 		$priorities_table = new FileTemplate('bugtracker/AdminBugtrackerPrioritiesListController.tpl');
-		$priorities_table->add_lang($this->lang);
+		$priorities_table->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 
 		$key = 0;
 		foreach ($priorities as $key => $priority)
@@ -527,7 +527,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$versions = $this->config->get_versions();
 
 		$versions_table = new FileTemplate('bugtracker/AdminBugtrackerVersionsListController.tpl');
-		$versions_table->add_lang($this->lang);
+		$versions_table->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 
 		$key = 0;
 		foreach ($versions as $key => $version)

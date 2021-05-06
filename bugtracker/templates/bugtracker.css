@@ -18,39 +18,9 @@
 
 .legend { padding-right: 1.309em; }
 
-.title-column 	{ width: 30%; }
-.small-column 	{ width: 10%; }
-.medium-column 	{ width: 20%; }
-#status-chart 	{ width: 90%; }
-
-table.version-list tfoot tr th,
-table.categories-list tfoot tr th { padding: 0.618em 0; }
-
-table.version-list input[id*="release_date"] { width: 80%; }
-
 table.bt .bt-content { width: 65% !important; }
 
 .form-field-progressbar { width: 25%; }
-
-.cw25 {
-	width: 100%;
-	text-align: center;
-}
-
-@media (min-width: 981px) {
-	.cw25 { width: calc(100% / 4); }
-}
-
-div[id*="calendar"] {
-	left: auto !important;
-	right: auto !important;
-}
-
-@media (max-width: 980px) {
-	table.version-list div[id*="calendar"] { display: none !important; }
-
-	table.version-list .fa-calendar-alt { display: none !important; }
-}
 
 .bugtracker-actions a { padding: 0.228em; }
 

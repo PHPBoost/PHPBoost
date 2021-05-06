@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 03
+ * @version     PHPBoost 6.0 - last update: 2021 05 06
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -39,10 +39,15 @@ $lang['common.and'] = 'And';
 $lang['common.yes'] = 'Yes';
 $lang['common.no']  = 'No';
 
-$lang['common.always']      = 'Always';
-$lang['common.unknown']     = 'Unknown';
-$lang['common.never']       = 'Never';
-$lang['common.unspecified'] = 'Unspecified';
+$lang['common.always']        = 'Always';
+$lang['common.unknown']       = 'Unknown';
+$lang['common.never']         = 'Never';
+$lang['common.unspecified']   = 'Unspecified';
+$lang['common.default']       = 'Default';
+$lang['common.default.by']    = 'By default';
+$lang['common.default.value'] = 'Default value';
+
+$lang['common.color'] = 'Color';
 
 // Actions
 $lang['common.read.more']    = 'Read more';
