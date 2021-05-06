@@ -15,6 +15,26 @@
 .bigger   { font-size: 1.456em;  }
 .biggest  { font-size: 2.1618em; }
 
+@media (min-width: 769px) {
+	.col-smaller { width: 3em;  }
+	.col-small   { width: 6em;  }
+	.col-medium  { width: 9em;  }
+	.col-large   { width: 12em; }
+	.col-larger  { width: 15em; }
+	.col-xlarge  { width: 18em; }
+	.col-xlarger { width: 21em; }
+
+	.col-05 { width: 5%;  }
+	.col-10 { width: 10%; }
+	.col-20 { width: 20%; }
+	.col-25 { width: 25%; }
+	.col-33 { width: calc(100% / 3); }
+	.col-50 { width: 50%; }
+	.col-66 { width: calc(100% / 3 * 2); }
+	.col-75 { width: 75%; }
+	.col-90 { width: 90%; }
+}
+
 .h-padding { padding: 0 0.618em; }
 .v-padding { padding: 0.618em 0; }
 

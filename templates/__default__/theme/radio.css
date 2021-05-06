@@ -33,6 +33,8 @@
 	cursor: pointer;
 }
 
+table .custom-radio .radio [type="radio"] + span { padding: 0; }
+
 .custom-radio .radio [type="radio"] + span:before,
 .custom-radio .radio [type="radio"] + span:after {
 	content: '';

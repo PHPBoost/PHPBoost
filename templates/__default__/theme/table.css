@@ -215,13 +215,6 @@ tfoot td select { padding: 0.1618em 0.309em; }
     white-space: nowrap;
 }
 
-/* --- Columns sizes --- */
-.col-smaller { width: 3em;  }
-.col-small   { width: 6em;  }
-.col-large   { width: 9em;  }
-.col-larger  { width: 12em; }
-.col-xlarge  { width: 15em; }
-
 /* --- bordered-table --- */
 .bordered-table td {
 	border-width: 1px 0 0 1px;
