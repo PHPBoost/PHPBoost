@@ -40,22 +40,38 @@
 		}
 	}
 
-// BBCode block: Code
+	// BBCode block: Code
 	// Add button "Copy to clipboard" on Coding block
-	jQuery(document).ready(function(){
-		var IDCODE = 1;
-		jQuery('.formatter-code').each( function(){
-			if ( !jQuery(this).children('.formatter-content').hasClass('copy-code-content') )
-			{
-				jQuery(this).prepend('<span id="copy-code-' + IDCODE + '" class="copy-code" aria-label="' + L_COPYTOCLIPBOARD + '" onclick="copy_code_clipboard(' + IDCODE + ')"><i class="far fa-clone fa-lg"></i></span>');
-				jQuery(this).children('.formatter-content').attr("id", 'copy-code-' + IDCODE + '-content');
-				jQuery(this).children('.formatter-content').addClass('copy-code-content');
-				IDCODE = IDCODE + 1;
-			}
-		} );
-	} );
+	var add_button_copytoclipboard = (callback) => {
+		if (document.readyState != "loading") callback();
+		else document.addEventListener("DOMContentLoaded", callback);
+	}
 
-	// Function copy_code_clipboard
+	add_button_copytoclipboard(() => {
+        Array.prototype.forEach.call( document.querySelectorAll(".formatter-code") , function (el, i) {
+
+			if ( !el.childNodes[1].classList.contains('copy-code-content') )
+			{
+				var parent = document.createElement("span");
+				parent.setAttribute('id', "copy-code-" + i);
+				parent.setAttribute('class', "copy-code");
+				parent.setAttribute('aria-label', L_COPYTOCLIPBOARD);
+				parent.setAttribute('onclick', "copy_code_clipboard(" + i + ")");
+
+				var child = document.createElement("i");
+				child.setAttribute('class', "far fa-clone fa-lg");
+
+				parent.appendChild(child);
+
+				el.insertBefore(parent, el.childNodes[0]);
+
+				el.childNodes[2].setAttribute('id',"copy-code-" + i + "-content")
+				el.childNodes[2].classList.add("copy-code-content")
+			}
+		})
+	});
+
+    // Function copy_code_clipboard
 	//
 	// Description :
 	// This function copy the content of your specific selection to clipboard.
