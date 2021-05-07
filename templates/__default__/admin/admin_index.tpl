@@ -189,7 +189,7 @@
 												# ELSE #
 													<a href="{comments_list.U_PROFILE}" class="{comments_list.LEVEL_CLASS}" # IF comments_list.C_GROUP_COLOR # style="color:{comments_list.GROUP_COLOR}" # ENDIF #>{comments_list.PSEUDO}</a>
 												# ENDIF #,
-											</span> <span>{comments_list.DATE_DIFF_NOW} :</span> </span>
+											</span> <span>{comments_list.DATE_AGO} :</span> </span>
 										<p>{comments_list.CONTENT}</p>
 									</li>
 								# END comments_list #
