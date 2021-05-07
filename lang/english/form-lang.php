@@ -109,9 +109,6 @@ $lang['form.avatar.management']              = 'Avatar';
 $lang['form.required.field']                 = 'Required field';
 $lang['form.required.field.clue']            = 'Required in the member profile and registration area';
 $lang['form.possible.values']                = 'Possible values';
-$lang['form.possible.values.is.default']     = 'Is default';
-$lang['form.possible.values.delete.default'] = 'Delete default value';
-$lang['form.default.value']                  = 'Default value';
 $lang['form.read.authorizations']            = 'Read permissions of the field in the profile';
 $lang['form.actions.authorizations']         = 'Read permissions of the field when creating or editing a profile';
 
@@ -153,10 +150,13 @@ $lang['form.picture']                   = 'Picture';
 $lang['form.picture.preview']           = 'Picture preview';
 $lang['form.sources']                   = 'Sources';
 $lang['form.add.source']                = 'Add a source';
-$lang['form.del.source']                = 'Delete the source';
+$lang['form.delete.source']             = 'Delete the source';
 $lang['form.source.name']               = 'Source name';
 $lang['form.source.url']                = 'Source address';
 $lang['form.captcha']                   = 'Code de vérification';
+$lang['form.default']                   = 'Default';
+$lang['form.is.default']                = 'By default';
+$lang['form.default.value']             = 'Default value';
 
 // Messages
 $lang['form.message.success.add']  = 'The profile field <b>:name</b> has been added';

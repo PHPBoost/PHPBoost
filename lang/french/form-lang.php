@@ -14,16 +14,18 @@
 $lang['form.required.fields'] = 'Les champs marqués * sont obligatoires !';
 
 // Autorizations
-$lang['form.authorizations']                = 'Autorisations';
-$lang['form.authorizations.read']           = 'Autorisation de lecture';
-$lang['form.authorizations.write']          = 'Autorisation d\'écriture';
-$lang['form.authorizations.contribution']   = 'Autorisation de contribution';
-$lang['form.authorizations.moderation']     = 'Autorisation de modération';
-$lang['form.authorizations.categories']     = 'Autorisation de gérer les catégories';
-$lang['form.authorizations.menu']           = 'Autorisation d\'afficher le menu';
-$lang['form.authorizations.specials']       = 'Autorisations spéciales';
-$lang['form.authorizations.default']        = 'Autorisations par défaut';
-$lang['form.authorizations.clue']           = 'Autorisations globales du module. Vous pouvez changer ces autorisations localement sur chaque catégorie.';
+$lang['form.authorizations']              = 'Autorisations';
+$lang['form.authorizations.read']         = 'Autorisation de lecture';
+$lang['form.authorizations.write']        = 'Autorisation d\'écriture';
+$lang['form.authorizations.contribution'] = 'Autorisation de contribution';
+$lang['form.authorizations.moderation']   = 'Autorisation de modération';
+$lang['form.authorizations.categories']   = 'Autorisation de gérer les catégories';
+$lang['form.authorizations.menu']         = 'Autorisation d\'afficher le menu';
+$lang['form.authorizations.specials']     = 'Autorisations spéciales';
+$lang['form.authorizations.default']      = 'Autorisations par défaut';
+$lang['form.authorizations.clue']         = 'Autorisations globales du module. Vous pouvez changer ces autorisations localement sur chaque catégorie.';
+$lang['form.authorizations.read.profile'] = 'Autorisations de lecture du champ dans le profil';
+$lang['form.authorizations.actions']      = 'Autorisations de lecture du champ dans la création ou la modification d\'un profil';
 
 // Buttons
 $lang['form.submit']  = 'Valider';
@@ -85,35 +87,30 @@ $lang['form.extended.fields.error.already.exists']  = 'Le champ existe déjà.';
 $lang['form.extended.fields.error.phpboost.config'] = 'Les champs utilisés par défaut par PHPBoost ne peuvent pas être créés plusieurs fois, veuillez choisir un autre type de champ.';
 
 // Fields
-$lang['form.fields.management']              = 'Gestion des champs';
-$lang['form.field.add']                      = 'Ajouter un champ';
-$lang['form.field.edit']                     = 'Editer un champ';
-$lang['form.field.type']                     = 'Type de champ';
-$lang['form.default.field']                  = 'Champ par défaut';
-$lang['form.short.text']                     = 'Texte court (max 255 caractères)';
-$lang['form.long.text']                      = 'Texte long (illimité)';
-$lang['form.half.text']                      = 'Texte semi long';
-$lang['form.simple.select']                  = 'Sélection unique (parmi plusieurs valeurs)';
-$lang['form.multiple.select']                = 'Sélection multiple (parmi plusieurs valeurs)';
-$lang['form.simple.check']                   = 'Choix unique (parmi plusieurs valeurs)';
-$lang['form.multiple.check']                 = 'Choix multiples (parmi plusieurs valeurs)';
-$lang['form.date']                           = 'Date';
-$lang['form.themes.choice']                  = 'Choix des thèmes';
-$lang['form.langs.choice']                   = 'Choix des langues';
-$lang['form.birthdate']                      = 'Date de naissance';
-$lang['form.pm.to.email']                    = 'Notification par email à la réception d\'un message privé';
-$lang['form.editor.choice']                  = 'Choix de l\'éditeur';
-$lang['form.timezone.choice']                = 'Choix du fuseau horaire';
-$lang['form.sex.choice']                     = 'Choix du sexe';
-$lang['form.avatar.management']              = 'Gestion de l\'avatar';
-$lang['form.required.field']                 = 'Champ requis';
-$lang['form.required.field.clue']            = 'Obligatoire dans le profil du membre et à son inscription.';
-$lang['form.possible.values']                = 'Valeurs possibles';
-$lang['form.possible.values.is.default']     = 'Par défaut';
-$lang['form.possible.values.delete.default'] = 'Supprimer la valeur par défaut';
-$lang['form.default.value']                  = 'Valeur par défaut';
-$lang['form.read.authorizations']            = 'Autorisations de lecture du champ dans le profil';
-$lang['form.actions.authorizations']         = 'Autorisations de lecture du champ dans la création ou la modification d\'un profil';
+$lang['form.fields.management']   = 'Gestion des champs';
+$lang['form.field.add']           = 'Ajouter un champ';
+$lang['form.field.edit']          = 'Editer un champ';
+$lang['form.field.type']          = 'Type de champ';
+$lang['form.default.field']       = 'Champ par défaut';
+$lang['form.short.text']          = 'Texte court (max 255 caractères)';
+$lang['form.long.text']           = 'Texte long (illimité)';
+$lang['form.half.text']           = 'Texte semi long';
+$lang['form.simple.select']       = 'Sélection unique (parmi plusieurs valeurs)';
+$lang['form.multiple.select']     = 'Sélection multiple (parmi plusieurs valeurs)';
+$lang['form.simple.check']        = 'Choix unique (parmi plusieurs valeurs)';
+$lang['form.multiple.check']      = 'Choix multiples (parmi plusieurs valeurs)';
+$lang['form.date']                = 'Date';
+$lang['form.themes.choice']       = 'Choix des thèmes';
+$lang['form.langs.choice']        = 'Choix des langues';
+$lang['form.birthdate']           = 'Date de naissance';
+$lang['form.pm.to.email']         = 'Notification par email à la réception d\'un message privé';
+$lang['form.editor.choice']       = 'Choix de l\'éditeur';
+$lang['form.timezone.choice']     = 'Choix du fuseau horaire';
+$lang['form.sex.choice']          = 'Choix du sexe';
+$lang['form.avatar.management']   = 'Gestion de l\'avatar';
+$lang['form.required.field']      = 'Champ requis';
+$lang['form.required.field.clue'] = 'Obligatoire dans le profil du membre et à son inscription.';
+$lang['form.possible.values']     = 'Valeurs possibles';
 
 // Labels
 $lang['form.name']                      = 'Nom';
@@ -153,10 +150,14 @@ $lang['form.picture']                   = 'Image';
 $lang['form.picture.preview']           = 'Prévisualisation de l\'image';
 $lang['form.sources']                   = 'Source(s)';
 $lang['form.add.source']                = 'Ajouter une source';
-$lang['form.del.source']                = 'Supprimer la source';
+$lang['form.delete.source']             = 'Supprimer la source';
 $lang['form.source.name']               = 'Nom de la source';
 $lang['form.source.url']                = 'Adresse de la source';
 $lang['form.captcha']                   = 'Code de vérification';
+$lang['form.default']                   = 'Défaut';
+$lang['form.is.default']                = 'Par défaut';
+$lang['form.default.value']             = 'Valeur par défaut';
+$lang['form.delete.default.value']      = 'Supprimer la valeur par défaut';
 
 // Messages
 $lang['form.message.success.add']  = 'Le champ du profil <b>:name</b> a été ajouté';

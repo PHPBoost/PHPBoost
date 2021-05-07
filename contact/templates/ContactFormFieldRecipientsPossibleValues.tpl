@@ -45,7 +45,7 @@
 </script>
 
 <div id="input_fields_${escape(HTML_ID)}">
-<span class="text-strong is-default-title">{@form.possible.values.is.default}</span>
+<span class="text-strong is-default-title">{@form.is.default}</span>
 # START fieldelements #
 	<div id="${escape(HTML_ID)}_{fieldelements.ID}" class="possible-values mini-checkbox">
 		<div class="form-field-checkbox">

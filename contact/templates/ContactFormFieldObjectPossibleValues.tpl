@@ -52,7 +52,7 @@
 
 <div id="input_fields_${escape(HTML_ID)}">
 	<div class="text-strong">
-		<span class="title-possible-value is-default-title">${LangLoader::get_message('form.possible.values.is.default', 'form-lang')}</span>
+		<span class="title-possible-value is-default-title">${LangLoader::get_message('form.is.default', 'form-lang')}</span>
 		<span class="title-possible-value name-title">{@contact.possible.values.subject}</span>
 		<span class="title-possible-value title-desc">${LangLoader::get_message('contact.possible.values.recipient', 'common', 'contact')}</span>
 	</div>
@@ -83,7 +83,7 @@
 </div>
 <div class="flex-between">
 	<a href="javascript:ContactFormFieldObjectPossibleValues.add();" id="add-${escape(HTML_ID)}" class="form-field-more-values" aria-label="${LangLoader::get_message('common.add', 'common-lang')}"><i class="far fa-lg fa-plus-square" aria-hidden="true"></i></a>
-	<a href="#" onclick="return false;" id="uncheck_default_${escape(HTML_ID)}"# IF NOT C_HAS_DEFAULT_VALUE # style="display: none;"# ENDIF # class="small"><i class="fa fa-times" aria-hidden="true"></i> ${LangLoader::get_message('form.possible.values.delete.default', 'form-lang')}</a>
+	<a href="#" onclick="return false;" id="uncheck_default_${escape(HTML_ID)}"# IF NOT C_HAS_DEFAULT_VALUE # style="display: none;"# ENDIF # class="small"><i class="fa fa-times" aria-hidden="true"></i> ${LangLoader::get_message('form.delete.default.value', 'form-lang')}</a>
 </div>
 
 <script>
