@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 11
+ * @version     PHPBoost 6.0 - last update: 2021 05 07
  * @since       PHPBoost 3.0 - 2012 11 13
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -109,8 +109,9 @@ class BugtrackerRoadmapListController extends ModuleController
 
 			$stats_cache = BugtrackerStatsCache::load();
 			$bugs_number = $stats_cache->get_bugs_number_per_version($roadmap_version);
+			$roadmap_status_bugs_number = ($bugs_number && isset($bugs_number[$roadmap_status]) ? $bugs_number[$roadmap_status] : 0);
 
-			$pagination = $this->get_pagination($bugs_number[$roadmap_status], $current_page, $roadmap_version, $roadmap_version_name, $roadmap_status, $field, $sort);
+			$pagination = $this->get_pagination($roadmap_status_bugs_number, $current_page, $roadmap_version, $roadmap_version_name, $roadmap_status, $field, $sort);
 
 			$result = PersistenceContext::get_querier()->select("SELECT b.*, member.*
 			FROM " . BugtrackerSetup::$bugtracker_table . " b
@@ -149,7 +150,7 @@ class BugtrackerRoadmapListController extends ModuleController
 
 			$this->view->put_all(array(
 				'C_VERSIONS_AVAILABLE'			=> true,
-				'C_BUGS'						=> $bugs_number[$roadmap_status],
+				'C_BUGS'						=> $roadmap_status_bugs_number,
 				'C_STATUS_IN_PROGRESS'			=> $roadmap_status == BugtrackerItem::IN_PROGRESS,
 				'C_DISPLAY_TYPE_COLUMN'			=> $this->config->is_type_column_displayed(),
 				'C_DISPLAY_CATEGORY_COLUMN'		=> $this->config->is_category_column_displayed(),
@@ -158,7 +159,7 @@ class BugtrackerRoadmapListController extends ModuleController
 				'C_PAGINATION'					=> $pagination->has_several_pages(),
 				'PAGINATION' 					=> $pagination->display(),
 				'BUGS_COLSPAN' 					=> $bugs_colspan,
-				'SELECT_VERSION'				=> $this->build_form(isset($versions[$roadmap_version]) ? $roadmap_version : 0, isset($versions[$roadmap_version]) ? Url::encode_rewrite($versions[$roadmap_version]['name']) : '', $roadmap_status, (int)$bugs_number[$roadmap_status], isset($versions[$roadmap_version]) ? $versions[$roadmap_version]['release_date'] : 0)->display(),
+				'SELECT_VERSION'				=> $this->build_form(isset($versions[$roadmap_version]) ? $roadmap_version : 0, isset($versions[$roadmap_version]) ? Url::encode_rewrite($versions[$roadmap_version]['name']) : '', $roadmap_status, (int)$roadmap_status_bugs_number, isset($versions[$roadmap_version]) ? $versions[$roadmap_version]['release_date'] : 0)->display(),
 				'LEGEND'						=> BugtrackerViews::build_legend($displayed_severities, 'roadmap'),
 				'LINK_BUG_ID_TOP' 				=> BugtrackerUrlBuilder::roadmap($roadmap_version, $roadmap_version_name, $roadmap_status, 'id', 'top', $current_page)->rel(),
 				'LINK_BUG_ID_BOTTOM' 			=> BugtrackerUrlBuilder::roadmap($roadmap_version, $roadmap_version_name, $roadmap_status, 'id', 'bottom', $current_page)->rel(),
