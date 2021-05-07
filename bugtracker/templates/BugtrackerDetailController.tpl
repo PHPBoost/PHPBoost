@@ -26,7 +26,7 @@
 			<div class="form-element">
 				<label>{@labels.fields.progress}</label>
 				<div class="form-field form-field-progressbar">
-					<div class="progressbar-container" role="progressbar" aria-valuenow="{bug.PROGRESS}" aria-valuemin="0" aria-valuemax="100">
+					<div class="progressbar-container" role="progressbar" aria-valuenow="{PROGRESS}" aria-valuemin="0" aria-valuemax="100">
 						<div class="progressbar-infos">{PROGRESS}%</div>
 						<div class="progressbar" style="width:{PROGRESS}%"></div>
 					</div>
