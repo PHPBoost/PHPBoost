@@ -29,9 +29,9 @@
 							<span class="hidden-large-screens">{@calendar.dates}</span>
 						</th>
 						# IF C_CONTROLS #
-							<th aria-label="{@common.controls}">
+							<th aria-label="{@common.moderation}">
 								<i class="fa fa-cog" aria-hidden="true"></i>
-								<span class="hidden-large-screens">{@common.controls}</span>
+								<span class="hidden-large-screens">{@common.moderation}</span>
 							</th>
 						# ENDIF #
 					</tr>
