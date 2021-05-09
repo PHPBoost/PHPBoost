@@ -4,9 +4,9 @@
     google.setOnLoadCallback(drawChart);
     function drawChart() {
         var status_chart_data = google.visualization.arrayToDataTable([
-            ['{@labels.fields.status}', ${TextHelper::to_js_string(LangLoader::get_message('items_number', 'common'))}],
+            ['{@common.status}', ${TextHelper::to_js_string(@common.items.number)}],
             # START status #
-            ['{status.NAME}',     {status.NUMBER}],
+                ['{status.NAME}',     {status.NUMBER}],
             # END status #
         ]);
 
@@ -23,13 +23,13 @@
 
 <article class="bugtracker-item several-items">
 	<header>
-		<h2>{@labels.fields.status}</h2>
+		<h2>{@common.status}</h2>
 	</header>
 	<div class="content align-center">
 		# IF C_BUGS #
-			<div id="status-chart" class="col-90P"></div>
+			<div id="status-chart"></div>
 		# ELSE #
-			<div class="message-helper bgc notice">{@notice.no_bug}</div>
+			<div class="message-helper bgc notice">{@common.no.item.now}</div>
 		# ENDIF #
 	</div>
 </article>
@@ -37,20 +37,20 @@
 # IF C_DISPLAY_VERSIONS #
     <article class="bugtracker-item several-items">
     	<header>
-    		<h2>{@labels.fix_bugs_per_version}</h2>
+    		<h2>{@bugtracker.solved.per.version}</h2>
     	</header>
 		# IF C_FIXED_BUGS #
     		<table class="table">
     			<thead>
     				<tr>
-    					<th>
-    						{@labels.fields.version}
+    					<th class="col-25">
+    						{@common.version}
     					</th>
     					<th>
-    						{@labels.fields.version_release_date}
+    						{@bugtracker.version.release.date}
     					</th>
-    					<th>
-    						{@labels.number_fixed}
+    					<th class="col-large">
+    						{@bugtracker.items.number}
     					</th>
     				</tr>
     			</thead>
@@ -71,7 +71,7 @@
     			</tbody>
     		</table>
 		# ELSE #
-		    <div class="message-helper bgc notice">{@notice.no_bug_solved}</div>
+		    <div class="message-helper bgc notice">{@common.no.item.now}</div>
 		# ENDIF #
     </article>
 # ENDIF #
@@ -79,20 +79,20 @@
 # IF C_DISPLAY_TOP_POSTERS #
     <article class="bugtracker-item several-items">
     	<header>
-    		<h2>{@labels.top_posters}</h2>
+    		<h2>{@bugtracker.top.contributors}</h2>
     	</header>
 		# IF C_POSTERS #
     		<table class="table">
     			<thead>
     				<tr>
-    					<th>
+    					<th class="col-25">
     						N&deg;
     					</th>
     					<th>
-    						{@labels.login}
+    						{@common.author}
     					</th>
-    					<th>
-    						${LangLoader::get_message('items_number', 'common')}
+    					<th class="col-large">
+    						{@bugtracker.items.number}
     					</th>
     				</tr>
     			</thead>
@@ -113,7 +113,7 @@
     			</tbody>
     		</table>
 		# ELSE #
-		    <div class="message-helper bgc notice">{@notice.no_bug}</div>
+		    <div class="message-helper bgc notice">{@common.no.item.now}</div>
 		# ENDIF #
     </article>
 # ENDIF #

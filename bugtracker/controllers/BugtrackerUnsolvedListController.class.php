@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 11
+ * @version     PHPBoost 6.0 - last update: 2021 05 09
  * @since       PHPBoost 3.0 - 2012 11 12
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -135,7 +135,6 @@ class BugtrackerUnsolvedListController extends ModuleController
 			'C_PAGINATION'					=> $pagination->has_several_pages(),
 			'PAGINATION' 					=> $pagination->display(),
 			'BUGS_COLSPAN' 					=> $bugs_colspan,
-			'L_NO_BUG' 						=> empty($filters) ? $this->lang['notice.no_bug'] : (count($filters) > 1 ? $this->lang['notice.no_bug_matching_filters'] : $this->lang['notice.no_bug_matching_filter']),
 			'FILTER_LIST'					=> BugtrackerViews::build_filters('unsolved', $bugs_number),
 			'LEGEND'						=> BugtrackerViews::build_legend($displayed_severities, 'unsolved'),
 			'LINK_BUG_ID_TOP' 				=> BugtrackerUrlBuilder::unsolved('id', 'top', $current_page, $filter, $filter_id)->rel(),
@@ -149,7 +148,7 @@ class BugtrackerUnsolvedListController extends ModuleController
 		));
 
 		if ($config->is_restrict_display_to_own_elements_enabled() && !BugtrackerAuthorizationsService::check_authorizations()->moderation() && !AppContext::get_current_user()->is_guest())
-			$this->view->put('MSG', MessageHelper::display($this->lang['warning.restrict_display_to_own_elements_enabled'], MessageHelper::WARNING));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.restrict_display_to_own_elements_enabled'], MessageHelper::WARNING));
 
 		return $this->view;
 	}
@@ -158,7 +157,7 @@ class BugtrackerUnsolvedListController extends ModuleController
 	{
 		$this->lang = LangLoader::get('common', 'bugtracker');
 		$this->view = new FileTemplate('bugtracker/BugtrackerListController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 	}
 
 	private function check_authorizations()

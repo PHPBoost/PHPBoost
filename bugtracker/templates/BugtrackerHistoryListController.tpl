@@ -4,22 +4,22 @@
 			<thead>
 				<tr>
 					<th>
-						{@labels.fields.updater_id}
+						{@bugtracker.updated.by}
 					</th>
 					<th>
-						{@labels.fields.updated_field}
+						{@bugtracker.updated.field}
 					</th>
 					<th>
-						{@labels.fields.old_value}
+						{@common.before}
 					</th>
 					<th>
-						{@labels.fields.new_value}
+						{@common.after}
 					</th>
 					<th>
-						{@labels.fields.update_date}
+						{@bugtracker.update.date}
 					</th>
 					<th>
-						{@labels.fields.change_comment}
+						{@common.comment}
 					</th>
 				</tr>
 			</thead>
@@ -57,5 +57,5 @@
 		</table>
 	</div>
 # ELSE #
-	<div class="message-helper bgc notice">{@notice.no_history}</div>
+	<div class="message-helper bgc notice">{@common.no.item.now}</div>
 # ENDIF #

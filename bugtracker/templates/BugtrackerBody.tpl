@@ -1,7 +1,7 @@
 # INCLUDE MSG #
 <section id="module-bugtracker">
 	<header class="section-header">
-		<h1> {TITLE} </h1>
+		<h1> {L_TITLE} </h1>
 	</header>
 	<div class="sub-section">
 		<div class="content-container">
@@ -15,7 +15,7 @@
 							# IF C_SYNDICATION #
 								# IF C_UNSOLVED #
 									<li# IF C_UNSOLVED # class="current"# ENDIF #>
-										<a class="cssmenu-title cssmenu-title-icon" href="{U_SYNDICATION_UNSOLVED}" aria-label="${LangLoader::get_message('syndication', 'common')}">
+										<a class="cssmenu-title cssmenu-title-icon" href="{U_SYNDICATION_UNSOLVED}" aria-label="{@common.syndication}">
 											<i class="fa fa-rss warning" aria-hidden="true"></i>
 										</a>
 									</li>
@@ -27,7 +27,7 @@
 							# IF C_SYNDICATION #
 								# IF C_SOLVED #
 									<li# IF C_SOLVED # class="current"# ENDIF #>
-										<a class="cssmenu-title cssmenu-title-icon" href="{U_SYNDICATION_SOLVED}" aria-label="${LangLoader::get_message('syndication', 'common')}">
+										<a class="cssmenu-title cssmenu-title-icon" href="{U_SYNDICATION_SOLVED}" aria-label="{@common.syndication}">
 											<i class="fa fa-rss warning" aria-hidden="true"></i>
 										</a>
 									</li>
@@ -35,19 +35,19 @@
 							# ENDIF #
 							# IF C_ROADMAP_ENABLED #
 								<li# IF C_ROADMAP # class="current"# ENDIF #>
-									<a href="${relative_url(BugtrackerUrlBuilder::roadmap())}" class="cssmenu-title"><i class="fa fa-fw fa-road"></i><span>{@titles.roadmap}</span></a>
+									<a href="${relative_url(BugtrackerUrlBuilder::roadmap())}" class="cssmenu-title"><i class="fa fa-fw fa-road"></i><span>{@bugtracker.roadmap}</span></a>
 								</li>
 							# ENDIF #
 							# IF C_STATS_ENABLED #
 								<li# IF C_STATS # class="current"# ENDIF #>
-									<a href="${relative_url(BugtrackerUrlBuilder::stats())}" class="cssmenu-title"><i class="fa fa-fw fa-poll-h"></i><span>{@titles.stats}</span></a>
+									<a href="${relative_url(BugtrackerUrlBuilder::stats())}" class="cssmenu-title"><i class="fa fa-fw fa-poll-h"></i><span>{@common.statistics}</span></a>
 								</li>
 							# ENDIF #
 						</ul>
 					</nav>
 					<script>
 						jQuery("#cssmenu-bugtrackerpageslist").menumaker({
-							title: "${LangLoader::get_message('form.options', 'common')}",
+							title: "{@common.pages}",
 							format: "multitoggle",
 							breakpoint: 768
 						});
@@ -55,7 +55,7 @@
 				# ENDIF #
 
 				# INCLUDE TEMPLATE #
-			</div>			
+			</div>
 		</div>
 	</div>
 	<footer></footer>

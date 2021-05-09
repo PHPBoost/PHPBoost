@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 06
+ * @version     PHPBoost 6.0 - last update: 2021 05 09
  * @since       PHPBoost 3.0 - 2012 10 18
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -31,9 +31,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 
 		$this->build_form();
 
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-
-		$tpl->add_lang($this->lang);
+		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -62,12 +60,12 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			$this->form->get_field_by_id('severities_table')->set_value($this->build_severities_table()->render());
 			$this->form->get_field_by_id('priorities_table')->set_value($this->build_priorities_table()->render());
 			$this->form->get_field_by_id('versions_table')->set_value($this->build_versions_table()->render());
-			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.config', 'warning-lang'), MessageHelper::SUCCESS, 5));
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$view->put('FORM', $this->form->display());
 
-		return new AdminBugtrackerDisplayResponse($tpl, $this->lang['titles.admin.module_config']);
+		return new AdminBugtrackerDisplayResponse($view, $this->lang['bugtracker.config.module.title']);
 	}
 
 	private function init()
@@ -78,11 +76,13 @@ class AdminBugtrackerConfigController extends AdminModuleController
 
 	private function build_form()
 	{
+		$form_lang = LangLoader::get('form-lang');
+
 		$form = new HTMLForm(__CLASS__);
 
 		$severities = $this->config->get_severities();
 
-		$fieldset = new FormFieldsetHTML('config', LangLoader::get_message('configuration', 'admin-common'));
+		$fieldset = new FormFieldsetHTML('config', $this->lang['bugtracker.config.module.title']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', LangLoader::get_message('config.items_number_per_page', 'admin-common'), (int)$this->config->get_items_per_page(),
@@ -416,7 +416,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$types = $this->config->get_types();
 
 		$types_table = new FileTemplate('bugtracker/AdminBugtrackerTypesListController.tpl');
-		$types_table->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
+		$types_table->add_lang(array_merge($this->lang, LangLoader::get('common-lang'), LangLoader::get('form-lang')));
 
 		$key = 0;
 		foreach ($types as $key => $type)
@@ -445,7 +445,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$categories = $this->config->get_categories();
 
 		$categories_table = new FileTemplate('bugtracker/AdminBugtrackerCategoriesListController.tpl');
-		$categories_table->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
+		$categories_table->add_lang(array_merge($this->lang, LangLoader::get('common-lang'), LangLoader::get('form-lang')));
 
 		$key = 0;
 		foreach ($categories as $key => $category)
@@ -474,7 +474,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$severities = $this->config->get_severities();
 
 		$severities_table = new FileTemplate('bugtracker/AdminBugtrackerSeveritiesListController.tpl');
-		$severities_table->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
+		$severities_table->add_lang(array_merge($this->lang, LangLoader::get('common-lang'), LangLoader::get('form-lang')));
 
 		$key = 0;
 		foreach ($severities as $key => $severity)
@@ -501,7 +501,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$priorities = $this->config->get_priorities();
 
 		$priorities_table = new FileTemplate('bugtracker/AdminBugtrackerPrioritiesListController.tpl');
-		$priorities_table->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
+		$priorities_table->add_lang(array_merge($this->lang, LangLoader::get('common-lang'), LangLoader::get('form-lang')));
 
 		$key = 0;
 		foreach ($priorities as $key => $priority)
@@ -527,7 +527,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$versions = $this->config->get_versions();
 
 		$versions_table = new FileTemplate('bugtracker/AdminBugtrackerVersionsListController.tpl');
-		$versions_table->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
+		$versions_table->add_lang(array_merge($this->lang, LangLoader::get('common-lang'), LangLoader::get('form-lang')));
 
 		$key = 0;
 		foreach ($versions as $key => $version)

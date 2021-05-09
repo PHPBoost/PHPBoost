@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 05 09
  * @since       PHPBoost 3.0 - 2012 10 08
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminBugtrackerAuthorizationsController extends AdminModuleController
@@ -24,43 +25,43 @@ class AdminBugtrackerAuthorizationsController extends AdminModuleController
 	{
 		$this->init();
 
-		//Form building
+		// Form building
 		$this->build_form();
 
-		//Creation of the template
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		// Creation of the template
+		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
+		$view->add_lang($this->lang);
 
-		//Saving of the configuration if the submit button has been submitted
+		// Saving of the configuration if the submit button has been submitted
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 
-		//Display the form on the template
-		$tpl->put('FORM', $this->form->display());
+		// Display the form on the template
+		$view->put('FORM', $this->form->display());
 
-		//Display the generated page
-		return new AdminBugtrackerDisplayResponse($tpl, $this->lang['titles.admin.module_authorizations']);
+		// Display the generated page
+		return new AdminBugtrackerDisplayResponse($view, $this->lang['bugtracker.authorizations.module.title']);
 	}
 
 	private function init()
 	{
-		//Load module lang
+		// Load module lang
 		$this->lang = LangLoader::get('common', 'bugtracker');
 	}
 
 	private function build_form()
 	{
-		//Creation of a new form
+		// Creation of a new form
 		$form = new HTMLForm(__CLASS__);
 
-		//Add a fieldset
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations', LangLoader::get_message('authorizations', 'common'));
+		// Add a fieldset to the form
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['bugtracker.authorizations.module.title']);
 		$form->add_fieldset($fieldset_authorizations);
 
-		//Authorizations list
+		// Authorizations list
 		$auth_settings = new AuthorizationsSettings(array(
 			new ActionAuthorization($this->lang['config.auth.read'], BugtrackerAuthorizationsService::READ_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['config.auth.create'], BugtrackerAuthorizationsService::WRITE_AUTHORIZATIONS),

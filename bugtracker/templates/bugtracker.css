@@ -18,10 +18,6 @@
 
 .legend { padding-right: 1.309em; }
 
-table.bt .bt-content { width: 65% !important; }
-
-.form-field-progressbar { width: 25%; }
-
 .bugtracker-actions a { padding: 0.228em; }
 
 @media (max-width: 768px) {
@@ -43,3 +39,7 @@ table.bt .bt-content { width: 65% !important; }
 }
 
 .table-form select { width : 100%; }
+
+table.bt .bt-content { width: 65% !important; }
+
+.cell-progressbar { width: 50%; }

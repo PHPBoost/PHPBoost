@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 05
+ * @version     PHPBoost 6.0 - last update: 2021 05 09
  * @since       PHPBoost 3.0 - 2012 11 11
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class BugtrackerHistoryListController extends ModuleController
@@ -147,7 +148,7 @@ class BugtrackerHistoryListController extends ModuleController
 		}
 
 		$this->view = new FileTemplate('bugtracker/BugtrackerHistoryListController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 		$this->config = BugtrackerConfig::load();
 	}
 

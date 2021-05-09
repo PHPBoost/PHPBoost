@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 07
+ * @version     PHPBoost 6.0 - last update: 2021 05 09
  * @since       PHPBoost 3.0 - 2012 11 13
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -32,7 +32,7 @@ class BugtrackerRoadmapListController extends ModuleController
 	{
 		$this->lang = LangLoader::get('common', 'bugtracker');
 		$this->view = new FileTemplate('bugtracker/BugtrackerRoadmapListController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 		$this->config = BugtrackerConfig::load();
 	}
 
@@ -194,12 +194,14 @@ class BugtrackerRoadmapListController extends ModuleController
 
 		$release_date = !empty($requested_version_release_date) && is_numeric($requested_version_release_date) ? new Date($requested_version_release_date, Timezone::SERVER_TIMEZONE) : null;
 
-		$fieldset = new FormFieldsetHorizontal('informations');
-		$form->add_fieldset($fieldset);
+		// $fieldset = new FormFieldsetHorizontal('informations');
+		// $form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldHTML('informations_date', !empty($release_date) ? $this->lang['labels.fields.version_release_date'] . ': ' . $release_date->format(Date::FORMAT_DAY_MONTH_YEAR) : ''));
+		$fieldset_infos =  new FormFieldsetHorizontal('informations', array('css_class' => 'flex-between'));
+		$form->add_fieldset($fieldset_infos);
+		$fieldset_infos->add_field(new FormFieldHTML('informations_date', !empty($release_date) ? $this->lang['labels.fields.version_release_date'] . ': ' . $release_date->format(Date::FORMAT_DAY_MONTH_YEAR) : ''));
 
-		$fieldset->add_field(new FormFieldHTML('informations_fixed_number', ($requested_status == BugtrackerItem::IN_PROGRESS ? $this->lang['labels.number_in_progress'] : $this->lang['labels.number_fixed']) . ': ' . $nbr_bugs));
+		$fieldset_infos->add_field(new FormFieldHTML('informations_fixed_number', ($this->lang['bugtracker.items.number'] . ': ' . $nbr_bugs)));
 
 		return $form;
 	}

@@ -1,4 +1,4 @@
-# INCLUDE MSG #
+# INCLUDE MESSAGE_HELPER #
 # INCLUDE FORM #
 <script>
 	function BugtrackerStatusChangedValidator(message, bug_id, bug_status)

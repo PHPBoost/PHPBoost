@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 14
+ * @version     PHPBoost 6.0 - last update: 2021 05 09
  * @since       PHPBoost 3.0 - 2013 04 29
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -18,7 +18,7 @@ class BugtrackerViews
 		$types = $config->get_types();
 
 		$body_view = new FileTemplate('bugtracker/BugtrackerBody.tpl');
-		$body_view->add_lang($lang);
+		$body_view->add_lang(array_merge($lang, LangLoader::get('common-lang')));
 		$body_view->put_all(array(
 			'C_ROADMAP_ENABLED'			=> $config->is_roadmap_displayed(),
 			'C_STATS_ENABLED'			=> $config->are_stats_enabled(),
@@ -28,7 +28,7 @@ class BugtrackerViews
 			'C_SOLVED'					=> $current_page == 'solved',
 			'C_ROADMAP'					=> $current_page == 'roadmap',
 			'C_STATS'					=> $current_page == 'stats',
-			'TITLE'						=> $lang['titles.' . $current_page] . (in_array($current_page, array('change_status', 'history', 'detail', 'edit')) ? " : " . $types[$bug_type] . ' #'  .$bug_id : ''),
+			'L_TITLE'					=> $lang['bugtracker.' . $current_page] . (in_array($current_page, array('change_status', 'history', 'detail', 'edit')) ? " : " . $types[$bug_type] . ' #'  .$bug_id : ''),
 			'TEMPLATE'					=> $view,
 			'U_SYNDICATION_UNSOLVED'	=> SyndicationUrlBuilder::rss('bugtracker', 0)->rel(),
 			'U_SYNDICATION_SOLVED'		=> SyndicationUrlBuilder::rss('bugtracker', 1)->rel()
@@ -88,7 +88,7 @@ class BugtrackerViews
 		if (!empty($filters)) $filters_number = $filters_number + 1;
 
 		$filters_view = new FileTemplate('bugtracker/BugtrackerFilter.tpl');
-		$filters_view->add_lang($lang);
+		$filters_view->add_lang(array_merge($lang, LangLoader::get('common-lang')));
 
 		$result = PersistenceContext::get_querier()->select("SELECT *
 		FROM " . BugtrackerSetup::$bugtracker_users_filters_table . "
@@ -130,9 +130,7 @@ class BugtrackerViews
 		$result->dispose();
 
 		$filters_view->put_all(array(
-			'L_FILTERS'				=> $filters_number > 1 ? $lang['titles.filters'] : $lang['titles.filter'],
-			'C_FILTER'				=> count($filters) == 1,
-			'C_FILTERS'				=> count($filters) > 1,
+			'C_SEVERAL_FILTERS'		=> $filters_number > 1,
 			'C_DISPLAY_TYPES'		=> $display_types,
 			'C_DISPLAY_CATEGORIES'	=> $display_categories,
 			'C_DISPLAY_SEVERITIES'	=> $display_severities,
@@ -140,6 +138,7 @@ class BugtrackerViews
 			'C_DISPLAY_SAVE_BUTTON'	=> $display_save_button,
 			'C_SAVED_FILTERS'		=> $saved_filters,
 			'C_HAS_SELECTED_FILTERS'=> $filters,
+
 			'FILTERS_NUMBER'		=> $filters_number,
 			'BUGS_NUMBER'			=> $nbr_bugs,
 			'LINK_FILTER_SAVE'		=> BugtrackerUrlBuilder::add_filter($current_page, $filter, $filter_id)->rel(),
@@ -147,7 +146,7 @@ class BugtrackerViews
 			'SELECT_CATEGORY'		=> $object->build_categories_form($current_page, ($filter == 'category') ? $filter_id : (in_array('category', $filters) ? $filters_ids[array_search('category', $filters)] : 0), $filters, $filters_ids)->display(),
 			'SELECT_SEVERITY'		=> $object->build_severities_form($current_page, ($filter == 'severity') ? $filter_id : (in_array('severity', $filters) ? $filters_ids[array_search('severity', $filters)] : 0), $filters, $filters_ids)->display(),
 			'SELECT_STATUS'			=> $object->build_status_form($current_page, ($filter == 'status') ? $filter_id : (in_array('status', $filters) ? $filters_ids[array_search('status', $filters)] : 0), $filters, $filters_ids, $lang)->display(),
-			'SELECT_VERSION'		=> $object->build_versions_form($current_page, ($current_page == 'unsolved' ? (($filter == 'detected_in') ? $filter_id : (in_array('detected_in', $filters) ? $filters_ids[array_search('detected_in', $filters)] : 0)) : (($filter == 'fixed_in') ? $filter_id : (in_array('fixed_in', $filters) ? $filters_ids[array_search('fixed_in', $filters)] : 0))), $filters, $filters_ids)->display()
+			'SELECT_VERSION'		=> $object->build_versions_form($current_page, ($current_page == 'unsolved' ? (($filter == 'detected_in') ? $filter_id : (in_array('detected_in', $filters) ? $filters_ids[array_search('detected_in', $filters)] : 0)) : (($filter == 'fixed_in') ? $filter_id : (in_array('fixed_in', $filters) ? $filters_ids[array_search('fixed_in', $filters)] : 0))), $filters, $filters_ids)->display(),
 		));
 
 		return $filters_view;

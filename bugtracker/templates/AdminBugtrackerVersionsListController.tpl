@@ -47,7 +47,7 @@
 
 				jQuery('<tr/>', {id : 'tr_' + id}).appendTo('#versions_list');
 
-				jQuery('<td/>', {id : 'td1_' + id, class : 'custom-radio', 'data-th' : ${escapejs(@labels.default)}}).appendTo('#tr_' + id);
+				jQuery('<td/>', {id : 'td1_' + id, class : 'custom-radio', 'data-th' : ${escapejs(@form.is.default)}}).appendTo('#tr_' + id);
 
 				jQuery('<div/>', {id : 'versions_radio_' + id, class: 'form-field-radio', style : 'display:none;'}).appendTo('#td1_' + id);
 				jQuery('<label/> ', {class : 'radio',for : 'default_version' + id}).appendTo('#versions_radio_' + id);
@@ -133,7 +133,7 @@
 	<thead>
 		<tr>
 			<th class="col-medium">
-				{@common.default.by}
+				{@form.is.default}
 			</th>
 			<th>
 				{@labels.version_name}

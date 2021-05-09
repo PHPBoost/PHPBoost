@@ -25,27 +25,35 @@ $lang['common.root']         = 'Racine';
 $lang['common.description']  = 'Description';
 $lang['common.content']      = 'Contenu';
 $lang['common.module']       = 'Module';
-$lang['common.controls']     = 'Contrôles';
+$lang['common.moderation']     = 'Moderation';
 $lang['common.participants'] = 'Participants';
 $lang['common.suggestions']  = 'Suggestions';
 $lang['common.update']       = 'Mise à jour';
+$lang['common.filter']       = 'Filtre';
+$lang['common.filters']      = 'Filtres';
+$lang['common.version']      = 'Version';
+$lang['common.type']         = 'Type';
+$lang['common.informations'] = 'Informations';
+$lang['common.statistics']   = 'Statistiques';
+$lang['common.pages']        = 'Pages';
 
-$lang['common.by']  = 'Par';
-$lang['common.the'] = 'Le';
-$lang['common.on']  = 'Le';
-$lang['common.in']  = 'Dans';
-$lang['common.of']  = 'Sur';
-$lang['common.and'] = 'Et';
-$lang['common.yes'] = 'Oui';
-$lang['common.no']  = 'Non';
+$lang['common.by']      = 'Par';
+$lang['common.the']     = 'Le';
+$lang['common.on.date'] = 'Le';
+$lang['common.in']      = 'Dans';
+$lang['common.of']      = 'Sur';
+$lang['common.and']     = 'Et';
+$lang['common.yes']     = 'Oui';
+$lang['common.no']      = 'Non';
 
-$lang['common.always']        = 'Toujours';
-$lang['common.unknown']       = 'Inconnu';
-$lang['common.never']         = 'Jamais';
-$lang['common.unspecified']   = 'Non précisé';
-$lang['common.default']       = 'Défaut';
-$lang['common.default.by']    = 'Par défaut';
-$lang['common.default.value'] = 'Valeur par défaut';
+$lang['common.always']      = 'Toujours';
+$lang['common.unknown']     = 'Inconnu';
+$lang['common.never']       = 'Jamais';
+$lang['common.unspecified'] = 'Non précisé';
+$lang['common.default']     = 'Défaut';
+$lang['common.default.by']  = 'Par défaut';
+$lang['common.before']      = 'Avant';
+$lang['common.after']       = 'Après';
 
 $lang['common.color'] = 'Couleur';
 
@@ -63,8 +71,6 @@ $lang['common.moderation']   = 'Modération';
 $lang['common.reorder']      = 'Réorganiser';
 $lang['common.respond']      = 'Répondre';
 $lang['common.loading']      = 'Chargement';
-$lang['common.filter']       = 'Filtrer';
-$lang['common.filters']      = 'Filtres';
 $lang['common.filter.items'] = 'Filtrer les éléments';
 $lang['common.actions']      = 'Actions';
 $lang['common.enable']       = 'Activer';
@@ -112,7 +118,7 @@ $lang['common.copy.to.clipboard']      = 'Copier vers le presse-papier';
 
 // Links
 $lang['common.see.details']            = 'Voir les détails';
-$lang['common.see.category']           = 'Voir la category';
+$lang['common.see.category']           = 'Voir la categorie';
 $lang['common.see.profile']            = 'Voir le profil du membre';
 $lang['common.see.profile.datas']      = 'Voir les infos du membre';
 $lang['common.link']                   = 'Lien';
@@ -139,6 +145,8 @@ $lang['common.author']        = 'Auteur';
 $lang['common.creation.date'] = 'Date de création';
 $lang['common.last.update']   = 'Dernière mise à jour';
 $lang['common.category']      = 'Catégorie';
+$lang['common.categories']    = 'Catégories';
+$lang['common.comment']       = 'Commentaire';
 $lang['common.comments']      = 'Commentaires';
 $lang['common.rating']        = 'Note';
 $lang['common.location']      = 'Localisation';
@@ -182,7 +190,7 @@ $lang['common.select']              = 'Sélectionner';
 $lang['common.select.element']      = 'Sélectionner cet élément';
 $lang['common.select.elements']     = 'Sélectionner des éléments';
 $lang['common.select.all.elements'] = 'Sélectionner tous les éléments';
-$lang['common.click.to.select']    = 'Cliquer pour sélectionner une option';
+$lang['common.click.to.select']     = 'Cliquer pour sélectionner une option';
 
 // Sort
 $lang['common.filters']                 = 'Filtres';
@@ -201,7 +209,7 @@ $lang['common.sort.asc']                = 'Croissant';
 $lang['common.sort.desc']               = 'Décroissant';
 
 // Status
-$lang['common.status']               = 'Statut';
+$lang['common.status']               = 'État';
 $lang['common.status.approved']      = 'Approuvé';
 $lang['common.status.unapproved']    = 'Non approuvé';
 $lang['common.status.draft']         = 'Brouillon';

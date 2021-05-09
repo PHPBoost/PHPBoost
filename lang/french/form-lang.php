@@ -14,6 +14,7 @@
 $lang['form.required.fields'] = 'Les champs marqués * sont obligatoires !';
 
 // Autorizations
+$lang['form.authorizations.management']   = 'Gestion des autorisations';
 $lang['form.authorizations']              = 'Autorisations';
 $lang['form.authorizations.read']         = 'Autorisation de lecture';
 $lang['form.authorizations.write']        = 'Autorisation d\'écriture';

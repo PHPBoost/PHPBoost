@@ -11,7 +11,7 @@
 
 				jQuery('<tr/>', {id : 'tr_' + id}).appendTo('#categories_list');
 
-				jQuery('<td/>', {id : 'td1_' + id, class : 'custom-radio', 'data-th' : ${escapejs(@labels.default)}}).appendTo('#tr_' + id);
+				jQuery('<td/>', {id : 'td1_' + id, class : 'custom-radio', 'data-th' : ${escapejs(@form.is.default)}}).appendTo('#tr_' + id);
 
 				jQuery('<div/>', {id : 'categories_radio_' + id, class: 'form-field-radio'}).appendTo('#td1_' + id);
 				jQuery('<label/> ', {class : 'radio', for : 'default_category' + id}).appendTo('#categories_radio_' + id);
@@ -56,7 +56,7 @@
 	<thead>
 		<tr>
 			<th class="col-medium">
-				{@labels.default}
+				{@form.is.default}
 			</th>
 			<th>
 				{@common.name}

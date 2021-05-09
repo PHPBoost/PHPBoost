@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 05 09
  * @since       PHPBoost 4.1 - 2014 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -42,7 +42,7 @@ class BugtrackerChangeBugStatusController extends ModuleController
 				$this->form->get_field_by_id('fixed_in')->set_hidden(!$this->bug->is_fixed() && !$this->bug->is_in_progress());
 			$this->form->get_field_by_id('comments_message')->set_value('');
 
-			$this->view->put('MSG', MessageHelper::display($this->lang['success.' . $this->bug->get_status()], MessageHelper::SUCCESS, 5));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['success.' . $this->bug->get_status()], MessageHelper::SUCCESS, 5));
 		}
 
 		$this->view->put('FORM', $this->form->display());
@@ -157,6 +157,7 @@ class BugtrackerChangeBugStatusController extends ModuleController
 
 	private function save()
 	{
+		$common_lang = LangLoader::get('common-lang');
 		$now = new Date();
 		$pm_recipients_list = array();
 		$send_pm = true;
@@ -213,8 +214,8 @@ class BugtrackerChangeBugStatusController extends ModuleController
 					'updater_id'	=> $this->current_user->get_id(),
 					'update_date'	=> $now->get_timestamp(),
 					'updated_field'	=> 'assigned_to_id',
-					'old_value'		=> $old_user_assigned ? $old_user_assigned->get_display_name() : $this->lang['notice.no_one'],
-					'new_value'		=> $new_user_assigned ? $new_user_assigned->get_display_name() : $this->lang['notice.no_one']
+					'old_value'		=> $old_user_assigned ? $old_user_assigned->get_display_name() : $common_lang['common.nobody'],
+					'new_value'		=> $new_user_assigned ? $new_user_assigned->get_display_name() : $common_lang['common.nobody']
 				));
 
 				//Bug update

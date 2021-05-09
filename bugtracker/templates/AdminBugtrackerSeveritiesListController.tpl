@@ -2,7 +2,7 @@
 	<thead>
 		<tr>
 			<th class="col-medium">
-				{@common.default.by}
+				{@form.is.default}
 			</th>
 			<th class="col-larger">
 				{@common.color}

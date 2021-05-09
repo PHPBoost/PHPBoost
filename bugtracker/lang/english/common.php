@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 24
+ * @version     PHPBoost 6.0 - last update: 2021 05 09
  * @since       PHPBoost 3.0 - 2012 11 09
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,10 +13,51 @@
 #                    English                       #
 ####################################################
 
-//Module title
-$lang['bugtracker.module.title'] = 'Bugtracker';
+$lang['bugtracker.module.title']                = 'Bugtracker';
+$lang['bugtracker.config.module.title']         = 'Bugtracker module configuration';
+$lang['bugtracker.authorizations.module.title'] = 'Bugtracker module authorizations';
 
-//Notice
+// Current page
+$lang['bugtracker.stats']         = 'Statistics';
+$lang['bugtracker.roadmap']       = 'Roadmap';
+$lang['bugtracker.solved']        = 'Solved tickets';
+$lang['bugtracker.unsolved']      = 'Unsolved tickets';
+$lang['bugtracker.history']       = 'Ticket History';
+$lang['bugtracker.edit']          = 'Edit ticket';
+$lang['bugtracker.detail']        = 'Ticket';
+$lang['bugtracker.change.status'] = 'Change ticket status';
+
+// Labels
+$lang['bugtracker.add.item']      = 'Open new ticket';
+$lang['bugtracker.item.number']   = 'Tickets number';
+$lang['bugtracker.severity']      = 'Level';
+$lang['bugtracker.priority']      = 'Priority';
+$lang['bugtracker.assigned']      = 'Assigned to';
+$lang['bugtracker.solved.in']     = 'Solved in';
+$lang['bugtracker.solved.date']   = 'Solved on';
+$lang['bugtracker.not.solved']    = 'Not solved';
+$lang['bugtracker.detected.in']   = 'Detected in';
+$lang['bugtracker.detected.date'] = 'Detected on';
+$lang['bugtracker.updated.by']    = 'Updated by';
+$lang['bugtracker.update.date']   = 'Update date';
+$lang['bugtracker.updated.field'] = 'Updated field';
+
+$lang['bugtracker.change.status']     = 'Change ticket status';
+$lang['bugtracker.processing.status'] = 'Ticket\'s processing status';
+$lang['bugtracker.progress']          = 'Progress';
+$lang['bugtracker.infos']             = 'Ticket\'s informations';
+
+$lang['bugtracker.reproduction.method'] = 'Reproduction method';
+$lang['bugtracker.reproducible']        = 'Reproductible';
+
+$lang['bugtracker.top.contributors']     = 'Top contributors';
+$lang['bugtracker.version.release.date'] = 'Release date';
+
+// Notices
+$lang['bugtracker.notice.version'] = 'Please add at least one version in the configuration to display the roadmap.';
+
+// #############################################################################
+// Notice
 $lang['notice.no_one'] = 'No one';
 $lang['notice.none'] = 'None';
 $lang['notice.none_e'] = 'None';
@@ -34,7 +75,7 @@ $lang['notice.reproduction_method_update'] = 'Reproduction method update';
 $lang['notice.not_defined'] = 'Not defined';
 $lang['notice.not_defined_e_date'] = 'Date not defined';
 
-//Actions
+// Actions
 $lang['actions'] = 'Actions';
 $lang['actions.add'] = 'Open new ticket';
 $lang['actions.history'] = 'History';
@@ -42,7 +83,7 @@ $lang['actions.change_status'] = 'Change ticket status';
 $lang['actions.confirm.del_default_value'] = 'Delete this default value?';
 $lang['actions.confirm.del_filter'] = 'Delete this filter?';
 
-//Titles
+// Titles
 $lang['titles.add'] = 'Opening ticket';
 $lang['titles.add_version'] = 'Add a new version';
 $lang['titles.add_type'] = 'Add a new ticket type';
@@ -51,15 +92,9 @@ $lang['titles.del_version'] = 'Delete the version';
 $lang['titles.del_type'] = 'Delete the type of ticket';
 $lang['titles.del_category'] = 'Delete the category';
 $lang['titles.calendar'] = 'Open the calendar selector';
-$lang['titles.edit'] = 'Ticket edition';
-$lang['titles.change_status'] = 'Status modification of ticket';
 $lang['titles.delete'] = 'Ticket suppression';
-$lang['titles.history'] = 'History of ticket';
-$lang['titles.detail'] = 'Ticket';
-$lang['titles.roadmap'] = 'Roadmap';
 $lang['titles.roadmap.version'] = 'Roadmap of version :version';
 $lang['titles.bugs_infos'] = 'Ticket\'s informations';
-$lang['titles.stats'] = 'Statistics';
 $lang['titles.bugs_treatment_state'] = 'Ticket\'s treatment state';
 $lang['titles.versions'] = 'Versions';
 $lang['titles.types'] = 'Types';
@@ -70,23 +105,33 @@ $lang['titles.admin.authorizations.manage'] = 'Manage authorizations';
 $lang['titles.admin.module_config'] = 'Bugtracker module configuration';
 $lang['titles.admin.module_authorizations'] = 'Bugtracker module authorizations configuration';
 $lang['titles.choose_version'] = 'Version to display';
-$lang['titles.solved'] = 'Processed tickets';
-$lang['titles.unsolved'] = 'In progress tickets';
 $lang['titles.content_value_title'] = 'Request default description';
 $lang['titles.content_value'] = 'Default description';
 $lang['titles.filter'] = 'Filter';
 $lang['titles.filters'] = 'Filters';
 $lang['titles.informations'] = 'Informations';
 $lang['titles.version_informations'] = 'Version Informations';
+    // pages
+$lang['titles.solved'] = 'Processed tickets';
+$lang['titles.unsolved'] = 'In progress tickets';
+$lang['titles.roadmap'] = 'Roadmap';
+$lang['titles.stats'] = 'Statistics';
+    // array
+        // BugtrackerViews
+$lang['titles.change_status'] = 'Status modification of ticket';
+$lang['titles.history'] = 'History of ticket';
+$lang['titles.detail'] = 'Ticket';
+$lang['titles.edit'] = 'Ticket edition';
 
-//SEO
+// S.E.O.
 $lang['seo.history'] = 'All history of ticket #:id.';
 $lang['seo.roadmap'] = 'All tickets in progress / fixed in version :version.';
 $lang['seo.stats'] = 'Stats of open / fixed tickets per version.';
 $lang['seo.solved'] = 'All processed tickets.';
 $lang['seo.unsolved'] = 'All tickets in progress.';
 
-//Labels
+// Labels
+$lang['labels.default'] = 'Default';
 $lang['labels.fields.id'] = 'ID';
 $lang['labels.fields.title'] = 'Title';
 $lang['labels.fields.content'] = 'Description';
@@ -115,12 +160,11 @@ $lang['labels.fields.version_fixed'] = 'Fixed version';
 $lang['labels.fields.version_release_date'] = 'Release date';
 $lang['labels.page'] = 'Page';
 $lang['labels.color'] = 'Color';
-$lang['labels.number_fixed'] = 'Corrected tickets number';
+$lang['labels.number_fixed'] = 'Solved tickets number';
 $lang['labels.number_in_progress'] = 'Tickets being corrected number';
 $lang['labels.top_posters'] = 'Top posters';
 $lang['labels.login'] = 'Login';
-$lang['labels.default'] = 'Default';
-$lang['labels.default_value'] = 'Default value';
+$lang['labels.default_value'] = 'Default value'; // none
 $lang['labels.del_default_value'] = 'Delete default value';
 $lang['labels.type_mandatory'] = 'Section <b>Type</b> mandatory?';
 $lang['labels.category_mandatory'] = 'Section <b>Category</b> mandatory?';
@@ -130,14 +174,14 @@ $lang['labels.detected_in_mandatory'] = 'Section <b>Detected in version</b> mand
 $lang['labels.detected'] = 'Detected';
 $lang['labels.detected_in'] = 'Detected in';
 $lang['labels.fixed'] = 'Fixed';
-$lang['labels.fix_bugs_per_version'] = 'Fixed tickets number per version';
+$lang['bugtracker.solved.per.version'] = 'Fixed tickets per version';
 $lang['labels.not_yet_fixed'] = 'Not yet fixed';
 $lang['labels.alert_fix'] = 'Fix alert';
 $lang['labels.alert_delete'] = 'Delete alert';
 $lang['labels.save_filters'] = 'Save filters';
 $lang['labels.version_name'] = 'Version name';
 
-//Status
+// Status
 $lang['status.new'] = 'New';
 $lang['status.pending'] = 'Pending';
 $lang['status.assigned'] = 'Assigned';
@@ -146,7 +190,7 @@ $lang['status.fixed'] = 'Fixed';
 $lang['status.reopen'] = 'Reopen';
 $lang['status.rejected'] = 'Rejected';
 
-//Explainations
+// Explainations
 $lang['explain.content'] = 'Useful details to treat the ticket';
 $lang['explain.roadmap'] = 'Displays the fixed ticket list for each version. Displayed if there is at least one version in the list.';
 $lang['explain.type'] = 'Demands type. Examples : Anomaly, Evolution...';
@@ -162,7 +206,7 @@ $lang['explain.delete_comment'] = 'Optional. Permits to add a comment in the Pri
 $lang['explain.change_status_select_fix_version'] = 'You can select a version to put the ticket in the roadmap.';
 $lang['explain.change_status_comments_message'] = 'Optional. Permits to comment the ticket and add it in the Private Message if sending is enabled.';
 
-//PM
+// Private messages
 $lang['pm.with_comment'] = '<br />
 <br />
 Comment:<br />
@@ -201,7 +245,7 @@ $lang['pm.in_progress.content'] = ':author has put the ticket #:id in progress.'
 $lang['pm.delete.title'] = '[Bugtracker] The ticket #:id has been deleted';
 $lang['pm.delete.content'] = ':author delete the ticket #:id.';
 
-//Configuration
+// Configuration
 $lang['config.rejected_bug_color_label'] = 'Rejected ticket line color';
 $lang['config.fixed_bug_color_label'] = 'Fixed ticket line color';
 $lang['config.enable_roadmap'] = 'Enable roadmap';

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 24
+ * @version     PHPBoost 6.0 - last update: 2021 05 09
  * @since       PHPBoost 3.0 - 2012 11 09
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,22 +13,55 @@
 ####################################################
 #                    French                        #
 ####################################################
-// TODO:
-    // replace '_' by '.'
-    // replace common expression then send those to the right common file if not exists
-// should go to common file - start
+
+$lang['bugtracker.module.title']                = 'Rapport de bugs';
+$lang['bugtracker.config.module.title']         = 'Configuration du module Rapport de bugs';
+$lang['bugtracker.authorizations.module.title'] = 'Autorisations du module Rapport de bugs';
+
+// Current page
+$lang['bugtracker.solved']        = 'Tickets traités';
+$lang['bugtracker.unsolved']      = 'Tickets en cours';
+$lang['bugtracker.stats']         = 'Statistiques';
+$lang['bugtracker.roadmap']       = 'Feuille de route';
+$lang['bugtracker.history']       = 'Historique du ticket';
+$lang['bugtracker.edit']          = 'Éditer le ticket';
+$lang['bugtracker.detail']        = 'Ticket';
+$lang['bugtracker.change_status'] = 'Changer l\'état du ticket';
+
+// Labels
+$lang['bugtracker.add.item']      = 'Déclarer un ticket';
+$lang['bugtracker.items.number']  = 'Nombre de tickets';
+$lang['bugtracker.severity']      = 'Niveau';
+$lang['bugtracker.priority']      = 'Priorité';
+$lang['bugtracker.assigned']      = 'Assigné à';
+$lang['bugtracker.solved.in']     = 'Corrigé dans';
+$lang['bugtracker.solved.date']   = 'Corrigé le';
+$lang['bugtracker.not.solved']    = 'Non corrigé';
+$lang['bugtracker.detected.in']   = 'Détecté dans';
+$lang['bugtracker.detected.date'] = 'Détecté le';
+$lang['bugtracker.updated.by']    = 'Modifié par';
+$lang['bugtracker.update.date']   = 'Modifié le';
+$lang['bugtracker.updated.field'] = 'Champ modifié';
+
+$lang['bugtracker.change.status']     = 'Changer l\'état du ticket';
+$lang['bugtracker.processing.status'] = 'État de traitement du ticket';
+$lang['bugtracker.progress']          = 'Avancement';
+$lang['bugtracker.infos']             = 'Informations sur le ticket';
+
+$lang['bugtracker.reproduction.method'] = 'Méthode de reproduction';
+$lang['bugtracker.reproducible']        = 'Reproductible';
+
+$lang['bugtracker.top.contributors']     = 'Meilleurs contributeurs';
+$lang['bugtracker.version.release.date'] = 'Date de parution';
+
+// Notices
+$lang['bugtracker.notice.version'] = 'Veuillez ajouter au moins une version dans la configuration pour afficher la feuille de route.';
+
+// #############################################################################
+// Notice
 $lang['notice.no_one'] = 'Personne';
 $lang['notice.none'] = 'Aucun';
 $lang['notice.none_e'] = 'Aucune';
-$lang['notice.not_defined'] = 'Non défini';
-$lang['notice.new_comment'] = 'Nouveau commentaire';
-// ...
-// should go to common file - end
-
-//Titre du module
-$lang['bugtracker.module.title'] = 'Rapport de bugs';
-
-//Messages divers
 $lang['notice.no_bug'] = 'Aucun ticket n\'a été déclaré';
 $lang['notice.no_bug_solved'] = 'Aucun ticket n\'a été traité';
 $lang['notice.no_bug_fixed'] = 'Aucun ticket n\'a été corrigé dans cette version';
@@ -38,10 +71,12 @@ $lang['notice.no_bug_matching_filters'] = 'Aucun ticket ne correspond aux filtre
 $lang['notice.no_version_roadmap'] = 'Veuillez ajouter au moins une version dans la configuration pour afficher la feuille de route.';
 $lang['notice.no_history'] = 'Ce ticket n\'a aucun historique';
 $lang['notice.content_update'] = 'Mise à jour du contenu';
+$lang['notice.new_comment'] = 'Nouveau commentaire';
 $lang['notice.reproduction_method_update'] = 'Mise à jour de la méthode de reproduction';
+$lang['notice.not_defined'] = 'Non défini';
 $lang['notice.not_defined_e_date'] = 'Date non définie';
 
-//Actions
+// Actions
 $lang['actions'] = 'Actions';
 $lang['actions.add'] = 'Ouvrir un ticket';
 $lang['actions.history'] = 'Historique';
@@ -49,7 +84,7 @@ $lang['actions.change_status'] = 'Changer l\'état du ticket';
 $lang['actions.confirm.del_default_value'] = 'Etes-vous sûr de vouloir la valeur par défaut ?';
 $lang['actions.confirm.del_filter'] = 'Etes-vous sûr de vouloir supprimer ce filtre ?';
 
-//Titres
+// Titles
 $lang['titles.add'] = 'Ouverture d\'un ticket';
 $lang['titles.add_version'] = 'Ajouter une nouvelle version';
 $lang['titles.add_type'] = 'Ajouter un nouveau type de ticket';
@@ -58,15 +93,9 @@ $lang['titles.del_version'] = 'Supprimer la version';
 $lang['titles.del_type'] = 'Supprimer le type de ticket';
 $lang['titles.del_category'] = 'Supprimer la catégorie';
 $lang['titles.calendar'] = 'Ouvrir le sélecteur de date';
-$lang['titles.edit'] = 'Edition du ticket';
-$lang['titles.change_status'] = 'Changement d\'état du ticket';
 $lang['titles.delete'] = 'Suppression du ticket';
-$lang['titles.history'] = 'Historique du ticket';
-$lang['titles.detail'] = 'Ticket';
-$lang['titles.roadmap'] = 'Feuille de route';
 $lang['titles.roadmap.version'] = 'Feuille de route de la version :version';
 $lang['titles.bugs_infos'] = 'Informations sur le ticket';
-$lang['titles.stats'] = 'Statistiques';
 $lang['titles.bugs_treatment_state'] = 'Etat du traitement du ticket';
 $lang['titles.versions'] = 'Versions';
 $lang['titles.types'] = 'Types';
@@ -77,23 +106,33 @@ $lang['titles.admin.authorizations.manage'] = 'Gérer les autorisations';
 $lang['titles.admin.module_config'] = 'Configuration du module bugtracker';
 $lang['titles.admin.module_authorizations'] = 'Configuration des autorisations du module bugtracker';
 $lang['titles.choose_version'] = 'Version à afficher';
-$lang['titles.solved'] = 'Tickets traités';
-$lang['titles.unsolved'] = 'Tickets en cours';
 $lang['titles.content_value_title'] = 'Description par défaut du ticket';
 $lang['titles.content_value'] = 'Description par défaut';
 $lang['titles.filter'] = 'Filtre';
 $lang['titles.filters'] = 'Filtres';
 $lang['titles.informations'] = 'Informations';
 $lang['titles.version_informations'] = 'Informations sur la version';
+    // pages
+$lang['titles.solved'] = 'Tickets traités';
+$lang['titles.unsolved'] = 'Tickets en cours';
+$lang['titles.roadmap'] = 'Feuille de route';
+$lang['titles.stats'] = 'Statistiques';
+    // array
+        // BugtrackerViews
+$lang['titles.change_status'] = 'Changement d\'état du ticket';
+$lang['titles.history'] = 'Historique du ticket';
+$lang['titles.detail'] = 'Ticket';
+$lang['titles.edit'] = 'Edition du ticket';
 
-//SEO
+// S.E.O.
 $lang['seo.history'] = 'Tout l\'historique du ticket #:id.';
 $lang['seo.roadmap'] = 'Tous les tickets en cours / corrigés dans la version :version.';
 $lang['seo.stats'] = 'Statistiques des tickets ouverts / fermés par version.';
 $lang['seo.solved'] = 'Tous les tickets traités.';
 $lang['seo.unsolved'] = 'Tous les tickets en cours.';
 
-//Libellés
+// Labels
+$lang['labels.default'] = 'Par défaut';
 $lang['labels.fields.id'] = 'ID';
 $lang['labels.fields.title'] = 'Titre';
 $lang['labels.fields.content'] = 'Description';
@@ -126,7 +165,6 @@ $lang['labels.number_fixed'] = 'Nombre de tickets corrigés';
 $lang['labels.number_in_progress'] = 'Nombre de tickets en cours de correction';
 $lang['labels.top_posters'] = 'Top posteurs';
 $lang['labels.login'] = 'Pseudo';
-$lang['labels.default'] = 'Par défaut';
 $lang['labels.default_value'] = 'Valeur par défaut';
 $lang['labels.del_default_value'] = 'Supprimer la valeur par défaut';
 $lang['labels.type_mandatory'] = 'Section <b>Type</b> obligatoire ?';
@@ -137,14 +175,14 @@ $lang['labels.detected_in_mandatory'] = 'Section <b>Détecté dans la version</b
 $lang['labels.detected'] = 'Détecté';
 $lang['labels.detected_in'] = 'Détecté dans';
 $lang['labels.fixed'] = 'Corrigé';
-$lang['labels.fix_bugs_per_version'] = 'Nombre de tickets corrigés par version';
+$lang['bugtracker.solved.per.version'] = 'Tickets corrigés par version';
 $lang['labels.not_yet_fixed'] = 'Pas encore corrigé';
 $lang['labels.alert_fix'] = 'Passer l\'alerte en réglé';
 $lang['labels.alert_delete'] = 'Supprimer l\'alerte';
 $lang['labels.save_filters'] = 'Sauvegarder les filtres';
 $lang['labels.version_name'] = 'Nom de la version';
 
-//Etats
+// Status
 $lang['status.new'] = 'Nouveau';
 $lang['status.pending'] = 'En attente';
 $lang['status.assigned'] = 'Assigné';
@@ -153,7 +191,7 @@ $lang['status.fixed'] = 'Corrigé';
 $lang['status.reopen'] = 'Réouvert';
 $lang['status.rejected'] = 'Rejeté';
 
-//Explications
+// Explainations
 $lang['explain.content'] = 'Détails qui seront utiles pour la résolution du ticket';
 $lang['explain.roadmap'] = 'Permet d\'afficher la liste des tickets corrigés pour chaque version. Affichée s\'il y a au moins une version dans la liste.';
 $lang['explain.type'] = 'Type des demandes. Exemples : Anomalie, Demande d\'évolution...';
@@ -169,7 +207,7 @@ $lang['explain.delete_comment'] = 'Facultatif. Permet d\'ajouter un commentaire 
 $lang['explain.change_status_select_fix_version'] = 'Vous pouvez sélectionner une version pour que le ticket soit présent dans la feuille de route.';
 $lang['explain.change_status_comments_message'] = 'Facultatif. Permet de commenter le ticket et d\'ajouter ce commentaire dans le Message Privé si son envoi est activé.';
 
-//MP
+// Private messages
 $lang['pm.with_comment'] = '<br />
 <br />
 Commentaire :<br />
@@ -208,7 +246,7 @@ $lang['pm.in_progress.content'] = ':author a mis le ticket #:id en cours de corr
 $lang['pm.delete.title'] = '[Rapport de bugs] Le ticket #:id a été supprimé';
 $lang['pm.delete.content'] = ':author a supprimé le ticket #:id.';
 
-//Configuration
+// Configuration
 $lang['config.rejected_bug_color_label'] = 'Couleur de la ligne d\'un ticket Rejeté';
 $lang['config.fixed_bug_color_label'] = 'Couleur de la ligne d\'un ticket Fermé';
 $lang['config.enable_roadmap'] = 'Activer la feuille de route';

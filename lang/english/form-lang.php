@@ -14,16 +14,19 @@
 $lang['form.required.fields'] = 'The fields marked with a * are required !';
 
 // Autorizations
-$lang['form.authorizations']                = 'Permissions';
-$lang['form.authorizations.read']           = 'Read permission';
-$lang['form.authorizations.write']          = 'Write permission';
-$lang['form.authorizations.contribution']   = 'Contribution permission';
-$lang['form.authorizations.moderation']     = 'Moderation permission';
-$lang['form.authorizations.categories']     = 'Categories management permission';
-$lang['form.authorizations.menu']           = 'Permission to display menu';
-$lang['form.authorizations.specials']       = 'Special authorizations';
-$lang['form.authorizations.default']        = 'Default authorisations';
-$lang['form.authorizations.clue']           = 'Module global authorizations. You can change these authorizations on each category.';
+$lang['form.authorizations.management']   = 'Permissions management';
+$lang['form.authorizations']              = 'Permissions';
+$lang['form.authorizations.read']         = 'Read permission';
+$lang['form.authorizations.write']        = 'Write permission';
+$lang['form.authorizations.contribution'] = 'Contribution permission';
+$lang['form.authorizations.moderation']   = 'Moderation permission';
+$lang['form.authorizations.categories']   = 'Categories management permission';
+$lang['form.authorizations.menu']         = 'Permission to display menu';
+$lang['form.authorizations.specials']     = 'Special authorizations';
+$lang['form.authorizations.default']      = 'Default authorisations';
+$lang['form.authorizations.clue']         = 'Module global authorizations. You can change these authorizations on each category.';
+$lang['form.authorizations.read.profile'] = 'Read permissions of the field in the profile';
+$lang['form.actions.authorizations']      = 'Read permissions of the field when creating or editing a profile';
 
 // Buttons
 $lang['form.submit']  = 'Submit';
@@ -85,32 +88,30 @@ $lang['form.extended.fields.error.already.exists']  = 'The field already exists.
 $lang['form.extended.fields.error.phpboost.config'] = 'The fields used by default PHPBoost can not be created more than one time, please choose another type of field.';
 
 // Fields
-$lang['form.fields.management']              = 'Fields management';
-$lang['form.field.add']                      = 'Add a field';
-$lang['form.field.edit']                     = 'Edit a field';
-$lang['form.field.type']                     = 'Field Type';
-$lang['form.default.field']                  = 'Default field';
-$lang['form.short.text']                     = 'Short text (max 255 characters)';
-$lang['form.long.text']                      = 'Long text (unlimited)';
-$lang['form.half.text']                      = 'Medium text';
-$lang['form.simple.select']                  = 'Single selection (between several values)';
-$lang['form.multiple.select']                = 'Multiple selection (between several values)';
-$lang['form.simple.check']                   = 'Single choice (between several values)';
-$lang['form.multiple.check']                 = 'Multiple choice (between several values)';
-$lang['form.date']                           = 'Date';
-$lang['form.themes.choice']                  = 'Theme';
-$lang['form.langs.choice']                   = 'Language';
-$lang['form.birthdate']                      = 'Date of birth';
-$lang['form.pm.to.email']                    = 'Email notification when receiving private message';
-$lang['form.editor.choice']                  = 'Editor';
-$lang['form.timezone.choice']                = 'Timezone choice';
-$lang['form.sex.choice']                     = 'Sex';
-$lang['form.avatar.management']              = 'Avatar';
-$lang['form.required.field']                 = 'Required field';
-$lang['form.required.field.clue']            = 'Required in the member profile and registration area';
-$lang['form.possible.values']                = 'Possible values';
-$lang['form.read.authorizations']            = 'Read permissions of the field in the profile';
-$lang['form.actions.authorizations']         = 'Read permissions of the field when creating or editing a profile';
+$lang['form.fields.management']   = 'Fields management';
+$lang['form.field.add']           = 'Add a field';
+$lang['form.field.edit']          = 'Edit a field';
+$lang['form.field.type']          = 'Field Type';
+$lang['form.default.field']       = 'Default field';
+$lang['form.short.text']          = 'Short text (max 255 characters)';
+$lang['form.long.text']           = 'Long text (unlimited)';
+$lang['form.half.text']           = 'Medium text';
+$lang['form.simple.select']       = 'Single selection (between several values)';
+$lang['form.multiple.select']     = 'Multiple selection (between several values)';
+$lang['form.simple.check']        = 'Single choice (between several values)';
+$lang['form.multiple.check']      = 'Multiple choice (between several values)';
+$lang['form.date']                = 'Date';
+$lang['form.themes.choice']       = 'Theme';
+$lang['form.langs.choice']        = 'Language';
+$lang['form.birthdate']           = 'Date of birth';
+$lang['form.pm.to.email']         = 'Email notification when receiving private message';
+$lang['form.editor.choice']       = 'Editor';
+$lang['form.timezone.choice']     = 'Timezone choice';
+$lang['form.sex.choice']          = 'Sex';
+$lang['form.avatar.management']   = 'Avatar';
+$lang['form.required.field']      = 'Required field';
+$lang['form.required.field.clue'] = 'Required in the member profile and registration area';
+$lang['form.possible.values']     = 'Possible values';
 
 // Labels
 $lang['form.name']                      = 'Name';

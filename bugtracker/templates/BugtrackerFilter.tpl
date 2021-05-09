@@ -19,7 +19,7 @@
 	}
 </script>
 <div class="bugtracker-filter">
-	<a href="#" onclick="toggle_filters_table(); return false;" class="cssmenu-title"><i class="fa fa-filter" aria-hidden="true"></i> {L_FILTERS}</a>
+	<a href="#" onclick="toggle_filters_table(); return false;" class="cssmenu-title"><i class="fa fa-filter" aria-hidden="true"></i> # IF C_SEVERAL_FILTERS #{@common.filters}# ELSE #{@common.filter}# ENDIF #</a>
 </div>
 <div class="responsive-table">
 	<table id="table_filters" class="table table-form"# IF NOT C_HAS_SELECTED_FILTERS # style="display: none;"# ENDIF #>
@@ -27,25 +27,25 @@
 			<tr>
 				# IF C_DISPLAY_TYPES #
 					<th>
-						{@labels.fields.type}
+						{@common.type}
 					</th>
 				# ENDIF #
 				# IF C_DISPLAY_CATEGORIES #
 					<th>
-						{@labels.fields.category}
+						{@common.category}
 					</th>
 				# ENDIF #
 				# IF C_DISPLAY_SEVERITIES #
 					<th>
-						{@labels.fields.severity}
+						{@bugtracker.severity}
 					</th>
 				# ENDIF #
 					<th>
-						{@labels.fields.status}
+						{@common.status}
 					</th>
 				# IF C_DISPLAY_VERSIONS #
 					<th>
-						{@labels.fields.version}
+						{@common.version}
 					</th>
 				# ENDIF #
 				# IF C_DISPLAY_SAVE_BUTTON #
@@ -72,9 +72,9 @@
 						# INCLUDE SELECT_SEVERITY #
 					</td>
 				# ENDIF #
-					<td>
-						# INCLUDE SELECT_STATUS #
-					</td>
+				<td>
+					# INCLUDE SELECT_STATUS #
+				</td>
 				# IF C_DISPLAY_VERSIONS #
 					<td>
 						# INCLUDE SELECT_VERSION #
@@ -89,9 +89,9 @@
 			# IF C_SAVED_FILTERS #
 				# START filters #
 					<tr id="filter{filters.ID}">
-						<td colspan="{FILTERS_NUMBER}">
-							<a href="#" aria-label="${LangLoader::get_message('delete', 'common')}" onclick="delete_filter('{filters.ID}'); return false;"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+						<td colspan="{FILTERS_NUMBER}" class="controls">
 							<a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
+							<a href="#" aria-label="{@common.delete}" onclick="delete_filter('{filters.ID}'); return false;"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
 						</td>
 					</tr>
 				# END filters #
@@ -99,7 +99,7 @@
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="{FILTERS_NUMBER}">${LangLoader::get_message('items_number', 'common')} : {BUGS_NUMBER}</td>
+				<td colspan="{FILTERS_NUMBER}">{@bugtracker.items.number} : {BUGS_NUMBER}</td>
 			</tr>
 		</tfoot>
 	</table>
