@@ -36,7 +36,10 @@
 	margin-left: 1.309rem;
 }
 
-.cssmenu-horizontal .cssmenu-img { vertical-align: bottom; }
+.cssmenu-horizontal .cssmenu-img {
+	vertical-align: bottom;
+	margin-right: 0.618rem;
+}
 
 .cssmenu .menu-with-img { display: inline-block; }
 
