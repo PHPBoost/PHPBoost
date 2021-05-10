@@ -643,9 +643,9 @@
 		maxFileSize: '{MAX_FILE_SIZE}',
 		maxFilesSize: '{MAX_FILES_SIZE}',
 		allowedExtensions: ["{ALLOWED_EXTENSIONS}"],
-		warningText: ${escapejs(LangLoader::get_message('upload.warning.disabled', 'upload-lang'))},
-		warningExtension: ${escapejs(LangLoader::get_message('upload.warning.extension', 'upload-lang'))},
-		warningFileSize: ${escapejs(LangLoader::get_message('upload.warning.file.size', 'upload-lang'))},
-		warningFilesNbr: ${escapejs(LangLoader::get_message('upload.warning.files.number', 'upload-lang'))},
+		warningText: ${escapejs(@H|upload.warning.disabled)},
+		warningExtension: ${escapejs(@H|upload.warning.extension)},
+		warningFileSize: ${escapejs(@H|upload.warning.file.size)},
+		warningFilesNbr: ${escapejs(@H|upload.warning.files.number)},
 	});
 </script>
