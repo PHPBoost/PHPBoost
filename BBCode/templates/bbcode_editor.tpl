@@ -32,7 +32,7 @@
 				});
 			}
 			else
-				alert(${escapejs(LangLoader::get_message('require_text', 'main'))});
+				alert(${escapejs(LangLoader::get_message('warning.text', 'warning-lang'))});
 		}
 	</script>
 
@@ -75,7 +75,7 @@
 					<i class="fa fa-fw fa-tint" aria-hidden="true"></i>
 				</span>
 				<div id="block-color{FIELD}" class="modal modal-animation">
-					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.color}</div>
@@ -89,7 +89,7 @@
 					<i class="fa fa-fw fa-paint-brush" aria-hidden="true"></i>
 				</span>
 				<div id="block-bgcolor{FIELD}" class="modal modal-animation">
-					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.bgcolor}</div>
@@ -103,7 +103,7 @@
 					<i class="fa fa-fw fa-text-height" aria-hidden="true"></i>
 				</span>
 				<div id="block-size{FIELD}" class="modal modal-animation">
-					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.size}</div>
@@ -130,7 +130,7 @@
 					<i class="fa fa-fw fa-font" aria-hidden="true"></i>
 				</span>
 				<div id="block-font{FIELD}" class="modal modal-animation">
-					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.font}</div>
@@ -164,7 +164,7 @@
 					<i class="fa fa-fw fa-align-left" aria-hidden="true"></i>
 				</span>
 				<div id="block-align{FIELD}" class="modal modal-animation">
-					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.align}</div>
@@ -197,7 +197,7 @@
 					<i class="fa fa-fw fa-indent" aria-hidden="true"></i>
 				</span>
 				<div id="block-positions{FIELD}" class="modal modal-animation">
-					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.positions}</div>
@@ -235,7 +235,7 @@
 					<i class="fa fa-fw fa-heading" aria-hidden="true"></i>
 				</span>
 				<div id="block-title{FIELD}" class="modal modal-animation">
-					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.title}</div>
@@ -278,7 +278,7 @@
 					<i class="fa fa-fw fa-list{AUTH_LIST}" aria-hidden="true"></i>
 				</span>
 				<div id="block-list{FIELD}" class="modal modal-animation">
-					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.list}</div>
@@ -294,7 +294,7 @@
 							<div class="cell-input">
 								<label class="checkbox" for="">
 									<input id="bb_ordered_list{FIELD}" type="checkbox" name="bb_ordered_list{FIELD}" />
-									<span>&nbsp;<span class="sr-only">${LangLoader::get_message('select', 'common')}</span></span>
+									<span>&nbsp;<span class="sr-only">{@common.select}</span></span>
 								</label>
 							</div>
 						</div>
@@ -309,7 +309,7 @@
 					<i class="fa fa-fw fa-table" aria-hidden="true"></i>
 				</span>
 				<div id="block-table{FIELD}" class="modal modal-animation">
-					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.table}</div>
@@ -331,7 +331,7 @@
 							<div class="cell-input">
 								<label class="checkbox" for="">
 									<input type="checkbox" name="bb-head{FIELD}" id="bb-head{FIELD}" class="field-smaller">
-									<span>&nbsp;<span class="sr-only">${LangLoader::get_message('select', 'common')}</span></span>
+									<span>&nbsp;<span class="sr-only">{@common.select}</span></span>
 								</label>
 							</div>
 						</div>
@@ -346,7 +346,7 @@
 					<i class="far fa-fw fa-square" aria-hidden="true"></i>
 				</span>
 				<div id="block-container{FIELD}" class="modal modal-animation">
-					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.container}</div>
@@ -378,7 +378,7 @@
 					</div>
 				</div>
 				<div id="block-custom-div{FIELD}" class="modal modal-animation">
-					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.custom.div}</div>
@@ -406,7 +406,7 @@
 					</div>
 				</div>
 				<div id="block-fieldset{FIELD}" class="modal modal-animation">
-					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.fieldset}</div>
@@ -425,7 +425,7 @@
 					</div>
 				</div>
 				<div id="block-abbr{FIELD}" class="modal modal-animation">
-					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.abbr}</div>
@@ -449,7 +449,7 @@
 					<i class="fa fa-fw fa-quote-left{AUTH_QUOTE}" aria-hidden="true"></i>
 				</span>
 				<div id="block-quote{FIELD}" class="modal modal-animation">
-					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.quote}</div>
@@ -477,7 +477,7 @@
 					<i class="fa fa-fw fa-eye-slash" aria-hidden="true"></i>
 				</span>
 				<div id="block-hide{FIELD}" class="modal modal-animation">
-					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.hide}</div>
@@ -510,7 +510,7 @@
 					<i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i>
 				</span>
 				<div id="block-style{FIELD}" class="modal modal-animation">
-					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.style}</div>
@@ -518,7 +518,7 @@
 						<div class="cell-body">
 							<div class="cell-content">
 								<div class="message-helper bgc notice flex-between">
-									<span>${LangLoader::get_message('notice', 'main')}</span>
+									<span>{@common.notice}</span>
 									<span class="button bgc-full notice hide-modal" onclick="insertbbcode('[style=notice]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
 							</div>
@@ -526,7 +526,7 @@
 						<div class="cell-body">
 							<div class="cell-content">
 								<div class="message-helper bgc question flex-between">
-									<span>${LangLoader::get_message('question', 'main')}</span>
+									<span>{@common.question}</span>
 									<span class="button bgc-full question hide-modal" onclick="insertbbcode('[style=question]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
 							</div>
@@ -534,7 +534,7 @@
 						<div class="cell-body">
 							<div class="cell-content">
 								<div class="message-helper bgc success flex-between">
-									<span>${LangLoader::get_message('success', 'main')}</span>
+									<span>{@common.success}</span>
 									<span class="button bgc-full success hide-modal" onclick="insertbbcode('[style=success]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
 							</div>
@@ -542,7 +542,7 @@
 						<div class="cell-body">
 							<div class="cell-content">
 								<div class="message-helper bgc warning flex-between">
-									<span>${LangLoader::get_message('warning', 'main')}</span>
+									<span>{@common.warning}</span>
 									<span class="button bgc-full warning hide-modal" onclick="insertbbcode('[style=warning]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
 							</div>
@@ -550,7 +550,7 @@
 						<div class="cell-body">
 							<div class="cell-content">
 								<div class="message-helper bgc error flex-between">
-									<span>${LangLoader::get_message('error', 'main')}</span>
+									<span>{@common.error}</span>
 									<span class="button bgc-full error hide-modal" onclick="insertbbcode('[style=error]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
 							</div>
@@ -564,7 +564,7 @@
 					<i class="fa fa-fw fa-globe" aria-hidden="true"></i>
 				</span>
 				<div id="block-url{FIELD}" class="modal modal-animation">
-					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.link}</div>
@@ -592,7 +592,7 @@
 					<i class="fa fa-fw iboost fa-iboost-email" aria-hidden="true"></i>
 				</span>
 				<div id="block-mail{FIELD}" class="modal modal-animation">
-					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.mail}</div>
@@ -620,7 +620,7 @@
 					<i class="fab fa-fw fa-wikipedia-w{AUTH_WIKIPEDIA}" aria-hidden="true"></i>
 				</span>
 				<div id="block-wikipedia{FIELD}" class="modal modal-animation">
-					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.wikipedia}</div>
@@ -652,7 +652,7 @@
 					<i class="fa fa-fw fa-rss" aria-hidden="true"></i>
 				</span>
 				<div id="block-feed{FIELD}" class="modal modal-animation">
-					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.feed}</div>
@@ -669,7 +669,7 @@
 							</div>
 						</div>
 						<div class="cell-form">
-							<label for="bb_feed_category{FIELD}" class="cell-label">${LangLoader::get_message('category', 'categories-common')}</label>
+							<label for="bb_feed_category{FIELD}" class="cell-label">{@common.category}</label>
 							<div class="cell-input">
 								<select id="bb_feed_category{FIELD}" disabled="disabled"></select>
 							</div>
@@ -691,7 +691,7 @@
 					<i class="fa fa-fw fa-anchor{AUTH_ANCHOR}" aria-hidden="true"></i>
 				</span>
 				<div id="block-anchor{FIELD}" class="modal modal-animation">
-					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.anchor}</div>
@@ -707,7 +707,7 @@
 							<div class="cell-input">
 								<label class="checkbox" for="">
 									<input class="checkbox-revealer" id="bb_anchor_url{FIELD}" type="checkbox" name="bb_anchor_url{FIELD}" />
-									<span>&nbsp;<span class="sr-only">${LangLoader::get_message('select', 'common')}</span></span>
+									<span>&nbsp;<span class="sr-only">{@common.select}</span></span>
 								</label>
 							</div>
 						</div>
@@ -727,7 +727,7 @@
 					<i class="fa fa-fw fa-music" aria-hidden="true"></i>
 				</span>
 				<div id="block-sound{FIELD}" class="modal modal-animation">
-					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.sound}</div>
@@ -752,7 +752,7 @@
 					<i class="fa fa-fw fa-film" aria-hidden="true"></i>
 				</span>
 				<div id="block-movie{FIELD}" class="modal modal-animation">
-					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.movie}</div>
@@ -805,7 +805,7 @@
 					<i class="fa fa-fw fa-camera" aria-hidden="true"></i>
 				</span>
 				<div id="block-lightbox{FIELD}" class="modal modal-animation">
-					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.lightbox}</div>
@@ -840,7 +840,7 @@
 					<i class="far fa-fw fa-image" aria-hidden="true"></i>
 				</span>
 				<div id="block-figure{FIELD}" class="modal modal-animation">
-					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.figure}</div>
@@ -891,7 +891,7 @@
 					<i class="far fa-fw fa-smile" aria-hidden="true"></i>
 				</span>
 				<div id="block-smileys{FIELD}" class="modal modal-animation">
-					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.smileys}</div>
@@ -915,7 +915,7 @@
 					<i class="far fa-fw fa-flag" aria-hidden="true"></i>
 				</span>
 				<div id="block-fa{FIELD}" class="modal modal-animation">
-					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.fa}</div>
@@ -944,7 +944,7 @@
 					<i class="fa fa-fw fa-code" aria-hidden="true"></i>
 				</span>
 				<div id="block-code{FIELD}" class="modal modal-animation">
-					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.code}</div>
@@ -1002,7 +1002,7 @@
 							<div class="cell-input">
 								<label class="checkbox" for="">
 									<input id="bb_code_line{FIELD}" name="bb_code_line{FIELD}" type="checkbox">
-									<span>&nbsp;<span class="sr-only">${LangLoader::get_message('select', 'common')}</span></span>
+									<span>&nbsp;<span class="sr-only">{@common.select}</span></span>
 								</label>
 							</div>
 						</div>
@@ -1023,7 +1023,7 @@
 				</span>
 			</li>
 			<li id="code-help" class="bbcode-elements">
-				<a class="bbcode-button" href="https://www.phpboost.com/wiki/bbcode" aria-label="{@bbcode.help}<br />${LangLoader::get_message('new.window', 'main')}" target="_blank" rel="noopener">
+				<a class="bbcode-button" href="https://www.phpboost.com/wiki/bbcode" aria-label="{@bbcode.help}<br />{@common.is.new.window}" target="_blank" rel="noopener">
 					<i class="far fa-fw fa-question-circle" aria-hidden="true"></i>
 				</a>
 			</li>

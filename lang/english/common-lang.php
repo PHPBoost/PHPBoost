@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 06
+ * @version     PHPBoost 6.0 - last update: 2021 05 10
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -129,6 +129,8 @@ $lang['common.source']                 = 'Source';
 $lang['common.sources']                = 'Sources';
 $lang['common.copy.link.to.clipboard'] = 'Copy link to clipboard';
 $lang['common.copied.to.clipboard']    = 'Copied to clipboard';
+$lang['common.open.new.window']        = 'Open in a new window';
+$lang['common.is.new.window']          = 'Opens in a new window';
 
 // List order
 $lang['common.listorder.item.start']   = '{startItem}';
@@ -139,6 +141,13 @@ $lang['common.listorder.pages.number'] = '{pagesNumber}';
 
 // Locale
 $lang['common.xml.lang'] = 'en';
+
+// Message helper
+$lang['common.notice']   = 'Notice';
+$lang['common.question'] = 'Question';
+$lang['common.success']  = 'Success';
+$lang['common.warning']  = 'Warning';
+$lang['common.error']    = 'Error';
 
 // More
 $lang['common.author']        = 'Author';

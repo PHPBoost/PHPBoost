@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 28
+ * @version     PHPBoost 6.0 - last update: 2021 05 10
  * @since       PHPBoost 2.0 - 2008 07 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -61,7 +61,7 @@ class BBCodeEditor extends ContentEditor
 		}
 
 		$bbcode_lang = LangLoader::get('common', 'BBCode');
-		$template->add_lang($bbcode_lang);
+		$template->add_lang(array_merge($bbcode_lang, LangLoader::get('common-lang')));
 
 		$template->put_all(array(
 			'PAGE_PATH'                     => $_SERVER['PHP_SELF'],
