@@ -3,14 +3,18 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 14
+ * @version     PHPBoost 6.0 - last update: 2021 05 11
  * @since       PHPBoost 1.2 - 2005 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once('../admin/admin_begin.php');
 load_module_lang('gallery'); //Chargement de la langue du module.
+
+$lang = LangLoader::get('common', 'gallery');
+
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 $config = GalleryConfig::load();
@@ -20,7 +24,12 @@ $request = AppContext::get_request();
 $valid = $request->get_postvalue('valid', false);
 $gallery_cache = $request->get_postvalue('gallery_cache', false);
 
-$tpl = new FileTemplate('gallery/admin_gallery_config.tpl');
+$view = new FileTemplate('gallery/admin_gallery_config.tpl');
+$view->add_lang(array_merge(
+	$lang,
+	LangLoader::get('common-lang'),
+	LangLoader::get('form-lang')
+));
 
 //Si c'est confirmé on execute
 if ($valid)
@@ -73,7 +82,7 @@ if ($valid)
 	###### Régénération du cache de la gallery #######
 	GalleryMiniMenuCache::invalidate();
 
-	$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+	$view->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 }
 elseif ($gallery_cache) //Suppression des miniatures.
 {
@@ -83,7 +92,7 @@ elseif ($gallery_cache) //Suppression des miniatures.
 
 	GalleryMiniMenuCache::invalidate();
 
-	$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+	$view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 }
 
 //Vitesse de défilement des miniatures.
@@ -97,10 +106,10 @@ for ($i = 1; $i <= 10; $i++)
 //Type de défilemennt
 $scroll_types = '';
 $array_scroll = array(
-	GalleryConfig::STATIC_SCROLL => $LANG['static_scroll'],
-	GalleryConfig::VERTICAL_DYNAMIC_SCROLL => $LANG['vertical_dynamic_scroll'],
-	GalleryConfig::HORIZONTAL_DYNAMIC_SCROLL => $LANG['horizontal_dynamic_scroll'],
-	GalleryConfig::NO_SCROLL => $LANG['no_scroll']
+	GalleryConfig::STATIC_SCROLL => $lang['gallery.static.scroll'],
+	GalleryConfig::VERTICAL_DYNAMIC_SCROLL => $lang['gallery.vertical.scroll'],
+	GalleryConfig::HORIZONTAL_DYNAMIC_SCROLL => $lang['gallery.horizontal.scroll'],
+	GalleryConfig::NO_SCROLL => $lang['gallery.no.scroll']
 );
 
 foreach ($array_scroll as $key => $name)
@@ -109,42 +118,44 @@ foreach ($array_scroll as $key => $name)
 	$scroll_types .= '<option value="' . $key . '"' . $selected . '>' . $name . '</option>';
 }
 
-$tpl->put_all(array(
-	'C_LOGO_ENABLED' => $config->is_logo_enabled(),
-	'C_TITLE_ENABLED' => $config->is_title_enabled(),
+$view->put_all(array(
+	'C_LOGO_ENABLED'           => $config->is_logo_enabled(),
+	'C_TITLE_ENABLED'          => $config->is_title_enabled(),
 	'C_NOTES_NUMBER_DISPLAYED' => $config->are_notes_number_displayed(),
-	'C_VIEWS_COUNTER_ENABLED' => $config->is_views_counter_enabled(),
-	'C_AUTHOR_DISPLAYED' => $config->is_author_displayed(),
-	'C_DISPLAY_PICS_NEW_PAGE' => $config->get_pics_enlargement_mode() == GalleryConfig::NEW_PAGE,
-	'C_DISPLAY_PICS_RESIZE' => $config->get_pics_enlargement_mode() == GalleryConfig::RESIZE,
-	'C_DISPLAY_PICS_POPUP' => $config->get_pics_enlargement_mode() == GalleryConfig::POPUP,
-	'C_DISPLAY_PICS_FULL_SCREEN' => $config->get_pics_enlargement_mode() == GalleryConfig::FULL_SCREEN,
-	'MINI_MAX_WIDTH' => $config->get_mini_max_width(),
-	'MINI_MAX_HEIGHT' => $config->get_mini_max_height(),
-	'MAX_WIDTH' => $config->get_max_width(),
-	'MAX_HEIGHT' => $config->get_max_height(),
-	'MAX_WEIGHT' => $config->get_max_weight(),
-	'QUALITY' => $config->get_quality(),
-	'LOGO' => $config->get_logo(),
-	'LOGO_TRANSPARENCY' => $config->get_logo_transparency(),
+	'C_VIEWS_COUNTER_ENABLED'  => $config->is_views_counter_enabled(),
+	'C_AUTHOR_DISPLAYED'       => $config->is_author_displayed(),
+	'C_DISPLAY_NEW_PAGE'       => $config->get_pics_enlargement_mode() == GalleryConfig::NEW_PAGE,
+	'C_DISPLAY_RESIZING'       => $config->get_pics_enlargement_mode() == GalleryConfig::RESIZE,
+	'C_DISPLAY_POPUP'          => $config->get_pics_enlargement_mode() == GalleryConfig::POPUP,
+	'C_DISPLAY_FULL_SCREEN'    => $config->get_pics_enlargement_mode() == GalleryConfig::FULL_SCREEN,
+
+	'THUMBNAIL_MAX_WIDTH'      => $config->get_mini_max_width(),
+	'THUMBNAIL_MAX_HEIGHT'     => $config->get_mini_max_height(),
+	'MAX_WIDTH'                => $config->get_max_width(),
+	'MAX_HEIGHT'               => $config->get_max_height(),
+	'MAX_WEIGHT'               => $config->get_max_weight(),
+	'QUALITY'                  => $config->get_quality(),
+	'LOGO'                     => $config->get_logo(),
+	'LOGO_TRANSPARENCY'        => $config->get_logo_transparency(),
 	'LOGO_HORIZONTAL_DISTANCE' => $config->get_logo_horizontal_distance(),
-	'LOGO_VERTICAL_DISTANCE' => $config->get_logo_vertical_distance(),
-	'CATEGORIES_NUMBER_PER_PAGE' => $config->get_categories_number_per_page(),
-	'COLUMNS_NUMBER' => $config->get_columns_number(),
-	'PICS_NUMBER_PER_PAGE' => $config->get_pics_number_per_page(),
-	'MEMBER_MAX_PICS_NUMBER' => $config->get_member_max_pics_number(),
-	'MODERATOR_MAX_PICS_NUMBER' => $config->get_moderator_max_pics_number(),
-	'PICS_NUMBER_IN_MINI' => $config->get_pics_number_in_mini(),
-	'MINI_PICS_SPEED' => $mini_pics_speed,
-	'SCROLL_TYPES' => $scroll_types,
-	'NEW_PAGE' => GalleryConfig::NEW_PAGE,
-	'RESIZE' => GalleryConfig::RESIZE,
-	'POPUP' => GalleryConfig::POPUP,
-	'FULL_SCREEN' => GalleryConfig::FULL_SCREEN,
-	'AUTH_READ' => Authorizations::generate_select(Category::READ_AUTHORIZATIONS, $config->get_authorizations()),
-	'AUTH_WRITE' => Authorizations::generate_select(Category::WRITE_AUTHORIZATIONS, $config->get_authorizations()),
-	'AUTH_MODERATION' => Authorizations::generate_select(Category::MODERATION_AUTHORIZATIONS, $config->get_authorizations()),
-	'AUTH_MANAGE_CATEGORIES' => Authorizations::generate_select(Category::CATEGORIES_MANAGEMENT_AUTHORIZATIONS, $config->get_authorizations()),
+	'LOGO_VERTICAL_DISTANCE'   => $config->get_logo_vertical_distance(),
+	'CATEGORIES_PER_PAGE'      => $config->get_categories_number_per_page(),
+	'COLUMNS_NUMBER'           => $config->get_columns_number(),
+	'ITEMS_PER_PAGE'           => $config->get_pics_number_per_page(),
+	'MEMBER_ITEMS_NUMBER'      => $config->get_member_max_pics_number(),
+	'MODERATOR_ITEMS_NUMBER'   => $config->get_moderator_max_pics_number(),
+	'THUMBNAILS_NUMBER'        => $config->get_pics_number_in_mini(),
+	'SCROLLING_SPEED'          => $mini_pics_speed,
+	'SCROLLING_TYPES'          => $scroll_types,
+	'NEW_PAGE'                 => GalleryConfig::NEW_PAGE,
+	'RESIZE'                   => GalleryConfig::RESIZE,
+	'POPUP'                    => GalleryConfig::POPUP,
+	'FULL_SCREEN'              => GalleryConfig::FULL_SCREEN,
+	'AUTH_READ'                => Authorizations::generate_select(Category::READ_AUTHORIZATIONS, $config->get_authorizations()),
+	'AUTH_WRITE'               => Authorizations::generate_select(Category::WRITE_AUTHORIZATIONS, $config->get_authorizations()),
+	'AUTH_MODERATION'          => Authorizations::generate_select(Category::MODERATION_AUTHORIZATIONS, $config->get_authorizations()),
+	'AUTH_MANAGE_CATEGORIES'   => Authorizations::generate_select(Category::CATEGORIES_MANAGEMENT_AUTHORIZATIONS, $config->get_authorizations()),
+	//
 	'L_AUTH_READ' => $LANG['auth_read'],
 	'L_AUTH_WRITE' => $LANG['auth_upload'],
 	'L_AUTH_MODERATION' => $LANG['auth_edit'],
@@ -160,7 +171,7 @@ $tpl->put_all(array(
 	'L_REQUIRE_IMG_P' => $LANG['require_img_p'],
 	'L_REQUIRE_QUALITY' => $LANG['require_quality'],
 	'L_GALLERY_MANAGEMENT' => LangLoader::get_message('gallery.management', 'common', 'gallery'),
-	'L_GALLERY_PICS_ADD' => LangLoader::get_message('gallery.actions.add', 'common', 'gallery'),
+	// 'L_GALLERY_PICS_ADD' => LangLoader::get_message('gallery.actions.add', 'common', 'gallery'),
 	'L_GALLERY_CONFIG' => $LANG['gallery_config'],
 	'L_CONFIG_CONFIG' => LangLoader::get_message('general-config', 'admin-config-common'),
 	'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
@@ -228,7 +239,7 @@ $tpl->put_all(array(
 	'L_RESET' => $LANG['reset']
 ));
 
-$tpl->display();
+$view->display();
 
 require_once('../admin/admin_footer.php');
 

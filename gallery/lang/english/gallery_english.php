@@ -23,6 +23,7 @@ $LANG['img_without_cat'] = 'Picture(s) without categories';
 $LANG['total_img_root'] = 'There are %d pictures in the gallery';
 $LANG['total_img_root_single'] = 'There is one picture in the gallery';
 $LANG['total_img_cat'] = '%d picture(s) in this category';
+
 $LANG['height_max'] = 'Picture max height';
 $LANG['height_max_explain'] = '600px by default';
 $LANG['width_max'] = 'Picture max width';
@@ -66,6 +67,7 @@ $LANG['nbr_img_modo'] = 'Max number of pictures';
 $LANG['nbr_img_modo_explain'] = 'Moderator';
 $LANG['explain_gallery_cache'] = 'Regeneration of the thumbnails<br />Empties the cache in case of thumbnails configuration modification, and recount number of pictures in each categories.';
 $LANG['explain_pic'] = 'The gallery you are about to delete contains <strong>1</strong> picture, do you want to preserve it by transferring it in another gallery, or to delete this picture?';
+
 $LANG['explain_pics'] = 'The gallery you are about to delete contains <strong>%d</strong> pictures, do you want to preserve them by transferring them in another gallery, or to delete all pictures?';
 $LANG['explain_subgallery'] = 'The gallery you are about to delete contains <strong>1</strong> subgallery, do you want to preserve it by transferring it in another gallery, or to delete it and its contents?';
 $LANG['explain_subgalleries'] = 'The gallery you are about to delete contains <strong>%d</strong> subgalleries, do you want to preserve them by transferring them in another gallery, or to delete all these subgalleries and their contents?';
@@ -81,16 +83,19 @@ $LANG['auth_extension'] = 'Authorized extensions';
 $LANG['add_on'] = 'Add on';
 $LANG['nbr_pics_info_admin'] = '%d picture(s) included %s hidden';
 $LANG['nbr_pics_info'] = '%d picture(s)';
+
 $LANG['display_mode'] = 'Image resizing mode';
 $LANG['new_page'] = 'New page';
 $LANG['resize'] = 'Resize';
 $LANG['popup'] = 'Popup';
 $LANG['popup_full'] = 'Full screen';
+
 $LANG['success_upload_img'] = 'Picture succesfully uploaded!';
 $LANG['album'] = 'Albums';
 $LANG['sub_album'] = 'Subalbums';
 $LANG['best_views'] = 'Best views';
 $LANG['best_notes'] = 'Best notes';
+
 $LANG['thumbnails_scolling'] = 'Thumbnails scrolling';
 $LANG['nbr_pics_mini'] = 'Number of thumbnails';
 $LANG['speed_mini_pics'] = 'Scrolling speed';
@@ -100,6 +105,7 @@ $LANG['no_scroll'] = 'No scrolling';
 $LANG['static_scroll'] = 'Static scrolling';
 $LANG['vertical_dynamic_scroll'] = 'Vertical dynamic scrolling';
 $LANG['horizontal_dynamic_scroll'] = 'Horizontal dynamic scrolling';
+
 $LANG['column'] = 'Columns';
 $LANG['global_cat_selection'] = 'All selected pictures category';
 $LANG['global_cat_selection_explain'] = 'Allows to change all selected pictures category in one time';

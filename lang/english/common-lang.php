@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 10
+ * @version     PHPBoost 6.0 - last update: 2021 05 11
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,29 +13,30 @@
 #                     English                      #
 ####################################################
 
-$lang['common.id']           = 'ID';
-$lang['common.title']        = 'Title';
-$lang['common.name']         = 'Name';
-$lang['common.home']         = 'Home';
 $lang['common.avatar']       = 'Avatar';
-$lang['common.options']      = 'Options';
-$lang['common.other']        = 'Other';
-$lang['common.back']         = 'Back';
-$lang['common.root']         = 'Root';
-$lang['common.description']  = 'Description';
+$lang['common.color']        = 'Color';
 $lang['common.content']      = 'Content';
-$lang['common.module']       = 'Module';
-$lang['common.moderation']     = 'Moderation';
-$lang['common.participants'] = 'Participants';
-$lang['common.suggestions']  = 'Suggestions';
-$lang['common.update']       = 'Update';
+$lang['common.description']  = 'Description';
 $lang['common.filter']       = 'Filter';
 $lang['common.filters']      = 'Filters';
-$lang['common.version']      = 'Version';
-$lang['common.type']         = 'Type';
+$lang['common.home']         = 'Home';
+$lang['common.id']           = 'ID';
+$lang['common.image']        = 'Image';
 $lang['common.informations'] = 'Informations';
-$lang['common.statistics']   = 'Statistics';
+$lang['common.moderation']   = 'Moderation';
+$lang['common.module']       = 'Module';
+$lang['common.name']         = 'Name';
+$lang['common.options']      = 'Options';
+$lang['common.other']        = 'Other';
 $lang['common.pages']        = 'Pages';
+$lang['common.participants'] = 'Participants';
+$lang['common.root']         = 'Root';
+$lang['common.statistics']   = 'Statistics';
+$lang['common.suggestions']  = 'Suggestions';
+$lang['common.title']        = 'Title';
+$lang['common.type']         = 'Type';
+$lang['common.update']       = 'Update';
+$lang['common.version']      = 'Version';
 
 $lang['common.by']      = 'By';
 $lang['common.the']     = 'The';
@@ -54,8 +55,6 @@ $lang['common.default']     = 'Default';
 $lang['common.default.by']  = 'By default';
 $lang['common.before']      = 'Before';
 $lang['common.after']       = 'After';
-
-$lang['common.color'] = 'Color';
 
 // Actions
 $lang['common.read.more']    = 'Read more';
@@ -79,6 +78,8 @@ $lang['common.enabled']      = 'Enabled';
 $lang['common.disabled']     = 'Disabled';
 $lang['common.display']      = 'Display';
 $lang['common.displayed']    = 'Displayed';
+$lang['common.approve']      = 'Approve';
+$lang['common.disapprove']   = 'Disapprove';
 $lang['common.hide']         = 'Hide';
 $lang['common.hidden']       = 'Hidden';
 $lang['common.close']        = 'Close';
@@ -101,6 +102,7 @@ $lang['common.visits.number']    = 'Visits number';
 $lang['common.downloads.number'] = 'Downloads number';
 $lang['common.maximum']          = 'Maximum';
 $lang['common.minimum']          = 'Minimum';
+$lang['common.dimensions']       = 'Dimensions';
 $lang['common.size']             = 'Size';
 $lang['common.unknown.size']     = 'Unknown size';
 $lang['common.unlimited']        = 'Unlimited';
@@ -117,6 +119,7 @@ $lang['common.hide.text']              = 'Click here to hide this text.';
 $lang['common.copy.to.clipboard']      = 'Copy to clipboard';
 
 // Links
+$lang['common.back']                   = 'Back';
 $lang['common.see.details']            = 'See details';
 $lang['common.see.category']           = 'See category';
 $lang['common.see.profile']            = 'See member profile';
@@ -208,7 +211,7 @@ $lang['common.sort.options']            = 'Sort options';
 $lang['common.sort.by']                 = 'Sort by';
 $lang['common.sort.by.alphabetic']      = 'Alphabetic';
 $lang['common.sort.by.author']          = 'Author';
-$lang['common.sort.by.date']            = 'Creation date';
+$lang['common.sort.by.date']            = 'Release date';
 $lang['common.sort.by.update']          = 'Date';
 $lang['common.sort.by.views.number']    = 'Views number';
 $lang['common.sort.by.best.note']       = 'Best note';

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 28
+ * @version     PHPBoost 6.0 - last update: 2021 05 11
  * @since       PHPBoost 1.5 - 2006 06 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -61,6 +61,9 @@ $lang['warning.invalid.archive.content'] = 'Le contenu de l\'archive est incorre
 $lang['warning.404.message']             = 'Il semblerait qu\'une tornade soit passée par ici.<br />Il ne reste malheureusement plus rien à voir.';
 $lang['warning.403.message']             = 'Il semblerait qu\'une tornade soit passée par ici.<br />L\'accès est interdit au public.';
 $lang['warning.csrf.invalid.token']      = 'Jeton de session invalide. Veuillez essayer de recharger la page car l\'opération n\'a pas pu être effectuée.';
+
+// Forbidden
+$lang['warning.file.forbidden.chars'] = 'Le nom du fichier ne peut contenir aucun des caractères suivants : \\\ / . | ? < > \"';
 
 // Groups
 $lang['warning.already.group'] = 'Le membre appartient déjà au groupe';

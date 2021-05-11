@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 15
+ * @version     PHPBoost 6.0 - last update: 2021 05 11
  * @since       PHPBoost 1.2 - 2005 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -12,6 +12,9 @@
 
 require_once('../admin/admin_begin.php');
 load_module_lang('gallery'); //Chargement de la langue du module.
+
+$lang = LangLoader::get('common', 'gallery');
+
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
@@ -25,7 +28,13 @@ $move = $request->get_getint('move', 0);
 $Gallery = new Gallery();
 $config = GalleryConfig::load();
 
-$tpl = new FileTemplate('gallery/admin_gallery_management.tpl');
+$view = new FileTemplate('gallery/admin_gallery_management.tpl');
+$view->add_lang(array_merge(
+	$lang,
+	LangLoader::get('common-lang'),
+	LangLoader::get('form-lang'),
+	LangLoader::get('upload-lang')
+));
 
 if (!empty($idpics) && $move) //Déplacement d'une image.
 {
@@ -37,7 +46,7 @@ if (!empty($idpics) && $move) //Déplacement d'une image.
 	GalleryMiniMenuCache::invalidate();
 	GalleryCategoriesCache::invalidate();
 
-	$tpl->put('message_helper', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+	$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 }
 elseif (!empty($del)) //Suppression d'une image.
 {
@@ -49,7 +58,7 @@ elseif (!empty($del)) //Suppression d'une image.
 	GalleryMiniMenuCache::invalidate();
 	GalleryCategoriesCache::invalidate();
 
-	$tpl->put('message_helper', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+	$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 }
 
 if (!empty($id_category))
@@ -93,23 +102,29 @@ $nbr_column_pics = ($nbr_pics > $config->get_columns_number()) ? $config->get_co
 $nbr_column_pics = !empty($nbr_column_pics) ? $nbr_column_pics : 1;
 $column_width_pics = floor(100/$nbr_column_pics);
 
-$tpl->put_all(array(
-	'C_DISPLAY_NO_PICTURES_MESSAGE' => $category->get_id() != Category::ROOT_CATEGORY,
-	'C_PICTURES' => $nbr_pics > 0,
+$view->put_all(array(
+	'C_ITEMS'                    => $nbr_pics > 0,
+	'C_IS_CATEGORY'              => !empty($id_category),
+	'C_DISPLAY_NO_ITEMS_MESSAGE' => $category->get_id() != Category::ROOT_CATEGORY,
 	'C_SUBCATEGORIES_PAGINATION' => $pagination->has_several_pages(),
+
+	'CATEGORY_NAME'            => $category->get_name(),
 	'SUBCATEGORIES_PAGINATION' => $pagination->display(),
-	'COLUMNS_NUMBER' => $config->get_columns_number(),
-	'COLSPAN' => min($nbr_column_cats, $config->get_columns_number()),
-	'CAT_ID' => $id_category,
-	'GALLERY' => !empty($id_category) ? $LANG['gallery'] . ' : ' . $category->get_name() : $LANG['gallery'],
+	'COLUMNS_NUMBER'           => $config->get_columns_number(),
+	'COLSPAN'                  => min($nbr_column_cats, $config->get_columns_number()),
+	'CATEGORY_ID'              => $id_category,
+	'ARRAY_JS'                 => '',
+	'JS_ITEMS_NUMBER'          => 0,
+	'MAX_START'                => 0,
+	'START_THUMB'              => 0,
+	'ITEMS_NUMBER'             => $nbr_pics,
+
+	'U_PARENT_CATEGORY' => $category->get_id_parent(),
+	//
 	'HEIGHT_MAX' => ($config->get_mini_max_height() - 15),
-	'ARRAY_JS' => '',
-	'NBR_PICS' => 0,
-	'MAX_START' => 0,
-	'START_THUMB' => 0,
 	'END_THUMB' => 0,
+	//
 	'L_GALLERY_MANAGEMENT' => LangLoader::get_message('gallery.management', 'common', 'gallery'),
-	'L_GALLERY_PICS_ADD' => LangLoader::get_message('gallery.actions.add', 'common', 'gallery'),
 	'L_GALLERY_CONFIG' => $LANG['gallery_config'],
 	'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 	'L_FILE_FORBIDDEN_CHARS' => $LANG['file_forbidden_chars'],
@@ -130,7 +145,7 @@ $tpl->put_all(array(
 $nbr_cat_displayed = 0;
 if ($total_cat > 0)
 {
-	$tpl->assign_block_vars('cat', array(
+	$view->assign_block_vars('cat', array(
 	));
 
 	$i = 0;
@@ -150,14 +165,19 @@ if ($total_cat > 0)
 			$category_thumbnail = $cat->get_thumbnail()->rel();
 			$elements_number = $cat->get_elements_number();
 
-			$tpl->assign_block_vars('cat.list', array(
-				'C_IMG' => !empty($category_thumbnail),
-				'IDCAT' => $cat->get_id(),
-				'CAT' => $cat->get_name(),
-				'IMG' => $category_thumbnail,
+			$view->assign_block_vars('cat.list', array(
+				'C_THUMBNAILS'  => !empty($category_thumbnail),
+				'CATEGORY_ID'   => $cat->get_id(),
+				'CATEGORY_NAME' => $cat->get_name(),
+
+				'ITEMS_NUMBER'        => $elements_number['pics_aprob'],
+				'HIDDEN_ITEMS_NUMBER' => $elements_number['pics_unaprob'],
+
+				'U_THUMBNAIL' => $category_thumbnail,
+				//
 				'C_DISPLAY_TR_START' => $display_tr_start,
 				'C_DISPLAY_TR_END' => $display_tr_end,
-				'L_NBR_PICS' => sprintf($LANG['nbr_pics_info_admin'], $elements_number['pics_aprob'], $elements_number['pics_unaprob'])
+				'L_NBR_PICS' => sprintf($LANG['nbr_pics_info_admin'], $elements_number['pics_aprob'], $elements_number['pics_unaprob']),
 			));
 		}
 	}
@@ -166,7 +186,7 @@ if ($total_cat > 0)
 	while (!is_int($i/$nbr_column_cats))
 	{
 		$i++;
-		$tpl->assign_block_vars('cat.end_td', array(
+		$view->assign_block_vars('cat.end_td', array(
 			'COLUMN_WIDTH_PICS' => $column_width_pics,
 			'C_DISPLAY_TR_END' => (is_int($i/$nbr_column_cats))
 		));
@@ -179,13 +199,15 @@ if ($nbr_pics > 0 && empty($idpics))
 }
 
 ##### Affichage des photos #####
-$tpl->assign_block_vars('pics', array(
+$view->assign_block_vars('pics', array(
 	'C_PICS_MAX' => $nbr_pics == 0 || !empty($idpics),
-	'COLSPAN' => isset($nbr_pics_category) ? min($nbr_pics_category, $config->get_columns_number()) : 1,
-	'C_EDIT' => !empty($id_category),
-	'ID' => $idpics,
-	'ID_CATEGORY' => $id_category,
-	'CATNAME' => $category->get_name(),
+	'C_EDIT'     => !empty($id_category),
+
+	'COLSPAN'       => isset($nbr_pics_category) ? min($nbr_pics_category, $config->get_columns_number()) : 1,
+	'ID'            => $idpics,
+	'ID_CATEGORY'   => $id_category,
+	'CATEGORY_NAME' => $category->get_name(),
+
 	'U_EDIT_CATEGORY' => CategoriesUrlBuilder::edit($id_category)->rel()
 ));
 
@@ -202,12 +224,13 @@ if ($nbr_pics > 0)
 		DispatchManager::redirect($error_controller);
 	}
 
-	$tpl->put_all(array(
+	$view->put_all(array(
+		'C_PAGINATION' => $pagination->has_several_pages(),
+		'PAGINATION'   => $pagination->display(),
+		//
 		'L_BY' => $LANG['by'],
 		'L_PREVIOUS' => $LANG['previous'],
 		'L_NEXT' => $LANG['next'],
-		'C_PAGINATION' => $pagination->has_several_pages(),
-		'PAGINATION' => $pagination->display()
 	));
 
 	if (!empty($idpics))
@@ -249,11 +272,13 @@ if ($nbr_pics > 0)
 
 				//Affichage de la liste des miniatures sous l'image.
 				$array_pics[] = array(
+					'C_CURRENT_ITEM' => $row['id'] == $idpics,
+
 					'HEIGHT' => ($config->get_mini_max_height() + 16),
-					'ID' => $i,
-					'URL' => 'admin_gallery.php?cat=' . $row['id_category'] . '&amp;id=' . $row['id'] . '#pics_max',
-					'NAME' => stripslashes($row['name']),
-					'PATH' => $row['path']
+					'ID'     => $i,
+					'URL'    => 'admin_gallery.php?cat=' . $row['id_category'] . '&amp;id=' . $row['id'] . '#pics_max',
+					'NAME'   => stripslashes($row['name']),
+					'PATH'   => $row['path']
 				);
 
 				if ($row['id'] == $idpics)
@@ -263,7 +288,6 @@ if ($nbr_pics > 0)
 				}
 				else
 				{
-
 					if (!$reach_pics_pos)
 					{
 						$thumbnails_before++;
@@ -289,11 +313,12 @@ if ($nbr_pics > 0)
 			if ($thumbnails_after < $nbr_pics_display_after)
 				$start_thumbnails += $nbr_pics_display_after - $thumbnails_after;
 
-			$tpl->put_all(array(
-				'ARRAY_JS' => $array_js,
-				'NBR_PICS' => ($i - 1),
-				'MAX_START' => ($i - 1) - $nbr_column_pics,
-				'START_THUMB' => (($pos_pics - $start_thumbnails) > 0) ? ($pos_pics - $start_thumbnails) : 0,
+			$view->put_all(array(
+				'ARRAY_JS'        => $array_js,
+				'JS_ITEMS_NUMBER' => ($i - 1),
+				'MAX_START'       => ($i - 1) - $nbr_column_pics,
+				'START_THUMB'     => (($pos_pics - $start_thumbnails) > 0) ? ($pos_pics - $start_thumbnails) : 0,
+				//
 				'END_THUMB' => ($pos_pics + $end_thumbnails),
 				'L_INFORMATIONS' => $LANG['informations'],
 				'L_NAME' => $LANG['name'],
@@ -327,32 +352,34 @@ if ($nbr_pics > 0)
 			$date = new Date($info_pics['timestamp'], Timezone::SERVER_TIMEZONE);
 
 			//Affichage de l'image et de ses informations.
-			$tpl->assign_block_vars('pics.pics_max', array_merge(Date::get_array_tpl_vars($date, 'date'), array(
-				'C_APPROVED' => $info_pics['aprob'],
-				'C_PREVIOUS' => ($pos_pics > 0),
-				'C_NEXT' => ($pos_pics < ($i - 1)),
-				'C_LEFT_THUMBNAILS' => ($pos_pics - $start_thumbnails),
+			$view->assign_block_vars('pics.pics_max', array_merge(Date::get_array_tpl_vars($date, 'date'), array(
+				'C_APPROVED'         => $info_pics['aprob'],
+				'C_PREVIOUS'         => ($pos_pics > 0),
+				'C_NEXT'             => ($pos_pics < ($i - 1)),
+				'C_LEFT_THUMBNAILS'  => ($pos_pics - $start_thumbnails),
 				'C_RIGHT_THUMBNAILS' => (($pos_pics - $start_thumbnails) <= ($i - 1) - $nbr_column_pics),
-				'ID' => $info_pics['id'],
-				'ID_CATEGORY' => $id_category,
-				'ID_PREVIOUS' => $id_previous,
-				'ID_NEXT' => $id_next,
-				'TOKEN' => AppContext::get_session()->get_token(),
-				'PICTURE_NAME' => stripslashes($info_pics['name']),
-				'C_POSTOR_EXIST' => !empty($info_pics['display_name']),
-				'POSTOR' => $info_pics['display_name'],
-				'POSTOR_LEVEL_CLASS' => UserService::get_level_class($info_pics['level']),
-				'C_POSTOR_GROUP_COLOR' => !empty($group_color),
-				'POSTOR_GROUP_COLOR' => $group_color,
-				'U_POSTOR_PROFILE' => UserUrlBuilder::profile($info_pics['user_id'])->rel(),
-				'VIEWS' => ($info_pics['views'] + 1),
-				'DIMENSION' => $info_pics['width'] . ' x ' . $info_pics['height'],
-				'SIZE' => NumberHelper::round($info_pics['weight']/1024, 1),
-				'COLSPAN' => min(($i + 2), ($config->get_columns_number() + 2)),
-				'COLSPAN_PICTURE' => (int)($pos_pics > 0) + (int)($pos_pics < ($i - 1)),
-				'CAT' => $cat_list,
-				'RENAME' => addslashes($info_pics['name']),
-				'RENAME_CUT' => addslashes($info_pics['name'])
+				'C_AUTHOR_EXISTS' => !empty($info_pics['display_name']),
+				'C_AUTHOR_GROUP_COLOR' => !empty($group_color),
+
+				'ID'                  => $info_pics['id'],
+				'ID_CATEGORY'         => $id_category,
+				'ID_PREVIOUS'         => $id_previous,
+				'ID_NEXT'             => $id_next,
+				'TOKEN'               => AppContext::get_session()->get_token(),
+				'PICTURE_NAME'        => stripslashes($info_pics['name']),
+				'AUTHOR_DISPLAY_NAME' => $info_pics['display_name'],
+				'AUTHOR_LEVEL_CLASS'  => UserService::get_level_class($info_pics['level']),
+				'AUTHOR_GROUP_COLOR'  => $group_color,
+				'VIEWS_NUMBER'        => ($info_pics['views'] + 1),
+				'DIMENSION'           => $info_pics['width'] . ' x ' . $info_pics['height'],
+				'SIZE'                => NumberHelper::round($info_pics['weight']/1024, 1),
+				'COLSPAN'             => min(($i + 2), ($config->get_columns_number() + 2)),
+				'COLSPAN_THUMBNAIL'   => (int)($pos_pics > 0) + (int)($pos_pics < ($i - 1)),
+				'CATEGORIES_LIST'     => $cat_list,
+				'RENAME'              => addslashes($info_pics['name']),
+				'RENAME_CUT'          => addslashes($info_pics['name']),
+
+				'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($info_pics['user_id'])->rel(),
 			)));
 
 			//Affichage de la liste des miniatures sous l'image.
@@ -361,7 +388,7 @@ if ($nbr_pics > 0)
 			{
 				if ($i >= ($pos_pics - $start_thumbnails) && $i <= ($pos_pics + $end_thumbnails))
 				{
-					$tpl->assign_block_vars('pics.pics_max.list_preview_pics', $pics);
+					$view->assign_block_vars('pics.pics_max.list_preview_pics', $pics);
 				}
 				$i++;
 			}
@@ -391,7 +418,7 @@ if ($nbr_pics > 0)
 			$name_cut = (TextHelper::strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlspecialchars(TextHelper::substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 
 			//On reccourci le nom s'il est trop long pour éviter de déformer l'administration.
-			$name = TextHelper::html_entity_decode($row['name']);
+			$name = !empty($row['name']) ? TextHelper::html_entity_decode($row['name']) : $row['path'];
 			$name = TextHelper::strlen($name) > 20 ? TextHelper::substr($name, 0, 20) . '...' : $name;
 
 			//On genère le tableau pour x colonnes
@@ -425,25 +452,28 @@ if ($nbr_pics > 0)
 
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
-			$tpl->assign_block_vars('pics.list', array(
-				'C_APPROVED' => $row['aprob'],
-				'ID' => $row['id'],
-				'ALT_NAME' => $name,
-				'PATH' => $row['path'],
-				'NAME' => stripslashes($name_cut),
-				'TITLE' => stripslashes($row['name']),
-				'PROTECTED_TITLE' => addslashes($row['name']),
-				'PROTECTED_NAME' => addslashes($name_cut),
+			$view->assign_block_vars('pics.list', array(
+				'C_APPROVED'           => $row['aprob'],
+				'C_AUTHOR_EXISTS'      => !empty($row['display_name']),
+				'C_AUTHOR_GROUP_COLOR' => !empty($group_color),
+
+				'ID'                  => $row['id'],
+				'ALT_NAME'            => $name,
+				'PATH'                => $row['path'],
+				'NAME'                => stripslashes($name_cut),
+				'TITLE'               => stripslashes($row['name']),
+				'PROTECTED_TITLE'     => addslashes($row['name']),
+				'PROTECTED_NAME'      => addslashes($name_cut),
+				'CATEGORIES_LIST'     => $cat_list,
+				'AUTHOR_DISPLAY_NAME' => $row['display_name'],
+				'AUTHOR_LEVEL_CLASS'  => UserService::get_level_class($row['level']),
+				'AUTHOR_GROUP_COLOR'  => $group_color,
+
+				'U_ITEM'           => $display_link,
+				'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
+				//
 				'C_DISPLAY_TR_START' => $display_tr_start,
 				'C_DISPLAY_TR_END' => $display_tr_end,
-				'CAT' => $cat_list,
-				'U_DISPLAY' => $display_link,
-				'C_POSTOR_EXIST' => !empty($row['display_name']),
-				'POSTOR' => $row['display_name'],
-				'POSTOR_LEVEL_CLASS' => UserService::get_level_class($row['level']),
-				'C_POSTOR_GROUP_COLOR' => !empty($group_color),
-				'POSTOR_GROUP_COLOR' => $group_color,
-				'U_POSTOR_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel()
 			));
 		}
 		$result->dispose();
@@ -454,7 +484,7 @@ if ($nbr_pics > 0)
 			while (!is_int($j/$nbr_column_pics))
 			{
 				$j++;
-				$tpl->assign_block_vars('pics.end_td_pics', array(
+				$view->assign_block_vars('pics.end_td_pics', array(
 					'COLUMN_WIDTH_PICS' => $column_width_pics,
 					'C_DISPLAY_TR_END' => (is_int($j/$nbr_column_pics))
 				));
@@ -463,7 +493,7 @@ if ($nbr_pics > 0)
 	}
 }
 
-$tpl->display();
+$view->display();
 
 require_once('../admin/admin_footer.php');
 

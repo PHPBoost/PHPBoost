@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 27
+ * @version     PHPBoost 6.0 - last update: 2021 05 11
  * @since       PHPBoost 1.2 - 2005 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -13,6 +13,9 @@
 
 require_once('../admin/admin_begin.php');
 load_module_lang('gallery'); // loading of the module lang
+
+$lang = LangLoader::get('common', 'gallery');
+
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
@@ -28,7 +31,13 @@ $nbr_pics_post = $request->get_postint('nbr_pics', 0);
 
 $valid = $request->get_postvalue('valid', false);
 
-$tpl = new FileTemplate('gallery/admin_gallery_add.tpl');
+$view = new FileTemplate('gallery/admin_gallery_add.tpl');
+$view->add_lang(array_merge(
+	$lang,
+	LangLoader::get('common-lang'),
+	LangLoader::get('form-lang'),
+	LangLoader::get('upload-lang')
+));
 
 if (isset($_FILES['gallery'])) // Upload
 {
@@ -49,26 +58,26 @@ if (isset($_FILES['gallery'])) // Upload
 		$error = 'e_upload_invalid_format';
 
 	if ($error != '') // Error, then stop here
-		$tpl->put('message_helper', MessageHelper::display($LANG[$error], MessageHelper::WARNING));
+		$view->put('MESSAGE_HELPER', MessageHelper::display($LANG[$error], MessageHelper::WARNING));
 	else
 	{
 		$path = $dir . $Upload->get_filename();
 		$error = $Upload->check_img($config->get_max_width(), $config->get_max_height(), Upload::DELETE_ON_ERROR);
 		if (!empty($error)) // Error, then stop here
-			$tpl->put('message_helper', MessageHelper::display($LANG[$error], MessageHelper::WARNING));
+			$view->put('MESSAGE_HELPER', MessageHelper::display($LANG[$error], MessageHelper::WARNING));
 		else
 		{
 			// Saving the picture in database.
 			$Gallery->Resize_pics($path);
 			if ($Gallery->get_error() != '')
-				$tpl->put('message_helper', MessageHelper::display($LANG[$Gallery->get_error()], MessageHelper::WARNING));
+				$view->put('MESSAGE_HELPER', MessageHelper::display($LANG[$Gallery->get_error()], MessageHelper::WARNING));
 
 			$name = TextHelper::strprotect($request->get_postvalue('name', ''));
 			foreach ($Upload->get_files_parameters() as $parameters)
 			{
 				$idpic = $Gallery->Add_pics($id_category_post, $name, $parameters['path'], AppContext::get_current_user()->get_id());
 				if ($Gallery->get_error() != '')
-					$tpl->put('message_helper', MessageHelper::display($LANG[$Gallery->get_error()], MessageHelper::WARNING));
+					$view->put('MESSAGE_HELPER', MessageHelper::display($LANG[$Gallery->get_error()], MessageHelper::WARNING));
 			}
 
 			// Regenerate cache of mini module
@@ -78,7 +87,7 @@ if (isset($_FILES['gallery'])) // Upload
 	}
 
 	if (empty($error) && !$Gallery->get_error())
-		$tpl->put('message_helper', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+		$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 }
 elseif ($valid && !empty($nbr_pics_post)) // Massive addition through ftp
 {
@@ -107,7 +116,7 @@ elseif ($valid && !empty($nbr_pics_post)) // Massive addition through ftp
 	GalleryMiniMenuCache::invalidate();
 	GalleryCategoriesCache::invalidate();
 
-	$tpl->put('message_helper', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+	$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 }
 
 // Display of the uploaded picture
@@ -122,26 +131,27 @@ if (!empty($add_pic))
 		DispatchManager::redirect($error_controller);
 	}
 
-	$tpl->assign_block_vars('image_up', array(
-		'NAME' => stripslashes($imageup['name']),
-		'PATH' => $imageup['path'],
-		'U_IMG' => 'admin_gallery.php?cat=' . $imageup['id_category'] . '&amp;id=' . $add_pic . '#pics_max',
+	$view->assign_block_vars('image_up', array(
+		'NAME'          => stripslashes($imageup['name']),
+		'PATH'          => $imageup['path'],
+		'CATEGORY_NAME' => $categories[$imageup['id_category']]->get_name(),
+
+		'U_ITEM'     => 'admin_gallery.php?cat=' . $imageup['id_category'] . '&amp;id=' . $add_pic . '#pics_max',
+		'U_CATEGORY' => 'admin_gallery.php?cat=' . $imageup['id_category'],
+		//
 		'L_SUCCESS_UPLOAD' => $LANG['success_upload_img'],
-		'CATNAME' => $categories[$imageup['id_category']]->get_name(),
-		'U_CAT' => 'admin_gallery.php?cat=' . $imageup['id_category']
 	));
 }
 
-$tpl->put_all(array(
-	'MAX_WIDTH' => $config->get_max_width(),
-	'MAX_HEIGHT' => $config->get_max_height(),
-	'MAX_FILE_SIZE' => $config->get_max_weight() * 1024,
-	// 'MAX_FILE_SIZE_TEXT' => File::get_formated_size($config->get_max_weight()),
+$view->put_all(array(
+	'MAX_WIDTH'          => $config->get_max_width(),
+	'MAX_HEIGHT'         => $config->get_max_height(),
+	'MAX_FILE_SIZE'      => $config->get_max_weight() * 1024,
 	'MAX_FILE_SIZE_TEXT' => ($config->get_max_weight() / 1024) . ' ' . LangLoader::get_message('unit.megabytes', 'common'),
-	'IMG_HEIGHT_MAX' => $config->get_mini_max_height()+10,
 	'ALLOWED_EXTENSIONS' => implode('", "',FileUploadConfig::load()->get_authorized_picture_extensions()),
+	//
+	'IMG_HEIGHT_MAX' => $config->get_mini_max_height()+10,
 	'L_GALLERY_MANAGEMENT' => LangLoader::get_message('gallery.management', 'common', 'gallery'),
-	'L_GALLERY_PICS_ADD' => LangLoader::get_message('gallery.actions.add', 'common', 'gallery'),
 	'L_GALLERY_CONFIG' => $LANG['gallery_config'],
 	'L_ADD_IMG' => $LANG['add_pic'],
 	'L_WEIGHT_MAX' => $LANG['weight_max'],
@@ -214,12 +224,13 @@ if (is_dir($dir)) //Si le dossier existe
 			$root_categories_list .= $option->display()->render();
 		}
 
-		$tpl->put_all(array(
-			'NBR_PICS' => $nbr_pics,
+		$view->put_all(array(
+			'ITEMS_NUMBER' => $nbr_pics,
+			'CATEGORIES_LIST' => $categories_list,
+			'ROOT_CATEGORIES_LIST' => $root_categories_list,
+			//
 			'COLUMN_WIDTH_PICS' => $column_width_pics,
 			'SELECTBOX_WIDTH' => $selectbox_width,
-			'CATEGORIES' => $categories_list,
-			'ROOT_CATEGORIES' => $root_categories_list,
 		));
 
 		$j = 0;
@@ -279,13 +290,14 @@ if (is_dir($dir)) //Si le dossier existe
 				$categories_list .= $option->display()->render();
 			}
 
-			$tpl->assign_block_vars('list', array(
+			$view->assign_block_vars('list', array(
 				'ID' => $j,
 				'NAME' => $pics,
 				'UNIQ_NAME' => $pics,
+				'CATEGORIES_LIST' => $categories_list,
+				//
 				'C_DISPLAY_TR_START' => $display_tr_start,
 				'C_DISPLAY_TR_END' => $display_tr_end,
-				'CATEGORIES' => $categories_list,
 			));
 		}
 
@@ -293,7 +305,7 @@ if (is_dir($dir)) //Si le dossier existe
 		while (!is_int($j/$nbr_column_pics))
 		{
 			$j++;
-			$tpl->assign_block_vars('end_td_pics', array(
+			$view->assign_block_vars('end_td_pics', array(
 				'COLUMN_WIDTH_PICS' => $column_width_pics,
 				'C_DISPLAY_TR_END' => (is_int($j/$nbr_column_pics))
 			));
@@ -301,9 +313,9 @@ if (is_dir($dir)) //Si le dossier existe
 	}
 }
 
-$tpl->put('C_IMG', $j);
+$view->put('C_ITEMS', $j);
 
-$tpl->display();
+$view->display();
 
 require_once('../admin/admin_footer.php');
 

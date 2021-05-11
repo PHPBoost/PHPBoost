@@ -43,7 +43,7 @@
 
 		if( regex.test(name) ) //interdiction des caractères spéciaux dans le nom.
 		{
-			alert("{L_FILE_FORBIDDEN_CHARS}");
+			alert("${escapejs(LangLoader::get_message('warning.file.forbidden.chars', 'warning-lang'))}");
 			document.getElementById('fi_' + id_file).style.display = 'inline';
 			document.getElementById('fi' + id_file).style.display = 'none';
 		}
@@ -64,7 +64,7 @@
 					html_protected_name = name.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
 					html_protected_name2 = xhr_object.responseText.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
 
-					document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\',\'' + html_protected_name + '\',\'' + html_protected_name2 + '\');" aria-label="{L_EDIT}"><i class="far fa-edit" aria-hidden="true"></i></a>';
+					document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\',\'' + html_protected_name + '\',\'' + html_protected_name2 + '\');" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a>';
 					document.getElementById('img' + id_file).innerHTML = '';
 				}
 				else if( xhr_object.readyState == 4 && xhr_object.responseText == '0' )
@@ -88,12 +88,12 @@
 				if( xhr_object.responseText == 0 )
 				{
 					img_aprob = 'fa-eye-slash';
-					title_aprob = '{L_UNAPROB}';
+					title_aprob = '{@common.disapprove}';
 				}
 				else
 				{
 					img_aprob = 'fa-eye';
-					title_aprob = '{L_APROB}';
+					title_aprob = '{@common.approve}';
 				}
 
 				document.getElementById('img' + id_file).innerHTML = '';
@@ -184,7 +184,7 @@
 		}
 
 		var j = 0;
-		for(var i = 0; i <= {NBR_PICS}; i++)
+		for(var i = 0; i <= {JS_ITEMS_NUMBER}; i++)
 		{
 			if( document.getElementById('thumb' + i) )
 			{
@@ -218,7 +218,7 @@
 				if (already_view && ('{DISPLAY_MODE}' == 'full_screen' || '{DISPLAY_MODE}' == 'resize'))
 				{
 					data = '';
-					var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/gallery/xmlhttprequest.php?token={TOKEN}&id=' + idpics + '&cat={CAT_ID}&increment_view=1');
+					var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/gallery/xmlhttprequest.php?token={TOKEN}&id=' + idpics + '&cat={ID_CATEGORY}&increment_view=1');
 					xmlhttprequest_sender(xhr_object, data);
 				}
 
@@ -226,7 +226,7 @@
 				views = document.getElementById('gv' + idpics).innerHTML;
 				views++;
 				document.getElementById('gv' + idpics).innerHTML = views;
-				document.getElementById('gvl' + idpics).innerHTML = (views > 1) ? "{L_VIEWS}" : "{L_VIEW}";
+				document.getElementById('gvl' + idpics).innerHTML = (views > 1) ? "{@common.views}" : "{@common.view}";
 
 				already_view = true;
 				incr_pics_displayed = idpics;
@@ -235,14 +235,14 @@
 	}
 </script>
 
-# INCLUDE message_helper #
+# INCLUDE MESSAGE_HELPER #
 
 <section id="module-gallery">
 	<header class="section-header">
 		<div class="controls align-right">
-			<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-fw fa-rss warning" aria-hidden="true"></i></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', ID_CATEGORY))}" aria-label="{@common.syndication}"><i class="fa fa-fw fa-rss warning" aria-hidden="true"></i></a>
 			# IF NOT C_ROOT_CATEGORY #{MODULE_NAME}# ENDIF #
-			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
+			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1>
 			# IF C_ROOT_CATEGORY #{MODULE_NAME}# ELSE #{CATEGORY_NAME}# ENDIF #
@@ -262,35 +262,36 @@
 	<div class="gallery-tools-container">
 		<nav id="cssmenu-galleryfilter" class="cssmenu cssmenu-right cssmenu-actionslinks cssmenu-tools">
 			<ul class="level-0 hidden">
-				<li class="has-sub"><a class="cssmenu-title"><i class="fa fa-fw fa-eye" aria-hidden="true"></i> <span>{L_DISPLAY}</span></a>
+				<li class="has-sub"><a class="cssmenu-title"><i class="fa fa-fw fa-eye" aria-hidden="true"></i> <span>{@common.display}</span></a>
 					<ul class="level-1">
-						<li><a href="{U_BEST_VIEWS}" class="cssmenu-title"><i class="fa fa-fw fa-eye" aria-hidden="true"></i> <span>{L_BEST_VIEWS}</span></a></li>
-						# IF C_NOTATION_ENABLED #<li><a href="{U_BEST_NOTES}" class="cssmenu-title"><i class="far fa-star" aria-hidden="true"></i> <span>{L_BEST_NOTES}</span></a></li># ENDIF #
+						<li><a href="{U_BEST_VIEWS}" class="cssmenu-title"><i class="fa fa-fw fa-eye" aria-hidden="true"></i> <span>{@gallery.top.views}</span></a></li>
+						# IF C_NOTATION_ENABLED #<li><a href="{U_BEST_NOTES}" class="cssmenu-title"><i class="far fa-star" aria-hidden="true"></i> <span>{@gallery.top.rated}</span></a></li># ENDIF #
 					</ul>
 				</li>
-				<li class="has-sub"><a class="cssmenu-title"><i class="fa fa-fw fa-sort" aria-hidden="true"></i> <span>{L_ORDER_BY}</span></a>
+				<li class="has-sub"><a class="cssmenu-title"><i class="fa fa-fw fa-sort" aria-hidden="true"></i> <span>{@common.sort.by}</span></a>
 					<ul class="level-1">
-						<li><a href="{U_ORDER_BY_NAME}" class="cssmenu-title"><i class="fa fa-fw fa-tag" aria-hidden="true"></i> <span>{L_NAME}</span></a></li>
-						<li><a href="{U_ORDER_BY_DATE}" class="cssmenu-title"><i class="fa fa-fw fa-clock" aria-hidden="true"></i> <span>{L_DATE}</span></a></li>
-						<li><a href="{U_ORDER_BY_VIEWS}" class="cssmenu-title"><i class="fa fa-fw fa-eye" aria-hidden="true"></i> <span>{L_VIEWS}</span></a></li>
+						<li><a href="{U_SORT_BY_NAME}" class="cssmenu-title"><i class="fa fa-fw fa-tag" aria-hidden="true"></i> <span>{@common.sort.by.alphabetic}</span></a></li>
+						<li><a href="{U_SORT_BY_DATE}" class="cssmenu-title"><i class="fa fa-fw fa-clock" aria-hidden="true"></i> <span>{@common.sort.by.date}</span></a></li>
+						<li><a href="{U_SORT_BY_VIEWS}" class="cssmenu-title"><i class="fa fa-fw fa-eye" aria-hidden="true"></i> <span>{@common.sort.by.views.number}</span></a></li>
 						# IF C_NOTATION_ENABLED #
-						<li><a href="{U_ORDER_BY_NOTES}" class="cssmenu-title"><i class="far fa-star" aria-hidden="true"></i> <span>{L_NOTES}</span></a></li>
+							<li><a href="{U_SORT_BY_NOTES}" class="cssmenu-title"><i class="far fa-star" aria-hidden="true"></i> <span>{@common.sort.by.best.note}</span></a></li>
 						# ENDIF #
 						# IF C_COMMENTS_ENABLED #
-						<li><a href="{U_ORDER_BY_COM}" class="cssmenu-title"><i class="fa fa-fw fa-comments" aria-hidden="true"></i> <span>{L_COM}</span></a></li># ENDIF #
+							<li><a href="{U_SORT_BY_COMMENTS}" class="cssmenu-title"><i class="fa fa-fw fa-comments" aria-hidden="true"></i> <span>{@common.sort.by.comments.number}</span></a></li>
+						# ENDIF #
 					</ul>
 				</li>
-				<li class="has-sub"><a class="cssmenu-title"><i class="fa fa-fw fa-sort-alpha-down"></i> <span>{L_DIRECTION}</span></a>
+				<li class="has-sub"><a class="cssmenu-title"><i class="fa fa-fw fa-sort-alpha-down"></i> <span>{@common.sort.direction}</span></a>
 					<ul class="level-1">
-						<li><a href="{U_ASC}" class="cssmenu-title"><i class="fa fa-fw fa-sort-amount-down" aria-hidden="true"></i> <span>{L_ASC}</span></a></li>
-						<li><a href="{U_DESC}" class="cssmenu-title"><i class="fa fa-fw fa-sort-amount-up" aria-hidden="true"></i> <span>{L_DESC}</span></a></li>
+						<li><a href="{U_ASC}" class="cssmenu-title"><i class="fa fa-fw fa-sort-amount-down" aria-hidden="true"></i> <span>{@common.sort.desc}</span></a></li>
+						<li><a href="{U_DESC}" class="cssmenu-title"><i class="fa fa-fw fa-sort-amount-up" aria-hidden="true"></i> <span>{@common.sort.asc}</span></a></li>
 					</ul>
 				</li>
 			</ul>
 		</nav>
 		<script>
 			jQuery("#cssmenu-galleryfilter").menumaker({
-				title: "${LangLoader::get_message('sort_options', 'common')}",
+				title: "{@common.sort.options}",
 				format: "multitoggle",
 				actionslinks: true,
 				breakpoint: 768
@@ -310,15 +311,15 @@
 						<div class="cell category-{sub_categories_list.CATEGORY_ID}" itemscope>
 							<div class="cell-header">
 								<h5 class="cell-name" itemprop="name"><a href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
-								<span class="small pinned notice" role="contentinfo" itemprop="items" aria-label="{sub_categories_list.PICTURES_NUMBER} # IF sub_categories_list.C_SEVERAL_PICTURES #{@gallery.items}# ELSE #{@gallery.item}# ENDIF #">{sub_categories_list.PICTURES_NUMBER}</span>
+								<span class="small pinned notice" role="contentinfo" itemprop="items" aria-label="{sub_categories_list.ITEMS_NUMBER} # IF sub_categories_list.C_SEVERAL_ITEMS #{@gallery.items}# ELSE #{@gallery.item}# ENDIF #">{sub_categories_list.ITEMS_NUMBER}</span>
 							</div>
 							<div class="cell-body">
 								<div class="cell-thumbnail cell-landscape cell-center" itemprop="thumbnail">
 									# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
 										<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
 									# ENDIF #
-									<a class="cell-thumbnail-caption small" href="{sub_categories_list.U_CATEGORY}" aria-label="{sub_categories_list.CATEGORY_NAME}">
-										${LangLoader::get_message('see.category', 'categories-common')}
+									<a class="cell-thumbnail-caption small" href="{sub_categories_list.U_CATEGORY}">
+										{@common.see.category}
 									</a>
 								</div>
 							</div>
@@ -333,121 +334,124 @@
 	# IF C_GALLERY_PICS #
 		<div class="sub-section">
 			<div class="content-container">
-				<article id="article-gallery-{ID}" class="article-gallery several-items category-{CAT_ID}">
+				<article id="article-gallery-{ID}" class="article-gallery several-items category-{ID_CATEGORY}">
 					<header>
-						<h2>${LangLoader::get_message('image', 'main')}</h2>
+						<h2>{@common.image}</h2>
 					</header>
 					<div class="content">
 						<p class="align-center" id="pics_max"></p>
 
 						# IF C_GALLERY_PICS_MAX #
-							<p class="pics-max"><a href="{U_IMG_MAX}" data-lightbox="formatter"><img src="{U_IMG_MAX}" alt="{NAME}" /></a></p>
-							<div class="cell-tile">
-								<div class="cell cell-options">
+							<p class="pics-max"><a href="{U_ITEM_MAX}" data-lightbox="formatter"><img src="{U_ITEM_MAX}" alt="{NAME}" /></a></p>
+							<div class="cell-tile cell-flex cell-columns-3">
+								<div class="cell cell-1-3">
 									<div class="cell-header">
-										<h6 class="cell-name">{L_INFORMATIONS}</h6>
+										<h6 class="cell-name">{@common.informations}</h6>
 									</div>
 									<div class="cell-list">
 										<ul>
 											# IF C_TITLE_ENABLED #
 												<li class="li-stretch">
-													<span class="text-strong">{L_NAME} : </span>
+													<span class="text-strong">{@common.name}</span>
 													<span><span id="fi_{ID}">{NAME}</span> <span id="fi{ID}"></span></span>
 												</li>
 											# ENDIF #
 											# IF C_AUTHOR_DISPLAYED #
 												<li class="li-stretch">
-													<span class="text-strong">{L_POSTOR} : </span>
+													<span class="text-strong">{@common.author}</span>
 													<span>
-														# IF C_POSTOR_EXIST #
-															<a class="{POSTOR_LEVEL_CLASS}"# IF C_POSTOR_GROUP_COLOR # style="color:{POSTOR_GROUP_COLOR}"# ENDIF # href="{U_POSTOR_PROFILE}">{POSTOR}</a>
+														# IF C_AUTHOR_EXISTS #
+															<a class="{AUTHOR_LEVEL_CLASS}"# IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}"# ENDIF # href="{U_AUTHOR_PROFILE}">{AUTHOR_DISPLAY_NAME}</a>
 														# ELSE #
-															<span class="visitor">${LangLoader::get_message('guest', 'main')}</span>
+															<span class="visitor">${LangLoader::get_message('user.guest', 'user-lang')}</span>
 														# ENDIF #
 													</span>
 												</li>
 											# ENDIF #
 											# IF C_VIEWS_COUNTER_ENABLED #
-												<li class="li-stretch"><span class="text-strong">{L_VIEWS} : </span><span>{VIEWS}</span></li>
+												<li class="li-stretch"><span class="text-strong">{@common.views.number}</span><span>{VIEWS_NUMBER}</span></li>
 											# ENDIF #
-											<li class="li-stretch"><span class="text-strong">{L_ADD_ON} : </span><span>{DATE}</span></li>
-											<li class="li-stretch"><span class="text-strong">{L_DIMENSION} : </span><span>{DIMENSION}</span></li>
-											<li class="li-stretch"><span class="text-strong">{L_SIZE} : </span><span>{SIZE} {L_KB}</span></li>
+											<li class="li-stretch"><span class="text-strong">{@gallery.date.added}</span><span>{DATE}</span></li>
+											<li class="li-stretch"><span class="text-strong">{@common.dimensions}</span><span>{DIMENSION}</span></li>
+											<li class="li-stretch"><span class="text-strong">{@common.size}</span><span>{SIZE} {@common.unit.kilobytes}</span></li>
 											# IF C_COMMENTS_ENABLED #
-												<li class="li-stretch"><span></span><a href="{U_COMMENTS}">{L_COMMENTS}</a></li>
+												<li class="li-stretch"><span class="text-strong">{@common.comments}</span><a href="{U_COMMENTS}">{COMMENTS_NUMBER}</a></li>
 											# ENDIF #
 											# IF C_NOTATION_ENABLED #
 												<li class="align-center"><div class="text-strong">{KERNEL_NOTATION}</div></li>
 											# ENDIF #
 											# IF C_GALLERY_PICS_MODO #
 												<li id="img{ID}" class="li-stretch">
-													<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}','{RENAME}','{RENAME_CUT}');" aria-label="{L_EDIT}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a></span>
+													<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}','{RENAME}','{RENAME_CUT}');" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a></span>
 
-													<a href="{U_DEL}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+													<a href="{U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 													<div id="move{ID}" class="modal-container cell-modal inline-block cell-tile">
-														<a data-modal data-target="gallery-pic-move-to" aria-label="{L_MOVETO}"><i class="fa fa-fw fa-fw fa-share" aria-hidden="true"></i></a>
+														<a data-modal data-target="gallery-pic-move-to" aria-label="{@common.move.to}"><i class="fa fa-fw fa-fw fa-share" aria-hidden="true"></i></a>
 														<div id="gallery-pic-move-to" class="modal modal-animation">
-															<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+															<div class="close-modal" aria-label="{@common.close}"></div>
 															<div class="cell content-panel">
 																<div class="cell-header">
-																	<div class="cell-name">{L_MOVETO} :</div>
+																	<div class="cell-name">{@common.move.to} :</div>
 																</div>
 																<div class="cell-input">
 																	<select name="{ID}cat" onchange="document.location = '{U_MOVE}">
-																		{CAT}
+																		{CATEGORIES_LIST}
 																	</select>
 																</div>
 															</div>
 														</div>
 													</div>
-													<a href="javascript:pics_aprob({ID});" aria-label="{L_APROB_IMG}"><i id="img_aprob{ID}" class="{IMG_APROB}" aria-hidden="true"></i></a>
+													<a href="javascript:pics_aprob({ID});" aria-label="# IF C_DISPLAY_STATUS #{@common.disapprove}# ELSE #{@common.approve}# ENDIF #"><i id="img_aprob{ID}" class="far fa-fw # IF C_DISPLAY_STATUS #fa-eye-slash# ELSE #fa-eye# ENDIF #" aria-hidden="true"></i></a>
 												</li>
 											# ENDIF #
-
-
 										</ul>
 									</div>
 								</div>
+								<div class="cell cell-2-3">
+									<div class="flex-between">
+										<span><a href="{U_PREVIOUS}#pics_max" aria-label="{@common.previous}"><i class="fa fa-fw fa-arrow-left fa-2x" aria-hidden="true"></i></a></span>
+										<span><a href="{U_NEXT}#pics_max" aria-label="{@common.next}"> <i class="fa fa-fw fa-arrow-right fa-2x" aria-hidden="true"></i></a></span>
+									</div>
+									<table class="pics-max-thumbnails">
+										<thead>
+											<tr>
+												<th colspan="{COLSPAN}">
+													{@gallery.thumbnails} ({ITEMS_NUMBER})
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>
+													<span id="display_left"># IF C_LEFT_THUMBNAILS #<a href="javascript:display_thumbnails('left')" aria-label="{@common.previous}"><i class="fa fa-fw fa-arrow-left fa-2x" aria-hidden="true"></i></a># ENDIF #</span>
+												</td>
+												# START list_preview_pics #
+													<td class="align-center# IF list_preview_pics.C_CURRENT_ITEM # current# ENDIF #" style="height:{list_preview_pics.HEIGHT}px">
+														<span id="thumb{list_preview_pics.ID}">
+															<a href="{list_preview_pics.URL}"><img src="pics/thumbnails/{list_preview_pics.PATH}" alt="{list_preview_pics.NAME}" /></a>
+														</span>
+													</td>
+												# END list_preview_pics #
+												<td>
+													<span id="display_right"># IF C_RIGHT_THUMBNAILS #<a href="javascript:display_thumbnails('right')" aria-label="{@common.next}"><i class="fa fa-fw fa-arrow-right fa-2x" aria-hidden="true"></i></a># ENDIF #</span>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
 							</div>
-
-							<div class="link-to-other-pics-container">
-								<span class="float-left">&nbsp;&nbsp;&nbsp;<a href="{U_PREVIOUS}#pics_max" aria-label="${LangLoader::get_message('previous', 'main')}"><i class="fa fa-fw fa-arrow-left fa-2x" aria-hidden="true"></i></a></span>
-								<span class="float-right"><a href="{U_NEXT}#pics_max" aria-label="${LangLoader::get_message('next', 'main')}"> <i class="fa fa-fw fa-arrow-right fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;</span>
-							</div>
-							<table class="pics-max-thumbnails">
-								<thead>
-									<tr>
-										<th colspan="{COLSPAN}">
-											{L_THUMBNAILS}
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>
-											<span id="display_left"># IF C_LEFT_THUMBNAILS #<a href="javascript:display_thumbnails('left')" aria-label="${LangLoader::get_message('previous', 'main')}"><i class="fa fa-fw fa-arrow-left fa-2x" aria-hidden="true"></i></a># ENDIF #</span>
-										</td>
-
-										# START list_preview_pics #
-											<td class="align-center" style="height:{list_preview_pics.HEIGHT}px"><span id="thumb{list_preview_pics.ID}"><a href="{list_preview_pics.URL}"><img src="pics/thumbnails/{list_preview_pics.PATH}" alt="{list_preview_pics.NAME}" /></a></span></td>
-										# END list_preview_pics #
-
-										<td>
-											<span id="display_right"># IF C_RIGHT_THUMBNAILS #<a href="javascript:display_thumbnails('right')" aria-label="${LangLoader::get_message('next', 'main')}"><i class="fa fa-fw fa-arrow-right fa-2x" aria-hidden="true"></i></a># ENDIF #</span>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-							{COMMENTS}
+							<aside>
+								{COMMENTS}
+							</aside>
 						# ENDIF #
 
 						<div class="cell-flex cell-columns-{COLUMNS_NUMBER} cell-tile">
 							# START pics_list #
 								<div class="cell small# IF pics_list.C_NEW_CONTENT # new-content# ENDIF #">
 									<div class="cell-header">
-										# IF C_PICTURE_NAME_DISPLAYED #
+										# IF C_NAME_DISPLAYED #
 											<div class="cell-name">
-												<a id="fi_{pics_list.ID}" class="ellipsis" href="{pics_list.U_PICTURE_LINK}">
+												<a id="fi_{pics_list.ID}" class="ellipsis" href="{pics_list.U_ITEM}">
 													{pics_list.NAME}
 												</a>
 											</div>
@@ -460,8 +464,8 @@
 									<div class="cell-body">
 										<div class="cell-thumbnail cell-landscape cell-center">
 											<img src="{pics_list.U_PICTURE}" alt="{pics_list.NAME}" class="gallery-img" />
-											<a class="cell-thumbnail-caption small" aria-label="# IF C_PICTURE_NAME_DISPLAYED #{pics_list.NAME}# ENDIF #" href="{pics_list.U_DISPLAY}" onclick="{pics_list.ONCLICK}" # IF NOT pics_list.ONCLICK # data-lightbox="formatter"# ENDIF #>
-												${LangLoader::get_message('general-config.view_real_preview', 'admin-config-common')}
+											<a class="cell-thumbnail-caption small" aria-label="# IF C_NAME_DISPLAYED #{pics_list.NAME}# ENDIF #" href="{pics_list.U_DISPLAY}" onclick="{pics_list.ONCLICK}" # IF NOT pics_list.ONCLICK # data-lightbox="formatter"# ENDIF #>
+												${LangLoader::get_message('form.picture.full.size', 'form-lang')}
 											</a>
 										</div>
 									</div>
@@ -469,23 +473,23 @@
 										<ul>
 											# IF C_AUTHOR_DISPLAYED #
 												<li>
-													# IF pics_list.C_POSTOR_EXIST #
-														<a class="{pics_list.POSTOR_LEVEL_CLASS}"# IF pics_list.C_POSTOR_GROUP_COLOR # style="color:{pics_list.POSTOR_GROUP_COLOR}"# ENDIF # href="{pics_list.U_POSTOR_PROFILE}">
-															{L_BY} {pics_list.POSTOR}
+													# IF pics_list.C_AUTHOR_EXISTS #
+														<a class="{pics_list.AUTHOR_LEVEL_CLASS}"# IF pics_list.C_AUTHOR_GROUP_COLOR # style="color:{pics_list.AUTHOR_GROUP_COLOR}"# ENDIF # href="{pics_list.U_AUTHOR_PROFILE}">
+															{@common.by} {pics_list.AUTHOR_DISPLAY_NAME}
 														</a>
 													# ELSE #
-														{L_BY} ${LangLoader::get_message('guest', 'main')}
+														{@common.by} ${LangLoader::get_message('user.guest', 'user-lang')}
 													# ENDIF #
 												</li>
 											# ENDIF #
 											# IF C_VIEWS_COUNTER_ENABLED #
 												<li>
-													<span id="gv{pics_list.ID}">{pics_list.VIEWS}</span> <span id="gvl{pics_list.ID}">{pics_list.L_VIEWS}</span>
+													<span id="gv{pics_list.ID}">{pics_list.VIEWS_NUMBER}</span> <span id="gvl{pics_list.ID}"># IF pics_list.C_SEVERAL_VIEWS #{@common.view}# ELSE #{@common.views}# ENDIF #</span>
 												</li>
 											# ENDIF #
 											# IF C_COMMENTS_ENABLED #
 												<li>
-													<a href="{pics_list.U_COMMENTS}">{pics_list.L_COMMENTS}</a>
+													<a href="{pics_list.U_COMMENTS}">{pics_list.COMMENTS}</a>
 												</li>
 											# ENDIF #
 											# IF C_NOTATION_ENABLED #
@@ -495,29 +499,29 @@
 											# ENDIF #
 										</ul>
 									</div>
-									# IF C_GALLERY_MODO #
+									# IF C_CONTROLS #
 										<div class="cell-list">
 											<ul>
 												<li class="li-stretch">
-													<a id="fihref{pics_list.ID}" href="javascript:display_rename_file('{pics_list.ID}','{pics_list.RENAME}','{pics_list.RENAME_CUT}');" aria-label="{L_EDIT}"><i class="far fa-edit"></i></a>
-													<a href="{pics_list.U_DEL}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="far fa-trash-alt"></i></a>
+													<a id="fihref{pics_list.ID}" href="javascript:display_rename_file('{pics_list.ID}','{pics_list.RENAME}','{pics_list.RENAME_CUT}');" aria-label="{@common.edit}"><i class="far fa-edit"></i></a>
+													<a href="{pics_list.U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-trash-alt"></i></a>
 													<div id="move{pics_list.ID}" class="modal-container cell-modal cell-tile">
-														<a data-modal data-target="gallery-pic-move-to" aria-label="{L_MOVETO}"><i class="fa fa-fw fa-share" aria-hidden="true"></i></a>
+														<a data-modal data-target="gallery-pic-move-to" aria-label="{@common.move.to}"><i class="fa fa-fw fa-share" aria-hidden="true"></i></a>
 														<div id="gallery-pic-move-to" class="modal modal-animation">
-															<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+															<div class="close-modal" aria-label="{@common.close}"></div>
 															<div class="cell content-panel">
 																<div class="cell-header">
-																	<div class="cell-name">{L_MOVETO} :</div>
+																	<div class="cell-name">{@common.move.to} :</div>
 																</div>
 																<div class="cell-input">
 																	<select name="{pics_list.ID}cat" onchange="document.location = '{pics_list.U_MOVE}">
-																		{pics_list.CAT}
+																		{pics_list.CATEGORIES_LIST}
 																	</select>
 																</div>
 															</div>
 														</div>
 													</div>
-													<a href="javascript:pics_aprob({pics_list.ID});" aria-label="{pics_list.L_APROB_IMG}"><i id="img_aprob{pics_list.ID}" class="# IF pics_list.C_IMG_APROB #fa fa-fw fa-eye-slash# ELSE #fa fa-fw fa-eye# ENDIF #"></i></a>
+													<a href="javascript:pics_aprob({pics_list.ID});" aria-label="# IF pics_list.C_APPROVED #{@common.disapprove}# ELSE #{@common.approve}# ENDIF #"><i id="img_aprob{pics_list.ID}" class="far fa-fw # IF pics_list.C_APPROVED #fa-eye-slash# ELSE #fa-eye# ENDIF #"></i></a>
 												</li>
 											</ul>
 										</div>
@@ -531,9 +535,5 @@
 			</div>
 		</div>
 	# ENDIF #
-	<footer>
-		<div class="sub-section">
-			<div class="content-container"><p class="nbr-total-pics">{L_TOTAL_IMG}</p></div>
-		</div>
-	</footer>
+	<footer></footer>
 </section>

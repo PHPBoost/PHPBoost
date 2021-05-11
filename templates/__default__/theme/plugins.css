@@ -149,6 +149,7 @@ li:last-child .accordion .content-panel { border-width: 0 1px 1px; }
     right: 0;
     width:100%;
     height:100vw;
+    cursor: pointer;
 }
 
 .close-modal:after {

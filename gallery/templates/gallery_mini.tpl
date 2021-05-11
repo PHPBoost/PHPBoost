@@ -29,20 +29,20 @@
 <div class="cell-body">
 	<div id="scrolling-images">
 		# IF C_NO_ITEM #
-			<div class="mini-picture"><em>{L_NO_RANDOM_PICS}</em></div>
+			<div class="message-helper bgc notice">{@common.no.item.now}</div>
 		# ELSE #
 			# IF C_STATIC #
 				# START pics_mini #
 					<div class="mini-picture">
-						<a href="{pics_mini.U_PICS}#pics_max">
-							<img src="{pics_mini.PICS}" alt="{pics_mini.NAME}" width="{pics_mini.WIDTH}" height="{pics_mini.HEIGHT}" />
+						<a href="{pics_mini.U_ITEM}#pics_max">
+							<img src="{pics_mini.U_THUMBNAIL}" alt="{pics_mini.NAME}" width="{pics_mini.WIDTH}" height="{pics_mini.HEIGHT}" />
 						</a>
 					</div>
 				# END pics_mini #
 			# ELSE #
 				<ul id="mini-gallery-slideshow" class="# IF C_VERTICAL_SCROLL #vertical# ENDIF ## IF C_FADE #fade# ENDIF ## IF C_HORIZONTAL_SCROLL #horizontal# ENDIF #">
 					# START pics_mini #
-						<li class="mini-picture"><a href="{pics_mini.U_PICS}#pics_max"><img src="{pics_mini.PICS}" alt="{pics_mini.NAME}" width="{pics_mini.WIDTH}" height="{pics_mini.HEIGHT}" /></a></li>
+						<li class="mini-picture"><a href="{pics_mini.U_ITEM}#pics_max"><img src="{pics_mini.U_THUMBNAIL}" alt="{pics_mini.NAME}" width="{pics_mini.WIDTH}" height="{pics_mini.HEIGHT}" /></a></li>
 					# END pics_mini #
 				</ul>
 			# ENDIF #
@@ -51,6 +51,6 @@
 </div>
 <div class="cell-body">
 	<div class="cell-content align-center">
-		<a class="button small" href="{PATH_TO_ROOT}/gallery/gallery.php">{L_GALLERY}</a>
+		<a class="button small" href="{PATH_TO_ROOT}/gallery/gallery.php">{@gallery.module.title}</a>
 	</div>
 </div>

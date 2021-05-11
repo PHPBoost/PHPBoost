@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2021 05 11
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,7 +15,7 @@
 class GalleryDisplayCategoryController extends ModuleController
 {
 	private $lang;
-	private $tpl;
+	private $view;
 
 	private $category;
 	private $db_querier;
@@ -34,6 +34,13 @@ class GalleryDisplayCategoryController extends ModuleController
 		$this->build_view();
 
 		return $this->generate_response();
+	}
+
+	private function init()
+	{
+		$this->lang = LangLoader::get('common', 'gallery');
+		$this->view = new FileTemplate('gallery/gallery.tpl');
+		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 	}
 
 	private function build_view()
@@ -104,14 +111,14 @@ class GalleryDisplayCategoryController extends ModuleController
 		$is_admin = AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL);
 		$is_modo = CategoriesAuthorizationsService::check_authorizations($category->get_id())->moderation();
 
-		$module_data_path = $this->tpl->get_pictures_data_path();
+		$module_data_path = $this->view->get_pictures_data_path();
 		$rewrite_title = Url::encode_rewrite($category->get_name());
 
 		##### Catégorie disponibles #####
 		$nbr_cat_displayed = 0;
 		if ($total_cat > 0 && empty($g_idpics))
 		{
-			$this->tpl->put('C_GALLERY_CATS', true);
+			$this->view->put('C_GALLERY_CATS', true);
 
 			foreach ($subcategories as $id => $cat)
 			{
@@ -122,14 +129,14 @@ class GalleryDisplayCategoryController extends ModuleController
 					$category_thumbnail = $cat->get_thumbnail()->rel();
 					$elements_number = $cat->get_elements_number();
 
-					$this->tpl->assign_block_vars('sub_categories_list', array(
+					$this->view->assign_block_vars('sub_categories_list', array(
 						'C_CATEGORY_THUMBNAIL' => !empty($category_thumbnail),
-						'C_SEVERAL_PICTURES' => $elements_number['pics_aprob'] > 1,
-						'CATEGORY_ID' => $category->get_id(),
-						'CATEGORY_NAME' => $cat->get_name(),
+						'C_SEVERAL_ITEMS'      => $elements_number['pics_aprob'] > 1,
+						'CATEGORY_ID'          => $category->get_id(),
+						'CATEGORY_NAME'        => $cat->get_name(),
+						'ITEMS_NUMBER'         => sprintf($elements_number['pics_aprob']),
 						'U_CATEGORY_THUMBNAIL' => $category_thumbnail,
-						'PICTURES_NUMBER' => sprintf($elements_number['pics_aprob']),
-						'U_CATEGORY' => GalleryUrlBuilder::get_link_cat($cat->get_id(), $cat->get_name())
+						'U_CATEGORY'           => GalleryUrlBuilder::get_link_cat($cat->get_id(), $cat->get_name())
 					));
 				}
 			}
@@ -137,55 +144,59 @@ class GalleryDisplayCategoryController extends ModuleController
 
 		$category_description = FormatingHelper::second_parse($category->get_description());
 
-		$this->tpl->put_all(array(
-			'C_ROOT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY,
-			'MODULE_NAME' => $LANG['gallery'],
-			'CATEGORY_NAME' => $category->get_name(),
-			'C_CATEGORY_DESCRIPTION' => $category_description,
-			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
+		$this->view->put_all(array(
+			'C_ROOT_CATEGORY'            => $category->get_id() == Category::ROOT_CATEGORY,
+			'C_CATEGORY_DESCRIPTION'     => $category_description,
+			'C_SUB_CATEGORIES'           => $nbr_cat_displayed > 0,
 			'C_SUBCATEGORIES_PAGINATION' => $pagination->has_several_pages(),
+			'CATEGORY_NAME'              => $category->get_name(),
+
+			'ID_CATEGORY'              => $category->get_id(),
+			'DISPLAY_MODE'             => $config->get_pics_enlargement_mode(),
 			'SUBCATEGORIES_PAGINATION' => $pagination->display(),
-			'ARRAY_JS' => '',
-			'NBR_PICS' => 0,
-			'MAX_START' => 0,
-			'START_THUMB' => 0,
-			'END_THUMB' => 0,
+			'ARRAY_JS'                 => '',
+			'JS_ITEMS_NUMBER'          => 0,
+			'MAX_START'                => 0,
+			'START_THUMB'              => 0,
+			'COLUMNS_NUMBER'           => $config->get_columns_number(),
+			'CATEGORY_DESCRIPTION'     => $category_description,
+			'ITEMS_NUMBER'             => $nbr_pics,
+
+			'U_EDIT_CATEGORY'    => $category->get_id() == Category::ROOT_CATEGORY ? GalleryUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($category->get_id())->rel(),
+			'U_BEST_VIEWS'       => PATH_TO_ROOT . '/gallery/gallery' . url('.php?views=1&amp;cat=' . $category->get_id(), '-' . $category->get_id() . '.php?views=1'),
+			'U_BEST_NOTES'       => PATH_TO_ROOT . '/gallery/gallery' . url('.php?notes=1&amp;cat=' . $category->get_id(), '-' . $category->get_id() . '.php?notes=1'),
+			'U_ASC'              => PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $category->get_id() . '&amp;sort=' . $g_type . '_' . 'asc', '-' . $category->get_id() . '.php?sort=' . $g_type . '_' . 'asc'),
+			'U_DESC'             => PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $category->get_id() . '&amp;sort=' . $g_type . '_' . 'desc', '-' . $category->get_id() . '.php?sort=' . $g_type . '_' . 'desc'),
+			'U_SORT_BY_NAME'     => PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=name_desc&amp;cat=' . $category->get_id(), '-' . $category->get_id() . '+' . $rewrite_title . '.php?sort=name_desc'),
+			'U_SORT_BY_DATE'     => PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=date_desc&amp;cat=' . $category->get_id(), '-' . $category->get_id() . '+' . $rewrite_title . '.php?sort=date_desc'),
+			'U_SORT_BY_VIEWS'    => PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=views_desc&amp;cat=' . $category->get_id(), '-' . $category->get_id() . '+' . $rewrite_title . '.php?sort=views_desc'),
+			'U_SORT_BY_NOTES'    => PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=notes_desc&amp;cat=' . $category->get_id(), '-' . $category->get_id() . '+' . $rewrite_title . '.php?sort=notes_desc'),
+			'U_SORT_BY_COMMENTS' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=com_desc&amp;cat=' . $category->get_id(), '-' . $category->get_id() . '+' . $rewrite_title . '.php?sort=com_desc'),
+			//
 			'C_SEVERAL_CATS_COLUMNS' => $nbr_column_cats > 1,
-			'COLUMNS_NUMBER' => $config->get_columns_number(),
-			'CATEGORY_DESCRIPTION' => $category_description,
-			'U_EDIT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY ? GalleryUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($category->get_id())->rel(),
-			'CAT_ID' => $category->get_id(),
-			'DISPLAY_MODE' => $config->get_pics_enlargement_mode(),
-			'GALLERY' => $category->get_id() != Category::ROOT_CATEGORY ? $this->lang['module_title'] . ' - ' . $category->get_name() : $this->lang['module_title'],
+			'MODULE_NAME' => $LANG['gallery'],
+			'GALLERY' => $category->get_id() != Category::ROOT_CATEGORY ? $this->lang['gallery.module.title'] . ' - ' . $category->get_name() : $this->lang['gallery.module.title'],
 			'HEIGHT_MAX' => $config->get_mini_max_height(),
 			'WIDTH_MAX' => $column_width_pics,
 			'MODULE_DATA_PATH' => $module_data_path,
+			'END_THUMB' => 0,
+			'U_INDEX' => url('.php'),
+			'L_TOTAL_IMG' => $nbr_pics > 0 ? ($category->get_id() != Category::ROOT_CATEGORY ? sprintf($LANG['total_img_cat'], $nbr_pics) : ($nbr_pics > 1 ? sprintf($LANG['total_img_root'], $nbr_pics) : $LANG['total_img_root_single'])) : '',
+			'L_CATEGORIES' => ($category->get_id_parent() >= 0) ? $LANG['sub_album'] : $LANG['album'],
+			'L_ORDER_BY' => LangLoader::get_message('sort_by', 'common') . (isset($LANG[$g_type]) ? ' ' . TextHelper::strtolower($LANG[$g_type]) : ''),
 			'L_APROB' => $LANG['aprob'],
 			'L_UNAPROB' => $LANG['unaprob'],
 			'L_FILE_FORBIDDEN_CHARS' => $LANG['file_forbidden_chars'],
-			'L_TOTAL_IMG' => $nbr_pics > 0 ? ($category->get_id() != Category::ROOT_CATEGORY ? sprintf($LANG['total_img_cat'], $nbr_pics) : ($nbr_pics > 1 ? sprintf($LANG['total_img_root'], $nbr_pics) : $LANG['total_img_root_single'])) : '',
 			'L_ADD_IMG' => $LANG['add_pic'],
-			'L_GALLERY' => $this->lang['module_title'],
-			'L_CATEGORIES' => ($category->get_id_parent() >= 0) ? $LANG['sub_album'] : $LANG['album'],
+			'L_GALLERY' => $this->lang['gallery.module.title'],
 			'L_NAME' => $LANG['name'],
 			'L_EDIT' => LangLoader::get_message('edit', 'common'),
 			'L_MOVETO' => $LANG['moveto'],
 			'L_DELETE' => LangLoader::get_message('delete', 'common'),
 			'L_SUBMIT' => $LANG['submit'],
 			'L_ALREADY_VOTED' => $LANG['already_vote'],
-			'L_ORDER_BY' => LangLoader::get_message('sort_by', 'common') . (isset($LANG[$g_type]) ? ' ' . TextHelper::strtolower($LANG[$g_type]) : ''),
 			'L_DIRECTION' => $LANG['direction'],
 			'L_DISPLAY' => LangLoader::get_message('display', 'common'),
-			'U_INDEX' => url('.php'),
-			'U_BEST_VIEWS' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?views=1&amp;cat=' . $category->get_id(), '-' . $category->get_id() . '.php?views=1'),
-			'U_BEST_NOTES' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?notes=1&amp;cat=' . $category->get_id(), '-' . $category->get_id() . '.php?notes=1'),
-			'U_ASC' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $category->get_id() . '&amp;sort=' . $g_type . '_' . 'asc', '-' . $category->get_id() . '.php?sort=' . $g_type . '_' . 'asc'),
-			'U_DESC' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $category->get_id() . '&amp;sort=' . $g_type . '_' . 'desc', '-' . $category->get_id() . '.php?sort=' . $g_type . '_' . 'desc'),
-			'U_ORDER_BY_NAME' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=name_desc&amp;cat=' . $category->get_id(), '-' . $category->get_id() . '+' . $rewrite_title . '.php?sort=name_desc'),
-			'U_ORDER_BY_DATE' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=date_desc&amp;cat=' . $category->get_id(), '-' . $category->get_id() . '+' . $rewrite_title . '.php?sort=date_desc'),
-			'U_ORDER_BY_VIEWS' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=views_desc&amp;cat=' . $category->get_id(), '-' . $category->get_id() . '+' . $rewrite_title . '.php?sort=views_desc'),
-			'U_ORDER_BY_NOTES' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=notes_desc&amp;cat=' . $category->get_id(), '-' . $category->get_id() . '+' . $rewrite_title . '.php?sort=notes_desc'),
-			'U_ORDER_BY_COM' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=com_desc&amp;cat=' . $category->get_id(), '-' . $category->get_id() . '+' . $rewrite_title . '.php?sort=com_desc'),
 			'L_BEST_VIEWS' => $LANG['best_views'],
 			'L_BEST_NOTES' => $LANG['best_notes'],
 			'L_ASC' => $LANG['asc'],
@@ -236,7 +247,7 @@ class GalleryDisplayCategoryController extends ModuleController
 			elseif ($g_notes)
 				$g_sql_sort = ' ORDER BY notes.average_notes DESC';
 
-			$this->tpl->put('C_GALLERY_PICS', true);
+			$this->view->put('C_GALLERY_PICS', true);
 
 			//Affichage d'une photo demandée.
 			if (!empty($g_idpics))
@@ -283,11 +294,12 @@ class GalleryDisplayCategoryController extends ModuleController
 
 						//Affichage de la liste des miniatures sous l'image.
 						$array_pics[] = array(
-							'HEIGHT' => ($config->get_mini_max_height() + 16),
-							'ID' => $i,
-							'URL' => 'gallery' . url('.php?cat=' . $row['id_category'] . '&amp;id=' . $row['id'] . '&amp;sort=' . $g_sort, '-' . $row['id_category'] . '-' . $row['id'] . '.php?sort=' . $g_sort) . '#pics_max',
-							'NAME' => stripslashes($row['name']),
-							'PATH' => $row['path']
+							'C_CURRENT_ITEM' => $row['id'] == $g_idpics,
+							'HEIGHT'         => ($config->get_mini_max_height() + 16),
+							'ID'             => $i,
+							'URL'            => 'gallery' . url('.php?cat =' . $row['id_category'] . '&amp;id =' . $row['id'] . '&amp;sort=' . $g_sort, '-' . $row['id_category'] . '-' . $row['id'] . '.php?sort=' . $g_sort) . '#pics_max',
+							'NAME'           => stripslashes($row['name']),
+							'PATH'           => $row['path']
 						);
 
 						if ($row['id'] == $g_idpics)
@@ -360,39 +372,53 @@ class GalleryDisplayCategoryController extends ModuleController
 					$extension = $info->getExtension();
 
 					//Affichage de l'image et de ses informations.
-					$this->tpl->put_all(array_merge(
+					$this->view->put_all(array_merge(
 						Date::get_array_tpl_vars($date,'date'),
 						array(
-							'C_GALLERY_PICS_MAX' => true,
-							'C_GALLERY_PICS_MODO' => $is_modo,
-							'C_AUTHOR_DISPLAYED' => $config->is_author_displayed(),
+							'C_GALLERY_PICS_MAX'      => true,
+							'C_GALLERY_PICS_MODO'     => $is_modo,
+							'C_AUTHOR_DISPLAYED'      => $config->is_author_displayed(),
 							'C_VIEWS_COUNTER_ENABLED' => $config->is_views_counter_enabled(),
-							'C_TITLE_ENABLED' => $config->is_title_enabled(),
-							'C_COMMENTS_ENABLED' => $comments_config->module_comments_is_enabled('gallery'),
-							'C_NOTATION_ENABLED' => $content_management_config->module_notation_is_enabled('gallery'),
-							'ID' => $info_pics['id'],
-							'NAME' => !empty(stripslashes($info_pics['name'])) ? stripslashes($info_pics['name']) : $info_pics['path'],
-							'C_POSTOR_EXIST' => !empty($info_pics['display_name']),
-							'POSTOR' => $info_pics['display_name'],
-							'POSTOR_LEVEL_CLASS' => UserService::get_level_class($info_pics['level']),
-							'C_POSTOR_GROUP_COLOR' => !empty($group_color),
-							'POSTOR_GROUP_COLOR' => $group_color,
-							'U_POSTOR_PROFILE' => UserUrlBuilder::profile($info_pics['user_id'])->rel(),
-							'VIEWS' => ($info_pics['views'] + 1),
-							'DIMENSION' => $info_pics['width'] . ' x ' . $info_pics['height'],
-							'SIZE' => NumberHelper::round($info_pics['weight']/1024, 1),
-							'L_COMMENTS' => CommentsService::get_number_and_lang_comments('gallery', $info_pics['id']),
-							'KERNEL_NOTATION' => $activ_note ? NotationService::display_active_image($notation) : '',
-							'COLSPAN' => min(($i + 2), ($config->get_columns_number() + 2)),
-							'CAT' => $cat_list,
-							'RENAME' => $html_protected_name,
-							'RENAME_CUT' => $html_protected_name,
+							'C_TITLE_ENABLED'         => $config->is_title_enabled(),
+							'C_COMMENTS_ENABLED'      => $comments_config->module_comments_is_enabled('gallery'),
+							'C_NOTATION_ENABLED'      => $content_management_config->module_notation_is_enabled('gallery'),
+							'C_AUTHOR_EXISTS'         => !empty($info_pics['display_name']),
+							'C_AUTHOR_GROUP_COLOR'    => !empty($group_color),
+							'C_LEFT_THUMBNAILS'       => (($pos_pics - $start_thumbnails) > 0),
+							'C_RIGHT_THUMBNAILS'      => (($pos_pics - $start_thumbnails) <= ($i - 1) - $nbr_column_pics),
+							'C_DISPLAY_STATUS'        => $info_pics['aprob'] == 1,
+
+							'ID'                  => $info_pics['id'],
+							'NAME'                => !empty(stripslashes($info_pics['name'])) ? stripslashes($info_pics['name']) : $info_pics['path'],
+							'AUTHOR_DISPLAY_NAME' => $info_pics['display_name'],
+							'AUTHOR_LEVEL_CLASS'  => UserService::get_level_class($info_pics['level']),
+							'AUTHOR_GROUP_COLOR'  => $group_color,
+							'VIEWS_NUMBER'        => ($info_pics['views'] + 1),
+							'DIMENSION'           => $info_pics['width'] . ' x ' . $info_pics['height'],
+							'SIZE'                => NumberHelper::round($info_pics['weight']/1024, 1),
+							'COMMENTS'            => CommentsService::get_number_and_lang_comments('gallery', $info_pics['id']),
+							'COMMENTS_NUMBER'     => CommentsService::get_comments_number('gallery', $info_pics['id']),
+							'KERNEL_NOTATION'     => $activ_note ? NotationService::display_active_image($notation) : '',
+							'COLSPAN'             => min(($i + 2), ($config->get_columns_number() + 2)),
+							'CATEGORIES_LIST'     => $cat_list,
+							'RENAME'              => $html_protected_name,
+							'RENAME_CUT'          => $html_protected_name,
+							'ARRAY_JS'            => $array_js,
+							'JS_ITEMS_NUMBER'     => ($i - 1),
+							'MAX_START'           => ($i - 1) - $nbr_column_pics,
+							'START_THUMB'         => (($pos_pics - $start_thumbnails) > 0) ? ($pos_pics - $start_thumbnails) : 0,
+							'END_THUMB'           => ($pos_pics + $end_thumbnails),
+
+							'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($info_pics['user_id'])->rel(),
+							'U_DELETE'         => url('gallery.php?del=' . $info_pics['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;cat=' . $category->get_id()),
+							'U_MOVE'           => url('gallery.php?id=' . $info_pics['id'] . '&amp;token=' . AppContext ::get_session()->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value'),
+							'U_PREVIOUS'       => ($pos_pics > 0) ? GalleryUrlBuilder::get_link_item($category->get_id(),$id_previous) : '',
+							'U_NEXT'           => ($pos_pics < ($i - 1)) ? GalleryUrlBuilder::get_link_item($category->get_id(),$id_next) : '',
+							'U_COMMENTS'       => GalleryUrlBuilder::get_link_item($info_pics['id_category'],$info_pics['id'],0,$g_sort) .'#comments-list',
+							'U_ITEM_MAX'       => 'show_pics.php?id=' . $info_pics['id'] . '&amp;cat=' . $info_pics['id_category'] . '&amp;ext=.' . $extension,
+
+							//
 							'IMG_APROB' => ($info_pics['aprob'] == 1) ? 'fa fa-eye-slash' : 'fa fa-eye',
-							'ARRAY_JS' => $array_js,
-							'NBR_PICS' => ($i - 1),
-							'MAX_START' => ($i - 1) - $nbr_column_pics,
-							'START_THUMB' => (($pos_pics - $start_thumbnails) > 0) ? ($pos_pics - $start_thumbnails) : 0,
-							'END_THUMB' => ($pos_pics + $end_thumbnails),
 							'L_KB' => LangLoader::get_message('unit.kilobytes', 'common'),
 							'L_INFORMATIONS' => $LANG['informations'],
 							'L_NAME' => $LANG['name'],
@@ -404,16 +430,7 @@ class GalleryDisplayCategoryController extends ModuleController
 							'L_NOTE' => LangLoader::get_message('note', 'common'),
 							'L_COM' => $LANG['com'],
 							'L_EDIT' => LangLoader::get_message('edit', 'common'),
-							'L_APROB_IMG' => ($info_pics['aprob'] == 1) ? $LANG['unaprob'] : $LANG['aprob'],
 							'L_THUMBNAILS' => $LANG['thumbnails'],
-							'U_DEL' => url('gallery.php?del=' . $info_pics['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;cat=' . $category->get_id()),
-							'U_MOVE' => url('gallery.php?id=' . $info_pics['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value'),
-							'U_PREVIOUS' => ($pos_pics > 0) ? GalleryUrlBuilder::get_link_item($category->get_id(),$id_previous) : '',
-							'U_NEXT' => ($pos_pics < ($i - 1)) ? GalleryUrlBuilder::get_link_item($category->get_id(),$id_next) : '',
-							'C_LEFT_THUMBNAILS' => (($pos_pics - $start_thumbnails) > 0),
-							'C_RIGHT_THUMBNAILS' => (($pos_pics - $start_thumbnails) <= ($i - 1) - $nbr_column_pics),
-							'U_COMMENTS' => GalleryUrlBuilder::get_link_item($info_pics['id_category'],$info_pics['id'],0,$g_sort) .'#comments-list',
-							'U_IMG_MAX' => 'show_pics.php?id=' . $info_pics['id'] . '&amp;cat=' . $info_pics['id_category'] . '&amp;ext=.' . $extension
 						)
 					));
 
@@ -423,7 +440,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					{
 						if ($i >= ($pos_pics - $start_thumbnails) && $i <= ($pos_pics + $end_thumbnails))
 						{
-							$this->tpl->assign_block_vars('list_preview_pics', $pics);
+							$this->view->assign_block_vars('list_preview_pics', $pics);
 						}
 						$i++;
 					}
@@ -431,7 +448,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					//Commentaires
 					if (AppContext::get_request()->get_getint('com', 0) == 0 && $comments_config->module_comments_is_enabled('gallery'))
 					{
-						$this->tpl->put_all(array(
+						$this->view->put_all(array(
 							'COMMENTS' => CommentsService::display($comments_topic)->render()
 						));
 					}
@@ -452,15 +469,17 @@ class GalleryDisplayCategoryController extends ModuleController
 					DispatchManager::redirect($error_controller);
 				}
 
-				$this->tpl->put_all(array(
-					'C_GALLERY_MODO' => $is_modo,
-					'C_PICTURE_NAME_DISPLAYED' => $config->is_title_enabled(),
-					'C_AUTHOR_DISPLAYED' => $config->is_author_displayed(),
+				$this->view->put_all(array(
+					'C_CONTROLS'              => $is_modo,
+					'C_NAME_DISPLAYED'        => $config->is_title_enabled(),
+					'C_AUTHOR_DISPLAYED'      => $config->is_author_displayed(),
 					'C_VIEWS_COUNTER_ENABLED' => $config->is_views_counter_enabled(),
-					'C_COMMENTS_ENABLED' => $comments_config->module_comments_is_enabled('gallery'),
-					'C_NOTATION_ENABLED' => $content_management_config->module_notation_is_enabled('gallery'),
-					'C_PAGINATION' => $pagination->has_several_pages(),
+					'C_COMMENTS_ENABLED'      => $comments_config->module_comments_is_enabled('gallery'),
+					'C_NOTATION_ENABLED'      => $content_management_config->module_notation_is_enabled('gallery'),
+					'C_PAGINATION'            => $pagination->has_several_pages(),
+
 					'PAGINATION' => $pagination->display(),
+					//
 					'L_EDIT' => LangLoader::get_message('edit', 'common'),
 					'L_BY' => $LANG['by'],
 					'L_VIEW' => $LANG['view'],
@@ -544,36 +563,39 @@ class GalleryDisplayCategoryController extends ModuleController
 
 					$html_protected_name = $row['name'];
 
-					$this->tpl->assign_block_vars('pics_list', array(
-						'C_IMG_APROB' => $row['aprob'] == 1,
-						'C_OPEN_TR' => is_int($j++/$nbr_column_pics),
-						'C_CLOSE_TR' => is_int($j/$nbr_column_pics),
+					$this->view->assign_block_vars('pics_list', array(
+						'C_APPROVED' => $row['aprob'] == 1,
+						'C_AUTHOR_EXISTS' => !empty($row['display_name']),
+						'C_AUTHOR_GROUP_COLOR' => !empty($group_color),
+						'C_SEVERAL_VIEWS' => $row['views'] > 1,
 						'C_NEW_CONTENT' => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('gallery', $row['timestamp']),
+
 						'ID' => $row['id'],
-						'APROB' => $row['aprob'],
 						'PATH' => $row['path'],
 						'NAME' => !empty(stripslashes($row['name'])) ? stripslashes($row['name']) : $row['path'],
-						'C_POSTOR_EXIST' => !empty($row['display_name']),
-						'POSTOR' => $row['display_name'],
-						'POSTOR_LEVEL_CLASS' => UserService::get_level_class($row['level']),
-						'C_POSTOR_GROUP_COLOR' => !empty($group_color),
-						'POSTOR_GROUP_COLOR' => $group_color,
-						'U_POSTOR_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
-						'VIEWS' => $row['views'],
-						'L_VIEWS' => $row['views'] > 1 ? $LANG['views'] : $LANG['view'],
-						'L_COMMENTS' => CommentsService::get_number_and_lang_comments('gallery', $row['id']),
+						'AUTHOR_DISPLAY_NAME' => $row['display_name'],
+						'AUTHOR_LEVEL_CLASS' => UserService::get_level_class($row['level']),
+						'AUTHOR_GROUP_COLOR' => $group_color,
+						'VIEWS_NUMBER' => $row['views'],
 						'KERNEL_NOTATION' => $content_management_config->module_notation_is_enabled('gallery') && $is_connected ? NotationService::display_active_image($notation) : NotationService::display_static_image($notation),
-						'CAT' => $cat_list,
+						'CATEGORIES_LIST' => $cat_list,
 						'ONCLICK' => $onclick,
 						'RENAME' => $html_protected_name,
 						'RENAME_CUT' => $html_protected_name,
-						'L_APROB_IMG' => ($row['aprob'] == 1) ? $LANG['unaprob'] : $LANG['aprob'],
-						'U_PICTURE_LINK' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $row['id_category'] . '&amp;id=' . $row['id'], '-' . $row['id_category'] . '-' . $row['id'] . '.php'),
+						'COMMENTS' => CommentsService::get_number_and_lang_comments('gallery', $row['id']),
+
+						'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
+						'U_ITEM' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $row['id_category'] . '&amp;id=' . $row['id'], '-' . $row['id_category'] . '-' . $row['id'] . '.php'),
 						'U_PICTURE' => 'show_pics.php?id=' . $row['id'] . '&amp;cat=' . $row['id_category'] . '&amp;ext=.' . $extension,
-						'U_DEL' => url('gallery.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;cat=' . $category->get_id()),
+						'U_DELETE' => url('gallery.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;cat=' . $category->get_id()),
 						'U_MOVE' => url('gallery.php?id=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value'),
 						'U_DISPLAY' => $display_link,
-						'U_COMMENTS' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $row['id_category'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['id_category'] . '-' . $row['id'] . '.php?com=0') . '#comments-list'
+						'U_COMMENTS' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $row['id_category'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['id_category'] . '-' . $row['id'] . '.php?com=0') . '#comments-list',
+						//
+						'C_OPEN_TR' => is_int($j++/$nbr_column_pics),
+						'C_CLOSE_TR' => is_int($j/$nbr_column_pics),
+						'APROB' => $row['aprob'],
+						'L_APROB_IMG' => ($row['aprob'] == 1) ? $LANG['unaprob'] : $LANG['aprob'],
 					));
 				}
 				$result->dispose();
@@ -581,20 +603,13 @@ class GalleryDisplayCategoryController extends ModuleController
 				//Création des cellules du tableau si besoin est.
 				while (!is_int($j/$nbr_column_pics))
 				{
-					$this->tpl->assign_block_vars('end_table', array(
+					$this->view->assign_block_vars('end_table', array(
 						'COLUMN_WIDTH_PICS' => $column_width_pics,
 						'C_DISPLAY_TR_END' => (is_int(++$j/$nbr_column_pics))
 					));
 				}
 			}
 		}
-	}
-
-	private function init()
-	{
-		$this->lang = LangLoader::get('common', 'gallery');
-		$this->tpl = new FileTemplate('gallery/gallery.tpl');
-		$this->tpl->add_lang($this->lang);
 	}
 
 	private function get_category()
@@ -632,14 +647,14 @@ class GalleryDisplayCategoryController extends ModuleController
 	private function generate_response()
 	{
 		$page = AppContext::get_request()->get_getint('p', 1);
-		$response = new SiteDisplayResponse($this->tpl);
+		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
 
 		if ($this->get_category()->get_id() != Category::ROOT_CATEGORY)
-			$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['module_title'], $page);
+			$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['gallery.module.title'], $page);
 		else
-			$graphical_environment->set_page_title($this->lang['module_title'], '', $page);
+			$graphical_environment->set_page_title($this->lang['gallery.module.title'], '', $page);
 
 		$description = $this->get_category()->get_description();
 		if (empty($description))
@@ -648,7 +663,7 @@ class GalleryDisplayCategoryController extends ModuleController
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(GalleryUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], GalleryUrlBuilder::home());
+		$breadcrumb->add($this->lang['gallery.module.title'], GalleryUrlBuilder::home());
 
 		$categories = array_reverse(CategoriesService::get_categories_manager('gallery')->get_parents($this->get_category()->get_id(), true));
 		foreach ($categories as $id => $category)
@@ -666,7 +681,7 @@ class GalleryDisplayCategoryController extends ModuleController
 		$object->init();
 		$object->check_authorizations();
 		$object->build_view();
-		return $object->tpl;
+		return $object->view;
 	}
 }
 ?>

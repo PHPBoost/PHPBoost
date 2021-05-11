@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 16
+ * @version     PHPBoost 6.0 - last update: 2021 05 11
  * @since       PHPBoost 1.2 - 2005 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -154,7 +154,15 @@ elseif ($g_add)
 	}
 
 	$categories = CategoriesService::get_categories_manager()->get_categories_cache()->get_categories();
-	$tpl = new FileTemplate('gallery/gallery_add.tpl');
+
+	$lang = LangLoader::get('common', 'gallery');
+	$view = new FileTemplate('gallery/gallery_add.tpl');
+	$view->add_lang(array_merge(
+		$lang,
+		LangLoader::get('common-lang'),
+		LangLoader::get('form-lang'),
+		LangLoader::get('upload-lang')
+	));
 
 	//Niveau d'autorisation de la catégorie, accès en écriture.
 	if (!CategoriesAuthorizationsService::check_authorizations($id_category)->write())
@@ -174,9 +182,9 @@ elseif ($g_add)
 	$get_error = retrieve(GET, 'error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_max_dimension', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_unsupported_format', 'e_unabled_create_pics', 'e_error_resize', 'e_no_graphic_support', 'e_unabled_incrust_logo', 'delete_thumbnails', 'upload_limit');
 	if (in_array($get_error, $array_error))
-		$tpl->put('message_helper', MessageHelper::display(LangLoader::get_message($get_error, 'errors'), MessageHelper::WARNING));
+		$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message($get_error, 'errors'), MessageHelper::WARNING));
 
-	$module_data_path = $tpl->get_pictures_data_path();
+	$module_data_path = $view->get_pictures_data_path();
 
 	//Aficchage de la photo uploadée.
 	if (!empty($g_idpics))
@@ -188,13 +196,14 @@ elseif ($g_add)
 			DispatchManager::redirect($error_controller);
 		}
 
-		$tpl->assign_block_vars('image_up', array(
-			'NAME' => stripslashes($imageup['name']),
+		$view->assign_block_vars('image_up', array(
+			'NAME'          => stripslashes($imageup['name']),
+			'ID'            => $g_idpics,
+			'PATH'          => $imageup['path'],
+			'ID_CATEGORY'   => $imageup['id_category'],
+			'CATEGORY_NAME' => $categories[$imageup['id_category']]->get_name(),
+			//
 			'L_SUCCESS_UPLOAD' => $LANG['success_upload_img'],
-			'ID' => $g_idpics,
-			'PATH' => $imageup['path'],
-			'ID_CATEGORY' => $imageup['id_category'],
-			'CAT_NAME' => $categories[$imageup['id_category']]->get_name()
 		));
 	}
 
@@ -206,35 +215,41 @@ elseif ($g_add)
 		switch (AppContext::get_current_user()->get_level())
 		{
 			case 2:
-			$l_pics_quota = $LANG['illimited'];
+				$l_pics_quota = LangLoader::get_message('common.unlimited', 'common-lang');
 			break;
 			case 1:
-			$l_pics_quota = $config->get_moderator_max_pics_number();
+				$l_pics_quota = $config->get_moderator_max_pics_number();
 			break;
 			default:
-			$l_pics_quota = $config->get_member_max_pics_number();
+				$l_pics_quota = $config->get_member_max_pics_number();
 		}
 		$nbr_upload_pics = $Gallery->get_nbr_upload_pics(AppContext::get_current_user()->get_id());
 
-		$tpl->assign_block_vars('image_quota', array(
-			'L_IMAGE_QUOTA' => sprintf($LANG['image_quota'], $nbr_upload_pics, $l_pics_quota)
+		$view->put_all(array(
+			'CURRENT_ITEMS_NUMBER' => $nbr_upload_pics,
+			'MAX_ITEMS_NUMBER'     => $l_pics_quota
 		));
 	}
 
 	$search_category_children_options = new SearchCategoryChildrensOptions();
 	$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-	$tpl->put_all(array(
-		'CAT_ID' => $id_category,
-		'MODULE_NAME' => $LANG['gallery'],
-		'C_ROOT_CATEGORY' => $categories[$id_category]->get_id() == Category::ROOT_CATEGORY,
-		'CATEGORY_NAME' => $categories[$id_category]->get_name(),
-		'CATEGORIES_TREE' => CategoriesService::get_categories_manager()->get_select_categories_form_field('cat', LangLoader::get_message('form.category', 'common'), $id_category, $search_category_children_options)->display()->render(),
-		'MAX_WIDTH' => $config->get_max_width(),
-		'MAX_HEIGHT' => $config->get_max_height(),
+	$view->put_all(array(
+		'CATEGORIES_TREE'    => CategoriesService::get_categories_manager()->get_select_categories_form_field('cat', LangLoader::get_message('form.category', 'common'), $id_category, $search_category_children_options)->display()->render(),
+		'MAX_WIDTH'          => $config->get_max_width(),
+		'MAX_HEIGHT'         => $config->get_max_height(),
 		'ALLOWED_EXTENSIONS' => implode('", "',FileUploadConfig::load()->get_authorized_picture_extensions()),
-		'MAX_FILE_SIZE' => $config->get_max_weight() * 1024,
+		'MAX_FILE_SIZE'      => $config->get_max_weight() * 1024,
 		'MAX_FILE_SIZE_TEXT' => ($config->get_max_weight() / 1024) . ' ' . LangLoader::get_message('unit.megabytes', 'common'),
-		'IMG_FORMAT' => 'JPG, PNG, GIF',
+		'IMG_FORMAT'         => 'JPG, PNG, GIF',
+
+		'U_GALLERY_ACTION_ADD' => GalleryUrlBuilder::get_link_cat_add($id_category,null,AppContext::get_session()->get_token()),
+		// 
+		'CATEGORY_NAME' => $categories[$id_category]->get_name(),
+		'C_ROOT_CATEGORY' => $categories[$id_category]->get_id() == Category::ROOT_CATEGORY,
+		'MODULE_NAME' => $LANG['gallery'],
+		'CAT_ID' => $id_category,
+		'U_GALLERY_CAT_LINKS' => $cat_links,
+		'U_INDEX' => url('.php'),
 		'L_IMG_FORMAT' => $LANG['img_format'],
 		'L_WIDTH_MAX' => $LANG['width_max'],
 		'L_HEIGHT_MAX' => $LANG['height_max'],
@@ -247,12 +262,9 @@ elseif ($g_add)
 		'L_UNIT_PX' => LangLoader::get_message('unit.pixels', 'common'),
 		'L_UNIT_KO' => LangLoader::get_message('unit.kilobytes', 'common'),
 		'L_UPLOAD' => $LANG['upload_img'],
-		'U_GALLERY_CAT_LINKS' => $cat_links,
-		'U_GALLERY_ACTION_ADD' => GalleryUrlBuilder::get_link_cat_add($id_category,null,AppContext::get_session()->get_token()),
-		'U_INDEX' => url('.php')
 	));
 
-	$tpl->display();
+	$view->display();
 }
 else
 {

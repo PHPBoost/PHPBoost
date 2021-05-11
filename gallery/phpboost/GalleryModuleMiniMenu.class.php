@@ -3,11 +3,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 14
+ * @version     PHPBoost 6.0 - last update: 2021 05 11
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Pierre Pelisset <ppelisset@hotmail.fr>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class GalleryModuleMiniMenu extends ModuleMiniMenu
@@ -24,9 +25,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 
 	public function get_menu_title()
 	{
-		global $LANG;
-		load_module_lang('gallery');
-		return $LANG['random_img'];
+		return LangLoader::get_message('gallery.random.items', 'common', 'gallery');
 	}
 
 	public function is_displayed()
@@ -36,10 +35,10 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 
 	public function get_menu_content()
 	{
-		global $LANG;
-		$tpl = new FileTemplate('gallery/gallery_mini.tpl');
+		$view = new FileTemplate('gallery/gallery_mini.tpl');
+		$view->add_lang(array_merge(LangLoader::get('common', 'gallery'), LangLoader::get('common-lang')));
 
-		MenuService::assign_positions_conditions($tpl, $this->get_block());
+		MenuService::assign_positions_conditions($view, $this->get_block());
 
 		//Chargement de la langue du module.
 		load_module_lang('gallery');
@@ -98,25 +97,25 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 						break;
 				}
 			}
-			$tpl->put_all(array(
-				'C_FADE' => false,
-				'C_VERTICAL_SCROLL' => false,
+			$view->put_all(array(
+				'C_FADE'              => false,
+				'C_VERTICAL_SCROLL'   => false,
 				'C_HORIZONTAL_SCROLL' => false,
-				'C_STATIC' => false
+				'C_STATIC'            => false
 			));
 			switch ($config->get_scroll_type())
 			{
 				case GalleryConfig::STATIC_SCROLL :
-					$tpl->put('C_FADE', true);
+					$view->put('C_FADE', true);
 					break;
 				case GalleryConfig::VERTICAL_DYNAMIC_SCROLL :
-					$tpl->put('C_VERTICAL_SCROLL', true);
+					$view->put('C_VERTICAL_SCROLL', true);
 					break;
 				case GalleryConfig::HORIZONTAL_DYNAMIC_SCROLL :
-					$tpl->put('C_HORIZONTAL_SCROLL', true);
+					$view->put('C_HORIZONTAL_SCROLL', true);
 					break;
 				case GalleryConfig::NO_SCROLL :
-					$tpl->put('C_STATIC', true);
+					$view->put('C_STATIC', true);
 					break;
 			}
 
@@ -134,13 +133,13 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 				if ($row['width'] == 0 || $row['height'] == 0)
 					list($row['width'], $row['height']) = array(142, 142);
 
-				$tpl->assign_block_vars('pics_mini', array(
-					'ID' => $row['id'],
-					'PICS' => TPL_PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path'],
-					'NAME' => $row['name'],
-					'HEIGHT' => $row['height'],
-					'WIDTH' => $row['width'],
-					'U_PICS' => TPL_PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $row['id_category'] . '&amp;id=' . $row['id'], '-' . $row['id_category'] . '-' . $row['id'] . '.php')
+				$view->assign_block_vars('pics_mini', array(
+					'ID'          => $row['id'],
+					'U_THUMBNAIL' => TPL_PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path'],
+					'NAME'        => $row['name'],
+					'HEIGHT'      => $row['height'],
+					'WIDTH'       => $row['width'],
+					'U_ITEM'      => TPL_PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $row['id_category'] . '&amp;id=' . $row['id'], '-' . $row['id_category'] . '-' . $row['id'] . '.php')
 				));
 
 				$sum_height += $row['height'] + 5;
@@ -153,20 +152,19 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 			}
 		}
 
-		$tpl->put_all(array(
+		$view->put_all(array(
 			'C_NO_ITEM' => count($gallery_mini) == 0,
-			'ARRAY_PICS' => $array_pics_mini,
-			'HEIGHT_DIV' => $config->get_mini_max_height(),
-			'SUM_HEIGHT' => $sum_height + 10,
+			'SCROLL_DELAY'  => $config->get_mini_pics_speed()*1000,
+			//
+			'ARRAY_PICS'    => $array_pics_mini,
+			'HEIGHT_DIV'    => $config->get_mini_max_height(),
+			'SUM_HEIGHT'    => $sum_height + 10,
 			'HIDDEN_HEIGHT' => $config->get_mini_max_height() + 10,
-			'WIDTH_DIV' => $config->get_mini_max_width(),
-			'SUM_WIDTH' => $sum_width + 30,
-			'HIDDEN_WIDTH' => ($config->get_mini_max_width() * 3) + 30,
-			'SCROLL_DELAY' => $config->get_mini_pics_speed()*1000,
-			'L_NO_RANDOM_PICS' => $LANG['no_random_img'],
-			'L_GALLERY' => $LANG['gallery']
+			'WIDTH_DIV'     => $config->get_mini_max_width(),
+			'SUM_WIDTH'     => $sum_width + 30,
+			'HIDDEN_WIDTH'  => ($config->get_mini_max_width() * 3) + 30,
 		));
-		return $tpl->render();
+		return $view->render();
 	}
 }
 ?>

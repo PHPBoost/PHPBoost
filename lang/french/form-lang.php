@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 02
+ * @version     PHPBoost 6.0 - last update: 2021 05 11
  * @since       PHPBoost 6.0 - 2021 04 18
 */
 
@@ -149,6 +149,7 @@ $lang['form.thumbnail']                 = 'Image';
 $lang['form.thumbnail.preview']         = 'Prévisualisation de l\'image';
 $lang['form.picture']                   = 'Image';
 $lang['form.picture.preview']           = 'Prévisualisation de l\'image';
+$lang['form.picture.full.size']         = 'Voir en taille réelle';
 $lang['form.sources']                   = 'Source(s)';
 $lang['form.add.source']                = 'Ajouter une source';
 $lang['form.delete.source']             = 'Supprimer la source';

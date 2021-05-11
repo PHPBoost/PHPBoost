@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 29
+ * @version     PHPBoost 6.0 - last update: 2021 05 11
  * @since       PHPBoost 1.6 - 2007 10 18
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 if (defined('PHPBOOST') !== true)
@@ -15,7 +16,7 @@ if (defined('PHPBOOST') !== true)
 load_module_lang('gallery'); //Chargement de la langue du module.
 
 //Création de l'arborescence des catégories.
-$module_title = LangLoader::get_message('module_title', 'common', 'gallery');
+$module_title = LangLoader::get_message('gallery.module.title', 'common', 'gallery');
 $Bread_crumb->add($module_title, GalleryUrlBuilder::home());
 
 $id_category = AppContext::get_request()->get_getint('cat', 0);

@@ -85,3 +85,5 @@
 .article-gallery > header { display: none; }
 
 .mr5 { margin-right: 0.309em; }
+
+td.current { background-color: rgba(var(--main-rgb-t), 0.1); }

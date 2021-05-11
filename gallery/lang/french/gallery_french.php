@@ -23,6 +23,7 @@ $LANG['img_without_cat'] = 'Image(s) sans catégories';
 $LANG['total_img_root'] = 'Il y a %d image(s) dans la galerie';
 $LANG['total_img_root_single'] = 'Il y a une image dans la galerie';
 $LANG['total_img_cat'] = '%d image(s) dans cette catégorie';
+
 $LANG['height_max'] = 'Hauteur max des photos';
 $LANG['height_max_explain'] = '600px par défaut';
 $LANG['width_max'] = 'Largeur max des photos';
@@ -65,6 +66,7 @@ $LANG['nbr_img_explain'] = 'Membres (illimité si invités autorisés)';
 $LANG['nbr_img_modo'] = 'Nombre de photos maximum';
 $LANG['nbr_img_modo_explain'] = 'Modérateurs';
 $LANG['explain_gallery_cache'] = 'Régénération des miniatures (définitif !)<br />Vide le cache en cas de modification des configurations des miniatures, et recompte le nombre d\'images par catégories.';
+
 $LANG['explain_pic'] = 'La galerie que vous désirez supprimer contient <strong>1</strong> image, voulez-vous la conserver en la transférant dans une autre galerie, ou bien la supprimer ?';
 $LANG['explain_pics'] = 'La galerie que vous désirez supprimer contient <strong>%d</strong> images, voulez-vous les conserver en les transférant dans une autre galerie, ou bien tout supprimer ?';
 $LANG['explain_subgallery'] = 'La galerie que vous désirez supprimer contient <strong>1</strong> sous-galerie, voulez-vous la conserver en la transférant dans une autre galerie, ou bien la supprimer ainsi que son contenu ?';
@@ -81,16 +83,19 @@ $LANG['auth_extension'] = 'Extensions autorisées';
 $LANG['add_on'] = 'Ajoutée le';
 $LANG['nbr_pics_info_admin'] = '%d image(s) dont %s non visible(s)';
 $LANG['nbr_pics_info'] = '%d image(s)';
+
 $LANG['display_mode'] = 'Mode d\'agrandissement des images';
 $LANG['new_page'] = 'Nouvelle page';
 $LANG['resize'] = 'Redimensionnement';
 $LANG['popup'] = 'Popup';
 $LANG['popup_full'] = 'Plein écran';
+
 $LANG['success_upload_img'] = 'Vos images ont bien été enregistrées !';
 $LANG['album'] = 'Albums';
 $LANG['sub_album'] = 'Sous albums';
 $LANG['best_views'] = 'Les plus vues';
 $LANG['best_notes'] = 'Les mieux notées';
+
 $LANG['thumbnails_scolling'] = 'Défilement des miniatures';
 $LANG['nbr_pics_mini'] = 'Nombre de miniatures';
 $LANG['speed_mini_pics'] = 'Vitesse du défilement';
@@ -100,6 +105,7 @@ $LANG['no_scroll'] = 'Aucun défilement';
 $LANG['static_scroll'] = 'Défilement statique';
 $LANG['vertical_dynamic_scroll'] = 'Défilement dynamique vertical';
 $LANG['horizontal_dynamic_scroll'] = 'Défilement dynamique horizontal';
+
 $LANG['column'] = 'Colonnes';
 $LANG['global_cat_selection'] = 'Catégorie de toutes les images sélectionnées';
 $LANG['global_cat_selection_explain'] = 'Permet de changer la catégorie de toutes les images sélectionnées d\'un coup';
