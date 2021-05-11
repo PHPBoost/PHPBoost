@@ -86,7 +86,7 @@ $lang['gallery.date.added']   = 'Ajoutée le';
 $lang['gallery.thumbnails']   = 'Miniatures';
 $lang['gallery.upload.limit'] = 'Limite d\'upload';
 
-// Message-helper
+// Message helper
 $lang['gallery.warning.success.upload'] = 'Vos images ont bien été enregistrées !';
 
 // Notices
@@ -95,7 +95,6 @@ $lang['gallery.no.ftp.item'] = 'Aucune image supplémentaire présente sur le se
 // Tree links
 $lang['gallery.add.items']  = 'Ajouter des images';
 $lang['gallery.management'] = 'Gestion des images';
-// $lang['gallery.manage']  = 'Gérer les images';
 
 // Tools menu
 $lang['gallery.top.views'] = 'Les plus vues';

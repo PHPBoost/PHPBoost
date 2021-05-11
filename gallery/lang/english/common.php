@@ -66,10 +66,10 @@ $lang['gallery.no.scroll']                    = 'No scrolling';
 $lang['gallery.static.scroll']                = 'Static scrolling';
 $lang['gallery.vertical.scroll']              = 'Vertical dynamic scrolling';
 $lang['gallery.horizontal.scroll']            = 'Horizontal dynamic scrolling';
-$lang['gallery.cache.clue']                   = 'Thumbnails cache';
+$lang['gallery.cache']                        = 'Thumbnails cache';
 $lang['gallery.cache.clue']                   = 'Regeneration of the thumbnails<br />Empties the cache in case of thumbnails configuration modification, and recount number of pictures in each categories.';
     // add
-$lang['gallery.upload.items']            = 'Uploader pictures';
+$lang['gallery.upload.items']            = 'Upload pictures';
 $lang['gallery.server.item']             = 'Pictures available on the server';
 $lang['gallery.select.all.items']        = 'Select all pictures';
 $lang['gallery.deselect.all.items']      = 'Deselect all pictures';
@@ -95,7 +95,6 @@ $lang['gallery.no.ftp.item'] = 'No additional picture present on the server';
 // Tree links
 $lang['gallery.add.items']  = 'Add pictures';
 $lang['gallery.management'] = 'Pictures management';
-// $lang['gallery.manage']  = 'Manage pictures';
 
 // Tools menu
 $lang['gallery.top.views'] = 'Top views';
