@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 15
+ * @version     PHPBoost 6.0 - last update: 2021 04 12
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -36,13 +36,13 @@ elseif ($id_media > 0)
 {
 	$view = new FileTemplate('media/MediaItemController.tpl');
 	$lang = LangLoader::get('common', 'media');
-	$view->add_lang($lang);
+	$view->add_lang(array_merge($lang, LangLoader::get('common-lang')));
 	$config = MediaConfig::load();
 	$comments_config = CommentsConfig::load();
 	$content_management_config = ContentManagementConfig::load();
 
 	try {
-		$media = PersistenceContext::get_querier()->select_single_row_query("SELECT v.*, mb.display_name, mb.user_groups, mb.level, notes.average_notes, notes.notes_number, note.note
+		$media = PersistenceContext::get_querier()->select_single_row_query("SELECT v.*, mb.user_id, mb.display_name, mb.user_groups, mb.level, notes.average_notes, notes.notes_number, note.note
 		FROM " . PREFIX . "media AS v
 		LEFT JOIN " . DB_TABLE_MEMBER . " AS mb ON v.author_user_id = mb.user_id
 		LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON notes.id_in_module = v.id AND notes.module_name = 'media'
@@ -92,25 +92,31 @@ elseif ($id_media > 0)
 	$view->put_all(array_merge(
 		Date::get_array_tpl_vars($date, 'date'),
 		array(
-			'ID' => $id_media,
-			'C_ROOT_CATEGORY' => $media['id_category'] == Category::ROOT_CATEGORY,
-			'C_CONTROLS' => CategoriesAuthorizationsService::check_authorizations($media['id_category'])->moderation(),
-			'C_ENABLED_NOTATION' => $content_management_config->module_notation_is_enabled('media'),
-			'C_ENABLED_COMMENTS' => $comments_config->module_comments_is_enabled('media'),
-			'C_NEW_CONTENT' => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('media', $media['creation_date']),
-			'TITLE' => $media['title'],
-			'CONTENT' => FormatingHelper::second_parse(stripslashes($media['content'])),
-			'KERNEL_NOTATION' => NotationService::display_active_image($notation),
-			'VIEWS_NUMBER' => (int)$media['views_number']+1,
-			'COMMENTS_NUMBER' => CommentsService::get_number_and_lang_comments('media', $id_media),
-			'AUTHOR_NAME' => !empty($media['display_name']) ? '<a href="' . UserUrlBuilder::profile($media['author_user_id'])->rel() . '" class="'.UserService::get_level_class($media['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $media['display_name'] . '</a>' : $LANG['guest'],
-			'U_INVISIBLE_MEDIA' => url('media_action.php?invisible=' . $id_media . '&amp;token=' . AppContext::get_session()->get_token()),
-			'U_EDIT_MEDIA' => url('media_action.php?edit=' . $id_media),
-			'U_DELETE_MEDIA' => url('media_action.php?del=' . $id_media . '&amp;token=' . AppContext::get_session()->get_token()),
-			'U_POPUP_MEDIA' => url('media_popup.php?id=' . $id_media),
-			'CATEGORY_ID' => $media['id_category'],
-			'CATEGORY_NAME' => $media['id_category'] == Category::ROOT_CATEGORY ? $lang['media.module.title'] : CategoriesService::get_categories_manager()->get_categories_cache()->get_category($media['id_category'])->get_name(),
-			'U_EDIT_CATEGORY' => $media['id_category'] == Category::ROOT_CATEGORY ? MediaUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($media['id_category'])->rel()
+			'C_ROOT_CATEGORY'      => $media['id_category'] == Category::ROOT_CATEGORY,
+			'C_CONTROLS'           => CategoriesAuthorizationsService   ::check_authorizations($media['id_category'])->moderation(),
+			'C_ENABLED_NOTATION'   => $content_management_config->module_notation_is_enabled('media'),
+			'C_ENABLED_COMMENTS'   => $comments_config->module_comments_is_enabled('media'),
+			'C_NEW_CONTENT'        => ContentManagementConfig           ::load()->module_new_content_is_enabled_and_check_date('media', $media['creation_date']),
+			'C_AUTHOR_EXISTS'      => !empty($media['display_name']),
+			'C_AUTHOR_GROUP_COLOR' => !empty($group_color),
+
+			'ID'                  => $id_media,
+			'TITLE'               => $media['title'],
+			'CONTENT'             => FormatingHelper::second_parse(stripslashes($media['content'])),
+			'KERNEL_NOTATION'     => NotationService::display_active_image($notation),
+			'VIEWS_NUMBER'        => (int)$media['views_number']+1,
+			'COMMENTS_NUMBER'     => CommentsService::get_comments_number('media', $id_media),
+			'AUTHOR_DISPLAY_NAME' => $media['display_name'],
+			'AUTHOR_LEVEL_CLASS'  => UserService::get_level_class($media['level']),
+			'AUTHOR_GROUP_COLOR'  => $group_color,
+			'CATEGORY_ID'         => $media['id_category'],
+			'CATEGORY_NAME'       => $media['id_category'] == Category::ROOT_CATEGORY ? $lang['media.module.title'] : CategoriesService::get_categories_manager()->get_categories_cache()->get_category($media['id_category'])->get_name(),
+
+			'U_STATUS' 		   => url('media_action.php?invisible=' . $id_media . '&amp;token=' . AppContext::get_session()->get_token()),
+			'U_EDIT'      	   => url('media_action.php?edit=' . $id_media),
+			'U_DELETE'    	   => url('media_action.php?del=' . $id_media . '&amp;token=' . AppContext::get_session()->get_token()),
+			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($media['user_id'])->rel(),
+			'U_EDIT_CATEGORY'  => $media['id_category'] == Category::ROOT_CATEGORY ? MediaUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($media['id_category'])->rel()
 		)
 	));
 

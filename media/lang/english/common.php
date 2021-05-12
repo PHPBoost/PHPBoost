@@ -15,7 +15,12 @@
 
 $lang['media.module.title'] = 'Multimedia';
 
-$lang['media.items']       = 'Files';
+$lang['media.items']       = 'files';
+$lang['media.item']        = 'file';
+$lang['media.add.item']    = 'Add a file';
+$lang['media.delete.item'] = 'Delete a file';
+$lang['media.edit.item']   = 'Edit a file';
+$lang['media.hide.item']   = 'Hide the file';
 
 // Tree links
 $lang['media.management'] = 'Files management';

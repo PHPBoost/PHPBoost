@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 06
+ * @version     PHPBoost 6.0 - last update: 2021 05 12
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -34,7 +34,7 @@ class MediaDisplayCategoryController extends ModuleController
 		$this->lang = LangLoader::get('common', 'media');
 		$this->common_lang = LangLoader::get('common');
 		$this->view = new FileTemplate('media/MediaSeveralItemsController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 	}
 
 	private function build_view()
@@ -74,12 +74,14 @@ class MediaDisplayCategoryController extends ModuleController
 
 				$this->view->assign_block_vars('sub_categories_list', array(
 					'C_CATEGORY_THUMBNAIL' => !empty($category_thumbnail),
-					'CATEGORY_ID' => $category->get_id(),
-					'CATEGORY_NAME' => $category->get_name(),
+					'C_SEVERAL_ITEMS'      => $category->get_elements_number() > 1,
+
+					'CATEGORY_ID'          => $category->get_id(),
+					'CATEGORY_NAME'        => $category->get_name(),
 					'U_CATEGORY_THUMBNAIL' => $category_thumbnail,
-					'L_ITEMS' => $category->get_elements_number() > 1 ? $this->lang['media.items'] : $this->lang['media.item'],
-					'ITEMS_NUMBER' => sprintf($category->get_elements_number()),
-					'U_CATEGORY' => MediaUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel()
+					'ITEMS_NUMBER'         => sprintf($category->get_elements_number()),
+
+					'U_CATEGORY'           => MediaUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel()
 				));
 			}
 		}
@@ -87,18 +89,20 @@ class MediaDisplayCategoryController extends ModuleController
 		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
 
 		$this->view->put_all(array(
-			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
-			'C_CATEGORY_DESCRIPTION' => $category_description,
-			'C_SUB_CATEGORIES' => $categories_number > 0,
-			'C_CONTROLS' => CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
+			'C_ROOT_CATEGORY'            => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
+			'C_CATEGORY_DESCRIPTION'     => $category_description,
+			'C_SUB_CATEGORIES'           => $categories_number > 0,
+			'C_CONTROLS'                 => CategoriesAuthorizationsService             ::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_SUBCATEGORIES_PAGINATION' => $subcategories_pagination->has_several_pages(),
+
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
-			'CATEGORIES_NUMBER_PER_ROW' => $config->get_categories_per_row(),
-			'ITEMS_NUMBER_PER_ROW' => $config->get_items_per_row(),
-			'CATEGORY_NAME' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? $this->lang['media.module.title'] : $this->get_category()->get_name(),
-			'CATEGORY_DESCRIPTION' => $category_description,
+			'CATEGORIES_PER_ROW'       => $config->get_categories_per_row(),
+			'ITEMS_PER_ROW'            => $config->get_items_per_row(),
+			'CATEGORY_NAME'            => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? $this->lang['media.module.title'] : $this->get_category()->get_name(),
+			'CATEGORY_DESCRIPTION'     => $category_description,
+			'CATEGORY_ID'              => $this->get_category()->get_id(),
+
 			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? MediaUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->get_category()->get_id())->rel(),
-			'CATEGORY_ID' => $this->get_category()->get_id()
 		));
 
 		$selected_fields = array('alpha' => '', 'date' => '', 'views' => '', 'note' => '', 'com' => '', 'asc' => '', 'desc' => '');
@@ -136,6 +140,7 @@ class MediaDisplayCategoryController extends ModuleController
 		$this->view->put_all(array(
 			'C_ENABLED_NOTATION' => $content_management_config->module_notation_is_enabled('media'),
 			'C_ENABLED_COMMENTS' => $comments_config->module_comments_is_enabled('media'),
+
 			'SELECTED_ALPHA' => $selected_fields['alpha'],
 			'SELECTED_DATE'  => $selected_fields['date'],
 			'SELECTED_VIEWS' => $selected_fields['views'],
@@ -164,7 +169,7 @@ class MediaDisplayCategoryController extends ModuleController
 
 		$result = PersistenceContext::get_querier()->select("SELECT
 			v.id, v.author_user_id, v.title, v.creation_date, v.views_number, v.published, v.thumbnail, v.content,
-			mb.display_name, mb.user_groups, mb.level,
+			mb.display_name, mb.user_groups, mb.level, mb.user_id,
 			notes.notes_number, notes.average_notes,
 			com.comments_number
 			FROM " . PREFIX . "media AS v
@@ -207,7 +212,7 @@ class MediaDisplayCategoryController extends ModuleController
 
 				$poster_infos = array(
 					'C_HAS_PICTURE' => $poster_type->is_picture(),
-					'PICTURE' => $picture_url->rel()
+					'PICTURE'       => $picture_url->rel()
 				);
 			}
 
@@ -217,20 +222,27 @@ class MediaDisplayCategoryController extends ModuleController
 				$poster_infos,
 				Date::get_array_tpl_vars($date, 'date'),
 				array(
-				'ID'            => $row['id'],
-				'TITLE'          => $row['title'],
-				'IMG_TITLE'      => str_replace('"', '\"', $row['title']),
-				'C_NEW_CONTENT' => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('media', $row['creation_date']),
-				'C_CONTENT' => !empty($row['content']),
-				'CONTENT'   => FormatingHelper::second_parse(stripslashes($row['content'])),
-				'PSEUDO'     => !empty($row['display_name']) ? '<a href="' . UserUrlBuilder::profile($row['author_user_id'])->rel() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>' : LangLoader::get_message('guest', 'main'),
-				'VIEWS_NUMBER'  => $row['views_number'],
-				'COMMENTS_NUMBER'=> CommentsService::get_number_and_lang_comments('media', $row['id']),
-				'KERNEL_NOTATION'          => NotationService::display_static_image($notation),
-				'U_MEDIA_LINK'            => PATH_TO_ROOT . '/media/' . url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $this->get_category()->get_id() . '+' . Url::encode_rewrite($row['title']) . '.php'),
-				'U_ADMIN_INVISIBLE_MEDIA' => PATH_TO_ROOT . url('/media/media_action.php?invisible=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
-				'U_ADMIN_EDIT_MEDIA'      => PATH_TO_ROOT . url('/media/media_action.php?edit=' . $row['id']),
-				'U_ADMIN_DELETE_MEDIA'    => PATH_TO_ROOT . url('/media/media_action.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token())
+				'C_NEW_CONTENT'        => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('media', $row['creation_date']),
+				'C_CONTENT'            => !empty($row['content']),
+				'C_AUTHOR_EXISTS'      => !empty($row['display_name']),
+				'C_AUTHOR_GROUP_COLOR' => !empty($group_color),
+
+				'ID'                  => $row['id'],
+				'TITLE'               => $row['title'],
+				'IMG_TITLE'           => str_replace('"', '\"', $row['title']),
+				'CONTENT'             => FormatingHelper::second_parse(stripslashes($row['content'])),
+				'AUTHOR_DISPLAY_NAME' => $row['display_name'],
+				'AUTHOR_LEVEL_CLASS'  => UserService::get_level_class($row['level']),
+				'AUTHOR_GROUP_COLOR'  => $group_color,
+				'VIEWS_NUMBER'        => $row['views_number'],
+				'COMMENTS_NUMBER'     => CommentsService::get_comments_number('media', $row['id']),
+				'KERNEL_NOTATION'     => NotationService::display_static_image($notation),
+
+				'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
+				'U_ITEM'           => PATH_TO_ROOT . '/media/' . url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $this->get_category()->get_id() . '+' . Url::encode_rewrite($row['title']) . '.php'),
+				'U_STATUS' 		   => PATH_TO_ROOT . url('/media/media_action.php?invisible=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
+				'U_EDIT'     	   => PATH_TO_ROOT . url('/media/media_action.php?edit=' . $row['id']),
+				'U_DELETE'   	   => PATH_TO_ROOT . url('/media/media_action.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token())
 			)));
 		}
 		$result->dispose();

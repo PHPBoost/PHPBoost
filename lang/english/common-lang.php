@@ -154,7 +154,7 @@ $lang['common.error']    = 'Error';
 
 // More
 $lang['common.author']        = 'Author';
-$lang['common.creation.date'] = 'Creation date';
+$lang['common.creation.date'] = 'Release date';
 $lang['common.last.update']   = 'Last update';
 $lang['common.category']      = 'Category';
 $lang['common.categories']    = 'Categories';
