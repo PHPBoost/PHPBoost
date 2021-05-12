@@ -12,23 +12,22 @@
 #                    English                       #
 ####################################################
 
-// Module title
 $lang['guestbook.module.title'] = 'Guest Book';
-$lang['guestbook.add'] = 'Sign the guest book';
-$lang['guestbook.edit'] = 'Message edition';
-$lang['guestbook.messages'] = 'Messages';
+
+$lang['guestbook.items']     = 'Messages';
+$lang['guestbook.add.item']  = 'Sign the guest book';
+$lang['guestbook.edit.item'] = 'Message edition';
 
 // Configuration
-$lang['guestbook.max.links.number.per.message.enabled'] = 'Limit links number in messages';
-$lang['guestbook.max.links'] = 'Max links number in a message';
-$lang['admin.authorizations.read']  = 'Permission to display the guestbook';
+$lang['guestbook.links.limit.in.item'] = 'Limit links number in messages';
+$lang['guestbook.max.links']           = 'Max links number in a message';
 
-//SEO
+// S.E.O.
 $lang['guestbook.seo.description'] = 'All :site\'s guestbook messages.';
 
-//Messages
+// Messages
 $lang['guestbook.message.success.delete'] = 'The message has been deleted';
 
-//Errors
+// Errors
 $lang['guestbook.error.post.unauthorized'] = 'You are not authorized to post a message!';
 ?>

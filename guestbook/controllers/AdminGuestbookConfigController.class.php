@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 04 12
  * @since       PHPBoost 3.0 - 2012 11 30
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -72,7 +72,7 @@ class AdminGuestbookConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('max_links_number_per_message_enabled', $this->lang['guestbook.max.links.number.per.message.enabled'], $this->config->is_max_links_number_per_message_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('max_links_number_per_message_enabled', $this->lang['guestbook.links.limit.in.item'], $this->config->is_max_links_number_per_message_enabled(),
 			array(
 				'class' => 'top-field custom-checkbox',
 				'events' => array('click' => '
@@ -95,7 +95,7 @@ class AdminGuestbookConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset_authorizations);
 
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($this->lang['admin.authorizations.read'], GuestbookAuthorizationsService::READ_AUTHORIZATIONS),
+			new ActionAuthorization($common_lang['authorizations.read'], GuestbookAuthorizationsService::READ_AUTHORIZATIONS),
 			new ActionAuthorization($common_lang['authorizations.write'], GuestbookAuthorizationsService::WRITE_AUTHORIZATIONS),
 			new MemberDisabledActionAuthorization($common_lang['authorizations.moderation'], GuestbookAuthorizationsService::MODERATION_AUTHORIZATIONS)
 		));

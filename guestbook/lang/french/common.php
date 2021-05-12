@@ -12,23 +12,22 @@
 #                    French                        #
 ####################################################
 
-// Module title
 $lang['guestbook.module.title'] = 'Livre d\'or';
-$lang['guestbook.add'] = 'Signer le livre d\'or';
-$lang['guestbook.edit'] = 'Edition d\'un message';
-$lang['guestbook.messages'] = 'Messages';
+
+$lang['guestbook.items']     = 'Messages';
+$lang['guestbook.add.item']  = 'Signer le livre d\'or';
+$lang['guestbook.edit.item'] = 'Edition d\'un message';
 
 // Configuration
-$lang['guestbook.max.links.number.per.message.enabled'] = 'Limiter le nombre de liens dans les messages';
-$lang['guestbook.max.links'] = 'Nombre de liens maximum dans le message';
-$lang['admin.authorizations.read']  = 'Autorisation d\'afficher le livre d\'or';
+$lang['guestbook.links.limit.in.item'] = 'Limiter le nombre de liens dans les messages';
+$lang['guestbook.max.links']           = 'Nombre de liens maximum dans le message';
 
-//SEO
+// S.E.O.
 $lang['guestbook.seo.description'] = 'Tous les messages du livre d\'or du site :site.';
 
-//Messages
+// Messages
 $lang['guestbook.message.success.delete'] = 'Le message a été supprimé';
 
-//Errors
+// Errors
 $lang['guestbook.error.post.unauthorized'] = 'Vous n\'êtes pas autorisé à ajouter un message !';
 ?>

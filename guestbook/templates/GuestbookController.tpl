@@ -15,8 +15,8 @@
 					# ENDIF #
 					<nav class="tabs-nav">
 				        <ul class="flex-between">
-				            <li><a href="#" data-tabs="" data-target="message-list">{@guestbook.messages}</a></li>
-				            # IF C_WRITE #<li><a class="pinned question" href="#" data-tabs="" data-target="add-message">{@guestbook.add}</a></li># ENDIF #
+				            <li><a href="#" data-tabs="" data-target="message-list">{@guestbook.items}</a></li>
+				            # IF C_WRITE #<li><a class="pinned question" href="#" data-tabs="" data-target="add-message">{@guestbook.add.item}</a></li># ENDIF #
 				        </ul>
 				    </nav>
 					<div id="message-list" class="first-tab tabs tabs-animation">

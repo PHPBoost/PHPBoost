@@ -76,7 +76,7 @@ class GuestbookFormController extends ModuleController
 		$formatter->set_forbidden_tags($config->get_forbidden_tags());
 
 		$form = new HTMLForm(__CLASS__);
-		$form->set_layout_title($this->is_new_message ? $this->lang['guestbook.add'] : $this->lang['guestbook.edit']);
+		$form->set_layout_title($this->is_new_message ? $this->lang['guestbook.add.item'] : $this->lang['guestbook.edit.item']);
 
 		$fieldset = new FormFieldsetHTML('message', $common_lang['form.parameters']) ;
 		$form->add_fieldset($fieldset);
@@ -194,8 +194,8 @@ class GuestbookFormController extends ModuleController
 
 		if ($message->get_id() === null)
 		{
-			$graphical_environment->set_page_title($this->lang['guestbook.add'], $this->lang['guestbook.module.title']);
-			$breadcrumb->add($this->lang['guestbook.add'], GuestbookUrlBuilder::add());
+			$graphical_environment->set_page_title($this->lang['guestbook.add.item'], $this->lang['guestbook.module.title']);
+			$breadcrumb->add($this->lang['guestbook.add.item'], GuestbookUrlBuilder::add());
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(GuestbookUrlBuilder::add());
 		}
 		else
@@ -203,8 +203,8 @@ class GuestbookFormController extends ModuleController
 			if (!AppContext::get_session()->location_id_already_exists($location_id))
 				$graphical_environment->set_location_id($location_id);
 
-			$graphical_environment->set_page_title($this->lang['guestbook.edit'], $this->lang['guestbook.module.title']);
-			$breadcrumb->add($this->lang['guestbook.edit'], GuestbookUrlBuilder::edit($message->get_id(), $page));
+			$graphical_environment->set_page_title($this->lang['guestbook.edit.item'], $this->lang['guestbook.module.title']);
+			$breadcrumb->add($this->lang['guestbook.edit.item'], GuestbookUrlBuilder::edit($message->get_id(), $page));
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(GuestbookUrlBuilder::edit($message->get_id(), $page));
 		}
 
