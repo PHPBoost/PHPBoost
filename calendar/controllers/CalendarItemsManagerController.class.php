@@ -66,7 +66,7 @@ class CalendarItemsManagerController extends ModuleController
 		$table_model->add_filter(new HTMLTableAjaxUserAutoCompleteSQLFilter('display_name', 'filter3', $common_lang['common.author']));
 		if ($display_categories)
 			$table_model->add_filter(new HTMLTableCategorySQLFilter('filter4'));
-		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('approved', 'filter5', $common_lang['common.status'], array(1 => $common_lang['common.status.approved'], 0 => $common_lang['common.status.unapproved'])));
+		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('approved', 'filter5', $common_lang['common.status'], array(1 => $common_lang['common.status.approved'], 0 => $common_lang['common.status.disapproved'])));
 
 		$table = new HTMLTable($table_model);
 		$table->set_filters_fieldset_class_HTML();

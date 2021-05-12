@@ -64,7 +64,7 @@ class FaqItemsManagerController extends ModuleController
 		if ($display_categories)
 			$table_model->add_filter(new HTMLTableCategorySQLFilter('filter4'));
 
-		$status_list = array(Item::PUBLISHED => $common_lang['common.status.approved'], Item::NOT_PUBLISHED => $common_lang['common.status.unapproved']);
+		$status_list = array(Item::PUBLISHED => $common_lang['common.status.approved'], Item::NOT_PUBLISHED => $common_lang['common.status.disapproved']);
 		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('published', 'filter5', $common_lang['common.status'], $status_list));
 
 		$table = new HTMLTable($table_model);
