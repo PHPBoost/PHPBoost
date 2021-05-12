@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 21
+ * @version     PHPBoost 6.0 - last update: 2021 04 12
  * @since       PHPBoost 4.0 - 2013 06 27
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -133,23 +133,24 @@ class GuestbookMessage
 		return array_merge(
 			Date::get_array_tpl_vars($this->creation_date, 'date'),
 			array(
-			'C_EDIT' => $this->is_authorized_to_edit(),
-			'C_DELETE' => $this->is_authorized_to_delete(),
-			'C_AUTHOR_EXIST' => $user->get_id() != User::VISITOR_LEVEL,
-			'C_USER_GROUP_COLOR' => !empty($user_group_color),
+				'C_EDIT'               => $this->is_authorized_to_edit(),
+				'C_DELETE'             => $this->is_authorized_to_delete(),
+				'C_AUTHOR_GROUP_COLOR' => !empty($user_group_color),
+				'C_AUTHOR_EXISTS'	   => $user->get_id() != User::VISITOR_LEVEL,
 
-			//Message
-			'ID' => $this->id,
-			'CONTENT' => FormatingHelper::second_parse($this->content),
-			'PSEUDO' => $this->login ? $this->login : $user->get_display_name(),
-			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
-			'USER_GROUP_COLOR' => $user_group_color,
+				// Message
+				'ID'                  => $this->id,
+				'CONTENT'             => FormatingHelper::second_parse($this->content),
+				'AUTHOR_DISPLAY_NAME' => $this->login,
+				'AUTHOR_LEVEL_CLASS'  => UserService::get_level_class($user->get_level()),
+				'AUTHOR_GROUP_COLOR'  => $user_group_color,
 
-			'U_ANCHOR' => GuestbookUrlBuilder::home($page, $this->id)->rel(),
-			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
-			'U_EDIT' => GuestbookUrlBuilder::edit($this->id, $page)->rel(),
-			'U_DELETE' => GuestbookUrlBuilder::delete($this->id)->rel()
-		));
+				'U_ANCHOR'         => GuestbookUrlBuilder::home($page, $this->id)->rel(),
+				'U_AUTHOR_PROFILE' => UserUrlBuilder     ::profile($this->get_author_user()->get_id())->rel(),
+				'U_EDIT'           => GuestbookUrlBuilder::edit($this->id, $page)->rel(),
+				'U_DELETE'         => GuestbookUrlBuilder::delete($this->id)->rel()
+			)
+		);
 	}
 }
 ?>

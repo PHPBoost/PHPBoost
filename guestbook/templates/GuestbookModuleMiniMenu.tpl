@@ -4,14 +4,21 @@
             # IF C_HORIZONTAL #
                 {CONTENT}
             # ELSE #
-                {SHORT_CONTENT}
-                # IF C_MORE_CONTENT #... <a href="{U_MESSAGE}" class="small pinned">${LangLoader::get_message('read.more', 'common')}</a># ENDIF #
+                {SUMMARY}
+                # IF C_SUMMARY #... <a href="{U_MESSAGE}" class="small pinned">{@common.read.more}</a># ENDIF #
             # ENDIF #
-            <p class="small">${LangLoader::get_message('by', 'common')} # IF C_VISITOR #<span class="text-italic"># IF USER_PSEUDO #{USER_PSEUDO}# ELSE #${LangLoader::get_message('visitor', 'user-common')}# ENDIF #</span># ELSE #<a href="{U_PROFILE}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{USER_PSEUDO}</a># ENDIF #</p>
+            <p class="small">
+                {@common.by}
+                # IF C_VISITOR #
+                    <span class="text-italic">{AUTHOR_DISPLAY_NAME}</span>
+                # ELSE #
+                    <a href="{U_AUTHOR_PROFILE}" class="{AUTHOR_LEVEL_CLASS}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR_DISPLAY_NAME}</a>
+                # ENDIF #
+                </p>
         </div>
     # ELSE #
         <div class="cell-content">
-            ${LangLoader::get_message('no_item_now', 'common')}
+            {@common.no.item.now}
         </div>
     # ENDIF #
     <div class="cell-content align-center">

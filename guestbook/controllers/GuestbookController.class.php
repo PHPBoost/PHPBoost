@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 02
+ * @version     PHPBoost 6.0 - last update: 2021 04 12
  * @since       PHPBoost 3.0 - 2012 12 12
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -69,9 +69,11 @@ class GuestbookController extends ModuleController
 
 			$this->view->assign_block_vars('messages', array_merge($message->get_array_tpl_vars($page), array(
 				'C_CURRENT_USER_MESSAGE' => AppContext::get_current_user()->get_display_name() == $row['login'],
-				'C_AVATAR' => $row['user_avatar'] || $user_accounts_config->is_default_avatar_enabled(),
-				'C_USER_GROUPS' => !empty($row['user_groups']),
+				'C_AVATAR'               => $row['user_avatar'] || $user_accounts_config->is_default_avatar_enabled(),
+				'C_USER_GROUPS'          => !empty($row['user_groups']),
+
 				'MESSAGE_NUMBER' => $this->elements_number,
+
 				'U_AVATAR' => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : $user_accounts_config->get_default_avatar()
 			)));
 
@@ -87,8 +89,8 @@ class GuestbookController extends ModuleController
 						$group = $groups_cache->get_group($user_group_id);
 						$this->view->assign_block_vars('messages.usergroups', array(
 							'C_GROUP_PICTURE' => !empty($group['img']),
-							'GROUP_PICTURE' => $group['img'],
-							'GROUP_NAME' => $group['name']
+							'GROUP_PICTURE'   => $group['img'],
+							'GROUP_NAME'      => $group['name']
 						));
 					}
 				}
@@ -100,10 +102,11 @@ class GuestbookController extends ModuleController
 			$this->display_multiple_delete = false;
 
 		$this->view->put_all(array(
-			'C_NO_MESSAGE' => $result->get_rows_count() == 0,
+			'C_NO_MESSAGE'                => $result->get_rows_count() == 0,
 			'C_MULTIPLE_DELETE_DISPLAYED' => $this->display_multiple_delete,
-			'C_PAGINATION' => $messages_number > GuestbookConfig::load()->get_items_per_page(),
-			'PAGINATION' => $pagination->display(),
+			'C_PAGINATION'                => $messages_number > GuestbookConfig::load()->get_items_per_page(),
+
+			'PAGINATION'      => $pagination->display(),
 			'MESSAGES_NUMBER' => $this->elements_number
 		));
 
@@ -128,7 +131,7 @@ class GuestbookController extends ModuleController
 
 		$this->lang = LangLoader::get('common', 'guestbook');
 		$this->view = new FileTemplate('guestbook/GuestbookController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 	}
 
 	private function execute_multiple_delete_if_needed(HTTPRequestCustom $request)

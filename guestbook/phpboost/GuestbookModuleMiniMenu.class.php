@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 21
+ * @version     PHPBoost 6.0 - last update: 2021 04 12
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -35,15 +35,15 @@ class GuestbookModuleMiniMenu extends ModuleMiniMenu
 	public function get_menu_content()
 	{
 		//Create file template
-		$tpl = new FileTemplate('guestbook/GuestbookModuleMiniMenu.tpl');
+		$view = new FileTemplate('guestbook/GuestbookModuleMiniMenu.tpl');
 
 		//Assign the lang file to the tpl
-		$tpl->add_lang(LangLoader::get('common', 'guestbook'));
+		$view->add_lang(array_merge(LangLoader::get('common', 'guestbook'), LangLoader::get('common-lang')));
 
 		//Assign common menu variables to the tpl
-		MenuService::assign_positions_conditions($tpl, $this->get_block());
+		MenuService::assign_positions_conditions($view, $this->get_block());
 
-		$tpl->put('U_GUESTBOOK',GuestbookUrlBuilder::home()->rel());
+		$view->put('U_GUESTBOOK',GuestbookUrlBuilder::home()->rel());
 
 		$guestbook_cache = GuestbookCache::load();
 		$messages = $guestbook_cache->get_messages();
@@ -56,23 +56,25 @@ class GuestbookModuleMiniMenu extends ModuleMiniMenu
 			{
 				$user_group_color = User::get_group_color($random_message['user_groups'], $random_message['level']);
 
-				$tpl->put_all(array(
+				$view->put_all(array(
 					'C_ANY_MESSAGE_GUESTBOOK' => true,
-					'C_USER_GROUP_COLOR' => !empty($user_group_color),
-					'C_MORE_CONTENT' => TextHelper::strlen($random_message['content']) >= 200,
-					'C_VISITOR' => empty($random_message['user_id']),
-					'CONTENT' => $random_message['content'],
-					'SHORT_CONTENT' => nl2br(TextHelper::substr_html($random_message['content'], 0, 200)),
-					'USER_PSEUDO' => $random_message['login'],
-					'USER_LEVEL_CLASS' => UserService::get_level_class($random_message['level']),
-					'USER_GROUP_COLOR' => $user_group_color,
-					'U_MESSAGE' => GuestbookUrlBuilder::home($random_message['page'], $random_message['id'])->rel(),
-					'U_PROFILE' => UserUrlBuilder::profile($random_message['user_id'])->rel(),
+					'C_AUTHOR_GROUP_COLOR'    => !empty($user_group_color),
+					'C_SUMMARY'               => TextHelper::strlen($random_message['content']) >= 200,
+					'C_VISITOR'               => empty($random_message['user_id']),
+
+					'CONTENT'             => $random_message['content'],
+					'SUMMARY'             => nl2br(TextHelper::substr_html($random_message['content'], 0, 200)),
+					'AUTHOR_DISPLAY_NAME' => $random_message['login'],
+					'AUTHOR_LEVEL_CLASS'  => UserService::get_level_class($random_message['level']),
+					'AUTHOR_GROUP_COLOR'  => $user_group_color,
+
+					'U_MESSAGE'        => GuestbookUrlBuilder::home($random_message['page'], $random_message['id'])->rel(),
+					'U_AUTHOR_PROFILE' => UserUrlBuilder     ::profile($random_message['user_id'])->rel(),
 				));
 			}
 		}
 
-		return $tpl->render();
+		return $view->render();
 	}
 }
 ?>
