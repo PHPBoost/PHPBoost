@@ -77,7 +77,7 @@ class MediaDisplayCategoryController extends ModuleController
 					'CATEGORY_ID' => $category->get_id(),
 					'CATEGORY_NAME' => $category->get_name(),
 					'U_CATEGORY_THUMBNAIL' => $category_thumbnail,
-					'ITEMS_TEXT' => $category->get_elements_number() > 1 ? $this->lang['items'] : $this->lang['item'],
+					'L_ITEMS' => $category->get_elements_number() > 1 ? $this->lang['media.items'] : $this->lang['media.item'],
 					'ITEMS_NUMBER' => sprintf($category->get_elements_number()),
 					'U_CATEGORY' => MediaUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel()
 				));
@@ -95,7 +95,7 @@ class MediaDisplayCategoryController extends ModuleController
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
 			'CATEGORIES_NUMBER_PER_ROW' => $config->get_categories_per_row(),
 			'ITEMS_NUMBER_PER_ROW' => $config->get_items_per_row(),
-			'CATEGORY_NAME' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? $this->lang['module.title'] : $this->get_category()->get_name(),
+			'CATEGORY_NAME' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? $this->lang['media.module.title'] : $this->get_category()->get_name(),
 			'CATEGORY_DESCRIPTION' => $category_description,
 			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? MediaUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->get_category()->get_id())->rel(),
 			'CATEGORY_ID' => $this->get_category()->get_id()
@@ -276,9 +276,9 @@ class MediaDisplayCategoryController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 
 		if ($this->get_category()->get_id() != Category::ROOT_CATEGORY)
-			$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['module.title'], $page);
+			$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['media.module.title'], $page);
 		else
-			$graphical_environment->set_page_title($this->lang['module.title'], '', $page);
+			$graphical_environment->set_page_title($this->lang['media.module.title'], '', $page);
 
 		$description = $this->get_category()->get_description();
 		if (empty($description))
@@ -287,7 +287,7 @@ class MediaDisplayCategoryController extends ModuleController
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(MediaUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'], MediaUrlBuilder::home());
+		$breadcrumb->add($this->lang['media.module.title'], MediaUrlBuilder::home());
 
 		$categories = array_reverse(CategoriesService::get_categories_manager('media')->get_parents($this->get_category()->get_id(), true));
 		foreach ($categories as $id => $category)

@@ -4,12 +4,12 @@
 		{
 			if (document.getElementById('name').value == "")
 			{
-				alert ("{@media.require.title}");
+				alert ("{@warning.title}");
 				return false;
 		    }
 			if (document.getElementById('u_media').value == "" || document.getElementById('u_media').value == "http://")
 			{
-				alert ("{@media.require.file.url}");
+				alert ("{@warning.url}");
 				return false;
 		    }
 			return true;
@@ -58,11 +58,7 @@
 				# IF C_EDIT #
 					{@media.edit.item}
 				# ELSE #
-					# IF C_CONTRIBUTION #
-						{@media.contribution}
-					# ELSE #
-						{@media.add.item}
-					# ENDIF #
+					{@media.add.item}
 				# ENDIF #
 			</h1>
 		</header>
@@ -70,16 +66,16 @@
 			<div class="content-container">
 				<div class="content">
 					<form action="media_action.php" method="post" onsubmit="return check_form();" class="fieldset-content">
-						<p class="align-center">${LangLoader::get_message('form.explain_required_fields', 'status-messages-common')}</p>
+						<p class="align-center small text-italic">{@form.required.fields}</p>
 						<fieldset>
-							<legend>${LangLoader::get_message('form.parameters', 'common')}</legend>
+							<legend>{@form.parameters}</legend>
 							<div class="form-element">
-								<label for="title">* {@media.title}</label>
+								<label for="title">* {@form.title}</label>
 								<div class="form-field"><input type="text" id="title" name="title" value="{TITLE}" /></div>
 							</div>
 							# IF C_CATEGORIES #
 								<div class="form-element">
-									<label for="category">${LangLoader::get_message('form.category', 'common')}</label>
+									<label for="category">{@form.category}</label>
 									<div class="form-field">
 										<select name="id_category" id="id_category">
 											{CATEGORIES}
@@ -118,7 +114,7 @@
 								</div>
 							</div>
 							<div class="form-element form-element-textarea">
-								<label for="content" id="preview_content">{@media.description}</label>
+								<label for="content" id="preview_content">{@form.description}</label>
 								{KERNEL_EDITOR}
 								<div class="form-field-textarea">
 									<textarea rows="10" cols="90" id="content" name="content">{CONTENT}</textarea>
@@ -126,7 +122,7 @@
 							</div>
 							# IF C_APPROVAL #
 								<div class="form-element">
-									<label>{@media.approval}</label>
+									<label>{@common.approve}</label>
 									<div class="form-field">
 										<label for="approved" class="checkbox">
 											<input type="checkbox" name="approved" id="approved"{APPROVED} />
@@ -138,10 +134,10 @@
 						</fieldset>
 						# IF C_CONTRIBUTION #
 							<fieldset>
-								<legend>${LangLoader::get_message('contribution', 'main')}</legend>
-								<div class="message-helper bgc warning">{@H|media.contribution.notice}</div>
+								<legend>{@contribution.contribution}</legend>
+								<div class="message-helper bgc warning">{@H|contribution.clue}</div>
 								<div class="form-element form-element-textarea">
-									<label>{@media.additional.contribution} <p class="field-description">{@media.additional.contribution.description}</p></label>
+									<label>{@contribution.description} <p class="field-description">{@contribution.description.clue}</p></label>
 									{CONTRIBUTION_EDITOR}
 									<div class="form-field-textarea">
 										<textarea rows="20" cols="40" id="counterpart" name="counterpart"></textarea>

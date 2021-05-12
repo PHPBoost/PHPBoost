@@ -21,7 +21,12 @@ if (AppContext::get_current_user()->is_readonly())
 
 $view = new FileTemplate('media/media_action.tpl');
 $lang = LangLoader::get('common', 'media');
-$view->add_lang($lang);
+$view->add_lang(array_merge(
+	$lang,
+	LangLoader::get('contribution-lang'),
+	LangLoader::get('form-lang'),
+	LangLoader::get('warning-lang')
+));
 
 $config = MediaConfig::load();
 $request = AppContext::get_request();

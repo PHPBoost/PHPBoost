@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 14
+ * @version     PHPBoost 6.0 - last update: 2021 05 12
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor mipel <mipel@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -14,57 +14,42 @@
 #                      French                      #
 ####################################################
 
-$lang['module.title'] = 'Multimédia';
+$lang['media.module.title'] = 'Multimédia';
 
-$lang['items'] = 'fichiers';
-$lang['item'] = 'fichier';
+$lang['media.items']       = 'fichiers';
+$lang['media.item']        = 'fichier';
+$lang['media.add.item']    = 'Ajouter un fichier';
+$lang['media.delete.item'] = 'Supprimer un fichier';
+$lang['media.edit.item']   = 'Éditer un fichier';
+$lang['media.hide.item']   = 'Cacher le fichier';
 
-$lang['media.actions.add'] = 'Ajouter un fichier';
-$lang['media.manage'] = 'Gérer les fichiers';
-$lang['media.hide.file'] = 'Cacher le fichier';
+// Tree links
+$lang['media.management']      = 'Gestion des fichiers';
 
 // Categories
-$lang['media.content.type'] = 'Types de fichiers autorisés';
+$lang['media.content.type']                 = 'Types de fichiers autorisés';
 $lang['media.content.type.music.and.video'] = 'Musique & Vidéo';
-$lang['media.content.type.music'] = 'Musique';
-$lang['media.content.type.video'] = 'Vidéo';
+$lang['media.content.type.music']           = 'Musique';
+$lang['media.content.type.video']           = 'Vidéo';
 
 // Action
-$lang['media.add.item'] = 'Ajouter un fichier';
-$lang['media.delete.item'] = 'Supprimer un fichier';
-$lang['media.edit.item'] = 'Éditer un fichier';
-$lang['media.approval'] = 'Approuver';
-$lang['media.description'] = 'Description du fichier';
-$lang['media.moderation'] = 'Modération';
-$lang['media.title'] = 'Titre du fichier';
 $lang['media.file.url'] = 'Lien du fichier';
-$lang['media.poster'] = 'Affiche de la vidéo';
-$lang['media.height'] = 'Hauteur de la vidéo';
-$lang['media.width'] = 'Largeur de la vidéo';
-$lang['media.require.title'] = 'Vous devez donner un titre à ce fichier !';
-$lang['media.require.file.url'] = 'Vous devez renseigner le lien de votre fichier !';
-$lang['media.additional.contribution'] = 'Complément de contribution';
-$lang['media.additional.contribution.description'] = 'Expliquez les raisons de votre contribution (pourquoi vous souhaitez proposer ce fichier). Ce champ est facultatif.';
-$lang['media.contribution'] = 'Proposer un fichier';
-$lang['media.contribution.notice'] = '
-    Vous n\'êtes pas autorisé à ajouter un fichier, cependant vous pouvez en proposer un.
-    <span class="error text-strong">La modification est possible tant que la contribution n\'a pas été approuvée.
-    </span> Votre contribution suivra le parcours classique et sera traitée dans la panneau de contribution de PHPBoost.
-    Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.
-';
+$lang['media.poster']   = 'Affiche de la vidéo';
+$lang['media.height']   = 'Hauteur de la vidéo';
+$lang['media.width']    = 'Largeur de la vidéo';
 
 // Moderation
-$lang['media.all.files'] = 'Tous les fichiers';
+$lang['media.all.files']                = 'Tous les fichiers';
 $lang['media.confirm.delete.all.files'] = 'Cette action supprimera DÉFINITIVEMENT tous les fichiers sélectionnés !';
-$lang['media.display.files'] = 'Afficher les fichiers';
-$lang['media.filter'] = 'Filtre';
-$lang['media.include.sub.categories'] = ', inclure les sous-catégories:';
-$lang['media.visible'] = 'Approuvés';
-$lang['media.invisible'] = 'Masqués';
-$lang['media.disapproved'] = 'Désapprouvés';
-$lang['media.disapproved.description'] = 'Fichier désapprouvé';
-$lang['media.invisible.description'] = 'Fichier approuvé mais masqué';
-$lang['media.visible.description'] = 'Fichier approuvé et visible';
+$lang['media.display.files']            = 'Afficher les fichiers';
+$lang['media.filter']                   = 'Filtre';
+$lang['media.include.sub.categories']   = ', inclure les sous-catégories:';
+$lang['media.visible']                  = 'Approuvés';
+$lang['media.invisible']                = 'Masqués';
+$lang['media.disapproved']              = 'Désapprouvés';
+$lang['media.disapproved.description']  = 'Fichier désapprouvé';
+$lang['media.invisible.description']    = 'Fichier approuvé mais masqué';
+$lang['media.visible.description']      = 'Fichier approuvé et visible';
 
 // Configuration
 $lang['config.max.video.width'] = 'Largeur maximale d\'une vidéo';
@@ -74,7 +59,7 @@ $lang['config.constant.host'] = 'Hébergeurs de confiance';
 $lang['config.constant.host.peertube'] = 'Peertube';
 $lang['config.constant.host.peertube.desc'] = '<a href="https://joinpeertube.org">Joinpeertube.org</a> - <a href="https://instances.joinpeertube.org/instances/">Liste des instances</a>';
 
-// SEO
+// S.E.O.
 $lang['media.seo.description.root'] = 'Tous les fichiers du site :site.';
 
 // Message helper

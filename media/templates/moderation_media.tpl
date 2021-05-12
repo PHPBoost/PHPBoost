@@ -1,7 +1,7 @@
 # IF C_DISPLAY #
 	<section id="module-media">
 		<header class="section-header">
-			<h1>${LangLoader::get_message('modo_panel', 'main')}</h1>
+			<h1>${LangLoader::get_message('user.moderation.panel', 'user-lang')}</h1>
 		</header>
 		<div class="sub-section">
 			<div class="content-container">
@@ -23,11 +23,11 @@
 						</div>
 					</fieldset>
 					<fieldset class="fieldset-submit">
-						<legend>${LangLoader::get_message('submit', 'main')}</legend>
+						<legend>{@form.submit}</legend>
 						<div class="fieldset-inset">
 							<input type="hidden" name="token" value="{TOKEN}">
-							<button type="submit" name="filter" value="true" class="button submit">${LangLoader::get_message('submit', 'main')}</button>
-							<button type="reset" class="button reset-button" value="true">${LangLoader::get_message('reset', 'main')}</button>
+							<button type="submit" name="filter" value="true" class="button submit">{@form.submit}</button>
+							<button type="reset" class="button reset-button" value="true">{@form.reset}</button>
 						</div>
 					</fieldset>
 				</form>
@@ -63,30 +63,30 @@
 							<thead>
 								<tr>
 									<th>
-										${LangLoader::get_message('name', 'main')}
+										{@common.name}
 									</th>
 									<th>
-										${LangLoader::get_message('category', 'categories-common')}
+										{@common.category}
 									</th>
 									<th onclick="check_all('visible');" onmouseover="pointer('visible');" id="visible">
-										{@visible}
+										{@common.status.visible}
 									</th>
 									<th onclick="check_all('invisible');" onmouseover="pointer('invisible');" id="invisible">
-										{@invisible}
+										{@common.status.invisible}
 									</th>
 									<th>
-										{@disapproved}
+										{@common.status.disapproved}
 									</th>
 									<th onclick="check_all('delete');" onmouseover="pointer('delete');" id="delete">
-										${LangLoader::get_message('delete', 'common')}
+										{@common.delete}
 									</th>
-									<th>${LangLoader::get_message('edit', 'common')}</th>
+									<th>{@common.edit}</th>
 								</tr>
 							</thead>
 							<tbody>
 								# IF C_NO_ITEM #
 									<tr>
-										<td colspan="6"><div class="message-helper notice">${LangLoader::get_message('no_item_now', 'common')}</div></td>
+										<td colspan="6"><div class="message-helper notice">{@common.no.item.now}</div></td>
 									</tr>
 								# ELSE #
 									# START items #
@@ -110,7 +110,7 @@
 												<input type="radio" id="delete{items.ID}" name="action[{items.ID}]" value="delete" data-confirmation="delete-element">
 											</td>
 											<td class="{items.COLOR}">
-												<a href="{items.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
+												<a href="{items.U_EDIT}"><i class="fa fa-edit" aria-hidden="true"></i><span class="sr-only">{@common.edit}</span></a>
 											</td>
 										</tr>
 									# END items #
@@ -139,15 +139,14 @@
 						</table>
 					</div>
 					<fieldset class="fieldset-submit">
-						<legend>${LangLoader::get_message('submit', 'main')}</legend>
+						<legend>{@form.submit}</legend>
 						<div class="fieldset-inset">
 							<input type="hidden" name="token" value="{TOKEN}">
-							<button type="submit" name="submit" value="true" class="button submit">${LangLoader::get_message('submit', 'main')}</button>
-							<button type="reset" class="button reset-button" value="true">${LangLoader::get_message('reset', 'main')}</button>
+							<button type="submit" name="submit" value="true" class="button submit">{@form.submit}</button>
+							<button type="reset" class="button reset-button" value="true">{@form.reset}</button>
 						</div>
 					</fieldset>
 				</form>
-
 			</div>
 		</div>
 	</section>

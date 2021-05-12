@@ -27,7 +27,7 @@ class MediaFeedProvider implements FeedProvider
 			$site_name = GeneralConfig::load()->get_site_name();
 			$site_name = $id_category != Category::ROOT_CATEGORY ? $site_name . ' : ' . $category->get_name() : $site_name;
 
-			$feed_module_name = LangLoader::get_message('module.title', 'common', 'media');
+			$feed_module_name = LangLoader::get_message('media.module.title', 'common', 'media');
 			$data = new FeedData();
 			$data->set_title($feed_module_name . ' - ' . $site_name);
 			$data->set_date(new Date());

@@ -1,7 +1,7 @@
 <section id="module-media" class="category-{CATEGORY_ID}">
 	<header class="setion-header">
 		<div class="controls align-right">
-			{@module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
+			{@media.module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1>
 			{TITLE}
@@ -25,7 +25,7 @@
 					</div>
 					# IF C_CONTROLS #
 						<div class="controls">
-							<a href="{U_INVISIBLE_MEDIA}" aria-label="{@media.hide.file}"><i class="fa fa-eye-slash"></i></a>
+							<a href="{U_INVISIBLE_MEDIA}" aria-label="{@media.hide.item}"><i class="fa fa-eye-slash"></i></a>
 							<a href="{U_EDIT_MEDIA}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit"></i></a>
 							<a href="{U_DELETE_MEDIA}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-trash-alt"></i></a>
 						</div>

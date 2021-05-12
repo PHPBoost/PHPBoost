@@ -2,11 +2,11 @@
 	<header class="section-header">
 		<div class="controls align-right">
 			<a href="${relative_url(SyndicationUrlBuilder::rss('media', CATEGORY_ID))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
-			# IF NOT C_ROOT_CATEGORY #{@module.title}# ENDIF #
+			# IF NOT C_ROOT_CATEGORY #{@media.module.title}# ENDIF #
 			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1>
-			# IF C_ROOT_CATEGORY #{@module.title}# ELSE #{CATEGORY_NAME}# ENDIF #
+			# IF C_ROOT_CATEGORY #{@media.module.title}# ELSE #{CATEGORY_NAME}# ENDIF #
 		</h1>
 	</header>
 	# IF C_CATEGORY_DESCRIPTION #
@@ -29,7 +29,7 @@
 								<h5 class="cell-name" itemprop="about">
 									<a href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
 								</h5>
-								<span class="small pinned notice" role="contentinfo" aria-label="{sub_categories_list.ITEMS_NUMBER} {sub_categories_list.ITEMS_TEXT}">{sub_categories_list.ITEMS_NUMBER}</span>
+								<span class="small pinned notice" role="contentinfo" aria-label="{sub_categories_list.ITEMS_NUMBER} {sub_categories_list.L_ITEMS}">{sub_categories_list.ITEMS_NUMBER}</span>
 							</div>
 								# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
 							<div class="cell-body">
@@ -117,7 +117,7 @@
 									</div>
 									# IF C_CONTROLS #
 										<div class="controls align-right">
-											<a href="{items.U_ADMIN_INVISIBLE_MEDIA}" aria-label="{@media.hide.file}"><i class="fa fa-fw fa-eye-slash"></i></a>
+											<a href="{items.U_ADMIN_INVISIBLE_MEDIA}" aria-label="{@media.hide.item}"><i class="fa fa-fw fa-eye-slash"></i></a>
 											<a href="{items.U_ADMIN_EDIT_MEDIA}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit"></i></a>
 											<a href="{items.U_ADMIN_DELETE_MEDIA}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt"></i></a>
 										</div>

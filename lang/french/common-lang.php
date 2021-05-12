@@ -222,8 +222,10 @@ $lang['common.sort.desc']               = 'Décroissant';
 
 // Status
 $lang['common.status']               = 'État';
+$lang['common.status.visible']       = 'Visible';
+$lang['common.status.invisible']     = 'Invisible';
 $lang['common.status.approved']      = 'Approuvé';
-$lang['common.status.unapproved']    = 'Non approuvé';
+$lang['common.status.disapproved']   = 'Désapprouvé';
 $lang['common.status.draft']         = 'Brouillon';
 $lang['common.status.published']     = 'Publié';
 $lang['common.status.deffered.date'] = 'Publication différée';

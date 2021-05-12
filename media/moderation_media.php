@@ -23,9 +23,13 @@ $config = MediaConfig::load();
 $items_per_page = $config->get_items_per_page();
 
 $view = new FileTemplate('media/moderation_media.tpl');
-$view->add_lang(LangLoader::get('common', 'media'));
+$view->add_lang(array_merge(
+	LangLoader::get('common', 'media'),
+	LangLoader::get('common-lang'),
+	LangLoader::get('form-lang')
+));
 
-$Bread_crumb->add(LangLoader::get_message('module.title', 'common', 'media'), url('media.php'));
+$Bread_crumb->add(LangLoader::get_message('media.module.title', 'common', 'media'), url('media.php'));
 $Bread_crumb->add($LANG['modo_panel'], url('moderation_media.php'));
 $request = AppContext::get_request();
 

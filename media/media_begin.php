@@ -23,7 +23,7 @@ require_once('media_constant.php');
 function bread_crumb($id)
 {
 	global $Bread_crumb;
-	$Bread_crumb->add(LangLoader::get_message('module.title', 'common', 'media'), MediaUrlBuilder::home());
+	$Bread_crumb->add(LangLoader::get_message('media.module.title', 'common', 'media'), MediaUrlBuilder::home());
 
 	$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($id, true));
 	foreach ($categories as $category)
