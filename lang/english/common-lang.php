@@ -126,6 +126,7 @@ $lang['common.see.profile']            = 'See member profile';
 $lang['common.see.profile.datas']      = 'See member datas';
 $lang['common.link']                   = 'Link';
 $lang['common.link.to.anchor']         = 'Link to anchor';
+$lang['common.link.to.website']        = 'Link to website';
 $lang['common.keyword']                = 'Keyword';
 $lang['common.keywords']               = 'Keywords';
 $lang['common.source']                 = 'Source';
