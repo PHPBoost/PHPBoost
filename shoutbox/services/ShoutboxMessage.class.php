@@ -135,7 +135,7 @@ class ShoutboxMessage
 		return array_merge(Date::get_array_tpl_vars($this->creation_date, 'date'),array(
 			'C_EDIT' => $this->is_authorized_to_edit(),
 			'C_DELETE' => $this->is_authorized_to_delete(),
-			'C_AUTHOR_EXIST' => $user->get_id() != User::VISITOR_LEVEL,
+			'C_AUTHOR_EXISTS' => $user->get_id() != User::VISITOR_LEVEL,
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 
 			//Message

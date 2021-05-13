@@ -198,7 +198,7 @@ class CalendarItem
 				'C_MISSING_PARTICIPANTS'     => !empty($missing_participants_number) && $missing_participants_number <= 5,
 				'C_REGISTRATION_DAYS_LEFT'   => !empty($registration_days_left) && $registration_days_left <= 5,
 				'C_AUTHOR_GROUP_COLOR'       => !empty($author_group_color),
-				'C_AUTHOR_EXIST'             => $author->get_id() !== User::VISITOR_LEVEL,
+				'C_AUTHOR_EXISTS'             => $author->get_id() !== User::VISITOR_LEVEL,
 				'C_CANCELLED'                => $this->content->is_cancelled(),
 				'C_FULL_ITEM_DISPLAY'        => CalendarConfig::load()->is_full_item_displayed(),
 				'C_NEW_CONTENT'              => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('calendar', $this->content->get_creation_date()->get_timestamp()),
@@ -240,7 +240,7 @@ class CalendarItem
 			)
 		);
 	}
-	
+
 	private function round_to_five_minutes($timestamp)
 	{
 		if (($timestamp % 300) < 150)

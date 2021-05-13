@@ -200,7 +200,7 @@ class FaqItem
 			'C_DELETE'           => $this->is_authorized_to_delete(),
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			'C_NEW_CONTENT'      => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('faq', $this->get_creation_date()->get_timestamp()),
-			'C_AUTHOR_EXIST'     => $user->get_id() !== User::VISITOR_LEVEL,
+			'C_AUTHOR_EXISTS'    => $user->get_id() !== User::VISITOR_LEVEL,
 
 			// Item
 			'ID'               => $this->id,

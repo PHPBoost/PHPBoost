@@ -148,7 +148,7 @@
 													# IF items.C_AUTHOR_CUSTOM_NAME #
 														<span class="pinned">{items.AUTHOR_CUSTOM_NAME}</span>
 													# ELSE #
-														# IF items.C_AUTHOR_EXIST #
+														# IF items.C_AUTHOR_EXISTS #
 															<a itemprop="author" href="{items.U_AUTHOR}" class="pinned# IF C_AUTHOR_GROUP_COLOR # {items.AUTHOR_GROUP_COLOR}# ELSE # {items.AUTHOR_LEVEL_CLASS}# ENDIF #">
 																{items.AUTHOR_DISPLAY_NAME}
 															</a>
@@ -230,7 +230,7 @@
 													# IF items.C_AUTHOR_CUSTOM_NAME #
 														<span aria-label="{@common.author}" itemprop="author" class="pinned">{items.AUTHOR_CUSTOM_NAME}</span>
 													# ELSE #
-														# IF items.C_AUTHOR_EXIST #
+														# IF items.C_AUTHOR_EXISTS #
 															<a aria-label="{@common.author}" itemprop="author" href="{items.U_AUTHOR}" class="pinned# IF C_AUTHOR_GROUP_COLOR # {items.AUTHOR_GROUP_COLOR}# ELSE # {items.AUTHOR_LEVEL_CLASS}# ENDIF #">
 																{items.AUTHOR_DISPLAY_NAME}
 															</a>

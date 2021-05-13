@@ -204,7 +204,7 @@ class FaqQuestion
 			'ID' => $this->id,
 			'QUESTION' => $this->question,
 			'ANSWER' => FormatingHelper::second_parse($this->answer),
-			'C_AUTHOR_EXIST' => $user->get_id() !== User::VISITOR_LEVEL,
+			'C_AUTHOR_EXISTS' => $user->get_id() !== User::VISITOR_LEVEL,
 			'PSEUDO' => $user->get_display_name(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR' => $user_group_color,

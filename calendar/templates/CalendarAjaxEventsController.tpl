@@ -46,7 +46,7 @@
 								# ENDIF #
 							</td>
 							<td>
-								# IF items.C_AUTHOR_EXIST #
+								# IF items.C_AUTHOR_EXISTS #
 									<a itemprop="author" href="{items.U_AUTHOR_PROFILE}" class="{items.AUTHOR_LEVEL_CLASS}" # IF items.C_AUTHOR_GROUP_COLOR # style="color:{items.AUTHOR_GROUP_COLOR}" # ENDIF #>{items.AUTHOR}</a>
 								# ELSE #
 									{items.AUTHOR}
@@ -84,7 +84,7 @@
 					</header>
 					<div class="cell-infos">
 						<div class="more">
-							# IF items.C_AUTHOR_EXIST #
+							# IF items.C_AUTHOR_EXISTS #
 								<i class="fa fa-user"></i> <a itemprop="author" href="{items.U_AUTHOR_PROFILE}" class="pinned {items.AUTHOR_LEVEL_CLASS}" # IF items.C_AUTHOR_GROUP_COLOR # style="color:{items.AUTHOR_GROUP_COLOR}" # ENDIF # aria-label="{@common.author}">{items.AUTHOR}</a>
 							# ELSE #
 								<span class="pinned notice"><i class="fa fa-user"></i> {items.AUTHOR}</span>

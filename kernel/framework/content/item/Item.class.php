@@ -715,7 +715,7 @@ class Item
 			'C_CONTROLS'            => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
 			'C_EDIT'                => $this->is_authorized_to_edit(),
 			'C_DELETE'              => $this->is_authorized_to_delete(),
-			'C_AUTHOR_EXIST'        => $author->get_id() !== User::VISITOR_LEVEL,
+			'C_AUTHOR_EXISTS'       => $author->get_id() !== User::VISITOR_LEVEL,
 			'C_AUTHOR_GROUP_COLOR'  => !empty($author_group_color),
 			'C_HAS_UPDATE_DATE'     => $this->has_update_date(),
 			'C_PUBLISHED'           => $this->is_published(),

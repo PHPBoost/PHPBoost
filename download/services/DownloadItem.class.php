@@ -540,7 +540,7 @@ class DownloadItem
 				'SUMMARY' 		      => $real_summary,
 				'STATUS'              => $this->get_publishing_state(),
 				'AUTHOR_CUSTOM_NAME'  => $this->author_custom_name,
-				'C_AUTHOR_EXIST'      => $user->get_id() !== User::VISITOR_LEVEL,
+				'C_AUTHOR_EXISTS'     => $user->get_id() !== User::VISITOR_LEVEL,
 				'AUTHOR_DISPLAY_NAME' => $user->get_display_name(),
 				'AUTHOR_LEVEL_CLASS'  => UserService::get_level_class($user->get_level()),
 				'AUTHOR_GROUP_COLOR'    => $user_group_color,
