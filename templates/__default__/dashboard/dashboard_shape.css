@@ -74,8 +74,9 @@ body {
 
 /* --- Containers --- */
 #admin-main {
-	padding-bottom: 40px;
+	padding-bottom: 2.618em;
 	flex: 1 1 auto;
+	overflow: hidden;
 }
 
 #admin-contents{ padding: 0.618em; }
