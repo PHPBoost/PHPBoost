@@ -44,69 +44,69 @@ $lang['newsletter.stream.delete.clue'] = 'Vous êtes sur le point de supprimer l
 $lang['newsletter.items.list']         = 'Liste des newsletters';
 
 // Subscription
-$lang['newsletter.subscribe.streams'] = 'S\'abonner aux newsletters';
-$lang['newsletter.subscribe.item'] = 'S\'abonner à une newsletter';
-$lang['newsletter.subscribe.item.clue'] = 'Choisissez les flux de newsletters auxquels vous souhaitez être abonné';
-$lang['newsletter.subscriber.edit'] = 'Editer un inscrit';
-$lang['newsletter.subscriber.email'] = 'Email';
-$lang['newsletter.unsubscribe.item'] = 'Se désabonner d\'une newsletter';
+$lang['newsletter.subscribe.streams']     = 'S\'abonner aux newsletters';
+$lang['newsletter.subscribe.item']        = 'S\'abonner à une newsletter';
+$lang['newsletter.subscribe.item.clue']   = 'Choisissez les flux de newsletters auxquels vous souhaitez être abonné';
+$lang['newsletter.subscriber.edit']       = 'Editer un inscrit';
+$lang['newsletter.subscriber.email']      = 'Email';
+$lang['newsletter.unsubscribe.item']      = 'Se désabonner d\'une newsletter';
 $lang['newsletter.unsubscribe.item.clue'] = 'Choisissez les flux de newsletters auxquels vous souhaitez rester abonné';
-$lang['newsletter.delete.all.streams'] = 'Se désinscrire de tous les flux';
-$lang['newsletter.unsubscribe.items'] = 'Se désinscrire des newsletters';
+$lang['newsletter.delete.all.streams']    = 'Se désinscrire de tous les flux';
+$lang['newsletter.unsubscribe.items']     = 'Se désinscrire des newsletters';
 
 // Newsletters
-$lang['newsletter.subscribers.list'] = 'Liste des inscrits';
+$lang['newsletter.subscribers.list']     = 'Liste des inscrits';
 $lang['newsletter.see.subscribers.list'] = 'Voir les inscrits';
     // Archives
-$lang['newsletter.archives'] = 'Archives';
-$lang['newsletter.archives.list'] = 'Liste des archives';
-$lang['newsletter.see.archives'] = 'Voir les archives';
-$lang['newsletter.stream.name'] = 'Nom du flux';
-$lang['newsletter.item.name'] = 'Nom de la newsletter';
-$lang['newsletter.archives.date'] = 'Date de publication';
+$lang['newsletter.archives']           = 'Archives';
+$lang['newsletter.archives.list']      = 'Liste des archives';
+$lang['newsletter.see.archives']       = 'Voir les archives';
+$lang['newsletter.stream.name']        = 'Nom du flux';
+$lang['newsletter.item.name']          = 'Nom de la newsletter';
+$lang['newsletter.archives.date']      = 'Date de publication';
 $lang['newsletter.subscribers.number'] = 'Nombre d\'inscrits';
     // Types
-$lang['newsletter.types.choice'] = 'Veuillez sélectionner un type de message';
-$lang['newsletter.types.for.all'] = 'Pour tous';
-$lang['newsletter.types.text'] = 'Texte';
-$lang['newsletter.types.text.clue'] = 'Vous ne pourrez procéder à aucune mise en forme du message.';
-$lang['newsletter.types.bbcode'] = 'BBCode';
+$lang['newsletter.types.choice']      = 'Veuillez sélectionner un type de message';
+$lang['newsletter.types.for.all']     = 'Pour tous';
+$lang['newsletter.types.text']        = 'Texte';
+$lang['newsletter.types.text.clue']   = 'Vous ne pourrez procéder à aucune mise en forme du message.';
+$lang['newsletter.types.bbcode']      = 'BBCode';
 $lang['newsletter.types.bbcode.clue'] = 'Vous pouvez formater le texte grâce au BBCode, le langage de mise en forme simplifié adopté sur tout le portail.';
-$lang['newsletter.types.html'] = 'HTML';
+$lang['newsletter.types.html']        = 'HTML';
 $lang['newsletter.types.for.experts'] = 'Utilisateurs expérimentés seulement';
-$lang['newsletter.types.html.clue'] = 'Vous pouvez mettre en forme le texte à votre guise, mais vous devez connaître le langage html.';
+$lang['newsletter.types.html.clue']   = 'Vous pouvez mettre en forme le texte à votre guise, mais vous devez connaître le langage html.';
     // Add
-$lang['newsletter.title'] = 'Titre de la newsletter';
-$lang['newsletter.content'] = 'Contenu';
-$lang['newsletter.content.clue'] = 'Utilisez <b>:user_display_name</b> pour afficher le pseudo du membre si besoin (sera remplacé par visiteur pour les inscrits qui ne sont pas membres du site).';
+$lang['newsletter.title']          = 'Titre de la newsletter';
+$lang['newsletter.content']        = 'Contenu';
+$lang['newsletter.content.clue']   = 'Utilisez <b>:user_display_name</b> pour afficher le pseudo du membre si besoin (sera remplacé par visiteur pour les inscrits qui ne sont pas membres du site).';
 $lang['newsletter.choose.streams'] = 'Choisissez le ou les flux où vous souhaitez envoyer cette newsletter';
-$lang['newsletter.send.test'] = 'Envoyer un email de test';
-$lang['newsletter.add.item'] = 'Ajouter une newsletter';
+$lang['newsletter.send.test']      = 'Envoyer un email de test';
+$lang['newsletter.add.item']       = 'Ajouter une newsletter';
 
 // Messages
-$lang['newsletter.stream.success.add'] = 'Le flux <b>:name</b> a été ajouté';
-$lang['newsletter.stream.success.edit'] = 'Le flux <b>:name</b> a été modifié';
-$lang['newsletter.stream.success.delete'] = 'Le flux <b>:name</b> a été supprimé';
+$lang['newsletter.stream.success.add']         = 'Le flux <b>:name</b> a été ajouté';
+$lang['newsletter.stream.success.edit']        = 'Le flux <b>:name</b> a été modifié';
+$lang['newsletter.stream.success.delete']      = 'Le flux <b>:name</b> a été supprimé';
 $lang['newsletter.stream.delete.confirmation'] = 'Voulez-vous vraiment supprimer le flux :name ?';
-$lang['newsletter.success.send.test'] = 'L\'email de test a bien été envoyé';
-$lang['newsletter.item.success.add'] = 'La newsletter a été envoyée';
-$lang['newsletter.archive.success.delete'] = 'L\'archive a été supprimée';
+$lang['newsletter.success.send.test']          = 'L\'email de test a bien été envoyé';
+$lang['newsletter.item.success.add']           = 'La newsletter a été envoyée';
+$lang['newsletter.archive.success.delete']     = 'L\'archive a été supprimée';
 
 // Errors
-$lang['newsletter.sender.email.not.configured'] = 'L\'adresse email d\'envoi de la newsletter n\'a pas été configurée. Veuillez la <a href="' . NewsletterUrlBuilder::configuration()->rel() . '">configurer</a> avant de pouvoir envoyer une newsletter.';
-$lang['newsletter.stream.not.exists'] = 'Le flux demandé n\'existe pas';
-$lang['newsletter.subscriber.not.exists'] = 'L\'inscrit n\'existe pas';
-$lang['newsletter.subscriber.already.exists'] = 'Cette adresse email est déjà inscrite aux newsletters du site';
-$lang['newsletter.archive.not.exists'] = 'L\'archive n\'existe pas';
+$lang['newsletter.sender.email.not.configured'] = 'L\'adresse email d\'envoi de la newsletter n\'a pas été configurée. Veuillez la <a href ="' . NewsletterUrlBuilder::configuration()->rel() . '">configurer</a> avant de pouvoir envoyer une newsletter.';
+$lang['newsletter.stream.not.exists']           = 'Le flux demandé n\'existe pas';
+$lang['newsletter.subscriber.not.exists']       = 'L\'inscrit n\'existe pas';
+$lang['newsletter.subscriber.already.exists']   = 'Cette adresse email est déjà inscrite aux newsletters du site';
+$lang['newsletter.archive.not.exists']          = 'L\'archive n\'existe pas';
 
 // Register extended fields
 $lang['newsletter.extended.fields.subscribed.items'] = 'Newsletter(s) souscrite(s)';
-$lang['newsletter.extended.fields.select.items'] = 'Sélectionnez la(les) newsletter(s) auxquelles vous souhaitez être inscrit';
+$lang['newsletter.extended.fields.select.items']     = 'Sélectionnez la(les) newsletter(s) auxquelles vous souhaitez être inscrit';
 
 // S.E.O.
-$lang['newsletter.seo.suscribe'] = 'Renseignez votre adresse email et choisissez la ou les newsletters que vous souhaitez recevoir.';
-$lang['newsletter.seo.unsuscribe'] = 'Choisissez la ou les newsletters que vous ne souhaitez plus recevoir.';
+$lang['newsletter.seo.suscribe']        = 'Renseignez votre adresse email et choisissez la ou les newsletters que vous souhaitez recevoir.';
+$lang['newsletter.seo.unsuscribe']      = 'Choisissez la ou les newsletters que vous ne souhaitez plus recevoir.';
 $lang['newsletter.seo.suscribers.list'] = 'Liste des inscrits à la newsletter :name.';
-$lang['newsletter.seo.home'] = 'Liste des newsletters du site :site.';
-$lang['newsletter.seo.archives'] = 'Liste des archives des newsletters :name.';
+$lang['newsletter.seo.home']            = 'Liste des newsletters du site :site.';
+$lang['newsletter.seo.archives']        = 'Liste des archives des newsletters :name.';
 ?>
