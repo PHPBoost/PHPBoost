@@ -19,9 +19,9 @@ $lang['newsletter.module.title'] = 'Newsletter';
 
 // Configuration
 $lang['newsletter.email.sender']      = 'Adresse d\'envoi';
-$lang['newsletter.email.sender.clue'] = 'Adresse mail valide';
+$lang['newsletter.email.sender.clue'] = 'Adresse email valide';
 $lang['newsletter.name']              = 'Nom de la newsletter';
-$lang['newsletter.name.clue']         = 'Objet du mail envoyé';
+$lang['newsletter.name.clue']         = 'Objet de l\'email envoyé';
 $lang['newsletter.streams.per.page']  = 'Nombre de flux par page';
 $lang['newsletter.default.content']   = 'Contenu par défaut d\'une newsletter de type BBCode ou HTML';
 
