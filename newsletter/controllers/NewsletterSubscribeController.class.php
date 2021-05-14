@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 15
+ * @version     PHPBoost 6.0 - last update: 2021 05 14
  * @since       PHPBoost 3.0 - 2011 02 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -23,7 +23,7 @@ class NewslettersubscribeController extends ModuleController
 		$this->init();
 		$this->build_form();
 
-		$tpl = new StringTemplate('# INCLUDE MSG ## INCLUDE FORM #');
+		$tpl = new StringTemplate('# INCLUDE MESSAGE_HELPER ## INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
@@ -66,12 +66,12 @@ class NewslettersubscribeController extends ModuleController
 		// $common_lang = LangLoader::get('common');
 
 		$form = new HTMLForm(__CLASS__);
-		// $form->set_layout_title($this->lang['subscribe.newsletters']);
+		// $form->set_layout_title($this->lang['newsletter.subscribe.streams']);
 
-		$fieldset = new FormFieldsetHTML('subscribe.newsletters', $this->lang['subscribe.newsletters']);
+		$fieldset = new FormFieldsetHTML('newsletter.subscribe.streams', $this->lang['newsletter.subscribe.streams']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldMailEditor('mail', $this->lang['subscribe.mail'], $email,
+		$fieldset->add_field(new FormFieldMailEditor('mail', $this->lang['newsletter.subscriber.email'], $email,
 			array('required' => true)
 		));
 
@@ -89,7 +89,7 @@ class NewslettersubscribeController extends ModuleController
 		else
 			$newsletter_subscribe = array();
 
-		$fieldset->add_field(new FormFieldMultipleCheckbox('newsletter_choice', $this->lang['subscribe.newsletter_choice'], $newsletter_subscribe, $this->get_streams(),
+		$fieldset->add_field(new FormFieldMultipleCheckbox('newsletter_choice', $this->lang['newsletter.subscribe.item.clue'], $newsletter_subscribe, $this->get_streams(),
 			array('required' => true)
 		));
 
@@ -107,11 +107,11 @@ class NewslettersubscribeController extends ModuleController
 		$body_view->put('TEMPLATE', $view);
 		$response = new SiteDisplayResponse($body_view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
-		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->rel());
-		$breadcrumb->add($this->lang['subscribe.newsletters'], NewsletterUrlBuilder::subscribe()->rel());
+		$breadcrumb->add($this->lang['newsletter.module.title'], NewsletterUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['newsletter.subscribe.streams'], NewsletterUrlBuilder::subscribe()->rel());
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['subscribe.newsletters'], $this->lang['newsletter']);
+		$graphical_environment->set_page_title($this->lang['newsletter.subscribe.streams'], $this->lang['newsletter.module.title']);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['newsletter.seo.suscribe']);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsletterUrlBuilder::subscribe());
 
@@ -142,7 +142,7 @@ class NewslettersubscribeController extends ModuleController
 		{
 			if ($streams != NewsletterService::get_member_id_streams($this->current_user->get_id()))
 				NewsletterService::update_subscriptions_member_registered($streams, $this->current_user->get_id());
-			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+			$tpl->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 		}
 		else
 		{
@@ -151,10 +151,10 @@ class NewslettersubscribeController extends ModuleController
 				if (!NewsletterDAO::mail_existed($this->form->get_value('mail')) || ($streams != NewsletterService::get_visitor_id_streams($this->form->get_value('mail'))))
 				{
 					NewsletterService::update_subscriptions_visitor($streams, $this->form->get_value('mail'));
-					$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+					$tpl->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 				}
 				else if (NewsletterDAO::mail_existed($this->form->get_value('mail')))
-					$tpl->put('MSG', MessageHelper::display($this->lang['error-subscriber-exists'], MessageHelper::ERROR));
+					$tpl->put('MESSAGE_HELPER', MessageHelper::display($this->lang['newsletter.subscriber.already.exists'], MessageHelper::ERROR));
 			}
 			else if ($this->current_user->is_admin())
 			{
@@ -163,7 +163,7 @@ class NewslettersubscribeController extends ModuleController
 					if (!NewsletterDAO::user_id_existed($user->get_id()) || ($streams != NewsletterService::get_member_id_streams($user->get_id())))
 					{
 						NewsletterService::update_subscriptions_member_registered($streams, $user->get_id());
-						$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+						$tpl->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 					}
 				}
 				else
@@ -171,10 +171,10 @@ class NewslettersubscribeController extends ModuleController
 					if (!NewsletterDAO::mail_existed($this->form->get_value('mail')) || ($streams != NewsletterService::get_visitor_id_streams($this->form->get_value('mail'))))
 					{
 						NewsletterService::update_subscriptions_visitor($streams, $this->form->get_value('mail'));
-						$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+						$tpl->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 					}
 					else if (NewsletterDAO::mail_existed($this->form->get_value('mail')))
-						$tpl->put('MSG', MessageHelper::display($this->lang['error-subscriber-exists'], MessageHelper::ERROR));
+						$tpl->put('MESSAGE_HELPER', MessageHelper::display($this->lang['newsletter.subscriber.already.exists'], MessageHelper::ERROR));
 				}
 			}
 		}

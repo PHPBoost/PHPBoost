@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2015 11 05
+ * @version     PHPBoost 6.0 - last update: 2021 05 14
  * @since       PHPBoost 3.0 - 2011 02 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class HomeAddNewsletterController extends ModuleController
@@ -28,9 +29,9 @@ class HomeAddNewsletterController extends ModuleController
 
 		$this->build_form();
 
-		$tpl = new StringTemplate('# INCLUDE FORM #');
+		$view = new StringTemplate('# INCLUDE FORM #');
 
-		$tpl->add_lang($this->lang);
+		$view->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -42,9 +43,9 @@ class HomeAddNewsletterController extends ModuleController
 			}
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$view->put('FORM', $this->form->display());
 
-		return $this->build_response($tpl);
+		return $this->build_response($view);
 	}
 
 	private function check_authorizations()
@@ -71,12 +72,12 @@ class HomeAddNewsletterController extends ModuleController
 		{
 			$fieldset->add_field(new FormFieldHTML('choices_table', $this->build_choices_table()->render()));
 
-			$this->submit_button = new FormButtonDefaultSubmit($this->lang['newsletter.types.next']);
+			$this->submit_button = new FormButtonDefaultSubmit(LangLoader::get_message('form.next', 'form-lang'));
 			$form->add_button($this->submit_button);
 		}
 		else
 		{
-			$fieldset->add_field(new FormFieldHTML('mail_sender_not_configured_msg', MessageHelper::display($this->lang['error.sender-mail-not-configured' . (AppContext::get_current_user()->is_admin() ? '-for-admin' : '')], MessageHelper::WARNING)->render()));
+			$fieldset->add_field(new FormFieldHTML('mail_sender_not_configured_msg', MessageHelper::display($this->lang['newsletter.sender.email.not.configured' . (AppContext::get_current_user()->is_admin() ? '-for-admin' : '')], MessageHelper::WARNING)->render()));
 
 			$this->submit_button = new FormButtonDefaultSubmit();
 		}
@@ -99,11 +100,11 @@ class HomeAddNewsletterController extends ModuleController
 		$body_view->put('TEMPLATE', $view);
 		$response = new SiteDisplayResponse($body_view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
-		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->rel());
-		$breadcrumb->add($this->lang['newsletter-add'], NewsletterUrlBuilder::add_newsletter()->rel());
+		$breadcrumb->add($this->lang['newsletter.module.title'], NewsletterUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['newsletter.add.item'], NewsletterUrlBuilder::add_newsletter()->rel());
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['newsletter-add'], $this->lang['newsletter']);
+		$graphical_environment->set_page_title($this->lang['newsletter.add.item'], $this->lang['newsletter.module.title']);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsletterUrlBuilder::add_newsletter());
 
 		return $response;

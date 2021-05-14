@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 15
+ * @version     PHPBoost 6.0 - last update: 2021 05 14
  * @since       PHPBoost 3.0 - 2011 03 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -22,17 +22,17 @@ class NewsletterUnsubscribeController extends ModuleController
 		$this->init();
 		$this->build_form();
 
-		$tpl = new StringTemplate('# INCLUDE MSG ## INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER ## INCLUDE FORM #');
+		$view->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
-			$this->save($tpl);
+			$this->save($view);
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$view->put('FORM', $this->form->display());
 
-		return $this->build_response($tpl);
+		return $this->build_response($view);
 	}
 
 	private function init()
@@ -53,19 +53,19 @@ class NewsletterUnsubscribeController extends ModuleController
 			$email = $mail_request;
 		}
 
-		// $common_lang = LangLoader::get('common');
+		$form_lang = LangLoader::get('form-lang');
 
 		$form = new HTMLForm(__CLASS__);
-		// $form->set_layout_title($this->lang['unsubscribe.newsletter']);
+		$form->set_layout_title($this->lang['newsletter.unsubscribe.items']);
 
-		$fieldset = new FormFieldsetHTML('unsubscribe.newsletter', $this->lang['unsubscribe.newsletter']);
+		$fieldset = new FormFieldsetHTML('unsubscribe_items', $form_lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldMailEditor('mail', $this->lang['subscribe.mail'], $email,
+		$fieldset->add_field(new FormFieldMailEditor('mail', $this->lang['newsletter.subscriber.email'], $email,
 			array('required' => true)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('delete_all_streams', $this->lang['newsletter.delete_all_streams'], FormFieldCheckbox::UNCHECKED,
+		$fieldset->add_field(new FormFieldCheckbox('delete_all_streams', $this->lang['newsletter.delete.all.streams'], FormFieldCheckbox::UNCHECKED,
 			array(
 				'events' => array('click' => '
 					if (HTMLForms.getField("delete_all_streams").getValue()) {
@@ -91,7 +91,7 @@ class NewsletterUnsubscribeController extends ModuleController
 		else
 			$newsletter_subscribe = array();
 
-		$fieldset->add_field(new FormFieldMultipleCheckbox('choice', $this->lang['unsubscribe.newsletter_choice'], $newsletter_subscribe, $this->get_streams()));
+		$fieldset->add_field(new FormFieldMultipleCheckbox('choice', $this->lang['newsletter.unsubscribe.item.clue'], $newsletter_subscribe, $this->get_streams()));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -107,11 +107,11 @@ class NewsletterUnsubscribeController extends ModuleController
 		$body_view->put('TEMPLATE', $view);
 		$response = new SiteDisplayResponse($body_view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
-		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->rel());
-		$breadcrumb->add($this->lang['unsubscribe.newsletter'], NewsletterUrlBuilder::unsubscribe()->rel());
+		$breadcrumb->add($this->lang['newsletter.module.title'], NewsletterUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['newsletter.unsubscribe.items'], NewsletterUrlBuilder::unsubscribe()->rel());
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['unsubscribe.newsletter'], $this->lang['newsletter']);
+		$graphical_environment->set_page_title($this->lang['newsletter.unsubscribe.items'], $this->lang['newsletter.module.title']);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['newsletter.seo.unsuscribe']);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsletterUrlBuilder::unsubscribe());
 
@@ -130,7 +130,7 @@ class NewsletterUnsubscribeController extends ModuleController
 		return $streams;
 	}
 
-	private function save(&$tpl)
+	private function save(&$view)
 	{
 		$delete_all_streams = $this->form->get_value('delete_all_streams');
 		if ($delete_all_streams)
@@ -138,7 +138,7 @@ class NewsletterUnsubscribeController extends ModuleController
 			if ($this->current_user->check_level(User::MEMBER_LEVEL) && $this->form->get_value('mail') == $this->current_user->get_email())
 			{
 				NewsletterService::unsubscriber_all_streams_member($this->current_user->get_id());
-				$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+				$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 			}
 			else
 			{
@@ -147,7 +147,7 @@ class NewsletterUnsubscribeController extends ModuleController
 					if (NewsletterDAO::mail_existed($this->form->get_value('mail')))
 					{
 						NewsletterService::unsubscriber_all_streams_visitor($this->form->get_value('mail'));
-						$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+						$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 					}
 				}
 				else if ($this->current_user->is_admin())
@@ -157,24 +157,24 @@ class NewsletterUnsubscribeController extends ModuleController
 						if (NewsletterDAO::user_id_existed($user->get_id()))
 						{
 							NewsletterService::unsubscriber_all_streams_member($user->get_id());
-							$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+							$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 						}
 						else
-							$tpl->put('MSG', MessageHelper::display($this->lang['error-subscriber-not-existed'], MessageHelper::ERROR));
+							$view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['newsletter.subscriber.not.exists'], MessageHelper::ERROR));
 					}
 					else
 					{
 						if (NewsletterDAO::mail_existed($this->form->get_value('mail')))
 						{
 							NewsletterService::unsubscriber_all_streams_visitor($this->form->get_value('mail'));
-							$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+							$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 						}
 						else
-							$tpl->put('MSG', MessageHelper::display($this->lang['error-subscriber-not-existed'], MessageHelper::ERROR));
+							$view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['newsletter.subscriber.not.exists'], MessageHelper::ERROR));
 					}
 				}
 				else
-					$tpl->put('MSG', MessageHelper::display($this->lang['error-subscriber-not-existed'], MessageHelper::ERROR));
+					$view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['newsletter.subscriber.not.exists'], MessageHelper::ERROR));
 			}
 		}
 		else
@@ -188,7 +188,7 @@ class NewsletterUnsubscribeController extends ModuleController
 			if ($this->current_user->check_level(User::MEMBER_LEVEL) && $this->form->get_value('mail') == $this->current_user->get_email() && ($streams != NewsletterService::get_member_id_streams($this->current_user->get_id())) && !empty($streams))
 			{
 				NewsletterService::update_subscriptions_member_registered($streams, $this->current_user->get_id());
-				$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+				$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 			}
 			else
 			{
@@ -197,7 +197,7 @@ class NewsletterUnsubscribeController extends ModuleController
 					if (NewsletterDAO::mail_existed($this->form->get_value('mail')) && ($streams != NewsletterService::get_visitor_id_streams($this->form->get_value('mail'))))
 					{
 						NewsletterService::update_subscriptions_visitor($streams, $this->form->get_value('mail'));
-						$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+						$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 					}
 				}
 				else if ($this->current_user->is_admin())
@@ -207,7 +207,7 @@ class NewsletterUnsubscribeController extends ModuleController
 						if (NewsletterDAO::user_id_existed($user->get_id()) && ($streams != NewsletterService::get_member_id_streams($user->get_id())))
 						{
 							NewsletterService::update_subscriptions_member_registered($streams, $user->get_id());
-							$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+							$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 						}
 					}
 					else
@@ -215,7 +215,7 @@ class NewsletterUnsubscribeController extends ModuleController
 						if (NewsletterDAO::mail_existed($this->form->get_value('mail')) && ($streams != NewsletterService::get_visitor_id_streams($this->form->get_value('mail'))))
 						{
 							NewsletterService::update_subscriptions_visitor($streams, $this->form->get_value('mail'));
-							$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+							$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 						}
 					}
 				}

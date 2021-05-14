@@ -4,20 +4,20 @@
 			<li>
 				<a href="${relative_url(NewsletterUrlBuilder::subscribe())}" class="cssmenu-title">
 					<i class="fa fa-sign-in-alt" aria-hidden="true"></i>
-					<span>{@newsletter.subscribe_newsletters}</span>
+					<span>{@newsletter.subscribe.item}</span>
 				</a>
 			</li>
 			<li>
 				<a href="${relative_url(NewsletterUrlBuilder::unsubscribe())}" class="cssmenu-title">
 					<i class="fa fa-sign-out-alt" aria-hidden="true"></i>
-					<span>{@newsletter.unsubscribe_newsletters}</span>
+					<span>{@newsletter.unsubscribe.item}</span>
 				</a>
 			</li>
 		</ul>
 	</nav>
 	<script>
 		jQuery("#cssmenu-newsletter-actions").menumaker({
-			title: "${LangLoader::get_message('form.options', 'common')}",
+			title: "{@common.options}",
 			format: "multitoggle",
 			breakpoint: 768
 		});
@@ -25,27 +25,27 @@
 # ENDIF #
 
 # IF NOT C_STREAMS #
-	<div class="message-helper bgc notice">{@newsletter.no_newsletters}</div>
+	<div class="message-helper bgc notice">{@common.no.item.now}</div>
 # ELSE #
 	<div class="responsive-table">
 		<table class="table">
 			<thead>
 				<tr>
 					<th>
-						${LangLoader::get_message('form.name', 'common')}
+						{@common.name}
 					</th>
 					<th>
-						${LangLoader::get_message('form.description', 'common')}
+						{@common.description}
 					</th>
 					<th>
 						{@newsletter.archives}
 					</th>
 					<th>
-						{@newsletter.subscribers}
+						{@newsletter.subscribers.list}
 					</th>
-					<th class="col-small" aria-label="${LangLoader::get_message('form.thumbnail', 'common')}">
+					<th class="col-small" aria-label="${LangLoader::get_message('form.thumbnail', 'form-lang')}">
 						<i class="far fa-fw fa-image hidden-small-screens" aria-hidden="true"></i>
-						<span class="hidden-large-screens">${LangLoader::get_message('form.thumbnail', 'common')}</span>
+						<span class="hidden-large-screens">${LangLoader::get_message('form.thumbnail', 'form-lang')}</span>
 					</th>
 				</tr>
 			</thead>
@@ -59,10 +59,10 @@
 							{streams_list.DESCRIPTION}
 						</td>
 						<td>
-							# IF streams_list.C_VIEW_ARCHIVES #<a href="{streams_list.U_VIEW_ARCHIVES}">{@newsletter.view_archives}</a># ELSE #${LangLoader::get_message('error.auth', 'status-messages-common')}# ENDIF #
+							# IF streams_list.C_VIEW_ARCHIVES #<a href="{streams_list.U_VIEW_ARCHIVES}">{@newsletter.see.archives}</a># ELSE #{@warning.auth}# ENDIF #
 						</td>
 						<td>
-							# IF streams_list.C_VIEW_SUBSCRIBERS #<a href="{streams_list.U_VIEW_SUBSCRIBERS}">{@newsletter.view_subscribers}</a> ({streams_list.SUBSCRIBERS_NUMBER})# ELSE #${LangLoader::get_message('error.auth', 'status-messages-common')}# ENDIF #
+							# IF streams_list.C_VIEW_SUBSCRIBERS #<a href="{streams_list.U_VIEW_SUBSCRIBERS}">{@newsletter.see.subscribers.list}</a> ({streams_list.SUBSCRIBERS_NUMBER})# ELSE #{@warning.auth}# ENDIF #
 						</td>
 						<td>
 							# IF streams_list.C_THUMBNAIL #<img src="{streams_list.U_THUMBNAIL}" alt="{streams_list.NAME}" /># ENDIF #
@@ -71,13 +71,7 @@
 				# END streams_list #
 			</tbody>
 			# IF C_PAGINATION #
-				<tfoot>
-					<tr>
-						<td colspan="5">
-							# INCLUDE PAGINATION #
-						</td>
-					</tr>
-				</tfoot>
+				# INCLUDE PAGINATION #
 			# ENDIF #
 		</table>
 

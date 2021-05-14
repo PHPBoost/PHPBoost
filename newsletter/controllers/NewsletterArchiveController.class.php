@@ -27,7 +27,7 @@ class NewsletterArchiveController extends ModuleController
 		$archive_exist = PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_archives, "WHERE id = '" . $id . "'") > 0;
 		if (!$archive_exist)
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $this->lang['error-archive-not-existed']);
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $this->lang['newsletter.archive.not.exists']);
 			DispatchManager::redirect($controller);
 		}
 

@@ -23,11 +23,11 @@ class NewsletterDeleteArchiveController extends ModuleController
 
 			NewsletterService::delete_archive($id);
 
-			AppContext::get_response()->redirect(($request->get_url_referrer() ? $request->get_url_referrer() : NewsletterUrlBuilder::archives($id_stream)), LangLoader::get_message('newsletter.message.success.delete', 'common', 'newsletter'));
+			AppContext::get_response()->redirect(($request->get_url_referrer() ? $request->get_url_referrer() : NewsletterUrlBuilder::archives($id_stream)), LangLoader::get_message('newsletter.archive.success.delete', 'common', 'newsletter'));
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $this->lang['error-archive-not-existed']);
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $this->lang['newsletter.archive.not.exists']);
 			DispatchManager::redirect($controller);
 		}
 	}

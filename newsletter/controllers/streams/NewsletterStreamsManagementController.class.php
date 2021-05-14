@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 04 01
+ * @version     PHPBoost 6.0 - last update: 2021 05 14
  * @since       PHPBoost 4.0 - 2014 05 21
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -42,17 +42,17 @@ class NewsletterStreamsManagementController extends AbstractCategoriesManagement
 
 	protected function get_module_home_page_title()
 	{
-		return LangLoader::get_message('newsletter', 'common', 'newsletter');
+		return LangLoader::get_message('newsletter.module.title', 'common', 'newsletter');
 	}
 
 	protected function get_title()
 	{
-		return LangLoader::get_message('newsletter.streams.manager', 'common', 'newsletter');
+		return LangLoader::get_message('newsletter.streams.management', 'common', 'newsletter');
 	}
 
 	protected function get_delete_confirmation_message()
 	{
-		return LangLoader::get_message('stream.message.delete_confirmation', 'common', 'newsletter');
+		return LangLoader::get_message('newsletter.stream.delete.confirmation', 'common', 'newsletter');
 	}
 
 	protected function check_authorizations()

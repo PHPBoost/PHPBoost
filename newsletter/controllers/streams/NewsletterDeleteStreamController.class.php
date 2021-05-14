@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 04 01
+ * @version     PHPBoost 6.0 - last update: 2021 05 14
  * @since       PHPBoost 4.0 - 2014 05 21
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -37,27 +37,27 @@ class NewsletterDeleteStreamController extends AbstractDeleteCategoryController
 
 	protected function get_module_home_page_title()
 	{
-		return LangLoader::get_message('newsletter', 'common', 'newsletter');
+		return LangLoader::get_message('newsletter.module.title', 'common', 'newsletter');
 	}
 
 	protected function get_categories_management_title()
 	{
-		return LangLoader::get_message('newsletter.streams.manager', 'common', 'newsletter');
+		return LangLoader::get_message('newsletter.streams.management', 'common', 'newsletter');
 	}
 
 	protected function get_title()
 	{
-		return LangLoader::get_message('stream.delete', 'common', 'newsletter');
+		return LangLoader::get_message('newsletter.stream.delete', 'common', 'newsletter');
 	}
 
 	protected function get_description()
 	{
-		return LangLoader::get_message('stream.delete.description', 'common', 'newsletter');
+		return LangLoader::get_message('newsletter.stream.delete.clue', 'common', 'newsletter');
 	}
 
 	protected function get_success_message()
 	{
-		return LangLoader::get_message('stream.message.success.delete', 'common', 'newsletter');
+		return LangLoader::get_message('newsletter.stream.success.delete', 'common', 'newsletter');
 	}
 
 	protected function check_authorizations()

@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 05 14
  * @since       PHPBoost 3.0 - 2011 03 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class NewsletterSubscribersListController extends ModuleController
@@ -54,12 +55,13 @@ class NewsletterSubscribersListController extends ModuleController
 
 	private function build_table()
 	{
+		$user_lang = LangLoader::get('user-lang');
 		$moderation_authorization = NewsletterAuthorizationsService::id_stream($this->stream->get_id())->moderation_subscribers();
 
 		$columns = array(
-			new HTMLTableColumn($this->lang['subscribers.pseudo'], 'name'),
-			new HTMLTableColumn($this->lang['subscribers.mail'], 'user_mail'),
-			new HTMLTableColumn($this->lang['subscription.date'], 'subscription_date')
+			new HTMLTableColumn($user_lang['user.display.name'], 'name'),
+			new HTMLTableColumn($user_lang['user.email'], 'user_mail'),
+			new HTMLTableColumn($user_lang['user.registration.date'], 'subscription_date')
 		);
 
 		if ($moderation_authorization)
@@ -152,7 +154,11 @@ class NewsletterSubscribersListController extends ModuleController
 		$body_view->add_lang($this->lang);
 		$body_view->put_all(array(
 			'C_SUBTITLE' => true,
-			'L_SUBTITLE' => $this->lang['subscribers.list'],
+			'C_STREAM_TITLE' => $this->stream->get_id() != Category::ROOT_CATEGORY,
+
+			'L_SUBTITLE' => $this->lang['newsletter.subscribers.list'],
+			'STREAM_TITLE' => $this->stream->get_name(),
+
 			'TEMPLATE'   => $this->view
 		));
 		$response = new SiteDisplayResponse($body_view);
@@ -160,11 +166,11 @@ class NewsletterSubscribersListController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home());
-		$page_name = $this->lang['newsletter.subscribers'] . ' : ' . $this->stream->get_name();
+		$breadcrumb->add($this->lang['newsletter.module.title'], NewsletterUrlBuilder::home());
+		$page_name = $this->lang['newsletter.subscribers.list'] . ' : ' . $this->stream->get_name();
 		$breadcrumb->add($page_name, NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name()));
 
-		$graphical_environment->set_page_title($page_name, $this->lang['newsletter'], $page);
+		$graphical_environment->set_page_title($page_name, $this->lang['newsletter.module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['newsletter.seo.suscribers.list'], array('name' => $this->stream->get_name())), $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name()));
 

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 11
+ * @version     PHPBoost 6.0 - last update: 2021 05 14
  * @since       PHPBoost 6.0 - 2021 04 18
 */
 
@@ -40,6 +40,7 @@ $lang['form.search']  = 'Rechercher';
 $lang['form.save']    = 'Sauvegarder';
 $lang['form.go']      = 'Go';
 $lang['form.ok']      = 'OK';
+$lang['form.next']    = 'Suivant';
 $lang['form.refresh'] = 'Rafraichir';
 $lang['form.apply']   = 'Appliquer';
 $lang['form.insert']  = 'Insérer';
@@ -145,8 +146,8 @@ $lang['form.parameters']                = 'Paramètres';
 $lang['form.options']                   = 'Options';
 $lang['form.keywords']                  = 'Mots clés';
 $lang['form.keywords.clue']             = 'Un seul mot clé par ligne';
-$lang['form.thumbnail']                 = 'Image';
-$lang['form.thumbnail.preview']         = 'Prévisualisation de l\'image';
+$lang['form.thumbnail']                 = 'Vignette';
+$lang['form.thumbnail.preview']         = 'Prévisualisation de la vignette';
 $lang['form.picture']                   = 'Image';
 $lang['form.picture.preview']           = 'Prévisualisation de l\'image';
 $lang['form.picture.full.size']         = 'Voir en taille réelle';

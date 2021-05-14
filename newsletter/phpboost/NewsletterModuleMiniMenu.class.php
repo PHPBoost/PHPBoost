@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 02 05
+ * @version     PHPBoost 6.0 - last update: 2021 05 14
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -38,16 +38,16 @@ class NewsletterModuleMiniMenu extends ModuleMiniMenu
 
 	public function get_menu_content()
 	{
-		$tpl = new FileTemplate('newsletter/newsletter_mini.tpl');
+		$view = new FileTemplate('newsletter/newsletter_mini.tpl');
 
-		$tpl->add_lang(LangLoader::get('common', 'newsletter'));
+		$view->add_lang(array_merge(LangLoader::get('common', 'newsletter'), LangLoader::get('user-lang')));
 
-		MenuService::assign_positions_conditions($tpl, $this->get_block());
-		Menu::assign_common_template_variables($tpl);
+		MenuService::assign_positions_conditions($view, $this->get_block());
+		Menu::assign_common_template_variables($view);
 
-		$tpl->put('USER_MAIL', AppContext::get_current_user()->get_email());
+		$view->put('USER_MAIL', AppContext::get_current_user()->get_email());
 
-		return $tpl->render();
+		return $view->render();
 	}
 
 	public function display()
@@ -61,8 +61,8 @@ class NewsletterModuleMiniMenu extends ModuleMiniMenu
 				$this->assign_common_template_variables($template);
 
 				$template->put_all(array(
-					'ID' => $this->get_menu_id(),
-					'TITLE' => $this->get_menu_title(),
+					'ID'       => $this->get_menu_id(),
+					'TITLE'    => $this->get_menu_title(),
 					'CONTENTS' => $this->get_menu_content()
 				));
 

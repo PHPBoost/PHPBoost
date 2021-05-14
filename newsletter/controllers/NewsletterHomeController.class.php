@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 04 01
+ * @version     PHPBoost 6.0 - last update: 2021 05 14
  * @since       PHPBoost 3.0 - 2011 03 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -26,6 +26,16 @@ class NewsletterHomeController extends ModuleController
 		$this->build_form($request);
 
 		return $this->generate_response($request);
+	}
+
+	private function init()
+	{
+		$this->config = NewsletterConfig::load();
+		$this->lang = LangLoader::get('common', 'newsletter');
+		$this->full_view = new FileTemplate('newsletter/NewsletterBody.tpl');
+		$this->full_view->add_lang($this->lang);
+		$this->view = new FileTemplate('newsletter/NewsletterHomeController.tpl');
+		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang'), LangLoader::get('warning-lang')));
 	}
 
 	private function build_form(HTTPRequestCustom $request)
@@ -53,6 +63,7 @@ class NewsletterHomeController extends ModuleController
 				$category = new RichCategory();
 				$category->set_properties($row);
 				$category_thumbnail = $category->get_thumbnail()->rel();
+
 				$this->view->assign_block_vars('streams_list', array(
 					'C_THUMBNAIL' => !empty($category_thumbnail),
 					'C_VIEW_ARCHIVES' => NewsletterAuthorizationsService::id_stream($row['id'])->read_archives(),
@@ -87,16 +98,6 @@ class NewsletterHomeController extends ModuleController
 		}
 	}
 
-	private function init()
-	{
-		$this->config = NewsletterConfig::load();
-		$this->lang = LangLoader::get('common', 'newsletter');
-		$this->full_view = new FileTemplate('newsletter/NewsletterBody.tpl');
-		$this->full_view->add_lang($this->lang);
-		$this->view = new FileTemplate('newsletter/NewsletterHomeController.tpl');
-		$this->view->add_lang($this->lang);
-	}
-
 	private function get_pagination()
 	{
 		$nbr_streams = PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_streams);
@@ -120,11 +121,11 @@ class NewsletterHomeController extends ModuleController
 
 		$response = new SiteDisplayResponse($this->full_view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
-		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->absolute());
-		$breadcrumb->add($this->lang['newsletter.list_newsletters'], NewsletterUrlBuilder::home($page)->absolute());
+		$breadcrumb->add($this->lang['newsletter.module.title'], NewsletterUrlBuilder::home()->absolute());
+		$breadcrumb->add($this->lang['newsletter.items.list'], NewsletterUrlBuilder::home($page)->absolute());
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['newsletter.list_newsletters'], $this->lang['newsletter'], $page);
+		$graphical_environment->set_page_title($this->lang['newsletter.items.list'], $this->lang['newsletter.module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['newsletter.seo.home'], array('site' => GeneralConfig::load()->get_site_name())));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsletterUrlBuilder::home($page));
 

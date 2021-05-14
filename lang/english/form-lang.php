@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 11
+ * @version     PHPBoost 6.0 - last update: 2021 05 14
  * @since       PHPBoost 6.0 - 2021 04 18
 */
 
@@ -40,6 +40,7 @@ $lang['form.search']  = 'Search';
 $lang['form.save']    = 'Save';
 $lang['form.go']      = 'Go';
 $lang['form.ok']      = 'OK';
+$lang['form.next']    = 'Next';
 $lang['form.refresh'] = 'Refresh';
 $lang['form.apply']   = 'Apply';
 $lang['form.insert']  = 'Insert';

@@ -52,7 +52,7 @@ class NewsletterDeleteSubscriberController extends ModuleController
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('error-subscriber-not-existed', 'common', 'newsletter'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('newsletter.subscriber.not.exists', 'common', 'newsletter'));
 			DispatchManager::redirect($controller);
 		}
 	}

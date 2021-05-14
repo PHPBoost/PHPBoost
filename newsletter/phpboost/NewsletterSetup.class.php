@@ -114,9 +114,9 @@ class NewsletterSetup extends DefaultModuleSetup
 		$lang = LangLoader::get('common', 'newsletter');
 
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['extended_fields.newsletter.name']);
+		$extended_field->set_name($lang['newsletter.extended.fields.subscribed.items']);
 		$extended_field->set_field_name('register_newsletter');
-		$extended_field->set_description($lang['extended_fields.newsletter.description']);
+		$extended_field->set_description($lang['newsletter.extended.fields.select.items']);
 		$extended_field->set_field_type('RegisterNewsletterExtendedField');
 		$extended_field->set_display(true);
 		ExtendedFieldsService::add($extended_field);

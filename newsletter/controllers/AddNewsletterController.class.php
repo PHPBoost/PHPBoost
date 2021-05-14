@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 05 14
  * @since       PHPBoost 3.0 - 2011 02 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -36,23 +36,23 @@ class AddNewsletterController extends ModuleController
 		$this->init();
 		$this->build_form($type);
 
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
+		$view->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->send_mail($type);
-			$tpl->put('MSG', MessageHelper::display($this->lang['newsletter.message.success.add'], MessageHelper::SUCCESS, 5));
+			$view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['newsletter.item.success.add'], MessageHelper::SUCCESS, 5));
 		}
 		else if ($this->send_test_button->has_been_submited() && $this->form->validate())
 		{
 			$this->send_test($type);
-			$tpl->put('MSG', MessageHelper::display($this->lang['newsletter.success-send-test'], MessageHelper::SUCCESS, 5));
+			$view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['newsletter.success.send.test'], MessageHelper::SUCCESS, 5));
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$view->put('FORM', $this->form->display());
 
-		return $this->build_response($tpl, $type);
+		return $this->build_response($view, $type);
 	}
 
 	private function init()
@@ -64,15 +64,15 @@ class AddNewsletterController extends ModuleController
 	private function build_form($type)
 	{
 		$form = new HTMLForm(__CLASS__);
-		$form->set_layout_title($this->lang['newsletter-add']);
+		$form->set_layout_title($this->lang['newsletter.add.item']);
 
-		$fieldset = new FormFieldsetHTML('add-newsletter', $this->common_lang['form.parameters']);
+		$fieldset = new FormFieldsetHTML('add-newsletter', LangLoader::get_message('form.parameters', 'form-lang'));
 		$form->add_fieldset($fieldset);
 
 		if (NewsletterConfig::load()->get_mail_sender())
 		{
 			$streams = $this->get_streams();
-			$fieldset->add_field(new FormFieldMultipleCheckbox('newsletter_choice', $this->lang['add.choice_streams'], (count($streams) == 1 ? array('1') : array()), $streams,
+			$fieldset->add_field(new FormFieldMultipleCheckbox('newsletter_choice', $this->lang['newsletter.choose.streams'], (count($streams) == 1 ? array('1') : array()), $streams,
 				array('required' => true)
 			));
 
@@ -83,14 +83,14 @@ class AddNewsletterController extends ModuleController
 			$fieldset->add_field($this->return_editor($type));
 
 			$this->submit_button = new FormButtonDefaultSubmit();
-			$this->send_test_button = new FormButtonSubmit($this->lang['add.send_test'], 'send_test');
+			$this->send_test_button = new FormButtonSubmit($this->lang['newsletter.send.test'], 'send_test');
 			$form->add_button($this->submit_button);
 			$form->add_button($this->send_test_button);
 			$form->add_button(new FormButtonReset());
 		}
 		else
 		{
-			$fieldset->add_field(new FormFieldHTML('mail_sender_not_configured_msg', MessageHelper::display($this->lang['error.sender-mail-not-configured' . (AppContext::get_current_user()->is_admin() ? '-for-admin' : '')], MessageHelper::WARNING)->render()));
+			$fieldset->add_field(new FormFieldHTML('mail_sender_not_configured_msg', MessageHelper::display($this->lang['newsletter.sender.email.not.configured' . (AppContext::get_current_user()->is_admin() ? '-for-admin' : '')], MessageHelper::WARNING)->render()));
 
 			$this->submit_button = new FormButtonDefaultSubmit();
 		}
@@ -133,10 +133,10 @@ class AddNewsletterController extends ModuleController
 		$body_view->put('TEMPLATE', $view);
 		$response = new SiteDisplayResponse($body_view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
-		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->rel());
-		$breadcrumb->add($this->lang['newsletter-add'], NewsletterUrlBuilder::add_newsletter()->rel());
+		$breadcrumb->add($this->lang['newsletter.module.title'], NewsletterUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['newsletter.add.item'], NewsletterUrlBuilder::add_newsletter()->rel());
 		$breadcrumb->add($this->lang['newsletter.types.' . $type], NewsletterUrlBuilder::add_newsletter($type)->rel());
-		$response->get_graphical_environment()->set_page_title($this->lang['newsletter-add'], $this->lang['newsletter']);
+		$response->get_graphical_environment()->set_page_title($this->lang['newsletter.add.item'], $this->lang['newsletter.module.title']);
 		return $response;
 	}
 
@@ -157,13 +157,13 @@ class AddNewsletterController extends ModuleController
 		if ($type == 'bbcode')
 		{
 			return new FormFieldRichTextEditor('content', $this->lang['newsletter.content'], $this->config->get_default_content(), array(
-				'rows' => 10, 'cols' => 47, 'description' => $this->lang['newsletter.content.explain'], 'required' => true)
+				'rows' => 10, 'cols' => 47, 'description' => $this->lang['newsletter.content.clue'], 'required' => true)
 			);
 		}
 		else
 		{
 			return new FormFieldMultiLineTextEditor('content', $this->lang['newsletter.content'], ($type == 'html' ? $this->config->get_default_content() : ''), array(
-				'rows' => 10, 'cols' => 47, 'description' => $this->lang['newsletter.content.explain'], 'required' => true)
+				'rows' => 10, 'cols' => 47, 'description' => $this->lang['newsletter.content.clue'], 'required' => true)
 			);
 		}
 	}

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 15
+ * @version     PHPBoost 6.0 - last update: 2021 05 14
  * @since       PHPBoost 4.0 - 2014 05 21
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -42,22 +42,22 @@ class NewsletterStreamsFormController extends AbstractCategoriesFormController
 
 	protected function get_module_home_page_title()
 	{
-		return LangLoader::get_message('newsletter', 'common', 'newsletter');
+		return LangLoader::get_message('newsletter.module.title', 'common', 'newsletter');
 	}
 
 	protected function get_categories_management_title()
 	{
-		return LangLoader::get_message('newsletter.streams.manager', 'common', 'newsletter');
+		return LangLoader::get_message('newsletter.streams.management', 'common', 'newsletter');
 	}
 
 	protected function get_title()
 	{
-		return $this->get_id_category() == 0 ? LangLoader::get_message('stream.add', 'common', 'newsletter') : LangLoader::get_message('stream.edit', 'common', 'newsletter');
+		return $this->get_id_category() == 0 ? LangLoader::get_message('newsletter.stream.add', 'common', 'newsletter') : LangLoader::get_message('newsletter.stream.edit', 'common', 'newsletter');
 	}
 
 	protected function get_success_message()
 	{
-		return $this->is_new_category ? LangLoader::get_message('stream.message.success.add', 'common', 'newsletter') : LangLoader::get_message('stream.message.success.edit', 'common', 'newsletter');
+		return $this->is_new_category ? LangLoader::get_message('newsletter.stream.success.add', 'common', 'newsletter') : LangLoader::get_message('newsletter.stream.success.edit', 'common', 'newsletter');
 	}
 
 	/**
@@ -68,12 +68,12 @@ class NewsletterStreamsFormController extends AbstractCategoriesFormController
 		$lang = LangLoader::get('common', 'newsletter');
 
 		return array(
-			new ActionAuthorization($lang['auth.read'], NewsletterAuthorizationsService::AUTH_READ),
-			new ActionAuthorization($lang['auth.subscribe'], NewsletterAuthorizationsService::AUTH_SUBSCRIBE),
-			new ActionAuthorization($lang['auth.subscribers-read'], NewsletterAuthorizationsService::AUTH_READ_SUBSCRIBERS),
-			new MemberDisabledActionAuthorization($lang['auth.subscribers-moderation'], NewsletterAuthorizationsService::AUTH_MODERATION_SUBSCRIBERS),
-			new VisitorDisabledActionAuthorization($lang['auth.create-newsletter'], NewsletterAuthorizationsService::AUTH_CREATE_NEWSLETTERS),
-			new ActionAuthorization($lang['auth.archives-read'], NewsletterAuthorizationsService::AUTH_READ_ARCHIVES)
+			new ActionAuthorization($lang['newsletter.authorizations.streams.read'], NewsletterAuthorizationsService::AUTH_READ),
+			new ActionAuthorization($lang['newsletter.authorizations.streams.subscribe'], NewsletterAuthorizationsService::AUTH_SUBSCRIBE),
+			new ActionAuthorization($lang['newsletter.authorizations.subscribers.read'], NewsletterAuthorizationsService::AUTH_READ_SUBSCRIBERS),
+			new MemberDisabledActionAuthorization($lang['newsletter.authorizations.subscribers.moderation'], NewsletterAuthorizationsService::AUTH_MODERATION_SUBSCRIBERS),
+			new VisitorDisabledActionAuthorization($lang['newsletter.authorizations.item.write'], NewsletterAuthorizationsService::AUTH_CREATE_NEWSLETTERS),
+			new ActionAuthorization($lang['newsletter.authorizations.archives.manage'], NewsletterAuthorizationsService::AUTH_READ_ARCHIVES)
 		);
 	}
 

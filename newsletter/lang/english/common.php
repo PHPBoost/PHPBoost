@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 24
+ * @version     PHPBoost 6.0 - last update: 2021 05 14
  * @since       PHPBoost 3.0 - 2011 03 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,118 +15,95 @@
 #                    English                       #
 ####################################################
 
-//Title
-$lang['newsletter.home'] = 'Home';
-$lang['newsletter'] = 'Newsletter';
-$lang['newsletter.archives'] = 'Archive';
-$lang['newsletter.subscribers'] = 'list of subscribers';
-$lang['newsletter.streams.manager'] = 'Feed management';
+$lang['newsletter.module.title'] = 'Newsletter';
 
-//Other title
-$lang['subscribe.newsletters'] = 'Subscribe to newsletters';
-$lang['subscriber.edit'] = 'Post a registrant';
-$lang['archives.list'] = 'Archive List';
-$lang['newsletter-add'] = 'Add newsletter';
-$lang['newsletter.subscribe_newsletters'] = 'Subscribe to a newsletter';
-$lang['newsletter.unsubscribe_newsletters'] = 'Unsubscribe to a newsletter';
-$lang['stream.add'] = 'Add Feed';
-$lang['stream.edit'] = 'Edit Feed';
-$lang['stream.delete'] = 'Delete feed';
-$lang['stream.delete.description'] = 'You are about to delete the stream. Two solutions are available to you. You can either move all of its content (newsletters and streams) in another stream or delete the whole stream. <strong>Note that this action is irreversible!</ strong>';
-$lang['newsletter.list_newsletters'] = 'List of newsletters';
+// Configuration
+$lang['newsletter.email.sender']      = 'Mailing address';
+$lang['newsletter.email.sender.clue'] = 'Valid email Address';
+$lang['newsletter.name']              = 'Name of the newsletter';
+$lang['newsletter.name.clue']         = 'Subject of email sent';
+$lang['newsletter.streams.per.page']  = 'Streams number per page';
+$lang['newsletter.default.content']   = 'Default content of a BBCode or HTML newsletter';
 
-//Admin
-$lang['admin.mail-sender'] = 'Mailing address';
-$lang['admin.mail-sender-explain'] = 'Valid email Address';
-$lang['admin.newsletter-name'] = 'Name of the newsletter';
-$lang['admin.streams.number.per.page'] = 'Feeds number per page';
-$lang['admin.newsletter-name-explain'] = 'Subject of email sent';
-$lang['admin.default-content'] = 'Default content of a BBCode or HTML newsletter';
+// Authorizations
+$lang['newsletter.authorizations.streams.read'] = 'Read authorizations';
+$lang['newsletter.authorizations.streams.manage'] = 'Streams management authorizations';
+$lang['newsletter.authorizations.streams.subscribe'] = 'Authorizations to register for newsletters';
+$lang['newsletter.authorizations.archives.manage'] = 'Archives read authorizations';
+$lang['newsletter.authorizations.archives.moderation'] = 'Archives moderation authorizations';
+$lang['newsletter.authorizations.subscribers.read'] = 'Subscribers read authorizations';
+$lang['newsletter.authorizations.subscribers.moderation'] = 'Subscribers moderation authorizations';
+$lang['newsletter.authorizations.item.write'] = 'Add newsletter authorizations';
 
-//Authorizations
-$lang['admin.newsletter-authorizations'] = 'Authorizations';
-$lang['auth.read'] = 'Read authorizations';
-$lang['auth.archives-read'] = 'Archives read authorizations';
-$lang['auth.archives-moderation'] = 'Archives moderation authorizations';
-$lang['auth.subscribers-read'] = 'Subscribers read authorizations';
-$lang['auth.subscribers-moderation'] = 'Subscribers moderation authorizations';
-$lang['auth.subscribe'] = 'Authorizations to register for newsletters';
-$lang['auth.create-newsletter'] = 'Add newsletter authorizations';
-$lang['auth.manage-streams'] = 'Streams management authorizations';
+// Streams
+$lang['newsletter.streams.management'] = 'Feed management';
+$lang['newsletter.stream.add'] = 'Add Feed';
+$lang['newsletter.stream.edit'] = 'Edit Feed';
+$lang['newsletter.stream.delete'] = 'Delete feed';
+$lang['newsletter.stream.delete.clue'] = 'You are about to delete the stream. Two solutions are available to you. You can either move all of its content (newsletters and streams) in another stream or delete the whole stream. <strong>Note that this action is irreversible!</ strong>';
+$lang['newsletter.items.list'] = 'List of newsletters';
 
-//Subscribe
-$lang['subscribe.mail'] = 'Mail';
-$lang['subscribe.newsletter_choice'] = 'Choose which newsletters you wish to subscribe';
+// Subscription
+$lang['newsletter.subscribe.streams'] = 'Subscribe to newsletters';
+$lang['newsletter.subscribe.item'] = 'Subscribe to a newsletter';
+$lang['newsletter.subscribe.item.clue'] = 'Choose which newsletters you want to subscribe';
+$lang['newsletter.subscriber.edit'] = 'Post a registrant';
+$lang['newsletter.subscriber.email'] = 'Email';
+$lang['newsletter.unsubscribe.item'] = 'Unsubscribe to a newsletter';
+$lang['newsletter.unsubscribe.item.clue'] = 'Select the newsletters you want to stay or subscribe';
+$lang['newsletter.delete.all.streams'] = 'Unsubscribe from all streams';
+$lang['newsletter.unsubscribe.items'] = 'Unsubscribe from newsletters';
 
-//Subscribers
-$lang['subscribers.list'] = 'Subscribers list';
-$lang['subscribers.pseudo'] = 'Username';
-$lang['subscribers.mail'] = 'Mail';
-$lang['subscription.date'] = 'Subscription date';
-$lang['subscribers.delete'] = 'Do you really want to delete this person listed ?';
-$lang['subscribers.no_users'] = 'None subscribers';
-
-//Unsubcribe
-$lang['newsletter.delete_all_streams'] = 'Unsubscribe from all streams';
-$lang['unsubscribe.newsletter'] = 'Unsubscribe from newsletters';
-$lang['unsubscribe.newsletter_choice'] = 'Select the newsletters you want to stay or subscribe';
-
-//Archives
-$lang['archives.stream_name'] = 'Feed name';
-$lang['archives.name'] = 'Newsletter name';
-$lang['archives.date'] = 'Publication date';
-$lang['archives.nbr_subscribers'] = 'Number of registered';
-$lang['archives.not_archives'] = 'No archive available';
-
-//Add newsletter
-$lang['add.choice_streams'] = 'Choose the flow or you want to send this newsletter';
-$lang['add.send_test'] = 'Send a test email';
-$lang['add.add_newsletter'] = 'Add newsletter';
-
-//Types newsletters
+// Newsletters
+$lang['newsletter.subscribers.list'] = 'list of subscribers';
+$lang['newsletter.see.subscribers.list'] = 'See the list';
+    //Archives
+$lang['newsletter.archives'] = 'Archives';
+$lang['newsletter.archives.list'] = 'Archive List';
+$lang['newsletter.see.archives'] = 'View Archives';
+$lang['newsletter.stream.name'] = 'Feed name';
+$lang['newsletter.item.name'] = 'Newsletter name';
+$lang['newsletter.archives.date'] = 'Publication date';
+$lang['newsletter.subscribers.number'] = 'Number of registered';
+    // Types
 $lang['newsletter.types.choice'] = 'Please select a type of message';
-$lang['newsletter.types.null'] = '--';
-$lang['newsletter.types.forall'] = 'Every users';
+$lang['newsletter.types.for.all'] = 'Every users';
 $lang['newsletter.types.text'] = 'Text';
-$lang['newsletter.types.text_explain'] = 'You can\'t make any formatting of the message.';
+$lang['newsletter.types.text.clue'] = 'You can\'t make any formatting of the message.';
 $lang['newsletter.types.bbcode'] = 'BBCode';
-$lang['newsletter.types.bbcode_explain'] = 'You can format text using the BBCode, the simplified formatting language used throughout the portal.';
+$lang['newsletter.types.bbcode.clue'] = 'You can format text using the BBCode, the simplified formatting language used throughout the portal.';
 $lang['newsletter.types.html'] = 'HTML';
-$lang['newsletter.types.forexpert'] = 'Only expert users';
-$lang['newsletter.types.html_explain'] = 'You can format the text as you wish, but you need to know HTML language.';
-$lang['newsletter.types.next'] = 'Next';
-
-//Other
-$lang['newsletter.no_newsletters'] = 'No newsletter Available';
-$lang['unsubscribe_newsletter'] = 'Unsubscribe to this newsletter';
-$lang['newsletter.view_archives'] = 'View Archives';
-$lang['newsletter.view_subscribers'] = 'View record';
+$lang['newsletter.types.for.experts'] = 'Only expert users';
+$lang['newsletter.types.html.clue'] = 'You can format the text as you wish, but you need to know HTML language.';
+    // Add
 $lang['newsletter.title'] = 'Title of the newsletter';
 $lang['newsletter.content'] = 'Content';
-$lang['newsletter.content.explain'] = 'Use <b>:user_display_name</b> to display the member\'s nickname if needed (will be replaced by visitor for non-member members).';
+$lang['newsletter.content.clue'] = 'Use <b>:user_display_name</b> to display the member\'s nickname if needed (will be replaced by visitor for non-member members).';
+$lang['newsletter.choose.streams'] = 'Choose the flow or you want to send this newsletter';
+$lang['newsletter.send.test'] = 'Send a test email';
+$lang['newsletter.add.item'] = 'Add newsletter';
 
-//Messages
-$lang['stream.message.success.add'] = 'The stream <b>:name</b> has been added';
-$lang['stream.message.success.edit'] = 'The stream <b>:name</b> has been modified';
-$lang['stream.message.success.delete'] = 'The stream <b>:name</b> has been deleted';
-$lang['stream.message.delete_confirmation'] = 'Do you really want to delete the stream :name?';
+// Messages
+$lang['newsletter.stream.success.add'] = 'The stream <b>:name</b> has been added';
+$lang['newsletter.stream.success.edit'] = 'The stream <b>:name</b> has been modified';
+$lang['newsletter.stream.success.delete'] = 'The stream <b>:name</b> has been deleted';
+$lang['newsletter.stream.delete.confirmation'] = 'Do you really want to delete the stream :name?';
+$lang['newsletter.success.send.test'] = 'The test email has been sent';
+$lang['newsletter.item.success.add'] = 'The newsletter has been sent';
+$lang['newsletter.archive.success.delete'] = 'The archive has been deleted';
 
-//Errors
-$lang['error.sender-mail-not-configured'] = 'The newsletter sender mail has not been configured by the administrator, please try again later.';
-$lang['error.sender-mail-not-configured-for-admin'] = 'The newsletter sender mail has not been configured. Please <a href="' . NewsletterUrlBuilder::configuration()->rel() . '">configure</a> it before sending a newsletter.';
-$lang['admin.stream-not-existed'] = 'The requested stream does not exist';
-$lang['error-subscriber-not-existed'] = 'This registrant does not exist';
-$lang['error-subscriber-exists'] = 'This email address is already subscribed to the site\'s newsletters';
-$lang['error-archive-not-existed'] = 'This archive does not exist';
-$lang['newsletter.success-send-test'] = 'The test email has been sent';
-$lang['newsletter.message.success.add'] = 'The newsletter has been sent';
-$lang['newsletter.message.success.delete'] = 'The archive has been deleted';
+// Errors
+$lang['newsletter.sender.email.not.configured'] = 'The newsletter sender mail has not been configured. Please <a href="' . NewsletterUrlBuilder::configuration()->rel() . '">configure</a> it before sending a newsletter.';
+$lang['newsletter.stream.not.exists'] = 'The requested stream does not exist';
+$lang['newsletter.subscriber.not.exists'] = 'This registrant does not exist';
+$lang['newsletter.subscriber.already.exists'] = 'This email address is already subscribed to the site\'s newsletters';
+$lang['newsletter.archive.not.exists'] = 'This archive does not exist';
 
-//Register extended field
-$lang['extended_fields.newsletter.name'] = 'Subscribe to newsletters';
-$lang['extended_fields.newsletter.description'] = 'Select the newsletter you wish to be registered';
+// Register extended fields
+$lang['newsletter.extended.fields.subscribed.items'] = 'Subscribe to newsletters';
+$lang['newsletter.extended.fields.select.items'] = 'Select the newsletter you wish to be registered';
 
-//SEO
+// S.E.O.
 $lang['newsletter.seo.suscribe'] = 'Enter your email address and choose the newsletters you wish to receive.';
 $lang['newsletter.seo.unsuscribe'] = 'Choose the newsletters that you do not want to receive anymore.';
 $lang['newsletter.seo.suscribers.list'] = 'List of subscribers to the newsletter :name.';

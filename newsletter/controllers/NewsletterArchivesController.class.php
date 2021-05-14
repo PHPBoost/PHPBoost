@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 05 14
  * @since       PHPBoost 3.0 - 2011 03 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class NewsletterArchivesController extends ModuleController
@@ -24,7 +25,7 @@ class NewsletterArchivesController extends ModuleController
 
 		if (!NewsletterStreamsCache::load()->stream_exists($this->stream->get_id()))
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('admin.stream-not-existed', 'common', 'newsletter'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('newsletter.stream.not.exists', 'common', 'newsletter'));
 			DispatchManager::redirect($controller);
 		}
 
@@ -58,10 +59,10 @@ class NewsletterArchivesController extends ModuleController
 		$moderation_authorization = NewsletterAuthorizationsService::id_stream($this->stream->get_id())->moderation_archives();
 
 		$columns = array(
-			new HTMLTableColumn($this->lang['archives.stream_name'], 'stream_id'),
-			new HTMLTableColumn($this->lang['archives.name'], 'subject'),
-			new HTMLTableColumn($this->lang['archives.date'], 'timestamp'),
-			new HTMLTableColumn($this->lang['archives.nbr_subscribers'], 'nbr_subscribers')
+			new HTMLTableColumn($this->lang['newsletter.stream.name'], 'stream_id'),
+			new HTMLTableColumn($this->lang['newsletter.item.name'], 'subject'),
+			new HTMLTableColumn($this->lang['newsletter.archives.date'], 'timestamp'),
+			new HTMLTableColumn($this->lang['newsletter.subscribers.number'], 'nbr_subscribers')
 		);
 
 		if ($this->stream->get_id())
@@ -143,7 +144,9 @@ class NewsletterArchivesController extends ModuleController
 		$body_view->add_lang($this->lang);
 		$body_view->put_all(array(
 			'C_SUBTITLE' => true,
+			'C_STREAM_TITLE' => $this->stream->get_id() != Category::ROOT_CATEGORY,
 			'L_SUBTITLE' => $this->lang['newsletter.archives'],
+			'STREAM_TITLE' => $this->stream->get_name(),
 			'TEMPLATE'   => $this->view
 		));
 		$response = new SiteDisplayResponse($body_view);
@@ -151,8 +154,8 @@ class NewsletterArchivesController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->rel());
-		$breadcrumb->add($this->lang['archives.list'], NewsletterUrlBuilder::archives()->rel());
+		$breadcrumb->add($this->lang['newsletter.module.title'], NewsletterUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['newsletter.archives.list'], NewsletterUrlBuilder::archives()->rel());
 
 		if ($this->stream->get_id() > 0)
 		{
@@ -160,7 +163,7 @@ class NewsletterArchivesController extends ModuleController
 			$breadcrumb->add($stream->get_name(), NewsletterUrlBuilder::archives($this->stream->get_id(), $this->stream->get_rewrited_name())->rel());
 		}
 
-		$graphical_environment->set_page_title($this->lang['archives.list'], $this->lang['newsletter'], $page);
+		$graphical_environment->set_page_title($this->lang['newsletter.archives.list'], $this->lang['newsletter.module.title'], $page);
 		$description = $this->stream->get_description();
 		if (empty($description))
 			$description = StringVars::replace_vars($this->lang['newsletter.seo.archives'], array('name' => $this->stream->get_name()));

@@ -33,7 +33,7 @@ class NewsletterEditSubscriberController extends ModuleController
 		$verificate_is_edit = PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE id = '". $id ."' AND user_id = -1") > 0;
 		if (!$this->subscriber_exist($id) || !$verificate_is_edit)
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('error-subscriber-not-existed', 'common', 'newsletter'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('newsletter.subscriber.not.exists', 'common', 'newsletter'));
 			DispatchManager::redirect($controller);
 		}
 
@@ -63,7 +63,7 @@ class NewsletterEditSubscriberController extends ModuleController
 		$common_lang = LangLoader::get('common');
 
 		$form = new HTMLForm(__CLASS__);
-		$form->set_layout_title($this->lang['subscriber.edit']);
+		$form->set_layout_title($this->lang['newsletter.subscriber.edit']);
 
 		$columns = array('*');
 		$condition = "WHERE id = '". $id ."' AND user_id = -1";
@@ -72,7 +72,7 @@ class NewsletterEditSubscriberController extends ModuleController
 		$fieldset = new FormFieldsetHTML('edit-subscriber', $common_lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldMailEditor('mail', $this->lang['subscribe.mail'], $row['mail'],
+		$fieldset->add_field(new FormFieldMailEditor('mail', $this->lang['newsletter.subscriber.email'], $row['mail'],
 			array('required' => true)
 		));
 
@@ -100,11 +100,11 @@ class NewsletterEditSubscriberController extends ModuleController
 		$body_view->put('TEMPLATE', $view);
 		$response = new SiteDisplayResponse($body_view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
-		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->rel());
-		$breadcrumb->add($this->lang['subscriber.edit'], '');
+		$breadcrumb->add($this->lang['newsletter.module.title'], NewsletterUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['newsletter.subscriber.edit'], '');
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['subscriber.edit'], $this->lang['newsletter']);
+		$graphical_environment->set_page_title($this->lang['newsletter.subscriber.edit'], $this->lang['newsletter.module.title']);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsletterUrlBuilder::edit_subscriber($id));
 
 		return $response;
