@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 31
+ * @version     PHPBoost 6.0 - last update: 2021 05 15
  * @since       PHPBoost 1.6 - 2007 01 25
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -49,16 +49,16 @@ if (!empty($stats_referer))
 			$view = new FileTemplate('stats/stats_tables.tpl');
 
 			$view->put_all(array(
-				'C_REFERER' => true,
-				'FULL_URL' => $row['url'] . $row['relative_url'],
+				'C_REFERER'    => true,
+				'FULL_URL'     => $row['url'] . $row['relative_url'],
 				'RELATIVE_URL' => $row['url'] . $row['relative_url'],
-				'TOTAL_VISIT' => $row['total_visit'],
-				'AVERAGE' => $trend_parameters['average'],
-				'LAST_UPDATE' => Date::to_format($row['last_update'], Date::FORMAT_DAY_MONTH_YEAR),
-				'C_PICTURE' => !empty($trend_parameters['picture']),
-				'PICTURE' => $trend_parameters['picture'],
-				'SIGN' => $trend_parameters['sign'],
-				'TREND' => $trend_parameters['trend'],
+				'TOTAL_VISIT'  => $row['total_visit'],
+				'AVERAGE'      => $trend_parameters['average'],
+				'LAST_UPDATE'  => Date::to_format($row['last_update'], Date::FORMAT_DAY_MONTH_YEAR),
+				'C_PICTURE'    => !empty($trend_parameters['picture']),
+				'PICTURE'      => $trend_parameters['picture'],
+				'SIGN'         => $trend_parameters['sign'],
+				'TREND'        => $trend_parameters['trend'],
 			));
 
 			echo $view->display();
@@ -90,14 +90,14 @@ elseif (!empty($stats_keyword))
 			$view = new FileTemplate('stats/stats_tables.tpl');
 
 			$view->put_all(array(
-				'FULL_URL' => $row['url'],
+				'FULL_URL'    => $row['url'],
 				'TOTAL_VISIT' => $row['total_visit'],
-				'AVERAGE' => $trend_parameters['average'],
+				'AVERAGE'     => $trend_parameters['average'],
 				'LAST_UPDATE' => Date::to_format($row['last_update'], Date::FORMAT_DAY_MONTH_YEAR),
-				'C_PICTURE' => !empty($trend_parameters['picture']),
-				'PICTURE' => $trend_parameters['picture'],
-				'SIGN' => $trend_parameters['sign'],
-				'TREND' => $trend_parameters['trend'],
+				'C_PICTURE'   => !empty($trend_parameters['picture']),
+				'PICTURE'     => $trend_parameters['picture'],
+				'SIGN'        => $trend_parameters['sign'],
+				'TREND'       => $trend_parameters['trend'],
 			));
 
 			echo $view->display();

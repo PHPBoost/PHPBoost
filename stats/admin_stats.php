@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 15
+ * @version     PHPBoost 6.0 - last update: 2021 05 15
  * @since       PHPBoost 1.2 - 2005 07 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,7 +15,10 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 $lang = LangLoader::get('common', 'stats');
+$form_lang = LangLoader::get('form-lang');
+//
 $main_lang = LangLoader::get('main');
+//
 
 $stats_config = StatsConfig::load();
 
@@ -31,12 +34,12 @@ if (AppContext::get_request()->get_postvalue('valid', false))
 else
 {
 	$view = new FileTemplate('stats/admin_stats_management.tpl');
-	$view->add_lang($lang);
+	$view->add_lang(array_merge($lang, $form_lang));
 	$view->add_lang($main_lang);
 
 	$view->put_all(array(
 		'ELEMENTS_NUMBER_PER_PAGE' => $stats_config->get_elements_number_per_page(),
-		'READ_AUTHORIZATION' => Authorizations::generate_select(StatsAuthorizationsService::READ_AUTHORIZATIONS, $stats_config->get_authorizations()),
+		'READ_AUTHORIZATION'       => Authorizations::generate_select(StatsAuthorizationsService::READ_AUTHORIZATIONS, $stats_config->get_authorizations()),
 	));
 
 	$view->display();

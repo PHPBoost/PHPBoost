@@ -118,12 +118,12 @@ $lang['user.rank.moderator']     = 'Modérateur';
 $lang['user.rank.administrator'] = 'Administrateur';
 
 // S.E.O.
-$lang['user.seo.profile']            = 'Toutes les informations de profil de    :name.';
+$lang['user.seo.profile']            = 'Toutes les informations de profil de :name.';
 $lang['user.seo.list']               = 'Tableau de la liste des utilisateurs du site.';
 $lang['user.seo.groups']             = 'Utilisateurs de chaque groupe du site.';
 $lang['user.seo.comments']           = 'Tous les commentaires.';
 $lang['user.seo.comments.user']      = 'Tous les commentaires de l\'utilisateur :name.';
-$lang['user.seo.messages']           = 'Tous les messages de l\'utilisateur     :name.';
+$lang['user.seo.messages']           = 'Tous les messages de l\'utilisateur :name.';
 $lang['user.seo.registration']       = 'Renseignez toutes les informations demandées pour créer un compte.';
 $lang['user.seo.login']              = 'Connectez-vous au site pour accéder au contenu protégé.';
 $lang['user.seo.forgotten.password'] = 'Renseignez toutes les informations demandées pour recevoir un lien pour changer de mot de passe.';

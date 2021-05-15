@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 11
+ * @version     PHPBoost 6.0 - last update: 2021 05 15
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -15,6 +15,7 @@
 
 $lang['common.avatar']       = 'Avatar';
 $lang['common.color']        = 'Color';
+$lang['common.colors']       = 'Colors';
 $lang['common.content']      = 'Content';
 $lang['common.description']  = 'Description';
 $lang['common.filter']       = 'Filter';
@@ -23,16 +24,21 @@ $lang['common.home']         = 'Home';
 $lang['common.id']           = 'ID';
 $lang['common.image']        = 'Image';
 $lang['common.informations'] = 'Informations';
+$lang['common.message']      = 'Message';
+$lang['common.messages']     = 'Messages';
 $lang['common.moderation']   = 'Moderation';
 $lang['common.module']       = 'Module';
 $lang['common.name']         = 'Name';
 $lang['common.options']      = 'Options';
 $lang['common.other']        = 'Other';
-$lang['common.pages']        = 'Pages';
 $lang['common.participants'] = 'Participants';
 $lang['common.root']         = 'Root';
 $lang['common.statistics']   = 'Statistics';
 $lang['common.suggestions']  = 'Suggestions';
+$lang['common.template']     = 'Template';
+$lang['common.templates']    = 'Templates';
+$lang['common.themes']       = 'Themes';
+$lang['common.themes']       = 'Themes';
 $lang['common.title']        = 'Title';
 $lang['common.type']         = 'Type';
 $lang['common.update']       = 'Update';
@@ -47,14 +53,15 @@ $lang['common.and']     = 'And';
 $lang['common.yes']     = 'Yes';
 $lang['common.no']      = 'No';
 
-$lang['common.always']      = 'Always';
-$lang['common.unknown']     = 'Unknown';
-$lang['common.never']       = 'Never';
-$lang['common.unspecified'] = 'Unspecified';
-$lang['common.default']     = 'Default';
-$lang['common.default.by']  = 'By default';
-$lang['common.before']      = 'Before';
-$lang['common.after']       = 'After';
+$lang['common.always']        = 'Always';
+$lang['common.unknown']       = 'Unknown';
+$lang['common.indeterminate'] = 'Indeterminate';
+$lang['common.never']         = 'Never';
+$lang['common.unspecified']   = 'Unspecified';
+$lang['common.default']       = 'Default';
+$lang['common.default.by']    = 'By default';
+$lang['common.before']        = 'Before';
+$lang['common.after']         = 'After';
 
 // Actions
 $lang['common.read.more']    = 'Read more';
@@ -93,6 +100,7 @@ $lang['common.constraint.required']     = 'Required';
 $lang['common.constraint.not.required'] = 'Not required';
 
 // Count
+$lang['common.number']           = 'Number';
 $lang['common.items.number']     = 'Items number';
 $lang['common.no.item.now']      = 'No item is available for the moment';
 $lang['common.views']            = 'views';
@@ -105,6 +113,10 @@ $lang['common.minimum']          = 'Minimum';
 $lang['common.dimensions']       = 'Dimensions';
 $lang['common.size']             = 'Size';
 $lang['common.unknown.size']     = 'Unknown size';
+$lang['common.average']          = 'Average';
+$lang['common.percent']          = 'Percent';
+$lang['common.percentage']       = 'Percentage';
+$lang['common.total']            = 'Total';
 $lang['common.unlimited']        = 'Unlimited';
 $lang['common.all']              = 'All';
 $lang['common.all.e']            = 'All';
@@ -177,6 +189,8 @@ $lang['common.add.note'] = 'Add a note';
 $lang['common.no.note']  = 'No note';
 
 // Pagination
+$lang['common.page']                = 'Page';
+$lang['common.pages']               = 'Pages';
 $lang['common.pagination.first']    = 'To first page';
 $lang['common.pagination.previous'] = 'To previous page';
 $lang['common.pagination.next']     = 'To next page';
@@ -203,7 +217,7 @@ $lang['common.select']              = 'Select';
 $lang['common.select.element']      = 'Select this element';
 $lang['common.select.elements']     = 'Select elements';
 $lang['common.select.all.elements'] = 'Select all elements';
-$lang['common.click.to.select'] = 'Click to select an option';
+$lang['common.click.to.select']     = 'Click to select an option';
 
 // Sort
 $lang['common.filters']                 = 'Filters';

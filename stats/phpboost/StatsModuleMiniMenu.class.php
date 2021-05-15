@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 31
+ * @version     PHPBoost 6.0 - last update: 2021 05 15
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -43,13 +43,19 @@ class StatsModuleMiniMenu extends ModuleMiniMenu
 		MenuService::assign_positions_conditions($view, $this->get_block());
 
 		$stats_cache = StatsCache::load();
-		$l_member_registered = ($stats_cache->get_stats_properties('nbr_members') > 1) ? $lang['member.registered.s'] : $lang['member.registered'];
 
 		$group_color = User::get_group_color($stats_cache->get_stats_properties('last_member_groups'), $stats_cache->get_stats_properties('last_member_level'));
 
 		$view->put_all(array(
-			'L_USER_REGISTERED' => sprintf($l_member_registered, $stats_cache->get_stats_properties('nbr_members')),
-			'U_LINK_LAST_USER' => '<a href="' . UserUrlBuilder::profile($stats_cache->get_stats_properties('last_member_id'))->rel() . '" class="' . UserService::get_level_class($stats_cache->get_stats_properties('last_member_level')) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $stats_cache->get_stats_properties('last_member_login') . '</a>'
+			'C_SEVERAL_REGISTERED_USERS' => $stats_cache->get_stats_properties('nbr_members') > 1,
+			'C_LAST_USER_GROUP_COLOR'    => !empty($group_color),
+
+			'REGISTERED_USERS_NUMBER' => $stats_cache->get_stats_properties('nbr_members'),
+			'LAST_USER_LEVEL_CLASS'   => UserService::get_level_class($stats_cache->get_stats_properties('last_member_level')),
+			'LAST_USER_GROUP_COLOR'   => $group_color,
+			'LAST_USER_DISPLAY_NAME'  => $stats_cache->get_stats_properties('last_member_login'),
+
+			'U_LAST_USER_PROFILE' => UserUrlBuilder::profile($stats_cache->get_stats_properties('last_member_id'))->rel(),
 		));
 
 		return $view->render();

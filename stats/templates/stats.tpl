@@ -6,60 +6,60 @@
 		<div class="content-container">
 			<nav id="menustats">
 				<a href="#" class="js-menu-button" onclick="open_submenu('menustats');return false;" aria-label="${LangLoader::get_message('categories', 'categories-common')}">
-					<i class="fa fa-fw fa-bars" aria-hidden="true"></i> ${LangLoader::get_message('categories', 'categories-common')}
+					<i class="fa fa-fw fa-bars" aria-hidden="true"></i> ${LangLoader::get_message('category.categories', 'category-lang')}
 				</a>
 				<ul>
 					<li>
-						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_SITE}#stats" aria-label="{@site}">
-							<i class="fa fa-fw fa-home" aria-hidden="true"></i> <span>{@site}</span>
+						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_SITE}#stats" aria-label="{@stats.website}">
+							<i class="fa fa-fw fa-home" aria-hidden="true"></i> <span>{@stats.website}</span>
 						</a>
 					</li>
 					<li>
-						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_USERS}#stats" aria-label="{@member_s}">
-							<i class="fa fa-fw fa-users" aria-hidden="true"></i> <span>{@member_s}</span>
+						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_USERS}#stats" aria-label="{@user.members}">
+							<i class="fa fa-fw fa-users" aria-hidden="true"></i> <span>{@user.members}</span>
 						</a>
 					</li>
 					<li>
-						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_VISIT}#stats" aria-label="{@guest_s}">
-							<i class="fa fa-fw fa-eye" aria-hidden="true"></i> <span>{@guest_s}</span>
+						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_VISIT}#stats" aria-label="{@user.guests}">
+							<i class="fa fa-fw fa-eye" aria-hidden="true"></i> <span>{@user.guests}</span>
 						</a>
 					</li>
 					<li>
-						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_PAGES}#stats" aria-label="{@page.s}">
-							<i class="far fa-fw fa-file" aria-hidden="true"></i> <span>{@page.s}</span>
+						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_PAGES}#stats" aria-label="{@common.pages}">
+							<i class="far fa-fw fa-file" aria-hidden="true"></i> <span>{@common.pages}</span>
 						</a>
 					</li>
 					<li>
-						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_BROWSER}#stats" aria-label="{@browser.s}">
-							<i class="fa fa-fw fa-globe" aria-hidden="true"></i> <span>{@browser.s}</span>
+						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_BROWSER}#stats" aria-label="{@stats.browsers}">
+							<i class="fa fa-fw fa-globe" aria-hidden="true"></i> <span>{@stats.browsers}</span>
 						</a>
 					</li>
 					<li>
-						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_OS}#stats" aria-label="{@os}">
-							<i class="fa fa-fw fa-laptop" aria-hidden="true"></i> <span>{@os}</span>
+						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_OS}#stats" aria-label="{@stats.os}">
+							<i class="fa fa-fw fa-laptop" aria-hidden="true"></i> <span>{@stats.os}</span>
 						</a>
 					</li>
 					<li>
-						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_LANG}#stats" aria-label="{@stat.lang}">
-							<i class="fa fa-fw fa-flag" aria-hidden="true"></i> <span>{@stat.lang}</span>
+						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_LANG}#stats" aria-label="{@stats.countries}">
+							<i class="fa fa-fw fa-flag" aria-hidden="true"></i> <span>{@stats.countries}</span>
 						</a>
 					</li>
 					<li>
-						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_REFERER}#stats" aria-label="{@referer.s}">
-							<i class="fa fa-fw fa-share-square" aria-hidden="true"></i> <span>{@referer.s}</span>
+						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_REFERER}#stats" aria-label="{@stats.referers}">
+							<i class="fa fa-fw fa-share-square" aria-hidden="true"></i> <span>{@stats.referers}</span>
 						</a>
 					</li>
 					<li>
-						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_KEYWORD}#stats" aria-label="{@keyword.s}">
-							<i class="fa fa-fw fa-key" aria-hidden="true"></i> <span>{@keyword.s}</span>
+						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_KEYWORD}#stats" aria-label="{@common.keywords}">
+							<i class="fa fa-fw fa-key" aria-hidden="true"></i> <span>{@common.keywords}</span>
 						</a>
 					</li>
 					# IF IS_ADMIN #
-					<li>
-						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_ROBOTS}#stats" aria-label="{@robot_s}">
-							<i class="fa fa-fw fa-search" aria-hidden="true"></i> <span>{@robot_s}</span>
-						</a>
-					</li>
+						<li>
+							<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_ROBOTS}#stats" aria-label="{@stats.robots}">
+								<i class="fa fa-fw fa-search" aria-hidden="true"></i> <span>{@stats.robots}</span>
+							</a>
+						</li>
 					# ENDIF #
 				</ul>
 			</nav>
@@ -67,16 +67,16 @@
 			# IF C_STATS_SITE #
 				<article class="content">
 					<header>
-						<h2>{@site}</h2>
+						<h2>{@stats.website}</h2>
 					</header>
 					<table class="table">
 						<thead>
 							<tr>
 								<th>
-									{@start}
+									{@stats.website.creation.date}
 								</th>
 								<th>
-									{@version} PHPBoost
+									{@stats.phpboost.version}
 								</th>
 							</tr>
 						</thead>
@@ -97,32 +97,32 @@
 			# IF C_STATS_USERS #
 				<article class="content">
 					<header>
-						<h2>{@member_s}</h2>
+						<h2>{@user.members}</h2>
 					</header>
 					<table class="table">
 						<thead>
 							<tr>
 								<th>
-									{@member_s}
+									{@user.members}
 								</th>
 								<th>
-									{@last.member}
+									{@stats.last.member}
 								</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
 								<td>
-									{USERS}
+									{USERS_NUMBER}
 								</td>
 								<td>
-									<a href="{U_LAST_USER_PROFILE}" class="{LAST_USER_LEVEL_CLASS}" # IF C_LAST_USER_GROUP_COLOR # style="color:{LAST_USER_GROUP_COLOR}" # ENDIF #>{LAST_USER}</a>
+									<a href="{U_LAST_USER_PROFILE}" class="{LAST_USER_LEVEL_CLASS}" # IF C_LAST_USER_GROUP_COLOR # style="color:{LAST_USER_GROUP_COLOR}" # ENDIF #>{LAST_USER_DISPLAY_NAME}</a>
 								</td>
 							 </tr>
 						</tbody>
 					</table>
 
-					<h3>{@theme_s}</h3>
+					<h3>{@common.themes}</h3>
 					<div class="align-center">
 						{GRAPH_RESULT_THEME}
 					</div>
@@ -130,13 +130,16 @@
 						<thead>
 							<tr>
 								<th>
-									{@theme_s}
+									{@common.themes}
 								</th>
 								<th>
-									{@colors}
+									{@common.percentage}
 								</th>
 								<th>
-									{@member_s}
+									{@common.colors}
+								</th>
+								<th>
+									{@user.members}
 								</th>
 							</tr>
 						</thead>
@@ -144,7 +147,10 @@
 							# START templates #
 								<tr>
 									<td>
-										<div class="flex-between">{templates.THEME} <span>{templates.PERCENT}%</span></div>
+										{templates.THEME}
+									</td>
+									<td>
+										{templates.PERCENT}%
 									</td>
 									<td>
 										<div class="stats-color-square" style="background-color: {templates.COLOR};"></div>
@@ -158,7 +164,7 @@
 					</table>
 
 					# IF C_DISPLAY_SEX #
-						<h3>{@sex}</h3>
+						<h3>{@user.sex}</h3>
 						<div class="align-center">
 							{GRAPH_RESULT_SEX}
 						</div>
@@ -166,13 +172,13 @@
 							<thead>
 								<tr>
 									<th>
-										{@sex}
+										{@user.sex}
 									</th>
 									<th>
-										{@colors}
+										{@common.colors}
 									</th>
 									<th>
-										{@member_s}
+										{@user.members}
 									</th>
 								</tr>
 							</thead>
@@ -194,7 +200,7 @@
 						</table>
 					# ENDIF #
 
-					<h3>{@top.10.posters}</h3>
+					<h3>{@stats.top.10.contributors}</h3>
 					<table class="table">
 						<thead>
 							<tr>
@@ -202,10 +208,10 @@
 									N&deg;
 								</th>
 								<th>
-									${LangLoader::get_message('display_name', 'user-common')}
+									{@user.display.name}
 								</th>
 								<th>
-									{@message_s}
+									{@common.messages}
 								</th>
 							</tr>
 						</thead>
@@ -232,36 +238,36 @@
 				<form action="stats.php#stats" method="get">
 					<article class="content">
 						<header>
-							<h2>{@guest_s}</h2>
+							<h2>{@user.guests}</h2>
 						</header>
 						<div class="cell-flex cell-tile">
 							<div class="cell">
 								<div class="cell-header">
-									<span class="cell-name">{@total}: {VISIT_TOTAL}</span><span>{@today}: {VISIT_DAY}</span>
+									<span class="cell-name">{@common.total}: {VISIT_TOTAL}</span><span>{@date.today}: {VISIT_DAY}</span>
 								</div>
 								<div class="cell-form grouped-inputs">
-									<a class="grouped-element" href="stats{U_PREVIOUS_LINK}#stats" aria-label="${LangLoader::get_message('previous', 'common')}"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+									<a class="grouped-element" href="stats{U_PREVIOUS_LINK}#stats" aria-label="{@common.previous}"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
 									# IF C_STATS_DAY #
-									<select name="d">
-										{STATS_DAY}
-									</select>
+										<select name="d">
+											{STATS_DAY}
+										</select>
 									# ENDIF #
 									# IF C_STATS_MONTH #
-									<select name="m">
-										{STATS_MONTH}
-									</select>
+										<select name="m">
+											{STATS_MONTH}
+										</select>
 									# ENDIF #
 									# IF C_STATS_YEAR #
-									<select name="y">
-										{STATS_YEAR}
-									</select>
+										<select name="y">
+											{STATS_YEAR}
+										</select>
 									# ENDIF #
-									<a class="grouped-element" href="stats{U_NEXT_LINK}#stats" aria-label="${LangLoader::get_message('next', 'common')}"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+									<a class="grouped-element" href="stats{U_NEXT_LINK}#stats" aria-label="{@common.next}"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
 								</div>
 								<div class="cell-body">
 									<div class="cell-content align-center">
 										<input type="hidden" name="{TYPE}" value="1">
-										<button type="submit" name="date" value="true" class="button submit">{@submit}</button>
+										<button type="submit" name="date" value="true" class="button submit">{@form.submit}</button>
 										<input type="hidden" name="token" value="{TOKEN}">
 									</div>
 								</div>
@@ -269,8 +275,8 @@
 									<ul>
 										# IF U_YEAR #<li>{MONTH} {U_YEAR}</li># ENDIF #
 										<li class="li-stretch">
-											<span>{@total}: {SUM_NBR}</span>
-											<span>{@average}: {MOY_NBR}</span>
+											<span>{@common.total}: {SUM_NBR}</span>
+											<span>{@common.average}: {MOY_NBR}</span>
 										</li>
 									</ul>
 								</div>
@@ -285,22 +291,22 @@
 													</td>
 
 													# START values #
-													<td>
-														<table>
-															<tbody>
-																# START values.head #
-																<tr>
-																	<td class="table-values-head">
-																	</td>
-																</tr>
-																# END values.head #
-																<tr>
-																	<td class="table-values" style="height: {values.HEIGHT}px;">
-																	</td>
-																</tr>
-															</tbody>
-														</table>
-													</td>
+														<td>
+															<table>
+																<tbody>
+																	# START values.head #
+																	<tr>
+																		<td class="table-values-head">
+																		</td>
+																	</tr>
+																	# END values.head #
+																	<tr>
+																		<td class="table-values" style="height: {values.HEIGHT}px;">
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</td>
 													# END values #
 
 													# START end_td #
@@ -313,9 +319,9 @@
 														0
 													</td>
 													# START legend #
-													<td>
-														{legend.LEGEND}
-													</td>
+														<td>
+															{legend.LEGEND}
+														</td>
 													# END legend #
 												</tr>
 												<tr>
@@ -336,10 +342,10 @@
 							<thead>
 								<tr>
 									<th>
-										{@date}
+										{@date.date}
 									</th>
 									<th>
-										{@guest_s}
+										{@user.guests}
 									</th>
 								</tr>
 							</thead>
@@ -363,7 +369,7 @@
 			# IF C_STATS_BROWSERS #
 				<article class="content">
 					<header>
-						<h2>{@browser.s}</h2>
+						<h2>{@stats.browsers}</h2>
 					</header>
 					<div class="align-center">
 						{GRAPH_RESULT}
@@ -371,24 +377,24 @@
 					<table class="table">
 						<thead>
 							<tr>
-								<th>{@browser.s}</th>
-								<th>{@colors}</th>
-								<th>{@percentage}</th>
+								<th>{@stats.browsers}</th>
+								<th>{@common.colors}</th>
+								<th>{@common.percentage}</th>
 							</tr>
 						</thead>
 						<tbody>
 							# START list #
-							<tr>
-								<td>
-									{list.IMG}
-								</td>
-								<td>
-									<div class="stats-color-square" style="background-color: {list.COLOR};"></div>
-								</td>
-								<td>
-									{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
-								</td>
-							</tr>
+								<tr>
+									<td>
+										{list.IMG}
+									</td>
+									<td>
+										<div class="stats-color-square" style="background-color: {list.COLOR};"></div>
+									</td>
+									<td>
+										{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
+									</td>
+								</tr>
 							# END list #
 						</tbody>
 					</table>
@@ -398,7 +404,7 @@
 			# IF C_STATS_OS #
 				<article class="content">
 					<header>
-						<h2>{@os}</h2>
+						<h2>{@stats.os}</h2>
 					</header>
 					<div class="align-center">
 						{GRAPH_RESULT}
@@ -406,24 +412,24 @@
 					<table class="table">
 						<thead>
 							<tr>
-								<th>{@os}</th>
-								<th>{@colors}</th>
-								<th>{@percentage}</th>
+								<th>{@stats.os}</th>
+								<th>{@common.colors}</th>
+								<th>{@common.percentage}</th>
 							</tr>
 						</thead>
 						<tbody>
 							# START list #
-							<tr>
-								<td>
-									{list.IMG}
-								</td>
-								<td>
-									<div class="stats-color-square" style="background-color: {list.COLOR};"></div>
-								</td>
-								<td>
-									{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
-								</td>
-							</tr>
+								<tr>
+									<td>
+										{list.IMG}
+									</td>
+									<td>
+										<div class="stats-color-square" style="background-color: {list.COLOR};"></div>
+									</td>
+									<td>
+										{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
+									</td>
+								</tr>
 							# END list #
 						</tbody>
 					</table>
@@ -433,7 +439,7 @@
 			# IF C_STATS_LANG #
 				<article class="content">
 					<header>
-						<h2>{@stat.lang}</h2>
+						<h2>{@stats.countries}</h2>
 					</header>
 					<div class="align-center">
 						{GRAPH_RESULT}
@@ -441,24 +447,24 @@
 					<table class="table">
 						<thead>
 							<tr>
-								<th>{@stat.lang}</th>
-								<th>{@colors}</th>
-								<th>{@percentage}</th>
+								<th>{@stats.countries}</th>
+								<th>{@common.colors}</th>
+								<th>{@common.percentage}</th>
 							</tr>
 						</thead>
 						<tbody>
 							# START list #
-							<tr>
-								<td>
-									{list.IMG}
-								</td>
-								<td>
-									<div class="stats-color-square" style="background-color: {list.COLOR};"></div>
-								</td>
-								<td>
-									{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
-								</td>
-							</tr>
+								<tr>
+									<td>
+										{list.IMG}
+									</td>
+									<td>
+										<div class="stats-color-square" style="background-color: {list.COLOR};"></div>
+									</td>
+									<td>
+										{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
+									</td>
+								</tr>
 							# END list #
 						</tbody>
 					</table>
@@ -509,69 +515,69 @@
 
 				<article class="content">
 					<header>
-						<h2>{@referer.s}</h2>
+						<h2>{@stats.referers}</h2>
 					</header>
 					<table class="table">
 						<thead>
 							<tr>
 								<th>
-									{@referer.s}
+									{@stats.referers}
 								</th>
 								<th class="total-head">
-									{@total.visit}
+									{@stats.total.visits}
 								</th>
 								<th class="average-head">
-									{@average.visit}
+									{@stats.average.visits}
 								</th>
 								<th class="last-update-head">
-									{@last.update}
+									{@stats.last.visit.date}
 								</th>
 								<th class="trend-head">
-									{@trend}
+									{@stats.trend}
 								</th>
 							</tr>
 						</thead>
 						<tbody>
 							# START referer_list #
-							<tr>
-								<td>
-									<a class="far fa-plus-square" style="cursor: pointer;" onclick="XMLHttpRequest_referer({referer_list.ID})" id="img-url-{referer_list.ID}"></a> <span class="smaller">({referer_list.NBR_LINKS})</span> <a href="{referer_list.URL}">{referer_list.URL}</a>	<span id="load{referer_list.ID}"></span>
-								</td>
-								<td>
-									{referer_list.TOTAL_VISIT}
-								</td>
-								<td>
-									{referer_list.AVERAGE_VISIT}
-								</td>
-								<td>
-									{referer_list.LAST_UPDATE}
-								</td>
-								<td>
-									{referer_list.TREND}
-								</td>
-							</tr>
-							<tr>
-								<td colspan="5" >
-									<div id="url{referer_list.ID}" style="display: none;width: 100%;"></div>
-								</td>
-							</tr>
+								<tr>
+									<td>
+										<a class="far fa-plus-square" style="cursor: pointer;" onclick="XMLHttpRequest_referer({referer_list.ID})" id="img-url-{referer_list.ID}"></a> <span class="smaller">({referer_list.NBR_LINKS})</span> <a href="{referer_list.URL}">{referer_list.URL}</a>	<span id="load{referer_list.ID}"></span>
+									</td>
+									<td>
+										{referer_list.TOTAL_VISIT}
+									</td>
+									<td>
+										{referer_list.AVERAGE_VISIT}
+									</td>
+									<td>
+										{referer_list.LAST_UPDATE}
+									</td>
+									<td>
+										{referer_list.TREND}
+									</td>
+								</tr>
+								<tr>
+									<td colspan="5" >
+										<div id="url{referer_list.ID}" style="display: none;width: 100%;"></div>
+									</td>
+								</tr>
 							# END referer_list #
 							# IF NOT C_REFERERS #
-							<tr>
-								<td colspan="5">
-								{@no.referer}
-								</td>
-							</tr>
+								<tr>
+									<td colspan="5">
+										<div class="message-helper bgc notice">{@common.no.item.now}</div>
+									</td>
+								</tr>
 							# ENDIF #
 						</tbody>
 						# IF C_PAGINATION #
-						<tfoot>
-							<tr>
-								<td colspan="5">
-									# INCLUDE PAGINATION #
-								</td>
-							</tr>
-						</tfoot>
+							<tfoot>
+								<tr>
+									<td colspan="5">
+										# INCLUDE PAGINATION #
+									</td>
+								</tr>
+							</tfoot>
 						# ENDIF #
 					</table>
 				</article>
@@ -608,69 +614,69 @@
 				</script>
 				<article class="content">
 					<header>
-						<h2>{@keyword.s}</h2>
+						<h2>{@common.keywords}</h2>
 					</header>
 					<table class="table">
 						<thead>
 							<tr>
 								<th>
-									{@keyword.s}
+									{@common.keywords}
 								</th>
 								<th class="total-head">
-									{@total.visit}
+									{@stats.total.visits}
 								</th>
 								<th class="average-head">
-									{@average.visit}
+									{@stats.average.visits}
 								</th>
 								<th class="last-update-head">
-									{@last.update}
+									{@stats.last.visit.date}
 								</th>
 								<th class="trend-head">
-									{@trend}
+									{@stats.trend}
 								</th>
 							</tr>
 						</thead>
 						<tbody>
 							# START keyword_list #
-							<tr>
-								<td>
-									<a class="far fa-plus-square" style="cursor: pointer;" onclick="XMLHttpRequest_referer({keyword_list.ID})" id="img-url-{keyword_list.ID}"></a> <span class="smaller">({keyword_list.NBR_LINKS})</span> {keyword_list.KEYWORD} <span id="load{keyword_list.ID}"></span>
-								</td>
-								<td>
-									{keyword_list.TOTAL_VISIT}
-								</td>
-								<td>
-									{keyword_list.AVERAGE_VISIT}
-								</td>
-								<td>
-									{keyword_list.LAST_UPDATE}
-								</td>
-								<td>
-									{keyword_list.TREND}
-								</td>
-							</tr>
-							<tr>
-								<td colspan="5">
-									<div id="url{keyword_list.ID}" style="display: none;width: 100%;"></div>
-								</td>
-							</tr>
+								<tr>
+									<td>
+										<a class="far fa-plus-square" style="cursor: pointer;" onclick="XMLHttpRequest_referer({keyword_list.ID})" id="img-url-{keyword_list.ID}"></a> <span class="smaller">({keyword_list.NBR_LINKS})</span> {keyword_list.KEYWORD} <span id="load{keyword_list.ID}"></span>
+									</td>
+									<td>
+										{keyword_list.TOTAL_VISIT}
+									</td>
+									<td>
+										{keyword_list.AVERAGE_VISIT}
+									</td>
+									<td>
+										{keyword_list.LAST_UPDATE}
+									</td>
+									<td>
+										{keyword_list.TREND}
+									</td>
+								</tr>
+								<tr>
+									<td colspan="5">
+										<div id="url{keyword_list.ID}" style="display: none;width: 100%;"></div>
+									</td>
+								</tr>
 							# END keyword_list #
 							# IF NOT C_KEYWORDS #
-							<tr>
-								<td colspan="5">
-								{@no.keyword}
-								</td>
-							</tr>
+								<tr>
+									<td colspan="5">
+										<div class="message-helper bgc notice">{@common.no.item.now}</div>
+									</td>
+								</tr>
 							# ENDIF #
 						</tbody>
 						# IF C_PAGINATION #
-						<tfoot>
-							<tr>
-								<td colspan="5">
-									# INCLUDE PAGINATION #
-								</td>
-							</tr>
-						</tfoot>
+							<tfoot>
+								<tr>
+									<td colspan="5">
+										# INCLUDE PAGINATION #
+									</td>
+								</tr>
+							</tfoot>
 						# ENDIF #
 					</table>
 				</article>
@@ -681,27 +687,27 @@
 					<form action="stats.php?bot=1#stats" name="form" method="post" onsubmit="return check_form();">
 						<article class="content">
 							<header>
-								<h2>{@robot_s}</h2>
+								<h2>{@stats.robots}</h2>
 							</header>
 							# IF C_ROBOTS_DATA #
 								<div class="align-center">
-									<img class="fieldset-img" src="display_stats.php?bot=1" alt="{@robot_s}" />
+									<img class="fieldset-img" src="display_stats.php?bot=1" alt="{@stats.robots}" />
 								</div>
 							# ENDIF #
 							<table class="table">
 								<thead>
 									<tr>
 										<th>
-											{@robot_s}
+											{@stats.robots}
 										</th>
 										<th>
-											{@colors}
+											{@common.colors}
 										</th>
 										<th>
-											{@visits.number}
+											{@common.visits.number}
 										</th>
 										<th>
-											{@last.seen}
+											{@stats.last.visit}
 										</th>
 									</tr>
 								</thead>
@@ -723,28 +729,28 @@
 										</tr>
 									# END list #
 									# IF NOT C_ROBOTS_DATA #
-									<tr>
-										<td colspan="4">
-										${LangLoader::get_message('no_item_now', 'common')}
-										</td>
-									</tr>
+										<tr>
+											<td colspan="4">
+												<div class="message-helper bgc notice">{@common.no.item.now}</div>
+											</td>
+										</tr>
 									# ENDIF #
 								</tbody>
 							</table>
-								# IF C_ROBOTS_DATA #
+							# IF C_ROBOTS_DATA #
 								<fieldset class="fieldset-submit">
-									<legend>{@erase.list}</legend>
+									<legend>{@stats.erase.list}</legend>
 									<div class="fieldset-inset">
-										<button type="submit" name="erase" value="true" class="button submit">{@erase.list}</button>
-										<button type="submit" name="erase-occasional" value="true" class="button submit">{@erase.occasional}</button>
+										<button type="submit" name="erase" value="true" class="button submit">{@stats.erase.list}</button>
+										<button type="submit" name="erase-occasional" value="true" class="button submit">{@stats.erase.occasional}</button>
 										<input type="hidden" name="token" value="{TOKEN}">
 									</div>
 								</fieldset>
 							# ENDIF #
 						</article>
 					</form>
-				# ENDIF #			
-			# ENDIF #			
+				# ENDIF #
+			# ENDIF #
 		</div>
 	</div>
 	<footer></footer>

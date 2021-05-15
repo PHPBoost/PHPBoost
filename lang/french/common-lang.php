@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 11
+ * @version     PHPBoost 6.0 - last update: 2021 05 15
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -15,6 +15,7 @@
 
 $lang['common.avatar']       = 'Avatar';
 $lang['common.color']        = 'Couleur';
+$lang['common.colors']       = 'Couleurs';
 $lang['common.content']      = 'Contenu';
 $lang['common.description']  = 'Description';
 $lang['common.filter']       = 'Filtre';
@@ -23,16 +24,21 @@ $lang['common.home']         = 'Accueil';
 $lang['common.id']           = 'ID';
 $lang['common.image']        = 'Image';
 $lang['common.informations'] = 'Informations';
+$lang['common.message']      = 'Message';
+$lang['common.messages']     = 'Messages';
 $lang['common.moderation']   = 'Moderation';
 $lang['common.module']       = 'Module';
 $lang['common.name']         = 'Nom';
 $lang['common.options']      = 'Options';
 $lang['common.other']        = 'Autre';
-$lang['common.pages']        = 'Pages';
 $lang['common.participants'] = 'Participants';
 $lang['common.root']         = 'Racine';
 $lang['common.statistics']   = 'Statistiques';
 $lang['common.suggestions']  = 'Suggestions';
+$lang['common.template']     = 'Template';
+$lang['common.templates']    = 'Templates';
+$lang['common.themes']       = 'Thèmes';
+$lang['common.themes']       = 'Thèmes';
 $lang['common.title']        = 'Titre';
 $lang['common.type']         = 'Type';
 $lang['common.update']       = 'Mise à jour';
@@ -47,14 +53,15 @@ $lang['common.and']     = 'Et';
 $lang['common.yes']     = 'Oui';
 $lang['common.no']      = 'Non';
 
-$lang['common.always']      = 'Toujours';
-$lang['common.unknown']     = 'Inconnu';
-$lang['common.never']       = 'Jamais';
-$lang['common.unspecified'] = 'Non précisé';
-$lang['common.default']     = 'Défaut';
-$lang['common.default.by']  = 'Par défaut';
-$lang['common.before']      = 'Avant';
-$lang['common.after']       = 'Après';
+$lang['common.always']        = 'Toujours';
+$lang['common.unknown']       = 'Inconnu';
+$lang['common.indeterminate'] = 'Indeterminé';
+$lang['common.never']         = 'Jamais';
+$lang['common.unspecified']   = 'Non précisé';
+$lang['common.default']       = 'Défaut';
+$lang['common.default.by']    = 'Par défaut';
+$lang['common.before']        = 'Avant';
+$lang['common.after']         = 'Après';
 
 // Actions
 $lang['common.read.more']    = 'Lire la suite';
@@ -93,6 +100,7 @@ $lang['common.constraint.required']     = 'Requis';
 $lang['common.constraint.not.required'] = 'Non requis';
 
 // Count
+$lang['common.number']           = 'Nombre';
 $lang['common.items.number']     = 'Nombre d\'éléments';
 $lang['common.no.item.now']      = 'Aucun élément n\'est disponible pour le moment';
 $lang['common.views']            = 'vues';
@@ -105,6 +113,10 @@ $lang['common.minimum']          = 'Minimum';
 $lang['common.dimensions']       = 'Dimensions';
 $lang['common.size']             = 'Taille';
 $lang['common.unknown.size']     = 'Taille inconnue';
+$lang['common.average']          = 'Moyenne';
+$lang['common.percent']          = 'Pourcent';
+$lang['common.percentage']       = 'Pourcentage';
+$lang['common.total']            = 'Total';
 $lang['common.unlimited']        = 'Illimité';
 $lang['common.all']              = 'Tous';
 $lang['common.all.e']            = 'Toutes';
@@ -177,6 +189,8 @@ $lang['common.add.note'] = 'Noter';
 $lang['common.no.note']  = 'Aucune note';
 
 // Pagination
+$lang['common.page']                = 'Page';
+$lang['common.pages']               = 'Pages';
 $lang['common.pagination.first']    = 'Vers la première page';
 $lang['common.pagination.previous'] = 'Vers la page précédente';
 $lang['common.pagination.next']     = 'Vers la page suivante';

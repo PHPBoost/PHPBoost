@@ -15,53 +15,42 @@
 ####################################################
 
 $lang['stats.module.title'] = 'Statistics';
-$lang['more.stats'] = 'More statistics';
-$lang['last.member'] = 'Latest member';
-$lang['percentage'] = 'Percentage';
-$lang['member.registered'] = '<strong>%d</strong> registered member';
-$lang['member.registered.s'] = '<strong>%d</strong> registered members';
-$lang['admin.authorizations'] = 'Permissions';
-$lang['admin.authorizations.read'] = 'Permission to display the statistics';
-$lang['config.elements.number.per.page'] = 'Elements number per page';
-$lang['config.elements.number.per.page.explain'] = 'For referent websites and keywords.';
-$lang['config.require.elements.number'] = 'The number of elements per page can\'t be null.';
+$lang['stats.config.module.title'] = 'Statistics module configuration';
+
+$lang['stats.items.per.page.clue'] = 'For referent websites and keywords.';
+$lang['stats.require.items.number'] = 'The number of elements per page can\'t be null.';
 
 
-// Robots
-$lang['robot'] = 'Robot';
-$lang['robots'] = 'Robots';
-$lang['unknown_bot'] = 'Unknown robot';
-$lang['erase.list'] = 'Erase list';
-$lang['erase.occasional'] = 'Erase occasional bots (0%)';
-$lang['visits.number'] = 'Visits number';
-$lang['last.seen'] = 'Last seen';
-$lang['last.seen.unknown'] = 'A long time ago';
-
-// Statistiques
-$lang['site'] = 'Site';
-$lang['referer.s'] = 'Referent websites';
-$lang['no.referer'] = 'no referent website';
-$lang['page.s'] = 'Displayed pages';
-$lang['browser.s'] = 'Browsers';
-$lang['keyword.s'] = 'Keywords';
-$lang['no.keyword'] = 'no keyword';
-$lang['os'] = 'Operating systems';
-$lang['number'] = 'Number of ';
-$lang['start'] = 'Creation of the website';
-$lang['stat.lang'] = 'Visitor\'s Countries';
-$lang['visits.year'] = 'See statistics for the year';
-$lang['unknown'] = 'Unknown';
-$lang['top.10.posters'] = 'Top 10: posters';
-$lang['version'] = 'Version';
-$lang['colors'] = 'Colors';
-$lang['calendar'] = 'Calendar';
-$lang['events'] = 'Events';
-
-// Referent websites
-$lang['total.visit'] = 'Total visits';
-$lang['average.visit'] = 'Average visits';
-$lang['trend'] = 'Trend';
-$lang['last.update'] = 'Last visit';
+// Stats
+$lang['stats.more.stats'] = 'More statistics';
+$lang['stats.see.year.stats'] = 'See statistics for the year';
+$lang['stats.total.visits'] = 'Total visits';
+$lang['stats.average.visits'] = 'Average visits';
+$lang['stats.trend'] = 'Trend';
+$lang['stats.last.visit.date'] = 'Last visit';
+	// Website
+$lang['stats.website'] = 'Website';
+$lang['stats.website.creation.date'] = 'Creation of the website';
+$lang['stats.phpboost.version'] = 'Current version';
+	// Members
+$lang['stats.last.member'] = 'Latest member';
+$lang['stats.top.10.contributors'] = 'Top 10 content writers';
+$lang['stats.registered.member'] = 'registered member';
+$lang['stats.registered.members'] = 'registered members';
+	// Browsers
+$lang['stats.browsers'] = 'Browsers';
+	// Operating systems
+$lang['stats.os'] = 'Operating systems';
+	// Countries
+$lang['stats.countries'] = 'Visitors countries';
+	// Referent websites
+$lang['stats.referers'] = 'Referent websites';
+	// Robots
+$lang['stats.robot'] = 'Robot';
+$lang['stats.robots'] = 'Robots';
+$lang['stats.erase.list'] = 'Erase list';
+$lang['stats.erase.occasional'] = 'Erase occasional bots (0%)';
+$lang['stats.last.visit'] = 'Last visit';
 
 // Browsers
 global $stats_array_browsers;

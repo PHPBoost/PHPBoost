@@ -3,11 +3,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 14
+ * @version     PHPBoost 6.0 - last update: 2021 05 15
  * @since       PHPBoost 1.6 - 2007 08 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '..');
@@ -29,7 +30,9 @@ $get_pages_year = (bool)retrieve(GET, 'pages_year', false);
 include_once(PATH_TO_ROOT . '/kernel/begin.php');
 AppContext::get_session()->no_session_location(); //Ne réactualise pas l'emplacement du visiteur/membre
 $lang = LangLoader::get('common', 'stats');
-$main_lang = LangLoader::get('main');
+$common_lang = LangLoader::get('common-lang');
+$date_lang = LangLoader::get('date-lang');
+$user_lang = LangLoader::get('user-lang');
 
 $Stats = new ImagesStats();
 
@@ -66,7 +69,7 @@ if ($get_visit_month)
 	}
 	$Stats->load_data($array_stats, 'histogram', 5);
 	//Tracé de l'histogramme.
-	$Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('days', 'date-common'), $main_lang['guest_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
+	$Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('days', 'date-common'), $user_lang['user.guests']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
 }
 elseif ($get_visit_year)
 {
@@ -96,7 +99,7 @@ elseif ($get_visit_year)
 	}
 	$Stats->load_data($array_stats, 'histogram', 5);
 	//Tracé de l'histogramme.
-	$Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('month', 'date-common'), $main_lang['guest_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
+	$Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('month', 'date-common'), $user_lang['user.guests']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
 }
 elseif ($get_pages_day)
 {
@@ -127,7 +130,7 @@ elseif ($get_pages_day)
 	}
 	$Stats->load_data($array_stats, 'histogram', 5);
 	//Tracé de l'histogramme.
-	$Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('hours', 'date-common'), $lang['page.s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
+	$Stats->draw_histogram(440, 250, '', array($date_lang['date.hours'], $common_lang['common.pages']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
 }
 elseif ($get_pages_month)
 {
@@ -161,7 +164,7 @@ elseif ($get_pages_month)
 	}
 	$Stats->load_data($array_stats, 'histogram', 5);
 	//Tracé de l'histogramme.
-	$Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('days', 'date-common'), $lang['page.s']), NO_DRAW_LEGEND, NO_DRAW_VALUES, 8);
+	$Stats->draw_histogram(440, 250, '', array($date_lang['date.days'], $common_lang['common.pages']), NO_DRAW_LEGEND, NO_DRAW_VALUES, 8);
 }
 elseif ($get_pages_year)
 {
@@ -191,7 +194,7 @@ elseif ($get_pages_year)
 	}
 	$Stats->load_data($array_stats, 'histogram', 5);
 	//Tracé de l'histogramme.
-	$Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('month', 'date-common'), $lang['page.s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
+	$Stats->draw_histogram(440, 250, '', array($date_lang['date.month'], $common_lang['common.pages']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
 }
 elseif ($get_brw) //Navigateurs.
 {
@@ -301,13 +304,13 @@ elseif ($get_sex)
 		switch ($row['user_sex'])
 		{
 			case 0:
-				$name = $lang['unknown'];
+				$name = $common_lang['common.unknown'];
 				break;
 			case 1:
-				$name = $main_lang['male'];
+				$name = $user_lang['user.male'];
 				break;
 			case 2:
-				$name = $main_lang['female'];
+				$name = $user_lang['user.female'];
 				break;
 		}
 		$array_stats[$name] = $row['compt'];
@@ -322,7 +325,7 @@ elseif ($get_bot)
 	$array_robot = StatsSaver::retrieve_stats('robots');
 	if (isset($array_robot['unknow_bot']))
 	{
-		$array_robot[$lang['unknown']] = $array_robot['unknow_bot'];
+		$array_robot[$common_lang['common.unknown']] = $array_robot['unknow_bot'];
 		unset($array_robot['unknow_bot']);
 	}
 	$robots_visits = array();
