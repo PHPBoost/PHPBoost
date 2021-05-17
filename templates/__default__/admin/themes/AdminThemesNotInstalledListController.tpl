@@ -7,7 +7,7 @@
 		# IF C_THEME_AVAILABLE #
 		<div class="cell-flex cell-columns-3 cell-tile">
 			# START themes_not_installed #
-			<article class="cell addon# IF NOT themes_not_installed.C_COMPATIBLE # not-compatible error# ENDIF #">
+			<article class="cell addon">
 				<header class="cell-header">
 					# IF C_MORE_THAN_ONE_THEME_AVAILABLE #
 						# IF themes_not_installed.C_COMPATIBLE #
@@ -19,12 +19,12 @@
 							</div>
 						# ENDIF #
 					# ENDIF #
-					<h3 class="cell-name">{themes_not_installed.NAME}</h3>
+					<h3 class="cell-name# IF NOT themes_not_installed.C_COMPATIBLE # not-compatible error# ENDIF #">{themes_not_installed.NAME}</h3>
 					<div class="addon-menu-container">
 						# IF themes_not_installed.C_COMPATIBLE #
 							<button type="submit" class="button submit addon-menu-title" name="add-{themes_not_installed.ID}" value="true">${LangLoader::get_message('install', 'admin-common')}</button>
 						# ELSE #
-							<span class="addon-menu-title">${LangLoader::get_message('not_compatible', 'admin-common')}</span>
+							<span class="addon-menu-title# IF NOT themes_not_installed.C_COMPATIBLE # not-compatible low-opacity bgc-full error# ENDIF #">${LangLoader::get_message('not_compatible', 'admin-common')}</span>
 						# ENDIF #
 					</div>
 				</header>
@@ -47,9 +47,9 @@
 							<span class="text-strong">${LangLoader::get_message('version', 'admin')} :</span>
 							{themes_not_installed.VERSION}
 						</li>
-						<li class="li-stretch">
+						<li class="li-stretch# IF NOT themes_not_installed.C_VERSION_COMPAT # not-compatible error# ENDIF #">
 							<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span>
-							<span# IF NOT themes_not_installed.C_COMPATIBLE # class="not-compatible error"# ENDIF #>PHPBoost {themes_not_installed.COMPATIBILITY}</span>
+							<span>PHPBoost {themes_not_installed.COMPATIBILITY}</span>
 						</li>
 						<li class="li-stretch">
 							<span class="text-strong">
@@ -90,10 +90,11 @@
 							{themes_not_installed.WIDTH}
 						</li>
 						# IF themes_not_installed.C_PARENT_THEME #
-						<li class="li-stretch">
-							<span class="text-strong">{@themes.parent.theme} :</span>
-							{themes_not_installed.PARENT_THEME}
-						</li>
+							<li class="li-stretch# IF NOT themes_not_installed.C_PARENT_COMPAT # not-compatible error# ENDIF #">
+								<span class="text-strong">{@themes.parent.theme} :</span>
+									{themes_not_installed.PARENT_THEME}
+
+							</li>
 						# ENDIF #
 					</ul>
 				</div>
@@ -106,6 +107,11 @@
 								{themes_not_installed.AUTHORIZATIONS}
 								<a href="#" class="addon-auth-close" aria-label="${LangLoader::get_message('close', 'main')}"><i class="fa fa-times" aria-hidden="true"></i></a>
 							</div>
+						</div>
+					# ELSE #
+						<div class="addon-auth-container">
+							# IF NOT themes_not_installed.C_VERSION_COMPAT #<span class="error d-block">${LangLoader::get_message('themes.not.compatible.version', 'admin-themes-common')}</span># ENDIF #
+							# IF NOT themes_not_installed.C_PARENT_COMPAT #<span class="error d-block">{themes_not_installed.L_PARENT_COMPAT}</span># ENDIF #
 						</div>
 					# ENDIF #
 				</footer>

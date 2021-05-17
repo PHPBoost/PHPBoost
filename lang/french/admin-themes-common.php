@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 30
+ * @version     PHPBoost 6.0 - last update: 2021 05 17
  * @since       PHPBoost 3.0 - 2011 04 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -42,6 +42,7 @@ $lang['themes.select_all_themes'] = 'Sélectionner tous les thèmes';
 $lang['themes.warning_before_delete'] = '<span class="message-helper bgc warning">Un thème doit être activé, désactivé ou supprimé uniquement depuis cette page.<br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span><span class="message-helper bgc notice">Les thèmes ajoutés sont automatiquement activés. Pensez à les désactiver si besoin.</span>';
 $lang['themes.add.warning_before_install'] = '<span class="message-helper bgc notice">Les thèmes ajoutés sont automatiquement activés. Pensez à les désactiver si besoin.</span>';
 $lang['themes.default.theme.not.removable'] = 'Le thème par défaut ne peut pas être désinstallé';
+$lang['themes.not.compatible.version'] = 'La version PHPBoost de ce thème n\'est pas compatible avec la version PHPBoost du site';
 $lang['themes.parent.theme.not.installed'] = 'Le thème parent (<b>:id_parent</b>) de ce thème n\'est pas installé, veuillez l\'installer avant de pouvoir installer celui-ci';
 $lang['themes.parent.of.default.theme'] = 'Le thème <b>:name</b> est le parent du thème par défaut du site (<b>:default_theme</b>), il ne peut pas être désinstallé';
 $lang['themes.theme.childs.list.uninstallation.warning'] = 'Les thèmes <b>:themes_names</b>, enfants du thème <b>:name</b> vont également être désinstallés';
