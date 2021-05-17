@@ -6,38 +6,57 @@
 	}
 
 // BBCode block: Hide
-	// Add the informations : icon to hide/text to reveal content
-	jQuery(document).ready(function(){
-		var IDCODE = 1;
-		jQuery('.formatter-hide').each( function(){
-			if ( jQuery(this).hasClass('no-js') )
-			{
-				jQuery(this).attr('id','formatter-hide-container-' + IDCODE);
-				jQuery(this).removeClass('no-js');
-				jQuery(this).attr('onClick', 'bb_hide(' + IDCODE + ', 1, event);');
-				jQuery(this).children('.formatter-content').before('<span id="formatter-hide-message-' + IDCODE + '" class="formatter-hide-message">' + L_HIDE_MESSAGE + '</span>');
-				jQuery(this).children('.formatter-content').before('<span id="formatter-hide-close-button-' + IDCODE + '" class="formatter-hide-close-button pinned error" aria-label="' + L_HIDE_HIDEBLOCK + '" onclick="bb_hide(' + IDCODE + ', 0, event);"><i class="fa fa-times"></i></span>');
-				IDCODE = IDCODE + 1;
-			}
-		} );
-	} );
+// Add the informations : icon to hide/text to reveal content
+	var add_icon_bbcodeblockhide = (callback) => {
+		if (document.readyState != "loading") callback();
+		else document.addEventListener("DOMContentLoaded", callback);
+	}
+
+	add_icon_bbcodeblockhide(() => {
+		Array.prototype.forEach.call( document.querySelectorAll(".formatter-hide") , function (el, i) {
+			if ( el.classList.contains('no-js') )
+	   		{
+				el.setAttribute('id', "formatter-hide-container-" + i);
+				el.classList.remove('no-js');
+				el.setAttribute('onClick', "bb_hide(" + i + ", 1, event);");
+
+	   			var parent1 = document.createElement("span");
+	   			parent1.setAttribute('id', "formatter-hide-message-" + i);
+	   			parent1.setAttribute('class', "formatter-hide-message");
+				var content1 = document.createTextNode(L_HIDE_MESSAGE);
+	   			parent1.appendChild(content1);
+
+	   			el.insertBefore(parent1, el.childNodes[1]);
+
+				var parent2 = document.createElement("span");
+	   			parent2.setAttribute('id', "formatter-hide-close-button-" + i);
+	   			parent2.setAttribute('class', "formatter-hide-close-button pinned error");
+	   			parent2.setAttribute('aria-label', L_HIDE_HIDEBLOCK);
+	   			parent2.setAttribute('onclick', "bb_hide(" + i + ", 0, event)");
+
+	   			var child2 = document.createElement("i");
+	   			child2.setAttribute('class', "fa fa-times");
+
+	   			parent2.appendChild(child2);
+
+	   			el.insertBefore(parent2, el.childNodes[2]);
+	   		}
+		})
+	});
 
 	// Hide/show content
 	function bb_hide(idcode, show, event)
 	{
-		idcode = (typeof idcode !== 'undefined') ? idcode : 0;
-		show = (typeof show !== 'undefined') ? show : 0;
+		var idcode = (typeof idcode !== 'undefined') ? idcode : 0;
+		var show = (typeof show !== 'undefined') ? show : 0;
+		var elem = document.getElementById('formatter-hide-container-' + idcode);
 
 		event.stopPropagation();
-		jQuery('#formatter-hide-container-' + idcode).toggleClass('formatter-show');
-		if (show == 1)
-		{
-			jQuery('#formatter-hide-container-' + idcode).removeAttr('onClick');
-		}
-		else
-		{
-			jQuery('#formatter-hide-container-' + idcode).attr('onClick', 'bb_hide(' + idcode + ', 1, event);');
-		}
+
+		elem.classList.toggle('formatter-show');
+
+		if (show == 1) elem.removeAttr('onClick');
+		else elem.setAttribute('onclick', "bb_hide(" + idcode + ", 1, event)");
 	}
 
 	// BBCode block: Code
