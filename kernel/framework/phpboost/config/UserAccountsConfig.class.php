@@ -82,8 +82,8 @@ class UserAccountsConfig extends AbstractConfigData
 	const ALLOW_USERS_TO_CHANGE_DISPLAY_NAME = 'allow_users_to_change_display_name';
 	const ALLOW_USERS_TO_CHANGE_EMAIL = 'allow_users_to_change_email';
 
-	const AUTOMATIC_USER_ACCOUNTS_VALIDATION = '1';
-	const MAIL_USER_ACCOUNTS_VALIDATION = '2';
+	const AUTOMATIC_USER_ACCOUNTS_VALIDATION     = '1';
+	const MAIL_USER_ACCOUNTS_VALIDATION          = '2';
 	const ADMINISTRATOR_USER_ACCOUNTS_VALIDATION = '3';
 
 	const DISPLAY_TYPE = 'display_type';
@@ -460,26 +460,26 @@ class UserAccountsConfig extends AbstractConfigData
 		$server_configuration = new ServerConfiguration();
 
 		return array(
-			self::DISPLAY_TYPE => self::TABLE_VIEW,
-			self::ITEMS_PER_PAGE => 25,
-			self::ITEMS_PER_ROW => 2,
-			self::REGISTRATION_ENABLED_PROPERTY => FormFieldCheckbox::CHECKED,
+			self::DISPLAY_TYPE                               => self::TABLE_VIEW,
+			self::ITEMS_PER_PAGE                             => 25,
+			self::ITEMS_PER_ROW                              => 2,
+			self::REGISTRATION_ENABLED_PROPERTY              => FormFieldCheckbox::CHECKED,
 			self::MEMBER_ACCOUNTS_VALIDATION_METHOD_PROPERTY => self::AUTOMATIC_USER_ACCOUNTS_VALIDATION,
-			self::WELCOME_MESSAGE_PROPERTY => LangLoader::get_message('site_config_msg_mbr', 'main'),
-			self::REGISTRATION_AGREEMENT_PROPERTY => LangLoader::get_message('register_agreement', 'main'),
-			self::UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY => 20,
-			self::ENABLE_AVATAR_UPLOAD_PROPERTY => FormFieldCheckbox::CHECKED,
-			self::ENABLE_AVATAR_AUTO_RESIZING => $server_configuration->has_gd_library() ? FormFieldCheckbox::CHECKED : FormFieldCheckbox::UNCHECKED,
-			self::DEFAULT_AVATAR_URL_PROPERTY => FormFieldThumbnail::DEFAULT_VALUE,
-			self::MAX_AVATAR_WIDTH_PROPERTY => 120,
-			self::MAX_AVATAR_HEIGHT_PROPERTY => 120,
-			self::MAX_AVATAR_WEIGHT_PROPERTY => 20,
-			self::AUTH_READ_MEMBERS => array('r0' => 1, 'r1' => 1),
-			self::DEFAULT_LANG => 'english',
-			self::DEFAULT_THEME => 'base',
-			self::MAX_PRIVATE_MESSAGES_NUMBER => 50,
-			self::ALLOW_USERS_TO_CHANGE_DISPLAY_NAME => true,
-			self::ALLOW_USERS_TO_CHANGE_EMAIL => true
+			self::WELCOME_MESSAGE_PROPERTY                   => LangLoader::get_message('site_config_msg_mbr', 'main'),
+			self::REGISTRATION_AGREEMENT_PROPERTY            => LangLoader::get_message('register_agreement', 'main'),
+			self::UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY      => 20,
+			self::ENABLE_AVATAR_UPLOAD_PROPERTY              => FormFieldCheckbox::CHECKED,
+			self::ENABLE_AVATAR_AUTO_RESIZING                => $server_configuration->has_gd_library() ? FormFieldCheckbox::CHECKED : FormFieldCheckbox::UNCHECKED,
+			self::DEFAULT_AVATAR_URL_PROPERTY                => FormFieldThumbnail::DEFAULT_VALUE,
+			self::MAX_AVATAR_WIDTH_PROPERTY                  => 120,
+			self::MAX_AVATAR_HEIGHT_PROPERTY                 => 120,
+			self::MAX_AVATAR_WEIGHT_PROPERTY                 => 20,
+			self::AUTH_READ_MEMBERS                          => array('r0' => 1, 'r1' => 1),
+			self::DEFAULT_LANG                               => 'english',
+			self::DEFAULT_THEME                              => 'base',
+			self::MAX_PRIVATE_MESSAGES_NUMBER                => 50,
+			self::ALLOW_USERS_TO_CHANGE_DISPLAY_NAME         => true,
+			self::ALLOW_USERS_TO_CHANGE_EMAIL                => true
 		);
 	}
 
