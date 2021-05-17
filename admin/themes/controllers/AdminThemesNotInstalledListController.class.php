@@ -63,7 +63,7 @@ class AdminThemesNotInstalledListController extends AdminController
 			$this->view->assign_block_vars('themes_not_installed', array(
 				'C_AUTHOR_EMAIL'   => !empty($author_email),
 				'C_AUTHOR_WEBSITE' => !empty($author_website),
-				'C_COMPATIBLE'     => $configuration->get_compatibility() == $phpboost_version && $theme_has_parent && ThemesManager::get_theme_existed($configuration->get_parent_theme()),
+				'C_COMPATIBLE'     => $configuration->get_compatibility() == $phpboost_version && ($theme_has_parent ? ThemesManager::get_theme_existed($configuration->get_parent_theme()) : true),
 				'C_VERSION_COMPAT' => $configuration->get_compatibility() == $phpboost_version,
 				'C_PARENT_THEME'   => $theme_has_parent,
 				'C_PARENT_COMPAT'  => $theme_has_parent ? ThemesManager::get_theme_existed($configuration->get_parent_theme()) : true,
