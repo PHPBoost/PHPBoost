@@ -44,7 +44,7 @@
 		})
 	});
 
-	// Hide/show content
+// Hide/show content
 	function bb_hide(idcode, show, event)
 	{
 		var idcode = (typeof idcode !== 'undefined') ? idcode : 0;
@@ -59,8 +59,8 @@
 		else elem.setAttribute('onclick', "bb_hide(" + idcode + ", 1, event)");
 	}
 
-	// BBCode block: Code
-	// Add button "Copy to clipboard" on Coding block
+// BBCode block: Code
+// Add button "Copy to clipboard" on Coding block
 	var add_button_copytoclipboard = (callback) => {
 		if (document.readyState != "loading") callback();
 		else document.addEventListener("DOMContentLoaded", callback);
@@ -90,21 +90,21 @@
 		})
 	});
 
-    // Function copy_code_clipboard
-	//
-	// Description :
-	// This function copy the content of your specific selection to clipboard.
-	//
-	// parameters : one
-	// {idcode} correspond to the ID selector you want to select.
-	//  - if it's a number : ID selector is 'copy-code-{idcode}-content'
-	//  - if it's a string : ID selector is '{idcode}'
-	//
-	// Return : -
-	//
-	// Comments :
-	// if container is an HTMLTextAreaElement, we use select() function of TextArea element instead of specific SelectElement function
-	//
+// Function copy_code_clipboard
+//
+// Description :
+// This function copy the content of your specific selection to clipboard.
+//
+// parameters : one
+// {idcode} correspond to the ID selector you want to select.
+//  - if it's a number : ID selector is 'copy-code-{idcode}-content'
+//  - if it's a string : ID selector is '{idcode}'
+//
+// Return : -
+//
+// Comments :
+// if container is an HTMLTextAreaElement, we use select() function of TextArea element instead of specific SelectElement function
+//
 	function copy_code_clipboard(idcode)
 	{
 		if ( Number.isInteger(idcode) )
@@ -125,18 +125,18 @@
 		}
 	}
 
-	//Function SelectElement
-	//
-	// Description :
-	// The content will be selected on your page as if you had selected it with your mouse
-	//
-	// parameters : one
-	// {element} correspond to the element you want to select
-	//
-	// Return : -
-	//
-	// Comments : -
-	//
+//Function SelectElement
+//
+// Description :
+// The content will be selected on your page as if you had selected it with your mouse
+//
+// parameters : one
+// {element} correspond to the element you want to select
+//
+// Return : -
+//
+// Comments : -
+//
 	function SelectElement(element) {
 		var range = document.createRange();
 		range.selectNodeContents(element);
@@ -169,6 +169,23 @@ function copy_to_clipboard(tocopy)
 		alert('Your browser do not authorize this operation');
 	}
 }
+
+// Copy link to clipboard
+document.querySelectorAll('.copy-link-to-clipboard').forEach( el => {
+  el.addEventListener('click', event => {
+		event.preventDefault();
+
+		var hrefValue = el.getAttribute('href');
+
+		document.addEventListener('copy', function(e) {
+			e.clipboardData.setData('text/plain', hrefValue);
+			e.preventDefault();
+		}, true);
+
+		document.execCommand('copy');
+		alert(COPIED_TO_CLIPBOARD +'\n' + hrefValue);
+  });
+});
 
 	// Open submenu
 	// Function open_submenu
@@ -568,18 +585,4 @@ function copy_to_clipboard(tocopy)
 				jQuery('html, body').animate({scrollTop:jQuery(hash).offset().top - menuOffset}, 'slow');
 			}
 		});
-	});
-
-// Copy link to clipboard
-	jQuery('.copy-link-to-clipboard').on('click', function (e) {
-		e.preventDefault();
-		var hrefValue = $(this).attr('href');
-
-		document.addEventListener('copy', function(e) {
-		  e.clipboardData.setData('text/plain', hrefValue);
-		  e.preventDefault();
-		}, true);
-
-		document.execCommand('copy');
-		alert(COPIED_TO_CLIPBOARD +'\n' + hrefValue);
 	});
