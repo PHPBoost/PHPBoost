@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2021 05 17
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -31,7 +31,7 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 
 	public function get_menu_title()
 	{
-		return LangLoader::get_message('online', 'common', 'online');
+		return LangLoader::get_message('online.module.title', 'common', 'online');
 	}
 
 	public function is_displayed()
@@ -44,7 +44,9 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 		$tpl = new FileTemplate('online/OnlineModuleMiniMenu.tpl');
 
 		$lang = LangLoader::get('common', 'online');
-		$tpl->add_lang($lang);
+		$common_lang = LangLoader::get('common-lang');
+		$user_lang = LangLoader::get('user-lang');
+		$tpl->add_lang(array_merge($lang, $common_lang, $user_lang));
 
 		MenuService::assign_positions_conditions($tpl, $this->get_block());
 
@@ -67,13 +69,12 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 
 					if ($user->get_level() != User::VISITOR_LEVEL)
 					{
-						$tpl->assign_block_vars('users', array(
-							'C_ROBOT' => $user->get_level() == User::ROBOT_LEVEL,
-							'U_PROFILE' => UserUrlBuilder::profile($user->get_id())->rel(),
-							'PSEUDO' => $user->get_display_name(),
-							'LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
+						$tpl->assign_block_vars('items', array(
+							'C_ROBOT'       => $user->get_level() == User::ROBOT_LEVEL,
+							'PSEUDO'        => $user->get_display_name(),
+							'LEVEL_CLASS'   => UserService::get_level_class($user->get_level()),
 							'C_GROUP_COLOR' => !empty($group_color),
-							'GROUP_COLOR' => $group_color,
+							'GROUP_COLOR'   => $group_color,
 						));
 					}
 				}
@@ -83,23 +84,17 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 		if (!$online_config->are_robots_displayed())
 			$this->visitor_number += $this->robot_number;
 
-		$main_lang = LangLoader::get('main');
 		$tpl->put_all(array(
 			'C_DISPLAY_ROBOTS' => $online_config->are_robots_displayed(),
-			'C_MORE_USERS' => $this->total_users > $online_config->get_members_number_displayed(),
-			'L_ROBOT' => $this->robot_number > 1 ? $main_lang['robot_s'] : $main_lang['robot'],
-			'L_VISITOR' => $this->visitor_number > 1 ? $main_lang['guest_s'] : $main_lang['guest'],
-			'L_MEMBER' => $this->member_number > 1 ? $main_lang['member_s'] : $main_lang['member'],
-			'L_MODO' => $this->moderator_number > 1 ? $main_lang['modo_s'] : $main_lang['modo'],
-			'L_ADMIN' => $this->administrator_number > 1 ? $main_lang['admin_s'] : $main_lang['admin'],
-			'L_USERS_ONLINE' => $this->total_users > 1 ? $lang['online_users'] : $lang['online_user'],
-			'L_TOTAL' => $main_lang['total'],
-			'TOTAL_USERS_CONNECTED' => $this->total_users,
-			'TOTAL_ROBOT_CONNECTED' => $this->robot_number,
-			'TOTAL_VISITOR_CONNECTED' => $this->visitor_number,
-			'TOTAL_MEMBER_CONNECTED' => $this->member_number,
-			'TOTAL_MODERATOR_CONNECTED' => $this->moderator_number,
-			'TOTAL_ADMINISTRATOR_CONNECTED' => $this->administrator_number
+			'C_SEVERAL_USERS' => $this->total_users > 1,
+			'C_MORE_USERS'     => $this->total_users > $online_config->get_members_number_displayed(),
+
+			'USERS_NUMBER'          => $this->total_users,
+			'ROBOTS_NUMBER'         => $this->robot_number,
+			'VISITORS_NUMBER'       => $this->visitor_number,
+			'MEMBERS_NUMBER'        => $this->member_number,
+			'MODERATORS_NUMBER'     => $this->moderator_number,
+			'ADMINISTRATORS_NUMBER' => $this->administrator_number,
 		));
 
 		return $tpl->render();

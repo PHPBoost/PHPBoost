@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 09
+ * @version     PHPBoost 6.0 - last update: 2021 05 17
  * @since       PHPBoost 3.0 - 2012 01 29
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -23,6 +23,14 @@ class OnlineHomeController extends ModuleController
 		$this->build_view();
 
 		return $this->generate_response();
+	}
+
+	private function init()
+	{
+		$this->lang = LangLoader::get('common', 'online');
+		$this->view = new FileTemplate('online/OnlineHomeController.tpl');
+		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang'), LangLoader::get('user-lang')));
+		$this->config = OnlineConfig::load();
 	}
 
 	public function build_view()
@@ -49,26 +57,28 @@ class OnlineHomeController extends ModuleController
 				if ($user->get_id() == AppContext::get_current_user()->get_id())
 				{
 					$user->set_location_script(OnlineUrlBuilder::home()->rel());
-					$user->set_location_title($this->lang['online']);
+					$user->set_location_title($this->lang['online.module.title']);
 					$user->set_last_update(new Date());
 				}
 
 				$group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 
-				$this->view->assign_block_vars('users', array_merge(
-					Date::get_array_tpl_vars($user->get_last_update(), 'last_update_date'),
+				$this->view->assign_block_vars('items', array_merge(
+					Date::get_array_tpl_vars($user->get_last_update(), 'date'),
 					array(
-					'C_AVATAR' => $user->has_avatar(),
+					'C_AVATAR'      => $user->has_avatar(),
 					'C_GROUP_COLOR' => !empty($group_color),
-					'C_ROBOT' => $user->get_level() == User::ROBOT_LEVEL,
-					'PSEUDO' => $user->get_display_name(),
-					'LEVEL' => UserService::get_level_lang($user->get_level()),
-					'LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
-					'GROUP_COLOR' => $group_color,
-					'TITLE_LOCATION' => $user->get_location_title(),
-					'U_PROFILE' => UserUrlBuilder::profile($user->get_id())->rel(),
+					'C_ROBOT'       => $user->get_level() == User::ROBOT_LEVEL,
+
+					'PSEUDO'         => $user->get_display_name(),
+					'LEVEL'          => UserService::get_level_lang($user->get_level()),
+					'LEVEL_CLASS'    => UserService::get_level_class($user->get_level()),
+					'GROUP_COLOR'    => $group_color,
+					'LOCATION_TITLE' => $user->get_location_title(),
+
+					'U_PROFILE'  => UserUrlBuilder::profile($user->get_id())->rel(),
 					'U_LOCATION' => $user->get_location_script(),
-					'U_AVATAR' => $user->get_avatar()
+					'U_AVATAR'   => $user->get_avatar()
 					)
 				));
 			}
@@ -81,14 +91,6 @@ class OnlineHomeController extends ModuleController
 		));
 
 		return $this->view;
-	}
-
-	private function init()
-	{
-		$this->lang = LangLoader::get('common', 'online');
-		$this->view = new FileTemplate('online/OnlineHomeController.tpl');
-		$this->view->add_lang($this->lang);
-		$this->config = OnlineConfig::load();
 	}
 
 	private function check_authorizations()
@@ -121,12 +123,12 @@ class OnlineHomeController extends ModuleController
 
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['online'], '', $page);
+		$graphical_environment->set_page_title($this->lang['online.module.title'], '', $page);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['online.seo.description'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(OnlineUrlBuilder::home($page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['online'], OnlineUrlBuilder::home($page));
+		$breadcrumb->add($this->lang['online.module.title'], OnlineUrlBuilder::home($page));
 
 		return $response;
 	}

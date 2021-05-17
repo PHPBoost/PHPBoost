@@ -54,6 +54,7 @@ $lang['form.categories.per.page']       = 'Nombre de catégories par page';
 $lang['form.categories.per.row']        = 'Nombre de catégories par ligne';
 $lang['form.items.per.row']             = 'Nombre d\'éléments par ligne';
 $lang['form.items.per.page']            = 'Nombre d\'éléments par page';
+$lang['form.items.in.menu']             = 'Nombre d\'éléments dans le menu';
 $lang['form.enable.comments']           = 'Activer les commentaires';
 $lang['form.enable.notation']           = 'Activer la notation';
 $lang['form.notation.scale']            = 'Echelle de notation';

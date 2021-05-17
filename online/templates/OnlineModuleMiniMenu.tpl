@@ -1,29 +1,44 @@
-<div class="cell-body">
-	<div class="cell-content">
-		${TextHelper::lcfirst(LangLoader::get_message('online', 'common', 'online'))} :
+<div class="cell-list">
+	<ul>
 		# IF C_DISPLAY_ROBOTS #
-			<span class="small pinned warning">{TOTAL_ROBOT_CONNECTED} {L_ROBOT}</span>
+			<li class="li-stretch">
+				<span class="small pinned warning">{@user.robots}</span>
+				<span>{ROBOTS_NUMBER}</span>
+			</li>
 		# ENDIF #
-		<span class="small pinned visitor">{TOTAL_VISITOR_CONNECTED} {L_VISITOR}</span>
-		<span class="small pinned member">{TOTAL_MEMBER_CONNECTED} {L_MEMBER}</span>
-		<span class="small pinned moderator">{TOTAL_MODERATOR_CONNECTED} {L_MODO}</span>
-		<span class="small pinned administrator">{TOTAL_ADMINISTRATOR_CONNECTED} {L_ADMIN}</span>
+		<li class="li-stretch">
+			<span class="small pinned visitor">{@user.guests}</span>
+			<span>{VISITORS_NUMBER}</span>
+		</li>
 
-		<div class="online-users-container">
-			# START users #
-				# IF users.C_ROBOT #
-					<span class="{users.LEVEL_CLASS}">{users.PSEUDO}</span>
-				# ELSE #
-					<a href="{users.U_PROFILE}" class="{users.LEVEL_CLASS} online-user" # IF users.C_GROUP_COLOR # style="color:{users.GROUP_COLOR}" # ENDIF #>{users.PSEUDO}</a>
-				# ENDIF #
-			# END users #
-		</div>
 
-	</div>
+		<li class="li-stretch">
+			<span class="small pinned member">{@user.members}</span>
+			<span>{MEMBERS_NUMBER}</span>
+		</li>
+
+		<li class="li-stretch">
+			<span class="small pinned moderator">{@user.moderators}</span>
+			<span>{MODERATORS_NUMBER}</span>
+		</li>
+
+		<li class="li-stretch">
+			<span class="small pinned administrator">{@user.administrators}</span>
+			<span>{ADMINISTRATORS_NUMBER}</span>
+		</li>
+
+		<li class="align-center">
+			{@common.total} : {USERS_NUMBER}
+		</li>
+	</ul>
+</div>
+<div class="cell-body">
 	<div class="cell-content align-center">
-		<p>{L_TOTAL} : {TOTAL_USERS_CONNECTED}</p>
-		# IF C_MORE_USERS #
-			<a class="button small" href="${relative_url(OnlineUrlBuilder::home())}">{TOTAL_USERS_CONNECTED} {L_USERS_ONLINE}</a>
-		# ENDIF #
+		<a
+		class="button small"
+		href="${relative_url(OnlineUrlBuilder::home())}"
+		aria-label="# START items #<span# IF NOT C_ROBOT # class='{items.LEVEL_CLASS}'# ENDIF ## IF items.C_GROUP_COLOR # style='background-color: {items.GROUP_COLOR}'# ENDIF #>{items.PSEUDO}</span># IF C_SEVERAL_USERS #, # ENDIF ## IF C_MORE_USERS #...# ENDIF ## END items #">
+			{@online.who.is}
+		</a>
 	</div>
 </div>

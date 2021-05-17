@@ -1,6 +1,6 @@
 <section id="module-online">
 	<header class="section-header">
-		<h1>{@online}</h1>
+		<h1>{@online.module.title}</h1>
 	</header>
 	<div class="sub-section">
 		<div class="content-container">
@@ -10,50 +10,59 @@
 						<thead>
 							<tr>
 								<th>
-									${LangLoader::get_message('form.name', 'common')}
+									{@user.avatar}
 								</th>
 								<th>
-									{@online.location}
+									{@user.display.name}
 								</th>
-								<th class="column-last-update">
-									{@online.last_update}
+								<th>
+									{@user.rank}
+								</th>
+								<th>
+									{@common.location}
+								</th>
+								<th>
+									{@user.last.connection}
 								</th>
 							</tr>
 						</thead>
 						<tbody>
-							# START users #
-							<tr>
-								<td>
-								# IF users.C_ROBOT #
-									<span class="{users.LEVEL_CLASS}">{users.PSEUDO}</span>
+							# START items #
+								# IF C_USERS #
+									<tr>
+										<td>
+											# IF items.C_AVATAR #<img src="{items.U_AVATAR}" class="online-avatar" alt="{@user.avatar}" /># ENDIF #
+										</td>
+										<td>
+											# IF items.C_ROBOT #
+												<span class="{items.LEVEL_CLASS}">{items.PSEUDO}</span>
+											# ELSE #
+												<a href="{items.U_PROFILE}" class="{items.LEVEL_CLASS}" # IF items.C_GROUP_COLOR # style="color:{items.GROUP_COLOR}" # ENDIF #>{items.PSEUDO}</a>
+											# ENDIF #
+										</td>
+										<td>{items.LEVEL}</td>
+										<td>
+											<a href="{items.U_LOCATION}">{items.LOCATION_TITLE}</a>
+										</td>
+										<td>
+											{items.DATE_AGO}
+										</td>
+									</tr>
 								# ELSE #
-									<a href="{users.U_PROFILE}" class="{users.LEVEL_CLASS}" # IF users.C_GROUP_COLOR # style="color:{users.GROUP_COLOR}" # ENDIF #>{users.PSEUDO}</a>
-									<div>{users.LEVEL}</div>
-									# IF users.C_AVATAR #<img src="{users.U_AVATAR}" class="message-avatar" alt="${LangLoader::get_message('avatar', 'user-common')}" /># ENDIF #
+									<tr>
+										<td colspan="3">
+											{@common.no.item.now}
+										</td>
+									</tr>
 								# ENDIF #
-								</td>
-								<td>
-									<a href="{users.U_LOCATION}">{users.TITLE_LOCATION}</a>
-								</td>
-								<td>
-									{users.LAST_UPDATE_DATE_FULL}
-								</td>
-							</tr>
-							# END users #
-							# IF NOT C_USERS #
-							<tr>
-								<td colspan="3">
-									${LangLoader::get_message('no_item_now', 'common')}
-								</td>
-							</tr>
-							# ENDIF #
+							# END items #
 						</tbody>
 						# IF C_PAGINATION #
-						<tfoot>
-							<tr>
-								<td colspan="3"># INCLUDE PAGINATION #</td>
-							</tr>
-						</tfoot>
+							<tfoot>
+								<tr>
+									<td colspan="3"># INCLUDE PAGINATION #</td>
+								</tr>
+							</tfoot>
 						# ENDIF #
 					</table>
 				</div>
