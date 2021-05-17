@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 05
+ * @version     PHPBoost 6.0 - last update: 2021 05 17
  * @since       PHPBoost 3.0 - 2010 02 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -301,9 +301,9 @@ class InstallationServices
 
 	private function install_modules(array $modules_to_install)
 	{
-		foreach ($modules_to_install as $module)
+		foreach ($modules_to_install as $module_id => $module)
 		{
-			ModulesManager::install_module($module->get_id(), true, false);
+			ModulesManager::install_module($module_id, true, false);
 		}
 
 		if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
