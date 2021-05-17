@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 29
+ * @version     PHPBoost 6.0 - last update: 2021 05 17
  * @since       PHPBoost 3.0 - 2011 04 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -275,12 +275,13 @@ class ThemesManager
 		$folder_containing_phpboost_themes = new Folder(PATH_TO_ROOT .'/templates/');
 		if (self::get_theme_existed($theme_id))
 		{
+			$installed_themes_list = array_keys(self::get_installed_themes_map());
 			foreach ($folder_containing_phpboost_themes->get_folders() as $folder)
 			{
 				if ($folder->get_name() != '__default__')
 				{
 					$theme = new Theme($folder->get_name());
-					if ($theme->get_configuration()->get_parent_theme() == $theme_id)
+					if ($theme->get_configuration()->get_parent_theme() == $theme_id && in_array($theme_id, $installed_themes_list))
 						$themes_childs_list[] = $folder->get_name();
 				}
 			}
