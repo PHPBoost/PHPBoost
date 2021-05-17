@@ -168,10 +168,10 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			{
 				$array_color = $Stats->array_allocated_color[$Stats->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
 				$view->assign_block_vars('sex', array(
-					'MEMBERS_NUMBER' => NumberHelper::round(($angle_value*$Stats->nbr_entry)/360, 0),
-					'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
-					'SEX' => ($name == 'Other') ? $main_lang['other'] : $name,
-					'PERCENT' => NumberHelper::round(($angle_value/3.6), 1)
+					'MEMBERS_NUMBER' => NumberHelper                             ::round(($angle_value*$Stats->nbr_entry)/360, 0),
+					'COLOR'          => 'rgb(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
+					'SEX'            => ($name == 'Other') ? $main_lang['other'] : $name,
+					'PERCENT'        => NumberHelper                             ::round(($angle_value/3.6), 1)
 				));
 			}
 
@@ -1207,7 +1207,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$array_color = $Stats->array_allocated_color[$Stats->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
 					$view->assign_block_vars('list', array(
 						'C_BOT_DETAILS' => $key != $common_lang['common.unknown'],
-						'COLOR'         => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
+						'COLOR'         => 'rgb(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
 						'VISITS_NUMBER' => $robots_visits[$key],
 						'LAST_SEEN'     => is_array($array_robot[$key]) && isset($array_robot[$key]['last_seen']) ? Date::to_format($array_robot[$key]['last_seen'], Date::FORMAT_DAY_MONTH_YEAR) : $common_lang['common.indeterminate'],
 						'PERCENT'       => NumberHelper::round(($angle_value/3.6), 1),

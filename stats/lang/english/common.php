@@ -14,29 +14,29 @@
 #                    English                       #
 ####################################################
 
-$lang['stats.module.title'] = 'Statistics';
+$lang['stats.module.title']        = 'Statistics';
 $lang['stats.config.module.title'] = 'Statistics module configuration';
 
-$lang['stats.items.per.page.clue'] = 'For referent websites and keywords.';
+$lang['stats.items.per.page.clue']  = 'For referent websites and keywords.';
 $lang['stats.require.items.number'] = 'The number of elements per page can\'t be null.';
 
 
 // Stats
-$lang['stats.more.stats'] = 'More statistics';
-$lang['stats.see.year.stats'] = 'See statistics for the year';
-$lang['stats.total.visits'] = 'Total visits';
-$lang['stats.average.visits'] = 'Average visits';
-$lang['stats.trend'] = 'Trend';
+$lang['stats.more.stats']      = 'More statistics';
+$lang['stats.see.year.stats']  = 'See statistics for the year';
+$lang['stats.total.visits']    = 'Total visits';
+$lang['stats.average.visits']  = 'Average visits';
+$lang['stats.trend']           = 'Trend';
 $lang['stats.last.visit.date'] = 'Last visit';
 	// Website
-$lang['stats.website'] = 'Website';
+$lang['stats.website']               = 'Website';
 $lang['stats.website.creation.date'] = 'Creation of the website';
-$lang['stats.phpboost.version'] = 'Current version';
+$lang['stats.phpboost.version']      = 'Current version';
 	// Members
-$lang['stats.last.member'] = 'Latest member';
+$lang['stats.last.member']         = 'Latest member';
 $lang['stats.top.10.contributors'] = 'Top 10 content writers';
-$lang['stats.registered.member'] = 'registered member';
-$lang['stats.registered.members'] = 'registered members';
+$lang['stats.registered.member']   = 'registered member';
+$lang['stats.registered.members']  = 'registered members';
 	// Browsers
 $lang['stats.browsers'] = 'Browsers';
 	// Operating systems
@@ -46,11 +46,11 @@ $lang['stats.countries'] = 'Visitors countries';
 	// Referent websites
 $lang['stats.referers'] = 'Referent websites';
 	// Robots
-$lang['stats.robot'] = 'Robot';
-$lang['stats.robots'] = 'Robots';
-$lang['stats.erase.list'] = 'Erase list';
+$lang['stats.robot']            = 'Robot';
+$lang['stats.robots']           = 'Robots';
+$lang['stats.erase.list']       = 'Erase list';
 $lang['stats.erase.occasional'] = 'Erase occasional bots (0%)';
-$lang['stats.last.visit'] = 'Last visit';
+$lang['stats.last.visit']       = 'Last visit';
 
 // Browsers
 global $stats_array_browsers;

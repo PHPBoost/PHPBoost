@@ -21,21 +21,21 @@ $lang['stats.items.per.page.clue'] = 'Pour les sites référents et les mots cl�
 $lang['stats.require.items.number'] = 'Le nombre d\'éléments par page ne peut pas être nul.';
 
 // Stats
-$lang['stats.more.stats'] = 'Plus de stats';
-$lang['stats.see.year.stats'] = 'Voir les statistiques de l\'année';
-$lang['stats.total.visits'] = 'Total des visites';
-$lang['stats.average.visits'] = 'Visites moyennes';
+$lang['stats.more.stats']      = 'Plus de stats';
+$lang['stats.see.year.stats']  = 'Voir les statistiques de l\'année';
+$lang['stats.total.visits']    = 'Total des visites';
+$lang['stats.average.visits']  = 'Visites moyennes';
 $lang['stats.last.visit.date'] = 'Dernière visite';
-$lang['stats.trend'] = 'Tendance';
+$lang['stats.trend']           = 'Tendance';
 	// Website
-$lang['stats.website'] = 'Site';
+$lang['stats.website']               = 'Site';
 $lang['stats.website.creation.date'] = 'Création du site';
-$lang['stats.phpboost.version'] = 'Version installée';
+$lang['stats.phpboost.version']      = 'Version installée';
 	// Members
-$lang['stats.last.member'] = 'Dernier membre';
+$lang['stats.last.member']         = 'Dernier membre';
 $lang['stats.top.10.contributors'] = 'Top 10 des contributeurs';
-$lang['stats.registered.member'] = 'membre inscrit';
-$lang['stats.registered.members'] = 'membres inscrits';
+$lang['stats.registered.member']   = 'membre inscrit';
+$lang['stats.registered.members']  = 'membres inscrits';
 	// Browsers
 $lang['stats.browsers'] = 'Navigateurs';
 	// Operating systems
@@ -45,11 +45,11 @@ $lang['stats.countries'] = 'Pays des visiteurs';
 	// Referent websites
 $lang['stats.referers'] = 'Sites référents';
 	// Robots
-$lang['stats.robot'] = 'Robot';
-$lang['stats.robots'] = 'Robots';
-$lang['stats.erase.list'] = 'Effacer la liste';
+$lang['stats.robot']            = 'Robot';
+$lang['stats.robots']           = 'Robots';
+$lang['stats.erase.list']       = 'Effacer la liste';
 $lang['stats.erase.occasional'] = 'Effacer les robots occasionnels (0%)';
-$lang['stats.last.visit'] = 'Dernière visite';
+$lang['stats.last.visit']       = 'Dernière visite';
 
 // Browsers
 global $stats_array_browsers;
