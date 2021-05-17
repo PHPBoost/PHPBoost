@@ -27,22 +27,22 @@ if (!$current_user->check_level(User::MEMBER_LEVEL))
 	DispatchManager::redirect($error_controller);
 }
 
-$request = AppContext::get_request();
+$request        = AppContext::get_request();
 
-$pm_get = (int)retrieve(GET, 'pm', 0);
-$pm_id_get = (int)retrieve(GET, 'id', 0);
+$pm_get         = (int)retrieve(GET, 'pm', 0);
+$pm_id_get      = (int)retrieve(GET, 'id', 0);
 $pm_del_convers = (bool)retrieve(GET, 'del_convers', false);
-$quote_get = (int)retrieve(GET, 'quote', 0);
-$page = (int)retrieve(GET, 'p', 0);
-$post = (bool)retrieve(GET, 'post', false);
-$pm_edit = (int)retrieve(GET, 'edit', 0);
-$pm_del = (int)retrieve(GET, 'del', 0);
-$read = (bool)retrieve(GET, 'read', false);
-$convers = (bool)retrieve(POST, 'convers', false);
-$prw_convers = (bool)retrieve(POST, 'prw_convers', false);
-$prw = (bool)retrieve(POST, 'prw', false);
-$pm_post = (bool)retrieve(POST, 'pm', false);
-$edit_pm = (bool)retrieve(POST, 'edit_pm', false);
+$quote_get      = (int)retrieve(GET, 'quote', 0);
+$page           = (int)retrieve(GET, 'p', 0);
+$post           = (bool)retrieve(GET, 'post', false);
+$pm_edit        = (int)retrieve(GET, 'edit', 0);
+$pm_del         = (int)retrieve(GET, 'del', 0);
+$read           = (bool)retrieve(GET, 'read', false);
+$convers        = (bool)retrieve(POST, 'convers', false);
+$prw_convers    = (bool)retrieve(POST, 'prw_convers', false);
+$prw            = (bool)retrieve(POST, 'prw', false);
+$pm_post        = (bool)retrieve(POST, 'pm', false);
+$edit_pm        = (bool)retrieve(POST, 'edit_pm', false);
 
 $editor = AppContext::get_content_formatting_service()->get_default_editor();
 $editor->set_identifier('contents');
@@ -54,10 +54,10 @@ $_NBR_ELEMENTS_PER_PAGE = 25;
 // Mark PM as read
 if ($read)
 {
-	$nbr_pm = PrivateMsg::count_conversations($current_user->get_id());
+	$nbr_pm        = PrivateMsg::count_conversations($current_user->get_id());
 	$max_pm_number = $user_accounts_config->get_max_private_messages_number();
-	$limit_group = $current_user->check_max_value(PM_GROUP_LIMIT, $max_pm_number);
-	$unlimited_pm = $current_user->check_level(User::MODERATOR_LEVEL) || ($limit_group === -1);
+	$limit_group   = $current_user->check_max_value(PM_GROUP_LIMIT, $max_pm_number);
+	$unlimited_pm  = $current_user->check_level(User::MODERATOR_LEVEL) || ($limit_group === -1);
 
 	$nbr_waiting_pm = 0;
 	if (!$unlimited_pm && $nbr_pm > $limit_group)
@@ -94,9 +94,9 @@ if ($read)
 
 if ($convers && empty($pm_edit) && empty($pm_del)) // Sending conversation.
 {
-	$title = retrieve(POST, 'title', '');
+	$title    = retrieve(POST, 'title', '');
 	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
-	$login = retrieve(POST, 'login', '');
+	$login    = retrieve(POST, 'login', '');
 
 	$limit_group = $current_user->check_max_value(PM_GROUP_LIMIT, $user_accounts_config->get_max_private_messages_number());
 	// Checking sender email
@@ -225,8 +225,8 @@ elseif ($prw_convers && empty($mp_edit)) // Conversation preview.
 	$view->put('KERNEL_EDITOR', $editor->display());
 
 	$view->assign_block_vars('post_convers', array(
-		'LOGIN' => $login,
-		'TITLE' => stripslashes($title),
+		'LOGIN'    => $login,
+		'TITLE'    => stripslashes($title),
 		'CONTENTS' => $contents
 	));
 
@@ -260,13 +260,13 @@ elseif ($prw && empty($pm_edit) && empty($pm_del)) // Message preview
 	$view->put('KERNEL_EDITOR', $editor->display());
 
 	$view->assign_block_vars('show_pm', array(
-		'DATE' => Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-		'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($contents))),
+		'DATE'            => Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
+		'CONTENTS'        => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($contents))),
 		'U_TITLE_CONVERS' => '<a href="pm' . url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get) . '">' . $convers_title . '</a>'
 	));
 
 	$view->assign_block_vars('post_pm', array(
-		'CONTENTS' => $contents,
+		'CONTENTS'         => $contents,
 		'U_PM_ACTION_POST' => url('.php?id=' . $pm_id_get . '&amp;token=' . AppContext::get_session()->get_token())
 	));
 
@@ -574,15 +574,15 @@ elseif (!empty($pm_edit)) // Edit PM, if recipient hasn't read it yet
 				$Bread_crumb->add($common_lang['common.edit']);
 
 				$view->assign_block_vars('edit_pm', array(
-					'CONTENTS' => ($prw_convers XOR $prw) ? $contents : FormatingHelper::unparse($pm['contents']),
-					'U_ACTION_EDIT' => url('.php?edit=' . $pm_edit . '&amp;token=' . AppContext::get_session()->get_token()),
+					'CONTENTS'      => ($prw_convers XOR $prw) ? $contents : FormatingHelper::unparse($pm['contents']),
+					'U_ACTION_EDIT' => url('.php?edit=' . $pm_edit . '&amp;token=' . AppContext::get_session()->get_token())
 				));
 
 				if ($prw_convers XOR $prw)
 				{
 					$view->assign_block_vars('edit_pm.show_pm', array(
-						'DATE' => Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-						'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($contents))),
+						'DATE'     => Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
+						'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($contents)))
 					));
 				}
 
@@ -668,8 +668,8 @@ elseif (!empty($pm_id_get)) // Messages associated with the conversation.
 	}
 
 	$view->assign_block_vars('pm', array(
-		'C_PAGINATION' => $pagination->has_several_pages(),
-		'PAGINATION' => $pagination->display(),
+		'C_PAGINATION'    => $pagination->has_several_pages(),
+		'PAGINATION'      => $pagination->display(),
 		'U_TITLE_CONVERS' => '<a href="pm' . url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get) . '">' . stripslashes($convers['title']) . '</a>'
 	));
 
@@ -722,19 +722,18 @@ elseif (!empty($pm_id_get)) // Messages associated with the conversation.
 			Date::get_array_tpl_vars($date,'date'),
 			array(
 			'C_CURRENT_USER_MESSAGE' => AppContext::get_current_user()->get_display_name() == $row['display_name'],
-			'C_MODERATION_TOOLS'     => ($row['id']                                        === $convers['last_msg_id']) && !$row['view_status'], // Last editable PM if recipient has'nt read it yet
+			'C_MODERATION_TOOLS'     => ($row['id'] === $convers['last_msg_id']) && !$row['view_status'], // Last editable PM if recipient has'nt read it yet
 			'C_VISITOR'              => $is_admin,
 			'C_AVATAR'               => $row['user_avatar'] || $user_accounts_config->is_default_avatar_enabled(),
 			'C_GROUP_COLOR'          => !empty($group_color),
-
-			'ID'            => $row['id'],
-			'CONTENTS'      => FormatingHelper::second_parse($row['contents']),
-			'USER_AVATAR'   => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : $user_accounts_config->get_default_avatar(),
-			'PSEUDO'        => $is_admin ? $lang['administrator'] : (!empty($row['display_name']) ? $row['display_name'] : $lang['guest']),
-			'LEVEL_CLASS'   => UserService::get_level_class($row['level']),
-			'GROUP_COLOR'   => $group_color,
-			'U_PROFILE'     => UserUrlBuilder::profile($row['user_id'])->rel(),
-			'WARNING_LEVEL' => (($row['warning_percentage'] < '100' || (time() - $row['delay_banned']) < 0) ? UserService::get_level_lang($row['level'] !== null ? $row['level'] : '-1') : $lang['banned'])
+			'ID'                     => $row['id'],
+			'CONTENTS'               => FormatingHelper::second_parse($row['contents']),
+			'USER_AVATAR'            => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : $user_accounts_config->get_default_avatar(),
+			'PSEUDO'                 => $is_admin ? $lang['administrator'] : (!empty($row['display_name']) ? $row['display_name'] : $lang['guest']),
+			'LEVEL_CLASS'            => UserService::get_level_class($row['level']),
+			'GROUP_COLOR'            => $group_color,
+			'U_PROFILE'              => UserUrlBuilder::profile($row['user_id'])->rel(),
+			'WARNING_LEVEL'          => (($row['warning_percentage'] < '100' || (time() - $row['delay_banned']) < 0) ? UserService::get_level_lang($row['level'] !== null ? $row['level'] : '-1') : $lang['banned'])
 			)
 		));
 
@@ -770,7 +769,7 @@ elseif (!empty($pm_id_get)) // Messages associated with the conversation.
 		$view->put('KERNEL_EDITOR', $editor->display());
 
 		$view->assign_block_vars('post_pm', array(
-			'CONTENTS' => $contents,
+			'CONTENTS'         => $contents,
 			'U_PM_ACTION_POST' => url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get)
 		));
 
@@ -957,7 +956,7 @@ else // Conversation list in the user email box
 
 		// Display of last message
 		$last_group_color = User::get_group_color($row['last_groups'], $row['last_level']);
-		$last_msg = '<a href="pm' . url('.php?' . $last_page . 'id=' . $row['id'], '-0-' . $row['id'] . $last_page_rewrite) . '#m' . $row['last_msg_id'] . '" class="far fa-hand-point-right"></a>' . ' ' . $common_lang['common.on'] . ' ' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br />';
+		$last_msg = '<a href="pm' . url('.php?' . $last_page . 'id=' . $row['id'], '-0-' . $row['id'] . $last_page_rewrite) . '#m' . $row['last_msg_id'] . '" class="far fa-hand-point-right"></a>' . ' ' . $common_lang['common.on.date'] . ' ' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br />';
 		$last_msg .= ($row['user_id'] == -1) ? $common_lang['common.by'] . ' ' . $lang['user.administrator'] : $common_lang['common.by'] . ' <a href="' . UserUrlBuilder::profile($row['last_user_id'])->rel() . '" class="small '.UserService::get_level_class($row['last_level']).'"' . (!empty($last_group_color) ? ' style="color:' . $last_group_color . '"' : '') . '>' . $row['last_login'] . '</a>';
 
 		$view->assign_block_vars('convers.list', array(
