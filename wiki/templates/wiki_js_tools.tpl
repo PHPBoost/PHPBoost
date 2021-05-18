@@ -96,7 +96,7 @@
 				</a>
 			</li>
 			<li class="bbcode-elements">
-				<a href="https://www.phpboost.com/wiki/" class="bbcode-button" aria-label="{@wiki.help.tags}"><i class="far fa-fw fa-question-circle" aria-hidden="true"></i></a>
+				<a href="https://www.phpboost.com/wiki/utilisation-du-module-wiki#paragraph-creer-un-sommaire" class="bbcode-button" aria-label="{@wiki.help.tags}"><i class="far fa-fw fa-question-circle" aria-hidden="true"></i></a>
 			</li>
 		</ul>
 	</nav>
