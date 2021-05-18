@@ -11,7 +11,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2021 05 18
  * @since       PHPBoost 2.0 - 2008 06 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -35,6 +35,9 @@ class Date
 	const FORMAT_ISO_DAY_MONTH_YEAR              = 10;
 	const FORMAT_AGO                             = 11;
 	const FORMAT_SINCE                           = 12;
+	const FORMAT_SMS                             = 13;
+	const FORMAT_HOUR_MINUTE                     = 14;
+	const FORMAT_DAY_MONTH_TEXT                  = 15;
 
 	/**
 	 * @var DateTime Representation of date and time.
@@ -166,6 +169,9 @@ class Date
 				return $time;
 				break;
 
+				case self::FORMAT_SMS:
+					return self::get_date_sms($this, $referencial_timezone);
+					break;
 			default:
 				return '';
 		}
@@ -210,6 +216,36 @@ class Date
 			return $months . ' ' . ($months > 1 ? LangLoader::get_message('date.months', 'date-lang') : LangLoader::get_message('date.month', 'date-lang'));
 		else
 			return $years . ' ' . ($years > 1 ? LangLoader::get_message('date.years', 'date-lang') : LangLoader::get_message('date.year', 'date-lang'));
+	}
+
+	/**
+	 * Returns the relative time associated to the date in SMS fomat
+	 * @param Date $date
+	 * @param int $referencial_timezone
+	 * @return string The relative time
+	 */
+	public function get_date_sms($date, $referencial_timezone)
+	{
+		$now = new Date(Date::DATE_NOW, $referencial_timezone);
+
+		if ($now->get_timestamp() > $date->get_timestamp())
+			$time_diff = $now->get_timestamp() - $date->get_timestamp();
+		else
+			$time_diff = $date->get_timestamp() - $now->get_timestamp();
+
+		$hours    = round($time_diff/3600);
+		$years    = round($time_diff/29030400);
+
+		if ($time_diff < 30) // Check if less than 30 seconds
+			return LangLoader::get_message('date.instantly', 'date-lang');
+		elseif ($hours < 24) // Check if it was today
+			return self::transform_date($date->date_time->format(LangLoader::get_message('date.format.hour.minute', 'date-lang')));
+		elseif ( ($hours > 24 ) && ( $hours < 48 ) ) // Check if it was yesterday
+			return LangLoader::get_message('date.yesterday', 'date-lang');
+		elseif ($years < 1) // Check if it was this year
+			return self::transform_date($date->date_time->format(LangLoader::get_message('date.format.day.month.text', 'date-lang')));
+		else
+			return self::transform_date($date->date_time->format(LangLoader::get_message('date.format.day.month.year', 'date-lang')));
 	}
 
 	/**
@@ -507,24 +543,27 @@ class Date
 			$date_label                       => $date->format(Date::FORMAT_DAY_MONTH_YEAR),
 			$date_label . '_TIMESTAMP'        => $date->get_timestamp(),
 			$date_label . '_SHORT'            => $date->format(Date::FORMAT_DAY_MONTH_YEAR),
-			$date_label . '_SHORT_TEXT'       => $date->format(Date::FORMAT_DAY_MONTH_YEAR_TEXT),
-			$date_label . '_SHORT_MONTH_TEXT' => $date->format(Date::FORMAT_DAY_MONTH_YEAR_LONG),
+			$date_label . '_SHORT_TEXT'       => $date->format(Date::FORMAT_DAY_MONTH_YEAR_TEXT), //The month in text format
+			$date_label . '_SHORT_MONTH_TEXT' => $date->format(Date::FORMAT_DAY_MONTH_YEAR_LONG), // The Year in 4 digits
 			$date_label . '_FULL'             => $date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 			$date_label . '_DAY'              => $date->get_day(), // The number of day
 			$date_label . '_DAY_TEXT'         => $date->get_day_text(3), // 3 first characters of day name
 			$date_label . '_DAY_FULLTEXT'     => $date->get_day_text(), // All characters of day name
+			$date_label . '_DAY_MONTH'        => $date->format(Date::FORMAT_DAY_MONTH),
+            $date_label . '_DAY_MONTH_TEXT'   => $date->format(Date::FORMAT_DAY_MONTH_TEXT), //The day with suffixe and the month in text format
 			$date_label . '_WEEK'             => $date->get_week_number(),
 			$date_label . '_MONTH'            => $date->get_month(), // The number of month
 			$date_label . '_MONTH_TEXT'       => $date->get_month_text(3), // 3 first characters of month name
 			$date_label . '_MONTH_FULLTEXT'   => $date->get_month_text(), // All characters of month name
 			$date_label . '_YEAR'             => $date->get_year(),
-			$date_label . '_DAY_MONTH'        => $date->format(Date::FORMAT_DAY_MONTH),
+			$date_label . '_HOUR_MINUTE'      => $date->format(Date::FORMAT_HOUR_MINUTE),
 			$date_label . '_HOUR'             => $date->get_hours(),
 			$date_label . '_MINUTE'           => $date->get_minutes(),
 			$date_label . '_SECONDS'          => $date->get_seconds(),
 			$date_label . '_ISO8601'          => $date->format(Date::FORMAT_ISO8601),
 			$date_label . '_AGO'              => $date->format(Date::FORMAT_AGO),
 			$date_label . '_SINCE'            => $date->format(Date::FORMAT_SINCE),
+			$date_label . '_SMS'              => $date->format(Date::FORMAT_SINCE),
 			$date_label . '_RELATIVE'         => $date->format(Date::FORMAT_RELATIVE)
 		);
 	}
