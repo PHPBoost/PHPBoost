@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 17
+ * @version     PHPBoost 6.0 - last update: 2021 05 18
  * @since       PHPBoost 3.0 - 2010 02 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -285,7 +285,7 @@ class InstallationServices
 			}
 		}
 
-		@usort($modules_not_installed, array(__CLASS__, 'callback_sort_modules_by_name'));
+		@uksort($modules_not_installed, array(__CLASS__, 'callback_sort_modules_by_name'));
 
 		return $modules_not_installed;
 	}
@@ -333,7 +333,7 @@ class InstallationServices
 			}
 		}
 
-		@usort($themes_not_installed, array(__CLASS__, 'callback_sort_themes_by_name'));
+		@uksort($themes_not_installed, array(__CLASS__, 'callback_sort_themes_by_name'));
 
 		return $themes_not_installed;
 	}
@@ -375,7 +375,7 @@ class InstallationServices
 			}
 		}
 
-		@usort($langs_not_installed, array(__CLASS__, 'callback_sort_langs_by_name'));
+		@uksort($langs_not_installed, array(__CLASS__, 'callback_sort_langs_by_name'));
 
 		return $langs_not_installed;
 	}
