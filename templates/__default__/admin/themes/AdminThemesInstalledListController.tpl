@@ -4,7 +4,7 @@
 		<header class="legend">{@themes.installed_theme}</header>
 		<div class="cell-flex cell-columns-3 cell-tile">
 			# START themes_installed #
-				<article class="cell addon# IF themes_installed.C_IS_DEFAULT_THEME # default-addon# ENDIF ## IF NOT themes_installed.C_IS_ACTIVATED #disabled-addon# ENDIF ## IF NOT themes_installed.C_COMPATIBLE # not-compatible error# ENDIF #">
+				<article class="cell addon# IF themes_installed.C_IS_DEFAULT_THEME # default-addon# ENDIF ## IF NOT themes_installed.C_IS_ACTIVATED # disabled-addon# ENDIF ## IF NOT themes_installed.C_COMPATIBLE # not-compatible error# ENDIF #">
 					<header class="cell-header">
 						# IF C_MORE_THAN_ONE_THEME_INSTALLED #
 							# IF themes_installed.C_COMPATIBLE #

@@ -92,8 +92,7 @@
 						# IF themes_not_installed.C_PARENT_THEME #
 							<li class="li-stretch# IF NOT themes_not_installed.C_PARENT_COMPAT # not-compatible error# ENDIF #">
 								<span class="text-strong">{@themes.parent.theme} :</span>
-									{themes_not_installed.PARENT_THEME}
-
+								{themes_not_installed.PARENT_THEME}
 							</li>
 						# ENDIF #
 					</ul>
