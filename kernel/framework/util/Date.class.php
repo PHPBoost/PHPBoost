@@ -109,15 +109,15 @@ class Date
 		switch ($format)
 		{
 			case self::FORMAT_DAY_MONTH:
-				return $this->date_time->format(LangLoader::get_message('date_format_day_month', 'date-common'));
+				return $this->date_time->format(LangLoader::get_message('date.format.day.month', 'date-lang'));
 				break;
 
 			case self::FORMAT_DAY_MONTH_YEAR:
-				return $this->date_time->format(LangLoader::get_message('date_format_day_month_year', 'date-common'));
+				return $this->date_time->format(LangLoader::get_message('date.format.day.month.year', 'date-lang'));
 				break;
 
 			case self::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE:
-				return $this->date_time->format(LangLoader::get_message('date_format_day_month_year_hour_minute', 'date-common'));
+				return $this->date_time->format(LangLoader::get_message('date.format.day.month.year.hour.minute', 'date-lang'));
 				break;
 
 			case self::FORMAT_TIMESTAMP:
@@ -133,15 +133,15 @@ class Date
 				break;
 
 			case self::FORMAT_DAY_MONTH_YEAR_LONG:
-				return self::transform_date($this->date_time->format(LangLoader::get_message('date_format_day_month_year_long', 'date-common')));
+				return self::transform_date($this->date_time->format(LangLoader::get_message('date.format.day.month.year.long', 'date-lang')));
 				break;
 
 			case self::FORMAT_DAY_MONTH_YEAR_TEXT:
-				return self::transform_date($this->date_time->format(LangLoader::get_message('date_format_day_month_year_text', 'date-common')));
+				return self::transform_date($this->date_time->format(LangLoader::get_message('date.format.day.month.year.text', 'date-lang')));
 				break;
 
 			case self::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT:
-				return self::transform_date($this->date_time->format(LangLoader::get_message('date_format_day_month_year_hour_minute_text', 'date-common')));
+				return self::transform_date($this->date_time->format(LangLoader::get_message('date.format.day.month.year.hour.minute.text', 'date-lang')));
 				break;
 
 			case self::FORMAT_RELATIVE:
@@ -540,16 +540,21 @@ class Date
 
 	private static function transform_date($date)
 	{
-		$date_lang = LangLoader::get('date-common');
+		$date_lang = LangLoader::get('date-lang');
 
 		$search = array(
 			'january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december',
-			'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'
+			'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec',
+			'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday',
+			'mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun',
 		);
 		$replace = array(
-			$date_lang['january'], $date_lang['february'], $date_lang['march'], $date_lang['april'], $date_lang['may'], $date_lang['june'],
-			$date_lang['july'], $date_lang['august'], $date_lang['september'], $date_lang['october'], $date_lang['november'], $date_lang['december'],
-			$date_lang['monday'], $date_lang['tuesday'], $date_lang['wednesday'], $date_lang['thursday'], $date_lang['friday'], $date_lang['saturday'], $date_lang['sunday'],
+			$date_lang['date.january'], $date_lang['date.february'], $date_lang['date.march'], $date_lang['date.april'], $date_lang['date.may'], $date_lang['date.june'],
+			$date_lang['date.july'], $date_lang['date.august'], $date_lang['date.september'], $date_lang['date.october'], $date_lang['date.november'], $date_lang['date.december'],
+			$date_lang['date.january.short'], $date_lang['date.february.short'], $date_lang['date.march.short'], $date_lang['date.april.short'], $date_lang['date.may.short'], $date_lang['date.june.short'],
+			$date_lang['date.july.short'], $date_lang['date.august.short'], $date_lang['date.september.short'], $date_lang['date.october.short'], $date_lang['date.november.short'], $date_lang['date.december.short'],
+			$date_lang['date.monday'], $date_lang['date.tuesday'], $date_lang['date.wednesday'], $date_lang['date.thursday'], $date_lang['date.friday'], $date_lang['date.saturday'], $date_lang['date.sunday'],
+			$date_lang['date.monday.short'], $date_lang['date.tuesday.short'], $date_lang['date.wednesday.short'], $date_lang['date.thursday.short'], $date_lang['date.friday.short'], $date_lang['date.saturday.short'], $date_lang['date.sunday.short']
 		);
 		return str_replace($search, $replace, TextHelper::strtolower($date));
 	}

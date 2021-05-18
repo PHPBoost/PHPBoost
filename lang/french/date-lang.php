@@ -48,6 +48,19 @@ $lang['date.october']   = 'Octobre';
 $lang['date.november']  = 'Novembre';
 $lang['date.december']  = 'Décembre';
 
+$lang['date.january.short']   = 'Jan';
+$lang['date.february.short']  = 'Fév';
+$lang['date.march.short']     = 'Mar';
+$lang['date.april.short']     = 'Avr';
+$lang['date.may.short']       = 'Mai';
+$lang['date.june.short']      = 'Jun';
+$lang['date.july.short']      = 'Jul';
+$lang['date.august.short']    = 'Aou';
+$lang['date.september.short'] = 'Sep';
+$lang['date.october.short']   = 'Oct';
+$lang['date.november.short']  = 'Nov';
+$lang['date.december.short']  = 'Déc';
+
 $lang['date.week.mini']      = 'Se';
 $lang['date.monday.mini']    = 'Lu';
 $lang['date.tuesday.mini']   = 'Ma';
