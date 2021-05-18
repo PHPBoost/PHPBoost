@@ -285,7 +285,7 @@ class InstallationServices
 			}
 		}
 
-		@uksort($modules_not_installed, array(__CLASS__, 'callback_sort_modules_by_name'));
+		@uasort($modules_not_installed, array(__CLASS__, 'callback_sort_modules_by_name'));
 
 		return $modules_not_installed;
 	}
@@ -333,7 +333,7 @@ class InstallationServices
 			}
 		}
 
-		@uksort($themes_not_installed, array(__CLASS__, 'callback_sort_themes_by_name'));
+		@uasort($themes_not_installed, array(__CLASS__, 'callback_sort_themes_by_name'));
 
 		return $themes_not_installed;
 	}
@@ -375,7 +375,7 @@ class InstallationServices
 			}
 		}
 
-		@uksort($langs_not_installed, array(__CLASS__, 'callback_sort_langs_by_name'));
+		@uasort($langs_not_installed, array(__CLASS__, 'callback_sort_langs_by_name'));
 
 		return $langs_not_installed;
 	}
