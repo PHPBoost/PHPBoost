@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 17
+ * @version     PHPBoost 6.0 - last update: 2021 05 19
  * @since       PHPBoost 3.0 - 2009 12 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -19,11 +19,13 @@ abstract class ModuleController extends AbstractController
 
 	public static function __static()
 	{
+		self::$module = self::$module_configuration = null;
 		self::$module_id = self::$module_id ? self::$module_id : Environment::get_running_module_name();
 	}
 	
 	public function __construct($module_id = '')
 	{
+		self::$module = self::$module_configuration = null;
 		self::$module_id = $module_id ? $module_id : Environment::get_running_module_name();
 	}
 
