@@ -121,10 +121,10 @@
 
 <div id="poll-countdown">
 	<span id="countdown-remaining-time">{@poll.countdown.remaining.time}</span>
-	<span id="countdown-day" >--</span><span id="countdown-day-lang"> {@days}</span>
-	<span id="countdown-hour">--</span><span id="countdown-hour-lang">{@unit.hour}</span>
-	<span id="countdown-min" >--</span><span id="countdown-min-lang">{@unit.minute}</span>
+	<span id="countdown-day" >--</span><span id="countdown-day-lang"> {@date.days}</span>
+	<span id="countdown-hour">--</span><span id="countdown-hour-lang">{@date.unit.hour}</span>
+	<span id="countdown-min" >--</span><span id="countdown-min-lang">{@date.unit.minute}</span>
 	# IF C_COUNTDOWN_WITH_S #
-		<span id="countdown-sec" >--</span><span id="countdown-sec-lang">{@unit.seconds}</span>
+		<span id="countdown-sec" >--</span><span id="countdown-sec-lang">{@date.unit.seconds}</span>
 	# ENDIF #
 </div>

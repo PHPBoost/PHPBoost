@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 01 11
+ * @version     PHPBoost 6.0 - last update: 2021 05 19
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -84,6 +84,8 @@ class PollItemController extends DefaultDisplayItemController
 			));
 		}
 
+		$fieldset = new FormFieldsetHTML('poll_warnings');
+		$vote_form->add_fieldset($fieldset);
 		if (!$this->get_item()->is_closed())
 		{
 			if ($this->get_item()->is_published())
@@ -96,16 +98,16 @@ class PollItemController extends DefaultDisplayItemController
 						$vote_form->add_button($this->submit_button);
 					}
 					else
-						$fieldset->add_field(new FormFieldFree('has_voted', '', $this->lang['poll.message.already.voted']));
+						$fieldset->set_description(MessageHelper::display($this->lang['poll.message.already.voted'], MessageHelper::SUCCESS)->render());
 				}
 				else
-					$fieldset->add_field(new FormFieldFree('vote_not_allowed', '', $this->lang['poll.message.not.allowed']));
+					$fieldset->set_description(MessageHelper::display($this->lang['poll.message.not.allowed'], MessageHelper::WARNING)->render());
 			}
 			else
-				$fieldset->add_field(new FormFieldFree('poll_not_published', '', $this->lang['poll.message.not.published']));
+				$fieldset->set_description(MessageHelper::display($this->lang['poll.message.not.published'], MessageHelper::WARNING)->render());
 		}
 		else
-			$fieldset->add_field(new FormFieldFree('poll_is_closed', '', $this->lang['poll.message.closed']));
+			$fieldset->set_description(MessageHelper::display($this->lang['poll.message.closed'], MessageHelper::NOTICE)->render());
 
 		$this->vote_form = $vote_form;
 	}

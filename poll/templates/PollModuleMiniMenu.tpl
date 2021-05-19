@@ -2,10 +2,10 @@
 	# IF NOT IS_USER_CONNECTED #
 		# IF C_DISPLAYING_POLLS_MAP #
 			<div class="cell-content">
-			  # IF C_MULTIPLE_POLL_ITEMS #
-				  {@poll.mini.participate.multiple}
+			  	# IF C_MULTIPLE_POLL_ITEMS #
+				  	{@poll.mini.participate.multiple}
 				# ELSE #
-				  {@poll.mini.participate.single}
+				  	{@poll.mini.participate.single}
 				# ENDIF #
 			</div>
 			<div class="cell-list">
@@ -107,7 +107,7 @@
 		    <div id="pollmini_loading_1" class="pollmini_loadingprogress"></div>
 	    </div>
 		# IF C_ENABLED_COUNTDOWN #
-			# INCLUDE COUNTDOWN #
+			<div class="cell-content"># INCLUDE COUNTDOWN #</div>
 		# ENDIF #
 		# IF C_VOTE_FORM_AND_RESULTS #
 			# INCLUDE VOTE_FORM #

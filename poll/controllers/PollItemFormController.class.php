@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 01 11
+ * @version     PHPBoost 6.0 - last update: 2021 05 19
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -44,7 +44,7 @@ class PollItemFormController extends DefaultItemFormController
 	protected function build_pre_content_fields(FormFieldset $fieldset)
 	{
 		if ($this->get_item()->has_votes())
-			$fieldset->add_field(new FormFieldFree('change_poll', '', $this->lang['poll.form.force.changes.poll']));
+			$fieldset->set_description(MessageHelper::display($this->lang['poll.form.force.changes.poll'], MessageHelper::WARNING)->render());
 
 		parent::build_pre_content_fields($fieldset);
 
@@ -65,7 +65,7 @@ class PollItemFormController extends DefaultItemFormController
 		),
 		array(
 			'hidden' 		=> !($this->get_item()->get_publishing_state() == Item::DEFERRED_PUBLICATION && $this->get_item()->get_publishing_end_date()),
-			'description' 	=> $this->lang['poll.form.countdown.parameters.description']
+			'description' 	=> $this->lang['poll.form.countdown.parameters.clue']
 		)
 		));
 

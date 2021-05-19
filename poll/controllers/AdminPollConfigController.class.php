@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 07
+ * @version     PHPBoost 6.0 - last update: 2021 05 19
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -43,20 +43,20 @@ class AdminPollConfigController extends DefaultConfigurationController
 		    array(
 		        'hidden' => empty($this->get_selected_items()),
 		        'required' => true,
-		        'description' => $this->lang['poll.config.mini.module.selected.items.description']
+		        'description' => $this->lang['poll.config.mini.module.selected.items.clue']
 	        ),
 		    $categories_cache
-		    ));
+	    ));
 
 		$fieldset->add_field(new FormFieldTextEditor('cookie_name', $this->lang['poll.config.cookie.name'], $this->config->get_cookie_name(),
-				array('maxlength' => 25, 'required' => true, 'class' => 'top-field'),
-				array(new FormFieldConstraintRegex('`^[a-z0-9_-]+$`iu'))
-			));
+			array('maxlength' => 25, 'required' => true, 'class' => 'top-field'),
+			array(new FormFieldConstraintRegex('`^[a-z0-9_-]+$`iu'))
+		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('cookie_lenght', $this->lang['poll.config.cookie.lenght'], $this->config->get_cookie_lenght(),
-				array('min' => 1, 'required' => true, 'class' => 'top-field'),
-				array(new FormFieldConstraintRegex('`^[0-9]+$`iu'))
-			));
+			array('min' => 1, 'required' => true, 'class' => 'top-field'),
+			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'))
+		));
 	}
 
 	protected function add_additional_actions_authorization()
@@ -86,25 +86,25 @@ class AdminPollConfigController extends DefaultConfigurationController
 
 	protected function get_selected_items()
 	{
-	  $request = AppContext::get_request();
-	  if ($request->has_postparameter('poll_config_form_cookie_name'))
-	  {
-  	  $selected_items = array();
-  	  if ($request->has_postparameter('poll_config_form_mini_module_selected_items'))
-  	  {
-  	    $pre_selected_items = $request->get_array('poll_config_form_mini_module_selected_items');
-  	    foreach ($pre_selected_items as $id_item)
-  	    {
-  	      $selected_items[] = (string) $id_item;
-  	    }
-  	  }
-	  }
-  	else
-  	{
-  	  $selected_items = $this->config->get_mini_module_selected_items();
-  	}
+		$request = AppContext::get_request();
+		if ($request->has_postparameter('poll_config_form_cookie_name'))
+		{
+			$selected_items = array();
+			if ($request->has_postparameter('poll_config_form_mini_module_selected_items'))
+			{
+				$pre_selected_items = $request->get_array('poll_config_form_mini_module_selected_items');
+				foreach ($pre_selected_items as $id_item)
+				{
+					$selected_items[] = (string) $id_item;
+				}
+			}
+		}
+		else
+		{
+			$selected_items = $this->config->get_mini_module_selected_items();
+		}
 
-	  return $selected_items;
+		return $selected_items;
 	}
 }
 ?>
