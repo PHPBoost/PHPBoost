@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 31
+ * @version     PHPBoost 6.0 - last update: 2021 05 05
  * @since       PHPBoost 6.0 - 2020 05 16
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -302,7 +302,7 @@ class DefaultItemFormController extends AbstractItemController
 				$ref_class = new ReflectionClass($field_class);
 				unset($parameters['field_class']);
 				array_unshift($parameters, $id);
-				$field_instance = $ref_class->newInstanceArgs($parameters);
+				$field_instance = $ref_class->newInstanceArgs(array_values($parameters));
 				$fieldset->add_field($field_instance);
 			}
 		}
