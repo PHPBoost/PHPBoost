@@ -31,9 +31,9 @@ input, button, label, select, textarea, legend {
 	vertical-align: middle;
 }
 
-optgroup, select, label, button, .button, input[type="radio"], input[type="checkbox"], input[type="color"], .notation .star { cursor: pointer; }
+optgroup, select, label, button, .button, [type="radio"], [type="checkbox"], [type="color"], .notation .star { cursor: pointer; }
 
-input[type="checkbox"] {
+[type="checkbox"] {
 	border: none;
 	background: none;
 }
