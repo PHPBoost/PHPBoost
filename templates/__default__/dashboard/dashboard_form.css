@@ -49,6 +49,8 @@ select {
 	padding: 0.618em;
 }
 
+[type="number"] { padding-right: 0; }
+
 [type="color"] { width: 100%; }
 
 @media (min-width:769px){
