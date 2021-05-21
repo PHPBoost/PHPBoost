@@ -47,6 +47,7 @@ $lang['form.insert']  = 'Insert';
 
 // Configuration
 $lang['form.home']                      = 'Homepage';
+$lang['form.module']                    = 'Module';
 $lang['form.documentation']             = 'Documentation';
 $lang['form.configuration']             = 'Configuration';
 $lang['form.module.title']              = ':module_name module configuration';

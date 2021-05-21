@@ -23,6 +23,7 @@ $lang['warning.email']     = 'Veuillez entrer un email valide !';
 $lang['warning.subcat']    = 'Veuillez sélectionner une sous-catégorie !';
 $lang['warning.url']       = 'Veuillez entrer une url valide !';
 $lang['warning.recipient'] = 'Veuillez entrer le destinataire du message !';
+$lang['warning.integer']   = 'Veuillez entrer nombre entier !';
 
 // Captcha
 $lang['warning.captcha.validation.error'] = 'Le champ de vérification visuel n\'a pas été saisi correctement !';

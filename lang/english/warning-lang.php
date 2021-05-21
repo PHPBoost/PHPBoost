@@ -23,6 +23,7 @@ $lang['warning.email']     = 'Please enter an valid email address !';
 $lang['warning.subcat']    = 'Please select a sub-category !';
 $lang['warning.url']       = 'Please enter a valid URL !';
 $lang['warning.recipient'] = 'Please enter the recipient !';
+$lang['warning.integer']   = 'Please enter an integer number !';
 
 // Captcha
 $lang['warning.captcha.validation.error'] = 'The visual confirmation field has not been properly filled!';
