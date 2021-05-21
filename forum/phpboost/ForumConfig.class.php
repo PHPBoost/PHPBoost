@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2021 05 21
  * @since       PHPBoost 4.1 - 2014 09 11
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -226,7 +226,7 @@ class ForumConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::FORUM_NAME                                => LangLoader::get_message('forum.default.forum.name', 'install', 'forum'),
+			self::FORUM_NAME                                => LangLoader::get_message('forum.config.default.forum.name', 'config', 'forum'),
 			self::NUMBER_TOPICS_PER_PAGE                    => 20,
 			self::NUMBER_MESSAGES_PER_PAGE                  => 15,
 			self::READ_MESSAGES_STORAGE_DURATION            => 30,
