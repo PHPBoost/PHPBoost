@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 30
+ * @version     PHPBoost 6.0 - last update: 2021 05 21
  * @since       PHPBoost 1.2 - 2005 10 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -217,7 +217,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				'U_CATEGORY'           => 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php'),
 				'U_TITLE_T'            => 'post' . url('.php?new=topic&amp;id=' . $id_get),
 
-				'L_ACTION'             => $lang['forum.new.subject'],
+				'L_ACTION'             => $lang['forum.new.topic'],
 				//
 				'L_NEW_SUBJECT'        => $LANG['post_new_subject'],
 				'L_REQUIRE'            => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
@@ -838,7 +838,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				'U_CATEGORY'           => 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php'),
 				'U_TITLE_T'            => 'post' . url('.php?new=topic&amp;id=' . $id_get),
 
-				'L_ACTION'             => $lang['forum.new.subject'],
+				'L_ACTION'             => $lang['forum.new.topic'],
 				//
 				'L_NEW_SUBJECT'        => $LANG['post_new_subject'],
 				'L_REQUIRE'            => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),

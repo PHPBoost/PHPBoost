@@ -29,7 +29,7 @@
 								</h3>
 							</div>
 							<div class="message-infos">
-								<time datetime="{list.TOPIC_DATE_FULL}" itemprop="datePublished">{@common.on} {list.TOPIC_DATE_FULL}</time>
+								<time datetime="{list.TOPIC_DATE_FULL}" itemprop="datePublished">{@common.on.date} {list.TOPIC_DATE_FULL}</time>
 								<a href="topic{list.U_VARS_ANCHOR}#m{list.ID}" aria-label="{@forum.link.to.topic}">\#{list.ID}</i></a>
 							</div>
 						</div>

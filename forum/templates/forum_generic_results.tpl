@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="message-infos">
-                <time datetime="{DATE}" itemprop="datePublished">{@common.on} : {DATE}</time>
+                <time datetime="{DATE}" itemprop="datePublished">{@common.on.date} : {DATE}</time>
                 <a href="{U_TOPIC}" aria-label="Lien vers ce message">{@forum.topic} : {TITLE}</a>
             </div>
         </div>

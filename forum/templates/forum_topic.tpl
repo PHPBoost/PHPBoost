@@ -226,7 +226,7 @@
 					</div>
 					<div class="message-infos">
 						<div class="message-date small">
-							<time datetime="{msg.TOPIC_DATE_FULL}" itemprop="datePublished">{@common.on} {msg.TOPIC_DATE_FULL}</time>
+							<time datetime="{msg.TOPIC_DATE_FULL}" itemprop="datePublished">{@common.on.date} {msg.TOPIC_DATE_FULL}</time>
 						</div>
 						<div class="message-actions">
 							<div class="message-actions-container-{msg.ID}">
@@ -351,7 +351,7 @@
 						# ELSE #
 							{@user.guest}
 						# ENDIF #
-						{@common.on} {msg.TOPIC_EDIT_DATE_FULL}
+						{@common.on.date} {msg.TOPIC_EDIT_DATE_FULL}
 					</p>
 				# ENDIF #
 			</div>
