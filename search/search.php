@@ -3,23 +3,30 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 10
+ * @version     PHPBoost 6.0 - last update: 2020 05 21
  * @since       PHPBoost 2.0 - 2008 01 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 //------------------------------------------------------------------- Language
 require_once('../kernel/begin.php');
 load_module_lang('search');
+$lang = LangLoader::get('common','search');
+$form_lang = LangLoader::get('form-lang');
+$warning_lang = LangLoader::get('warning-lang');
 
+//------------------------------------------------------------- Authorizations
 if (!SearchAuthorizationsService::check_authorizations()->read())
 {
 	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
 }
 
-$tpl = new FileTemplate('search/search_forms.tpl');
+//------------------------------------------------------------------- Template
+$view = new FileTemplate('search/search_forms.tpl');
+$view->add_lang(array_merge($lang, $form_lang, $warning_lang));
 
 //--------------------------------------------------------------------- Params
 $request = AppContext::get_request();
@@ -43,28 +50,29 @@ else if (count($selected_modules) == 1)
 
 //--------------------------------------------------------------------- Header
 
-define('TITLE', $LANG['title_search']);
+define('TITLE', $lang['search.module.title']);
 
 require_once('../kernel/header.php');
-$tpl->assign_vars(Array(
-	'L_TITLE_SEARCH' => TITLE,
-	'L_SEARCHED_TEXT' => $LANG['search.searched.text'],
-	'L_SEARCH' => $LANG['search'],
-	'TEXT_SEARCHED' => $unsecure_search,
-	'L_SEARCH_ALL' => $LANG['search_all'],
-	'L_SEARCH_KEYWORDS' => $LANG['search_keywords'],
-	'L_SEARCH_MIN_LENGTH' => $LANG['search_min_length'],
-	'L_SEARCH_IN_MODULES' => $LANG['search_in_modules'],
-	'L_SEARCH_IN_MODULES_EXPLAIN' => $LANG['search_in_modules_explain'],
-	'L_SEARCH_SPECIALIZED_FORM' => $LANG['search_specialized_form'],
-	'L_SEARCH_SPECIALIZED_FORM_EXPLAIN' => $LANG['search_specialized_form_explain'],
-	'L_WARNING_LENGTH_STRING_SEARCH' => TextHelper::to_js_string($LANG['warning_length_string_searched']),
-	'L_FORMS' => $LANG['forms'],
-	'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
-	'L_SIMPLE_SEARCH' => $LANG['simple_search'],
-	'U_FORM_VALID' => url('../search/search.php#results'),
+$view->assign_vars(Array(
 	'C_SIMPLE_SEARCH' => $search_in == 'all' ? true : false,
-	'SEARCH_MODE_MODULE' => $search_in
+	'MODULE_MODE' => $search_in,
+	'TEXT_SEARCHED' => $unsecure_search,
+	'U_FORM_VALID' => url('../search/search.php#results'),
+	'L_ADVANCED_SEARCH_LENGTH' => TextHelper::to_js_string($lang['search.warning.length']),
+	//
+	// 'L_TITLE_SEARCH' => TITLE,
+	// 'L_SEARCHED_TEXT' => $LANG['search_searched_text'],
+	// 'L_SEARCH' => $LANG['search'],
+	// 'L_SEARCH_ALL' => $LANG['search_all'],
+	// 'L_SEARCH_KEYWORDS' => $LANG['search_keywords'],
+	// 'L_SEARCH_MIN_LENGTH' => $LANG['search_min_length'],
+	// 'L_SEARCH_IN_MODULES' => $LANG['search_in_modules'],
+	// 'L_SEARCH_IN_MODULES_EXPLAIN' => $LANG['search_in_modules_explain'],
+	// 'L_SEARCH_SPECIALIZED_FORM' => $LANG['search_specialized_form'],
+	// 'L_SEARCH_SPECIALIZED_FORM_EXPLAIN' => $LANG['search_specialized_form_explain'],
+	// 'L_FORMS' => $LANG['forms'],
+	// 'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
+	// 'L_SIMPLE_SEARCH' => $LANG['simple_search'],
 ));
 
 //------------------------------------------------------------- Other includes
@@ -113,7 +121,7 @@ foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as
 					}
 				}
 
-				$tpl->assign_block_vars('forms', array(
+				$view->assign_block_vars('forms', array(
 					'MODULE_NAME' => $module->get_id(),
 					'L_MODULE_NAME' => TextHelper::ucfirst($module_configuration->get_name()),
 					'C_SEARCH_FORM' => true,
@@ -123,12 +131,12 @@ foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as
 			}
 			else
 			{
-				$tpl->assign_block_vars('forms', array(
+				$view->assign_block_vars('forms', array(
 					'MODULE_NAME' => $module->get_id(),
 					'L_MODULE_NAME' => TextHelper::ucfirst($module_configuration->get_name()),
 					'C_SEARCH_FORM' => false,
 					'C_SELECTED' => count($selected_modules) == 1 ? in_array($module->get_id(), $selected_modules) : false,
-					'SEARCH_FORM' => $LANG['search_no_options']
+					'SEARCH_FORM' => $lang['search.no.options']
 				));
 			}
 
@@ -144,7 +152,7 @@ foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as
 				$selected = '';
 			}
 
-			$tpl->assign_block_vars('searched_modules', array(
+			$view->assign_block_vars('searched_modules', array(
 				'MODULE' => $module->get_id(),
 				'L_MODULE_NAME' => TextHelper::ucfirst($module_configuration->get_name()),
 				'SELECTED' => $selected
@@ -153,11 +161,12 @@ foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as
 	}
 }
 
-$tpl->display();
+$view->display();
 
 if (!empty($search))
 {
-	$tpl = new FileTemplate('search/search_results.tpl');
+	$view = new FileTemplate('search/search_results.tpl');
+	$view->add_lang(array_merge($lang, LangLoader::get('common-lang')));
 
 	$results = array();
 	$idsSearch = array();
@@ -192,7 +201,7 @@ if (!empty($search))
 
 	foreach ($used_modules as $module_id => $extension_point)
 	{
-		$tpl->assign_block_vars('results', array(
+		$view->assign_block_vars('results', array(
 			'MODULE_NAME' => $module_id,
 			'L_MODULE_NAME' => TextHelper::ucfirst(ModulesManager::get_module($module_id)->get_configuration()->get_name()),
 			'ID_SEARCH' => $idsSearch[$module_id]
@@ -203,21 +212,25 @@ if (!empty($search))
 	if ( $nbResults > 0 )
 		get_html_results($results, $all_html_result, $search_in);
 
-	$tpl->assign_vars(Array(
-		'NB_RESULTS_PER_PAGE' => NB_RESULTS_PER_PAGE,
+	$view->assign_vars(Array(
+		'C_SIMPLE_SEARCH' => ($search_in == 'all'),
+		'C_HAS_RESULTS' => $nbResults > 0,
+		'C_SEVERAL_RESULTS' => $nbResults > 1,
+
+		'ALL_RESULTS' => $all_html_result,
+		'SEARCH_IN' => $search_in,
+		'RESULTS_PER_PAGE' => RESULTS_PER_PAGE,
+		'RESULTS_NUMBER' => $nbResults,
+		//
 		'L_TITLE_ALL_RESULTS' => $LANG['title_all_results'],
 		'L_RESULTS' => $LANG['results'],
 		'L_RESULTS_CHOICE' => $LANG['results_choice'],
 		'L_PRINT' => $LANG['print'],
 		'L_NB_RESULTS_FOUND' => $nbResults > 1 ? $LANG['nb_results_found'] : ($nbResults == 0 ? $LANG['no_results_found'] : $LANG['one_result_found']),
 		'L_SEARCH_RESULTS' => $LANG['search_results'],
-		'NB_RESULTS' => $nbResults,
-		'ALL_RESULTS' => $all_html_result,
-		'SEARCH_IN' => $search_in,
-		'C_SIMPLE_SEARCH' => ($search_in == 'all')
 	));
 
-	$tpl->display();
+	$view->display();
 }
 
 //--------------------------------------------------------------------- Footer

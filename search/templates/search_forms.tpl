@@ -1,7 +1,7 @@
 <script>
 	const FORM = 'form-';
 	const SPECIALIZED_FORM_LINK = 'specialize-form-link-';
-	var LastSpecializedFormUsed = '{SEARCH_MODE_MODULE}';
+	var LastSpecializedFormUsed = '{MODULE_MODE}';
 
 	function ChangeForm(module)
 	// Limit the search to a single module
@@ -20,15 +20,15 @@
 	function check_search_form_post()
 	// Check the form validity
 	{
-		var textSearched = document.getElementById("TxTsearched").value;
-		if ( textSearched.length >= 3 && textSearched != '{L_SEARCH}')
+		var searchText = document.getElementById("advanced-search-text").value;
+		if ( searchText.length >= 3 && searchText != '{@form.search}')
 		{
-			textSearched = escape_xmlhttprequest(textSearched);
+			searchText = escape_xmlhttprequest(searchText);
 			return true;
 		}
 		else
 		{
-			alert({L_WARNING_LENGTH_STRING_SEARCH});
+			alert({L_ADVANCED_SEARCH_LENGTH});
 			return false;
 		}
 	}
@@ -36,7 +36,7 @@
 
 <section id="module-search">
    <header>
-		<h1>{L_TITLE_SEARCH}</h1>
+		<h1>{@search.module.title}</h1>
 	</header>
 	<div class="sub-section">
 		<div class="content-container">
@@ -47,7 +47,7 @@
 							<div class="cell-list">
 								<ul>
 									<li id="specialize-form-link-all" # IF C_SIMPLE_SEARCH # class="current" # ENDIF #>
-										<a href="javascript:ChangeForm('all');">{L_SEARCH_ALL}</a>
+										<a href="javascript:ChangeForm('all');">{@search.all}</a>
 									</li>
 									# START forms #
 										<li id="specialize-form-link-{forms.MODULE_NAME}" # IF forms.C_SELECTED # class="current" # ENDIF #>
@@ -59,16 +59,16 @@
 						</div>
 					</div>
 					<div class="form-element">
-						<label for="">{L_SEARCHED_TEXT}</label>
+						<label for="">{@search.text}</label>
 						<div class="form-field form-field-text">
-							<input type="search" id="TxTsearched" name="q" value="{TEXT_SEARCHED}" class="field-xlarge" placeholder="">
+							<input type="search" id="advanced-search-text" name="q" value="{TEXT_SEARCHED}" class="field-xlarge" placeholder="">
 						</div>
 					</div>
-					<div id="form-all" class="SpecializedForm" # IF NOT C_SIMPLE_SEARCH # style="display: none;" # ENDIF #>
+					<div id="form-all" class="specialized-form" # IF NOT C_SIMPLE_SEARCH # style="display: none;" # ENDIF #>
 							<div class="form-element">
 								<label for="">
-									{L_SEARCH_IN_MODULES}
-									<span class="field-description">{L_SEARCH_IN_MODULES_EXPLAIN}</span>
+									{@search.in.modules}
+									<span class="field-description">{@search.in.modules.clue}</span>
 								</label>
 								<div class="form-field form-field-multi-select">
 									<select id="searched_modules" name="searched_modules[]" size="5" multiple="multiple" class="list-modules">
@@ -80,7 +80,7 @@
 							</div>
 					</div>
 					# START forms #
-						<div id="form-{forms.MODULE_NAME}" class="SpecializedForm" # IF NOT forms.C_SELECTED # style="display: none;" # ENDIF #>
+						<div id="form-{forms.MODULE_NAME}" class="specialized-form" # IF NOT forms.C_SELECTED # style="display: none;" # ENDIF #>
 							# IF forms.C_SEARCH_FORM #
 								{forms.SEARCH_FORM}
 							# ELSE #
@@ -91,7 +91,7 @@
 					<fieldset class="fieldset-submit">
 						<input type="hidden" id="search-in" name="search_in" value="all">
 						<input type="hidden" name="query_mode" value="0">
-						<button type="submit" name="search_submit" value="{L_SEARCH}" class="button submit"><i class="fa fa-search" aria-hidden="true"></i> {L_SEARCH}</button>
+						<button type="submit" name="search_submit" value="{@form.search}" class="button submit"><i class="fa fa-search" aria-hidden="true"></i> {@form.search}</button>
 						<input type="hidden" name="token" value="{TOKEN}">
 					</fieldset>
 				</form>
@@ -102,5 +102,5 @@
 	 <footer></footer>
 </section>
 <script>
-	ChangeForm('{SEARCH_MODE_MODULE}');
+	ChangeForm('{MODULE_MODE}');
 </script>

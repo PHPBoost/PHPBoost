@@ -3,17 +3,18 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 10 23
+ * @version     PHPBoost 6.0 - last update: 2021 05 21
  * @since       PHPBoost 2.0 - 2008 02 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 if (defined('PHPBOOST') !== true) exit;
 
 $config = SearchConfig::load();
 
-define ('NB_RESULTS_PER_PAGE', $config->get_nb_results_per_page());
+define ('RESULTS_PER_PAGE', $config->get_nb_results_per_page());
 
 /**
  *  Exécute la recherche
@@ -77,7 +78,7 @@ function get_html_results(&$results, &$html_results, &$results_name)
 		'C_ALL_RESULTS' => $display_all_results
 	));
 
-	$nb_pages = round(count($results) / NB_RESULTS_PER_PAGE) + 1;
+	$nb_pages = round(count($results) / RESULTS_PER_PAGE) + 1;
 	$nb_results = count($results);
 
 	if (!$display_all_results)
@@ -100,9 +101,9 @@ function get_html_results(&$results, &$html_results, &$results_name)
 			'BLOCK_DISPLAY' => ($num_page == 0 ? 'block' : 'none')
 		));
 
-		for ($i = 0 ; $i < NB_RESULTS_PER_PAGE; $i++)
+		for ($i = 0 ; $i < RESULTS_PER_PAGE; $i++)
 		{
-			$num_item = $num_page * NB_RESULTS_PER_PAGE + $i;
+			$num_item = $num_page * RESULTS_PER_PAGE + $i;
 			if (($num_item) >= $nb_results)
 				break;
 

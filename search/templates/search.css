@@ -2,7 +2,8 @@
 * Copy this file into your theme to customize the module.
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
-/* Config */
+
+/* --- Config --- */
 .fieldset-refresh .form-element { align-content: center; }
 
 /* --- Search input area --- */
@@ -20,7 +21,7 @@
 	width: auto;
 }
 
-.SpecializedForm { padding: 0 0.309em; }
+.specialized-form { padding: 0 0.309em; }
 
 @media (max-width: 768px) {
 	#module-search .options { float: none; }
@@ -28,43 +29,4 @@
 	#module-search #form-all .form-element label { text-align: center; }
 
 	#module-search #form-all .form-element label span { font-size: 0.809em; }
-}
-
-/* --- Results area --- */
-.results {
-	margin-top: 30px;
-	min-height: 50px;
-	vertical-align: middle;
-}
-
-.results span.title {
-	position: relative;
-	top: -25px;
-	font-weight: bold;
-	text-align: center;
-	text-transform: uppercase;
-}
-
-.results .infosResults {
-	width: 90%;
-	padding-left: 10px;
-	font-size: 0.75em;
-	font-weight: bold;
-}
-
-.infosResults .infosResults-progressbar {
-	margin: auto;
-	width: 500px;
-}
-
-.search-results {
-	margin-left: 30px;
-	padding: 10px;
-}
-
-.search-results li { padding: 0.309em; }
-
-.PaginationResults {
-	padding: 0.309em;
-	text-align: right;
 }

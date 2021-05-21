@@ -3,16 +3,19 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 10
+ * @version     PHPBoost 6.0 - last update: 2021 05 21
  * @since       PHPBoost 2.0 - 2008 01 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once('../kernel/begin.php');
 AppContext::get_session()->no_session_location(); //Permet de ne pas mettre jour la page dans la session.
 //------------------------------------------------------------------- Language
 load_module_lang('search');
+$lang = LangLoader::get('common','search');
+$common_lang = LangLoader::get('common-lang');
 
 //--------------------------------------------------------------------- Params
 $request = AppContext::get_request();
@@ -87,7 +90,7 @@ if (($id_search >= 0) && ($module_id != ''))
 	{
 		$search->id_search[$module_id] = $id_search;
 	}
-	echo   'var resultsAJAX = new Array();';
+	echo   'var resultsAJAX = new Array(); var resultWarning = \'\';';
 	$nb_results = $search->get_results_by_id($results, $search->id_search[$module_id]);
 	if ($nb_results > 0)
 	{
@@ -96,14 +99,16 @@ if (($id_search >= 0) && ($module_id != ''))
 		get_html_results($results, $html_results, $module_id);
 
 		echo   'nbResults[\'' . $module_id . '\'] = ' . $nb_results . ';
-				resultsAJAX[\'nbResults\'] = \'' . $nb_results . ' '.addslashes($nb_results > 1 ? $LANG['nb_results_found'] : $LANG['one_result_found']) . '\';
-				resultsAJAX[\'results\'] = \''.str_replace(array("\r", "\n", '\''), array('', ' ', '\\\''), $html_results) . '\';';
+				resultsAJAX[\'nbResults\'] = \'' . $nb_results . ' ' . addslashes($nb_results > 1 ? $lang['search.results.found'] : $lang['search.result.found']) . '\';
+				resultsAJAX[\'results\'] = \''.str_replace(array("\r", "\n", '\''), array('', ' ', '\\\''), $html_results) . '\';
+				resultWarning = \'success\';';
 	}
 	else
 	{
 		echo   'nbResults[\'' . $module_id . '\'] = 0;
-				resultsAJAX[\'nbResults\'] = \''.addslashes($LANG['no_results_found']) . '\';
-				resultsAJAX[\'results\'] = \'\';';
+				resultsAJAX[\'nbResults\'] = \''.addslashes($common_lang['common.no.item.now']) . '\';
+				resultsAJAX[\'results\'] = \'\';
+				resultWarning = \'notice\';';
 	}
 }
 else

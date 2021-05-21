@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 02 05
+ * @version     PHPBoost 6.0 - last update: 2021 05 21
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -29,9 +29,7 @@ class SearchModuleMiniMenu extends ModuleMiniMenu
 
 	public function get_menu_title()
 	{
-		global $LANG;
-		load_module_lang('search');
-		return $LANG['title_search'];
+		return LangLoader::get_message('search.module.title', 'common', 'search');
 	}
 
 	public function is_displayed()
@@ -43,25 +41,32 @@ class SearchModuleMiniMenu extends ModuleMiniMenu
 	{
 		global $LANG;
 		load_module_lang('search');
+		$lang = LangLoader::get('common','search');
+		$form_lang = LangLoader::get('form-lang');
 
 		$search = retrieve(REQUEST, 'q', '');
 
-		$tpl = new FileTemplate('search/search_mini.tpl');
-		MenuService::assign_positions_conditions($tpl, $this->get_block());
-		Menu::assign_common_template_variables($tpl);
+		$view = new FileTemplate('search/search_mini.tpl');
+		$view->add_lang(array_merge($lang, $form_lang));
 
-		$tpl->put_all(Array(
-			'TEXT_SEARCHED'                => !empty($search) ? stripslashes($search) : '',
-			'WARNING_LENGTH_STRING_SEARCH' => addslashes($LANG['warning_length_string_searched']),
-			'L_SEARCH_TITLE'               => $LANG['title_search'],
-			'L_SEARCH'                     => $LANG['search'],
-			'L_YOUR_SEARCH'                => $LANG['your_search'],
-			'U_FORM_VALID'                 => url(TPL_PATH_TO_ROOT . '/search/search.php#results'),
-			'L_ADVANCED_SEARCH'            => $LANG['advanced_search'],
-			'U_ADVANCED_SEARCH'            => url(TPL_PATH_TO_ROOT . '/search/search.php')
+		MenuService::assign_positions_conditions($view, $this->get_block());
+		Menu::assign_common_template_variables($view);
+
+		$view->put_all(Array(
+			'SEARCH_TEXT' => !empty($search) ? stripslashes($search) : '',
+
+			'U_FORM_VALID'      => url(TPL_PATH_TO_ROOT . '/search/search.php#results'),
+			'U_ADVANCED_SEARCH' => url(TPL_PATH_TO_ROOT . '/search/search.php'),
+
+			'L_SEARCH_LENGTH' => addslashes($lang['search.warning.length']),
+			//
+			'L_SEARCH_TITLE'    => $LANG['title_search'],
+			'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
+			'L_SEARCH'          => $LANG['search'],
+			'L_YOUR_SEARCH'     => $LANG['your_search'],
 		));
 
-		return $tpl->render();
+		return $view->render();
 	}
 
 	public function display()

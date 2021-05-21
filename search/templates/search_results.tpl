@@ -2,12 +2,14 @@
 	// Crée un lien de pagination javascript
 	function writePagin(fctName, fctArgs, isCurrentPage, textPagin, i)
 	{
-	    pagin = '<span class="pagination';
+	    pagin = '<li class="pagination-item">';
+	    pagin += '<a href="javascript:' + fctName + '(' + i + fctArgs + ')"';
 	    if ( isCurrentPage)
-	        pagin += ' pagination_current_page text-strong';
-	    pagin += '">';
-	    pagin += '<a href="javascript:' + fctName + '(' + i + fctArgs + ')">' + textPagin + '</a>';
-	    pagin += '</span>&nbsp;';
+	    	pagin += ' class="current-page" aria-label="{@common.pagination.current}">';
+	    else
+	    	pagin += ' aria-label="{@common.pagination.page} ' + textPagin + '">';
+	    pagin +=  textPagin + '</a>';
+	    pagin += '</li>';
 
 	    return pagin;
 	}
@@ -64,13 +66,13 @@
 
 	const RESULTS = 'results_';
 	const RESULTS_TITLE = 'results_title_';
-	const INFOS_RESULTS = 'infos_results_';
+	const RESULTS_INFOS = 'results_infos_';
 	const RESULTS_LIST = 'results_list_';
 	const PAGINATION_RESULTS = 'pagination_results_';
-	const NB_RESULTS_PER_PAGE = {NB_RESULTS_PER_PAGE};
+	const RESULTS_PER_PAGE = {RESULTS_PER_PAGE};
 
 	var nbResults = new Array();
-	nbResults['{SEARCH_IN}'] = {NB_RESULTS};
+	nbResults['{SEARCH_IN}'] = {RESULTS_NUMBER};
 
 	# IF C_SIMPLE_SEARCH #
 		var modulesResults = new Array('all');
@@ -156,9 +158,9 @@
 						eval(xhr_object.responseText);
 						if( !syncErr )
 						{
-							document.getElementById(INFOS_RESULTS + module).innerHTML = resultsAJAX['nbResults'];
+							document.getElementById(RESULTS_INFOS + module).innerHTML = '<div class="message-helper bgc ' + resultWarning + '">' + resultsAJAX['nbResults'] + '</div>';
 							document.getElementById(RESULTS_LIST + module).innerHTML = resultsAJAX['results'];
-							ChangePagination(0, Math.ceil(nbResults[module] / NB_RESULTS_PER_PAGE), PAGINATION_RESULTS + module, RESULTS + module, 2, 2);
+							ChangePagination(0, Math.ceil(nbResults[module] / RESULTS_PER_PAGE), PAGINATION_RESULTS + module, RESULTS + module, 2, 2);
 
 							// Met à jour la liste des résultats affiché, pour ne pas les rechercher
 							// dans la base de donnée si ils sont déjà dans le html.
@@ -178,14 +180,14 @@
 
 <section id="results">
    <header class="section-header">
-		<h1>{L_SEARCH_RESULTS}</h1>
+		<h2>{@search.results}</h2>
 		# IF C_SIMPLE_SEARCH #
 			<div id="results_choices" class="align-right" style="display: none;">
-				<span>{L_PRINT}</span>
+				<span>{@common.display}</span>
 				<select id="results_choice" name="ResultsSelection" onchange="ChangeResults();">
-					<option value="all">{L_TITLE_ALL_RESULTS}</option>
+					<option value="all">{@search.all.results}</option>
 					# START results #
-						<option value="{results.MODULE_NAME}"> --&gt; {results.L_MODULE_NAME}</option>
+						<option value="{results.MODULE_NAME}">{results.L_MODULE_NAME}</option>
 					# END results #
 				</select>
 			</div>
@@ -195,27 +197,32 @@
 		<div class="content-container">
 			<div class="content">
 				<div id="results_{SEARCH_IN}" class="results">
-					<span id="results_title_{SEARCH_IN}" class="title">{L_TITLE_ALL_RESULTS}</span><br />
-					<div id="infos_results_{SEARCH_IN}" class="infosResults">
-						# IF NB_RESULTS #
-							{NB_RESULTS}
+					<h3 id="results_title_{SEARCH_IN}" class="title">{@search.all.results}</h3>
+					<div id="results_infos_{SEARCH_IN}" class="infosResults">
+						# IF C_HAS_RESULTS #
+							<div class="message-helper bgc success">{RESULTS_NUMBER} # IF C_SEVERAL_RESULTS #{@search.results.found}# ELSE #{@search.result.found}# ENDIF #</div>
+						# ELSE #
+							<div class="message-helper bgc notice">{@common.no.item.now}</div>
 						# ENDIF #
-						{L_NB_RESULTS_FOUND}
 					</div>
 					<div id="results_list_{SEARCH_IN}" class="ResultsList">
 						{ALL_RESULTS}
 					</div>
-					<div id="pagination_results_{SEARCH_IN}" class="PaginationResults"></div>
+					<!-- <div id="pagination_results_{SEARCH_IN}" class="PaginationResults"></div> -->
+					<nav class="pagination">
+						<ul id="pagination_results_{SEARCH_IN}"></ul>
+					</nav>
 				</div>
 				# IF C_SIMPLE_SEARCH #
 					# START results #
 						<div id="results_{results.MODULE_NAME}" class="results" style="display: none;">
-							<span id="results_title_{results.MODULE_NAME}" class="title">{results.L_MODULE_NAME}</span><br />
-							<div id="infos_results_{results.MODULE_NAME}" class="infosResults">
-								# IF NB_RESULTS #
-									{NB_RESULTS}
+							<h3 id="results_title_{results.MODULE_NAME}" class="title">{results.L_MODULE_NAME}</h3>
+							<div id="results_infos_{results.MODULE_NAME}" class="infosResults">
+								# IF C_HAS_RESULTS #
+									<div class="message-helper bgc success">{RESULTS_NUMBER} # IF C_SEVERAL_RESULTS #{@search.results.found}# ELSE #{@search.result.found}# ENDIF #</div>
+								# ELSE #
+									<div class="message-helper bgc notice">{@common.no.item.now}</div>
 								# ENDIF #
-								{L_NB_RESULTS_FOUND}
 								<div class="infosResults-progressbar">
 									<div id="progress_bar_{results.MODULE_NAME}" class="progressbar-container">
 										<span class="progressbar-infos"></span>
@@ -240,7 +247,7 @@
 	</footer>
 </section>
 <script>
-	ChangePagination(0, Math.ceil(nbResults['{SEARCH_IN}'] / NB_RESULTS_PER_PAGE), PAGINATION_RESULTS + '{SEARCH_IN}', 'results_{SEARCH_IN}');
+	ChangePagination(0, Math.ceil(nbResults['{SEARCH_IN}'] / RESULTS_PER_PAGE), PAGINATION_RESULTS + '{SEARCH_IN}', 'results_{SEARCH_IN}');
 	jQuery('#' + RESULTS + '{SEARCH_IN}_0').fadeIn();
 
 	jQuery('#results_choices').fadeIn();
