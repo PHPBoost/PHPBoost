@@ -58,7 +58,7 @@ $view->assign_vars(Array(
 	'MODULE_MODE' => $search_in,
 	'TEXT_SEARCHED' => $unsecure_search,
 	'U_FORM_VALID' => url('../search/search.php#results'),
-	'L_ADVANCED_SEARCH_LENGTH' => TextHelper::to_js_string($lang['search.warning.length']),
+	'L_ADVANCED_SEARCH_LENGTH' => addslashes($lang['search.warning.length']),
 	//
 	// 'L_TITLE_SEARCH' => TITLE,
 	// 'L_SEARCHED_TEXT' => $LANG['search_searched_text'],

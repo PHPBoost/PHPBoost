@@ -28,7 +28,7 @@
 		}
 		else
 		{
-			alert({L_ADVANCED_SEARCH_LENGTH});
+			alert('{L_ADVANCED_SEARCH_LENGTH}');
 			return false;
 		}
 	}
