@@ -11,7 +11,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 19
+ * @version     PHPBoost 6.0 - last update: 2021 05 21
  * @since       PHPBoost 2.0 - 2008 06 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -35,7 +35,7 @@ class Date
 	const FORMAT_ISO_DAY_MONTH_YEAR              = 10;
 	const FORMAT_AGO                             = 11;
 	const FORMAT_SINCE                           = 12;
-	const FORMAT_SMS                             = 13;
+	const FORMAT_DELAY                           = 13;
 	const FORMAT_HOUR_MINUTE                     = 14;
 	const FORMAT_DAY_MONTH_TEXT                  = 15;
 
@@ -169,8 +169,8 @@ class Date
 				return $time;
 				break;
 
-				case self::FORMAT_SMS:
-					return self::get_date_sms($this, $referencial_timezone);
+				case self::FORMAT_DELAY:
+					return self::get_date_delay($this, $referencial_timezone);
 					break;
 			default:
 				return '';
@@ -219,12 +219,12 @@ class Date
 	}
 
 	/**
-	 * Returns the relative time associated to the date in SMS fomat
+	 * Returns the delay between now and the date
 	 * @param Date $date
 	 * @param int $referencial_timezone
 	 * @return string The relative time
 	 */
-	public function get_date_sms($date, $referencial_timezone)
+	public function get_date_delay($date, $referencial_timezone)
 	{
 		$now = new Date(Date::DATE_NOW, $referencial_timezone);
 
@@ -563,7 +563,7 @@ class Date
 			$date_label . '_ISO8601'          => $date->format(Date::FORMAT_ISO8601),
 			$date_label . '_AGO'              => $date->format(Date::FORMAT_AGO),
 			$date_label . '_SINCE'            => $date->format(Date::FORMAT_SINCE),
-			$date_label . '_SMS'              => $date->format(Date::FORMAT_SMS),
+			$date_label . '_DELAY'            => $date->format(Date::FORMAT_DELAY),
 			$date_label . '_RELATIVE'         => $date->format(Date::FORMAT_RELATIVE)
 		);
 	}
