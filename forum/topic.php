@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 30
+ * @version     PHPBoost 6.0 - last update: 2021 05 21
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -186,7 +186,7 @@ $vars_tpl = array(
 	'TITLE_T'                 => stripslashes($topic['title']),
 	'DISPLAY_ISSUE_STATUS'    => (($config->is_message_before_topic_title_displayed() && $topic['display_msg']) ? $config->get_message_before_topic_title() . ' ' : '') ,
 
-	'U_MARK_AS_READ'          => Url::to_rel('/forum/action' . url('.php?read =1&amp;f =' . $topic['id_category'], '')),
+	'U_MARK_AS_READ'          => Url::to_rel('/forum/action' . url('.php?read=1&amp;f=' . $topic['id_category'], '')),
 	'U_CHANGE_CAT'            => 'topic' . url('.php?id=' . $id_get, '-' . $id_get . '+' . $category->get_rewrited_name() . '.php'),
 	'U_ONCHANGE'              => url(".php?id=' + this.options[this.selectedIndex].value + '", "forum-' + this.options[this.selectedIndex].value + '.php"),
 	'U_ONCHANGE_CAT'          => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
@@ -433,11 +433,11 @@ while ( $row = $result->fetch() )
 		'U_USER_MEMBERMSG'            => PATH_TO_ROOT . '/forum/membermsg' . url('.php?id=' . $row['user_id'], ''),
 		'U_USER_MAIL'                 => 'mailto:' . $row['email'],
 		'U_FORUM_USER_PROFILE'        => UserUrlBuilder::profile($row['user_id'])->rel(),
-		'U_EDIT'                      => url('.php?new=msg&amp;idm    =' . $row['id'] . '&amp;id=' . $topic['id_category'] . '&amp;idt=' . $id_get),
+		'U_EDIT'                      => url('.php?new=msg&amp;idm=' . $row['id'] . '&amp;id=' . $topic['id_category'] . '&amp;idt=' . $id_get),
 		'U_FORUM_USER_EDITOR_PROFILE' => UserUrlBuilder::profile($row['user_id_edit'])->rel(),
 		'U_DELETE'                    => url('.php?del=1&amp;idm=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
-		'U_FORUM_WARNING'             => url('.php?action=warning&amp;id =' . $row['user_id']),
-		'U_FORUM_PUNISHEMENT'         => url('.php?action =punish&amp;id  =' . $row['user_id']),
+		'U_FORUM_WARNING'             => url('.php?action=warning&amp;id=' . $row['user_id']),
+		'U_FORUM_PUNISHEMENT'         => url('.php?action=punish&amp;id=' . $row['user_id']),
 		'U_CUT_TOPIC'                 => url('.php?idm=' . $row['id']),
 		'U_VARS_ANCHOR'               => Url::to_rel('/forum/topic.php?id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '') . $rewrited_title . '.php'),
 		'U_QUOTE'                     => url('.php?quote=' . $row['id'] . '&amp;id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '-0') . '-0-' . $row['id'] . $rewrited_title . '.php'),
