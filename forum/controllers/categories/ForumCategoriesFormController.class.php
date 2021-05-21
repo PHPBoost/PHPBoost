@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 15
+ * @version     PHPBoost 6.0 - last update: 2021 05 21
  * @since       PHPBoost 4.1 - 2015 05 15
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -56,9 +56,9 @@ class ForumCategoriesFormController extends DefaultCategoriesFormController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldTextEditor('name', self::$common_lang['form.name'], $this->get_category()->get_name(), array('required' => true)));
+		$fieldset->add_field(new FormFieldTextEditor('name', self::$form_lang['form.name'], $this->get_category()->get_name(), array('required' => true)));
 
-		$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_name', self::$common_lang['form.rewrited_name.personalize'], $this->get_category()->rewrited_name_is_personalized(),
+		$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_name', self::$form_lang['form.rewrited.name.personalize'], $this->get_category()->rewrited_name_is_personalized(),
 			array(
 				'events' => array('click' => '
 					if (HTMLForms.getField("personalize_rewrited_name").getValue()) {
@@ -70,15 +70,15 @@ class ForumCategoriesFormController extends DefaultCategoriesFormController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldTextEditor('rewrited_name', self::$common_lang['form.rewrited_name'], $this->get_category()->get_rewrited_name(),
+		$fieldset->add_field(new FormFieldTextEditor('rewrited_name', self::$form_lang['form.rewrited.name'], $this->get_category()->get_rewrited_name(),
 			array(
-				'description' => self::$common_lang['form.rewrited_name.description'],
+				'description' => self::$form_lang['form.rewrited.name.clue'],
 				'hidden' => !$this->get_category()->rewrited_name_is_personalized()
 			),
 			array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu'))
 		));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('description', self::$common_lang['form.description'], $this->get_category()->get_description(),
+		$fieldset->add_field(new FormFieldRichTextEditor('description', self::$form_lang['form.description'], $this->get_category()->get_description(),
 			array('hidden' => $this->get_category()->get_type() == ForumCategory::TYPE_CATEGORY)
 		));
 
@@ -88,7 +88,7 @@ class ForumCategoriesFormController extends DefaultCategoriesFormController
 		if ($this->get_category()->get_id())
 			$search_category_children_options->add_category_in_excluded_categories($this->get_category()->get_id());
 
-		$fieldset->add_field(self::get_categories_manager()->get_select_categories_form_field('id_parent', self::$common_lang['form.category'], $this->get_category()->get_id_parent(), $search_category_children_options, array('required' => true, 'hidden' => $this->get_category()->get_type() == ForumCategory::TYPE_CATEGORY)));
+		$fieldset->add_field(self::get_categories_manager()->get_select_categories_form_field('id_parent', self::$form_lang['form.category'], $this->get_category()->get_id_parent(), $search_category_children_options, array('required' => true, 'hidden' => $this->get_category()->get_type() == ForumCategory::TYPE_CATEGORY)));
 
 		$fieldset->add_field(new FormFieldCheckbox('status', LangLoader::get_message('category.status.locked', 'common', 'forum'), $this->get_category()->get_status(),
 			array('hidden' => $this->get_category()->get_type() != ForumCategory::TYPE_FORUM)
@@ -98,12 +98,12 @@ class ForumCategoriesFormController extends DefaultCategoriesFormController
 			array('required' => true, 'hidden' => $this->get_category()->get_type() != ForumCategory::TYPE_URL)
 		));
 
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', self::$common_lang['authorizations']);
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', self::$form_lang['form.authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 
 		$root_auth = self::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY)->get_authorizations();
 
-		$fieldset_authorizations->add_field(new FormFieldCheckbox('special_authorizations', self::$common_lang['authorizations'], !$this->get_category()->auth_is_equals($root_auth),
+		$fieldset_authorizations->add_field(new FormFieldCheckbox('special_authorizations', self::$form_lang['form.authorizations'], !$this->get_category()->auth_is_equals($root_auth),
 		array('description' => self::$lang['category.form.authorizations.description'], 'events' => array('click' => '
 		if (HTMLForms.getField("special_authorizations").getValue()) {
 			jQuery("#' . __CLASS__ . '_authorizations").show();
