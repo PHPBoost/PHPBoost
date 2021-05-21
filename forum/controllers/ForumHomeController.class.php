@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 28
+ * @version     PHPBoost 6.0 - last update: 2021 05 21
  * @since       PHPBoost 4.1 - 2015 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -351,7 +351,7 @@ class ForumHomeController extends ModuleController
 		$breadcrumb->add($this->config->get_forum_name(), ForumUrlBuilder::home());
 
 		if ($this->category !== false && $this->category->get_id() != Category::ROOT_CATEGORY)
-			$breadcrumb->add($this->category->get_name(), url('/forum/index.php?id=' . $this->category->get_id(), '/forum/cat-' . $this->category->get_id() . '+' . $this->category->get_rewrited_name() . '.php'));
+			$breadcrumb->add($this->category->get_name(), Url::to_rel(url('/forum/index.php?id=' . $this->category->get_id(), '/forum/cat-' . $this->category->get_id() . '+' . $this->category->get_rewrited_name() . '.php')));
 
 		return $response;
 	}
