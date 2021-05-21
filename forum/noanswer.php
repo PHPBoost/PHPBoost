@@ -39,7 +39,7 @@ if (!empty($change_cat))
 if (ForumAuthorizationsService::check_authorizations()->read() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 {
 	$view = new FileTemplate('forum/forum_forum.tpl');
-	$view->add_lang(array_merge(LangLoader::get('common', 'forum'), LangLoader::get('common-lang')));
+	$view->add_lang(array_merge(LangLoader::get('common', 'forum'), LangLoader::get('common-lang'), LangLoader::get('user-lang')));
 
 	$nbr_topics = 0;
 
