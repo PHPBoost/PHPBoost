@@ -70,7 +70,7 @@
 					# IF C_NO_TRACKED_TOPICS #
 						<tr>
 							<td colspan="10">
-								<div class="message-helper bgc notice">{@forum.no.tracked.topics}</div>
+								<div class="message-helper bgc notice">{@common.no.item.now}</div>
 							</td>
 						</tr>
 					# ENDIF #
