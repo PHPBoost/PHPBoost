@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 06
+ * @version     PHPBoost 6.0 - last update: 2021 05 22
  * @since       PHPBoost 4.1 - 2014 10 14
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -31,6 +31,19 @@ class ShoutboxHomeController extends ModuleController
 			$this->execute_multiple_delete_if_needed($request);
 
 		return $this->generate_response();
+	}
+
+	private function init()
+	{
+		$this->current_user = AppContext::get_current_user();
+
+		$this->lang = LangLoader::get('common', 'shoutbox');
+		$this->view = new FileTemplate('shoutbox/ShoutboxHomeController.tpl');
+		$this->view->add_lang(array_merge(
+			$this->lang,
+			LangLoader::get('common', 'BBCode'),
+			LangLoader::get('common-lang')
+		));
 	}
 
 	private function build_view()
@@ -129,15 +142,6 @@ class ShoutboxHomeController extends ModuleController
 		return $this->view;
 	}
 
-	private function init()
-	{
-		$this->current_user = AppContext::get_current_user();
-
-		$this->lang = LangLoader::get('common', 'shoutbox');
-		$this->view = new FileTemplate('shoutbox/ShoutboxHomeController.tpl');
-		$this->view->add_lang($this->lang);
-	}
-
 	private function execute_multiple_delete_if_needed(HTTPRequestCustom $request)
 	{
 		if ($request->get_string('delete-selected-elements', false))
@@ -192,12 +196,12 @@ class ShoutboxHomeController extends ModuleController
 
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['module_title'], '', $page);
+		$graphical_environment->set_page_title($this->lang['shoutbox.module.title'], '', $page);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['shoutbox.seo.description'], array('site' => GeneralConfig::load()->get_site_name())), $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(ShoutboxUrlBuilder::home($page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], ShoutboxUrlBuilder::home($page));
+		$breadcrumb->add($this->lang['shoutbox.module.title'], ShoutboxUrlBuilder::home($page));
 
 		return $response;
 	}

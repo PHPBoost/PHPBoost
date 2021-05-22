@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 09
+ * @version     PHPBoost 6.0 - last update: 2021 05 22
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -27,7 +27,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 
 	public function get_menu_title()
 	{
-		return LangLoader::get_message('module_title', 'common', 'shoutbox');
+		return LangLoader::get_message('shoutbox.module.title', 'common', 'shoutbox');
 	}
 
 	public function is_displayed()
@@ -38,13 +38,19 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	public function get_menu_content()
 	{
 		//Create file template
-		$tpl = new FileTemplate('shoutbox/ShoutboxModuleMiniMenu.tpl');
+		$view = new FileTemplate('shoutbox/ShoutboxModuleMiniMenu.tpl');
 
 		//Assign the lang file to the tpl
-		$tpl->add_lang(LangLoader::get('common', 'shoutbox'));
+		$view->add_lang(array_merge(
+			LangLoader::get('common', 'shoutbox'),
+			LangLoader::get('common', 'BBCode'),
+			LangLoader::get('common-lang'),
+			LangLoader::get('form-lang'),
+			LangLoader::get('warning-lang')
+		));
 
 		//Assign common menu variables to the tpl
-		MenuService::assign_positions_conditions($tpl, $this->get_block());
+		MenuService::assign_positions_conditions($view, $this->get_block());
 
 		$config = ShoutboxConfig::load();
 		$forbidden_tags = array_flip($config->get_forbidden_formatting_tags());
@@ -59,7 +65,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 			{
 				$smileys_displayed_number++;
 
-				$tpl->assign_block_vars('smileys', array(
+				$view->assign_block_vars('smileys', array(
 					'C_END_LINE' => $smileys_displayed_number % $smileys_per_line == 0,
 					'URL' => TPL_PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley'],
 					'CODE' => addslashes($code_smile)
@@ -67,7 +73,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 			}
 		}
 
-		$tpl->put_all(array(
+		$view->put_all(array(
 			'C_MEMBER' => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 			'C_DISPLAY_FORM' => ShoutboxAuthorizationsService::check_authorizations()->write() && !AppContext::get_current_user()->is_readonly(),
 			'C_VALIDATE_ONKEYPRESS_ENTER' => $config->is_validation_onkeypress_enter_enabled(),
@@ -80,11 +86,11 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 			'C_DISPLAY_NO_WRITE_AUTHORIZATION_MESSAGE' => $config->is_no_write_authorization_message_displayed(),
 			'SHOUTBOX_PSEUDO' => AppContext::get_current_user()->get_display_name(),
 			'SHOUT_REFRESH_DELAY' => $config->get_refresh_delay(),
-			'L_ALERT_LINK_FLOOD' => sprintf(LangLoader::get_message('e_l_flood', 'errors'), $config->get_max_links_number_per_message()),
+			'L_ALERT_LINK_FLOOD' => sprintf(LangLoader::get_message('warning.link.flood', 'warning-lang'), $config->get_max_links_number_per_message()),
 			'SHOUTBOX_MESSAGES' => ShoutboxAjaxRefreshMessagesController::get_view()
 		));
 
-		return $tpl->render();
+		return $view->render();
 	}
 }
 ?>

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 06
+ * @version     PHPBoost 6.0 - last update: 2021 05 22
  * @since       PHPBoost 4.1 - 2014 11 28
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,38 +13,37 @@
 #                      English                     #
 ####################################################
 
-$lang['module_title'] = 'Shoutbox';
+$lang['shoutbox.module.title'] = 'Shoutbox';
 
-$lang['archives'] = 'Archives';
-$lang['archives.link'] = 'Link to shoutbox archives';
-$lang['shoutbox.add'] = 'Add a message';
-$lang['shoutbox.edit'] = 'Message edition';
-$lang['shoutbox.messages'] = 'Messages';
+$lang['shoutbox.archives'] = 'Archives';
+$lang['shoutbox.add.item'] = 'Add a message';
+$lang['shoutbox.edit.item'] = 'Message edition';
+$lang['shoutbox.refresh']   = 'Vérifier les nouveaux messages';
 
-//Config
-$lang['config.items_per_page'] = 'Items number per page in the archives';
-$lang['config.max_messages_number_enabled'] = 'Limit messages number in the archives';
-$lang['config.max_messages_number'] = 'Maximum number of message to keep';
-$lang['config.max_links_number_per_message_enabled'] = 'Limit links number in messages';
-$lang['config.max_links_number_per_message'] = 'Max links number in a message';
-$lang['config.no_write_authorization_message_displayed'] = 'Display a message for unauthorized writing users';
-$lang['config.shoutbox_menu'] = 'Shoutbox menu';
-$lang['config.automatic_refresh_enabled'] = 'Enable the automatic refresh of the discussion';
-$lang['config.refresh_delay'] = 'Refresh delay';
-$lang['config.refresh_delay.explain'] = 'In minutes';
-$lang['config.date_displayed'] = 'Display date';
-$lang['config.shout_max_messages_number_enabled'] = 'Limit displayed messages number';
-$lang['config.shout_max_messages_number'] = 'Maximum number of message to display';
-$lang['config.shout_bbcode_enabled'] = 'Display a small BBcode bar before the send button';
-$lang['config.validation_onkeypress_enter_enabled'] = 'Send message when pressing enter';
+// Configuration
+$lang['shoutbox.enable.max.messages.number'] = 'Limit messages number in the archives';
+$lang['shoutbox.max.messages.number'] = 'Maximum number of message to keep';
+$lang['shoutbox.enable.max.links.per.message'] = 'Limit links number in messages';
+$lang['shoutbox.max.links.per.message'] = 'Max links number in a message';
+$lang['shoutbox.display.no.write.message'] = 'Display a message to users who do not have write rights';
 
-//SEO
+$lang['shoutbox.shoutbox.menu']                      = 'Shoutbox mini module';
+$lang['shoutbox.enable.automatic.refresh']           = 'Enable the automatic refresh of the discussion';
+$lang['shoutbox.refresh.delay']                      = 'Refresh delay';
+$lang['shoutbox.refresh.delay.clue']                 = 'In minutes';
+$lang['shoutbox.display.date']                       = 'Display date';
+$lang['shoutbox.mini.enable.max.messages.number']    = 'Limit displayed messages number';
+$lang['shoutbox.mini.max.messages.number']           = 'Maximum number of message to display';
+$lang['shoutbox.mini.enable.bbcode']                 = 'Display a small BBcode bar before the send button';
+$lang['shoutbox.enable.validation.onkeypress.enter'] = 'Send message when pressing enter';
+
+// S.E.O.
 $lang['shoutbox.seo.description'] = 'All :site\'s shoutbox messages.';
 
-//Messages
+// Messages helper
 $lang['shoutbox.message.success.delete'] = 'The message has been deleted';
+$lang['shoutbox.message.unauthorized']   = 'You are not authorized to post a message!';
 
-//Errors
-$lang['error.message.delete'] = 'Error occurred while message deleting';
-$lang['error.post.unauthorized'] = 'You are not authorized to post a message!';
+// Warnings
+$lang['shoutbox.warning.delete.message'] = 'An error occurred while message deleting';
 ?>

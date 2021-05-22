@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 24
+ * @version     PHPBoost 6.0 - last update: 2021 05 22
  * @since       PHPBoost 4.1 - 2014 10 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -69,7 +69,7 @@ class ShoutboxFormController extends ModuleController
 
 	private function build_form(HTTPRequestCustom $request)
 	{
-		$common_lang = LangLoader::get('common');
+		$form_lang = LangLoader::get('form-lang');
 		$config = ShoutboxConfig::load();
 		$current_user = AppContext::get_current_user();
 
@@ -77,19 +77,19 @@ class ShoutboxFormController extends ModuleController
 		$formatter->set_forbidden_tags($config->get_forbidden_formatting_tags());
 
 		$form = new HTMLForm(__CLASS__);
-		$form->set_layout_title($this->is_new_message ? $this->lang['shoutbox.add'] : $this->lang['shoutbox.edit']);
+		$form->set_layout_title($this->is_new_message ? $this->lang['shoutbox.add.item'] : $this->lang['shoutbox.edit.item']);
 
-		$fieldset = new FormFieldsetHTML('message', $common_lang['form.parameters']);
+		$fieldset = new FormFieldsetHTML('message', $form_lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
 		if (!$current_user->check_level(User::MEMBER_LEVEL))
 		{
-			$fieldset->add_field(new FormFieldTextEditor('pseudo', LangLoader::get_message('form.name', 'common'), $this->get_message()->get_login(), array(
+			$fieldset->add_field(new FormFieldTextEditor('pseudo', $form_lang['form.name'], $this->get_message()->get_login(), array(
 				'required' => true, 'maxlength' => 25)
 			));
 		}
 
-		$fieldset->add_field(new FormFieldRichTextEditor('content', LangLoader::get_message('message', 'main'), $this->get_message()->get_content(),
+		$fieldset->add_field(new FormFieldRichTextEditor('content', LangLoader::get_message('common.message', 'common-lang'), $this->get_message()->get_content(),
 			array('formatter' => $formatter, 'rows' => 10, 'cols' => 47, 'required' => true),
 			array(
 				(!$current_user->is_moderator() && !$current_user->is_admin() ? new FormFieldConstraintMaxLinks($config->get_max_links_number_per_message(), true) : ''),
@@ -190,12 +190,12 @@ class ShoutboxFormController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], ShoutboxUrlBuilder::home($page));
+		$breadcrumb->add($this->lang['shoutbox.module.title'], ShoutboxUrlBuilder::home($page));
 
 		if ($message->get_id() === null)
 		{
-			$graphical_environment->set_page_title($this->lang['shoutbox.add'], $this->lang['module_title']);
-			$breadcrumb->add($this->lang['shoutbox.add'], ShoutboxUrlBuilder::add());
+			$graphical_environment->set_page_title($this->lang['shoutbox.add.item'], $this->lang['shoutbox.module.title']);
+			$breadcrumb->add($this->lang['shoutbox.add.item'], ShoutboxUrlBuilder::add());
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(ShoutboxUrlBuilder::add());
 		}
 		else
@@ -203,8 +203,8 @@ class ShoutboxFormController extends ModuleController
 			if (!AppContext::get_session()->location_id_already_exists($location_id))
 				$graphical_environment->set_location_id($location_id);
 
-			$graphical_environment->set_page_title($this->lang['shoutbox.edit'], $this->lang['module_title']);
-			$breadcrumb->add($this->lang['shoutbox.edit'], ShoutboxUrlBuilder::edit($message->get_id(), $page));
+			$graphical_environment->set_page_title($this->lang['shoutbox.edit.item'], $this->lang['shoutbox.module.title']);
+			$breadcrumb->add($this->lang['shoutbox.edit.item'], ShoutboxUrlBuilder::edit($message->get_id(), $page));
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(ShoutboxUrlBuilder::edit($message->get_id(), $page));
 		}
 
