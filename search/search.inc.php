@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 21
+ * @version     PHPBoost 6.0 - last update: 2021 05 22
  * @since       PHPBoost 2.0 - 2008 02 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -74,7 +74,7 @@ function get_html_results(&$results, &$html_results, &$results_name)
 
 	$tpl_results = new FileTemplate('search/search_generic_pagination_results.tpl');
 	$tpl_results->assign_vars(Array(
-		'RESULTS_NAME' => $results_name,
+		'RESULTS_NAME'  => $results_name,
 		'C_ALL_RESULTS' => $display_all_results
 	));
 
@@ -97,7 +97,7 @@ function get_html_results(&$results, &$html_results, &$results_name)
 	for ($num_page = 0; $num_page < $nb_pages; $num_page++)
 	{
 		$tpl_results->assign_block_vars('page', array(
-			'NUM_PAGE' => $num_page,
+			'NUM_PAGE'      => $num_page,
 			'BLOCK_DISPLAY' => ($num_page == 0 ? 'block' : 'none')
 		));
 
@@ -126,7 +126,7 @@ function get_html_results(&$results, &$html_results, &$results_name)
 					));
 				}
 				$tpl_result->assign_vars(array(
-					'TITLE' => stripslashes($results[$num_item]['title']),
+					'TITLE'  => stripslashes($results[$num_item]['title']),
 					'U_LINK' => url($results[$num_item]['link'])
 				));
 

@@ -3,18 +3,16 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 21
+ * @version     PHPBoost 6.0 - last update: 2020 05 22
  * @since       PHPBoost 2.0 - 2008 01 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 //------------------------------------------------------------------- Language
 require_once('../kernel/begin.php');
-load_module_lang('search');
-$lang = LangLoader::get('common','search');
-$form_lang = LangLoader::get('form-lang');
+$lang         = LangLoader::get('common','search');
+$form_lang    = LangLoader::get('form-lang');
 $warning_lang = LangLoader::get('warning-lang');
 
 //------------------------------------------------------------- Authorizations
@@ -49,38 +47,20 @@ else if (count($selected_modules) == 1)
 }
 
 //--------------------------------------------------------------------- Header
-
 define('TITLE', $lang['search.module.title']);
 
 require_once('../kernel/header.php');
 $view->assign_vars(Array(
-	'C_SIMPLE_SEARCH' => $search_in == 'all' ? true : false,
-	'MODULE_MODE' => $search_in,
-	'TEXT_SEARCHED' => $unsecure_search,
-	'U_FORM_VALID' => url('../search/search.php#results'),
-	'L_ADVANCED_SEARCH_LENGTH' => addslashes($lang['search.warning.length']),
-	//
-	// 'L_TITLE_SEARCH' => TITLE,
-	// 'L_SEARCHED_TEXT' => $LANG['search_searched_text'],
-	// 'L_SEARCH' => $LANG['search'],
-	// 'L_SEARCH_ALL' => $LANG['search_all'],
-	// 'L_SEARCH_KEYWORDS' => $LANG['search_keywords'],
-	// 'L_SEARCH_MIN_LENGTH' => $LANG['search_min_length'],
-	// 'L_SEARCH_IN_MODULES' => $LANG['search_in_modules'],
-	// 'L_SEARCH_IN_MODULES_EXPLAIN' => $LANG['search_in_modules_explain'],
-	// 'L_SEARCH_SPECIALIZED_FORM' => $LANG['search_specialized_form'],
-	// 'L_SEARCH_SPECIALIZED_FORM_EXPLAIN' => $LANG['search_specialized_form_explain'],
-	// 'L_FORMS' => $LANG['forms'],
-	// 'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
-	// 'L_SIMPLE_SEARCH' => $LANG['simple_search'],
+	'C_SIMPLE_SEARCH' => $search_in == 'all',
+	'MODULE_MODE'     => $search_in,
+	'TEXT_SEARCHED'   => $unsecure_search,
+	'U_FORM_VALID'    => url('../search/search.php#results'),
 ));
 
 //------------------------------------------------------------- Other includes
-
 require_once('../search/search.inc.php');
 
 //----------------------------------------------------------------------- Main
-
 $config = SearchConfig::load();
 $modules_args = array();
 $used_modules = array();
@@ -122,21 +102,21 @@ foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as
 				}
 
 				$view->assign_block_vars('forms', array(
-					'MODULE_NAME' => $module->get_id(),
-					'L_MODULE_NAME' => TextHelper::ucfirst($module_configuration->get_name()),
 					'C_SEARCH_FORM' => true,
-					'C_SELECTED' => count($selected_modules) == 1 ? in_array($module->get_id(), $selected_modules) : false,
-					'SEARCH_FORM' => $search_extensions_point[$module->get_id()]->get_search_form($modules_args[$module->get_id()])
+					'C_SELECTED'    => count($selected_modules) == 1 ? in_array($module->get_id(), $selected_modules) : false,
+					'MODULE_NAME'   => $module->get_id(),
+					'SEARCH_FORM'   => $search_extensions_point[$module->get_id()]->get_search_form($modules_args[$module->get_id()]),
+					'L_MODULE_NAME' => TextHelper::ucfirst($module_configuration->get_name()),
 				));
 			}
 			else
 			{
 				$view->assign_block_vars('forms', array(
-					'MODULE_NAME' => $module->get_id(),
-					'L_MODULE_NAME' => TextHelper::ucfirst($module_configuration->get_name()),
 					'C_SEARCH_FORM' => false,
-					'C_SELECTED' => count($selected_modules) == 1 ? in_array($module->get_id(), $selected_modules) : false,
-					'SEARCH_FORM' => $lang['search.no.options']
+					'C_SELECTED'    => count($selected_modules) == 1 ? in_array($module->get_id(), $selected_modules) : false,
+					'MODULE_NAME'   => $module->get_id(),
+					'SEARCH_FORM'   => $lang['search.no.options'],
+					'L_MODULE_NAME' => TextHelper::ucfirst($module_configuration->get_name()),
 				));
 			}
 
@@ -153,9 +133,9 @@ foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as
 			}
 
 			$view->assign_block_vars('searched_modules', array(
-				'MODULE' => $module->get_id(),
+				'MODULE'        => $module->get_id(),
+				'SELECTED'      => $selected,
 				'L_MODULE_NAME' => TextHelper::ucfirst($module_configuration->get_name()),
-				'SELECTED' => $selected
 			));
 		}
 	}
@@ -203,8 +183,8 @@ if (!empty($search))
 	{
 		$view->assign_block_vars('results', array(
 			'MODULE_NAME' => $module_id,
+			'ID_SEARCH' => $idsSearch[$module_id],
 			'L_MODULE_NAME' => TextHelper::ucfirst(ModulesManager::get_module($module_id)->get_configuration()->get_name()),
-			'ID_SEARCH' => $idsSearch[$module_id]
 		));
 	}
 
@@ -221,13 +201,6 @@ if (!empty($search))
 		'SEARCH_IN' => $search_in,
 		'RESULTS_PER_PAGE' => RESULTS_PER_PAGE,
 		'RESULTS_NUMBER' => $nbResults,
-		//
-		'L_TITLE_ALL_RESULTS' => $LANG['title_all_results'],
-		'L_RESULTS' => $LANG['results'],
-		'L_RESULTS_CHOICE' => $LANG['results_choice'],
-		'L_PRINT' => $LANG['print'],
-		'L_NB_RESULTS_FOUND' => $nbResults > 1 ? $LANG['nb_results_found'] : ($nbResults == 0 ? $LANG['no_results_found'] : $LANG['one_result_found']),
-		'L_SEARCH_RESULTS' => $LANG['search_results'],
 	));
 
 	$view->display();

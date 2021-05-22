@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 21
+ * @version     PHPBoost 6.0 - last update: 2021 05 22
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -24,7 +24,7 @@ class SearchModuleMiniMenu extends ModuleMiniMenu
 
 	public function get_menu_id()
 	{
-		return 'module-mini-search-form';
+		return 'module-mini-search';
 	}
 
 	public function get_menu_title()
@@ -39,8 +39,6 @@ class SearchModuleMiniMenu extends ModuleMiniMenu
 
 	public function get_menu_content()
 	{
-		global $LANG;
-		load_module_lang('search');
 		$lang = LangLoader::get('common','search');
 		$form_lang = LangLoader::get('form-lang');
 
@@ -54,16 +52,8 @@ class SearchModuleMiniMenu extends ModuleMiniMenu
 
 		$view->put_all(Array(
 			'SEARCH_TEXT' => !empty($search) ? stripslashes($search) : '',
-
 			'U_FORM_VALID'      => url(TPL_PATH_TO_ROOT . '/search/search.php#results'),
 			'U_ADVANCED_SEARCH' => url(TPL_PATH_TO_ROOT . '/search/search.php'),
-
-			'L_SEARCH_LENGTH' => addslashes($lang['search.warning.length']),
-			//
-			'L_SEARCH_TITLE'    => $LANG['title_search'],
-			'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
-			'L_SEARCH'          => $LANG['search'],
-			'L_YOUR_SEARCH'     => $LANG['your_search'],
 		));
 
 		return $view->render();
@@ -80,8 +70,8 @@ class SearchModuleMiniMenu extends ModuleMiniMenu
 				$this->assign_common_template_variables($template);
 
 				$template->put_all(array(
-					'ID' => $this->get_menu_id(),
-					'TITLE' => $this->get_menu_title(),
+					'ID'       => $this->get_menu_id(),
+					'TITLE'    => $this->get_menu_title(),
 					'CONTENTS' => $this->get_menu_content()
 				));
 

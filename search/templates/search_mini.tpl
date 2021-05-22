@@ -9,7 +9,7 @@
 		}
 		else
 		{
-			alert('{L_SEARCH_LENGTH}');
+			alert('{@search.warning.length}');
 			return false;
 		}
 	}
@@ -20,10 +20,10 @@
 </script>
 
 # IF C_VERTICAL #
-	<form role="search" action="{U_FORM_VALID}" onsubmit="return check_search_mini_form_post();" method="post">
+	<form id="mini-search-form" role="search" action="{U_FORM_VALID}" onsubmit="return check_search_mini_form_post();" method="post">
 		<fieldset>
 			<legend class="sr-only">{@search.module.title}</legend>
-			<div id="mini-search-form" class="cell-form grouped-inputs">
+			<div class="cell-form grouped-inputs">
 				<input class="grouped-element" type="search" id="search-text" name="q" value="{SEARCH_TEXT}" placeholder="{@search.text}..." aria-labelledby="search-button">
 				<input type="hidden" id="search-token" name="token" value="{TOKEN}">
 				<button id="search-button" class="button submit" type="submit" name="search_submit" aria-label="{@form.search}"><i class="fa fa-search" aria-hidden="true"></i></button>

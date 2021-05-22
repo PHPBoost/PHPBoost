@@ -3,7 +3,7 @@
 	function writePagin(fctName, fctArgs, isCurrentPage, textPagin, i)
 	{
 	    pagin = '<li class="pagination-item">';
-	    pagin += '<a href="javascript:' + fctName + '(' + i + fctArgs + ')"';
+	    pagin += '<a href="javascript:' + fctName + '(' + i + fctArgs + ');"';
 	    if ( isCurrentPage)
 	    	pagin += ' class="current-page" aria-label="{@common.pagination.current}">';
 	    else
@@ -107,7 +107,7 @@
 		// Reconstitution d'une chaine "POSTABLE" à partir des formulaires
 		{
 			var dataString = "";
-			var form = document.getElementById('mini-search-form');
+			var form = document.getElementById('search-text');
 			var elements = form.elements;
 
 			for (var i = 0; i < form.length; i++)

@@ -24,8 +24,6 @@
 .specialized-form { padding: 0 0.309em; }
 
 @media (max-width: 768px) {
-	#module-search .options { float: none; }
-
 	#module-search #form-all .form-element label { text-align: center; }
 
 	#module-search #form-all .form-element label span { font-size: 0.809em; }

@@ -12,12 +12,12 @@
 require_once('../admin/admin_begin.php');
 
 //------------------------------------------------------------------- Language
-$lang = LangLoader::get('common','search');
-$form_lang = LangLoader::get('form-lang');
+$lang         = LangLoader::get('common','search');
+$form_lang    = LangLoader::get('form-lang');
 $warning_lang = LangLoader::get('warning-lang');
-define('TITLE', $form_lang['form.configuration']);
 
 //--------------------------------------------------------------------- Header
+define('TITLE', $form_lang['form.configuration']);
 require_once('../admin/admin_header.php');
 
 //--------------------------------------------------------------------- Params
