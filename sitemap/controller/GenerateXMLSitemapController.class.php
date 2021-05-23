@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2014 12 22
+ * @version     PHPBoost 6.0 - last update: 2021 05 23
  * @since       PHPBoost 3.0 - 2009 12 08
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class GenerateXMLSitemapController extends AdminController
@@ -31,7 +32,7 @@ class GenerateXMLSitemapController extends AdminController
 		));
 
 		$response = new AdminSitemapResponse($view);
-		$response->get_graphical_environment()->set_page_title($lang['generate_xml_file'], $lang['sitemap']);
+		$response->get_graphical_environment()->set_page_title($lang['sitemap.generate.xml'], $lang['sitemap.module.title']);
 		return $response;
 	}
 }
