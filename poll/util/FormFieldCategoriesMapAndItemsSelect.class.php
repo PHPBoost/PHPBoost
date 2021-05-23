@@ -7,7 +7,7 @@
  * @since       PHPBoost 6.0 - 2020 05 14
 */
 
-class FormFieldCategoriesMapAndItemsMultipleSelect extends FormFieldMultipleSelectChoice
+class FormFieldCategoriesMapAndItemsSelect extends FormFieldMultipleSelectChoice
 {
 	private $categories_cache;
 	private $search_category_children_options;
