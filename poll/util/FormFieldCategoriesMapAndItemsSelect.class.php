@@ -14,7 +14,7 @@ class FormFieldCategoriesMapAndItemsSelect extends FormFieldMultipleSelectChoice
 	private $options = array();
 	private $selected_options;
 
-    public function __construct($id, $label, $value = 0, SearchCategoryChildrensOptions $search_category_children_options, array $selected_options, array $field_options, CategoriesCache $categories_cache)
+    public function __construct($id, $label, $value, SearchCategoryChildrensOptions $search_category_children_options, array $selected_options, array $field_options, CategoriesCache $categories_cache)
     {
     	$this->categories_cache = $categories_cache;
     	$this->search_category_children_options = $search_category_children_options;
