@@ -4,11 +4,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 11 14
+ * @version     PHPBoost 6.0 - last update: 2021 05 23
  * @since       PHPBoost 2.0 - 2008 07 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class TinyMCEEditor extends ContentEditor
@@ -23,6 +24,7 @@ class TinyMCEEditor extends ContentEditor
 		if (!is_object($this->template) || !($this->template instanceof Template))
 		{
 			$this->template = new FileTemplate('TinyMCE/tinymce_editor.tpl');
+			$this->template->add_lang(LangLoader::get('warning-lang'));
 		}
 		return $this->template;
 	}

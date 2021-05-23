@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 11
+ * @version     PHPBoost 6.0 - last update: 2021 05 23
  * @since       PHPBoost 1.5 - 2006 06 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -14,6 +14,13 @@
 ####################################################
 
 $lang['warning.success'] = 'Succès';
+$lang['warning.error']   = 'Erreur';
+
+$lang['warning.fatal']    = 'Fatale';
+$lang['warning.notice']   = 'Suggestion';
+$lang['warning.warning']  = 'Avertissement';
+$lang['warning.question'] = 'Question';
+$lang['warning.unknow']   = 'Inconnue';
 
 $lang['warning.username']  = 'Veuillez entrer un nom d\'utilisateur !';
 $lang['warning.password']  = 'Veuillez entrer un mot de passe !';
@@ -45,7 +52,6 @@ $lang['warning.element.unexist']        = 'L\'élément que vous demandez n\'exi
 $lang['warning.element.not.visible']    = 'Cet élément n\'est pas encore ou n\'est plus approuvé, il n\'est pas affiché pour les autres utilisateurs du site.';
 
 // Errors
-$lang['warning.error']                   = 'Erreur';
 $lang['warning.incomplete']              = 'Tous les champs obligatoires doivent être remplis !';
 $lang['warning.readonly']                = 'Vous ne pouvez exécuter cette action, car vous avez été placé en lecture seule !';
 $lang['warning.flood']                   = 'Vous ne pouvez pas encore poster, réessayez dans quelques instants';
@@ -102,35 +108,38 @@ $lang['warning.message.delete.install.and.update.folders'] = 'Par mesure de séc
 $lang['warning.message.delete.install.or.update.folders']  = 'Par mesure de sécurité nous vous conseillons fortement de supprimer le dossier <b>:folder</b> et tout ce qu\'il contient, des personnes mal intentionnées pourraient relancer le script d\'installation et écraser certaines de vos données !';
 
 // Regex
-$lang['warning.regex'] = 'La valeur saisie n\'est pas au bon format';
-$lang['warning.regex.date'] = 'La valeur saisie doit être une date valide';
-$lang['warning.regex.url'] = 'La valeur saisie doit être une url valide';
-$lang['warning.regex.email'] = 'La valeur saisie doit être un mail valide';
-$lang['warning.regex.tel'] = 'La valeur saisie doit être un numéro de téléphone valide';
-$lang['warning.regex.number'] = 'La valeur saisie doit être un nombre';
-$lang['warning.regex.authorized.extensions'] = 'L\'extension du fichier n\'est pas autorisée. Extensions valides : :extensions.';
+$lang['warning.regex']              = 'La valeur saisie n\'est pas au bon format';
+$lang['warning.regex.date']         = 'La valeur saisie doit être une date valide';
+$lang['warning.regex.url']          = 'La valeur saisie doit être une url valide';
+$lang['warning.regex.email']        = 'La valeur saisie doit être un mail valide';
+$lang['warning.regex.tel']          = 'La valeur saisie doit être un numéro de téléphone valide';
+$lang['warning.regex.number']       = 'La valeur saisie doit être un nombre';
 $lang['warning.regex.picture.file'] = 'La valeur saisie doit correspondre à une image';
-$lang['warning.length.intervall'] = 'La valeur saisie ne respecte par la longueur définie (:lower_bound <= valeur <= :upper_bound)';
-$lang['warning.length.min'] = 'La valeur saisie doit faire au moins :lower_bound caractères';
-$lang['warning.length.max'] = 'La valeur saisie doit faire au maximum :upper_bound caractères';
-$lang['warning.integer.intervall'] = 'La valeur saisie ne respecte pas l\'intervalle définie (:lower_bound <= valeur <= :upper_bound)';
-$lang['warning.integer.min'] = 'La valeur saisie doit être supérieure ou égale à :lower_bound';
-$lang['warning.integer.max'] = 'La valeur saisie doit être inférieure ou égale à :upper_bound';
-$lang['warning.medium.password.regex'] = 'Le mot de passe doit comporter au moins une minuscule et une majuscule ou une minuscule et un chiffre';
-$lang['warning.strong.password.regex'] = 'Le mot de passe doit comporter au moins une minuscule, une majuscule et un chiffre';
-$lang['warning.very.strong.password.regex'] = 'Le mot de passe doit comporter au moins une minuscule, une majuscule, un chiffre et un caractère spécial';
-$lang['warning.invalid.url'] = 'L\'url n\'est pas valide';
-$lang['warning.invalid.picture'] = 'Le fichier indiqué n\'est pas une image';
-$lang['warning.unexisting.file'] = 'Le fichier n\'a pas été trouvé, son adresse doit être incorrecte';
+$lang['warning.length.intervall']   = 'La valeur saisie ne respecte par la longueur définie (:lower_bound <= valeur <= :upper_bound)';
+$lang['warning.length.min']         = 'La valeur saisie doit faire au moins :lower_bound caractères';
+$lang['warning.length.max']         = 'La valeur saisie doit faire au maximum :upper_bound caractères';
+$lang['warning.integer.intervall']  = 'La valeur saisie ne respecte pas l\'intervalle définie (:lower_bound <= valeur <= :upper_bound)';
+$lang['warning.integer.min']        = 'La valeur saisie doit être supérieure ou égale à :lower_bound';
+$lang['warning.integer.max']        = 'La valeur saisie doit être inférieure ou égale à :upper_bound';
+$lang['warning.regex.authorized.extensions'] = 'L\'extension du fichier n\'est pas autorisée. Extensions valides : :extensions.';
+
+$lang['warning.medium.password.regex']          = 'Le mot de passe doit comporter au moins une minuscule et une majuscule ou une minuscule et un chiffre';
+$lang['warning.strong.password.regex']          = 'Le mot de passe doit comporter au moins une minuscule, une majuscule et un chiffre';
+$lang['warning.very.strong.password.regex']     = 'Le mot de passe doit comporter au moins une minuscule, une majuscule, un chiffre et un caractère spécial';
+$lang['warning.email.authorized.domains.regex'] = 'Le nom de domaine de cette adresse n\'est pas autorisé sur le site, veuillez choisir une autre adresse email';
+
+$lang['warning.invalid.url']      = 'L\'url n\'est pas valide';
+$lang['warning.invalid.picture']  = 'Le fichier indiqué n\'est pas une image';
+$lang['warning.unexisting.file']  = 'Le fichier n\'a pas été trouvé, son adresse doit être incorrecte';
 $lang['warning.has.to.be.filled'] = 'Le champ ":name" doit être renseigné';
 $lang['warning.validation.error'] = 'Veuillez corriger les erreurs du formulaire';
-$lang['warning.fields.must.be.equal'] = 'Les champs ":field1" et ":field2" doivent être égaux';
-$lang['warning.fields.must.not.be.equal'] = 'Les champs ":field1" et ":field2" doivent avoir des valeurs différentes';
-$lang['warning.first.field.must.be.inferior.to.second.field'] = 'Le champ ":field2" doit avoir une valeur inférieure au champ ":field1"';
-$lang['warning.first.field.must.be.superior.to.second.field'] = 'Le champ ":field2" doit avoir une valeur supérieure au champ ":field1"';
-$lang['warning.first.field.must.not.be.contained.in.second.field'] = 'La valeur champ ":field1" ne doit pas être contenue dans le champ ":field2"';
+
+$lang['warning.fields.must.be.equal']                                  = 'Les champs ":field1" et ":field2" doivent être égaux';
+$lang['warning.fields.must.not.be.equal']                              = 'Les champs ":field1" et ":field2" doivent avoir des valeurs différentes';
+$lang['warning.first.field.must.be.inferior.to.second.field']          = 'Le champ ":field2" doit avoir une valeur inférieure au champ ":field1"';
+$lang['warning.first.field.must.be.superior.to.second.field']          = 'Le champ ":field2" doit avoir une valeur supérieure au champ ":field1"';
+$lang['warning.first.field.must.not.be.contained.in.second.field']     = 'La valeur champ ":field1" ne doit pas être contenue dans le champ ":field2"';
 $lang['warning.login.and.email.must.not.be.contained.in.second.field'] = 'Votre email ou votre identifiant de connexion ne doivent pas être contenus dans le champ ":field2"';
-$lang['warning.email.authorized.domains.regex'] = 'Le nom de domaine de cette adresse n\'est pas autorisé sur le site, veuillez choisir une autre adresse email';
 
 // Upload
 $lang['warning.file.max.dimension']     = 'Dimensions maximales du fichier dépassées';

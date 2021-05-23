@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 11
+ * @version     PHPBoost 6.0 - last update: 2021 05 23
  * @since       PHPBoost 1.5 - 2006 06 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -14,6 +14,13 @@
 ####################################################
 
 $lang['warning.success'] = 'Succès';
+$lang['warning.error']   = 'Error';
+
+$lang['warning.fatal']    = 'Fatal';
+$lang['warning.notice']   = 'Notice';
+$lang['warning.warning']  = 'Warning';
+$lang['warning.question'] = 'Question';
+$lang['warning.unknow']   = 'Unknow';
 
 $lang['warning.username']  = 'Please enter a username !';
 $lang['warning.password']  = 'Please enter a password !';
@@ -45,7 +52,6 @@ $lang['warning.element.unexist']        = 'The item you requested does not exist
 $lang['warning.element.not.visible']    = 'This element is not yet or no more approved, it is not displayed for the other users.';
 
 // Errors
-$lang['warning.error']                   = 'Error';
 $lang['warning.incomplete']              = 'All the required fields must be filled!';
 $lang['warning.readonly']                = 'You can\'t perform this action because your account is read-only!';
 $lang['warning.flood']                   = 'You can\'t post yet, retry in a few moments';
@@ -102,35 +108,38 @@ $lang['warning.message.delete.install.and.update.folders'] = 'For security reaso
 $lang['warning.message.delete.install.or.update.folders']  = 'For security reasons we recommand you to delete the <b>:folder</b> folder and all its contents, hackers could manage to run the installation script and you could lose data !';
 
 // Regex
-$lang['warning.regex'] = 'The entered value does not fit the proper format';
-$lang['warning.regex.date'] = 'The entered value has to be a valid date';
-$lang['warning.regex.url'] = 'The entered value has to be a valid url';
-$lang['warning.regex.email'] = 'The entered value has to be a valid mail';
-$lang['warning.regex.tel'] = 'The entered value has to be a valid phone number';
-$lang['warning.regex.number'] = 'The value entered must be a number';
-$lang['warning.regex.authorized.extensions'] = 'File extension is not authorized. Valid extensions : :extensions.';
+$lang['warning.regex']              = 'The entered value does not fit the proper format';
+$lang['warning.regex.date']         = 'The entered value has to be a valid date';
+$lang['warning.regex.url']          = 'The entered value has to be a valid url';
+$lang['warning.regex.email']        = 'The entered value has to be a valid mail';
+$lang['warning.regex.tel']          = 'The entered value has to be a valid phone number';
+$lang['warning.regex.number']       = 'The value entered must be a number';
 $lang['warning.regex.picture.file'] = 'The value entered must correspond to a picture';
-$lang['warning.length.intervall'] = 'The entered value does not fit the specified length (:lower_bound <= value <= :upper_bound)';
-$lang['warning.length.min'] = 'The entered value must be at least :lower_bound characters';
-$lang['warning.length.max'] = 'The entered value must be max :upper_bound characters';
-$lang['warning.integer.intervall'] = 'The entered value does not fit the specified interval (:lower_bound <= value <= :upper_bound)';
-$lang['warning.integer.min'] = 'The entered value must be superior or equal to :lower_bound';
-$lang['warning.integer.max'] = 'The entered value must be inferior or equal to :upper_bound';
-$lang['warning.medium.password.regex'] = 'The password must contain at least one lower case letter and one upper case letter or one lower case letter and a digit';
-$lang['warning.strong.password.regex'] = 'The password must contain at least one lower case letter, one upper case letter and a digit';
-$lang['warning.very.strong.password.regex'] = 'The password must contain at least one lower case letter, one upper case letter, one digit and a special character';
-$lang['warning.invalid.url'] = 'The url is not valid';
-$lang['warning.invalid.picture'] = 'The file is not a picture';
-$lang['warning.unexisting.file'] = 'The file has not been found, its url must be incorrect';
+$lang['warning.length.intervall']   = 'The entered value does not fit the specified length (:lower_bound <= value <= :upper_bound)';
+$lang['warning.length.min']         = 'The entered value must be at least :lower_bound characters';
+$lang['warning.length.max']         = 'The entered value must be max :upper_bound characters';
+$lang['warning.integer.intervall']  = 'The entered value does not fit the specified interval (:lower_bound <= value <= :upper_bound)';
+$lang['warning.integer.min']        = 'The entered value must be superior or equal to :lower_bound';
+$lang['warning.integer.max']        = 'The entered value must be inferior or equal to :upper_bound';
+$lang['warning.regex.authorized.extensions'] = 'File extension is not authorized. Valid extensions : :extensions.';
+
+$lang['warning.medium.password.regex']          = 'The password must contain at least one lower case letter and one upper case letter or one lower case letter and a digit';
+$lang['warning.strong.password.regex']          = 'The password must contain at least one lower case letter, one upper case letter and a digit';
+$lang['warning.very.strong.password.regex']     = 'The password must contain at least one lower case letter, one upper case letter, one digit and a special character';
+$lang['warning.email.authorized.domains.regex'] = 'This mail domain address is not authorized, please choose another mail address';
+
+$lang['warning.invalid.url']      = 'The url is not valid';
+$lang['warning.invalid.picture']  = 'The file is not a picture';
+$lang['warning.unexisting.file']  = 'The file has not been found, its url must be incorrect';
 $lang['warning.has.to.be.filled'] = 'The field ":name" has to be filled';
 $lang['warning.validation.error'] = 'Please correct the form errors';
-$lang['warning.fields.must.be.equal'] = 'Fields ":field1" and ":field2" must be equal';
-$lang['warning.fields.must.not.be.equal'] = 'Fields ":field1" and ":field2" must have different values';
-$lang['warning.first.field.must.be.inferior.to.second.field'] = 'Field ":field2" must have a value inferior to field ":field1"';
-$lang['warning.first.field.must.be.superior.to.second.field'] = 'Field ":field2" must have a value superior to field ":field1"';
-$lang['warning.first.field.must.not.be.contained.in.second.field'] = 'Value of field ":field1" must not be present in field ":field2"';
+
+$lang['warning.fields.must.be.equal']                                  = 'Fields ":field1" and ":field2" must be equal';
+$lang['warning.fields.must.not.be.equal']                              = 'Fields ":field1" and ":field2" must have different values';
+$lang['warning.first.field.must.be.inferior.to.second.field']          = 'Field ":field2" must have a value inferior to field ":field1"';
+$lang['warning.first.field.must.be.superior.to.second.field']          = 'Field ":field2" must have a value superior to field ":field1"';
+$lang['warning.first.field.must.not.be.contained.in.second.field']     = 'Value of field ":field1" must not be present in field ":field2"';
 $lang['warning.login.and.email.must.not.be.contained.in.second.field'] = 'Your mail or your login must not be present in field ":field2"';
-$lang['warning.email.authorized.domains.regex'] = 'This mail domain address is not authorized, please choose another mail address';
 
 // Upload
 $lang['warning.file.max.dimension']     = 'Max file dimensions exceeded';
