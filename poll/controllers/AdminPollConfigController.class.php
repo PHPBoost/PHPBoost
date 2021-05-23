@@ -34,7 +34,7 @@ class AdminPollConfigController extends DefaultConfigurationController
 		$categories_cache = CategoriesService::get_categories_manager('poll')->get_categories_cache();
 
 		$fieldset->add_field(
-		  new FormFieldCategoriesMapAndItemsMultipleSelect(
+		  new FormFieldCategoriesMapAndItemsSelect(
 		    'mini_module_selected_items',
 		    $this->lang['poll.config.mini.module.selected.items'],
 		    Category::ROOT_CATEGORY,
