@@ -40,9 +40,9 @@
 							# ENDIF #
 							# IF C_HAS_CATEGORY #
 								# IF NOT C_ROOT_CATEGORY #
-								<span class="pinned">
-									<a itemprop="about" href="{U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {CATEGORY_NAME}</a>
-								</span>
+									<span class="pinned">
+										<a itemprop="about" href="{U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {CATEGORY_NAME}</a>
+									</span>
 								# ENDIF #
 							# ENDIF #
 							# IF C_PUBLISHED #

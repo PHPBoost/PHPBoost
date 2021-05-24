@@ -28,6 +28,11 @@
 						<span class="pinned">
 							<i class="far fa-calendar-alt" aria-hidden="true"></i> <time datetime="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{PUBLISHING_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT C_DIFFERED #{DATE}# ELSE #{PUBLISHING_START_DATE}# ENDIF #</time>
 						</span>
+						# IF NOT C_ROOT_CATEGORY #
+							<span class="pinned">
+								<i class="far fa-folder" aria-hidden="true"></i> <a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
+							</span>
+						# ENDIF #
 						<span class="pinned">
 							<i class="far fa-eye" aria-hidden="true"></i> <span role="contentinfo" aria-label="{VIEWS_NUMBER} ${LangLoader::get_message('views', 'main')}">{VIEWS_NUMBER}</span>
 						</span>
@@ -35,11 +40,6 @@
 							<span class="pinned">
 								<a href="#comments-list"><i class="fa fa-comments" aria-hidden="true"></i> {COMMENTS_LABEL}</a>
 							</span>
-						# ENDIF #
-						# IF NOT C_ROOT_CATEGORY #
-						<span class="pinned">
-							<i class="far fa-folder" aria-hidden="true"></i> <a itemprop="about" class="small" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
-						</span>
 						# ENDIF #
 					</div>
 					<div class="controls align-right">
