@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 21
+ * @version     PHPBoost 6.0 - last update: 2021 05 24
  * @since       PHPBoost 4.1 - 2015 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -359,6 +359,7 @@ class ForumHomeController extends ModuleController
 	public static function get_view()
 	{
 		$object = new self();
+		$object->init();
 		$object->build_view();
 		return $object->view;
 	}
