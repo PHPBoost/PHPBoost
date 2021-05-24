@@ -3,7 +3,8 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-#module-pages ul {
+.root-list,
+.pages-list ul {
 	margin: 0;
 	padding: 0;
 	list-style-type: none;

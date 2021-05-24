@@ -1,8 +1,8 @@
 <section id="module-pages">
 	<header class="section-header">
 		<div class="controls align-right">
-			<a href="${relative_url(SyndicationUrlBuilder::rss('pages', CATEGORY_ID))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
-			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF ## ENDIF #
+			<a href="${relative_url(SyndicationUrlBuilder::rss('pages', CATEGORY_ID))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
+			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF ## ENDIF #
 		</div>
 		<h1 class="flex-between">
 			{MODULE_NAME}
@@ -24,7 +24,7 @@
 			<div class="content-container">
 				<div class="content">
 					<div class="message-helper bgc notice">
-						${LangLoader::get_message('no_item_now', 'common')}
+						{@common.no.item.now}
 					</div>
 				</div>
 			</div>
@@ -34,7 +34,7 @@
 			<div class="content-container">
 				<article class="pages-item several-items">
 					<div class="content">
-						<ul# IF C_CONTROLS ## IF C_ROOT_SEVERAL_ITEMS # class="root-ul"# ENDIF ## ENDIF #>
+						<ul class="root-list # IF C_CONTROLS ## IF C_ROOT_SEVERAL_ITEMS # root-ul# ENDIF ## ENDIF #">
 							# IF C_CONTROLS #
 								# IF C_ROOT_SEVERAL_ITEMS #
 									<a class="reorder-items" href="{U_ROOT_REORDER_ITEMS}" aria-label="{@items.reorder}"><i class="fa fa-fw fa-exchange-alt"></i></a>
@@ -45,15 +45,15 @@
 									<a class="categories-item d-block" href="{root_items.U_ITEM}"><i class="fa fa-fw fa-file-alt"></i> {root_items.TITLE}</a>
 									# IF root_items.C_CONTROLS #
 										<div class="controls">
-											# IF root_items.C_EDIT #<a href="{root_items.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
-											# IF root_items.C_DELETE #<a href="{root_items.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}" id="delete-{root_items.ID}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
+											# IF root_items.C_EDIT #<a href="{root_items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
+											# IF root_items.C_DELETE #<a href="{root_items.U_DELETE}" data-confirmation="delete-element" aria-label="{@common.delete}" id="delete-{root_items.ID}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
 										</div>
 									# ENDIF #
 								</li>
 							# END root_items #
 						</ul>
 
-					    <nav id="category-nav">
+					    <nav id="category-nav" class="pages-list">
 					        <ul>
 								# START categories #
 					            	<li
@@ -79,8 +79,8 @@
 														<a class="d-block categories-item" href="{categories.items.U_ITEM}"><i class="fa fa-fw fa-file-alt"></i> {categories.items.TITLE}</a>
 														# IF categories.items.C_CONTROLS #
 															<div class="controls">
-																# IF categories.items.C_EDIT #<a href="{categories.items.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
-																# IF categories.items.C_DELETE #<a href="{categories.items.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}" id="delete-{categories.items.ID}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
+																# IF categories.items.C_EDIT #<a href="{categories.items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
+																# IF categories.items.C_DELETE #<a href="{categories.items.U_DELETE}" data-confirmation="delete-element" aria-label="{@common.delete}" id="delete-{categories.items.ID}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
 															</div>
 														# ENDIF #
 													</li>

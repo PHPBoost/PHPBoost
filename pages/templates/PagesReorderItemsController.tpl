@@ -9,7 +9,7 @@
 			init_sortable : function() {
 				jQuery("ul#items-list").sortable({
 					handle: '.sortable-selector',
-					placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>',
+					placeholder: '<div class="dropzone">' + ${escapejs(@common.drop.here)} + '</div>',
 					onDrop: function ($item, container, _super, event) {
 						PagesItems.change_reposition_pictures();
 						$item.removeClass(container.group.options.draggedClass).removeAttr("style");
@@ -60,8 +60,8 @@
 <section id="module-page">
 	<header class="section-header">
 		<div class="controls align-right">
-			<a href="${relative_url(SyndicationUrlBuilder::rss('pages', CATEGORY_ID))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
-			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
+			<a href="${relative_url(SyndicationUrlBuilder::rss('pages', CATEGORY_ID))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
+			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1>
 			{MODULE_NAME}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
@@ -77,17 +77,17 @@
 							<ul id="items-list" class="sortable-block">
 								# START items #
 									<li class="sortable-element# IF items.C_NEW_CONTENT # new-content# ENDIF #" id="list-{items.ID}" data-id="{items.ID}">
-										<div class="sortable-selector" aria-label="${LangLoader::get_message('position.move', 'common')}"></div>
+										<div class="sortable-selector" aria-label="{@common.move}"></div>
 										<div class="sortable-title">
 											<span class="item-title">{items.TITLE}</span>
 										</div>
 										<div class="sortable-actions">
 											# IF C_SEVERAL_ITEMS #
-												<a href="#" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{items.ID}" onclick="return false;"><i class="fa fa-fw fa-arrow-up" aria-hidden="true"></i></a>
-												<a href="#" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{items.ID}" onclick="return false;"><i class="fa fa-fw fa-arrow-down" aria-hidden="true"></i></a>
+												<a href="#" aria-label="{@common.move.up}" id="move-up-{items.ID}" onclick="return false;"><i class="fa fa-fw fa-arrow-up" aria-hidden="true"></i></a>
+												<a href="#" aria-label="{@common.move.down}" id="move-down-{items.ID}" onclick="return false;"><i class="fa fa-fw fa-arrow-down" aria-hidden="true"></i></a>
 											# ENDIF #
-											<a href="{items.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
-											<a href="#" onclick="return false;" aria-label="${LangLoader::get_message('delete', 'common')}" id="delete-{items.ID}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+											<a href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+											<a href="#" onclick="return false;" aria-label="{@common.delete}" id="delete-{items.ID}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 										</div>
 
 										<script>
@@ -114,7 +114,7 @@
 						</fieldset>
 						# IF C_SEVERAL_ITEMS #
 							<fieldset class="fieldset-submit" id="position-update-button">
-								<button type="submit" name="submit" value="true" class="button submit">${LangLoader::get_message('position.update', 'common')}</button>
+								<button type="submit" name="submit" value="true" class="button submit">${LangLoader::get_message('form.submit', 'form-lang')}</button>
 								<input type="hidden" name="token" value="{TOKEN}">
 								<input type="hidden" name="tree" id="tree" value="">
 							</fieldset>
@@ -129,7 +129,7 @@
 				<div class="content-container">
 					<div class="content">
 						<div class="message-helper bgc notice align-center">
-							${LangLoader::get_message('no_item_now', 'common')}
+							{@common.no.item.now}
 						</div>
 					</div>
 				</div>
