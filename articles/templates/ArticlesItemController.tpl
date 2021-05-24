@@ -2,8 +2,8 @@
 
 	<header class="section-header">
 		<div class="controls align-right">
-			<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
-			{MODULE_NAME}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"> <i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
+			<a href="{U_SYNDICATION}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
+			{MODULE_NAME}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"> <i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1><span itemprop="name">{TITLE}</span></h1>
 	</header>
@@ -34,7 +34,7 @@
 							</span>
 						# ENDIF #
 						<span class="pinned">
-							<i class="far fa-eye" aria-hidden="true"></i> <span role="contentinfo" aria-label="{VIEWS_NUMBER} ${LangLoader::get_message('views', 'main')}">{VIEWS_NUMBER}</span>
+							<i class="far fa-eye" aria-hidden="true"></i> <span role="contentinfo" aria-label="{VIEWS_NUMBER} {@common.views}">{VIEWS_NUMBER}</span>
 						</span>
 						# IF C_ENABLED_COMMENTS #
 							<span class="pinned">
@@ -44,11 +44,14 @@
 					</div>
 					<div class="controls align-right">
 						# IF C_CONTROLS #
-							<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
-							<a href="{U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+							<a href="{U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+							<a href="{U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 						# ENDIF #
 					</div>
 				</div>
+				# IF C_HAS_UPDATE_DATE #
+					<span class="pinned notice small text-italic modified-date"><i>{@common.last.update} : <time datetime="{UPDATE_DATE_ISO8601}" itemprop="datePublished">{UPDATE_DATE}</time></i></span>
+				# ENDIF #
 
 				# IF C_PAGINATION #
 					# INCLUDE FORM #
@@ -96,7 +99,7 @@
 
 				# IF C_SOURCES #
 					<aside class="sources-container">
-						<span class="text-strong"><i class="fa fa-map-signs" aria-hidden="true"></i> ${LangLoader::get_message('form.sources', 'common')}</span> :
+						<span class="text-strong"><i class="fa fa-map-signs" aria-hidden="true"></i> {@common.sources}</span> :
 						# START sources #
 							<a class="pinned question" itemprop="isBasedOnUrl" href="{sources.URL}" rel="nofollow">{sources.NAME}</a>
 							# IF sources.C_SEPARATOR ## ENDIF #
@@ -105,15 +108,12 @@
 				# ENDIF #
 				# IF C_KEYWORDS #
 					<aside class="tags-container">
-						<span class="text-strong"><i class="fa fa-tags" aria-hidden="true"></i> ${LangLoader::get_message('form.keywords', 'common')}</span> :
+						<span class="text-strong"><i class="fa fa-tags" aria-hidden="true"></i> {@common.keywords}</span> :
 						# START keywords #
 							<a class="pinned link-color" itemprop="keywords" href="{keywords.URL}">{keywords.NAME}</a>
 							# IF keywords.C_SEPARATOR ## ENDIF #
 						# END keywords #
 					</aside>
-				# ENDIF #
-				# IF C_UPDATE_DATE #
-					<aside><i>${LangLoader::get_message('form.date.update', 'common')} : <time datetime="{UPDATE_DATE_ISO8601}" itemprop="datePublished">{UPDATE_DATE}</time></i></aside>
 				# ENDIF #
 				# IF C_ENABLED_NOTATION #
 					<aside>
