@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 02 27
+ * @version     PHPBoost 6.0 - last update: 2021 05 24
  * @since       PHPBoost 5.1 - 2018 01 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -21,6 +21,7 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 	private $submit_button;
 
 	private $lang;
+	private $form_lang;
 	private $view;
 
 	/**
@@ -41,7 +42,7 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.message.success.config', 'warning-lang'), MessageHelper::SUCCESS, 5));
 		}
 
 		$social_networks_number = 0;
@@ -72,8 +73,8 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 		));
 
 		$response = new AdminMenuDisplayResponse($this->view);
-		$response->add_link(LangLoader::get_message('configuration', 'admin-common'), DispatchManager::get_url('/SocialNetworks', '/admin/'));
-		$response->get_graphical_environment()->set_page_title(StringVars::replace_vars(LangLoader::get_message('configuration.module.title', 'admin-common'), array('module_name' => $this->lang['module_name'])));
+		$response->add_link($this->form_lang['form.configuration'], DispatchManager::get_url('/SocialNetworks', '/admin/'));
+		$response->get_graphical_environment()->set_page_title(StringVars::replace_vars($this->form_lang['form.module.title'], array('module_name' => $this->lang['sn.module.title'])));
 
 		return $response;
 	}
@@ -81,10 +82,11 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'SocialNetworks');
+		$this->form_lang = LangLoader::get('form-lang');
 		$this->config = SocialNetworksConfig::load();
 		$this->server_configuration = new ServerConfiguration();
 		$this->view = new FileTemplate('SocialNetworks/AdminSocialNetworksConfigController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang'), $this->form_lang));
 
 		$social_networks_list = new SocialNetworksList();
 		$this->social_networks = $social_networks_list->get_social_networks_list();
@@ -107,14 +109,14 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 				{
 					if ($sn->authentication_identifiers_needed())
 					{
-						$fieldset->add_field(new FormFieldCheckbox($id . '_authentication_enabled', StringVars::replace_vars($this->lang['authentication.config.authentication-enabled'],
+						$fieldset->add_field(new FormFieldCheckbox($id . '_authentication_enabled', StringVars::replace_vars($this->lang['sn.enable.authentication'],
 							array('name' => $sn->get_name())), $this->config->is_authentication_enabled($id),
 								array(
 									'class' => 'third-field custom-checkbox',
-									'description' => StringVars::replace_vars(($sn->authentication_client_secret_needed() ? $this->lang['authentication.config.authentication-enabled-explain'] : $this->lang['authentication.config.authentication-enabled-explain.key-only']
+									'description' => StringVars::replace_vars(($sn->authentication_client_secret_needed() ? $this->lang['sn.enable.authentication.clue'] : $this->lang['sn.enable.authentication.key.only.clue']
 								),
 								array(
-									'identifiers_creation_url' => $sn->get_identifiers_creation_url())) . ($sn->callback_url_needed() ? StringVars::replace_vars($this->lang['authentication.config.authentication-enabled-explain.callback-url'],
+									'identifiers_creation_url' => $sn->get_identifiers_creation_url())) . ($sn->callback_url_needed() ? StringVars::replace_vars($this->lang['sn.enable.authentication.callback.url.clue'],
 									array('callback_url' => UserUrlBuilder::connect($id)->absolute())) : ''), 'events' => array('click' => '
 										if (HTMLForms.getField("' . $id . '_authentication_enabled").getValue()) {
 											HTMLForms.getField("' . $id . '_client_id").enable();
@@ -128,13 +130,13 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 							)
 						);
 
-						$fieldset->add_field(new FormFieldTextEditor($id . '_client_id', StringVars::replace_vars($this->lang['authentication.config.client-id'], array('name' => $sn->get_name())), $this->config->get_client_id($id),
+						$fieldset->add_field(new FormFieldTextEditor($id . '_client_id', StringVars::replace_vars($this->lang['sn.authentication.client.id'], array('name' => $sn->get_name())), $this->config->get_client_id($id),
 							array('class' => 'third-field top-field', 'required' => true, 'hidden' => !$this->config->is_authentication_enabled($id))
 						));
 
 						if ($sn->authentication_client_secret_needed())
 						{
-							$fieldset->add_field(new FormFieldPasswordEditor($id . '_client_secret', StringVars::replace_vars($this->lang['authentication.config.client-secret'], array('name' => $sn->get_name())), $this->config->get_client_secret($id),
+							$fieldset->add_field(new FormFieldPasswordEditor($id . '_client_secret', StringVars::replace_vars($this->lang['sn.authentication.client.secret'], array('name' => $sn->get_name())), $this->config->get_client_secret($id),
 								array('class' => 'third-field top-field', 'required' => true, 'hidden' => !$this->config->is_authentication_enabled($id))
 							));
 						}
@@ -143,8 +145,8 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 					}
 					else
 					{
-						$fieldset->add_field(new FormFieldCheckbox($id . '_authentication_enabled', StringVars::replace_vars($this->lang['authentication.config.authentication-enabled'], array('name' => $sn->get_name())), $this->config->is_authentication_enabled($id),
-							array('class' => 'custom-checkbox', 'description' => $this->lang['authentication.config.no-identifier-needed'])
+						$fieldset->add_field(new FormFieldCheckbox($id . '_authentication_enabled', StringVars::replace_vars($this->lang['sn.enable.authentication'], array('name' => $sn->get_name())), $this->config->is_authentication_enabled($id),
+							array('class' => 'custom-checkbox', 'description' => $this->lang['sn.authentication.no.identifier.needed'])
 						));
 					}
 				}
@@ -152,7 +154,7 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 		}
 		else
 		{
-			$fieldset->add_field(new FormFieldFree('', '', MessageHelper::display($this->lang['authentication.config.curl_extension_disabled'], MessageHelper::WARNING)->render()));
+			$fieldset->add_field(new FormFieldFree('', '', MessageHelper::display($this->lang['sn.authentication.curl.extension.disabled'], MessageHelper::WARNING)->render()));
 		}
 
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -216,7 +218,7 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 		if ($request->get_value('order_manage_submit', false))
 		{
 			$this->update_position($request);
-			$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.position.update', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.message.success.position.update', 'warning-lang'), MessageHelper::SUCCESS, 5));
 		}
 	}
 

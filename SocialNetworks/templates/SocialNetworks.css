@@ -34,8 +34,7 @@
 	border-color: transparent;
 }
 
-/* -- Social Connect -- */
-/* -------------------- */
+/* --- Social Connect --- */
 a.social-connect {
 	display: block;
 	vertical-align: middle;
@@ -68,22 +67,11 @@ a.social-connect { padding: 0.809em 1.618em; }
 
 a.social-connect span { display: none; }
 
-.social-connect { color: #DEDEDE; }
+.social-connect { color: var(--txt-alt); }
 
-.social-connect i:before       { color: #DFDFDF; }
-.social-connect:hover i:before { color: #EFEFEF; }
+.social-connect i:before       { color: var(--txt-alt); }
 
-/* -- Social Share -- */
-/* ------------------ */
-.social-element > a {
-	color: #FFFFFF;
-	border-width: 2px;
-	border-style: solid;
-	border-color: transparent;
-}
-
-/* -- Color Social network -- */
-/* -------------------------- */
+/* --- Color Social network --- */
 .blogger    { background-color: #f57d00; }
 .discord    { background-color: #7289DA; }
 .facebook   { background-color: #3b5998; }
@@ -142,26 +130,8 @@ a.social-connect span { display: none; }
 .yahoo:hover      { color: #430297; border-color: #430297; background-color: rgba(67, 2, 150, 0.4); }
 .youtube:hover    { color: #ff0000; border-color: #ff0000; background-color: rgba(255, 0, 0, 0.4); }
 
-/* -- Configuration -- */
-/* -------------------------- */
-.social-networks-list-container .sortable-title { padding: 8px 0.309em 12px 10px; }
-
+/* --- Configuration --- */
 .social-networks-list-container .sortable-title > .social-connect {
 	font-size: .618em;
-	font-weight: normal;
 	margin-right: 0.809em;
-}
-
-.social-networks-menu {
-	font-size: 1.228em;
-	margin-bottom: 1.618em;
-	vertical-align: top;
-}
-
-@media (min-width: 769px) {
-	.social-networks-menu {
-		width: calc(99%/2);
-		display: inline-block;
-		padding-right: 2.618em;
-	}
 }

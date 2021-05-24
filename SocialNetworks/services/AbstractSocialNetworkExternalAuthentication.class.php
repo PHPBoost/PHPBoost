@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 04 24
+ * @version     PHPBoost 6.0 - last update: 2021 05 24
  * @since       PHPBoost 5.1 - 2018 04 16
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class AbstractSocialNetworkExternalAuthentication implements ExternalAuthentication
@@ -19,7 +20,7 @@ abstract class AbstractSocialNetworkExternalAuthentication implements ExternalAu
 	 */
 	public function get_authentication_name()
 	{
-		return StringVars::replace_vars(LangLoader::get_message('sign-in-label', 'common', 'SocialNetworks'), array('name' => $this->get_social_network()->get_name()));
+		return StringVars::replace_vars(LangLoader::get_message('sn.sign.in.label', 'common', 'SocialNetworks'), array('name' => $this->get_social_network()->get_name()));
 	}
 
 	/**
@@ -40,13 +41,13 @@ abstract class AbstractSocialNetworkExternalAuthentication implements ExternalAu
 	 */
 	public function get_image_renderer_html()
 	{
-		$tpl = new FileTemplate('SocialNetworks/auth_image_render.tpl');
-		$tpl->put_all(array(
+		$view = new FileTemplate('SocialNetworks/auth_image_render.tpl');
+		$view->put_all(array(
 			'C_DISPLAY_NAME' => strpos(REWRITED_SCRIPT, 'user') !== false && strpos(REWRITED_SCRIPT, 'login') !== false,
-			'ICON_NAME' => $this->get_social_network()->get_icon_name(),
-			'NAME' => $this->get_authentication_name()
+			'ICON_NAME'      => $this->get_social_network()->get_icon_name(),
+			'NAME'           => $this->get_authentication_name()
 		));
-		return $tpl->render();
+		return $view->render();
 	}
 
 	/**
