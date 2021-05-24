@@ -743,16 +743,16 @@ a.wikipedia-link { border-bottom-color: var(--main-tone); }
 .floating-element,
 .message-helper { background-color: var(--bgc-main) }
 
-.notice        { color: var(--notice-tone); 	   border-color: var(--notice-tone); }
-.question      { color: var(--question-tone); 	   border-color: var(--question-tone); }
-.success       { color: var(--success-tone); 	   border-color: var(--success-tone); }
-.warning       { color: var(--warning-tone); 	   border-color: var(--warning-tone); }
-.error         { color: var(--error-tone); 		   border-color: var(--error-tone); }
-.visitor       { color: var(--visitor-tone); 	   border-color: var(--visitor-tone); }
-.custom-author { color: var(--custom-author-tone); border-color: var(--custom-author-tone); }
-.member        { color: var(--member-tone); 	   border-color: var(--member-tone); }
-.moderator     { color: var(--moderator-tone); 	   border-color: var(--moderator-tone); }
-.administrator { color: var(--administrator-tone); border-color: var(--administrator-tone); }
+.button.notice, .notice 			  { color: var(--notice-tone); 	 	  border-color: var(--notice-tone); }
+.button.question, .question 		  { color: var(--question-tone); 	  border-color: var(--question-tone); }
+.button.success, .success 			  { color: var(--success-tone); 	  border-color: var(--success-tone); }
+.button.warning, .warning 			  { color: var(--warning-tone); 	  border-color: var(--warning-tone); }
+.button.error, .error 				  { color: var(--error-tone); 		  border-color: var(--error-tone); }
+.button.visitor, .visitor 			  { color: var(--visitor-tone); 	  border-color: var(--visitor-tone); }
+.button.custom-author, .custom-author { color: var(--custom-author-tone); border-color: var(--custom-author-tone); }
+.button.member, .member 			  { color: var(--member-tone); 	 	  border-color: var(--member-tone); }
+.button.moderator, .moderator 		  { color: var(--moderator-tone); 	  border-color: var(--moderator-tone); }
+.button.administrator, .administrator { color: var(--administrator-tone); border-color: var(--administrator-tone); }
 
 .button.notice:hover        { color: var(--notice-light); 		 border-color: var(--notice-light);}
 .button.question:hover      { color: var(--question-light); 	 border-color: var(--question-light);}
