@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 15
+ * @version     PHPBoost 6.0 - last update: 2021 05 25
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -31,7 +31,11 @@ class WebPendingItemsController extends ModuleController
 	{
 		$this->lang = LangLoader::get('common', 'web');
 		$this->view = new FileTemplate('web/WebSeveralItemsController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->view->add_lang(array_merge(
+			$this->lang,
+			LangLoader::get('common-lang'),
+			LangLoader::get('contribution-lang')
+		));
 		$this->config = WebConfig::load();
 	}
 
@@ -191,12 +195,12 @@ class WebPendingItemsController extends ModuleController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['web.pending.items'], $this->lang['module.title'], $page);
+		$graphical_environment->set_page_title($this->lang['web.pending.items'], $this->lang['web.module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['web.seo.description.pending'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::display_pending($sort_field, $sort_mode, $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'], WebUrlBuilder::home());
+		$breadcrumb->add($this->lang['web.module.title'], WebUrlBuilder::home());
 		$breadcrumb->add($this->lang['web.pending.items'], WebUrlBuilder::display_pending($sort_field, $sort_mode, $page));
 
 		return $response;

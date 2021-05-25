@@ -3,9 +3,8 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 15
+ * @version     PHPBoost 6.0 - last update: 2021 05 25
  * @since       PHPBoost 5.2 - 2020 12 05
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class WebMemberItemsController extends ModuleController
@@ -30,7 +29,11 @@ class WebMemberItemsController extends ModuleController
 	{
 		$this->lang = LangLoader::get('common', 'web');
 		$this->view = new FileTemplate('web/WebSeveralItemsController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->view->add_lang(array_merge(
+			$this->lang,
+			LangLoader::get('common-lang'),
+			LangLoader::get('contribution-lang')
+		));
 		$this->config = WebConfig::load();
 	}
 
@@ -164,17 +167,17 @@ class WebMemberItemsController extends ModuleController
 	private function generate_response(HTTPRequestCustom $request)
 	{
 		$page = $request->get_getint('page', 1);
-		$page_title = $this->is_current_member_displayed() ? $this->lang['my.items'] : $this->lang['member.items'] . ' ' . $this->get_member()->get_display_name();
+		$page_title = $this->is_current_member_displayed() ? $this->lang['web.my.items'] : $this->lang['web.member.items'] . ' ' . $this->get_member()->get_display_name();
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($page_title, $this->lang['module.title'], $page);
+		$graphical_environment->set_page_title($page_title, $this->lang['web.module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['web.seo.description.member'], array('author' => AppContext::get_current_user()->get_display_name())), $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::display_member_items($this->get_member()->get_id(), $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'], WebUrlBuilder::home());
-		$breadcrumb->add($this->lang['my.items'], WebUrlBuilder::display_member_items($this->get_member()->get_id(), $page));
+		$breadcrumb->add($this->lang['web.module.title'], WebUrlBuilder::home());
+		$breadcrumb->add($this->lang['web.my.items'], WebUrlBuilder::display_member_items($this->get_member()->get_id(), $page));
 
 		return $response;
 	}

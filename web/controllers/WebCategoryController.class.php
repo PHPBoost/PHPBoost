@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 05
+ * @version     PHPBoost 6.0 - last update: 2021 05 25
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -35,7 +35,11 @@ class WebCategoryController extends ModuleController
 	{
 		$this->lang = LangLoader::get('common', 'web');
 		$this->view = new FileTemplate('web/WebSeveralItemsController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->view->add_lang(array_merge(
+			$this->lang,
+			LangLoader::get('common-lang'),
+			LangLoader::get('contribution-lang')
+		));
 		$this->config = WebConfig::load();
 		$this->comments_config = CommentsConfig::load();
 		$this->content_management_config = ContentManagementConfig::load();
@@ -289,9 +293,9 @@ class WebCategoryController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 
 		if ($this->get_category()->get_id() != Category::ROOT_CATEGORY)
-			$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['module.title'], $page);
+			$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['web.module.title'], $page);
 		else
-			$graphical_environment->set_page_title($this->lang['module.title'], '', $page);
+			$graphical_environment->set_page_title($this->lang['web.module.title'], '', $page);
 
 		$description = $this->get_category()->get_description();
 		if (empty($description))
@@ -300,7 +304,7 @@ class WebCategoryController extends ModuleController
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $sort_field, $sort_mode, $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'], WebUrlBuilder::home());
+		$breadcrumb->add($this->lang['web.module.title'], WebUrlBuilder::home());
 
 		$categories = array_reverse(CategoriesService::get_categories_manager('web')->get_parents($this->get_category()->get_id(), true));
 		foreach ($categories as $id => $category)

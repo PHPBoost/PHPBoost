@@ -57,7 +57,7 @@ class WebItemsManagerController extends ModuleController
 
 		$table_model->set_layout_title($this->lang['web.management']);
 
-		$table_model->set_filters_menu_title($this->lang['filter.items']);
+		$table_model->set_filters_menu_title($this->lang['web.filter.items']);
 		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('creation_date', 'filter1', LangLoader::get_message('form.date.creation', 'common') . ' ' . TextHelper::lcfirst(LangLoader::get_message('minimum', 'common'))));
 		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('creation_date', 'filter2', LangLoader::get_message('form.date.creation', 'common') . ' ' . TextHelper::lcfirst(LangLoader::get_message('maximum', 'common'))));
 		$table_model->add_filter(new HTMLTableAjaxUserAutoCompleteSQLFilter('display_name', 'filter3', LangLoader::get_message('author', 'common')));
@@ -149,11 +149,11 @@ class WebItemsManagerController extends ModuleController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['web.management'], $this->lang['module.title'], $page);
+		$graphical_environment->set_page_title($this->lang['web.management'], $this->lang['web.module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::manage());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'], WebUrlBuilder::home());
+		$breadcrumb->add($this->lang['web.module.title'], WebUrlBuilder::home());
 
 		$breadcrumb->add($this->lang['web.management'], WebUrlBuilder::manage());
 

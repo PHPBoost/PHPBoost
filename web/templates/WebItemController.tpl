@@ -1,9 +1,9 @@
 <section id="module-web" class="category-{CATEGORY_ID}">
 	<header class="section-header">
 		<div class="controls align-right">
-			<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
-			{@module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
-			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
+			<a href="{U_SYNDICATION}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
+			{@web.module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
+			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1><span id="name" itemprop="name">{TITLE}</span></h1>
 	</header>
@@ -17,8 +17,8 @@
 			<article id="web-item-{ID}" itemscope="itemscope" itemtype="https://schema.org/CreativeWork" class="web-item single-item# IF C_IS_PARTNER # content-friends# ENDIF ## IF C_IS_PRIVILEGED_PARTNER # content-privileged-friends# ENDIF ## IF C_NEW_CONTENT # new-content# ENDIF#">
 				# IF C_CONTROLS #
 					<div class="controls align-right">
-						# IF C_EDIT #<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
-						# IF C_DELETE #<a href="{U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
+						# IF C_EDIT #<a href="{U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
+						# IF C_DELETE #<a href="{U_DELETE}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
 					</div>
 				# ENDIF #
 
@@ -50,22 +50,22 @@
 							<ul>
 								<li class="li-stretch">
 									<a href="{U_VISIT}" class="button submit">
-										<i class="fa fa-globe" aria-hidden="true"></i> {@web.visit}
+										<i class="fa fa-globe" aria-hidden="true"></i> {@common.visit}
 									</a>
 									# IF C_VISIBLE #
 										# IF IS_USER_CONNECTED #
-											<a href="{U_DEADLINK}" data-confirmation="${LangLoader::get_message('deadlink.confirmation', 'common')}" class="button bgc-full warning" aria-label="${LangLoader::get_message('deadlink', 'common')}">
+											<a href="{U_DEADLINK}" data-confirmation="{@contribution.dead.link.confirmation}" class="button bgc-full warning" aria-label="{@contribution.report.dead.link}">
 												<i class="fa fa-unlink" aria-hidden="true"></i>
 											</a>
 										# ENDIF #
 									# ENDIF #
 								</li>
 								<li class="li-stretch">
-									<span class="text-strong">{@web.visits.number} : </span>
+									<span class="text-strong">{@common.visits.number} : </span>
 									<span>{VIEWS_NUMBER}</span>
 								</li>
 								<li class="li-stretch">
-									<span class="text-strong">${LangLoader::get_message('category', 'categories-common')} : </span>
+									<span class="text-strong">{@common.category} : </span>
 									<span><a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a></span>
 								</li>
 								# IF C_ENABLED_COMMENTS #
@@ -85,14 +85,14 @@
 					</div>
 					<div itemprop="text">{CONTENT}</div>
 				</div>
-				# IF C_HAS_UPDATE_DATE #<span class="pinned notice small text-italic modified-date">${LangLoader::get_message('status.last.update', 'common')} <time datetime="{UPDATE_DATE_ISO8601}" itemprop="dateModified">{UPDATE_DATE_FULL}</time></span># ENDIF #
+				# IF C_HAS_UPDATE_DATE #<span class="pinned notice small text-italic modified-date">{@common.last.update} <time datetime="{UPDATE_DATE_ISO8601}" itemprop="dateModified">{UPDATE_DATE_FULL}</time></span># ENDIF #
 				<aside>
 					${ContentSharingActionsMenuService::display()}
 				</aside>
 
 				# IF C_KEYWORDS #
 					<aside class="tags-container">
-						<span class="text-strong"><i class="fa fa-tags" aria-hidden="true"></i> ${LangLoader::get_message('form.keywords', 'common')} : </span>
+						<span class="text-strong"><i class="fa fa-tags" aria-hidden="true"></i> {@common.keywords} : </span>
 						# START keywords #
 							<a class="pinned link-color" href="{keywords.URL}" itemprop="keywords">{keywords.NAME}</a>
 							# IF keywords.C_SEPARATOR ## ENDIF #

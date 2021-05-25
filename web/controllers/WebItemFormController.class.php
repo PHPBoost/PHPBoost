@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2021 05 25
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -85,7 +85,7 @@ class WebItemFormController extends ModuleController
 
 		$fieldset->add_field(new FormFieldCheckbox('summary_enabled', $this->common_lang['form.short_contents.enabled'], $this->item->is_summary_enabled(),
 			array(
-				'description' => StringVars::replace_vars($this->common_lang['form.short_contents.enabled.description'], array('number' => WebConfig::CHARACTERS_NUMBER_TO_CUT)),
+				'description' => StringVars::replace_vars($this->common_lang['form.short_contents.enabled.description'], array('number' => WebConfig::AUTO_CUT_CHARACTERS_NUMBER)),
 				'events' => array('click' => '
 					if (HTMLForms.getField("summary_enabled").getValue()) {
 						HTMLForms.getField("summary").enable();
@@ -126,7 +126,7 @@ class WebItemFormController extends ModuleController
 
 		$options_fieldset->add_field(new FormFieldCheckbox('privileged_partner', $this->lang['web.form.privileged.partner'], $this->item->is_privileged_partner(),
 			array(
-				'description' => $this->lang['web.form.privileged.partner.description'],
+				'description' => $this->lang['web.form.privileged.partner.clue'],
 				'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_partner', false) : !$this->item->is_partner())
 			))
 		);
@@ -465,13 +465,13 @@ class WebItemFormController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'], WebUrlBuilder::home());
+		$breadcrumb->add($this->lang['web.module.title'], WebUrlBuilder::home());
 
 		if ($this->item->get_id() === null)
 		{
 			$breadcrumb->add($this->lang['web.add.item'], WebUrlBuilder::add($this->item->get_id_category()));
 			$graphical_environment->set_page_title($this->lang['web.add.item']);
-			$graphical_environment->get_seo_meta_data()->set_description($this->lang['web.add.item'], $this->lang['module.title']);
+			$graphical_environment->get_seo_meta_data()->set_description($this->lang['web.add.item'], $this->lang['web.module.title']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::add($this->item->get_id_category()));
 		}
 		else
@@ -480,7 +480,7 @@ class WebItemFormController extends ModuleController
 				$graphical_environment->set_location_id($location_id);
 
 			$graphical_environment->set_page_title($this->lang['web.edit.item']);
-			$graphical_environment->get_seo_meta_data()->set_description($this->lang['web.edit.item'], $this->lang['module.title']);
+			$graphical_environment->get_seo_meta_data()->set_description($this->lang['web.edit.item'], $this->lang['web.module.title']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::edit($this->item->get_id()));
 
 			$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->item->get_id_category(), true));

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 16
+ * @version     PHPBoost 6.0 - last update: 2021 05 25
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -32,7 +32,11 @@ class WebItemController extends ModuleController
 	{
 		$this->lang = LangLoader::get('common', 'web');
 		$this->view = new FileTemplate('web/WebItemController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->view->add_lang(array_merge(
+			$this->lang,
+			LangLoader::get('common-lang'),
+			LangLoader::get('contribution-lang')
+		));
 	}
 
 	private function get_item()
@@ -144,7 +148,7 @@ class WebItemController extends ModuleController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->item->get_title(), ($category->get_id() != Category::ROOT_CATEGORY ? $category->get_name() . ' - ' : '') . $this->lang['module.title']);
+		$graphical_environment->set_page_title($this->item->get_title(), ($category->get_id() != Category::ROOT_CATEGORY ? $category->get_name() . ' - ' : '') . $this->lang['web.module.title']);
 		$graphical_environment->get_seo_meta_data()->set_description($this->item->get_real_summary());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title()));
 
@@ -152,7 +156,7 @@ class WebItemController extends ModuleController
 			$graphical_environment->get_seo_meta_data()->set_picture_url($this->item->get_thumbnail());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'],WebUrlBuilder::home());
+		$breadcrumb->add($this->lang['web.module.title'],WebUrlBuilder::home());
 
 		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->item->get_id_category(), true));
 		foreach ($categories as $id => $category)
