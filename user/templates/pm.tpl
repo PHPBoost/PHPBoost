@@ -103,7 +103,7 @@
 											<span><i class="fa fa-people-arrows {convers.list.ANNOUNCE}" aria-hidden="true"></i></span>
 										</td>
 										<td class="align-left">
-											{convers.list.ANCRE} <a href="pm{convers.list.U_CONVERS}" class="offload">{convers.list.TITLE}</a> &nbsp;<span class="smaller">[{convers.list.U_AUTHOR}]</span>
+											{convers.list.ANCRE} <a href="pm{convers.list.U_CONVERS}" class="offload">{convers.list.TITLE}</a> &nbsp;<span class="small">[{convers.list.U_AUTHOR}]</span>
 										</td>
 										<td>
 											{convers.list.U_PARTICIPANTS}
@@ -111,7 +111,7 @@
 										<td>
 											{convers.list.MSG}
 										</td>
-										<td class="smaller">
+										<td class="small">
 											{convers.list.U_LAST_MSG}
 										</td>
 									</tr>

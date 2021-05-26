@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2021 05 26
  * @since       PHPBoost 1.5 - 2006 07 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -957,7 +957,7 @@ else // Conversation list in the user email box
 		// Display of last message
 		$last_group_color = User::get_group_color($row['last_groups'], $row['last_level']);
 		$last_msg = '<a href="pm' . url('.php?' . $last_page . 'id=' . $row['id'], '-0-' . $row['id'] . $last_page_rewrite) . '#m' . $row['last_msg_id'] . '" class="far fa-hand-point-right"></a>' . ' ' . $common_lang['common.on.date'] . ' ' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br />';
-		$last_msg .= ($row['user_id'] == -1) ? $common_lang['common.by'] . ' ' . $lang['user.administrator'] : $common_lang['common.by'] . ' <a href="' . UserUrlBuilder::profile($row['last_user_id'])->rel() . '" class="small '.UserService::get_level_class($row['last_level']).'"' . (!empty($last_group_color) ? ' style="color:' . $last_group_color . '"' : '') . '>' . $row['last_login'] . '</a>';
+		$last_msg .= ($row['user_id'] == -1) ? $common_lang['common.by'] . ' ' . $lang['user.administrator'] : $common_lang['common.by'] . ' <a href="' . UserUrlBuilder::profile($row['last_user_id'])->rel() . '" class="'.UserService::get_level_class($row['last_level']).'"' . (!empty($last_group_color) ? ' style="color:' . $last_group_color . '"' : '') . '>' . $row['last_login'] . '</a>';
 
 		$view->assign_block_vars('convers.list', array(
 			'INCR'           => $i,
