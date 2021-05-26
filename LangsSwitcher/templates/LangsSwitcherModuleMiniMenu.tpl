@@ -1,13 +1,13 @@
 # IF C_HORIZONTAL #
-<div class="cell-mini">
+<div id="module-mini-langsswitcher" class="cell-mini">
 	<div class="cell">
 # ENDIF #
 		<div class="cell-form# IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF #">
 			<form action="{REWRITED_SCRIPT}" method="get">
 				<div class="# IF C_HORIZONTAL #grouped-inputs grouped-auto grouped-left# ENDIF #">
-					# IF C_HORIZONTAL #<span class="grouped-element">{@switch.lang}</span># ENDIF #
+					# IF C_HORIZONTAL #<span class="grouped-element">{@ls.switch.lang}</span># ENDIF #
 					<div class="grouped-element">
-						<label for="switchlang"><span class="sr-only">${LangLoader::get_message('select', 'common')}</span></label>
+						<label for="switchlang"><span class="sr-only">{@common.select}</span></label>
 						<select
 							id="switchlang"
 							class="flag-selector select-to-list"
@@ -19,7 +19,7 @@
 						</select>
 					</div>
 
-					# IF C_HORIZONTAL #<a class="grouped-element" href="{U_ITEM}{DEFAULT_ITEM}">{@default.lang}</a># ENDIF #
+					# IF C_HORIZONTAL #<a class="grouped-element" href="{U_ITEM}{DEFAULT_ITEM}">{@ls.default.lang}</a># ENDIF #
 				</div>
 			</form>
 		</div>
@@ -31,7 +31,7 @@
 # IF C_VERTICAL #
 	<div class="cell-body">
 		<div class="cell-content align-center">
-			<a class="button small" href="{URL}{DEFAULT_LANG}">{@default.lang}</a>
+			<a class="button small" href="{URL}{DEFAULT_LANG}">{@ls.default.lang}</a>
 		</div>
 	</div>
 # ENDIF #

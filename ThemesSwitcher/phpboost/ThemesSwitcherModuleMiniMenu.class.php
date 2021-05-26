@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 29
+ * @version     PHPBoost 6.0 - last update: 2021 05 26
  * @since       PHPBoost 3.0 - 2012 02 22
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -29,7 +29,7 @@ class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
 
 	public function get_menu_title()
 	{
-		return LangLoader::get_message('switch.theme', 'common', 'ThemesSwitcher');
+		return LangLoader::get_message('ts.switch.theme', 'common', 'ThemesSwitcher');
 	}
 
 	public function is_displayed()
@@ -57,7 +57,10 @@ class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
 		}
 
 		$view = new FileTemplate('ThemesSwitcher/ThemesSwitcherModuleMiniMenu.tpl');
-		$view->add_lang(LangLoader::get('common', 'ThemesSwitcher'));
+		$view->add_lang(array_merge(
+			LangLoader::get('common', 'ThemesSwitcher'),
+			LangLoader::get('common-lang')
+		));
 		MenuService::assign_positions_conditions($view, $this->get_block());
 		Menu::assign_common_template_variables($view);
 
@@ -65,8 +68,8 @@ class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
 		{
 			$view->assign_block_vars('items', array(
 				'C_SELECTED' => $user->get_theme() == $item->get_id(),
-				'ITEM_NAME' => $item->get_configuration()->get_name(),
-				'ITEM_ID' => $item->get_id()
+				'ITEM_NAME'  => $item->get_configuration()->get_name(),
+				'ITEM_ID'    => $item->get_id()
 			));
 		}
 
@@ -74,7 +77,7 @@ class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
 
 		$view->put_all(array(
 			'DEFAULT_ITEM' => UserAccountsConfig::load()->get_default_theme(),
-			'U_ITEM' => $current_url . (strstr($current_url, '?') ? '&' : '?') . 'switchtheme='
+			'U_ITEM'       => $current_url . (strstr($current_url, '?') ? '&' : '?') . 'switchtheme='
 		));
 
 		return $view->render();
@@ -91,8 +94,8 @@ class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
 				$this->assign_common_template_variables($template);
 
 				$template->put_all(array(
-					'ID' => $this->get_menu_id(),
-					'TITLE' => $this->get_menu_title(),
+					'ID'       => $this->get_menu_id(),
+					'TITLE'    => $this->get_menu_title(),
 					'CONTENTS' => $this->get_menu_content()
 				));
 

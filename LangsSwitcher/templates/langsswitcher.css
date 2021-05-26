@@ -3,4 +3,7 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-#module-mini-langsswitcher .cssmenu-select .has-sub > .cssmenu-title { margin: 0; }
+#module-mini-langsswitcher .cssmenu-select .has-sub > .cssmenu-title {
+    margin: 0;
+    border-color: transparent;
+}
