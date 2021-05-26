@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 15
+ * @version     PHPBoost 6.0 - last update: 2021 05 26
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -37,7 +37,7 @@ $lang['common.statistics']   = 'Statistiques';
 $lang['common.suggestions']  = 'Suggestions';
 $lang['common.template']     = 'Template';
 $lang['common.templates']    = 'Templates';
-$lang['common.themes']       = 'Thèmes';
+$lang['common.theme']        = 'Thème';
 $lang['common.themes']       = 'Thèmes';
 $lang['common.title']        = 'Titre';
 $lang['common.type']         = 'Type';
@@ -108,6 +108,7 @@ $lang['common.view']             = 'vue';
 $lang['common.views.number']     = 'Nombre de vues';
 $lang['common.visits.number']    = 'Nombre de visites';
 $lang['common.downloads.number'] = 'Nombre de téléchargement';
+$lang['common.comments.number']  = 'Nombre de commentaires';
 $lang['common.maximum']          = 'Maximum';
 $lang['common.minimum']          = 'Minimum';
 $lang['common.dimensions']       = 'Dimensions';
@@ -228,6 +229,8 @@ $lang['common.sort.options']            = 'Options de tri';
 $lang['common.sort.by']                 = 'Trier par';
 $lang['common.sort.by.alphabetic']      = 'Alphabétique';
 $lang['common.sort.by.author']          = 'Auteur';
+$lang['common.sort.by.price']           = 'Prix';
+$lang['common.sort.by.location']        = 'Localisation';
 $lang['common.sort.by.date']            = 'Date de parution';
 $lang['common.sort.by.update']          = 'Dernières modifications';
 $lang['common.sort.by.views.number']    = 'Nombre de vues';

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 15
+ * @version     PHPBoost 6.0 - last update: 2021 05 26
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -37,7 +37,7 @@ $lang['common.statistics']   = 'Statistics';
 $lang['common.suggestions']  = 'Suggestions';
 $lang['common.template']     = 'Template';
 $lang['common.templates']    = 'Templates';
-$lang['common.themes']       = 'Themes';
+$lang['common.theme']        = 'Theme';
 $lang['common.themes']       = 'Themes';
 $lang['common.title']        = 'Title';
 $lang['common.type']         = 'Type';
@@ -108,6 +108,7 @@ $lang['common.view']             = 'view';
 $lang['common.views.number']     = 'Views number';
 $lang['common.visits.number']    = 'Visits number';
 $lang['common.downloads.number'] = 'Downloads number';
+$lang['common.comments.number']  = 'Comments number';
 $lang['common.maximum']          = 'Maximum';
 $lang['common.minimum']          = 'Minimum';
 $lang['common.dimensions']       = 'Dimensions';
@@ -118,8 +119,8 @@ $lang['common.percent']          = 'Percent';
 $lang['common.percentage']       = 'Percentage';
 $lang['common.total']            = 'Total';
 $lang['common.unlimited']        = 'Unlimited';
-$lang['common.whole']           = 'Whole';
-$lang['common.whole.e']         = 'Whole';
+$lang['common.whole']            = 'Whole';
+$lang['common.whole.e']          = 'Whole';
 $lang['common.all']              = 'All';
 $lang['common.all.e']            = 'All';
 $lang['common.nobody']           = 'Nobody';
@@ -228,6 +229,8 @@ $lang['common.sort.options']            = 'Sort options';
 $lang['common.sort.by']                 = 'Sort by';
 $lang['common.sort.by.alphabetic']      = 'Alphabetic';
 $lang['common.sort.by.author']          = 'Author';
+$lang['common.sort.by.price']           = 'Price';
+$lang['common.sort.by.location']        = 'Location';
 $lang['common.sort.by.date']            = 'Release date';
 $lang['common.sort.by.update']          = 'Date';
 $lang['common.sort.by.views.number']    = 'Views number';
