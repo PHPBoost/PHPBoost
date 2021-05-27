@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 26
+ * @version     PHPBoost 6.0 - last update: 2021 05 27
  * @since       PHPBoost 1.5 - 2006 07 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -817,7 +817,6 @@ else // Conversation list in the user email box
 
 	$view->assign_block_vars('convers', array(
 		'C_PAGINATION'       => $pagination->has_several_pages(),
-
 		'PAGINATION'         => $pagination->display(),
 		'NBR_PM'             => $nbr_pm,
 		'PM_POURCENT'        => '<strong>' . $nbr_pm . '</strong> / <strong>' . $pm_max . '</strong>',
@@ -850,16 +849,18 @@ else // Conversation list in the user email box
 	$i = 0;
 	$j = 0;
 	$result = PersistenceContext::get_querier()->select("SELECT
-		pm.id, pm.title, pm.user_id, pm.user_id_dest, pm.user_convers_status, pm.nbr_msg, pm.last_user_id, pm.last_msg_id, pm.last_timestamp,
-		msg.view_status,
-		m.display_name AS login, m.level AS level, m.user_groups AS m_user_groups,
-		m1.display_name AS login_dest,  m1.level AS dest_level, m1.user_groups AS dest_groups,
-		m2.display_name AS last_login, m2.level AS last_level, m2.user_groups AS last_groups
+		pm.id, pm.title, pm.user_id, pm.user_id_dest, pm.user_convers_status, pm.nbr_msg, pm.last_user_id, pm.last_msg_id, pm.last_timestamp, msg.view_status, msg.contents AS contents,
+		m.display_name AS login, m.level AS level, m.user_groups AS groups, ext_field.user_avatar AS avatar,
+		m1.display_name AS dest_login,  m1.level AS dest_level, m1.user_groups AS dest_groups, ext_field_dest.user_avatar AS dest_avatar,
+		m2.display_name AS last_login, m2.level AS last_level, m2.user_groups AS last_groups, ext_field_last.user_avatar AS last_avatar
 	FROM " . DB_TABLE_PM_TOPIC . "  pm
 	LEFT JOIN " . DB_TABLE_PM_MSG . " msg ON msg.id = pm.last_msg_id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = pm.user_id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m1 ON m1.user_id = pm.user_id_dest
 	LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = pm.last_user_id
+	LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = pm.user_id
+	LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field_dest ON ext_field_dest.user_id = pm.user_id_dest
+	LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field_last ON ext_field_last.user_id = pm.last_user_id
 	WHERE
 	(
 		:user_id IN (pm.user_id, pm.user_id_dest)
@@ -918,51 +919,87 @@ else // Conversation list in the user email box
 		$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 		$last_page = ($last_page > 1) ? 'p=' . $last_page . '&amp;' : '';
 
-		$group_color = User::get_group_color($row['m_user_groups'], $row['level']);
+		if (!empty($row['login'])) //PM from existing user
+			$author_group_color = User::get_group_color($row['groups'], $row['level']);
 
-		if ($row['user_id'] == -1)
-			$author = $lang['user.administrator'];
-		elseif (!empty($row['login']))
-			$author = '<a href="' . UserUrlBuilder::profile($row['user_id'])->rel() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>';
-		else
-			$author = '<del>' . $lang['user.guest'] . '</del>';
-
-		$participants = ($row['login_dest'] != $current_user->get_display_name()) ? $row['login_dest'] : $author;
-		$user_id_dest = $row['user_id_dest'] != $current_user->get_id() ? $row['user_id_dest'] : $row['user_id'];
-		$participants_group_color = ($participants != $lang['user.administrator'] && $participants != '<del>' . $lang['user.guest'] . '</del>') ? User::get_group_color($row['dest_groups'], $row['dest_level']) : '';
-
-		switch ($author)
+		if ( $row['user_id_dest'] == $current_user->get_id() ) //The PM recipient is the current user
 		{
-			case $lang['user.administrator']:
-				$participants_level_class = UserService::get_level_class(User::ADMINISTRATOR_LEVEL);
-				break;
-
-			case '<del>' . $lang['user.guest'] . '</del>':
-				$participants_level_class = '';
-				break;
-
-			default:
-				$participants_level_class = UserService::get_level_class($row['dest_level']);
-				break;
+			if ($row['user_id'] == -1) //PM from system
+			{
+				$participant_id = -1;
+				$participant_level_class = UserService::get_level_class(User::ADMINISTRATOR_LEVEL);
+			}
+			elseif (!empty($row['login'])) //PM from existing user
+			{
+				$participant_id = $row['user_id'];
+				$participant_name = $row['login'];
+				$participant_group_color = User::get_group_color($row['groups'], $row['level']);
+				$participant_level_class = UserService::get_level_class($row['level']);
+				$participant_avatar = $row['avatar'] ? Url::to_rel($row['avatar']) : $user_accounts_config->get_default_avatar();
+			}
+			else //PM from deleted user
+				$participant_id = "";
+		}
+		else //The current user is the Author of the PM
+		{
+			if (!empty($row['dest_login'])) //PM from existing user
+			{
+				$participant_id = $row['user_id_dest'];
+				$participant_name = $row['dest_login'];
+				$participant_group_color = User::get_group_color($row['dest_groups'], $row['dest_level']);
+				$participant_level_class = UserService::get_level_class($row['dest_level']);
+				$participant_avatar = $row['dest_avatar'] ? Url::to_rel($row['dest_avatar']) : $user_accounts_config->get_default_avatar();
+			}
+			else //PM from deleted user
+				$participant_id = "";
 		}
 
-		$participants = !empty($participants) ? '<a href="' . UserUrlBuilder::profile($user_id_dest)->rel() . '" class="' . $participants_level_class . '"' . (!empty($participants_group_color) ? ' style="color:' . $participants_group_color . '"' : '') . '>' . $participants . '</a>' : '<del>' . $lang['user.administrator']. '</del>';
-
 		// Display of last message
-		$last_group_color = User::get_group_color($row['last_groups'], $row['last_level']);
-		$last_msg = '<a href="pm' . url('.php?' . $last_page . 'id=' . $row['id'], '-0-' . $row['id'] . $last_page_rewrite) . '#m' . $row['last_msg_id'] . '" class="far fa-hand-point-right"></a>' . ' ' . $common_lang['common.on.date'] . ' ' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br />';
-		$last_msg .= ($row['user_id'] == -1) ? $common_lang['common.by'] . ' ' . $lang['user.administrator'] : $common_lang['common.by'] . ' <a href="' . UserUrlBuilder::profile($row['last_user_id'])->rel() . '" class="'.UserService::get_level_class($row['last_level']).'"' . (!empty($last_group_color) ? ' style="color:' . $last_group_color . '"' : '') . '>' . $row['last_login'] . '</a>';
+		if ($row['last_user_id'] == -1) //Last is Administrator
+		{
+			$last_user_level_class = UserService::get_level_class(User::ADMINISTRATOR_LEVEL);
+		}
+		else {
+			$last_user_group_color = User::get_group_color($row['last_groups'], $row['last_level']);
+			$last_user_level_class = UserService::get_level_class($row['last_level']);
+		}
 
 		$view->assign_block_vars('convers.list', array(
-			'INCR'           => $i,
-			'ID'             => $row['id'],
-			'ANNOUNCE'       => $announce,
-			'TITLE'          => stripslashes($row['title']),
-			'MSG'            => ($row['nbr_msg'] - 1),
-			'U_PARTICIPANTS' => (($row['user_convers_status'] != 0) ? '<del>' . $participants . '</del>' : $participants),
-			'U_CONVERS'	     => url('.php?id=' . $row['id'], '-0-' . $row['id']),
-			'U_AUTHOR'       => $common_lang['common.by'] . ' ' . $author,
-			'U_LAST_MSG'     => $last_msg
+			'INCR'                           => $i,
+			'ID'                             => $row['id'],
+			'ANNOUNCE'                       => $announce,
+			'TITLE'                          => stripslashes($row['title']),
+			'MSG'                            => ($row['nbr_msg'] - 1),
+			'U_CONVERS'                      => url('.php?id=' . $row['id'], '-0-' . $row['id']),
+			'BRIEF'                          => TextHelper::cut_string(strip_tags(str_replace(array('<br/>', '<br />', '<br>'), ' ', $row['contents'])), 300),
+
+			'C_AUTHOR_IS_ADMINISTRATOR'      => ($row['user_id'] == -1),
+			'C_AUTHOR_EXIST'                 => !empty($row['login']),
+			'U_AUTHOR'                       => UserUrlBuilder::profile($row['user_id'])->rel(),
+			'AUTHOR_NAME'                    => $row['login'],
+			'AUTHOR_CSSCLASS'                => UserService::get_level_class($row['level']),
+			'C_AUTHOR_GROUP_COLOR'           => !empty($author_group_color),
+			'AUTHOR_GROUP_COLOR'             => $author_group_color,
+
+			'C_PARTICIPANT_IS_ADMINISTRATOR' => ($participant_id == -1),
+			'C_PARTICIPANT_EXIST'            => !empty($participant_id),
+			'C_PARTICIPANT_LEAVE'            => $row['user_convers_status'] <> 0,
+			'U_PARTICIPANT'                  => UserUrlBuilder::profile($participant_id)->rel(),
+			'U_PARTICIPANT_AVATAR'           => $participant_avatar,
+			'PARTICIPANT_NAME'               => $participant_name,
+			'PARTICIPANT_CSSCLASS'           => $participant_level_class,
+			'C_PARTICIPANT_GROUP_COLOR'      => !empty($participant_group_color),
+			'PARTICIPANT_GROUP_COLOR'        => $participant_group_color,
+
+			'U_LAST_MSG'                     => "pm" . url('.php?' . $last_page . 'id =' . $row['id'], '-0-' . $row['id'] . $last_page_rewrite) . "#m" . $row['last_msg_id'],
+			'LAST_MSG_DATE'                  => Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
+			'LAST_MSG_DATE_DELAY'            => Date::to_format($row['last_timestamp'], Date::FORMAT_DELAY),
+			'C_LAST_IS_ADMINISTRATOR'        => $row['last_user_id'] == -1,
+			'U_LAST_USER'                    => UserUrlBuilder::profile($row['last_user_id'])->rel(),
+			'LAST_USER_NAME'                 => $row['last_login'],
+			'LAST_USER_CSSCLASS'             => $last_user_level_class,
+			'C_LAST_USER_GROUP_COLOR'        => !empty($last_user_group_color),
+			'LAST_USER_GROUP_COLOR'          => $last_user_group_color
 		));
 		$i++;
 	}

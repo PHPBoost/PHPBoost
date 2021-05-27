@@ -103,16 +103,44 @@
 											<span><i class="fa fa-people-arrows {convers.list.ANNOUNCE}" aria-hidden="true"></i></span>
 										</td>
 										<td class="align-left">
-											{convers.list.ANCRE} <a href="pm{convers.list.U_CONVERS}" class="offload">{convers.list.TITLE}</a> &nbsp;<span class="small">[{convers.list.U_AUTHOR}]</span>
+											{convers.list.ANCRE} <a href="pm{convers.list.U_CONVERS}" class="offload">{convers.list.TITLE}</a> &nbsp;
+											<span class="small">[{@common.by}
+												# IF convers.list.C_AUTHOR_IS_ADMINISTRATOR #
+												${LangLoader::get_message('user.administrator', 'user-lang')}
+												# ELSE #
+													# IF convers.list.C_AUTHOR_EXIST #
+													<a href="{convers.list.U_AUTHOR}" class="{convers.list.AUTHOR_CSSCLASS}"# IF convers.list.C_AUTHOR_GROUP_COLOR #style="color:{convers.list.AUTHOR_GROUP_COLOR}"# ENDIF #>{convers.list.AUTHOR_NAME}</a>
+													# ELSE #
+													<del>${LangLoader::get_message('user.guest', 'user-lang')}</del>
+													# ENDIF #
+												# ENDIF #
+											]</span>
 										</td>
 										<td>
-											{convers.list.U_PARTICIPANTS}
+											# IF convers.list.C_PARTICIPANT_IS_ADMINISTRATOR #
+											${LangLoader::get_message('user.administrator', 'user-lang')}
+											# ELSE #
+												# IF convers.list.C_PARTICIPANT_EXIST #
+												<a href="{convers.list.U_PARTICIPANT}" class="{convers.list.PARTICIPANT_CSSCLASS}"# IF convers.list.C_PARTICIPANT_GROUP_COLOR #style="color:{convers.list.PARTICIPANT_GROUP_COLOR}"# ENDIF #>
+													# IF convers.list.C_PARTICIPANT_LEAVE #<del>{convers.list.PARTICIPANT_NAME}</del># ELSE #{convers.list.PARTICIPANT_NAME}# ENDIF #
+												</a>
+												# ELSE #
+												<del>${LangLoader::get_message('user.guest', 'user-lang')}</del>
+												# ENDIF #
+											# ENDIF #
 										</td>
 										<td>
 											{convers.list.MSG}
 										</td>
 										<td class="small">
-											{convers.list.U_LAST_MSG}
+											<a href="{convers.list.U_LAST_MSG}"><i class="far fa-hand-point-right"></i></a>
+											{@common.on.date} {convers.list.LAST_MSG_DATE} <br />
+											{@common.by}
+											# IF convers.list.C_PARTICIPANT_IS_ADMINISTRATOR #
+											${LangLoader::get_message('user.administrator', 'user-lang')}
+											# ELSE #
+											<a href="{convers.list.U_LAST_USER}" class="{convers.list.LAST_USER_CSSCLASS}"# IF convers.list.C_LAST_USER_GROUP_COLOR #style="color:{convers.list.LAST_USER_GROUP_COLOR}"# ENDIF #>{convers.list.LAST_USER_NAME}</a>
+											# ENDIF #
 										</td>
 									</tr>
 								# END convers.list #
