@@ -919,23 +919,31 @@ else // Conversation list in the user email box
 		$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 		$last_page = ($last_page > 1) ? 'p=' . $last_page . '&amp;' : '';
 
-		if (!empty($row['login'])) //PM from existing user
+
+		if ($row['user_id'] == -1) //The PM author is the system
+			$author_group_color = UserService::get_level_class(User::ADMINISTRATOR_LEVEL);
+		elseif (!empty($row['login'])) //The PM author is an existing user
 			$author_group_color = User::get_group_color($row['groups'], $row['level']);
+		else //The PM auther is a deleted user
+			$author_group_color = "";
 
 		if ( $row['user_id_dest'] == $current_user->get_id() ) //The PM recipient is the current user
 		{
 			if ($row['user_id'] == -1) //PM from system
 			{
-				$participant_id = -1;
+				$participant_id          = -1;
+				$participant_name        = $lang['user.administrator'];
+				$participant_group_color = "";
 				$participant_level_class = UserService::get_level_class(User::ADMINISTRATOR_LEVEL);
+				$participant_avatar      = $user_accounts_config->get_default_avatar();
 			}
 			elseif (!empty($row['login'])) //PM from existing user
 			{
-				$participant_id = $row['user_id'];
-				$participant_name = $row['login'];
+				$participant_id          = $row['user_id'];
+				$participant_name        = $row['login'];
 				$participant_group_color = User::get_group_color($row['groups'], $row['level']);
 				$participant_level_class = UserService::get_level_class($row['level']);
-				$participant_avatar = $row['avatar'] ? Url::to_rel($row['avatar']) : $user_accounts_config->get_default_avatar();
+				$participant_avatar      = $row['avatar'] ? Url::to_rel($row['avatar']) : $user_accounts_config->get_default_avatar();
 			}
 			else //PM from deleted user
 				$participant_id = "";
@@ -944,11 +952,11 @@ else // Conversation list in the user email box
 		{
 			if (!empty($row['dest_login'])) //PM from existing user
 			{
-				$participant_id = $row['user_id_dest'];
-				$participant_name = $row['dest_login'];
+				$participant_id          = $row['user_id_dest'];
+				$participant_name        = $row['dest_login'];
 				$participant_group_color = User::get_group_color($row['dest_groups'], $row['dest_level']);
 				$participant_level_class = UserService::get_level_class($row['dest_level']);
-				$participant_avatar = $row['dest_avatar'] ? Url::to_rel($row['dest_avatar']) : $user_accounts_config->get_default_avatar();
+				$participant_avatar      = $row['dest_avatar'] ? Url::to_rel($row['dest_avatar']) : $user_accounts_config->get_default_avatar();
 			}
 			else //PM from deleted user
 				$participant_id = "";
