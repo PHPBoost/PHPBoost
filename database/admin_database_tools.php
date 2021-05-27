@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 03
+ * @version     PHPBoost 6.0 - last update: 2021 05 27
  * @since       PHPBoost 2.0 - 2008 08 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -13,6 +13,7 @@
 require_once('../admin/admin_begin.php');
 
 $lang = LangLoader::get('common', 'database');
+$common_lang = LangLoader::get('common-lang');
 define('TITLE', $lang['database.management']);
 require_once('../admin/admin_header.php');
 
@@ -20,7 +21,11 @@ $table = retrieve(GET, 'table', '');
 $action = retrieve(GET, 'action', '');
 
 $view = new FileTemplate('database/admin_database_tools.tpl');
-$view->add_lang($lang);
+$view->add_lang(array_merge(
+	$lang,
+	$common_lang,
+	LangLoader::get('form-lang')
+));
 
 // Database save tools
 
@@ -87,14 +92,14 @@ if (!empty($table) && $action == 'data')
 			if ($j == 0)
 			{
 				$view->assign_block_vars('line.field', array(
-					'FIELD_NAME' => '<span class="text-strong"><a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=update&amp;token=' . AppContext::get_session()->get_token() . '" aria-label="' . LangLoader::get_message('update', 'main') . '" class="far fa-fw fa-edit"></a> <a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=delete&amp;token=' . AppContext::get_session()->get_token() . '" aria-label="' . LangLoader::get_message('delete', 'common') . '" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a></span>',
-					'STYLE' => ''
+					'FIELD_NAME' => '<span class="text-strong"><a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=update&amp;token =' . AppContext::get_session()->get_token() . '" aria-label="' . $common_lang['common.edit'] . '"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a> <a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value .  '&amp;action=delete&amp;token=' . AppContext::get_session()->get_token() . '" aria-label="' . $common_lang['common.delete'] . '" data-confirmation ="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a></span>',
+					'STYLE'      => ''
 				));
 			}
 
 			$view->assign_block_vars('line.field', array(
 				'FIELD_NAME' => str_replace("\n", '<br />', TextHelper::strprotect($field_value, TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE)),
-				'STYLE' => is_numeric($field_value) ? 'text-align:right;' : ''
+				'STYLE'      => is_numeric($field_value) ? 'text-align:right;' : ''
 			));
 			$j++;
 		}
@@ -103,12 +108,12 @@ if (!empty($table) && $action == 'data')
 	$result->dispose();
 
 	$view->put_all(array(
-		'C_DATABASE_TABLE_DATA' => true,
+		'C_DATABASE_TABLE_DATA'      => true,
 		'C_DATABASE_TABLE_STRUCTURE' => false,
-		'C_PAGINATION' => $pagination->has_several_pages(),
-		'PAGINATION' => $pagination->display(),
-		'QUERY' => DatabaseService::indent_query($query),
-		'QUERY_HIGHLIGHT' => DatabaseService::highlight_query($query)
+		'C_PAGINATION'               => $pagination->has_several_pages(),
+		'PAGINATION'                 => $pagination->display(),
+		'QUERY'                      => DatabaseService::indent_query($query),
+		'QUERY_HIGHLIGHT'            => DatabaseService::highlight_query($query)
 	));
 }
 elseif (!empty($table) && $action == 'delete')
@@ -145,9 +150,9 @@ elseif (!empty($table) && $action == 'update') // Update
 	{
 		$view->put_all(array(
 			'C_DATABASE_UPDATE_FORM' => true,
-			'FIELD_NAME' => $field,
-			'FIELD_VALUE' => $value,
-			'ACTION' => 'update'
+			'FIELD_NAME'             => $field,
+			'FIELD_VALUE'            => $value,
+			'ACTION'                 => 'update'
 		));
 
 		// On query execute
@@ -158,10 +163,10 @@ elseif (!empty($table) && $action == 'update') // Update
 		foreach ($row as $field_name => $field_value)
 		{
 			$view->assign_block_vars('fields', array(
-				'FIELD_NAME' => $field_name,
-				'FIELD_TYPE' => $table_structure['fields'][$i]['type'],
-				'FIELD_NULL' => $table_structure['fields'][$i]['null'] ? LangLoader::get_message('yes', 'common') : LangLoader::get_message('no', 'common'),
-				'FIELD_VALUE' => TextHelper::strprotect($field_value, TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE),
+				'FIELD_NAME'          => $field_name,
+				'FIELD_TYPE'          => $table_structure['fields'][$i]['type'],
+				'FIELD_NULL'          => $table_structure['fields'][$i]['null'] ? $common_lang['common.yes'] : $common_lang['common.no'],
+				'FIELD_VALUE'         => TextHelper::strprotect($field_value, TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE),
 				'C_FIELD_FORM_EXTEND' => ($table_structure['fields'][$i]['type'] == 'text' || $table_structure['fields'][$i]['type'] == 'mediumtext') ? true : false
 			));
 			$i++;
@@ -206,18 +211,18 @@ elseif (!empty($table) && $action == 'insert') // Update
 	{
 		$view->put_all(array(
 			'C_DATABASE_UPDATE_FORM' => true,
-			'FIELD_NAME' => '',
-			'FIELD_VALUE' => '',
-			'ACTION' => 'insert'
+			'FIELD_NAME'             => '',
+			'FIELD_VALUE'            => '',
+			'ACTION'                 => 'insert'
 		));
 
 		foreach ($table_structure['fields'] as $fields_info)
 		{
 			$view->assign_block_vars('fields', array(
-				'FIELD_NAME' => $fields_info['name'],
-				'FIELD_TYPE' => $fields_info['type'],
-				'FIELD_NULL' => $fields_info['null'] ? LangLoader::get_message('yes', 'common') : LangLoader::get_message('no', 'common'),
-				'FIELD_VALUE' => TextHelper::strprotect($fields_info['default']),
+				'FIELD_NAME'          => $fields_info['name'],
+				'FIELD_TYPE'          => $fields_info['type'],
+				'FIELD_NULL'          => $fields_info['null'] ? $common_lang['common.yes'] : $common_lang['common.no'],
+				'FIELD_VALUE'         => TextHelper::strprotect($fields_info['default']),
 				'C_FIELD_FORM_EXTEND' => ($fields_info['type'] == 'text' || $fields_info['type'] == 'mediumtext') ? true : false
 			));
 		}
@@ -295,7 +300,7 @@ elseif (!empty($table) && $action == 'query')
 		$query = "SELECT * FROM " . $table . " WHERE 1";
 
 	$view->put_all(array(
-		'QUERY' => DatabaseService::indent_query($query),
+		'QUERY'           => DatabaseService::indent_query($query),
 		'QUERY_HIGHLIGHT' => DatabaseService::highlight_query($query)
 	));
 }
@@ -319,12 +324,12 @@ elseif (!empty($table))
 
 		// fields
 		$view->assign_block_vars('field', array(
-			'FIELD_NAME' => ($primary_key) ? '<span style="text-decoration:underline">' . $fields_info['name'] . '<span>' : $fields_info['name'],
-			'FIELD_TYPE' => $fields_info['type'],
+			'FIELD_NAME'      => ($primary_key) ? '<span style ="text-decoration: underline">' . $fields_info['name'] . '<span>' : $fields_info['name'],
+			'FIELD_TYPE'      => $fields_info['type'],
 			'FIELD_ATTRIBUTE' => $fields_info['attribute'],
-			'FIELD_NULL' => $fields_info['null'] ? '<strong>' . LangLoader::get_message('yes', 'common') . '</strong>' : LangLoader::get_message('no', 'common'),
-			'FIELD_DEFAULT' => $fields_info['default'],
-			'FIELD_EXTRA' => $fields_info['extra']
+			'FIELD_NULL'      => $fields_info['null'] ? '<strong>' . $common_lang['common.yes'] . '</strong>' : $common_lang['common.no'],
+			'FIELD_DEFAULT'   => $fields_info['default'],
+			'FIELD_EXTRA'     => $fields_info['extra']
 		));
 	}
 
@@ -332,8 +337,8 @@ elseif (!empty($table))
 	foreach ($table_structure['index'] as $index_info)
 	{
 		$view->assign_block_vars('index', array(
-			'INDEX_NAME' => $index_info['name'],
-			'INDEX_TYPE' => $index_info['type'],
+			'INDEX_NAME'   => $index_info['name'],
+			'INDEX_TYPE'   => $index_info['type'],
 			'INDEX_FIELDS' => str_replace(',', '<br />', $index_info['fields'])
 		));
 	}
@@ -350,19 +355,19 @@ elseif (!empty($table))
 
 	$view->put_all(array(
 		'C_DATABASE_TABLE_STRUCTURE' => true,
-		'C_DATABASE_TABLE_DATA' => false,
-		'C_AUTOINDEX' => !empty($backup->tables[$table]['auto_increment']) ? true : false,
-		'TABLE_ENGINE' => $backup->tables[$table]['engine'],
-		'TABLE_ROW_FORMAT' => $backup->tables[$table]['row_format'],
-		'TABLE_ROWS' => $backup->tables[$table]['rows'],
-		'TABLE_DATA' => $data != 0 ? $data : '-',
-		'TABLE_INDEX' => $index != 0 ? $index : '-',
-		'TABLE_TOTAL_SIZE' => $total != 0 ? $l_total : '-',
-		'TABLE_FREE' => $free != 0 ? '<span class="bgc error">' . $free . '</span>' : '-',
-		'TABLE_COLLATION' => $backup->tables[$table]['collation'],
-		'TABLE_AUTOINCREMENT' => $backup->tables[$table]['auto_increment'],
-		'TABLE_CREATION_DATE' => Date::to_format(strtotime($backup->tables[$table]['create_time'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
-		'TABLE_LAST_UPDATE' => Date::to_format(strtotime($backup->tables[$table]['update_time'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE))
+		'C_DATABASE_TABLE_DATA'      => false,
+		'C_AUTOINDEX'                => !empty($backup->tables[$table]['auto_increment']) ? true : false,
+		'TABLE_ENGINE'               => $backup->tables[$table]['engine'],
+		'TABLE_ROW_FORMAT'           => $backup->tables[$table]['row_format'],
+		'TABLE_ROWS'                 => $backup->tables[$table]['rows'],
+		'TABLE_DATA'                 => $data != 0 ? $data : '-',
+		'TABLE_INDEX'                => $index != 0 ? $index : '-',
+		'TABLE_TOTAL_SIZE'           => $total != 0 ? $l_total : '-',
+		'TABLE_FREE'                 => $free != 0 ? '<span class="bgc error">' . $free . '</span>' : '-',
+		'TABLE_COLLATION'            => $backup->tables[$table]['collation'],
+		'TABLE_AUTOINCREMENT'        => $backup->tables[$table]['auto_increment'],
+		'TABLE_CREATION_DATE'        => Date::to_format(strtotime($backup->tables[$table]['create_time'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
+		'TABLE_LAST_UPDATE'          => Date::to_format(strtotime($backup->tables[$table]['update_time'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE))
 	));
 }
 else

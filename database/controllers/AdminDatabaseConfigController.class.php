@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 05 27
  * @since       PHPBoost 4.1 - 2015 09 30
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -32,19 +32,19 @@ class AdminDatabaseConfigController extends AdminModuleController
 
 		$this->build_form();
 
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
+		$view->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
 			$this->form->get_field_by_id('database_tables_optimization_day')->set_hidden(!$this->config->is_database_tables_optimization_enabled());
-			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.message.success.config', 'warning-lang'), MessageHelper::SUCCESS, 5));
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$view->put('FORM', $this->form->display());
 
-		return new AdminDatabaseDisplayResponse($tpl, $this->lang['module.config.title']);
+		return new AdminDatabaseDisplayResponse($view, $this->lang['database.config.module.title']);
 	}
 
 	private function init()
@@ -57,10 +57,10 @@ class AdminDatabaseConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('config', $this->lang['module.config.title']);
+		$fieldset = new FormFieldsetHTML('config', $this->lang['database.config.module.title']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldCheckbox('database_tables_optimization_enabled', $this->lang['database.config.tables.optimization.enabled'], $this->config->is_database_tables_optimization_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('database_tables_optimization_enabled', $this->lang['database.config.enable.tables.optimization'], $this->config->is_database_tables_optimization_enabled(),
 			array(
 				'class' => 'half-field top-field custom-checkbox',
 				'events' => array('change' => '
@@ -73,20 +73,20 @@ class AdminDatabaseConfigController extends AdminModuleController
 			)
 		));
 
-		$date_lang = LangLoader::get('date-common');
+		$date_lang = LangLoader::get('date-lang');
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('database_tables_optimization_day', $this->lang['database.config.tables.optimization.day'], $this->config->get_database_tables_optimization_day(),
 			array(
-				new FormFieldSelectChoiceOption($date_lang['sunday'], 0),
-				new FormFieldSelectChoiceOption($date_lang['monday'], 1),
-				new FormFieldSelectChoiceOption($date_lang['tuesday'], 2),
-				new FormFieldSelectChoiceOption($date_lang['wednesday'], 3),
-				new FormFieldSelectChoiceOption($date_lang['thursday'], 4),
-				new FormFieldSelectChoiceOption($date_lang['friday'], 5),
-				new FormFieldSelectChoiceOption($date_lang['saturday'], 6),
-				new FormFieldSelectChoiceOption($date_lang['every_month'], 7)
+				new FormFieldSelectChoiceOption($date_lang['date.sunday'], 0),
+				new FormFieldSelectChoiceOption($date_lang['date.monday'], 1),
+				new FormFieldSelectChoiceOption($date_lang['date.tuesday'], 2),
+				new FormFieldSelectChoiceOption($date_lang['date.wednesday'], 3),
+				new FormFieldSelectChoiceOption($date_lang['date.thursday'], 4),
+				new FormFieldSelectChoiceOption($date_lang['date.friday'], 5),
+				new FormFieldSelectChoiceOption($date_lang['date.saturday'], 6),
+				new FormFieldSelectChoiceOption($date_lang['date.every.month'], 7)
 			),
 			array(
-				'description' => $this->lang['database.config.tables.optimization.day.description'],
+				'description' => $this->lang['database.config.tables.optimization.day.clue'],
 				'hidden' => !$this->config->is_database_tables_optimization_enabled()
 			)
 		));

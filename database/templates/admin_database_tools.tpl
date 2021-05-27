@@ -4,13 +4,13 @@
 	</a>
 	<ul>
 		<li>
-			<a href="admin_database.php" class="quick-link">{@database.tools}</a>
+			<a href="admin_database.php" class="quick-link">{@database.management}</a>
 		</li>
 		<li>
-			<a href="admin_database.php?query=1" class="quick-link">{@database.query.execute}</a>
+			<a href="admin_database.php?query=1" class="quick-link">{@database.sql.queries}</a>
 		</li>
 		<li>
-			<a href="${relative_url(DatabaseUrlBuilder::configuration())}" class="quick-link">${LangLoader::get_message('configuration', 'admin-common')}</a>
+			<a href="${relative_url(DatabaseUrlBuilder::configuration())}" class="quick-link">{@form.configuration}</a>
 		</li>
 	</ul>
 </nav>
@@ -42,7 +42,7 @@
 				</li>
 				<li>
 					<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=data">
-						<i class="fa fa-fw fa-laptop" aria-hidden="true"></i> <span>${LangLoader::get_message('display', 'common')}</span>
+						<i class="fa fa-fw fa-laptop" aria-hidden="true"></i> <span>{@common.display}</span>
 					</a>
 				</li>
 				<li>
@@ -62,19 +62,19 @@
 				</li>
 				<li>
 					<a class="cssmenu-title error" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate&amp;token={TOKEN}" data-confirmation="{@database.confirm.empty.table}">
-						<i class="fa fa-fw fa-share-square" aria-hidden="true"></i> <span>${LangLoader::get_message('empty', 'main')}</span>
+						<i class="fa fa-fw fa-share-square" aria-hidden="true"></i> <span>{@form.empty}</span>
 					</a>
 				</li>
 				<li>
 					<a class="cssmenu-title error" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp;token={TOKEN}" data-confirmation="delete-element">
-						<i class="far fa-fw fa-trash-alt" aria-hidden="true"></i> <span>${LangLoader::get_message('delete', 'common')}</span>
+						<i class="far fa-fw fa-trash-alt" aria-hidden="true"></i> <span>{@common.delete}</span>
 					</a>
 				</li>
 			</ul>
 		</nav>
 		<script>
 			$("#cssmenu-database-tools").menumaker({
-				title: "{@database.tools}",
+				title: "{@database.management}",
 				format: "multitoggle",
 				breakpoint: 768
 			});
@@ -87,10 +87,10 @@
 			<thead>
 				<tr>
 					<th>{@database.table.field}</th>
-					<th>${LangLoader::get_message('type', 'main')}</th>
+					<th>{@common.type}</th>
 					<th>{@database.table.attribute}</th>
 					<th>{@database.table.null}</th>
-					<th>${LangLoader::get_message('default', 'main')}</th>
+					<th>{@common.default}</th>
 					<th>{@database.table.extra}</th>
 				</tr>
 			</thead>
@@ -112,8 +112,8 @@
 			<caption>{@database.table.index}</caption>
 			<thead>
 				<tr>
-					<th>${LangLoader::get_message('name', 'main')}</th>
-					<th>${LangLoader::get_message('type', 'main')}</th>
+					<th>{@common.name}</th>
+					<th>{@common.type}</th>
 					<th>{@database.table.field}</th>
 				</tr>
 			</thead>
@@ -129,13 +129,13 @@
 		</table>
 
 		<table class="table">
-			<caption>${LangLoader::get_message('size', 'main')}</caption>
+			<caption>{@common.size}</caption>
 			<thead>
 				<tr>
 					<th>{@database.table.data}</th>
 					<th>{@database.table.index}</th>
 					<th>{@database.table.free}</th>
-					<th>${LangLoader::get_message('total', 'main')}</th>
+					<th>{@common.total}</th>
 					# IF TABLE_FREE #
 						<th></th>
 					# ENDIF #
@@ -160,19 +160,19 @@
 
 		<div class="responsive-table">
 			<table class="table">
-				<caption>${LangLoader::get_message('stats', 'admin')}</caption>
+				<caption>{@common.statistics}</caption>
 				<thead>
 					<tr>
 						<th>{@database.table.rows.format}</th>
 						<th>{@database.table.rows}</th>
 						<th>{@database.table.engine}</th>
 						<th>{@database.table.collation}</th>
-						<th>${LangLoader::get_message('size', 'main')}</th>
+						<th>{@common.size}</th>
 						# IF C_AUTOINDEX #
 							<th>{@database.autoincrement}</th>
 						# ENDIF #
 						<th>{@database.creation.date}</th>
-						<th>${LangLoader::get_message('last_update', 'admin')}</th>
+						<th>{@common.last.update}</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -196,14 +196,14 @@
 
 	# IF C_DATABASE_TABLE_DATA #
 		<fieldset id="executed_query">
-			<legend>{@database.executed.query}</legend>
+			<legend>{@database.sql.queries}</legend>
 			<p class="db-executed-query">{QUERY_HIGHLIGHT}</p>
 		</fieldset>
 
 		# IF C_PAGINATION # <div class="align-center"># INCLUDE PAGINATION #</div> # ENDIF #
 		<div class="responsive-table">
 			<table class="table large-table">
-				<caption>${LangLoader::get_message('display', 'common')}</caption>
+				<caption>{@common.display}</caption>
 				<thead>
 					<tr>
 						<th>&nbsp;</th>
@@ -235,7 +235,7 @@
 				var keyword = new Array('delete', 'drop', 'truncate');
 
 				if(query == "") {
-					alert("${LangLoader::get_message('form.explain_required_fields', 'status-messages-common')}");
+					alert("{@form.required.fields}");
 					return false;
 				}
 
@@ -261,7 +261,7 @@
 				<div class="fieldset-inset">
 					<span id="errorh"></span>
 					<div class="form-element form-element-textarea">
-						<label for="query">* {@database.executed.query}</label>
+						<label for="query">* {@database.sql.queries}</label>
 						<div class="form-field form-field-textarea">
 							<textarea rows="12" id="query" name="query">{QUERY}</textarea>
 						</div>
@@ -310,7 +310,7 @@
 					<thead>
 						<tr>
 							<th>{@database.table.field}</th>
-							<th>${LangLoader::get_message('type', 'main')}</th>
+							<th>{@common.type}</th>
 							<th>{@database.table.null}</th>
 							<th>{@database.table.value}</th>
 						</tr>

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 19
+ * @version     PHPBoost 6.0 - last update: 2021 05 27
  * @since       PHPBoost 1.5 - 2006 08 06
  * @contributor Regis VIARRE <crowkait@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -71,7 +71,12 @@ if ($action == 'backup_table' && !empty($get_table)) // Save for unic table
 	$tables_backup = true;
 
 $view = new FileTemplate('database/admin_database_management.tpl');
-$view->add_lang($lang);
+$view->add_lang(array_merge(
+	$lang,
+	LangLoader::get('common-lang'),
+	LangLoader::get('form-lang'),
+	LangLoader::get('upload-lang')
+));
 
 $view->put('TABLE_NAME', $get_table);
 
@@ -325,11 +330,11 @@ elseif ($action == 'restore')
 				$view->put('MESSAGE_HELPER', MessageHelper::display($lang['database.restore.success'], MessageHelper::SUCCESS));
 				break;
 			case 'failure' :
-				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $lang['database.restore.error'], UserErrorController::FATAL);
+				$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $lang['database.restore.error'], UserErrorController::FATAL);
 				DispatchManager::redirect($controller);
 				break;
 			case 'upload_failure' :
-				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $lang['database.upload.error'], UserErrorController::FATAL);
+				$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $lang['database.upload.error'], UserErrorController::FATAL);
 				DispatchManager::redirect($controller);
 				break;
 			case 'file_already_exists' :
@@ -348,7 +353,7 @@ elseif ($action == 'restore')
 				$view->put('MESSAGE_HELPER', MessageHelper::display($lang['database.unlink.success'], MessageHelper::SUCCESS));
 				break;
 			case 'unlink_failure' :
-				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $lang['database.unlink.error'], UserErrorController::FATAL);
+				$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $lang['database.unlink.error'], UserErrorController::FATAL);
 				DispatchManager::redirect($controller);
 				break;
 			case 'file_does_not_exist':
@@ -510,7 +515,7 @@ else
 			'NBR_FREE' => File::get_formated_size($nbr_free),
 			'L_RESTORE_FROM_UPLOADED_FILE' => sprintf($lang['database.import.file.description'], File::get_formated_size($upload_max_filesize)),
 			'RESTORE_UPLOADED_FILE_MAX_SIZE' => $upload_max_filesize,
-			'L_RESTORE_UPLOADED_FILE_SIZE_EXCEEDED' => StringVars::replace_vars(LangLoader::get_message('upload.max_file_size_exceeded', 'status-messages-common'), array('max_file_size' => File::get_formated_size($upload_max_filesize))),
+			'L_RESTORE_UPLOADED_FILE_SIZE_EXCEEDED' => StringVars::replace_vars(LangLoader::get_message('upload.warning.file.size', 'upload-lang'), array('max_file_size' => File::get_formated_size($upload_max_filesize))),
 			'MAX_FILE_SIZE' => File::get_formated_size($upload_max_filesize),
 			'ALLOWED_EXTENSIONS' => 'zip", "sql'
 		));

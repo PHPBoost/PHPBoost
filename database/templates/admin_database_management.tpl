@@ -7,13 +7,13 @@
 			<a href="admin_database.php" class="quick-link">{@database.management}</a>
 		</li>
 		<li>
-			<a href="admin_database.php?query=1" class="quick-link">{@database.query.execute}</a>
+			<a href="admin_database.php?query=1" class="quick-link">{@database.sql.queries}</a>
 		</li>
 		<li>
-			<a href="${relative_url(DatabaseUrlBuilder::configuration())}" class="quick-link">${LangLoader::get_message('configuration', 'admin-common')}</a>
+			<a href="${relative_url(DatabaseUrlBuilder::configuration())}" class="quick-link">{@form.configuration}</a>
 		</li>
 		<li>
-			<a href="${relative_url(DatabaseUrlBuilder::documentation())}" class="quick-link">${LangLoader::get_message('module.documentation', 'admin-modules-common')}</a>
+			<a href="${relative_url(DatabaseUrlBuilder::documentation())}" class="quick-link">{@form.documentation}</a>
 		</li>
 	</ul>
 </nav>
@@ -61,25 +61,25 @@
 						<div class="cell-body">
 							<div class="dnd-area">
 								<div class="dnd-dropzone">
-									<label for="select-file-to-restore" class="dnd-label">${LangLoader::get_message('drag.and.drop.files', 'upload-common')} <span class="d-block"></span></label>
+									<label for="select-file-to-restore" class="dnd-label">{@upload.drag.and.drop.files} <span class="d-block"></span></label>
 									<input type="file" name="upload_file" id="select-file-to-restore" class="ufiles" />
 								</div>
 								<input type="hidden" name="max_file_size" value="{MAX_FILE_SIZE}">
 								<div class="ready-to-load">
-									<button type="button" class="button clear-list">${LangLoader::get_message('clear.list', 'upload-common')}</button>
+									<button type="button" class="button clear-list">{@upload.clear.list}</button>
 									<span class="fa-stack fa-lg">
 										<i class="far fa-file fa-stack-2x"></i>
 										<strong class="fa-stack-1x files-nbr"></strong>
 									</span>
 								</div>
 								<div class="modal-container">
-									<button class="button upload-help" data-modal data-target="upload-helper" aria-label="${LangLoader::get_message('upload.helper', 'upload-common')}"><i class="fa fa-question" aria-hidden="true"></i></button>
+									<button class="button upload-help" data-modal data-target="upload-helper" aria-label="{@upload.upload.helper}"><i class="fa fa-question" aria-hidden="true"></i></button>
 									<div id="upload-helper" class="modal modal-animation">
-										<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+										<div class="close-modal" aria-label="{@common.close}"></div>
 										<div class="content-panel">
-											<h3>${LangLoader::get_message('upload.helper', 'upload-common')}</h3>
-											<p><strong>${LangLoader::get_message('max.file.size', 'upload-common')} :</strong> {MAX_FILE_SIZE}</p>
-											<p><strong>${LangLoader::get_message('allowed.extensions', 'upload-common')} :</strong> "{ALLOWED_EXTENSIONS}"</p>
+											<h3>{@upload.upload.helper}</h3>
+											<p><strong>{@upload.max.file.size} :</strong> {MAX_FILE_SIZE}</p>
+											<p><strong>{@upload.allowed.extensions} :</strong> "{ALLOWED_EXTENSIONS}"</p>
 										</div>
 									</div>
 								</div>
@@ -91,10 +91,10 @@
 								multiple: true,
 								maxFileSize: '{MAX_FILE_SIZE}',
 								allowedExtensions: ["{ALLOWED_EXTENSIONS}"],
-								warningText: ${escapejs(LangLoader::get_message('warning.upload.disabled', 'upload-common'))},
-								warningExtension: ${escapejs(LangLoader::get_message('warning.upload.extension', 'upload-common'))},
-								warningFileSize: ${escapejs(LangLoader::get_message('warning.upload.file.size', 'upload-common'))},
-								warningFilesNbr: ${escapejs(LangLoader::get_message('warning.upload.files.number', 'upload-common'))},
+								warningText: ${escapejs(@upload.warning.disabled)},
+								warningExtension: ${escapejs(@upload.warning.extension)},
+								warningFileSize: ${escapejs(@upload.warning.file.size)},
+								warningFilesNbr: ${escapejs(@upload.warning.files.number)},
 							});
 						</script>
 						<div class="cell-body">
@@ -164,7 +164,7 @@
 			</table>
 
 			<fieldset class="sub-section">
-				<legend>{@database.action.for.selected.tables}</legend>
+				<legend>{@database.selected.tables.action}</legend>
 				<div class="fieldset-inset">
 					<input type="hidden" name="token" value="{TOKEN}">
 					<div class="flex-database">
@@ -232,7 +232,7 @@
 						</li>
 						<li>
 							<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=data">
-								<i class="fa fa-fw fa-laptop" aria-hidden="true"></i> <span>${LangLoader::get_message('display', 'common')}</span>
+								<i class="fa fa-fw fa-laptop" aria-hidden="true"></i> <span>{@common.display}</span>
 							</a>
 						</li>
 						<li>
@@ -252,12 +252,12 @@
 						</li>
 						<li>
 							<a class="cssmenu-title error" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate&amp;token={TOKEN}" data-confirmation="{@database.confirm.empty.table}">
-								<i class="fa fa-fw fa-share-square" aria-hidden="true"></i> <span>${LangLoader::get_message('empty', 'main')}</span>
+								<i class="fa fa-fw fa-share-square" aria-hidden="true"></i> <span>{@form.empty}</span>
 							</a>
 						</li>
 						<li>
 							<a class="cssmenu-title error" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp;token={TOKEN}" data-confirmation="delete-element">
-								<i class="far fa-fw fa-trash-alt" aria-hidden="true"></i> <span>${LangLoader::get_message('delete', 'common')}</span>
+								<i class="far fa-fw fa-trash-alt" aria-hidden="true"></i> <span>{@common.delete}</span>
 							</a>
 						</li>
 					</ul>
@@ -298,9 +298,9 @@
 							</select>
 						</div>
 						<p class="align-center">
-							<a href="javascript:check_select_all_tables(true);">${LangLoader::get_message('select_all', 'main')}</a>
+							<a href="javascript:check_select_all_tables(true);">{@common.select.all}</a>
 							 /
-							<a href="javascript:check_select_all_tables(false);">${LangLoader::get_message('select_none', 'main')}</a>
+							<a href="javascript:check_select_all_tables(false);">{@common.deselect.all}</a>
 						</p>
 					</div>
 					<div class="form-element third-field top-field align-center custom-radio">
@@ -358,7 +358,7 @@
 				var keyword = new Array('delete', 'drop', 'truncate');
 
 				if( query == "" ) {
-					alert("${LangLoader::get_message('form.explain_required_fields', 'status-messages-common')}");
+					alert("{@form.required.fields}");
 					return false;
 				}
 
@@ -385,7 +385,7 @@
 				<div class="fieldset-inset">
 					<span id="errorh"></span>
 					<div class="form-element form-element-textarea">
-						<label for="query">* {@database.executed.query}</label>
+						<label for="query">* {@database.sql.queries}</label>
 						<div class="form-field form-field-textarea">
 							<textarea rows="12" id="query" name="query">{QUERY}</textarea>
 						</div>
@@ -438,14 +438,14 @@
 				<tr>
 					<th>{@database.file.name}</th>
 					<th>{@database.file.weight}</th>
-					<th>${LangLoader::get_message('date', 'date-common')}</th>
+					<th>${LangLoader::get_message('date.date', 'date-lang')}</th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
 					<td colspan="4">
-						# IF C_FILES #{@database.restore.file.description}# ELSE #{@database.empty.directory}# ENDIF #
+						# IF C_FILES #{@database.restore.file.clue}# ELSE #{@database.empty.directory}# ENDIF #
 					</td>
 				</tr>
 				# START file #
@@ -459,8 +459,8 @@
 						<td>{file.WEIGHT}</td>
 						<td>{file.FILE_DATE}</td>
 						<td>
-							<a href="admin_database.php?read_file={file.FILE_NAME}&amp;token={TOKEN}" aria-label="{@database.download}"><i class="fa fa-fw fa-download" aria-hidden="true"></i></a>
-							<a href="admin_database.php?action=restore&amp;del={file.FILE_NAME}&amp;token={TOKEN}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+							<a href="admin_database.php?read_file={file.FILE_NAME}&amp;token={TOKEN}" aria-label="{@common.download}"><i class="fa fa-fw fa-download" aria-hidden="true"></i></a>
+							<a href="admin_database.php?action=restore&amp;del={file.FILE_NAME}&amp;token={TOKEN}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 						</td>
 					</tr>
 				# END file #

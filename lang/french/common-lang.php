@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 26
+ * @version     PHPBoost 6.0 - last update: 2021 05 27
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -217,6 +217,8 @@ $lang['common.scroll.to.bottom'] = 'bas de la page';
 
 // Select
 $lang['common.select']              = 'Sélectionner';
+$lang['common.select.all']          = 'Tout sélectionner';
+$lang['common.deselect.all']        = 'Tout désélectionner';
 $lang['common.select.element']      = 'Sélectionner cet élément';
 $lang['common.select.elements']     = 'Sélectionner des éléments';
 $lang['common.select.all.elements'] = 'Sélectionner tous les éléments';
