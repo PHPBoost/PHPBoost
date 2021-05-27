@@ -152,7 +152,6 @@ if ($convers && empty($pm_edit) && empty($pm_del)) // Sending conversation.
 elseif (!empty($post) || (!empty($pm_get) && $pm_get != $current_user->get_id()) && $pm_get > '0') // Message form interface
 {
 	$view         = new FileTemplate('user/pm.tpl');
-	$lang         = LangLoader::get('user-lang');
 	$common_lang  = LangLoader::get('common-lang');
 	$form_lang    = LangLoader::get('form-lang');
 	$warning_lang = LangLoader::get('warning-lang');
@@ -216,7 +215,6 @@ elseif ($prw_convers && empty($mp_edit)) // Conversation preview.
 	$login = retrieve(POST, 'login', '');
 
 	$view         = new FileTemplate('user/pm.tpl');
-	$lang         = LangLoader::get('user-lang');
 	$common_lang  = LangLoader::get('common-lang');
 	$form_lang    = LangLoader::get('form-lang');
 	$warning_lang = LangLoader::get('warning-lang');
@@ -251,7 +249,6 @@ elseif ($prw && empty($pm_edit) && empty($pm_del)) // Message preview
 	} catch (RowNotFoundException $ex) {}
 
 	$view         = new FileTemplate('user/pm.tpl');
-	$lang         = LangLoader::get('user-lang');
 	$common_lang  = LangLoader::get('common-lang');
 	$form_lang    = LangLoader::get('form-lang');
 	$warning_lang = LangLoader::get('warning-lang');
@@ -560,7 +557,6 @@ elseif (!empty($pm_edit)) // Edit PM, if recipient hasn't read it yet
 			else // Edition interface
 			{
 				$view         = new FileTemplate('user/pm.tpl');
-				$lang         = LangLoader::get('user-lang');
 				$common_lang  = LangLoader::get('common-lang');
 				$form_lang    = LangLoader::get('form-lang');
 				$warning_lang = LangLoader::get('warning-lang');
@@ -616,7 +612,6 @@ elseif (!empty($pm_edit)) // Edit PM, if recipient hasn't read it yet
 elseif (!empty($pm_id_get)) // Messages associated with the conversation.
 {
 	$view         = new FileTemplate('user/pm.tpl');
-	$lang         = LangLoader::get('user-lang');
 	$common_lang  = LangLoader::get('common-lang');
 	$form_lang    = LangLoader::get('form-lang');
 	$warning_lang = LangLoader::get('warning-lang');
@@ -798,7 +793,6 @@ elseif (!empty($pm_id_get)) // Messages associated with the conversation.
 else // Conversation list in the user email box
 {
 	$view         = new FileTemplate('user/pm.tpl');
-	$lang         = LangLoader::get('user-lang');
 	$common_lang  = LangLoader::get('common-lang');
 	$form_lang    = LangLoader::get('form-lang');
 	$warning_lang = LangLoader::get('warning-lang');
