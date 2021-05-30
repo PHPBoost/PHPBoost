@@ -62,6 +62,7 @@ class DefaultModuleConfig extends AbstractConfigData
 	 */
 	public static function load($module_id = '')
 	{
+		!empty($module_id) ? self::$module_id = $module_id : '';
 		return ConfigManager::load(get_called_class(), (!empty($module_id) ? $module_id : self::$module_id), 'config');
 	}
 
