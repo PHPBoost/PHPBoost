@@ -61,7 +61,7 @@ class PollItem extends RichItem
 		    'field_class' => 'FormFieldPossibleValues',
 		    'label'       => LangLoader::get_message('poll.form.answers', 'common', 'poll'),
 		    'value'       => self::DEFAULT_VALUE_ANSWERS,
-		    'options'     => array('min_input' => 2, 'display_default' => false, 'placeholder' => LangLoader::get_message('poll.form.answer.placeholder', 'common', 'poll'))
+		    'options'     => array('required' => true, 'min_input' => 2, 'display_default' => false, 'placeholder' => LangLoader::get_message('poll.form.answer.placeholder', 'common', 'poll'))
 		    )
 		));
 
