@@ -17,11 +17,6 @@ class PollConfig extends DefaultRichModuleConfig
 	const VOTE_AUTHORIZATIONS = 32;
 	const DISPLAY_VOTES_RESULT_AUTHORIZATIONS = 64;
 
-	public static function __static()
-	{
-		self::$module_id = 'poll';
-	}
-
 	public function get_additional_default_values()
 	{
 		return array(

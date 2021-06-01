@@ -16,11 +16,6 @@ class NewsConfig extends DefaultRichModuleConfig
 	const ITEMS_SUGGESTIONS_ENABLED = 'items_suggestions_enabled';
 	const ITEMS_NAVIGATION_ENABLED = 'items_navigation_enabled';
 
-	public static function __static()
-	{
-		self::$module_id = 'news';
-	}
-
 	/**
 	 * {@inheritdoc}
 	 */

@@ -12,11 +12,6 @@
 
 class ArticlesConfig extends DefaultRichModuleConfig
 {
-	public static function __static()
-	{
-		self::$module_id = 'articles';
-	}
-
 	public function get_additional_default_values()
 	{
 		return array(

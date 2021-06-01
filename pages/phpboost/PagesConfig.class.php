@@ -14,11 +14,6 @@ class PagesConfig extends DefaultRichModuleConfig
 	const LEFT_COLUMN_DISABLED      = 'left_column_disabled';
 	const RIGHT_COLUMN_DISABLED     = 'right_column_disabled';
 
-	public static function __static()
-	{
-		self::$module_id = 'pages';
-	}
-
 	/**
 	 * {@inheritdoc}
 	 */
