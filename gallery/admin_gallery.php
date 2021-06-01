@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 11
+ * @version     PHPBoost 6.0 - last update: 2021 06 01
  * @since       PHPBoost 1.2 - 2005 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -64,7 +64,7 @@ elseif (!empty($del)) //Suppression d'une image.
 if (!empty($id_category))
 {
 	try {
-		$category = CategoriesService::get_categories_manager()->get_categories_cache()->get_category($id_category);
+		$category = CategoriesService::get_categories_manager('gallery')->get_categories_cache()->get_category($id_category);
 	} catch (CategoryNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
@@ -72,10 +72,10 @@ if (!empty($id_category))
 }
 else
 {
-	$category = CategoriesService::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY);
+	$category = CategoriesService::get_categories_manager('gallery')->get_categories_cache()->get_category(Category::ROOT_CATEGORY);
 }
 
-$subcategories = CategoriesService::get_categories_manager()->get_categories_cache()->get_children($category->get_id(), CategoriesService::get_authorized_categories($category->get_id()));
+$subcategories = CategoriesService::get_categories_manager('gallery')->get_categories_cache()->get_children($category->get_id(), CategoriesService::get_authorized_categories($category->get_id()));
 $elements_number = $category->get_elements_number();
 
 $nbr_pics = $elements_number['pics_aprob'] + $elements_number['pics_unaprob'];
@@ -337,7 +337,7 @@ if ($nbr_pics > 0)
 			$search_category_children_options = new SearchCategoryChildrensOptions();
 			$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 			$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-			$categories_tree = CategoriesService::get_categories_manager()->get_select_categories_form_field($info_pics['id'] . 'cat', '', $info_pics['id_category'], $search_category_children_options);
+			$categories_tree = CategoriesService::get_categories_manager('gallery')->get_select_categories_form_field($info_pics['id'] . 'cat', '', $info_pics['id_category'], $search_category_children_options);
 			$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 			$method->setAccessible(true);
 			$categories_tree_options = $method->invoke($categories_tree);
@@ -440,7 +440,7 @@ if ($nbr_pics > 0)
 			$search_category_children_options = new SearchCategoryChildrensOptions();
 			$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 			$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-			$categories_tree = CategoriesService::get_categories_manager()->get_select_categories_form_field($row['id'] . 'cat', '', $row['id_category'], $search_category_children_options);
+			$categories_tree = CategoriesService::get_categories_manager('gallery')->get_select_categories_form_field($row['id'] . 'cat', '', $row['id_category'], $search_category_children_options);
 			$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 			$method->setAccessible(true);
 			$categories_tree_options = $method->invoke($categories_tree);

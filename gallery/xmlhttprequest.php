@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 29
+ * @version     PHPBoost 6.0 - last update: 2021 06 01
  * @since       PHPBoost 1.6 - 2007 08 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -29,7 +29,7 @@ $id_file = $request->get_postint('id_file', 0);
 //Notation.
 if (!empty($increment_view))
 {
-	$categories = CategoriesService::get_categories_manager()->get_categories_cache()->get_categories();
+	$categories = CategoriesService::get_categories_manager('gallery')->get_categories_cache()->get_categories();
 	$g_idpics = $request->get_getint('id', 0);
 	$g_id_category = $request->get_getint('cat', 0);
 	if (empty($g_idpics) || (!empty($g_id_category) && !isset($categories[$g_id_category])))
