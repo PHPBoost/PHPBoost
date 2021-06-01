@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 06
+ * @version     PHPBoost 6.0 - last update: 2021 06 01
  * @since       PHPBoost 4.1 - 2015 02 03
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -175,7 +175,7 @@ class AdminMediaConfigController extends AdminModuleController
 		$this->config->set_peertube_constant($this->form->get_value('peertube_constant'));
 
 		MediaConfig::save();
-		CategoriesService::get_categories_manager()->regenerate_cache();
+		CategoriesService::get_categories_manager('media')->regenerate_cache();
 	}
 }
 ?>

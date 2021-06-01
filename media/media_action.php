@@ -108,7 +108,7 @@ elseif ($delete > 0)
 
 	MediaCategoriesCache::invalidate();
 
-	$category = CategoriesService::get_categories_manager()->get_categories_cache()->get_category($media['id_category']);
+	$category = CategoriesService::get_categories_manager('media')->get_categories_cache()->get_category($media['id_category']);
 	bread_crumb($media['id_category']);
 	$Bread_crumb->add($lang['delete_media'], url('media.php?cat=' . $media['id_category'], 'media-0-' . $media['id_category'] . '+' . $category->get_rewrited_name() . '.php'));
 
@@ -131,7 +131,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 	));
 
 	// Build of the musical categories table
-	$categories = CategoriesService::get_categories_manager()->get_categories_cache()->get_categories();
+	$categories = CategoriesService::get_categories_manager('media')->get_categories_cache()->get_categories();
 	$js_id_music = array();
 	foreach ($categories as $cat)
 	{
@@ -163,7 +163,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 
 		bread_crumb($media['id_category']);
 
-		$categories_tree = CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', '', $media['id_category'], $search_category_children_options);
+		$categories_tree = CategoriesService::get_categories_manager('media')->get_select_categories_form_field('id_category', '', $media['id_category'], $search_category_children_options);
 		$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 		$method->setAccessible(true);
 		$categories_tree_options = $method->invoke($categories_tree);
@@ -180,7 +180,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 			'C_CONTRIBUTION' => 0,
 			'ITEM_ID' => $media['id'],
 			'TITLE' => $media['title'],
-			'C_CATEGORIES' => CategoriesService::get_categories_manager()->get_categories_cache()->has_categories(),
+			'C_CATEGORIES' => CategoriesService::get_categories_manager('media')->get_categories_cache()->has_categories(),
 			'CATEGORIES' => $categories_list,
 			'WIDTH' => $media['width'],
 			'HEIGHT' => $media['height'],
@@ -201,7 +201,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 		$editor = AppContext::get_content_formatting_service()->get_default_editor();
 		$editor->set_identifier('counterpart');
 
-		$categories_tree = CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', '', Category::ROOT_CATEGORY, $search_category_children_options);
+		$categories_tree = CategoriesService::get_categories_manager('media')->get_select_categories_form_field('id_category', '', Category::ROOT_CATEGORY, $search_category_children_options);
 		$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 		$method->setAccessible(true);
 		$categories_tree_options = $method->invoke($categories_tree);
@@ -216,7 +216,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 			'CONTRIBUTION_EDITOR' => $editor->display(),
 			'IDEDIT' => 0,
 			'TITLE' => '',
-			'C_CATEGORIES' => CategoriesService::get_categories_manager()->get_categories_cache()->has_categories(),
+			'C_CATEGORIES' => CategoriesService::get_categories_manager('media')->get_categories_cache()->has_categories(),
 			'CATEGORIES' => $categories_list,
 			'WIDTH' => '800',
 			'HEIGHT' => '450',
@@ -257,7 +257,7 @@ elseif ($submit)
 	$media = array(
 		'idedit' => (int)retrieve(POST, 'idedit', 0, TINTEGER),
 		'title' => stripslashes(retrieve(POST, 'title', '', TSTRING)),
-		'id_category' => CategoriesService::get_categories_manager()->get_categories_cache()->has_categories() ? retrieve(POST, 'id_category', 0, TINTEGER) : Category::ROOT_CATEGORY,
+		'id_category' => CategoriesService::get_categories_manager('media')->get_categories_cache()->has_categories() ? retrieve(POST, 'id_category', 0, TINTEGER) : Category::ROOT_CATEGORY,
 		'width' => min(retrieve(POST, 'width', $config->get_max_video_width(), TINTEGER), $config->get_max_video_width()),
 		'height' => min(retrieve(POST, 'height', $config->get_max_video_height(), TINTEGER), $config->get_max_video_height()),
 		'file_url' => new Url(retrieve(POST, 'u_media', '', TSTRING)),
@@ -268,7 +268,7 @@ elseif ($submit)
 		'counterpart' => retrieve(POST, 'counterpart', '', TSTRING_PARSE)
 	);
 
-	$category = CategoriesService::get_categories_manager()->get_categories_cache()->get_category($media['id_category']);
+	$category = CategoriesService::get_categories_manager('media')->get_categories_cache()->get_category($media['id_category']);
 	bread_crumb($media['id_category']);
 
 	if ($media['idedit'])
@@ -422,7 +422,7 @@ elseif ($submit)
 			$media_contribution->set_module('media');
 			$media_contribution->set_auth(
 				Authorizations::capture_and_shift_bit_auth(
-					CategoriesService::get_categories_manager()->get_heritated_authorizations($media['id_category'], Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
+					CategoriesService::get_categories_manager('media')->get_heritated_authorizations($media['id_category'], Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
 					Category::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
 				)
 			);

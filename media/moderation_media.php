@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 06
+ * @version     PHPBoost 6.0 - last update: 2021 06 01
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -134,7 +134,7 @@ else
 
 	$items_number = PersistenceContext::get_querier()->count(PREFIX . "media", 'WHERE ' . ($sub_cats && !empty($authorized_categories) ? 'id_category IN :authorized_categories' : 'id_category = :id_category') . (is_null($db_where) ? '' : ' AND published = :published'), array('authorized_categories' => $authorized_categories, 'id_category' => (!empty($id_category) ? $id_category : 0), 'published' => $db_where));
 
-	$categories_cache = CategoriesService::get_categories_manager()->get_categories_cache();
+	$categories_cache = CategoriesService::get_categories_manager('media')->get_categories_cache();
 
 	// Pagination if items number > items per page.
 	$page = AppContext::get_request()->get_getint('p', 1);
