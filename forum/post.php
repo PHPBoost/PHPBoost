@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 21
+ * @version     PHPBoost 6.0 - last update: 2021 06 01
  * @since       PHPBoost 1.2 - 2005 10 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -22,7 +22,7 @@ $id_get = (int)retrieve(GET, 'id', 0);
 $is_modo = ForumAuthorizationsService::check_authorizations($id_get)->moderation();
 
 //Existance de la catégorie.
-if ($id_get != Category::ROOT_CATEGORY && !CategoriesService::get_categories_manager()->get_categories_cache()->category_exists($id_get))
+if ($id_get != Category::ROOT_CATEGORY && !CategoriesService::get_categories_manager('forum')->get_categories_cache()->category_exists($id_get))
 {
 	$controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($controller);
@@ -35,7 +35,7 @@ if (AppContext::get_current_user()->get_delay_readonly() > time()) //Lecture seu
 }
 
 try {
-	$category = CategoriesService::get_categories_manager()->get_categories_cache()->get_category($id_get);
+	$category = CategoriesService::get_categories_manager('forum')->get_categories_cache()->get_category($id_get);
 } catch (CategoryNotFoundException $e) {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
@@ -45,7 +45,7 @@ $locked_cat = ($category->get_status() == ForumCategory::STATUS_LOCKED && !AppCo
 
 //Récupération de la barre d'arborescence.
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
-$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($id_get, true));
+$categories = array_reverse(CategoriesService::get_categories_manager('forum')->get_parents($id_get, true));
 foreach ($categories as $id => $cat)
 {
 	if ($cat->get_id() != Category::ROOT_CATEGORY)

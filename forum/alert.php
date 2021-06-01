@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 30
+ * @version     PHPBoost 6.0 - last update: 2021 06 01
  * @since       PHPBoost 1.5 - 2006 08 07
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -29,7 +29,7 @@ try {
 	DispatchManager::redirect($error_controller);
 }
 
-$category = CategoriesService::get_categories_manager()->get_categories_cache()->get_category($topic['id_category']);
+$category = CategoriesService::get_categories_manager('forum')->get_categories_cache()->get_category($topic['id_category']);
 
 $topic_name = !empty($topic['title']) ? stripslashes($topic['title']) : '';
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
