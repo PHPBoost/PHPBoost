@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 10 28
+ * @version     PHPBoost 6.0 - last update: 2021 06 02
  * @since       PHPBoost 3.0 - 2010 12 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MenuAdminService
@@ -40,9 +41,9 @@ class MenuAdminService
 
 	public static function add_filter_fieldset(Menu $menu, Template $tpl)
 	{
-		$tpl_filter = new FileTemplate('admin/menus/filters.tpl');
+		$filter_tpl = new FileTemplate('admin/menus/filters.tpl');
 
-		$tpl_filter->assign_block_vars('modules', array(
+		$filter_tpl->assign_block_vars('modules', array(
 			'ID' => '',
 		));
 		foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $module)
@@ -52,13 +53,13 @@ class MenuAdminService
 
 			if (!empty($home_page))
 			{
-				$tpl_filter->assign_block_vars('modules', array(
+				$filter_tpl->assign_block_vars('modules', array(
 					'ID' => $module->get_id(),
 				));
 			}
 		}
 
-		//Ajout du menu
+		// Add menu
 		if ($menu->get_id() == '')
 		{
 			$menu->set_filters(array(new MenuStringFilter('/')));
@@ -73,12 +74,12 @@ class MenuAdminService
 			$module_name = $filter_infos[0];
 			$regex = TextHelper::substr(TextHelper::strstr($filter_pattern, '/'), 1);
 
-			$tpl_filter->assign_block_vars('filters', array(
+			$filter_tpl->assign_block_vars('filters', array(
 				'ID' => $key,
 				'FILTER' => $regex
 			));
 
-			$tpl_filter->assign_block_vars('filters.modules', array(
+			$filter_tpl->assign_block_vars('filters.modules', array(
 				'ID' => '',
 				'SELECTED' => $filter_pattern == '/' ? ' selected="selected"' : ''
 			));
@@ -89,7 +90,7 @@ class MenuAdminService
 
 				if (!empty($home_page))
 				{
-					$tpl_filter->assign_block_vars('filters.modules', array(
+					$filter_tpl->assign_block_vars('filters.modules', array(
 						'ID' => $module->get_id(),
 						'SELECTED' => $module_name == $module->get_id() ? ' selected="selected"' : ''
 					));
@@ -97,12 +98,12 @@ class MenuAdminService
 			}
 		}
 
-		$tpl_filter->add_lang(LangLoader::get('admin-menus-common'));
-		$tpl_filter->put_all(array(
-		    'NBR_FILTER' => ($menu->get_id() == '') ? 0 : count($menu->get_filters()) - 1,
+		$filter_tpl->add_lang(array_merge(LangLoader::get('common-lang'), LangLoader::get('menu-lang')));
+		$filter_tpl->put_all(array(
+		    'FILTERS_NUMBER' => ($menu->get_id() == '') ? 0 : count($menu->get_filters()) - 1,
 		));
 
-		$tpl->put('filters', $tpl_filter);
+		$tpl->put('FILTERS', $filter_tpl);
 	}
 }
 ?>

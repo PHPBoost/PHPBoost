@@ -25,6 +25,8 @@
  	}
 
  	#footer span { color: var(--txt-alt); }
+	
+ 	#footer a { color: var(--logo-tone); }
 
 /* --- Content --- */
 .options { background-color: var(--bgc-main); }

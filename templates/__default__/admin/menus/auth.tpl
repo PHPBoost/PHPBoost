@@ -1,27 +1,27 @@
 <div id="admin-contents">
 	<form action="auth.php" method="post" class="fieldset-content">
 		<fieldset>
-			<legend>{L_ACTION_MENUS}</legend>
+			<legend>{@menu.edit.mini}</legend>
 			<div class="fieldset-inset">
 				<div class="form-element">
-					<label>{L_NAME}</label>
+					<label>{@common.name}</label>
 					<div class="form-field"><label>{NAME}</label></div>
 				</div>
 				<div class="form-element">
-					<label for="location">{L_LOCATION}</label>
+					<label for="location">{@menu.location}</label>
 					<div class="form-field"><select name="location" id="location">{LOCATIONS}</select></div>
 				</div>
 				<div class="form-element">
-					<label for="activ">{L_STATUS}</label>
+					<label for="activ">{@common.status}</label>
 					<div class="form-field">
 						<select name="activ" id="activ">
-							<option value="1"# IF C_ENABLED # selected="selected"# ENDIF #>{L_ENABLED}</option>
-							<option value="0"# IF NOT C_ENABLED # selected="selected"# ENDIF #>{L_DISABLED}</option>
+							<option value="1"# IF C_ENABLED # selected="selected"# ENDIF #>{@common.enabled}</option>
+							<option value="0"# IF NOT C_ENABLED # selected="selected"# ENDIF #>{@common.disabled}</option>
 						</select>
 					</div>
 				</div>
 				<div class="form-element custom-checkbox">
-					<label for="hidden_with_small_screens">{L_HIDDEN_WITH_SMALL_SCREENS}</label>
+					<label for="hidden_with_small_screens">{@menu.hidden.on.small.screens}</label>
 					<div class="form-field">
 						<div class="form-field-checkbox">
 							<label class="checkbox" for="hidden_with_small_screens">
@@ -32,21 +32,21 @@
 					</div>
 				</div>
 				<div class="form-element full-field">
-					<label for="auth">{L_AUTHS}</label>
+					<label for="auth">{@form.authorizations.read}</label>
 					<div class="form-field"><label>{AUTH_MENUS}</label></div>
 				</div>
 			</div>
 
 		</fieldset>
 
-		# INCLUDE filters #
+		# INCLUDE FILTERS #
 
 		<fieldset class="fieldset-submit">
-			<legend>{L_ACTION}</legend>
+			<legend>{@form.submit}</legend>
 			<input type="hidden" name="action" value="{ACTION}">
-			<input type="hidden" name="id" value="{IDMENU}">
-			<button type="submit" class="button submit" name="valid" value="true">{L_ACTION}</button>
-			<button type="reset" class="button reset-button" value="true">{L_RESET}</button>
+			<input type="hidden" name="id" value="{MENU_ID}">
+			<button type="submit" class="button submit" name="valid" value="true">{@form.submit}</button>
+			<button type="reset" class="button reset-button" value="true">{@form.reset}</button>
 			<input type="hidden" name="token" value="{TOKEN}">
 		</fieldset>
 	</form>

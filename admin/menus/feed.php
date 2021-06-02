@@ -3,14 +3,16 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 04
+ * @version     PHPBoost 6.0 - last update: 2021 06 02
  * @since       PHPBoost 2.0 - 2009 02 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '../..');
 require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
-define('TITLE', $LANG['menus_feed_add']);
+$lang = LangLoader::get('menu-lang');
+define('TITLE', $lang['menu.feed.menu']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
 $id = (int)retrieve(REQUEST, 'id', 0);
@@ -91,43 +93,30 @@ $edit = !empty($id);
 include('lateral_menu.php');
 lateral_menu();
 
-$tpl = new FileTemplate('admin/menus/feed.tpl');
+$view = new FileTemplate('admin/menus/feed.tpl');
+$view->add_lang(array_merge(
+	$lang,
+	LangLoader::get('common-lang'),
+	LangLoader::get('form-lang'),
+	LangLoader::get('warning-lang')
+));
 
-$tpl->put_all(array(
-	'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
-	'JL_REQUIRE_NAME' => TextHelper::to_js_string($LANG['require_name']),
-	'JL_REQUIRE_FEED' => TextHelper::to_js_string($LANG['choose_feed_in_list']),
-	'JL_REQUIRE_ITEMS_NUMBER' => TextHelper::to_js_string($LANG['require_items_number']),
-	'L_FEED' => $LANG['feed'],
-	'L_AVAILABLES_FEEDS' => $LANG['availables_feeds'],
-	'L_NAME' => $LANG['name'],
-	'L_STATUS' => $LANG['status'],
-	'L_HIDDEN_WITH_SMALL_SCREENS' => $LANG['hidden_with_small_screens'],
-	'L_AUTHS' => $LANG['auths'],
-	'L_ENABLED' => LangLoader::get_message('enabled', 'common'),
-	'L_DISABLED' => LangLoader::get_message('disabled', 'common'),
-	'L_GUEST' => $LANG['guest'],
-	'L_USER' => $LANG['member'],
-	'L_MODO' => $LANG['modo'],
-	'L_ADMIN' => $LANG['admin'],
-	'L_LOCATION' => $LANG['location'],
-	'L_ACTION_MENUS' => ($edit) ? $LANG['menus_edit'] : LangLoader::get_message('add', 'common'),
-	'L_ACTION' => ($edit) ? $LANG['update'] : $LANG['submit'],
-	'L_RESET' => $LANG['reset'],
+$view->put_all(array(
+	'C_EDIT' => $edit,
 	'ACTION' => 'save',
 ));
 
 // Possible locations.
 $block = retrieve(GET, 's', Menu::BLOCK_POSITION__HEADER, TINTEGER);
 $array_location = array(
-	Menu::BLOCK_POSITION__HEADER => $LANG['menu_header'],
-	Menu::BLOCK_POSITION__SUB_HEADER => $LANG['menu_subheader'],
-	Menu::BLOCK_POSITION__LEFT => $LANG['menu_left'],
-	Menu::BLOCK_POSITION__TOP_CENTRAL => $LANG['menu_top_central'],
-	Menu::BLOCK_POSITION__BOTTOM_CENTRAL => $LANG['menu_bottom_central'],
-	Menu::BLOCK_POSITION__RIGHT => $LANG['menu_right'],
-	Menu::BLOCK_POSITION__TOP_FOOTER => $LANG['menu_top_footer'],
-	Menu::BLOCK_POSITION__FOOTER => $LANG['menu_footer']
+	Menu::BLOCK_POSITION__HEADER         => $lang['menu.header'],
+	Menu::BLOCK_POSITION__SUB_HEADER     => $lang['menu.sub.header'],
+	Menu::BLOCK_POSITION__LEFT           => $lang['menu.left'],
+	Menu::BLOCK_POSITION__TOP_CENTRAL    => $lang['menu.top.central'],
+	Menu::BLOCK_POSITION__BOTTOM_CENTRAL => $lang['menu.bottom.central'],
+	Menu::BLOCK_POSITION__RIGHT          => $lang['menu.right'],
+	Menu::BLOCK_POSITION__TOP_FOOTER     => $lang['menu.top.footer'],
+	Menu::BLOCK_POSITION__FOOTER         => $lang['menu.footer']
 );
 
 $feed_url = '';
@@ -141,23 +130,24 @@ if ($edit)
 	$block = $menu->get_block();
 	$feed_url = $menu->get_url(true);
 
-	$tpl->put_all(array(
-		'IDMENU' => $id,
-		'NAME' => $menu->get_title(),
-		'ITEMS_NUMBER' => $menu->get_number(),
-		'AUTH_MENUS' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, $menu->get_auth()),
+	$view->put_all(array(
 		'C_MENU_HIDDEN_WITH_SMALL_SCREENS' => $menu->is_hidden_with_small_screens(),
 		'C_ENABLED' => $menu->is_enabled(),
-		'C_EDIT' => true,
+
+		'MENU_ID'       => $id,
+		'NAME'         => $menu->get_title(),
+		'ITEMS_NUMBER' => $menu->get_number(),
+		'AUTH_MENUS'   => Authorizations::generate_select(Menu::MENU_AUTH_BIT, $menu->get_auth()),
 	));
 }
 else
 {
-	$tpl->put_all(array(
-		'C_NEW' => true,
+	$view->put_all(array(
+		'C_NEW'     => true,
 		'C_ENABLED' => true,
+
 		'ITEMS_NUMBER' => 10,
-		'AUTH_MENUS' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, array(), array(-1 => true, 0 => true, 1 => true, 2 => true))
+		'AUTH_MENUS'   => Authorizations::generate_select(Menu::MENU_AUTH_BIT, array(), array(-1 => true, 0 => true, 1 => true, 2 => true))
 	));
 
 	// Create a new generic menu
@@ -178,11 +168,11 @@ function get_feeds_children(Array $children, $module_id, $feed_type, $feed_url_e
 			$url = $feed_cat->get_url($feed_type);
 
 			$urls[] = array(
-				'name' => $feed_cat->get_category_name(),
-				'url' => $url,
-				'level' => $level,
+				'name'      => $feed_cat->get_category_name(),
+				'url'       => $url,
+				'level'     => $level,
 				'feed_name' => $feed_type,
-				'selected' => $feed_url_edit == $url
+				'selected'  => $feed_url_edit == $url
 			);
 		}
 
@@ -207,25 +197,25 @@ foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as
 				$urls = get_feeds($object, $module->get_id(), $feed_type, $feed_url);
 
 				$root[0] = array(
-					'name' => $object->get_category_name(),
-					'url' => $object->get_url($feed_type),
-					'level' => 0,
+					'name'      => $object->get_category_name(),
+					'url'       => $object->get_url($feed_type),
+					'level'     => 0,
 					'feed_name' => null,
-					'selected' => $feed_url == $object->get_url($feed_type)
+					'selected'  => $feed_url == $object->get_url($feed_type)
 				);
 			}
 
 			$urls = array_merge($root, $urls);
-			$tpl->assign_block_vars('modules', array('NAME' => TextHelper::ucfirst($module->get_configuration()->get_name())));
+			$view->assign_block_vars('modules', array('NAME' => TextHelper::ucfirst($module->get_configuration()->get_name())));
 
 			foreach ($urls as $url)
 			{
-				$tpl->assign_block_vars('modules.feeds_urls', array(
-					'URL' => $url['url'],
-					'NAME' => $url['name'],
-					'SPACE' => str_repeat('--', $url['level']),
+				$view->assign_block_vars('modules.feeds_urls', array(
+					'URL'       => $url['url'],
+					'NAME'      => $url['name'],
+					'SPACE'     => str_repeat('--', $url['level']),
 					'FEED_NAME' => $url['feed_name'] != 'master' ? $url['feed_name'] : null,
-					'SELECTED' => $url['selected'] ? ' selected="selected"' : ''
+					'SELECTED'  => $url['selected'] ? ' selected="selected"' : ''
 				));
 			}
 		}
@@ -239,10 +229,10 @@ foreach ($array_location as $key => $name)
 }
 
 // Filters
-MenuAdminService::add_filter_fieldset($menu, $tpl);
+MenuAdminService::add_filter_fieldset($menu, $view);
 
-$tpl->put_all(array('LOCATIONS' => $locations));
-$tpl->display();
+$view->put_all(array('LOCATIONS' => $locations));
+$view->display();
 
 require_once(PATH_TO_ROOT . '/admin/admin_footer.php');
 

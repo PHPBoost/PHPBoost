@@ -3,13 +3,15 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 11 28
+ * @version     PHPBoost 6.0 - last update: 2021 06 02
  * @since       PHPBoost 2.0 - 2009 01 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '../..');
 require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
+$lang = LangLoader::get('menu-lang');
 define('TITLE', $LANG['administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
@@ -44,43 +46,33 @@ if ($post)
 include('lateral_menu.php');
 lateral_menu();
 
-$tpl = new FileTemplate('admin/menus/auth.tpl');
+$view = new FileTemplate('admin/menus/auth.tpl');
+$view->add_lang(array_merge(
+	$lang,
+	LangLoader::get('common-lang'),
+	LangLoader::get('form-lang'),
+	LangLoader::get('warning-lang')
+));
 
 $editor = AppContext::get_content_formatting_service()->get_default_editor();
 $editor->set_identifier('contents');
 
-$tpl->put_all(array(
+$view->put_all(array(
 	'KERNEL_EDITOR' => $editor->display(),
-	'L_REQUIRE_TITLE' => $LANG['require_title'],
-	'L_REQUIRE_TEXT' => $LANG['require_text'],
-	'L_NAME' => $LANG['name'],
-	'L_STATUS' => $LANG['status'],
-	'L_HIDDEN_WITH_SMALL_SCREENS' => $LANG['hidden_with_small_screens'],
-	'L_AUTHS' => $LANG['auths'],
-	'L_ENABLED' => LangLoader::get_message('enabled', 'common'),
-	'L_DISABLED' => LangLoader::get_message('disabled', 'common'),
-	'L_GUEST' => $LANG['guest'],
-	'L_USER' => $LANG['member'],
-	'L_MODO' => $LANG['modo'],
-	'L_ADMIN' => $LANG['admin'],
-	'L_LOCATION' => $LANG['location'],
-	'L_ACTION_MENUS' => $LANG['menus_edit'],
-	'L_ACTION' => $LANG['update'],
-	'L_RESET' => $LANG['reset'],
-	'ACTION' => 'save',
+	'ACTION'        => 'save',
 ));
 
 // Possible Locations.
 $block = $menu->get_block();
 $array_location = array(
-	Menu::BLOCK_POSITION__HEADER => $LANG['menu_header'],
-	Menu::BLOCK_POSITION__SUB_HEADER => $LANG['menu_subheader'],
-	Menu::BLOCK_POSITION__LEFT => $LANG['menu_left'],
-	Menu::BLOCK_POSITION__TOP_CENTRAL => $LANG['menu_top_central'],
-	Menu::BLOCK_POSITION__BOTTOM_CENTRAL => $LANG['menu_bottom_central'],
-	Menu::BLOCK_POSITION__RIGHT => $LANG['menu_right'],
-	Menu::BLOCK_POSITION__TOP_FOOTER => $LANG['menu_top_footer'],
-	Menu::BLOCK_POSITION__FOOTER => $LANG['menu_footer']
+	Menu::BLOCK_POSITION__HEADER         => $lang['menu.header'],
+	Menu::BLOCK_POSITION__SUB_HEADER     => $lang['menu.sub.header'],
+	Menu::BLOCK_POSITION__LEFT           => $lang['menu.left'],
+	Menu::BLOCK_POSITION__TOP_CENTRAL    => $lang['menu.top.central'],
+	Menu::BLOCK_POSITION__BOTTOM_CENTRAL => $lang['menu.bottom.central'],
+	Menu::BLOCK_POSITION__RIGHT          => $lang['menu.right'],
+	Menu::BLOCK_POSITION__TOP_FOOTER     => $lang['menu.top.footer'],
+	Menu::BLOCK_POSITION__FOOTER         => $lang['menu.footer']
 );
 
 $locations = '';
@@ -89,20 +81,20 @@ foreach ($array_location as $key => $name)
 	$locations .= '<option value="' . $key . '" ' . (($block == $key) ? 'selected="selected"' : '') . '>' . $name . '</option>';
 }
 
-
-$tpl->put_all(array(
-	'IDMENU' => $id,
-	'NAME' => $menu->get_formated_title(),
+$view->put_all(array(
+	'C_ENABLED'                        => $menu->is_enabled(),
 	'C_MENU_HIDDEN_WITH_SMALL_SCREENS' => $menu->is_hidden_with_small_screens(),
-	'LOCATIONS' => $locations,
+
+	'MENU_ID'    => $id,
+	'NAME'       => $menu->get_formated_title(),
+	'LOCATIONS'  => $locations,
 	'AUTH_MENUS' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, $menu->get_auth()),
-	'C_ENABLED' => $menu->is_enabled(),
 ));
 
 // Filters
-MenuAdminService::add_filter_fieldset($menu, $tpl);
+MenuAdminService::add_filter_fieldset($menu, $view);
 
-$tpl->display();
+$view->display();
 
 require_once(PATH_TO_ROOT . '/admin/admin_footer.php');
 ?>

@@ -3,20 +3,16 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2014 12 22
+ * @version     PHPBoost 6.0 - last update: 2021 06 02
  * @since       PHPBoost 2.0 - 2008 11 23
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 function lateral_menu()
 {
-    global $LANG;
-    $tpl = new FileTemplate('admin/menus/panel.tpl');
-    $tpl->put_all(array(
-        'L_MENUS_MANAGEMENT' => $LANG['menus_management'],
-        'L_ADD_CONTENT_MENUS' => $LANG['menus_content_add'],
-        'L_ADD_LINKS_MENUS' => $LANG['menus_links_add'],
-        'L_ADD_FEED_MENUS' => $LANG['menus_feed_add']
-    ));
-    $tpl->display();
+    $view = new FileTemplate('admin/menus/panel.tpl');
+    $view->add_lang(LangLoader::get('menu-lang'));
+    $view->put_all(array());
+    $view->display();
 }
 ?>

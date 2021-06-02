@@ -22,15 +22,16 @@ $lang['warning.warning']  = 'Warning';
 $lang['warning.question'] = 'Question';
 $lang['warning.unknow']   = 'Unknow';
 
-$lang['warning.username']  = 'Please enter a username !';
-$lang['warning.password']  = 'Please enter a password !';
-$lang['warning.title']     = 'Please enter a title !';
-$lang['warning.text']      = 'Please enter a text !';
-$lang['warning.email']     = 'Please enter an valid email address !';
-$lang['warning.subcat']    = 'Please select a sub-category !';
-$lang['warning.url']       = 'Please enter a valid URL !';
-$lang['warning.recipient'] = 'Please enter the recipient !';
-$lang['warning.integer']   = 'Please enter an integer number !';
+$lang['warning.username']     = 'Please enter a username !';
+$lang['warning.password']     = 'Please enter a password !';
+$lang['warning.title']        = 'Please enter a title !';
+$lang['warning.text']         = 'Please enter a text !';
+$lang['warning.email']        = 'Please enter an valid email address !';
+$lang['warning.subcat']       = 'Please select a sub-category !';
+$lang['warning.url']          = 'Please enter a valid URL !';
+$lang['warning.recipient']    = 'Please enter the recipient !';
+$lang['warning.integer']      = 'Please enter an integer number !';
+$lang['warning.items.number'] = 'Please enter an item number !';
 
 // Captcha
 $lang['warning.captcha.validation.error'] = 'The visual confirmation field has not been properly filled!';

@@ -22,15 +22,16 @@ $lang['warning.warning']  = 'Avertissement';
 $lang['warning.question'] = 'Question';
 $lang['warning.unknow']   = 'Inconnue';
 
-$lang['warning.username']  = 'Veuillez entrer un nom d\'utilisateur !';
-$lang['warning.password']  = 'Veuillez entrer un mot de passe !';
-$lang['warning.title']     = 'Veuillez entrer un titre !';
-$lang['warning.text']      = 'Veuillez entrer un texte !';
-$lang['warning.email']     = 'Veuillez entrer un email valide !';
-$lang['warning.subcat']    = 'Veuillez sélectionner une sous-catégorie !';
-$lang['warning.url']       = 'Veuillez entrer une url valide !';
-$lang['warning.recipient'] = 'Veuillez entrer le destinataire du message !';
-$lang['warning.integer']   = 'Veuillez entrer nombre entier !';
+$lang['warning.username']     = 'Veuillez entrer un nom d\'utilisateur !';
+$lang['warning.password']     = 'Veuillez entrer un mot de passe !';
+$lang['warning.title']        = 'Veuillez entrer un titre !';
+$lang['warning.text']         = 'Veuillez entrer un texte !';
+$lang['warning.email']        = 'Veuillez entrer un email valide !';
+$lang['warning.subcat']       = 'Veuillez sélectionner une sous-catégorie !';
+$lang['warning.url']          = 'Veuillez entrer une url valide !';
+$lang['warning.recipient']    = 'Veuillez entrer le destinataire du message !';
+$lang['warning.integer']      = 'Veuillez entrer nombre entier !';
+$lang['warning.items.number'] = 'Veuillez entrer un nombre d\'éléments !';
 
 // Captcha
 $lang['warning.captcha.validation.error'] = 'Le champ de vérification visuel n\'a pas été saisi correctement !';

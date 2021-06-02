@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 04
+ * @version     PHPBoost 6.0 - last update: 2021 06 02
  * @since       PHPBoost 2.0 - 2008 11 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -11,7 +11,8 @@
 
 define('PATH_TO_ROOT', '../..');
 require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
-define('TITLE', $LANG['menus_links_add']);
+$lang = LangLoader::get('menu-lang');
+define('TITLE', $lang['menu.links.menu']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
 $menu_id = (int)retrieve(REQUEST, 'id', 0);
@@ -150,72 +151,39 @@ if ($action == 'save')
 include('lateral_menu.php');
 lateral_menu();
 
-$tpl = new FileTemplate('admin/menus/links.tpl');
+$view = new FileTemplate('admin/menus/links.tpl');
+$view->add_lang(array_merge(
+	$lang,
+	LangLoader::get('common-lang'),
+	LangLoader::get('form-lang'),
+	LangLoader::get('warning-lang')
+));
 
-$tpl->put_all(array(
-	'L_NAME' => $LANG['name'],
-	'L_URL' => $LANG['url'],
-	'L_IMAGE' => LangLoader::get_message('form.picture', 'common'),
-	'L_STATUS' => $LANG['status'],
-	'L_HIDDEN_WITH_SMALL_SCREENS' => $LANG['hidden_with_small_screens'],
-	'L_AUTHS' => $LANG['auths'],
-	'L_ENABLED' => LangLoader::get_message('enabled', 'common'),
-	'L_DISABLED' => LangLoader::get_message('disabled', 'common'),
-	'L_GUEST' => $LANG['guest'],
-	'L_USER' => $LANG['member'],
-	'L_MODO' => $LANG['modo'],
-	'L_ADMIN' => $LANG['admin'],
-	'L_LOCATION' => $LANG['location'],
-	'L_ACTION_MENUS' => ($menu_id > 0) ? $LANG['menus_edit'] : LangLoader::get_message('add', 'common'),
-	'L_ACTION' => ($menu_id > 0) ? $LANG['update'] : $LANG['submit'],
-	'L_RESET' => $LANG['reset'],
+$view->put_all(array(
+	'C_EDIT' => $menu_id > 0,
 	'ACTION' => 'save',
-	'L_TYPE' => $LANG['type'],
-	'L_PUSHMENU_DISABLED_BODY' => $LANG['push.menu.disabled.body'],
-	'L_PUSHMENU_PUSHED_CONTENT' => $LANG['push.menu.pushed.content'],
-	'L_PUSHMENU_OPENING' => $LANG['push.menu.opening.type'],
-	'L_PUSHMENU_EXPANDING' => $LANG['push.menu.expansion.type'],
-	'L_CONTENT' => $LANG['content'],
-	'L_AUTHORIZATIONS' => $LANG['authorizations'],
-	'L_ADD' => LangLoader::get_message('add', 'common'),
-	'L_REQUIRE_NAME' => $LANG['require_name'],
+
 	'J_AUTH_FORM' => str_replace(array("&quot;", "<!--", "-->"), array('"', "", ""), TextHelper::to_js_string(Authorizations::generate_select(Menu::MENU_AUTH_BIT, array('r-1' => Menu::MENU_AUTH_BIT, 'r0' => Menu::MENU_AUTH_BIT, 'r1' => Menu::MENU_AUTH_BIT), array(), 'menu_element_##UID##_auth'))),
-	'JL_AUTHORIZATIONS' => TextHelper::to_js_string($LANG['authorizations']),
-	'JL_PROPERTIES' => TextHelper::to_js_string($LANG['properties']),
-	'JL_NAME' => TextHelper::to_js_string($LANG['name']),
-	'JL_URL' => TextHelper::to_js_string($LANG['url']),
-	'JL_IMAGE' => TextHelper::to_js_string(LangLoader::get_message('form.picture', 'common')),
-	'JL_DELETE_ELEMENT' => TextHelper::to_js_string(LangLoader::get_message('confirm.delete', 'status-messages-common')),
-	'JL_MORE' => TextHelper::to_js_string($LANG['more_details']),
-	'JL_DELETE' => TextHelper::to_js_string(LangLoader::get_message('delete', 'common')),
-	'JL_ADD_SUB_ELEMENT' => TextHelper::to_js_string($LANG['add_sub_element']),
-	'JL_ADD_SUB_MENU' => TextHelper::to_js_string($LANG['add_sub_menu']),
 ));
 
 // Possible locations
 $block = retrieve(GET, 's', Menu::BLOCK_POSITION__HEADER, TINTEGER);
 $array_location = array(
-	Menu::BLOCK_POSITION__HEADER => $LANG['menu_header'],
-	Menu::BLOCK_POSITION__SUB_HEADER => $LANG['menu_subheader'],
-	Menu::BLOCK_POSITION__LEFT => $LANG['menu_left'],
-	Menu::BLOCK_POSITION__TOP_CENTRAL => $LANG['menu_top_central'],
-	Menu::BLOCK_POSITION__BOTTOM_CENTRAL => $LANG['menu_bottom_central'],
-	Menu::BLOCK_POSITION__RIGHT => $LANG['menu_right'],
-	Menu::BLOCK_POSITION__TOP_FOOTER => $LANG['menu_top_footer'],
-	Menu::BLOCK_POSITION__FOOTER => $LANG['menu_footer']
+	Menu::BLOCK_POSITION__HEADER         => $lang['menu.header'],
+	Menu::BLOCK_POSITION__SUB_HEADER     => $lang['menu.sub.header'],
+	Menu::BLOCK_POSITION__LEFT           => $lang['menu.left'],
+	Menu::BLOCK_POSITION__TOP_CENTRAL    => $lang['menu.top.central'],
+	Menu::BLOCK_POSITION__BOTTOM_CENTRAL => $lang['menu.bottom.central'],
+	Menu::BLOCK_POSITION__RIGHT          => $lang['menu.right'],
+	Menu::BLOCK_POSITION__TOP_FOOTER     => $lang['menu.top.footer'],
+	Menu::BLOCK_POSITION__FOOTER         => $lang['menu.footer']
 );
 
 $edit_menu_tpl = new FileTemplate('admin/menus/menu_edition.tpl');
-$edit_menu_tpl->put_all(array(
-	'L_NAME' => $LANG['name'],
-	'L_IMAGE' => LangLoader::get_message('form.picture', 'common'),
-	'L_URL' => $LANG['url'],
-	'L_PROPERTIES' => $LANG['properties'],
-	'L_AUTHORIZATIONS' => $LANG['authorizations'],
-	'L_ADD_SUB_ELEMENT' => $LANG['add_sub_element'],
-	'L_ADD_SUB_MENU' => $LANG['add_sub_menu'],
-	'L_MORE' => $LANG['more_details'],
-	'L_DELETE' => LangLoader::get_message('delete', 'common')
+$edit_menu_tpl->add_lang(array_merge(
+	$lang,
+	LangLoader::get('common-lang'),
+	LangLoader::get('form-lang')
 ));
 
 $menu = null;
@@ -233,68 +201,67 @@ else
 	$menu = new LinksMenu('', '', '', LinksMenu::AUTOMATIC_MENU);
 }
 
-$tpl->put_all(array(
-	'IDMENU' => $menu_id,
-	'AUTH_MENUS' => Authorizations::generate_select(
-		Menu::MENU_AUTH_BIT, $menu->get_auth(), array(), 'menu_element_' . $menu->get_uid() . '_auth'
-	),
-	'C_ENABLED' => !empty($menu_id) ? $menu->is_enabled() : true,
+$view->put_all(array(
+	'C_ENABLED'                        => !empty($menu_id) ? $menu->is_enabled() : true,
 	'C_MENU_HIDDEN_WITH_SMALL_SCREENS' => $menu->is_hidden_with_small_screens(),
-	'C_PUSHMENU_DISABLED_BODY' => $menu->is_disabled_body(),
-	'C_PUSHMENU_PUSHED_CONTENT' => $menu->is_pushed_content(),
-	'MENU_ID' => $menu->get_id(),
-	'MENU_TREE' => $menu->display($edit_menu_tpl, LinksMenuElement::LINKS_MENU_ELEMENT__FULL_DISPLAYING),
-	'MENU_NAME' => $menu->get_title(),
-	'MENU_URL' => $menu->get_url(true),
-	'MENU_IMG' => $menu->get_image(true),
-	'ID' => $menu->get_uid()
+	'C_PUSHMENU_DISABLED_BODY'         => $menu->is_disabled_body(),
+	'C_PUSHMENU_PUSHED_CONTENT'        => $menu->is_pushed_content(),
+
+	'AUTH_MENUS' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, $menu->get_auth(), array(), 'menu_element_' . $menu->get_uid() . '_auth'),
+	'MENU_ID'    => $menu->get_id(),
+	'MENU_TREE'  => $menu->display($edit_menu_tpl, LinksMenuElement::LINKS_MENU_ELEMENT__FULL_DISPLAYING),
+	'MENU_NAME'  => $menu->get_title(),
+	'MENU_URL'   => $menu->get_url(true),
+	'MENU_IMG'   => $menu->get_image(true),
+	'ID'         => $menu->get_uid()
 ));
 
 foreach (LinksMenu::get_menu_types_list() as $type_name)
 {
-	$tpl->assign_block_vars('type', array(
-		'NAME' => $type_name,
-		'L_NAME' => $LANG[$type_name . '.menu'],
+	$view->assign_block_vars('type', array(
+		'NAME'     => $type_name,
+		'L_NAME'   => $lang['menu.' . $type_name],
 		'SELECTED' => $menu->get_type() == $type_name ? ' selected="selected"' : ''
 	));
 }
 
 foreach ($array_location as $key => $name)
 {
-	$tpl->assign_block_vars('location', array(
+	$view->assign_block_vars('location', array(
 		'C_SELECTED' => $block == $key,
-		'VALUE' => $key,
-		'NAME' => $name
+		'VALUE'      => $key,
+		'NAME'       => $name
 	));
 }
 
 // Types of pushmenu opening
 $array_opening = array(
-	Menu::PUSHMENU_LEFT => $LANG['push.menu.opening.type.left'],
-	Menu::PUSHMENU_RIGHT => $LANG['push.menu.opening.type.right'],
-	Menu::PUSHMENU_TOP => $LANG['push.menu.opening.type.top'],
-	Menu::PUSHMENU_BOTTOM => $LANG['push.menu.opening.type.bottom']
+	Menu::PUSHMENU_LEFT   => $lang['menu.push.opening.type.left'],
+	Menu::PUSHMENU_RIGHT  => $lang['menu.push.opening.type.right'],
+	Menu::PUSHMENU_TOP    => $lang['menu.push.opening.type.top'],
+	Menu::PUSHMENU_BOTTOM => $lang['menu.push.opening.type.bottom']
 );
 
 foreach ($array_opening as $key => $name)
 {
-	$tpl->assign_block_vars('opening', array(
+	$view->assign_block_vars('opening', array(
 		'C_SELECTED' => $menu->get_pushmenu_opening() == $key,
+		
 		'VALUE' => $key,
-		'NAME' => $name
+		'NAME'  => $name
 	));
 }
 
 // Types of pushmenu expanding tabs
 $array_expanding = array(
-	Menu::PUSHMENU_OVERLAP => $LANG['push.menu.expansion.type.overlap'],
-	Menu::PUSHMENU_EXPAND => $LANG['push.menu.expansion.type.expand'],
-	Menu::PUSHMENU_NONE => $LANG['push.menu.expansion.type.none']
+	Menu::PUSHMENU_OVERLAP => $lang['menu.push.expansion.type.overlap'],
+	Menu::PUSHMENU_EXPAND  => $lang['menu.push.expansion.type.expand'],
+	Menu::PUSHMENU_NONE    => $lang['menu.push.expansion.type.none']
 );
 
 foreach ($array_expanding as $key => $name)
 {
-	$tpl->assign_block_vars('expanding', array(
+	$view->assign_block_vars('expanding', array(
 		'C_SELECTED' => $menu->get_pushmenu_expanding() == $key,
 		'VALUE' => $key,
 		'NAME' => $name
@@ -302,13 +269,13 @@ foreach ($array_expanding as $key => $name)
 }
 
 // Filters
-MenuAdminService::add_filter_fieldset($menu, $tpl);
+MenuAdminService::add_filter_fieldset($menu, $view);
 
-$tpl->put_all(array(
+$view->put_all(array(
 	'ID_MAX' => AppContext::get_uid()
 ));
 
-$tpl->display();
+$view->display();
 
 require_once(PATH_TO_ROOT . '/admin/admin_footer.php');
 

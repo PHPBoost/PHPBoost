@@ -3,21 +3,23 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 04
+ * @version     PHPBoost 6.0 - last update: 2021 06 02
  * @since       PHPBoost 1.6 - 2007 03 05
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '../..');
 require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
-define('TITLE', $LANG['menus_management']);
+$lang = LangLoader::get('menu-lang');
+define('TITLE', $lang['menu.menus.management']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
 $id = (int)retrieve(GET, 'id', 0);
 $switchtheme = retrieve(GET, 'theme', '');
-$name_theme = !empty($switchtheme) ? $switchtheme : AppContext::get_current_user()->get_theme();
+$theme_name = !empty($switchtheme) ? $switchtheme : AppContext::get_current_user()->get_theme();
 $theme_post = retrieve(POST, 'theme', '');
 
 $action = retrieve(GET, 'action', '');
@@ -103,15 +105,15 @@ $menus_blocks = MenuService::get_menus_map();
 function get_block($position)
 {
 	$blocks = array(
-		Menu::BLOCK_POSITION__HEADER => 'mod_header',
-		Menu::BLOCK_POSITION__SUB_HEADER => 'mod_subheader',
-		Menu::BLOCK_POSITION__TOP_CENTRAL => 'mod_topcentral',
-		Menu::BLOCK_POSITION__NOT_ENABLED => 'mod_central',
+		Menu::BLOCK_POSITION__HEADER         => 'mod_header',
+		Menu::BLOCK_POSITION__SUB_HEADER     => 'mod_subheader',
+		Menu::BLOCK_POSITION__TOP_CENTRAL    => 'mod_topcentral',
+		Menu::BLOCK_POSITION__NOT_ENABLED    => 'mod_central',
 		Menu::BLOCK_POSITION__BOTTOM_CENTRAL => 'mod_bottomcentral',
-		Menu::BLOCK_POSITION__TOP_FOOTER => 'mod_topfooter',
-		Menu::BLOCK_POSITION__FOOTER => 'mod_footer',
-		Menu::BLOCK_POSITION__LEFT => 'mod_left',
-		Menu::BLOCK_POSITION__RIGHT => 'mod_right'
+		Menu::BLOCK_POSITION__TOP_FOOTER     => 'mod_topfooter',
+		Menu::BLOCK_POSITION__FOOTER         => 'mod_footer',
+		Menu::BLOCK_POSITION__LEFT           => 'mod_left',
+		Menu::BLOCK_POSITION__RIGHT          => 'mod_right'
 	);
 
 	return $blocks[$position];
@@ -165,21 +167,30 @@ if ($action == 'save') // Save menus positions.
 }
 
 
-$tpl = new FileTemplate('admin/menus/menus.tpl');
+$view = new FileTemplate('admin/menus/menus.tpl');
+$view->add_lang(array_merge(
+	$lang,
+	LangLoader::get('common-lang'),
+	LangLoader::get('form-lang'),
+	LangLoader::get('warning-lang')
+));
 
 $menu_template = new FileTemplate('admin/menus/menu.tpl');
+$menu_template->add_lang(array_merge(
+	$lang,
+	LangLoader::get('common-lang')
+));
 $menu_template->put_all(array(
-	'L_ENABLED' => LangLoader::get_message('enabled', 'common'),
-	'L_DISABLED' => LangLoader::get_message('disabled', 'common'),
-	'I_HEADER' => Menu::BLOCK_POSITION__HEADER,
-	'I_SUBHEADER' => Menu::BLOCK_POSITION__SUB_HEADER,
-	'I_TOPCENTRAL' => Menu::BLOCK_POSITION__TOP_CENTRAL,
+	'I_HEADER'        => Menu::BLOCK_POSITION__HEADER,
+	'I_SUBHEADER'     => Menu::BLOCK_POSITION__SUB_HEADER,
+	'I_TOPCENTRAL'    => Menu::BLOCK_POSITION__TOP_CENTRAL,
 	'I_BOTTOMCENTRAL' => Menu::BLOCK_POSITION__BOTTOM_CENTRAL,
-	'I_TOPFOOTER' => Menu::BLOCK_POSITION__TOP_FOOTER,
-	'I_FOOTER' => Menu::BLOCK_POSITION__FOOTER,
-	'I_LEFT' => Menu::BLOCK_POSITION__LEFT,
-	'I_RIGHT' => Menu::BLOCK_POSITION__RIGHT,
-	'U_TOKEN' => AppContext::get_session()->get_token()
+	'I_TOPFOOTER'     => Menu::BLOCK_POSITION__TOP_FOOTER,
+	'I_FOOTER'        => Menu::BLOCK_POSITION__FOOTER,
+	'I_LEFT'          => Menu::BLOCK_POSITION__LEFT,
+	'I_RIGHT'         => Menu::BLOCK_POSITION__RIGHT,
+
+	'U_TOKEN' => AppContext::get_session()->get_token(),
 ));
 
 foreach ($menus_blocks as $block_id => $menus)
@@ -204,32 +215,28 @@ foreach ($menus_blocks as $block_id => $menus)
 		$vertical_position = in_array($block_id, array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT));
 
 		$menu_tpl->put_all(array(
-			'NAME' => $menu->get_formated_title(),
-			'IDMENU' => $id,
-			'CONTENTS' => $menu->admin_display(),
-			'ACTIV' => ($enabled ? 'disable' : 'enable'),
-			'UNACTIV' => ($enabled ? 'enable' : 'disable'),
 			'C_MENU_ACTIVATED' => $enabled,
-			'C_EDIT' => !empty($edit_link),
-			'C_DEL' => !empty($del_link),
-			'C_UP' => $block_id != Menu::BLOCK_POSITION__NOT_ENABLED && $i > 0,
-			'C_DOWN' => $block_id != Menu::BLOCK_POSITION__NOT_ENABLED && $i < $max - 1,
-			'C_VERTICAL' => $vertical_position,
-			'C_HORIZONTAL' => !$vertical_position,
-			'L_DEL' => LangLoader::get_message('delete', 'common'),
-			'L_EDIT' => LangLoader::get_message('edit', 'common'),
-			'L_ACTIVATE' => LangLoader::get_message('enable', 'common'),
-			'L_UNACTIVATE' => LangLoader::get_message('disable', 'common'),
-			'L_MOVE_UP' => $LANG['move_up'],
-			'L_MOVE_DOWN' => $LANG['move_down'],
-			'U_EDIT' => menu_admin_link($menu, 'edit'),
+			'C_EDIT'           => !empty($edit_link),
+			'C_DELETE'         => !empty($del_link),
+			'C_UP'             => $block_id != Menu::BLOCK_POSITION__NOT_ENABLED && $i > 0,
+			'C_DOWN'           => $block_id != Menu::BLOCK_POSITION__NOT_ENABLED && $i < $max - 1,
+			'C_VERTICAL'       => $vertical_position,
+			'C_HORIZONTAL'     => !$vertical_position,
+
+			'NAME'     => $menu->get_formated_title(),
+			'IDMENU'   => $id,
+			'CONTENTS' => $menu->admin_display(),
+			'ACTIV'    => ($enabled ? 'disable' : 'enable'),
+			'UNACTIV'  => ($enabled ? 'enable' : 'disable'),
+
+			'U_EDIT'   => menu_admin_link($menu, 'edit'),
 			'U_DELETE' => menu_admin_link($menu, 'delete'),
-			'U_UP' => menu_admin_link($menu, 'up'),
-			'U_DOWN' => menu_admin_link($menu, 'down'),
-			'U_MOVE' => menu_admin_link($menu, 'move'),
+			'U_UP'     => menu_admin_link($menu, 'up'),
+			'U_DOWN'   => menu_admin_link($menu, 'down'),
+			'U_MOVE'   => menu_admin_link($menu, 'move'),
 		));
 
-		$tpl->assign_block_vars(get_block($block_id), array('MENU' => $menu_tpl->render()));
+		$view->assign_block_vars(get_block($block_id), array('MENU' => $menu_tpl->render()));
 		$i++;
 	}
 }
@@ -237,71 +244,55 @@ foreach ($menus_blocks as $block_id => $menus)
 foreach(ThemesManager::get_activated_themes_map() as $theme => $properties)
 {
 	$configuration = $properties->get_configuration();
-	$selected = (empty($name_theme) ? AppContext::get_current_user()->get_theme() == $theme : $name_theme == $theme) ? ' selected="selected"' : '';
-	$tpl->assign_block_vars('themes', array(
-		'NAME' => $configuration->get_name(),
-		'IDNAME' => $theme,
+	$selected = (empty($theme_name) ? AppContext::get_current_user()->get_theme() == $theme : $theme_name == $theme) ? ' selected="selected"' : '';
+	$view->assign_block_vars('themes', array(
+		'NAME'     => $configuration->get_name(),
+		'THEME_ID' => $theme,
 		'SELECTED' => $selected
 	));
 }
 
-$columns_disable = ThemesManager::get_theme($name_theme)->get_columns_disabled();
+$columns_disable = ThemesManager::get_theme($theme_name)->get_columns_disabled();
 
-$tpl->put_all(array(
-	'NAME_THEME' => $name_theme,
-	'CHECKED_RIGHT_COLUMN' => !$columns_disable->right_columns_is_disabled() ? 'checked="checked"' : '',
-	'CHECKED_LEFT_COLUMN' => !$columns_disable->left_columns_is_disabled() ? 'checked="checked"' : '',
-	'CHECKED_FOOTER_COLUMN' => !$columns_disable->footer_is_disabled() ? 'checked="checked"' : '',
-	'CHECKED_TOP_FOOTER_COLUMN' => !$columns_disable->top_footer_is_disabled() ? 'checked="checked"' : '',
-	'CHECKED_BOTTOM_CENTRAL_COLUMN' => !$columns_disable->bottom_central_is_disabled() ? 'checked="checked"' : '',
-	'CHECKED_TOP_CENTRAL_COLUMN' => !$columns_disable->top_central_is_disabled() ? 'checked="checked"' : '',
-	'CHECKED_SUB_HEADER_COLUMN' => !$columns_disable->sub_header_is_disabled() ? 'checked="checked"' : '',
-	'CHECKED_HEADER_COLUMN' => !$columns_disable->header_is_disabled() ? 'checked="checked"' : '',
-	'C_RIGHT_COLUMN' => $columns_disable->right_columns_is_disabled(),
-	'C_LEFT_COLUMN' => $columns_disable->left_columns_is_disabled(),
-	'C_FOOTER_COLUMN' => $columns_disable->footer_is_disabled(),
-	'C_TOP_FOOTER_COLUMN' => $columns_disable->top_footer_is_disabled(),
+$view->put_all(array(
+	'C_RIGHT_COLUMN'          => $columns_disable->right_columns_is_disabled(),
+	'C_LEFT_COLUMN'           => $columns_disable->left_columns_is_disabled(),
+	'C_FOOTER_COLUMN'         => $columns_disable->footer_is_disabled(),
+	'C_TOP_FOOTER_COLUMN'     => $columns_disable->top_footer_is_disabled(),
 	'C_BOTTOM_CENTRAL_COLUMN' => $columns_disable->bottom_central_is_disabled(),
-	'C_TOP_CENTRAL_COLUMN' => $columns_disable->top_central_is_disabled(),
-	'C_SUB_HEADER_COLUMN' => $columns_disable->sub_header_is_disabled(),
-	'C_HEADER_COLUMN' => $columns_disable->header_is_disabled(),
-	'L_MENUS_MANAGEMENT' => $LANG['menus_management'],
-	'START_PAGE' => Environment::get_home_page(),
-	'L_INDEX' => $LANG['home'],
-	'L_CONFIRM_DEL_MENU' => LangLoader::get_message('confirm.delete', 'status-messages-common'),
-	'L_MOVETO' => $LANG['moveto'],
-	'L_GUEST' => $LANG['guest'],
-	'L_USER' => $LANG['member'],
-	'L_MODO' => $LANG['modo'],
-	'L_ADMIN' => $LANG['admin'],
-	'L_HEADER' => $LANG['menu_header'],
-	'L_SUB_HEADER' => $LANG['menu_subheader'],
-	'L_LEFT_MENU' => $LANG['menu_left'],
-	'L_RIGHT_MENU' => $LANG['menu_right'],
-	'L_TOP_CENTRAL_MENU' => $LANG['menu_top_central'],
-	'L_BOTTOM_CENTRAL_MENU' => $LANG['menu_bottom_central'],
-	'L_TOP_FOOTER' => $LANG['menu_top_footer'],
-	'L_FOOTER' => $LANG['menu_footer'],
-	'L_ADD_MENU' => $LANG['menus_add'],
-	'L_ADD_CONTENT_MENUS' => $LANG['menus_content_add'],
-	'L_ADD_LINKS_MENUS' => $LANG['menus_links_add'],
-	'L_ADD_FEED_MENUS' => $LANG['menus_feed_add'],
-	'L_VALID_POSTIONS' => $LANG['valid_position_menus'],
-	'L_THEME_MANAGEMENT' => $LANG['theme_management'],
-	'I_HEADER' => Menu::BLOCK_POSITION__HEADER,
-	'I_SUBHEADER' => Menu::BLOCK_POSITION__SUB_HEADER,
-	'I_TOPCENTRAL' => Menu::BLOCK_POSITION__TOP_CENTRAL,
-	'I_BOTTOMCENTRAL' => Menu::BLOCK_POSITION__BOTTOM_CENTRAL,
-	'I_TOPFOOTER' => Menu::BLOCK_POSITION__TOP_FOOTER,
-	'I_FOOTER' => Menu::BLOCK_POSITION__FOOTER,
-	'I_LEFT' => Menu::BLOCK_POSITION__LEFT,
-	'I_RIGHT' => Menu::BLOCK_POSITION__RIGHT,
-	'L_MENUS_AVAILABLE' => count($menus_blocks[Menu::BLOCK_POSITION__NOT_ENABLED]) ? $LANG['available_menus'] : $LANG['no_available_menus'],
-	'L_SUBMIT' => $LANG['submit'],
-	'L_RESET' => $LANG['reset'],
-	'U_TOKEN' => AppContext::get_session()->get_token()
-));
-$tpl->display();
+	'C_TOP_CENTRAL_COLUMN'    => $columns_disable->top_central_is_disabled(),
+	'C_SUB_HEADER_COLUMN'     => $columns_disable->sub_header_is_disabled(),
+	'C_HEADER_COLUMN'         => $columns_disable->header_is_disabled(),
 
+	'THEME_NAME' => $theme_name,
+	'CHECKED_RIGHT_COLUMN'          => !$columns_disable->right_columns_is_disabled() ? 'checked="checked"' : '',
+	'CHECKED_LEFT_COLUMN'           => !$columns_disable->left_columns_is_disabled() ? 'checked="checked"' : '',
+	'CHECKED_FOOTER_COLUMN'         => !$columns_disable->footer_is_disabled() ? 'checked="checked"' : '',
+	'CHECKED_TOP_FOOTER_COLUMN'     => !$columns_disable->top_footer_is_disabled() ? 'checked="checked"' : '',
+	'CHECKED_BOTTOM_CENTRAL_COLUMN' => !$columns_disable->bottom_central_is_disabled() ? 'checked="checked"' : '',
+	'CHECKED_TOP_CENTRAL_COLUMN'    => !$columns_disable->top_central_is_disabled() ? 'checked="checked"' : '',
+	'CHECKED_SUB_HEADER_COLUMN'     => !$columns_disable->sub_header_is_disabled() ? 'checked="checked"' : '',
+	'CHECKED_HEADER_COLUMN'         => !$columns_disable->header_is_disabled() ? 'checked="checked"' : '',
+	'I_HEADER'        => Menu::BLOCK_POSITION__HEADER,
+	'I_SUBHEADER'     => Menu::BLOCK_POSITION__SUB_HEADER,
+	'I_TOPCENTRAL'    => Menu::BLOCK_POSITION__TOP_CENTRAL,
+	'I_BOTTOMCENTRAL' => Menu::BLOCK_POSITION__BOTTOM_CENTRAL,
+	'I_TOPFOOTER'     => Menu::BLOCK_POSITION__TOP_FOOTER,
+	'I_FOOTER'        => Menu::BLOCK_POSITION__FOOTER,
+	'I_LEFT'          => Menu::BLOCK_POSITION__LEFT,
+	'I_RIGHT'         => Menu::BLOCK_POSITION__RIGHT,
+	'AVAILABLE_MENUS_NUMBER'      => count($menus_blocks[Menu::BLOCK_POSITION__NOT_ENABLED]),
+	'HEADER_MENUS_NUMBER'         => count($menus_blocks[Menu::BLOCK_POSITION__HEADER]),
+	'SUB_HEADER_MENUS_NUMBER'     => count($menus_blocks[Menu::BLOCK_POSITION__SUB_HEADER]),
+	'TOP_CENTRAL_MENUS_NUMBER'    => count($menus_blocks[Menu::BLOCK_POSITION__TOP_CENTRAL]),
+	'BOTTOM_CENTRAL_MENUS_NUMBER' => count($menus_blocks[Menu::BLOCK_POSITION__BOTTOM_CENTRAL]),
+	'TOP_FOOTER_MENUS_NUMBER'     => count($menus_blocks[Menu::BLOCK_POSITION__TOP_FOOTER]),
+	'FOOTER_MENUS_NUMBER'         => count($menus_blocks[Menu::BLOCK_POSITION__FOOTER]),
+	'LEFT_MENUS_NUMBER'           => count($menus_blocks[Menu::BLOCK_POSITION__LEFT]),
+	'RIGHT_MENUS_NUMBER'          => count($menus_blocks[Menu::BLOCK_POSITION__RIGHT]),
+
+	'U_TOKEN' => AppContext::get_session()->get_token(),
+));
+$view->display();
 require_once(PATH_TO_ROOT . '/admin/admin_footer.php');
 ?>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{L_XML_LANGUAGE}">
+<html lang="{@common.xml.lang}">
 	<head>
 		<meta charset="utf-8" />
 		<title>{TITLE}</title>

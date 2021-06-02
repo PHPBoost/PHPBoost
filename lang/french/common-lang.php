@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 27
+ * @version     PHPBoost 6.0 - last update: 2021 06 02
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -31,6 +31,7 @@ $lang['common.module']       = 'Module';
 $lang['common.name']         = 'Nom';
 $lang['common.options']      = 'Options';
 $lang['common.other']        = 'Autre';
+$lang['common.page']         = 'Page';
 $lang['common.participants'] = 'Participants';
 $lang['common.root']         = 'Racine';
 $lang['common.statistics']   = 'Statistiques';
@@ -128,6 +129,13 @@ $lang['common.none']             = 'Aucun';
 $lang['common.none.e']           = 'Aucune';
 $lang['common.item.rate']        = 'Éléments :start à :end sur :total';
 
+//Footer
+$lang['common.powered.by']     = 'Humblement propulsé par';
+$lang['common.phpboost.right'] = 'Open Source';
+$lang['common.phpboost.link']  = 'Lien vers le site PHPBoost officiel';
+$lang['common.sql.request']    = ' Requètes';
+$lang['common.achieved']       = 'Éxécuté en';
+
 // Formatter
 $lang['common.hidden.text']            = 'Ce texte est caché, cliquer ici pour afficher son contenu.';
 $lang['common.hide.text']              = 'Cliquer ici pour cacher le texte.';
@@ -150,6 +158,7 @@ $lang['common.copy.link.to.clipboard'] = 'Copier le lien dans le presse-papier';
 $lang['common.copied.to.clipboard']    = 'Copié dans le presse-papier';
 $lang['common.open.new.window']        = 'Ouvrir dans une nouvelle fenêtre';
 $lang['common.is.new.window']          = 'S\'ouvre dans une nouvelle fenêtre';
+$lang['common.url']                    = 'Url';
 
 // List order
 $lang['common.listorder.item.start']   = '{startItem}';

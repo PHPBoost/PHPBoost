@@ -8,7 +8,7 @@
 	</nav>
 	<script>
 		jQuery("#cssmenu-module-${escape(ID)}").menumaker({
-			title: "${LangLoader::get_message('content.menus.actions', 'admin-links-common')} {MODULE_NAME}",
+			title: "${LangLoader::get_message('menu.tree.links', 'menu-lang')} {MODULE_NAME}",
 			format: "multitoggle",
 			actionslinks: true,
 			breakpoint: 768

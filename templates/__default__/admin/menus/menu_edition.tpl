@@ -7,8 +7,8 @@
 			# END elements #
 		</ul>
 		<fieldset class="fieldset-submit">
-			<button class="button" type="button" id="menu_element_{ID}_add_sub_element" name="menu_element_{ID}_add_sub_element" onclick="addSubElement('menu_element_{ID}');">{L_ADD_SUB_ELEMENT}</button>
-			<button class="button" type="button" id="menu_element_{ID}_add_sub_menu" name="menu_element_{ID}_add_sub_menu" onclick="addSubMenu('menu_element_{ID}');">{L_ADD_SUB_MENU}</button>
+			<button class="button" type="button" id="menu_element_{ID}_add_sub_element" name="menu_element_{ID}_add_sub_element" onclick="addSubElement('menu_element_{ID}');">{@menu.add.item}</button>
+			<button class="button" type="button" id="menu_element_{ID}_add_sub_menu" name="menu_element_{ID}_add_sub_menu" onclick="addSubMenu('menu_element_{ID}');">{@menu.add.sub.menu}</button>
 		</fieldset>
 	</div>
 # ENDIF #
@@ -19,9 +19,9 @@
 		<div class="sortable-title" aria-label="${LangLoader::get_message('sub.menu', 'admin')}">
 			<div class="grouped-inputs inputs-with-sup large-inputs-group">
 				<span class="grouped-element bgc-full notice"><i class="fa fa-folder" aria-hidden="true"></i></span>
-				<label for="menu_element_{ID}_name" class="label-sup grouped-element"><span>{L_NAME}</span><input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name"></label>
-				<label for="menu_element_{ID}_url" class="label-sup grouped-element"><span>{L_URL}</span><input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url"></label>
-				<label for="menu_element_{ID}_image" class="label-sup grouped-element"><span>{L_IMAGE}</span><input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)"></label>
+				<label for="menu_element_{ID}_name" class="label-sup grouped-element"><span>{@common.nom}</span><input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name"></label>
+				<label for="menu_element_{ID}_url" class="label-sup grouped-element"><span>{@common.url}</span><input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url"></label>
+				<label for="menu_element_{ID}_image" class="label-sup grouped-element"><span>{@common.image}</span><input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)"></label>
 				<script>
 					jQuery(document).ready(function() {
 						image_preview(jQuery('#menu_element_{ID}_image').val(), menu_element_{ID}_image_preview, true);
@@ -32,15 +32,15 @@
 
 		</div>
 		<div class="sortable-actions">
-			<a href="#" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});return false;" aria-label="{L_MORE}"><i class="fa fa-cog" aria-hidden="true"></i></a>
-			<a href="#" id="menu_element_{ID}_delete_image" style="cursor:pointer;" onclick="deleteElement('menu_element_{ID}');return false;" aria-label="{L_DELETE}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+			<a href="#" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});return false;" aria-label="{@form.authorizations.management}"><i class="fa fa-cog" aria-hidden="true"></i></a>
+			<a href="#" id="menu_element_{ID}_delete_image" style="cursor:pointer;" onclick="deleteElement('menu_element_{ID}');return false;" aria-label="{@common.delete}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
 		</div>
 		<div class="spacer"></div>
 		<fieldset id="menu_element_{ID}_properties"# IF C_AUTH_MENU_HIDDEN # style="display: none;"# ENDIF #>
-			<legend>{L_PROPERTIES}</legend>
+			<legend>{@form.authorizations}</legend>
 			<div class="fieldset-inset">
 				<div class="form-element full-field">
-					<label>{L_AUTHORIZATIONS}</label>
+					<label>{@form.authorizations.read}</label>
 					<div class="form-field">{AUTH_FORM}</div>
 				</div>
 			</div>
@@ -52,21 +52,21 @@
 			# END elements #
 		</ul>
 		<fieldset class="fieldset-submit">
-			<button class="button" type="button" id="menu_element_{ID}_add_sub_element" name="menu_element_{ID}_add_sub_element" onclick="addSubElement('menu_element_{ID}');">{L_ADD_SUB_ELEMENT}</button>
-			<button class="button" type="button" id="menu_element_{ID}_add_sub_menu" name="menu_element_{ID}_add_sub_menu" onclick="addSubMenu('menu_element_{ID}');">{L_ADD_SUB_MENU}</button>
+			<button class="button" type="button" id="menu_element_{ID}_add_sub_element" name="menu_element_{ID}_add_sub_element" onclick="addSubElement('menu_element_{ID}');">{@menu.add.item}</button>
+			<button class="button" type="button" id="menu_element_{ID}_add_sub_menu" name="menu_element_{ID}_add_sub_menu" onclick="addSubMenu('menu_element_{ID}');">{@menu.add.sub.menu}</button>
 		</fieldset>
 	</li>
 # ENDIF #
 
 # IF C_LINK #
 	<li class="sortable-element" id="menu_element_{ID}" data-id="{ID}">
-		<div class="sortable-selector" aria-label="${LangLoader::get_message('position.move', 'common')}"></div>
-		<div class="sortable-title" aria-label="${LangLoader::get_message('menu.element', 'admin')}">
+		<div class="sortable-selector" aria-label="{@common.move}"></div>
+		<div class="sortable-title" aria-label="{@menu.item}">
 			<div class="grouped-inputs inputs-with-sup large-inputs-group">
 				<span class="grouped-element bgc-full link-color"><i class="fa fa-globe" aria-hidden="true"></i></span>
-				<label for="menu_element_{ID}_name" class="label-sup grouped-element"><span>{L_NAME}</span> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name"></label>
-				<label for="menu_element_{ID}_url" class="label-sup grouped-element"><span>{L_URL}</span> <input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url"></label>
-				<label for="menu_element_{ID}_image" class="label-sup grouped-element"><span>{L_IMAGE}</span> <input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)"></label>
+				<label for="menu_element_{ID}_name" class="label-sup grouped-element"><span>{@common.name}</span> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name"></label>
+				<label for="menu_element_{ID}_url" class="label-sup grouped-element"><span>{@common.url}</span> <input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url"></label>
+				<label for="menu_element_{ID}_image" class="label-sup grouped-element"><span>{@common.image}</span> <input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)"></label>
 				<script>
 					jQuery(document).ready(function() {
 						image_preview(jQuery('#menu_element_{ID}_image').val(), menu_element_{ID}_image_preview, true);
@@ -76,15 +76,15 @@
 			</div>
 		</div>
 		<div class="sortable-actions">
-			<a href="#" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});return false;" aria-label="{L_MORE}"><i class="fa fa-cog" aria-hidden="true"></i></a>
-			<a href="#" id="menu_element_{ID}_delete_image" style="cursor:pointer;" onclick="deleteElement('menu_element_{ID}');return false;" aria-label="{L_DELETE}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+			<a href="#" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});return false;" aria-label="{@form.authorizations.management}"><i class="fa fa-cog" aria-hidden="true"></i></a>
+			<a href="#" id="menu_element_{ID}_delete_image" style="cursor:pointer;" onclick="deleteElement('menu_element_{ID}');return false;" aria-label="{@common.delete}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
 		</div>
 		<div class="spacer"></div>
 		<fieldset id="menu_element_{ID}_properties"# IF C_AUTH_MENU_HIDDEN # style="display: none;"# ENDIF #>
-			<legend>{L_PROPERTIES}</legend>
+			<legend>{@form.authorizations}</legend>
 			<div class="fieldset-inset">
 				<div class="form-element full-field">
-					<label>{L_AUTHORIZATIONS}</label>
+					<label>{@form.authorizations.read}</label>
 					<div class="form-field">{AUTH_FORM}</div>
 				</div>
 			</div>

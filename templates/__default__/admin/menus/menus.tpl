@@ -1,12 +1,12 @@
 <script>
-// Hide/reveal the block menu to add menus
+	// Hide/reveal the block menu to add menus
 	var delay = 1200; // Delay to hide the block on mouseleave.
 	var timeout;
 	var displayed = false;
 	var previous = '';
 	var started = false;
 
-// Show the block
+	// Show the block
 	function menu_display_block(divID)
 	{
 		if( timeout )
@@ -26,7 +26,7 @@
 		}
 	}
 
-// Hide the block
+	// Hide the block
 	function menu_hide_block(idfield, stop)
 	{
 		if( stop && timeout )
@@ -35,7 +35,7 @@
 			timeout = setTimeout('menu_display_block()', delay);
 	}
 
-//  Opacity when block menu is unchecked
+	//  Opacity when block menu is unchecked
 	function minimize_container(input, containerName)
 	{
 		var container = document.getElementById('mod_' + containerName);
@@ -55,7 +55,7 @@
 		}
 	}
 
-// Sortable drag and drop
+	// Sortable drag and drop
 	var menusContainerList = new Array(
 		'mod_header',
 		'mod_subheader',
@@ -81,7 +81,7 @@
 			}).appendTo('#form_menus');
 		}
 	}
-	
+
 	function createSortableMenu()
 	{
 		var containerListLength = menusContainerList.length;
@@ -90,7 +90,7 @@
 			jQuery('#' + menusContainerList[i]).sortable({
 				handle: '.fa-arrows-alt',
 				group: 'menus',
-				placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>',
+				placeholder: '<div class="dropzone">' + ${escapejs(@common.drop.here)} + '</div>',
 				containerSelector: '#mod_header, #mod_subheader, #mod_left, #mod_right, #mod_topcentral, #mod_central, #mod_bottomcentral, #mod_topfooter, #mod_footer',
 				itemSelector: 'div.menus-block-container'
 			});
@@ -100,40 +100,46 @@
 
 <form id="form_menus" action="menus.php?action=save" method="post" onsubmit="build_menu_tree();">
 
-	<div class="themesmanagement">
-		<strong>{L_THEME_MANAGEMENT} :</strong>
-		<select name="switchtheme" onchange="document.location = '?token={TOKEN}&amp;theme=' + this.options[this.selectedIndex].value;">
-			# START themes #
-				<option value="{themes.IDNAME}" {themes.SELECTED} >{themes.NAME}</option>
-			# END themes #
-		</select>
+	<div class="themesmanagement flex-between">
+		<h2>{@menu.menus.management}</h2>
+		<div class="grouped-inputs">
+			<span class="grouped-element">{@menu.theme.management} :</span>
+			<select class="grouped-element" name="switchtheme" onchange="document.location = '?token={TOKEN}&amp;theme=' + this.options[this.selectedIndex].value;">
+				# START themes #
+					<option value="{themes.THEME_ID}" {themes.SELECTED} >{themes.NAME}</option>
+				# END themes #
+			</select>
+		</div>
 	</div>
 	<div id="admin-contents">
 		<div class="menusmanagement">
 			<div id="container-top-header">
 				<div class="container-block">
-					<p class="menu-block-libelle mini-checkbox">
-						<span class="form-field-checkbox">
-							<label class="checkbox" for="header_enabled">
-								<input id="header_enabled" onclick="minimize_container(this, 'header')" type="checkbox" name="header_enabled" {CHECKED_HEADER_COLUMN} />
-								<span>&nbsp;</span>
-							</label>
+					<p class="menu-block-libelle mini-checkbox flex-between">
+						<span>
+							<span class="form-field-checkbox">
+								<label class="checkbox" for="header_enabled">
+									<input id="header_enabled" onclick="minimize_container(this, 'header')" type="checkbox" name="header_enabled" {CHECKED_HEADER_COLUMN} />
+									<span>&nbsp;</span>
+								</label>
+							</span>
+							<span class="text-strong">{@menu.header}</span>
 						</span>
-						{L_HEADER}
+						<span class="pinned notice">{HEADER_MENUS_NUMBER}</span>
 					</p>
 					<p class="menus-block-add" onclick="menu_display_block('addmenu1');" onmouseover="menu_hide_block('addmenu1', 1);" onmouseout="menu_hide_block('addmenu1', 0);">
-						<i class="fa fa-plus" aria-hidden="true"></i> {L_ADD_MENU}
+						<i class="fa fa-plus" aria-hidden="true"></i> {@menu.add.menu}
 					</p>
 					<div class="container-block-absolute" id="moveaddmenu1">
 						<div onmouseover="menu_hide_block('addmenu1', 1);" onmouseout="menu_hide_block('addmenu1', 0);">
 							<p class="menus-block-add menus-block-add-links">
-								<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=1" class="small">{L_ADD_LINKS_MENUS}</a>
+								<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=1" class="small">{@menu.links.menu}</a>
 							</p>
 							<p class="menus-block-add menus-block-add-links">
-								<a href="{PATH_TO_ROOT}/admin/menus/content.php?s=1" class="small">{L_ADD_CONTENT_MENUS}</a>
+								<a href="{PATH_TO_ROOT}/admin/menus/content.php?s=1" class="small">{@menu.content.menu}</a>
 							</p>
 							<p class="menus-block-add menus-block-add-links">
-								<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=1" class="small">{L_ADD_FEED_MENUS}</a>
+								<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=1" class="small">{@menu.feed.menu}</a>
 							</p>
 						</div>
 					</div>
@@ -146,28 +152,31 @@
 			</div>
 			<div id="container-sub-header">
 				<div class="container-block">
-					<p class="menu-block-libelle mini-checkbox">
-						<span class="form-field-checkbox">
-							<label class="checkbox" for="sub_header_enabled">
-								<input id="sub_header_enabled" onclick="minimize_container(this, 'subheader')" type="checkbox" name="sub_header_enabled" {CHECKED_SUB_HEADER_COLUMN} />
-								<span>&nbsp;</span>
-							</label>
+					<p class="menu-block-libelle mini-checkbox flex-between">
+						<span>
+							<span class="form-field-checkbox">
+								<label class="checkbox" for="sub_header_enabled">
+									<input id="sub_header_enabled" onclick="minimize_container(this, 'subheader')" type="checkbox" name="sub_header_enabled" {CHECKED_SUB_HEADER_COLUMN} />
+									<span>&nbsp;</span>
+								</label>
+							</span>
+							<span class="text-strong">{@menu.sub.header}</span>
 						</span>
-						{L_SUB_HEADER}
+						<span class="pinned notice">{SUB_HEADER_MENUS_NUMBER}</span>
 					</p>
 					<p class="menus-block-add" onclick="menu_display_block('addmenu2');" onmouseover="menu_hide_block('addmenu2', 1);" onmouseout="menu_hide_block('addmenu2', 0);">
-						<i class="fa fa-plus" aria-hidden="true"></i> {L_ADD_MENU}
+						<i class="fa fa-plus" aria-hidden="true"></i> {@menu.add.menu}
 					</p>
 					<div class="container-block-absolute" id="moveaddmenu2">
 						<div onmouseover="menu_hide_block('addmenu2', 1);" onmouseout="menu_hide_block('addmenu2', 0);">
 							<p class="menus-block-add menus-block-add-links">
-								<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=2" class="small">{L_ADD_LINKS_MENUS}</a>
+								<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=2" class="small">{@menu.links.menu}</a>
 							</p>
 							<p class="menus-block-add menus-block-add-links">
-								<a href="{PATH_TO_ROOT}/admin/menus/content.php?s=2" class="small">{L_ADD_CONTENT_MENUS}</a>
+								<a href="{PATH_TO_ROOT}/admin/menus/content.php?s=2" class="small">{@menu.content.menu}</a>
 							</p>
 							<p class="menus-block-add menus-block-add-links">
-								<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=2" class="small">{L_ADD_FEED_MENUS}</a>
+								<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=2" class="small">{@menu.feed.menu}</a>
 							</p>
 						</div>
 					</div>
@@ -181,31 +190,34 @@
 			<div id="container-global" class="menus-management-column">
 				<div id="container-menu-left" class="menus-management-column-left">
 					<div class="container-block">
+						<p class="menu-block-libelle mini-checkbox flex-between">
+							<span>
+								<span class="form-field-checkbox">
+									<label class="checkbox" for="left_column_enabled">
+										<input id="left_column_enabled" onclick="minimize_container(this, 'left')" type="checkbox" name="left_column_enabled" {CHECKED_LEFT_COLUMN} />
+										<span>&nbsp;</span>
+									</label>
+								</span>
+								<span class="text-strong">{@menu.left}	</span>
+							</span>
+							<span class="pinned notice">{LEFT_MENUS_NUMBER}</span>
+						</p>
+						<p class="menus-block-add" onclick="menu_display_block('addmenu3');" onmouseover="menu_hide_block('addmenu3', 1);" onmouseout="menu_hide_block('addmenu3', 0);">
+							<i class="fa fa-plus" aria-hidden="true"></i> {@menu.add.menu}
+						</p>
 						<div class="container-block-absolute" id="moveaddmenu3">
 							<div onmouseover="menu_hide_block('addmenu3', 1);" onmouseout="menu_hide_block('addmenu3', 0);">
 								<p class="menus-block-add menus-block-add-links">
-									<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=7" class="small">{L_ADD_LINKS_MENUS}</a>
+									<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=7" class="small">{@menu.links.menu}</a>
 								</p>
 								<p class="menus-block-add menus-block-add-links">
-									<a href="{PATH_TO_ROOT}/admin/menus/content.php?s=7" class="small">{L_ADD_CONTENT_MENUS}</a>
+									<a href="{PATH_TO_ROOT}/admin/menus/content.php?s=7" class="small">{@menu.content.menu}</a>
 								</p>
 								<p class="menus-block-add menus-block-add-links">
-									<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=7" class="small">{L_ADD_FEED_MENUS}</a>
+									<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=7" class="small">{@menu.feed.menu}</a>
 								</p>
 							</div>
 						</div>
-						<p class="menu-block-libelle mini-checkbox">
-							<span class="form-field-checkbox">
-								<label class="checkbox" for="left_column_enabled">
-									<input id="left_column_enabled" onclick="minimize_container(this, 'left')" type="checkbox" name="left_column_enabled" {CHECKED_LEFT_COLUMN} />
-									<span>&nbsp;</span>
-								</label>
-							</span>
-							{L_LEFT_MENU}
-						</p>
-						<p class="menus-block-add" onclick="menu_display_block('addmenu3');" onmouseover="menu_hide_block('addmenu3', 1);" onmouseout="menu_hide_block('addmenu3', 0);">
-							<i class="fa fa-plus" aria-hidden="true"></i> {L_ADD_MENU}
-						</p>
 					</div>
 					<div id="mod_left" class="menus-block-list">
 						# START mod_left #
@@ -216,28 +228,31 @@
 				<div id="container-main" class="menus-management-column-central">
 					<div id="container-top-content">
 						<div class="container-block">
-							<p class="menu-block-libelle mini-checkbox">
-								<span class="form-field-checkbox">
-									<label class="checkbox" for="top_central_enabled">
-										<input id="top_central_enabled" onclick="minimize_container(this, 'topcentral')" type="checkbox" name="top_central_enabled" {CHECKED_TOP_CENTRAL_COLUMN} />
-										<span>&nbsp;</span>
-									</label>
+							<p class="menu-block-libelle mini-checkbox flex-between">
+								<span>
+									<span class="form-field-checkbox">
+										<label class="checkbox" for="top_central_enabled">
+											<input id="top_central_enabled" onclick="minimize_container(this, 'topcentral')" type="checkbox" name="top_central_enabled" {CHECKED_TOP_CENTRAL_COLUMN} />
+											<span>&nbsp;</span>
+										</label>
+									</span>
+									<span class="text-strong">{@menu.top.central}</span>
 								</span>
-								{L_TOP_CENTRAL_MENU}
+								<span class="pinned notice">{TOP_CENTRAL_MENUS_NUMBER}</span>
 							</p>
 							<p class="menus-block-add" onclick="menu_display_block('addmenu4');" onmouseover="menu_hide_block('addmenu4', 1);" onmouseout="menu_hide_block('addmenu4', 0);">
-								<i class="fa fa-plus" aria-hidden="true"></i> {L_ADD_MENU}
+								<i class="fa fa-plus" aria-hidden="true"></i> {@menu.add.menu}
 							</p>
 							<div class="container-block-absolute" id="moveaddmenu4">
 								<div onmouseover="menu_hide_block('addmenu4', 1);" onmouseout="menu_hide_block('addmenu4', 0);">
 									<p class="menus-block-add menus-block-add-links">
-										<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=3" class="small">{L_ADD_LINKS_MENUS}</a>
+										<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=3" class="small">{@menu.links.menu}</a>
 									</p>
 									<p class="menus-block-add menus-block-add-links">
-										<a href="{PATH_TO_ROOT}/admin/menus/content.php?s=3" class="small">{L_ADD_CONTENT_MENUS}</a>
+										<a href="{PATH_TO_ROOT}/admin/menus/content.php?s=3" class="small">{@menu.content.menu}</a>
 									</p>
 									<p class="menus-block-add menus-block-add-links">
-										<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=3" class="small">{L_ADD_FEED_MENUS}</a>
+										<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=3" class="small">{@menu.feed.menu}</a>
 									</p>
 								</div>
 							</div>
@@ -250,7 +265,10 @@
 					</div>
 					<div id="container-main-content">
 						<div class="container-block">
-							<p class="menu-block-libelle">{L_MENUS_AVAILABLE}</p>
+							<p class="menu-block-libelle flex-between">
+								<span class="text-strong">{@menu.available.menus}</span>
+								<span class="pinned notice">{AVAILABLE_MENUS_NUMBER}</span>
+							</p>
 							<p class="menus-block-add"></p>
 						</div>
 						<div id="mod_central" class="menus-block-list">
@@ -261,28 +279,31 @@
 					</div>
 					<div id="container-bottom-content">
 						<div class="container-block">
-							<p class="menu-block-libelle mini-checkbox">
-								<span class="form-field-checkbox">
-									<label class="checkbox" for="bottom_central_enabled">
-										<input id="bottom_central_enabled" onclick="minimize_container(this, 'bottomcentral')" type="checkbox" name="bottom_central_enabled" {CHECKED_BOTTOM_CENTRAL_COLUMN} />
-										<span>&nbsp;</span>
-									</label>
+							<p class="menu-block-libelle mini-checkbox flex-between">
+								<span>
+									<span class="form-field-checkbox">
+										<label class="checkbox" for="bottom_central_enabled">
+											<input id="bottom_central_enabled" onclick="minimize_container(this, 'bottomcentral')" type="checkbox" name="bottom_central_enabled" {CHECKED_BOTTOM_CENTRAL_COLUMN} />
+											<span>&nbsp;</span>
+										</label>
+									</span>
+									<span class="text-strong">{@menu.bottom.central}</span>
 								</span>
-								{L_BOTTOM_CENTRAL_MENU}
+								<span class="pinned notice">{BOTTOM_CENTRAL_MENUS_NUMBER}</span>
 							</p>
 							<p class="menus-block-add" onclick="menu_display_block('addmenu5');" onmouseover="menu_hide_block('addmenu5', 1);" onmouseout="menu_hide_block('addmenu5', 0);">
-								<i class="fa fa-plus" aria-hidden="true"></i> {L_ADD_MENU}
+								<i class="fa fa-plus" aria-hidden="true"></i> {@menu.add.menu}
 							</p>
 							<div class="container-block-absolute" id="moveaddmenu5">
 								<div onmouseover="menu_hide_block('addmenu5', 1);" onmouseout="menu_hide_block('addmenu5', 0);">
 									<p class="menus-block-add menus-block-add-links">
-										<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=4" class="small">{L_ADD_LINKS_MENUS}</a>
+										<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=4" class="small">{@menu.links.menu}</a>
 									</p>
 									<p class="menus-block-add menus-block-add-links">
-										<a href="{PATH_TO_ROOT}/admin/menus/content.php?s=4" class="small">{L_ADD_CONTENT_MENUS}</a>
+										<a href="{PATH_TO_ROOT}/admin/menus/content.php?s=4" class="small">{@menu.content.menu}</a>
 									</p>
 									<p class="menus-block-add menus-block-add-links">
-										<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=4" class="small">{L_ADD_FEED_MENUS}</a>
+										<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=4" class="small">{@menu.feed.menu}</a>
 									</p>
 								</div>
 							</div>
@@ -297,28 +318,31 @@
 				<div id="container-menu-right" class="menus-management-column-right">
 					<div class="container-block">
 						<div class="menu-manager-block">
-							<p class="menu-block-libelle mini-checkbox">
-								<span class="form-field-checkbox">
-									<label class="checkbox" for="right_column_enabled">
-										<input id="right_column_enabled" onclick="minimize_container(this, 'right')" type="checkbox" name="right_column_enabled" {CHECKED_RIGHT_COLUMN} />
-										<span>&nbsp;</span>
-									</label>
+							<p class="menu-block-libelle mini-checkbox flex-between">
+								<span>
+									<span class="form-field-checkbox">
+										<label class="checkbox" for="right_column_enabled">
+											<input id="right_column_enabled" onclick="minimize_container(this, 'right')" type="checkbox" name="right_column_enabled" {CHECKED_RIGHT_COLUMN} />
+											<span>&nbsp;</span>
+										</label>
+									</span>
+									<span class="text-strong">{@menu.right}</span>
 								</span>
-								{L_RIGHT_MENU}
+								<span class="pinned notice">{RIGHT_MENUS_NUMBER}</span>
 							</p>
 							<p class="menus-block-add" onclick="menu_display_block('addmenu6');" onmouseover="menu_hide_block('addmenu6', 1);" onmouseout="menu_hide_block('addmenu6', 0);">
-								<i class="fa fa-plus" aria-hidden="true"></i> {L_ADD_MENU}
+								<i class="fa fa-plus" aria-hidden="true"></i> {@menu.add.menu}
 							</p>
 							<div class="container-block-absolute" id="moveaddmenu6">
 								<div onmouseover="menu_hide_block('addmenu6', 1);" onmouseout="menu_hide_block('addmenu6', 0);">
 									<p class="menus-block-add menus-block-add-links">
-										<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=8" class="small">{L_ADD_LINKS_MENUS}</a>
+										<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=8" class="small">{@menu.links.menu}</a>
 									</p>
 									<p class="menus-block-add menus-block-add-links">
-										<a href="{PATH_TO_ROOT}/admin/menus/content.php?s=8" class="small">{L_ADD_CONTENT_MENUS}</a>
+										<a href="{PATH_TO_ROOT}/admin/menus/content.php?s=8" class="small">{@menu.content.menu}</a>
 									</p>
 									<p class="menus-block-add menus-block-add-links">
-										<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=8" class="small">{L_ADD_FEED_MENUS}</a>
+										<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=8" class="small">{@menu.feed.menu}</a>
 									</p>
 								</div>
 							</div>
@@ -333,28 +357,31 @@
 			</div>
 			<div id="container-top-footer">
 				<div class="container-block">
-					<p class="menu-block-libelle mini-checkbox">
-						<span class="form-field-checkbox">
-							<label class="checkbox" for="top_footer_enabled">
-								<input id="top_footer_enabled" onclick="minimize_container(this, 'topfooter')" type="checkbox" name="top_footer_enabled" {CHECKED_TOP_FOOTER_COLUMN} />
-								<span>&nbsp;</span>
-							</label>
+					<p class="menu-block-libelle mini-checkbox flex-between">
+						<span>
+							<span class="form-field-checkbox">
+								<label class="checkbox" for="top_footer_enabled">
+									<input id="top_footer_enabled" onclick="minimize_container(this, 'topfooter')" type="checkbox" name="top_footer_enabled" {CHECKED_TOP_FOOTER_COLUMN} />
+									<span>&nbsp;</span>
+								</label>
+							</span>
+							<span class="text-strong">{@menu.top.footer}</span>
 						</span>
-						{L_TOP_FOOTER}
+						<span class="pinned notice">{TOP_FOOTER_MENUS_NUMBER}</span>
 					</p>
 					<p class="menus-block-add" onclick="menu_display_block('addmenu7');" onmouseover="menu_hide_block('addmenu7', 1);" onmouseout="menu_hide_block('addmenu7', 0);">
-						<i class="fa fa-plus" aria-hidden="true"></i> {L_ADD_MENU}
+						<i class="fa fa-plus" aria-hidden="true"></i> {@menu.add.menu}
 					</p>
 					<div class="container-block-absolute" id="moveaddmenu7">
 						<div onmouseover="menu_hide_block('addmenu7', 1);" onmouseout="menu_hide_block('addmenu7', 0);">
 							<p class="menus-block-add menus-block-add-links">
-								<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=5" class="small">{L_ADD_LINKS_MENUS}</a>
+								<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=5" class="small">{@menu.links.menu}</a>
 							</p>
 							<p class="menus-block-add menus-block-add-links">
-								<a href="{PATH_TO_ROOT}/admin/menus/content.php?s=5" class="small">{L_ADD_CONTENT_MENUS}</a>
+								<a href="{PATH_TO_ROOT}/admin/menus/content.php?s=5" class="small">{@menu.content.menu}</a>
 							</p>
 							<p class="menus-block-add menus-block-add-links">
-								<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=5" class="small">{L_ADD_FEED_MENUS}</a>
+								<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=5" class="small">{@menu.feed.menu}</a>
 							</p>
 						</div>
 					</div>
@@ -367,28 +394,31 @@
 			</div>
 			<div id="container-footer-content">
 				<div class="container-block">
-					<p class="menu-block-libelle mini-checkbox">
-						<span class="form-field-checkbox">
-							<label class="checkbox" for="footer_enabled">
-								<input id="footer_enabled" onclick="minimize_container(this, 'footer')" type="checkbox" name="footer_enabled" {CHECKED_FOOTER_COLUMN} />
-								<span>&nbsp;</span>
-							</label>
+					<p class="menu-block-libelle mini-checkbox flex-between">
+						<span>
+							<span class="form-field-checkbox">
+								<label class="checkbox" for="footer_enabled">
+									<input id="footer_enabled" onclick="minimize_container(this, 'footer')" type="checkbox" name="footer_enabled" {CHECKED_FOOTER_COLUMN} />
+									<span>&nbsp;</span>
+								</label>
+							</span>
+							<span class="text-strong">{@menu.footer}</span>
 						</span>
-						{L_FOOTER}
+						<span class="pinned notice">{FOOTER_MENUS_NUMBER}</span>
 					</p>
 					<p class="menus-block-add" onclick="menu_display_block('addmenu8');" onmouseover="menu_hide_block('addmenu8', 1);" onmouseout="menu_hide_block('addmenu8', 0);">
-						<i class="fa fa-plus" aria-hidden="true"></i> {L_ADD_MENU}
+						<i class="fa fa-plus" aria-hidden="true"></i> {@menu.add.menu}
 					</p>
 					<div class="container-block-absolute" id="moveaddmenu8">
 						<div onmouseover="menu_hide_block('addmenu8', 1);" onmouseout="menu_hide_block('addmenu8', 0);">
 							<p class="menus-block-add menus-block-add-links">
-								<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=6" class="small">{L_ADD_LINKS_MENUS}</a>
+								<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=6" class="small">{@menu.links.menu}</a>
 							</p>
 							<p class="menus-block-add menus-block-add-links">
-								<a href="{PATH_TO_ROOT}/admin/menus/content.php?s=6" class="small">{L_ADD_CONTENT_MENUS}</a>
+								<a href="{PATH_TO_ROOT}/admin/menus/content.php?s=6" class="small">{@menu.content.menu}</a>
 							</p>
 							<p class="menus-block-add menus-block-add-links">
-								<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=6" class="small">{L_ADD_FEED_MENUS}</a>
+								<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=6" class="small">{@menu.feed.menu}</a>
 							</p>
 						</div>
 					</div>
@@ -402,8 +432,8 @@
 		</div>
 
 		<div id="valid-position-menus">
-			<button type="submit" class="button submit big" name="valid" value="true"><i class="far fa-fw fa-check-square"></i> {L_VALID_POSTIONS}</button>
-			<input type="hidden" name="theme" value="{NAME_THEME}">
+			<button type="submit" class="button bgc-full success big" name="valid" value="true"><i class="far fa-fw fa-check-square"></i> {@menu.validated.position}</button>
+			<input type="hidden" name="theme" value="{THEME_NAME}">
 			<input type="hidden" name="token" value="{TOKEN}">
 		</div>
 	</div>
@@ -411,6 +441,33 @@
 	<script>
 		jQuery(document).ready(function() {
 			createSortableMenu();
+
+			// Change validation button on moving menus
+			function checkForChanges(){
+				var thisId,
+					initPrevSibling,
+					newPrevSibling;
+				if(jQuery( '.menus-block-container' ).hasClass('dragged'))
+				{
+					thisId = jQuery('.menus-block-container.dragged').attr('id')
+					initPrevSibling = jQuery('.menus-block-container.dragged').prev().attr('id');
+					if(typeof initPrevSibling === 'undefined') initPrevSibling = 'initPrev';
+					jQuery('#' + thisId).on('mouseup', function() {
+						newPrevSibling = jQuery(this).siblings('.dropzone').prev().attr('id');
+						if(typeof newPrevSibling === 'undefined') newPrevSibling = 'newPrev';
+						if(newPrevSibling != initPrevSibling && newPrevSibling != thisId)
+					    	jQuery('#valid-position-menus button').addClass('warning').removeClass('success').html('<i class="far fa-fw fa-square"></i> {@menu.valid.position}');
+					});
+				}
+			    else
+			        setTimeout(checkForChanges, 3);
+			}
+			jQuery(checkForChanges);
+
+			// Change validation button on changing checkboxes status
+			jQuery('[type="checkbox"]').on('change', function(){
+				jQuery('#valid-position-menus button').addClass('warning').removeClass('success').html('<i class="far fa-fw fa-square"></i> {@menu.valid.position}');
+			})
 		});
 	</script>
 </form>
