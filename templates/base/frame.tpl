@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{L_XML_LANGUAGE}"# IF C_OPENGRAPH # prefix="og: https://ogp.me/ns#"# ENDIF #>
+<html lang="{@common.xml.lang}"# IF C_OPENGRAPH # prefix="og: https://ogp.me/ns#"# ENDIF #>
 	<head>
 		<meta charset="utf-8" />
 		<title>{TITLE}</title>
@@ -11,7 +11,7 @@
 		# IF C_OPENGRAPH #
 			<meta property="og:site_name" content="{SITE_NAME}" />
 			<meta name="twitter:card" content="{SITE_NAME}">
-			<meta property="og:locale" content="{L_XML_LANGUAGE}" />
+			<meta property="og:locale" content="{@common.xml.lang}" />
 			<meta property="og:title" content="{PAGE_TITLE}" />
 			<meta name="twitter:title" content="{PAGE_TITLE}">
 			<meta property="og:type" content="{PAGE_TYPE}" />
@@ -41,7 +41,7 @@
 		{MODULES_CSS}
 
 		# IF C_FAVICON #
-			<link rel="icon" href="{FAVICON}" type="{FAVICON_TYPE}" />
+			<link rel="icon" href="{U_FAVICON}" type="{FAVICON_TYPE}" />
 		# ENDIF #
 
 		# INCLUDE JS_TOP #

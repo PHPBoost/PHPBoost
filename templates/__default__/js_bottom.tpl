@@ -4,9 +4,9 @@
 		jQuery('[data-confirmation]').each(function() {
 			data_confirmation = jQuery(this).attr('data-confirmation');
 			if (data_confirmation == 'delete-element')
-				var message = ${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))};
+				var message = ${escapejs(LangLoader::get_message('warning.confirm.delete', 'warning-lang'))};
 			else if (data_confirmation == 'delete-elements')
-				var message = ${escapejs(LangLoader::get_message('confirm.delete.elements', 'status-messages-common'))};
+				var message = ${escapejs(LangLoader::get_message('warning.confirm.delete.elements', 'warning-lang'))};
 			else
 				var message = data_confirmation;
 			this.onclick = function () { return confirm(message); }
@@ -20,13 +20,13 @@
 		jQuery('a[data-lightbox^=formatter]').attr('data-rel', 'lightcase:collection');
 		jQuery('a[data-rel^=lightcase]').lightcase({
 			labels : {
-				'errorMessage'    : ${escapejs(LangLoader::get_message('element.unexist', 'status-messages-common'))},
-				'sequenceInfo.of' : ' ' + ${escapejs(TextHelper::lcfirst(LangLoader::get_message('of', 'common')))} + ' ',
-				'close'           : ${escapejs(LangLoader::get_message('close', 'main'))},
-				'navigator.prev'  : ${escapejs(LangLoader::get_message('previous', 'common'))},
-				'navigator.next'  : ${escapejs(LangLoader::get_message('next', 'common'))},
-				'navigator.play'  : ${escapejs(LangLoader::get_message('play', 'common'))},
-				'navigator.pause' : ${escapejs(LangLoader::get_message('pause', 'common'))}
+				'errorMessage'    : ${escapejs(LangLoader::get_message('warning.element.unexist', 'warning-lang'))},
+				'sequenceInfo.of' : ' ' + ${escapejs(TextHelper::lcfirst(LangLoader::get_message('common.of', 'common-lang')))} + ' ',
+				'close'           : ${escapejs(LangLoader::get_message('common.close', 'common-lang'))},
+				'navigator.prev'  : ${escapejs(LangLoader::get_message('common.previous', 'common-lang'))},
+				'navigator.next'  : ${escapejs(LangLoader::get_message('common.next', 'common-lang'))},
+				'navigator.play'  : ${escapejs(LangLoader::get_message('common.play', 'common-lang'))},
+				'navigator.pause' : ${escapejs(LangLoader::get_message('common.pause', 'common-lang'))}
 			},
 			maxHeight: window.innerHeight,
 			maxWidth: window.innerWidth,
@@ -67,7 +67,7 @@
 
 // SelectImg
 	jQuery('.select-to-list').selectImg({
-		ariaLabel : ${escapejs(LangLoader::get_message('click.to.select', 'common'))}
+		ariaLabel : ${escapejs(LangLoader::get_message('common.click.to.select', 'common-lang'))}
 	});
 
 // SelectImg multi

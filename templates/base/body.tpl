@@ -3,7 +3,7 @@
 <header id="header">
 	<div id="top-header">
 		<div id="site-infos" role="banner">
-			<div id="site-logo" # IF C_HEADER_LOGO #style="background-image: url({HEADER_LOGO});"# ENDIF #></div>
+			<div id="site-logo" # IF C_HEADER_LOGO #style="background-image: url({U_HEADER_LOGO});"# ENDIF #></div>
 			<div id="site-name-container">
 				<a id="site-name" href="{PATH_TO_ROOT}/">{SITE_NAME}</a>
 				<span id="site-slogan">{SITE_SLOGAN}</span>
@@ -19,13 +19,13 @@
 
 		# IF C_VISIT_COUNTER #
 			<div id="visit-counter" class="hidden-small-screens">
-				<div class="visit-counter-total">
-					<span class="text-strong">{L_VISIT} : </span>
-					{VISIT_COUNTER_TOTAL}
+				<div class="visit-counter-total flex-between">
+					<span class="text-strong">{@user.guests} &nbsp;</span>
+					<span class="pinned visitor small">{VISIT_COUNTER_TOTAL}</span>
 				</div>
-				<div class="visit-counter-today">
-					<span class="text-strong">{L_TODAY} : </span>
-					{VISIT_COUNTER_DAY}
+				<div class="visit-counter-today flex-between">
+					<span class="text-strong">{@date.today}</span>
+					<span class="pinned visitor small">{VISIT_COUNTER_DAY}</span>
 				</div>
 			</div>
 		# ENDIF #
@@ -69,7 +69,7 @@
 				<ol itemscope itemtype="https://schema.org/BreadcrumbList">
 					<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
 						<a href="{START_PAGE}" itemprop="item">
-							<span itemprop="name">${LangLoader::get_message('home', 'main')}</span>
+							<span itemprop="name">{@common.home}</span>
     						<meta itemprop="position" content="1" />
 						</a>
 					</li>
@@ -127,16 +127,14 @@
 	# ENDIF #
 
 	<div role="contentinfo" class="footer-infos">
-		<span class="footer-infos-powered-by">{L_POWERED_BY} <a href="https://www.phpboost.com" aria-label="{L_PHPBOOST_LINK}">PHPBoost</a> {L_PHPBOOST_RIGHT}</span>
+		<span class="footer-infos-powered-by">{@common.powered.by} <i class="fa iboost fa-iboost-logo" aria-hidden="true"></i> <a href="https://www.phpboost.com" aria-label="{@common.phpboost.link}">PHPBoost</a></span> | <span aria-label="{@common.phpboost.right}"><i class="fab fa-osi" aria-hidden="true"></i></span>
 		# IF C_DISPLAY_BENCH #
-		<span class="footer-infos-separator"> | </span>
-		<span class="footer-infos-benchmark">{L_ACHIEVED} {BENCH}{L_UNIT_SECOND} - {REQ} {L_REQ} - {MEMORY_USED}</span>
+			| <span class="footer-infos-benchmark">{@common.achieved} {BENCH}{@date.unit.seconds} - {REQ} {@common.sql.request} - {MEMORY_USED}</span>
 		# ENDIF #
 		# IF C_DISPLAY_AUTHOR_THEME #
-		<span class="footer-infos-separator"> | </span>
-		<span class="footer-infos-template-author">{L_THEME} {L_THEME_NAME} {L_BY} <a href="{U_THEME_AUTHOR_LINK}">{L_THEME_AUTHOR}</a></span>
+			| <span class="footer-infos-template-author">{@common.theme} {L_THEME_NAME} ${TextHelper::lcfirst(@common.by)} <a href="{U_THEME_AUTHOR_LINK}">{L_THEME_AUTHOR}</a></span>
 		# ENDIF #
 	</div>
 </footer>
 
-<span id="scroll-to-top" class="scroll-to" role="button" aria-label="${LangLoader::get_message('common.scroll.to.top', 'common-lang')}"><i class="fa fa-chevron-up" aria-hidden="true"></i></span>
+<span id="scroll-to-top" class="scroll-to" role="button" aria-label="{@common.scroll.to.top}"><i class="fa fa-chevron-up" aria-hidden="true"></i></span>

@@ -3,16 +3,15 @@
 	<div id="message-maintain" class="floating-message-container">
 		<div id="message-helper-maintain" class="floating-element">
 			<div class="message-helper bgc warning">
-				<a id="message-helper-button-maintain" class="bgc-full warning {MESSAGE_CSS_CLASS}" aria-label="${LangLoader::get_message('message.close_ephemeral_message', 'status-messages-common')}"><i class="fa fa-close-message" aria-hidden="true"></i></a>
-				{L_MAINTAIN_DELAY}
-				<div id="release">{L_LOADING}...</div>
+				<a id="message-helper-button-maintain" class="bgc-full warning close-message" aria-label="{@common.close}"><i class="fa fa-times" aria-hidden="true"></i></a>
+				{@admin.maintenance.delay}
+				<div id="release">{@common.loading}...</div>
 				# INCLUDE DISABLE_MAINTENANCE #
 			</div>
 		</div>
 	</div>
 	# ENDIF #
 	<script>
-	<!--
 		jQuery(function(){
 			jQuery("#message-helper-maintain").fadeTo("fast", 1);
 
@@ -21,10 +20,8 @@
 				setTimeout('jQuery("#message-helper-maintain").hide();', 400);
 			});
 		});
-	-->
 	</script>
 	<script>
-	<!--
 		var release_timeout_seconds = 0;
 		function release(year, month, day, hour, minute, second)
 		{
@@ -58,7 +55,7 @@
 				release_seconds = Math.floor(release_time);
 				release_seconds = (release_seconds < 10) ? '0' + release_seconds : release_seconds;
 
-				document.getElementById('release').innerHTML = '<strong>' + release_days + '</strong> {L_DAYS} <strong>' + release_hours + '</strong> {L_HOURS} <strong>' + release_minutes + '</strong> {L_MIN} <strong>' + release_seconds + '</strong> {L_SEC}';
+				document.getElementById('release').innerHTML = '<strong>' + release_days + '</strong> {@date.days} <strong>' + release_hours + '</strong> {@date.hours} <strong>' + release_minutes + '</strong> {@date.minutes} <strong>' + release_seconds + '</strong> {@date.seconds}';
 			}
 		}
 		if ({UNSPECIFIED})
@@ -68,6 +65,5 @@
 			if (document.getElementById('release'))
 				document.getElementById('release').innerHTML = '<strong>{DELAY}</strong>';
 		}
-	-->
 	</script>
 # ENDIF #

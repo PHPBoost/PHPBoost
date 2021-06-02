@@ -24,6 +24,7 @@ $lang['common.home']         = 'Home';
 $lang['common.id']           = 'ID';
 $lang['common.image']        = 'Image';
 $lang['common.informations'] = 'Informations';
+$lang['common.loading']      = 'Loading';
 $lang['common.message']      = 'Message';
 $lang['common.messages']     = 'Messages';
 $lang['common.moderation']   = 'Moderation';
