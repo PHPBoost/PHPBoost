@@ -82,19 +82,19 @@ $lang['menu.comments']     = 'Commentaires';
 $lang['menu.modules'] = 'Modules';
 
 // Configuration
-$lang['menu.menus.management']  = 'Gestion des menus';
-$lang['menu.theme.management']  = 'Gestion du thème';
-$lang['menu.add.menu'] = 'Ajouter un menu';
-$lang['menu.header']            = 'Tête de page';
-$lang['menu.sub.header']         = 'Sous entête';
-$lang['menu.left']              = 'Menu gauche';
-$lang['menu.right']             = 'Menu droit';
-$lang['menu.top.central']       = 'Menu central haut';
-$lang['menu.bottom.central']    = 'Menu central bas';
-$lang['menu.top.footer']        = 'Sur pied de page';
-$lang['menu.footer']            = 'Pied de page';
-$lang['menu.available.menus']   = 'Menus disponibles';
-    // Menus type
+$lang['menu.menus.management'] = 'Gestion des menus';
+$lang['menu.theme.management'] = 'Gestion du thème';
+$lang['menu.add.menu']         = 'Ajouter un menu';
+$lang['menu.header']           = 'Tête de page';
+$lang['menu.sub.header']       = 'Sous entête';
+$lang['menu.left']             = 'Menu gauche';
+$lang['menu.right']            = 'Menu droit';
+$lang['menu.top.central']      = 'Menu central haut';
+$lang['menu.bottom.central']   = 'Menu central bas';
+$lang['menu.top.footer']       = 'Sur pied de page';
+$lang['menu.footer']           = 'Pied de page';
+$lang['menu.available.menus']  = 'Menus disponibles';
+    // Menu types
 $lang['menu.location']                = 'Emplacement';
 $lang['menu.display.title']           = 'Afficher le titre';
 $lang['menu.hidden.on.small.screens'] = 'Cacher sur petits écrans';
@@ -111,7 +111,7 @@ $lang['menu.feed.edit'] = 'Éditer un menu de flux';
 $lang['menu.warning.feed'] = 'Veuillez choisir un flux dans la liste !';
 $lang['menu.module.feed'] = 'Flux de module';
 $lang['menu.available.feeds'] = 'Flux disponibles';
-    // Link menu
+    // Links menu
 $lang['menu.links.add']  = 'Ajouter un menu de liens';
 $lang['menu.links.edit'] = 'Éditer un menu de liens';
 $lang['menu.automatic']      = 'Automatique';
@@ -131,7 +131,7 @@ $lang['menu.push.expansion.type']         = 'Déploiement des onglets';
 $lang['menu.push.expansion.type.overlap'] = 'Par chevauchement';
 $lang['menu.push.expansion.type.expand']  = 'Par en dessous';
 $lang['menu.push.expansion.type.none']    = 'Aucun';
-    // Link menu form
+    // Links menu form
 $lang['menu.add.item']     = 'Ajouter un élément';
 $lang['menu.add.sub.menu'] = 'Ajouter un sous-menu';
 $lang['menu.item']         = 'Élément de menu';
@@ -140,25 +140,4 @@ $lang['menu.sub.menu']     = 'Sous-menu';
 // Validation button
 $lang['menu.valid.position'] = 'Valider la position des menus';
 $lang['menu.validated.position'] = 'La position des menus est validée';
-
-//
-
-
-$lang['use_tpl'] = 'Utiliser la structure des templates';
-$lang['move'] = 'Déplacer';
-$lang['move_up'] = 'Monter';
-$lang['move_down'] = 'Descendre';
-
-$lang['menu_configurations'] = 'Configurations';
-// $lang['menu_configurations_list'] = 'Liste des configurations de menus';
-$lang['menu.menus'] = 'Menus';
-$lang['menu_configuration_name'] = 'Nom';
-$lang['menu_configuration_match_regex'] = 'Correspond à';
-$lang['menu_configuration_edit'] = 'Editer';
-$lang['menu_configuration_configure'] = 'Configurer';
-$lang['menu_configuration_default_name'] = 'Configuration par défaut';
-$lang['menu_configuration_configure_default_config'] = 'Configurer la configuration par défaut';
-$lang['menu_configuration_edition'] = 'Edition d\'une configuration de menu';
-$lang['menu_configuration_edition_name'] = 'Nom de la configuration';
-$lang['menu_configuration_edition_match_regex'] = 'Expression régulière de correspondance';
 ?>
