@@ -16,12 +16,12 @@
 		var COOKIEBAR_DURATION        = {COOKIEBAR_DURATION};
 		var COOKIEBAR_TRACKING_MODE   = '{COOKIEBAR_TRACKING_MODE}';
 		var L_COOKIEBAR_CONTENT       = {COOKIEBAR_CONTENT};
-		var L_COOKIEBAR_UNDERSTAND    = ${escapejs(LangLoader::get_message('cookiebar.understand', 'user-lang'))};
-		var L_COOKIEBAR_ALLOWED       = ${escapejs(LangLoader::get_message('cookiebar.allowed', 'user-lang'))};
-		var L_COOKIEBAR_DECLINED      = ${escapejs(LangLoader::get_message('cookiebar.declined', 'user-lang'))};
-		var L_COOKIEBAR_MORE_TITLE    = ${escapejs(LangLoader::get_message('cookiebar.more.title', 'user-lang'))};
-		var L_COOKIEBAR_MORE          = ${escapejs(LangLoader::get_message('cookiebar.more', 'user-lang'))};
-		var L_COOKIEBAR_CHANGE_CHOICE = ${escapejs(LangLoader::get_message('cookiebar.change.choice', 'user-lang'))};
+		var L_COOKIEBAR_UNDERSTAND    = ${escapejs(LangLoader::get_message('user.cookiebar.understand', 'user-lang'))};
+		var L_COOKIEBAR_ALLOWED       = ${escapejs(LangLoader::get_message('user.cookiebar.allowed', 'user-lang'))};
+		var L_COOKIEBAR_DECLINED      = ${escapejs(LangLoader::get_message('user.cookiebar.declined', 'user-lang'))};
+		var L_COOKIEBAR_MORE_TITLE    = ${escapejs(LangLoader::get_message('user.cookiebar.more.title', 'user-lang'))};
+		var L_COOKIEBAR_MORE          = ${escapejs(LangLoader::get_message('user.cookiebar.more', 'user-lang'))};
+		var L_COOKIEBAR_CHANGE_CHOICE = ${escapejs(LangLoader::get_message('user.cookiebar.change.choice', 'user-lang'))};
 		var U_COOKIEBAR_ABOUTCOOKIE   = '${relative_url(UserUrlBuilder::aboutcookie())}';
 	# ENDIF #
 </script>
