@@ -13,7 +13,6 @@
 
 require_once('../kernel/begin.php');
 $upload_lang = LangLoader::get('upload-lang');
-$upload_lang = LangLoader::get('upload-lang');
 define('TITLE', $upload_lang['upload.files.management']);
 
 $popup = retrieve(GET, 'popup', '');

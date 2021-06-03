@@ -40,7 +40,7 @@
 							<div class="modal-container">
 								<button class="button upload-help" data-modal data-target="upload-helper" aria-label="{@upload.upload.helper}"><i class="fa fa-question" aria-hidden="true"></i></button>
 								<div id="upload-helper" class="modal modal-animation">
-									<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+									<div class="close-modal" aria-label="{@common.close}"></div>
 									<div class="content-panel">
 										<h3>{@upload.upload.helper}</h3>
 										<p><strong>{@upload.allowed.extensions} :</strong> "{ALLOWED_EXTENSIONS}"</p>

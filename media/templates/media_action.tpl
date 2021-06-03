@@ -96,7 +96,7 @@
 								<div class="form-field# IF C_AUTH_UPLOAD #  grouped-inputs form-field-upload-file# ENDIF #">
 									<input class="grouped-element upload-input" type="text" id="u_media" name="u_media" value="{U_MEDIA}" />
 									# IF C_AUTH_UPLOAD #
-										<a class="grouped-element" aria-label="${LangLoader::get_message('files_management', 'main')}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=u_media&amp;parse=true&amp;no_path=true', '', 'height=500,width=769,resizable=yes,scrollbars=yes');return false;">
+										<a class="grouped-element" aria-label="${LangLoader::get_message('upload.files.management', 'upload-lang')}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=u_media&amp;parse=true&amp;no_path=true', '', 'height=500,width=769,resizable=yes,scrollbars=yes');return false;">
 											<i class="fa fa-cloud-upload-alt fa-2x" aria-hidden="true"></i>
 										</a>
 									# ENDIF #
@@ -107,7 +107,7 @@
 								<div class="form-field# IF C_AUTH_UPLOAD # grouped-inputs form-field-upload-file# ENDIF #">
 									<input class="grouped-element upload-input" type="text" id="thumbnail" name="thumbnail" value="{POSTER}" />
 									# IF C_AUTH_UPLOAD #
-										<a class="grouped-element" aria-label="${LangLoader::get_message('files_management', 'main')}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=poster&amp;parse=true&amp;no_path=true', '', 'height=500,width=769,resizable=yes,scrollbars=yes');return false;">
+										<a class="grouped-element" aria-label="${LangLoader::get_message('upload.files.management', 'upload-lang')}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=poster&amp;parse=true&amp;no_path=true', '', 'height=500,width=769,resizable=yes,scrollbars=yes');return false;">
 											<i class="fa fa-cloud-upload-alt fa-2x" aria-hidden="true"></i>
 										</a>
 									# ENDIF #
@@ -148,25 +148,17 @@
 
 						<fieldset class="fieldset-submit">
 							<legend>
-								# IF C_EDIT #
-									${LangLoader::get_message('update', 'main')}
-								# ELSE #
-									${LangLoader::get_message('submit', 'main')}
-								# ENDIF #
+								{@form.submit}
 							</legend>
 							<div class="fieldset-inset">
 								<input type="hidden" name="idedit" value="{ITEM_ID}" />
 								<input type="hidden" name="contrib" value="{C_CONTRIBUTION}" />
 								<input type="hidden" name="token" value="{TOKEN}" />
 								<button type="submit" class="button submit" name="submit" value="true">
-									# IF C_EDIT #
-										${LangLoader::get_message('update', 'main')}
-									# ELSE #
-										${LangLoader::get_message('submit', 'main')}
-									# ENDIF #
+									{@form.submit}
 								</button>
-								<button type="button" class="button preview-button" onclick="XMLHttpRequest_preview(); return false;">${LangLoader::get_message('preview', 'main')}</button>
-								<button type="reset" class="button reset-button" value="true">${LangLoader::get_message('reset', 'main')}</button>
+								<button type="button" class="button preview-button" onclick="XMLHttpRequest_preview(); return false;">{@form.preview}</button>
+								<button type="reset" class="button reset-button" value="true">{@form.reset}</button>
 							</div>
 						</fieldset>
 					</form>

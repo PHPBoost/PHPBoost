@@ -378,17 +378,17 @@
 					<thead>
 						<tr>
 							<th>
-								${LangLoader::get_message('description', 'main')}
+								{@common.description}
 							</th>
 							<th>
-								${LangLoader::get_message('display_name', 'user-common')}
+								${LangLoader::get_message('user.member', 'user-lang')}
 							</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
 							<td class="td33P">
-								{L_LOGIN}
+								${LangLoader::get_message('user.username', 'user-lang')}
 							</td>
 							<td>
 								<a href="{USER_ID}" class="{USER_CSSCLASS}"# IF C_USER_GROUP_COLOR # style="color: {USER_GROUP_COLOR};"# ENDIF #>{LOGIN_USER}</a>
@@ -396,7 +396,7 @@
 						</tr>
 						<tr>
 							<td class="td33P">
-								{L_PM}
+								${LangLoader::get_message('user.contact.pm', 'user-lang')}
 							</td>
 							<td>
 								<a href="{U_PM}" class="button submit smaller">MP</a>

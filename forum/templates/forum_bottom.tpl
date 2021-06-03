@@ -98,9 +98,9 @@
 					# IF ONLINE_USERS_LIST #
 						<div class="flex-between flex-between-large">
 							<div class="forum-online-users">
-								{TOTAL_ONLINE} {L_USER} {L_ONLINE} : {ADMINISTRATORS_NUMBER} {L_ADMIN}, {MODERATORS_NUMBER} {L_MODO}, {MEMBERS_NUMBER} {L_MEMBER} {L_AND} {GUESTS_NUMBER} {L_GUEST}
+								{TOTAL_ONLINE} {L_USER} ${TextHelper::lcfirst(@user.online)} : {ADMINISTRATORS_NUMBER} {L_ADMIN}, {MODERATORS_NUMBER} {L_MODO}, {MEMBERS_NUMBER} {L_MEMBER} {L_AND} {GUESTS_NUMBER} {L_GUEST}
 								<div class="spacer"></div>
-								{L_USER} {L_ONLINE} : # IF C_NO_USER_ONLINE #<em>${LangLoader::get_message('no_member_online', 'main')}</em># ELSE #{ONLINE_USERS_LIST}# ENDIF #
+								{L_USER} ${TextHelper::lcfirst(@user.online)} : # IF C_NO_USER_ONLINE #<em>{@user.no.user.online}</em># ELSE #{ONLINE_USERS_LIST}# ENDIF #
 							</div>
 
 							<div class="forum-online-select-cat">

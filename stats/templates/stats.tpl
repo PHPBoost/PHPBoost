@@ -5,7 +5,7 @@
 	<div class="sub-section">
 		<div class="content-container">
 			<nav id="menustats">
-				<a href="#" class="js-menu-button" onclick="open_submenu('menustats');return false;" aria-label="${LangLoader::get_message('categories', 'categories-common')}">
+				<a href="#" class="js-menu-button" onclick="open_submenu('menustats');return false;" aria-label="${LangLoader::get_message('category.categories', 'category-lang')}">
 					<i class="fa fa-fw fa-bars" aria-hidden="true"></i> ${LangLoader::get_message('category.categories', 'category-lang')}
 				</a>
 				<ul>

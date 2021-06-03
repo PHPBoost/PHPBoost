@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 17
+ * @version     PHPBoost 6.0 - last update: 2021 06 03
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -403,6 +403,11 @@ $lang['user.cookiebar.more.title']    = 'Explications sur la gestion des cookies
 $lang['user.cookiebar.more']          = 'En savoir plus';
 $lang['user.cookiebar.cookies']       = 'Cookies';
 $lang['user.cookiebar.change.choice'] = 'Modifier vos préférences';
+
+// Status
+$lang['user.online'] = 'En ligne';
+$lang['user.offline'] = 'Hors connexion';
+$lang['user.no.user.online'] = 'Aucun utilisateur en ligne';
 
 // Menu
 $lang['user.menu.link.to'] = 'Lien vers la page ';

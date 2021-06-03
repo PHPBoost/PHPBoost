@@ -811,7 +811,7 @@ $vars_tpl = array_merge($vars_tpl, array(
 	'L_GUEST'               => ($total_visit > 1) ? $LANG['guest_s']   : $LANG['guest'],
 	//
 	'L_AND'                 => $LANG['and'],
-	'L_ONLINE'              => TextHelper                              ::strtolower($LANG['online']),
+	'L_ONLINE'              => TextHelper::strtolower($LANG['online']),
 	'L_FORUM_INDEX'         => $LANG['forum_index']
 ));
 

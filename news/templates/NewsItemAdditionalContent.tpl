@@ -1,6 +1,6 @@
 # IF C_SUGGESTED_NEWS #
 	<aside class="suggested-links">
-		<span class="text-strong"><i class="fa fa-lightbulb"></i> ${LangLoader::get_message('suggestions', 'common')} :</span>
+		<span class="text-strong"><i class="fa fa-lightbulb"></i> ${LangLoader::get_message('common.suggestions', 'common-lang')} :</span>
 		<div class="cell-row">
 			# START suggested #
 				<div class="cell">

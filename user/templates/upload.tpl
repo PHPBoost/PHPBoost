@@ -170,12 +170,12 @@
 						<div class="cell-list">\
 							<ul>\
 								<li class="li-stretch">\
-									<span id="fhref' + xhr_object.responseText + '" aria-label="' + ${escapejs(LangLoader::get_message('edit', 'common'))} + '">\
+									<span id="fhref' + xhr_object.responseText + '" aria-label="' + ${escapejs(@common.edit)} + '">\
 										<a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');">\
 											<i class="far fa-edit" aria-hidden="true"></i>\
 										</a>\
 									</span>\
-									<a href="upload.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="' + ${escapejs(LangLoader::get_message('delete', 'common'))} + '">\
+									<a href="upload.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="' + ${escapejs(@common.delete)} + '">\
 										<i class="far fa-trash-alt" aria-hidden="true"></i>\
 									</a>\
 									<a href="upload.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}{POPUP}" aria-label="{@common.move.to}">\

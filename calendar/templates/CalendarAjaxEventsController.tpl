@@ -16,9 +16,9 @@
 				<thead>
 					<tr>
 						<th>{@common.title}</th>
-						<th aria-label="${LangLoader::get_message('category', 'categories-common')}">
+						<th aria-label="{@common.category}">
 							<i class="far fa-folder" aria-hidden="true"></i>
-							<span class="hidden-large-screens">${LangLoader::get_message('category', 'categories-common')}</span>
+							<span class="hidden-large-screens">{@common.category}</span>
 						</th>
 						<th aria-label="{@common.author}">
 							<i class="fa fa-user" aria-hidden="true"></i>

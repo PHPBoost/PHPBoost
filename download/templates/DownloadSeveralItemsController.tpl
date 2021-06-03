@@ -94,9 +94,9 @@
 										</th>
 									# ENDIF #
 									# IF C_ENABLED_COMMENTS #
-										<th aria-label="${LangLoader::get_message('comments', 'comments-common')}">
+										<th aria-label="{@common.comments}">
 											<i class="far fa-fw fa-comments hidden-small-screens" aria-hidden="true"></i>
-											<span class="hidden-large-screens">${LangLoader::get_message('comments', 'comments-common')}</span>
+											<span class="hidden-large-screens">{@common.comments}</span>
 										</th>
 									# ENDIF #
 									# IF C_CONTROLS #

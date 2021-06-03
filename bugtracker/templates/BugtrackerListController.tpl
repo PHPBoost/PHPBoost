@@ -106,12 +106,12 @@
 								<div class="progressbar" style="width:{bug.PROGRESS}%"></div>
 							</div>
 						# ENDIF #
-						<a href="{bug.U_COMMENTS}">{bug.COMMENTS_NUMBER} # IF bug.C_MORE_THAN_ONE_COMMENT #${LangLoader::get_message('comments', 'comments-common')}# ELSE #${LangLoader::get_message('comment', 'comments-common')}# ENDIF #</a>
+						<a href="{bug.U_COMMENTS}">{bug.COMMENTS_NUMBER} # IF bug.C_MORE_THAN_ONE_COMMENT #{@common.comments}# ELSE #${@common.comment}# ENDIF #</a>
 					</td>
 					<td # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
 						# IF C_UNSOLVED #{bug.SUBMIT_DATE_FULL}# ELSE ## IF bug.C_FIX_DATE #{bug.FIX_DATE_FULL}# ELSE #{@bugtracker.not.solved}# ENDIF ## ENDIF #
 						<div class="spacer"></div>
-						# IF C_DISPLAY_AUTHOR #${LangLoader::get_message('by', 'common')} # IF bug.C_AUTHOR_EXISTS #<a href="{bug.U_AUTHOR_PROFILE}" class="{bug.AUTHOR_LEVEL_CLASS}" # IF bug.C_AUTHOR_GROUP_COLOR # style="color:{bug.AUTHOR_GROUP_COLOR}" # ENDIF #>{bug.AUTHOR}</a># ELSE #{bug.AUTHOR}# ENDIF ## ENDIF #
+						# IF C_DISPLAY_AUTHOR #{@common.by} # IF bug.C_AUTHOR_EXISTS #<a href="{bug.U_AUTHOR_PROFILE}" class="{bug.AUTHOR_LEVEL_CLASS}" # IF bug.C_AUTHOR_GROUP_COLOR # style="color:{bug.AUTHOR_GROUP_COLOR}" # ENDIF #>{bug.AUTHOR}</a># ELSE #{bug.AUTHOR}# ENDIF ## ENDIF #
 					</td>
 					# IF C_IS_ADMIN #
 					<td class="bugtracker-actions" # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
