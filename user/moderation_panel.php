@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2021 06 03
  * @since       PHPBoost 1.6 - 2007 03 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -83,7 +83,7 @@ if ($action == 'punish')
 
 	$view->put_all(array(
 		'C_USER' => true,
-		'L_ACTION_INFO'     => $lang['user.punishment.management'],
+		'L_ACTION_INFO'     => $lang['user.punishments.management'],
 		'U_XMLHTTPREQUEST'  => 'punish_user',
 		'U_ACTION'          => UserUrlBuilder::moderation_panel('punish')->rel()
 	));
@@ -107,7 +107,7 @@ if ($action == 'punish')
 
 		$view->put_all(array(
 			'C_USER_LIST' => true,
-			'L_TITLE'				 => $lang['user.punishment.management'],
+			'L_TITLE'				 => $lang['user.punishments.management'],
 			'L_ACTION_USER'          => $lang['user.punishments'],
 			'L_INFO'                 => $lang['user.punish.until'],
 		));
@@ -142,7 +142,7 @@ if ($action == 'punish')
 		{
 			$view->put_all(array(
 				'C_EMPTY_LIST' => true,
-				'L_NO_USER'    => $lang['user.no.punish'],
+				'L_NO_USER'    => $lang['user.no.punished.user'],
 			));
 		}
 	}
@@ -257,7 +257,7 @@ else if ($action == 'warning')
 
 	$view->put_all(array(
 		'C_USER' => true,
-		'L_ACTION_INFO'     => $lang['user.warning.management'],
+		'L_ACTION_INFO'     => $lang['user.warnings.management'],
 		'U_XMLHTTPREQUEST'  => 'warning_user',
 		'U_ACTION'          => UserUrlBuilder::moderation_panel('warning')->rel() . '&amp;' . AppContext::get_session()->get_token()
 	));
@@ -281,7 +281,7 @@ else if ($action == 'warning')
 
 		$view->put_all(array(
 			'C_USER_LIST' => true,
-			'L_TITLE'				 => $lang['user.warning.management'],
+			'L_TITLE'				 => $lang['user.warnings.management'],
 			'L_ACTION_USER'          => $lang['user.warnings'],
 			'L_INFO'                 => $lang['user.warning.level'],
 		));
@@ -385,7 +385,7 @@ else
 
 	$view->put_all(array(
 		'C_USER' => true,
-		'L_ACTION_INFO'     => $lang['user.ban.management'],
+		'L_ACTION_INFO'     => $lang['user.bans.management'],
 
 		'U_XMLHTTPREQUEST'  => 'ban_user',
 		'U_ACTION'          => UserUrlBuilder::moderation_panel('ban')->rel() . '&amp;token=' . AppContext::get_session()->get_token()
@@ -410,7 +410,7 @@ else
 
 		$view->put_all(array(
 			'C_USER_LIST' => true,
-			'L_TITLE'				 => $lang['user.ban.management'],
+			'L_TITLE'				 => $lang['user.bans.management'],
 			'L_ACTION_USER'   => $lang['user.bans'],
 			'L_INFO'          => $lang['user.ban.until'],
 		));

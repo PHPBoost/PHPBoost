@@ -103,6 +103,7 @@ $lang['user.members.all']        = 'All members';
 $lang['user.members.list']       = 'Members list';
 $lang['user.member.management']  = 'Member management';
 $lang['user.search.member']      = 'Search member';
+$lang['user.search.joker']       = 'Use * to replace a letter';
 
 $lang['user.profile.edit.password.error']       = 'The new password is not correct';
 $lang['user.external.auth.account.exists']      = 'You already have an account. To use this login method, please login to the site and go to editing of your profile';
@@ -307,7 +308,7 @@ $lang['user.alternative.pm.clue'] = 'Leave empty for no private message. The mem
     // Bans management.
 $lang['user.ban']             = 'Ban';
 $lang['user.bans']            = 'Bans';
-$lang['user.ban.management']  = 'Ban management';
+$lang['user.bans.management'] = 'Ban management';
 $lang['user.ban.until']       = 'Banned until';
 $lang['user.no.ban']          = 'No banned user';
 $lang['user.ban.delay']       = 'Ban delay';
@@ -322,10 +323,9 @@ It may be an error, if you think it is, you can contact the administrator of the
 
     // Punishments management
 $lang['user.punishments']            = 'Punishment';
-$lang['user.punishment.management']  = 'Punishment management';
 $lang['user.punishments.management'] = 'Punishments management';
 $lang['user.punish.until']           = 'Punishment until';
-$lang['user.no.punish']              = 'No punished user';
+$lang['user.no.punished.user']       = 'No punished user';
 $lang['user.life']                   = 'Life';
 $lang['user.readonly']               = 'Member on read only';
 $lang['user.readonly.clue']          = 'He can read but can\'t post on the whole website (comments, etc...)';
@@ -338,13 +338,13 @@ This is a semi-automatic message.';
     // Warnings management
 $lang['user.warning']               = 'Warning';
 $lang['user.warnings']              = 'Warnings';
-$lang['user.warning.management']    = 'Warning management';
 $lang['user.warnings.management']   = 'Warnings management';
 $lang['user.warning.level']         = 'Warning level';
 $lang['user.no.user.warning']       = 'No warned users';
 $lang['user.warning.clue']          = 'Member warning level. You can update it, but at 100% the member is banned';
 $lang['user.warning.user']          = 'Warn user';
-$lang['user.warning.level.changed'] = 'You have been warned by a member of the moderation team, your warning level is now %level%%. Be careful with your behavior, if you reach 100% you will be permanently banned.
+$lang['user.warning.level.changed'] = 'You have been warned by a member of the moderation team, your warning level is now %level%%.
+Be careful with your behavior, if you reach 100% you will be permanently banned.
 
 
 This is a semi-automatic message.';

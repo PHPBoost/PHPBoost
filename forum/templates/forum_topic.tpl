@@ -205,10 +205,17 @@
 				<div class="message-header-infos">
 					<div class="message-user-container">
 						<h3 class="message-user-name">
-							<span class="smaller"><i class="fa # IF msg.C_USER_ONLINE #fa-user-check success# ELSE #fa-user-times error# ENDIF #" aria-hidden="true"></i></span>
+							<span
+								class="smaller"
+								aria-label="# IF msg.C_USER_ONLINE #{@user.online}# ELSE #{@user.offline}# ENDIF #">
+								<i class="fa # IF msg.C_USER_ONLINE #fa-user-check success# ELSE #fa-user-times error# ENDIF #" aria-hidden="true"></i>
+							</span>
 							# IF msg.C_FORUM_USER_LOGIN #
-								<span aria-label="{@common.see.profile.datas}" data-modal data-target="message-user-datas-{msg.ID}" class="{msg.FORUM_USER_LEVEL}" # IF msg.FORUM_USER_GROUP_COLOR # style="color:{msg.FORUM_USER_GROUP_COLOR}"# ENDIF #>
+								<span class="{msg.FORUM_USER_LEVEL}" # IF msg.FORUM_USER_GROUP_COLOR # style="color:{msg.FORUM_USER_GROUP_COLOR}"# ENDIF #>
 									{msg.FORUM_USER_LOGIN}
+								</span>
+								<span class="smaller" aria-label="{@common.see.profile.datas}" data-modal data-target="message-user-datas-{msg.ID}">
+									<i class="far fa-eye" aria-hidden="true"></i>
 								</span>
 								<span class="sr-only"># IF C_USER_ONLINE #{@forum.connected.member}# ELSE #{@forum.not.connected.member}# ENDIF #</span>
 							# ELSE #

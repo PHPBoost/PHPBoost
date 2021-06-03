@@ -115,12 +115,12 @@ $lang['forum.delete.message']   = 'Suppression d\'un message';
 $lang['forum.delete.topic']     = 'Suppression d\'un sujet';
 $lang['forum.lock.topic']       = 'Verrouillage d\'un sujet';
 $lang['forum.unlock.topic']     = 'Déverrouillage d\'un sujet';
-$lang['forum.moving.topic']       = 'Déplacement d\'un sujet';
-$lang['forum.cutting.topic']        = 'Scindement d\'un sujet';
+$lang['forum.moving.topic']     = 'Déplacement d\'un sujet';
+$lang['forum.cutting.topic']    = 'Scindement d\'un sujet';
 $lang['forum.warning.on.user']  = '+10% à un membre';
 $lang['forum.warning.off.user'] = '-10% à un membre';
-$lang['forum.set.warning.user'] = 'Modification pourcentage avertissement';
-$lang['forum.more.action']      = 'Voir 100 actions en plus';
+$lang['forum.set.warning.user'] = 'Modifier le pourcentage';
+$lang['forum.more.action']      = 'Voir les 100 prochaines actions';
 $lang['forum.ban.user']         = 'Bannissement d\'un membre';
 $lang['forum.edit.message']     = 'Edition message d\'un membre';
 $lang['forum.edit.topic']       = 'Edition sujet d\'un membre';
@@ -139,11 +139,11 @@ $lang['forum.reload.unread.messages'] = 'Réactualiser les messages non lus';
 $lang['forum.mark.topics.as.read']    = 'Marquer tous les sujets comme lu';
 
 // Moderation
-$lang['forum.moderation.forum'] = 'Modération du forum';
-$lang['forum.for.selection'] = 'Pour la sélection';
+$lang['forum.moderation.forum']       = 'Modération du forum';
+$lang['forum.for.selection']          = 'Pour la sélection';
 $lang['forum.change.issue.status.to'] = 'Mettre le statut: %s';
-$lang['forum.default.issue.status'] = 'Mettre le statut par défaut';
-$lang['forum.no.moderation'] = 'Aucune action';
+$lang['forum.default.issue.status']   = 'Mettre le statut par défaut';
+$lang['forum.no.moderation']          = 'Aucune action';
     // Warnings
 $lang['forum.warnings.management'] = 'Aucune action';
     // Reports
@@ -151,8 +151,8 @@ $lang['forum.warnings.management'] = 'Aucune action';
 $lang['forum.reports.management']        = 'Gestion des signalement';
 $lang['forum.report.topic']              = 'Signaler ce sujet';
 $lang['forum.report.concerned.topic']    = 'Sujet concerné';
-$lang['forum.report.concerned.cat']      = 'Catégorie du sujet concerné';
-$lang['forum.report.author']             = 'Posteur du signalement';
+$lang['forum.report.concerned.category'] = 'Catégorie du sujet concerné';
+$lang['forum.report.author']             = 'Signalé par';
 $lang['forum.report.message']            = 'Précisions';
 $lang['forum.report.unsolved']           = 'En attente de traitement';
 $lang['forum.report.solved']             = 'Résolue par ';
@@ -175,6 +175,11 @@ $lang['forum.report.content']            = 'Merci de détailler davantage le pro
 $lang['forum.report.success']            = 'Vous avez signalé avec succès la non-conformité du sujet <em>%title</em>, l\'équipe modératrice vous remercie de l\'avoir aidée.';
 $lang['forum.report.topic.already.done'] = 'Nous vous remercions d\'avoir pris l\'initiative d\'aider l\'équipe modératrice, mais un membre a déjà signalé une non-conformité de ce sujet.';
 $lang['forum.report.back']               = 'Retour au sujet';
+$lang['forum.report.alternative.pm'] = '
+    Message privé envoyé au membre
+    <p class="smaller">(Laisser vide pour aucun message privé)</p>
+    Le membre averti ne pourra pas répondre à ce message, et ne connaîtra pas l\'expéditeur.
+';
         // Report moderation
 
 // Poll

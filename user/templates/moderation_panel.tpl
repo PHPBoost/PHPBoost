@@ -11,7 +11,7 @@
 							<div class="cell-content align-center">
 								<a href="{U_WARNING}">
 									<i class="fa fa-exclamation-triangle fa-2x warning" aria-hidden="true"></i>
-									<span class="d-block">{@user.warning.management}</span>
+									<span class="d-block">{@user.warnings.management}</span>
 								</a>
 							</div>
 						</div>
@@ -21,7 +21,7 @@
 							<div class="cell-content align-center">
 								<a href="{U_PUNISH}">
 									<i class="fa fa-times fa-2x error" aria-hidden="true"></i>
-									<span class="d-block">{@user.punishment.management}</span>
+									<span class="d-block">{@user.punishments.management}</span>
 								</a>
 							</div>
 						</div>
@@ -31,7 +31,7 @@
 							<div class="cell-content align-center">
 								<a href="{U_BAN}">
 									<i class="fa fa-minus-circle fa-2x error" aria-hidden="true"></i>
-									<span class="d-block">{@user.ban.management}</span>
+									<span class="d-block">{@user.bans.management}</span>
 								</a>
 							</div>
 						</div>
@@ -65,7 +65,7 @@
 							<legend>{L_TITLE}</legend>
 							<div class="fieldset-inset">
 								<div class="form-element">
-									<label for="login">{@user.search.member}</label>
+									<label for="login">{@user.search.member} <span class="field-description">{@user.search.joker}</span></label>
 									<div class="form-field grouped-inputs">
 										<input type="text" maxlength="25" id="login" value="" name="login">
 										<input type="hidden" name="token" value="{TOKEN}">

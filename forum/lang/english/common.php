@@ -117,10 +117,10 @@ $lang['forum.delete.topic']     = 'Delete topic';
 $lang['forum.lock.topic']       = 'Lock topic';
 $lang['forum.unlock.topic']     = 'Unlock topic';
 $lang['forum.moving.topic']     = 'Moving topic';
-$lang['forum.cutting.topic']        = 'Cut topic';
+$lang['forum.cutting.topic']    = 'Cut topic';
 $lang['forum.warning.on.user']  = '+10% to member';
 $lang['forum.warning.off.user'] = '-10% to member';
-$lang['forum.set.warning.user'] = 'Warning percent modification';
+$lang['forum.set.warning.user'] = 'Modify percentage';
 $lang['forum.more.action']      = 'Show 100 more action ';
 $lang['forum.ban.user']         = 'Ban member';
 $lang['forum.edit.message']     = 'Edit member\'s message ';
@@ -152,11 +152,11 @@ $lang['forum.no.moderation'] = 'No action';
 $lang['forum.reports.management']        = 'Report management';
 $lang['forum.report.topic']              = 'Report this topic';
 $lang['forum.report.concerned.topic']    = 'Concerned topic';
-$lang['forum.report.concerned.cat']      = 'Concerned topic\'s category';
-$lang['forum.report.author']             = 'Report postor';
+$lang['forum.report.concerned.category'] = 'Concerned topic\'s category';
+$lang['forum.report.author']             = 'Reported by';
 $lang['forum.report.message']            = 'Precisions';
 $lang['forum.report.unsolved']           = 'Waiting for treatement';
-$lang['forum.report.solved']             = 'Resolve by ';
+$lang['forum.report.solved']             = 'Solved by ';
 $lang['forum.report.change.to.unsolved'] = 'Set in waiting for treatment';
 $lang['forum.report.change.to.solved']   = 'Set in resolved';
 $lang['forum.report.not.auth']           = 'This alert has been posted in a forum in which you haven\'t the moderator\'s rights.';
@@ -177,6 +177,11 @@ $lang['forum.report.content'] = 'Thanks for detailing the problem more in order 
 $lang['forum.report.success'] = 'You successfully reported the nonconformity of the topic <em>%title</em>, the moderating team thanks you for helping it.';
 $lang['forum.report.topic.already.done'] = 'We thank you for taking the initiative to help the moderating team, but a member already reported a nonconformity of this topic.';
 $lang['forum.report.back'] = 'Back to topic';
+$lang['forum.report.alternative.pm'] = '
+    Private message sent to the member
+    <p class="smaller">(Leave empty for no private message)</p>.
+    The member won\'t be able to reply to this message, he won\'t know who sent it
+';
         // Report moderation
 
 // Poll
