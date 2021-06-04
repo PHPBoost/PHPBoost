@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 19
+ * @version     PHPBoost 6.0 - last update: 2021 06 04
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -31,11 +31,11 @@ $lang['poll.config.vote.authorization']              = 'Vote authorization';
 $lang['poll.config.votes.result.authorization']      = 'Display the result of votes authorization';
 
 // Form
-$lang['poll.form.question']                  = 'Question : ';
-$lang['poll.form.answers.type']              = 'Type of answers : ';
+$lang['poll.form.question']                  = 'Question';
+$lang['poll.form.answers.type']              = 'Type of answers';
 $lang['poll.form.single']                    = 'Single';
 $lang['poll.form.multiple']                  = 'Multiple';
-$lang['poll.form.answers']                   = 'Answers : ';
+$lang['poll.form.answers']                   = 'Answers';
 $lang['poll.form.answer.placeholder']        = 'Answer';
 $lang['poll.form.close.poll']                = 'Close the poll';
 $lang['poll.form.display.poll.in.mini']      = 'Display the poll in mini module';
@@ -46,17 +46,17 @@ $lang['poll.form.countdown.with.seconds']    = 'Countdown with seconds';
 $lang['poll.form.countdown.not.displaying']  = 'No countdown';
 $lang['poll.form.force.changes.poll']        = 'The poll contains votes. Changes will result in the deletion of votes.';
 
-//Vote Form
+// Vote Form
 $lang['poll.vote.submit']          = 'Vote';
 $lang['poll.vote.single.choice']   = 'Choose an answer : ';
 $lang['poll.vote.multiple.choice'] = 'Choose one or more answers : ';
 $lang['poll.vote.saved']           = 'Your vote is saved';
 
-//Display Countdown
+// Display Countdown
 $lang['poll.countdown.remaining.time']       = 'Remaining time : ';
 $lang['poll.countdown.less.than.one.minute'] = 'less than one minute';
 
-//Display poll mini
+// Display poll mini
 $lang['poll.mini.more']                 = 'More polls';
 $lang['poll.mini.participate.single']   = 'Let\'s participate in the following poll :';
 $lang['poll.mini.participate.multiple'] = 'Let\'s participate in the following polls :';
@@ -65,6 +65,7 @@ $lang['poll.mini.have.to.choose']       = 'Choose from the answers';
 $lang['poll.mini.form.error']           = 'Error in form';
 
 // Message helper
+$lang['poll.message.no.mini']       = 'This option is disabled because you do not have any poll declared in the mini module.';
 $lang['poll.message.closed']        = 'The poll is completed.';
 $lang['poll.message.not.published'] = 'You don\'t have the authorization to vote because the poll isn\'t published.';
 $lang['poll.message.not.allowed']   = 'You don\'t have the authorization to vote.';

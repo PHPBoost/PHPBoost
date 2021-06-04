@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 19
+ * @version     PHPBoost 6.0 - last update: 2021 06 04
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -15,39 +15,6 @@ class AdminPollConfigController extends DefaultConfigurationController
 		$fieldset = new FormFieldsetHTML('advanced_config', $this->lang['poll.config.advanced.configuration']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldCheckbox('mini_module_activating', $this->lang['poll.config.enable.mini.module'], $this->config->get_mini_module_activating(),
-			array(
-				'class' => 'custom-checkbox top-field',
-				'events' => array('click' =>'
-					if (HTMLForms.getField("mini_module_activating").getValue()) {
-						HTMLForms.getField("mini_module_selected_items").enable();
-					} else {
-						HTMLForms.getField("mini_module_selected_items").disable();
-					}'
-				)
-			)
-		));
-
-		$search_category_children_options = new SearchCategoryChildrensOptions();
-		$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
-		$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-		$categories_cache = CategoriesService::get_categories_manager('poll')->get_categories_cache();
-
-		$fieldset->add_field(
-		  new FormFieldCategoriesMapAndItemsSelect(
-		    'mini_module_selected_items',
-		    $this->lang['poll.config.mini.module.selected.items'],
-		    Category::ROOT_CATEGORY,
-		    $search_category_children_options,
-		    $this->get_selected_items(),
-		    array(
-		        'hidden' => empty($this->get_selected_items()),
-		        'required' => true,
-		        'description' => $this->lang['poll.config.mini.module.selected.items.clue']
-	        ),
-		    $categories_cache
-	    ));
-
 		$fieldset->add_field(new FormFieldTextEditor('cookie_name', $this->lang['poll.config.cookie.name'], $this->config->get_cookie_name(),
 			array('maxlength' => 25, 'required' => true, 'class' => 'top-field'),
 			array(new FormFieldConstraintRegex('`^[a-z0-9_-]+$`iu'))
@@ -57,6 +24,46 @@ class AdminPollConfigController extends DefaultConfigurationController
 			array('min' => 1, 'required' => true, 'class' => 'top-field'),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'))
 		));
+
+		if (!empty($this->get_selected_items()))
+		{
+			$fieldset->add_field(new FormFieldCheckbox('mini_module_activating', $this->lang['poll.config.enable.mini.module'], $this->config->get_mini_module_activating(),
+				array(
+					'class' => 'custom-checkbox top-field',
+					'events' => array('click' =>'
+						if (HTMLForms.getField("mini_module_activating").getValue()) {
+							HTMLForms.getField("mini_module_selected_items").enable();
+						} else {
+							HTMLForms.getField("mini_module_selected_items").disable();
+						}'
+					)
+				)
+			));
+
+			$search_category_children_options = new SearchCategoryChildrensOptions();
+			$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
+			$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
+			$categories_cache = CategoriesService::get_categories_manager('poll')->get_categories_cache();
+
+			$fieldset->add_field(
+			  new FormFieldCategoriesMapAndItemsSelect(
+			    'mini_module_selected_items',
+			    $this->lang['poll.config.mini.module.selected.items'],
+			    Category::ROOT_CATEGORY,
+			    $search_category_children_options,
+			    $this->get_selected_items(),
+			    array(
+			        'hidden' => empty($this->get_selected_items()),
+			        'required' => true,
+			        'description' => $this->lang['poll.config.mini.module.selected.items.clue']
+		        ),
+			    $categories_cache
+		    ));
+		}
+		else
+		{
+			$fieldset->add_field(new FormFieldFree('no_item_in_mini', $this->lang['poll.config.enable.mini.module'], MessageHelper::display($this->lang['poll.message.no.mini'], MessageHelper::WARNING)->render()));
+		}
 	}
 
 	protected function add_additional_actions_authorization()
@@ -70,14 +77,9 @@ class AdminPollConfigController extends DefaultConfigurationController
 	protected function save_additional_fields()
 	{
 		if (!empty($this->get_selected_items()))
-		{
-		  $this->config->set_mini_module_activating($this->form->get_value('mini_module_activating'));
-		}
+		  	$this->config->set_mini_module_activating($this->form->get_value('mini_module_activating'));
 		else
-		{
-		  $this->form->get_field_by_id('mini_module_activating')->set_value(false);
-		  $this->config->set_mini_module_activating(false);
-		}
+		  	$this->config->set_mini_module_activating(false);
 
 		$this->config->set_mini_module_selected_items($this->get_selected_items());
 		$this->config->set_cookie_name($this->form->get_value('cookie_name'));

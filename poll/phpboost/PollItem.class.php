@@ -53,7 +53,7 @@ class PollItem extends RichItem
 									new FormFieldRadioChoiceOption(LangLoader::get_message('poll.form.single', 'common', 'poll'), '1'),
 									new FormFieldRadioChoiceOption(LangLoader::get_message('poll.form.multiple', 'common', 'poll'), '2')
 		                        ),
-		    'field_options'  => array('required' => true, 'class' => 'css-class inline-radio')
+		    'field_options'  => array('required' => true, 'class' => 'inline-radio')
 		    )
 		));
 
@@ -61,7 +61,7 @@ class PollItem extends RichItem
 		    'field_class' => 'FormFieldPossibleValues',
 		    'label'       => LangLoader::get_message('poll.form.answers', 'common', 'poll'),
 		    'value'       => self::DEFAULT_VALUE_ANSWERS,
-		    'options'     => array('required' => true, 'min_input' => 2, 'display_default' => false, 'placeholder' => LangLoader::get_message('poll.form.answer.placeholder', 'common', 'poll'))
+		    'options'     => array('required' => true, 'unique_input_value' => true, 'min_input' => 2, 'display_default' => false, 'placeholder' => LangLoader::get_message('poll.form.answer.placeholder', 'common', 'poll'))
 		    )
 		));
 
@@ -207,7 +207,7 @@ class PollItem extends RichItem
 	{
 		return $this->has_votes() ? ItemsService::get_items_manager()->user_has_voted($this->current_user_id, $this->get_id()) : false;
 	}
-  
+
   public function user_is_empowered_to_vote()
 	{
 		return !$this->is_closed()

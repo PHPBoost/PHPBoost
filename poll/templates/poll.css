@@ -2,3 +2,5 @@
 * Copy this file into your theme to customize the module.
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
+
+#module-poll .form-field-free { font-weight: bold; }

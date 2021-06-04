@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 19
+ * @version     PHPBoost 6.0 - last update: 2021 0604
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -33,14 +33,14 @@ class PollItemController extends DefaultDisplayItemController
 			}
 		}
 
-		$this->view->add_lang($this->lang);
+		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 		$this->view->put_all(array(
-			'C_PUBLISHED' 			=> $this->get_item()->is_published(),
-			'C_MORE_OPTIONS' 		=> true,
-			'C_ENABLED_COUNTDOWN' 	=> $this->get_item()->is_published() && $this->get_item()->end_date_enabled() && $this->get_item()->get_countdown_display() > 0,
-			'COUNTDOWN'				=> PollCountdownService::display($this->get_item()),
-			'VOTE_FORM' 			=> $this->vote_form->display(),
-			'VOTES_RESULT'          => PollVotesResultService::display($this->get_item())
+			'C_PUBLISHED' 	      => $this->get_item()->is_published(),
+			'C_MORE_OPTIONS'      => true,
+			'C_ENABLED_COUNTDOWN' => $this->get_item()->is_published() && $this->get_item()->end_date_enabled() && $this->get_item()->get_countdown_display() > 0,
+			'COUNTDOWN'		      => PollCountdownService::display($this->get_item()),
+			'VOTE_FORM' 	      => $this->vote_form->display(),
+			'VOTES_RESULT'        => PollVotesResultService::display($this->get_item())
 		));
 
 		return $this->generate_response();
