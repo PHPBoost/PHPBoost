@@ -9,6 +9,7 @@
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor xela <xela@phpboost.com>
 */
 
 ####################################################
@@ -92,6 +93,9 @@ $lang['form.invalid_url'] = 'The url is not valid';
 $lang['form.invalid_picture'] = 'The file is not a picture';
 $lang['form.unexisting_file'] = 'The file has not been found, its url must be incorrect';
 $lang['form.has_to_be_filled'] = 'The field ":name" has to be filled';
+$lang['form.must_contain_min_input'] = 'The field ":name" must contain at least :min_input values';
+$lang['form.must_contain_max_input'] = 'The field ":name" must not contain more :max_input values';
+$lang['form.unique_input_value'] = 'The field ":name" must not contain same values';
 $lang['form.validation_error'] = 'Please correct the form errors';
 $lang['form.fields_must_be_equal'] = 'Fields ":field1" and ":field2" must be equal';
 $lang['form.fields_must_not_be_equal'] = 'Fields ":field1" and ":field2" must have different values';

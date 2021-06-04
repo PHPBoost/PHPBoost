@@ -5,11 +5,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 18
+ * @version     PHPBoost 6.0 - last update: 2020 06 04
  * @since       PHPBoost 4.0 - 2013 09 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor xela <xela@phpboost.com>
 */
 
 class FormFieldPossibleValues extends AbstractFormField
@@ -18,10 +19,19 @@ class FormFieldPossibleValues extends AbstractFormField
 	private $max_input = 100;
 	private $display_default = true;
 	protected $placeholder = '';
+	private $unique_input_value = true;
 
 	public function __construct($id, $label = '', array $value = array(), array $field_options = array(), array $constraints = array())
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
+		if ($this->is_required())
+		{
+		  $this->add_constraint(new FormFieldConstraintPossibleValuesMin());
+		  $this->add_constraint(new FormFieldConstraintPossibleValuesMax());
+		}
+		if ($this->unique_input_value)
+		  $this->add_constraint(new FormFieldConstraintPossibleValuesUnique());
+						  
 	}
 
 	function display()
@@ -71,11 +81,13 @@ class FormFieldPossibleValues extends AbstractFormField
 			'C_DISABLED'              => $this->is_disabled(),
 			'MIN_INPUT'               => $this->min_input,
 			'MAX_INPUT'               => $this->max_input,
+			'C_UNIQUE_INPUT_VALUE'    => $this->unique_input_value,
 			'PLACEHOLDER'             => $this->placeholder ? $this->placeholder : $lang['field.name'],
 			'C_DISPLAY_DEFAULT_RADIO' => $this->display_default,
 		 	'FIELDS_NUMBER'           => $i,
 			'C_HAS_DEFAULT_VALUE'     => $has_default,
-			'C_DELETE'				  => $i > $this->min_input
+			'C_DELETE'				  => $i > $this->min_input,
+			'C_REQUIRED'              => $this->is_required()
 		));
 
 		$template->assign_block_vars('fieldelements', array(
@@ -131,11 +143,31 @@ class FormFieldPossibleValues extends AbstractFormField
 					$this->placeholder = $value;
 					unset($field_options['placeholder']);
 					break;
+			 	case 'unique_input_value':
+					$this->unique_input_value = (bool)$value;
+					$this->unique_input_value ? $this->add_constraint(new FormFieldConstraintPossibleValuesUnique()) : '';
+					unset($field_options['unique_input_value']);
+					break;
 			}
 		}
 		parent::compute_options($field_options);
 	}
-
+  
+  public function get_min_input()
+  {
+    return $this->min_input;
+  }
+  
+  public function get_max_input()
+  {
+    return $this->max_input;
+  }
+  
+  public function get_unique_input_value()
+  {
+    return $this->unique_input_value;
+  }
+  
 	protected function get_default_template()
 	{
 		return new FileTemplate('framework/builder/form/FormField.tpl');

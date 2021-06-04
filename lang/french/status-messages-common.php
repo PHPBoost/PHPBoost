@@ -3,11 +3,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 12
+ * @version     PHPBoost 6.0 - last update: 2021 06 04
  * @since       PHPBoost 3.0 - 2012 04 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
+ * @contributor xela <xela@phpboost.com>
 */
 
 ####################################################
@@ -91,6 +92,9 @@ $lang['form.invalid_url'] = 'L\'url n\'est pas valide';
 $lang['form.invalid_picture'] = 'Le fichier indiqué n\'est pas une image';
 $lang['form.unexisting_file'] = 'Le fichier n\'a pas été trouvé, son adresse doit être incorrecte';
 $lang['form.has_to_be_filled'] = 'Le champ ":name" doit être renseigné';
+$lang['form.must_contain_min_input'] = 'Le champ ":name" doit contenir au moins :min_input valeurs';
+$lang['form.must_contain_max_input'] = 'Le champ ":name" ne doit pas contenir plus de :max_input valeurs';
+$lang['form.unique_input_value'] = 'Le champ ":name" ne doit pas contenir de valeurs identiques';
 $lang['form.validation_error'] = 'Veuillez corriger les erreurs du formulaire';
 $lang['form.fields_must_be_equal'] = 'Les champs ":field1" et ":field2" doivent être égaux';
 $lang['form.fields_must_not_be_equal'] = 'Les champs ":field1" et ":field2" doivent avoir des valeurs différentes';
