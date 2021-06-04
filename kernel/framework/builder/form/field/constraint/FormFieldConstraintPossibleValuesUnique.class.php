@@ -30,7 +30,7 @@ class FormFieldConstraintPossibleValuesUnique extends AbstractFormFieldConstrain
     if (is_array($value) && !empty($value))
     {
       $input_values = array_keys($value);
-      $input_values_unique = array_unique($input_value);
+      $input_values_unique = array_unique($input_values);
       
       return count($input_values) == count($input_values_unique);
     }
