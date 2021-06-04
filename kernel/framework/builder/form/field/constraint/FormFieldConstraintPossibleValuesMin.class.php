@@ -32,6 +32,7 @@ class FormFieldConstraintPossibleValuesMin extends AbstractFormFieldConstraint
 
 	public function get_js_validation(FormField $field)
 	{
+                $field->get_min_input() == 1 ? $this->error_message = rtrim($this->error_message, 's') : '';
 		return 'MinPossibleValuesFormFieldValidator(' . TextHelper::to_js_string($field->get_html_id()) .
 			', ' . $field->get_min_input() . ', ' . TextHelper::to_js_string(StringVars::replace_vars($this->error_message, array('name' => TextHelper::strtolower($field->get_label()), 'min_input' => $field->get_min_input()))) .')';
 	}
