@@ -3,7 +3,7 @@
 		<div class="controls align-right">
 			# IF C_SYNDICATION #<a href="{U_SYNDICATION}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a># ENDIF #
 			{MODULE_NAME}
-			# IF C_HAS_CATEGORIES #
+			# IF C_HAS_CATEGORY #
 				# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
 				# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 			# ENDIF #
