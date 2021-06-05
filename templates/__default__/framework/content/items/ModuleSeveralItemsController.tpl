@@ -45,7 +45,7 @@
 										<div class="cell-thumbnail cell-landscape cell-center">
 											<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
 											<a class="cell-thumbnail-caption" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
-												{@category.see.category}
+												{@common.see.category}
 											</a>
 										</div>
 									</div>
@@ -91,9 +91,9 @@
 										</th>
 									# ENDIF #
 									# IF C_ENABLED_CATEGORIES #
-										<th class="col-small" arai-label="{@category.category}">
+										<th class="col-small" arai-label="{@common.category}">
 											<i class="far fa-fw fa-folder hidden-small-screens" aria-hidden="true"></i>
-											<span class="hidden-large-screens">{@category.category)}</span>
+											<span class="hidden-large-screens">{@common.category}</span>
 										</th>
 									# ENDIF #
 									# IF NOT C_PENDING #
@@ -122,9 +122,9 @@
 											</th>
 										# ENDIF #
 										# IF C_ENABLED_COMMENTS #
-											<th class="col-small" aria-label="{'comment.comments}">
+											<th class="col-small" aria-label="{@common.comments}">
 												<i class="far fa-fw fa-comments hidden-small-screens" aria-hidden="true"></i>
-												<span class="hidden-large-screens">{'comment.comments}</span>
+												<span class="hidden-large-screens">{@common.comments}</span>
 											</th>
 										# ENDIF #
 									# ENDIF #
@@ -265,7 +265,7 @@
 											# IF C_ENABLED_CATEGORIES #
 												# IF items.C_HAS_CATEGORY #
 													# IF NOT items.C_ROOT_CATEGORY #
-														<span class="pinned">
+														<span class="pinned" aria-label="{@common.category}">
 															<a itemprop="about" href="{items.U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {items.CATEGORY_NAME}</a>
 														</span>
 													# ENDIF #
@@ -273,15 +273,15 @@
 											# ENDIF #
 											# IF NOT C_PENDING #
 												# IF C_ENABLED_VIEWS #
-													<span class="pinned" role="contentinfo" aria-label="{items.VIEWS_NUMBER} # IF items.C_SEVERAL_VIEWS #{@common.views}# ELSE #{@common.view}# ENDIF #"><i class="fa fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span>
+													<span class="pinned" role="contentinfo" aria-label="{@common.views.number}"><i class="fa fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span>
 												# ENDIF #
 												# IF C_ENABLED_VISITS #
-													<span class="pinned">
+													<span class="pinned" aria-label="{@common.visits.number}">
 														{items.VISITS_NUMBER} # IF C_SEVERAL_VISITS #{@common.visits}# ELSE #{@common.visit}# ENDIF #
 													</span>
 												# ENDIF #
 												# IF C_ENABLED_DOWNLOADS #
-													<span class="pinned">
+													<span class="pinned" aria-label="{@common.downloads.number}">
 														{items.DOWNLOADS_NUMBER} # IF C_SEVERAL_DOWNLOADS #{@common.downloads}# ELSE #{@common.download}# ENDIF #
 													</span>
 												# ENDIF #
@@ -289,7 +289,7 @@
 													<div class="pinned">{items.STATIC_NOTATION}</div>
 												# ENDIF #
 												# IF C_ENABLED_COMMENTS #
-													<span class="pinned">
+													<span class="pinned" aria-label="{@common.comments}">
 														<a href="{items.U_COMMENTS}"><i class="fa fa-comments" aria-hidden="true"></i> {items.COMMENTS_LABEL}</a>
 													</span>
 												# ENDIF #
@@ -391,7 +391,7 @@
 				# IF NOT C_HIDE_NO_ITEM_MESSAGE #
 					<div class="content">
 						<div class="message-helper bgc notice align-center">
-							{@items.no.element}
+							{@common.no.item.now}
 						</div>
 					</div>
 				# ENDIF #
