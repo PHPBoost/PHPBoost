@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 02
+ * @version     PHPBoost 6.0 - last update: 2021 06 05
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -151,6 +151,9 @@ $lang['common.see.profile.datas']      = 'See member datas';
 $lang['common.link']                   = 'Link';
 $lang['common.link.to.anchor']         = 'Link to anchor';
 $lang['common.link.to.website']        = 'Link to website';
+$lang['common.go.to.content']          = 'Go to content';
+$lang['common.scroll.to.top']          = 'Scroll to Top';
+$lang['common.scroll.to.bottom']       = 'Scroll to Bottom';
 $lang['common.keyword']                = 'Keyword';
 $lang['common.keywords']               = 'Keywords';
 $lang['common.source']                 = 'Source';
@@ -220,10 +223,6 @@ $lang['common.move.up']         = 'Move up';
 $lang['common.move.down']       = 'Move down';
 $lang['common.update.position'] = 'Change positions';
 $lang['common.drop.here']       = 'Drop here';
-
-// Scroll to
-$lang['common.scroll.to.top']    = 'Scroll to Top';
-$lang['common.scroll.to.bottom'] = 'Scroll to Bottom';
 
 // Select
 $lang['common.select']              = 'Select';

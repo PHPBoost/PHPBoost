@@ -1,5 +1,5 @@
 # INCLUDE MAINTAIN #
-<a href="#global" aria-label="${LangLoader::get_message('go.to.content', 'main')}"></a>
+<a href="#global" aria-label="{@common.go.to.content}"></a>
 <header id="header">
 	<div id="top-header">
 		<div id="site-infos" role="banner">
