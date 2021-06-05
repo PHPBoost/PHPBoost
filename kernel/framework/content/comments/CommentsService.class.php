@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 28
+ * @version     PHPBoost 6.0 - last update: 2021 06 05
  * @since       PHPBoost 3.0 - 2011 03 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -28,7 +28,7 @@ class CommentsService
 		self::$user = AppContext::get_current_user();
 		self::$lang = LangLoader::get('main');
 		self::$common_lang = LangLoader::get('common');
-		self::$comments_lang = LangLoader::get('comments-common');
+		self::$comments_lang = LangLoader::get('comment-lang');
 		self::$comments_cache = CommentsCache::load();
 		self::$template = new FileTemplate('framework/content/comments/comments.tpl');
 		self::$template->add_lang(self::$comments_lang);
@@ -49,7 +49,7 @@ class CommentsService
 
 		if (!$authorizations->is_authorized_read())
 		{
-			self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$comments_lang['comments.not-authorized.read'], MessageHelper::NOTICE));
+			self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$comments_lang['comment.not.authorized.read'], MessageHelper::NOTICE));
 		}
 		else
 		{
@@ -108,7 +108,7 @@ class CommentsService
 					}
 					elseif (!empty($user_read_only) && $user_read_only > time())
 					{
-						self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$comments_lang['comments.user.read-only'], MessageHelper::NOTICE));
+						self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$comments_lang['comment.user.read.only'], MessageHelper::NOTICE));
 					}
 					else
 					{
@@ -121,7 +121,7 @@ class CommentsService
 				}
 				else
 				{
-					self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$comments_lang['comments.not-authorized.post'], MessageHelper::NOTICE));
+					self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$comments_lang['comment.not.authorized.post'], MessageHelper::NOTICE));
 				}
 			}
 
@@ -210,7 +210,7 @@ class CommentsService
 	public static function get_lang_comments($module_id, $id_in_module = '', $topic_identifier = CommentsTopic::DEFAULT_TOPIC_IDENTIFIER)
 	{
 		$comments_number = CommentsManager::get_comments_number($module_id, $id_in_module, $topic_identifier);
-		$lang = $comments_number > 1 ? self::$comments_lang['comments'] : self::$comments_lang['comment'];
+		$lang = $comments_number > 1 ? self::$comments_lang['comment.comments'] : self::$comments_lang['comment.comment'];
 
 		return !empty($comments_number) ? ' ' .$lang : '0 '.$lang;
 	}

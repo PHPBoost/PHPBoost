@@ -26,8 +26,8 @@
 <div id="comments-list" class="tabs-container">
     # IF C_DISPLAY_FORM #
 		<nav class="tabs-nav">
-	        <ul class="flex-between">
-	            <li><a href="#" data-tabs="" data-target="comments-section"><h5>{@comments}</h5></a></li>
+	        <ul class="flex-between flex-between-large">
+	            <li><a href="#" data-tabs="" data-target="comments-section"><h5>{@comment.comments}</h5></a></li>
 	            # IF NOT C_IS_LOCKED #<li><a class="pinned question" href="#" data-tabs="" data-target="add-comment">{@comment.add}</a></li># ENDIF #
 	        </ul>
 	    </nav>
@@ -41,9 +41,9 @@
 					# IF C_MODERATE #
 						<div class="controls align-right">
 							# IF C_IS_LOCKED #
-								<a href="{U_UNLOCK}" class="user-locked"><i class="fa fa-user-lock" aria-hidden="true"></i> {@unlock}</a>
+								<a href="{U_UNLOCK}" class="user-locked"><i class="fa fa-user-lock" aria-hidden="true"></i> {@comment.unlock}</a>
 							# ELSE #
-								<a href="{U_LOCK}" class="user-unlocked"><i class="fa fa-user-lock" aria-hidden="true"></i> {@lock}</a>
+								<a href="{U_LOCK}" class="user-unlocked"><i class="fa fa-user-lock" aria-hidden="true"></i> {@comment.lock}</a>
 							# ENDIF #
 						</div>
 					# ENDIF #
@@ -62,7 +62,7 @@
 					</form>
 				# ENDIF #
 			# ELSE #
-				<div class="message-helper bgc notice">{@no.comment}</div>
+				<div class="message-helper bgc notice">{@comment.no.comment}</div>
 			# ENDIF #
 		</div>
     </div>
@@ -81,6 +81,6 @@
 
 # IF C_DISPLAY_VIEW_ALL_COMMENTS #
 	<div class="align-center">
-		<button type="submit" class="button submit" id="refresh-comments">{@allComments}</button>
+		<button type="submit" class="button submit" id="refresh-comments">{@comment.see.all.comments}</button>
 	</div>
 # ENDIF #

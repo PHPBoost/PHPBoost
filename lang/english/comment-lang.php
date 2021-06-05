@@ -25,8 +25,6 @@ $lang['comment.form.visitor.email.clue']   = 'The email won\'t be publicly displ
 $lang['comment.config.visitor.email']      = 'Email for visitors';
 $lang['comment.config.visitor.email.clue'] = 'Display an email required field for not connected users.';
 
-$lang['comment.locked'] = 'Comments blocked, you can not post comments';
-
 $lang['comment.add']            = 'Add a comment';
 $lang['comment.edit']           = 'Edit a comment';
 $lang['comment.link']           = 'Link to comments';
@@ -34,6 +32,7 @@ $lang['comment.link.to.anchor'] = 'Link to this message';
 
 $lang['comment.lock']   = 'Lock';
 $lang['comment.unlock'] = 'Unlock';
+$lang['comment.locked'] = 'Comments blocked, you can not post comments';
 
 $lang['comment.see.all.comments']    = 'See all comments';
 $lang['comment.see.other.comments']  = 'See other comments';

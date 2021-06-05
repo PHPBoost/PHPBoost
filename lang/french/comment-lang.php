@@ -25,8 +25,6 @@ $lang['comment.form.visitor.email.clue']   = 'L\'email ne sera pas affiché publ
 $lang['comment.config.visitor.email']      = 'Email pour les visiteurs';
 $lang['comment.config.visitor.email.clue'] = 'Affiche dans le formulaire un champ obligatoire pour l\'email lorsque l\'utilisateur n\'est pas connecté.';
 
-$lang['comment.locked'] = 'Commentaires bloqués, vous ne pouvez pas poster de commentaire';
-
 $lang['comment.add']            = 'Ajouter un commentaire';
 $lang['comment.edit']           = 'Editer un commentaire';
 $lang['comment.link']           = 'Lien vers les commentaires';
@@ -34,6 +32,7 @@ $lang['comment.link.to.anchor'] = 'Lien vers ce message';
 
 $lang['comment.lock']   = 'Verrouiller';
 $lang['comment.unlock'] = 'Déverrouiller';
+$lang['comment.locked'] = 'Commentaires bloqués, vous ne pouvez pas poster de commentaire';
 
 $lang['comment.see.all.comments']    = 'Voir tous les commentaires';
 $lang['comment.see.other.comments']  = 'Voir les autres commentaires';

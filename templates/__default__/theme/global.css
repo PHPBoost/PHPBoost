@@ -164,7 +164,13 @@ a.pinned { cursor: pointer; }
 
 .flex-between.flex-between-large { flex-direction: column; }
 
-@media (min-width: 769px) { .flex-between.flex-between-large { flex-direction: row; }}
+.flex-between.flex-between-large > * { margin-bottom: 0.309em; }
+
+@media (min-width: 769px) {
+	.flex-between.flex-between-large { flex-direction: row; }
+
+	.flex-between.flex-between-large > * { margin-bottom: 0; }
+}
 
 /* --- Display --- */
 .d-flex         { display: flex; }
