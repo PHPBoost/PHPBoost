@@ -25,6 +25,7 @@ class FormFieldConstraintPossibleValuesMin extends AbstractFormFieldConstraint
 	public function validate(FormField $field)
 	{
 		$value = $field->get_value();
+                $field->get_min_input() == 1 ? $this->error_message = rtrim($this->error_message, 's') : '';
 		$this->set_validation_error_message(StringVars::replace_vars($this->error_message, array('name' => TextHelper::strtolower($field->get_label()), 'min_input' => $field->get_min_input())));
 
 		return is_array($value) && !empty($value) && count($value) >= $field->get_min_input();
