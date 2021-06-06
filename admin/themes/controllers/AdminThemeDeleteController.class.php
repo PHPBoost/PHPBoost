@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 29
+ * @version     PHPBoost 6.0 - last update: 2021 06 06
  * @since       PHPBoost 3.0 - 2011 04 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminThemeDeleteController extends AdminController
@@ -15,7 +16,7 @@ class AdminThemeDeleteController extends AdminController
 	private $submit_button;
 	private $theme_id;
 	private $multiple = false;
-	private $tpl;
+	private $view;
 	private $file;
 
 	public function execute(HTTPRequestCustom $request)
@@ -60,17 +61,17 @@ class AdminThemeDeleteController extends AdminController
 					}
 
 					if (count($theme_childs_list_names) > 1)
-						$warning_message = StringVars::replace_vars($this->lang['themes.theme.childs.list.uninstallation.warning'], array('themes_names' => implode('</b>, <b>', $theme_childs_list_names), 'name' => $requested_theme_name));
+						$warning_message = StringVars::replace_vars($this->lang['addon.themes.warning.childs.list'], array('themes_names' => implode('</b>, <b>', $theme_childs_list_names), 'name' => $requested_theme_name));
 					else
-						$warning_message = StringVars::replace_vars($this->lang['themes.theme.child.uninstallation.warning'], array('theme_name' => $theme_childs_list_names[0], 'name' => $requested_theme_name));
-					
-					$this->tpl->put('MSG', MessageHelper::display($warning_message, MessageHelper::WARNING));
+						$warning_message = StringVars::replace_vars($this->lang['addon.themes.warning.child'], array('theme_name' => $theme_childs_list_names[0], 'name' => $requested_theme_name));
+
+					$this->view->put('MESSAGE_HELPER', MessageHelper::display($warning_message, MessageHelper::WARNING));
 				}
 			}
 
-			$this->tpl->put('FORM', $this->form->display());
+			$this->view->put('FORM', $this->form->display());
 
-			return new AdminThemesDisplayResponse($this->tpl, $this->multiple ? $this->lang['themes.delete_theme_multiple'] : $this->lang['themes.delete_theme']);
+			return new AdminThemesDisplayResponse($this->view, $this->multiple ? $this->lang['addon.themes.delete.multiple'] : $this->lang['addon.themes.delete']);
 		}
 		else
 		{
@@ -81,22 +82,22 @@ class AdminThemeDeleteController extends AdminController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-themes-common');
-		$this->tpl = new StringTemplate('# INCLUDE MSG ## INCLUDE FORM #');
-		$this->tpl->add_lang($this->lang);
+		$this->lang = LangLoader::get('addon-lang');
+		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER ## INCLUDE FORM #');
+		$this->view->add_lang($this->lang);
 	}
 
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('delete_theme', $this->multiple ? $this->lang['themes.delete_theme_multiple'] : $this->lang['themes.delete_theme']);
+		$fieldset = new FormFieldsetHTML('delete_theme', $this->multiple ? $this->lang['addon.themes.delete.multiple'] : $this->lang['addon.themes.delete']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldRadioChoice('drop_files', $this->multiple ? $this->lang['themes.drop_files_multiple'] : $this->lang['themes.drop_files'], '0',
+		$fieldset->add_field(new FormFieldRadioChoice('drop_files', $this->multiple ? $this->lang['addon.themes.drop.multiple'] : $this->lang['addon.themes.drop'], '0',
 			array(
-				new FormFieldRadioChoiceOption(LangLoader::get_message('yes', 'common'), '1'),
-				new FormFieldRadioChoiceOption(LangLoader::get_message('no', 'common'), '0')
+				new FormFieldRadioChoiceOption(LangLoader::get_message('common.yes', 'common-lang'), '1'),
+				new FormFieldRadioChoiceOption(LangLoader::get_message('common.no', 'common-lang'), '0')
 			),
 			array('class' => 'inline-radio custom-radio')
 		));
@@ -115,7 +116,7 @@ class AdminThemeDeleteController extends AdminController
 		{
 			$default_theme_parent_name = ThemesManager::get_theme($default_theme_parent)->get_configuration()->get_name();
 			$default_theme_name = ThemesManager::get_theme(ThemesManager::get_default_theme())->get_configuration()->get_name();
-			$default_theme_parent_error = StringVars::replace_vars($this->lang['themes.parent.of.default.theme'], array('name' => $default_theme_parent_name, 'default_theme' => $default_theme_name));
+			$default_theme_parent_error = StringVars::replace_vars($this->lang['addon.themes.default.parent.theme'], array('name' => $default_theme_parent_name, 'default_theme' => $default_theme_name));
 		}
 
 		if ($this->multiple)
@@ -137,7 +138,7 @@ class AdminThemeDeleteController extends AdminController
 		}
 
 		if ($try_to_delete_default)
-			AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), $this->lang['themes.default.theme.not.removable'], MessageHelper::WARNING);
+			AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), $this->lang['addon.themes.warning.default'], MessageHelper::WARNING);
 		else if ($default_theme_parent != '__default__' && $try_to_delete_default_parent)
 			AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), $default_theme_parent_error, MessageHelper::WARNING);
 	}

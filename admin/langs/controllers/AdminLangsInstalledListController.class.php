@@ -3,11 +3,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 23
+ * @version     PHPBoost 6.0 - last update: 2021 06 06
  * @since       PHPBoost 3.0 - 2011 04 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor xela <xela@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminLangsInstalledListController extends AdminController
@@ -21,14 +22,14 @@ class AdminLangsInstalledListController extends AdminController
 		$this->build_view();
 		$this->save($request);
 
-		return new AdminLangsDisplayResponse($this->view, $this->lang['langs.installed_langs']);
+		return new AdminLangsDisplayResponse($this->view, $this->lang['addon.langs.installed']);
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-langs-common');
+		$this->lang = LangLoader::get('addon-lang');
 		$this->view = new FileTemplate('admin/langs/AdminLangsInstalledListController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 	}
 
 	private function build_view()
@@ -45,21 +46,22 @@ class AdminLangsInstalledListController extends AdminController
 			$author_website = $configuration->get_author_link();
 
 			$this->view->assign_block_vars('langs_installed', array(
-				'C_AUTHOR_EMAIL' => !empty($author_email),
-				'C_AUTHOR_WEBSITE' => !empty($author_website),
-				'C_COMPATIBLE' => $configuration->get_compatibility() == $phpboost_version,
+				'C_AUTHOR_EMAIL'    => !empty($author_email),
+				'C_AUTHOR_WEBSITE'  => !empty($author_website),
+				'C_COMPATIBLE'      => $configuration->get_compatibility() == $phpboost_version,
 				'C_IS_DEFAULT_LANG' => $lang->get_id() == LangsManager::get_default_lang(),
-				'C_IS_ACTIVATED' => $lang->is_activated(),
-				'C_HAS_PICTURE' => $configuration->has_picture(),
-				'LANG_NUMBER' => $lang_number,
-				'ID' => $lang->get_id(),
-				'PICTURE_URL' => $configuration->get_picture_url()->rel(),
-				'NAME' => $configuration->get_name(),
-				'VERSION' => $configuration->get_version(),
-				'AUTHOR' => $configuration->get_author_name(),
-				'AUTHOR_EMAIL' => $author_email,
+				'C_IS_ACTIVATED'    => $lang->is_activated(),
+				'C_HAS_PICTURE'     => $configuration->has_picture(),
+
+				'LANG_NUMBER'    => $lang_number,
+				'ID'             => $lang->get_id(),
+				'PICTURE_URL'    => $configuration->get_picture_url()->rel(),
+				'NAME'           => $configuration->get_name(),
+				'VERSION'        => $configuration->get_version(),
+				'AUTHOR'         => $configuration->get_author_name(),
+				'AUTHOR_EMAIL'   => $author_email,
 				'AUTHOR_WEBSITE' => $author_website,
-				'COMPATIBILITY' => $configuration->get_compatibility(),
+				'COMPATIBILITY'  => $configuration->get_compatibility(),
 				'AUTHORIZATIONS' => Authorizations::generate_select(Lang::ACCES_LANG, $authorizations, array(2 => true), $lang->get_id())
 			));
 			if ($lang->get_id() == LangsManager::get_default_lang())
@@ -70,8 +72,9 @@ class AdminLangsInstalledListController extends AdminController
 
 		$installed_langs_number = count($installed_langs);
 		$this->view->put_all(array(
-			'C_MORE_THAN_ONE_LANG_INSTALLED' => $installed_langs_number > 1,
-			'LANGS_NUMBER' => $installed_langs_number,
+			'C_SEVERAL_LANGS_INSTALLED' => $installed_langs_number > 1,
+
+			'LANGS_NUMBER'        => $installed_langs_number,
 			'DEFAULT_LANG_NUMBER' => $selected_lang_number
 		));
 	}
@@ -123,7 +126,7 @@ class AdminLangsInstalledListController extends AdminController
 				}
 				$lang_number++;
 			}
-			AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), LangLoader::get_message('process.success', 'status-messages-common'));
+			AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), LangLoader::get_message('warning.process.success', 'warning-lang'));
 		}
 		else
 		{
@@ -138,7 +141,7 @@ class AdminLangsInstalledListController extends AdminController
 					$user_accounts_config->set_default_lang($lang->get_id());
 					UserAccountsConfig::save();
 
-					AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), LangLoader::get_message('process.success', 'status-messages-common'));
+					AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), LangLoader::get_message('warning.process.success', 'warning-lang'));
 				}
 				else if ($request->get_string('delete-' . $lang->get_id(), ''))
 				{
@@ -149,14 +152,14 @@ class AdminLangsInstalledListController extends AdminController
 					$authorizations = Authorizations::auth_array_simple(Lang::ACCES_LANG, $lang->get_id());
 					LangsManager::change_informations($lang->get_id(), 1, $authorizations);
 
-					AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), LangLoader::get_message('process.success', 'status-messages-common'));
+					AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), LangLoader::get_message('warning.process.success', 'warning-lang'));
 				}
 				else if ($request->get_string('disable-' . $lang->get_id(), ''))
 				{
 					$authorizations = Authorizations::auth_array_simple(Lang::ACCES_LANG, $lang->get_id());
 					LangsManager::change_informations($lang->get_id(), 0, $authorizations);
 
-					AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), LangLoader::get_message('process.success', 'status-messages-common'));
+					AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), LangLoader::get_message('warning.process.success', 'warning-lang'));
 				}
 			}
 		}
@@ -172,7 +175,7 @@ class AdminLangsInstalledListController extends AdminController
 					LangsManager::change_informations($lang->get_id(), $lang->is_activated(), $authorizations);
 				}
 			}
-			AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), LangLoader::get_message('process.success', 'status-messages-common'));
+			AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), LangLoader::get_message('warning.process.success', 'warning-lang'));
 		}
 	}
 }

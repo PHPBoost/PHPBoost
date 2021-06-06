@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 10
+ * @version     PHPBoost 6.0 - last update: 2021 06 06
  * @since       PHPBoost 3.0 - 2011 09 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -46,13 +46,13 @@ class AdminModuleUpdateController extends AdminController
 		}
 
 		if ($modules_selected > 0 && $modules_selected == $modules_success)
-			$this->view->put('MSG_SUCCESS', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 10));
+			$this->view->put('MESSAGE_HELPER_SUCCESS', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 10));
 		else
 		{
 			if ($message_warning)
-				$this->view->put('MSG_WARNING', MessageHelper::display($message_warning, MessageHelper::WARNING, -1));
+				$this->view->put('MESSAGE_HELPER_WARNING', MessageHelper::display($message_warning, MessageHelper::WARNING, -1));
 			if ($message_success)
-				$this->view->put('MSG_SUCCESS', MessageHelper::display($message_success, MessageHelper::SUCCESS, 10));
+				$this->view->put('MESSAGE_HELPER_SUCCESS', MessageHelper::display($message_success, MessageHelper::SUCCESS, 10));
 		}
 
 		$this->upload_form();
@@ -66,28 +66,26 @@ class AdminModuleUpdateController extends AdminController
 
 		$this->view->put('UPLOAD_FORM', $this->form->display());
 
-		return new AdminModulesDisplayResponse($this->view, $this->lang['modules.update_module']);
+		return new AdminModulesDisplayResponse($this->view, $this->lang['addon.modules.update']);
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-modules-common');
+		$this->lang = LangLoader::get('addon-lang');
 		$this->view = new FileTemplate('admin/modules/AdminModuleUpdateController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 	}
 
 	private function upload_form()
 	{
 		$form = new HTMLForm('upload_module', '', false);
 
-		$fieldset = new FormFieldsetHTML('upload', $this->lang['modules.update_module']);
+		$fieldset = new FormFieldsetHTML('upload', $this->lang['addon.modules.update']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldFree('warnings', '', $this->lang['modules.update.warning_before_update'],
-			array('class' => 'full-field')
-		));
+		$fieldset->set_description(MessageHelper::display($this->lang['addon.modules.warning.update'], MessageHelper::NOTICE)->render());
 
-        $fieldset->add_field(new FormFieldFilePicker('file', StringVars::replace_vars($this->lang['modules.upload_description'], array('max_size' => File::get_formated_size(ServerConfiguration::get_upload_max_filesize()))),
+        $fieldset->add_field(new FormFieldFilePicker('file', MessageHelper::display(StringVars::replace_vars($this->lang['addon.upload.clue'], array('max_size' => File::get_formated_size(ServerConfiguration::get_upload_max_filesize()))), MessageHelper::QUESTION)->render(),
 			array('class' => 'full-field', 'authorized_extensions' => 'gz|zip')
 		));
 
@@ -114,12 +112,12 @@ class AdminModuleUpdateController extends AdminController
 					'C_AUTHOR_EMAIL'   => !empty($author_email),
 					'C_AUTHOR_WEBSITE' => !empty($author_website),
 					'C_COMPATIBLE'     => $configuration->get_compatibility() == $phpboost_version,
+
 					'MODULE_NUMBER'    => $module_number,
-					'ID'               => $module->get_id(),
-					'NAME'             => TextHelper::ucfirst($configuration->get_name()),
+					'MODULE_ID'               => $module->get_id(),
+					'MODULE_NAME'             => TextHelper::ucfirst($configuration->get_name()),
 					'CREATION_DATE'    => $configuration->get_creation_date(),
 					'LAST_UPDATE'      => $configuration->get_last_update(),
-					'ICON'             => $module->get_id(),
 					'VERSION'          => $configuration->get_version(),
 					'AUTHOR'           => $configuration->get_author(),
 					'AUTHOR_EMAIL'     => $author_email,
@@ -135,7 +133,7 @@ class AdminModuleUpdateController extends AdminController
 		}
 
 		$this->view->put_all(array(
-			'C_MORE_THAN_ONE_MODULE_AVAILABLE' => $modules_upgradable > 1,
+			'C_SEVERAL_MODULES_AVAILABLE' => $modules_upgradable > 1,
 			'C_UPDATES' => $modules_upgradable > 0,
 			'MODULES_NUMBER' => $modules_upgradable
 		));
@@ -146,21 +144,21 @@ class AdminModuleUpdateController extends AdminController
 		switch (ModulesManager::upgrade_module($module_id))
 		{
 			case ModulesManager::UPGRADE_FAILED:
-				return array('msg' => LangLoader::get_message('process.error', 'status-messages-common'), 'type' => MessageHelper::WARNING);
+				return array('msg' => LangLoader::get_message('warning.process.error', 'warning-lang'), 'type' => MessageHelper::WARNING);
 				break;
 			case ModulesManager::MODULE_NOT_UPGRADABLE:
-				return array('msg' => $this->lang['modules.module_not_upgradable'], 'type' => MessageHelper::WARNING);
+				return array('msg' => $this->lang['addon.modules.not.upgradable'], 'type' => MessageHelper::WARNING);
 				break;
 			case ModulesManager::NOT_INSTALLED_MODULE:
-				return array('msg' => $this->lang['modules.not_installed_module'], 'type' => MessageHelper::WARNING);
+				return array('msg' => $this->lang['addon.modules.not.installed'], 'type' => MessageHelper::WARNING);
 				break;
 			case ModulesManager::UNEXISTING_MODULE:
-				return array('msg' => LangLoader::get_message('element.unexist', 'status-messages-common'), 'type' => MessageHelper::WARNING);
+				return array('msg' => LangLoader::get_message('warning.element.unexist', 'warning-lang'), 'type' => MessageHelper::WARNING);
 				break;
 			case ModulesManager::MODULE_UPDATED:
 			default:
 				ModulesManager::set_module_activation($module_id, true);
-				return array('msg' => LangLoader::get_message('process.success', 'status-messages-common'), 'type' => MessageHelper::SUCCESS);
+				return array('msg' => LangLoader::get_message('warning.process.success', 'warning-lang'), 'type' => MessageHelper::SUCCESS);
 		}
 	}
 
@@ -236,18 +234,18 @@ class AdminModuleUpdateController extends AdminController
 							$result = $this->upgrade_module($module_id);
 
 							if ($result['type'] == MessageHelper::SUCCESS)
-								$this->view->put('MSG_SUCCESS', MessageHelper::display($result['msg'], MessageHelper::SUCCESS, 10));
+								$this->view->put('MESSAGE_HELPER_SUCCESS', MessageHelper::display($result['msg'], MessageHelper::SUCCESS, 10));
 							else
-								$this->view->put('MSG_WARNING', MessageHelper::display($result['msg'], MessageHelper::WARNING));
+								$this->view->put('MESSAGE_HELPER_WARNING', MessageHelper::display($result['msg'], MessageHelper::WARNING));
 						}
 						else
 						{
-							$this->view->put('MSG_WARNING', MessageHelper::display($this->lang['modules.not_installed_module'], MessageHelper::WARNING));
+							$this->view->put('MESSAGE_HELPER_WARNING', MessageHelper::display($this->lang['addon.modules.not.installed'], MessageHelper::WARNING));
 						}
 					}
 					else
 					{
-						$this->view->put('MSG_WARNING', MessageHelper::display(LangLoader::get_message('error.invalid_archive_content', 'status-messages-common'), MessageHelper::WARNING));
+						$this->view->put('MESSAGE_HELPER_WARNING', MessageHelper::display(LangLoader::get_message('warning.invalid_archive_content', 'warning-lang'), MessageHelper::WARNING));
 					}
 
 					$uploaded_file = new File($archive);
@@ -255,12 +253,12 @@ class AdminModuleUpdateController extends AdminController
 				}
 				else
 				{
-					$this->view->put('MSG_WARNING', MessageHelper::display(LangLoader::get_message('upload.invalid_format', 'status-messages-common'), MessageHelper::WARNING));
+					$this->view->put('MESSAGE_HELPER_WARNING', MessageHelper::display(LangLoader::get_message('warning.file.upload.invalid.format', 'warning-lang'), MessageHelper::WARNING));
 				}
 			}
 			else
 			{
-				$this->view->put('MSG_WARNING', MessageHelper::display(LangLoader::get_message('upload.error', 'status-messages-common'), MessageHelper::WARNING));
+				$this->view->put('MESSAGE_HELPER_WARNING', MessageHelper::display(LangLoader::get_message('warning.file.upload.error', 'warning-lang'), MessageHelper::WARNING));
 			}
 		}
 	}

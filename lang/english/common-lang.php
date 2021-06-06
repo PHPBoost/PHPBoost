@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 05
+ * @version     PHPBoost 6.0 - last update: 2021 06 06
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,38 +13,40 @@
 #                     English                      #
 ####################################################
 
-$lang['common.avatar']       = 'Avatar';
-$lang['common.color']        = 'Color';
-$lang['common.colors']       = 'Colors';
-$lang['common.content']      = 'Content';
-$lang['common.description']  = 'Description';
-$lang['common.filter']       = 'Filter';
-$lang['common.filters']      = 'Filters';
-$lang['common.home']         = 'Home';
-$lang['common.id']           = 'ID';
-$lang['common.image']        = 'Image';
-$lang['common.informations'] = 'Informations';
-$lang['common.loading']      = 'Loading';
-$lang['common.message']      = 'Message';
-$lang['common.messages']     = 'Messages';
-$lang['common.moderation']   = 'Moderation';
-$lang['common.module']       = 'Module';
-$lang['common.name']         = 'Name';
-$lang['common.options']      = 'Options';
-$lang['common.other']        = 'Other';
-$lang['common.page']         = 'Page';
-$lang['common.participants'] = 'Participants';
-$lang['common.root']         = 'Root';
-$lang['common.statistics']   = 'Statistics';
-$lang['common.suggestions']  = 'Suggestions';
-$lang['common.template']     = 'Template';
-$lang['common.templates']    = 'Templates';
-$lang['common.theme']        = 'Theme';
-$lang['common.themes']       = 'Themes';
-$lang['common.title']        = 'Title';
-$lang['common.type']         = 'Type';
-$lang['common.update']       = 'Update';
-$lang['common.version']      = 'Version';
+$lang['common.avatar']         = 'Avatar';
+$lang['common.color']          = 'Color';
+$lang['common.colors']         = 'Colors';
+$lang['common.content']        = 'Content';
+$lang['common.description']    = 'Description';
+$lang['common.email']          = 'Email';
+$lang['common.filter']         = 'Filter';
+$lang['common.filters']        = 'Filters';
+$lang['common.home']           = 'Home';
+$lang['common.id']             = 'ID';
+$lang['common.image']          = 'Image';
+$lang['common.informations']   = 'Informations';
+$lang['common.loading']        = 'Loading';
+$lang['common.message']        = 'Message';
+$lang['common.messages']       = 'Messages';
+$lang['common.moderation']     = 'Moderation';
+$lang['common.module']         = 'Module';
+$lang['common.name']           = 'Name';
+$lang['common.options']        = 'Options';
+$lang['common.other']          = 'Other';
+$lang['common.page']           = 'Page';
+$lang['common.participants']   = 'Participants';
+$lang['common.root']           = 'Root';
+$lang['common.statistics']     = 'Statistics';
+$lang['common.suggestions']    = 'Suggestions';
+$lang['common.template']       = 'Template';
+$lang['common.templates']      = 'Templates';
+$lang['common.theme']          = 'Theme';
+$lang['common.themes']         = 'Themes';
+$lang['common.title']          = 'Title';
+$lang['common.type']           = 'Type';
+$lang['common.update']         = 'Update';
+$lang['common.version']        = 'Version';
+$lang['common.website']        = 'Website';
 
 $lang['common.by']      = 'By';
 $lang['common.the']     = 'The';

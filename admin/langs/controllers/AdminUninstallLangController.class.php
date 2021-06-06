@@ -3,11 +3,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 06 06
  * @since       PHPBoost 3.0 - 2012 01 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor xela <xela@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminUninstallLangController extends AdminController
@@ -17,7 +18,7 @@ class AdminUninstallLangController extends AdminController
 	private $submit_button;
 	private $lang_id;
 	private $multiple = false;
-	private $tpl;
+	private $view;
 	private $file;
 
 	public function execute(HTTPRequestCustom $request)
@@ -44,12 +45,12 @@ class AdminUninstallLangController extends AdminController
 			{
 				$this->uninstall($this->form->get_value('drop_files')->get_raw_value());
 
-				AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), LangLoader::get_message('process.success', 'status-messages-common'));
+				AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), LangLoader::get_message('warning.process.success', 'warning-lang'));
 			}
 
-			$this->tpl->put('FORM', $this->form->display());
+			$this->view->put('FORM', $this->form->display());
 
-			return new AdminLangsDisplayResponse($this->tpl, $this->multiple ? $this->lang['langs.delete_lang_multiple'] : $this->lang['langs.delete_lang']);
+			return new AdminLangsDisplayResponse($this->view, $this->multiple ? $this->lang['addon.langs.delete.multiple'] : $this->lang['addon.langs.delete']);
 		}
 		else
 		{
@@ -60,22 +61,22 @@ class AdminUninstallLangController extends AdminController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-langs-common');
-		$this->tpl = new StringTemplate('# INCLUDE FORM #');
-		$this->tpl->add_lang($this->lang);
+		$this->lang = LangLoader::get('addon-lang');
+		$this->view = new StringTemplate('# INCLUDE FORM #');
+		$this->view->add_lang($this->lang);
 	}
 
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('uninstall_lang', $this->multiple ? $this->lang['langs.delete_lang_multiple'] : $this->lang['langs.delete_lang']);
+		$fieldset = new FormFieldsetHTML('uninstall_lang', $this->multiple ? $this->lang['addon.langs.delete.multiple'] : $this->lang['addon.langs.delete']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldRadioChoice('drop_files', $this->multiple ? $this->lang['langs.drop_files_multiple'] : $this->lang['langs.drop_files'], '0',
+		$fieldset->add_field(new FormFieldRadioChoice('drop_files', $this->multiple ? $this->lang['addon.langs.drop.multiple'] : $this->lang['addon.langs.drop'], '0',
 			array(
-				new FormFieldRadioChoiceOption(LangLoader::get_message('yes', 'common'), '1'),
-				new FormFieldRadioChoiceOption(LangLoader::get_message('no', 'common'), '0')
+				new FormFieldRadioChoiceOption(LangLoader::get_message('common.yes', 'common-lang'), '1'),
+				new FormFieldRadioChoiceOption(LangLoader::get_message('common.no', 'common-lang'), '0')
 			),
 			array('class' => 'inline-radio custom-radio')
 		));

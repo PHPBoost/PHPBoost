@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 05
+ * @version     PHPBoost 6.0 - last update: 2021 06 06
  * @since       PHPBoost 3.0 - 2011 04 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -35,7 +35,14 @@ class AdminLangsNotInstalledListController extends AdminController
 
 		$this->view->put('UPLOAD_FORM', $this->form->display());
 
-		return new AdminLangsDisplayResponse($this->view, $this->lang['langs.add_lang']);
+		return new AdminLangsDisplayResponse($this->view, $this->lang['addon.langs.add']);
+	}
+
+	private function init()
+	{
+		$this->lang = LangLoader::get('addon-lang');
+		$this->view = new FileTemplate('admin/langs/AdminLangsNotInstalledListController.tpl');
+		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 	}
 
 	private function build_view()
@@ -50,36 +57,32 @@ class AdminLangsNotInstalledListController extends AdminController
 			$author_website = $configuration->get_author_link();
 
 			$this->view->assign_block_vars('langs_not_installed', array(
-				'C_AUTHOR_EMAIL' => !empty($author_email),
+				'C_AUTHOR_EMAIL'   => !empty($author_email),
 				'C_AUTHOR_WEBSITE' => !empty($author_website),
-				'C_COMPATIBLE' => $configuration->get_compatibility() == $phpboost_version,
-				'C_HAS_PICTURE' => $configuration->has_picture(),
-				'LANG_NUMBER' => $lang_number,
-				'ID' => $lang->get_id(),
-				'PICTURE_URL' => $configuration->get_picture_url()->rel(),
-				'NAME' => $configuration->get_name(),
-				'VERSION' => $configuration->get_version(),
-				'AUTHOR' => $configuration->get_author_name(),
-				'AUTHOR_EMAIL' => $author_email,
+				'C_COMPATIBLE'     => $configuration->get_compatibility() == $phpboost_version,
+				'C_HAS_THUMBNAIL'    => $configuration->has_picture(),
+
+				'LANG_NUMBER'    => $lang_number,
+				'ID'             => $lang->get_id(),
+				'NAME'           => $configuration->get_name(),
+				'VERSION'        => $configuration->get_version(),
+				'AUTHOR'         => $configuration->get_author_name(),
+				'AUTHOR_EMAIL'   => $author_email,
 				'AUTHOR_WEBSITE' => $author_website,
-				'COMPATIBILITY' => $configuration->get_compatibility(),
-				'AUTHORIZATIONS' => Authorizations::generate_select(Lang::ACCES_LANG, array('r-1' => 1, 'r0' => 1, 'r1' => 1), array(2 => true), $lang->get_id())
+				'COMPATIBILITY'  => $configuration->get_compatibility(),
+				'AUTHORIZATIONS' => Authorizations::generate_select(Lang::ACCES_LANG, array('r-1' => 1, 'r0' => 1, 'r1' => 1), array(2 => true), $lang->get_id()),
+
+				'U_THUMBNAIL' => $configuration->get_picture_url()->rel(),
 			));
 			$lang_number++;
 		}
 		$not_installed_langs_number = count($not_installed_langs);
 		$this->view->put_all(array(
-			'C_MORE_THAN_ONE_LANG_AVAILABLE' => $not_installed_langs_number > 1,
-			'C_LANG_AVAILABLE' => $not_installed_langs_number > 0,
+			'C_SEVERAL_LANGS_AVAILABLE' => $not_installed_langs_number > 1,
+			'C_LANG_AVAILABLE'          => $not_installed_langs_number > 0,
+
 			'LANGS_NUMBER' => $not_installed_langs_number
 		));
-	}
-
-	private function init()
-	{
-		$this->lang = LangLoader::get('admin-langs-common');
-		$this->view = new FileTemplate('admin/langs/AdminLangsNotInstalledListController.tpl');
-		$this->view->add_lang($this->lang);
 	}
 
 	private function get_not_installed_langs()
@@ -136,11 +139,11 @@ class AdminLangsNotInstalledListController extends AdminController
 		$error = LangsManager::get_error();
 		if ($error !== null)
 		{
-			$this->view->put('MSG', MessageHelper::display($error, MessageHelper::WARNING, 10));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($error, MessageHelper::WARNING, 10));
 		}
 		else
 		{
-			$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 10));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 10));
 		}
 	}
 
@@ -148,14 +151,12 @@ class AdminLangsNotInstalledListController extends AdminController
 	{
 		$form = new HTMLForm('upload_lang', '', false);
 
-		$fieldset = new FormFieldsetHTML('upload', $this->lang['langs.upload_lang']);
+		$fieldset = new FormFieldsetHTML('upload', $this->lang['addon.langs.upload']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldFree('warnings', '', $this->lang['langs.add.warning_before_install'],
-			array('class' => 'full-field')
-		));
+		$fieldset->set_description(MessageHelper::display($this->lang['addon.langs.warning.install'], MessageHelper::NOTICE)->render());
 
-		$fieldset->add_field(new FormFieldFilePicker('file', StringVars::replace_vars($this->lang['langs.upload_description'], array('max_size' => File::get_formated_size(ServerConfiguration::get_upload_max_filesize()))),
+		$fieldset->add_field(new FormFieldFilePicker('file', MessageHelper::display(StringVars::replace_vars($this->lang['addon.upload.clue'], array('max_size' => File::get_formated_size(ServerConfiguration::get_upload_max_filesize()))), MessageHelper::QUESTION)->render(),
 			array('class' => 'full-field', 'authorized_extensions' => 'gz|zip')
 		));
 
@@ -239,12 +240,12 @@ class AdminLangsNotInstalledListController extends AdminController
 						}
 						else
 						{
-							$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('element.already_exists', 'status-messages-common'), MessageHelper::WARNING));
+							$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.element.already.exists', 'warning-lang'), MessageHelper::WARNING));
 						}
 					}
 					else
 					{
-						$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('error.invalid_archive_content', 'status-messages-common'), MessageHelper::WARNING));
+						$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.invalid.archive.content', 'warning-lang'), MessageHelper::WARNING));
 					}
 
 					$uploaded_file = new File($archive);
@@ -252,12 +253,12 @@ class AdminLangsNotInstalledListController extends AdminController
 				}
 				else
 				{
-					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('upload.invalid_format', 'status-messages-common'), MessageHelper::WARNING));
+					$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.file.invalid.format', 'warning-lang'), MessageHelper::WARNING));
 				}
 			}
 			else
 			{
-				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('upload.error', 'status-messages-common'), MessageHelper::WARNING));
+				$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.file.upload.error', 'warning-lang'), MessageHelper::WARNING));
 			}
 		}
 	}

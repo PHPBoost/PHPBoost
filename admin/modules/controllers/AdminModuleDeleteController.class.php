@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 06 06
  * @since       PHPBoost 3.0 - 2011 09 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminModuleDeleteController extends AdminController
@@ -17,7 +18,7 @@ class AdminModuleDeleteController extends AdminController
 	private $module_id;
 	private $multiple = false;
 	private $error = '';
-	private $tpl;
+	private $view;
 	private $file;
 
 	public function execute(HTTPRequestCustom $request)
@@ -47,12 +48,12 @@ class AdminModuleDeleteController extends AdminController
 				$this->delete_module($drop_files);
 
 				if (!$this->error)
-					AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), LangLoader::get_message('process.success', 'status-messages-common'));
+					AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), LangLoader::get_message('warning.process.success', 'warning-lang'));
 				else
-					$this->tpl->put('MSG', $this->error);
+					$this->view->put('MESSAGE_HELPER', $this->error);
 			}
-			$this->tpl->put('FORM', $this->form->display());
-			return new AdminModulesDisplayResponse($this->tpl, $this->multiple ? $this->lang['modules.delete_module_multiple'] : $this->lang['modules.delete_module']);
+			$this->view->put('FORM', $this->form->display());
+			return new AdminModulesDisplayResponse($this->view, $this->multiple ? $this->lang['addon.modules.delete.multiple'] : $this->lang['addon.modules.delete']);
 		}
 		else
 		{
@@ -63,9 +64,9 @@ class AdminModuleDeleteController extends AdminController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-modules-common');
-		$this->tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$this->tpl->add_lang($this->lang);
+		$this->lang = LangLoader::get('addon-lang');
+		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
+		$this->view->add_lang($this->lang);
 	}
 
 	private function module_exists()
@@ -96,13 +97,13 @@ class AdminModuleDeleteController extends AdminController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('delete_module', $this->multiple ? $this->lang['modules.delete_module_multiple'] : $this->lang['modules.delete_module']);
+		$fieldset = new FormFieldsetHTML('delete_module', $this->multiple ? $this->lang['addon.modules.delete.multiple'] : $this->lang['addon.modules.delete']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldRadioChoice('drop_files', $this->multiple ? $this->lang['modules.drop_files_multiple'] : $this->lang['modules.drop_files'], '0',
+		$fieldset->add_field(new FormFieldRadioChoice('drop_files', $this->multiple ? $this->lang['addon.modules.drop.multiple'] : $this->lang['addon.modules.drop'], '0',
 			array(
-				new FormFieldRadioChoiceOption(LangLoader::get_message('yes', 'common'), '1'),
-				new FormFieldRadioChoiceOption(LangLoader::get_message('no', 'common'), '0')
+				new FormFieldRadioChoiceOption(LangLoader::get_message('common.yes', 'common-lang'), '1'),
+				new FormFieldRadioChoiceOption(LangLoader::get_message('common.no', 'common-lang'), '0')
 			),
 			array('class' => 'inline-radio custom-radio')
 		));
@@ -134,15 +135,15 @@ class AdminModuleDeleteController extends AdminController
 			switch($error)
 			{
 				case ModulesManager::MODULE_FILES_COULD_NOT_BE_DROPPED:
-					$this->error = MessageHelper::display(LangLoader::get_message('files_del_failed', 'main'), MessageHelper::WARNING, 10);
+					$this->error = MessageHelper::display(LangLoader::get_message('warning.files.del.failed', 'warning-lang'), MessageHelper::WARNING, 10);
 					break;
 				case ModulesManager::NOT_INSTALLED_MODULE:
-					$this->error = MessageHelper::display($this->lang['modules.not_installed_module'], MessageHelper::WARNING, 10);
+					$this->error = MessageHelper::display($this->lang['addon.modules.not.installed'], MessageHelper::WARNING, 10);
 					break;
 				case ModulesManager::MODULE_UNINSTALLED:
 					break;
 				default:
-					$this->error = MessageHelper::display(LangLoader::get_message('process.error', 'status-messages-common'), MessageHelper::WARNING, 10);
+					$this->error = MessageHelper::display(LangLoader::get_message('warning.process.error', 'warning-lang'), MessageHelper::WARNING, 10);
 			}
 		}
 		else

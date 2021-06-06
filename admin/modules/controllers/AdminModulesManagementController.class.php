@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2019 10 10
+ * @version     PHPBoost 6.0 - last update: 2021 06 06
  * @since       PHPBoost 3.0 - 2011 09 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -22,14 +22,14 @@ class AdminModulesManagementController extends AdminController
 		$this->build_view();
 		$this->save($request);
 
-		return new AdminModulesDisplayResponse($this->view, $this->lang['modules.module_management']);
+		return new AdminModulesDisplayResponse($this->view, $this->lang['addon.modules.management']);
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-modules-common');
+		$this->lang = LangLoader::get('addon-lang');
 		$this->view = new FileTemplate('admin/modules/AdminModulesManagementController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 	}
 
 	private function build_view()
@@ -49,21 +49,22 @@ class AdminModulesManagementController extends AdminController
 				'C_AUTHOR_WEBSITE' => !empty($author_website),
 				'C_COMPATIBLE'     => $configuration->get_compatibility() == $phpboost_version,
 				'C_IS_ACTIVATED'   => $module->is_activated(),
-				'MODULE_NUMBER'    => $module_number,
-				'ID'               => $module->get_id(),
-				'NAME'             => TextHelper::ucfirst($configuration->get_name()),
-				'CREATION_DATE'    => $configuration->get_creation_date(),
-				'LAST_UPDATE'      => $configuration->get_last_update(),
-				'ICON'             => $module->get_id(),
-				'VERSION'          => $module->get_installed_version(),
-				'AUTHOR'           => $configuration->get_author(),
-				'AUTHOR_EMAIL'     => $author_email,
-				'AUTHOR_WEBSITE'   => $author_website,
-				'DESCRIPTION'      => $configuration->get_description(),
-				'COMPATIBILITY'    => $configuration->get_compatibility(),
-				'PHP_VERSION'      => $configuration->get_php_version(),
-				'C_DOCUMENTATION'  => !empty($documentation),
-				'L_DOCUMENTATION'  => $documentation
+				'C_DOCUMENTATION' => !empty($documentation),
+
+				'MODULE_NUMBER'  => $module_number,
+				'MODULE_ID'      => $module->get_id(),
+				'MODULE_NAME'    => TextHelper::ucfirst($configuration->get_name()),
+				'CREATION_DATE'  => $configuration->get_creation_date(),
+				'LAST_UPDATE'    => $configuration->get_last_update(),
+				'VERSION'        => $module->get_installed_version(),
+				'AUTHOR'         => $configuration->get_author(),
+				'AUTHOR_EMAIL'   => $author_email,
+				'AUTHOR_WEBSITE' => $author_website,
+				'DESCRIPTION'    => $configuration->get_description(),
+				'COMPATIBILITY'  => $configuration->get_compatibility(),
+				'PHP_VERSION'    => $configuration->get_php_version(),
+
+				'U_DOCUMENTATION' => $documentation
 			));
 
 			$module_number++;
@@ -71,7 +72,7 @@ class AdminModulesManagementController extends AdminController
 
 		$installed_modules_number = count($installed_modules);
 		$this->view->put_all(array(
-			'C_MORE_THAN_ONE_MODULE_INSTALLED' => $installed_modules_number > 1,
+			'C_SEVERAL_MODULES_INSTALLED' => $installed_modules_number > 1,
 			'MODULES_NUMBER' => $installed_modules_number
 		));
 	}

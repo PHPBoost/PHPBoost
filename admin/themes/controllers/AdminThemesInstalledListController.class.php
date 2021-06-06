@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 30
+ * @version     PHPBoost 6.0 - last update: 2021 06 06
  * @since       PHPBoost 3.0 - 2011 04 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -13,6 +13,7 @@
 class AdminThemesInstalledListController extends AdminController
 {
 	private $lang;
+	private $common_lang;
 	private $view;
 
 	public function execute(HTTPRequestCustom $request)
@@ -21,14 +22,15 @@ class AdminThemesInstalledListController extends AdminController
 		$this->build_view();
 		$this->save($request);
 
-		return new AdminThemesDisplayResponse($this->view, $this->lang['themes.installed_theme']);
+		return new AdminThemesDisplayResponse($this->view, $this->lang['addon.themes.installed']);
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-themes-common');
+		$this->lang = LangLoader::get('addon-lang');
+		$this->common_lang = LangLoader::get('common-lang');
 		$this->view = new FileTemplate('admin/themes/AdminThemesInstalledListController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->view->add_lang(array_merge($this->lang, $this->common_lang));
 	}
 
 	private function build_view()
@@ -51,26 +53,28 @@ class AdminThemesInstalledListController extends AdminController
 				'C_COMPATIBLE'       => $configuration->get_compatibility() == $phpboost_version,
 				'C_IS_DEFAULT_THEME' => $theme->get_id() == ThemesManager::get_default_theme(),
 				'C_IS_ACTIVATED'     => $theme->is_activated(),
-				'C_PICTURES'         => count($pictures) > 0,
+				'C_THUMBNAILS'       => count($pictures) > 0,
 				'C_PARENT_THEME'     => $configuration->get_parent_theme() != '' && $configuration->get_parent_theme() != '__default__',
-				'THEME_NUMBER'       => $theme_number,
-				'ID'                 => $theme->get_id(),
-				'NAME'               => $configuration->get_name(),
-				'CREATION_DATE'      => $configuration->get_creation_date(),
-				'LAST_UPDATE'        => $configuration->get_last_update(),
-				'VERSION'            => $configuration->get_version(),
-				'MAIN_PICTURE'       => count($pictures) > 0 ? Url::to_rel('/templates/' . $theme->get_id() . '/' . current($pictures)) : '',
-				'AUTHOR'             => $configuration->get_author_name(),
-				'AUTHOR_EMAIL'       => $author_email,
-				'AUTHOR_WEBSITE'     => $author_website,
-				'DESCRIPTION'        => $configuration->get_description() !== '' ? $configuration->get_description() : $this->lang['themes.bot_informed'],
-				'COMPATIBILITY'      => $configuration->get_compatibility(),
-				'AUTHORIZATIONS'     => Authorizations::generate_select(Theme::ACCES_THEME, $authorizations, array(2 => true), $theme->get_id()),
-				'HTML_VERSION'       => $configuration->get_html_version() !== '' ? $configuration->get_html_version() : $this->lang['themes.bot_informed'],
-				'CSS_VERSION'        => $configuration->get_css_version() !== '' ? $configuration->get_css_version() : $this->lang['themes.bot_informed'],
-				'MAIN_COLOR'         => $configuration->get_main_color() !== '' ? $configuration->get_main_color() : $this->lang['themes.bot_informed'],
-				'WIDTH'              => $configuration->get_variable_width() ? $this->lang['themes.variable-width'] : $configuration->get_width(),
-				'PARENT_THEME'       => $configuration->get_parent_theme() != '' && $configuration->get_parent_theme() != '__default__' ? (ThemesManager::get_theme_existed($configuration->get_parent_theme()) ? ThemesManager::get_theme($configuration->get_parent_theme())->get_configuration()->get_name() : $configuration->get_parent_theme()) : '',
+
+				'THEME_NUMBER'   => $theme_number,
+				'MODULE_ID'      => $theme->get_id(),
+				'MODULE_NAME'    => $configuration->get_name(),
+				'CREATION_DATE'  => $configuration->get_creation_date(),
+				'LAST_UPDATE'    => $configuration->get_last_update(),
+				'VERSION'        => $configuration->get_version(),
+				'AUTHOR'         => $configuration->get_author_name(),
+				'AUTHOR_EMAIL'   => $author_email,
+				'AUTHOR_WEBSITE' => $author_website,
+				'DESCRIPTION'    => $configuration->get_description() !== '' ? $configuration->get_description() : $this->common_lang['common.unspecified'],
+				'COMPATIBILITY'  => $configuration->get_compatibility(),
+				'AUTHORIZATIONS' => Authorizations::generate_select(Theme::ACCES_THEME, $authorizations, array( 2 => true), $theme->get_id()),
+				'HTML_VERSION'   => $configuration->get_html_version() !== '' ? $configuration->get_html_version() : $this->common_lang['common.unspecified'],
+				'CSS_VERSION'    => $configuration->get_css_version() !== '' ? $configuration->get_css_version() : $this->common_lang['common.unspecified'],
+				'MAIN_COLOR'     => $configuration->get_main_color() !== '' ? $configuration->get_main_color() : $this->common_lang['common.unspecified'],
+				'WIDTH'          => $configuration->get_variable_width() ? $this->lang['addon.themes.variable.width'] : $configuration->get_width(),
+				'PARENT_THEME'   => $configuration->get_parent_theme() != '' && $configuration->get_parent_theme() != '__default__' ? (ThemesManager::get_theme_existed($configuration->get_parent_theme()) ? ThemesManager::get_theme($configuration->get_parent_theme())->get_configuration()->get_name() : $configuration->get_parent_theme()) : '',
+
+				'U_MAIN_THUMBNAIL' => count($pictures) > 0 ? Url::to_rel('/templates/' . $theme->get_id() . '/' . current($pictures)) : '',
 			));
 
 			if (count($pictures) > 0)
@@ -80,7 +84,7 @@ class AdminThemesInstalledListController extends AdminController
 				{
 					$url = '/templates/' . (!preg_match('/\/default\//', $picture) ? $theme->get_id() . '/' : '') . $picture;
 					$this->view->assign_block_vars('themes_installed.pictures', array(
-						'URL' => Url::to_rel($url)
+						'U_THUMBNAIL' => Url::to_rel($url)
 					));
 				}
 			}
@@ -93,8 +97,9 @@ class AdminThemesInstalledListController extends AdminController
 
 		$installed_themes_number = count($installed_themes);
 		$this->view->put_all(array(
-			'C_MORE_THAN_ONE_THEME_INSTALLED' => $installed_themes_number > 1,
-			'THEMES_NUMBER' => $installed_themes_number,
+			'C_SEVERAL_THEMES_INSTALLED' => $installed_themes_number > 1,
+
+			'THEMES_NUMBER'        => $installed_themes_number,
 			'DEFAULT_THEME_NUMBER' => $default_theme_number
 		));
 	}
@@ -146,7 +151,7 @@ class AdminThemesInstalledListController extends AdminController
 				}
 				$theme_number++;
 			}
-			AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), LangLoader::get_message('process.success', 'status-messages-common'));
+			AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), LangLoader::get_message('warning.warning.process.success', 'warning-lang'));
 		}
 		else
 		{
@@ -161,7 +166,7 @@ class AdminThemesInstalledListController extends AdminController
 					$user_accounts_config->set_default_theme($theme->get_id());
 					UserAccountsConfig::save();
 
-					AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), LangLoader::get_message('process.success', 'status-messages-common'));
+					AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), LangLoader::get_message('warning.warning.process.success', 'warning-lang'));
 				}
 				else if ($request->get_string('delete-' . $theme->get_id(), ''))
 				{
@@ -172,14 +177,14 @@ class AdminThemesInstalledListController extends AdminController
 					$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $theme->get_id());
 					ThemesManager::change_informations($theme->get_id(), 1, $authorizations);
 
-					AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), LangLoader::get_message('process.success', 'status-messages-common'));
+					AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), LangLoader::get_message('warning.process.success', 'warning-lang'));
 				}
 				else if ($request->get_string('disable-' . $theme->get_id(), ''))
 				{
 					$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $theme->get_id());
 					ThemesManager::change_informations($theme->get_id(), 0, $authorizations);
 
-					AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), LangLoader::get_message('process.success', 'status-messages-common'));
+					AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), LangLoader::get_message('warning.process.success', 'warning-lang'));
 				}
 			}
 		}
@@ -194,7 +199,7 @@ class AdminThemesInstalledListController extends AdminController
 					ThemesManager::change_informations($theme->get_id(), $theme->is_activated(), $authorizations);
 				}
 			}
-			AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), LangLoader::get_message('process.success', 'status-messages-common'));
+			AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), LangLoader::get_message('warning.process.success', 'warning-lang'));
 		}
 	}
 }
