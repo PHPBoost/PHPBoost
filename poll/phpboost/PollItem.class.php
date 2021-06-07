@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 04
+ * @version     PHPBoost 6.0 - last update: 2021 06 07
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -71,11 +71,7 @@ class PollItem extends RichItem
 
 		$this->add_additional_attribute('countdown_display', array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 2));
 
-		$this->add_additional_attribute('close_poll', array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0, 'attribute_pre_content_field_parameters' => array(
-			'field_class' => 'FormFieldCheckbox',
-		    'label'       => LangLoader::get_message('poll.form.close.poll', 'common', 'poll')
-		    )
-		));
+		$this->add_additional_attribute('close_poll', array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0));
 	}
 
 	public function get_question()
@@ -147,6 +143,11 @@ class PollItem extends RichItem
 	public function is_closed()
 	{
 		return $this->get_close_poll() > 0;
+	}
+
+        public function set_close_poll(int $value)
+	{
+		$this->set_additional_property('close_poll', $value);
 	}
 
 	public function get_mini_module_map()
@@ -240,6 +241,7 @@ class PollItem extends RichItem
 	{
 		$this->set_votes(self::DEFAULT_VALUE_VOTES);
 		$this->set_votes_number(self::DEFAULT_VALUE_VOTES_NUMBER);
+                $this->set_close_poll(FormFieldCheckbox::UNCHECKED);
 		$this->set_countdown_display(self::DEFAULT_VALUE_COUNTDOWN_DISPLAY);
 	}
 
