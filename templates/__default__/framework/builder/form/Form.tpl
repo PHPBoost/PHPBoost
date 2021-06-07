@@ -28,7 +28,11 @@
 			<div class="content-container">
 				<div class="content">
 # ENDIF #
-					<form id="${HTML_ID}" # IF C_TARGET #action="${TARGET}"# ENDIF # method="${METHOD}" onsubmit="return HTMLForms.get('${HTML_ID}').validate();" class="${FORMCLASS}">
+					<form
+						id="${HTML_ID}"
+						# IF C_TARGET #action="${TARGET}"# ENDIF #
+						method="${METHOD}" onsubmit="return HTMLForms.get('${HTML_ID}').validate();"
+						class="${FORMCLASS}">
 						# IF C_HAS_REQUIRED_FIELDS #
 							<p class="required-fields-text small text-italic">{L_REQUIRED_FIELDS}</p>
 						# ENDIF #

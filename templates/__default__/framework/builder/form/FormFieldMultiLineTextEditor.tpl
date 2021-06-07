@@ -1,4 +1,7 @@
-<div id="${escape(HTML_ID)}_field" class="form-element form-element-textarea# IF C_REQUIRED_AND_HAS_VALUE # constraint-status-right# ENDIF ## IF C_EDITOR_ENABLED # editor-{EDITOR_NAME}# ENDIF ## IF C_HAS_CSS_CLASS # {CSS_CLASS}# ENDIF #"# IF C_HIDDEN # style="display: none;"# ENDIF #>
+<div
+	id="${escape(HTML_ID)}_field"
+	class="form-element form-element-textarea# IF C_REQUIRED_AND_HAS_VALUE # constraint-status-right# ENDIF ## IF C_EDITOR_ENABLED # editor-{EDITOR_NAME}# ENDIF ## IF C_HAS_CSS_CLASS # {CSS_CLASS}# ENDIF #"
+	# IF C_HIDDEN # style="display: none;"# ENDIF #>
 	<label for="${escape(HTML_ID)}">
 		{LABEL}
 		# IF C_DESCRIPTION #<span class="field-description">{DESCRIPTION}</span># ENDIF #

@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 19
+ * @version     PHPBoost 6.0 - last update: 2021 06 07
  * @since       PHPBoost 3.0 - 2010 01 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -30,8 +30,8 @@ class FormFieldMultipleAutocompleter extends AbstractFormField
     {
         $template = $this->get_template_to_use();
 
-		$tpl = new FileTemplate('framework/builder/form/FormFieldMultipleAutocompleter.tpl');
-		$tpl->add_lang(LangLoader::get('common'));
+		$view = new FileTemplate('framework/builder/form/FormFieldMultipleAutocompleter.tpl');
+		$view->add_lang(LangLoader::get('common-lang'));
         $this->assign_common_template_variables($template);
 
     	if (empty($this->file))
@@ -42,7 +42,7 @@ class FormFieldMultipleAutocompleter extends AbstractFormField
         $i = 0;
    		foreach ($this->get_value() as $value)
 		{
-	        $tpl->assign_block_vars('fieldelements', array(
+	        $view->assign_block_vars('fieldelements', array(
 				'ID' => $i,
 	        	'VALUE' => $value
 	        ));
@@ -51,19 +51,19 @@ class FormFieldMultipleAutocompleter extends AbstractFormField
 
 		if ($i == 0)
 		{
-			$tpl->assign_block_vars('fieldelements', array(
+			$view->assign_block_vars('fieldelements', array(
 				'ID' => $i,
 	        	'VALUE' => ''
 	        ));
 		}
 
-		 $tpl->put_all(array(
+		 $view->put_all(array(
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_id(),
 			'HTML_ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->is_disabled(),
         	'MAX_INPUT' => $this->max_input,
-		 	'NBR_FIELDS' => $i == 0 ? 1 : $i,
+		 	'FIELDS_NUMBER' => $i == 0 ? 1 : $i,
 		 	'SIZE' => $this->size,
 		 	'METHOD' =>  $this->method,
 			'NAME_PARAMETER' =>  $this->name_parameter,
@@ -71,7 +71,7 @@ class FormFieldMultipleAutocompleter extends AbstractFormField
         ));
 
 		$template->assign_block_vars('fieldelements', array(
-			'ELEMENT' => $tpl->render()
+			'ELEMENT' => $view->render()
         ));
 
         return $template;

@@ -5,17 +5,19 @@
 				<a href="#">
 					# IF action.C_PICTURE #
 						# IF action.C_IMG #
-						<img src="{action.U_IMG}" alt="{action.TITLE}" />
+							<img src="{action.U_IMG}" alt="{action.TITLE}" />
 						# ELSE #
-						<i class="fa {action.CSS_CLASS}" aria-hidden="true"></i>
+							<i class="fa {action.CSS_CLASS}" aria-hidden="true"></i>
 						# ENDIF #
 					# ENDIF #
 					{action.TITLE}
 				</a>
 			</li>
 		# END action #
-		# IF NOT IS_USER_CONNECTED #<li><a href="#">${LangLoader::get_message('content.config.captcha', 'admin-contents-common')}</a></li># ENDIF #
-		<li><a href="#">${LangLoader::get_message('validation', 'common')}</a></li>
+		# IF NOT IS_USER_CONNECTED #
+			<li><a href="#">${LangLoader::get_message('form.captcha', 'form-lang')}</a></li>
+		# ENDIF #
+		<li><a href="#">${LangLoader::get_message('form.submit', 'form-lang')}</a></li>
 	</ul>
 </nav>
 <div class="wizard-navigator"></div>

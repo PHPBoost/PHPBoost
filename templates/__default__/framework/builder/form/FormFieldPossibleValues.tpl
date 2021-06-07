@@ -25,7 +25,7 @@
 				jQuery('<div/>', {id : id + '_inputs', class: 'grouped-inputs'}).appendTo('#' + id);
 				jQuery('<input/>', {class : 'grouped-element', type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{PLACEHOLDER}'}).appendTo('#' + id + '_inputs');
 				jQuery('#field_name_' + id).after(' ');
-				jQuery('<a/>', {class : 'grouped-element bgc-full error', href : 'javascript:FormFieldPossibleValues.delete_field('+ this.integer +');', id : 'delete_' + id, 'aria-label' : "${LangLoader::get_message('delete', 'common')}"}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#' + id + '_inputs');
+				jQuery('<a/>', {class : 'grouped-element bgc-full error', href : 'javascript:FormFieldPossibleValues.delete_field('+ this.integer +');', id : 'delete_' + id, 'aria-label' : "${LangLoader::get_message('common.delete', 'common-lang')}"}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#' + id + '_inputs');
 
 				# IF C_DISPLAY_DEFAULT_RADIO #
 					jQuery('<script/>').html('jQuery("#field_is_default_' + id + '").on(\'click\',function(){ jQuery("#uncheck_default_${escape(HTML_ID)}").show(); });').appendTo('#' + id);
@@ -59,24 +59,24 @@
 	};
 
 	var FormFieldPossibleValues = new FormFieldPossibleValues();
-	
+
 	jQuery("#${escape(HTML_ID)}_field").on("focusout", function() {
 	  jQuery("input[id^=field_name_${escape(HTML_ID)}]").each(function() {
 		  var html_id = "${escape(HTML_ID)}";
 		  var message = "error";
 		  var validation = [];
-		  
+
 		  # IF C_REQUIRED #
 			if ({MIN_INPUT})
 			  validation.push(MinPossibleValuesFormFieldValidator(html_id, {MIN_INPUT}, message));
 			if ({MAX_INPUT})
 			  validation.push(MaxPossibleValuesFormFieldValidator(html_id, {MAX_INPUT}, message));
 		  # ENDIF #
-		  
+
 		  # IF C_UNIQUE_INPUT_VALUE #
 			validation.push(UniquePossibleValuesFormFieldValidator(html_id, message));
 		  # ENDIF #
-		  
+
 		  if (!jQuery.isEmptyObject(validation)) {
 			if (validation.indexOf(message) !== -1) {
 				jQuery('#'+html_id+'_field').removeClass('constraint-status-right').addClass('constraint-status-error');
@@ -86,12 +86,12 @@
 				jQuery("#onblurMessageResponse" +html_id).hide();
 			}
 		  }
-	  });  
+	  });
 	});
 </script>
 
 <div id="input_fields_${escape(HTML_ID)}" class="form-field-values">
-	<span class="text-strong is-default-title hidden-small-screens">{@field.possible_values.is_default}</span>
+	<span class="text-strong is-default-title hidden-small-screens">{@form.is.default}</span>
 	# START fieldelements #
 		<div id="${escape(HTML_ID)}_{fieldelements.ID}" class="possible-values custom-radio">
 			# IF C_DISPLAY_DEFAULT_RADIO #
@@ -105,7 +105,7 @@
 
 			<div class="grouped-inputs">
 				<input class="grouped-element" type="text" name="field_name_${escape(HTML_ID)}_{fieldelements.ID}" id="field_name_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.TITLE}" placeholder="{PLACEHOLDER}"/>
-				<a class="grouped-element bgc-full error# IF NOT C_DELETE # icon-disabled# ENDIF #" href="javascript:FormFieldPossibleValues.delete_field({fieldelements.ID});" id="delete_${escape(HTML_ID)}_{fieldelements.ID}" aria-label="${LangLoader::get_message('delete', 'common')}"# IF C_DELETE # data-confirmation="delete-element"# ENDIF #><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+				<a class="grouped-element bgc-full error# IF NOT C_DELETE # icon-disabled# ENDIF #" href="javascript:FormFieldPossibleValues.delete_field({fieldelements.ID});" id="delete_${escape(HTML_ID)}_{fieldelements.ID}" aria-label="${LangLoader::get_message('common.delete', 'common-lang')}"# IF C_DELETE # data-confirmation="delete-element"# ENDIF #><i class="far fa-trash-alt" aria-hidden="true"></i></a>
 			</div>
 
 			# IF C_DISPLAY_DEFAULT_RADIO #
@@ -119,8 +119,8 @@
 	# END fieldelements #
 </div>
 <div class="flex-between">
-	<a href="javascript:FormFieldPossibleValues.add_field();" id="add_${escape(HTML_ID)}" class="add-more-values" aria-label="${LangLoader::get_message('add', 'common')}"><i class="far fa-lg fa-plus-square" aria-hidden="true"></i></a>
-	# IF C_DISPLAY_DEFAULT_RADIO #<a href="#" onclick="return false;" id="uncheck_default_${escape(HTML_ID)}"# IF NOT C_HAS_DEFAULT_VALUE # style="display: none;"# ENDIF # class="small"> <i class="fa fa-times" aria-hidden="true"></i> {@field.possible_values.delete_default}</a># ENDIF #
+	<a href="javascript:FormFieldPossibleValues.add_field();" id="add_${escape(HTML_ID)}" class="add-more-values" aria-label="${LangLoader::get_message('common.add', 'common-lang')}"><i class="far fa-lg fa-plus-square" aria-hidden="true"></i></a>
+	# IF C_DISPLAY_DEFAULT_RADIO #<a href="#" onclick="return false;" id="uncheck_default_${escape(HTML_ID)}"# IF NOT C_HAS_DEFAULT_VALUE # style="display: none;"# ENDIF # class="small"> <i class="fa fa-times" aria-hidden="true"></i> {@form.delete.default.values.}</a># ENDIF #
 </div>
 
 # IF C_DISPLAY_DEFAULT_RADIO #

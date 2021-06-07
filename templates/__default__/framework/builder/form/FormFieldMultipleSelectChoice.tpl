@@ -40,7 +40,7 @@
 		# START options # # INCLUDE options.OPTION # # END options #
 	</select>
 	<div class="spacer"></div>
-	<a href="#" id="${escapejscharacters(NAME)}_select_all" onclick="return false;" class="small select-all">{L_SELECT_ALL}</a> /
-	<a href="#" id="${escapejscharacters(NAME)}_unselect_all" onclick="return false;" class="small deselect-all">{L_UNSELECT_ALL}</a>
-	<span class="field-description general-selector">{L_SELECT_EXPLAIN}</span>
+	<a href="#" id="${escapejscharacters(NAME)}_select_all" onclick="return false;" class="small select-all">{@form.select.all}</a> /
+	<a href="#" id="${escapejscharacters(NAME)}_unselect_all" onclick="return false;" class="small deselect-all">{@form.select.none}</a>
+	<span class="field-description general-selector">{@form.select.multiple.clue}</span>
 </div>

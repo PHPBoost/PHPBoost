@@ -2,7 +2,8 @@
 # START actions #
     <div class="form-element form-element-auth">
     	<label>
-    		{actions.LABEL} # IF actions.DESCRIPTION #<span class="field-description">{actions.DESCRIPTION}</span># ENDIF #
+    		{actions.LABEL}
+            # IF actions.DESCRIPTION #<span class="field-description">{actions.DESCRIPTION}</span># ENDIF #
     	</label>
     	<div class="form-field">
     		{actions.AUTH_FORM}

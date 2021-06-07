@@ -6,10 +6,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 16
+ * @version     PHPBoost 6.0 - last update: 2021 06 07
  * @since       PHPBoost 3.0 - 2010 01 09
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
@@ -58,13 +59,14 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 		$editor->set_identifier($this->get_html_id());
 
 		$template->put_all(array(
-			'C_EDITOR_ENABLED' => true,
+			'C_EDITOR_ENABLED'       => true,
 			'C_RESET_BUTTON_ENABLED' => $this->reset_value !== null,
-			'EDITOR' => $editor->display(),
-			'EDITOR_NAME' => TextHelper::strtolower($this->formatter->get_name()),
-			'VALUE' => $this->get_raw_value(),
+
+			'EDITOR'         => $editor->display(),
+			'EDITOR_NAME'    => TextHelper::strtolower($this->formatter->get_name()),
+			'VALUE'          => $this->get_raw_value(),
 			'PREVIEW_BUTTON' => $this->get_preview_button_code(),
-			'RESET_BUTTON' => $this->get_reset_button_code()
+			'RESET_BUTTON'   => $this->get_reset_button_code()
 		));
 	}
 
@@ -83,9 +85,11 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 
 		$template->put_all(array(
 			'C_ONCLICK_FUNCTION' => true,
+
 			'HTML_ID' => $this->get_html_id(),
-			'CLASS' => 'small',
-			'L_RESET' => LangLoader::get_message('reset', 'main'),
+			'CLASS'   => 'small',
+
+			'L_RESET'         => LangLoader ::get_message('form.reset', 'form-lang'),
 			'ONCLICK_ACTIONS' => (AppContext::get_current_user()->get_editor() == 'TinyMCE' ? 'setTinyMceContent(' . TextHelper::to_js_string($this->unparse_value($this->reset_value)) . ');' :
 				'HTMLForms.getField("' . $this->get_id() . '").setValue(' . TextHelper::to_js_string($this->unparse_value($this->reset_value)) . ');')
 		));

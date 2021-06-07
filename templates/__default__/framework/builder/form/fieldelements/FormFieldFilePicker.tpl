@@ -2,16 +2,16 @@
 	<div class="dnd-dropzone">
 		<label for="inputfiles" class="dnd-label">
 			# IF C_MULTIPLE #
-				# IF IS_MOBILE_DEVICE #{@click.and.add.files}# ELSE #{@drag.and.drop.files}# ENDIF #
+				# IF IS_MOBILE_DEVICE #{@upload.click.and.add.files}# ELSE #{@upload.drag.and.drop.files}# ENDIF #
 			# ELSE #
-				# IF IS_MOBILE_DEVICE #{@click.and.add.file}# ELSE #{@drag.and.drop.file}# ENDIF #
+				# IF IS_MOBILE_DEVICE #{@upload.click.and.add.file}# ELSE #{@upload.drag.and.drop.file}# ENDIF #
 			# ENDIF #
 			<span class="d-block"></span></label>
 		<input type="file" name="${escape(NAME)}# IF C_MULTIPLE #[]# ENDIF #" id="${escape(HTML_ID)}" class="ufiles"# IF C_DISABLED # disabled="disabled" # ENDIF # />
 	</div>
 	<input type="hidden" name="max_file_size" value="{MAX_FILE_SIZE}">
 	<div class="ready-to-load">
-		<button type="button" class="button clear-list">{@clear.list}</button>
+		<button type="button" class="button clear-list">{@upload.clear.list}</button>
 		# IF C_MULTIPLE #
 			<span class="fa-stack fa-lg">
 				<i class="far fa-file fa-stack-2x "></i>
@@ -20,17 +20,17 @@
 		# ENDIF #
 	</div>
 	<div class="modal-container">
-		<button class="button upload-help" data-modal data-target="upload-helper" aria-label="{@upload.helper}"><i class="fa fa-question"></i></button>
+		<button class="button upload-help" data-modal data-target="upload-helper" aria-label="{@upload.upload.helper}"><i class="fa fa-question"></i></button>
 		<div id="upload-helper" class="modal modal-animation">
-			<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+			<div class="close-modal" aria-label="${LangLoader::get_message('common.close', 'common-lang')}"></div>
 			<div class="content-panel">
-				<h3>{@upload.helper}</h3>
+				<h3>{@upload.upload.helper}</h3>
 				# IF IS_ADMIN #
-					<p><strong>{@max.file.size} :</strong> {MAX_FILE_SIZE_TEXT}</p>
+					<p><strong>{@upload.max.file.size} :</strong> {MAX_FILE_SIZE_TEXT}</p>
 				# ELSE #
-					<p><strong>{@max.files.size} :</strong> {MAX_FILES_SIZE_TEXT}</p>
+					<p><strong>{@upload.max.files.size} :</strong> {MAX_FILES_SIZE_TEXT}</p>
 				# ENDIF #
-				<p><strong>{@allowed.extensions} :</strong> "{ALLOWED_EXTENSIONS}"</p>
+				<p><strong>{@upload.allowed.extensions} :</strong> "{ALLOWED_EXTENSIONS}"</p>
 			</div>
 		</div>
 	</div>
@@ -44,9 +44,9 @@
 		maxFileSize: '{MAX_FILE_SIZE}',
 		maxFilesSize: '{MAX_FILES_SIZE}',
 		allowedExtensions: ["{ALLOWED_EXTENSIONS}"],
-		warningText: ${escapejs(LangLoader::get_message('warning.upload.disabled', 'upload-common'))},
-		warningExtension: ${escapejs(LangLoader::get_message('warning.upload.extension', 'upload-common'))},
-		warningFileSize: ${escapejs(LangLoader::get_message('warning.upload.file.size', 'upload-common'))},
-		warningFilesNbr: ${escapejs(LangLoader::get_message('warning.upload.files.number', 'upload-common'))},
+		warningText: ${escapejs(LangLoader::get_message('upload.warning.disabled', 'upload-lang'))},
+		warningExtension: ${escapejs(LangLoader::get_message('upload.warning.extension', 'upload-lang'))},
+		warningFileSize: ${escapejs(LangLoader::get_message('upload.warning.file.size', 'upload-lang'))},
+		warningFilesNbr: ${escapejs(LangLoader::get_message('upload.warning.files.number', 'upload-lang'))},
 	});
 </script>

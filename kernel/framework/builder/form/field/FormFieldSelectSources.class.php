@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 06 03
+ * @version     PHPBoost 6.0 - last update: 2021 06 07
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldSelectSources extends AbstractFormField
@@ -23,10 +24,10 @@ class FormFieldSelectSources extends AbstractFormField
 	{
 		$template = $this->get_template_to_use();
 
-		$tpl = new FileTemplate('framework/builder/form/fieldelements/FormFieldSelectSources.tpl');
-		$tpl->add_lang(LangLoader::get('common'));
+		$view = new FileTemplate('framework/builder/form/fieldelements/FormFieldSelectSources.tpl');
+		$view->add_lang(LangLoader::get('form-lang'));
 
-		$tpl->put_all(array(
+		$view->put_all(array(
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->is_disabled()
@@ -38,7 +39,7 @@ class FormFieldSelectSources extends AbstractFormField
 		$i = 0;
 		foreach ($this->get_value() as $name => $value)
 		{
-			$tpl->assign_block_vars('fieldelements', array(
+			$view->assign_block_vars('fieldelements', array(
 				'ID' => $i,
 				'VALUE' => $value,
 				'NAME' => $name
@@ -48,14 +49,14 @@ class FormFieldSelectSources extends AbstractFormField
 
 		if ($i == 0)
 		{
-			$tpl->assign_block_vars('fieldelements', array(
+			$view->assign_block_vars('fieldelements', array(
 				'ID' => $i,
 				'VALUE' => '',
 				'NAME' => ''
 			));
 		}
 
-		$tpl->put_all(array(
+		$view->put_all(array(
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->is_disabled(),
@@ -64,7 +65,7 @@ class FormFieldSelectSources extends AbstractFormField
 		));
 
 		$template->assign_block_vars('fieldelements', array(
-			'ELEMENT' => $tpl->render()
+			'ELEMENT' => $view->render()
 		));
 
 		return $template;

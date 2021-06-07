@@ -1,6 +1,6 @@
 <script>
 	var FormFieldMultipleAutocompleter = function(){
-		this.integer = {NBR_FIELDS};
+		this.integer = {FIELDS_NUMBER};
 		this.id_input = ${escapejs(HTML_ID)};
 		this.max_input = {MAX_INPUT};
 	};
@@ -16,7 +16,7 @@
 
 			this.load_autocompleter('field_' + id);
 
-			jQuery('<a/>', {href : 'javascript:FormFieldMultipleAutocompleter.delete_field('+ this.integer +');', class : 'grouped-element bgc-full error', 'aria-label' : ${escapejs(@delete)}}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#' + id);
+			jQuery('<a/>', {href : 'javascript:FormFieldMultipleAutocompleter.delete_field('+ this.integer +');', class : 'grouped-element bgc-full error', 'aria-label' : ${escapejs(@common.delete)}}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#' + id);
 
 			this.integer++;
 		}
@@ -48,8 +48,8 @@
 # START fieldelements #
 	<div id="${escape(HTML_ID)}_{fieldelements.ID}" class="form-autocompleter-container grouped-inputs">
 		<input class="grouped-element" type="text" name="field_${escape(HTML_ID)}_{fieldelements.ID}" id="field_${escape(HTML_ID)}_{fieldelements.ID}" onfocus="javascript:FormFieldMultipleAutocompleter.load_autocompleter('field_${escape(HTML_ID)}_{fieldelements.ID}');" value="{fieldelements.VALUE}" size="{SIZE}" autocomplete="off"/>
-		<a href="javascript:FormFieldMultipleAutocompleter.delete_field({fieldelements.ID});" class="grouped-element bgc-full error" data-confirmation="delete-element" aria-label="{@delete}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+		<a href="javascript:FormFieldMultipleAutocompleter.delete_field({fieldelements.ID});" class="grouped-element bgc-full error" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
 	</div>
 # END fieldelements #
 </div>
-<a href="javascript:FormFieldMultipleAutocompleter.add_field();" id="add-${escape(HTML_ID)}" class="add-more-values" aria-label="{@add}"><i class="far fa-lg fa-plus-square" aria-hidden="true"></i></a>
+<a href="javascript:FormFieldMultipleAutocompleter.add_field();" id="add-${escape(HTML_ID)}" class="add-more-values" aria-label="{@common.add}"><i class="far fa-lg fa-plus-square" aria-hidden="true"></i></a>

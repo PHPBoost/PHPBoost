@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 04
+ * @version     PHPBoost 6.0 - last update: 2021 06 07
  * @since       PHPBoost 4.0 - 2013 09 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -31,13 +31,13 @@ class FormFieldPossibleValues extends AbstractFormField
 		}
 		if ($this->unique_input_value)
 		  $this->add_constraint(new FormFieldConstraintPossibleValuesUnique());
-						  
+
 	}
 
 	function display()
 	{
 		$template = $this->get_template_to_use();
-		$lang = LangLoader::get('admin-user-common');
+		$lang = LangLoader::get('form-lang');
 
 		$tpl = new FileTemplate('framework/builder/form/FormFieldPossibleValues.tpl');
 		$tpl->add_lang($lang);
@@ -75,19 +75,20 @@ class FormFieldPossibleValues extends AbstractFormField
 		}
 
 		$tpl->put_all(array(
-			'NAME'                    => $this->get_html_id(),
-			'ID'                      => $this->get_id(),
-			'HTML_ID'                 => $this->get_html_id(),
-			'C_DISABLED'              => $this->is_disabled(),
-			'MIN_INPUT'               => $this->min_input,
-			'MAX_INPUT'               => $this->max_input,
-			'C_UNIQUE_INPUT_VALUE'    => $this->unique_input_value,
-			'PLACEHOLDER'             => $this->placeholder ? $this->placeholder : $lang['field.name'],
-			'C_DISPLAY_DEFAULT_RADIO' => $this->display_default,
-		 	'FIELDS_NUMBER'           => $i,
 			'C_HAS_DEFAULT_VALUE'     => $has_default,
 			'C_DELETE'				  => $i > $this->min_input,
-			'C_REQUIRED'              => $this->is_required()
+			'C_REQUIRED'              => $this->is_required(),
+			'C_DISPLAY_DEFAULT_RADIO' => $this->display_default,
+			'C_UNIQUE_INPUT_VALUE'    => $this->unique_input_value,
+			'C_DISABLED'              => $this->is_disabled(),
+
+			'NAME'          => $this->get_html_id(),
+			'ID'            => $this->get_id(),
+			'HTML_ID'       => $this->get_html_id(),
+			'MIN_INPUT'     => $this->min_input,
+			'MAX_INPUT'     => $this->max_input,
+			'PLACEHOLDER'   => $this->placeholder ? $this->placeholder : $lang['form.name'],
+		 	'FIELDS_NUMBER' => $i,
 		));
 
 		$template->assign_block_vars('fieldelements', array(
@@ -152,22 +153,22 @@ class FormFieldPossibleValues extends AbstractFormField
 		}
 		parent::compute_options($field_options);
 	}
-  
+
   public function get_min_input()
   {
     return $this->min_input;
   }
-  
+
   public function get_max_input()
   {
     return $this->max_input;
   }
-  
+
   public function get_unique_input_value()
   {
     return $this->unique_input_value;
   }
-  
+
 	protected function get_default_template()
 	{
 		return new FileTemplate('framework/builder/form/FormField.tpl');

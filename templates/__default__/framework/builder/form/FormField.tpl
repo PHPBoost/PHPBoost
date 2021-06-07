@@ -2,9 +2,7 @@
 	# IF C_HAS_LABEL #
 		<label# IF NOT C_HIDE_FOR_ATTRIBUTE # for="${escape(HTML_ID)}"# ELSE # for="onblurContainerResponse${escape(HTML_ID)}"# ENDIF #>
 			{LABEL}
-			# IF C_DESCRIPTION #
-			<span class="field-description">{DESCRIPTION}</span>
-			# ENDIF #
+			# IF C_DESCRIPTION #<span class="field-description">{DESCRIPTION}</span># ENDIF #
 		</label>
 	# ENDIF #
 
@@ -14,6 +12,5 @@
 		# END fieldelements #
 		<span class="text-status-constraint" style="display: none;" id="onblurMessageResponse${escape(HTML_ID)}"></span>
 	</div>
-
 </div>
 # INCLUDE ADD_FIELD_JS #
