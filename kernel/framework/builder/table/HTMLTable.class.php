@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 09
+ * @version     PHPBoost 6.0 - last update: 2021 06 07
  * @since       PHPBoost 3.0 - 2009 12 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -28,7 +28,7 @@ class HTMLTable extends AbstractHTMLElement
 	/**
 	 * @var Template
 	 */
-	protected $tpl;
+	protected $view;
 
 	/**
 	 * @var HTMLTableModel
@@ -55,10 +55,10 @@ class HTMLTable extends AbstractHTMLElement
 		}
 		$model->set_html_table($this);
 
-		$this->lang = !empty($lang) ? $lang : LangLoader::get('common');
+		$this->lang = !empty($lang) ? $lang : LangLoader::get('common-lang');
 		$this->css_class = $css_class;
-		$this->tpl = new FileTemplate($tpl_path);
-		$this->tpl->add_lang($this->lang);
+		$this->view = new FileTemplate($tpl_path);
+		$this->view->add_lang($this->lang);
 		$this->model = $model;
 		$this->columns = $this->model->get_columns();
 		$this->parameters = new HTMLTableParameters($this->model);
@@ -74,7 +74,7 @@ class HTMLTable extends AbstractHTMLElement
 		$this->generate_headers();
 		$this->generate_rows();
 		$this->generate_rows_stats();
-		return $this->tpl;
+		return $this->view;
 	}
 
 	private function extract_parameters()
@@ -120,28 +120,28 @@ class HTMLTable extends AbstractHTMLElement
 		{
 			$form = new HTMLForm('filters_form_' . $this->arg_id, '#', false);
 			$filters_fieldset_class = $this->filters_fieldset_class;
-			$fieldset = new $filters_fieldset_class('filters', LangLoader::get_message('filters', 'common'));
+			$fieldset = new $filters_fieldset_class('filters', LangLoader::get_message('common.filters', 'common-lang'));
 			$form->add_fieldset($fieldset);
 
 			foreach ($filters as $filter)
 			{
 				$fieldset->add_field($filter->get_form_field());
-				$this->tpl->assign_block_vars('filterElt', array(
+				$this->view->assign_block_vars('filterElt', array(
 					'FORM_ID'  => $filter->get_form_field()->get_html_id(),
 					'TABLE_ID' => $filter->get_id()
 				));
 			}
 
 			$submit_function = str_replace('-', '_', 'submit_filters_' . $this->arg_id);
-			$form->add_button(new FormButtonButton(LangLoader::get_message('apply', 'common'), 'return ' . $submit_function . '()', 'submit'));
+			$form->add_button(new FormButtonButton(LangLoader::get_message('common.apply', 'common-lang'), 'return ' . $submit_function . '()', 'submit'));
 
-			$this->tpl->put_all(array(
+			$this->view->put_all(array(
 				'C_FILTERS'            => $has_filters,
 				'C_FILTERS_MENU_TITLE' => $this->model->has_filters_menu_title(),
 				'FILTERS_MENU_TITLE'   => $this->model->get_filters_menu_title(),
 				'SUBMIT_FUNCTION'      => $submit_function,
 				'SUBMIT_URL'           => $this->parameters->get_js_submit_url(),
-				'filters'              => $form->display()
+				'FILTERS'              => $form->display()
 			));
 		}
 	}
@@ -150,9 +150,9 @@ class HTMLTable extends AbstractHTMLElement
 	{
 		$has_nb_rows_options = $this->model->has_nb_rows_options();
 
-		$this->tpl->put_all(array(
+		$this->view->put_all(array(
 			'C_PAGINATION_ACTIVATED'      => $this->is_pagination_activated(),
-			'C_NB_ROWS_OPTIONS'           => $has_nb_rows_options,
+			'C_OPTIONS_ROWS_NUMBER'       => $has_nb_rows_options,
 			'C_HAS_ROWS'                  => !empty($this->rows),
 			'C_MULTIPLE_DELETE_DISPLAYED' => !empty($this->rows) && $this->multiple_delete_displayed,
 			'C_DISPLAY_FOOTER'            => $this->model->is_footer_displayed() && !empty($this->rows),
@@ -162,16 +162,18 @@ class HTMLTable extends AbstractHTMLElement
 			'C_ID'                        => $this->model->has_id(),
 			'C_CAPTION'                   => $this->model->has_caption(),
 			'C_LAYOUT'                    => $this->model->has_layout_title(),
-			'TABLE_ID'                    => $this->arg_id,
-			'NUMBER_OF_COLUMNS'           => !empty($this->rows) && $this->multiple_delete_displayed ? count($this->columns) + 1 : count($this->columns),
-			'CSS_CLASSES'                 => $this->get_css_class(),
-			'CSS_STYLE'                   => $this->get_css_style(),
-			'ID'                          => $this->model->get_id(),
-			'CAPTION'                     => $this->model->get_caption(),
-			'LAYOUT_TITLE'                => $this->model->get_layout_title(),
-			'MODULE_ID'                   => Environment::get_running_module_name(),
-			'FOOTER_CSS_CLASSES'          => $this->model->get_footer_css_class(),
-			'U_TABLE_DEFAULT_OPTIONS'     => $this->parameters->get_default_table_url()
+
+			'TABLE_ID'           => $this->arg_id,
+			'COLUMNS_NUMBER'     => !empty($this->rows) && $this->multiple_delete_displayed ? count($this->columns) + 1 : count($this->columns),
+			'CSS_CLASSES'        => $this->get_css_class(),
+			'CSS_STYLE'          => $this->get_css_style(),
+			'ID'                 => $this->model->get_id(),
+			'CAPTION'            => $this->model->get_caption(),
+			'LAYOUT_TITLE'       => $this->model->get_layout_title(),
+			'MODULE_ID'          => Environment::get_running_module_name(),
+			'FOOTER_CSS_CLASSES' => $this->model->get_footer_css_class(),
+
+			'U_TABLE_DEFAULT_OPTIONS' => $this->parameters->get_default_table_url()
 		));
 
 		if ($has_nb_rows_options)
@@ -182,8 +184,8 @@ class HTMLTable extends AbstractHTMLElement
 
 			foreach ($nb_rows_options as $value)
 			{
-				$this->tpl->assign_block_vars('nbItemsOption', array(
-					'URL' => $this->parameters->get_nb_items_per_page_url($value, $first_row_index),
+				$this->view->assign_block_vars('option_items_number', array(
+					'U_OPTION' => $this->parameters->get_nb_items_per_page_url($value, $first_row_index),
 					'VALUE' => $value,
 					'C_SELECTED' => $value == $nb_rows_per_page
 				));
@@ -203,12 +205,14 @@ class HTMLTable extends AbstractHTMLElement
 				'C_SORTABLE'           => $column->is_sortable(),
 				'C_SORT_ASC_SELECTED'  => $sorted == HTMLTableSortingRule::ASC . $sortable_parameter,
 				'C_SORT_DESC_SELECTED' => $sorted == HTMLTableSortingRule::DESC . $sortable_parameter,
-				'U_SORT_ASC'           => $this->parameters->get_ascending_sort_url($sortable_parameter),
-				'NAME'                 => $column->get_value(),
-				'U_SORT_DESC'          => $this->parameters->get_descending_sort_url($sortable_parameter)
+
+				'NAME' => $column->get_value(),
+
+				'U_SORT_ASC'  => $this->parameters->get_ascending_sort_url($sortable_parameter),
+				'U_SORT_DESC' => $this->parameters->get_descending_sort_url($sortable_parameter)
 			);
 			$this->add_css_vars($column, $values);
-			$this->tpl->assign_block_vars('header_column', $values);
+			$this->view->assign_block_vars('header_column', $values);
 		}
 	}
 
@@ -259,9 +263,10 @@ class HTMLTable extends AbstractHTMLElement
 		$row_values = array();
 		$this->add_css_vars($row, $row_values);
 		$this->add_id_vars($row, $row_values);
-		$this->tpl->assign_block_vars('row', array_merge($row_values, array(
+		$this->view->assign_block_vars('row', array_merge($row_values, array(
 			'C_DISPLAY_DELETE_INPUT' => $row->is_delete_input_displayed(),
-			'ELEMENT_NUMBER'         => $element_number
+
+			'ELEMENTS_NUMBER' => $element_number
 		)));
 
 		foreach ($row->get_cells() as $cell)
@@ -280,7 +285,7 @@ class HTMLTable extends AbstractHTMLElement
 		);
 		$this->add_css_vars($cell, $cell_values);
 		$this->add_id_vars($cell, $cell_values);
-		$this->tpl->assign_block_vars('row.cell', $cell_values);
+		$this->view->assign_block_vars('row.cell', $cell_values);
 	}
 
 	private function add_css_vars(HTMLElement $element, array &$tpl_vars)
@@ -300,12 +305,12 @@ class HTMLTable extends AbstractHTMLElement
 	private function generate_stats()
 	{
 		$end = $this->get_first_row_index() + $this->get_nb_rows_per_page();
-		$elements = StringVars::replace_vars(LangLoader::get_message('table_footer_stats', 'common'), array(
+		$elements = StringVars::replace_vars(LangLoader::get_message('common.item.rate', 'common-lang'), array(
 			'start' => $this->get_first_row_index() + 1,
 			'end'   => $end > $this->nb_rows || $this->get_nb_rows_per_page() == HTMLTableModel::NO_PAGINATION ? $this->nb_rows : $end,
 			'total' => $this->nb_rows
 		));
-		$this->tpl->put_all(array(
+		$this->view->put_all(array(
 			'ELEMENTS_NUMBER'       => $this->nb_rows,
 			'ELEMENTS_NUMBER_LABEL' => $elements
 		));
@@ -316,7 +321,7 @@ class HTMLTable extends AbstractHTMLElement
 		$nb_pages = $this->get_nb_pages();
 		$pagination = new Pagination($nb_pages, $this->page_number);
 		$pagination->set_url_builder_callback(array($this->parameters, 'get_pagination_url'));
-		$this->tpl->put('pagination', $pagination->export());
+		$this->view->put('PAGINATION', $pagination->export());
 	}
 
 	private function get_nb_pages()

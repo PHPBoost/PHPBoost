@@ -9,11 +9,11 @@
 # ENDIF #
 				# IF C_FILTERS #
 					<div id="filters-{TABLE_ID}" class="html-table-filters">
-						<a href="" class="filter-button button bgc link-color"><i class="fa fa-sliders-h" aria-hidden="true"></i> # IF C_FILTERS_MENU_TITLE #{FILTERS_MENU_TITLE}# ELSE #{@filter.items}# ENDIF #</a>
+						<a href="" class="filter-button button bgc link-color"><i class="fa fa-sliders-h" aria-hidden="true"></i> # IF C_FILTERS_MENU_TITLE #{FILTERS_MENU_TITLE}# ELSE #{@common.filter.items}# ENDIF #</a>
 						<div class="filters-container">
-							<i class="close-filters far fa-window-close" aria-hidden="true"></i> <span class="sr-only">${LangLoader::get_message('close', 'main')}</span>
+							<i class="close-filters far fa-window-close" aria-hidden="true"></i> <span class="sr-only">{@common.close}</span>
 							<script src="{PATH_TO_ROOT}/templates/__default__/plugins/UrlSerializedParameterEncoder.js"></script>
-							# INCLUDE filters #
+							# INCLUDE FILTERS #
 						</div>
 					</div>
 					<script>
@@ -30,7 +30,7 @@
 
 				# IF NOT C_HAS_ROWS #
 					<div class="message-helper bgc notice">
-						{@no_item_now}
+						{@common.no.item.now}
 					</div>
 				# ELSE #
 					<form method="post" class="fieldset-content">
@@ -46,14 +46,14 @@
 								# ENDIF #
 								<thead>
 									<tr>
-										# IF C_MULTIPLE_DELETE_DISPLAYED #<th class="col-smaller"><span aria-label="{@select.elements}"><i class="far fa-square" aria-hidden="true"></i></span></th># ENDIF #
+										# IF C_MULTIPLE_DELETE_DISPLAYED #<th class="col-smaller"><span aria-label="{@common.select.elements}"><i class="far fa-square" aria-hidden="true"></i></span></th># ENDIF #
 										# START header_column #
 											<th
 												# IF header_column.C_CSS_CLASSES # class="{header_column.CSS_CLASSES}"# ENDIF #
 												# IF header_column.C_CSS_STYLE # style="{header_column.CSS_STYLE}"# ENDIF #>
 												# IF header_column.C_SORTABLE #
 													<span class="html-table-header-sortable# IF header_column.C_SORT_DESC_SELECTED # sort-active# ENDIF #">
-														<a href="{header_column.U_SORT_DESC}" aria-label="{@sort.desc}">
+														<a href="{header_column.U_SORT_DESC}" aria-label="{@common.sort.desc}">
 															<i class="fa fa-caret-up" aria-hidden="true"></i>
 														</a>
 													</span>
@@ -61,7 +61,7 @@
 												<span class="html-table-header-name# IF header_column.C_SR_ONLY # sr-only# ENDIF #">{header_column.NAME}</span>
 												# IF header_column.C_SORTABLE #
 													<span class="html-table-header-sortable# IF header_column.C_SORT_ASC_SELECTED # sort-active# ENDIF #">
-														<a href="{header_column.U_SORT_ASC}" aria-label="{@sort.asc}">
+														<a href="{header_column.U_SORT_ASC}" aria-label="{@common.sort.asc}">
 															<i class="fa fa-caret-down" aria-hidden="true"></i>
 														</a>
 													</span>
@@ -80,8 +80,8 @@
 										# IF C_MULTIPLE_DELETE_DISPLAYED #
 											<td class="mini-checkbox">
 												# IF row.C_DISPLAY_DELETE_INPUT #
-													<label for="multiple-checkbox-{row.ELEMENT_NUMBER}" class="checkbox" aria-label="{@select.element}">
-														<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{row.ELEMENT_NUMBER}" name="delete-checkbox-{row.ELEMENT_NUMBER}" onclick="delete_button_display({ELEMENTS_NUMBER});" />
+													<label for="multiple-checkbox-{row.ELEMENTS_NUMBER}" class="checkbox" aria-label="{@common.select.element}">
+														<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{row.ELEMENTS_NUMBER}" name="delete-checkbox-{row.ELEMENTS_NUMBER}" onclick="delete_button_display({ELEMENTS_NUMBER});" />
 														<span>&nbsp;</span>
 													</label>
 												# ENDIF #
@@ -102,39 +102,39 @@
 								# IF C_DISPLAY_FOOTER #
 									<tfoot>
 										<tr>
-											<td colspan="{NUMBER_OF_COLUMNS}" class="html-table-footer# IF C_FOOTER_CSS_CLASSES # {FOOTER_CSS_CLASSES}# ENDIF #">
+											<td colspan="{COLUMNS_NUMBER}" class="html-table-footer# IF C_FOOTER_CSS_CLASSES # {FOOTER_CSS_CLASSES}# ENDIF #">
 												<div class="flex-between">
 													# IF C_MULTIPLE_DELETE_DISPLAYED #
 														<div class="mini-checkbox">
-															<label for="delete-all-checkbox" class="checkbox" aria-label="{@select.all.elements}">
+															<label for="delete-all-checkbox" class="checkbox" aria-label="{@common.select.all.elements}">
 																<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {ELEMENTS_NUMBER});">
 																<span>&nbsp;</span>
 															</label>
 															<input type="hidden" name="token" value="{TOKEN}" />
-															<button type="submit" id="delete-all-button" name="delete-selected-elements" value="true" class="button submit" data-confirmation="delete-element" disabled="disabled">{@delete}</button>
+															<button type="submit" id="delete-all-button" name="delete-selected-elements" value="true" class="button submit" data-confirmation="delete-element" disabled="disabled">{@common.delete}</button>
 														</div>
 													# ENDIF #
 													<div class="html-table-elements-number">
 														<span>{ELEMENTS_NUMBER_LABEL}</span>
 													</div>
 													# IF C_PAGINATION_ACTIVATED #
-														# IF C_NB_ROWS_OPTIONS #
+														# IF C_OPTIONS_ROWS_NUMBER #
 															<div class="flex-between">
 																<div class="table-rows-options">
-																	<select name="nbItemsPerPage" onchange="window.location=this.value">
-																		# START nbItemsOption #
-																		<option value="{nbItemsOption.URL}"
-																			# IF nbItemsOption.C_SELECTED # selected="selected"# END IF #>
-																			{nbItemsOption.VALUE}
-																		</option>
-																		# END nbItemsOption #
+																	<select name="items-per-page" onchange="window.location=this.value">
+																		# START option_items_number #
+																			<option value="{option_items_number.U_OPTION}"
+																				# IF option_items_number.C_SELECTED # selected="selected"# END IF #>
+																				{option_items_number.VALUE}
+																			</option>
+																		# END option_items_number #
 																	</select>
 																</div>
 														# END IF #
 														<div class="table-pagination">
-															# INCLUDE pagination #
+															# INCLUDE PAGINATION #
 														</div>
-														# IF C_NB_ROWS_OPTIONS #
+														# IF C_OPTIONS_ROWS_NUMBER #
 															</div>
 														# ENDIF #
 													# ENDIF #
@@ -154,7 +154,7 @@
 							var filtersObjects = new Array();
 							var has_filter = false;
 							# START filterElt #
-							filtersObjects.push({formId: ${escapejs(filterElt.FORM_ID)}, tableId: ${escapejs(filterElt.TABLE_ID)}});
+								filtersObjects.push({formId: ${escapejs(filterElt.FORM_ID)}, tableId: ${escapejs(filterElt.TABLE_ID)}});
 							# END filterElt #
 							for (var i = 0; i < filtersObjects.length; i++) {
 								var filter = filtersObjects[i];
