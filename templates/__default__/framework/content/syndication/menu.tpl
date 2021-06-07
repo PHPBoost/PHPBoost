@@ -1,12 +1,12 @@
 <nav class="dynamic-menu">
 	<ul>
-		<li><a>${LangLoader::get_message('syndication', 'common')}</a>
+		<li><a>${LangLoader::get_message('common.syndication', 'common-lang')}</a>
 			<ul>
 				<li>
-					<a href="{U_FEED_RSS}">${LangLoader::get_message('syndication.rss', 'common')}</a>
+					<a href="{U_FEED_RSS}">${LangLoader::get_message('common.syndication.rss', 'common-lang')}</a>
 				</li>
 				<li>
-					<a href="{U_FEED_ATOM}">${LangLoader::get_message('syndication.atom', 'common')}</a>
+					<a href="{U_FEED_ATOM}">${LangLoader::get_message('common.syndication.atom', 'common-lang')}</a>
 				</li>
 				<li>
 					<a href="https://www.netvibes.com/subscribe.php?type=rss&amp;url={U_FEED_RSS}">Netvibes</a>

@@ -7,9 +7,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 14
+ * @version     PHPBoost 6.0 - last update: 2021 06 07
  * @since       PHPBoost 2.0 - 2008 04 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('FEEDS_PATH', PATH_TO_ROOT . '/cache/syndication/');
@@ -42,7 +43,7 @@ class Feed
 	 *
 	 * @var string The feed Template to use
 	 */
-	protected $tpl = null;
+	protected $view = null;
 	/**
 	 *
 	 * @var string The data structure
@@ -74,7 +75,7 @@ class Feed
 	public function load_file($url) { }
 
 	/**
-	 * Exports the feed as a string parsed by the <$tpl> template
+	 * Exports the feed as a string parsed by the <$view> template
 	 * @param mixed $template If false, uses de default tpl. If an associative array,
 	 * uses the default tpl but assigns it the array vars first.
 	 * It could also be a Template object
@@ -86,59 +87,62 @@ class Feed
 	{
 		if ($template === false)
 		{    // A specific template is used
-			$tpl = clone $this->tpl;
+			$view = clone $this->tpl;
 		}
 		else
 		{
-			$tpl = clone $template;
+			$view = clone $template;
 		}
 
 
 		if (!empty($this->data))
 		{
-			$tpl->put_all(array(
-				'DATE' => $this->data->get_date(),
-				'DATE_RFC822' => $this->data->get_date_rfc2822(),
+			$view->put_all(array(
+				'DATE'         => $this->data->get_date(),
+				'DATE_RFC822'  => $this->data->get_date_rfc2822(),
 				'DATE_RFC3339' => $this->data->get_date_iso8601(),
-				'DATE_TEXT' => $this->data->get_date_text(),
-				'THIS_YEAR' => date('Y'),
-				'TITLE' => $this->data->get_title(),
-				'RAW_TITLE' => TextHelper::htmlspecialchars($this->data->get_title()),
+				'DATE_TEXT'    => $this->data->get_date_text(),
+				'THIS_YEAR'    => date('Y'),
+				'TITLE'        => $this->data->get_title(),
+				'RAW_TITLE'    => TextHelper::htmlspecialchars($this->data->get_title()),
+				'HOST'         => $this->data->get_host(),
+				'DESC'         => ContentSecondParser::export_html_text($this->data->get_desc()),
+				'RAW_DESC'     => TextHelper::htmlspecialchars($this->data->get_desc()),
+				'LANG'         => $this->data->get_lang(),
+
 				'U_LINK' => $this->data->get_link(),
-				'HOST' => $this->data->get_host(),
-				'DESC' => ContentSecondParser::export_html_text($this->data->get_desc()),
-				'RAW_DESC' => TextHelper::htmlspecialchars($this->data->get_desc()),
-				'LANG' => $this->data->get_lang()
 			));
 
 			$items = $this->data->subitems($number, $begin_at);
 			foreach ($items as $item)
 			{
 				$enclosure = $item->get_enclosure();
-				$tpl->assign_block_vars('item', array(
-					'TITLE' => $item->get_title(),
-					'RAW_TITLE' => TextHelper::htmlspecialchars($item->get_title()),
+				$view->assign_block_vars('item', array(
+					'C_ENCLOSURE' => $enclosure !== null,
+					'C_IMG'       => ($item->get_image_url() != ''),
+
+					'TITLE'            => $item->get_title(),
+					'RAW_TITLE'        => TextHelper::htmlspecialchars($item->get_title()),
+					'DESC'             => ContentSecondParser::export_html_text($item->get_desc()),
+					'RAW_DESC'         => TextHelper::htmlspecialchars($item->get_desc()),
+					'DATE'             => $item->get_date(),
+					'DATE_RFC822'      => $item->get_date_rfc2822(),
+					'DATE_RFC3339'     => $item->get_date_iso8601(),
+					'DATE_HOUR'        => $item->get_hours(),
+					'DATE_MINUTES'     => $item->get_minutes(),
+					'DATE_TEXT'        => $item->get_date_text(),
+					'ENCLOSURE_LENGHT' => $enclosure !== null ? $enclosure->get_lenght() : '',
+					'ENCLOSURE_TYPE'   => $enclosure !== null ? $enclosure->get_type() : '',
+					'ENCLOSURE_URL'    => $enclosure !== null ? $enclosure->get_url() : '',
+
 					'U_LINK' => $item->get_link(),
 					'U_GUID' => $item->get_guid(),
-					'DESC' => ContentSecondParser::export_html_text($item->get_desc()),
-					'RAW_DESC' => TextHelper::htmlspecialchars($item->get_desc()),
-					'DATE' => $item->get_date(),
-					'DATE_RFC822' => $item->get_date_rfc2822(),
-					'DATE_RFC3339' => $item->get_date_iso8601(),
-					'DATE_HOUR' => $item->get_hours(),
-					'DATE_MINUTES' => $item->get_minutes(),
-					'DATE_TEXT' => $item->get_date_text(),
-					'C_IMG' => ($item->get_image_url() != ''),
-					'U_IMG' => $item->get_image_url(),
-					'C_ENCLOSURE' => $enclosure !== null,
-					'ENCLOSURE_LENGHT' => $enclosure !== null ? $enclosure->get_lenght() : '',
-					'ENCLOSURE_TYPE' => $enclosure !== null ? $enclosure->get_type() : '',
-					'ENCLOSURE_URL' => $enclosure !== null ? $enclosure->get_url() : ''
+					'U_IMG'  => $item->get_image_url(),
 				));
 			}
 		}
 
-		return $tpl->render();
+		return $view->render();
 	}
 
 	/**
@@ -235,7 +239,7 @@ class Feed
 	 * @param string $module_id the module id
 	 * @param string $name the feed name / type
 	 * @param int $idcat the feed data category
-	 * @param mixed $tpl If false, uses de default tpl. If an associative array,
+	 * @param mixed $view If false, uses de default tpl. If an associative array,
 	 * uses the default tpl but assigns it the array vars first.
 	 * It could also be a Template object
 	 * @param int $number the number of item to display

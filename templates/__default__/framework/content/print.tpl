@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{L_XML_LANGUAGE}">
+<html lang="${LangLoader::get_message('common.xml.lang', 'common-lang')}">
 	<head>
 		<title>{PAGE_TITLE}</title>
 		<meta charset="UTF-8" />

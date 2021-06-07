@@ -80,7 +80,6 @@ $lang['common.validation']   = 'Validation';
 $lang['common.moderation']   = 'Moderation';
 $lang['common.reorder']      = 'Reorder';
 $lang['common.respond']      = 'Respond';
-$lang['common.loading']      = 'Loading';
 $lang['common.filter.items'] = 'Filter items';
 $lang['common.actions']      = 'Actions';
 $lang['common.enable']       = 'Enable';
@@ -97,6 +96,7 @@ $lang['common.close']        = 'Close';
 $lang['common.visit']        = 'Visit';
 $lang['common.download']     = 'Download';
 $lang['common.upload']       = 'Upload';
+$lang['common.loading']      = 'Loading';
 $lang['common.print']        = 'print';
 $lang['common.open.panels']  = 'Open all panels';
 $lang['common.close.panels'] = 'Close all panels';
@@ -237,6 +237,10 @@ $lang['common.select.element']      = 'Select this element';
 $lang['common.select.elements']     = 'Select elements';
 $lang['common.select.all.elements'] = 'Select all elements';
 $lang['common.click.to.select']     = 'Click to select an option';
+
+// Share
+$lang['common.share.email'] = 'Share by email';
+$lang['common.share.sms']   = 'Share by sms';
 
 // Sort
 $lang['common.filters']                 = 'Filters';
