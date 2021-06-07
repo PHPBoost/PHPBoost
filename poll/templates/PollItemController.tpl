@@ -70,11 +70,11 @@
 				</div>
 				# IF C_HAS_UPDATE_DATE #<span class="pinned notice small text-italic modified-date">{@common.last.update} <time datetime="{UPDATE_DATE_ISO8601}" itemprop="dateModified">{UPDATE_DATE_FULL}</time></span># ENDIF #
 
-				<div class="content">
+				<div class="content">					
 					# IF C_ENABLED_COUNTDOWN #
 						# INCLUDE COUNTDOWN #
 					# ENDIF #
-					# INCLUDE MSG # # INCLUDE VOTE_FORM #
+					# INCLUDE VOTE_FORM #
 					# INCLUDE VOTES_RESULT #
 
 					# IF C_HAS_THUMBNAIL #<img src="{U_THUMBNAIL}" alt="{TITLE}" class="item-thumbnail" itemprop="thumbnailUrl" /># ENDIF #
@@ -86,19 +86,9 @@
 					${ContentSharingActionsMenuService::display()}
 				</aside>
 
-				# IF C_SOURCES #
-					<aside class="sources-container">
-						<span class="text-strong"><i class="fa fa-map-signs" aria-hidden="true"></i> {@common.sources}</span> :
-						# START sources #
-							<a class="pinned question offload" href="{sources.URL}" itemprop="isBasedOnUrl" rel="nofollow">{sources.NAME}</a>
-							# IF sources.C_SEPARATOR ## ENDIF #
-						# END sources #
-					</aside>
-				# ENDIF #
-
 				# IF C_KEYWORDS #
 					<aside class="tags-container">
-						<span class="text-strong"><i class="fa fa-tags" aria-hidden="true"></i> ${LangLoader::get_message('form.keywords', 'common')}</span> :
+						<span class="text-strong"><i class="fa fa-tags" aria-hidden="true"></i> {@common.keywords}</span> :
 						# START keywords #
 							<a class="pinned question offload" href="{keywords.URL}" itemprop="keywords" rel="tag">{keywords.NAME}</a>
 						# END keywords #

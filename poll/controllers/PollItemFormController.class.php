@@ -119,7 +119,7 @@ class PollItemFormController extends DefaultItemFormController
 
 	protected function save()
 	{
-                $this->get_item()->set_close_poll($this->form->get_value('close_poll', FormFieldCheckbox::UNCHECKED));
+        $this->get_item()->set_close_poll($this->form->get_value('close_poll', FormFieldCheckbox::UNCHECKED));
 		$this->get_item()->set_countdown_display($this->form->get_value('countdown_display')->get_raw_value());
 
 		parent::save();

@@ -33,7 +33,7 @@ $lang['poll.form.single']                    = 'Unique';
 $lang['poll.form.multiple']                  = 'Multiple';
 $lang['poll.form.answers']                   = 'Réponses';
 $lang['poll.form.answer.placeholder']        = 'Réponse';
-$lang['poll.form.close.poll']                = 'Clôturer le sondage';
+$lang['poll.form.close.poll']                = 'Clore le sondage';
 $lang['poll.form.display.poll.in.mini']      = 'Afficher le sondage dans le mini module';
 $lang['poll.form.countdown.parameters']      = 'Paramètres du décompte';
 $lang['poll.form.countdown.parameters.clue'] = 'Possibilité d\'afficher un décompte avec jours-h-mn-s';
@@ -62,7 +62,7 @@ $lang['poll.mini.form.error']           = 'Erreur dans le formulaire';
 
 // Message helper
 $lang['poll.message.no.mini']       = 'Cette option est désactivée car vous n\'avez aucun sondage déclaré dans le mini module.';
-$lang['poll.message.closed']        = 'Le sondage est clôturé.';
+$lang['poll.message.closed']        = 'Le sondage est clôs.';
 $lang['poll.message.not.published'] = 'Vous n\'avez pas l\'autorisation de voter car le sondage n\'est pas publié.';
 $lang['poll.message.not.allowed']   = 'Vous n\'avez pas l\'autorisation de voter.';
 $lang['poll.message.already.voted'] = 'Votre vote a déjà été enregistré.';
