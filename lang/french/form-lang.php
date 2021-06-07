@@ -33,7 +33,7 @@ $lang['form.authorizations.clue']         = 'Autorisations globales du module. V
 $lang['form.authorizations.read.profile'] = 'Autorisations de lecture du champ dans le profil';
 $lang['form.authorizations.actions']      = 'Autorisations de lecture du champ dans la création ou la modification d\'un profil';
 
-$lang['form.select.multiple.clue']   = 'Maintenez ctrl puis cliquez dans la liste pour faire plusieurs choix';
+$lang['form.select.multiple.clue']   = 'Maintenez ctrl puis cliquez dans la liste pour faire un choix multiple';
 $lang['form.select.all']             = 'Tout sélectionner';
 $lang['form.select.none']            = 'Tout désélectionner';
 $lang['form.add.member']             = 'Ajouter un membre';

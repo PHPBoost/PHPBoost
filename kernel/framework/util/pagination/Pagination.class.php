@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2017 05 31
+ * @version     PHPBoost 6.0 - last update: 2021 06 07
  * @since       PHPBoost 3.0 - 2009 12 22
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class Pagination
@@ -21,7 +22,7 @@ class Pagination
 	const LIGHT_PAGINATION = 'light';
 	const FULL_PAGINATION = 'full';
 
-	private $tpl;
+	private $view;
 	private $nb_pages;
 	private $current_page;
 	private $url_pattern;
@@ -61,7 +62,7 @@ class Pagination
 		$this->generate_first_page_pagination();
 		$this->generate_near_pages_pagination();
 		$this->generate_last_page_pagination();
-		return $this->tpl;
+		return $this->view;
 	}
 
 	public function get_number_pages()
@@ -71,13 +72,11 @@ class Pagination
 
 	private function init_tpl($type)
 	{
-		$this->tpl = new FileTemplate('framework/util/pagination.tpl');
-		$this->tpl->put_all(array(
+		$this->view = new FileTemplate('framework/util/pagination.tpl');
+		$this->view->add_lang('common-lang');
+		$this->view->put_all(array(
 			'C_LIGHT_PAGINATION' => $type == self::LIGHT_PAGINATION,
 			'C_FULL_PAGINATION'  => $type == self::FULL_PAGINATION,
-			'L_FIRST_PAGE'    => LangLoader::get_message('pagination.first', 'common'),
-			'L_CURRENT_PAGE'  => LangLoader::get_message('pagination.current', 'common'),
-			'L_LAST_PAGE'     => LangLoader::get_message('pagination.last', 'common')
 		));
 	}
 
@@ -113,13 +112,16 @@ class Pagination
 
 	private function add_pagination_page($name, $page_number, $is_current_page = false)
 	{
-		$this->tpl->assign_block_vars('page', array(
-			'U_PAGE'          => $this->get_url($page_number),
-			'PAGE_NAME'       => $name == self::PREV_LINK || $name == self::NEXT_LINK ? '' : $name,
-			'C_CURRENT_PAGE'  => $is_current_page,
-			'L_PAGE' 		  => $is_current_page ? LangLoader::get_message('pagination.current', 'common') : LangLoader::get_message('pagination.page', 'common') . " " . $page_number,
+		$this->view->assign_block_vars('page', array(
 			'C_PREVIOUS_PAGE' => $name == self::PREV_LINK,
-			'C_NEXT_PAGE'     => $name == self::NEXT_LINK
+			'C_NEXT_PAGE'     => $name == self::NEXT_LINK,
+			'C_CURRENT_PAGE'  => $is_current_page,
+
+			'PAGE_NAME' => $name == self::PREV_LINK || $name == self::NEXT_LINK ? '' : $name,
+
+			'U_PAGE' => $this->get_url($page_number),
+			
+			'L_PAGE'    => $is_current_page ? LangLoader::get_message('common.pagination.current', 'common-lang') : LangLoader::get_message('common.page', 'common-lang') . " " . $page_number,
 		));
 	}
 

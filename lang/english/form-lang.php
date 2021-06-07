@@ -33,7 +33,7 @@ $lang['form.authorizations.clue']         = 'Module global authorizations. You c
 $lang['form.authorizations.read.profile'] = 'Read authorizations of the field in the profile';
 $lang['form.actions.authorizations']      = 'Read authorizations of the field when creating or editing a profile';
 
-$lang['form.select.multiple.clue']   = 'Hold ctrl and click in the list to make multiple choices';
+$lang['form.select.multiple.clue']   = 'Hold ctrl then click in the list to make multiple choices';
 $lang['form.select.all']             = 'Select all';
 $lang['form.select.none']            = 'Unselect all';
 $lang['form.add.member']             = 'Add a member';

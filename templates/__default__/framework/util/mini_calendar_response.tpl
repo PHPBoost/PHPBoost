@@ -1,5 +1,5 @@
 <div class="cell-body date-select-container grouped-inputs">
-	<a class="date-select-nav grouped-element" href="#" onclick="xmlhttprequest_calendar(${escapejs(FIELD)}, ${escapejs(INPUT_FIELD)}, ${escapejs(PREVIOUS_YEAR)}, ${escapejs(PREVIOUS_MONTH)}, 1, ${escapejs(CALENDAR_NUMBER)});return false;" aria-label="${LangLoader::get_message('next', 'common')}">
+	<a class="date-select-nav grouped-element" href="#" onclick="xmlhttprequest_calendar(${escapejs(FIELD)}, ${escapejs(INPUT_FIELD)}, ${escapejs(PREVIOUS_YEAR)}, ${escapejs(PREVIOUS_MONTH)}, 1, ${escapejs(CALENDAR_NUMBER)});return false;" aria-label="${LangLoader::get_message('common.next', 'common-lang')}">
 		<i class="fa fa-caret-left fa-large" aria-hidden="true"></i>
 	</a>
 	<select onchange="xmlhttprequest_calendar(${escapejs(FIELD)}, ${escapejs(INPUT_FIELD)}, ${escapejs(YEAR)}, jQuery(this).val(), 1, ${escapejs(CALENDAR_NUMBER)});" class="date-select-month grouped-element">
@@ -12,7 +12,7 @@
 			{year.YEAR}
 		# END year #
 	</select>
-	<a class="date-select-nav grouped-element" href="#" onclick="xmlhttprequest_calendar(${escapejs(FIELD)}, ${escapejs(INPUT_FIELD)}, ${escapejs(NEXT_YEAR)}, ${escapejs(NEXT_MONTH)}, 1, ${escapejs(CALENDAR_NUMBER)});return false;" aria-label="${LangLoader::get_message('previous', 'common')}">
+	<a class="date-select-nav grouped-element" href="#" onclick="xmlhttprequest_calendar(${escapejs(FIELD)}, ${escapejs(INPUT_FIELD)}, ${escapejs(NEXT_YEAR)}, ${escapejs(NEXT_MONTH)}, 1, ${escapejs(CALENDAR_NUMBER)});return false;" aria-label="${LangLoader::get_message('common.previous', 'common-lang')}">
 		<i class="fa fa-caret-right fa-large" aria-hidden="true"></i>
 	</a>
 </div>
@@ -20,13 +20,13 @@
 	<table class="date-picker">
 		<thead>
 			<tr>
-				<th>{@monday_short}</th>
-				<th>{@tuesday_short}</th>
-				<th>{@wednesday_short}</th>
-				<th>{@thursday_short}</th>
-				<th>{@friday_short}</th>
-				<th>{@saturday_short}</th>
-				<th>{@sunday_short}</th>
+				<th>{@date.monday.short}</th>
+				<th>{@date.tuesday.short}</th>
+				<th>{@date.wednesday.short}</th>
+				<th>{@date.thursday.short}</th>
+				<th>{@date.friday.short}</th>
+				<th>{@date.saturday.short}</th>
+				<th>{@date.sunday.short}</th>
 			</tr>
 		</thead>
 		<tbody>

@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 15
+ * @version     PHPBoost 6.0 - last update: 2021 06 07
  * @since       PHPBoost 1.6 - 2007 01 25
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -30,9 +30,9 @@ $calendar_number = $request->get_getvalue('calendar_number', '');
 $calendar_type = !empty($date) ? 'timestamp' : 'date';
 $field = !empty($field) ? trim($field) : 'calendar';
 
-$date_lang = LangLoader::get('date-common');
-$tpl = new FileTemplate('framework/util/mini_calendar_response.tpl');
-$tpl->add_lang($date_lang);;
+$view = new FileTemplate('framework/util/mini_calendar_response.tpl');
+$date_lang = LangLoader::get('date-lang');
+$view->add_lang($date_lang);;
 
 //Type date.
 if ($calendar_type == 'date')
@@ -55,34 +55,34 @@ if ($calendar_type == 'date')
 	$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 
 	$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
-	$array_l_month = array($date_lang['january'], $date_lang['february'], $date_lang['march'], $date_lang['april'], $date_lang['may'], $date_lang['june'],
-	$date_lang['july'], $date_lang['august'], $date_lang['september'], $date_lang['october'], $date_lang['november'], $date_lang['december']);
+	$array_l_month = array($date_lang['date.january'], $date_lang['date.february'], $date_lang['date.march'], $date_lang['date.april'], $date_lang['date.may'], $date_lang['date.june'],
+	$date_lang['date.july'], $date_lang['date.august'], $date_lang['date.september'], $date_lang['date.october'], $date_lang['date.november'], $date_lang['date.december']);
 	$month_day = $array_month[$month - 1];
 
-	$tpl->put_all(array(
-		'FIELD' => $field,
-		'INPUT_FIELD' => $input_field,
+	$view->put_all(array(
+		'FIELD'           => $field,
+		'INPUT_FIELD'     => $input_field,
 		'CALENDAR_NUMBER' => $calendar_number,
-		'MONTH' => $month,
-		'YEAR' => $year,
-		'PREVIOUS_YEAR' => ($month == 1) ? ($year - 1) : $year,
-		'PREVIOUS_MONTH' => ($month == 1) ? 12 : ($month - 1),
-		'NEXT_YEAR' => ($month == 12) ? ($year + 1) : $year,
-		'NEXT_MONTH' => ($month == 12) ? 1 : ($month + 1)
+		'MONTH'           => $month,
+		'YEAR'            => $year,
+		'PREVIOUS_YEAR'   => ($month == 1) ? ($year - 1) : $year,
+		'PREVIOUS_MONTH'  => ($month == 1) ? 12 : ($month - 1),
+		'NEXT_YEAR'       => ($month == 12) ? ($year + 1) : $year,
+		'NEXT_MONTH'      => ($month == 12) ? 1 : ($month + 1)
 	));
 
 	//Génération des select.
 	for ($i = 1; $i <= 12; $i++)
 	{
 		$selected = ($month == $i) ? 'selected="selected"' : '';
-		$tpl->assign_block_vars('month', array(
+		$view->assign_block_vars('month', array(
 			'MONTH' => '<option value="' . $i . '" ' . $selected . '>' . TextHelper::htmlspecialchars($array_l_month[$i - 1]) . '</option>'
 		));
 	}
 	for ($i = 1900; $i <= 2521; $i++)
 	{
 		$selected = ($year == $i) ? 'selected="selected"' : '';
-		$tpl->assign_block_vars('year', array(
+		$view->assign_block_vars('year', array(
 			'YEAR' => '<option value="' . $i . '" ' . $selected . '>' . $i . '</option>'
 		));
 	}
@@ -124,12 +124,12 @@ if ($calendar_type == 'date')
 			$class = 'calendar-none';
 		}
 
-		$tpl->assign_block_vars('day', array(
-			'DAY' => $contents,
-			'CLASS' => $class,
+		$view->assign_block_vars('day', array(
+			'DAY'         => $contents,
+			'CLASS'       => $class,
 			'CHANGE_LINE' => (($i % 7) == 0 && $i != 42),
 			'INPUT_FIELD' => $input_field,
-			'DATE' => $date,
+			'DATE'        => $date,
 		));
 	}
 }
@@ -140,7 +140,7 @@ else
 	DispatchManager::redirect($error_controller);
 }
 
-$tpl->display();
+$view->display();
 
 include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
 ?>

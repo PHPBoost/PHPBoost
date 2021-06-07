@@ -1,37 +1,37 @@
 <div class="advanced-auth-container">
-	<label for="groups_auth{IDSELECT}"><span class="sr-only">{L_EXPLAIN_SELECT_MULTIPLE}</span></label>
+	<label for="groups_auth{SELECT_ID}"><span class="sr-only">{@form.select.multiple.clue}</span></label>
 	<div class="advanced-auth advanced-auth-group">
-		<select id="groups_auth{IDSELECT}" name="groups_auth{IDSELECT}[]" size="8" multiple="multiple" onclick="{DISABLED_SELECT} document.getElementById('id{IDSELECT}r2').selected = true;">
-			<optgroup label="{L_RANKS}">
+		<select id="groups_auth{SELECT_ID}" name="groups_auth{SELECT_ID}[]" size="8" multiple="multiple" onclick="{DISABLED_SELECT} document.getElementById('id{SELECT_ID}r2').selected = true;">
+			<optgroup label="{@user.ranks}">
 				# START ranks_list #
-					<option # IF ranks_list.C_DISABLED #disabled="disabled" # ENDIF #value="r{ranks_list.IDRANK}" id="id{IDSELECT}r{ranks_list.ID}" {ranks_list.SELECTED} onclick="check_select_multiple_ranks('id{IDSELECT}r', {ranks_list.ID})">{ranks_list.RANK_NAME}</option>
+					<option # IF ranks_list.C_DISABLED #disabled="disabled" # ENDIF #value="r{ranks_list.RANK_ID}" id="id{SELECT_ID}r{ranks_list.ID}" {ranks_list.SELECTED} onclick="check_select_multiple_ranks('id{SELECT_ID}r', {ranks_list.ID})">{ranks_list.RANK_NAME}</option>
 				# END ranks_list #
 			</optgroup>
 
-			<optgroup label="{L_GROUPS}">
+			<optgroup label="{@user.groups}">
 				# START groups_list #
-					<option # IF groups_list.C_DISABLED #disabled="disabled" # ENDIF #value="{groups_list.IDGROUP}" {groups_list.SELECTED}>{groups_list.GROUP_NAME}</option>
+					<option # IF groups_list.C_DISABLED #disabled="disabled" # ENDIF #value="{groups_list.GROUP_ID}" {groups_list.SELECTED}>{groups_list.GROUP_NAME}</option>
 				# END groups_list #
 			</optgroup>
 		</select>
 	</div>
 
 	# IF C_ADVANCED_AUTH #
-		<div id="advanced_authb{IDSELECT}" class="advanced-auth advanced-auth-select"# IF NOT C_ADVANCED_AUTH_OPEN # style="display: none;"# ENDIF #>
-			<div id="advanced_auth{IDSELECT}" class="advanced-auth advanced-auth-input"# IF NOT C_ADVANCED_AUTH_OPEN # style="display: none;"# ENDIF #>
+		<div id="advanced_authb{SELECT_ID}" class="advanced-auth advanced-auth-select"# IF NOT C_ADVANCED_AUTH_OPEN # style="display: none;"# ENDIF #>
+			<div id="advanced_auth{SELECT_ID}" class="advanced-auth advanced-auth-input"# IF NOT C_ADVANCED_AUTH_OPEN # style="display: none;"# ENDIF #>
 				<div class="grouped-inputs">
-					<label for="login{IDSELECT}" class="sr-only">{L_ADD_USER}</label>
-					<input class="grouped-element" type="text" size="14" value="" id="login{IDSELECT}" name="login{IDSELECT}" placeholder="{L_ADD_USER}">
-					<button class="grouped-element button bgc-full link-color" onclick="XMLHttpRequest_search_members('{IDSELECT}', '{THEME}', 'add_member_auth', '{L_REQUIRE_PSEUDO}');" type="button" name="valid" aria-label="{L_SEARCH_MEMBER}">
+					<label for="login{SELECT_ID}" class="sr-only">{@user.add.member}</label>
+					<input class="grouped-element" type="text" size="14" value="" id="login{SELECT_ID}" name="login{SELECT_ID}" placeholder="{@user.add.member}">
+					<button class="grouped-element button bgc-full link-color" onclick="XMLHttpRequest_search_members('{SELECT_ID}', '{THEME}', 'add_member_auth', ${escapejs(LangLoader::get_message('warning.username', 'warning-lang'))});" type="button" name="valid" aria-label="{@user.search.member}">
 						<i class="fa fa-search-plus" aria-hidden="true"></i>
 					</button>
 				</div>
-				<span id="search_img{IDSELECT}"></span>
-				<div id="xmlhttprequest-result-search{IDSELECT}" class="xmlhttprequest-result-search advanced-auth-input-result" style="display: none;"></div>
+				<span id="search_img{SELECT_ID}"></span>
+				<div id="xmlhttprequest-result-search{SELECT_ID}" class="xmlhttprequest-result-search advanced-auth-input-result" style="display: none;"></div>
 			</div>
-			<label for="members_auth{IDSELECT}"><span class="sr-only">{L_USERS}</span></label>
-			<select id="members_auth{IDSELECT}" class="advanced-auth-select advanced-auth-input" name="members_auth{IDSELECT}[]" size="5" multiple="multiple">
-				<optgroup label="{L_USERS}" id="advanced_auth3{IDSELECT}">
+			<label for="members_auth{SELECT_ID}"><span class="sr-only">{@user.members}</span></label>
+			<select id="members_auth{SELECT_ID}" class="advanced-auth-select advanced-auth-input" name="members_auth{SELECT_ID}[]" size="5" multiple="multiple">
+				<optgroup label="{@user.members}" id="advanced_auth3{SELECT_ID}">
 					# START members_list #
 						<option value="{members_list.USER_ID}" selected="selected">{members_list.LOGIN}</option>
 					# END members_list #
@@ -42,15 +42,15 @@
 
 </div>
 <div class="advanced-auth-text">
-	<a class="small" href="javascript:check_select_multiple('{IDSELECT}',true);">{L_SELECT_ALL}</a> / <a class="small" href="javascript:check_select_multiple('{IDSELECT}',false);">{L_SELECT_NONE}</a>
-	<span class="field-description">{L_EXPLAIN_SELECT_MULTIPLE}</span>
-	<a class="small" href="javascript:open_advanced_auth('{IDSELECT}');">
+	<a class="small" href="javascript:check_select_multiple('{SELECT_ID}',true);">{@common.select.all}</a> / <a class="small" href="javascript:check_select_multiple('{SELECT_ID}',false);">{@common.deselect.all}</a>
+	<span class="field-description">{@form.select.multiple.clue}</span>
+	<a class="small" href="javascript:open_advanced_auth('{SELECT_ID}');">
 		# IF C_ADVANCED_AUTH_OPEN #
-			<i id="advanced_auth_plus{IDSELECT}" class="fa fa-minus-square"></i>
+			<i id="advanced_auth_plus{SELECT_ID}" class="fa fa-minus-square"></i>
 		# ELSE #
-			<i id="advanced_auth_plus{IDSELECT}" class="fa fa-plus-square"></i>
+			<i id="advanced_auth_plus{SELECT_ID}" class="fa fa-plus-square"></i>
 		# ENDIF #
-		{L_ADVANCED_AUTHORIZATION}
+		{@form.authorizations.advanced}
 	</a>
 </div>
 <script>

@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2021 06 07
  * @since       PHPBoost 2.0 - 2008 07 26
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -98,36 +98,31 @@ class Authorizations
 	 */
 	public static function generate_select($auth_bit, $array_auth = array(), $array_ranks_default = array(), $idselect = '', $disabled = false, $disabled_advanced_auth = false, $disabled_ranks = array())
 	{
-		$lang = LangLoader::get('main');
+		$user_lang = LangLoader::get('user-lang');
 
 		//Récupération du tableau des rangs.
 		$array_ranks = array(
-			User::VISITOR_LEVEL       => $lang['guest'],
-			User::MEMBER_LEVEL        => $lang['member'],
-			User::MODERATOR_LEVEL     => $lang['modo'],
-			User::ADMINISTRATOR_LEVEL => $lang['admin']
+			User::VISITOR_LEVEL       => $user_lang['user.guest'],
+			User::MEMBER_LEVEL        => $user_lang['user.member'],
+			User::MODERATOR_LEVEL     => $user_lang['user.moderator'],
+			User::ADMINISTRATOR_LEVEL => $user_lang['user.administrator']
 		);
 
 		//Identifiant du select, par défaut la valeur du bit de l'autorisation.
 		$idselect = ((string)$idselect == '') ? $auth_bit : $idselect;
 
-		$tpl = new FileTemplate('framework/groups_auth.tpl');
+		$view = new FileTemplate('framework/groups_auth.tpl');
+		$view->add_lang(array_merge(
+			$user_lang,
+			LangLoader::get('common-lang'),
+			LangLoader::get('form-lang')
+		));
 
-		$tpl->put_all(array(
-			'C_ADVANCED_AUTH'           => !$disabled_advanced_auth,
-			'IDSELECT'                  => $idselect,
-			'DISABLED_SELECT'           => (empty($disabled) ? 'if (disabled == 0)' : ''),
-			'L_USERS'                   => $lang['member_s'],
-			'L_ADD_USER'                => $lang['add_member'],
-			'L_SEARCH_MEMBER'           => LangLoader::get_message('search_member', 'admin'),
-			'L_REQUIRE_PSEUDO'          => $lang['require_pseudo'],
-			'L_RANKS'                   => $lang['ranks'],
-			'L_GROUPS'                  => $lang['groups'],
-			'L_GO'                      => $lang['go'],
-			'L_ADVANCED_AUTHORIZATION'  => $lang['advanced_authorization'],
-			'L_SELECT_ALL'              => $lang['select_all'],
-			'L_SELECT_NONE'             => $lang['select_none'],
-			'L_EXPLAIN_SELECT_MULTIPLE' => $lang['explain_select_multiple']
+		$view->put_all(array(
+			'C_ADVANCED_AUTH' => !$disabled_advanced_auth,
+
+			'SELECT_ID'       => $idselect,
+			'DISABLED_SELECT' => (empty($disabled) ? 'if (disabled == 0)' : ''),
 		));
 
 		##### Génération d'une liste à sélection multiple des rangs et membres #####
@@ -138,9 +133,9 @@ class Authorizations
 			//Si il s'agit de l'administrateur, il a automatiquement l'autorisation
 			if ($idrank == 2)
 			{
-				$tpl->assign_block_vars('ranks_list', array(
+				$view->assign_block_vars('ranks_list', array(
 					'ID'        => $j,
-					'IDRANK'    => $idrank,
+					'RANK_ID'   => $idrank,
 					'RANK_NAME' => $group_name,
 					'DISABLED'  => '',
 					'SELECTED'  => ' selected="selected"'
@@ -155,12 +150,13 @@ class Authorizations
 				}
 				$selected = (isset($array_ranks_default[$idrank]) && $array_ranks_default[$idrank] === true && empty($disabled)) ? 'selected="selected"' : $selected;
 
-				$tpl->assign_block_vars('ranks_list', array(
+				$view->assign_block_vars('ranks_list', array(
 					'C_DISABLED' => !empty($disabled) || in_array($idrank, $disabled_ranks),
-					'ID'         => $j,
-					'IDRANK'     => $idrank,
-					'RANK_NAME'  => $group_name,
-					'SELECTED'   => $selected
+
+					'ID'        => $j,
+					'RANK_ID'   => $idrank,
+					'RANK_NAME' => $group_name,
+					'SELECTED'  => $selected
 				));
 			}
 			$j++;
@@ -176,11 +172,12 @@ class Authorizations
 				$selected = ' selected="selected"';
 			}
 
-			$tpl->assign_block_vars('groups_list', array(
-				'C_DISABLED'   => !empty($disabled),
-				'IDGROUP'      => $idgroup,
-				'GROUP_NAME'   => $group_name,
-				'SELECTED'     => $selected
+			$view->assign_block_vars('groups_list', array(
+				'C_DISABLED' => !empty($disabled),
+
+				'GROUP_ID'   => $idgroup,
+				'GROUP_NAME' => $group_name,
+				'SELECTED'   => $selected
 			));
 		}
 
@@ -200,7 +197,7 @@ class Authorizations
 		}
 		$advanced_auth = count($array_auth_members) > 0;
 
-		$tpl->put_all(array(
+		$view->put_all(array(
 			'C_ADVANCED_AUTH_OPEN' => $advanced_auth,
 			'C_NO_GROUP'           => count($groups_name) == 0
 		));
@@ -211,7 +208,7 @@ class Authorizations
 			$result = PersistenceContext::get_querier()->select_rows(DB_TABLE_MEMBER, array('user_id, display_name'), 'WHERE user_id IN :user_ids', array('user_ids' => str_replace('m', '', array_keys($array_auth_members))));
 			while ($row = $result->fetch())
 			{
-				$tpl->assign_block_vars('members_list', array(
+				$view->assign_block_vars('members_list', array(
 					'USER_ID' => $row['user_id'],
 					'LOGIN'   => $row['display_name']
 				));
@@ -220,7 +217,7 @@ class Authorizations
 			$result->dispose();
 		}
 
-		return $tpl->render();
+		return $view->render();
 	}
 
 	/**
