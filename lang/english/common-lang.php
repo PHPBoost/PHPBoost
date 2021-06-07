@@ -98,6 +98,8 @@ $lang['common.visit']        = 'Visit';
 $lang['common.download']     = 'Download';
 $lang['common.upload']       = 'Upload';
 $lang['common.print']        = 'print';
+$lang['common.open.panels']  = 'Open all panels';
+$lang['common.close.panels'] = 'Close all panels';
 
 // Constraint
 $lang['common.constraint.required']     = 'Required';
@@ -130,6 +132,7 @@ $lang['common.all.e']            = 'All';
 $lang['common.nobody']           = 'Nobody';
 $lang['common.none']             = 'None';
 $lang['common.none.e']           = 'None';
+$lang['common.no.result']        = 'No result';
 $lang['common.item.rate']        = ':start to :end of :total elements';
 
 //Footer

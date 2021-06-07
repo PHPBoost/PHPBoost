@@ -98,6 +98,8 @@ $lang['common.visit']        = 'Visiter';
 $lang['common.download']     = 'Télécharger';
 $lang['common.upload']       = 'Uploader';
 $lang['common.print']        = 'Imprimer';
+$lang['common.open.panels']  = 'Ouvrir tous les panneaux';
+$lang['common.close.panels'] = 'Fermer tous les panneaux';
 
 // Constraint
 $lang['common.constraint.required']     = 'Requis';
@@ -130,6 +132,7 @@ $lang['common.all.e']            = 'Toutes';
 $lang['common.nobody']           = 'Personne';
 $lang['common.none']             = 'Aucun';
 $lang['common.none.e']           = 'Aucune';
+$lang['common.no.result']        = 'Aucun résultat';
 $lang['common.item.rate']        = 'Éléments :start à :end sur :total';
 
 //Footer

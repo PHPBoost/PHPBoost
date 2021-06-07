@@ -2,9 +2,13 @@
 /**
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
- * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 14
- * @since       PHPBoost 6.0 - 2021 04 18
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version     PHPBoost 6.0 - last update: 2021 06 07
+ * @since       PHPBoost 1.3 - 2005 11 20
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
 */
 
 ####################################################
@@ -14,19 +18,28 @@
 $lang['form.required.fields'] = 'The fields marked with a * are required !';
 
 // Autorizations
-$lang['form.authorizations.management']   = 'Permissions management';
-$lang['form.authorizations']              = 'Permissions';
-$lang['form.authorizations.read']         = 'Read permission';
-$lang['form.authorizations.write']        = 'Write permission';
-$lang['form.authorizations.contribution'] = 'Contribution permission';
-$lang['form.authorizations.moderation']   = 'Moderation permission';
-$lang['form.authorizations.categories']   = 'Categories management permission';
-$lang['form.authorizations.menu']         = 'Permission to display menu';
+$lang['form.authorizations.management']   = 'Authorizations management';
+$lang['form.authorizations']              = 'Authorizations';
+$lang['form.authorizations.advanced']     = 'Advanced authorizations';
+$lang['form.authorizations.read']         = 'Read authorizations';
+$lang['form.authorizations.write']        = 'Write authorizations';
+$lang['form.authorizations.contribution'] = 'Contribution authorizations';
+$lang['form.authorizations.moderation']   = 'Moderation authorizations';
+$lang['form.authorizations.categories']   = 'Categories management authorizations';
+$lang['form.authorizations.menu']         = 'Authorizations to display menu';
 $lang['form.authorizations.specials']     = 'Special authorizations';
 $lang['form.authorizations.default']      = 'Default authorisations';
 $lang['form.authorizations.clue']         = 'Module global authorizations. You can change these authorizations on each category.';
-$lang['form.authorizations.read.profile'] = 'Read permissions of the field in the profile';
-$lang['form.actions.authorizations']      = 'Read permissions of the field when creating or editing a profile';
+$lang['form.authorizations.read.profile'] = 'Read authorizations of the field in the profile';
+$lang['form.actions.authorizations']      = 'Read authorizations of the field when creating or editing a profile';
+
+$lang['form.select.multiple.clue']   = 'Hold ctrl and click in the list to make multiple choices';
+$lang['form.select.all']             = 'Select all';
+$lang['form.select.none']            = 'Unselect all';
+$lang['form.add.member']             = 'Add a member';
+$lang['form.warning.member']         = 'The member is already in the list';
+$lang['form.select.group']           = 'Select by group or rank';
+$lang['form.select.member']          = 'Select by member';
 
 // Buttons
 $lang['form.submit']  = 'Submit';
@@ -70,7 +83,7 @@ $lang['form.display.type.list']         = 'Display in list view';
 $lang['form.display.type.table']        = 'Display in table view';
 $lang['form.display.full.item']         = 'Display full item';
 $lang['form.characters.number.to.cut']  = 'Characters number to cut';
-$lang['form.display.summary.to.guests'] = 'Display summary of files to guests if they don\'t have read permission';
+$lang['form.display.summary.to.guests'] = 'Display summary of files to guests if they don\'t have read authorization';
 $lang['form.display.author']            = 'Display author\'s name';
 $lang['form.display.date']              = 'Display publication date';
 $lang['form.display.update.date']       = 'Display update date';

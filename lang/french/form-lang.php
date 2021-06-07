@@ -2,9 +2,13 @@
 /**
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
- * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 06
- * @since       PHPBoost 6.0 - 2021 04 18
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version     PHPBoost 6.0 - last update: 2021 06 07
+ * @since       PHPBoost 1.3 - 2005 11 20
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
 */
 
 ####################################################
@@ -16,6 +20,7 @@ $lang['form.required.fields'] = 'Les champs marqués * sont obligatoires !';
 // Autorizations
 $lang['form.authorizations.management']   = 'Gestion des autorisations';
 $lang['form.authorizations']              = 'Autorisations';
+$lang['form.authorizations.advanced']     = 'Autorisations avancées';
 $lang['form.authorizations.read']         = 'Autorisation de lecture';
 $lang['form.authorizations.write']        = 'Autorisation d\'écriture';
 $lang['form.authorizations.contribution'] = 'Autorisation de contribution';
@@ -27,6 +32,14 @@ $lang['form.authorizations.default']      = 'Autorisations par défaut';
 $lang['form.authorizations.clue']         = 'Autorisations globales du module. Vous pouvez changer ces autorisations localement sur chaque catégorie.';
 $lang['form.authorizations.read.profile'] = 'Autorisations de lecture du champ dans le profil';
 $lang['form.authorizations.actions']      = 'Autorisations de lecture du champ dans la création ou la modification d\'un profil';
+
+$lang['form.select.multiple.clue']   = 'Maintenez ctrl puis cliquez dans la liste pour faire plusieurs choix';
+$lang['form.select.all']             = 'Tout sélectionner';
+$lang['form.select.none']            = 'Tout désélectionner';
+$lang['form.add.member']             = 'Ajouter un membre';
+$lang['form.warning.member']         = 'Le membre est déjà dans la liste';
+$lang['form.select.group']           = 'Selection par groupe et rang';
+$lang['form.select.member']          = 'Selection par membre';
 
 // Buttons
 $lang['form.submit']  = 'Valider';
