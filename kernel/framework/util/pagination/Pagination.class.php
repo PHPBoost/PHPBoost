@@ -73,7 +73,7 @@ class Pagination
 	private function init_tpl($type)
 	{
 		$this->view = new FileTemplate('framework/util/pagination.tpl');
-		$this->view->add_lang('common-lang');
+		$this->view->add_lang(LangLoader::get('common-lang'));
 		$this->view->put_all(array(
 			'C_LIGHT_PAGINATION' => $type == self::LIGHT_PAGINATION,
 			'C_FULL_PAGINATION'  => $type == self::FULL_PAGINATION,
@@ -120,7 +120,7 @@ class Pagination
 			'PAGE_NAME' => $name == self::PREV_LINK || $name == self::NEXT_LINK ? '' : $name,
 
 			'U_PAGE' => $this->get_url($page_number),
-			
+
 			'L_PAGE'    => $is_current_page ? LangLoader::get_message('common.pagination.current', 'common-lang') : LangLoader::get_message('common.page', 'common-lang') . " " . $page_number,
 		));
 	}
