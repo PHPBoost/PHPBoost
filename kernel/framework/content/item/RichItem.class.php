@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 26
+ * @version     PHPBoost 6.0 - last update: 2021 06 09
  * @since       PHPBoost 6.0 - 2020 01 23
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -161,7 +161,7 @@ class RichItem extends Item
 			$this->set_thumbnail(FormFieldThumbnail::DEFAULT_VALUE);
 	}
 
-	protected static function get_kernel_additional_sorting_fields()
+	protected function get_kernel_additional_sorting_fields()
 	{
 		return array('views' => array('database_field' => 'views_number', 'label' => LangLoader::get_message('sort_by.views.number', 'common'), 'icon' => 'fa fa-eye'));
 	}
