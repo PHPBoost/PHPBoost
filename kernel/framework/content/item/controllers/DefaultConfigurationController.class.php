@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 19
+ * @version     PHPBoost 6.0 - last update: 2021 06 09
  * @since       PHPBoost 6.0 - 2020 02 11
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -66,7 +66,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 
 		if (self::get_module_configuration()->has_rich_items())
 		{
-			$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort_field', $this->lang['config.items.default.sort.field'], $this->config->get_items_default_sort_field(), $item_class_name::get_sorting_field_options(),
+			$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort_field', $this->lang['config.items.default.sort.field'], $this->config->get_items_default_sort_field(), $this->module_item->get_sorting_field_options(),
 				array('select_to_list' => true, 'class' => 'third-field')
 			));
 
