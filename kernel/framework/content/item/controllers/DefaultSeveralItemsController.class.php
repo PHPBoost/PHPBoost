@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 30
+ * @version     PHPBoost 6.0 - last update: 2021 06 09
  * @since       PHPBoost 6.0 - 2020 01 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor xela <xela@phpboost.com>
 */
 
 class DefaultSeveralItemsController extends AbstractItemController
@@ -47,7 +48,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 		$requested_sort_field = $this->request->get_getstring('field', '');
 		$requested_sort_mode = $this->request->get_getstring('sort', '');
 
-		$this->sort_field = (in_array($requested_sort_field, array_keys(Item::get_sorting_fields_list())) ? $requested_sort_field : $this->config->get_items_default_sort_field());
+		$this->sort_field = (in_array($requested_sort_field, array_keys($this->module_item->get_sorting_fields_list())) ? $requested_sort_field : $this->config->get_items_default_sort_field());
 		$this->sort_mode = (in_array(TextHelper::strtoupper($requested_sort_mode), array(Item::ASC, Item::DESC)) ? $requested_sort_mode : $this->config->get_items_default_sort_mode());
 		$this->page = $this->request->get_getint('page', 1);
 		$this->subcategories_page = $this->request->get_getint('subcategories_page', 1);
@@ -224,7 +225,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 	protected function build_view()
 	{
 		$pagination = $this->get_pagination();
-		$sorting_fields_list = Item::get_sorting_fields_list();
+		$sorting_fields_list = $this->module_item->get_sorting_fields_list();
 		$sort_field = $sorting_fields_list[$this->sort_field];
 		$items = self::get_items_manager()->get_items($this->sql_condition, $this->sql_parameters, $pagination->get_number_items_per_page(), $pagination->get_display_from(), $sort_field['database_field'], TextHelper::strtoupper($this->sort_mode), $this->keyword !== null);
 		$controls_displayed = false;
@@ -277,8 +278,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 		);
 		$form->add_fieldset($fieldset);
 
-		$item_class_name = self::get_module_configuration()->get_item_name();
-		$fields_list = $item_class_name::get_sorting_field_options();
+		$fields_list = $this->module_item->get_sorting_field_options();
 		if (TextHelper::strstr($this->request->get_current_url(), '/member/'))
 			unset($fields_list['author']);
 
@@ -289,7 +289,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $this->sort_mode, $item_class_name::get_sorting_mode_options(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $this->sort_mode, $this->module_item->get_sorting_mode_options(),
 			array(
 				'select_to_list' => true,
 				'events'         => array('change' => 'document.location = "' . $this->url_without_sorting_parameters->rel() . '" + HTMLForms.getField("sort_field").getValue() + "/" + HTMLForms.getField("sort_mode").getValue()' . ($this->page > 1 ? ' + "/' . $this->page . '"' : '') . ';')
