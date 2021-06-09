@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 09
+ * @version     PHPBoost 6.0 - last update: 2021 06 09
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -575,7 +575,7 @@ class Item
 		$this->end_date_enabled = false;
 	}
 
-	public static function get_sorting_fields_list()
+	public function get_sorting_fields_list()
 	{
 		$common_lang = LangLoader::get('common');
 
@@ -586,8 +586,8 @@ class Item
 				'date'                  => array('database_field' => 'creation_date', 'label' => $common_lang['form.date.creation'], 'icon' => 'far fa-calendar-alt'),
 				'update_date'           => array('database_field' => 'update_date', 'label' => $common_lang['form.date.update'], 'icon' => 'far fa-calendar-plus')
 			),
-			self::get_kernel_additional_sorting_fields(),
-			self::get_additional_sorting_fields()
+			$this->get_kernel_additional_sorting_fields(),
+			$this->get_additional_sorting_fields()
 		);
 
 		if (self::$module && self::$module->get_configuration()->feature_is_enabled('comments') && CommentsConfig::load()->module_comments_is_enabled(self::$module_id))
@@ -598,21 +598,21 @@ class Item
 		return $fields_list;
 	}
 
-	protected static function get_kernel_additional_sorting_fields()
+	protected function get_kernel_additional_sorting_fields()
 	{
 		return array();
 	}
 
-	protected static function get_additional_sorting_fields()
+	protected function get_additional_sorting_fields()
 	{
 		return array();
 	}
 
-	public static function get_sorting_field_options()
+	public function get_sorting_field_options()
 	{
 		$sort_options = array();
 
-		foreach (self::get_sorting_fields_list() as $id => $parameters)
+		foreach ($this->get_sorting_fields_list() as $id => $parameters)
 		{
 			$sort_options[$id] = new FormFieldSelectChoiceOption($parameters['label'], $id, array('data_option_icon' => $parameters['icon']));
 		}
