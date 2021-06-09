@@ -56,6 +56,23 @@ $lang['admin.404.errors.list'] = 'Liste des erreurs 404';
 $lang['admin.404.requested.url'] = 'Url demandée';
 $lang['admin.404.from.url'] = 'Url de provenance';
 
+// Groups
+$lang['admin.groups.management']    = 'Gestion des groupes';
+$lang['admin.edit.group']           = 'Modifier le groupe';
+$lang['admin.add.group']            = 'Ajouter un groupe';
+$lang['admin.flood']                = 'Autorisation de flooder';
+$lang['admin.pm.limit']             = 'Limite de messages privés';
+$lang['admin.pm.limit.clue']        = 'Mettre -1 pour illimité';
+$lang['admin.data.limit']           = 'Taille de l\'espace de stockage des fichiers';
+$lang['admin.data.limit.clue']      = 'En Mo. Mettre -1 pour illimité';
+$lang['admin.group.color']          = 'Couleur associée au groupe';
+$lang['admin.delete.group.color']   = 'Supprimer la couleur associée au groupe';
+$lang['admin.group.thumbnail']      = 'Image associée au groupe';
+$lang['admin.group.thumbnail.clue'] = 'Mettre dans le dossier images/group/';
+$lang['admin.add.group.member']     = 'Ajouter un membre au groupe';
+$lang['admin.group.members']        = 'Membres du groupe';
+$lang['admin.upload.thumbnail']     = 'Uploader une image';
+
 // Maintenance
 $lang['admin.maintenance']         = 'Maintenance';
 $lang['admin.maintenance.title']   = 'Site en maintenance';

@@ -91,10 +91,10 @@
 								multiple: true,
 								maxFileSize: '{MAX_FILE_SIZE}',
 								allowedExtensions: ["{ALLOWED_EXTENSIONS}"],
-								warningText: ${escapejs(@upload.warning.disabled)},
-								warningExtension: ${escapejs(@upload.warning.extension)},
-								warningFileSize: ${escapejs(@upload.warning.file.size)},
-								warningFilesNbr: ${escapejs(@upload.warning.files.number)},
+								warningText: ${escapejs(@H|upload.warning.disabled)},
+								warningExtension: ${escapejs(@H|upload.warning.extension)},
+								warningFileSize: ${escapejs(@H|upload.warning.file.size)},
+								warningFilesNbr: ${escapejs(@H|upload.warning.files.number)},
 							});
 						</script>
 						<div class="cell-body">

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 02
+ * @version     PHPBoost 6.0 - last update: 2021 06 09
  * @since       PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -55,6 +55,23 @@ $lang['admin.404.errors'] = '404 errors';
 $lang['admin.404.errors.list'] = '404 errors list';
 $lang['admin.404.requested.url'] = 'Requested url';
 $lang['admin.404.from.url'] = 'Source url';
+
+// Groups
+$lang['admin.groups.management']    = 'Groups management';
+$lang['admin.edit.group']           = 'Edit group';
+$lang['admin.add.group']            = 'Add a group';
+$lang['admin.flood']                = 'Allowed to flood';
+$lang['admin.pm.limit']             = 'Private messages limit';
+$lang['admin.pm.limit.clue']        = 'Set -1 for no limit';
+$lang['admin.data.limit']           = 'Files storage area size';
+$lang['admin.data.limit.clue']      = 'In MB. Set -1 for no limit';
+$lang['admin.color.group']          = 'Associated color of the group';
+$lang['admin.delete.color.group']   = 'Delete associated color of the group';
+$lang['admin.group.thumbnail']      = 'Associated image of the group';
+$lang['admin.group.thumbnail.clue'] = 'Put in the directory images/group/';
+$lang['admin.add.mbr.group']        = 'Add a member to group';
+$lang['admin.mbrs.group']           = 'Group\'s member';
+$lang['admin.upload.thumbnail']     = 'Upload a thumbnail';
 
 // Maintenance
 $lang['admin.maintenance']         = 'Maintenance';

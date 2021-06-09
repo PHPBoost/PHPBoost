@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Mipel <mipel@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 08
+ * @version     PHPBoost 6.0 - last update: 2021 06 09
  * @since       PHPBoost 6.0 - 2019 11 27
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -28,7 +28,7 @@ $lang['upload.file.type']        = 'Fichier %s';
 $lang['upload.image.type']       = 'Image %s';
 $lang['upload.audio.type']       = 'Fichier audio %s';
 $lang['upload.zip.type']         = 'Archive %s';
-$lang['upload.adobe.pdf']        = 'Adobe Document';
+$lang['upload.adobe.pdf']        = 'Document Adobe';
 $lang['upload.document.type']    = 'Document %s';
 $lang['upload.popup.insert']     = 'Insérer le code dans le formulaire';
 

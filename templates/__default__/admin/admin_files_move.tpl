@@ -2,27 +2,27 @@
 
 		<nav id="admin-quick-menu">
 			<a href="#" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;">
-				<i class="fa fa-bars" aria-hidden="true"></i> {L_FILES_MANAGEMENT}
+				<i class="fa fa-bars" aria-hidden="true"></i> {@upload.files.management}
 			</a>
 			<ul>
 				<li>
-					<a href="admin_files.php" class="quick-link">{L_FILES_MANAGEMENT}</a>
+					<a href="admin_files.php" class="quick-link">{@upload.files.management}</a>
 				</li>
 				<li>
-					<a href="${relative_url(AdminFilesUrlBuilder::configuration())}" class="quick-link">{L_CONFIG_FILES}</a>
+					<a href="${relative_url(AdminFilesUrlBuilder::configuration())}" class="quick-link">{@upload.files.config}</a>
 				</li>
 			</ul>
 		</nav>
 
 		<div id="admin-contents">
 			<fieldset>
-				<legend>{L_FILES_MANAGEMENT}</legend>
+				<legend>{@upload.files.management}</legend>
 				<div class="fieldset-inset">
 					<div class="upload-address-bar">
-						<a href="admin_files.php"><i class="fa fa-home" aria-hidden="true"></i> {L_ROOT}</a>{URL}
+						<a href="admin_files.php"><i class="fa fa-home" aria-hidden="true"></i> {@common.root}</a>{URL}
 					</div>
 
-					# INCLUDE message_helper #
+					# INCLUDE MESSAGE_HELPER #
 					<form action="{TARGET}" method="post">
 						<div class="cell-flex cell-tile cell-columns-3">
 							# START folder #
@@ -67,7 +67,7 @@
 
 							<div class="cell">
 								<div class="cell-infos no-style">
-									<span class="text-strong">{L_MOVE_TO}</span>
+									<span class="text-strong">{@common.move.to}</span>
 									<i class="fa fa-arrow-right" aria-hidden="true"></i>
 								</div>
 							</div>
@@ -79,7 +79,7 @@
 											var path = '{PATH_TO_ROOT}/templates/{THEME}';
 											var selected_cat = {SELECTED_CAT};
 										</script>
-										<span><a href="javascript:select_cat(0);"><i class="fa fa-home" aria-hidden="true"></i> <span id="class-0" class="{CAT_0}">{L_ROOT}</span></a></span>
+										<span><a href="javascript:select_cat(0);"><i class="fa fa-home" aria-hidden="true"></i> <span id="class-0" class="{CAT_0}">{@common.root}</span></a></span>
 										{FOLDERS}
 									</div>
 								</div>
@@ -87,8 +87,9 @@
 						</div>
 						<div class="spacer"></div>
 						<fieldset class="fieldset-submit">
+							<legend>{@form.submit}</legend>
 							<input type="hidden" name="new_cat" id="id_cat" value="{SELECTED_CAT}">
-							<button type="submit" class="button submit" value name="valid">{L_SUBMIT}</button>
+							<button type="submit" class="button submit" value name="valid">{@form.submit}</button>
 							<input type="hidden" name="token" value="{TOKEN}">
 						</fieldset>
 					</form>

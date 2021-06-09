@@ -1,60 +1,60 @@
 		<nav id="admin-quick-menu">
 			<a href="#" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" aria-label="{L_GROUPS_MANAGEMENT}">
-				<i class="fa fa-bars" aria-hidden="true"></i> {L_GROUPS_MANAGEMENT}
+				<i class="fa fa-bars" aria-hidden="true"></i> {@admin.groups.management}
 			</a>
 			<ul>
 				<li>
-					<a href="admin_groups.php" class="quick-link">{L_GROUPS_MANAGEMENT}</a>
+					<a href="admin_groups.php" class="quick-link">{@admin.groups.management}</a>
 				</li>
 				<li>
-					<a href="admin_groups.php?add=1" class="quick-link">{L_ADD_GROUPS}</a>
+					<a href="admin_groups.php?add=1" class="quick-link">{@admin.add.group}</a>
 				</li>
 			</ul>
 		</nav>
 
 		<div id="admin-contents">
 			<fieldset class="fieldset-content">
-				<legend>{L_GROUPS_MANAGEMENT}</legend>
+				<legend>{@admin.groups.management}</legend>
 				<div class="fieldset-inset">
 					<table class="table">
 						<thead>
 							<tr>
 								<th>
-									{L_NAME}
+									{@common.name}
 								</th>
 								<th>
-									{L_IMAGE}
+									{@common.image}
 								</th>
 								<th>
-									{L_UPDATE}
+									{@common.edit}
 								</th>
 								<th>
-									{L_DELETE}
+									{@common.delete}
 								</th>
 							</tr>
 						</thead>
 						<tbody>
 							# START group #
-							<tr>
-								<td>
-									<a href="{group.U_USER_GROUP}"# IF group.C_GROUP_COLOR # style="color:{group.GROUP_COLOR}"# ENDIF #>{group.NAME}</a>
-								</td>
-								<td>
-									{group.IMAGE}
-								</td>
-								<td>
-									<a href="admin_groups.php?id={group.ID}" aria-label="{L_UPDATE}"><i class="far fa-fw fa-edit" aria-hidden="true" aria-label="{L_UPDATE}"></i></a>
-								</td>
-								<td>
-									<a href="admin_groups.php?del=1&amp;id={group.ID}&amp;token={TOKEN}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="far fa-fw fa-trash-alt" aria-hidden="true" aria-label="{L_DELETE}"></i></a>
-								</td>
-							</tr>
+								<tr>
+									<td>
+										<a href="{group.U_GROUP}"# IF group.C_GROUP_COLOR # style="color:{group.GROUP_COLOR}"# ENDIF #>{group.NAME}</a>
+									</td>
+									<td>
+										# IF group.C_THUMBNAIL #<img src="{group.U_THUMBNAIL}" alt="{group.NAME}"># ENDIF #
+									</td>
+									<td>
+										<a href="admin_groups.php?id={group.ID}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+									</td>
+									<td>
+										<a href="admin_groups.php?del=1&amp;id={group.ID}&amp;token={TOKEN}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+									</td>
+								</tr>
 							# END group #
 						</tbody>
 						<tfoot>
 							<tr>
 								<td colspan="4">
-									<span><a href="admin_groups.php?add=1" aria-label="{L_ADD_GROUPS}">{L_ADD_GROUPS}</a></span>
+									<a class="button link-color" href="admin_groups.php?add=1">{@admin.add.group}</a>
 								</td>
 							</tr>
 						</tfoot>
