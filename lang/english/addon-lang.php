@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 06
+ * @version     PHPBoost 6.0 - last update: 2021 06 08
  * @since       PHPBoost 3.0 - 2012 04 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -54,6 +54,7 @@ $lang['addon.langs.drop.multiple'] = 'Delete all languages\'s files';
 $lang['addon.langs.default.clue']  = 'The default language can not be uninstalled, disabled or reserved';
 
 // Modules
+$lang['addon.modules']                 = 'Modules';
 $lang['addon.modules.management']      = 'Module management';
 $lang['addon.modules.add']             = 'Add a module';
 $lang['addon.modules.update']          = 'Update a module';
@@ -87,8 +88,9 @@ $lang['addon.modules.upgrade']     = 'Update';
 $lang['addon.modules.upgrade.all'] = 'Update selected modules';
 
 // Themes
+$lang['addon.themes']                 = 'Themes';
 $lang['addon.themes.management']      = 'Themes management';
-$lang['addon.themes.add']            = 'Add theme';
+$lang['addon.themes.add']             = 'Add theme';
 $lang['addon.themes.delete']          = 'Delete a theme';
 $lang['addon.themes.delete.multiple'] = 'Delete selected themes';
 $lang['addon.themes.installed']       = 'Installed themes';

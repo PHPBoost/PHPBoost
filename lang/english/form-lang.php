@@ -95,11 +95,10 @@ $lang['form.root.category.description'] = 'Root category description';
 $lang['form.item.default.content']      = 'Item default content';
 
 // Extended Fields
-$lang['form.profile.fields.management']             = 'Profile field management';
+$lang['form.extended.fields.management']            = 'Profile fields management';
 $lang['form.extended.field.add']                    = 'Add profile field';
 $lang['form.extended.field.edit']                   = 'Edit profile field';
 $lang['form.extended.field']                        = 'Profile fields';
-$lang['form.extended.fields.management']            = 'Profile field management';
 $lang['form.extended.fields.error.already.exists']  = 'The field already exists.';
 $lang['form.extended.fields.error.phpboost.config'] = 'The fields used by default PHPBoost can not be created more than one time, please choose another type of field.';
 

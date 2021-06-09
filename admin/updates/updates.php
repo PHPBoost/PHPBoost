@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 02 19
+ * @version     PHPBoost 6.0 - last update: 2021 06 09
  * @since       PHPBoost 1.6 - 2008 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -13,7 +13,10 @@
 define('PATH_TO_ROOT', '../..');
 
 require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
-define('TITLE', $LANG['administration']);
+
+$lang = LangLoader::get('admin-lang');
+
+define('TITLE', $lang['admin.updates'] . ' - ' . $lang['admin.administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
 $check_updates = retrieve(GET, 'check', false);
@@ -29,7 +32,8 @@ if ($check_updates === true)
 	new Updates();
 	AppContext::get_response()->redirect('updates.php' . (!empty($update_type) ? '?type=' . $update_type : ''));
 }
-$tpl = new FileTemplate('admin/updates/updates.tpl');
+$view = new FileTemplate('admin/updates/updates.tpl');
+$view->add_lang(array_merge($lang, LangLoader::get('addon-lang')));
 $updates_availables = 0;
 
 if (ServerConfiguration::get_phpversion() > Updates::PHP_MIN_VERSION_UPDATES)
@@ -61,23 +65,23 @@ if (ServerConfiguration::get_phpversion() > Updates::PHP_MIN_VERSION_UPDATES)
 		switch ($update->get_priority())
 		{
 			case AdministratorAlert::ADMIN_ALERT_VERY_HIGH_PRIORITY:
-				$priority = 'priority_very_high';
+				$priority = 'admin.priority.very.high';
 				$priority_css_class = 'error';
 				break;
 			case AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY:
-				$priority = 'priority_high';
+				$priority = 'admin.priority.high';
 				$priority_css_class = 'warning';
 				break;
 			case AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY:
-				$priority = 'priority_medium';
+				$priority = 'admin.priority.medium';
 				$priority_css_class = 'success';
 				break;
 			case AdministratorAlert::ADMIN_ALERT_LOW_PRIORITY:
-				$priority = 'priority_low';
+				$priority = 'admin.priority.low';
 				$priority_css_class = 'question';
 				break;
 			default:
-				$priority = 'priority_very_low';
+				$priority = 'admin.priority.very.low';
 				$priority_css_class = 'notice';
 				break;
 		}
@@ -87,14 +91,15 @@ if (ServerConfiguration::get_phpversion() > Updates::PHP_MIN_VERSION_UPDATES)
 		$length = TextHelper::strlen($short_description) > $maxlength ?  $maxlength + TextHelper::strpos(TextHelper::substr($short_description, $maxlength), ' ') : 0;
 		$length = $length > ($maxlength * 1.1) ? $maxlength : $length;
 
-		$tpl->assign_block_vars('apps', array(
-			'TYPE' => $update->get_type(),
-			'NAME' => $update->get_name(),
-			'VERSION' => $update->get_version(),
-			'SHORT_DESCRIPTION' => ($length > 0 ? TextHelper::substr($short_description, 0, $length) . '...' : $short_description),
-			'IDENTIFIER' => $update->get_identifier(),
-			'PRIORITY' => $LANG[$priority],
-			'PRIORITY_CSS_CLASS' => $priority_css_class
+		$view->assign_block_vars('apps', array(
+			'TYPE'               => $update->get_type(),
+			'NAME'               => $update->get_name(),
+			'VERSION'            => $update->get_version(),
+			'SHORT_DESCRIPTION'  => ($length > 0 ? TextHelper::substr($short_description, 0, $length) . '...' : $short_description),
+			'IDENTIFIER'         => $update->get_identifier(),
+			'PRIORITY_CSS_CLASS' => $priority_css_class,
+
+			'L_PRIORITY'           => $lang[$priority],
 		));
 
 		$updates_availables++;
@@ -102,25 +107,18 @@ if (ServerConfiguration::get_phpversion() > Updates::PHP_MIN_VERSION_UPDATES)
 }
 else
 {
-	$tpl->put_all(array(
-		'L_INCOMPATIBLE_PHP_VERSION' => sprintf($LANG['incompatible_php_version'], Updates::PHP_MIN_VERSION_UPDATES),
+	$view->put_all(array(
 		'C_INCOMPATIBLE_PHP_VERSION' => true,
+		'L_INCOMPATIBLE_PHP_VERSION' => sprintf($lang['admin.php.version'], Updates::PHP_MIN_VERSION_UPDATES),
 	));
 }
 
-$tpl->put_all(array(
-	'L_WEBSITE_UPDATES' => $LANG['website_updates'],
-	'L_KERNEL' => $LANG['kernel'],
-	'L_MODULES' => $LANG['modules'],
-	'L_THEMES' => $LANG['themes'],
-	'L_MORE_DETAILS' => $LANG['more_details'],
-	'L_NO_AVAILABLES_UPDATES' => !$updates_availables ? $LANG['no_available_update'] : '',
+$view->put_all(array(
 	'C_UPDATES' => $updates_availables,
 	'U_CHECK' => 'updates.php?check=1' . (!empty($update_type) ? '&amp;type=' . $update_type : '') . '&amp;token=' . AppContext::get_session()->get_token(),
-	'L_CHECK_FOR_UPDATES_NOW' => $LANG['check_for_updates_now']
 ));
 
-$tpl->display();
+$view->display();
 
 require_once(PATH_TO_ROOT . '/admin/admin_footer.php');
 ?>

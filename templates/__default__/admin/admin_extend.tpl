@@ -141,12 +141,12 @@
 						</a>
 					</li>
 					# START modules_extend #
-					<li>
-						<a href="{modules_extend.U_ADMIN_MODULE}">
-							<img src="{modules_extend.IMG}" alt="{modules_extend.NAME}" />
-							<p>{modules_extend.NAME}</p>
-						</a>
-					</li>
+						<li>
+							<a href="{modules_extend.U_ADMIN_MODULE}">
+								<img src="{modules_extend.IMG}" alt="{modules_extend.NAME}" />
+								<p>{modules_extend.NAME}</p>
+							</a>
+						</li>
 					# END modules_extend #
 				</ul>
 			</nav>

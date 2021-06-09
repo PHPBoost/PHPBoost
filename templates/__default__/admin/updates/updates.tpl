@@ -1,26 +1,26 @@
 <nav id="admin-quick-menu">
 	<a href="#" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;">
-		<i class="fa fa-bars" aria-hidden="true"></i> {L_WEBSITE_UPDATES}
+		<i class="fa fa-bars" aria-hidden="true"></i> {@admin.updates}
 	</a>
 	<ul>
 		<li>
-			<a href="updates.php" class="quick-link">{L_WEBSITE_UPDATES}</a>
+			<a href="updates.php" class="quick-link">{@admin.updates}</a>
 		</li>
 		<li>
-			<a href="updates.php?type=kernel" class="quick-link">{L_KERNEL}</a>
+			<a href="updates.php?type=kernel" class="quick-link">{@admin.kernel}</a>
 		</li>
 		<li>
-			<a href="updates.php?type=module" class="quick-link">{L_MODULES}</a>
+			<a href="updates.php?type=module" class="quick-link">{@addon.modules}</a>
 		</li>
 		<li>
-			<a href="updates.php?type=template" class="quick-link">{L_THEMES}</a>
+			<a href="updates.php?type=template" class="quick-link">{@addon.themes}</a>
 		</li>
 	</ul>
 </nav>
 
 <div id="admin-contents">
 	<fieldset>
-		<legend>{L_WEBSITE_UPDATES}</legend>
+		<legend>{@admin.updates}</legend>
 		<div class="fieldset-inset">
 		# IF C_INCOMPATIBLE_PHP_VERSION #
 			<div class="message-helper bgc warning message-helper-small">{L_INCOMPATIBLE_PHP_VERSION}</div>
@@ -33,18 +33,18 @@
 						</header>
 						<div class="content">
 							<div class="infos options align-center alert-priority bgc {apps.PRIORITY_CSS_CLASS}">
-								<p>{apps.PRIORITY}</p>
-								<p><a href="{PATH_TO_ROOT}/admin/updates/detail.php?identifier={apps.IDENTIFIER}">[ {L_MORE_DETAILS} ]</a></p>
+								<p>{apps.L_PRIORITY}</p>
+								<p><a href="{PATH_TO_ROOT}/admin/updates/detail.php?identifier={apps.IDENTIFIER}">[ {@admin.more.details} ]</a></p>
 							</div>
 							<p>{apps.SHORT_DESCRIPTION}</p>
 						</div>
 					</article>
 				# END apps #
 			# ELSE #
-				<div class="message-helper bgc success message-helper-small">{L_NO_AVAILABLES_UPDATES}</div>
+				<div class="message-helper bgc success message-helper-small">{@admin.no.available.update}</div>
 			# ENDIF #
-			<p class="align-center question">
-				<a href="{U_CHECK}"><i class="fa fa-download" aria-hidden="true"></i> {L_CHECK_FOR_UPDATES_NOW}</a>
+			<p class="align-center">
+				<a href="{U_CHECK}" class="button link-color"><i class="fa fa-download" aria-hidden="true"></i> {@admin.updates.check}</a>
 			</p>
 		# ENDIF #
 		</div>

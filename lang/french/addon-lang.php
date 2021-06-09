@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 06
+ * @version     PHPBoost 6.0 - last update: 2021 06 08
  * @since       PHPBoost 3.0 - 2012 04 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -54,6 +54,7 @@ $lang['addon.langs.drop.multiple'] = 'Supprimer tous les fichiers des langues';
 $lang['addon.langs.default.clue']  = 'La langue par défaut ne peut pas être désinstallée, désactivée ou réservée';
 
 // Modules
+$lang['addon.modules']                 = 'Modules';
 $lang['addon.modules.management']      = 'Gestion des modules';
 $lang['addon.modules.add']             = 'Ajouter un module';
 $lang['addon.modules.update']          = 'Mettre à jour un module';
@@ -69,8 +70,8 @@ $lang['addon.modules.warning.update']  = 'Les modules mis à jour sont automatiq
     // Upload
 $lang['addon.modules.upload']      = 'Uploader un module';
     // Module
-$lang['addon.modules.php.version']      = 'Version PHP';
-$lang['addon.modules.documentation']    = 'Documentation';
+$lang['addon.modules.php.version']   = 'Version PHP';
+$lang['addon.modules.documentation'] = 'Documentation';
     // Messages helper
 $lang['addon.modules.already.installed'] = 'Ce module est déjà installé';
 $lang['addon.modules.not.upgradable']    = 'Ce module ne peut pas être mis à jour';
@@ -86,6 +87,7 @@ $lang['addon.modules.upgrade']     = 'Mettre à jour';
 $lang['addon.modules.upgrade.all'] = 'Mettre à jour les modules sélectionnés';
 
 // Themes
+$lang['addon.themes']                 = 'Thèmes';
 $lang['addon.themes.management']      = 'Gestion des thèmes';
 $lang['addon.themes.add']             = 'Ajouter un thème';
 $lang['addon.themes.delete']          = 'Suppression d\'un thème';

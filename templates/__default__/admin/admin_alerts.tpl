@@ -1,10 +1,10 @@
 <nav id="admin-quick-menu">
-	<a href="#" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" aria-label="{L_ADMIN_ALERTS}">
-		<i class="fa fa-bars" aria-hidden="true"></i> {L_ADMIN_ALERTS}
+	<a href="#" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" aria-label="{@admin.alerts}">
+		<i class="fa fa-bars" aria-hidden="true"></i> {@admin.alerts}
 	</a>
 	<ul>
 		<li>
-			<a href="admin_alerts.php" class="quick-link">{L_ADMINISTRATOR_ALERTS_LIST}</a>
+			<a href="admin_alerts.php" class="quick-link">{@admin.alerts.list}</a>
 		</li>
 	</ul>
 </nav>
@@ -34,13 +34,13 @@
 				{
 					document.getElementById("status_" + id).innerHTML = "<i class=\"fa fa-check success\"></i>";
 					document.getElementById("status_" + id).href = "javascript:change_alert_status('" + id + "', '2');";
-					document.getElementById("status_" + id).title = "{L_UNFIX}";
+					document.getElementById("status_" + id).setAttribute('aria-label',${escapejs(@admin.unfix.alert)});
 				}
 				else
 				{
 					document.getElementById("status_" + id).innerHTML = "<i class=\"fa fa-times error\"></i>";
 					document.getElementById("status_" + id).href = "javascript:change_alert_status('" + id + "', '0');";
-					document.getElementById("status_" + id).title = "{L_FIX}";
+					document.getElementById("status_" + id).setAttribute('aria-label',${escapejs(@admin.fix.alert)});
 				}
 			}
 		}
@@ -51,7 +51,7 @@
 
 	function delete_alert(id)
 	{
-		if( !confirm("{L_CONFIRM_DELETE_ALERT}") )
+		if( !confirm("{@admin.warning.delete.alert}") )
 			return;
 
 		document.getElementById("status_" + id).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
@@ -83,47 +83,31 @@
 
 <div id="admin-contents">
 	<fieldset>
-		<legend>{L_ADMIN_ALERTS}</legend>
+		<legend>{@admin.alerts}</legend>
 		<div class="fieldset-inset">
 		# IF C_EXISTING_ALERTS #
 			<table class="table">
 				<thead>
 					<tr>
 						<th>
-							# IF NOT C_ORDER_ENTITLED_ASC #
-								<a href="{U_ORDER_ENTITLED_ASC}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-arrow-up" aria-hidden="true" aria-label="${LangLoader::get_message('sort.asc', 'common')}"></i></a>
-							# ENDIF #
-							{L_TYPE}
-							# IF NOT C_ORDER_ENTITLED_DESC #
-								<a href="{U_ORDER_ENTITLED_DESC}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-arrow-down" aria-hidden="true" aria-label="${LangLoader::get_message('sort.desc', 'common')}"></i></a>
-							# ENDIF #
+							<span class="html-table-header-sortable"><a href="{U_ORDER_ENTITLED_ASC}" aria-label="{@common.sort.asc}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></span>
+							{@common.type}
+							<span class="html-table-header-sortable"><a href="{U_ORDER_ENTITLED_DESC}" aria-label="{@common.sort.desc}"><i class="fa fa-caret-down" aria-hidden="true"></i></a></span>
 						</th>
 						<th>
-							# IF NOT C_ORDER_CREATION_DATE_ASC #
-								<a href="{U_ORDER_CREATION_DATE_ASC}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-arrow-up" aria-hidden="true" aria-label="${LangLoader::get_message('sort.asc', 'common')}"></i></a>
-							# ENDIF #
-							{L_DATE}
-							# IF NOT C_ORDER_CREATION_DATE_DESC #
-								<a href="{U_ORDER_CREATION_DATE_DESC}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-arrow-down" aria-hidden="true" aria-label="${LangLoader::get_message('sort.desc', 'common')}"></i></a>
-							# ENDIF #
+							<span class="html-table-header-sortable"><a href="{U_ORDER_CREATION_DATE_ASC}" aria-label="{@common.sort.asc}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></span>
+							{@common.creation.date}
+							<span class="html-table-header-sortable"><a href="{U_ORDER_CREATION_DATE_DESC}" aria-label="{@common.sort.desc}"><i class="fa fa-caret-down" aria-hidden="true"></i></a></span>
 						</th>
 						<th>
-							# IF NOT C_ORDER_PRIORITY_ASC #
-								<a href="{U_ORDER_PRIORITY_ASC}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-arrow-up" aria-hidden="true" aria-label="${LangLoader::get_message('sort.asc', 'common')}"></i></a>
-							# ENDIF #
-							{L_PRIORITY}
-							# IF NOT C_ORDER_PRIORITY_DESC #
-								<a href="{U_ORDER_PRIORITY_DESC}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-arrow-down" aria-hidden="true" aria-label="${LangLoader::get_message('sort.desc', 'common')}"></i></a>
-							# ENDIF #
+							<span class="html-table-header-sortable"><a href="{U_ORDER_PRIORITY_ASC}" aria-label="{@common.sort.asc}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></span>
+							{@admin.priority}
+							<span class="html-table-header-sortable"><a href="{U_ORDER_PRIORITY_DESC}" aria-label="{@common.sort.desc}"><i class="fa fa-caret-down" aria-hidden="true"></i></a></span>
 						</th>
 						<th>
-							# IF NOT C_ORDER_STATUS_ASC #
-								<a href="{U_ORDER_STATUS_ASC}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-arrow-up" aria-hidden="true" aria-label="${LangLoader::get_message('sort.asc', 'common')}"></i></a>
-							# ENDIF #
-							{L_ACTIONS}
-							# IF NOT C_ORDER_STATUS_DESC #
-								<a href="{U_ORDER_STATUS_DESC}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-arrow-down" aria-hidden="true" aria-label="${LangLoader::get_message('sort.desc', 'common')}"></i></a>
-							# ENDIF #
+							<span class="html-table-header-sortable"><a href="{U_ORDER_STATUS_ASC}" aria-label="{@common.sort.asc}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></span>
+							{@common.actions}
+							<span class="html-table-header-sortable"><a href="{U_ORDER_STATUS_DESC}" aria-label="{@common.sort.desc}"><i class="fa fa-caret-down" aria-hidden="true"></i></a></span>
 						</th>
 					</tr>
 				</thead>
@@ -131,7 +115,7 @@
 					# START alerts #
 					<tr id="delete_{alerts.ID}">
 						<td>
-							{alerts.IMG} <a href="{alerts.FIXING_URL}">{alerts.NAME}</a>
+							# IF alerts.C_ICON # <i class="{alerts.ICON}"></i># ENDIF # <a href="{alerts.FIXING_URL}">{alerts.NAME}</a>
 						</td>
 						<td>
 							{alerts.DATE}
@@ -141,25 +125,32 @@
 						</td>
 						<td class="controls">
 							{alerts.ACTIONS}
-							<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" aria-label="# IF alerts.C_PROCESSED #{L_UNFIX}# ELSE #{L_FIX}# ENDIF #" id="status_{alerts.ID}"><i class="fa fa-fw # IF alerts.C_PROCESSED #fa-check success# ELSE #fa-times error# ENDIF #"></i></a>
-							<a href="javascript:delete_alert('{alerts.ID}');" aria-label="{L_DELETE}"><i class="far fa-fw fa-trash-alt" aria-hidden="true" aria-label="{L_DELETE}"></i></a>
+							<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" aria-label="# IF alerts.C_PROCESSED #{@admin.unfix.alert}# ELSE #{@admin.fix.alert}# ENDIF #" id="status_{alerts.ID}"><i class="fa fa-fw # IF alerts.C_PROCESSED #fa-check success# ELSE #fa-times error# ENDIF #"></i></a>
+							<a href="javascript:delete_alert('{alerts.ID}');" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 						</td>
 					</tr>
 					# END alerts #
 				</tbody>
 				# IF C_PAGINATION #
-				<tfoot>
-					<tr>
-						<td colspan="4">
-							# INCLUDE PAGINATION #
-						</td>
-					</tr>
-				</tfoot>
+					<tfoot>
+						<tr>
+							<td colspan="4">
+								# INCLUDE PAGINATION #
+							</td>
+						</tr>
+					</tfoot>
 				# ENDIF #
 			</table>
 		# ELSE #
-			<div class="message-helper bgc question message-helper-small">{L_NO_ALERT}</div>
+			<div class="message-helper bgc question message-helper-small">{@admin.no.alert}</div>
 		# ENDIF #
 		</div>
 	</fieldset>
 </div>
+<script>
+	// Highlight current order
+	if(window.location.search)
+		jQuery('.html-table-header-sortable a[href*="' + window.location.search + '"]').parent().addClass('sort-active');
+	else
+		jQuery('.html-table-header-sortable').first().addClass('sort-active');
+</script>

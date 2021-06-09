@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 19
+ * @version     PHPBoost 6.0 - last update: 2021 06 09
  * @since       PHPBoost 1.6 - 2008 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -13,18 +13,15 @@
 define('PATH_TO_ROOT', '../..');
 
 require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
-define('TITLE', $LANG['administration']);
+
+$lang = LangLoader::get('admin-lang');
+
+define('TITLE', $lang['admin.updates'] . ' - ' . $lang['admin.administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
 $identifier = retrieve(GET, 'identifier', '');
-$tpl = new FileTemplate('admin/updates/detail.tpl');
-
-$tpl->put_all(array(
-	'L_WEBSITE_UPDATES' => $LANG['website_updates'],
-	'L_KERNEL' => $LANG['kernel'],
-	'L_MODULES' => $LANG['modules'],
-	'L_THEMES' => $LANG['themes']
-));
+$view = new FileTemplate('admin/updates/detail.tpl');
+$view->add_lang(array_merge($lang, LangLoader::get('addon-lang')));
 
 $app = null;
 $server_configuration = new ServerConfiguration();
@@ -59,7 +56,7 @@ if ($app instanceof Application)
 				$download_status = FileSystemHelper::download_remote_file($url, $temporary_dir_path);
 				if (!$download_status)
 				{
-					$tpl->put('MSG', MessageHelper::display(StringVars::replace_vars(LangLoader::get_message('message.download.file.error', 'status-messages-common'), array('filename' => $url)), MessageHelper::ERROR));
+					$view->put('MESSAGE_HELPER', MessageHelper::display(StringVars::replace_vars(LangLoader::get_message('message.download.file.error', 'status-messages-common'), array('filename' => $url)), MessageHelper::ERROR));
 					$installation_error = true;
 					break;
 				}
@@ -83,7 +80,7 @@ if ($app instanceof Application)
 			$download_status = FileSystemHelper::download_remote_file($app->get_autoupdate_url(), $temporary_dir_path);
 			if (!$download_status)
 			{
-				$tpl->put('MSG', MessageHelper::display(StringVars::replace_vars(LangLoader::get_message('message.download.file.error', 'status-messages-common'), array('filename' => $app->get_autoupdate_url())), MessageHelper::ERROR));
+				$view->put('MESSAGE_HELPER', MessageHelper::display(StringVars::replace_vars(LangLoader::get_message('message.download.file.error', 'status-messages-common'), array('filename' => $app->get_autoupdate_url())), MessageHelper::ERROR));
 				$installation_error = true;
 			}
 		}
@@ -102,11 +99,11 @@ if ($app instanceof Application)
 						switch (ModulesManager::upgrade_module($f->get_name()))
 						{
 							case ModulesManager::UPGRADE_FAILED:
-								$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'status-messages-common'), MessageHelper::ERROR));
+								$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.error', 'status-messages-common'), MessageHelper::ERROR));
 								$installation_error = true;
 								break;
 							case ModulesManager::MODULE_NOT_UPGRADABLE:
-								$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('modules.module_not_upgradable', 'admin-modules-common'), MessageHelper::WARNING));
+								$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('modules.module_not_upgradable', 'admin-modules-common'), MessageHelper::WARNING));
 								$installation_error = true;
 								break;
 							case ModulesManager::MODULE_UPDATED:
@@ -116,7 +113,7 @@ if ($app instanceof Application)
 					}
 					else
 					{
-						$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('modules.not_installed_module', 'admin-modules-common'), MessageHelper::ERROR));
+						$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('modules.not_installed_module', 'admin-modules-common'), MessageHelper::ERROR));
 						$installation_error = true;
 					}
 				}
@@ -130,7 +127,7 @@ if ($app instanceof Application)
 					}
 					else
 					{
-						$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'status-messages-common'), MessageHelper::ERROR));
+						$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.error', 'status-messages-common'), MessageHelper::ERROR));
 						$installation_error = true;
 					}
 				}
@@ -176,7 +173,7 @@ if ($app instanceof Application)
 					$update->set_status(AdministratorAlert::ADMIN_ALERT_STATUS_PROCESSED);
 					AdministratorAlertService::save_alert($update);
 
-					$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+					$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 				}
 			}
 
@@ -184,7 +181,7 @@ if ($app instanceof Application)
 		}
 		else
 		{
-			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'status-messages-common'), MessageHelper::ERROR));
+			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.error', 'status-messages-common'), MessageHelper::ERROR));
 			$installation_error = true;
 		}
 	}
@@ -196,7 +193,7 @@ if ($app instanceof Application)
 	$bug_corrections = $app->get_bug_corrections();
 	$security_improvements = $app->get_security_improvements();
 
-	$nb_authors = count($authors);
+	$authors_number = count($authors);
 	$has_new_feature = count($new_features) > 0;
 	$has_warning = !empty($warning);
 	$has_improvements = count($improvements) > 0;
@@ -235,21 +232,34 @@ if ($app instanceof Application)
 			break;
 	}
 
-	$tpl->put_all(array(
-		'APP_NAME' => $app->get_name(),
-		'APP_VERSION' => $app->get_version(),
-		'APP_LANGUAGE' => $app->get_localized_language(),
-		'APP_PUBDATE' => $app->get_pubdate(),
-		'APP_DESCRIPTION' => $app->get_description(),
-		'APP_WARNING_LEVEL' => $app->get_warning_level(),
-		'APP_WARNING' => $warning,
-		'U_APP_DOWNLOAD' => $app->get_download_url(),
-		'U_APP_UPDATE' => $app->get_update_url(),
-		'PRIORITY' => $update->get_priority_name(),
+	$view->put_all(array(
+		'C_DISPLAY_LINKS_AND_PRIORITY' => !$installation_success && $app->check_compatibility() && ($app->get_type() == 'kernel' ? version_compare(Environment::get_phpboost_version(), $app->get_version(), '<') : true),
+		'C_DISPLAY_UPDATE_BUTTON'      => $app->get_autoupdate_url() != '' && $server_configuration->has_curl_library() && Url::check_url_validity($app->get_autoupdate_url()) && !$installation_error,
+		'C_NEW_FEATURES'               => $has_new_feature,
+		'C_APP_WARNING'                => $has_warning,
+		'C_IMPROVEMENTS'               => $has_improvements,
+		'C_BUG_CORRECTIONS'            => $has_bug_corrections,
+		'C_SECURITY_IMPROVEMENTS'      => $has_security_improvements,
+		'C_NEW'                        => $has_new_feature || $has_improvements || $has_bug_corrections || $has_security_improvements,
+
+		'APP_NAME'           => $app->get_name(),
+		'APP_VERSION'        => $app->get_version(),
+		'APP_LANGUAGE'       => $app->get_localized_language(),
+		'APP_PUBDATE'        => $app->get_pubdate(),
+		'APP_DESCRIPTION'    => $app->get_description(),
+		'APP_WARNING_LEVEL'  => $app->get_warning_level(),
+		'APP_WARNING'        => $warning,
+		'PRIORITY'           => $update->get_priority_name(),
 		'PRIORITY_CSS_CLASS' => $priority_css_class,
-		'WARNING_CSS_CLASS' => $warning_css_class,
-		'IDENTIFIER' => $identifier,
-		'L_AUTHORS' => $nb_authors > 1 ? $LANG['authors'] : $LANG['author'],
+		'WARNING_CSS_CLASS'  => $warning_css_class,
+		'IDENTIFIER'         => $identifier,
+
+		'U_APP_DOWNLOAD' => $app->get_download_url(),
+		'U_APP_UPDATE'   => $app->get_update_url(),
+
+		'L_APP_UPDATE_MESSAGE' => $update->get_entitled(),
+		'L_AUTHORS'            => $authors_number > 1 ? $lang['admin.authors'] : $lang['admin.author'],
+		//
 		'L_NEW_FEATURES' => $LANG['new_features'],
 		'L_IMPROVEMENTS' => $LANG['improvements'],
 		'L_FIXED_BUGS' => $LANG['fixed_bugs'],
@@ -258,31 +268,25 @@ if ($app instanceof Application)
 		'L_DOWNLOAD_PACK' => $LANG['app_update__download_pack'],
 		'L_UPDATE_PACK' => $LANG['app_update__update_pack'],
 		'L_WARNING' => $LANG['warning'],
-		'L_APP_UPDATE_MESSAGE' => $update->get_entitled(),
-		'C_DISPLAY_LINKS_AND_PRIORITY' => !$installation_success && $app->check_compatibility() && ($app->get_type() == 'kernel' ? version_compare(Environment::get_phpboost_version(), $app->get_version(), '<') : true),
-		'C_DISPLAY_UPDATE_BUTTON' => $app->get_autoupdate_url() != '' && $server_configuration->has_curl_library() && Url::check_url_validity($app->get_autoupdate_url()) && !$installation_error,
-		'C_NEW_FEATURES' => $has_new_feature,
-		'C_APP_WARNING' => $has_warning,
-		'C_IMPROVEMENTS' => $has_improvements,
-		'C_BUG_CORRECTIONS' => $has_bug_corrections,
-		'C_SECURITY_IMPROVEMENTS' => $has_security_improvements,
-		'C_NEW' => $has_new_feature || $has_improvements || $has_bug_corrections || $has_security_improvements
 	));
 
 	foreach ($authors as $author)
-		$tpl->assign_block_vars('authors', array('name' => $author['name'], 'email' => $author['email']));
+		$view->assign_block_vars('authors', array(
+			'NAME' => $author['name'],
+			'EMAIL' => $author['email']
+		));
 
 	foreach ($new_features as $new_feature)
-		$tpl->assign_block_vars('new_features', array('description' => $new_feature));
+		$view->assign_block_vars('new_features', array('DESCRIPTION' => $new_feature));
 
 	foreach ($improvements as $improvement)
-		$tpl->assign_block_vars('improvements', array('description' => $improvement));
+		$view->assign_block_vars('improvements', array('DESCRIPTION' => $improvement));
 
 	foreach ($bug_corrections as $bug_correction)
-		$tpl->assign_block_vars('bugs', array('description' => $bug_correction));
+		$view->assign_block_vars('bugs', array('DESCRIPTION' => $bug_correction));
 
 	foreach ($security_improvements as $security_improvement)
-		$tpl->assign_block_vars('security', array('description' => $security_improvement));
+		$view->assign_block_vars('security', array('DESCRIPTION' => $security_improvement));
 }
 else
 {
@@ -290,6 +294,6 @@ else
 	DispatchManager::redirect($error_controller);
 }
 
-$tpl->display();
+$view->display();
 require_once(PATH_TO_ROOT . '/admin/admin_footer.php');
 ?>

@@ -14,8 +14,47 @@
 #                     French                      #
 ####################################################
 
-// Labels
-$lang['admin.administration'] = 'Administration';
+$lang['admin.administration']     = 'Administration';
+$lang['admin.author']             = 'Auteur';
+$lang['admin.authors']            = 'Auteurs';
+$lang['admin.kernel']             = 'Noyau';
+$lang['admin.warning']            = 'Attention';
+$lang['admin.priority']           = 'Priorité';
+$lang['admin.priority.very.high'] = 'Immédiat';
+$lang['admin.priority.high']      = 'Urgent';
+$lang['admin.priority.medium']    = 'Moyenne';
+$lang['admin.priority.low']       = 'Faible';
+$lang['admin.priority.very.low']  = 'Très faible';
+
+// Alerts
+$lang['admin.alerts']               = 'Alertes';
+$lang['admin.alerts.list']          = 'Liste des alertes';
+$lang['admin.no.unread.alert']      = 'Aucune alerte en attente';
+$lang['admin.unread.alerts']        = 'Des alertes non traitées sont en attente.';
+$lang['admin.no.alert']             = 'Aucune alerte existante';
+$lang['admin.display.all.alerts']   = 'Voir toutes les alertes';
+$lang['admin.fix.alert']            = 'Passer l\'alerte en réglée';
+$lang['admin.unfix.alert']          = 'Passer l\'alerte en non réglée';
+$lang['admin.warning.delete.alert'] = 'Etes-vous sûr de vouloir supprimer cette alerte ?';
+
+// Content
+$lang['admin.forbidden.module']                  = 'Modules interdits';
+$lang['admin.comments.forbidden.module.clue']    = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer les commentaires';
+$lang['admin.notation.forbidden.module.clue']    = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer la notation';
+$lang['admin.new.content.forbidden.module.clue'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer les tags de nouveau contenu';
+
+// Errors
+$lang['admin.errors'] = 'Erreurs';
+$lang['admin.clear.list'] = 'Vider la liste';
+$lang['admin.warning.clear'] = 'Effacer toutes les erreurs ?';
+    // Logged
+$lang['admin.logged.errors'] = 'Erreurs archivées';
+$lang['admin.logged.errors.list'] = 'Liste des erreurs archivées';
+    // 404
+$lang['admin.404.errors'] = 'Erreurs 404';
+$lang['admin.404.errors.list'] = 'Liste des erreurs 404';
+$lang['admin.404.requested.url'] = 'Url demandée';
+$lang['admin.404.from.url'] = 'Url de provenance';
 
 // Maintenance
 $lang['admin.maintenance']         = 'Maintenance';
@@ -33,9 +72,29 @@ $lang['admin.maintenance.admin.display.duration'] = 'Afficher la durée de la ma
 $lang['admin.maintenance.text']                   = 'Texte à afficher lorsque la maintenance du site est en cours';
 $lang['admin.maintenance.authorization']          = 'Autorisation d\'accès au site durant la maintenance';
 
-$lang['admin.forbidden.module']                  = 'Modules interdits';
-$lang['admin.comments.forbidden.module.clue']    = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer les commentaires';
-$lang['admin.notation.forbidden.module.clue']    = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer la notation';
-$lang['admin.new.content.forbidden.module.clue'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer les tags de nouveau contenu';
+// Updates
+$lang['admin.updates']                = 'Mises à jour';
+$lang['admin.available.updates']      = 'Mises à jour disponibles';
+$lang['admin.available.updates.clue'] = 'Des mises à jours sont disponibles.<br />Veuillez les effectuer au plus vite.';
+$lang['admin.available.version']      = 'Le %1$s %2$s est disponible dans sa version %3$s';
+$lang['admin.kernel.update']          = 'PHPBoost est disponible dans sa nouvelle version %s';
+$lang['admin.download.app']           = 'Téléchargement';
+$lang['admin.download.pack']          = 'Pack complet';
+$lang['admin.update.pack']            = 'Pack de mise à jour';
+$lang['admin.new.features']           = 'Nouvelles Fonctionnalités';
+$lang['admin.improvements']           = 'Améliorations';
+$lang['admin.security.improvements']  = 'Améliorations de sécurité';
+$lang['admin.fixed.bugs']             = 'Corrections de bugs';
+$lang['admin.details']                = 'Détails';
+$lang['admin.more.details']           = 'Plus de détails';
+$lang['admin.download.full.pack']     = 'Télécharger le pack complet';
+$lang['admin.download.update.pack']   = 'Télécharger le pack de mise à jour';
+$lang['admin.no.available.update']    = 'Aucune mise à jour n\'est disponible pour l\'instant.';
+$lang['admin.updates.check']          = 'Vérifier la présence de mises à jour';
+$lang['admin.php.version']            = '
+    Impossible de vérifier la présence de mise à jour.<br />
+    Veuillez utiliser la version %s ou ultérieure de PHP.<br />
+    Si vous ne pouvez utiliser PHP5, veuillez vérifier la présence de ces mises à jour sur notre <a href="https://www.phpboost.com">site officiel</a>.
+';
 
 ?>

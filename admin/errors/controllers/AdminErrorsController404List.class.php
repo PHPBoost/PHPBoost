@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 06
+ * @version     PHPBoost 6.0 - last update: 2021 06 09
  * @since       PHPBoost 3.0 - 2009 12 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -23,6 +23,7 @@ class AdminErrorsController404List extends AdminController
 
 	private $view;
 	private $lang;
+	private $admin_lang;
 
 	private $elements_number = 0;
 	private $ids = array();
@@ -35,27 +36,28 @@ class AdminErrorsController404List extends AdminController
 
 		$this->execute_multiple_delete_if_needed($request);
 
-		return new AdminErrorsDisplayResponse($this->view, $this->lang['404_list'], $current_page);
+		return new AdminErrorsDisplayResponse($this->view, $this->admin_lang['admin.404.errors.list'], $current_page);
 	}
 
 	private function init()
 	{
-		$this->lang = array_merge(LangLoader::get('common'), LangLoader::get('admin-errors-common'));
-		$this->view = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM # # INCLUDE table #');
+		$this->lang = LangLoader::get('common-lang');
+		$this->admin_lang = LangLoader::get('admin-lang');
+		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM # # INCLUDE TABLE #');
 	}
 
 	private function build_table()
 	{
 		$table_model = new SQLHTMLTableModel(PREFIX . 'errors_404', 'error-list404', array(
-			new HTMLTableColumn($this->lang['404_error_requested_url']),
-			new HTMLTableColumn($this->lang['404_error_from_url']),
-			new HTMLTableColumn($this->lang['404_error_times'], 'times', array('css_class' => 'col-medium')),
-			new HTMLTableColumn($this->lang['delete'], '', array('css_class' => 'col-small'))
+			new HTMLTableColumn($this->admin_lang['admin.404.requested.url']),
+			new HTMLTableColumn($this->admin_lang['admin.404.from.url']),
+			new HTMLTableColumn($this->lang['common.number'], 'times', array('css_class' => 'col-medium')),
+			new HTMLTableColumn($this->lang['common.delete'], '', array('css_class' => 'col-small'))
 		), new HTMLTableSortingRule('times', HTMLTableSortingRule::DESC));
 
 		$table = new HTMLTable($table_model, $this->lang, 'error-list404');
 
-		$table_model->set_caption($this->lang['404_list']);
+		$table_model->set_caption($this->admin_lang['admin.404.errors.list']);
 		$table_model->set_footer_css_class('footer-error-list404');
 
 		$results = array();
@@ -82,10 +84,10 @@ class AdminErrorsController404List extends AdminController
 
 			$this->view->put('FORM', $this->form->display());
 
-			$this->view->put('table', $table->display());
+			$this->view->put('TABLE', $table->display());
 		}
 		else
-			$this->view->put('MSG', MessageHelper::display($this->lang['no_item_now'], MessageHelper::SUCCESS, 0, true));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['common.no.item.now'], MessageHelper::SUCCESS, 0, true));
 
 		return $table->get_page_number();
 	}
@@ -110,10 +112,10 @@ class AdminErrorsController404List extends AdminController
 	{
 		$form = new HTMLForm(__CLASS__, AdminErrorsUrlBuilder::clear_404_errors()->rel(), false);
 
-		$fieldset = new FormFieldsetHTML('clear_errors', $this->lang['clear_list']);
+		$fieldset = new FormFieldsetHTML('clear_errors', $this->admin_lang['admin.clear.list']);
 		$form->add_fieldset($fieldset);
 
-		$this->submit_button = new FormButtonSubmit($this->lang['clear_list'], 'clear', '', 'submit', $this->lang['logged_errors_clear_confirmation']);
+		$this->submit_button = new FormButtonSubmit($this->admin_lang['admin.clear.list'], 'clear', '', 'submit', $this->admin_lang['admin.warning.clear']);
 		$form->add_button($this->submit_button);
 
 		$this->form = $form;

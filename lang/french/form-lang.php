@@ -95,11 +95,10 @@ $lang['form.root.category.description'] = 'Description de la catégorie racine';
 $lang['form.item.default.content']      = 'Contenu par défaut d\'un élément';
 
 // Extended Fields
-$lang['form.profile.fields.management']             = 'Gestion des champs du profil';
+$lang['form.extended.fields.management']            = 'Gestion des champs du profil';
 $lang['form.extended.field.add']                    = 'Ajouter un champ au profil';
 $lang['form.extended.field.edit']                   = 'Editer un champ du profil';
 $lang['form.extended.field']                        = 'Champs du profil';
-$lang['form.extended.fields.management']            = 'Gestion des champs du profil';
 $lang['form.extended.fields.error.already.exists']  = 'Le champ existe déjà.';
 $lang['form.extended.fields.error.phpboost.config'] = 'Les champs utilisés par défaut par PHPBoost ne peuvent pas être créés plusieurs fois, veuillez choisir un autre type de champ.';
 
