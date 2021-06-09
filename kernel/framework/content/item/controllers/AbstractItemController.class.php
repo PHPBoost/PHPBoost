@@ -5,10 +5,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 30
+ * @version     PHPBoost 6.0 - last update: 2021 06 09
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor xela <xela@phpboost.com>
 */
 
 abstract class AbstractItemController extends ModuleController
@@ -110,7 +111,8 @@ abstract class AbstractItemController extends ModuleController
 		$this->view->put_all($this->get_additional_view_parameters());
 
 		$item_class_name = self::get_module_configuration()->get_item_name();
-		$this->module_item = new $item_class_name(self::$module_id);
+		$module_item_class_name = ucfirst(self::$module_id) . $item_class_name;
+		$this->module_item = is_subclass_of($module_item_class_name, $item_class_name) ? new $module_item_class_name() : new $item_class_name(self::$module_id);
 
 		$this->view->put_all($this->module_item->get_global_template_vars());
 	}
