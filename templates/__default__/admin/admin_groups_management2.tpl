@@ -53,14 +53,14 @@
 
 <nav id="admin-quick-menu">
 	<a href="#" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" aria-label="{L_GROUPS_MANAGEMENT}">
-		<i class="fa fa-bars" aria-hidden="true"></i> {@admin.groups.management}
+		<i class="fa fa-bars" aria-hidden="true"></i> {@user.groups.management}
 	</a>
 	<ul>
 		<li>
-			<a href="admin_groups.php" class="quick-link">{@admin.groups.management}</a>
+			<a href="admin_groups.php" class="quick-link">{@user.groups.management}</a>
 		</li>
 		<li>
-			<a href="admin_groups.php?add=1" class="quick-link">{@admin.add.group}</a>
+			<a href="admin_groups.php?add=1" class="quick-link">{@user.add.group}</a>
 		</li>
 	</ul>
 </nav>
@@ -70,7 +70,7 @@
 		<form action="admin_groups.php" method="post" onsubmit="return check_form();" class="fieldset-content">
 			<p class="align-center small text-italic">{@form.required.fields}</p>
 			<fieldset>
-				<legend>{@admin.edit.group}</legend>
+				<legend>{@user.edit.group}</legend>
 				<div class="fieldset-inset">
 					<div class="form-element">
 						<label for="name">* {@form.name}</label>
@@ -79,7 +79,7 @@
 						</div>
 					</div>
 					<div class="form-element inline-radio custom-radio">
-						<label for="auth_flood">{@admin.flood}</label>
+						<label for="auth_flood">{@user.flood}</label>
 						<div class="form-field">
 							<div class="form-field-radio">
 								<label class="radio" for="auth_flood">
@@ -96,25 +96,25 @@
 						</div>
 					</div>
 					<div class="form-element">
-						<label for="pm_group_limit">{@admin.pm.limit} <span>{@admin.pm.limit.clue}</span></label>
+						<label for="pm_group_limit">{@user.pm.limit} <span>{@user.pm.limit.clue}</span></label>
 						<div class="form-field">
 							<input type="text" name="pm_group_limit" id="pm_group_limit" value="{GROUP_PM_LIMIT}">
 						</div>
 					</div>
 					<div class="form-element">
-						<label for="data_group_limit">{@admin.data.limit} <span class="field-description">{@admin.data.limit.clue}</span></label>
+						<label for="data_group_limit">{@user.data.limit} <span class="field-description">{@user.data.limit.clue}</span></label>
 						<div class="form-field">
 							<input type="text" name="data_group_limit" id="data_group_limit" value="{GROUP_DATA_LIMIT}">
 						</div>
 					</div>
 					<div class="form-element top-field">
-						<label for="color_group">{@admin.group.color}</label>
+						<label for="color_group">{@user.group.color}</label>
 						<div class="form-field">
-							<input type="color" name="color_group" id="color_group" value="{GROUP_COLOR}" pattern="#[A-Fa-f0-9]{6}" placeholder="#366493">
+							<input type="color" name="color_group" id="color_group" value="{GROUP_COLOR}" pattern="#[A-Fa-f0-9]{6}">
 						</div>
 					</div>
 					<div class="form-element custom-checkbox top-field">
-						<label for="delete_group_color">{@admin.delete.group.color}</label>
+						<label for="delete_group_color">{@user.delete.group.color}</label>
 						<div class="form-field">
 							<div class="form-field-checkbox">
 								<label class="checkbox" for="delete_group_color">
@@ -125,7 +125,7 @@
 						</div>
 					</div>
 					<div class="form-element top-field">
-						<label for="img_group">{@admin.group.thumbnail} <span class="field-description">{@admin.group.thumbnail.clue}</span></label>
+						<label for="img_group">{@user.group.thumbnail} <span class="field-description">{@user.group.thumbnail.clue}</span></label>
 						<div class="form-field">
 							<select name="img" id="img_group" onchange="img_change(this.options[selectedIndex].value)">
 								{THUMBNAILS_LIST}
@@ -156,7 +156,7 @@
 
 		<form action="admin_groups.php?id={GROUP_ID}" method="post" onsubmit="return check_form_add_mbr();" class="fieldset-content">
 			<fieldset>
-				<legend>{@admin.add.group.member}</legend>
+				<legend>{@user.add.group.member}</legend>
 				<div class="fieldset-inset">
 					<div class="form-element">
 						<label for="login">{@user.display.name}</label>
@@ -179,7 +179,7 @@
 
 		<table class="table">
 			<caption>
-				{@admin.group.members}
+				{@user.group.members}
 			</caption>
 			<thead>
 				<tr>
@@ -221,7 +221,7 @@
 
 		<form action="admin_groups.php?add=1" method="post" enctype="multipart/form-data" class="fieldset-content">
 			<fieldset>
-				<legend>{@admin.upload.thumbnail}</legend>
+				<legend>{@user.upload.thumbnail}</legend>
 				<div class="dnd-area">
 					<div class="dnd-dropzone">
 						<label for="inputfiles" class="dnd-label">{@upload.drag.and.drop.files} <span class="d-block"></span></label>
@@ -261,7 +261,7 @@
 		<form action="admin_groups.php" method="post" onsubmit="return check_form();" class="fieldset-content">
 			<p class="align-center small text-italic">{@form.required.fields}</p>
 			<fieldset>
-				<legend>{@admin.add.group}</legend>
+				<legend>{@user.add.group}</legend>
 				<div class="fieldset-inset">
 					<div class="form-element">
 						<label for="name">* {@common.name}</label>
@@ -270,7 +270,7 @@
 						</div>
 					</div>
 					<div class="form-element inline-radio custom-radio">
-						<label for="auth_flood">{@admin.flood}</label>
+						<label for="auth_flood">{@user.flood}</label>
 						<div class="form-field">
 							<div class="form-field-radio">
 								<label class="radio" for="auth_flood">
@@ -287,25 +287,25 @@
 						</div>
 					</div>
 					<div class="form-element">
-						<label for="pm_group_limit">{@admin.pm.limit} <span class="field-description">{@admin.pm.limit.clue}</span></label>
+						<label for="pm_group_limit">{@user.pm.limit} <span class="field-description">{@user.pm.limit.clue}</span></label>
 						<div class="form-field">
 							<input type="text" name="pm_group_limit" id="pm_group_limit" value="75">
 						</div>
 					</div>
 					<div class="form-element">
-						<label for="data_group_limit">{@admin.data.limit} <span class="field-description">{@admin.data.limit.clue}</span></label>
+						<label for="data_group_limit">{@user.data.limit} <span class="field-description">{@user.data.limit.clue}</span></label>
 						<div class="form-field">
 							<input type="text" name="data_group_limit" id="data_group_limit" value="5">
 						</div>
 					</div>
 					<div class="form-element top-field">
-						<label for="color_group">{@admin.group.color}</label>
+						<label for="color_group">{@user.group.color}</label>
 						<div class="form-field">
-							<input type="color" name="color_group" id="color_group" value="{GROUP_COLOR}" pattern="#[A-Fa-f0-9]{6}" placeholder="#366493">
+							<input type="color" name="color_group" id="color_group" value="#366493" pattern="#[A-Fa-f0-9]{6}">
 						</div>
 					</div>
 					<div class="form-element top-field">
-						<label for="img_group">{@admin.group.thumbnail} <span class="field-description">{@admin.group.thumbnail.clue}</span></label>
+						<label for="img_group">{@user.group.thumbnail} <span class="field-description">{@user.group.thumbnail.clue}</span></label>
 						<div class="form-field">
 							<select name="img" id="img_group" onchange="img_change(this.options[selectedIndex].value)">
 								{THUMBNAILS_LIST}

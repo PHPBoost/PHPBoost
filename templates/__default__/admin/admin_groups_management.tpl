@@ -1,20 +1,20 @@
 		<nav id="admin-quick-menu">
 			<a href="#" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" aria-label="{L_GROUPS_MANAGEMENT}">
-				<i class="fa fa-bars" aria-hidden="true"></i> {@admin.groups.management}
+				<i class="fa fa-bars" aria-hidden="true"></i> {@user.groups.management}
 			</a>
 			<ul>
 				<li>
-					<a href="admin_groups.php" class="quick-link">{@admin.groups.management}</a>
+					<a href="admin_groups.php" class="quick-link">{@user.groups.management}</a>
 				</li>
 				<li>
-					<a href="admin_groups.php?add=1" class="quick-link">{@admin.add.group}</a>
+					<a href="admin_groups.php?add=1" class="quick-link">{@user.add.group}</a>
 				</li>
 			</ul>
 		</nav>
 
 		<div id="admin-contents">
 			<fieldset class="fieldset-content">
-				<legend>{@admin.groups.management}</legend>
+				<legend>{@user.groups.management}</legend>
 				<div class="fieldset-inset">
 					<table class="table">
 						<thead>
@@ -54,7 +54,7 @@
 						<tfoot>
 							<tr>
 								<td colspan="4">
-									<a class="button link-color" href="admin_groups.php?add=1">{@admin.add.group}</a>
+									<a class="button link-color" href="admin_groups.php?add=1">{@user.add.group}</a>
 								</td>
 							</tr>
 						</tfoot>

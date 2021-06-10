@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 27
+ * @version     PHPBoost 6.0 - last update: 2021 06 09
  * @since       PHPBoost 1.2 - 2005 06 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -13,7 +13,15 @@
 */
 
 require_once('../admin/admin_begin.php');
-define('TITLE', $LANG['administration']);
+
+$lang = LangLoader::get('admin-lang');
+$common_lang = LangLoader::get('common-lang');
+$form_lang = LangLoader::get('form-lang');
+$upload_lang = LangLoader::get('upload-lang');
+$user_lang = LangLoader::get('user-lang');
+$warning_lang = LangLoader::get('warning-lang');
+
+define('TITLE', $user_lang['user.groups.management'] . ' - ' . $lang['admin.administration']);
 require_once('../admin/admin_header.php');
 
 $request = AppContext::get_request();
@@ -178,7 +186,8 @@ elseif (!empty($_FILES['upload_groups']['name'])) // Upload
 }
 elseif (!empty($idgroup)) // Group editing interface
 {
-	$template = new FileTemplate('admin/admin_groups_management2.tpl');
+	$view = new FileTemplate('admin/admin_groups_management2.tpl');
+	$view->add_lang(array_merge($lang, $common_lang, $form_lang, $upload_lang, $user_lang, $warning_lang));
 
 	try {
 		$group = PersistenceContext::get_querier()->select_single_row(DB_TABLE_GROUP, array('id', 'name', 'img', 'color', 'auth', 'members'), 'WHERE id=:id', array('id' => $idgroup));
@@ -193,11 +202,11 @@ elseif (!empty($idgroup)) // Group editing interface
 		$get_error = retrieve(GET, 'error', '');
 		if ($get_error == 'incomplete')
 		{
-			$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
+			$view->put('MESSAGE_HELPER', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
 		}
 		elseif ($get_error == 'already_group')
 		{
-			$template->put('message_helper', MessageHelper::display($LANG['e_already_group'], MessageHelper::NOTICE));
+			$view->put('MESSAGE_HELPER', MessageHelper::display($LANG['e_already_group'], MessageHelper::NOTICE));
 		}
 
 		// Get the groups images folders
@@ -211,43 +220,46 @@ elseif (!empty($idgroup)) // Group editing interface
 		}
 		$array_group = TextHelper::unserialize(stripslashes($group['auth']));
 
-		$template->put_all(array(
+		$view->put_all(array(
+			'C_EDIT_GROUP'    => true,
+			'C_HAS_THUMBNAIL' => !empty($group['img']),
+
 			'NAME' => stripslashes($group['name']),
-			'IMG' => $group['img'],
 			'GROUP_ID' => $idgroup,
-			'IMG_GROUPS' => $img_groups,
-			'C_EDIT_GROUP' => true,
+			'THUMBNAILS_LIST' => $img_groups,
 			'AUTH_FLOOD_ENABLED' => $array_group['auth_flood'] == 1 ? 'checked="checked"' : '',
 			'AUTH_FLOOD_DISABLED' => $array_group['auth_flood'] == 0 ? 'checked="checked"' : '',
-			'PM_GROUP_LIMIT' => $array_group['pm_group_limit'],
-			'DATA_GROUP_LIMIT' => NumberHelper::round($array_group['data_group_limit']/1024, 2),
-			'COLOR_GROUP' => (TextHelper::substr($group['color'], 0, 1) != '#' ? '#' : '') . $group['color'],
-			'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
-			'L_REQUIRE_LOGIN' => $LANG['require_name'],
-			'L_CONFIRM_DEL_USER_GROUP' => LangLoader::get_message('confirm.delete', 'status-messages-common'),
-			'L_GROUPS_MANAGEMENT' => $LANG['groups_management'],
-			'L_ADD_GROUPS' => $LANG['groups_add'],
-			'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
-			'L_NAME' => $LANG['name'],
-			'L_IMG_ASSOC_GROUP' => $LANG['img_assoc_group'],
-			'L_IMG_ASSOC_GROUP_EXPLAIN' => $LANG['img_assoc_group_explain'],
-			'L_AUTH_FLOOD' => $LANG['auth_flood'],
-			'L_PM_GROUP_LIMIT' => $LANG['pm_group_limit'],
-			'L_PM_GROUP_LIMIT_EXPLAIN' => $LANG['pm_group_limit_explain'],
-			'L_DATA_GROUP_LIMIT' => $LANG['data_group_limit'],
-			'L_DATA_GROUP_LIMIT_EXPLAIN' => $LANG['data_group_limit_explain'],
-			'L_COLOR_GROUP' => $LANG['color_group'],
-			'L_DELETE_GROUP_COLOR' => $LANG['delete_color_group'],
-			'L_YES' => LangLoader::get_message('yes', 'common'),
-			'L_NO' => LangLoader::get_message('no', 'common'),
-			'L_ADD' => LangLoader::get_message('add', 'common'),
-			'L_MBR_GROUP' => $LANG['mbrs_group'],
-			'L_PSEUDO' => LangLoader::get_message('display_name', 'user-common'),
-			'L_SEARCH' => $LANG['search'],
-			'L_UPDATE' => $LANG['update'],
-			'L_RESET' => $LANG['reset'],
-			'L_DELETE' => LangLoader::get_message('delete', 'common'),
-			'L_ADD_MBR_GROUP' => $LANG['add_mbr_group']
+			'GROUP_PM_LIMIT' => $array_group['pm_group_limit'],
+			'GROUP_DATA_LIMIT' => NumberHelper::round($array_group['data_group_limit']/1024, 2),
+			'GROUP_COLOR' => (TextHelper::substr($group['color'], 0, 1) != '#' ? '#' : '') . $group['color'],
+			'U_THUMBNAIL' => Url::to_rel('/images/group/' . $group['img']),
+			//
+			// 'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
+			// 'L_REQUIRE_LOGIN' => $LANG['require_name'],
+			// 'L_CONFIRM_DEL_USER_GROUP' => LangLoader::get_message('confirm.delete', 'status-messages-common'),
+			// 'L_GROUPS_MANAGEMENT' => $LANG['groups_management'],
+			// 'L_ADD_GROUPS' => $LANG['groups_add'],
+			// 'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
+			// 'L_NAME' => $LANG['name'],
+			// 'L_IMG_ASSOC_GROUP' => $LANG['img_assoc_group'],
+			// 'L_IMG_ASSOC_GROUP_EXPLAIN' => $LANG['img_assoc_group_explain'],
+			// 'L_AUTH_FLOOD' => $LANG['auth_flood'],
+			// 'L_PM_GROUP_LIMIT' => $LANG['pm_group_limit'],
+			// 'L_PM_GROUP_LIMIT_EXPLAIN' => $LANG['pm_group_limit_explain'],
+			// 'L_DATA_GROUP_LIMIT' => $LANG['data_group_limit'],
+			// 'L_DATA_GROUP_LIMIT_EXPLAIN' => $LANG['data_group_limit_explain'],
+			// 'L_COLOR_GROUP' => $LANG['color_group'],
+			// 'L_DELETE_GROUP_COLOR' => $LANG['delete_color_group'],
+			// 'L_YES' => LangLoader::get_message('yes', 'common'),
+			// 'L_NO' => LangLoader::get_message('no', 'common'),
+			// 'L_ADD' => LangLoader::get_message('add', 'common'),
+			// 'L_MBR_GROUP' => $LANG['mbrs_group'],
+			// 'L_PSEUDO' => LangLoader::get_message('display_name', 'user-common'),
+			// 'L_SEARCH' => $LANG['search'],
+			// 'L_UPDATE' => $LANG['update'],
+			// 'L_RESET' => $LANG['reset'],
+			// 'L_DELETE' => LangLoader::get_message('delete', 'common'),
+			// 'L_ADD_MBR_GROUP' => $LANG['add_mbr_group']
 		));
 
 		// Group members list
@@ -268,7 +280,7 @@ elseif (!empty($idgroup)) // Group editing interface
 			{
 				$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
-				$template->assign_block_vars('member', array(
+				$view->assign_block_vars('member', array(
 					'C_GROUP_COLOR' => !empty($group_color),
 					'USER_ID' => $row['user_id'],
 					'LOGIN' => $row['display_name'],
@@ -281,7 +293,7 @@ elseif (!empty($idgroup)) // Group editing interface
 			$result->dispose();
 		}
 
-		$template->put_all(array(
+		$view->put_all(array(
 			'C_NO_MEMBERS' => $number_member == 0,
 			'NO_MEMBERS' => LangLoader::get_message('no_member', 'user-common')
 		));
@@ -289,26 +301,27 @@ elseif (!empty($idgroup)) // Group editing interface
 	else
 		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 
-	$template->display();
+	$view->display();
 }
 elseif ($add) // Add group interface
 {
-	$template = new FileTemplate('admin/admin_groups_management2.tpl');
+	$view = new FileTemplate('admin/admin_groups_management2.tpl');
+	$view->add_lang(array_merge($lang, $common_lang, $form_lang, $upload_lang, $user_lang, $warning_lang));
 
 	// Errors management
 	$get_success = retrieve(GET, 'success', '');
 	if ($get_success == 1)
 	{
-		$template->put('message_helper', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 10));
+		$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 10));
 	}
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
 	{
-		$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
+		$view->put('MESSAGE_HELPER', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
 	}
 	elseif ($get_error == 'group_already_exists')
 	{
-		$template->put('message_helper', MessageHelper::display(LangLoader::get_message('element.already_exists', 'status-messages-common'), MessageHelper::NOTICE));
+		$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('element.already_exists', 'status-messages-common'), MessageHelper::NOTICE));
 	}
 
 	// Get the groups images folders contained in the /images/group folder.
@@ -322,12 +335,13 @@ elseif ($add) // Add group interface
 		$img_groups .= '<option value="' . $file . '">' . $file . '</option>';
 	}
 
-	$template->put_all(array(
-		'IMG_GROUPS' => $img_groups,
+	$view->put_all(array(
 		'C_ADD_GROUP' => true,
+		'THUMBNAILS_LIST' => $img_groups,
 		'MAX_FILE_SIZE' => ServerConfiguration::get_upload_max_filesize(),
         'MAX_FILE_SIZE_TEXT' => File::get_formated_size(ServerConfiguration::get_upload_max_filesize()),
 		'ALLOWED_EXTENSIONS' => implode('", "',FileUploadConfig::load()->get_authorized_picture_extensions()),
+		//
 		'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
 		'L_REQUIRE_NAME' => $LANG['require_name'],
 		'L_CONFIRM_DEL_USER_GROUP' => LangLoader::get_message('confirm.delete', 'status-messages-common'),
@@ -351,48 +365,33 @@ elseif ($add) // Add group interface
 		'L_ADD' => LangLoader::get_message('add', 'common')
 	));
 
-	$template->display();
+	$view->display();
 }
 else // Groups list
 {
-	$template = new FileTemplate('admin/admin_groups_management.tpl');
-
-	$group_cache = GroupsCache::load()->get_groups();
-
-	$nbr_group = count($group_cache);
-
-	$editor = AppContext::get_content_formatting_service()->get_default_editor();
-	$editor->set_identifier('contents');
-
-	$template->put_all(array(
-		'KERNEL_EDITOR' => $editor->display(),
-		'L_CONFIRM_DEL_GROUP' => LangLoader::get_message('confirm.delete', 'status-messages-common'),
-		'L_GROUPS_MANAGEMENT' => $LANG['groups_management'],
-		'L_ADD_GROUPS' => $LANG['groups_add'],
-		'L_NAME' => $LANG['name'],
-		'L_IMAGE' => $LANG['image'],
-		'L_UPDATE' => $LANG['update'],
-		'L_DELETE' => LangLoader::get_message('delete', 'common')
-	));
-
+	$view = new FileTemplate('admin/admin_groups_management.tpl');
+	$view->add_lang(array_merge($lang, $common_lang, $user_lang));
 
 	$result = PersistenceContext::get_querier()->select("SELECT id, name, img, color
 	FROM " . DB_TABLE_GROUP . "
 	ORDER BY name");
 	while ($row = $result->fetch())
 	{
-		$template->assign_block_vars('group', array(
+		$view->assign_block_vars('group', array(
+			'C_THUMBNAIL'   => !empty($row['img']),
 			'C_GROUP_COLOR' => !empty($row['color']),
-			'U_USER_GROUP' => UserUrlBuilder::group($row['id'])->rel(),
-			'ID' => $row['id'],
-			'NAME' => stripslashes($row['name']),
+
+			'ID'          => $row['id'],
+			'NAME'        => stripslashes($row['name']),
 			'GROUP_COLOR' => '#' . $row['color'],
-			'IMAGE' => !empty($row['img']) ? '<img src="'. PATH_TO_ROOT .'/images/group/' . $row['img'] . '" alt="' . stripslashes($row['name']) . '" />' : ''
+
+			'U_THUMBNAIL' => Url::to_rel('/images/group/' . $row['img']),
+			'U_GROUP'     => UserUrlBuilder::group($row['id'])->rel(),
 		));
 	}
 	$result->dispose();
 
-	$template->display();
+	$view->display();
 }
 
 require_once('../admin/admin_footer.php');

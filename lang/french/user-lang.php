@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 03
+ * @version     PHPBoost 6.0 - last update: 2021 06 10
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -65,6 +65,22 @@ $lang['user.modos.list']              = 'Liste des modérateurs';
 $lang['user.no.member']               = 'Aucun membre dans ce groupe';
 $lang['user.group.view.list.members'] = 'Voir les membres du groupe';
 $lang['user.group.hide.list.members'] = 'Masquer les membres du groupe';
+    // configuration
+$lang['user.groups.management']    = 'Gestion des groupes';
+$lang['user.edit.group']           = 'Modifier le groupe';
+$lang['user.add.group']            = 'Ajouter un groupe';
+$lang['user.flood']                = 'Autorisation de flooder';
+$lang['user.pm.limit']             = 'Limite de messages privés';
+$lang['user.pm.limit.clue']        = 'Mettre -1 pour illimité';
+$lang['user.data.limit']           = 'Taille de l\'espace de stockage des fichiers';
+$lang['user.data.limit.clue']      = 'En Mo. Mettre -1 pour illimité';
+$lang['user.group.color']          = 'Couleur associée au groupe';
+$lang['user.delete.group.color']   = 'Supprimer la couleur associée au groupe';
+$lang['user.group.thumbnail']      = 'Image associée au groupe';
+$lang['user.group.thumbnail.clue'] = 'Mettre dans le dossier images/group/';
+$lang['user.add.group.member']     = 'Ajouter un membre au groupe';
+$lang['user.group.members']        = 'Membres du groupe';
+$lang['user.upload.thumbnail']     = 'Uploader une image';
 
 // Labels
 $lang['user.user']           = 'Utilisateur';

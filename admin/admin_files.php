@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 27
+ * @version     PHPBoost 6.0 - last update: 2021 06 09
  * @since       PHPBoost 1.6 - 2007 03 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -11,12 +11,18 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  */
 require_once('../admin/admin_begin.php');
-define('TITLE', $LANG['administration']);
+
+$lang = LangLoader::get('admin-lang');
+$common_lang = LangLoader::get('admin-lang');
+$upload_lang = LangLoader::get('upload-lang');
+$user_lang = LangLoader::get('user-lang');
+$warning_lang = LangLoader::get('warning-lang');
+
+define('TITLE', $upload_lang['upload.files.management'] . ' - ' . $lang['admin.administration']);
 require_once('../admin/admin_header.php');
 
 // Personal or shared files
 $request = AppContext::get_request();
-$upload_lang = LangLoader::get('upload-common');
 $is_shared_checkbox = ($request->get_postvalue('is_shared_checkbox', 1) === 'on' ? 1 : 0);
 $item_id = $request->get_int('item_id', 0);
 $status = $request->get_int('status', 0);
@@ -174,7 +180,9 @@ elseif (!empty($move_file) && $to != -1) // Moving file
 }
 elseif (!empty($move_folder) || !empty($move_file))
 {
-	$template = new FileTemplate('admin/admin_files_move.tpl');
+	$view = new FileTemplate('admin/admin_files_move.tpl');
+	$view->add_lang(array_merge($common_lang, LangLoader::get('form-lang'), $upload_lang));
+
 
 	if (!empty($folder_member))
 	{
@@ -204,28 +212,22 @@ elseif (!empty($move_folder) || !empty($move_file))
 	$result->dispose();
 
 	if ($show_member)
-		$url = Uploads::get_admin_url($folder, ' | <a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>');
+		$url = Uploads::get_admin_url($folder, ' | <a href="admin_files.php?showm=1">' . $user_lang['user.members'] . '</a>');
 	elseif (!empty($folder_member) || !empty($folder_info['user_id']))
-		$url = Uploads::get_admin_url($folder, '', ' | <a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a> | <a href="admin_files.php?fm=' . $folder_info['user_id'] . '">' . $folder_info['display_name'] . '</a> | ');
+		$url = Uploads::get_admin_url($folder, '', ' | <a href="admin_files.php?showm=1">' . $user_lang['user.members'] . '</a> | <a href="admin_files.php?fm=' . $folder_info['user_id'] . '">' . $folder_info['display_name'] . '</a> | ');
 	elseif (empty($folder))
 		$url = '';
 	else
 		$url = Uploads::get_admin_url($folder, '');
 
-	$template->put_all(array(
+	$view->put_all(array(
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',
+
 		'URL' => $url,
-		'L_FILES_MANAGEMENT' => $LANG['files_management'],
-		'L_FILES_ACTION' => $LANG['files_management'],
-		'L_CONFIG_FILES' => $LANG['files_config'],
-		'L_MOVE_TO' => $LANG['moveto'],
-		'L_ROOT' => $LANG['root'],
-		'L_URL' => $LANG['url'],
-		'L_SUBMIT' => $LANG['submit']
 	));
 
 	if ($get_error == 'folder_contains_folder')
-		$template->put('message_helper', MessageHelper::display($LANG['upload_folder_contains_folder'], MessageHelper::WARNING));
+		$view->put('MESSAGE_HELPER', MessageHelper::display($warning_lang['warning.folder.contains.folder'], MessageHelper::WARNING));
 
 	// Available files list
 	include_once(PATH_TO_ROOT . '/user/upload_functions.php');
@@ -247,13 +249,13 @@ elseif (!empty($move_folder) || !empty($move_file))
 
 		$name = $folder_info['name'];
 		$id_cat = $folder_info['id_parent'];
-		$template->assign_block_vars('folder', array(
+		$view->assign_block_vars('folder', array(
 			'NAME' => $name
 		));
-		$template->put_all(array(
+		$view->put_all(array(
 			'SELECTED_CAT' => $id_cat,
-			'ID_FILE' => $move_folder,
-			'TARGET' => url('admin_files.php?movefd=' . $move_folder . '&amp;f=0&amp;token=' . AppContext::get_session()->get_token())
+			'ID_FILE'      => $move_folder,
+			'TARGET'       => url('admin_files.php?movefd=' . $move_folder . '&amp;f=0&amp;token=' . AppContext::get_session()->get_token())
 		));
 		$cat_explorer = display_cat_explorer($id_cat, $cats, 1, $folder_member);
 	}
@@ -281,30 +283,31 @@ elseif (!empty($move_folder) || !empty($move_file))
 
 		$cat_explorer = display_cat_explorer($info_move['idcat'], $cats, 1, $folder_member);
 
-		$template->assign_block_vars('file', array(
+		$view->assign_block_vars('file', array(
 			'C_ENABLED_THUMBNAILS' => FileUploadConfig::load()->get_display_file_thumbnail(),
 			'C_REAL_IMG' => $display_real_img,
 			'NAME' => $info_move['name'],
 			'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
-			'SIZE' => ($info_move['size'] > 1024) ? NumberHelper::round($info_move['size'] / 1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($info_move['size'], 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
+			'SIZE' => ($info_move['size'] > 1024) ? NumberHelper::round($info_move['size'] / 1024, 2) . ' ' . $common_lang['unit.megabytes'] : NumberHelper::round($info_move['size'], 0) . ' ' . $common_lang['unit.kilobytes'],
 			'FILE_ICON' => FileUploadConfig::load()->get_display_file_thumbnail() ? ($display_real_img ? $info_move['path'] : $get_img_mimetype['img']) : $get_img_mimetype['img']
 		));
-		$template->put_all(array(
+		$view->put_all(array(
 			'SELECTED_CAT' => $info_move['idcat'],
 			'TARGET' => url('admin_files.php?movefi=' . $move_file . '&amp;f=0&amp;token=' . AppContext::get_session()->get_token())
 		));
 	}
 
-	$template->put_all(array(
+	$view->put_all(array(
 		'FOLDERS' => $cat_explorer,
 		'ID_FILE' => $move_file
 	));
 
-	$template->display();
+	$view->display();
 }
 else
 {
-	$template = new FileTemplate('admin/admin_files_management.tpl');
+	$view = new FileTemplate('admin/admin_files_management.tpl');
+	$view->add_lang(array_merge($common_lang, LangLoader::get('form-lang'), $upload_lang, $warning_lang));
 
 	if (!empty($folder_member))
 	{
@@ -336,71 +339,44 @@ else
 	// Errors management
 	$array_error = array('e_upload_no_file', 'e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_unlink_disabled');
 	if (in_array($get_error, $array_error))
-		$template->put('message_helper', MessageHelper::display($LANG[$get_error], MessageHelper::WARNING));
+		$view->put('MESSAGE_HELPER', MessageHelper::display($LANG[$get_error], MessageHelper::WARNING));
 	if ($get_error == 'incomplete')
-		$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
+		$view->put('MESSAGE_HELPER', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
 
 	if (isset($LANG[$get_l_error]))
-		$template->put('message_helper', MessageHelper::display($LANG[$get_l_error], MessageHelper::WARNING));
+		$view->put('MESSAGE_HELPER', MessageHelper::display($LANG[$get_l_error], MessageHelper::WARNING));
 
 	if ($show_member)
-		$url = Uploads::get_admin_url($folder, ' | <a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a> |');
+		$url = Uploads::get_admin_url($folder, ' | <a href="admin_files.php?showm=1">' . $user_lang['user.members'] . '</a> |');
 	elseif (!empty($folder_member) || !empty($folder_info['user_id']))
-		$url = Uploads::get_admin_url($folder, '', ' | <a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a> | <a href="admin_files.php?fm=' . $folder_info['user_id'] . '">' . $folder_info['display_name'] . '</a> | ');
+		$url = Uploads::get_admin_url($folder, '', ' | <a href="admin_files.php?showm=1">' . $user_lang['user.members'] . '</a> | <a href="admin_files.php?fm=' . $folder_info['user_id'] . '">' . $folder_info['display_name'] . '</a> | ');
 	elseif (empty($folder))
 		$url = '';
 	else
 		$url = Uploads::get_admin_url($folder, '');
 
-	$template->put_all(array(
+	$view->put_all(array(
 		'C_MEMBER_ROOT_FOLDER' => $folder == 0 && !empty($folder_info['user_id']),
-		'FOLDER_ID' => !empty($folder) ? $folder : '0',
-		'FOLDERM_ID' => !empty($folder_member) ? '&amp;fm=' . $folder_member : '',
-		'USER_ID' => !empty($folder_info['user_id']) ? $folder_info['user_id'] : '-1',
+
+		'FOLDER_ID'          => !empty($folder) ? $folder : '0',
+		'FOLDERM_ID'         => !empty($folder_member) ? '&amp;fm=' . $folder_member : '',
+		'USER_ID'            => !empty($folder_info['user_id']) ? $folder_info['user_id'] : '-1',
+		'MAX_FILE_SIZE'      => ServerConfiguration ::get_upload_max_filesize(),
+		'MAX_FILE_SIZE_TEXT' => File ::get_formated_size(ServerConfiguration::get_upload_max_filesize()),
+		'ALLOWED_EXTENSIONS' => implode('", "', FileUploadConfig ::load()->get_authorized_extensions()),
+
 		'URL' => $url,
-		'MAX_FILE_SIZE' => ServerConfiguration::get_upload_max_filesize(),
-		'MAX_FILE_SIZE_TEXT' => File::get_formated_size(ServerConfiguration::get_upload_max_filesize()),
-		'ALLOWED_EXTENSIONS' => implode('", "', FileUploadConfig::load()->get_authorized_extensions()),
-		'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
-		'L_CONFIRM_DEL_FOLDER' => $LANG['confirm_del_folder'],
-		'L_CONFIRM_EMPTY_FOLDER' => $LANG['confirm_empty_folder'],
-		'L_FOLDER_ALREADY_EXIST' => LangLoader::get_message('element.already_exists', 'status-messages-common'),
-		'L_FOLDER_FORBIDDEN_CHARS' => $LANG['folder_forbidden_chars'],
-		'L_FILES_MANAGEMENT' => $LANG['files_management'],
-		'L_FILES_ACTION' => $LANG['files_management'],
-		'L_CONFIG_FILES' => $LANG['files_config'],
-		'L_ADD_FILES' => $LANG['file_add'],
-		'L_NAME' => $LANG['name'],
-		'L_SIZE' => $LANG['size'],
-		'L_MOVETO' => $LANG['moveto'],
-		'L_DATA' => $LANG['data'],
-		'L_FOLDER_SIZE' => $LANG['folder_size'],
-		'L_FOLDERS' => $LANG['folders'],
-		'L_ROOT' => $LANG['root'],
-		'L_FOLDER_NEW' => $LANG['folder_new'],
-		'L_FOLDER_CONTENT' => $LANG['folder_content'],
-		'L_FOLDER_UP' => $LANG['folders_up'],
-		'L_FILES' => $LANG['files'],
-		'L_DELETE' => LangLoader::get_message('delete', 'common'),
-		'L_EMPTY' => $LANG['empty'],
-		'L_UPLOAD' => $LANG['upload'],
-		'L_URL' => $LANG['url'],
-		'L_SHARED_CHECKBOX' => $upload_lang['shared.checkbox'],
-		'L_SHARED_TITLE' => $upload_lang['shared.title'],
-		'L_PERSONAL_TITLE' => $upload_lang['personal.title'],
-		'L_CHANGE_PERSONAL' => $upload_lang['change.to.personal'],
-		'L_CHANGE_SHARED' => $upload_lang['change.to.shared'],
-		'L_POSTOR' => $upload_lang['posted.by']
 	));
 
 	if ($folder == 0 && !$show_member && empty($folder_member))
 	{
-		$template->assign_block_vars('folder', array(
+		$view->assign_block_vars('folder', array(
 			'C_MEMBERS_FOLDER' => true,
-			'C_MEMBER_FOLDER' => true,
-			'NAME' => '<a class="com" href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>',
+			'C_MEMBER_FOLDER'  => true,
+
+			'NAME' => $user_lang['user.members'],
+
 			'U_FOLDER' => '?showm=1',
-			'L_TYPE_DEL_FOLDER' => $LANG['empty_member_folder']
 		));
 	}
 
@@ -445,18 +421,19 @@ else
 	{
 		$name_cut = (TextHelper::strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlspecialchars(TextHelper::substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 
-		$template->assign_block_vars('folder', array(
+		$view->assign_block_vars('folder', array(
 			'C_MEMBER_FOLDER' => $show_member,
-			'ID' => $row['id'],
-			'NAME' => $name_cut,
-			'NAME_WITH_SLASHES' => addslashes($row['name']),
-			'NAME_CUT_WITH_SLASHES' => addslashes($name_cut),
-			'DEL_TYPE' => $show_member ? 'eptf' : 'delf',
 			'C_TYPEFOLDER' => !$show_member,
+
+			'ID'                    => $row['id'],
+			'NAME'                  => $name_cut,
+			'NAME_WITH_SLASHES'     => addslashes($row['name']),
+			'NAME_CUT_WITH_SLASHES' => addslashes($name_cut),
+			'DEL_TYPE'              => $show_member ? 'eptf' : 'delf',
+
 			'U_ONCHANGE_FOLDER' => "'admin_files" . url(".php?movef=" . $row['id'] . "&amp;to=' + this.options[this.selectedIndex].value + '") . "'",
-			'L_TYPE_DEL_FOLDER' => $LANG['del_folder'],
-			'U_FOLDER' => '?' . ($show_member ? 'fm=' . $row['user_id'] : 'f=' . $row['id']),
-			'U_MOVE' => '.php?movefd=' . $row['id'] . '&amp;f=' . $folder . ($row['user_id'] > 0 ? '&amp;fm=' . $row['user_id'] : '')
+			'U_FOLDER'          => '?' . ($show_member ? 'fm=' . $row['user_id'] : 'f=' . $row['id']),
+			'U_MOVE'            => '.php?movefd=' . $row['id'] . '&amp;f=' . $folder . ($row['user_id'] > 0 ? '&amp;fm=' . $row['user_id'] : '')
 		));
 		$total_directories++;
 	}
@@ -525,7 +502,7 @@ else
 				// Videos
 				case 'webm':
 				case 'mp4':
-					$bbcode = '[movie=100,100]/upload/' . $row['path'] . '[/movie]';
+					$bbcode = '[movie=800,450]/upload/' . $row['path'] . '[/movie]';
 					$tinymce = '<a href="/upload/' . $row['path'] . '">' . $row['name'] . '</a>';
 					$link = 'javascript:popup_upload(\'' . Url::to_rel('/upload/' . $row['path']) . '\', 400, 225, \'no\')';
 					break;
@@ -535,29 +512,31 @@ else
 			}
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
-			$template->assign_block_vars($loop_id, array(
+			$view->assign_block_vars($loop_id, array(
 				'C_ENABLED_THUMBNAILS' => FileUploadConfig::load()->get_display_file_thumbnail(),
-				'C_IMG' => $get_img_mimetype['img'] == 'far fa-file-image',
-				'C_RECENT_FILE' => $row['timestamp'] > ($now->get_timestamp() - (2 * 60)), // File added less than 2 minutes ago
-				'ID' => $row['id'],
-				'C_POSTOR_EXIST' => !empty($row['display_name']),
-				'POSTOR' => $row['display_name'],
-				'POSTOR_LEVEL_CLASS' => UserService::get_level_class($row['level']),
-				'C_POSTOR_GROUP_COLOR' => !empty($group_color),
-				'POSTOR_GROUP_COLOR' => $group_color,
-				'U_POSTOR_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
-				'C_IS_SHARED_FILE' => $row['shared'] == 1,
-				'IMG' => $get_img_mimetype['img'],
-				'URL' => $link,
-				'NAME' => $name_cut,
-				'NAME_WITH_SLASHES' => addslashes($row['name']),
+				'C_IMG'                => $get_img_mimetype['img'] == 'far fa-file-image',
+				'C_RECENT_FILE'        => $row['timestamp'] > ($now->get_timestamp() - (2 * 60)), // File added less than 2 minutes ago
+				'C_AUTHOR_EXIST'       => !empty($row['display_name']),
+				'C_AUTHOR_GROUP_COLOR' => !empty($group_color),
+				'C_IS_SHARED_FILE'     => $row['shared'] == 1,
+
+				'ID'                    => $row['id'],
+				'AUTHOR'                => $row['display_name'],
+				'AUTHOR_LEVEL_CLASS'    => UserService::get_level_class($row['level']),
+				'AUTHOR_GROUP_COLOR'    => $group_color,
+				'ICON'                  => $get_img_mimetype['img'],
+				'NAME'                  => $name_cut,
+				'NAME_WITH_SLASHES'     => addslashes($row['name']),
 				'NAME_CUT_WITH_SLASHES' => addslashes($name_cut),
-				'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
-				'BBCODE' => '<input readonly="readonly" type="text" onclick="select_div(\'text_' . $row['id'] . '\');" id="text_' . $row['id'] . '" value="' . $bbcode . '">',
-				'DISPLAYED_CODE' => '/upload/' . $row['path'],
-                'SIZE' => ($row['size'] > 1024) ? NumberHelper::round($row['size'] / 1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($row['size'], 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
-				'LIGHTBOX' => !empty($size_img) ? ' data-lightbox="1" data-rel="lightcase:collection"' : '',
-				'U_MOVE' => '.php?movefi=' . $row['id'] . '&amp;f=' . $folder . '&amp;fm=' . $row['user_id']
+				'FILETYPE'              => $get_img_mimetype['filetype'] . $size_img,
+				'BBCODE'                => '<input readonly="readonly" type="text" onclick="select_div(\'text_' . $row['id'] . '\');" id="text_' . $row['id'] . '" value="' . $bbcode . '">',
+				'DISPLAYED_CODE'        => '/upload/' . $row['path'],
+                'SIZE'                  => ($row['size'] > 1024) ? NumberHelper::round($row['size'] / 1024, 2) . ' ' . $common_lang['unit.megabytes'] : NumberHelper::round($row['size'], 0) . ' ' . $common_lang['unit.kilobytes'],
+
+				'LIGHTBOX'         => !empty($size_img) ? ' data-lightbox ="1" data-rel="lightcase:collection"' : '',
+				'URL'              => $link,
+				'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
+				'U_MOVE'           => '.php?movefi=' . $row['id'] . '&amp;f=' . $folder . '&amp;fm=' . $row['user_id']
 			));
 			if ($loop_id == 'shared_files')
 			{
@@ -581,20 +560,20 @@ else
 	} catch (RowNotFoundException $e) {
 
 	}
-	$template->put_all(array(
-		'C_PERSONAL_SUMMARY' => ($total_directories > 0 || $total_personal_files > 0) && !$show_shared,
+	$view->put_all(array(
+		'C_PERSONAL_SUMMARY'   => ($total_directories > 0 || $total_personal_files > 0) && !$show_shared,
 		'C_SHARED_FILES_EXIST' => $total_shared_files > 0,
-		'C_SHOW_SHARED_FILES' => $show_shared,
-		'TOTAL_SIZE' => File::get_formated_size($total_size * 1024),
-		'TOTAL_SHARED_SIZE' => File::get_formated_size($total_shared_size * 1024),
-		'TOTAL_FOLDER_SIZE' => File::get_formated_size($total_folder_size * 1024),
-		'TOTAL_FOLDERS' => $total_directories,
+		'C_SHOW_SHARED_FILES'  => $show_shared,
+
+		'TOTAL_SIZE'           => File::get_formated_size($total_size * 1024),
+		'TOTAL_SHARED_SIZE'    => File::get_formated_size($total_shared_size * 1024),
+		'TOTAL_FOLDER_SIZE'    => File::get_formated_size($total_folder_size * 1024),
+		'TOTAL_FOLDERS'        => $total_directories,
 		'TOTAL_PERSONAL_FILES' => $total_personal_files,
-		'TOTAL_SHARED_FILES' => $total_shared_files,
-		'L_NO_ITEM' => LangLoader::get_message('no_item_now', 'common'),
+		'TOTAL_SHARED_FILES'   => $total_shared_files,
 	));
 
-	$template->display();
+	$view->display();
 }
 
 require_once('../admin/admin_footer.php');
