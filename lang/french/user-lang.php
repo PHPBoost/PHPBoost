@@ -421,8 +421,10 @@ $lang['user.cookiebar.cookies']       = 'Cookies';
 $lang['user.cookiebar.change.choice'] = 'Modifier vos préférences';
 
 // Status
-$lang['user.online'] = 'En ligne';
-$lang['user.offline'] = 'Hors connexion';
+$lang['user.online.users']   = 'Utilisateurs en ligne';
+$lang['user.ip.address']     = 'Adresse ip';
+$lang['user.online']         = 'En ligne';
+$lang['user.offline']        = 'Hors connexion';
 $lang['user.no.user.online'] = 'Aucun utilisateur en ligne';
 
 // Menu

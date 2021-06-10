@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 06 10
  * @since       PHPBoost 4.1 - 2015 05 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -92,7 +92,7 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 
 		$form = new HTMLForm('system-report', '', false);
 
-		$this->get_advises($form);
+		$this->get_advice($form);
 
 		$fieldset = new FormFieldsetHTML('server-report', $this->admin_lang['server']);
 		$form->add_fieldset($fieldset);
@@ -149,9 +149,9 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 		$this->form = $form;
 	}
 
-	public static function get_advises(HTMLForm $html_form)
+	public static function get_advice(HTMLForm $html_form)
 	{
-		$lang = LangLoader::get('admin-server-common');
+		$lang = LangLoader::get('admin-lang');
 
 		$server_configuration = new ServerConfiguration();
 		$maintenance_config = MaintenanceConfig::load();
@@ -165,41 +165,41 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 			$url_rewriting_available = $server_configuration->has_url_rewriting();
 		} catch (UnsupportedOperationException $ex) {}
 
-		$fieldset = new FormFieldsetHTML('advises', $lang['advises']);
+		$fieldset = new FormFieldsetHTML('advice', $lang['admin.advice']);
 
 		if (ModulesManager::is_module_installed('QuestionCaptcha') && ModulesManager::is_module_activated('QuestionCaptcha') && ContentManagementConfig::load()->get_used_captcha_module() == 'QuestionCaptcha' && QuestionCaptchaConfig::load()->count_items() < 3)
 			$fieldset->add_field(new FormFieldFree('QuestionCaptcha_questions_number', '', MessageHelper::display(LangLoader::get_message('advices.questioncaptcha.items.number', 'common', 'QuestionCaptcha'), MessageHelper::WARNING)->render()));
 
-		$fieldset->add_field(new FormFieldFree('modules_management', '', MessageHelper::display($lang['advises.modules_management'], MessageHelper::SUCCESS)->render()));
+		$fieldset->add_field(new FormFieldFree('modules_management', '', MessageHelper::display($lang['admin.advice.modules.management'], MessageHelper::SUCCESS)->render()));
 
 		if ($maintenance_config->is_under_maintenance())
-			$fieldset->add_field(new FormFieldFree('check_modules_authorizations', '', MessageHelper::display($lang['advises.check_modules_authorizations'], MessageHelper::SUCCESS)->render()));
+			$fieldset->add_field(new FormFieldFree('check_modules_authorizations', '', MessageHelper::display($lang['admin.advice.check.modules.authorizations'], MessageHelper::SUCCESS)->render()));
 
 		if (!TextHelper::strstr($general_config->get_site_url(), 'localhost') && !TextHelper::strstr($general_config->get_site_url(), '127.0.0.1') && !$maintenance_config->is_under_maintenance() && Debug::is_debug_mode_enabled())
-			$fieldset->add_field(new FormFieldFree('disable_debug_mode', '', MessageHelper::display($lang['advises.disable_debug_mode'], MessageHelper::WARNING)->render()));
+			$fieldset->add_field(new FormFieldFree('disable_debug_mode', '', MessageHelper::display($lang['admin.advice.disable.debug.mode'], MessageHelper::WARNING)->render()));
 
 		if ($maintenance_config->is_under_maintenance())
-			$fieldset->add_field(new FormFieldFree('disable_maintenance', '', MessageHelper::display($lang['advises.disable_maintenance'], MessageHelper::NOTICE)->render()));
+			$fieldset->add_field(new FormFieldFree('disable_maintenance', '', MessageHelper::display($lang['admin.advice.disable.maintenance'], MessageHelper::NOTICE)->render()));
 
 		if ($url_rewriting_available && !$server_environment_config->is_url_rewriting_enabled())
-			$fieldset->add_field(new FormFieldFree('enable_url_rewriting', '', MessageHelper::display($lang['advises.enable_url_rewriting'], MessageHelper::NOTICE)->render()));
+			$fieldset->add_field(new FormFieldFree('enable_url_rewriting', '', MessageHelper::display($lang['admin.advice.enable.url.rewriting'], MessageHelper::NOTICE)->render()));
 
 		if (function_exists('ob_gzhandler') && @extension_loaded('zlib') && !$server_environment_config->is_output_gziping_enabled())
-			$fieldset->add_field(new FormFieldFree('enable_output_gz', '', MessageHelper::display($lang['advises.enable_output_gz'], MessageHelper::NOTICE)->render()));
+			$fieldset->add_field(new FormFieldFree('enable_output_gz', '', MessageHelper::display($lang['admin.advice.enable.output.gz'], MessageHelper::NOTICE)->render()));
 
 		if (DataStoreFactory::is_apc_available() && !DataStoreFactory::is_apc_enabled())
-			$fieldset->add_field(new FormFieldFree('enable_apcu_cache', '', MessageHelper::display($lang['advises.enable_apcu_cache'], MessageHelper::NOTICE)->render()));
+			$fieldset->add_field(new FormFieldFree('enable_apcu_cache', '', MessageHelper::display($lang['admin.advice.enable.apcu.cache'], MessageHelper::NOTICE)->render()));
 
-		$fieldset->add_field(new FormFieldFree('save_database', '', MessageHelper::display($lang['advises.save_database'], MessageHelper::SUCCESS)->render()));
+		$fieldset->add_field(new FormFieldFree('save_database', '', MessageHelper::display($lang['admin.advice.save.database'], MessageHelper::SUCCESS)->render()));
 
 		if (ModulesManager::is_module_installed('database') && ModulesManager::is_module_activated('database') && !DatabaseConfig::load()->is_database_tables_optimization_enabled())
-			$fieldset->add_field(new FormFieldFree('optimize_database_tables', '', MessageHelper::display($lang['advises.optimize_database_tables'], MessageHelper::SUCCESS)->render()));
+			$fieldset->add_field(new FormFieldFree('optimize_database_tables', '', MessageHelper::display($lang['admin.advice.optimize.database.tables'], MessageHelper::SUCCESS)->render()));
 
 		if ($security_config->get_internal_password_min_length() == 6 && $security_config->get_internal_password_strength() == SecurityConfig::PASSWORD_STRENGTH_WEAK && !$security_config->are_login_and_email_forbidden_in_password())
-			$fieldset->add_field(new FormFieldFree('password_security', '', MessageHelper::display($lang['advises.password_security'], MessageHelper::NOTICE)->render()));
+			$fieldset->add_field(new FormFieldFree('password_security', '', MessageHelper::display($lang['admin.advice.password.security'], MessageHelper::NOTICE)->render()));
 
 		if (version_compare(ServerConfiguration::get_phpversion(), ServerConfiguration::RECOMMENDED_PHP_VERSION, '<'))
-			$fieldset->add_field(new FormFieldFree('upgrade_php_version', '', MessageHelper::display($lang['advises.upgrade_php_version'], MessageHelper::NOTICE)->render()));
+			$fieldset->add_field(new FormFieldFree('upgrade_php_version', '', MessageHelper::display($lang['admin.advice.upgrade.php.version'], MessageHelper::NOTICE)->render()));
 
 		if (count($fieldset->get_fields()))
 			$html_form->add_fieldset($fieldset);

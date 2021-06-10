@@ -420,8 +420,10 @@ $lang['user.cookiebar.cookies']       = 'Cookies';
 $lang['user.cookiebar.change.choice'] = 'Change your preferences';
 
 // Status
-$lang['user.online'] = 'Online';
-$lang['user.offline'] = 'Offline';
+$lang['user.online.users']   = 'Online users';
+$lang['user.ip.address']     = 'IP address';
+$lang['user.online']         = 'Online';
+$lang['user.offline']        = 'Offline';
 $lang['user.no.user.online'] = 'No user online';
 
 // Menu

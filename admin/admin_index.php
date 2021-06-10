@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 02
+ * @version     PHPBoost 6.0 - last update: 2021 06 10
  * @since       PHPBoost 1.2 - 2005 06 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -11,7 +11,15 @@
 */
 
 require_once('../admin/admin_begin.php');
-define('TITLE', $LANG['administration']);
+
+$lang = LangLoader::get('admin-lang');
+$addon_lang = LangLoader::get('addon-lang');
+$common_lang = LangLoader::get('common-lang');
+$form_lang = LangLoader::get('form-lang');
+$menu_lang = LangLoader::get('menu-lang');
+$user_lang = LangLoader::get('user-lang');
+
+define('TITLE', $lang['admin.administration']);
 require_once('../admin/admin_header.php');
 
 // Save writing pad
@@ -27,7 +35,8 @@ if (!empty($writingpad))
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 
-$tpl = new FileTemplate('admin/admin_index.tpl');
+$view = new FileTemplate('admin/admin_index.tpl');
+$view->add_lang(array_merge($lang, $addon_lang, $common_lang, $form_lang, $menu_lang, $user_lang));
 
 $result = PersistenceContext::get_querier()->select("
 	SELECT comments.*, comments.timestamp AS comment_timestamp, topic.*, member.*
@@ -46,22 +55,24 @@ while ($row = $result->fetch())
 	$group_color = User::get_group_color($row['user_groups'], $row['level']);
 	$visitor_email_enabled = CommentsConfig::load()->is_visitor_email_enabled();
 
-	$tpl->assign_block_vars('comments_list', array_merge(
+	$view->assign_block_vars('comments_list', array_merge(
 		Date::get_array_tpl_vars(new Date($row['comment_timestamp'], Timezone::SERVER_TIMEZONE), 'date'),
 		array(
-		'C_VISITOR'       => $row['level'] == User::VISITOR_LEVEL || empty($row['user_id']),
-		'C_VISITOR_EMAIL' => $visitor_email_enabled,
-		'C_GROUP_COLOR'   => !empty($group_color),
-		'COMMENT_NUMBER'  => $comments_number,
-		'CONTENT'         => FormatingHelper::second_parse($row['message']),
-		'PSEUDO'          => ($row['level'] != User::VISITOR_LEVEL) && !empty($row['display_name']) ? $row['display_name'] : (!empty($row['pseudo']) ? $row['pseudo'] : $LANG['guest']),
-		'VISITOR_EMAIL'   => $row['visitor_email'],
-		'LEVEL_CLASS'     => UserService::get_level_class($row['level']),
-		'GROUP_COLOR'     => $group_color,
-		'U_PROFILE'       => UserUrlBuilder::profile($row['user_id'])->rel(),
-		'U_DELETE'        => CommentsUrlBuilder::delete($row['path'], $row['id'], REWRITED_SCRIPT)->rel(),
-		'MODULE_NAME'     => ModulesManager::get_module($row['module_id'])->get_configuration()->get_name(),
-		'U_LINK'          => Url::to_rel($row['path']) . '#com' . $row['id']
+		'C_VISITOR'          => $row['level'] == User::VISITOR_LEVEL || empty($row['user_id']),
+		'C_VISITOR_EMAIL'    => $visitor_email_enabled,
+		'C_USER_GROUP_COLOR' => !empty($group_color),
+
+		'COMMENTS_NUMBER'   => $comments_number,
+		'CONTENT'           => FormatingHelper::second_parse($row['message']),
+		'USER_DISPLAY_NAME' => ($row['level'] != User::VISITOR_LEVEL) && !empty($row['display_name']) ? $row['display_name'] : (!empty($row['pseudo']) ? $row['pseudo'] : $user_lang['user.guest']),
+		'VISITOR_EMAIL'     => $row['visitor_email'],
+		'USER_LEVEL_CLASS'  => UserService::get_level_class($row['level']),
+		'USER_GROUP_COLOR'  => $group_color,
+		'MODULE_NAME'       => ModulesManager::get_module($row['module_id'])->get_configuration()->get_name(),
+
+		'U_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
+		'U_DELETE'       => CommentsUrlBuilder::delete($row['path'], $row['id'], REWRITED_SCRIPT)->rel(),
+		'U_LINK'         => Url::to_rel($row['path']) . '#com' . $row['id']
 		)
 	));
 }
@@ -84,7 +95,7 @@ if ($request->get_string('delete-selected-comments', false))
 
 // Advises
 $advises_form = new HTMLForm('advises_list', '', false);
-AdminServerSystemReportController::get_advises($advises_form);
+AdminServerSystemReportController::get_advice($advises_form);
 
 // Header logo
 $theme = ThemesManager::get_theme(AppContext::get_current_user()->get_theme());
@@ -98,61 +109,24 @@ $module_customization_installed = ModulesManager::is_module_installed('customiza
 $module_articles_installed = ModulesManager::is_module_installed('articles') && ModulesManager::is_module_activated('articles');
 $module_news_installed = ModulesManager::is_module_installed('news') && ModulesManager::is_module_activated('news');
 
-$tpl->put_all(array(
-	'L_QUICK_ACCESS' => $LANG['quick_access'],
-	'L_ADD_CONTENT' => $LANG['add_content'],
-	'L_MODULES_MANAGEMENT' => $LANG['modules_management'],
-	'L_ADD_ARTICLES' => $LANG['add_articles'],
-	'L_ADD_NEWS' => $LANG['add_news'],
-	'L_CUSTOMIZE_SITE' => $LANG['customize_site'],
-	'L_ADD_TEMPLATE' => $LANG['add_template'],
-	'L_MENUS_MANAGEMENT' => $LANG['menus_management'],
-	'L_CUSTOMIZE_TEMPLATE' => $LANG['customize_template'],
-	'L_SITE_MANAGEMENT' => $LANG['site_management'],
-	'L_GENERAL_CONFIG' => $LANG['general_config'],
-	'L_EMPTY_CACHE' => $LANG['empty_cache'],
-	'L_SAVE_DATABASE' => $LANG['save_database'],
-	'L_WELCOME_TITLE' => $LANG['welcome_title'],
-	'L_WELCOME_DESC' => $LANG['welcome_desc'],
+$view->put_all(array(
+	'C_COMMENTS'             => $comments_number > 0,
+	'C_HEADER_LOGO'          => !empty($header_logo_path),
+	'C_UNREAD_ALERTS'        => (bool)AdministratorAlertService::get_number_unread_alerts(),
+	'C_MODULE_DATABASE'      => $module_database_installed,
+	'C_MODULE_CUSTOMIZATION' => $module_customization_installed,
+	'C_MODULE_ARTICLES'      => $module_articles_installed,
+	'C_MODULE_NEWS'          => $module_news_installed,
+
+	'HEADER_LOGO'         => Url::to_rel($header_logo_path),
+	'COMMENTS_NUMBER'     => $comments_number,
 	'WRITING_PAD_CONTENT' => WritingPadConfig::load()->get_content(),
-	'C_HEADER_LOGO' => !empty($header_logo_path),
-	'HEADER_LOGO' => Url::to_rel($header_logo_path),
-	'C_COMMENTS' => $comments_number > 0,
-	'COMMENTS_NUMBER' => $comments_number,
-	'C_UNREAD_ALERTS' => (bool)AdministratorAlertService::get_number_unread_alerts(),
-	'C_MODULE_DATABASE_INSTALLED' => $module_database_installed,
-	'C_MODULE_CUSTOMIZATION_INSTALLED' => $module_customization_installed,
-	'C_MODULE_ARTICLES_INSTALLED' => $module_articles_installed,
-	'C_MODULE_NEWS_INSTALLED' => $module_news_installed,
-	'U_SAVE_DATABASE' => $module_database_installed ? Url::to_rel('/database/admin_database.php') : '',
+	'ADVICE'              => $advises_form->display(),
+
+	'U_SAVE_DATABASE'  => $module_database_installed ? Url::to_rel('/database/admin_database.php') : '',
 	'U_EDIT_CSS_FILES' => $module_customization_installed ? AdminCustomizeUrlBuilder::editor_css_file()->rel() : '',
-	'U_ADD_ARTICLE' => $module_articles_installed ? ItemsUrlBuilder::add(null, 'articles')->rel() : '',
-	'U_ADD_NEWS' => $module_news_installed ? ItemsUrlBuilder::add(null, 'news')->rel() : '',
-	'L_INDEX_ADMIN' => $LANG['administration'],
-	'L_ADMIN_ALERTS' => $LANG['administrator_alerts'],
-	'L_NO_UNREAD_ALERT' => $LANG['no_unread_alert'],
-	'L_UNREAD_ALERT' => $LANG['unread_alerts'],
-	'L_DISPLAY_ALL_ALERTS' => $LANG['display_all_alerts'],
-	'L_ADMINISTRATOR_ALERTS' => $LANG['administrator_alerts'],
-	'L_QUICK_LINKS' => $LANG['quick_links'],
-	'L_ACTION_USERS_MANAGEMENT' => $LANG['action.members_management'],
-	'L_ACTION_MENUS_MANAGEMENT' => $LANG['action.menus_management'],
-	'L_ACTION_MODULES_MANAGEMENT' => $LANG['action.modules_management'],
-	'L_ACTION_THEMES_MANAGEMENT' => $LANG['action.themes_management'],
-	'L_ACTION_LANGS_MANAGEMENT' => $LANG['action.langs_management'],
-	'L_LAST_COMMENTS' => $LANG['last_comments'],
-	'L_VIEW_ALL_COMMENTS' => $LANG['view_all_comments'],
-	'L_WRITING_PAD' => $LANG['writing_pad'],
-	'L_STATS' => $LANG['stats'],
-	'L_USER_ONLINE' => $LANG['user_online'],
-	'L_USER_IP' => $LANG['user_ip'],
-	'L_LOCALISATION' => $LANG['localisation'],
-	'L_LAST_UPDATE' => $LANG['last_update'],
-	'L_WEBSITE_UPDATES' => $LANG['website_updates'],
-	'L_BY' => $LANG['by'],
-	'L_UPDATE' => $LANG['update'],
-	'L_RESET' => $LANG['reset'],
-	'ADVISES' => $advises_form->display()
+	'U_ADD_ARTICLE'    => $module_articles_installed ? ItemsUrlBuilder::add(null, 'articles')->rel() : '',
+	'U_ADD_NEWS'       => $module_news_installed ? ItemsUrlBuilder::add(null, 'news')->rel() : '',
 ));
 
 
@@ -175,22 +149,26 @@ while ($row = $result->fetch())
 
 	$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
-	$tpl->assign_block_vars('user', array(
-		'C_ROBOT' => $row['level'] == User::ROBOT_LEVEL,
-		'C_VISITOR' => $row['level'] == User::VISITOR_LEVEL,
-		'C_GROUP_COLOR' => !empty($group_color),
-		'PSEUDO' => ($row['level'] != User::VISITOR_LEVEL) && !empty($row['display_name']) ? $row['display_name'] : $LANG['guest'],
-		'LEVEL_CLASS' => UserService::get_level_class($row['level']),
-		'GROUP_COLOR' => $group_color,
-		'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
-		'USER_IP' => $row['ip'],
-		'WHERE' => (!empty($row['location_title']) ? '<a href="' . $row['location_script'] . '">' . stripslashes($row['location_title']) . '</a>' : $LANG['unknown']),
-		'TIME' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)
+	$view->assign_block_vars('user', array(
+		'C_ROBOT'            => $row['level'] == User::ROBOT_LEVEL,
+		'C_VISITOR'          => $row['level'] == User::VISITOR_LEVEL,
+		'C_USER_GROUP_COLOR' => !empty($group_color),
+		'C_LOCATION'         => !empty($row['location_title']) ,
+
+		'USER_DISPLAY_NAME' => ($row['level'] != User::VISITOR_LEVEL) && !empty($row['display_name']) ? $row['display_name'] : $user_lang['user.guest'],
+		'USER_LEVEL_CLASS'  => UserService::get_level_class($row['level']),
+		'USER_GROUP_COLOR'  => $group_color,
+		'USER_IP'           => $row['ip'],
+		'WEBSITE_LOCATION'  => stripslashes($row['location_title']),
+		'DATE'              => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
+
+		'U_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
+		'U_LOCATION'     => $row['location_script'],
 	));
 }
 $result->dispose();
 
-$tpl->display();
+$view->display();
 
 require_once('../admin/admin_footer.php');
 ?>
