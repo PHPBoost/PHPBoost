@@ -66,6 +66,7 @@ $lang['common.default']       = 'Default';
 $lang['common.default.by']    = 'By default';
 $lang['common.before']        = 'Before';
 $lang['common.after']         = 'After';
+$lang['common.no.script']     = 'Javascript is disabled from your navigator, you won\'t be able to access to all functions of the website';
 
 // Actions
 $lang['common.read.more']    = 'Read more';
@@ -126,12 +127,12 @@ $lang['common.percentage']       = 'Percentage';
 $lang['common.total']            = 'Total';
 $lang['common.unlimited']        = 'Unlimited';
 $lang['common.whole']            = 'Whole';
-$lang['common.whole.e']          = 'Whole';
+$lang['common.whole.alt']        = 'Whole';
 $lang['common.all']              = 'All';
-$lang['common.all.e']            = 'All';
+$lang['common.all.alt']          = 'All';
 $lang['common.nobody']           = 'Nobody';
 $lang['common.none']             = 'None';
-$lang['common.none.e']           = 'None';
+$lang['common.none.alt']         = 'None';
 $lang['common.no.result']        = 'No result';
 $lang['common.item.rate']        = ':start to :end of :total elements';
 

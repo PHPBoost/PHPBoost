@@ -2,7 +2,7 @@
     <label for="ForumTime">{@date.date}</label>
     <div class="form-field form-field-select">
         <select id="ForumTime" name="ForumTime" class="search-field">
-            <option value="30000" {IS_SELECTED_30000}>{@common.all.e}</option>
+            <option value="30000" {IS_SELECTED_30000}>{@common.all.alt}</option>
             <option value="1" {IS_SELECTED_1}>1 {@date.day}</option>
             <option value="7" {IS_SELECTED_7}>7 {@date.days}</option>
             <option value="15" {IS_SELECTED_15}>15 {@date.days}</option>
@@ -16,7 +16,7 @@
     <label for="ForumIdcat">{@common.category}</label>
     <div class="form-field form-field-select">
         <select name="ForumIdcat" id="ForumIdcat" class="search-field">
-            <option value="-1" {IS_ALL_CATS_SELECTED}>{@common.all.e}</option>
+            <option value="-1" {IS_ALL_CATS_SELECTED}>{@common.all.alt}</option>
             {CATS}
         </select>
     </div>

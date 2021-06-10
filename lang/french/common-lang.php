@@ -66,6 +66,7 @@ $lang['common.default']       = 'Défaut';
 $lang['common.default.by']    = 'Par défaut';
 $lang['common.before']        = 'Avant';
 $lang['common.after']         = 'Après';
+$lang['common.no.script']     = 'Votre navigateur ne prend pas en charge le Javascript, vous ne pourrez donc pas profiter de toutes les fonctionnalités du site';
 
 // Actions
 $lang['common.read.more']    = 'Lire la suite';
@@ -126,12 +127,12 @@ $lang['common.percentage']       = 'Pourcentage';
 $lang['common.total']            = 'Total';
 $lang['common.unlimited']        = 'Illimité';
 $lang['common.whole']            = 'Tout';
-$lang['common.whole.e']          = 'Toute';
+$lang['common.whole.alt']        = 'Toute';
 $lang['common.all']              = 'Tous';
-$lang['common.all.e']            = 'Toutes';
+$lang['common.all.alt']          = 'Toutes';
 $lang['common.nobody']           = 'Personne';
 $lang['common.none']             = 'Aucun';
-$lang['common.none.e']           = 'Aucune';
+$lang['common.none.alt']         = 'Aucune';
 $lang['common.no.result']        = 'Aucun résultat';
 $lang['common.item.rate']        = 'Éléments :start à :end sur :total';
 
