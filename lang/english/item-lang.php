@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 29
+ * @version     PHPBoost 6.0 - last update: 2021 60 10
  * @since       PHPBoost 6.0 - 2020 01 08
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -21,6 +21,7 @@ $lang['an.item.alt'] = 'a :item';
 $lang['all.items'] = 'all :items';
 $lang['last.items'] = 'last :items';
 $lang['items.number'] = ':Items number';
+$lang['completed.item'] = 'This :item is over';
 $lang['items.no.element'] = 'No :item is available for the moment';
 
 //Management

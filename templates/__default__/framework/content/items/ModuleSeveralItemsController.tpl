@@ -141,6 +141,7 @@
 									<tr class="category-{items.CATEGORY_ID}# IF items.C_PRIME_ITEM # prime-item# ENDIF #">
 										<td>
 											<a href="{items.U_ITEM}" itemprop="name"# IF items.C_NEW_CONTENT # class="new-content"# ENDIF#>{items.TITLE}</a>
+											# IF items.C_COMPLETED #<span class="d-block small error">[{@completed.item}]</span># ENDIF #
 										</td>
 										# IF NOT C_MEMBER_ITEMS #
 											# IF C_AUTHOR_DISPLAYED #
@@ -222,6 +223,11 @@
 									<h2 class="cell-name"><a href="{items.U_ITEM}" itemprop="name">{items.TITLE}</a></h2>
 								</header>
 								<div class="cell-body">
+									# IF items.C_COMPLETED #
+										<div class="cell-content">
+											<span class="message-helper bgc error">{@completed.item}</span>
+										</div>
+									# ENDIF #
 									<div class="cell-infos">
 										<div class="more">
 											# IF NOT C_MEMBER_ITEMS #
@@ -391,7 +397,7 @@
 				# IF NOT C_HIDE_NO_ITEM_MESSAGE #
 					<div class="content">
 						<div class="message-helper bgc notice align-center">
-							{@common.no.item.now}
+							{@items.no.element}
 						</div>
 					</div>
 				# ENDIF #

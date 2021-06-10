@@ -9,6 +9,7 @@
 			# ENDIF #
 		</div>
 		<h1 itemprop="name">{TITLE}</h1>
+		# IF C_COMPLETED #<div class="message-helper bgc error">{@completed.item}</div># ENDIF #
 	</header>
 	<div class="sub-section">
 		<div class="content-container">
