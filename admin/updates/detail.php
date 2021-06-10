@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 09
+ * @version     PHPBoost 6.0 - last update: 2021 06 10
  * @since       PHPBoost 1.6 - 2008 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -15,13 +15,14 @@ define('PATH_TO_ROOT', '../..');
 require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
 
 $lang = LangLoader::get('admin-lang');
+$addon_lang = LangLoader::get('addon-lang');
 
 define('TITLE', $lang['admin.updates'] . ' - ' . $lang['admin.administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
 $identifier = retrieve(GET, 'identifier', '');
 $view = new FileTemplate('admin/updates/detail.tpl');
-$view->add_lang(array_merge($lang, LangLoader::get('addon-lang')));
+$view->add_lang(array_merge($lang, $addon_lang, LangLoader::get('common-lang')));
 
 $app = null;
 $server_configuration = new ServerConfiguration();
@@ -258,21 +259,11 @@ if ($app instanceof Application)
 		'U_APP_UPDATE'   => $app->get_update_url(),
 
 		'L_APP_UPDATE_MESSAGE' => $update->get_entitled(),
-		'L_AUTHORS'            => $authors_number > 1 ? $lang['admin.authors'] : $lang['admin.author'],
-		//
-		'L_NEW_FEATURES' => $LANG['new_features'],
-		'L_IMPROVEMENTS' => $LANG['improvements'],
-		'L_FIXED_BUGS' => $LANG['fixed_bugs'],
-		'L_SECURITY_IMPROVEMENTS' => $LANG['security_improvements'],
-		'L_DOWNLOAD' => $LANG['app_update__download'],
-		'L_DOWNLOAD_PACK' => $LANG['app_update__download_pack'],
-		'L_UPDATE_PACK' => $LANG['app_update__update_pack'],
-		'L_WARNING' => $LANG['warning'],
 	));
 
 	foreach ($authors as $author)
 		$view->assign_block_vars('authors', array(
-			'NAME' => $author['name'],
+			'NAME'  => $author['name'],
 			'EMAIL' => $author['email']
 		));
 

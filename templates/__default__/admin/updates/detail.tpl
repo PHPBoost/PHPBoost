@@ -37,7 +37,10 @@
 						# ENDIF #
 					</header>
 					<div class="more">
-						{APP_PUBDATE} | # START authors #<a href="mailto:{authors.EMAIL}">{authors.NAME}</a> | # END authors #
+						<span class="pinned" aria-label="{@common.creation.date}">{APP_PUBDATE}</span>
+						# START authors #
+							<span class="pinned" aria-label="{@common.author}"><a href="mailto:{authors.EMAIL}">{authors.NAME}</a></span>
+						# END authors #
 					</div>
 					<div class="content">
 						# IF C_DISPLAY_LINKS_AND_PRIORITY #
