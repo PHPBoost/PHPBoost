@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 06
+ * @version     PHPBoost 6.0 - last update: 2021 06 10
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -204,10 +204,11 @@ $lang['common.play']     = 'Lecture';
 $lang['common.pause']    = 'Pause';
 
 // Notes
-$lang['common.note']     = 'Note';
-$lang['common.notes']    = 'Notes';
-$lang['common.add.note'] = 'Noter';
-$lang['common.no.note']  = 'Aucune note';
+$lang['common.note']          = 'Note';
+$lang['common.notes']         = 'Notes';
+$lang['common.add.note']      = 'Noter';
+$lang['common.no.note']       = 'Aucune note';
+$lang['common.already.voted'] = 'Vous avez déjà voté';
 
 // Pagination
 $lang['common.page']                = 'Page';

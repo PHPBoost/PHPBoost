@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 15
+ * @version     PHPBoost 6.0 - last update: 2021 06 10
  * @since       PHPBoost 3.0 - 2010 02 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -38,7 +38,8 @@ class NotationService
 		$notation_scale = $notation->get_notation_scale();
 		if (!empty($notation_scale))
 		{
-			$template = new FileTemplate('framework/content/notation/notation.tpl');
+			$view = new FileTemplate('framework/content/notation/notation.tpl');
+			$view->add_lang(LangLoader::get('common-lang'));
 
 			$average_notes = $notation->get_average_notes();
 			$int = intval($average_notes);
@@ -80,7 +81,7 @@ class NotationService
 					$star_width = 'star-width-0';
 				}
 
-				$template->assign_block_vars('star', array(
+				$view->assign_block_vars('star', array(
 					'I' => $i,
 					'STAR_EMPTY' => $star_empty,
 					'STAR_HALF'  => $star_half,
@@ -90,17 +91,17 @@ class NotationService
 			}
 
 			$count_notes = $notation->get_notes_number();
-			$template->put_all(array(
+			$view->put_all(array(
 				'C_STATIC_DISPLAY' => true,
-				'C_NOTES' => $count_notes > 0,
-				'ID_IN_MODULE' => $notation->get_id_in_module(),
-				'NOTES_NUMBER' => $notation->get_notes_number(),
-				'AVERAGE_NOTES' => $average_notes,
+				'C_NOTES'          => $count_notes > 0,
+
+				'ID_IN_MODULE'   => $notation->get_id_in_module(),
+				'NOTES_NUMBER'   => $notation->get_notes_number(),
+				'AVERAGE_NOTES'  => $average_notes,
 				'NOTATION_SCALE' => $notation->get_notation_scale(),
-				'L_NO_NOTE' => LangLoader::get_message('no_note', 'common'),
 			));
 
-			return $template->render();
+			return $view->render();
 		}
 		else
 		{
@@ -125,7 +126,8 @@ class NotationService
 		}
 		else
 		{
-			$template = new FileTemplate('framework/content/notation/notation.tpl');
+			$view = new FileTemplate('framework/content/notation/notation.tpl');
+			$view->add_lang(array_merge(LangLoader::get('common-lang')));
 
 			$average_notes = $notation->get_average_notes();
 			$int = intval($average_notes);
@@ -167,7 +169,7 @@ class NotationService
 					$star_width = 'star-width-0';
 				}
 
-				$template->assign_block_vars('star', array(
+				$view->assign_block_vars('star', array(
 					'I' => $i,
 					'STAR_EMPTY' => $star_empty,
 					'STAR_HALF'  => $star_half,
@@ -177,27 +179,22 @@ class NotationService
 			}
 
 			$count_notes = $notation->get_notes_number();
-			$template->put_all(array(
+			$view->put_all(array(
 				'C_JS_NOT_ALREADY_INCLUDED' => !self::$js_already_included,
 				'C_NOTES' => $count_notes > 0,
-				'C_MORE_1_NOTES' => $count_notes > 1,
+				'C_SEVERAL_NOTES' => $count_notes > 1,
+
 				'CURRENT_URL' => REWRITED_SCRIPT,
 				'ID_IN_MODULE' => $notation->get_id_in_module(),
 				'NOTATION_SCALE' => $notation->get_notation_scale(),
 				'NOTES_NUMBER' => $count_notes,
 				'AVERAGE_NOTES' => $average_notes,
 				'ALREADY_NOTE' => $notation->user_already_noted(),
-				'L_NO_NOTE' => LangLoader::get_message('no_note', 'common'),
-				'L_AUTH_ERROR' => LangLoader::get_message('error.auth', 'status-messages-common'),
-				'L_ALREADY_NOTE' => self::$lang['already_vote'],
-				'L_NOTES' => LangLoader::get_message('notes', 'common'),
-				'L_NOTE' => LangLoader::get_message('note', 'common'),
-				'L_VALID_NOTE' => LangLoader::get_message('add_note', 'common')
 			));
 
 			self::$js_already_included = true;
 
-			return $template->render();
+			return $view->render();
 		}
 	}
 

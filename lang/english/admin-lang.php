@@ -25,7 +25,7 @@ $lang['admin.priority.low']       = 'Low';
 $lang['admin.priority.very.low']  = 'Very low';
 
 // Advice
-$lang['admin.advice']                              = 'Advises';
+$lang['admin.advice']                              = 'Advice';
 $lang['admin.advice.modules.management']           = '<a href="' . AdminModulesUrlBuilder::list_installed_modules()->rel() . '">Disable or uninstall modules</a> you don\'t need to free ressources on the website.';
 $lang['admin.advice.check_modules.authorizations'] = 'Check the authorizations of all your modules and menus before opening your website to avoit guest or unauthorized users accessing protected areas.';
 $lang['admin.advice.disable.debug.mode']           = '<a href="' . AdminConfigUrlBuilder::advanced_config()->rel() . '">Disable debug mode</a> to hide errors to users (the errors are loggued on the <a href="' . AdminErrorsUrlBuilder::logged_errors()->rel() . '">Loggued errors</a> page).';
