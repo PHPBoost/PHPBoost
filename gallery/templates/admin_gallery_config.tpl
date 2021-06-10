@@ -69,7 +69,7 @@
 	<form action="admin_gallery_config.php" method="post" onsubmit="return check_form();" class="fieldset-content">
 		<p class="align-center small text-italic">{@form.required.fields}</p>
 		<fieldset>
-			<legend>{@gallery.module.config.title}</legend>
+			<legend>{@gallery.config.module.title}</legend>
 			<div class="fieldset-inset">
 				<div class="form-element">
 					<label for="max_width">* {@gallery.max.width} ({@common.unit.pixels})<span class="field-description">{@gallery.max.width.clue}</span></label>

@@ -13,7 +13,7 @@
 ####################################################
 
 $lang['gallery.module.title']        = 'Galerie';
-$lang['gallery.module.config.title'] = 'Configuration du module Galerie';
+$lang['gallery.config.module.title'] = 'Configuration du module Galerie';
 $lang['gallery.random.items']        = 'Images aléatoires';
 
 // Configuration

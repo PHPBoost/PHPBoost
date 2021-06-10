@@ -243,7 +243,7 @@ elseif ($g_add)
 		'IMG_FORMAT'         => 'JPG, PNG, GIF',
 
 		'U_GALLERY_ACTION_ADD' => GalleryUrlBuilder::get_link_cat_add($id_category,null,AppContext::get_session()->get_token()),
-		// 
+		//
 		'CATEGORY_NAME' => $categories[$id_category]->get_name(),
 		'C_ROOT_CATEGORY' => $categories[$id_category]->get_id() == Category::ROOT_CATEGORY,
 		'MODULE_NAME' => $LANG['gallery'],
