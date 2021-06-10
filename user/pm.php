@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 27
+ * @version     PHPBoost 6.0 - last update: 2021 06 10
  * @since       PHPBoost 1.5 - 2006 07 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -978,8 +978,11 @@ else // Conversation list in the user email box
 			'ANNOUNCE'                       => $announce,
 			'TITLE'                          => stripslashes($row['title']),
 			'MSG'                            => ($row['nbr_msg'] - 1),
-			'U_CONVERS'                      => url('.php?id=' . $row['id'], '-0-' . $row['id']),
+			'U_CONVERS'                      => "pm" .url('.php?id=' . $row['id'], '-0-' . $row['id']),
 			'BRIEF'                          => TextHelper::cut_string(strip_tags(str_replace(array('<br/>', '<br />', '<br>'), ' ', $row['contents'])), 300),
+
+			'C_UNREAD'                       => ($reading === false),
+			'C_NOTSEE'                       => ($track === true),
 
 			'C_AUTHOR_IS_ADMINISTRATOR'      => ($row['user_id'] == -1),
 			'C_AUTHOR_EXIST'                 => !empty($row['login']),
