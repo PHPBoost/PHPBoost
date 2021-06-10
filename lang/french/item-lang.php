@@ -6,6 +6,7 @@
  * @version     PHPBoost 6.0 - last update: 2021 06 10
  * @since       PHPBoost 6.0 - 2020 01 08
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor xela <xela@phpboost.com>
 */
 
 ####################################################
@@ -26,7 +27,7 @@ $lang['last.items'] = 'derniers :items';
 $lang['last.items.alt'] = 'dernières :items';
 $lang['items.number'] = 'Nombre de :items';
 $lang['items.number.alt2'] = 'Nombre d\':items';
-$lang['completed.item'] = 'Cet :item est terminé';
+$lang['completed.item'] = 'Ce :item est terminé';
 $lang['completed.item.alt'] = 'Cette :item est terminée';
 $lang['items.no.element'] = 'Aucun :item n\'est disponible pour le moment';
 $lang['items.no.element.alt'] = 'Aucune :item n\'est disponible pour le moment';
