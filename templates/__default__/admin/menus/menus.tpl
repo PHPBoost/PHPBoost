@@ -432,7 +432,7 @@
 		</div>
 
 		<div id="valid-position-menus">
-			<button type="submit" class="button bgc-full success big" name="valid" value="true"><i class="far fa-fw fa-check-square"></i> {@menu.validated.position}</button>
+			<button type="submit" class="button bgc-full link-color big" name="valid" value="true"><i class="far fa-fw fa-check-square"></i> {@menu.position}</button>
 			<input type="hidden" name="theme" value="{THEME_NAME}">
 			<input type="hidden" name="token" value="{TOKEN}">
 		</div>
@@ -441,6 +441,14 @@
 	<script>
 		jQuery(document).ready(function() {
 			createSortableMenu();
+
+			// Change validation button status when save
+			let menusUrl = window.location.hash;
+			if(menusUrl != '')
+				jQuery('#valid-position-menus button')
+					.addClass('success')
+					.removeClass('link-color')
+					.html('<i class="far fa-fw fa-check-square"></i> {@menu.validated.position}');
 
 			// Change validation button on moving
 			jQuery('.menus-block-container').each(function() {
@@ -457,7 +465,7 @@
 						if(newPos != thisPos && newPrev != thisId)
 							jQuery('#valid-position-menus button')
 								.addClass('warning')
-								.removeClass('success')
+								.removeClass('link-color')
 								.html('<i class="far fa-fw fa-square"></i> {@menu.valid.position}');
 					}
 				});

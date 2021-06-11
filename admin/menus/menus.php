@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 02
+ * @version     PHPBoost 6.0 - last update: 2021 06 11
  * @since       PHPBoost 1.6 - 2007 03 05
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -163,7 +163,7 @@ if ($action == 'save') // Save menus positions.
 
 	MenuService::generate_cache();
 
-	AppContext::get_response()->redirect('menus.php');
+	AppContext::get_response()->redirect('menus.php#saved');
 }
 
 
