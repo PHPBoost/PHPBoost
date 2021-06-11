@@ -29,7 +29,7 @@ $lang['items.number'] = 'Nombre de :items';
 $lang['items.number.alt2'] = 'Nombre d\':items';
 $lang['completed.item'] = 'Ce :item est terminé';
 $lang['completed.item.alt'] = 'Cette :item est terminée';
-$lang['completed.item.alt2'] = 'Cet :item est terminée';
+$lang['completed.item.alt2'] = 'Cet :item est terminé';
 $lang['items.no.element'] = 'Aucun :item n\'est disponible pour le moment';
 $lang['items.no.element.alt'] = 'Aucune :item n\'est disponible pour le moment';
 
