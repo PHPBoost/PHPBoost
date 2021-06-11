@@ -37,7 +37,7 @@
 		<a
 		class="button small"
 		href="${relative_url(OnlineUrlBuilder::home())}"
-		aria-label="# START items #<span# IF NOT C_ROBOT # class='{items.LEVEL_CLASS}'# ENDIF ## IF items.C_GROUP_COLOR # style='background-color: {items.GROUP_COLOR}'# ENDIF #>{items.PSEUDO}</span># IF C_SEVERAL_USERS #, # ENDIF ## IF C_MORE_USERS #...# ENDIF ## END items #">
+		aria-label="# START items #<span# IF NOT C_ROBOT # class='{items.USER_LEVEL_CLASS}'# ENDIF ## IF items.C_USER_GROUP_COLOR # style='color: {items.USER_GROUP_COLOR}'# ENDIF #>{items.USER_DISPLAY_NAME}</span># IF C_SEVERAL_USERS #<br /># ENDIF ## IF C_MORE_USERS #...# ENDIF ## END items #">
 			{@online.who.is}
 		</a>
 	</div>
