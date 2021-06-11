@@ -432,7 +432,7 @@
 		</div>
 
 		<div id="valid-position-menus">
-			<button type="submit" class="button bgc-full link-color big" name="valid" value="true"><i class="far fa-fw fa-check-square"></i> {@menu.position}</button>
+			<button type="submit" class="button bgc-full link-color big" name="valid" value="true"><i class="far fa-fw fa-square"></i> {@menu.position}</button>
 			<input type="hidden" name="theme" value="{THEME_NAME}">
 			<input type="hidden" name="token" value="{TOKEN}">
 		</div>
@@ -444,11 +444,17 @@
 
 			// Change validation button status when save
 			let menusUrl = window.location.hash;
-			if(menusUrl != '')
+			if(menusUrl != '') {
 				jQuery('#valid-position-menus button')
 					.addClass('success')
-					.removeClass('link-color')
 					.html('<i class="far fa-fw fa-check-square"></i> {@menu.validated.position}');
+				if (performance.navigation.type == performance.navigation.TYPE_RELOAD) { // back to init status on reloading page
+				  	history.pushState('', '', ' ');
+					jQuery('#valid-position-menus button')
+						.removeClass('success')
+						.html('<i class="far fa-fw fa-square"></i> {@menu.position}');
+				}
+			}
 
 			// Change validation button on moving
 			jQuery('.menus-block-container').each(function() {
@@ -462,10 +468,10 @@
 						let newParent = $this.closest('.menusmanagement').find('.dropzone').parent().attr('id'),
 							newPrev = $this.siblings('.dropzone').prev().attr('id'),
 							newPos = newParent + '-' + newPrev;
+					console.log(newParent, thisId);
 						if(newPos != thisPos && newPrev != thisId)
 							jQuery('#valid-position-menus button')
 								.addClass('warning')
-								.removeClass('link-color')
 								.html('<i class="far fa-fw fa-square"></i> {@menu.valid.position}');
 					}
 				});
@@ -473,7 +479,7 @@
 
 			// Change validation button on changing checkboxes status
 			jQuery('[type="checkbox"]').on('change', function(){
-				jQuery('#valid-position-menus button').addClass('warning').removeClass('success').html('<i class="far fa-fw fa-square"></i> {@menu.valid.position}');
+				jQuery('#valid-position-menus button').addClass('warning').html('<i class="far fa-fw fa-square"></i> {@menu.valid.position}');
 			});
 
 			// opacity for unchecked block on page loading
