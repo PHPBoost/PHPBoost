@@ -442,27 +442,26 @@
 		jQuery(document).ready(function() {
 			createSortableMenu();
 
-			// Change validation button on moving menus
-			function checkForChanges(){
-				var thisId,
-					initPrevSibling,
-					newPrevSibling;
-				if(jQuery( '.menus-block-container' ).hasClass('dragged'))
-				{
-					thisId = jQuery('.menus-block-container.dragged').attr('id')
-					initPrevSibling = jQuery('.menus-block-container.dragged').prev().attr('id');
-					if(typeof initPrevSibling === 'undefined') initPrevSibling = 'initPrev';
-					jQuery('#' + thisId).on('mouseup', function() {
-						newPrevSibling = jQuery(this).siblings('.dropzone').prev().attr('id');
-						if(typeof newPrevSibling === 'undefined') newPrevSibling = 'newPrev';
-						if(newPrevSibling != initPrevSibling && newPrevSibling != thisId)
-					    	jQuery('#valid-position-menus button').addClass('warning').removeClass('success').html('<i class="far fa-fw fa-square"></i> {@menu.valid.position}');
-					});
-				}
-			    else
-			        setTimeout(checkForChanges, 3);
-			}
-			jQuery(checkForChanges);
+			// Change validation button on moving
+			jQuery('.menus-block-container').each(function() {
+				let $this = jQuery(this),
+					thisId = $this.attr('id'),
+					thisParent = $this.parent().attr('id'),
+					thisPrev = $this.prev().attr('id'),
+					thisPos = thisParent + '-' + thisPrev;
+				$this.on('mouseup', function() {
+					if($this.hasClass('dragged')) { 
+						let newParent = $this.closest('.menusmanagement').find('.dropzone').parent().attr('id'),
+							newPrev = $this.siblings('.dropzone').prev().attr('id'),
+							newPos = newParent + '-' + newPrev;
+						if(newPos != thisPos && newPrev != thisId)
+							jQuery('#valid-position-menus button')
+								.addClass('warning')
+								.removeClass('success')
+								.html('<i class="far fa-fw fa-square"></i> {@menu.valid.position}');
+					}
+				});
+			});
 
 			// Change validation button on changing checkboxes status
 			jQuery('[type="checkbox"]').on('change', function(){
