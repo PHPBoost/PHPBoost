@@ -450,7 +450,7 @@
 					thisPrev = $this.prev().attr('id'),
 					thisPos = thisParent + '-' + thisPrev;
 				$this.on('mouseup', function() {
-					if($this.hasClass('dragged')) { 
+					if($this.hasClass('dragged')) {
 						let newParent = $this.closest('.menusmanagement').find('.dropzone').parent().attr('id'),
 							newPrev = $this.siblings('.dropzone').prev().attr('id'),
 							newPos = newParent + '-' + newPrev;
@@ -466,7 +466,13 @@
 			// Change validation button on changing checkboxes status
 			jQuery('[type="checkbox"]').on('change', function(){
 				jQuery('#valid-position-menus button').addClass('warning').removeClass('success').html('<i class="far fa-fw fa-square"></i> {@menu.valid.position}');
-			})
+			});
+
+			// opacity for unchecked block on page loading
+			jQuery('.container-block').each(function(){
+				let cb = jQuery(this).find('[type="checkbox"]');
+				if(!cb.is(':checked')) jQuery(this).next().css('opacity', 0.5);
+			});
 		});
 	</script>
 </form>
