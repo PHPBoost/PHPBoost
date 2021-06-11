@@ -34,6 +34,11 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 		return LangLoader::get_message('online.module.title', 'common', 'online');
 	}
 
+	public function get_formated_title()
+	{
+		return $this->get_menu_title();
+	}
+
 	public function is_displayed()
 	{
 		return !Url::is_current_url('/online/') && OnlineAuthorizationsService::check_authorizations()->read();
@@ -87,7 +92,7 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 
 		$tpl->put_all(array(
 			'C_DISPLAY_ROBOTS' => $online_config->are_robots_displayed(),
-			'C_SEVERAL_USERS' => $this->total_users > 1,
+			'C_SEVERAL_USERS'  => $this->total_users > 1,
 			'C_MORE_USERS'     => $this->total_users > $online_config->get_members_number_displayed(),
 
 			'USERS_NUMBER'          => $this->total_users,

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 26
+ * @version     PHPBoost 6.0 - last update: 2021 06 11
  * @since       PHPBoost 3.0 - 2012 02 22
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -31,6 +31,11 @@ class LangsSwitcherModuleMiniMenu extends ModuleMiniMenu
 	public function get_menu_title()
 	{
 		return LangLoader::get_message('ls.switch.lang', 'common', 'LangsSwitcher');
+	}
+
+	public function get_formated_title()
+	{
+		return $this->get_menu_title();
 	}
 
 	public function is_displayed()

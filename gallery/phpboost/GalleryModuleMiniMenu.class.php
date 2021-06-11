@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 11
+ * @version     PHPBoost 6.0 - last update: 2021 06 11
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -26,6 +26,11 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 	public function get_menu_title()
 	{
 		return LangLoader::get_message('gallery.random.items', 'common', 'gallery');
+	}
+
+	public function get_formated_title()
+	{
+		return LangLoader::get_message('gallery.module.title', 'common', 'gallery');
 	}
 
 	public function is_displayed()
