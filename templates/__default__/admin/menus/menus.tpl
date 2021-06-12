@@ -464,11 +464,11 @@
 					thisPrev = $this.prev().attr('id'),
 					thisPos = thisParent + '-' + thisPrev;
 				$this.on('mouseup', function() {
+					console.log(thisParent, thisId);
 					if($this.hasClass('dragged')) {
 						let newParent = $this.closest('.menusmanagement').find('.dropzone').parent().attr('id'),
 							newPrev = $this.siblings('.dropzone').prev().attr('id'),
 							newPos = newParent + '-' + newPrev;
-					console.log(newParent, thisId);
 						if(newPos != thisPos && newPrev != thisId)
 							jQuery('#valid-position-menus button')
 								.addClass('warning')

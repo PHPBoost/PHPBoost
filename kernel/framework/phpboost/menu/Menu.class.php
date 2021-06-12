@@ -78,6 +78,11 @@ abstract class Menu
 	protected $hidden_with_small_screens = false;
 	/**
 	* @access protected
+	* @var bool menu comes from a module
+	*/
+	protected $mini_from_module = false;
+	/**
+	* @access protected
 	* @var bool disabled body content or not with push menu
 	*/
 	protected $disabled_body = false;
@@ -106,7 +111,6 @@ abstract class Menu
 	 * @var Template the template of the menu
 	 */
 	protected $template = null;
-
 
 	/**
 	 * Build a Menu element.
@@ -209,6 +213,10 @@ abstract class Menu
 	*/
 	public function set_hidden_with_small_screens($value) { $this->hidden_with_small_screens = $value; }
 	/*
+	* @param bool $value true if menu comes from a module
+	*/
+	public function set_mini_from_module($value) { $this->mini_from_module = $value; }
+	/*
 	* @param bool $value true if body is disabled with push menu
 	*/
 	public function set_disabled_body($value) { $this->disabled_body = $value; }
@@ -262,6 +270,10 @@ abstract class Menu
 	* @return bool check if menu is hidden with small screens
 	*/
 	public function is_hidden_with_small_screens() { return $this->hidden_with_small_screens; }
+	/**
+	* @return bool check if body is disabled (pushmenu)
+	*/
+	public function is_mini_from_module() { return $this->mini_from_module; }
 	/**
 	* @return bool check if body is disabled (pushmenu)
 	*/

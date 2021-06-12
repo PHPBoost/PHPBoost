@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 11
+ * @version     PHPBoost 6.0 - last update: 2021 06 12
  * @since       PHPBoost 1.6 - 2007 03 05
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -215,19 +215,19 @@ foreach ($menus_blocks as $block_id => $menus)
 		$vertical_position = in_array($block_id, array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT));
 
 		$menu_tpl->put_all(array(
-			'C_MENU_ACTIVATED' => $enabled,
-			'C_EDIT'           => !empty($edit_link),
-			'C_DELETE'         => !empty($del_link),
-			'C_UP'             => $block_id != Menu::BLOCK_POSITION__NOT_ENABLED && $i > 0,
-			'C_DOWN'           => $block_id != Menu::BLOCK_POSITION__NOT_ENABLED && $i < $max - 1,
-			'C_VERTICAL'       => $vertical_position,
-			'C_HORIZONTAL'     => !$vertical_position,
+			'C_DISPLAY'    => $enabled,
+			'C_EDIT'       => !empty($edit_link),
+			'C_DELETE'     => !empty($del_link),
+			'C_UP'         => $block_id != Menu::BLOCK_POSITION__NOT_ENABLED && $i > 0,
+			'C_DOWN'       => $block_id != Menu::BLOCK_POSITION__NOT_ENABLED && $i < $max - 1,
+			'C_VERTICAL'   => $vertical_position,
+			'C_HORIZONTAL' => !$vertical_position,
+			'C_IS_MODULE'  => $menu->is_mini_from_module(),
 
-			'NAME'     => $menu->get_formated_title(),
-			'IDMENU'   => $id,
-			'CONTENTS' => $menu->admin_display(),
-			'ACTIV'    => ($enabled ? 'disable' : 'enable'),
-			'UNACTIV'  => ($enabled ? 'enable' : 'disable'),
+			'MENU_TITLE'     => $menu->get_formated_title(),
+			'MENU_ID'        => $id,
+			'CONTENT'        => $menu->admin_display(),
+			'DISPLAY_STATUS' => ($enabled ? 'disable' : 'enable'),
 
 			'U_EDIT'   => menu_admin_link($menu, 'edit'),
 			'U_DELETE' => menu_admin_link($menu, 'delete'),
