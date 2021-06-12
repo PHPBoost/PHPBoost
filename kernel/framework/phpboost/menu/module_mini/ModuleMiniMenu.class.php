@@ -40,11 +40,6 @@ class ModuleMiniMenu extends Menu
 		return !empty($this->get_menu_title()) ? $this->get_menu_title() : $this->get_format_title();
 	}
 
-	public function is_module()
-	{
-		return $this->get_format_title();
-	}
-
 	public function get_menu_content()
 	{
 		return '';
