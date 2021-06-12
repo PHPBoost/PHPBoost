@@ -5,11 +5,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 11 14
+ * @version     PHPBoost 6.0 - last update: 2021 06 12
  * @since       PHPBoost 2.0 - 2008 11 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ModuleMiniMenu extends Menu
@@ -34,6 +35,16 @@ class ModuleMiniMenu extends Menu
 		return '';
 	}
 
+	public function get_formated_title()
+	{
+		return !empty($this->get_menu_title()) ? $this->get_menu_title() : $this->get_format_title();
+	}
+
+	public function is_module()
+	{
+		return $this->get_format_title();
+	}
+
 	public function get_menu_content()
 	{
 		return '';
@@ -44,7 +55,7 @@ class ModuleMiniMenu extends Menu
 		return true;
 	}
 
-	public function get_formated_title()
+	public function get_format_title()
 	{
 		$class_name = get_class($this);
 		$module_name = TextHelper::strstr($class_name, self::MODULE_MINI_MENU__CLASS, true);
@@ -63,7 +74,7 @@ class ModuleMiniMenu extends Menu
 
 		$localized_module_name = !empty($module) ? $module->get_configuration()->get_name() : '';
 
-		return !empty($localized_module_name) ? (!preg_match('/^' . Langloader::get_message('admin.main_menu', 'main') . ' /u', $localized_module_name) ? Langloader::get_message('admin.main_menu', 'main') . ' ' : '') . $localized_module_name : $class_name;
+		return !empty($localized_module_name) ? (!preg_match('/^' . Langloader::get_message('menu.menu', 'menu-lang') . ' /u', $localized_module_name) ? Langloader::get_message('menu.menu', 'menu-lang') . ' ' : '') . $localized_module_name : $class_name;
 	}
 
 	public function display()
@@ -87,8 +98,8 @@ class ModuleMiniMenu extends Menu
 			$this->assign_common_template_variables($template);
 
 			$template->put_all(array(
-				'ID' => $this->get_menu_id(),
-				'TITLE' => $this->get_menu_title(),
+				'ID'       => $this->get_menu_id(),
+				'TITLE'    => $this->get_menu_title(),
 				'CONTENTS' => $this->get_menu_content()
 			));
 

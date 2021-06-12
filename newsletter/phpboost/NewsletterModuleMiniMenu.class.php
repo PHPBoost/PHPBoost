@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 11
+ * @version     PHPBoost 6.0 - last update: 2021 06 12
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -29,11 +29,6 @@ class NewsletterModuleMiniMenu extends ModuleMiniMenu
 	public function get_menu_title()
 	{
 		return LangLoader::get_message('newsletter.module.title', 'common', 'newsletter');
-	}
-
-	public function get_formated_title()
-	{
-		return $this->get_menu_title();
 	}
 
 	public function is_displayed()

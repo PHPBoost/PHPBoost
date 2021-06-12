@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 16
+ * @version     PHPBoost 6.0 - last update: 2021 06 12
  * @since       PHPBoost 2.0 - 2008 11 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -228,6 +228,10 @@ abstract class Menu
 	## Getters ##
 	/**
 	 * @return string the displayable Menu $title
+	 */
+	public function get_format_title() { return $this->title; }
+	/**
+	 * @return string the displayable Menu $title in the menus manager
 	 */
 	public function get_formated_title() { return $this->title; }
 	/**

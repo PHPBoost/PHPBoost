@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 11
+ * @version     PHPBoost 6.0 - last update: 2021 06 12
  * @since       PHPBoost 4.0 - 2014 09 02
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FaqModuleMiniMenu extends ModuleMiniMenu
@@ -67,8 +68,8 @@ class FaqModuleMiniMenu extends ModuleMiniMenu
 
 				$view->put_all(array(
 					'C_ITEMS' => true,
-					'TITLE' => $random_question['title'],
-					'U_ITEM' => FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $random_question['id'])->rel()
+					'TITLE'   => $random_question['title'],
+					'U_ITEM'  => FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $random_question['id'])->rel()
 				));
 			}
 		}
