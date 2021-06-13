@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 10
+ * @version     PHPBoost 6.0 - last update: 2021 06 13
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -17,6 +17,7 @@ $lang['common.avatar']         = 'Avatar';
 $lang['common.color']          = 'Color';
 $lang['common.colors']         = 'Colors';
 $lang['common.content']        = 'Content';
+$lang['common.date']           = 'Date';
 $lang['common.description']    = 'Description';
 $lang['common.email']          = 'Email';
 $lang['common.filter']         = 'Filter';
@@ -241,6 +242,7 @@ $lang['common.select.all.elements'] = 'Select all elements';
 $lang['common.click.to.select']     = 'Click to select an option';
 
 // Share
+$lang['common.share']       = 'Share';
 $lang['common.share.email'] = 'Share by email';
 $lang['common.share.sms']   = 'Share by sms';
 
