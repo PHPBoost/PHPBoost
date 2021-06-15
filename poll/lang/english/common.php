@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 04
+ * @version     PHPBoost 6.0 - last update: 2021 06 15
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -22,9 +22,8 @@ $lang['poll.no.vote']     = 'Nobody has voted yet.';
 
 // Configuration
 $lang['poll.config.advanced.configuration']          = 'Advanced configuration';
-$lang['poll.config.enable.mini.module']              = 'Activate the mini module';
 $lang['poll.config.mini.module.selected.items']      = 'Select the items to display';
-$lang['poll.config.mini.module.selected.items.clue'] = 'Select at least one item to activate the mini module. The items will be displayed randomly.';
+$lang['poll.config.mini.module.selected.items.clue'] = 'The items will be displayed randomly.';
 $lang['poll.config.cookie.name']                     = 'Cookie name';
 $lang['poll.config.cookie.lenght']                   = 'Cookie life length';
 $lang['poll.config.vote.authorization']              = 'Vote authorization';
@@ -66,8 +65,10 @@ $lang['poll.mini.form.error']           = 'Error in form';
 
 // Message helper
 $lang['poll.message.no.mini']       = 'This option is disabled because you do not have any poll declared in the mini module.';
-$lang['poll.message.closed']        = 'The poll is completed.';
-$lang['poll.message.not.published'] = 'You don\'t have the authorization to vote because the poll isn\'t published.';
+$lang['completed.item'] 			= 'This poll is completed.';
 $lang['poll.message.not.allowed']   = 'You don\'t have the authorization to vote.';
-$lang['poll.message.already.voted'] = 'Your vote has already been saved.';
+$lang['poll.message.already.voted'] = 'Your vote is saved.';
+
+// Sorting field
+$lang['poll.sorting.field.closed']        = 'Polls completed';
 ?>

@@ -3,13 +3,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 01
+ * @version     PHPBoost 6.0 - last update: 2021 06 15
  * @since       PHPBoost 6.0 - 2020 05 14
 */
 
 class PollConfig extends DefaultRichModuleConfig
 {
-	const MINI_MODULE_ACTIVATING = 'mini_module_activating';
 	const MINI_MODULE_SELECTED_ITEMS = 'mini_module_selected_items';
 	const COOKIE_NAME = 'cookie_name';
 	const COOKIE_LENGHT = 'cookie_lenght';
@@ -20,8 +19,7 @@ class PollConfig extends DefaultRichModuleConfig
 	public function get_additional_default_values()
 	{
 		return array(
-			self::MINI_MODULE_ACTIVATING => false,
-			self::MINI_MODULE_SELECTED_ITEMS => array(),
+			self::MINI_MODULE_SELECTED_ITEMS => array($this->get_default_mini_module_selected_item_id()),
 			self::COOKIE_NAME => 'poll',
 			self::COOKIE_LENGHT => 30, //Cookie duration is 30 days per default
 			self::AUTHORIZATIONS => array('r-1' => 97, 'r0' => 103, 'r1' => 109)
@@ -41,6 +39,30 @@ class PollConfig extends DefaultRichModuleConfig
 			$set_array[] = (string) $value;
 		}
 		return $this->set_property(self::MINI_MODULE_SELECTED_ITEMS, $set_array);
+	}
+	
+	public function get_default_mini_module_selected_item_id()
+	{
+	  $install_lang = LangLoader::get('install', self::$module_id);
+	  $install_item_title = $install_lang['items'][0]['item.title'];
+	  
+	  $db_querier  = PersistenceContext::get_querier();
+	  
+	  try 
+	  {
+	    $item = $db_querier->select_single_row(
+			PREFIX . self::$module_id,
+			array('id', 'title'),
+			'WHERE title =:title',
+			array('title' => $install_item_title));
+	  }
+	  catch (RowNotFoundException $e)
+	  {
+	    return '';
+	  }
+	  
+	  return (string) $item['id'];
+	  
 	}
 }
 ?>

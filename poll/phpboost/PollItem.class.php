@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 07
+ * @version     PHPBoost 6.0 - last update: 2021 06 11
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -24,22 +24,23 @@ class PollItem extends RichItem
 	const COUNTDOWN_NO_DISPLAY = '0';
 
 	public $current_user_id;
+	public $lang;
 
 	public function __construct()
 	{
 		$this->content_field_enabled = false;
 		$this->summary_field_enabled = false;
-
+		$this->lang = LangLoader::get('common', self::MODULE_ID);
 		$this->current_user_id = AppContext::get_current_user()->get_id();
 
-		parent::__construct('poll');
+		parent::__construct(self::MODULE_ID);
 	}
 
 	protected function set_additional_attributes_list()
 	{
 		$this->add_additional_attribute('question', array('type' => 'text', 'length' => 65000, 'notnull' => 1, 'attribute_pre_content_field_parameters' => array(
 		    'field_class' => 'FormFieldRichTextEditor',
-		    'label'       => LangLoader::get_message('poll.form.question', 'common', 'poll'),
+		    'label'       => $this->lang['poll.form.question'],
 		    'value'       => self::DEFAULT_VALUE_QUESTION,
 		    'options'     => array('required' => true)
 		    )
@@ -47,11 +48,11 @@ class PollItem extends RichItem
 
 		$this->add_additional_attribute('answers_type', array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 1, 'attribute_pre_content_field_parameters' => array(
 		    'field_class'    => 'FormFieldRadioChoice',
-		    'label'          => LangLoader::get_message('poll.form.answers.type', 'common', 'poll'),
+		    'label'          => $this->lang['poll.form.answers.type'],
 		    'value'          => self::DEFAULT_VALUE_ANSWERS_TYPE,
 		    'options'        => array(
-									new FormFieldRadioChoiceOption(LangLoader::get_message('poll.form.single', 'common', 'poll'), '1'),
-									new FormFieldRadioChoiceOption(LangLoader::get_message('poll.form.multiple', 'common', 'poll'), '2')
+									new FormFieldRadioChoiceOption($this->lang['poll.form.single'], '1'),
+									new FormFieldRadioChoiceOption($this->lang['poll.form.multiple'], '2')
 		                        ),
 		    'field_options'  => array('required' => true, 'class' => 'inline-radio')
 		    )
@@ -59,9 +60,9 @@ class PollItem extends RichItem
 
 		$this->add_additional_attribute('answers', array('type' => 'text', 'length' => 65000, 'notnull' => 1, 'is_array' => true, 'attribute_pre_content_field_parameters' => array(
 		    'field_class' => 'FormFieldPossibleValues',
-		    'label'       => LangLoader::get_message('poll.form.answers', 'common', 'poll'),
+		    'label'       => $this->lang['poll.form.answers'],
 		    'value'       => self::DEFAULT_VALUE_ANSWERS,
-		    'options'     => array('required' => true, 'unique_input_value' => true, 'min_input' => 2, 'display_default' => false, 'placeholder' => LangLoader::get_message('poll.form.answer.placeholder', 'common', 'poll'))
+			'options'     => array('required' => true, 'unique_input_value' => true, 'min_input' => 2, 'display_default' => false, 'placeholder' => $this->lang['poll.form.answer.placeholder'])
 		    )
 		));
 
@@ -167,7 +168,6 @@ class PollItem extends RichItem
 			$update_mini_module_map = $this->get_mini_module_map();
 			$update_mini_module_map[] = $this->get_id();
 
-			$this->load_conf_parameters()->set_mini_module_activating(true);
 			$this->load_conf_parameters()->set_mini_module_selected_items(array_unique($update_mini_module_map));
 			$this->save_conf_parameters();
 		}
@@ -180,9 +180,6 @@ class PollItem extends RichItem
 			$update_mini_module_map = $this->get_mini_module_map();
 			$item_id_key = array_search($this->get_id(), $update_mini_module_map);
 			unset($update_mini_module_map[$item_id_key]);
-
-			if (empty($update_mini_module_map) || !$this->load_conf_parameters()->get_mini_module_activating())
-				$this->load_conf_parameters()->set_mini_module_activating(false);
 
 			$this->load_conf_parameters()->set_mini_module_selected_items($update_mini_module_map);
 			$this->save_conf_parameters();
@@ -241,7 +238,7 @@ class PollItem extends RichItem
 	{
 		$this->set_votes(self::DEFAULT_VALUE_VOTES);
 		$this->set_votes_number(self::DEFAULT_VALUE_VOTES_NUMBER);
-                $this->set_close_poll(FormFieldCheckbox::UNCHECKED);
+		$this->set_close_poll(FormFieldCheckbox::UNCHECKED);
 		$this->set_countdown_display(self::DEFAULT_VALUE_COUNTDOWN_DISPLAY);
 	}
 
@@ -259,6 +256,16 @@ class PollItem extends RichItem
 	public function poll_module()
 	{
 		return ModulesManager::get_module(self::MODULE_ID);
+	}
+	
+	protected function get_additional_sorting_fields()
+	{
+		return array('close_poll' => array('database_field' => 'close_poll', 'label' => $this->lang['poll.sorting.field.closed'], 'icon' => 'fas fa-window-close'));
+	}
+	
+	public function get_additional_template_vars()
+	{
+		return array('C_COMPLETED' => $this->is_closed());
 	}
 }
 ?>

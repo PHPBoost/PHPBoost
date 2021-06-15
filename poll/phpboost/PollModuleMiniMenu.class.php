@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 01 12
+ * @version     PHPBoost 6.0 - last update: 2021 06 11
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -37,7 +37,7 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 
 	public function get_menu_id()
 	{
-		return 'poll-mini-module';
+		return 'poll-module-mini';
 	}
 
 	public function get_menu_title()
@@ -53,9 +53,8 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 
 	public function is_displayed()
 	{
-		return  !Url::is_current_url(self::MODULE_ID)
+		return  !Url::is_current_url(self::MODULE_ID);
 		        //&& ItemsAuthorizationsService::check_authorizations(self::MODULE_ID)->read()
-		        && $this->get_config()->get_mini_module_activating();
 	}
 
 	// $msg_return = array(key of var lang => const MessageHelper::[SUCCESS, WARNING etc])

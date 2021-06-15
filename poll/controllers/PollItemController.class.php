@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 0604
+ * @version     PHPBoost 6.0 - last update: 2021 06 15
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -103,11 +103,7 @@ class PollItemController extends DefaultDisplayItemController
 				else
 					$fieldset->set_description(MessageHelper::display($this->lang['poll.message.not.allowed'], MessageHelper::WARNING)->render());
 			}
-			else
-				$fieldset->set_description(MessageHelper::display($this->lang['poll.message.not.published'], MessageHelper::WARNING)->render());
 		}
-		else
-			$fieldset->set_description(MessageHelper::display($this->lang['poll.message.closed'], MessageHelper::NOTICE)->render());
 
 		$this->vote_form = $vote_form;
 	}

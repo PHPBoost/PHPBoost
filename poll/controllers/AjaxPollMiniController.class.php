@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 01 11
+ * @version     PHPBoost 6.0 - last update: 2021 06 11
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -32,7 +32,7 @@ class AjaxPollMiniController extends AbstractController
 		{
 			$json_response = array(
 				'validated' => 0,
-				'html' 		=> $this->get_view($this->get_pollminimenu(), !empty($previous_item_id) ? $previous_item_id : $next_item_id)
+				'html' 		=> $this->set_view($this->get_pollminimenu(), !empty($previous_item_id) ? $previous_item_id : $next_item_id)
 			);
 		}
 		else
@@ -49,7 +49,7 @@ class AjaxPollMiniController extends AbstractController
 
 					$json_response = array(
 						'validated' => 1,
-						'html' 		=> $this->get_view($this->get_pollminimenu(), '', array('poll.vote.saved' => MessageHelper::SUCCESS))
+						'html' 		=> $this->set_view($this->get_pollminimenu(), '', array('poll.vote.saved' => MessageHelper::SUCCESS))
 					);
 
 				}
@@ -57,14 +57,14 @@ class AjaxPollMiniController extends AbstractController
 				{
 					$json_response = array(
 						'validated' => 0,
-						'html' 		=> $this->get_view($this->get_pollminimenu(), $this->get_sended_item_id(), array('poll.mini.have.to.choose' => MessageHelper::NOTICE))
+						'html' 		=> $this->set_view($this->get_pollminimenu(), $this->get_sended_item_id(), array('poll.mini.have.to.choose' => MessageHelper::NOTICE))
 					);
 				}
 				elseif (!$this->form_has_been_submited() && !$this->form_is_validated())
 				{
 					$json_response = array(
 						'validated' => 0,
-						'html' 		=> $this->get_view($this->get_pollminimenu(), $this->get_sended_item_id(), array('form_error.poll_mini' => MessageHelper::WARNING))
+						'html' 		=> $this->set_view($this->get_pollminimenu(), $this->get_sended_item_id(), array('form_error.poll_mini' => MessageHelper::WARNING))
 					);
 				}
 			}
@@ -191,7 +191,7 @@ class AjaxPollMiniController extends AbstractController
 		return $multiple_vote;
 	}
 
-	protected function get_view(ModuleMiniMenu $moduleminimenu, $item_id, $msg_return = array())
+	protected function set_view(ModuleMiniMenu $moduleminimenu, $item_id, $msg_return = array())
 	{
 		return $moduleminimenu->get_menu_content($item_id, $msg_return);
 	}

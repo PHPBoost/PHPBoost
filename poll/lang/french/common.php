@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 04
+ * @version     PHPBoost 6.0 - last update: 2021 06 15
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -18,9 +18,8 @@ $lang['poll.no.vote']     = 'Personne n\'a voté pour l\'instant.';
 
 // Configuration
 $lang['poll.config.advanced.configuration']          = 'Configuration avancée';
-$lang['poll.config.enable.mini.module']              = 'Activer le mini module';
 $lang['poll.config.mini.module.selected.items']      = 'Sélectionner les éléments à afficher';
-$lang['poll.config.mini.module.selected.items.clue'] = 'Sélectionner au moins un élément pour activer le mini module. Les éléments seront affichés aléatoirement.';
+$lang['poll.config.mini.module.selected.items.clue'] = 'Les éléments seront affichés aléatoirement.';
 $lang['poll.config.cookie.name']                     = 'Nom du cookie';
 $lang['poll.config.cookie.lenght']                   = 'Durée de validité du cookie';
 $lang['poll.config.vote.authorization']              = 'Autorisation de voter';
@@ -62,8 +61,10 @@ $lang['poll.mini.form.error']           = 'Erreur dans le formulaire';
 
 // Message helper
 $lang['poll.message.no.mini']       = 'Cette option est désactivée car vous n\'avez aucun sondage déclaré dans le mini module.';
-$lang['poll.message.closed']        = 'Le sondage est clôs.';
-$lang['poll.message.not.published'] = 'Vous n\'avez pas l\'autorisation de voter car le sondage n\'est pas publié.';
+$lang['completed.item'] 			= 'Ce sondage est clos';
 $lang['poll.message.not.allowed']   = 'Vous n\'avez pas l\'autorisation de voter.';
-$lang['poll.message.already.voted'] = 'Votre vote a déjà été enregistré.';
+$lang['poll.message.already.voted'] = 'Votre vote est enregistré.';
+
+// Sorting field
+$lang['poll.sorting.field.closed']        = 'Sondages clos';
 ?>
