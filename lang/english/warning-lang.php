@@ -32,6 +32,7 @@ $lang['warning.url']          = 'Please enter a valid URL !';
 $lang['warning.recipient']    = 'Please enter the recipient !';
 $lang['warning.integer']      = 'Please enter an integer number !';
 $lang['warning.items.number'] = 'Please enter an item number !';
+$lang['warning.irreversible'] = 'This action is irreversible !';
 
 // Captcha
 $lang['warning.captcha.validation.error'] = 'The visual confirmation field has not been properly filled!';

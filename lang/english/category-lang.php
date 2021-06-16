@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2021 06 16
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -33,9 +33,10 @@ $lang['category.delete']                = 'Delete category';
 $lang['category.form.authorizations.clue'] = 'General module authorizations are applied per default. You can apply special permissions.';
 
 // Delete category
-$lang['category.delete.clue']        = 'You are about to delete the category. Two solutions are available to you. You can either move all of its contents (elements and subcategories) in another category or delete the whole category. <strong>Note that this action is irreversible!</ strong>';
+$lang['category.content.management'] = 'Category content management';
+$lang['category.delete.clue']        = 'You are about to delete the category. Two solutions are available to you. You can either move all of its contents (elements and subcategories) in another category or delete the whole category. <strong>Note that this action is irreversible!</strong>';
 $lang['category.delete.all.content'] = 'Delete all content';
-$lang['category.move.to']            = 'Move content in:';
+$lang['category.move.to']            = 'Move content to:';
 
 // Messages
 $lang['category.no.element']          = 'No category';

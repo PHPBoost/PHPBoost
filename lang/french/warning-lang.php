@@ -32,6 +32,7 @@ $lang['warning.url']          = 'Veuillez entrer une url valide !';
 $lang['warning.recipient']    = 'Veuillez entrer le destinataire du message !';
 $lang['warning.integer']      = 'Veuillez entrer nombre entier !';
 $lang['warning.items.number'] = 'Veuillez entrer un nombre d\'éléments !';
+$lang['warning.irreversible'] = 'Cette action est irréversible !';
 
 // Captcha
 $lang['warning.captcha.validation.error'] = 'Le champ de vérification visuel n\'a pas été saisi correctement !';

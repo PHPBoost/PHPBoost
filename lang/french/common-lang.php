@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 13
+ * @version     PHPBoost 6.0 - last update: 2021 06 15
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -34,7 +34,6 @@ $lang['common.module']         = 'Module';
 $lang['common.name']           = 'Nom';
 $lang['common.options']        = 'Options';
 $lang['common.other']          = 'Autre';
-$lang['common.page']           = 'Page';
 $lang['common.participants']   = 'Participants';
 $lang['common.root']           = 'Racine';
 $lang['common.statistics']     = 'Statistiques';
