@@ -46,7 +46,7 @@
 										</div>
 									</div>
 									<div class="message-infos">
-										<time datetime="{messages.DATE}">{@common.on} {messages.DATE}</time>
+										<time datetime="{messages.DATE}">{@common.on.date} {messages.DATE}</time>
 										<a href="{messages.U_ANCHOR}" aria-label="{@common.link.to.anchor}">\#{messages.ID}</a>
 									</div>
 								</div>
