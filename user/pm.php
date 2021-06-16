@@ -978,7 +978,7 @@ else // Conversation list in the user email box
 			'ANNOUNCE'                       => $announce,
 			'TITLE'                          => stripslashes($row['title']),
 			'MSG'                            => ($row['nbr_msg'] - 1),
-			'U_CONVERS'                      => "pm" .url('.php?id=' . $row['id'], '-0-' . $row['id']),
+			'U_CONVERS'                      => 'pm' . url('.php?id=' . $row['id'], '-0-' . $row['id']),
 			'BRIEF'                          => TextHelper::cut_string(strip_tags(str_replace(array('<br/>', '<br />', '<br>'), ' ', $row['contents'])), 300),
 
 			'C_UNREAD'                       => ($reading === false),

@@ -103,7 +103,7 @@
 											<span><i class="fa fa-people-arrows {convers.list.ANNOUNCE}" aria-hidden="true"></i></span>
 										</td>
 										<td class="align-left">
-											{convers.list.ANCRE} <a href="pm{convers.list.U_CONVERS}" class="offload">{convers.list.TITLE}</a> &nbsp;
+											{convers.list.ANCRE} <a href="{convers.list.U_CONVERS}" class="offload">{convers.list.TITLE}</a> &nbsp;
 											<span class="small">[{@common.by}
 												# IF convers.list.C_AUTHOR_IS_ADMINISTRATOR #
 												${LangLoader::get_message('user.administrator', 'user-lang')}
@@ -208,7 +208,7 @@
 						    <header class="message-header-container# IF pm.msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
 								# IF pm.msg.C_AVATAR #<img src="{pm.msg.USER_AVATAR}" alt="{pm.msg.USER_PSEUDO}" class="message-user-avatar" /># ENDIF #
 						        <div class="message-header-infos">
-						            <div class="message-user">
+						            <div class="message-user-container">
 						                <h3 class="message-user-pseudo">
 											# IF pm.msg.C_VISITOR #
 												<span>{pm.msg.PSEUDO}</span>
@@ -218,15 +218,16 @@
 												</a>
 											# ENDIF #
 						                </h3>
-						                <div class="message-actions">
+						                <div class="controls message-user-infos-preview">
 											# IF pm.msg.C_MODERATION_TOOLS #
 												<a href="pm.php?edit={pm.msg.ID}" class="offload" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 												<a href="pm.php?del={pm.msg.ID}&amp;token={TOKEN}" class="offload" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 											# ENDIF #
+											{pm.msg.WARNING_LEVEL}
 						            	</div>
 						            </div>
 						            <div class="message-infos">
-						                <time datetime="Date" itemprop="{pm.msg.DATE_FULL}">{@common.on} {pm.msg.DATE_FULL}</time>
+						                <time datetime="Date" itemprop="{pm.msg.DATE_FULL}">{@common.on.date} {pm.msg.DATE_FULL}</time>
 						                <a href="#article-pm-{pm.msg.ID}" aria-label="{@common.link.to.anchor}">\#{pm.msg.ID}</a>
 						            </div>
 						        </div>
@@ -234,12 +235,6 @@
 						    <div class="message-content# IF pm.msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
 						        {pm.msg.CONTENTS}
 						    </div>
-						    <footer class="message-footer-container# IF pm.msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
-						        <div class="message-user-assoc">
-						            <div class="message-group-level"></div>
-						            <div class="message-user-rank">{pm.msg.WARNING_LEVEL}</div>
-						        </div>
-						    </footer>
 						</article>
 					# END pm.msg #
 				</div>

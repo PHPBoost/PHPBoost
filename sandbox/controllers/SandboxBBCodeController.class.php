@@ -30,7 +30,7 @@ class SandboxBBCodeController extends ModuleController
 		$this->common_lang = LangLoader::get('common', 'sandbox');
 		$this->lang = LangLoader::get('bbcode', 'sandbox');
 		$this->view = new FileTemplate('sandbox/SandboxBBCodeController.tpl');
-		$this->view->add_lang(array_merge($this->lang, $this->common_lang));
+		$this->view->add_lang(array_merge($this->lang, $this->common_lang, LangLoader::get('common-lang')));
 	}
 
 	private function build_view()
