@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 24
+ * @version     PHPBoost 6.0 - last update: 2021 06 16
  * @since       PHPBoost 3.0 - 2012 10 18
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -60,7 +60,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			$this->form->get_field_by_id('severities_table')->set_value($this->build_severities_table()->render());
 			$this->form->get_field_by_id('priorities_table')->set_value($this->build_priorities_table()->render());
 			$this->form->get_field_by_id('versions_table')->set_value($this->build_versions_table()->render());
-			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.message.success.config', 'warning-lang'), MessageHelper::SUCCESS, 5));
+			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.config', 'warning-lang'), MessageHelper::SUCCESS, 5));
 		}
 
 		$view->put('FORM', $this->form->display());

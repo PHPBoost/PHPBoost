@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 23
+ * @version     PHPBoost 6.0 - last update: 2021 06 16
  * @since       PHPBoost 1.5 - 2006 06 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -101,13 +101,13 @@ $lang['warning.process.error']   = 'An error occurred during the operation';
 $lang['warning.confirm.delete']          = 'Do you really want to delete this item?';
 $lang['warning.confirm.delete.elements'] = 'Do you really want to delete these items?';
 
-$lang['warning.message.success.config']          = 'The configuration has been modified';
-$lang['warning.message.success.position.update'] = 'The position of the items has been updated';
+$lang['warning.success.config']          = 'The configuration has been modified';
+$lang['warning.success.position.update'] = 'The position of the items has been updated';
 
-$lang['warning.message.download.file.error'] = 'File :filename download failed';
+$lang['warning.download.file.error'] = 'File :filename download failed';
 
-$lang['warning.message.delete.install.and.update.folders'] = 'For security reasons we recommand you to delete the <b>install</b> and <b>update</b> folders and all their contents, hackers could manage to run the installation script and you could lose data !';
-$lang['warning.message.delete.install.or.update.folders']  = 'For security reasons we recommand you to delete the <b>:folder</b> folder and all its contents, hackers could manage to run the installation script and you could lose data !';
+$lang['warning.delete.install.and.update.folders'] = 'For security reasons we recommand you to delete the <b>install</b> and <b>update</b> folders and all their contents, hackers could manage to run the installation script and you could lose data !';
+$lang['warning.delete.install.or.update.folders']  = 'For security reasons we recommand you to delete the <b>:folder</b> folder and all its contents, hackers could manage to run the installation script and you could lose data !';
 
 // Regex
 $lang['warning.regex']              = 'The entered value does not fit the proper format';

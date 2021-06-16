@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 23
+ * @version     PHPBoost 6.0 - last update: 2021 06 16
  * @since       PHPBoost 1.5 - 2006 06 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -101,13 +101,13 @@ $lang['warning.process.error']   = 'Une erreur s\'est produite lors de l\'opéra
 $lang['warning.confirm.delete']          = 'Voulez-vous vraiment supprimer cet élément ?';
 $lang['warning.confirm.delete.elements'] = 'Voulez-vous vraiment supprimer ces éléments ?';
 
-$lang['warning.message.success.config']          = 'La configuration a été modifiée';
-$lang['warning.message.success.position.update'] = 'Les éléments ont été repositionnés';
+$lang['warning.success.config']          = 'La configuration a été modifiée';
+$lang['warning.success.position.update'] = 'Les éléments ont été repositionnés';
 
-$lang['warning.message.download.file.error'] = 'Echec lors du téléchargement du fichier :filename';
+$lang['warning.download.file.error'] = 'Echec lors du téléchargement du fichier :filename';
 
-$lang['warning.message.delete.install.and.update.folders'] = 'Par mesure de sécurité nous vous conseillons fortement de supprimer les dossiers <b>install</b> et <b>update</b> et tout ce qu\'ils contiennent, des personnes mal intentionnées pourraient relancer le script d\'installation et écraser certaines de vos données !';
-$lang['warning.message.delete.install.or.update.folders']  = 'Par mesure de sécurité nous vous conseillons fortement de supprimer le dossier <b>:folder</b> et tout ce qu\'il contient, des personnes mal intentionnées pourraient relancer le script d\'installation et écraser certaines de vos données !';
+$lang['warning.delete.install.and.update.folders'] = 'Par mesure de sécurité nous vous conseillons fortement de supprimer les dossiers <b>install</b> et <b>update</b> et tout ce qu\'ils contiennent, des personnes mal intentionnées pourraient relancer le script d\'installation et écraser certaines de vos données !';
+$lang['warning.delete.install.or.update.folders']  = 'Par mesure de sécurité nous vous conseillons fortement de supprimer le dossier <b>:folder</b> et tout ce qu\'il contient, des personnes mal intentionnées pourraient relancer le script d\'installation et écraser certaines de vos données !';
 
 // Regex
 $lang['warning.regex']              = 'La valeur saisie n\'est pas au bon format';

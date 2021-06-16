@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 22
+ * @version     PHPBoost 6.0 - last update: 2021 06 16
  * @since       PHPBoost 4.0 - 2013 03 01
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -57,7 +57,7 @@ class AdminContactFieldsListController extends AdminModuleController
 		if ($request->get_value('submit', false))
 		{
 			$this->update_position($request);
-			$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.message.success.position.update', 'warning-lang'), MessageHelper::SUCCESS, 5));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.position.update', 'warning-lang'), MessageHelper::SUCCESS, 5));
 		}
 	}
 

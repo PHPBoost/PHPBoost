@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 23
+ * @version     PHPBoost 6.0 - last update: 2021 06 16
  * @since       PHPBoost 4.0 - 2014 08 02
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -24,7 +24,7 @@ class FaqReorderItemsController extends ModuleController
 		if ($request->get_value('submit', false))
 		{
 			$this->update_position($request);
-			AppContext::get_response()->redirect(FaqUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name()), LangLoader::get_message('warning.message.success.position.update', 'warning-lang'));
+			AppContext::get_response()->redirect(FaqUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name()), LangLoader::get_message('warning.success.position.update', 'warning-lang'));
 		}
 
 		$this->build_view($request);

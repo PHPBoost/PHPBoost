@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 21
+ * @version     PHPBoost 6.0 - last update: 2021 06 16
  * @since       PHPBoost 2.0 - 2008 03 22
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -47,7 +47,7 @@ if ($valid)
 		$config->set_authorizations(Authorizations::build_auth_array_from_form(SearchAuthorizationsService::READ_AUTHORIZATIONS));
 		SearchConfig::save();
 
-		$view->put('MESSAGE_HELPER', MessageHelper::display($warning_lang['warning.message.success.config'], MessageHelper::SUCCESS, 4));
+		$view->put('MESSAGE_HELPER', MessageHelper::display($warning_lang['warning.success.config'], MessageHelper::SUCCESS, 4));
 	}
 	else
 	{
@@ -61,7 +61,7 @@ if ($valid)
 		SearchConfig::load()->set_weightings($search_weightings);
 		SearchConfig::save();
 
-		$view->put('MESSAGE_HELPER', MessageHelper::display($warning_lang['warning.message.success.config'], MessageHelper::SUCCESS, 4));
+		$view->put('MESSAGE_HELPER', MessageHelper::display($warning_lang['warning.success.config'], MessageHelper::SUCCESS, 4));
 	}
 }
 elseif ($clearOutCache) // On vide le contenu du cache de la recherche
