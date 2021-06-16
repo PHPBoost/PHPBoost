@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 10
+ * @version     PHPBoost 6.0 - last update: 2021 06 16
  * @since       PHPBoost 1.5 - 2006 07 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -850,7 +850,7 @@ else // Conversation list in the user email box
 	$j = 0;
 	$result = PersistenceContext::get_querier()->select("SELECT
 		pm.id, pm.title, pm.user_id, pm.user_id_dest, pm.user_convers_status, pm.nbr_msg, pm.last_user_id, pm.last_msg_id, pm.last_timestamp, msg.view_status, msg.contents AS contents,
-		m.display_name AS login, m.level AS level, m.user_groups AS groups, ext_field.user_avatar AS avatar,
+		m.display_name AS login, m.level AS level, m.user_groups AS user_groups, ext_field.user_avatar AS avatar,
 		m1.display_name AS dest_login,  m1.level AS dest_level, m1.user_groups AS dest_groups, ext_field_dest.user_avatar AS dest_avatar,
 		m2.display_name AS last_login, m2.level AS last_level, m2.user_groups AS last_groups, ext_field_last.user_avatar AS last_avatar
 	FROM " . DB_TABLE_PM_TOPIC . "  pm
@@ -923,7 +923,7 @@ else // Conversation list in the user email box
 		if ($row['user_id'] == -1) //The PM author is the system
 			$author_group_color = UserService::get_level_class(User::ADMINISTRATOR_LEVEL);
 		elseif (!empty($row['login'])) //The PM author is an existing user
-			$author_group_color = User::get_group_color($row['groups'], $row['level']);
+			$author_group_color = User::get_group_color($row['user_groups'], $row['level']);
 		else //The PM auther is a deleted user
 			$author_group_color = "";
 
@@ -941,7 +941,7 @@ else // Conversation list in the user email box
 			{
 				$participant_id          = $row['user_id'];
 				$participant_name        = $row['login'];
-				$participant_group_color = User::get_group_color($row['groups'], $row['level']);
+				$participant_group_color = User::get_group_color($row['user_groups'], $row['level']);
 				$participant_level_class = UserService::get_level_class($row['level']);
 				$participant_avatar      = $row['avatar'] ? Url::to_rel($row['avatar']) : $user_accounts_config->get_default_avatar();
 			}
