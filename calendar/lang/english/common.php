@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 22
+ * @version     PHPBoost 6.0 - last update: 2021 06 17
  * @since       PHPBoost 4.0 - 2013 08 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -104,5 +104,5 @@ $lang['calendar.message.success.delete'] = 'The event <b>:title</b> has been del
 
 // Errors
 $lang['calendar.error.invalid.date']             = 'Invalid date';
-$lang['calendar.error.user.born.field.disabled'] = 'The field <b>Date of birth</b> is not displayed in members profile. Please enable its display it in the <a href="' . AdminExtendedFieldsUrlBuilder::fields_list()->rel() . '">Profile field management</a> to allow members to fill the field date of birth and display their birthday date in the calendar.';
+$lang['calendar.error.user.born.field.disabled'] = 'The field <b>Date of birth</b> is not displayed in members profile. Please enable its display it in the <a class="offload" href="' . AdminExtendedFieldsUrlBuilder::fields_list()->rel() . '">Profile field management</a> to allow members to fill the field date of birth and display their birthday date in the calendar.';
 ?>

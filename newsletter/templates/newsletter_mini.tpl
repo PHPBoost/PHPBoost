@@ -26,7 +26,7 @@
 			</div>
 			<div class="cell-body">
 				<div class="cell-content align-center">
-					<a href="${relative_url(NewsletterUrlBuilder::archives())}" class="button small">{@newsletter.archives}</a>
+					<a href="${relative_url(NewsletterUrlBuilder::archives())}" class="button small offload">{@newsletter.archives}</a>
 				</div>
 			</div>
 		</fieldset>

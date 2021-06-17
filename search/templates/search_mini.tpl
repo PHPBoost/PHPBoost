@@ -31,7 +31,7 @@
 		</fieldset>
 	</form>
 	<div class="cell-body">
-		<div class="cell-content align-center"><a href="{U_ADVANCED_SEARCH}" class="button small">{@search.advanced}</a></div>
+		<div class="cell-content align-center"><a href="{U_ADVANCED_SEARCH}" class="button small offload">{@search.advanced}</a></div>
 	</div>
 # ELSE #
 	<div role="search" id="module-mini-search" class="cell-mini# IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF #">

@@ -82,7 +82,7 @@ if ($valid)
 	###### Régénération du cache de la gallery #######
 	GalleryMiniMenuCache::invalidate();
 
-	$view->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+	$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 }
 elseif ($gallery_cache) //Suppression des miniatures.
 {
@@ -92,7 +92,7 @@ elseif ($gallery_cache) //Suppression des miniatures.
 
 	GalleryMiniMenuCache::invalidate();
 
-	$view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+	$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 }
 
 //Vitesse de défilement des miniatures.

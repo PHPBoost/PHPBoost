@@ -90,9 +90,9 @@
 <section id="module-faq">
 	<header class="section-header">
 		<div class="controls align-right">
-			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
+			<a class="offload" href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 			# IF NOT C_ROOT_CATEGORY #{@faq.module.title}# ENDIF #
-			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
+			# IF IS_ADMIN #<a class="offload" href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1>
 			# IF C_ROOT_CATEGORY #{@faq.module.title}# ELSE #{CATEGORY_NAME}# ENDIF #
@@ -123,11 +123,11 @@
 										</div>
 										<div class="sortable-actions">
 											# IF C_SEVERAL_ITEMS #
-											<a href="#" aria-label="{@common.move.up}" id="move-up-{items.ID}" onclick="return false;"><i class="fa fa-fw fa-arrow-up" aria-hidden="true"></i></a>
-											<a href="#" aria-label="{@common.move.down}" id="move-down-{items.ID}" onclick="return false;"><i class="fa fa-fw fa-arrow-down" aria-hidden="true"></i></a>
+												<a href="#" aria-label="{@common.move.up}" id="move-up-{items.ID}" onclick="return false;"><i class="fa fa-fw fa-arrow-up" aria-hidden="true"></i></a>
+												<a href="#" aria-label="{@common.move.down}" id="move-down-{items.ID}" onclick="return false;"><i class="fa fa-fw fa-arrow-down" aria-hidden="true"></i></a>
 											# ENDIF #
-											<a href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
-											<a href="#" onclick="return false;" aria-label="{@common.delete}" id="delete-{items.ID}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+											<a class="offload" href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+											<a href="#" onclick="return false;" aria-label="{@common.delete}" id="delete-{items.ID}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 										</div>
 
 										<script>

@@ -55,7 +55,7 @@
 							# END list_cats #
 							# START list_files #
 								<li>
-									<a class="explorer-list-file-link" href="{list_files.URL_FILE}">
+									<a class="explorer-list-file-link offload" href="{list_files.URL_FILE}">
 										<i class="fa fa-fw fa-file" aria-hidden="true"></i> {list_files.TITLE}
 									</a>
 								</li>

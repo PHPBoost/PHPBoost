@@ -5,16 +5,16 @@
                 {CONTENT}
             # ELSE #
                 {SUMMARY}
-                # IF C_SUMMARY #... <a href="{U_MESSAGE}" class="small pinned">{@common.read.more}</a># ENDIF #
+                # IF C_SUMMARY #... <a href="{U_MESSAGE}" class="small pinned offload">{@common.read.more}</a># ENDIF #
             # ENDIF #
             <p class="small">
                 {@common.by}
                 # IF C_VISITOR #
                     <span class="text-italic">{AUTHOR_DISPLAY_NAME}</span>
                 # ELSE #
-                    <a href="{U_AUTHOR_PROFILE}" class="{AUTHOR_LEVEL_CLASS}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR_DISPLAY_NAME}</a>
+                    <a href="{U_AUTHOR_PROFILE}" class="{AUTHOR_LEVEL_CLASS} offload" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR_DISPLAY_NAME}</a>
                 # ENDIF #
-                </p>
+            </p>
         </div>
     # ELSE #
         <div class="cell-content">
@@ -22,6 +22,6 @@
         </div>
     # ENDIF #
     <div class="cell-content align-center">
-        <a class="button small" href="{U_GUESTBOOK}">{@guestbook.module.title}</a>
+        <a class="button small offload" href="{U_GUESTBOOK}">{@guestbook.module.title}</a>
     </div>
 </div>

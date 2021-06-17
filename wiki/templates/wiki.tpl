@@ -1,7 +1,7 @@
 <section id="module-wiki">
 	<header class="section-header">
 		<div class="controls align-right">
-			<a href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
+			<a class="offload" href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 			{CATEGORY_TITLE}
 		</div>
 		<h1 itemprop="name">{TITLE}</h1>
@@ -19,7 +19,7 @@
 								<ul>
 									# START cat.list_cats #
 										<li>
-											<i class="fa fa-folder" aria-hidden="true"></i> <a href="{cat.list_cats.U_CAT}">{cat.list_cats.NAME}</a>
+											<i class="fa fa-folder" aria-hidden="true"></i> <a class="offload" href="{cat.list_cats.U_CAT}">{cat.list_cats.NAME}</a>
 										</li>
 									# END cat.list_cats #
 								</ul>
@@ -34,7 +34,7 @@
 							<ul>
 								# START cat.list_art #
 									<li>
-										<i class="fa fa-file" aria-hidden="true"></i> <a href="{cat.list_art.U_ARTICLE}">{cat.list_art.TITLE}</a>
+										<i class="fa fa-file" aria-hidden="true"></i> <a class="offload" href="{cat.list_art.U_ARTICLE}">{cat.list_art.TITLE}</a>
 									</li>
 								# END cat.list_art #
 							</ul>
@@ -62,7 +62,7 @@
 					# START redirect #
 						{redirect.REDIRECTED}
 						# START redirect.remove_redirection #
-							<a href="{redirect.remove_redirection.U_REMOVE_REDIRECTION}" data-confirmation="{redirect.remove_redirection.L_ALERT_REMOVE_REDIRECTION}" aria-label="{redirect.remove_redirection.L_REMOVE_REDIRECTION}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+							<a class="offload" href="{redirect.remove_redirection.U_REMOVE_REDIRECTION}" data-confirmation="{redirect.remove_redirection.L_ALERT_REMOVE_REDIRECTION}" aria-label="{redirect.remove_redirection.L_REMOVE_REDIRECTION}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
 						# END redirect.remove_redirection #
 					# END redirect #
 

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 03
+ * @version     PHPBoost 6.0 - last update: 2021 06 17
  * @since       PHPBoost 1.6 - 2007 10 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -41,7 +41,7 @@ $lang['wiki.versions']           	 = 'Versions';
 $lang['wiki.version.date']           = 'Version date';
 $lang['wiki.current.version']        = 'Current version';
 $lang['wiki.article.does.not.exist'] = 'The article you want to read doesn\'t exist, if you want to create it you can do it on this page.';
-$lang['wiki.cat.does.not.exist']     = 'Error : the category you want to read doesn\'t exist. <a href="wiki.php">Go back to wiki index.</a>';
+$lang['wiki.cat.does.not.exist']     = 'Error : the category you want to read doesn\'t exist. <a class="offload" href="wiki.php">Go back to wiki index.</a>';
 $lang['wiki.consult.article']        = 'Read';
 $lang['wiki.restore.version']        = 'Restore this version';
 $lang['wiki.actions']                = 'Possible actions';
@@ -87,12 +87,12 @@ $lang['wiki.index.text'] = '
 	Welcome on the wiki module!
 	<p>Here are some tips for a good start with this module :</p>
 	<ul class="formatter-ul">
-		<li class="formatter-li">To configure your module, go to the <a href="' . WikiUrlBuilder::configuration()->relative() . '">administration module</a></li>
-		<li class="formatter-li">To create categories, <a href="' . WikiUrlBuilder::add_category()->relative() . '">click here</a></li>
-		<li class="formatter-li">To create articles, <a href="' . WikiUrlBuilder::add()->relative() . '">click here</a></li>
+		<li class="formatter-li">To configure your module, go to the <a class="offload" href="' . WikiUrlBuilder::configuration()->relative() . '">administration module</a></li>
+		<li class="formatter-li">To create categories, <a class="offload" href="' . WikiUrlBuilder::add_category()->relative() . '">click here</a></li>
+		<li class="formatter-li">To create articles, <a class="offload" href="' . WikiUrlBuilder::add()->relative() . '">click here</a></li>
 	</ul><br /><br />
-	To customize the home page of this module, <a href="' . WikiUrlBuilder::configuration()->relative() . '">click here</a>.<br /><br />
-	For more information about the features of this module, feel free to ask questions on the <a href="https://www.phpboost.com/forum/">support forum</a>.
+	To customize the home page of this module, <a class="offload" href="' . WikiUrlBuilder::configuration()->relative() . '">click here</a>.<br /><br />
+	For more information about the features of this module, feel free to ask questions on the <a class="offload" href="https://www.phpboost.com/forum/">support forum</a>.
 ';
 
 // Categories
@@ -168,7 +168,7 @@ $lang['wiki.redirection.delete']       = 'Delete the redirection';
 $lang['wiki.alert.delete.redirection'] = 'Are you sure you want to delete this redirection?';
 $lang['wiki.no.redirection']           = 'They have no redirection to this page';
 
-$lang['wiki.create.redirection.management'] = 'Create a redirection to the article: <em>%s</em>';
+$lang['wiki.create.redirection.management'] = 'Create a redirection to the article';
 $lang['wiki.create.redirection']            = 'Create a redirection to this page';
 	// Rename
 $lang['wiki.renaming.management']  = 'Rename an article';

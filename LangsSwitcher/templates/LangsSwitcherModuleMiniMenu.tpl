@@ -19,7 +19,7 @@
 						</select>
 					</div>
 
-					# IF C_HORIZONTAL #<a class="grouped-element" href="{U_ITEM}{DEFAULT_ITEM}">{@ls.default.lang}</a># ENDIF #
+					# IF C_HORIZONTAL #<a class="grouped-element offload" href="{U_ITEM}{DEFAULT_ITEM}">{@ls.default.lang}</a># ENDIF #
 				</div>
 			</form>
 		</div>
@@ -31,7 +31,7 @@
 # IF C_VERTICAL #
 	<div class="cell-body">
 		<div class="cell-content align-center">
-			<a class="button small" href="{URL}{DEFAULT_LANG}">{@ls.default.lang}</a>
+			<a class="button small offload" href="{URL}{DEFAULT_LANG}">{@ls.default.lang}</a>
 		</div>
 	</div>
 # ENDIF #

@@ -2,7 +2,7 @@
 	<tbody>
 		<tr>
 			<td>
-				# IF C_REFERER #<a href="{FULL_URL}">{RELATIVE_URL}</a># ELSE #{FULL_URL}# ENDIF #
+				# IF C_REFERER #<a class="offload" href="{FULL_URL}">{RELATIVE_URL}</a># ELSE #{FULL_URL}# ENDIF #
 			</td>
 			<td class="total-head">
 				{TOTAL_VISIT}

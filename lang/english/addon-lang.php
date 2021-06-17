@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 09
+ * @version     PHPBoost 6.0 - last update: 2021 06 17
  * @since       PHPBoost 3.0 - 2012 04 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -79,7 +79,7 @@ $lang['addon.modules.not.upgradable']    = 'The module cannot be updated';
 $lang['addon.modules.not.installed']     = 'The module is not installed!';
 $lang['addon.modules.available.updates'] = 'Module updates available';
 $lang['addon.modules.config.conflict']   = 'Conflict with module configuration, impossible to install!';
-$lang['addon.modules.not.compatible']    = 'This module is not compatible with the actual version of PHPBoost. Please verify new version availability on <a href="https://www.phpboost.com/download">PHPBoost website</a>.';
+$lang['addon.modules.not.compatible']    = 'This module is not compatible with the actual version of PHPBoost. Please verify new version availability on <a class="offload" href="https://www.phpboost.com/download">PHPBoost website</a>.';
     // Drop
 $lang['addon.modules.drop']          = 'Delete all the module\'s files';
 $lang['addon.modules.drop.multiple'] = 'Delete all modules\'s files';

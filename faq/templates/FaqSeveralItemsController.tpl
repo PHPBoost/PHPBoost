@@ -32,14 +32,14 @@
 <section id="module-faq">
 	<header class="section-header">
 		<div class="controls align-right">
-			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
+			<a class="offload" href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 			# IF NOT C_ROOT_CATEGORY #{@faq.module.title}# ENDIF #
 			# IF C_CATEGORY #
 				# IF C_DISPLAY_REORDER_LINK #
-					<a href="{U_REORDER_ITEMS}" aria-label="{@faq.questions.reorder}"><i class="fa fa-fw fa-exchange-alt" aria-hidden="true"></i></a>
+					<a class="offload" href="{U_REORDER_ITEMS}" aria-label="{@faq.questions.reorder}"><i class="fa fa-fw fa-exchange-alt" aria-hidden="true"></i></a>
 				# ENDIF #
 				# IF IS_ADMIN #
-					<a href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+					<a class="offload" href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 				# ENDIF #
 			# ENDIF #
 		</div>
@@ -68,14 +68,14 @@
 					# START sub_categories_list #
 						<div class="cell category-{sub_categories_list.CATEGORY_ID}">
 							<div class="cell-header">
-								<h5 class="cell-name"><a class="subcat-title" itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
+								<h5 class="cell-name"><a class="subcat-title offload" itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
 								<span class="small pinned notice" aria-label="# IF sub_categories_list.C_SEVERAL_ITEMS #${TextHelper::lcfirst(@faq.items)}# ELSE #${TextHelper::lcfirst(@faq.item)}# ENDIF #">{sub_categories_list.ITEMS_NUMBER}</span>
 							</div>
 							<div class="cell-body">
 								# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
 									<div class="cell-thumbnail cell-landscape cell-center">
 										<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
-										<a class="cell-thumbnail-caption" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
+										<a class="cell-thumbnail-caption offload" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
 											${LangLoader::get_message('category.see.category', 'category-lang')}
 										</a>
 									</div>
@@ -115,10 +115,10 @@
 									# IF C_PENDING_ITEMS #{items.ITEM_DATE} | # ENDIF #
 									<a href="{items.U_ITEM}" onclick="copy_to_clipboard('{items.U_ABSOLUTE_LINK}');return false;" aria-label="{@common.copy.link.to.clipboard}"><i class="fa fa-fw fa-anchor" aria-hidden="true"></i></a>
 									# IF items.C_EDIT #
-										<a href="{items.U_EDIT}"aria-label="{@common.edit}"><i class="far fa-fw fa-edit fa-fw" aria-hidden="true"></i> </a>
+										<a class="offload" href="{items.U_EDIT}"aria-label="{@common.edit}"><i class="far fa-fw fa-edit fa-fw" aria-hidden="true"></i> </a>
 									# ENDIF #
 									# IF items.C_DELETE #
-										<a href="#"aria-label="{@common.delete}" onclick="delete_question({items.ID});return false;"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i> </a>
+										<a href="#" aria-label="{@common.delete}" onclick="delete_question({items.ID});return false;"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i> </a>
 									# ENDIF #
 								</div>
 								<div class="content">{items.CONTENT}</div>

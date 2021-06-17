@@ -39,7 +39,7 @@
 							# ENDIF #
 							# IF C_ENABLED_CATEGORY #
 								<span class="pinned" aria-label="{@common.category}">
-									<a itemprop="about" href="{U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {CATEGORY_NAME}</a>
+									<a class="offload" itemprop="about" href="{U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {CATEGORY_NAME}</a>
 								</span>
 							# ENDIF #
 							# IF C_ENABLED_VIEWS #
@@ -71,7 +71,7 @@
 				</div>
 				# IF C_HAS_UPDATE_DATE #<span class="pinned notice small text-italic modified-date">{@common.last.update} <time datetime="{UPDATE_DATE_ISO8601}" itemprop="dateModified">{UPDATE_DATE_FULL}</time></span># ENDIF #
 
-				<div class="content">					
+				<div class="content">
 					# IF C_ENABLED_COUNTDOWN #
 						# INCLUDE COUNTDOWN #
 					# ENDIF #

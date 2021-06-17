@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 10
+ * @version     PHPBoost 6.0 - last update: 2021 06 17
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -409,7 +409,7 @@ De base, ' . GeneralConfig::load()->get_site_name() . ' utilise les cookies pour
 
 <h2 class="formatter-title">Comment contrôler les cookies ?</h2>
 Vous pouvez contrôler et/ou supprimer des cookies comme vous le souhaitez.<br />
-Pour en savoir plus, consultez le site <a href="https://www.aboutcookies.org">aboutcookies.org</a>.<br />
+Pour en savoir plus, consultez le site <a class="offload" href="https://www.aboutcookies.org">aboutcookies.org</a>.<br />
 Vous avez la possibilité de supprimer tous les cookies déjà stockés sur votre ordinateur et de configurer la plupart des navigateurs pour qu\'ils les bloquent. Toutefois, dans ce cas, vous devrez peut-être indiquer vous-mêmes certaines préférences chaque fois que vous vous rendrez sur le site, et certains services et fonctionnalités risquent de ne pas être accessibles.
 ';
 $lang['user.cookiebar.understand']    = 'J\'ai compris';

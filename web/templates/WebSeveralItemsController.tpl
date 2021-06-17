@@ -1,9 +1,9 @@
 <section id="module-web">
 	<header class="section-header">
 		<div class="controls align-right">
-			<a href="${relative_url(SyndicationUrlBuilder::rss('web', ID_CAT))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
+			<a class="offload" href="${relative_url(SyndicationUrlBuilder::rss('web', ID_CAT))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 			# IF NOT C_ROOT_CATEGORY #{@web.module.title}# ENDIF #
-			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF ## ENDIF #
+			# IF C_CATEGORY ## IF IS_ADMIN #<a class="offload" href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF ## ENDIF #
 		</div>
 		<h1>
 			# IF C_PENDING_ITEMS #
@@ -34,7 +34,7 @@
 					# START sub_categories_list #
 						<div class="cell category-{sub_categories_list.CATEGORY_ID}" itemscope>
 							<div class="cell-header">
-								<h5 class="cell-name" itemprop="about"><a href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
+								<h5 class="cell-name" itemprop="about"><a class="offload" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
 								<span class="small pinned notice" role="contentinfo" aria-label="{sub_categories_list.ITEMS_NUMBER} # IF sub_categories_list.C_SEVERAL_ITEMS #${TextHelper::lcfirst(@items)}# ELSE #${TextHelper::lcfirst(@item)}# ENDIF #">
 									{sub_categories_list.ITEMS_NUMBER}
 								</span>
@@ -43,7 +43,7 @@
 								<div class="cell-body">
 									<div class="cell-thumbnail cell-landscape cell-center">
 										<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
-										<a class="cell-thumbnail-caption" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
+										<a class="cell-thumbnail-caption offload" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
 											{@common.category}
 										</a>
 									</div>
@@ -100,7 +100,7 @@
 								# START items #
 									<tr class="category-{items.CATEGORY_ID}">
 										<td>
-											<a href="{items.U_ITEM}" itemprop="name"# IF items.C_NEW_CONTENT # class="new-content"# ENDIF#>{items.TITLE}</a>
+											<a href="{items.U_ITEM}" itemprop="name" class="offload# IF items.C_NEW_CONTENT # new-content# ENDIF#">{items.TITLE}</a>
 										</td>
 										<td>
 											{items.VIEWS_NUMBER}
@@ -118,7 +118,7 @@
 										# IF items.C_CONTROLS #
 											<td class="controls">
 												# IF items.C_EDIT #
-													<a href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+													<a class="offload" href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 												# ENDIF #
 												# IF items.C_DELETE #
 													<a href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
@@ -135,7 +135,7 @@
 						# START items #
 							<article id="web-item-{items.ID}" class="web-item several-items category-{items.CATEGORY_ID} cell# IF items.C_IS_PARTNER # content-friends# ENDIF ## IF items.C_IS_PRIVILEGED_PARTNER # content-privileged-friends# ENDIF ## IF items.C_NEW_CONTENT # new-content# ENDIF#" itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 								<header class="cell-header">
-									<h2 class="cell-name"><a href="{items.U_ITEM}" itemprop="name">{items.TITLE}</a></h2>
+									<h2 class="cell-name"><a class="offload" href="{items.U_ITEM}" itemprop="name">{items.TITLE}</a></h2>
 								</header>
 								<div class="cell-body">
 									<div class="cell-infos">
@@ -153,7 +153,7 @@
 										</div>
 										# IF items.C_CONTROLS #
 											<span class="controls align-right">
-												# IF items.C_EDIT #<a href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
+												# IF items.C_EDIT #<a class="offload" href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
 												# IF items.C_DELETE #<a href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
 											</span>
 										# ENDIF #
@@ -173,7 +173,7 @@
 														<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
 													# ENDIF #
 												# ENDIF #
-												<a class="cell-thumbnail-caption" href="{items.U_ITEM}">
+												<a class="offload" class="cell-thumbnail-caption" href="{items.U_ITEM}">
 													{@common.see.details}
 												</a>
 											</div>
@@ -184,7 +184,7 @@
 											<span></span>
 											# IF items.C_VISIBLE #
 												<span>
-													<a href="{items.U_VISIT}" class="button submit small">
+													<a class="offload" href="{items.U_VISIT}" class="button submit small">
 														<i class="fa fa-globe" aria-hidden="true"></i> {@common.visit}
 													</a>
 													# IF IS_USER_CONNECTED #
@@ -195,7 +195,7 @@
 												</span>
 											# ELSE #
 												# IF C_PENDING_ITEMS #
-													<a href="{items.U_VISIT}" class="button submit small">
+													<a class="offload" href="{items.U_VISIT}" class="button submit small">
 														<i class="fa fa-globe" aria-hidden="true"></i> {@common.visit}
 													</a>
 												# ENDIF #
@@ -203,7 +203,7 @@
 										</div>
 										# IF C_FULL_ITEM_DISPLAY #
 											# IF items.C_IS_ADORNED #
-												<a class="item-thumbnail" href="{items.U_ITEM}">
+												<a class="offload" class="item-thumbnail" href="{items.U_ITEM}">
 													# IF items.C_IS_PARTNER #
 														# IF items.C_HAS_PARTNER_THUMBNAIL #
 															<img src="{items.U_PARTNER_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
@@ -219,7 +219,7 @@
 											# ENDIF #
 											<div itemprop="text">{items.CONTENT}</div>
 										# ELSE #
-											{items.SUMMARY}# IF items.C_READ_MORE # <a href="{items.U_ITEM}" class="read-more">[{@common.read.more}]</a># ENDIF #
+											{items.SUMMARY}# IF items.C_READ_MORE # <a href="{items.U_ITEM}" class="read-more offload">[{@common.read.more}]</a># ENDIF #
 										# ENDIF #
 									</div>
 								</div>

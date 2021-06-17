@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 01
+ * @version     PHPBoost 6.0 - last update: 2021 06 17
  * @since       PHPBoost 1.2 - 2005 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -175,7 +175,7 @@ elseif ($g_add)
 	foreach ($categories as $category)
 	{
 		if ($category->get_id() != Category::ROOT_CATEGORY && $category->get_id_parent() == $categories[$id_category]->get_id_parent())
-			$cat_links .= ' <a href="' . GalleryUrlBuilder::get_link_cat($category->get_id()) . '">' . $category->get_name() . '</a> &raquo;';
+			$cat_links .= ' <a href="' . GalleryUrlBuilder::get_link_cat($category->get_id()) . '" class="offload">' . $category->get_name() . '</a> &raquo;';
 	}
 
 	//Gestion erreur.

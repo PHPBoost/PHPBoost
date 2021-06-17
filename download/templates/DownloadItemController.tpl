@@ -1,9 +1,9 @@
 <section id="module-download" class="category-{CATEGORY_ID}">
 	<header class="section-header">
 		<div class="controls align-right">
-			<a href="{U_SYNDICATION}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
+			<a class="offload" href="{U_SYNDICATION}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 			{@download.module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
-			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
+			# IF IS_ADMIN #<a class="offload" href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1><span id="name" itemprop="name">{TITLE}</span></h1>
 	</header>
@@ -17,7 +17,7 @@
 			<article itemscope="itemscope" itemtype="https://schema.org/CreativeWork" id="download-item-{ID}" class="download-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #">
 				# IF C_CONTROLS #
 					<div class="controls align-right">
-						# IF C_EDIT #<a href="{U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
+						# IF C_EDIT #<a class="offload" href="{U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
 						# IF C_DELETE #<a href="{U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
 					</div>
 				# ENDIF #
@@ -39,7 +39,7 @@
 								# IF C_VISIBLE #
 									# IF C_DISPLAY_DOWNLOAD_LINK #
 										<li class="li-stretch">
-											<a href="{U_DOWNLOAD}" class="button submit">
+											<a class="offload" href="{U_DOWNLOAD}" class="button submit">
 												<i class="fa fa-download" aria-hidden="true"></i> {@download.download}
 											</a>
 											# IF IS_USER_CONNECTED #
@@ -58,7 +58,7 @@
 								# IF C_HAS_UPDATE_DATE #<li class="li-stretch"><span class="text-strong">{@common.status.last.update} : </span><time datetime="{UPDATED_DATE_ISO8601}" itemprop="dateModified">{UPDATE_DATE}</time></li># ENDIF #
 								<li class="li-stretch"><span class="text-strong">{@download.downloads.number} : </span><span>{DOWNLOADS_NUMBER}</span></li>
 								# IF C_ENABLED_VIEWS_NUMBER #<li class="li-stretch"><span class="text-strong">{@common.views.number} : </span><span>{VIEWS_NUMBER}</span></li># ENDIF #
-								<li class="li-stretch"><span class="text-strong">${LangLoader::get_message('category.category', 'category-lang')} : </span><a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a></li>
+								<li class="li-stretch"><span class="text-strong">{@common.category} : </span><a class="offload" itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a></li>
 								# IF C_AUTHOR_DISPLAYED #
 									<li class="li-stretch">
 										<span class="text-strong">{@common.author} : </span>
@@ -66,7 +66,7 @@
 											# IF C_AUTHOR_CUSTOM_NAME #
 												<span class="custom-author">{AUTHOR_CUSTOM_NAME}</span>
 											# ELSE #
-												# IF C_AUTHOR_EXISTS #<a itemprop="author" rel="author" class="{AUTHOR_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR_DISPLAY_NAME}</a># ELSE #<span class="visitor">{AUTHOR_DISPLAY_NAME}</span># ENDIF #
+												# IF C_AUTHOR_EXISTS #<a itemprop="author" rel="author" class="{AUTHOR_LEVEL_CLASS} offload" href="{U_AUTHOR_PROFILE}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR_DISPLAY_NAME}</a># ELSE #<span class="visitor">{AUTHOR_DISPLAY_NAME}</span># ENDIF #
 											# ENDIF #
 										</span>
 									</li>
@@ -91,7 +91,7 @@
 					<aside class="sources-container">
 						<span class="text-strong"><i class="fa fa-map-signs" aria-hidden="true"></i> {@common.sources}</span> :
 						# START sources #
-							<a itemprop="isBasedOnUrl" href="{sources.URL}" class="pinned link-color" rel="nofollow">{sources.NAME}</a># IF sources.C_SEPARATOR ## ENDIF #
+							<a itemprop="isBasedOnUrl" href="{sources.URL}" class="pinned link-color offload" rel="nofollow">{sources.NAME}</a># IF sources.C_SEPARATOR ## ENDIF #
 						# END sources #
 					</aside>
 				# ENDIF #
@@ -99,7 +99,7 @@
 					<aside class="tags-container">
 						<span class="text-strong"><i class="fa fa-tags" aria-hidden="true"></i> {@common.keywords} : </span>
 						# START keywords #
-							<a itemprop="pinned link-color" href="{keywords.URL}">{keywords.NAME}</a># IF keywords.C_SEPARATOR #, # ENDIF #
+							<a class="pinned link-color offload" href="{keywords.URL}">{keywords.NAME}</a># IF keywords.C_SEPARATOR #, # ENDIF #
 						# END keywords #
 					</aside>
 				# ENDIF #
@@ -115,8 +115,8 @@
 		<meta itemprop="url" content="{U_ITEM}">
 		<meta itemprop="description" content="${escape(SUMMARY)}" />
 		# IF C_ENABLED_COMMENTS #
-		<meta itemprop="discussionUrl" content="{U_COMMENTS}">
-		<meta itemprop="interactionCount" content="{COMMENTS_NUMBER} UserComments">
+			<meta itemprop="discussionUrl" content="{U_COMMENTS}">
+			<meta itemprop="interactionCount" content="{COMMENTS_NUMBER} UserComments">
 		# ENDIF #
 	</footer>
 </section>

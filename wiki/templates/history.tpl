@@ -1,7 +1,7 @@
 <section id="module-wiki-history" class="wiki-history">
 	# IF C_ITEM #
 		<header class="section-header">
-			<h1>{@wiki.history} : <a href="{U_ITEM}">{TITLE}</a></h1>
+			<h1>{@wiki.history} : <a class="offload" href="{U_ITEM}">{TITLE}</a></h1>
 		</header>
 		<div class="sub-section">
 			<div class="content-container">
@@ -31,7 +31,7 @@
 								# START list #
 									<tr# IF list.C_CURRENT_VERSION # class="bgc visitor"# ENDIF #>
 										<td>
-											<a href="{list.U_ARTICLE}">{list.TITLE}</a>
+											<a class="offload" href="{list.U_ARTICLE}">{list.TITLE}</a>
 										</td>
 										<td>
 											{list.DATE}
@@ -45,7 +45,7 @@
 										<td>
 											# IF list.C_ACTIONS #
 												# IF list.C_RESTORE #
-													<a href="{list.U_RESTORE}" aria-label="{@wiki.restore.version}"><i class="fa fa-fw fa-undo" aria-hidden="true"></i></a>
+													<a class="offload" href="{list.U_RESTORE}" aria-label="{@wiki.restore.version}"><i class="fa fa-fw fa-undo" aria-hidden="true"></i></a>
 												# ENDIF #
 												# IF list.C_DELETE #
 													<a href="{list.U_DELETE}" aria-label="{@common.delete}" data-confirmation="{@wiki.confirm.delete.archive}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
@@ -92,7 +92,7 @@
 								# START list #
 									<tr>
 										<td>
-											<a href="{list.U_ITEM}" aria-label="{@common.see.details}">{list.TITLE}</a>
+											<a class="offload" href="{list.U_ITEM}" aria-label="{@common.see.details}">{list.TITLE}</a>
 										</td>
 										<td>
 											{list.LAST_UPDATE}

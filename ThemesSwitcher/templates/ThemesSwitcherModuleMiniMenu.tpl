@@ -11,7 +11,7 @@
 						<option value="{items.ITEM_ID}"# IF items.C_SELECTED# selected="selected"# ENDIF #>{items.ITEM_NAME}</option>
 					# END items #
 				</select>
-				# IF C_HORIZONTAL #<a class="grouped-element" href="{U_ITEM}{DEFAULT_ITEM}">{@ts.default.theme}</a># ENDIF #
+				# IF C_HORIZONTAL #<a class="grouped-element offload" href="{U_ITEM}{DEFAULT_ITEM}">{@ts.default.theme}</a># ENDIF #
 			</div>
 		</form>
 # IF C_HORIZONTAL #
@@ -20,6 +20,6 @@
 # ENDIF #
 # IF C_VERTICAL #
 	<div class="cell-body">
-		<div class="cell-content align-center"><a class="button small" href="{U_ITEM}{DEFAULT_ITEM}">{@ts.default.theme}</a></div>
+		<div class="cell-content align-center"><a class="button small offload" href="{U_ITEM}{DEFAULT_ITEM}">{@ts.default.theme}</a></div>
 	</div>
 # ENDIF #

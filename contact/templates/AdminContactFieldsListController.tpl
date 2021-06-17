@@ -109,7 +109,7 @@
 							<a href="#" aria-label="{@common.move.up}" id="move-up-{fields_list.ID}" onclick="return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
 							<a href="#" aria-label="{@common.move.down}" id="move-down-{fields_list.ID}" onclick="return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
 						# ENDIF #
-						<a href="{fields_list.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+						<a class="offload" href="{fields_list.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 						# IF fields_list.C_DELETE #<a href="#" onclick="return false;" aria-label="{@common.delete}" id="delete-{fields_list.ID}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ELSE #&nbsp;# ENDIF #
 						# IF NOT fields_list.C_READONLY #<a href="#" onclick="return false;" id="change-display-{fields_list.ID}"# IF fields_list.C_DISPLAY # aria-label="{@form.displayed}"# ELSE #aria-label="{@form.displayed.not}"# ENDIF #><i aria-hidden="true" class="# IF fields_list.C_DISPLAY #fa fa-eye# ELSE #fa fa-eye-slash# ENDIF #"></i></a># ELSE #&nbsp;# ENDIF #
 					</div>

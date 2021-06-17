@@ -1,7 +1,7 @@
 <section id="module-wiki">
 	<header class="section-header">
 		<div class="controls align-right">
-			<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
+			<a class="offload" href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 		</div>
 		<h1>
 			{TITLE}
@@ -21,7 +21,7 @@
 	<div class="sub-section">
 		<div class="content-container">
 			<div class="align-center">
-				<a href="{PATH_TO_ROOT}/wiki/{U_EXPLORER}" class="button bgc-full link-color">
+				<a href="{PATH_TO_ROOT}/wiki/{U_EXPLORER}" class="button bgc-full link-color offload">
 					<i class="fa fa-folder-open" aria-hidden="true"></i>
 					{@wiki.explorer}
 				</a>
@@ -37,7 +37,7 @@
 								<ul>
 									# START cat_list.list #
 										<li>
-											<i class="fa fa-folder small" aria-hidden="true"></i> <a href="{PATH_TO_ROOT}/wiki/{cat_list.list.U_CATEGORY}">{cat_list.list.CATEGORY_NAME}</a>
+											<i class="fa fa-folder small" aria-hidden="true"></i> <a class="offload" href="{PATH_TO_ROOT}/wiki/{cat_list.list.U_CATEGORY}">{cat_list.list.CATEGORY_NAME}</a>
 										</li>
 									# END cat_list.list #
 								</ul>
@@ -56,7 +56,7 @@
 								{@wiki.last.articles.list}
 							</h6>
 							# IF last_articles.C_ITEMS #
-								<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" aria-label="{@common.syndication}">
+								<a class="offload" href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" aria-label="{@common.syndication}">
 									<i class="fa fa-rss warning" aria-hidden="true"></i>
 								</a>
 							# ENDIF #
@@ -66,7 +66,7 @@
 								<ul>
 									# START last_articles.list #
 										<li>
-											<i class="fa fa-file-alt small" aria-hidden="true"></i> <a href="{PATH_TO_ROOT}/wiki/{last_articles.list.U_ITEM}" class="wiki-list-element">{last_articles.list.ITEM_TITLE}</a>
+											<i class="fa fa-file-alt small" aria-hidden="true"></i> <a class="offload" href="{PATH_TO_ROOT}/wiki/{last_articles.list.U_ITEM}" class="wiki-list-element">{last_articles.list.ITEM_TITLE}</a>
 										</li>
 									# END last_articles.list #
 								</ul>

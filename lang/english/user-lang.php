@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 10
+ * @version     PHPBoost 6.0 - last update: 2021 06 17
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -408,7 +408,7 @@ It enables the website to remember your actions and preferences (such as login, 
 ' . GeneralConfig::load()->get_site_name() . ' does not use any tracking cookies. However, using google-analytics module or social-media buttons need some tracking cookies.
 
 <h2 class="formatter-title">How to control cookies ?</h2>
-You can control and/or delete cookies as you wish – for details, see <a href="https://www.aboutcookies.org">aboutcookies.org</a>. <br />
+You can control and/or delete cookies as you wish – for details, see <a class="offload" href="https://www.aboutcookies.org">aboutcookies.org</a>. <br />
 You can delete all cookies that are already on your computer and you can set most browsers to prevent them from being placed. If you do this, however, you may have to manually adjust some preferences every time you visit a site and some services and functionalities may not work.
 ';
 $lang['user.cookiebar.understand']    = 'Ok';

@@ -37,12 +37,12 @@
 											# IF items.C_ROBOT #
 												<span class="{items.LEVEL_CLASS}">{items.PSEUDO}</span>
 											# ELSE #
-												<a href="{items.U_PROFILE}" class="{items.LEVEL_CLASS}" # IF items.C_GROUP_COLOR # style="color:{items.GROUP_COLOR}" # ENDIF #>{items.PSEUDO}</a>
+												<a href="{items.U_PROFILE}" class="{items.LEVEL_CLASS} offload" # IF items.C_GROUP_COLOR # style="color:{items.GROUP_COLOR}" # ENDIF #>{items.PSEUDO}</a>
 											# ENDIF #
 										</td>
 										<td>{items.LEVEL}</td>
 										<td>
-											<a href="{items.U_LOCATION}">{items.LOCATION_TITLE}</a>
+											<a class="offload" href="{items.U_LOCATION}">{items.LOCATION_TITLE}</a>
 										</td>
 										<td>
 											{items.DATE_AGO}

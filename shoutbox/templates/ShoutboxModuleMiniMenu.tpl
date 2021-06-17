@@ -177,5 +177,5 @@
 	# ENDIF #
 # ENDIF #
 <div class="cell-footer">
-	<div class="align-center"><a class="button small" href="${relative_url(ShoutboxUrlBuilder::home())}">{@shoutbox.archives}</a></div>
+	<div class="align-center"><a class="button small offload" href="${relative_url(ShoutboxUrlBuilder::home())}">{@shoutbox.archives}</a></div>
 </div>

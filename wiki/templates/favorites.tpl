@@ -21,7 +21,7 @@
 						# START list #
 							<tr>
 								<td>
-									<a href="{list.U_ITEM}">{list.TITLE}</a>
+									<a class="offload" href="{list.U_ITEM}">{list.TITLE}</a>
 								</td>
 								<td>
 									<a href="{list.U_UNTRACK}" aria-label="{@wiki.untrack}" data-confirmation="{@wiki.confirm.untrack}">

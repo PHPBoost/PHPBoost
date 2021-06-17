@@ -2,8 +2,8 @@
 
 	<header class="section-header">
 		<div class="controls align-right">
-			<a href="{U_SYNDICATION}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
-			{MODULE_NAME}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"> <i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
+			<a class="offload" href="{U_SYNDICATION}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
+			{MODULE_NAME}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a class="offload" href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"> <i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1><span itemprop="name">{TITLE}</span></h1>
 	</header>
@@ -20,7 +20,7 @@
 									<i class="fa fa-user" aria-hidden="true"></i> <span class="custom-author">{AUTHOR_CUSTOM_NAME}</span>
 								# ELSE #
 									# IF NOT C_ID_CARD #
-										<i class="fa fa-user" aria-hidden="true"></i> # IF C_AUTHOR_EXISTS #<a itemprop="author" href="{U_AUTHOR}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF #>{AUTHOR_DISPLAY_NAME}</a># ELSE #<span class="visitor">{AUTHOR_DISPLAY_NAME}</span># ENDIF #
+										<i class="fa fa-user" aria-hidden="true"></i> # IF C_AUTHOR_EXISTS #<a itemprop="author" href="{U_AUTHOR}" class="{USER_LEVEL_CLASS} offload" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF #>{AUTHOR_DISPLAY_NAME}</a># ELSE #<span class="visitor">{AUTHOR_DISPLAY_NAME}</span># ENDIF #
 									# ENDIF #
 								# ENDIF #
 							</span>
@@ -30,7 +30,7 @@
 						</span>
 						# IF NOT C_ROOT_CATEGORY #
 							<span class="pinned">
-								<i class="far fa-folder" aria-hidden="true"></i> <a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
+								<i class="far fa-folder" aria-hidden="true"></i> <a class="offload" itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
 							</span>
 						# ENDIF #
 						<span class="pinned">
@@ -44,7 +44,7 @@
 					</div>
 					<div class="controls align-right">
 						# IF C_CONTROLS #
-							<a href="{U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+							<a class="offload" href="{U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 							<a href="{U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 						# ENDIF #
 					</div>
@@ -72,13 +72,13 @@
 					<aside class="flex-between">
 						<div class="pages-pagination">
 							# IF C_PREVIOUS_PAGE #
-								<a href="{U_PREVIOUS_PAGE}"><i class="fa fa-angle-double-left"></i> {L_PREVIOUS_TITLE}</a>
+								<a class="offload" href="{U_PREVIOUS_PAGE}"><i class="fa fa-angle-double-left"></i> {L_PREVIOUS_TITLE}</a>
 							# ENDIF #
 						</div>
 						<div class="pages-pagination align-center"># INCLUDE PAGINATION_ARTICLES #</div>
 						<div class="pages-pagination align-right">
 							# IF C_NEXT_PAGE #
-								<a href="{U_NEXT_PAGE}">{L_NEXT_TITLE} <i class="fa fa-angle-double-right"></i></a>
+								<a class="offload" href="{U_NEXT_PAGE}">{L_NEXT_TITLE} <i class="fa fa-angle-double-right"></i></a>
 							# ENDIF #
 						</div>
 					</aside>
@@ -101,7 +101,7 @@
 					<aside class="sources-container">
 						<span class="text-strong"><i class="fa fa-map-signs" aria-hidden="true"></i> {@common.sources}</span> :
 						# START sources #
-							<a class="pinned question" itemprop="isBasedOnUrl" href="{sources.URL}" rel="nofollow">{sources.NAME}</a>
+							<a class="pinned question offload" itemprop="isBasedOnUrl" href="{sources.URL}" rel="nofollow">{sources.NAME}</a>
 							# IF sources.C_SEPARATOR ## ENDIF #
 						# END sources #
 					</aside>
@@ -110,7 +110,7 @@
 					<aside class="tags-container">
 						<span class="text-strong"><i class="fa fa-tags" aria-hidden="true"></i> {@common.keywords}</span> :
 						# START keywords #
-							<a class="pinned link-color" itemprop="keywords" href="{keywords.URL}">{keywords.NAME}</a>
+							<a class="pinned link-color offload" itemprop="keywords" href="{keywords.URL}">{keywords.NAME}</a>
 							# IF keywords.C_SEPARATOR ## ENDIF #
 						# END keywords #
 					</aside>

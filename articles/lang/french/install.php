@@ -26,14 +26,14 @@ $lang['items'][] = array(
 	'item.content' => '
 		<p>Ce bref article va vous donner quelques conseils simples pour prendre en main ce module.</p>
 		<ul class="formatter-ul">
-			<li class="formatter-li">Pour configurer votre module, <a href="' . ModulesUrlBuilder::configuration('articles')->rel() . '">cliquez ici</a></li>
-			<li class="formatter-li">Pour ajouter des catégories : <a href="' . CategoriesUrlBuilder::add(Category::ROOT_CATEGORY, 'articles')->rel() . '">cliquez ici</a> (les catégories et sous catégories sont à l\'infini)</li>
-			<li class="formatter-li">Pour ajouter un article : <a href="' . ItemsUrlBuilder::add(Category::ROOT_CATEGORY, 'articles')->rel() . '">cliquez ici</a></li>
+			<li class="formatter-li">Pour configurer votre module, <a class="offload" href="' . ModulesUrlBuilder::configuration('articles')->rel() . '">cliquez ici</a></li>
+			<li class="formatter-li">Pour ajouter des catégories : <a class="offload" href="' . CategoriesUrlBuilder::add(Category::ROOT_CATEGORY, 'articles')->rel() . '">cliquez ici</a> (les catégories et sous catégories sont à l\'infini)</li>
+			<li class="formatter-li">Pour ajouter un article : <a class="offload" href="' . ItemsUrlBuilder::add(Category::ROOT_CATEGORY, 'articles')->rel() . '">cliquez ici</a></li>
 		</ul>
 		<ul class="formatter-ul">
-			<li class="formatter-li">Pour mettre en page vos articles, vous pouvez utiliser le langage bbcode ou l\'éditeur WYSIWYG (cf cet <a href="https://www.phpboost.com/wiki/bbcode">article</a>)<br /></li>
+			<li class="formatter-li">Pour mettre en page vos articles, vous pouvez utiliser le langage bbcode ou l\'éditeur WYSIWYG (cf cet <a class="offload" href="https://www.phpboost.com/wiki/bbcode">article</a>)<br /></li>
 		</ul>
-		<p>Pour en savoir plus, n\'hésitez pas à consulter la documentation du module sur le site de <a href="https://www.phpboost.com/wiki/articles">PHPBoost</a>.</p>
+		<p>Pour en savoir plus, n\'hésitez pas à consulter la documentation du module sur le site de <a class="offload" href="https://www.phpboost.com/wiki/articles">PHPBoost</a>.</p>
 		<br />
 		<br />
 		Bonne utilisation de ce module.',

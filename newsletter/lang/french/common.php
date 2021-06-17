@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 14
+ * @version     PHPBoost 6.0 - last update: 2021 06 17
  * @since       PHPBoost 3.0 - 2011 03 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -93,7 +93,7 @@ $lang['newsletter.item.success.add']           = 'La newsletter a été envoyée
 $lang['newsletter.archive.success.delete']     = 'L\'archive a été supprimée';
 
 // Errors
-$lang['newsletter.sender.email.not.configured'] = 'L\'adresse email d\'envoi de la newsletter n\'a pas été configurée. Veuillez la <a href ="' . NewsletterUrlBuilder::configuration()->rel() . '">configurer</a> avant de pouvoir envoyer une newsletter.';
+$lang['newsletter.sender.email.not.configured'] = 'L\'adresse email d\'envoi de la newsletter n\'a pas été configurée. Veuillez la <a class="offload" href ="' . NewsletterUrlBuilder::configuration()->rel() . '">configurer</a> avant de pouvoir envoyer une newsletter.';
 $lang['newsletter.stream.not.exists']           = 'Le flux demandé n\'existe pas';
 $lang['newsletter.subscriber.not.exists']       = 'L\'inscrit n\'existe pas';
 $lang['newsletter.subscriber.already.exists']   = 'Cette adresse email est déjà inscrite aux newsletters du site';

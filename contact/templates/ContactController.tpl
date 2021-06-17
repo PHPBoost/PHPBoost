@@ -64,7 +64,7 @@
 
 				# ELSE #
 					<div class="spacer"></div>
-					<div class="align-center"><a href="${relative_url(ContactUrlBuilder::home())}">{@contact.send.another.email}</a></div>
+					<div class="align-center"><a class="offload" href="${relative_url(ContactUrlBuilder::home())}">{@contact.send.another.email}</a></div>
 				# ENDIF #
 			</div>
 		</div>

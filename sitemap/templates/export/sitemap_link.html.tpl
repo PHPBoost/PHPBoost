@@ -1,1 +1,1 @@
-<a href="{LOC}">{TEXT}</a>
+<a class="offload" href="{LOC}">{TEXT}</a>

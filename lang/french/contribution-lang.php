@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 23
+ * @version     PHPBoost 6.0 - last update: 2021 06 17
  * @since       PHPBoost 6.0 - 2021 04 20
 */
 
@@ -56,7 +56,7 @@ $lang['contribution.member.edition.description.clue'] = 'Expliquez ce que vous a
 $lang['contribution.confirmed']                       = 'Votre contribution a bien été enregistrée.';
 $lang['contribution.confirmed.messages'] = '
     <p>
-        Vous pourrez la suivre dans le <a href="' . UserUrlBuilder::contribution_panel()->rel() . '">panneau de contribution</a>
+        Vous pourrez la suivre dans le <a class="offload" href="' . UserUrlBuilder::contribution_panel()->rel() . '">panneau de contribution</a>
         et éventuellement discuter avec les validateurs si leur choix n\'est pas franc.</p><p>Merci d\'avoir participé à la vie du site !
     </p>
 ';
@@ -67,7 +67,7 @@ $lang['contribution.pm.content'] = '
         <h6>Commentaire :</h6>
         :comment
     </p>
-    <a href=":contribution_url">Accéder à la contribution</a>
+    <a class="offload" href=":contribution_url">Accéder à la contribution</a>
 ';
 
 // Dead link

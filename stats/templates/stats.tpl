@@ -10,53 +10,53 @@
 				</a>
 				<ul>
 					<li>
-						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_SITE}#stats" aria-label="{@stats.website}">
+						<a class="offload" href="{PATH_TO_ROOT}/stats/stats{U_STATS_SITE}#stats" aria-label="{@stats.website}">
 							<i class="fa fa-fw fa-home" aria-hidden="true"></i> <span>{@stats.website}</span>
 						</a>
 					</li>
 					<li>
-						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_USERS}#stats" aria-label="{@user.members}">
+						<a class="offload" href="{PATH_TO_ROOT}/stats/stats{U_STATS_USERS}#stats" aria-label="{@user.members}">
 							<i class="fa fa-fw fa-users" aria-hidden="true"></i> <span>{@user.members}</span>
 						</a>
 					</li>
 					<li>
-						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_VISIT}#stats" aria-label="{@user.guests}">
+						<a class="offload" href="{PATH_TO_ROOT}/stats/stats{U_STATS_VISIT}#stats" aria-label="{@user.guests}">
 							<i class="fa fa-fw fa-eye" aria-hidden="true"></i> <span>{@user.guests}</span>
 						</a>
 					</li>
 					<li>
-						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_PAGES}#stats" aria-label="{@common.pages}">
+						<a class="offload" href="{PATH_TO_ROOT}/stats/stats{U_STATS_PAGES}#stats" aria-label="{@common.pages}">
 							<i class="far fa-fw fa-file" aria-hidden="true"></i> <span>{@common.pages}</span>
 						</a>
 					</li>
 					<li>
-						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_BROWSER}#stats" aria-label="{@stats.browsers}">
+						<a class="offload" href="{PATH_TO_ROOT}/stats/stats{U_STATS_BROWSER}#stats" aria-label="{@stats.browsers}">
 							<i class="fa fa-fw fa-globe" aria-hidden="true"></i> <span>{@stats.browsers}</span>
 						</a>
 					</li>
 					<li>
-						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_OS}#stats" aria-label="{@stats.os}">
+						<a class="offload" href="{PATH_TO_ROOT}/stats/stats{U_STATS_OS}#stats" aria-label="{@stats.os}">
 							<i class="fa fa-fw fa-laptop" aria-hidden="true"></i> <span>{@stats.os}</span>
 						</a>
 					</li>
 					<li>
-						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_LANG}#stats" aria-label="{@stats.countries}">
+						<a class="offload" href="{PATH_TO_ROOT}/stats/stats{U_STATS_LANG}#stats" aria-label="{@stats.countries}">
 							<i class="fa fa-fw fa-flag" aria-hidden="true"></i> <span>{@stats.countries}</span>
 						</a>
 					</li>
 					<li>
-						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_REFERER}#stats" aria-label="{@stats.referers}">
+						<a class="offload" href="{PATH_TO_ROOT}/stats/stats{U_STATS_REFERER}#stats" aria-label="{@stats.referers}">
 							<i class="fa fa-fw fa-share-square" aria-hidden="true"></i> <span>{@stats.referers}</span>
 						</a>
 					</li>
 					<li>
-						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_KEYWORD}#stats" aria-label="{@common.keywords}">
+						<a class="offload" href="{PATH_TO_ROOT}/stats/stats{U_STATS_KEYWORD}#stats" aria-label="{@common.keywords}">
 							<i class="fa fa-fw fa-key" aria-hidden="true"></i> <span>{@common.keywords}</span>
 						</a>
 					</li>
 					# IF IS_ADMIN #
 						<li>
-							<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_ROBOTS}#stats" aria-label="{@stats.robots}">
+							<a class="offload" href="{PATH_TO_ROOT}/stats/stats{U_STATS_ROBOTS}#stats" aria-label="{@stats.robots}">
 								<i class="fa fa-fw fa-search" aria-hidden="true"></i> <span>{@stats.robots}</span>
 							</a>
 						</li>
@@ -116,7 +116,7 @@
 									{USERS_NUMBER}
 								</td>
 								<td>
-									<a href="{U_LAST_USER_PROFILE}" class="{LAST_USER_LEVEL_CLASS}" # IF C_LAST_USER_GROUP_COLOR # style="color:{LAST_USER_GROUP_COLOR}" # ENDIF #>{LAST_USER_DISPLAY_NAME}</a>
+									<a href="{U_LAST_USER_PROFILE}" class="{LAST_USER_LEVEL_CLASS} offload" # IF C_LAST_USER_GROUP_COLOR # style="color:{LAST_USER_GROUP_COLOR}" # ENDIF #>{LAST_USER_DISPLAY_NAME}</a>
 								</td>
 							 </tr>
 						</tbody>
@@ -222,7 +222,7 @@
 										{top_poster.ID}
 									</td>
 									<td>
-										<a href="{top_poster.U_USER_PROFILE}" class="{top_poster.USER_LEVEL_CLASS}" # IF top_poster.C_USER_GROUP_COLOR # style="color: {top_poster.USER_GROUP_COLOR}" # ENDIF #>{top_poster.LOGIN}</a>
+										<a href="{top_poster.U_USER_PROFILE}" class="{top_poster.USER_LEVEL_CLASS} offload" # IF top_poster.C_USER_GROUP_COLOR # style="color: {top_poster.USER_GROUP_COLOR}" # ENDIF #>{top_poster.LOGIN}</a>
 									</td>
 									<td>
 										{top_poster.USER_POST}

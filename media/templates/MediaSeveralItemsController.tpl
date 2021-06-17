@@ -1,9 +1,9 @@
 <section id="module-media">
 	<header class="section-header">
 		<div class="controls align-right">
-			<a href="${relative_url(SyndicationUrlBuilder::rss('media', CATEGORY_ID))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
+			<a class="offload" href="${relative_url(SyndicationUrlBuilder::rss('media', CATEGORY_ID))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 			# IF NOT C_ROOT_CATEGORY #{@media.module.title}# ENDIF #
-			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="fa fa-edit" aria-hidden="true"></i></a># ENDIF #
+			# IF IS_ADMIN #<a class="offload" href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="fa fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1>
 			# IF C_ROOT_CATEGORY #{@media.module.title}# ELSE #{CATEGORY_NAME}# ENDIF #
@@ -27,7 +27,7 @@
 						<div class="cell category-{sub_categories_list.CATEGORY_ID}">
 							<div class="cell-header">
 								<h5 class="cell-name" itemprop="about">
-									<a href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
+									<a class="offload" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
 								</h5>
 								<span class="small pinned notice" role="contentinfo" aria-label="{sub_categories_list.ITEMS_NUMBER} # IF sub_categories_list.C_SEVERAL_ITEMS #{@media.items}# ELSE #{@media.item}# ENDIF #">{sub_categories_list.ITEMS_NUMBER}</span>
 							</div>
@@ -35,7 +35,7 @@
 							<div class="cell-body">
 								<div class="cell-thumbnail cell-landscape cell-center">
 									<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
-									<a class="cell-thumbnail-caption" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
+									<a class="cell-thumbnail-caption offload" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
 										{@common.see.category}
 									</a>
 								</div>
@@ -99,7 +99,7 @@
 						<article id="article-media-{items.ID}" class="media-item several-items category-{items.CATEGORY_ID} cell# IF items.C_NEW_CONTENT # new-content# ENDIF #">
 							<header class="cell-header">
 								<h2 class="cell-name">
-									<a href="{items.U_ITEM}">{items.TITLE}</a>
+									<a class="offload" href="{items.U_ITEM}">{items.TITLE}</a>
 								</h2>
 							</header>
 							<div class="cell-body">
@@ -107,7 +107,7 @@
 									<div class="more">
 										<span class="pinned" aria-label="{@common.author}">
 											# IF items.C_AUTHOR_EXISTS #
-												<a class="{items.AUTHOR_LEVEL_CLASS}"# IF items.C_AUTHOR_GROUP_COLOR # style="color:{items.AUTHOR_GROUP_COLOR}"# ENDIF # href="{items.U_AUTHOR_PROFILE}">{items.AUTHOR_DISPLAY_NAME}</a>
+												<a class="{items.AUTHOR_LEVEL_CLASS} offload"# IF items.C_AUTHOR_GROUP_COLOR # style="color:{items.AUTHOR_GROUP_COLOR}"# ENDIF # href="{items.U_AUTHOR_PROFILE}">{items.AUTHOR_DISPLAY_NAME}</a>
 											# ELSE #
 												<span class="visitor">${LangLoader::get_message('user.guest', 'user-lang')}</span>
 											# ENDIF #
@@ -123,16 +123,16 @@
 									</div>
 									# IF C_CONTROLS #
 										<div class="controls align-right">
-											<a href="{items.U_STATUS}" aria-label="{@media.hide.item}"><i class="fa fa-fw fa-eye-slash"></i></a>
-											<a href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit"></i></a>
-											<a href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt"></i></a>
+											<a class="offload" href="{items.U_STATUS}" aria-label="{@media.hide.item}"><i class="fa fa-fw fa-eye-slash" aria-hidden="true"></i></a>
+											<a class="offload" href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+											<a class="offload" href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 										</div>
 									# ENDIF #
 								</div>
 								# IF items.C_HAS_PICTURE #
 									<div class="cell-thumbnail cell-landscape cell-center">
 										<img itemprop="thumbnailUrl" src="{items.PICTURE}" alt="{items.TITLE}" />
-										<a class="cell-thumbnail-caption" href="{items.U_MEDIA_LINK}" aria-label="{@common.see.details}"><i class="fa fa-2x fa-play-circle"></i></a>
+										<a class="cell-thumbnail-caption offload" href="{items.U_MEDIA_LINK}" aria-label="{@common.see.details}"><i class="fa fa-2x fa-play-circle" aria-hidden="true"></i></a>
 									</div>
 								# ENDIF #
 								# IF items.C_CONTENT #

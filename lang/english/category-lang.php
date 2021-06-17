@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 16
+ * @version     PHPBoost 6.0 - last update: 2021 06 17
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -53,10 +53,10 @@ $lang['category.default.root.category.description'] = '
 	:created_elements_number Here are some tips to get started on this module.
 	<br />
 	<ul class="formatter-ul">
-		<li class="formatter-li"> To configure or customize the module homepage your module, go into the <a href=":configuration_link">module administration</a></li>
-		<li class="formatter-li"> To create categories, <a href=":add_category_link">clic here</a> </li>
-		<li class="formatter-li"> To create :items, <a href=":add_item_link">clic here</a></li>
+		<li class="formatter-li"> To configure or customize the module homepage your module, go into the <a class="offload" href=":configuration_link">module administration</a></li>
+		<li class="formatter-li"> To create categories, <a class="offload" href=":add_category_link">clic here</a> </li>
+		<li class="formatter-li"> To create :items, <a class="offload" href=":add_item_link">clic here</a></li>
 	</ul>
-	To learn more, feel free to consult the documentation for the module on <a href=":documentation_link">PHPBoost</a> website.
+	To learn more, feel free to consult the documentation for the module on <a class="offload" href=":documentation_link">PHPBoost</a> website.
 ';
 ?>

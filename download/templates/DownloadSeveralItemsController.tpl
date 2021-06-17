@@ -1,9 +1,9 @@
 <section id="module-download">
 	<header class="section-header">
 		<div class="controls align-right">
-			<a href="${relative_url(SyndicationUrlBuilder::rss('download', ID_CAT))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
+			<a class="offload" href="${relative_url(SyndicationUrlBuilder::rss('download', ID_CAT))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 			# IF NOT C_ROOT_CATEGORY #{@download.module.title}# ENDIF #
-			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF ## ENDIF #
+			# IF C_CATEGORY ## IF IS_ADMIN #<a class="offload" href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF ## ENDIF #
 		</div>
 		<h1>
 			# IF C_PENDING #
@@ -33,7 +33,7 @@
 					# START sub_categories_list #
 						<div class="cell {sub_categories_list.CATEGORY_ID}">
 							<div class="cell-header">
-								<div class="cell-name"><a class="subcat-title" itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></div>
+								<div class="cell-name"><a class="subcat-title offload" itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></div>
 								<span class="small pinned notice" role="contentinfo" aria-label="{sub_categories_list.ITEMS_NUMBER} # IF sub_categories_list.C_SEVERAL_ITEMS #${TextHelper::lcfirst(@download.items)}# ELSE #${TextHelper::lcfirst(@download.item)}# ENDIF #">
 									{sub_categories_list.ITEMS_NUMBER}
 								</span>
@@ -42,7 +42,7 @@
 								<div class="cell-body" itemprop="about">
 									<div class="cell-thumbnail cell-landscape cell-center">
 										<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
-										<a class="cell-thumbnail-caption" href="{sub_categories_list.U_CATEGORY}">
+										<a class="cell-thumbnail-caption offload" href="{sub_categories_list.U_CATEGORY}">
 											${LangLoader::get_message('category.see.category', 'category-lang')}
 										</a>
 									</div>
@@ -111,7 +111,7 @@
 								# START items #
 									<tr class="category-{items.CATEGORY_ID}">
 										<td>
-											<a href="{items.U_ITEM}" itemprop="name"# IF items.C_NEW_CONTENT # class="new-content"# ENDIF #>{items.TITLE}</a>
+											<a href="{items.U_ITEM}" itemprop="name" class="offload# IF items.C_NEW_CONTENT # new-content# ENDIF #">{items.TITLE}</a>
 										</td>
 										<td>
 											<time datetime="# IF NOT items.C_DIFFERED #{items.DATE_ISO8601}# ELSE #{items.DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished">
@@ -142,7 +142,7 @@
 										# IF C_CONTROLS #
 											<td class="controls">
 												# IF items.C_EDIT #
-													<a href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+													<a class="offload" href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 												# ENDIF #
 												# IF items.C_DELETE #
 													<a href="{items.U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
@@ -159,7 +159,7 @@
 						# START items #
 							<article id="download-item-{items.ID}" class="download-item several-items category-{items.CATEGORY_ID} cell# IF items.C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 								<header class="cell-header">
-									<h2 class="cell-name"><a href="{items.U_ITEM}" itemprop="name">{items.TITLE}</a></h2>
+									<h2 class="cell-name"><a class="offload" href="{items.U_ITEM}" itemprop="name">{items.TITLE}</a></h2>
 								</header>
 								<div class="cell-body">
 									<div class="cell-infos">
@@ -169,7 +169,7 @@
 													<span class="pinned"><i class="far fa-user" aria-hidden="true"></i> <span class="custom-author">{items.AUTHOR_CUSTOM_NAME}</span></span>
 												# ELSE #
 													<span class="pinned {AUTHOR_LEVEL_CLASS}"# IF C_AUTHOR_GROUP_COLOR # style="color:{items.AUTHOR_GROUP_COLOR}; border-color:{items.AUTHOR_GROUP_COLOR}" # ENDIF #>
-														<i class="far fa-user" aria-hidden="true"></i> # IF items.C_AUTHOR_EXISTS #<a itemprop="author" rel="author" class="{items.AUTHOR_LEVEL_CLASS}" href="{items.U_AUTHOR_PROFILE}" # IF items.C_AUTHOR_GROUP_COLOR # style="color:{items.AUTHOR_GROUP_COLOR}" # ENDIF #>{items.AUTHOR_DISPLAY_NAME}</a># ELSE #<span class="visitor">{items.AUTHOR_DISPLAY_NAME}</span># ENDIF #
+														<i class="far fa-user" aria-hidden="true"></i> # IF items.C_AUTHOR_EXISTS #<a itemprop="author" rel="author" class="{items.AUTHOR_LEVEL_CLASS} offload" href="{items.U_AUTHOR_PROFILE}" # IF items.C_AUTHOR_GROUP_COLOR # style="color:{items.AUTHOR_GROUP_COLOR}" # ENDIF #>{items.AUTHOR_DISPLAY_NAME}</a># ELSE #<span class="visitor">{items.AUTHOR_DISPLAY_NAME}</span># ENDIF #
 													</span>
 												# ENDIF #
 											# ENDIF #
@@ -201,7 +201,7 @@
 										</div>
 										# IF items.C_CONTROLS #
 											<div class="controls align-right">
-												# IF items.C_EDIT #<a href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
+												# IF items.C_EDIT #<a class="offload" href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
 												# IF items.C_DELETE #<a href="{items.U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
 											</div>
 										# ENDIF #
@@ -217,7 +217,7 @@
 										# IF items.C_HAS_THUMBNAIL #
 											<div class="cell-thumbnail cell-landscape cell-center">
 												<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
-												<a href="{items.U_ITEM}" class="cell-thumbnail-caption">
+												<a href="{items.U_ITEM}" class="cell-thumbnail-caption offload">
 													{@common.see.details}
 												</a>
 											</div>
@@ -228,7 +228,7 @@
 											<div class="cell-infos">
 												<span></span>
 												<span>
-													<a href="{items.U_DOWNLOAD}" class="button submit small">
+													<a href="{items.U_DOWNLOAD}" class="button submit small offload">
 														<i class="fa fa-download" aria-hidden="true"></i> {@download.download}
 													</a>
 													# IF IS_USER_CONNECTED #
@@ -242,13 +242,13 @@
 										<div itemprop="text">
 											# IF C_FULL_ITEM_DISPLAY #
 												# IF items.C_HAS_THUMBNAIL #
-													<a href="{items.U_ITEM}" class="item-thumbnail">
+													<a href="{items.U_ITEM}" class="item-thumbnail offload">
 														<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
 													</a>
 												# ENDIF #
 												{items.CONTENT}
 											# ELSE #
-												{items.SUMMARY}# IF items.C_READ_MORE # <a href="{items.U_ITEM}" class="read-more">[{@common.read.more}]</a># ENDIF #
+												{items.SUMMARY}# IF items.C_READ_MORE # <a href="{items.U_ITEM}" class="read-more offload">[{@common.read.more}]</a># ENDIF #
 											# ENDIF #
 										</div>
 									</div>

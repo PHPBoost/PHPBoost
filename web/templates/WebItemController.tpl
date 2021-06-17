@@ -1,9 +1,9 @@
 <section id="module-web" class="category-{CATEGORY_ID}">
 	<header class="section-header">
 		<div class="controls align-right">
-			<a href="{U_SYNDICATION}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
+			<a class="offload" href="{U_SYNDICATION}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 			{@web.module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
-			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
+			# IF IS_ADMIN #<a class="offload" href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1><span id="name" itemprop="name">{TITLE}</span></h1>
 	</header>
@@ -17,7 +17,7 @@
 			<article id="web-item-{ID}" itemscope="itemscope" itemtype="https://schema.org/CreativeWork" class="web-item single-item# IF C_IS_PARTNER # content-friends# ENDIF ## IF C_IS_PRIVILEGED_PARTNER # content-privileged-friends# ENDIF ## IF C_NEW_CONTENT # new-content# ENDIF#">
 				# IF C_CONTROLS #
 					<div class="controls align-right">
-						# IF C_EDIT #<a href="{U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
+						# IF C_EDIT #<a class="offload" href="{U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
 						# IF C_DELETE #<a href="{U_DELETE}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
 					</div>
 				# ENDIF #
@@ -49,7 +49,7 @@
 						<div class="cell-list small">
 							<ul>
 								<li class="li-stretch">
-									<a href="{U_VISIT}" class="button submit">
+									<a href="{U_VISIT}" class="button submit offload">
 										<i class="fa fa-globe" aria-hidden="true"></i> {@common.visit}
 									</a>
 									# IF C_VISIBLE #
@@ -66,7 +66,7 @@
 								</li>
 								<li class="li-stretch">
 									<span class="text-strong">{@common.category} : </span>
-									<span><a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a></span>
+									<span><a class="offload" itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a></span>
 								</li>
 								# IF C_ENABLED_COMMENTS #
 									<li>
@@ -94,7 +94,7 @@
 					<aside class="tags-container">
 						<span class="text-strong"><i class="fa fa-tags" aria-hidden="true"></i> {@common.keywords} : </span>
 						# START keywords #
-							<a class="pinned link-color" href="{keywords.URL}" itemprop="keywords">{keywords.NAME}</a>
+							<a class="pinned link-color offload" href="{keywords.URL}" itemprop="keywords">{keywords.NAME}</a>
 							# IF keywords.C_SEPARATOR ## ENDIF #
 						# END keywords #
 					</aside>

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 14
+ * @version     PHPBoost 6.0 - last update: 2021 06 17
  * @since       PHPBoost 3.0 - 2011 03 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -93,7 +93,7 @@ $lang['newsletter.item.success.add']           = 'The newsletter has been sent';
 $lang['newsletter.archive.success.delete']     = 'The archive has been deleted';
 
 // Errors
-$lang['newsletter.sender.email.not.configured'] = 'The newsletter sender email has not been configured. Please <a href ="' . NewsletterUrlBuilder::configuration()->rel() . '">configure</a> it before sending a newsletter.';
+$lang['newsletter.sender.email.not.configured'] = 'The newsletter sender email has not been configured. Please <a class="offload" href ="' . NewsletterUrlBuilder::configuration()->rel() . '">configure</a> it before sending a newsletter.';
 $lang['newsletter.stream.not.exists']           = 'The requested stream does not exist';
 $lang['newsletter.subscriber.not.exists']       = 'This registrant does not exist';
 $lang['newsletter.subscriber.already.exists']   = 'This email address is already subscribed to the site\'s newsletters';

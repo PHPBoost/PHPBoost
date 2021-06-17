@@ -1,8 +1,8 @@
 <section id="module-calendar" class="category-{CATEGORY_ID}">
 	<header class="section-header">
 		<div class="controls align-right">
-			<a href="{U_SYNDICATION}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
-			{@calendar.module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
+			<a class="offload" href="{U_SYNDICATION}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
+			{@calendar.module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a class="offload" href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1>
 			<span itemprop="name">{TITLE}</span>
@@ -14,13 +14,13 @@
 
 				<div class="flex-between">
 					<div class="more">
-						<span class="pinned"><i class="fa fa-user"></i> # IF C_AUTHOR_EXISTS #<a itemprop="author" href="{U_AUTHOR_PROFILE}" class="{AUTHOR_LEVEL_CLASS}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR}</a># ELSE #<span class="visitor">{AUTHOR}</span># ENDIF #</span>
-						# IF NOT C_ROOT_CATEGORY #<span class="pinned-category" data-color-surround="{CATEGORY_COLOR}"><a href="{U_CATEGORY}">{CATEGORY_NAME}</a></span># ENDIF #
+						<span class="pinned"><i class="fa fa-user"></i> # IF C_AUTHOR_EXISTS #<a itemprop="author" href="{U_AUTHOR_PROFILE}" class="{AUTHOR_LEVEL_CLASS} offload" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR}</a># ELSE #<span class="visitor">{AUTHOR}</span># ENDIF #</span>
+						# IF NOT C_ROOT_CATEGORY #<span class="pinned-category" data-color-surround="{CATEGORY_COLOR}"><a class="offload" aria-label="{@common.category}" href="{U_CATEGORY}">{CATEGORY_NAME}</a></span># ENDIF #
 					</div>
 					# IF C_CONTROLS #
 						<div class="controls align-right">
 							# IF C_EDIT #
-								<a href="{U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+								<a class="offload" href="{U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 							# ENDIF #
 							# IF C_DELETE #
 								<a href="{U_DELETE}" aria-label="{@common.delete}"# IF NOT C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
@@ -70,7 +70,7 @@
 												<span class="text-strong">{@calendar.participants}</span> :
 												# IF C_PARTICIPANTS #
 													# START participant #
-														<a href="{participant.U_PROFILE}" class="{participant.LEVEL_CLASS}" # IF participant.C_GROUP_COLOR # style="color:{participant.GROUP_COLOR}" # ENDIF #>{participant.DISPLAY_NAME}</a># IF NOT participant.C_LAST_PARTICIPANT #,# ENDIF #
+														<a href="{participant.U_PROFILE}" class="{participant.LEVEL_CLASS} offload" # IF participant.C_GROUP_COLOR # style="color:{participant.GROUP_COLOR}" # ENDIF #>{participant.DISPLAY_NAME}</a># IF NOT participant.C_LAST_PARTICIPANT #,# ENDIF #
 													# END participant #
 												# ELSE #
 													{@calendar.no.one}
@@ -89,7 +89,7 @@
 											# ELSE #
 												# IF C_PARTICIPATE #
 													<li>
-														<a href="{U_SUSCRIBE}" class="button alt-button">{@calendar.suscribe}</a>
+														<a href="{U_SUSCRIBE}" class="button submit offload">{@calendar.suscribe}</a>
 														# IF C_MISSING_PARTICIPANTS #
 															<span class="small text-italic">({L_MISSING_PARTICIPANTS})</span>
 														# ENDIF #
@@ -103,7 +103,7 @@
 										# IF C_IS_PARTICIPANT #
 											<li>
 												# IF C_UNSUBSCRIBE #
-													<a href="{U_UNSUSCRIBE}" class="button alt-button">{@calendar.unsuscribe}</a>
+													<a href="{U_UNSUSCRIBE}" class="button alt-button offload">{@calendar.unsuscribe}</a>
 												# ELSE #
 													<span>{@calendar.unsuscribe.notice.expired.event.date}</span>
 												# ENDIF #
@@ -135,7 +135,7 @@
 		</div>
 	</div>
 	<footer>
-		<a itemprop="url" href="{U_ITEM}"></a>
+		<meta itemprop="url" href="{U_ITEM}">
 		<meta itemprop="about" content="{CATEGORY_NAME}">
 		# IF C_COMMENTS_ENABLED #
 			<meta itemprop="discussionUrl" content="{U_COMMENTS}">

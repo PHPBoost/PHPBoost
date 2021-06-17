@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 23
+ * @version     PHPBoost 6.0 - last update: 2021 06 17
  * @since       PHPBoost 6.0 - 2021 04 20
 */
 
@@ -53,7 +53,7 @@ $lang['contribution.member.edition.description.desc'] = 'Please explain what you
 $lang['contribution.confirmed']                       = 'Your contribution has been saved.';
 $lang['contribution.confirmed.messages'] = '
     <p>
-        You can follow it into the <a href="' . UserUrlBuilder::contribution_panel()->rel() . '">contribution panel</a>
+        You can follow it into the <a class="offload" href="' . UserUrlBuilder::contribution_panel()->rel() . '">contribution panel</a>
         and possibly discuss with the validators if their choice is not straightforward.</p><p>Thank you for participating in the life of the site!
     </p>
 ';
@@ -64,7 +64,7 @@ $lang['contribution.pm.content'] = '
         <h6>Comment :</h6>
         :comment
     </p>
-    <a href=":contribution_url">See the contribution</a>
+    <a class="offload" href=":contribution_url">See the contribution</a>
 ';
 
 // Dead link

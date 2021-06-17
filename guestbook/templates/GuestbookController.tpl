@@ -35,7 +35,7 @@
 												<div class="message-user-container">
 													<h3 class="message-user-pseudo">
 														# IF messages.C_AUTHOR_EXISTS #
-															<a href="{messages.U_AUTHOR_PROFILE}" class="{messages.AUTHOR_LEVEL_CLASS}" # IF messages.C_AUTHOR_GROUP_COLOR # style="color:{messages.AUTHOR_GROUP_COLOR}" # ENDIF #>{messages.AUTHOR_DISPLAY_NAME}</a>
+															<a href="{messages.U_AUTHOR_PROFILE}" class="{messages.AUTHOR_LEVEL_CLASS} offload" # IF messages.C_AUTHOR_GROUP_COLOR # style="color:{messages.AUTHOR_GROUP_COLOR}" # ENDIF #>{messages.AUTHOR_DISPLAY_NAME}</a>
 														# ELSE #
 															<span class="visitor">{messages.AUTHOR_DISPLAY_NAME}</span>
 														# ENDIF #
@@ -58,7 +58,7 @@
 															</label>
 														# ENDIF #
 														# IF messages.C_EDIT #
-															<a href="{messages.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+															<a class="offload" href="{messages.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 														# ENDIF #
 														# IF messages.C_DELETE #
 															<a href="{messages.U_DELETE}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>

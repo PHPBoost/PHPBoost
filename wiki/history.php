@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 02
+ * @version     PHPBoost 6.0 - last update: 2021 06 17
  * @since       PHPBoost 1.6 - 2006 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -74,7 +74,7 @@ if (!empty($id_article))
 	while ($row = $result->fetch())
 	{
 		//Restauration
-		$actions = ($row['activ'] != 1 && $restore_auth) ? '<a href="' . url('action.php?restore=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()) . '" aria-label="' . $lang['wiki.restore.version'] . '"><i class="fa fa-undo" aria-hidden="true"></i></a> &nbsp; ' : '';
+		$actions = ($row['activ'] != 1 && $restore_auth) ? '<a class="offload" href="' . url('action.php?restore=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()) . '" aria-label="' . $lang['wiki.restore.version'] . '"><i class="fa fa-undo" aria-hidden="true"></i></a> &nbsp; ' : '';
 		$restore_link =
 		//Suppression
 		$actions .= ($row['activ'] != 1 && $delete_auth) ? '<a href="' . url('action.php?del_contents=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()) . '" aria-label="' . LangLoader::get_message('common.delete', 'common-lang') . '" data-confirmation="' . $lang['wiki.confirm.delete.archive'] . '"><i class="far fa-trash-alt" aria-hidden="true"></i></a>' : '';
@@ -87,7 +87,7 @@ if (!empty($id_article))
 			'C_DELETE'          => $row['activ'] != 1 && $delete_auth,
 			'C_CURRENT_VERSION' => $row['activ'] == 1,
 			'TITLE'           => $LANG['wiki_consult_article'],
-			'AUTHOR'          => !empty($row['display_name']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>' : $row['user_ip'],
+			'AUTHOR'          => !empty($row['display_name']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() . '" class="'.UserService::get_level_class($row['level']).' offload"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>' : $row['user_ip'],
 			'DATE'            => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 			'U_ARTICLE'       => $row['activ'] == 1 ? url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']) : url('wiki.php?id_contents=' . $row['id_contents']),
 			'U_RESTORE'       => url('action.php?restore=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()),
@@ -167,7 +167,7 @@ else //On affiche la liste des modifications
 
 		$view->assign_block_vars('list', array(
 			'TITLE'       => stripslashes($row['title']),
-			'AUTHOR'      => !empty($row['display_name']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>' : $row['user_ip'],
+			'AUTHOR'      => !empty($row['display_name']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() . '" class="'.UserService::get_level_class($row['level']).' offload"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>' : $row['user_ip'],
 			'LAST_UPDATE' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 			'U_ITEM'      => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
 		));

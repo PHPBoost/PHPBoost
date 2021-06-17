@@ -264,27 +264,27 @@
 			<ul class="level-0 hidden">
 				<li class="has-sub"><a class="cssmenu-title"><i class="fa fa-fw fa-eye" aria-hidden="true"></i> <span>{@common.display}</span></a>
 					<ul class="level-1">
-						<li><a href="{U_BEST_VIEWS}" class="cssmenu-title"><i class="fa fa-fw fa-eye" aria-hidden="true"></i> <span>{@gallery.top.views}</span></a></li>
-						# IF C_NOTATION_ENABLED #<li><a href="{U_BEST_NOTES}" class="cssmenu-title"><i class="far fa-star" aria-hidden="true"></i> <span>{@gallery.top.rated}</span></a></li># ENDIF #
+						<li><a href="{U_BEST_VIEWS}" class="cssmenu-title offload"><i class="fa fa-fw fa-eye" aria-hidden="true"></i> <span>{@gallery.top.views}</span></a></li>
+						# IF C_NOTATION_ENABLED #<li><a href="{U_BEST_NOTES}" class="cssmenu-title offload"><i class="far fa-star" aria-hidden="true"></i> <span>{@gallery.top.rated}</span></a></li># ENDIF #
 					</ul>
 				</li>
 				<li class="has-sub"><a class="cssmenu-title"><i class="fa fa-fw fa-sort" aria-hidden="true"></i> <span>{@common.sort.by}</span></a>
 					<ul class="level-1">
-						<li><a href="{U_SORT_BY_NAME}" class="cssmenu-title"><i class="fa fa-fw fa-tag" aria-hidden="true"></i> <span>{@common.sort.by.alphabetic}</span></a></li>
-						<li><a href="{U_SORT_BY_DATE}" class="cssmenu-title"><i class="fa fa-fw fa-clock" aria-hidden="true"></i> <span>{@common.sort.by.date}</span></a></li>
-						<li><a href="{U_SORT_BY_VIEWS}" class="cssmenu-title"><i class="fa fa-fw fa-eye" aria-hidden="true"></i> <span>{@common.sort.by.views.number}</span></a></li>
+						<li><a href="{U_SORT_BY_NAME}" class="cssmenu-title offload"><i class="fa fa-fw fa-tag" aria-hidden="true"></i> <span>{@common.sort.by.alphabetic}</span></a></li>
+						<li><a href="{U_SORT_BY_DATE}" class="cssmenu-title offload"><i class="fa fa-fw fa-clock" aria-hidden="true"></i> <span>{@common.sort.by.date}</span></a></li>
+						<li><a href="{U_SORT_BY_VIEWS}" class="cssmenu-title offload"><i class="fa fa-fw fa-eye" aria-hidden="true"></i> <span>{@common.sort.by.views.number}</span></a></li>
 						# IF C_NOTATION_ENABLED #
-							<li><a href="{U_SORT_BY_NOTES}" class="cssmenu-title"><i class="far fa-star" aria-hidden="true"></i> <span>{@common.sort.by.best.note}</span></a></li>
+							<li><a href="{U_SORT_BY_NOTES}" class="cssmenu-title offload"><i class="far fa-star" aria-hidden="true"></i> <span>{@common.sort.by.best.note}</span></a></li>
 						# ENDIF #
 						# IF C_COMMENTS_ENABLED #
-							<li><a href="{U_SORT_BY_COMMENTS}" class="cssmenu-title"><i class="fa fa-fw fa-comments" aria-hidden="true"></i> <span>{@common.sort.by.comments.number}</span></a></li>
+							<li><a href="{U_SORT_BY_COMMENTS}" class="cssmenu-title offload"><i class="fa fa-fw fa-comments" aria-hidden="true"></i> <span>{@common.sort.by.comments.number}</span></a></li>
 						# ENDIF #
 					</ul>
 				</li>
 				<li class="has-sub"><a class="cssmenu-title"><i class="fa fa-fw fa-sort-alpha-down"></i> <span>{@common.sort.direction}</span></a>
 					<ul class="level-1">
-						<li><a href="{U_ASC}" class="cssmenu-title"><i class="fa fa-fw fa-sort-amount-down" aria-hidden="true"></i> <span>{@common.sort.desc}</span></a></li>
-						<li><a href="{U_DESC}" class="cssmenu-title"><i class="fa fa-fw fa-sort-amount-up" aria-hidden="true"></i> <span>{@common.sort.asc}</span></a></li>
+						<li><a href="{U_ASC}" class="cssmenu-title offload"><i class="fa fa-fw fa-sort-amount-down" aria-hidden="true"></i> <span>{@common.sort.desc}</span></a></li>
+						<li><a href="{U_DESC}" class="cssmenu-title offload"><i class="fa fa-fw fa-sort-amount-up" aria-hidden="true"></i> <span>{@common.sort.asc}</span></a></li>
 					</ul>
 				</li>
 			</ul>
@@ -310,7 +310,7 @@
 					# START sub_categories_list #
 						<div class="cell category-{sub_categories_list.CATEGORY_ID}" itemscope>
 							<div class="cell-header">
-								<h5 class="cell-name" itemprop="name"><a href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
+								<h5 class="cell-name" itemprop="name"><a class="offload" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
 								<span class="small pinned notice" role="contentinfo" itemprop="items" aria-label="{sub_categories_list.ITEMS_NUMBER} # IF sub_categories_list.C_SEVERAL_ITEMS #{@gallery.items}# ELSE #{@gallery.item}# ENDIF #">{sub_categories_list.ITEMS_NUMBER}</span>
 							</div>
 							<div class="cell-body">
@@ -318,7 +318,7 @@
 									# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
 										<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
 									# ENDIF #
-									<a class="cell-thumbnail-caption small" href="{sub_categories_list.U_CATEGORY}">
+									<a class="cell-thumbnail-caption small offload" href="{sub_categories_list.U_CATEGORY}">
 										{@common.see.category}
 									</a>
 								</div>
@@ -361,7 +361,7 @@
 													<span class="text-strong">{@common.author}</span>
 													<span>
 														# IF C_AUTHOR_EXISTS #
-															<a class="{AUTHOR_LEVEL_CLASS}"# IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}"# ENDIF # href="{U_AUTHOR_PROFILE}">{AUTHOR_DISPLAY_NAME}</a>
+															<a class="{AUTHOR_LEVEL_CLASS} offload"# IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}"# ENDIF # href="{U_AUTHOR_PROFILE}">{AUTHOR_DISPLAY_NAME}</a>
 														# ELSE #
 															<span class="visitor">${LangLoader::get_message('user.guest', 'user-lang')}</span>
 														# ENDIF #
@@ -375,7 +375,7 @@
 											<li class="li-stretch"><span class="text-strong">{@common.dimensions}</span><span>{DIMENSION}</span></li>
 											<li class="li-stretch"><span class="text-strong">{@common.size}</span><span>{SIZE} {@common.unit.kilobytes}</span></li>
 											# IF C_COMMENTS_ENABLED #
-												<li class="li-stretch"><span class="text-strong">{@common.comments}</span><a href="{U_COMMENTS}">{COMMENTS_NUMBER}</a></li>
+												<li class="li-stretch"><span class="text-strong">{@common.comments}</span><a class="offload" href="{U_COMMENTS}">{COMMENTS_NUMBER}</a></li>
 											# ENDIF #
 											# IF C_NOTATION_ENABLED #
 												<li class="align-center"><div class="text-strong">{KERNEL_NOTATION}</div></li>
@@ -409,8 +409,8 @@
 								</div>
 								<div class="cell cell-2-3">
 									<div class="flex-between">
-										<span><a href="{U_PREVIOUS}#pics_max" aria-label="{@common.previous}"><i class="fa fa-fw fa-arrow-left fa-2x" aria-hidden="true"></i></a></span>
-										<span><a href="{U_NEXT}#pics_max" aria-label="{@common.next}"> <i class="fa fa-fw fa-arrow-right fa-2x" aria-hidden="true"></i></a></span>
+										<span><a class="offload" href="{U_PREVIOUS}#pics_max" aria-label="{@common.previous}"><i class="fa fa-fw fa-arrow-left fa-2x" aria-hidden="true"></i></a></span>
+										<span><a class="offload" href="{U_NEXT}#pics_max" aria-label="{@common.next}"> <i class="fa fa-fw fa-arrow-right fa-2x" aria-hidden="true"></i></a></span>
 									</div>
 									<table class="pics-max-thumbnails">
 										<thead>
@@ -428,7 +428,7 @@
 												# START list_preview_pics #
 													<td class="align-center# IF list_preview_pics.C_CURRENT_ITEM # current# ENDIF #" style="height:{list_preview_pics.HEIGHT}px">
 														<span id="thumb{list_preview_pics.ID}">
-															<a href="{list_preview_pics.URL}"><img src="pics/thumbnails/{list_preview_pics.PATH}" alt="{list_preview_pics.NAME}" /></a>
+															<a class="offload" href="{list_preview_pics.URL}"><img src="pics/thumbnails/{list_preview_pics.PATH}" alt="{list_preview_pics.NAME}" /></a>
 														</span>
 													</td>
 												# END list_preview_pics #
@@ -451,7 +451,7 @@
 									<div class="cell-header">
 										# IF C_NAME_DISPLAYED #
 											<div class="cell-name">
-												<a id="fi_{pics_list.ID}" class="ellipsis" href="{pics_list.U_ITEM}">
+												<a id="fi_{pics_list.ID}" class="ellipsis offload" href="{pics_list.U_ITEM}">
 													{pics_list.NAME}
 												</a>
 											</div>
@@ -474,7 +474,7 @@
 											# IF C_AUTHOR_DISPLAYED #
 												<li>
 													# IF pics_list.C_AUTHOR_EXISTS #
-														<a class="{pics_list.AUTHOR_LEVEL_CLASS}"# IF pics_list.C_AUTHOR_GROUP_COLOR # style="color:{pics_list.AUTHOR_GROUP_COLOR}"# ENDIF # href="{pics_list.U_AUTHOR_PROFILE}">
+														<a class="{pics_list.AUTHOR_LEVEL_CLASS} offload"# IF pics_list.C_AUTHOR_GROUP_COLOR # style="color:{pics_list.AUTHOR_GROUP_COLOR}"# ENDIF # href="{pics_list.U_AUTHOR_PROFILE}">
 															{@common.by} {pics_list.AUTHOR_DISPLAY_NAME}
 														</a>
 													# ELSE #
@@ -489,7 +489,7 @@
 											# ENDIF #
 											# IF C_COMMENTS_ENABLED #
 												<li>
-													<a href="{pics_list.U_COMMENTS}">{pics_list.COMMENTS}</a>
+													<a class="offload" href="{pics_list.U_COMMENTS}">{pics_list.COMMENTS}</a>
 												</li>
 											# ENDIF #
 											# IF C_NOTATION_ENABLED #

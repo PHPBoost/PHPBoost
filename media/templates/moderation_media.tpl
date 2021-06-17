@@ -92,10 +92,10 @@
 									# START items #
 										<tr>
 											<td class="{items.COLOR}">
-												<a href="{items.U_ITEM}">{items.TITLE}</a>
+												<a class="offload" href="{items.U_ITEM}">{items.TITLE}</a>
 											</td>
 											<td class="{items.COLOR}">
-												<a href="{items.U_CATEGORY}">{items.CATEGORY_NAME}</a>
+												<a class="offload" href="{items.U_CATEGORY}">{items.CATEGORY_NAME}</a>
 											</td>
 											<td class="{items.COLOR}">
 												<input type="radio" id="visible{items.ID}" name="action[{items.ID}]" value="visible"{items.VISIBLE}>
@@ -110,7 +110,7 @@
 												<input type="radio" id="delete{items.ID}" name="action[{items.ID}]" value="delete" data-confirmation="delete-element">
 											</td>
 											<td class="{items.COLOR}">
-												<a href="{items.U_EDIT}"><i class="fa fa-edit" aria-hidden="true"></i><span class="sr-only">{@common.edit}</span></a>
+												<a class="offload" href="{items.U_EDIT}"><i class="fa fa-edit" aria-hidden="true"></i><span class="sr-only">{@common.edit}</span></a>
 											</td>
 										</tr>
 									# END items #
