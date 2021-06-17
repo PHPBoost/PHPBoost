@@ -5,7 +5,7 @@
 		<div id="site-infos" role="banner">
 			<div id="site-logo" # IF C_HEADER_LOGO #style="background-image: url({U_HEADER_LOGO});"# ENDIF #></div>
 			<div id="site-name-container">
-				<a id="site-name" href="{PATH_TO_ROOT}/">{SITE_NAME}</a>
+				<a class="offload" id="site-name" href="{PATH_TO_ROOT}/">{SITE_NAME}</a>
 				<span id="site-slogan">{SITE_SLOGAN}</span>
 			</div>
 		</div>
@@ -68,14 +68,14 @@
 			<nav id="breadcrumb" itemprop="breadcrumb">
 				<ol itemscope itemtype="https://schema.org/BreadcrumbList">
 					<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-						<a href="{START_PAGE}" itemprop="item">
+						<a class="offload" href="{START_PAGE}" itemprop="item">
 							<span itemprop="name">{@common.home}</span>
     						<meta itemprop="position" content="1" />
 						</a>
 					</li>
 					# START link_bread_crumb #
 						<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" # IF link_bread_crumb.C_CURRENT # class="current" # ENDIF #>
-							<a href="{link_bread_crumb.URL}" itemprop="item">
+							<a class="offload" href="{link_bread_crumb.URL}" itemprop="item">
 								<span itemprop="name">{link_bread_crumb.TITLE}</span>
 	    						<meta itemprop="position" content="{link_bread_crumb.POSITION}" />
 							</a>
@@ -127,12 +127,12 @@
 	# ENDIF #
 
 	<div role="contentinfo" class="footer-infos">
-		<span class="footer-infos-powered-by">{@common.powered.by} <i class="fa iboost fa-iboost-logo" aria-hidden="true"></i> <a href="https://www.phpboost.com" aria-label="{@common.phpboost.link}">PHPBoost</a></span> | <span aria-label="{@common.phpboost.right}"><i class="fab fa-osi" aria-hidden="true"></i></span>
+		<span class="footer-infos-powered-by">{@common.powered.by} <i class="fa iboost fa-iboost-logo" aria-hidden="true"></i> <a class="offload" href="https://www.phpboost.com" aria-label="{@common.phpboost.link}">PHPBoost</a></span> | <span aria-label="{@common.phpboost.right}"><i class="fab fa-osi" aria-hidden="true"></i></span>
 		# IF C_DISPLAY_BENCH #
 			| <span class="footer-infos-benchmark">{@common.achieved} {BENCH}{@date.unit.seconds} - {REQ} {@common.sql.request} - {MEMORY_USED}</span>
 		# ENDIF #
 		# IF C_DISPLAY_AUTHOR_THEME #
-			| <span class="footer-infos-template-author">{@common.theme} {L_THEME_NAME} ${TextHelper::lcfirst(@common.by)} <a href="{U_THEME_AUTHOR_LINK}">{L_THEME_AUTHOR}</a></span>
+			| <span class="footer-infos-template-author">{@common.theme} {L_THEME_NAME} ${TextHelper::lcfirst(@common.by)} <a class="offload" href="{U_THEME_AUTHOR_LINK}">{L_THEME_AUTHOR}</a></span>
 		# ENDIF #
 	</div>
 </footer>

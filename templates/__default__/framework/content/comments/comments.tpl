@@ -41,9 +41,9 @@
 					# IF C_MODERATE #
 						<div class="controls align-right">
 							# IF C_IS_LOCKED #
-								<a href="{U_UNLOCK}" class="user-locked"><i class="fa fa-user-lock" aria-hidden="true"></i> {@comment.unlock}</a>
+								<a href="{U_UNLOCK}" class="user-locked offload"><i class="fa fa-user-lock" aria-hidden="true"></i> {@comment.unlock}</a>
 							# ELSE #
-								<a href="{U_LOCK}" class="user-unlocked"><i class="fa fa-user-lock" aria-hidden="true"></i> {@comment.lock}</a>
+								<a href="{U_LOCK}" class="user-unlocked offload"><i class="fa fa-user-lock" aria-hidden="true"></i> {@comment.lock}</a>
 							# ENDIF #
 						</div>
 					# ENDIF #

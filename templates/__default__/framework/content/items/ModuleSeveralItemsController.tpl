@@ -1,9 +1,9 @@
 <section id="module-{MODULE_ID}">
 	<header class="section-header">
 		<div class="controls align-right">
-			# IF C_SYNDICATION #<a href="{U_SYNDICATION}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a># ENDIF #
+			# IF C_SYNDICATION #<a class="offload" href="{U_SYNDICATION}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a># ENDIF #
 			# IF NOT C_ROOT_CATEGORY #{MODULE_NAME}# ENDIF #
-			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF ## ENDIF #
+			# IF C_CATEGORY ## IF IS_ADMIN #<a class="offload" href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF ## ENDIF #
 		</div>
 		<h1>
 			# IF C_PENDING #
@@ -35,7 +35,7 @@
 						# START sub_categories_list #
 							<div class="cell category-{sub_categories_list.CATEGORY_ID}" itemscope>
 								<div class="cell-header">
-									<h5 class="cell-name" itemprop="about"><a href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
+									<h5 class="cell-name" itemprop="about"><a class="offload" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
 									<span class="small pinned notice" aria-label="{sub_categories_list.ITEMS_NUMBER} # IF sub_categories_list.C_SEVERAL_ITEMS #{@items}# ELSE #{@item}# ENDIF #">
 										{sub_categories_list.ITEMS_NUMBER}
 									</span>
@@ -44,7 +44,7 @@
 									<div class="cell-body">
 										<div class="cell-thumbnail cell-landscape cell-center">
 											<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
-											<a class="cell-thumbnail-caption" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
+											<a class="cell-thumbnail-caption offload" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
 												{@common.see.category}
 											</a>
 										</div>
@@ -140,7 +140,7 @@
 								# START items #
 									<tr class="category-{items.CATEGORY_ID}# IF items.C_PRIME_ITEM # prime-item# ENDIF #">
 										<td>
-											<a href="{items.U_ITEM}" itemprop="name"# IF items.C_NEW_CONTENT # class="new-content"# ENDIF#>{items.TITLE}</a>
+											<a href="{items.U_ITEM}" itemprop="name" class="offload# IF items.C_NEW_CONTENT # new-content# ENDIF#">{items.TITLE}</a>
 											# IF items.C_COMPLETED #<span class="d-block small error">[{@completed.item}]</span># ENDIF #
 										</td>
 										# IF NOT C_MEMBER_ITEMS #
@@ -150,7 +150,7 @@
 														<span class="pinned">{items.AUTHOR_CUSTOM_NAME}</span>
 													# ELSE #
 														# IF items.C_AUTHOR_EXISTS #
-															<a itemprop="author" href="{items.U_AUTHOR}" class="pinned# IF C_AUTHOR_GROUP_COLOR # {items.AUTHOR_GROUP_COLOR}# ELSE # {items.AUTHOR_LEVEL_CLASS}# ENDIF #">
+															<a itemprop="author" href="{items.U_AUTHOR}" class="pinned offload# IF C_AUTHOR_GROUP_COLOR # {items.AUTHOR_GROUP_COLOR}# ELSE # {items.AUTHOR_LEVEL_CLASS}# ENDIF #">
 																{items.AUTHOR_DISPLAY_NAME}
 															</a>
 														# ELSE #
@@ -174,7 +174,7 @@
 										# ENDIF #
 										# IF C_ENABLED_CATEGORIES #
 											<td>
-												<a itemprop="about" href="{items.U_CATEGORY}">{items.CATEGORY_NAME}</a>
+												<a class="offload" aria-label="{@common.category}" itemprop="about" href="{items.U_CATEGORY}">{items.CATEGORY_NAME}</a>
 											</td>
 										# ENDIF #
 										# IF NOT C_PENDING #
@@ -200,13 +200,13 @@
 											# ENDIF #
 											# IF C_ENABLED_COMMENTS #
 												<td>
-													<a href="{items.U_COMMENTS}">{items.COMMENTS_NUMBER}</a>
+													<a class="offload" href="{items.U_COMMENTS}">{items.COMMENTS_NUMBER}</a>
 												</td>
 											# ENDIF #
 										# ENDIF #
 										# IF items.C_CONTROLS #
 											<td class="controls">
-												# IF items.C_EDIT #<a href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
+												# IF items.C_EDIT #<a class="offload" href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
 												# IF items.C_DELETE #<a href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
 											</td>
 										# ENDIF #
@@ -220,7 +220,7 @@
 						# START items #
 							<article id="{MODULE_ID}-item-{items.ID}" class="{MODULE_ID}-item several-items category-{items.CATEGORY_ID} cell# IF items.C_PRIME_ITEM # prime-item# ENDIF ## IF items.C_NEW_CONTENT # new-content# ENDIF#" itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 								<header class="cell-header">
-									<h2 class="cell-name"><a href="{items.U_ITEM}" itemprop="name">{items.TITLE}</a></h2>
+									<h2 class="cell-name"><a class="offload" href="{items.U_ITEM}" itemprop="name">{items.TITLE}</a></h2>
 								</header>
 								<div class="cell-body">
 									# IF items.C_COMPLETED #
@@ -237,7 +237,7 @@
 														<span aria-label="{@common.author}" itemprop="author" class="pinned">{items.AUTHOR_CUSTOM_NAME}</span>
 													# ELSE #
 														# IF items.C_AUTHOR_EXISTS #
-															<a aria-label="{@common.author}" itemprop="author" href="{items.U_AUTHOR}" class="pinned# IF C_AUTHOR_GROUP_COLOR # {items.AUTHOR_GROUP_COLOR}# ELSE # {items.AUTHOR_LEVEL_CLASS}# ENDIF #">
+															<a aria-label="{@common.author}" itemprop="author" href="{items.U_AUTHOR}" class="pinned offload# IF C_AUTHOR_GROUP_COLOR # {items.AUTHOR_GROUP_COLOR}# ELSE # {items.AUTHOR_LEVEL_CLASS}# ENDIF #">
 																{items.AUTHOR_DISPLAY_NAME}
 															</a>
 														# ELSE #
@@ -272,7 +272,7 @@
 												# IF items.C_HAS_CATEGORY #
 													# IF NOT items.C_ROOT_CATEGORY #
 														<span class="pinned" aria-label="{@common.category}">
-															<a itemprop="about" href="{items.U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {items.CATEGORY_NAME}</a>
+															<a class="offload" aria-label="{@common.category}" itemprop="about" href="{items.U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {items.CATEGORY_NAME}</a>
 														</span>
 													# ENDIF #
 												# ENDIF #
@@ -296,14 +296,14 @@
 												# ENDIF #
 												# IF C_ENABLED_COMMENTS #
 													<span class="pinned" aria-label="{@common.comments}">
-														<a href="{items.U_COMMENTS}"><i class="fa fa-comments" aria-hidden="true"></i> {items.COMMENTS_LABEL}</a>
+														<a class="offload" href="{items.U_COMMENTS}"><i class="fa fa-comments" aria-hidden="true"></i> {items.COMMENTS_LABEL}</a>
 													</span>
 												# ENDIF #
 											# ENDIF #
 										</div>
 										# IF items.C_CONTROLS #
 											<div class="controls align-right">
-												# IF items.C_EDIT #<a href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
+												# IF items.C_EDIT #<a class="offload" href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
 												# IF items.C_DELETE #<a href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
 											</div>
 										# ENDIF #
@@ -312,7 +312,7 @@
 										# IF items.C_HAS_THUMBNAIL #
 											<div class="cell-thumbnail cell-landscape cell-center">
 												<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
-												<a class="cell-thumbnail-caption" href="{items.U_ITEM}">
+												<a class="cell-thumbnail-caption offload" href="{items.U_ITEM}">
 													{@common.see.details}
 												</a>
 											</div>
@@ -323,7 +323,7 @@
 											<div class="cell-infos">
 												<span></span>
 												<span>
-													<a href="{items.U_VISIT}" class="button submit small">
+													<a class="offload" href="{items.U_VISIT}" class="button submit small">
 														<i class="fa fa-globe" aria-hidden="true"></i> {@common.visit}
 													</a>
 													# IF IS_USER_CONNECTED #
@@ -338,7 +338,7 @@
 											<div class="cell-infos">
 												<span></span>
 												<span>
-													<a href="{items.U_DOWNLOAD}" class="button submit small">
+													<a class="offload" href="{items.U_DOWNLOAD}" class="button submit small">
 														<i class="fa fa-dowload" aria-hidden="true"></i> {@common.download}
 													</a>
 													# IF IS_USER_CONNECTED #
@@ -352,14 +352,14 @@
 										<div itemprop="text">
 											# IF C_FULL_ITEM_DISPLAY #
 												# IF items.C_HAS_THUMBNAIL #
-													<a class="item-thumbnail" href="{items.U_ITEM}">
+													<a class="item-thumbnail offload" href="{items.U_ITEM}">
 														<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
 													</a>
 												# ENDIF #
 												{items.CONTENT}
 											# ELSE #
 												{items.SUMMARY}
-												# IF items.C_READ_MORE # <a href="{items.U_ITEM}" class="read-more">[{@common.read.more}]</a># ENDIF #
+												# IF items.C_READ_MORE # <a href="{items.U_ITEM}" class="read-more offload">[{@common.read.more}]</a># ENDIF #
 											# ENDIF #
 										</div>
 									</div>
@@ -370,7 +370,7 @@
 										<div class="tags-container">
 											<span class="text-strong"><i class="fa fa-tags" aria-hidden="true"></i> {@common.keywords}</span> :
 											# START items.keywords #
-												<a itemprop="keywords" href="{items.keywords.URL}" class="pinned question">{items.keywords.NAME}</a>
+												<a itemprop="keywords" href="{items.keywords.URL}" class="pinned question offload">{items.keywords.NAME}</a>
 											# END items.keywords #
 										</div>
 									# ENDIF #
@@ -378,7 +378,7 @@
 										<div class="sources-container">
 											<span class="text-strong"><i class="fa fa-map-signs" aria-hidden="true"></i> {@common.sources}</span> :
 											# START items.sources #
-												<a itemprop="isBasedOnUrl" href="{items.sources.URL}" class="pinned question" rel="nofollow">{items.sources.NAME}</a># IF items.sources.C_SEPARATOR ## ENDIF #
+												<a itemprop="isBasedOnUrl" href="{items.sources.URL}" class="pinned question offload" rel="nofollow">{items.sources.NAME}</a># IF items.sources.C_SEPARATOR ## ENDIF #
 											# END items.sources #
 										</div>
 									# ENDIF #

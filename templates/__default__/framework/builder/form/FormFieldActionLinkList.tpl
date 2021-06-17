@@ -3,7 +3,7 @@
 	<ul>
 		# START action #
 			<li# IF NOT action.C_IS_ACTIVE_MODULE # class="hidden"# ENDIF #>
-				<a href="{action.U_LINK}">
+				<a class="offload" href="{action.U_LINK}">
 					# IF action.C_PICTURE #
 						# IF action.C_IMG #
 						<img src="{action.U_IMG}" alt="{action.TITLE}" />

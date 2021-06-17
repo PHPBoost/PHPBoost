@@ -684,7 +684,7 @@
                 let $item_link = $item_content.find('a').addBack('a');
 
                 const $a = $item_link.length
-                  ? $item_link.clone(false, true).addClass('nav-item')
+                  ? $item_link.clone(false, true).addClass('nav-item offload')
                   : $(`<${item.subnav.length ? 'a name="nav-item"' : 'span'} class="nav-item">`).append($item_content.clone(true, true)).on('click', stopPropagation);
 
                 if ($a.is('a')) {

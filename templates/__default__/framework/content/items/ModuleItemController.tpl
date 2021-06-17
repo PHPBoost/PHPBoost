@@ -1,11 +1,11 @@
 <section id="module-{MODULE_ID}" class="category-{CATEGORY_ID}">
 	<header class="section-header">
 		<div class="controls align-right">
-			# IF C_SYNDICATION #<a href="{U_SYNDICATION}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a># ENDIF #
+			# IF C_SYNDICATION #<a class="offload" href="{U_SYNDICATION}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a># ENDIF #
 			{MODULE_NAME}
 			# IF C_HAS_CATEGORY #
 				# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
-				# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
+				# IF IS_ADMIN #<a class="offload" href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 			# ENDIF #
 		</div>
 		<h1 itemprop="name">{TITLE}</h1>
@@ -26,7 +26,7 @@
 								# ELSE #
 									# IF NOT C_ID_CARD #
 										<span class="pinned {AUTHOR_LEVEL_CLASS}"# IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}; border-color:{AUTHOR_GROUP_COLOR}" # ENDIF #>
-											<i class="far fa-user" aria-hidden="true"></i> # IF C_AUTHOR_EXISTS #<a itemprop="author" rel="author" class="{AUTHOR_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR_DISPLAY_NAME}</a># ELSE #<span class="visitor">{AUTHOR_DISPLAY_NAME}</span># ENDIF #
+											<i class="far fa-user" aria-hidden="true"></i> # IF C_AUTHOR_EXISTS #<a itemprop="author" rel="author" class="{AUTHOR_LEVEL_CLASS} offload" href="{U_AUTHOR_PROFILE}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR_DISPLAY_NAME}</a># ELSE #<span class="visitor">{AUTHOR_DISPLAY_NAME}</span># ENDIF #
 										</span>
 									# ENDIF #
 								# ENDIF #
@@ -42,7 +42,7 @@
 							# IF C_HAS_CATEGORY #
 								# IF NOT C_ROOT_CATEGORY #
 									<span class="pinned">
-										<a itemprop="about" href="{U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {CATEGORY_NAME}</a>
+										<a class="offload" aria-label="{@common.category}" itemprop="about" href="{U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {CATEGORY_NAME}</a>
 									</span>
 								# ENDIF #
 							# ENDIF #
@@ -70,7 +70,7 @@
 
 					# IF C_CONTROLS #
 						<div class="controls align-right">
-							# IF C_EDIT #<a href="{U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit"></i></a># ENDIF #
+							# IF C_EDIT #<a class="offload" href="{U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit"></i></a># ENDIF #
 							# IF C_DELETE #<a href="{U_DELETE}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt"></i></a># ENDIF #
 						</div>
 					# ENDIF #
@@ -94,7 +94,7 @@
 								<ul>
 									# IF C_ENABLED_VISIT #
 										<li class="li-stretch">
-											<a href="{U_VISIT}" class="button submit">
+											<a class="offload" href="{U_VISIT}" class="button submit">
 												<i class="fa fa-globe" aria-hidden="true"></i> {@common.visit}
 											</a>
 											# IF IS_USER_CONNECTED #
@@ -110,7 +110,7 @@
 									# ENDIF #
 									# IF C_ENABLED_DOWNLOAD #
 										<li class="li-stretch">
-											<a href="{U_DOWNLOAD}" class="button submit">
+											<a class="offload" href="{U_DOWNLOAD}" class="button submit">
 												<i class="fa fa-globe" aria-hidden="true"></i> {@common.download}
 											</a>
 											# IF IS_USER_CONNECTED #
@@ -132,7 +132,7 @@
 													<span class="pinned"><i class="far fa-user" aria-hidden="true"></i> <span class="custom-author">{AUTHOR_CUSTOM_NAME}</span></span>
 												# ELSE #
 													<span class="pinned {AUTHOR_LEVEL_CLASS}"# IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}; border-color:{AUTHOR_GROUP_COLOR}" # ENDIF #>
-														<i class="far fa-user" aria-hidden="true"></i> # IF C_AUTHOR_EXISTS #<a itemprop="author" rel="author" class="{AUTHOR_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR_DISPLAY_NAME}</a># ELSE #<span class="visitor">{AUTHOR_DISPLAY_NAME}</span># ENDIF #
+														<i class="far fa-user" aria-hidden="true"></i> # IF C_AUTHOR_EXISTS #<a itemprop="author" rel="author" class="{AUTHOR_LEVEL_CLASS} offload" href="{U_AUTHOR_PROFILE}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR_DISPLAY_NAME}</a># ELSE #<span class="visitor">{AUTHOR_DISPLAY_NAME}</span># ENDIF #
 													</span>
 												# ENDIF #
 											</li>
@@ -160,7 +160,7 @@
 										# IF NOT C_ROOT_CATEGORY #
 											<li class="li-stretch">
 												<span class="text-strong">{@category.category} : </span>
-												<span><a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a></span>
+												<span><a class="offload" aria-label="{@common.category}" itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a></span>
 											</li>
 										# ENDIF #
 									# ENDIF #
@@ -210,7 +210,7 @@
 					<aside class="tags-container">
 						<span class="text-strong"><i class="fa fa-tags" aria-hidden="true"></i> {@common.keywords}</span> :
 						# START keywords #
-							<a class="pinned question" href="{keywords.URL}" itemprop="keywords" rel="tag">{keywords.NAME}</a>
+							<a class="pinned question offload" href="{keywords.URL}" itemprop="keywords" rel="tag">{keywords.NAME}</a>
 						# END keywords #
 					</aside>
 				# ENDIF #
@@ -219,7 +219,7 @@
 					<aside class="sources-container">
 						<span class="text-strong"><i class="fa fa-map-signs" aria-hidden="true"></i> {@common.sources}</span> :
 						# START sources #
-							<a class="pinned question" href="{sources.URL}" itemprop="isBasedOnUrl" rel="nofollow">{sources.NAME}</a>
+							<a class="pinned question offload" href="{sources.URL}" itemprop="isBasedOnUrl" rel="nofollow">{sources.NAME}</a>
 							# IF sources.C_SEPARATOR ## ENDIF #
 						# END sources #
 					</aside>

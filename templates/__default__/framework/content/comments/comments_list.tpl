@@ -8,7 +8,7 @@
 						# IF comments.C_VISITOR #
 							<span itemprop="author">{comments.PSEUDO}</span>
 						# ELSE #
-							<a href="{comments.U_PROFILE}" class="{comments.LEVEL_CLASS}" # IF comments.C_GROUP_COLOR # style="color:{comments.GROUP_COLOR}" # ENDIF # itemprop="author">
+							<a href="{comments.U_PROFILE}" class="{comments.LEVEL_CLASS} offload" # IF comments.C_GROUP_COLOR # style="color:{comments.GROUP_COLOR}" # ENDIF # itemprop="author">
 								{comments.PSEUDO}
 							</a>
 						# ENDIF #
@@ -25,12 +25,12 @@
 								<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{comments.COMMENT_NUMBER}" name="delete-checkbox-{comments.COMMENT_NUMBER}" onclick="delete_button_display({comments.TOTAL_COMMENTS_NUMBER});" />
 								<span>&nbsp;</span>
 							</label>
-							<a href="{comments.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+							<a class="offload" href="{comments.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 							<a href="{comments.U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 						# ENDIF #
 						<a href="\#com{comments.ID_COMMENT}" class="hidden-small-screens" itemprop="url" aria-label="${LangLoader::get_message('link.to.anchor', 'comments-common')}">\#{comments.ID_COMMENT}</a>
 						# IF comments.C_VIEW_TOPIC #
-							<a href="{comments.U_TOPIC}\#com{comments.ID_COMMENT}" aria-label="{L_VIEW_TOPIC}">
+							<a class="offload" href="{comments.U_TOPIC}\#com{comments.ID_COMMENT}" aria-label="{L_VIEW_TOPIC}">
 								<i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
 							</a>
 						# ENDIF #
