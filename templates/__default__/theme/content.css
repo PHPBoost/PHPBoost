@@ -100,10 +100,8 @@ aside:not(#menu-left):not(#menu-right)::after {
 }
 
 /* --- Sibling links --- */
-
 .suggested-links .cell-thumbnail { max-width: 130px; }
 
-.related-links,
 .related-item {
 	display: flex;
 	flex-direction: column;
@@ -125,11 +123,6 @@ aside:not(#menu-left):not(#menu-right)::after {
 .related-item.next-item i 	 { padding: 0 0 0 0.618em;}
 
 @media (min-width: 769px) {
-	.related-links {
-		flex-direction: row;
-		justify-content: space-between;
-	}
-
 	.related-item { max-width: 35%; }
 }
 

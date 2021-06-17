@@ -23,21 +23,23 @@
 
 # IF C_RELATED_LINKS #
 	<aside class="related-links">
-		# IF C_PREVIOUS_ITEM #
-			<a class="related-item previous-item" href="{U_PREVIOUS_ITEM}">
-				<i class="fa fa-chevron-left"></i>
-				# IF C_PREVIOUS_HAS_THUMBNAIL #<img src="{U_PREVIOUS_THUMBNAIL}" alt="{PREVIOUS_ITEM}"># ENDIF #
-				{PREVIOUS_ITEM}
-			</a>
-		# ELSE #
-			<span></span>
-		# ENDIF #
-		# IF C_NEXT_ITEM #
-			<a class="related-item next-item" href="{U_NEXT_ITEM}">
-				{NEXT_ITEM}
-				# IF C_NEXT_HAS_THUMBNAIL #<img src="{U_NEXT_THUMBNAIL}" alt="{NEXT_ITEM}"># ENDIF #
-				<i class="fa fa-chevron-right"></i>
-			</a>
-		# ENDIF #
+		<div class="flex-between flex-between-large">
+			# IF C_PREVIOUS_ITEM #
+				<a class="related-item previous-item" href="{U_PREVIOUS_ITEM}">
+					<i class="fa fa-chevron-left"></i>
+					# IF C_PREVIOUS_HAS_THUMBNAIL #<img src="{U_PREVIOUS_THUMBNAIL}" alt="{PREVIOUS_ITEM}"># ENDIF #
+					{PREVIOUS_ITEM}
+				</a>
+			# ELSE #
+				<span></span>
+			# ENDIF #
+			# IF C_NEXT_ITEM #
+				<a class="related-item next-item" href="{U_NEXT_ITEM}">
+					{NEXT_ITEM}
+					# IF C_NEXT_HAS_THUMBNAIL #<img src="{U_NEXT_THUMBNAIL}" alt="{NEXT_ITEM}"># ENDIF #
+					<i class="fa fa-chevron-right"></i>
+				</a>
+			# ENDIF #
+		</div>
 	</aside>
 # ENDIF #
