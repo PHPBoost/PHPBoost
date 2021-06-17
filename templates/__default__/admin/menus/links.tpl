@@ -3,7 +3,7 @@
 	function check_form()
 	{
 		if(document.getElementById('menu_element_{ID}_name').value == "") {
-			alert("{L_REQUIRE_NAME}");
+			alert("{@warning.title}");
 			return false;
 		}
 		return true;
