@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Arnaud GENET <elenwii@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 01
+ * @version     PHPBoost 6.0 - last update: 2021 06 17
  * @since       PHPBoost 5.0 - 2016 09 18
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -151,7 +151,7 @@ if (ForumAuthorizationsService::check_authorizations()->read() && AppContext::ge
 			'LAST_USER_GROUP_COLOR'   => $last_group_color,
 
 			'U_ANCHOR'                => $new_anchor,
-			'U_AUTHOR'                => UserUrlBuilder::profile($row['user_id'])->rel(),
+			'U_AUTHOR_PROFILE'        => UserUrlBuilder::profile($row['user_id'])->rel(),
 			'L_GUEST'                 => $LANG['guest'],
 			'U_TOPIC'                 => url('.php?id=' . $row['id'], '-' . $row['id'] . $rewrited_title . '.php'),
 			'U_LAST_MESSAGE'          => "topic" . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id,

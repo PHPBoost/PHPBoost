@@ -109,7 +109,7 @@
 												${LangLoader::get_message('user.administrator', 'user-lang')}
 												# ELSE #
 													# IF convers.list.C_AUTHOR_EXIST #
-													<a href="{convers.list.U_AUTHOR}" class="{convers.list.AUTHOR_CSSCLASS}"# IF convers.list.C_AUTHOR_GROUP_COLOR #style="color:{convers.list.AUTHOR_GROUP_COLOR}"# ENDIF #>{convers.list.AUTHOR_NAME}</a>
+													<a href="{convers.list.U_AUTHOR_PROFILE}" class="{convers.list.AUTHOR_CSSCLASS}"# IF convers.list.C_AUTHOR_GROUP_COLOR #style="color:{convers.list.AUTHOR_GROUP_COLOR}"# ENDIF #>{convers.list.AUTHOR_NAME}</a>
 													# ELSE #
 													<del>${LangLoader::get_message('user.guest', 'user-lang')}</del>
 													# ENDIF #

@@ -206,7 +206,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 			'LAST_USER_GROUP_COLOR'   => $last_group_color,
 
 			'U_ANCHOR'                => $new_anchor,
-			'U_AUTHOR'                => UserUrlBuilder::profile($row['user_id'])->rel(),
+			'U_AUTHOR_PROFILE'        => UserUrlBuilder::profile($row['user_id'])->rel(),
 			'U_TOPIC'                 => url('.php?id                             =' . $row['id'], '-' . $row['id'] . $rewrited_title . '.php'),
 			'U_LAST_MESSAGE'          => "topic" . url('.php?' . $last_page . 'id =' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id,
 			'U_LAST_USER_PROFILE'     => UserUrlBuilder::profile($row['last_user_id'])->rel(),

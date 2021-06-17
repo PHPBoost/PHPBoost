@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 16
+ * @version     PHPBoost 6.0 - last update: 2021 06 17
  * @since       PHPBoost 1.5 - 2006 07 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -986,7 +986,7 @@ else // Conversation list in the user email box
 
 			'C_AUTHOR_IS_ADMINISTRATOR'      => ($row['user_id'] == -1),
 			'C_AUTHOR_EXIST'                 => !empty($row['login']),
-			'U_AUTHOR'                       => UserUrlBuilder::profile($row['user_id'])->rel(),
+			'U_AUTHOR_PROFILE'               => UserUrlBuilder::profile($row['user_id'])->rel(),
 			'AUTHOR_NAME'                    => $row['login'],
 			'AUTHOR_CSSCLASS'                => UserService::get_level_class($row['level']),
 			'C_AUTHOR_GROUP_COLOR'           => !empty($author_group_color),

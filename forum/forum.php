@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 01
+ * @version     PHPBoost 6.0 - last update: 2021 06 17
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -436,7 +436,7 @@ if (!empty($id_get))
 			'TYPE'                    => $type[$row['type']],
 			'CATEGORY_ID'             => $row['id_category'],
 			'TITLE'                   => stripslashes($row['title']),
-			'U_AUTHOR'                => UserUrlBuilder::profile($row['user_id'])->rel(),
+			'U_AUTHOR_PROFILE'        => UserUrlBuilder::profile($row['user_id'])->rel(),
 			'AUTHOR_LEVEL'            => UserService::get_level_class($row['user_level']),
 			'AUTHOR'                  => $row['login'],
 			'GROUP_COLOR'             => $group_color,

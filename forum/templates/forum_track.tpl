@@ -93,7 +93,7 @@
 							</td>
 							<td class="forum-author">
 								# IF topics.C_AUTHOR #
-									<a href="{topics.U_AUTHOR}" class="small {topics.AUTHOR_LEVEL}"# IF topics.C_GROUP_COLOR # style="color:{topics.GROUP_COLOR}"# ENDIF #>{topics.AUTHOR}</a>
+									<a href="{topics.U_AUTHOR_PROFILE}" class="small {topics.AUTHOR_LEVEL}"# IF topics.C_GROUP_COLOR # style="color:{topics.GROUP_COLOR}"# ENDIF #>{topics.AUTHOR}</a>
 								# ELSE #
 									<span class="small">${LangLoader::get_message('user.guest', 'user-lang')}</span>
 								# ENDIF #
