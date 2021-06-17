@@ -52,15 +52,15 @@
 										<i class="fa fa-eye" aria-hidden="true"></i> {VIEWS_NUMBER}
 									</span>
 								# ENDIF #
-								# IF C_ENABLED_NOTATION #
-									<li class="align-center">
-										{NOTATION}
-									</li>
-								# ENDIF #
 								# IF C_ENABLED_COMMENTS #
 									<span class="pinned">
 										<a href="#comments-list"><i class="fa fa-comments" aria-hidden="true"></i> {COMMENTS_LABEL}</a>
 									</span>
+								# ENDIF #
+								# IF C_ENABLED_NOTATION #
+									<div class="pinned">
+										{NOTATION}
+									</div>
 								# ENDIF #
 							# ENDIF #
 						</div>

@@ -41,6 +41,11 @@
 								<a href="#comments-list"><i class="fa fa-comments" aria-hidden="true"></i> {COMMENTS_LABEL}</a>
 							</span>
 						# ENDIF #
+						# IF C_ENABLED_NOTATION #
+							<div class="pinned">
+								{NOTATION}
+							</div>
+						# ENDIF #
 					</div>
 					<div class="controls align-right">
 						# IF C_CONTROLS #
