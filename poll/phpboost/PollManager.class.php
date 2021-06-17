@@ -3,12 +3,20 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 05
+ * @version     PHPBoost 6.0 - last update: 2021 06 18
  * @since       PHPBoost 6.0 - 2020 05 14
 */
 
 class PollManager extends ItemsManager
 {
+        public function delete(int $id)
+	{
+	  $item = $this->get_item($id);
+	  $item->unset_item_in_mini_module_map();
+	  
+	  parent::delete($id);
+	}
+
 	public function update_votes(array $vote, int $current_votes_number, int $item_id)
 	{
 		self::$db_querier->update(
