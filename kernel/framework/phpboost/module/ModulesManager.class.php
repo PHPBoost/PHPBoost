@@ -6,11 +6,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 18
+ * @version     PHPBoost 6.0 - last update: 2021 06 18
  * @since       PHPBoost 2.0 - 2008 10 12
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ModulesManager
@@ -243,7 +244,7 @@ class ModulesManager
 				}
 			}
 		}
-		
+
 		if ($generate_cache)
 		{
 			MenuService::generate_cache();
@@ -462,7 +463,7 @@ class ModulesManager
 			$module = self::get_module($module_id);
 
 			if ($module->get_configuration()->get_compatibility() != GeneralConfig::load()->get_phpboost_major_version())
-				$error = LangLoader::get_message('modules.not_compatible', 'admin-modules-common');
+				$error = LangLoader::get_message('addon.not.compatible', 'addon-lang');
 		}
 
 		if (empty($error))

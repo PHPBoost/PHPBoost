@@ -876,6 +876,11 @@ class UpdateServices
 		$file = new File(PATH_TO_ROOT . '/lang/french/admin-links-common.php');
 		$file->delete();
 
+		$file = new File(PATH_TO_ROOT . '/lang/english/admin-modules-common.php');
+		$file->delete();
+		$file = new File(PATH_TO_ROOT . '/lang/french/admin-modules-common.php');
+		$file->delete();
+
 		$file = new File(PATH_TO_ROOT . '/lang/english/admin-maintain-common.php');
 		$file->delete();
 		$file = new File(PATH_TO_ROOT . '/lang/french/admin-maintain-common.php');

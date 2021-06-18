@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 06 18
  * @since       PHPBoost 5.0 - 2017 03 26
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -113,7 +113,7 @@ class AdminGoogleMapsConfigController extends AdminModuleController
 		$response = new AdminMenuDisplayResponse($tpl);
 		$response->set_title($title);
 		$response->add_link($this->lang['config.title'], GoogleMapsUrlBuilder::configuration());
-		$response->add_link(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('GoogleMaps')->get_configuration()->get_documentation());
+		$response->add_link(LangLoader::get_message('form.documentation', 'form-lang'), ModulesManager::get_module('GoogleMaps')->get_configuration()->get_documentation());
 		$env = $response->get_graphical_environment();
 		$env->set_page_title($title);
 

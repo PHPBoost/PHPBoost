@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 18
+ * @version     PHPBoost 6.0 - last update: 2021 06 18
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -92,14 +92,14 @@ class DefaultTreeLinks implements ModuleTreeLinksExtensionPoint
 		$this->get_module_additional_actions_tree_links($tree);
 
 		if (ModulesManager::get_module($this->module_id)->get_configuration()->get_admin_main_page() && $this->display_configuration_link())
-			$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin-common'), ModulesUrlBuilder::configuration($this->module_id)));
+			$tree->add_link(new AdminModuleLink(LangLoader::get_message('form.configuration', 'form-lang'), ModulesUrlBuilder::configuration($this->module_id)));
 
 		if (ModulesManager::get_module($this->module_id)->get_configuration()->get_documentation())
 		{
 			if ($has_categories)
-				$tree->add_link(new ModuleLink(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module($this->module_id)->get_configuration()->get_documentation(), $this->check_write_authorization() || $this->authorizations->moderation()));
+				$tree->add_link(new ModuleLink(LangLoader::get_message('form.documentation', 'form-lang'), ModulesManager::get_module($this->module_id)->get_configuration()->get_documentation(), $this->check_write_authorization() || $this->authorizations->moderation()));
 			else
-				$tree->add_link(new AdminModuleLink(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module($this->module_id)->get_configuration()->get_documentation()));
+				$tree->add_link(new AdminModuleLink(LangLoader::get_message('form.documentation', 'form-lang'), ModulesManager::get_module($this->module_id)->get_configuration()->get_documentation()));
 		}
 
 		return $tree;

@@ -8,12 +8,12 @@
 
 				var new_id = this.max_filter_p + 1;
 				document.getElementById('add_filter' + this.max_filter_p).innerHTML +=
-					'<div id="filter' + new_id + '" class="menu-filter grouped-inputs inputs-with-sup large-inputs-group"># IF PATH_TO_ROOT #<span class="grouped-element">{PATH_TO_ROOT}</span># ENDIF #<label class="label-sup grouped-element"><span>' + ${escapejs(LangLoader::get_message('module', 'admin-modules-common'))} + '</span><select name="filter_module' + new_id + '" id="filter_module' + new_id + '">' +
+					'<div id="filter' + new_id + '" class="menu-filter grouped-inputs inputs-with-sup large-inputs-group"># IF PATH_TO_ROOT #<span class="grouped-element">{PATH_TO_ROOT}</span># ENDIF #<label class="label-sup grouped-element"><span>' + ${escapejs(@common.module)} + '</span><select name="filter_module' + new_id + '" id="filter_module' + new_id + '">' +
 					# START modules #
 						'<option value="{modules.ID}">{modules.ID}</option>' +
 					# END modules #
-					'</select></label><label class="label-sup grouped-element"><span>' + ${escapejs(LangLoader::get_message('page', 'main'))} + '</span><input type="text" name="f' + new_id + '" id="f' + new_id + '" value=""></label>' +
-					'<a class="grouped-element" href="javascript:delete_filter(' + new_id + ');" aria-label="' + ${escapejs(LangLoader::get_message('delete', 'common'))} + '"><i class="far fa-trash-alt" aria-hidden="true"></i></a>' +
+					'</select></label><label class="label-sup grouped-element"><span>' + ${escapejs(@common.page)} + '</span><input type="text" name="f' + new_id + '" id="f' + new_id + '" value=""></label>' +
+					'<a class="grouped-element" href="javascript:delete_filter(' + new_id + ');" aria-label="' + ${escapejs(@common.delete)} + '"><i class="far fa-trash-alt" aria-hidden="true"></i></a>' +
 					'</div><span id="add_filter' + new_id + '"></span>';
 			}
 			function delete_filter(id) {
