@@ -164,6 +164,7 @@ function copy_to_clipboard(tocopy)
 
 	try {
 		var successful = document.execCommand('copy');
+		alert(COPIED_TO_CLIPBOARD +'\n' + tocopy);
 	}
 	catch(err) {
 		alert('Your browser do not authorize this operation');
@@ -172,7 +173,7 @@ function copy_to_clipboard(tocopy)
 
 // Copy link to clipboard
 document.querySelectorAll('.copy-link-to-clipboard').forEach( el => {
-  el.addEventListener('click', event => {
+	el.addEventListener('click', event => {
 		event.preventDefault();
 
 		var hrefValue = el.getAttribute('href');
@@ -184,7 +185,7 @@ document.querySelectorAll('.copy-link-to-clipboard').forEach( el => {
 
 		document.execCommand('copy');
 		alert(COPIED_TO_CLIPBOARD +'\n' + hrefValue);
-  });
+  	});
 });
 
 	// Open submenu
