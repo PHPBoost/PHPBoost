@@ -3,11 +3,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 23
+ * @version     PHPBoost 6.0 - last update: 2021 06 18
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
+ * @contributor xela <xela@phpboost.com>
 */
 
 class FaqItemsManagerController extends ModuleController
@@ -74,7 +75,7 @@ class FaqItemsManagerController extends ModuleController
 		$result = $table_model->get_sql_results('faq LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = faq.author_user_id');
 		foreach ($result as $row)
 		{
-			$faq_question = new FaqItem();
+			$faq_question = new FaqQuestion();
             $faq_question->set_properties($row);
             $category = $faq_question->get_category();
             $user = $faq_question->get_author_user();
