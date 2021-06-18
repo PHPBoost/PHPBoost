@@ -44,8 +44,8 @@ class FaqItemsManagerController extends ModuleController
 		$display_categories = CategoriesService::get_categories_manager()->get_categories_cache()->has_categories();
 
 		$columns = array(
-			new HTMLTableColumn($this->lang['faq.form.question'], 'question'),
-			new HTMLTableColumn(LangLoader::get_message('category.category', 'category-lang'), 'id_category'),
+			new HTMLTableColumn($this->lang['faq.form.question'], 'title'),
+			new HTMLTableColumn($common_lang['common.category'], 'id_category'),
 			new HTMLTableColumn($common_lang['common.author'], 'display_name'),
 			new HTMLTableColumn($common_lang['common.creation.date'], 'creation_date'),
 			new HTMLTableColumn($common_lang['common.status.approved'], 'approved'),
@@ -75,7 +75,7 @@ class FaqItemsManagerController extends ModuleController
 		$result = $table_model->get_sql_results('faq LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = faq.author_user_id');
 		foreach ($result as $row)
 		{
-			$faq_question = new FaqQuestion();
+			$faq_question = new FaqItem();
             $faq_question->set_properties($row);
             $category = $faq_question->get_category();
             $user = $faq_question->get_author_user();
@@ -90,7 +90,7 @@ class FaqItemsManagerController extends ModuleController
             $author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
 
 			$row = array(
-				new HTMLTableRowCell(new LinkHTMLElement(FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $faq_question->get_id()), $faq_question->get_question()), 'left'),
+				new HTMLTableRowCell(new LinkHTMLElement(FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $faq_question->get_id()), $faq_question->get_title()), 'left'),
 				new HTMLTableRowCell(new LinkHTMLElement(FaqUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), ($category->get_id() == Category::ROOT_CATEGORY ? $common_lang['common.none.alt'] : $category->get_name()))),
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell($faq_question->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR)),

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 23
+ * @version     PHPBoost 6.0 - last update: 2021 06 18
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -50,7 +50,7 @@ class FaqCategoryController extends ModuleController
 			if ($categories_number > $subcategories_pagination->get_display_from() && $categories_number <= ($subcategories_pagination->get_display_from() + $subcategories_pagination->get_number_items_per_page()))
 			{
 				$this->view->assign_block_vars('sub_categories_list', array(
-					'C_CATEGORY_THUMBNAIL' => !empty($category_thumbnail),
+					'C_CATEGORY_THUMBNAIL' => !empty($category->get_thumbnail()),
 					'C_SEVERAL_ITEMS'      => $category->get_elements_number() > 1,
 
 					'CATEGORY_ID'      => $category->get_id(),
