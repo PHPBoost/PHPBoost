@@ -143,6 +143,8 @@ form > [class*="cell-"]:not(.cell-header) { border-width: 0 1px 1px; }
 	align-items: center;
 }
 
+.cell-list .button { width: auto; }
+
 .cell-list-inline ul {
 	display: flex;
 	flex-wrap: wrap;
