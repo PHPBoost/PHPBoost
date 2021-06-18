@@ -111,19 +111,20 @@ $lang['warning.delete.install.and.update.folders'] = 'For security reasons we re
 $lang['warning.delete.install.or.update.folders']  = 'For security reasons we recommand you to delete the <b>:folder</b> folder and all its contents, hackers could manage to run the installation script and you could lose data !';
 
 // Regex
-$lang['warning.regex']              = 'The entered value does not fit the proper format';
-$lang['warning.regex.date']         = 'The entered value has to be a valid date';
-$lang['warning.regex.url']          = 'The entered value has to be a valid url';
-$lang['warning.regex.email']        = 'The entered value has to be a valid mail';
-$lang['warning.regex.tel']          = 'The entered value has to be a valid phone number';
-$lang['warning.regex.number']       = 'The value entered must be a number';
-$lang['warning.regex.picture.file'] = 'The value entered must correspond to a picture';
-$lang['warning.length.intervall']   = 'The entered value does not fit the specified length (:lower_bound <= value <= :upper_bound)';
-$lang['warning.length.min']         = 'The entered value must be at least :lower_bound characters';
-$lang['warning.length.max']         = 'The entered value must be max :upper_bound characters';
-$lang['warning.integer.intervall']  = 'The entered value does not fit the specified interval (:lower_bound <= value <= :upper_bound)';
-$lang['warning.integer.min']        = 'The entered value must be superior or equal to :lower_bound';
-$lang['warning.integer.max']        = 'The entered value must be inferior or equal to :upper_bound';
+$lang['warning.regex']                 = 'The entered value does not fit the proper format';
+$lang['warning.regex.date']            = 'The entered value has to be a valid date';
+$lang['warning.regex.url']             = 'The entered value has to be a valid url';
+$lang['warning.regex.email']           = 'The entered value has to be a valid email';
+$lang['warning.regex.tel']             = 'The entered value has to be a valid phone number';
+$lang['warning.regex.letters.numbers'] = 'The value entered must be a serie of letters and numbers';
+$lang['warning.regex.number']          = 'The value entered must be a number';
+$lang['warning.regex.picture.file']    = 'The value entered must correspond to a picture';
+$lang['warning.length.intervall']      = 'The entered value does not fit the specified length (:lower_bound <= value <= :upper_bound)';
+$lang['warning.length.min']            = 'The entered value must be at least :lower_bound characters';
+$lang['warning.length.max']            = 'The entered value must be max :upper_bound characters';
+$lang['warning.integer.intervall']     = 'The entered value does not fit the specified interval (:lower_bound <= value <= :upper_bound)';
+$lang['warning.integer.min']           = 'The entered value must be superior or equal to :lower_bound';
+$lang['warning.integer.max']           = 'The entered value must be inferior or equal to :upper_bound';
 $lang['warning.regex.authorized.extensions'] = 'File extension is not authorized. Valid extensions : :extensions.';
 
 $lang['warning.medium.password.regex']          = 'The password must contain at least one lower case letter and one upper case letter or one lower case letter and a digit';

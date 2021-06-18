@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 10
+ * @version     PHPBoost 6.0 - last update: 2021 06 18
  * @since       PHPBoost 4.1 - 2015 05 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -103,24 +103,24 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 		$fieldset->add_field(new FormFieldFree('curl_library', $this->admin_lang['curl_library'], $server_configuration->has_curl_library() ? $picture_yes : $picture_no));
 		$fieldset->add_field(new FormFieldFree('mbstring_library', $this->admin_lang['mbstring_library'], $server_configuration->has_mbstring_library() ? $picture_yes : $picture_no));
 		$fieldset->add_field(new FormFieldFree('url_rewriting', $this->admin_lang['url_rewriting'], $url_rewriting_known ? ($url_rewriting_available ? $picture_yes : $picture_no) : $picture_unknown));
-		$fieldset->add_field(new FormFieldFree('apcu_cache', LangLoader::get_message('apcu_cache', 'admin-cache-common'), DataStoreFactory::is_apc_available() ? $picture_yes : $picture_no));
+		$fieldset->add_field(new FormFieldFree('apcu_cache', LangLoader::get_message('admin.apcu.cache', 'admin-lang'), DataStoreFactory::is_apc_available() ? $picture_yes : $picture_no));
 
 		$fieldset = new FormFieldsetHTML('phpboost-config-report', $this->admin_lang['phpboost_config']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldFree('kernel_version', $this->admin_lang['kernel_version'], Environment::get_phpboost_version()));
-		$fieldset->add_field(new FormFieldFree('site_url', LangLoader::get_message('advanced-config.site_url', 'admin-config-common'), $general_config->get_site_url()));
-		$fieldset->add_field(new FormFieldFree('site_path', LangLoader::get_message('advanced-config.site_path', 'admin-config-common'), $general_config->get_site_path()));
-		$fieldset->add_field(new FormFieldFree('default_theme', LangLoader::get_message('general-config.default_theme', 'admin-config-common'), $default_theme_config->get_name() . " (" . LangLoader::get_message('version', 'admin') . " " . $default_theme_config->get_version() . ")"));
-		$fieldset->add_field(new FormFieldFree('default_language', LangLoader::get_message('general-config.default_language', 'admin-config-common'), $default_lang_config->get_name()));
+		$fieldset->add_field(new FormFieldFree('site_url', LangLoader::get_message('configuration.site.url', 'configuration-lang'), $general_config->get_site_url()));
+		$fieldset->add_field(new FormFieldFree('site_path', LangLoader::get_message('configuration.site.path', 'configuration-lang'), $general_config->get_site_path()));
+		$fieldset->add_field(new FormFieldFree('default_theme', LangLoader::get_message('configuration.default.theme', 'configuration-lang'), $default_theme_config->get_name() . " (" . LangLoader::get_message('version', 'admin') . " " . $default_theme_config->get_version() . ")"));
+		$fieldset->add_field(new FormFieldFree('default_language', LangLoader::get_message('configuration.default.language', 'configuration-lang'), $default_lang_config->get_name()));
 		$fieldset->add_field(new FormFieldFree('default_editor', LangLoader::get_message('content.config.default-formatting-language', 'admin-contents-common'), $default_editor));
-		$fieldset->add_field(new FormFieldFree('start_page', LangLoader::get_message('general-config.start_page', 'admin-config-common'), Environment::get_home_page()));
+		$fieldset->add_field(new FormFieldFree('start_page', LangLoader::get_message('configuration.start.page', 'configuration-lang'), Environment::get_home_page()));
 		$fieldset->add_field(new FormFieldFree('phpboost_url_rewriting', $this->admin_lang['url_rewriting'], $server_environment_config->is_url_rewriting_enabled() ? $picture_yes : $picture_no));
-		$fieldset->add_field(new FormFieldFree('phpboost_apcu_cache', LangLoader::get_message('apcu_cache', 'admin-cache-common'), DataStoreFactory::is_apc_enabled() ? $picture_yes : $picture_no));
+		$fieldset->add_field(new FormFieldFree('phpboost_apcu_cache', LangLoader::get_message('admin.apcu.cache', 'admin-lang'), DataStoreFactory::is_apc_enabled() ? $picture_yes : $picture_no));
 		$fieldset->add_field(new FormFieldFree('output_gz', $this->admin_lang['output_gz'], $server_environment_config->is_output_gziping_enabled() ? $picture_yes : $picture_no));
-		$fieldset->add_field(new FormFieldFree('cookie_name', LangLoader::get_message('advanced-config.cookie-name', 'admin-config-common'), $sessions_config->get_cookie_name()));
-		$fieldset->add_field(new FormFieldFree('session_length', LangLoader::get_message('advanced-config.cookie-duration', 'admin-config-common'), $sessions_config->get_session_duration()));
-		$fieldset->add_field(new FormFieldFree('session_guest_length', LangLoader::get_message('advanced-config.active-session-duration', 'admin-config-common'), $sessions_config->get_active_session_duration()));
+		$fieldset->add_field(new FormFieldFree('cookie_name', LangLoader::get_message('configuration.cookie.name', 'configuration-lang'), $sessions_config->get_cookie_name()));
+		$fieldset->add_field(new FormFieldFree('session_length', LangLoader::get_message('configuration.cookie.duration', 'configuration-lang'), $sessions_config->get_session_duration()));
+		$fieldset->add_field(new FormFieldFree('session_guest_length', LangLoader::get_message('configuration.active.session.duration', 'configuration-lang'), $sessions_config->get_active_session_duration()));
 
 		$fieldset = new FormFieldsetHTML('directories_auth', $this->admin_lang['directories_auth']);
 		$form->add_fieldset($fieldset);

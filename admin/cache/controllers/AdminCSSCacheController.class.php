@@ -28,37 +28,36 @@ class AdminCSSCacheController extends AdminController
 
 		$this->build_form();
 
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->handle_submit();
-			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning'), MessageHelper::SUCCESS, 5));
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$view->put('FORM', $this->form->display());
 
-		return new AdminCacheMenuDisplayResponse($tpl, $this->lang['css_cache']);
+		return new AdminCacheMenuDisplayResponse($view, $this->lang['admin.cache.css']);
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-cache-common');
+		$this->lang = LangLoader::get('admin-lang');
 	}
 
 	protected function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('css_cache', $this->lang['css_cache']);
+		$fieldset = new FormFieldsetHTML('css_cache', $this->lang['admin.cache.css']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldHTML('explain', $this->lang['explain_css_cache'],
+		$fieldset->add_field(new FormFieldHTML('explain', $this->lang['admin.cache.css.description'],
 			array('class' => 'full-field')
 		));
 
-		$this->submit_button = new FormButtonSubmit($this->lang['clear_cache'], 'button');
+		$this->submit_button = new FormButtonSubmit($this->lang['admin.clear.cache'], 'button');
 		$form->add_button($this->submit_button);
 
 		$this->form = $form;

@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 06
+ * @version     PHPBoost 6.0 - last update: 2021 06 18
  * @since       PHPBoost 4.0 - 2014 01 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminLoggedErrorsControllerList extends AdminController
@@ -21,17 +22,18 @@ class AdminLoggedErrorsControllerList extends AdminController
 
 		$current_page = $this->build_table();
 
-		return new AdminErrorsDisplayResponse($this->view, $this->lang['logged_errors'], $current_page);
+		return new AdminErrorsDisplayResponse($this->view, $this->lang['admin.logged.errors'], $current_page);
 	}
 
 	private function init()
 	{
-		$this->lang = array_merge(LangLoader::get('common'), LangLoader::get('admin-errors-common'));
-		$this->view = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM # # INCLUDE table #');
+		$this->lang = LangLoader::get('admin-lang');
+		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM # # INCLUDE table #');
 	}
 
 	private function build_table()
 	{
+		$common_lang = LangLoader::get('common-lang');
 		$errors = $this->get_errors_list();
 
 		$types = array(
@@ -42,14 +44,14 @@ class AdminLoggedErrorsControllerList extends AdminController
 		);
 
 		$table_model = new HTMLTableModel('error-list', array(
-			new HTMLTableColumn(LangLoader::get_message('date', 'date-common'), '', array('css_class' => 'col-medium')),
-			new HTMLTableColumn(LangLoader::get_message('description', 'main'))
+			new HTMLTableColumn($common_lang['common.date'], '', array('css_class' => 'col-medium')),
+			new HTMLTableColumn($common_lang['common.description'])
 		), new HTMLTableSortingRule(''), self::NUMBER_ITEMS_PER_PAGE);
 
-		$table = new HTMLTable($table_model, $this->lang, 'error-list');
+		$table = new HTMLTable($table_model, $this->lang, 'admin.logged.errors.list');
 		$table->hide_multiple_delete();
 
-		$table_model->set_caption($this->lang['logged_errors_list']);
+		$table_model->set_caption($this->lang['admin.logged.errors.list']);
 		$table_model->set_footer_css_class('footer-error-list');
 
 		$br = new BrHTMLElement();
@@ -78,7 +80,7 @@ class AdminLoggedErrorsControllerList extends AdminController
 			));
 		}
 		else
-			$this->view->put('MSG', MessageHelper::display($this->lang['no_item_now'], MessageHelper::SUCCESS, 0, true));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($common_lang['common.no.item.now'], MessageHelper::SUCCESS, 0, true));
 
 		return $table->get_page_number();
 	}
@@ -87,10 +89,10 @@ class AdminLoggedErrorsControllerList extends AdminController
 	{
 		$form = new HTMLForm(__CLASS__, AdminErrorsUrlBuilder::clear_logged_errors()->rel(), false);
 
-		$fieldset = new FormFieldsetHTML('clear_errors', $this->lang['clear_list']);
+		$fieldset = new FormFieldsetHTML('clear_errors', '');
 		$form->add_fieldset($fieldset);
 
-		$submit_button = new FormButtonSubmit($this->lang['clear_list'], 'clear', '', 'submit', $this->lang['logged_errors_clear_confirmation']);
+		$submit_button = new FormButtonSubmit($this->lang['admin.clear.list'], 'clear', '', 'submit', $this->lang['admin.warning.clear.errors']);
 		$form->add_button($submit_button);
 
 		return $form;

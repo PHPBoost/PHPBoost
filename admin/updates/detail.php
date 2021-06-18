@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 10
+ * @version     PHPBoost 6.0 - last update: 2021 06 18
  * @since       PHPBoost 1.6 - 2008 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -81,7 +81,7 @@ if ($app instanceof Application)
 			$download_status = FileSystemHelper::download_remote_file($app->get_autoupdate_url(), $temporary_dir_path);
 			if (!$download_status)
 			{
-				$view->put('MESSAGE_HELPER', MessageHelper::display(StringVars::replace_vars(LangLoader::get_message('message.download.file.error', 'status-messages-common'), array('filename' => $app->get_autoupdate_url())), MessageHelper::ERROR));
+				$view->put('MESSAGE_HELPER', MessageHelper::display(StringVars::replace_vars(LangLoader::get_message('warning.download.file.error', 'warning-lang'), array('filename' => $app->get_autoupdate_url())), MessageHelper::ERROR));
 				$installation_error = true;
 			}
 		}
@@ -100,11 +100,11 @@ if ($app instanceof Application)
 						switch (ModulesManager::upgrade_module($f->get_name()))
 						{
 							case ModulesManager::UPGRADE_FAILED:
-								$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.error', 'status-messages-common'), MessageHelper::ERROR));
+								$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.error', 'warning-lang'), MessageHelper::ERROR));
 								$installation_error = true;
 								break;
 							case ModulesManager::MODULE_NOT_UPGRADABLE:
-								$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('modules.module_not_upgradable', 'admin-modules-common'), MessageHelper::WARNING));
+								$view->put('MESSAGE_HELPER', MessageHelper::display($addon_lang['addon.modules.not.upgradable'], MessageHelper::WARNING));
 								$installation_error = true;
 								break;
 							case ModulesManager::MODULE_UPDATED:
@@ -114,7 +114,7 @@ if ($app instanceof Application)
 					}
 					else
 					{
-						$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('modules.not_installed_module', 'admin-modules-common'), MessageHelper::ERROR));
+						$view->put('MESSAGE_HELPER', MessageHelper::display($addon_lang['addon.modules.not.installed'], MessageHelper::ERROR));
 						$installation_error = true;
 					}
 				}
@@ -128,7 +128,7 @@ if ($app instanceof Application)
 					}
 					else
 					{
-						$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.error', 'status-messages-common'), MessageHelper::ERROR));
+						$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.error', 'warning-lang'), MessageHelper::ERROR));
 						$installation_error = true;
 					}
 				}
@@ -174,7 +174,7 @@ if ($app instanceof Application)
 					$update->set_status(AdministratorAlert::ADMIN_ALERT_STATUS_PROCESSED);
 					AdministratorAlertService::save_alert($update);
 
-					$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+					$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
 				}
 			}
 
@@ -182,7 +182,7 @@ if ($app instanceof Application)
 		}
 		else
 		{
-			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.error', 'status-messages-common'), MessageHelper::ERROR));
+			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.error', 'warning-lang'), MessageHelper::ERROR));
 			$installation_error = true;
 		}
 	}

@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2015 11 07
+ * @version     PHPBoost 6.0 - last update: 2021 06 18
  * @since       PHPBoost 3.0 - 2011 09 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminCacheMenuDisplayResponse extends AdminMenuDisplayResponse
@@ -14,13 +15,13 @@ class AdminCacheMenuDisplayResponse extends AdminMenuDisplayResponse
 	{
 		parent::__construct($view);
 
-		$lang = LangLoader::get('admin-cache-common');
-		$this->set_title($lang['cache']);
+		$lang = LangLoader::get('admin-lang');
+		$this->set_title($lang['admin.cache']);
 
-		$this->add_link($lang['cache'], AdminCacheUrlBuilder::clear_cache());
-		$this->add_link($lang['syndication_cache'], AdminCacheUrlBuilder::clear_syndication_cache());
-		$this->add_link($lang['css_cache'], AdminCacheUrlBuilder::clear_css_cache());
-		$this->add_link($lang['cache_configuration'], AdminCacheUrlBuilder::configuration());
+		$this->add_link($lang['admin.cache'], AdminCacheUrlBuilder::clear_cache());
+		$this->add_link($lang['admin.cache.syndication'], AdminCacheUrlBuilder::clear_syndication_cache());
+		$this->add_link($lang['admin.cache.css'], AdminCacheUrlBuilder::clear_css_cache());
+		$this->add_link($lang['admin.cache.configuration'], AdminCacheUrlBuilder::configuration());
 
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);

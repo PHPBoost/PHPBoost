@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 09
+ * @version     PHPBoost 6.0 - last update: 2021 06 18
  * @since       PHPBoost 3.0 - 2009 12 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -23,7 +23,6 @@ class AdminErrorsController404List extends AdminController
 
 	private $view;
 	private $lang;
-	private $admin_lang;
 
 	private $elements_number = 0;
 	private $ids = array();
@@ -36,28 +35,28 @@ class AdminErrorsController404List extends AdminController
 
 		$this->execute_multiple_delete_if_needed($request);
 
-		return new AdminErrorsDisplayResponse($this->view, $this->admin_lang['admin.404.errors.list'], $current_page);
+		return new AdminErrorsDisplayResponse($this->view, $this->lang['admin.404.errors.list'], $current_page);
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('common-lang');
-		$this->admin_lang = LangLoader::get('admin-lang');
+		$this->lang = LangLoader::get('admin-lang');
 		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM # # INCLUDE TABLE #');
 	}
 
 	private function build_table()
 	{
+		$common_lang = LangLoader::get('common-lang');
 		$table_model = new SQLHTMLTableModel(PREFIX . 'errors_404', 'error-list404', array(
-			new HTMLTableColumn($this->admin_lang['admin.404.requested.url']),
-			new HTMLTableColumn($this->admin_lang['admin.404.from.url']),
-			new HTMLTableColumn($this->lang['common.number'], 'times', array('css_class' => 'col-medium')),
-			new HTMLTableColumn($this->lang['common.delete'], '', array('css_class' => 'col-small'))
+			new HTMLTableColumn($this->lang['admin.404.requested.url']),
+			new HTMLTableColumn($this->lang['admin.404.from.url']),
+			new HTMLTableColumn($common_lang['common.number'], 'times', array('css_class' => 'col-medium')),
+			new HTMLTableColumn($common_lang['common.delete'], '', array('css_class' => 'col-small'))
 		), new HTMLTableSortingRule('times', HTMLTableSortingRule::DESC));
 
-		$table = new HTMLTable($table_model, $this->lang, 'error-list404');
+		$table = new HTMLTable($table_model, $common_lang, 'error-list404');
 
-		$table_model->set_caption($this->admin_lang['admin.404.errors.list']);
+		$table_model->set_caption($this->lang['admin.404.errors.list']);
 		$table_model->set_footer_css_class('footer-error-list404');
 
 		$results = array();
@@ -87,7 +86,7 @@ class AdminErrorsController404List extends AdminController
 			$this->view->put('TABLE', $table->display());
 		}
 		else
-			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['common.no.item.now'], MessageHelper::SUCCESS, 0, true));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($common_lang['common.no.item.now'], MessageHelper::SUCCESS, 0, true));
 
 		return $table->get_page_number();
 	}
@@ -104,7 +103,7 @@ class AdminErrorsController404List extends AdminController
 						AdminError404Service::delete_404_error($this->ids[$i]);
 				}
 			}
-			AppContext::get_response()->redirect(AdminErrorsUrlBuilder::list_404_errors(), LangLoader::get_message('process.success', 'status-messages-common'));
+			AppContext::get_response()->redirect(AdminErrorsUrlBuilder::list_404_errors(), LangLoader::get_message('warning.process.success', 'warning-lang'));
 		}
 	}
 
@@ -112,10 +111,10 @@ class AdminErrorsController404List extends AdminController
 	{
 		$form = new HTMLForm(__CLASS__, AdminErrorsUrlBuilder::clear_404_errors()->rel(), false);
 
-		$fieldset = new FormFieldsetHTML('clear_errors', $this->admin_lang['admin.clear.list']);
+		$fieldset = new FormFieldsetHTML('clear_errors', '');
 		$form->add_fieldset($fieldset);
 
-		$this->submit_button = new FormButtonSubmit($this->admin_lang['admin.clear.list'], 'clear', '', 'submit', $this->admin_lang['admin.warning.clear']);
+		$this->submit_button = new FormButtonSubmit($this->lang['admin.clear.list'], 'clear', '', 'submit', $this->lang['admin.warning.clear.errors']);
 		$form->add_button($this->submit_button);
 
 		$this->form = $form;

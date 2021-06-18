@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 06 18
  * @since       PHPBoost 2.0 - 2008 08 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -29,24 +29,23 @@ class AdminCacheConfigController extends AdminController
 
 		$this->build_form();
 
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
 			$this->form->get_field_by_id('level_css_cache')->set_hidden(!$this->css_cache_config->is_enabled());
-			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.config', 'warning-lang'), MessageHelper::SUCCESS, 5));
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$view->put('FORM', $this->form->display());
 
-		return new AdminCacheMenuDisplayResponse($tpl, $this->lang['cache_configuration']);
+		return new AdminCacheMenuDisplayResponse($view, $this->lang['admin.cache.configuration']);
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-cache-common');
+		$this->lang = LangLoader::get('admin-lang');
 		$this->css_cache_config = CSSCacheConfig::load();
 	}
 
@@ -54,29 +53,29 @@ class AdminCacheConfigController extends AdminController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('explain', $this->lang['cache_configuration']);
+		$fieldset = new FormFieldsetHTML('explain', $this->lang['admin.cache.configuration']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldHTML('exp_php_cache', $this->lang['explain_php_cache'],
+		$fieldset->add_field(new FormFieldHTML('exp_php_cache', $this->lang['admin.php.description'],
 			array('class' => 'half-field')
 		));
 
-		$fieldset->add_field(new FormFieldBooleanInformation('apc_available', $this->lang['apc_available'], $this->is_apc_available(),
-			array('class' => 'top-field', 'description' => $this->lang['explain_apc_available'])
+		$fieldset->add_field(new FormFieldBooleanInformation('apc_available', $this->lang['admin.apc.available'], $this->is_apc_available(),
+			array('class' => 'top-field', 'description' => $this->lang['admin.apc.available.clue'])
 		));
 
 		if ($this->is_apc_available())
 		{
-			$fieldset->add_field(new FormFieldCheckbox('enable_apc', $this->lang['enable_apc'], $this->is_apc_enabled(),
+			$fieldset->add_field(new FormFieldCheckbox('enable_apc', $this->lang['admin.enable.apc'], $this->is_apc_enabled(),
 				array('class' => ' top-field custom-checkbox')
 			));
 		}
 
-		$fieldset->add_field(new FormFieldHTML('exp_css_cache', $this->lang['explain_css_cache_config'],
+		$fieldset->add_field(new FormFieldHTML('exp_css_cache', $this->lang['admin.css.cache.description'],
 			array('class'=>'half-field')
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('enable_css_cache', $this->lang['enable_css_cache'], $this->css_cache_config->is_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('enable_css_cache', $this->lang['admin.enable.css.cache'], $this->css_cache_config->is_enabled(),
 			array(
 				'class' => 'top-field custom-checkbox',
 				'events' => array('click' => '
@@ -89,14 +88,14 @@ class AdminCacheConfigController extends AdminController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('level_css_cache', $this->lang['level_css_cache'], $this->css_cache_config->get_optimization_level(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('level_css_cache', $this->lang['admin.optimization.level'], $this->css_cache_config->get_optimization_level(),
 			array(
-				new FormFieldSelectChoiceOption($this->lang['low_level_css_cache'], CSSFileOptimizer::LOW_OPTIMIZATION),
-				new FormFieldSelectChoiceOption($this->lang['high_level_css_cache'], CSSFileOptimizer::HIGH_OPTIMIZATION)
+				new FormFieldSelectChoiceOption($this->lang['admin.low.level'], CSSFileOptimizer::LOW_OPTIMIZATION),
+				new FormFieldSelectChoiceOption($this->lang['admin.high.level'], CSSFileOptimizer::HIGH_OPTIMIZATION)
 			),
 			array(
 				'class' => 'top-field',
-				'description' => $this->lang['level_css_cache'],
+				'description' => $this->lang['admin.level.clue'],
 				'hidden' => !$this->css_cache_config->is_enabled()
 			)
 		));

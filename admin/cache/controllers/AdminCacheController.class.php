@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 06 18
  * @since       PHPBoost 2.0 - 2008 08 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -28,37 +28,36 @@ class AdminCacheController extends AdminController
 
 		$this->build_form();
 
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->handle_submit();
-			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 5));
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$view->put('FORM', $this->form->display());
 
-		return new AdminCacheMenuDisplayResponse($tpl, $this->lang['cache']);
+		return new AdminCacheMenuDisplayResponse($view, $this->lang['admin.cache']);
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-cache-common');
+		$this->lang = LangLoader::get('admin-lang');
 	}
 
 	protected function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('cache', $this->lang['cache']);
+		$fieldset = new FormFieldsetHTML('cache', $this->lang['admin.cache']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldHTML('explain', $this->lang['explain_data_cache'],
+		$fieldset->add_field(new FormFieldHTML('explain', $this->lang['admin.cache.data.description'],
 			array('class' => 'full-field')
 		));
 
-		$this->submit_button = new FormButtonSubmit($this->lang['clear_cache'], 'button');
+		$this->submit_button = new FormButtonSubmit($this->lang['admin.clear.cache'], 'button');
 		$form->add_button($this->submit_button);
 
 		$this->form = $form;

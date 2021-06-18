@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 10
+ * @version     PHPBoost 6.0 - last update: 2021 06 18
  * @since       PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -55,11 +55,53 @@ $lang['admin.unread.alerts']        = 'There are some unprocessed alerts. You sh
 $lang['admin.see.all.alerts']       = 'See all alerts';
 
 // Cache
-$lang['admin.empty.cache'] = 'Empty cache';
+$lang['admin.clear.cache'] = 'Empty cache';
 
-// Configuration
-    // General
-$lang['admin.general.configuration'] = 'General configuration';
+$lang['admin.cache']                  = 'Cache';
+$lang['admin.cache.data.description'] = '
+    <p>PHPBoost caches certain data in order to improve dramatically its performance.
+    Every data handled by PHPBoost is stored in a data base but each data base access takes a significant time. Data that are often read by PHPBoost (typically the configuration) are stored directly on the web server
+    in order to avoid accessing the data base management system.</p>
+    <p>However, that means that some data are present in two places: in the database and somewhere in the web server\'s memory. If you update data that are cached in the data base, you won\'t see any change because the cache will still contain the former values.
+    In this situation, you have to clear the cache in order to have PHPBoost fetch again data in the data base.
+    The reference place for data is the data base. If you update data in the cache file, they will be lost at the same cache generation.</p>
+';
+    // Syndication
+$lang['admin.cache.syndication']             = 'Syndication';
+$lang['admin.cache.syndication.description'] = '
+    <p>PHPBoost caches all syndication data.
+    In fact, at the first time a feed is asked, it\'s fecthed in the data base and cache, and the next times the cache is read without accessing the data base.
+    <p>On this configuration page, you can clear the syndication cache. It\'s useful if you have manually updated data in the data base, without clearing it manually, changes aren\'t visible in the feeds.</p>
+';
+    // CSS
+$lang['admin.cache.css']             = 'CSS Cache';
+$lang['admin.cache.css.description'] = '
+    <p>PHPBoost caches all the CSS files provided by the themes and modules.
+    Normally, the display site, a set of css files are going to be loaded. The cache CSS meanwhile, will first optimize files and then create a single CSS file hash.</p>
+    <p>Via this page in the administration of PHPBoost, you can clear the cache so as to force CSS to recreate PHPBoost CSS files optimized.</p>
+';
+    // Configuration
+$lang['admin.cache.configuration'] = 'Cache configuration';
+$lang['admin.php.accelerator']     = 'PHP accelerator';
+$lang['admin.php.description']     = '
+    <p>Some additional PHP modules enable to improve dramatically the execution time of PHP applications.
+    PHP supports <acronym aria-label="Alternative PHP Cache">APCu</acronym> which is a cache system to improve pages loading duration.</p>
+    <p>By default, cache data are stored on the filesystem (in the files tree) but that kind of module allows to store directly in the server\'s central memory (RAM) which is far faster.</p>
+';
+$lang['admin.enable.apc']            = 'Enable APCu cache';
+$lang['admin.apc.available']         = 'Availability of the APCu extension';
+$lang['admin.apc.available.clue']    = 'The extension is available on a few servers. If it\'s not available, you cannot benefit from the performance improvement.';
+$lang['admin.apcu.cache']            = 'APCu Cache';
+$lang['admin.css.cache.description'] = '
+    <p>PHPBoost caches all CSS files provided by the themes and modules to improve the time to display pages.
+    You through this setup, choose to activate this feature or not and to choose its level of intensity.<br/>
+    Disabling this option can allow you to more easily customize your themes.</p>
+';
+$lang['admin.enable.css.cache']   = 'Enable CSS cache';
+$lang['admin.optimization.level'] = 'Optimization level';
+$lang['admin.low.level']          = 'Low';
+$lang['admin.high.level']         = 'High';
+$lang['admin.level.clue']         = 'The low level can only remove the tabs and spaces while the upper level fully optimizes your CSS files.';
 
 // Content
 $lang['admin.forbidden.module']                  = 'Forbidden modules';
@@ -68,17 +110,17 @@ $lang['admin.notation.forbidden.module.clue']    = 'Select modules in which you 
 $lang['admin.new.content.forbidden.module.clue'] = 'Select modules in which you do not want to enable new-content tag';
 
 // Errors lists
-$lang['admin.errors'] = 'Errors';
-$lang['admin.clear.list'] = 'Clear list';
-$lang['admin.warning.clear'] = 'Erase all errors?';
+$lang['admin.errors']               = 'Errors';
+$lang['admin.clear.list']           = 'Clear list';
+$lang['admin.warning.clear.errors'] = 'Erase all errors?';
     // Logged
-$lang['admin.logged.errors'] = 'Logged errors';
+$lang['admin.logged.errors']      = 'Logged errors';
 $lang['admin.logged.errors.list'] = 'Logged errors list';
     // 404
-$lang['admin.404.errors'] = '404 errors';
-$lang['admin.404.errors.list'] = '404 errors list';
+$lang['admin.404.errors']        = '404 errors';
+$lang['admin.404.errors.list']   = '404 errors list';
 $lang['admin.404.requested.url'] = 'Requested url';
-$lang['admin.404.from.url'] = 'Source url';
+$lang['admin.404.from.url']      = 'Source url';
 
 // Index
 $lang['admin.quick.access']        = 'Quick Access';

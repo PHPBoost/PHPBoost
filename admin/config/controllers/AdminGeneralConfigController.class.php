@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 06 18
  * @since       PHPBoost 3.0 - 2011 08 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -15,7 +15,7 @@ class AdminGeneralConfigController extends AdminController
 	private $general_config;
 	private $graphical_environment_config;
 	private $user_accounts_config;
-	private $tpl;
+	private $view;
 	/**
 	 * @var HTMLForm
 	 */
@@ -35,31 +35,25 @@ class AdminGeneralConfigController extends AdminController
 			$this->save();
 			$this->form->get_field_by_id('other_start_page')->set_hidden($this->general_config->get_module_home_page() != 'other');
 			$this->form->get_field_by_id('picture_theme')->set_value('<a href="'. $this->get_picture_theme() .'" data-lightbox="theme" data-rel="lightcase:collection" id="preview_theme">
-				<img id="img_theme" src="'. $this->get_picture_theme() .'" alt="' . $this->lang['general-config.theme_picture'] . '" class="admin-theme-img" /><br />
-				('. $this->lang['general-config.theme_preview_click'] .')
+				<img id="img_theme" src="'. $this->get_picture_theme() .'" alt="' . $this->lang['configuration.theme.picture'] . '" class="admin-theme-img" /><br />
+				('. $this->lang['configuration.theme.preview'] .')
 			</a>');
 			$this->clear_cache();
-			$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.config', 'warning-lang'), MessageHelper::SUCCESS, 5));
 		}
 
-		$this->tpl->put('FORM', $this->form->display());
+		$this->view->put('FORM', $this->form->display());
 
-		return new AdminConfigDisplayResponse($this->tpl, $this->lang['general-config']);
+		return new AdminConfigDisplayResponse($this->view, $this->lang['configuration.general']);
 	}
 
 	private function init()
 	{
-		$this->tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
 
-		$this->load_lang();
-		$this->tpl->add_lang($this->lang);
+		$this->lang = LangLoader::get('configuration-lang');
 
 		$this->load_config();
-	}
-
-	private function load_lang()
-	{
-		$this->lang = LangLoader::get('admin-config-common');
 	}
 
 	private function load_config()
@@ -73,30 +67,30 @@ class AdminGeneralConfigController extends AdminController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('general-config', $this->lang['general-config']);
+		$fieldset = new FormFieldsetHTML('general_configuration', $this->lang['configuration.general']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('site_name', $this->lang['general-config.site_name'], $this->general_config->get_site_name(),
+		$fieldset->add_field(new FormFieldTextEditor('site_name', $this->lang['configuration.site.name'], $this->general_config->get_site_name(),
 			array('required' => true)
 		));
 
-		$fieldset->add_field(new FormFieldTextEditor('site_slogan', $this->lang['general-config.site_slogan'], $this->general_config->get_site_slogan(),
+		$fieldset->add_field(new FormFieldTextEditor('site_slogan', $this->lang['configuration.site.slogan'], $this->general_config->get_site_slogan(),
 			array('class' => 'half-field')
 		));
 
-		$fieldset->add_field(new FormFieldLangsSelect('default_language', $this->lang['general-config.default_language'],
+		$fieldset->add_field(new FormFieldLangsSelect('default_language', $this->lang['configuration.default.language'],
 			$this->user_accounts_config->get_default_lang(),
 			array('required' => true)
 		));
 
-		$fieldset->add_field(new FormFieldMultiLineTextEditor('site_description', $this->lang['general-config.site_description'], $this->general_config->get_site_description(),
+		$fieldset->add_field(new FormFieldMultiLineTextEditor('site_description', $this->lang['configuration.site.description'], $this->general_config->get_site_description(),
 			array(
 				'rows' => 4, 'class' => 'full-field',
-				'description' => $this->lang['general-config.site_description-explain']
+				'description' => $this->lang['configuration.site.description.clue']
 			)
 		));
 
-		$fieldset->add_field(new FormFieldThemesSelect('default_theme', $this->lang['general-config.default_theme'], $this->user_accounts_config->get_default_theme(),
+		$fieldset->add_field(new FormFieldThemesSelect('default_theme', $this->lang['configuration.default.theme'], $this->user_accounts_config->get_default_theme(),
 			array(
 				'required' => true, 'class' => 'top-field',
 				'events' => array('change' => $this->construct_javascript_picture_theme() . '
@@ -107,14 +101,14 @@ class AdminGeneralConfigController extends AdminController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldFree('picture_theme', $this->lang['general-config.theme_picture'],
+		$fieldset->add_field(new FormFieldFree('picture_theme', $this->lang['configuration.theme.picture'],
 			'<a href="'. $this->get_picture_theme() .'" data-lightbox="theme" data-rel="lightcase:collection" id="preview_theme">
-				<img id="img_theme" src="'. $this->get_picture_theme() .'" alt="' . $this->lang['general-config.theme_picture'] . '" class="admin-theme-img" /><br />
-				('. $this->lang['general-config.theme_preview_click'] .')
+				<img id="img_theme" src="'. $this->get_picture_theme() .'" alt="' . $this->lang['configuration.theme.picture'] . '" class="admin-theme-img" /><br />
+				('. $this->lang['configuration.theme.preview'] .')
 			</a>'
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('start_page', $this->lang['general-config.start_page'], $this->general_config->get_module_home_page(), $this->list_modules_home_page(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('start_page', $this->lang['configuration.start.page'], $this->general_config->get_module_home_page(), $this->list_modules_home_page(),
 			array(
 				'required' => false, 'class' => 'top-field',
 				'events' => array('change' => '
@@ -127,28 +121,28 @@ class AdminGeneralConfigController extends AdminController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldTextEditor('other_start_page', $this->lang['general-config.other_start_page'], $this->general_config->get_other_home_page(),
+		$fieldset->add_field(new FormFieldTextEditor('other_start_page', $this->lang['configuration.other.start.page'], $this->general_config->get_other_home_page(),
 			array(
 				'class' => 'top-field', 'required' => false,
 				'hidden' => $this->general_config->get_module_home_page() != 'other'
 			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('visit_counter', $this->lang['general-config.visit_counter'], $this->graphical_environment_config->is_visit_counter_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('visit_counter', $this->lang['configuration.visit.counter'], $this->graphical_environment_config->is_visit_counter_enabled(),
 			array('class' => 'third-field custom-checkbox')
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('page_bench', $this->lang['general-config.page_bench'], $this->graphical_environment_config->is_page_bench_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('page_bench', $this->lang['configuration.page.bench'], $this->graphical_environment_config->is_page_bench_enabled(),
 			array(
 				'class' => 'third-field custom-checkbox',
-				'description' => $this->lang['general-config.page_bench-explain']
+				'description' => $this->lang['configuration.page.bench.clue']
 			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('display_theme_author', $this->lang['general-config.display_theme_author'], $this->graphical_environment_config->get_display_theme_author(),
+		$fieldset->add_field(new FormFieldCheckbox('display_theme_author', $this->lang['configuration.display.theme.author'], $this->graphical_environment_config->get_display_theme_author(),
 			array(
 				'class' => 'third-field custom-checkbox',
-				'description' => $this->lang['general-config.display_theme_author-explain']
+				'description' => $this->lang['configuration.display.theme.author.clue']
 			)
 		));
 
@@ -205,7 +199,7 @@ class AdminGeneralConfigController extends AdminController
 	private function list_modules_home_page()
 	{
 		$providers = array_keys(AppContext::get_extension_provider_service()->get_providers(HomePageExtensionPoint::EXTENSION_POINT));
-		$options = array(new FormFieldSelectChoiceOption($this->lang['general-config.other_start_page'], 'other'));
+		$options = array(new FormFieldSelectChoiceOption($this->lang['configuration.other.start.page'], 'other'));
 
 		$installed_modules = ModulesManager::get_activated_modules_map_sorted_by_localized_name();
 		foreach ($installed_modules as $id => $module)
@@ -218,7 +212,7 @@ class AdminGeneralConfigController extends AdminController
 
 		if (empty($options))
 		{
-			$options[] = new FormFieldSelectChoiceOption($this->lang['no_module_starteable'], '');
+			$options[] = new FormFieldSelectChoiceOption($this->lang['configuration.no.module.startable'], '');
 		}
 
 		return $options;

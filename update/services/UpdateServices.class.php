@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 22
+ * @version     PHPBoost 6.0 - last update: 2021 06 18
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -330,7 +330,7 @@ class UpdateServices
 			}
 			$this->add_error_to_file($class['type'] . ' ' . $object->get_config_name(), $success, $message);
 		}
-		
+
 		// Update modules configs
 		$update_modules_configs_class = array();
 
@@ -852,7 +852,49 @@ class UpdateServices
 
 	private function delete_old_files_lang()
 	{
+		$file = new File(PATH_TO_ROOT . '/lang/english/admin-cache-common.php');
+		$file->delete();
+		$file = new File(PATH_TO_ROOT . '/lang/french/admin-cache-common.php');
+		$file->delete();
 
+		$file = new File(PATH_TO_ROOT . '/lang/english/admin-config-common.php');
+		$file->delete();
+		$file = new File(PATH_TO_ROOT . '/lang/french/admin-config-common.php');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/lang/english/admin-errors-common.php');
+		$file->delete();
+		$file = new File(PATH_TO_ROOT . '/lang/french/admin-errors-common.php');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/lang/english/admin-langs-common.php');
+		$file->delete();
+		$file = new File(PATH_TO_ROOT . '/lang/french/admin-langs-common.php');
+
+		$file = new File(PATH_TO_ROOT . '/lang/english/admin-links-common.php');
+		$file->delete();
+		$file = new File(PATH_TO_ROOT . '/lang/french/admin-links-common.php');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/lang/english/admin-maintain-common.php');
+		$file->delete();
+		$file = new File(PATH_TO_ROOT . '/lang/french/admin-maintain-common.php');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/lang/english/admin-menus-common.php');
+		$file->delete();
+		$file = new File(PATH_TO_ROOT . '/lang/french/admin-menus-common.php');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/lang/english/admin-themes-common.php');
+		$file->delete();
+		$file = new File(PATH_TO_ROOT . '/lang/french/admin-themes-common.php');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/lang/english/items-common.php');
+		$file->delete();
+		$file = new File(PATH_TO_ROOT . '/lang/french/items-common.php');
+		$file->delete();
 	}
 
 	private function delete_old_files_templates()

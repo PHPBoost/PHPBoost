@@ -111,19 +111,20 @@ $lang['warning.delete.install.and.update.folders'] = 'Par mesure de sécurité n
 $lang['warning.delete.install.or.update.folders']  = 'Par mesure de sécurité nous vous conseillons fortement de supprimer le dossier <b>:folder</b> et tout ce qu\'il contient, des personnes mal intentionnées pourraient relancer le script d\'installation et écraser certaines de vos données !';
 
 // Regex
-$lang['warning.regex']              = 'La valeur saisie n\'est pas au bon format';
-$lang['warning.regex.date']         = 'La valeur saisie doit être une date valide';
-$lang['warning.regex.url']          = 'La valeur saisie doit être une url valide';
-$lang['warning.regex.email']        = 'La valeur saisie doit être un mail valide';
-$lang['warning.regex.tel']          = 'La valeur saisie doit être un numéro de téléphone valide';
-$lang['warning.regex.number']       = 'La valeur saisie doit être un nombre';
-$lang['warning.regex.picture.file'] = 'La valeur saisie doit correspondre à une image';
-$lang['warning.length.intervall']   = 'La valeur saisie ne respecte par la longueur définie (:lower_bound <= valeur <= :upper_bound)';
-$lang['warning.length.min']         = 'La valeur saisie doit faire au moins :lower_bound caractères';
-$lang['warning.length.max']         = 'La valeur saisie doit faire au maximum :upper_bound caractères';
-$lang['warning.integer.intervall']  = 'La valeur saisie ne respecte pas l\'intervalle définie (:lower_bound <= valeur <= :upper_bound)';
-$lang['warning.integer.min']        = 'La valeur saisie doit être supérieure ou égale à :lower_bound';
-$lang['warning.integer.max']        = 'La valeur saisie doit être inférieure ou égale à :upper_bound';
+$lang['warning.regex']                 = 'La valeur saisie n\'est pas au bon format';
+$lang['warning.regex.date']            = 'La valeur saisie doit être une date valide';
+$lang['warning.regex.url']             = 'La valeur saisie doit être une url valide';
+$lang['warning.regex.email']           = 'La valeur saisie doit être un email valide';
+$lang['warning.regex.tel']             = 'La valeur saisie doit être un numéro de téléphone valide';
+$lang['warning.regex.letters.numbers'] = 'La valeur saisie doit être une série de lettres et de nombres';
+$lang['warning.regex.number']          = 'La valeur saisie doit être un nombre';
+$lang['warning.regex.picture.file']    = 'La valeur saisie doit correspondre à une image';
+$lang['warning.length.intervall']      = 'La valeur saisie ne respecte par la longueur définie (:lower_bound <= valeur <= :upper_bound)';
+$lang['warning.length.min']            = 'La valeur saisie doit faire au moins :lower_bound caractères';
+$lang['warning.length.max']            = 'La valeur saisie doit faire au maximum :upper_bound caractères';
+$lang['warning.integer.intervall']     = 'La valeur saisie ne respecte pas l\'intervalle définie (:lower_bound <= valeur <= :upper_bound)';
+$lang['warning.integer.min']           = 'La valeur saisie doit être supérieure ou égale à :lower_bound';
+$lang['warning.integer.max']           = 'La valeur saisie doit être inférieure ou égale à :upper_bound';
 $lang['warning.regex.authorized.extensions'] = 'L\'extension du fichier n\'est pas autorisée. Extensions valides : :extensions.';
 
 $lang['warning.medium.password.regex']          = 'Le mot de passe doit comporter au moins une minuscule et une majuscule ou une minuscule et un chiffre';

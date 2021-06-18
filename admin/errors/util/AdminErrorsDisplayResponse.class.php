@@ -6,6 +6,7 @@
  * @version     PHPBoost 6.0 - last update: 2018 10 23
  * @since       PHPBoost 3.0 - 2009 12 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminErrorsDisplayResponse extends AdminMenuDisplayResponse
@@ -14,11 +15,11 @@ class AdminErrorsDisplayResponse extends AdminMenuDisplayResponse
 	{
 		parent::__construct($view);
 
-		$lang = LangLoader::get('admin-errors-common');
-		$this->set_title($lang['errors']);
+		$lang = LangLoader::get('admin-lang');
+		$this->set_title($lang['admin.errors']);
 
-		$this->add_link($lang['logged_errors'], AdminErrorsUrlBuilder::logged_errors());
-		$this->add_link($lang['404_errors'], AdminErrorsUrlBuilder::list_404_errors());
+		$this->add_link($lang['admin.logged.errors'], AdminErrorsUrlBuilder::logged_errors());
+		$this->add_link($lang['admin.404.errors'], AdminErrorsUrlBuilder::list_404_errors());
 
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page, '', $page);
