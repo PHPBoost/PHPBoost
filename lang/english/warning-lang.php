@@ -23,7 +23,6 @@ $lang['warning.question'] = 'Question';
 $lang['warning.unknow']   = 'Unknow';
 
 $lang['warning.username']     = 'Please enter a username !';
-$lang['warning.name']         = 'Please enter a name !';
 $lang['warning.password']     = 'Please enter a password !';
 $lang['warning.title']        = 'Please enter a title !';
 $lang['warning.text']         = 'Please enter a text !';
