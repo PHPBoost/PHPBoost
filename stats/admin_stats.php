@@ -12,13 +12,12 @@
 */
 
 require_once('../admin/admin_begin.php');
-define('TITLE', $LANG['administration']);
-require_once('../admin/admin_header.php');
+
 $lang = LangLoader::get('common', 'stats');
 $form_lang = LangLoader::get('form-lang');
-//
-$main_lang = LangLoader::get('main');
-//
+
+define('TITLE', $lang['stats.config.module.title']);
+require_once('../admin/admin_header.php');
 
 $stats_config = StatsConfig::load();
 
@@ -35,7 +34,6 @@ else
 {
 	$view = new FileTemplate('stats/admin_stats_management.tpl');
 	$view->add_lang(array_merge($lang, $form_lang));
-	$view->add_lang($main_lang);
 
 	$view->put_all(array(
 		'ELEMENTS_NUMBER_PER_PAGE' => $stats_config->get_elements_number_per_page(),

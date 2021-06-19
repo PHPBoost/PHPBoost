@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 01
+ * @version     PHPBoost 6.0 - last update: 2021 06 19
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -30,13 +30,13 @@ $view->add_lang(array_merge(
 ));
 
 $Bread_crumb->add(LangLoader::get_message('media.module.title', 'common', 'media'), url('media.php'));
-$Bread_crumb->add($LANG['modo_panel'], url('moderation_media.php'));
+$Bread_crumb->add(LangLoader::get_message('user.moderation.panel', 'user-lang'), url('moderation_media.php'));
 $request = AppContext::get_request();
 
 $submit = $request->get_postvalue('submit', false);
 $filter = $request->get_postvalue('filter', false);
 
-define('TITLE', $LANG['modo_panel']);
+define('TITLE', LangLoader::get_message('user.moderation.panel', 'user-lang'));
 require_once('../kernel/header.php');
 
 if ($submit)
@@ -165,34 +165,34 @@ else
 		$js_array[] = $row['id'];
 
 		$view->assign_block_vars('items', array(
-			'CATEGORY_NAME' => $categories_cache->category_exists($row['id_category']) ? $row['name'] : $LANG['unknown'],
-			'U_CATEGORY' => url('media.php?cat=' . $row['id_category']),
+			'CATEGORY_NAME' => $categories_cache->category_exists($row['id_category']) ? $row['name'] : LangLoader::get_message('common.unknown', 'common-lang'),
 
-			'ID' => $row['id'],
-			'TITLE' => $row['title'],
-			'COLOR' => $row['published'] == MEDIA_STATUS_INVISIBLE ? 'bgc warning' : ($row['published'] == MEDIA_STATUS_APPROVED ? 'bgc success' : 'bgc error'),
-			'VISIBLE' => $row['published'] == MEDIA_STATUS_APPROVED ? ' checked="checked"' : '',
-			'INVISIBLE' => $row['published'] == MEDIA_STATUS_INVISIBLE ? ' checked="checked"' : '',
+			'ID'          => $row['id'],
+			'TITLE'       => $row['title'],
+			'COLOR'       => $row['published'] == MEDIA_STATUS_INVISIBLE ? 'bgc warning' : ($row['published'] == MEDIA_STATUS_APPROVED ? 'bgc success' : 'bgc error'),
+			'VISIBLE'     => $row['published'] == MEDIA_STATUS_APPROVED ? ' checked="checked"' : '',
+			'INVISIBLE'   => $row['published'] == MEDIA_STATUS_INVISIBLE ? ' checked="checked"' : '',
 			'DISAPPROVED' => $row['published'] == MEDIA_STATUS_DISAPPROVED ? ' checked="checked"' : '',
 
-			'U_ITEM' => url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $row['id_category'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
-			'U_EDIT' => url('media_action.php?edit=' . $row['id']),
+			'U_CATEGORY' => url('media.php?cat=' . $row['id_category']),
+			'U_ITEM' 	 => url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $row['id_category'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
+			'U_EDIT' 	 => url('media_action.php?edit=' . $row['id']),
 		));
 	}
 	$result->dispose();
 
 	$view->put_all(array(
-		'C_DISPLAY' => true,
+		'C_DISPLAY'    => true,
 		'C_PAGINATION' => $pagination->has_several_pages(),
-		'C_NO_ITEM' => $items_number > 0 ? 0 : 1,
+		'C_NO_ITEM'    => $items_number > 0 ? 0 : 1,
 
-		'SELECTED_ALL' => is_null($db_where) ? ' selected="selected"' : '',
-		'SELECTED_VISIBLE' => $db_where === MEDIA_STATUS_APPROVED ? ' selected="selected"' : '',
-		'SELECTED_INVISIBLE' => $db_where === MEDIA_STATUS_INVISIBLE ? ' selected="selected"' : '',
+		'SELECTED_ALL'         => is_null($db_where) ? ' selected ="selected"' : '',
+		'SELECTED_VISIBLE'     => $db_where === MEDIA_STATUS_APPROVED ? ' selected="selected"' : '',
+		'SELECTED_INVISIBLE'   => $db_where === MEDIA_STATUS_INVISIBLE ? ' selected="selected"'   : '',
 		'SELECTED_DISAPPROVED' => $db_where === MEDIA_STATUS_DISAPPROVED ? ' selected="selected"' : '',
-		'SUB_CATS' => is_null($sub_cats) ? ' checked="checked"' : ($sub_cats ? ' checked="checked"' : ''),
-		'PAGINATION' => $pagination->display(),
-		'JS_ARRAY' => '"' . implode('", "', $js_array) . '"'
+		'SUB_CATS'             => is_null($sub_cats) ? ' checked  ="checked"' : ($sub_cats ? ' checked="checked"' : ''),
+		'PAGINATION'           => $pagination->display(),
+		'JS_ARRAY'             => '"' . implode('", "', $js_array) . '"'
 	));
 }
 

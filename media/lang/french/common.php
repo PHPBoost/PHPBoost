@@ -68,7 +68,7 @@ $lang['e_mime_unknow_media'] = 'Impossible de déterminer le type de ce fichier 
 $lang['e_link_empty_media'] = 'Veuillez renseigner le lien de votre fichier !';
 $lang['e_link_invalid_media'] = 'Veuillez renseigner un lien valide pour votre fichier !';
 $lang['e_unexist_media'] = 'Le fichier demandé n\'existe pas !';
-$lang['e.bad.url.odysee'] = '
+$lang['e_bad_url_odysee'] = '
     L\'url Odysee renseignée n\'est pas valide. <br />
     Dans l\'onglet <span class="pinned question">Partager</span> sous la vidéo, choisir une des deux url suivantes:
     <ul>
@@ -76,5 +76,5 @@ $lang['e.bad.url.odysee'] = '
         <li><span class="pinned question">Liens</span> / url fournie dans <span class="pinned question">Lien de téléchargement</span></li>
     </ul>
 ';
-$lang['e.bad.url.peertube'] = 'L\'url PeerTube renseignée n\'est pas valide. Elle ne correspond pas à l\'url renseignée dans la configuration du module.';
+$lang['e_bad_url_peertube'] = 'L\'url PeerTube renseignée n\'est pas valide. Elle ne correspond pas à l\'url renseignée dans la configuration du module.';
 ?>

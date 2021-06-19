@@ -80,7 +80,7 @@ if ($id_change_status > 0)
 	{
 		$id_status = -1;
 	}
-	elseif ($type_status == 'radio_defined' && $id_status > 0 && is_array($LANG['wiki_status_list'][$id_status - 1]))
+	elseif ($type_status == 'radio_defined' && $id_status > 0 && is_array(LangLoader::get_message('wiki.status.list', 'common', 'wiki')[$id_status - 1]))
 	{
 		$contents = '';
 	}

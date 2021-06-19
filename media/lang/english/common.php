@@ -67,7 +67,7 @@ $lang['e_mime_unknow_media'] = 'The type of file could not be determined!';
 $lang['e_link_empty_media'] = 'Please enter a link for your file!';
 $lang['e_link_invalid_media'] = 'Please enter a valid link for your file!';
 $lang['e_unexist_media'] = 'The file requested doesn\'t exist!';
-$lang['e.bad.url.odysee'] = '
+$lang['e_bad_url_odysee'] = '
     The Odysee url entered is not valid. <br />
     In the share tab
     In the <span class="pinned question">Share</span> tab under the video, choose one of the following two urls:
@@ -76,5 +76,5 @@ $lang['e.bad.url.odysee'] = '
         <li><span class="pinned question">Links</span> / url provided in <span class="pinned question">Download link</span></li>
     </ul>
 ';
-$lang['e.bad.url.peertube'] = 'The PeerTube url entrered is not valid. It does not correspond to the url entered in the module configuration.';
+$lang['e_bad_url_peertube'] = 'The PeerTube url entrered is not valid. It does not correspond to the url entered in the module configuration.';
 ?>

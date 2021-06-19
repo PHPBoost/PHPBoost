@@ -11,8 +11,10 @@
 
 define('PATH_TO_ROOT', '../..');
 require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
+
 $lang = LangLoader::get('menu-lang');
-define('TITLE', $LANG['administration']);
+
+define('TITLE', $lang['menu.administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
 $id = (int)retrieve(REQUEST, 'id', 0);

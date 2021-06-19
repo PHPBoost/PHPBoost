@@ -4,10 +4,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 03 19
+ * @version     PHPBoost 6.0 - last update: 2021 06 19
  * @since       PHPBoost 1.6 - 2007 01 25
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '../../..');
@@ -52,7 +53,7 @@ if (!empty($member) || !empty($insert_member) || !empty($add_member_auth) || !em
 			}
 			elseif (!empty($add_member_auth))
 			{
-				echo '<span><a href="javascript:XMLHttpRequest_add_member_auth(\'' . addslashes($divid) . '\', ' . $row['user_id'] . ', \'' . addslashes($row['display_name']) . '\', \'' . addslashes($LANG['alert_member_already_auth']) . '\');">' . $row['display_name'] . '</a></span>';
+				echo '<span><a href="javascript:XMLHttpRequest_add_member_auth(\'' . addslashes($divid) . '\', ' . $row['user_id'] . ', \'' . addslashes($row['display_name']) . '\', \'' . addslashes(LangLoader::get_message('form.warning.member', 'form-lang')) . '\');">' . $row['display_name'] . '</a></span>';
 			}
 			elseif (!empty($admin_member))
 			{
@@ -70,12 +71,12 @@ if (!empty($member) || !empty($insert_member) || !empty($add_member_auth) || !em
 		}
 		if ($i == 0) //Aucun membre trouvé.
 		{
-			echo '<span>' . $LANG['no_result'] . '</span>';
+			echo '<span>' . LangLoader::get_message('common.no.result', 'common-lang') . '</span>';
 		}
 	}
 	else
 	{
-		echo '<span>' . $LANG['no_result'] . '</span>';
+		echo '<span>' . LangLoader::get_message('common.no.result', 'common-lang') . '</span>';
 	}
 }
 elseif (!empty($warning_user) || !empty($punish_user) || !empty($ban_user)) //Recherche d'un membre
@@ -107,12 +108,12 @@ elseif (!empty($warning_user) || !empty($punish_user) || !empty($ban_user)) //Re
 
 		if ($i == 0) //Aucun membre trouvé.
 		{
-			echo '<span>' . $LANG['no_result'] . '</span>';
+			echo '<span>' . LangLoader::get_message('common.no.result', 'common-lang') . '</span>';
 		}
 	}
 	else
 	{
-		echo '<span>' . $LANG['no_result'] . '</span>';
+		echo '<span>' . LangLoader::get_message('common.no.result', 'common-lang') . '</span>';
 	}
 }
 else

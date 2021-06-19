@@ -5,10 +5,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2021 06 19
  * @since       PHPBoost 3.0 - 2009 02 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class Sitemap
@@ -126,6 +127,7 @@ class Sitemap
 
 		$template->put_all(array(
 		    'C_SITE_MAP' => true,
+			
             'SITE_NAME' => TextHelper::htmlspecialchars($this->site_name, ENT_QUOTES)
 		));
 
@@ -186,10 +188,10 @@ class Sitemap
 	 */
 	private function build_kernel_map($mode = self::USER_MODE, $auth_mode = self::AUTH_PUBLIC)
 	{
-		global $LANG;
+		$user_lang = LangLoader::get('user-lang');
 
 		//We consider the kernel as a module
-		$kernel_map = new ModuleMap(new SitemapLink($LANG['home'], new Url(Environment::get_home_page())));
+		$kernel_map = new ModuleMap(new SitemapLink(LangLoader::get_message('common.home', 'common-lang'), new Url(Environment::get_home_page())));
 
 		//The site description
 		$kernel_map->set_description(nl2br(GeneralConfig::load()->get_site_description()));
@@ -199,32 +201,32 @@ class Sitemap
 		{
 			if (AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), UserAccountsConfig::AUTH_READ_MEMBERS_BIT))
 			{
-				$kernel_map->add(new SitemapLink(LangLoader::get_message('members_list', 'user-common'), UserUrlBuilder::home()));
+				$kernel_map->add(new SitemapLink($user_lang['user.members.list'], UserUrlBuilder::home()));
 			}
 
 			//Member space
 			if ($auth_mode == self::AUTH_USER && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 			{
 				//We create a section for that
-				$member_space_section = new SitemapSection(new SitemapLink($LANG['my_private_profile'],
+				$member_space_section = new SitemapSection(new SitemapLink($user_lang['user.dashboard'],
 				UserUrlBuilder::profile(AppContext::get_current_user()->get_id())));
 
 				//Profile edition
-				$member_space_section->add(new SitemapLink(LangLoader::get_message('profile.edit', 'user-common'),
+				$member_space_section->add(new SitemapLink($user_lang['user.profile.edit'],
 				UserUrlBuilder::edit_profile(AppContext::get_current_user()->get_id())));
 
 				//Private messaging
-				$member_space_section->add(new SitemapLink($LANG['private_messaging'],
+				$member_space_section->add(new SitemapLink($user_lang['user.private.messaging'],
 				UserUrlBuilder::personnal_message(AppContext::get_current_user()->get_id())));
 
 				//Contribution panel
-				$member_space_section->add(new SitemapLink($LANG['contribution_panel'],
+				$member_space_section->add(new SitemapLink($user_lang['user.contribution.panel'],
 				UserUrlBuilder::contribution_panel()));
 
 				//Administration panel
 				if (AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL))
 				{
-					$member_space_section->add(new SitemapLink($LANG['admin_panel'],
+					$member_space_section->add(new SitemapLink($user_lang['user.admin.panel'],
 					UserUrlBuilder::administration()));
 				}
 

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 09
+ * @version     PHPBoost 6.0 - last update: 2021 06 19
  * @since       PHPBoost 1.2 - 2005 06 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -224,42 +224,16 @@ elseif (!empty($idgroup)) // Group editing interface
 			'C_EDIT_GROUP'    => true,
 			'C_HAS_THUMBNAIL' => !empty($group['img']),
 
-			'NAME' => stripslashes($group['name']),
-			'GROUP_ID' => $idgroup,
-			'THUMBNAILS_LIST' => $img_groups,
-			'AUTH_FLOOD_ENABLED' => $array_group['auth_flood'] == 1 ? 'checked="checked"' : '',
+			'NAME'                => stripslashes($group['name']),
+			'GROUP_ID'            => $idgroup,
+			'THUMBNAILS_LIST'     => $img_groups,
+			'AUTH_FLOOD_ENABLED'  => $array_group['auth_flood'] == 1 ? 'checked="checked"' : '',
 			'AUTH_FLOOD_DISABLED' => $array_group['auth_flood'] == 0 ? 'checked="checked"' : '',
-			'GROUP_PM_LIMIT' => $array_group['pm_group_limit'],
-			'GROUP_DATA_LIMIT' => NumberHelper::round($array_group['data_group_limit']/1024, 2),
-			'GROUP_COLOR' => (TextHelper::substr($group['color'], 0, 1) != '#' ? '#' : '') . $group['color'],
+			'GROUP_PM_LIMIT'      => $array_group['pm_group_limit'],
+			'GROUP_DATA_LIMIT'    => NumberHelper::round($array_group['data_group_limit']/1024, 2),
+			'GROUP_COLOR'         => (TextHelper::substr($group['color'], 0, 1) != '#' ? '#' : '') . $group['color'],
+
 			'U_THUMBNAIL' => Url::to_rel('/images/group/' . $group['img']),
-			//
-			// 'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
-			// 'L_REQUIRE_LOGIN' => $LANG['require_name'],
-			// 'L_CONFIRM_DEL_USER_GROUP' => LangLoader::get_message('confirm.delete', 'status-messages-common'),
-			// 'L_GROUPS_MANAGEMENT' => $LANG['groups_management'],
-			// 'L_ADD_GROUPS' => $LANG['groups_add'],
-			// 'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
-			// 'L_NAME' => $LANG['name'],
-			// 'L_IMG_ASSOC_GROUP' => $LANG['img_assoc_group'],
-			// 'L_IMG_ASSOC_GROUP_EXPLAIN' => $LANG['img_assoc_group_explain'],
-			// 'L_AUTH_FLOOD' => $LANG['auth_flood'],
-			// 'L_PM_GROUP_LIMIT' => $LANG['pm_group_limit'],
-			// 'L_PM_GROUP_LIMIT_EXPLAIN' => $LANG['pm_group_limit_explain'],
-			// 'L_DATA_GROUP_LIMIT' => $LANG['data_group_limit'],
-			// 'L_DATA_GROUP_LIMIT_EXPLAIN' => $LANG['data_group_limit_explain'],
-			// 'L_COLOR_GROUP' => $LANG['color_group'],
-			// 'L_DELETE_GROUP_COLOR' => $LANG['delete_color_group'],
-			// 'L_YES' => LangLoader::get_message('yes', 'common'),
-			// 'L_NO' => LangLoader::get_message('no', 'common'),
-			// 'L_ADD' => LangLoader::get_message('add', 'common'),
-			// 'L_MBR_GROUP' => $LANG['mbrs_group'],
-			// 'L_PSEUDO' => LangLoader::get_message('display_name', 'user-common'),
-			// 'L_SEARCH' => $LANG['search'],
-			// 'L_UPDATE' => $LANG['update'],
-			// 'L_RESET' => $LANG['reset'],
-			// 'L_DELETE' => LangLoader::get_message('delete', 'common'),
-			// 'L_ADD_MBR_GROUP' => $LANG['add_mbr_group']
 		));
 
 		// Group members list
@@ -282,10 +256,12 @@ elseif (!empty($idgroup)) // Group editing interface
 
 				$view->assign_block_vars('member', array(
 					'C_GROUP_COLOR' => !empty($group_color),
-					'USER_ID' => $row['user_id'],
-					'LOGIN' => $row['display_name'],
+
+					'USER_ID'     => $row['user_id'],
+					'LOGIN'       => $row['display_name'],
 					'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 					'GROUP_COLOR' => $group_color,
+
 					'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel()
 				));
 				$number_member++;
@@ -294,8 +270,7 @@ elseif (!empty($idgroup)) // Group editing interface
 		}
 
 		$view->put_all(array(
-			'C_NO_MEMBERS' => $number_member == 0,
-			'NO_MEMBERS' => LangLoader::get_message('no_member', 'user-common')
+			'C_NO_MEMBER' => $number_member == 0
 		));
 	}
 	else
@@ -337,32 +312,11 @@ elseif ($add) // Add group interface
 
 	$view->put_all(array(
 		'C_ADD_GROUP' => true,
-		'THUMBNAILS_LIST' => $img_groups,
-		'MAX_FILE_SIZE' => ServerConfiguration::get_upload_max_filesize(),
+
+		'THUMBNAILS_LIST'    => $img_groups,
+		'MAX_FILE_SIZE'      => ServerConfiguration::get_upload_max_filesize(),
         'MAX_FILE_SIZE_TEXT' => File::get_formated_size(ServerConfiguration::get_upload_max_filesize()),
 		'ALLOWED_EXTENSIONS' => implode('", "',FileUploadConfig::load()->get_authorized_picture_extensions()),
-		//
-		'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
-		'L_REQUIRE_NAME' => $LANG['require_name'],
-		'L_CONFIRM_DEL_USER_GROUP' => LangLoader::get_message('confirm.delete', 'status-messages-common'),
-		'L_GROUPS_MANAGEMENT' => $LANG['groups_management'],
-		'L_ADD_GROUPS' => $LANG['groups_add'],
-		'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
-		'L_UPLOAD_GROUPS' => $LANG['upload_group'],
-		'L_UPLOAD_FORMAT' => $LANG['explain_upload_img'],
-		'L_UPLOAD' => $LANG['upload'],
-		'L_NAME' => $LANG['name'],
-		'L_IMG_ASSOC_GROUP' => $LANG['img_assoc_group'],
-		'L_IMG_ASSOC_GROUP_EXPLAIN' => $LANG['img_assoc_group_explain'],
-		'L_AUTH_FLOOD' => $LANG['auth_flood'],
-		'L_PM_GROUP_LIMIT' => $LANG['pm_group_limit'],
-		'L_PM_GROUP_LIMIT_EXPLAIN' => $LANG['pm_group_limit_explain'],
-		'L_DATA_GROUP_LIMIT' => $LANG['data_group_limit'],
-		'L_DATA_GROUP_LIMIT_EXPLAIN' => $LANG['data_group_limit_explain'],
-		'L_COLOR_GROUP' => $LANG['color_group'],
-		'L_YES' => LangLoader::get_message('yes', 'common'),
-		'L_NO' => LangLoader::get_message('no', 'common'),
-		'L_ADD' => LangLoader::get_message('add', 'common')
 	));
 
 	$view->display();

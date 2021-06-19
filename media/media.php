@@ -59,7 +59,7 @@ elseif ($id_media > 0)
 	if (($media['published'] & MEDIA_STATUS_INVISIBLE) !== 0)
 	{
 		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
-		$LANG['e_unexist_media']);
+		$lang['e_unexist_media']);
 		DispatchManager::redirect($controller);
 	}
 	elseif (!CategoriesAuthorizationsService::check_authorizations($media['id_category'])->read())
@@ -168,7 +168,7 @@ elseif ($id_media > 0)
 				}
 				else {
 					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
-					$LANG['e.bad.url.odysee']);
+					$lang['e_bad_url_odysee']);
 					DispatchManager::redirect($controller);
 				}
 			}
@@ -186,7 +186,7 @@ elseif ($id_media > 0)
 			if($player_is_peertube) {
 				if(!$peertube_videos_link && (!$peertube_embed_link || !$peertube_watch_link)) {
 					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
-					$LANG['e.bad.url.peertube']);
+					$lang['e_bad_url_peertube']);
 					DispatchManager::redirect($controller);
 				}
 			}
@@ -199,6 +199,7 @@ elseif ($id_media > 0)
 
 				$media_tpl->put_all(array(
 					'C_SOUNDCLOUD' => $soundcloud_player,
+					
 					'SOUNDCLOUD_TYPE' => $soundcloud_player ? $soundcloud_type : '',
 				));
 			}

@@ -246,7 +246,7 @@ foreach ($array_opening as $key => $name)
 {
 	$view->assign_block_vars('opening', array(
 		'C_SELECTED' => $menu->get_pushmenu_opening() == $key,
-		
+
 		'VALUE' => $key,
 		'NAME'  => $name
 	));

@@ -53,7 +53,7 @@ if ($invisible > 0)
 	// Errors management
 	if (empty($media))
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_unexist_media']);
+		$controller = new UserErrorController(LangLoader::get_message('warning-error', 'warning-lang'), $lang['e_unexist_media']);
 		DispatchManager::redirect($controller);
 	}
 	elseif (!CategoriesAuthorizationsService::check_authorizations($media['id_category'])->moderation())
@@ -88,7 +88,7 @@ elseif ($delete > 0)
 
 	if (empty($media))
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_unexist_media']);
+		$controller = new UserErrorController(LangLoader::get_message('warning-error', 'warning-lang'), $lang['e_unexist_media']);
 		DispatchManager::redirect($controller);
 	}
 	elseif (!CategoriesAuthorizationsService::check_authorizations($media['id_category'])->moderation())
@@ -320,7 +320,7 @@ elseif ($submit)
 				}
 				else
 				{
-					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_mime_disable_media']);
+					$controller = new UserErrorController(LangLoader::get_message('warning-error', 'warning-lang'), $lang['e_mime_disable_media']);
 					DispatchManager::redirect($controller);
 				}
 			}
@@ -346,31 +346,31 @@ elseif ($submit)
 
 					if (empty($media['mime_type']))
 					{
-						$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_mime_disable_media']);
+						$controller = new UserErrorController(LangLoader::get_message('warning-error', 'warning-lang'), $lang['e_mime_disable_media']);
 						DispatchManager::redirect($controller);
 					}
 				}
 				else
 				{
-					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_mime_disable_media']);
+					$controller = new UserErrorController(LangLoader::get_message('warning-error', 'warning-lang'), $lang['e_mime_disable_media']);
 					DispatchManager::redirect($controller);
 				}
 			}
 			else
 			{
-				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_mime_unknow_media']);
+				$controller = new UserErrorController(LangLoader::get_message('warning-error', 'warning-lang'), $lang['e_mime_unknow_media']);
 				DispatchManager::redirect($controller);
 			}
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_link_invalid_media']);
+			$controller = new UserErrorController(LangLoader::get_message('warning-error', 'warning-lang'), $lang['e_link_invalid_media']);
 			DispatchManager::redirect($controller);
 		}
 	}
 	else
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), (empty($media['file_url']) ? $LANG['e_link_empty_media'] : $LANG['e_link_invalid_media']));
+		$controller = new UserErrorController(LangLoader::get_message('warning-error', 'warning-lang'), (empty($media['file_url']) ? $lang['e_link_empty_media'] : $lang['e_link_invalid_media']));
 		DispatchManager::redirect($controller);
 	}
 
