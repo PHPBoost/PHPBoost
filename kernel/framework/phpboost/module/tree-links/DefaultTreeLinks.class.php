@@ -71,7 +71,7 @@ class DefaultTreeLinks implements ModuleTreeLinksExtensionPoint
 		if ($has_categories)
 		{
 			$tree->add_link(new ModuleLink(LangLoader::get_message('category.categories.manage', 'category-lang'), CategoriesUrlBuilder::manage($this->module_id), $this->authorizations->manage()));
-			$tree->add_link(new ModuleLink(LangLoader::get_message('category.category.add', 'category-lang'), CategoriesUrlBuilder::add(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY), $this->module_id), $this->authorizations->manage()));
+			$tree->add_link(new ModuleLink(LangLoader::get_message('category.add', 'category-lang'), CategoriesUrlBuilder::add(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY), $this->module_id), $this->authorizations->manage()));
 		}
 
 		if ($this->display_items_links)
