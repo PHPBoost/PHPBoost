@@ -3,12 +3,13 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 01 29
+ * @version     PHPBoost 6.0 - last update: 2021 06 20
  * @since       PHPBoost 3.0 - 2010 10 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class InstallWebsiteConfigController extends InstallController
@@ -56,7 +57,7 @@ class InstallWebsiteConfigController extends InstallController
 
 	private function build_form()
 	{
-		$admin_user_lang = LangLoader::get('admin-user-common');
+		$user_lang = LangLoader::get('user-lang');
 		$this->form = new HTMLForm('websiteForm', '', false);
 
 		$fieldset = new FormFieldsetHTML('yourSite', $this->lang['website.yours']);
@@ -84,24 +85,24 @@ class InstallWebsiteConfigController extends InstallController
 			array('description' => $this->lang['website.timezone.explanation'])
 		));
 
-		$fieldset = new FormFieldsetHTML('security_config', $admin_user_lang['members.config-security']);
+		$fieldset = new FormFieldsetHTML('security_config', $user_lang['user.security']);
 		$this->form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldNumberEditor('internal_password_min_length', $admin_user_lang['security.config.internal-password-min-length'], $this->security_config->get_internal_password_min_length(),
+		$fieldset->add_field(new FormFieldNumberEditor('internal_password_min_length', $user_lang['user.password.min.length'], $this->security_config->get_internal_password_min_length(),
 			array('min' => 6, 'max' => 30),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'), new FormFieldConstraintIntegerRange(6, 30))
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('internal_password_strength', $admin_user_lang['security.config.internal-password-strength'], $this->security_config->get_internal_password_strength(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('internal_password_strength', $user_lang['user.password.strength'], $this->security_config->get_internal_password_strength(),
 			array(
-				new FormFieldSelectChoiceOption($admin_user_lang['security.config.internal-password-strength.weak'], SecurityConfig::PASSWORD_STRENGTH_WEAK),
-				new FormFieldSelectChoiceOption($admin_user_lang['security.config.internal-password-strength.medium'], SecurityConfig::PASSWORD_STRENGTH_MEDIUM),
-				new FormFieldSelectChoiceOption($admin_user_lang['security.config.internal-password-strength.strong'], SecurityConfig::PASSWORD_STRENGTH_STRONG),
-				new FormFieldSelectChoiceOption($admin_user_lang['security.config.internal-password-strength.very-strong'], SecurityConfig::PASSWORD_STRENGTH_VERY_STRONG)
+				new FormFieldSelectChoiceOption($user_lang['user.password.strength.weak'], SecurityConfig::PASSWORD_STRENGTH_WEAK),
+				new FormFieldSelectChoiceOption($user_lang['user.password.strength.medium'], SecurityConfig::PASSWORD_STRENGTH_MEDIUM),
+				new FormFieldSelectChoiceOption($user_lang['user.password.strength.strong'], SecurityConfig::PASSWORD_STRENGTH_STRONG),
+				new FormFieldSelectChoiceOption($user_lang['user.password.strength.very.strong'], SecurityConfig::PASSWORD_STRENGTH_VERY_STRONG)
 			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('login_and_email_forbidden_in_password', $admin_user_lang['security.config.login-and-email-forbidden-in-password'], $this->security_config->are_login_and_email_forbidden_in_password(),
+		$fieldset->add_field(new FormFieldCheckbox('login_and_email_forbidden_in_password', $user_lang['user.password.forbidden.tag'], $this->security_config->are_login_and_email_forbidden_in_password(),
 			array('class' => 'custom-checkbox')
 		));
 

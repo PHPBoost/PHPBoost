@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 06 20
  * @since       PHPBoost 3.0 - 2010 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -11,7 +11,7 @@
 
 class AdminExtendedFieldMemberEditController extends AdminController
 {
-	private $tpl;
+	private $view;
 
 	private $lang;
 	/**
@@ -44,16 +44,16 @@ class AdminExtendedFieldMemberEditController extends AdminController
 			DispatchManager::redirect($error_controller);
 		}
 
-		$this->tpl = new StringTemplate('# INCLUDE MSG #
-				# INCLUDE FORM #
-				<script>
+		$this->view = new StringTemplate('
+			# INCLUDE MESSAGE_HELPER #
+			# INCLUDE FORM #
+			<script>
 				jQuery(document).ready(function() {
 				'.$this->get_events_select_type().'});
-				</script>');
+			</script>
+		');
 
-		$this->tpl->add_lang($this->lang);
-
-		$this->tpl->put_all(array(
+		$this->view->put_all(array(
 			'FIELD_TYPE' => $this->extended_field['field_type']
 		));
 
@@ -63,22 +63,22 @@ class AdminExtendedFieldMemberEditController extends AdminController
 			$error = ExtendedFieldsService::get_error();
 			if (!empty($error))
 			{
-				$this->tpl->put('MSG', MessageHelper::display($error, MessageHelper::ERROR, 5));
+				$this->view->put('MESSAGE_HELPER', MessageHelper::display($error, MessageHelper::ERROR, 5));
 			}
 			else
 			{
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : AdminExtendedFieldsUrlBuilder::fields_list()), StringVars::replace_vars($this->lang['message.success.edit'], array('name' => $extended_field->get_name())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : AdminExtendedFieldsUrlBuilder::fields_list()), StringVars::replace_vars($this->lang['form.success.edit'], array('name' => $extended_field->get_name())));
 			}
 		}
 
-		$this->tpl->put('FORM', $this->form->display());
+		$this->view->put('FORM', $this->form->display());
 
-		return new AdminExtendedFieldsDisplayResponse($this->tpl, $this->lang['extended-field-edit']);
+		return new AdminExtendedFieldsDisplayResponse($this->view, LangLoader::get_message('user.extended.field.edit', 'user-lang'));
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-user-common');
+		$this->lang = LangLoader::get('form-lang');
 	}
 
 	private function build_form(HTTPRequestCustom $request)
@@ -88,27 +88,27 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$regex_type = is_numeric($this->extended_field['regex']) ? $this->extended_field['regex'] : 6;
 		$regex = is_string($this->extended_field['regex']) ? $this->extended_field['regex'] : '';
 
-		$fieldset = new FormFieldsetHTML('edit_fields', $this->lang['extended-field-edit']);
+		$fieldset = new FormFieldsetHTML('edit_fields', LangLoader::get_message('user.extended.field.edit', 'user-lang'));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['field.name'], $this->extended_field['name'],
+		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['form.name'], $this->extended_field['name'],
 			array('class' => 'top-field', 'required' => true)
 		));
 
-		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('description', $this->lang['field.description'], $this->extended_field['description']));
+		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('description', $this->lang['form.description'], $this->extended_field['description']));
 
-		$fieldset->add_field(new FormFieldCheckbox('display', $this->lang['field.display'], (int)$this->extended_field['display'],
+		$fieldset->add_field(new FormFieldCheckbox('display', $this->lang['form.display'], (int)$this->extended_field['display'],
 			array('class' => 'top-field custom-checkbox')
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('field_required', $this->lang['field.required'], (int)$this->extended_field['required'],
+		$fieldset->add_field(new FormFieldCheckbox('field_required', $this->lang['form.required.field'], (int)$this->extended_field['required'],
 			array(
 				'class' => 'top-field custom-checkbox',
-				'description' => $this->lang['field.required_explain']
+				'description' => $this->lang['form.required.field.clue']
 			)
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('field_type', $this->lang['field.type'], $this->extended_field['field_type'], $this->get_array_select_type(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('field_type', $this->lang['form.field.type'], $this->extended_field['field_type'], $this->get_array_select_type(),
 			array(
 				'class' => 'top-field',
 				'disabled' => $this->is_type_select_disabled(),
@@ -116,24 +116,24 @@ class AdminExtendedFieldMemberEditController extends AdminController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('default_value', $this->lang['field.default-value'], $this->extended_field['default_value'],
+		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('default_value', $this->lang['form.default.value'], $this->extended_field['default_value'],
 			array('rows' => 4)
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('regex_type', $this->lang['field.regex'], $regex_type,
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('regex_type', $this->lang['form.regex'], $regex_type,
 			array(
 				new FormFieldSelectChoiceOption('--', '0'),
-				new FormFieldSelectChoiceOption($this->lang['regex.figures'], '1'),
-				new FormFieldSelectChoiceOption($this->lang['regex.letters'], '2'),
-				new FormFieldSelectChoiceOption($this->lang['regex.figures-letters'], '3'),
-				new FormFieldSelectChoiceOption($this->lang['regex.word'], '7'),
-				new FormFieldSelectChoiceOption($this->lang['regex.mail'], '4'),
-				new FormFieldSelectChoiceOption($this->lang['regex.website'], '5'),
-				new FormFieldSelectChoiceOption($this->lang['regex.phone-number'], '8'),
-				new FormFieldSelectChoiceOption($this->lang['regex.personnal-regex'], '6'),
+				new FormFieldSelectChoiceOption($this->lang['form.figures'], '1'),
+				new FormFieldSelectChoiceOption($this->lang['form.letters'], '2'),
+				new FormFieldSelectChoiceOption($this->lang['form.figures.letters'], '3'),
+				new FormFieldSelectChoiceOption($this->lang['form.word'], '7'),
+				new FormFieldSelectChoiceOption($this->lang['form.email'], '4'),
+				new FormFieldSelectChoiceOption($this->lang['form.website'], '5'),
+				new FormFieldSelectChoiceOption($this->lang['form.phone.number'], '8'),
+				new FormFieldSelectChoiceOption($this->lang['form.personnal.regex'], '6'),
 			),
 			array(
-				'description' => $this->lang['field.regex-explain'],
+				'description' => $this->lang['form.regex.clue'],
 				'events' => array('change' => '
 					if (HTMLForms.getField("regex_type").getValue() == 6) {
 						HTMLForms.getField("regex").enable();
@@ -145,17 +145,17 @@ class AdminExtendedFieldMemberEditController extends AdminController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldTextEditor('regex', $this->lang['regex.personnal-regex'], $regex,
+		$fieldset->add_field(new FormFieldTextEditor('regex', $this->lang['form.personnal.regex'], $regex,
 			array('class' => 'top-field')
 		));
 
-		$fieldset->add_field(new FormFieldPossibleValues('possible_values', $this->lang['field.possible-values'], $this->extended_field['possible_values']));
+		$fieldset->add_field(new FormFieldPossibleValues('possible_values', $this->lang['form.possible.values'], $this->extended_field['possible_values']));
 
 		$auth = $this->extended_field['auth'];
 
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($this->lang['field.read_authorizations'], ExtendedField::READ_PROFILE_AUTHORIZATION),
-			new ActionAuthorization($this->lang['field.actions_authorizations'], ExtendedField::READ_EDIT_AND_ADD_AUTHORIZATION)
+			new ActionAuthorization($this->lang['form.authorizations.read'], ExtendedField::READ_PROFILE_AUTHORIZATION),
+			new ActionAuthorization($this->lang['form.authorizations.moderation'], ExtendedField::READ_EDIT_AND_ADD_AUTHORIZATION)
 		));
 		$auth_settings->build_from_auth_array($auth);
 		$fieldset->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
@@ -231,7 +231,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 					{
 						$kernel_select[] = new FormFieldSelectChoiceOption($field_type->get_name(), get_class($field_type));
 					}
-					$select[] = new FormFieldSelectChoiceGroupOption($this->lang['default-field'], $kernel_select);
+					$select[] = new FormFieldSelectChoiceGroupOption($this->lang['form.default.field'], $kernel_select);
 				}
 				else
 				{

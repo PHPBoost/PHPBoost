@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 07
+ * @version     PHPBoost 6.0 - last update: 2021 06 20
  * @since       PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -94,14 +94,6 @@ $lang['form.display.sort.form']         = 'Display items sort form';
 $lang['form.root.category.description'] = 'Root category description';
 $lang['form.item.default.content']      = 'Item default content';
 
-// Extended Fields
-$lang['form.extended.fields.management']            = 'Profile fields management';
-$lang['form.extended.field.add']                    = 'Add profile field';
-$lang['form.extended.field.edit']                   = 'Edit profile field';
-$lang['form.extended.field']                        = 'Profile fields';
-$lang['form.extended.fields.error.already.exists']  = 'The field already exists.';
-$lang['form.extended.fields.error.phpboost.config'] = 'The fields used by default PHPBoost can not be created more than one time, please choose another type of field.';
-
 // Fields
 $lang['form.fields.management']   = 'Fields management';
 $lang['form.field.add']           = 'Add a field';
@@ -176,8 +168,8 @@ $lang['form.is.default']                = 'By default';
 $lang['form.default.value']             = 'Default value';
 
 // Messages
-$lang['form.message.success.add']  = 'The profile field <b>:name</b> has been added';
-$lang['form.message.success.edit'] = 'The profile field <b>:name</b> has been modified';
+$lang['form.success.add']  = 'The field <b>:name</b> has been added';
+$lang['form.success.edit'] = 'The field <b>:name</b> has been modified';
 
 // Modules
 $lang['form.forbidden.module']                  = 'Forbidden modules';

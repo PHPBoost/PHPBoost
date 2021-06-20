@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 02 11
+ * @version     PHPBoost 6.0 - last update: 2021 06 20
  * @since       PHPBoost 4.1 - 2015 09 19
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MemberUserPMToMailExtendedField extends AbstractMemberExtendedField
@@ -15,7 +16,7 @@ class MemberUserPMToMailExtendedField extends AbstractMemberExtendedField
 	{
 		parent::__construct();
 		$this->set_disable_fields_configuration(array('field_required', 'regex', 'possible_values', 'default_value'));
-		$this->set_name(LangLoader::get_message('type.user_pmtomail','admin-user-common'));
+		$this->set_name(LangLoader::get_message('user.field.type.pm.email','user-lang'));
 		$this->field_used_once = true;
 		$this->field_used_phpboost_config = true;
 	}

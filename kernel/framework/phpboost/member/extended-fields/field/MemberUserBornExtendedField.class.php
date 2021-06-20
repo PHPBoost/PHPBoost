@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 14
+ * @version     PHPBoost 6.0 - last update: 2021 06 20
  * @since       PHPBoost 3.0 - 2010 12 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MemberUserBornExtendedField extends AbstractMemberExtendedField
@@ -16,7 +17,7 @@ class MemberUserBornExtendedField extends AbstractMemberExtendedField
 	{
 		parent::__construct();
 		$this->set_disable_fields_configuration(array('regex', 'possible_values', 'default_value'));
-		$this->set_name(LangLoader::get_message('type.user_born','admin-user-common'));
+		$this->set_name(LangLoader::get_message('user.field.type.born','user-lang'));
 		$this->field_used_once = true;
 		$this->field_used_phpboost_config = true;
 	}

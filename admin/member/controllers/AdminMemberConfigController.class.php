@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 06
+ * @version     PHPBoost 6.0 - last update: 2021 06 20
  * @since       PHPBoost 3.0 - 2010 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -32,8 +32,8 @@ class AdminMemberConfigController extends AdminController
 		$this->init();
 		$this->build_form();
 
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
+		$view->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -43,17 +43,17 @@ class AdminMemberConfigController extends AdminController
 			$this->form->get_field_by_id('unactivated_accounts_timeout')->set_hidden(!$this->user_accounts_config->is_registration_enabled() || $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION);
 			$this->form->get_field_by_id('items_per_row')->set_hidden($this->user_accounts_config->get_display_type() !== UserAccountsConfig::GRID_VIEW);
 
-			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('form.success.config', 'warning-lang'), MessageHelper::SUCCESS, 5));
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$view->put('FORM', $this->form->display());
 
-		return new AdminMembersDisplayResponse($tpl, $this->lang['members.members-management']);
+		return new AdminMembersDisplayResponse($view, $this->lang['user.members.management']);
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-user-common');
+		$this->lang = LangLoader::get('user-lang');
 		$this->user_accounts_config = UserAccountsConfig::load();
 		$this->security_config = SecurityConfig::load();
 		$this->server_configuration = new ServerConfiguration();
@@ -61,15 +61,15 @@ class AdminMemberConfigController extends AdminController
 
 	private function build_form()
 	{
-		$admin_common_lang = LangLoader::get('admin-common');
+		$form_lang = LangLoader::get('form-lang');
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('members_config', $this->lang['members.config-members']);
+		$fieldset = new FormFieldsetHTML('members_config', $this->lang['user.members.config']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldCheckbox('members_activation', $this->lang['members.config.registration-activation'], $this->user_accounts_config->is_registration_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('members_activation', $this->lang['user.registration.activation'], $this->user_accounts_config->is_registration_enabled(),
 			array(
-				'class' => 'custom-checkbox',
+				'class' => 'custom-checkbox top-field',
 				'events' => array('change' => '
 					if (HTMLForms.getField("members_activation").getValue()) {
 						HTMLForms.getField("type_activation_members").enable();
@@ -84,13 +84,14 @@ class AdminMemberConfigController extends AdminController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('type_activation_members', $this->lang['members.config.type-activation'], (string)$this->user_accounts_config->get_member_accounts_validation_method(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('type_activation_members', $this->lang['user.activation.mode'], (string)$this->user_accounts_config->get_member_accounts_validation_method(),
 			array(
-				new FormFieldSelectChoiceOption($this->lang['members.config.type-activation.auto'], UserAccountsConfig::AUTOMATIC_USER_ACCOUNTS_VALIDATION),
-				new FormFieldSelectChoiceOption($this->lang['members.config.type-activation.mail'], UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION),
-				new FormFieldSelectChoiceOption($this->lang['members.config.type-activation.admin'], UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION)
+				new FormFieldSelectChoiceOption($this->lang['user.activation.auto'], UserAccountsConfig::AUTOMATIC_USER_ACCOUNTS_VALIDATION),
+				new FormFieldSelectChoiceOption($this->lang['user.activation.mail'], UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION),
+				new FormFieldSelectChoiceOption($this->lang['user.activation.admin'], UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION)
 			),
 			array(
+				'class' => 'top-field',
 				'hidden' => !$this->user_accounts_config->is_registration_enabled(),
 				'events' => array('change' => '
 					if (HTMLForms.getField("type_activation_members").getValue() != ' . UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION . ') {
@@ -102,10 +103,10 @@ class AdminMemberConfigController extends AdminController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('unactivated_accounts_timeout', $this->lang['members.config.unactivated-accounts-timeout'], (int)$this->user_accounts_config->get_unactivated_accounts_timeout(),
+		$fieldset->add_field(new FormFieldNumberEditor('unactivated_accounts_timeout', $this->lang['user.unactivated.timeout'], (int)$this->user_accounts_config->get_unactivated_accounts_timeout(),
 			array(
 				'min' => 1, 'max' => 365,
-				'description' => $this->lang['members.config.unactivated-accounts-timeout-explain'],
+				'description' => $this->lang['user.unactivated.timeout.clue'],
 				'hidden' => !$this->user_accounts_config->is_registration_enabled() || $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION
 			),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'))
@@ -113,21 +114,21 @@ class AdminMemberConfigController extends AdminController
 
 		$fieldset->add_field(new FormFieldSpacer('1_separator', ''));
 
-		$fieldset->add_field(new FormFieldCheckbox('allow_users_to_change_display_name', $this->lang['members.config.allow_users_to_change_display_name'], $this->user_accounts_config->are_users_allowed_to_change_display_name(),
+		$fieldset->add_field(new FormFieldCheckbox('allow_users_to_change_display_name', $this->lang['user.allow.display.name.change'], $this->user_accounts_config->are_users_allowed_to_change_display_name(),
 			array('class' => 'custom-checkbox')
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('allow_users_to_change_email', $this->lang['members.config.allow_users_to_change_email'], $this->user_accounts_config->are_users_allowed_to_change_email(),
+		$fieldset->add_field(new FormFieldCheckbox('allow_users_to_change_email', $this->lang['user.allow.email.change'], $this->user_accounts_config->are_users_allowed_to_change_email(),
 			array('class' => 'custom-checkbox')
 		));
 
-		$fieldset = new FormFieldsetHTML('display_view', $this->lang['members.config.display.type']);
+		$fieldset = new FormFieldsetHTML('display_view', $this->lang['user.display.type']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $admin_common_lang['config.display.type'], $this->user_accounts_config->get_display_type(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $form_lang['form.display.type'], $this->user_accounts_config->get_display_type(),
 			array(
-				new FormFieldSelectChoiceOption($admin_common_lang['config.display.type.grid'], UserAccountsConfig::GRID_VIEW, array('data_option_icon' => 'fa fa-th-large')),
-				new FormFieldSelectChoiceOption($admin_common_lang['config.display.type.table'], UserAccountsConfig::TABLE_VIEW, array('data_option_icon' => 'fa fa-table'))
+				new FormFieldSelectChoiceOption($form_lang['form.display.type.grid'], UserAccountsConfig::GRID_VIEW, array('data_option_icon' => 'fa fa-th-large')),
+				new FormFieldSelectChoiceOption($form_lang['form.display.type.table'], UserAccountsConfig::TABLE_VIEW, array('data_option_icon' => 'fa fa-table'))
 			),
 			array(
 				'select_to_list' => true,
@@ -140,100 +141,100 @@ class AdminMemberConfigController extends AdminController
 			))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $admin_common_lang['config.items_number_per_page'], $this->user_accounts_config->get_items_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $form_lang['form.items.per.page'], $this->user_accounts_config->get_items_per_page(),
 			array(
 				'min' => 1, 'max' => 50, 'required' => true,
 			),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $admin_common_lang['config.items.per.row'], $this->user_accounts_config->get_items_per_row(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $form_lang['form.items.per.row'], $this->user_accounts_config->get_items_per_row(),
 			array(
 				'hidden' => $this->user_accounts_config->get_display_type() !== UserAccountsConfig::GRID_VIEW,
 				'min' => 1, 'max' => 4, 'required' => true),
 				array(new FormFieldConstraintIntegerRange(1, 4))
 		));
 
-		$fieldset = new FormFieldsetHTML('security_config', $this->lang['members.config-security']);
+		$fieldset = new FormFieldsetHTML('security_config', $this->lang['user.security']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldNumberEditor('internal_password_min_length', $this->lang['security.config.internal-password-min-length'], $this->security_config->get_internal_password_min_length(),
+		$fieldset->add_field(new FormFieldNumberEditor('internal_password_min_length', $this->lang['user.password.min.length'], $this->security_config->get_internal_password_min_length(),
 			array('min' => 6, 'max' => 30),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'), new FormFieldConstraintIntegerRange(6, 30))
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('internal_password_strength', $this->lang['security.config.internal-password-strength'], $this->security_config->get_internal_password_strength(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('internal_password_strength', $this->lang['user.password.strength'], $this->security_config->get_internal_password_strength(),
 			array(
-				new FormFieldSelectChoiceOption($this->lang['security.config.internal-password-strength.weak'], SecurityConfig::PASSWORD_STRENGTH_WEAK),
-				new FormFieldSelectChoiceOption($this->lang['security.config.internal-password-strength.medium'], SecurityConfig::PASSWORD_STRENGTH_MEDIUM),
-				new FormFieldSelectChoiceOption($this->lang['security.config.internal-password-strength.strong'], SecurityConfig::PASSWORD_STRENGTH_STRONG),
-				new FormFieldSelectChoiceOption($this->lang['security.config.internal-password-strength.very-strong'], SecurityConfig::PASSWORD_STRENGTH_VERY_STRONG)
+				new FormFieldSelectChoiceOption($this->lang['user.password.strength.weak'], SecurityConfig::PASSWORD_STRENGTH_WEAK),
+				new FormFieldSelectChoiceOption($this->lang['user.password.strength.medium'], SecurityConfig::PASSWORD_STRENGTH_MEDIUM),
+				new FormFieldSelectChoiceOption($this->lang['user.password.strength.strong'], SecurityConfig::PASSWORD_STRENGTH_STRONG),
+				new FormFieldSelectChoiceOption($this->lang['user.password.strength.very.strong'], SecurityConfig::PASSWORD_STRENGTH_VERY_STRONG)
 			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('login_and_email_forbidden_in_password', $this->lang['security.config.login-and-email-forbidden-in-password'], $this->security_config->are_login_and_email_forbidden_in_password(),
+		$fieldset->add_field(new FormFieldCheckbox('login_and_email_forbidden_in_password', $this->lang['user.password.forbidden.tag'], $this->security_config->are_login_and_email_forbidden_in_password(),
 			array('class' => 'custom-checkbox')
 		));
 
-		$fieldset->add_field(new FormFieldMultiLineTextEditor('forbidden_mail_domains', $this->lang['security.config.forbidden-mail-domains'], implode(',', $this->security_config->get_forbidden_mail_domains()),
-			array('description' => $this->lang['security.config.forbidden-mail-domains.explain'])
+		$fieldset->add_field(new FormFieldMultiLineTextEditor('forbidden_mail_domains', $this->lang['user.forbidden.email.domains'], implode(',', $this->security_config->get_forbidden_mail_domains()),
+			array('description' => $this->lang['user.forbidden.email.domains.clue'])
 		));
 
-		$fieldset = new FormFieldsetHTML('avatar_management', $this->lang['members.config.avatars-management']);
+		$fieldset = new FormFieldsetHTML('avatar_management', $this->lang['user.avatars.management']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldCheckbox('upload_avatar_server', $this->lang['members.config.upload-avatar-server-authorization'], $this->user_accounts_config->is_avatar_upload_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('upload_avatar_server', $this->lang['user.allow.avatar.upload'], $this->user_accounts_config->is_avatar_upload_enabled(),
 			array('class' => 'custom-checkbox')
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('activation_resize_avatar', $this->lang['members.config.activation-resize-avatar'], $this->user_accounts_config->is_avatar_auto_resizing_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('activation_resize_avatar', $this->lang['user.enable.avatar.resizing'], $this->user_accounts_config->is_avatar_auto_resizing_enabled(),
 			array(
 				'class' => 'custom-checkbox',
-				'description' => $this->lang['members.activation-resize-avatar-explain']
+				'description' => $this->lang['user.avatar.resizing.clue']
 			)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('maximal_width_avatar', $this->lang['members.config.maximal-width-avatar'], $this->user_accounts_config->get_max_avatar_width(),
-			array('description' => $this->lang['members.config.maximal-width-avatar-explain']),
+		$fieldset->add_field(new FormFieldNumberEditor('maximal_width_avatar', $this->lang['user.avatar.max.width'], $this->user_accounts_config->get_max_avatar_width(),
+			array('description' => $this->lang['user.avatar.max.width.clue']),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('maximal_height_avatar', $this->lang['members.config.maximal-height-avatar'], $this->user_accounts_config->get_max_avatar_height(),
-			array('description' => $this->lang['members.config.maximal-height-avatar-explain']),
+		$fieldset->add_field(new FormFieldNumberEditor('maximal_height_avatar', $this->lang['user.avatar.max.height'], $this->user_accounts_config->get_max_avatar_height(),
+			array('description' => $this->lang['user.avatar.max.height.clue']),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('maximal_weight_avatar', $this->lang['members.config.maximal-weight-avatar'], $this->user_accounts_config->get_max_avatar_weight(),
+		$fieldset->add_field(new FormFieldNumberEditor('maximal_weight_avatar', $this->lang['user.avatar.max.weight'], $this->user_accounts_config->get_max_avatar_weight(),
 			array(
 				'class' => 'top-field',
-				'description' => $this->lang['members.config.maximal-weight-avatar-explain']
+				'description' => $this->lang['user.avatar.max.weight.clue']
 			),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'))
 		));
 
-		$fieldset->add_field(new FormFieldThumbnail('default_avatar', $this->lang['members.config.default-avatar'], $this->user_accounts_config->get_default_avatar_name(), UserAccountsConfig::NO_AVATAR_URL,
+		$fieldset->add_field(new FormFieldThumbnail('default_avatar', $this->lang['user.default.avatar'], $this->user_accounts_config->get_default_avatar_name(), UserAccountsConfig::NO_AVATAR_URL,
 			array('class' => 'half-field')
 		));
 
-		$fieldset = new FormFieldsetHTML('authorization', $this->lang['members.config.authorization']);
+		$fieldset = new FormFieldsetHTML('authorization', $form_lang['form.authorizations']);
 		$form->add_fieldset($fieldset);
 
-		$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization($this->lang['members.config.authorization-read-member-profile'], UserAccountsConfig::AUTH_READ_MEMBERS_BIT)));
+		$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization($this->lang['user.authorization.description'], UserAccountsConfig::AUTH_READ_MEMBERS_BIT)));
 		$auth_settings->build_from_auth_array($this->user_accounts_config->get_auth_read_members());
 		$fieldset->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
 
-		$fieldset = new FormFieldsetHTML('welcome_message', $this->lang['members.config.welcome-message']);
+		$fieldset = new FormFieldsetHTML('welcome_message', $this->lang['user.welcome.message']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldRichTextEditor('welcome_message_contents', $this->lang['members.config.welcome-message-content'], $this->user_accounts_config->get_welcome_message(),
+		$fieldset->add_field(new FormFieldRichTextEditor('welcome_message_contents', $this->lang['user.welcome.message.content'], $this->user_accounts_config->get_welcome_message(),
 			array('rows' => 8, 'cols' => 47)
 		));
 
-		$fieldset = new FormFieldsetHTML('members_rules', $this->lang['members.rules']);
-		$fieldset->set_description($this->lang['members.rules.registration-agreement-description']);
+		$fieldset = new FormFieldsetHTML('members_rules', $this->lang['user.rules']);
+		$fieldset->set_description($this->lang['user.rules.description']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldRichTextEditor('registration_agreement', $this->lang['members.rules.registration-agreement'], UserAccountsConfig::load()->get_registration_agreement(),
+		$fieldset->add_field(new FormFieldRichTextEditor('registration_agreement', $this->lang['user.rules.content'], UserAccountsConfig::load()->get_registration_agreement(),
 			array('rows' => 8, 'cols' => 47)
 		));
 

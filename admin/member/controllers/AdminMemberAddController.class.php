@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 06 20
  * @since       PHPBoost 3.0 - 2010 12 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -26,8 +26,7 @@ class AdminMemberAddController extends AdminController
 		$this->init();
 		$this->build_form($request);
 
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -35,14 +34,14 @@ class AdminMemberAddController extends AdminController
 			AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : AdminMembersUrlBuilder::management()), StringVars::replace_vars($this->lang['user.message.success.add'], array('name' => $display_name)));
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$view->put('FORM', $this->form->display());
 
-		return new AdminMembersDisplayResponse($tpl, LangLoader::get_message('members.add-member', 'admin-user-common'));
+		return new AdminMembersDisplayResponse($view, $this->lang['user.add.member']);
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('user-common');
+		$this->lang = LangLoader::get('user-lang');
 	}
 
 	private function build_form(HTTPRequestCustom $request)
@@ -50,10 +49,10 @@ class AdminMemberAddController extends AdminController
 		$security_config = SecurityConfig::load();
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('add_member', LangLoader::get_message('members.add-member', 'admin-user-common'));
+		$fieldset = new FormFieldsetHTML('add_member', $this->lang['user.add.member']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field($display_name = new FormFieldTextEditor('display_name', $this->lang['display_name'], '',
+		$fieldset->add_field($display_name = new FormFieldTextEditor('display_name', $this->lang['user.display.name'], '',
 			array(
 				'maxlength' => 100, 'required' => true,
 				'events' => array('blur' => '
@@ -65,16 +64,16 @@ class AdminMemberAddController extends AdminController
 			array(new FormFieldConstraintLengthRange(3, 100), new FormFieldConstraintDisplayNameExists())
 		));
 
-		$fieldset->add_field($email = new FormFieldMailEditor('email', $this->lang['email'], '',
+		$fieldset->add_field($email = new FormFieldMailEditor('email', $this->lang['user.email'], '',
 			array('required' => true),
 			array(new FormFieldConstraintMailExist())
 		));
 
-		$fieldset->add_field(new FormFieldRanksSelect('rank', $this->lang['rank'], FormFieldRanksSelect::MEMBER));
+		$fieldset->add_field(new FormFieldRanksSelect('rank', $this->lang['user.rank'], FormFieldRanksSelect::MEMBER));
 
 		$fieldset->add_field(new FormFieldSpacer('define_identifier', ''));
 
-		$fieldset->add_field($custom_login_checked = new FormFieldCheckbox('custom_login', $this->lang['login.custom'], false,
+		$fieldset->add_field($custom_login_checked = new FormFieldCheckbox('custom_login', $this->lang['user.username.custom'], false,
 			array(
 				'class' => 'custom-checkbox',
 				'events' => array('click' => '
@@ -87,17 +86,17 @@ class AdminMemberAddController extends AdminController
 			)
 		));
 
-		$fieldset->add_field($login = new FormFieldTextEditor('login', $this->lang['login'], '',
+		$fieldset->add_field($login = new FormFieldTextEditor('login', $this->lang['user.username'], '',
 			array('required' => true, 'hidden' => true, 'maxlength' => 25),
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists())
 		));
 
 		$fieldset->add_field(new FormFieldSpacer('define_password', ''));
 
-		$fieldset->add_field(new FormFieldCheckbox('custom_password', $this->lang['password.custom'], false,
+		$fieldset->add_field(new FormFieldCheckbox('custom_password', $this->lang['user.password.custom'], false,
 			array(
 				'class' => 'custom-checkbox',
-				'description' => $this->lang['password.custom.explain'],
+				'description' => $this->lang['user.password.custom.clue'],
 				'events' => array('click' => '
 					if (HTMLForms.getField("custom_password").getValue()) {
 						HTMLForms.getField("password").enable();
@@ -110,12 +109,12 @@ class AdminMemberAddController extends AdminController
 			)
 		));
 
-		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '',
+		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['user.password'], '',
 			array('required' => true, 'autocomplete' => false, 'hidden' => true),
 			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
 		));
 
-		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '',
+		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['user.password.confirm'], '',
 			array('required' => true, 'autocomplete' => false, 'hidden' => true),
 			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
 		));

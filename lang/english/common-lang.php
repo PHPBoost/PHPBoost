@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 15
+ * @version     PHPBoost 6.0 - last update: 2021 06 20
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -269,6 +269,7 @@ $lang['common.status.visible']       = 'Visible';
 $lang['common.status.invisible']     = 'Invisible';
 $lang['common.status.approved']      = 'Approved';
 $lang['common.status.disapproved']   = 'Disapproved';
+$lang['common.status.unapproved']    = 'Unapproved';
 $lang['common.status.draft']         = 'Draft';
 $lang['common.status.published']     = 'Published';
 $lang['common.status.deffered.date'] = 'Differed publication';

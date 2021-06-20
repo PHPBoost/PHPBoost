@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 02 11
+ * @version     PHPBoost 6.0 - last update: 2021 06 20
  * @since       PHPBoost 4.0 - 2013 07 31
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ContactMultipleChoiceField extends AbstractContactField
@@ -13,7 +14,7 @@ class ContactMultipleChoiceField extends AbstractContactField
 	{
 		parent::__construct();
 		$this->set_disable_fields_configuration(array('regex', 'default_value_small', 'default_value_medium'));
-		$this->set_name(LangLoader::get_message('type.multiple-check', 'admin-user-common'));
+		$this->set_name(LangLoader::get_message('user.field.type.multiple.check', 'user-lang'));
 	}
 
 	public function display_field(ContactField $field)

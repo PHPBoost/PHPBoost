@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 17
+ * @version     PHPBoost 6.0 - last update: 2021 06 20
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -53,6 +53,51 @@ To change your password, click on the link below and follow the directions on th
 If you have problems, please contact the site administrator.
 
 :signature';
+
+// Configuration
+$lang['user.members.config']            = 'Members configuration';
+$lang['user.display.type']              = 'Members list display';
+$lang['user.registration.activation']   = 'Enable the registration of members';
+$lang['user.activation.mode']           = 'User account activation type';
+$lang['user.activation.auto']           = 'Automatic';
+$lang['user.activation.mail']           = 'Mail';
+$lang['user.activation.admin']          = 'Administrator';
+$lang['user.unactivated.timeout']       = 'Number of days after which the unactivated members are cleared';
+$lang['user.unactivated.timeout.clue']  = 'Leave blank to skip this option (not included if validated by administrator)';
+$lang['user.allow.display.name.change'] = 'Allow members to change their Display name';
+$lang['user.allow.email.change']        = 'Allow members to change their Email';
+$lang['user.authorization.description'] = 'Here you define the permissions to read the list of groups and members as well as some personal information such as their emails, messages and profiles.';
+    // Security
+$lang['user.security']                      = 'Security';
+$lang['user.password.min.length']           = 'Passwords minimal length';
+$lang['user.password.strength']             = 'Passwords strength';
+$lang['user.password.strength.weak']        = 'Weak';
+$lang['user.password.strength.medium']      = 'Medium (letters and digits)';
+$lang['user.password.strength.strong']      = 'Strong (lower case, upper case and digits)';
+$lang['user.password.strength.very.strong'] = 'Very strong (lower case, upper case, digits and special characters)';
+$lang['user.password.forbidden.tag']        = 'Forbid email and login in password';
+$lang['user.forbidden.email.domains']       = 'List of prohibited domain names';
+$lang['user.forbidden.email.domains.clue']  = 'Domains prohibited in users\' email addresses (separated by commas). Example: <b>domain.com</b>';
+$lang['user.authentication']                = 'Authentication configuration';
+    // Avatars
+$lang['user.avatars.management']     = 'Avatars management';
+$lang['user.allow.avatar.upload']    = 'Allow avatar upload on the server';
+$lang['user.enable.avatar.resizing'] = 'Enable automatic image resizing';
+$lang['user.avatar.resizing.clue']   = 'Warning your server must have the GD extension loaded';
+$lang['user.avatar.max.width']       = 'Maximum width of the avatar';
+$lang['user.avatar.max.width.clue']  = 'Default 120';
+$lang['user.avatar.max.height']      = 'Maximum height of the avatar';
+$lang['user.avatar.max.height.clue'] = 'Default 120';
+$lang['user.avatar.max.weight']      = 'Maximum weight of the avatar in KB';
+$lang['user.avatar.max.weight.clue'] = 'Default 20';
+$lang['user.default.avatar']         = 'Default avatar';
+    // Welcome
+$lang['user.welcome.message']           = 'Message to all members';
+$lang['user.welcome.message.content']   = 'Welcome message displayed in the panel member';
+    // Rules
+$lang['user.rules']             = 'Rules';
+$lang['user.rules.description'] = 'Enter below the agreement to display when members register, they have to accept it to register. Leave blank for no agreement.';
+$lang['user.rules.content']     = 'Registration agreement';
 
 // Groups
 $lang['user.groups']                  = 'Groups';
@@ -112,9 +157,9 @@ $lang['user.male']           = 'Male';
 $lang['user.female']         = 'Female';
 
 $lang['user.members.management'] = 'Members management';
-$lang['user.members.config']     = 'Members configuration';
 $lang['user.members.punishment'] = 'Members punishment';
 $lang['user.add.member']         = 'Add a member';
+$lang['user.filter.members']     = 'Filter members';
 $lang['user.members.all']        = 'All members';
 $lang['user.members.list']       = 'Members list';
 $lang['user.member.management']  = 'Member management';
@@ -279,6 +324,13 @@ $lang['user.message.success.delete']        = 'The user <b>:name</b> has been de
 $lang['user.message.success.delete.member'] = 'Your account has been deleted';
 
 // Extended Fields
+$lang['user.extended.fields.management']            = 'Profile fields management';
+$lang['user.extended.field.add']                    = 'Add profile field';
+$lang['user.extended.field.edit']                   = 'Edit profile field';
+$lang['user.extended.field']                        = 'Profile fields';
+$lang['user.extended.field.error.already.exists']  = 'The field already exists.';
+$lang['user.extended.field.error.phpboost.config'] = 'The fields used by default PHPBoost can not be created more than one time, please choose another type of field.';
+
 $lang['user.extended.field.sex']      = 'Sex';
 $lang['user.extended.field.sex.clue'] = '';
 
@@ -314,6 +366,24 @@ $lang['user.extended.field.no.member']      = 'This member is no longer registre
 
 $lang['user.extended.field.website']      = 'Website';
 $lang['user.extended.field.website.clue'] = 'Please enter a valid url (ex : https://www.phpboost.com)';
+
+// Fields type
+$lang['user.field.type.short.text'] = 'Short text (max 255 characters)';
+$lang['user.field.type.long.text'] = 'Long text (unlimited)';
+$lang['user.field.type.half.text'] = 'Medium text';
+$lang['user.field.type.simple.select'] = 'Single selection (between several values)';
+$lang['user.field.type.multiple.select'] = 'Multiple selection (between several values)';
+$lang['user.field.type.simple.check'] = 'Single choice (between several values)';
+$lang['user.field.type.multiple.check'] = 'Multiple choice (between several values)';
+$lang['user.field.type.date'] = 'Date';
+$lang['user.field.type.theme.choice'] = 'Theme';
+$lang['user.field.type.lang.choice'] = 'Language';
+$lang['user.field.type.born'] = 'Date of birth';
+$lang['user.field.type.pm.eomail'] = 'Email notification when receiving PM';
+$lang['user.field.type.editor'] = 'Editor';
+$lang['user.field.type.timezone'] = 'Timezone choice';
+$lang['user.field.type.sex'] = 'Sex';
+$lang['user.field.type.avatar'] = 'Avatar';
 
 // Moderation
     // Moderation panel

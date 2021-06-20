@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 01
+ * @version     PHPBoost 6.0 - last update: 2021 06 20
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -494,13 +494,13 @@ while ( $row = $result->fetch() )
 				}
 				if ($title == '')
 				{
-					$title = LangLoader::get_message('regex.mail', 'admin-user-common');
+					$title = LangLoader::get_message('form.email', 'form-lang');
 					$icon_fa = 'fa-mail';
 				}
 			}
 			else if ($field['regex'] == 5)
 			{
-				$button = '<a href="' . $row[$field_type] . '" class="button submit smaller user-website">' . LangLoader::get_message('regex.website', 'admin-user-common') . '</a>';
+				$button = '<a href="' . $row[$field_type] . '" class="button submit smaller user-website">' . LangLoader::get_message('form.website', 'form-lang') . '</a>';
 
 				foreach (MemberShortTextExtendedField::$brands_pictures_list as $id => $parameters)
 				{
@@ -514,7 +514,7 @@ while ( $row = $result->fetch() )
 				}
 				if ($title == '')
 				{
-					$title = LangLoader::get_message('regex.website', 'admin-user-common');
+					$title = LangLoader::get_message('form.website', 'form-lang');
 					$icon_fa = 'fa-website';
 				}
 			}

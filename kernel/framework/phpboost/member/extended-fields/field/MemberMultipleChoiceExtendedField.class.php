@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 14
+ * @version     PHPBoost 6.0 - last update: 2021 06 20
  * @since       PHPBoost 3.0 - 2010 12 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MemberMultipleChoiceExtendedField extends AbstractMemberExtendedField
@@ -16,7 +17,7 @@ class MemberMultipleChoiceExtendedField extends AbstractMemberExtendedField
 	{
 		parent::__construct();
 		$this->set_disable_fields_configuration(array('regex', 'default_value'));
-		$this->set_name(LangLoader::get_message('type.multiple-check','admin-user-common'));
+		$this->set_name(LangLoader::get_message('user.field.type.multiple.check','user-lang'));
 	}
 
 	public function display_field_create(MemberExtendedField $member_extended_field)

@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2014 12 22
+ * @version     PHPBoost 6.0 - last update: 2021 06 20
  * @since       PHPBoost 3.0 - 2010 12 08
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MemberHalfLongTextExtendedField extends AbstractMemberExtendedField
@@ -15,7 +16,7 @@ class MemberHalfLongTextExtendedField extends AbstractMemberExtendedField
 	{
 		parent::__construct();
 		$this->set_disable_fields_configuration(array('possible_values'));
-		$this->set_name(LangLoader::get_message('type.half-text','admin-user-common'));
+		$this->set_name(LangLoader::get_message('user.field.type.half.text','user-lang'));
 	}
 
 	public function display_field_create(MemberExtendedField $member_extended_field)

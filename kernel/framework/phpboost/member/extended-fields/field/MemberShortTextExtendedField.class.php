@@ -5,10 +5,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 14
+ * @version     PHPBoost 6.0 - last update: 2021 06 20
  * @since       PHPBoost 3.0 - 2010 12 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MemberShortTextExtendedField extends AbstractMemberExtendedField
@@ -36,9 +37,9 @@ class MemberShortTextExtendedField extends AbstractMemberExtendedField
 	public function __construct()
 	{
 		parent::__construct();
-		$this->lang = LangLoader::get('admin-user-common');
+		$this->lang = LangLoader::get('form-lang');
 		$this->set_disable_fields_configuration(array('possible_values'));
-		$this->set_name(LangLoader::get_message('type.short-text','admin-user-common'));
+		$this->set_name(LangLoader::get_message('user.field.type.short.text','user-lang'));
 	}
 
 	public function display_field_create(MemberExtendedField $member_extended_field)
@@ -122,7 +123,7 @@ class MemberShortTextExtendedField extends AbstractMemberExtendedField
 	{
 		if ($member_extended_field->get_regex() == 4)
 		{
-			$displayed_value = '<a href="mailto:' . $value . '" class="button alt-button smaller">' . $this->lang['regex.mail'] . '</a>';
+			$displayed_value = '<a href="mailto:' . $value . '" class="button alt-button smaller">' . $this->lang['form.email'] . '</a>';
 
 			foreach (self::$brands_pictures_list as $id => $parameters)
 			{
@@ -132,7 +133,7 @@ class MemberShortTextExtendedField extends AbstractMemberExtendedField
 		}
 		else if ($member_extended_field->get_regex() == 5)
 		{
-			$displayed_value = '<a href="' . $value . '" class="button alt-button smaller">' . $this->lang['regex.website'] . '</a>';
+			$displayed_value = '<a href="' . $value . '" class="button alt-button smaller">' . $this->lang['form.website'] . '</a>';
 
 			foreach (self::$brands_pictures_list as $id => $parameters)
 			{

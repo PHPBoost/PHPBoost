@@ -106,7 +106,7 @@
 # INCLUDE MESSAGE_HELPER #
 <form action="{REWRITED_SCRIPT}" method="post" onsubmit="ExtendedFields.serialize_sortable();" class="fieldset-content">
 	<fieldset id="management_extended_fields">
-		<legend>{@form.extended.fields.management}</legend>
+		<legend>${LangLoader::get_message('user.extended.fields.management', 'user-lang')}</legend>
 		<div class="fieldset-inset">
 			<ul id="lists" class="sortable-block">
 				# START list_extended_fields #

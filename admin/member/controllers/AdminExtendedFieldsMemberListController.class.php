@@ -11,8 +11,6 @@
 
 class AdminExtendedFieldsMemberListController extends AdminController
 {
-	private $lang;
-
 	private $view;
 
 	public function execute(HTTPRequestCustom $request)
@@ -47,14 +45,13 @@ class AdminExtendedFieldsMemberListController extends AdminController
 			'C_SEVERAL_FIELDS' => $fields_number > 1
 		));
 
-		return new AdminExtendedFieldsDisplayResponse($this->view, $this->lang['form.extended.fields.management']);
+		return new AdminExtendedFieldsDisplayResponse($this->view, LangLoader::get_message('user.extended.fields.management', 'user-lang'));
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('form-lang');
 		$this->view = new FileTemplate('admin/member/AdminExtendedFieldsMemberlistController.tpl');
-		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
+		$this->view->add_lang(array_merge(LangLoader::get('common-lang'), LangLoader::get('form-lang')));
 	}
 
 	private function update_fields($request)

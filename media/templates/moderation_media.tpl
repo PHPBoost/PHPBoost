@@ -75,7 +75,7 @@
 										{@common.status.invisible}
 									</th>
 									<th>
-										{@common.status.disapproved}
+										{@common.status.unapproved}
 									</th>
 									<th onclick="check_all('delete');" onmouseover="pointer('delete');" id="delete">
 										{@common.delete}

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 17
+ * @version     PHPBoost 6.0 - last update: 2021 06 20
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -53,6 +53,51 @@ Pour changer de mot de passe, cliquez sur le lien fourni ci-dessous et suivez le
 Si vous rencontrez des difficultés, veuillez contacter l\'administrateur du site.
 
 :signature';
+
+// Configuration
+$lang['user.members.config']            = 'Configuration des membres';
+$lang['user.display.type']              = 'Affichage de la liste des membres';
+$lang['user.registration.activation']   = 'Activer l\'inscription des membres';
+$lang['user.activation.mode']           = 'Mode d\'activation du compte membre';
+$lang['user.activation.auto']           = 'Automatique';
+$lang['user.activation.mail']           = 'Mail';
+$lang['user.activation.admin']          = 'Administrateur';
+$lang['user.unactivated.timeout']       = 'Nombre de jours après lequel les membres non activés sont effacés';
+$lang['user.unactivated.timeout.clue']  = 'Laisser vide pour ignorer cette option (Non pris en compte si validation par administrateur)';
+$lang['user.allow.display.name.change'] = 'Autoriser les membres à changer leur Nom d\'affichage';
+$lang['user.allow.email.change']        = 'Autoriser les membres à changer leur Email';
+$lang['user.authorization.description'] = 'Vous définissez ici les autorisations de lecture de la liste des groupes et des membres ainsi que certaines informations personnelles des utilisateurs comme leurs emails, messages et profils.';
+    // Security
+$lang['user.security']                      = 'Sécurité';
+$lang['user.password.min.length']           = 'Longueur minimale des mots de passe';
+$lang['user.password.strength']             = 'Complexité des mots de passe';
+$lang['user.password.strength.weak']        = 'Faible';
+$lang['user.password.strength.medium']      = 'Moyenne (lettres et chiffres)';
+$lang['user.password.strength.strong']      = 'Forte (minuscules, majuscules et chiffres)';
+$lang['user.password.strength.very.strong'] = 'Très forte (minuscules, majuscules, chiffres et caractères spéciaux)';
+$lang['user.password.forbidden.tag']        = 'Interdire l\'adresse email et l\'identifiant de connexion dans le mot de passe';
+$lang['user.forbidden.email.domains']       = 'Liste des noms de domaines interdits';
+$lang['user.forbidden.email.domains.clue']  = 'Domaines interdits dans les adresses mail des utilisateurs (séparés par des virgules). Exemple : <b>domain.com</b>';
+$lang['user.authentication']                = 'Configuration des moyens d\'authentification';
+    // Avatars
+$lang['user.avatars.management']     = 'Gestion des avatars';
+$lang['user.allow.avatar.upload']    = 'Autoriser l\'upload d\'avatar sur le serveur';
+$lang['user.enable.avatar.resizing'] = 'Activer le redimensionnement automatique des images';
+$lang['user.avatar.resizing.clue']   = 'Attention votre serveur doit avoir l\'extension GD chargée';
+$lang['user.avatar.max.width']       = 'Largeur maximale de l\'avatar';
+$lang['user.avatar.max.width.clue']  = 'Par défaut 120';
+$lang['user.avatar.max.height']      = 'Hauteur maximale de l\'avatar';
+$lang['user.avatar.max.height.clue'] = 'Par défaut 120';
+$lang['user.avatar.max.weight']      = 'Poids maximal de l\'avatar en Ko';
+$lang['user.avatar.max.weight.clue'] = 'Par défaut 20';
+$lang['user.default.avatar']         = 'Avatar par défaut';
+    // Welcome
+$lang['user.welcome.message']         = 'Message à tous les membres';
+$lang['user.welcome.message.content'] = 'Message de bienvenue affiché dans le profil du membre';
+    // Rules
+$lang['user.rules']             = 'Règlement';
+$lang['user.rules.description'] = 'Entrez ci-dessous le règlement à afficher lors de l\'enregistrement des membres, ils devront l\'accepter pour s\'enregistrer. Laissez vide pour aucun règlement.';
+$lang['user.rules.content']     = 'Contenu du règlement';
 
 // Groups
 $lang['user.groups']                  = 'Groupes';
@@ -112,9 +157,9 @@ $lang['user.male']           = 'Homme';
 $lang['user.female']         = 'Femme';
 
 $lang['user.members.management'] = 'Gestion des membres';
-$lang['user.members.config']     = 'Configuration des membres';
 $lang['user.members.punishment'] = 'Gestion des sanctions';
 $lang['user.add.member']         = 'Ajouter un membre';
+$lang['user.filter.members']     = 'Filtrer les membres';
 $lang['user.members.all']        = 'Tous les membres';
 $lang['user.members.list']       = 'Liste des membres';
 $lang['user.member.management']  = 'Gestion du membre';
@@ -279,6 +324,13 @@ $lang['user.message.success.delete']        = 'L\'utilisateur <b>:name</b> a ét
 $lang['user.message.success.delete.member'] = 'Votre compte a été supprimé';
 
 // Extended Fields
+$lang['user.extended.fields.management']            = 'Gestion des champs du profil';
+$lang['user.extended.field.add']                    = 'Ajouter un champ au profil';
+$lang['user.extended.field.edit']                   = 'Editer un champ du profil';
+$lang['user.extended.field']                        = 'Champs du profil';
+$lang['user.extended.field.error.already.exists']  = 'Le champ existe déjà.';
+$lang['user.extended.field.error.phpboost.config'] = 'Les champs utilisés par défaut par PHPBoost ne peuvent pas être créés plusieurs fois, veuillez choisir un autre type de champ.';
+
 $lang['user.extended.field.sex']      = 'Sexe';
 $lang['user.extended.field.sex.clue'] = '';
 
@@ -314,6 +366,24 @@ $lang['user.extended.field.no.member']      = 'Ce membre n\'est plus inscrit';
 
 $lang['user.extended.field.website']      = 'Site internet';
 $lang['user.extended.field.website.clue'] = 'Veuillez renseigner un site web valide (ex : https://www.phpboost.com)';
+
+// Fields type
+$lang['user.field.type.short.text'] = 'Texte court (max 255 caractères)';
+$lang['user.field.type.long.text'] = 'Texte long (illimité)';
+$lang['user.field.type.half.text'] = 'Texte semi long';
+$lang['user.field.type.simple.select'] = 'Sélection unique (parmi plusieurs valeurs)';
+$lang['user.field.type.multiple.select'] = 'Sélection multiple (parmi plusieurs valeurs)';
+$lang['user.field.type.simple.check'] = 'Choix unique (parmi plusieurs valeurs)';
+$lang['user.field.type.multiple.check'] = 'Choix multiples (parmi plusieurs valeurs)';
+$lang['user.field.type.date'] = 'Date';
+$lang['user.field.type.theme.choice'] = 'Choix des thèmes';
+$lang['user.field.type.lang.choice'] = 'Choix des langues';
+$lang['user.field.type.born'] = 'Date de naissance';
+$lang['user.field.type.pm.email'] = 'Notification par email à la réception d\'un MP';
+$lang['user.field.type.editor'] = 'Choix de l\'éditeur';
+$lang['user.field.type.timezone'] = 'Choix du fuseau horaire';
+$lang['user.field.type.sex'] = 'Choix du sexe';
+$lang['user.field.type.avatar'] = 'Gestion de l\'avatar';
 
 // Moderation
     // Moderation panel
