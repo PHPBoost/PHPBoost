@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 23
+ * @version     PHPBoost 6.0 - last update: 2021 06 20
  * @since       PHPBoost 6.0 - 2021 03 22
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class HTMLTableCategorySQLFilter extends AbstractHTMLTableFilter implements SQLFragmentBuilder
@@ -15,11 +16,11 @@ class HTMLTableCategorySQLFilter extends AbstractHTMLTableFilter implements SQLF
 
 	private $db_field;
 	private $options = array();
-	
+
 	public function __construct($name, $label = '', $db_field = 'id_category')
 	{
 		$this->db_field = $db_field;
-		$label = !empty($label) ? $label : LangLoader::get_message('category', 'categories-common');
+		$label = !empty($label) ? $label : LangLoader::get_message('category.category', 'category-lang');
 
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
@@ -28,7 +29,7 @@ class HTMLTableCategorySQLFilter extends AbstractHTMLTableFilter implements SQLF
 		$this->options = FormFieldCategoriesSelect::generate_options('', $search_category_children_options, true);
 
 		$select = CategoriesService::get_categories_manager()->get_select_categories_form_field($db_field, $label, '', $search_category_children_options, array(), $this->options);
-		
+
 		parent::__construct($name, $select);
 	}
 

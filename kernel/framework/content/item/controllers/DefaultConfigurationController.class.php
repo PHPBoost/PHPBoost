@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 09
+ * @version     PHPBoost 6.0 - last update: 2021 06 20
  * @since       PHPBoost 6.0 - 2020 02 11
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -43,7 +43,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 			}
 			$this->hide_fields();
 
-			$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+			$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('warning.success.config', 'warning-lang'), MessageHelper::SUCCESS, 4));
 		}
 
 		$this->view->put('FORM', $this->form->display());
@@ -184,7 +184,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 
 			if (self::get_module_configuration()->has_categories())
 			{
-				$fieldset_categories = new FormFieldsetHTML('categories', LangLoader::get_message('categories', 'categories-common'));
+				$fieldset_categories = new FormFieldsetHTML('categories', LangLoader::get_message('category.categories', 'category-lang'));
 				$form->add_fieldset($fieldset_categories);
 
 				if ($this->module_item->sub_categories_displayed())

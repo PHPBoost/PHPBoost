@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 17
+ * @version     PHPBoost 6.0 - last update: 2021 06 20
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -72,7 +72,7 @@ else
 
 $description = $category->get_description();
 if (empty($description))
-	$description = StringVars::replace_vars($LANG['root_description_seo'], array('site' => GeneralConfig::load()->get_site_name())) . ($category->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category', 'categories-common') . ' ' . $category->get_name() : '');
+	$description = StringVars::replace_vars($LANG['root_description_seo'], array('site' => GeneralConfig::load()->get_site_name())) . ($category->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category.category', 'category-lang') . ' ' . $category->get_name() : '');
 define('DESCRIPTION', $description);
 
 require_once('../kernel/header.php');

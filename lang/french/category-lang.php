@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 17
+ * @version     PHPBoost 6.0 - last update: 2021 06 20
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -35,7 +35,7 @@ $lang['category.form.authorizations.clue'] = 'Les autorisations générales du m
 
 // Delete category
 $lang['category.content.management'] = 'Gestion du contenu de la catégorie';
-$lang['category.delete.clue']        = 'Vous êtes sur le point de supprimer la catégorie. Deux solutions s\'offrent à vous : soit déplacer l\'ensemble de son contenu (éléments et sous catégories) dans une autre catégorie soit supprimer l\'ensemble de la catégorie. <strong>Attention, cette action est irréversible !</strong>';
+$lang['category.delete.description'] = 'Vous êtes sur le point de supprimer la catégorie. Deux solutions s\'offrent à vous : soit déplacer l\'ensemble de son contenu (éléments et sous catégories) dans une autre catégorie soit supprimer l\'ensemble de la catégorie. <strong>Attention, cette action est irréversible !</strong>';
 $lang['category.delete.all.content'] = 'Supprimer tout le contenu';
 $lang['category.move.to']            = 'Déplacer le contenu vers : ';
 

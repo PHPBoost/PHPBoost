@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 18
+ * @version     PHPBoost 6.0 - last update: 2021 06 20
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -70,8 +70,8 @@ class DefaultTreeLinks implements ModuleTreeLinksExtensionPoint
 
 		if ($has_categories)
 		{
-			$tree->add_link(new ModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), CategoriesUrlBuilder::manage($this->module_id), $this->authorizations->manage()));
-			$tree->add_link(new ModuleLink(LangLoader::get_message('category.add', 'categories-common'), CategoriesUrlBuilder::add(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY), $this->module_id), $this->authorizations->manage()));
+			$tree->add_link(new ModuleLink(LangLoader::get_message('category.categories.manage', 'category-lang'), CategoriesUrlBuilder::manage($this->module_id), $this->authorizations->manage()));
+			$tree->add_link(new ModuleLink(LangLoader::get_message('category.category.add', 'category-lang'), CategoriesUrlBuilder::add(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY), $this->module_id), $this->authorizations->manage()));
 		}
 
 		if ($this->display_items_links)

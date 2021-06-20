@@ -71,7 +71,7 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 					self::$categories_manager->move_into_another($category, $id_parent);
 				}
 			}
-			
+
 			self::$categories_manager->delete($this->get_category()->get_id());
 			$categories_cache = self::$categories_manager->get_categories_cache()->get_class();
 			$categories_cache::invalidate();
@@ -89,20 +89,19 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 		$class_name = get_called_class();
 		self::$categories_manager = $class_name::get_categories_manager();
 
-		$this->lang = LangLoader::get('categories-common');
+		$this->lang = LangLoader::get('category-lang');
 	}
 
 	private function build_form()
 	{
-		$common_lang = LangLoader::get('common');
 		$form = new HTMLForm(__CLASS__);
 		$form->set_layout_title($this->get_title());
 
-		$fieldset = new FormFieldsetHTML('delete_category', $common_lang['form.parameters']);
+		$fieldset = new FormFieldsetHTML('delete_category', LangLoader::get_message('form.parameters', 'form-lang'));
 		$fieldset->set_description($this->get_description());
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldCheckbox('delete_category_and_content', $this->lang['delete.category_and_content'], FormFieldCheckbox::UNCHECKED,
+		$fieldset->add_field(new FormFieldCheckbox('delete_category_and_content', $this->lang['category.delete.all.content'], FormFieldCheckbox::UNCHECKED,
 			array(
 				'events' => array('click' => '
 					if (HTMLForms.getField("delete_category_and_content").getValue()) {
@@ -117,7 +116,7 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 
 		$options = new SearchCategoryChildrensOptions();
 		$options->add_category_in_excluded_categories($this->get_category()->get_id());
-		$fieldset->add_field(self::$categories_manager->get_select_categories_form_field('move_in_other_cat', $this->lang['delete.move_in_other_cat'], $this->get_category()->get_id_parent(), $options));
+		$fieldset->add_field(self::$categories_manager->get_select_categories_form_field('move_in_other_cat', $this->lang['category.move.to'], $this->get_category()->get_id_parent(), $options));
 
 
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -159,7 +158,7 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 	 */
 	protected function get_categories_management_title()
 	{
-		return $this->lang['categories.management'];
+		return $this->lang['category.categories.management'];
 	}
 
 	/**
@@ -175,7 +174,7 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 	 */
 	protected function get_description()
 	{
-		return $this->lang['delete.description'];
+		return $this->lang['category.delete.description'];
 	}
 
 	/**
@@ -183,7 +182,7 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 	 */
 	protected function get_success_message()
 	{
-		return $this->lang['category.message.success.delete'];
+		return $this->lang['category.success.delete'];
 	}
 
 	/**

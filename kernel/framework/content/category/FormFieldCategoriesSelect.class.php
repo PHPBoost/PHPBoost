@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 03
+ * @version     PHPBoost 6.0 - last update: 2021 06 20
  * @since       PHPBoost 3.0 - 2011 09 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldCategoriesSelect extends FormFieldSimpleSelectChoice
@@ -33,11 +34,11 @@ class FormFieldCategoriesSelect extends FormFieldSimpleSelectChoice
 
 		if (($search_category_children_options->is_excluded_categories_recursive() && $search_category_children_options->category_is_excluded($root_category)) || !$search_category_children_options->check_authorizations($root_category))
 			return array();
-		
+
 		self::$options = array();
 		if ($all_categories_option)
-			self::$options[] = new FormFieldSelectChoiceOption(LangLoader::get_message('all.categories', 'categories-common'), 'all');
-		
+			self::$options[] = new FormFieldSelectChoiceOption(LangLoader::get_message('category.all.categories', 'category-lang'), 'all');
+
     	if (!$search_category_children_options->category_is_excluded($root_category))
 			self::$options[] = new FormFieldSelectChoiceOption($root_category->get_name(), $root_category->get_id());
 

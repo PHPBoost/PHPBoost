@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2021 06 20
  * @since       PHPBoost 4.0 - 2013 02 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -38,7 +38,7 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 		$class_name = get_called_class();
 		self::$categories_manager = $class_name::get_categories_manager();
 
-		$this->lang = LangLoader::get('categories-common');
+		$this->lang = LangLoader::get('category-lang');
 		$this->view = new FileTemplate('__default__/framework/content/categories/manage.tpl');
 		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 	}
@@ -53,8 +53,9 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 		$this->view->put_all(array(
 			'C_NO_CATEGORY'        => $number_categories <= 1, // Root category is not considered as a category
 			'C_SEVERAL_CATEGORIES' => $number_categories > 2, // Root category is not displayed, but taken into account in the calculation
-			'FIELDSET_TITLE'       => $this->get_title(),
-			'MODULE_ID'			   => Environment::get_running_module_name(),
+
+			'FIELDSET_TITLE' => $this->get_title(),
+			'MODULE_ID' 	 => Environment::get_running_module_name(),
 		));
 		$this->build_children_view($this->view, $categories, Category::ROOT_CATEGORY);
 	}
@@ -81,18 +82,20 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 				$category_view = new FileTemplate('__default__/framework/content/categories/category.tpl');
 				$category_view->add_lang(array_merge($this->lang, LangLoader::get('form-lang'), LangLoader::get('common-lang')));
 				$category_view->put_all(array(
-					'C_DESCRIPTION'               => !empty($description),
-					'C_COLOR'                     => !empty($color),
-					'C_ALLOWED_TO_HAVE_CHILDS'    => $category->is_allowed_to_have_childs(),
-					'C_SPECIAL_AUTHORIZATIONS'    => $category->has_special_authorizations(),
-					'U_DISPLAY'                   => $this->get_display_category_url($category)->rel(),
-					'U_EDIT'                      => $this->get_edit_category_url($category)->rel(),
-					'U_DELETE'                    => $this->get_delete_category_url($category)->rel(),
+					'C_DESCRIPTION'            => !empty($description),
+					'C_COLOR'                  => !empty($color),
+					'C_ALLOWED_TO_HAVE_CHILDS' => $category->is_allowed_to_have_childs(),
+					'C_SPECIAL_AUTHORIZATIONS' => $category->has_special_authorizations(),
+
 					'ID'                          => $id,
 					'NAME'                        => $category->get_name(),
 					'DESCRIPTION'                 => $description,
 					'COLOR'                       => $color,
-					'DELETE_CONFIRMATION_MESSAGE' => StringVars::replace_vars($this->get_delete_confirmation_message(), array('name' => $category->get_name()))
+					'DELETE_CONFIRMATION_MESSAGE' => StringVars::replace_vars($this->get_delete_confirmation_message(), array('name' => $category->get_name())),
+
+					'U_DISPLAY' => $this->get_display_category_url($category)->rel(),
+					'U_EDIT'    => $this->get_edit_category_url($category)->rel(),
+					'U_DELETE'  => $this->get_delete_category_url($category)->rel(),
 				));
 
 				$this->build_children_view($category_view, $categories, $id);
@@ -149,7 +152,7 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 	 */
 	protected function get_title()
 	{
-		return $this->lang['categories.management'];
+		return $this->lang['category.categories.management'];
 	}
 
 	/**
@@ -157,7 +160,7 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 	 */
 	protected function get_delete_confirmation_message()
 	{
-		return $this->lang['category.message.delete_confirmation'];
+		return $this->lang['category.delete.confirmation'];
 	}
 
 	/**
