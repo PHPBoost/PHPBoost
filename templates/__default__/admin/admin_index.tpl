@@ -68,7 +68,7 @@
 					<div class="cell-list">
 						<ul>
 							<li><a href="${relative_url(AdminConfigUrlBuilder::general_config())}">${LangLoader::get_message('configuration.general', 'configuration-lang')}</a></li>
-							<li><a href="${relative_url(AdminCacheUrlBuilder::clear_cache())}">{@admin.empty.cache}</a></li>
+							<li><a href="${relative_url(AdminCacheUrlBuilder::clear_cache())}">{@admin.clear.cache}</a></li>
 							# IF C_MODULE_DATABASE #
 								<li><a href="{U_SAVE_DATABASE}">${LangLoader::get_message('database.backup', 'common', 'database')}</a></li>
 							# ENDIF #
