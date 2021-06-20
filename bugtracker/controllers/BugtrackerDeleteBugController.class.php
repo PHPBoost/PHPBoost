@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 06 20
  * @since       PHPBoost 3.0 - 2012 11 11
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class BugtrackerDeleteBugController extends ModuleController
@@ -82,7 +83,7 @@ class BugtrackerDeleteBugController extends ModuleController
 		$fieldset = new FormFieldsetHTML('delete_bug');
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldRichTextEditor('comments_message', LangLoader::get_message('comment', 'comments-common'), '', array(
+		$fieldset->add_field(new FormFieldRichTextEditor('comments_message', LangLoader::get_message('comment.comment', 'comment-lang'), '', array(
 			'description' => $this->lang['explain.delete_comment'], 'hidden' => !$this->config->are_pm_enabled() || !$this->config->are_pm_delete_enabled()
 		)));
 

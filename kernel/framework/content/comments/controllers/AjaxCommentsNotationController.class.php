@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 15
+ * @version     PHPBoost 6.0 - last update: 2021 06 20
  * @since       PHPBoost 3.0 - 2011 08 30
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -21,28 +21,28 @@ class AjaxCommentsNotationController extends AbstractCommentsController
 
 		$note_type = $request->get_poststring('note_type', '');
 		$comment_id = $request->get_poststring('comment_id', '');
-		$comments_lang = LangLoader::get('comments-common');
+		$comment_lang = LangLoader::get('comment-lang');
 		if ($this->verificate_note_type($note_type) && $this->is_access_authorizations() && !empty($comment_id))
 		{
 			$this->register_note($note_type, $comment_id);
 
 			$object = array(
 				'success' => true,
-				'message' => $comments_lang['comment.note.success']
+				'message' => $comment_lang['comment.note.success']
 			);
 		}
 		else if (!$this->is_access_authorizations())
 		{
 			$object = array(
 				'success' => false,
-				'message' => $comments_lang['comments.not-authorized.note']
+				'message' => $comment_lang['comment.note.unauthorized']
 			);
 		}
 		else
 		{
 			$object = array(
 				'success' => false,
-				'message' => $comments_lang['comment.note.error']
+				'message' => $comment_lang['comment.note.error']
 			);
 		}
 

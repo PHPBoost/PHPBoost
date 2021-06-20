@@ -5,17 +5,16 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 09
+ * @version     PHPBoost 6.0 - last update: 2020 06 20
  * @since       PHPBoost 3.0 - 2011 09 25
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class EditCommentBuildForm extends AbstractCommentsBuildForm
 {
 	private $id_comment = 0;
 	private $user;
-	private $lang;
-	private $comments_lang;
 	private $comments_configuration;
 	private $topic_path;
 
@@ -37,21 +36,22 @@ class EditCommentBuildForm extends AbstractCommentsBuildForm
 	{
 		$this->id_comment = $id_comment;
 		$this->user = AppContext::get_current_user();
-		$this->lang = LangLoader::get('main');
 		$this->topic_path = $topic_path;
-		$this->comments_lang = LangLoader::get('comments-common');
 		$this->comments_configuration = CommentsConfig::load();
 	}
 
 	protected function create_form()
 	{
+		$form_lang = LangLoader::get('form-lang');
+		$comment_lang = LangLoader::get('comment-lang');
+
 		$form = new HTMLForm('comments', REWRITED_SCRIPT . '#comments-list');
-		$fieldset = new FormFieldsetHTML('edit_comment', $this->comments_lang['comment.edit']);
+		$fieldset = new FormFieldsetHTML('edit_comment', $comment_lang['comment.edit']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldRichTextEditor('message', $this->lang['message'], $this->get_contents(), array(
+		$fieldset->add_field(new FormFieldRichTextEditor('message', $form_lang['form.content'], $this->get_contents(), array(
 			'formatter' => $this->get_formatter(),
-			'rows' => 10, 'cols' => 47, 'required' => $this->lang['require_text']),
+			'rows' => 10, 'cols' => 47, 'required' => true),
 			array((!$this->user->is_moderator() && !$this->user->is_admin() ? new FormFieldConstraintMaxLinks($this->comments_configuration->get_max_links_comment()) : ''))
 		));
 

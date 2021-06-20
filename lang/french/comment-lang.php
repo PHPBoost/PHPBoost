@@ -22,8 +22,6 @@ $lang['comment.list']                = 'Liste des commentaires';
 $lang['comment.form.visitor.name']         = 'Visiteur';
 $lang['comment.form.visitor.email']        = 'visiteur@email.ext';
 $lang['comment.form.visitor.email.clue']   = 'L\'email ne sera pas affiché publiquement';
-$lang['comment.config.visitor.email']      = 'Email pour les visiteurs';
-$lang['comment.config.visitor.email.clue'] = 'Affiche dans le formulaire un champ obligatoire pour l\'email lorsque l\'utilisateur n\'est pas connecté.';
 
 $lang['comment.add']            = 'Ajouter un commentaire';
 $lang['comment.edit']           = 'Editer un commentaire';
@@ -43,4 +41,28 @@ $lang['comment.user.read.only'] = 'Vous êtes actuellement en lecture seule, vou
 $lang['comment.view.topic'] = 'Voir le topic';
 
 $lang['comment.no.comment'] = 'Il n\'y a aucun commentaire pour l\'instant.';
+
+// Configuration
+$lang['comment.configuration'] = 'Configuration des commentaires';
+$lang['comment.management']    = 'Gestion des commentaires';
+
+$lang['comment.enable']             = 'Activer les commentaires';
+$lang['comment.visitor.email']      = 'Email pour les visiteurs';
+$lang['comment.visitor.email.clue'] = 'Affiche dans le formulaire un champ obligatoire pour l\'email lorsque l\'utilisateur n\'est pas connecté.';
+$lang['comment.display.number']     = 'Nombre de commentaires à afficher par défaut';
+$lang['comment.max.links']          = 'Nombre de liens autorisés dans un commentaire';
+$lang['comment.display.order']      = 'Ordre d\'affichage des commentaires';
+$lang['comment.display.order.asc']  = 'Du plus ancien au plus récent';
+$lang['comment.display.order.desc'] = 'Du plus récent au plus ancien';
+
+// TODO:
+$lang['comment.authorization.note']        = 'Autorisation de noter les commentaires';
+$lang['comment.note.success']              = 'Votre note a été prise en compte.';
+$lang['comment.note.error']                = 'Votre note n\'a pas été prise en compte.';
+$lang['comment.note.unauthorized']         = 'Vous ne pouvez pas noter.';
+$lang['comment.approbation']               = 'Approbation des commentaires';
+$lang['comment.approbation.auto']          = 'Automatiquement';
+$lang['comment.approbation.moderator']     = 'Modérateur';
+$lang['comment.approbation.administrator'] = 'Administrateur';
+
 ?>

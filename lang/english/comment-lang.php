@@ -22,8 +22,6 @@ $lang['comment.list']                = 'Comments list';
 $lang['comment.form.visitor.name']         = 'Visitor';
 $lang['comment.form.visitor.email']        = 'visitor@email.ext';
 $lang['comment.form.visitor.email.clue']   = 'The email won\'t be publicly display';
-$lang['comment.config.visitor.email']      = 'Email for visitors';
-$lang['comment.config.visitor.email.clue'] = 'Display an email required field for not connected users.';
 
 $lang['comment.add']            = 'Add a comment';
 $lang['comment.edit']           = 'Edit a comment';
@@ -43,4 +41,28 @@ $lang['comment.user.read.only'] = 'You are currently read-only, you can not post
 $lang['comment.view.topic'] = 'View topic';
 
 $lang['comment.no.comment'] = 'There are no comments for the moment';
+
+// Configuration
+$lang['comment.configuration'] = 'Comments configuration';
+$lang['comment.management']    = 'Comments management';
+
+$lang['comment.enable']             = 'Enable comments';
+$lang['comment.visitor.email']      = 'Email for visitors';
+$lang['comment.visitor.email.clue'] = 'Display an email required field for not connected users.';
+$lang['comment.display.number']     = 'Number of comments to display by default';
+$lang['comment.max.links']          = 'Number of links allowed in a comment';
+$lang['comment.display.order']      = 'Ordre comments display';
+$lang['comment.display.order.asc']  = 'Oldest to newest';
+$lang['comment.display.order.desc'] = 'Newest to oldest';
+
+// TODO:
+$lang['comment.authorization.note']        = 'Authorization to note a comment';
+$lang['comment.note.success']              = 'Your note has been taken into account.';
+$lang['comment.note.error']                = 'Your note hasn\'t been taken into account.';
+$lang['comment.note.unauthorized']         = 'You can\'t rate.';
+$lang['comment.approbation']               = 'Comments approbation';
+$lang['comment.approbation.auto']          = 'Automatic';
+$lang['comment.approbation.moderator']     = 'Moderator';
+$lang['comment.approbation.administrator'] = 'Administrator';
+
 ?>

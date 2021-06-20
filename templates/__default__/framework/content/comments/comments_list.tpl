@@ -28,7 +28,7 @@
 							<a class="offload" href="{comments.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 							<a href="{comments.U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 						# ENDIF #
-						<a href="\#com{comments.ID_COMMENT}" class="hidden-small-screens" itemprop="url" aria-label="${LangLoader::get_message('link.to.anchor', 'comments-common')}">\#{comments.ID_COMMENT}</a>
+						<a href="\#com{comments.ID_COMMENT}" class="hidden-small-screens" itemprop="url" aria-label="${LangLoader::get_message('comment.link.to.anchor', 'comment-lang')}">\#{comments.ID_COMMENT}</a>
 						# IF comments.C_VIEW_TOPIC #
 							<a class="offload" href="{comments.U_TOPIC}\#com{comments.ID_COMMENT}" aria-label="{L_VIEW_TOPIC}">
 								<i class="fa fa-arrow-circle-right" aria-hidden="true"></i>

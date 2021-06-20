@@ -7,10 +7,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2017 06 23
+ * @version     PHPBoost 6.0 - last update: 2021 06 20
  * @since       PHPBoost 3.0 - 2012 05 02
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CommentsUrlBuilder
@@ -22,7 +23,7 @@ class CommentsUrlBuilder
 	 */
 	public static function edit($comment_path, $id)
 	{
-		return self::build_url($comment_path, 'edit_comment=' . $id . '#comments_message');
+		return self::build_url($comment_path, 'edit_comment=' . $id . '#add-comment');
 	}
 
 	 /**
@@ -32,7 +33,7 @@ class CommentsUrlBuilder
 	 */
 	public static function delete($comment_path, $id, $return_path = '')
 	{
-		return self::build_url($comment_path, 'delete_comment=' . $id . ($return_path ? '&return_path=' . $return_path : '#comments-list'));
+		return self::build_url($comment_path, 'delete_comment=' . $id . ($return_path ? '&return_path=' . $return_path : '#comments-section'));
 	}
 
 	/**
@@ -42,7 +43,7 @@ class CommentsUrlBuilder
 	 */
 	public static function lock_and_unlock($comment_path, $lock)
 	{
-		return self::build_url($comment_path, 'lock=' . (int)$lock . '#comments-list');
+		return self::build_url($comment_path, 'lock=' . (int)$lock . '#comments-section');
 	}
 
 	/**
