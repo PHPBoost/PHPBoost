@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 17
+ * @version     PHPBoost 6.0 - last update: 2021 06 20
  * @since       PHPBoost 1.5 - 2006 07 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -665,7 +665,8 @@ elseif (!empty($pm_id_get)) // Messages associated with the conversation.
 	$view->assign_block_vars('pm', array(
 		'C_PAGINATION'    => $pagination->has_several_pages(),
 		'PAGINATION'      => $pagination->display(),
-		'U_TITLE_CONVERS' => '<a href="pm' . url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get) . '">' . stripslashes($convers['title']) . '</a>'
+		'U_TITLE_CONVERS' => 'pm' . url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get),
+		'TITLE'           => stripslashes($convers['title'])
 	));
 
 	// Message not read by the other user view_status => 0.
@@ -724,7 +725,7 @@ elseif (!empty($pm_id_get)) // Messages associated with the conversation.
 			'ID'                     => $row['id'],
 			'CONTENTS'               => FormatingHelper::second_parse($row['contents']),
 			'USER_AVATAR'            => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : $user_accounts_config->get_default_avatar(),
-			'PSEUDO'                 => $is_admin ? $lang['administrator'] : (!empty($row['display_name']) ? $row['display_name'] : $lang['guest']),
+			'PSEUDO'                 => $is_admin ? $lang['user.administrator'] : (!empty($row['display_name']) ? $row['display_name'] : $lang['user.guest']),
 			'LEVEL_CLASS'            => UserService::get_level_class($row['level']),
 			'GROUP_COLOR'            => $group_color,
 			'U_PROFILE'              => UserUrlBuilder::profile($row['user_id'])->rel(),

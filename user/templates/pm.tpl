@@ -195,7 +195,7 @@
 	<section id="module-user-pm">
 		<header class="section-header">
 			<div class="controls align-right">{@user.private.messaging}</div>
-			<h1>{pm.U_TITLE_CONVERS}</h1>
+			<h1><a href="{pm.U_TITLE_CONVERS}">{pm.TITLE}</a></h1>
 		</header>
 		<div class="sub-section">
 			<div class="content-container">
