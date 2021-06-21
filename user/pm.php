@@ -619,7 +619,7 @@ elseif (!empty($pm_id_get)) // Messages associated with the conversation.
 
 	// Retrieve the conversation infos
 	try {
-		$convers = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_TOPIC, array('id', 'title', 'user_id', 'user_id_dest', 'nbr_msg', 'last_msg_id', 'last_user_id', 'user_view_pm'), 'WHERE id = :id AND :user_id IN (user_id, user_id_dest)', array('id' => $pm_id_get, 'user_id' => $current_user->get_id()));
+		$convers = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_TOPIC, array('id', 'title', 'user_id', 'user_id_dest', 'nbr_msg', 'last_msg_id', 'last_user_id', 'user_view_pm', 'last_timestamp'), 'WHERE id = :id AND :user_id IN (user_id, user_id_dest)', array('id' => $pm_id_get, 'user_id' => $current_user->get_id()));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
@@ -663,10 +663,11 @@ elseif (!empty($pm_id_get)) // Messages associated with the conversation.
 	}
 
 	$view->assign_block_vars('pm', array(
-		'C_PAGINATION'    => $pagination->has_several_pages(),
-		'PAGINATION'      => $pagination->display(),
-		'U_TITLE_CONVERS' => 'pm' . url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get),
-		'TITLE'           => stripslashes($convers['title'])
+		'C_PAGINATION'          => $pagination->has_several_pages(),
+		'PAGINATION'            => $pagination->display(),
+		'U_TITLE_CONVERS'       => 'pm' . url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get),
+		'TITLE'                 => stripslashes($convers['title']),
+		'LAST_PM_DATE_DELAY'    => Date::to_format($convers['last_timestamp'], Date::FORMAT_DELAY)
 	));
 
 	// Message not read by the other user view_status => 0.
