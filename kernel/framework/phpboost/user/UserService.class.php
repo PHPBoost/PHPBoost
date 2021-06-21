@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2021 06 21
  * @since       PHPBoost 3.0 - 2012 03 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -274,6 +274,9 @@ class UserService
 		{
 			case User::ROBOT_LEVEL:
 				return 'robot';
+			break;
+			case User::VISITOR_LEVEL:
+				return 'visitor';
 			break;
 			case User::MEMBER_LEVEL:
 				return 'member';

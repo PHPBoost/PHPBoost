@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 20
+ * @version     PHPBoost 6.0 - last update: 2021 06 21
  * @since       PHPBoost 1.5 - 2006 07 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -699,12 +699,18 @@ elseif (!empty($pm_id_get)) // Messages associated with the conversation.
 	while ($row = $result->fetch())
 	{
 		$row['user_id'] = (int)$row['user_id'];
-		$is_admin = ($row['user_id'] === -1);
-		if ($is_admin)
+		// Check if the user_id is an user (exist/deleted) of if the pm came from the system
+		$is_system = ($row['user_id'] === -1);
+
+		if ($is_system)
 			$row['level'] = 2;
 
 		if ( !$is_guest_in_convers )
+		{
+			$row['level'] = -1;
 			$is_guest_in_convers = empty($row['display_name']);
+		}
+			
 
 		// Resumption of the last message from the previous page.
 		$row['contents'] = ($quote_last_msg == 1 && $i == 0) ? '<span class="text-strong">' . $lang['user.quote.last.message'] . '</span><br /><br />' . $row['contents'] : $row['contents'];
@@ -719,13 +725,13 @@ elseif (!empty($pm_id_get)) // Messages associated with the conversation.
 			array(
 			'C_CURRENT_USER_MESSAGE' => AppContext::get_current_user()->get_display_name() == $row['display_name'],
 			'C_MODERATION_TOOLS'     => ($row['id'] === $convers['last_msg_id']) && !$row['view_status'], // Last editable PM if recipient has'nt read it yet
-			'C_VISITOR'              => $is_admin,
+			'C_NOT_USER'             => $is_system || empty($row['display_name']),
 			'C_AVATAR'               => $row['user_avatar'] || $user_accounts_config->is_default_avatar_enabled(),
 			'C_GROUP_COLOR'          => !empty($group_color),
 			'ID'                     => $row['id'],
 			'CONTENTS'               => FormatingHelper::second_parse($row['contents']),
 			'USER_AVATAR'            => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : $user_accounts_config->get_default_avatar(),
-			'PSEUDO'                 => $is_admin ? $lang['user.administrator'] : (!empty($row['display_name']) ? $row['display_name'] : $lang['user.guest']),
+			'PSEUDO'                 => $is_system ? $lang['user.administrator'] : (!empty($row['display_name']) ? $row['display_name'] : $lang['user.guest']),
 			'LEVEL_CLASS'            => UserService::get_level_class($row['level']),
 			'GROUP_COLOR'            => $group_color,
 			'U_PROFILE'              => UserUrlBuilder::profile($row['user_id'])->rel(),
@@ -960,7 +966,11 @@ else // Conversation list in the user email box
 				$participant_avatar      = $row['dest_avatar'] ? Url::to_rel($row['dest_avatar']) : $user_accounts_config->get_default_avatar();
 			}
 			else //PM from deleted user
-				$participant_id = "";
+			{
+				$participant_id     = "";
+				$participant_avatar = $user_accounts_config->get_default_avatar();
+			}
+				
 		}
 
 		// Display of last message

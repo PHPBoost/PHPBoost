@@ -210,8 +210,8 @@
 						        <div class="message-header-infos">
 						            <div class="message-user-container">
 						                <h3 class="message-user-pseudo">
-											# IF pm.msg.C_VISITOR #
-												<span>{pm.msg.PSEUDO}</span>
+											# IF pm.msg.C_NOT_USER #
+												<span class="{pm.msg.LEVEL_CLASS}">{pm.msg.PSEUDO}</span>
 											# ELSE #
 												<a href="{pm.msg.U_PROFILE}" class="offload {pm.msg.LEVEL_CLASS}" # IF pm.msg.C_GROUP_COLOR # style="color:{pm.msg.GROUP_COLOR}" # ENDIF #>
 													{pm.msg.PSEUDO}
