@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 20
+ * @version     PHPBoost 6.0 - last update: 2021 06 22
  * @since       PHPBoost 3.0 - 2010 02 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -66,12 +66,12 @@ class AdminViewAllMembersController extends AdminController
 
 		$table_model->set_filters_menu_title($this->lang['user.filter.members']);
 		$table_model->add_filter(new HTMLTableContainsTextSQLFilter('display_name', 'filter1', $this->lang['user.display.name']));
-		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('level', 'filter2', $this->lang['user.rank'], array(2 => LangLoader::get_message('admin_s', 'main'), 1 => LangLoader::get_message('modo_s', 'main'), 0 => LangLoader::get_message('member_s', 'main'))));
+		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('level', 'filter2', $this->lang['user.rank'], array(2 => $this->lang['user.administrators'], 1 => $this->lang['user.moderators'], 0 => $this->lang['user.members'])));
 		$table_model->add_filter(new HTMLTableContainsTextSQLFilter('email', 'filter3', $this->lang['user.email']));
-		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('registration_date', 'filter4', $this->lang['user.registration.date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('minimum', 'common'))));
-		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('registration_date', 'filter5', $this->lang['user.registration.date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('maximum', 'common'))));
-		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('last_connection_date', 'filter6', $this->lang['user.last.connection'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('minimum', 'common'))));
-		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('last_connection_date', 'filter7', $this->lang['user.last.connection'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('maximum', 'common'))));
+		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('registration_date', 'filter4', $this->lang['user.registration.date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('common.minimum', 'common-lang'))));
+		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('registration_date', 'filter5', $this->lang['user.registration.date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('common.maximum', 'common-lang'))));
+		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('last_connection_date', 'filter6', $this->lang['user.last.connection'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('common.minimum', 'common-lang'))));
+		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('last_connection_date', 'filter7', $this->lang['user.last.connection'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('common.maximum', 'common-lang'))));
 		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('approved', 'filter4', $this->lang['user.approbation'], array(1 => LangLoader::get_message('common.status.approved', 'common-lang'), 0 => LangLoader::get_message('common.status.unapproved', 'common-lang'))));
 
 		$table = new HTMLTable($table_model);

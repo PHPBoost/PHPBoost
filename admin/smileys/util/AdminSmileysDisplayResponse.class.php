@@ -13,11 +13,11 @@ class AdminSmileysDisplayResponse extends AdminMenuDisplayResponse
 	{
 		parent::__construct($view);
 
-		$lang = LangLoader::get('admin');
-		$this->set_title($lang['smiley_management']);
+		$lang = LangLoader::get('admin-lang');
+		$this->set_title($lang['admin.smileys.management']);
 
-		$this->add_link($lang['smiley_management'], AdminSmileysUrlBuilder::management());
-		$this->add_link($lang['add_smiley'], AdminSmileysUrlBuilder::add());
+		$this->add_link($lang['admin.smileys.management'], AdminSmileysUrlBuilder::management());
+		$this->add_link($lang['admin.add.smileys'], AdminSmileysUrlBuilder::add());
 
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page, '', $page);

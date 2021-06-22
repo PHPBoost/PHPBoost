@@ -14,11 +14,11 @@ class AdminCommentsDisplayResponse extends AdminMenuDisplayResponse
 	{
 		parent::__construct($view);
 
-		$lang = LangLoader::get('admin-contents-common');
-		$this->set_title($lang['comments']);
+		$lang = LangLoader::get('comment-lang');
+		$this->set_title($lang['comment.comments']);
 
-		$this->add_link($lang['comments.config'], DispatchManager::get_url('/admin/content/', '/comments/config/'));
-		$this->add_link($lang['comments.management'], UserUrlBuilder::comments());
+		$this->add_link($lang['comment.configuration'], DispatchManager::get_url('/admin/content/', '/comments/config/'));
+		$this->add_link($lang['comment.management'], UserUrlBuilder::comments());
 
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);

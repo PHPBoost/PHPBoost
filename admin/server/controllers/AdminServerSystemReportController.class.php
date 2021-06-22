@@ -36,9 +36,9 @@ class AdminServerSystemReportController extends AdminController
 
 	private function build_form()
 	{
-		$picture_yes = '<i class="fa fa-check fa-2x success" aria-hidden="true"></i><span class="sr-only">' . LangLoader::get_message('yes', 'common') . '</span>';
-		$picture_no = '<i class="fa fa-times fa-2x error" aria-hidden="true"></i><span class="sr-only">' . LangLoader::get_message('no', 'common') . '</span>';
-		$picture_unknown = '<i class="fa fa-question fa-2x question" aria-hidden="true"></i><span class="sr-only">' . LangLoader::get_message('unknown', 'main') . '</span>';
+		$picture_yes = '<i class="fa fa-check fa-2x success" aria-hidden="true"></i><span class="sr-only">' . LangLoader::get_message('common.yes', 'common-lang') . '</span>';
+		$picture_no = '<i class="fa fa-times fa-2x error" aria-hidden="true"></i><span class="sr-only">' . LangLoader::get_message('common.no', 'common-lang') . '</span>';
+		$picture_unknown = '<i class="fa fa-question fa-2x question" aria-hidden="true"></i><span class="sr-only">' . LangLoader::get_message('common.unknown', 'common-lang') . '</span>';
 
 		$default_lang_config = LangsManager::get_lang(LangsManager::get_default_lang())->get_configuration();
 		$default_theme_config = ThemesManager::get_theme(ThemesManager::get_default_theme())->get_configuration();

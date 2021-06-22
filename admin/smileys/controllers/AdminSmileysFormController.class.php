@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 27
+ * @version     PHPBoost 6.0 - last update: 2021 06 22
  * @since       PHPBoost 4.1 - 2015 05 22
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -48,13 +48,13 @@ class AdminSmileysFormController extends AdminController
 
 		$this->view->put('SMILEY_FORM', $this->smiley_form->display());
 
-		return new AdminSmileysDisplayResponse($this->view, !$this->smiley['idsmiley'] ? $this->lang['add_smiley'] : $this->lang['edit_smiley']);
+		return new AdminSmileysDisplayResponse($this->view, !$this->smiley['idsmiley'] ? $this->lang['admin.add.smileys'] : $this->lang['admin.edit.smiley']);
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin');
-		$this->view = new StringTemplate('# INCLUDE MSG # # INCLUDE UPLOAD_FORM # # INCLUDE SMILEY_FORM #');
+		$this->lang = LangLoader::get('admin-lang');
+		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE UPLOAD_FORM # # INCLUDE SMILEY_FORM #');
 		$this->view->add_lang($this->lang);
 		$this->smileys_path = PATH_TO_ROOT . '/images/smileys/';
 		$this->get_smiley();
@@ -64,10 +64,10 @@ class AdminSmileysFormController extends AdminController
 	{
 		$form = new HTMLForm('upload_smiley', '', false);
 
-		$fieldset = new FormFieldsetHTML('upload', $this->lang['upload_smiley']);
+		$fieldset = new FormFieldsetHTML('upload', $this->lang['admin.upload.smileys']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldFilePicker('file', $this->lang['explain_upload_img'],
+		$fieldset->add_field(new FormFieldFilePicker('file', '',
 			array(
 				'class' => 'full-field', 'multiple' => true,
 				'authorized_extensions' => implode('|', array_map('preg_quote', FileUploadConfig::load()->get_authorized_picture_extensions()))
@@ -101,7 +101,7 @@ class AdminSmileysFormController extends AdminController
 
 				if (empty($authorized_pictures_extensions))
 				{
-					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_upload_invalid_format', 'errors'), MessageHelper::NOTICE));
+					$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('e_upload_invalid_format', 'errors'), MessageHelper::NOTICE));
 				}
 
 				$upload = new Upload($this->smileys_path);
@@ -109,21 +109,21 @@ class AdminSmileysFormController extends AdminController
 				if ($upload->file('upload_smiley_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`iu'))
 				{
 					// TODO : manage the smileys archive (possibility to upload a zip + checkbox if you want to create each smiley directly with: name_of_smiley as code)
-					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+					$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 5));
 				}
 				else
 				{
-					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message($upload->get_error(), 'errors'), MessageHelper::NOTICE));
+					$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message($upload->get_error(), 'errors'), MessageHelper::NOTICE));
 				}
 			}
 			else
 			{
-				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('upload.error', 'status-messages-common'), MessageHelper::NOTICE));
+				$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.file.upload.error', 'warning-lang'), MessageHelper::NOTICE));
 			}
 		}
 		else
 		{
-			$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_upload_failed_unwritable', 'errors'), MessageHelper::WARNING));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('e_upload_failed_unwritable', 'errors'), MessageHelper::WARNING));
 		}
 	}
 
@@ -131,16 +131,17 @@ class AdminSmileysFormController extends AdminController
 	{
 		$form = new HTMLForm('smiley', '', false);
 
-		$fieldset = new FormFieldsetHTML('smiley', !$this->smiley['idsmiley'] ? $this->lang['add_smiley'] : $this->lang['edit_smiley']);
+		$fieldset = new FormFieldsetHTML('smiley', !$this->smiley['idsmiley'] ? $this->lang['admin.add.smileys'] : $this->lang['admin.edit.smiley']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('code_smiley', $this->lang['smiley_code'], $this->smiley['code_smiley'],
+		$fieldset->add_field(new FormFieldTextEditor('code_smiley', $this->lang['admin.smiley.code'], $this->smiley['code_smiley'],
 			array('maxlength' => 50, 'required' => true)
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('url_smiley', $this->lang['smiley_available'], $this->smiley['url_smiley'],
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('url_smiley', $this->lang['admin.available.smileys'], $this->smiley['url_smiley'],
 			$this->generate_available_smileys_pictures_list(),
 			array(
+				'description' => $this->lang['admin.available.smileys.clue'],
 				'events' => array('change' => '
 					if (HTMLForms.getField("url_smiley").getValue() != \'\') {
 						jQuery(\'#smiley-img\').attr(\'src\', \'' . Url::to_rel('/images/smileys/') . '\' + HTMLForms.getField("url_smiley").getValue());
@@ -160,7 +161,7 @@ class AdminSmileysFormController extends AdminController
 			)
 		);
 
-		$fieldset->add_field(new FormFieldFree('img_smiley', LangLoader::get_message('form.picture.preview', 'common'), $img_smiley->display(),
+		$fieldset->add_field(new FormFieldFree('img_smiley', LangLoader::get_message('form.picture.preview', 'form-lang'), $img_smiley->display(),
 			array('hidden' => !$this->smiley['idsmiley'])
 		));
 
@@ -187,11 +188,11 @@ class AdminSmileysFormController extends AdminController
 				 	// Regenerate smileys cache
 					SmileysCache::invalidate();
 
-					$this->view->put('MSG', MessageHelper::display($this->lang['smiley_add_success'], MessageHelper::SUCCESS));
+					$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['smiley_add_success'], MessageHelper::SUCCESS));
 				}
 				else
 				{
-					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('element.already_exists', 'status-messages-common'), MessageHelper::ERROR));
+					$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('element.already_exists', 'status-messages-common'), MessageHelper::ERROR));
 				}
 			}
 			else

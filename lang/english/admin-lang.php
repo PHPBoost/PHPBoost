@@ -23,6 +23,7 @@ $lang['admin.priority.high']      = 'Urgent';
 $lang['admin.priority.medium']    = 'Medium';
 $lang['admin.priority.low']       = 'Low';
 $lang['admin.priority.very.low']  = 'Very low';
+$lang['admin.code']               = 'Code';
 
 // Advice
 $lang['admin.advice']                              = 'Advice';
@@ -125,7 +126,7 @@ $lang['admin.404.from.url']      = 'Source url';
 // Index
 $lang['admin.quick.access']        = 'Quick Access';
 $lang['admin.welcome.title']       = 'Welcome to the administration panel of your site';
-$lang['admin.welcome.descritpion'] = 'The administration lets you manage content and configuration of your site<br />The home page lists the most common actions<br />Take time to read the tips to optimize the security of your site';
+$lang['admin.welcome.description'] = 'The administration lets you manage content and configuration of your site<br />The home page lists the most common actions<br />Take time to read the tips to optimize the security of your site';
 $lang['admin.website.management']  = 'Manage the website';
 $lang['admin.customize.website']   = 'Customize the website';
 $lang['admin.add.content']         = 'Add content';
@@ -151,6 +152,17 @@ $lang['admin.maintenance.display.duration']       = 'Display maintenance duratio
 $lang['admin.maintenance.admin.display.duration'] = 'Display maintenance duration to the administrator';
 $lang['admin.maintenance.text']                   = 'Text to display when the website is under maintenance';
 $lang['admin.maintenance.authorization']          = 'Permission to access to the website during maintenance';
+
+// Smileys
+$lang['admin.smileys.management']     = 'Smiley management';
+$lang['admin.upload.smileys']         = 'Upload smileys';
+$lang['admin.smiley']                 = 'Smiley';
+$lang['admin.add.smileys']            = 'Add smileys';
+$lang['admin.edit.smiley']            = 'Edit smiley';
+$lang['admin.smiley.code']            = 'Smiley code (ex: :D)';
+$lang['admin.available.smileys']      = 'Available smileys';
+$lang['admin.available.smileys.clue'] = '/images/smileys';
+$lang['admin.smiley.success.add']     = 'The smiley has been successfully add';
 
 // Updates
 $lang['admin.updates']                = 'Updates';

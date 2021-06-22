@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Mipel <mipel@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 09
+ * @version     PHPBoost 6.0 - last update: 2021 06 22
  * @since       PHPBoost 6.0 - 2019 11 27
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -53,4 +53,23 @@ $lang['upload.warning.extension']    = ' : l\'extension de ce fichier n\'est pas
 $lang['upload.warning.file.size']    = ' : le poids de ce fichiers est trop important.<br />';
 $lang['upload.warning.file.dim']     = 'La hauteur ou la largeur d\'une image excède les dimensions autorisées.<br />';
 $lang['upload.warning.files.number'] = '<br />- l\'ensemble des fichiers dépasse l\'espace alloué.<br />';
+
+// Configuration
+$lang['upload.size.limit']                   = 'Taille de l\'espace de stockage des fichiers pour chaque membre';
+$lang['upload.size.limit.clue']              = 'En Mo';
+$lang['upload.bandwidth.protect']            = 'Protection de la bande passante';
+$lang['upload.bandwidth.protect.clue']       = 'Interdiction d\'accès aux fichiers du répertoire upload depuis un autre serveur';
+$lang['upload.display.thumbnails']           = 'Afficher les miniatures dans le gestionnaire';
+$lang['upload.display.thumbnails.clue']      = 'Pour les fichiers de type image';
+$lang['upload.authorized.extensions']        = 'Extensions autorisées';
+$lang['upload.authorized.extensions.more']   = 'Extensions autorisées supplémentaires';
+$lang['upload.authorized.extensions.clue']   = 'Séparez les extensions avec des virgules';
+$lang['upload.files.manager.authorizations'] = 'Autorisation requise pour l\'activation de l\'interface de fichiers';
+    // Options
+$lang['upload.option.image']         = 'Images';
+$lang['upload.option.archives']      = 'Archives';
+$lang['upload.option.text']          = 'Textes';
+$lang['upload.option.media']         = 'Media';
+$lang['upload.option.prog']          = 'Programmation';
+$lang['upload.option.miscellaneous'] = 'Divers';
 ?>

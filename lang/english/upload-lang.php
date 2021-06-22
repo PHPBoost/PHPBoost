@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Mipel <mipel@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 08
+ * @version     PHPBoost 6.0 - last update: 2021 06 22
  * @since       PHPBoost 6.0 - 2019 11 27
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -53,4 +53,23 @@ $lang['upload.warning.extension']    = ' : the extension of this file isn\'t all
 $lang['upload.warning.file.size']    = ' : the weight of this files is too large.<br />';
 $lang['upload.warning.file.dim']     = ' : the height or width of the picture exceeds the maximum allowed.<br />';
 $lang['upload.warning.files.number'] = '<br />- the number of files exeeds the allocated space.<br />';
+
+// Configuration
+$lang['upload.size.limit']                   = 'Files storage area size for each member';
+$lang['upload.size.limit.clue']              = 'In MB';
+$lang['upload.bandwidth.protect']            = 'Bandwidth protection';
+$lang['upload.bandwidth.protect.clue']       = 'Access forbidden for external websites to upload folder contents';
+$lang['upload.display.thumbnails']           = 'Display the thumbnails in the manager';
+$lang['upload.display.thumbnails.clue']      = 'For picture type files';
+$lang['upload.authorized.extensions']        = 'Authorized extensions';
+$lang['upload.authorized.extensions.more']   = 'Additional authorized extensions';
+$lang['upload.authorized.extensions.clue']   = 'Separate each extension with comas';
+$lang['upload.files.manager.authorizations'] = 'Authorization required for file interface activation';
+    // Options
+$lang['upload.option.image']         = 'Images';
+$lang['upload.option.archives']      = 'Archives';
+$lang['upload.option.text']          = 'Texts';
+$lang['upload.option.media']         = 'Media';
+$lang['upload.option.prog']          = 'Programation';
+$lang['upload.option.miscellaneous'] = 'Miscellaneous';
 ?>

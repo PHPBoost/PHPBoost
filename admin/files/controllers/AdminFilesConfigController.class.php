@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 06 22
  * @since       PHPBoost 4.1 - 2015 05 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -28,24 +28,24 @@ class AdminFilesConfigController extends AdminController
 
 		$this->build_form();
 
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
+		$view->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
 			$this->form->get_field_by_id('authorized_extensions')->set_selected_options($this->file_upload_config->get_authorized_extensions());
-			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.config', 'warning-lang'), MessageHelper::SUCCESS, 5));
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$view->put('FORM', $this->form->display());
 
-		return new AdminFilesDisplayResponse($tpl, LangLoader::get_message('files_config', 'main'));
+		return new AdminFilesDisplayResponse($view, $this->lang['upload.files.config']);
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin');
+		$this->lang = LangLoader::get('upload-lang');
 		$this->file_upload_config = FileUploadConfig::load();
 	}
 
@@ -55,39 +55,45 @@ class AdminFilesConfigController extends AdminController
 
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('files-config', LangLoader::get_message('files_config', 'main'));
+		$fieldset = new FormFieldsetHTML('files-config', $this->lang['upload.files.config']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldDecimalNumberEditor('size_limit', $this->lang['size_limit'], NumberHelper::round($this->file_upload_config->get_maximum_size_upload() / 1024, 2),
+		$fieldset->add_field(new FormFieldDecimalNumberEditor('size_limit', $this->lang['upload.size.limit'], NumberHelper::round($this->file_upload_config->get_maximum_size_upload() / 1024, 2),
 			array(
+				'class' => 'third-field',
 				'min' => 0, 'step' => 0.05, 'required' => true,
-				'description' => $this->lang['size_limit_explain']
+				'description' => $this->lang['upload.size.limit.clue']
 			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('bandwidth_protect', $this->lang['bandwidth_protect'], $this->file_upload_config->get_enable_bandwidth_protect(),
+		$fieldset->add_field(new FormFieldCheckbox('bandwidth_protect', $this->lang['upload.bandwidth.protect'], $this->file_upload_config->get_enable_bandwidth_protect(),
 			array(
-				'class' => 'custom-checkbox',
-				'description' => $this->lang['bandwidth_protect_explain']
+				'class' => 'custom-checkbox third-field',
+				'description' => $this->lang['upload.bandwidth.protect.clue']
 			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('display_file_thumbnail', $this->lang['files_thumb'], $this->file_upload_config->get_display_file_thumbnail(),
+		$fieldset->add_field(new FormFieldCheckbox('display_file_thumbnail', $this->lang['upload.display.thumbnails'], $this->file_upload_config->get_display_file_thumbnail(),
 			array(
-				'class' => 'custom-checkbox',
-				'description' => $this->lang['files_thumb_explain']
+				'class' => 'custom-checkbox third-field',
+				'description' => $this->lang['upload.display.thumbnails.clue']
 			)
 		));
 
-		$fieldset->add_field(new FormFieldTextEditor('extend_extensions', $this->lang['extend_extensions'],  $extensions['extend_extensions'],
-			array('description' => $this->lang['extend_extensions_explain'])
+		$fieldset->add_field(new FormFieldSpacer('extensions', ''));
+
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('authorized_extensions', $this->lang['upload.authorized.extensions'], $this->file_upload_config->get_authorized_extensions(), $extensions['authorized_extensions_select'],
+			array('class' => 'half-field top-field', 'size' => 12)
 		));
 
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('authorized_extensions', $this->lang['auth_extensions'], $this->file_upload_config->get_authorized_extensions(), $extensions['authorized_extensions_select'],
-			array('class' => 'top-field', 'size' => 12)
+		$fieldset->add_field(new FormFieldTextEditor('extend_extensions', $this->lang['upload.authorized.extensions.more'],  $extensions['extend_extensions'],
+			array(
+				'class' => 'half-field top-field',
+				'description' => $this->lang['upload.authorized.extensions.clue']
+			)
 		));
 
-		$auth_settings = new AuthorizationsSettings(array(new VisitorDisabledActionAuthorization($this->lang['auth_files'], FileUploadConfig::AUTH_FILES_BIT)));
+		$auth_settings = new AuthorizationsSettings(array(new VisitorDisabledActionAuthorization($this->lang['upload.files.manager.authorizations'], FileUploadConfig::AUTH_FILES_BIT)));
 		$auth_settings->build_from_auth_array($this->file_upload_config->get_authorization_enable_interface_files());
 		$fieldset->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
 
@@ -145,11 +151,11 @@ class AdminFilesConfigController extends AdminController
 	{
 		$authorized_extensions = $this->file_upload_config->get_authorized_extensions();
 		$array_extensions_type = array(
-			$this->lang['files_image'] => array('jpg', 'jpeg', 'bmp', 'gif', 'png', 'webp', 'tif', 'svg', 'ico', 'nef'),
-			$this->lang['files_archives'] => array('rar', 'zip', 'gz', '7z'),
-			$this->lang['files_text'] => array('txt', 'doc', 'docx', 'pdf', 'ppt', 'xls', 'odt', 'odp', 'ods', 'odg', 'odc', 'odf', 'odb', 'xcf', 'csv'),
-			$this->lang['files_media'] => array('mp3', 'ogg', 'mpg', 'mov', 'swf', 'wav', 'wmv', 'midi', 'mng', 'qt', 'mp4', 'mkv'),
-			$this->lang['files_misc'] => array('ttf', 'tex', 'rtf', 'psd', 'iso')
+			$this->lang['upload.option.image'] => array('jpg', 'jpeg', 'bmp', 'gif', 'png', 'webp', 'tif', 'svg', 'ico', 'nef'),
+			$this->lang['upload.option.archives'] => array('rar', 'zip', 'gz', '7z'),
+			$this->lang['upload.option.text'] => array('txt', 'doc', 'docx', 'pdf', 'ppt', 'xls', 'odt', 'odp', 'ods', 'odg', 'odc', 'odf', 'odb', 'xcf', 'csv'),
+			$this->lang['upload.option.media'] => array('mp3', 'ogg', 'mpg', 'mov', 'swf', 'wav', 'wmv', 'midi', 'mng', 'qt', 'mp4', 'mkv'),
+			$this->lang['upload.option.miscellaneous'] => array('ttf', 'tex', 'rtf', 'psd', 'iso')
 		);
 
 		$select_options = array();

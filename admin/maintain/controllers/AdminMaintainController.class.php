@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 18
+ * @version     PHPBoost 6.0 - last update: 2021 06 22
  * @since       PHPBoost 4.1 - 2014 09 11
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -168,7 +168,7 @@ class AdminMaintainController extends AdminController
 	private function build_maintain_select_options()
 	{
 		$options = array(
-			new FormFieldSelectChoiceOption(LangLoader::get_message('no', 'common'), 'disabled'),
+			new FormFieldSelectChoiceOption(LangLoader::get_message('common.no', 'common-lang'), 'disabled'),
 			new FormFieldSelectChoiceOption($this->lang['admin.maintenance.type.during'], 'during'),
 			new FormFieldSelectChoiceOption($this->lang['admin.maintenance.type.until'], 'until'),
 			new FormFieldSelectChoiceOption($this->lang['admin.maintenance.type.unlimited'], 'unlimited')

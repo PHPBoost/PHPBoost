@@ -25,26 +25,26 @@ class AdminSmileysListController extends AdminController
 
 		$this->execute_multiple_delete_if_needed($request);
 
-		return new AdminSmileysDisplayResponse($this->view, $this->lang['smiley_management'], $current_page);
+		return new AdminSmileysDisplayResponse($this->view, $this->lang['admin.smileys.management'], $current_page);
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin');
-		$this->view = new StringTemplate('# INCLUDE table #');
+		$this->lang = LangLoader::get('admin-lang');
+		$this->view = new StringTemplate('# INCLUDE TABLE #');
 	}
 
 	private function build_table()
 	{
 		$table_model = new HTMLTableModel('table', array(
-			new HTMLTableColumn($this->lang['smiley']),
-			new HTMLTableColumn(LangLoader::get_message('code', 'main')),
-			new HTMLTableColumn(LangLoader::get_message('actions', 'admin-common'), '', array('sr-only' => true))
+			new HTMLTableColumn($this->lang['admin.smiley']),
+			new HTMLTableColumn($this->lang['admin.code']),
+			new HTMLTableColumn(LangLoader::get_message('common.moderation', 'common-lang'), '', array('sr-only' => true))
 		), new HTMLTableSortingRule(''), HTMLTableModel::NO_PAGINATION);
 
 		$table = new HTMLTable($table_model);
 
-		$table_model->set_caption($this->lang['smiley_management']);
+		$table_model->set_caption($this->lang['admin.smileys.management']);
 
 		$results = array();
 		foreach(SmileysCache::load()->get_smileys() as $code => $row)
@@ -64,7 +64,7 @@ class AdminSmileysListController extends AdminController
 		}
 		$table->set_rows(count($results), $results);
 
-		$this->view->put('table', $table->display());
+		$this->view->put('TABLE', $table->display());
 
 		return $table->get_page_number();
 	}

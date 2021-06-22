@@ -23,6 +23,7 @@ $lang['admin.priority.high']      = 'Urgent';
 $lang['admin.priority.medium']    = 'Moyenne';
 $lang['admin.priority.low']       = 'Faible';
 $lang['admin.priority.very.low']  = 'Très faible';
+$lang['admin.code']               = 'Code';
 
 // Advice
 $lang['admin.advice'] = 'Conseils';
@@ -151,6 +152,17 @@ $lang['admin.maintenance.display.duration']       = 'Afficher la durée de la ma
 $lang['admin.maintenance.admin.display.duration'] = 'Afficher la durée de la maintenance à l\'administrateur';
 $lang['admin.maintenance.text']                   = 'Texte à afficher lorsque la maintenance du site est en cours';
 $lang['admin.maintenance.authorization']          = 'Autorisation d\'accès au site durant la maintenance';
+
+// Smileys
+$lang['admin.smileys.management']     = 'Gestion des smileys';
+$lang['admin.upload.smileys']         = 'Uploader des smileys';
+$lang['admin.smiley']                 = 'Smiley';
+$lang['admin.add.smileys']            = 'Ajouter des smileys';
+$lang['admin.edit.smiley']            = 'Editer un smiley';
+$lang['admin.smiley.code']            = 'Code du smiley (ex : :D)';
+$lang['admin.available.smileys']      = 'Smileys disponibles';
+$lang['admin.available.smileys.clue'] = '/images/smileys';
+$lang['admin.smiley.success.add']     = 'Le smiley a été ajouté';
 
 // Updates
 $lang['admin.updates']                = 'Mises à jour';
