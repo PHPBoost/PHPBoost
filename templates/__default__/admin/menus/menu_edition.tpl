@@ -15,8 +15,8 @@
 
 # IF C_NEXT_MENU #
 	<li class="sortable-element" id="menu_element_{ID}" data-id="{ID}">
-		<div class="sortable-selector" aria-label="${LangLoader::get_message('position.move', 'common')}"></div>
-		<div class="sortable-title" aria-label="${LangLoader::get_message('sub.menu', 'admin')}">
+		<div class="sortable-selector" aria-label="{@common.move}"></div>
+		<div class="sortable-title" aria-label="{@menu.sub.menu}">
 			<div class="grouped-inputs inputs-with-sup large-inputs-group">
 				<span class="grouped-element bgc-full notice"><i class="fa fa-folder" aria-hidden="true"></i></span>
 				<label for="menu_element_{ID}_name" class="label-sup grouped-element"><span>{@common.name}</span><input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name"></label>
