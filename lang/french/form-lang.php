@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 20
+ * @version     PHPBoost 6.0 - last update: 2021 06 22
  * @since       PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -121,52 +121,52 @@ $lang['form.required.field.clue'] = 'Obligatoire dans le profil du membre et à 
 $lang['form.possible.values']     = 'Valeurs possibles';
 
 // Labels
-$lang['form.name']                      = 'Nom';
-$lang['form.title']                     = 'Titre';
-$lang['form.content']                   = 'Contenu';
-$lang['form.description']               = 'Description';
-$lang['form.summary']                   = 'Résumé';
-$lang['form.enable.summary']            = 'Personnaliser le résumé';
-$lang['form.summary.clue']              = 'Si non coché, la description est automatiquement coupée à :number caractères et le formatage du texte supprimé.';
-$lang['form.enable.author.custom.name'] = 'Personnaliser le nom de l\'auteur';
-$lang['form.author.custom.name']        = 'Nom de l\'auteur';
-$lang['form.category']                  = 'Emplacement';
-$lang['form.rewrited.name']             = 'Nom réécrit dans l\'url';
-$lang['form.rewrited.name.clue']        = 'Contient uniquement des lettres minuscules, des chiffres et des traits d\'union.';
-$lang['form.rewrited.name.personalize'] = 'Personnaliser le nom dans l\'url';
-$lang['form.approve']                   = 'Approuver';
-$lang['form.publication']               = 'Publication';
-$lang['form.publication.draft']         = 'Garder en brouillon';
-$lang['form.publication.now']           = 'Publier maintenant';
-$lang['form.publication.deffered']      = 'Publication differée';
-$lang['form.date.selector']             = 'Ouvrir/fermer le sélecteur de date';
-$lang['form.start.date']                = 'A partir du';
-$lang['form.enable.end.date']           = 'Définir une date de fin de publication';
-$lang['form.end.date']                  = 'Jusqu\'au';
-$lang['form.creation.date']             = 'Date de création';
-$lang['form.update.creation.date']      = 'Mettre à jour la date de création avec la date du jour';
-$lang['form.last.update']               = 'Dernière modification';
-$lang['form.url']                       = 'Adresse';
-$lang['form.other']                     = 'Autre';
-$lang['form.parameters']                = 'Paramètres';
-$lang['form.options']                   = 'Options';
-$lang['form.keywords']                  = 'Mots clés';
-$lang['form.keywords.clue']             = 'Un seul mot clé par ligne';
-$lang['form.thumbnail']                 = 'Vignette';
-$lang['form.thumbnail.preview']         = 'Prévisualisation de la vignette';
-$lang['form.picture']                   = 'Image';
-$lang['form.picture.preview']           = 'Prévisualisation de l\'image';
-$lang['form.picture.full.size']         = 'Voir en taille réelle';
-$lang['form.sources']                   = 'Sources';
-$lang['form.add.source']                = 'Ajouter une source';
-$lang['form.delete.source']             = 'Supprimer la source';
-$lang['form.source.name']               = 'Nom de la source';
-$lang['form.source.url']                = 'Adresse de la source';
-$lang['form.captcha']                   = 'Code de vérification';
-$lang['form.default']                   = 'Défaut';
-$lang['form.is.default']                = 'Par défaut';
-$lang['form.default.value']             = 'Valeur par défaut';
-$lang['form.delete.default.value']      = 'Supprimer la valeur par défaut';
+$lang['form.name']                       = 'Nom';
+$lang['form.title']                      = 'Titre';
+$lang['form.content']                    = 'Contenu';
+$lang['form.description']                = 'Description';
+$lang['form.summary']                    = 'Résumé';
+$lang['form.enable.summary']             = 'Personnaliser le résumé';
+$lang['form.summary.clue']               = 'Si non coché, la description est automatiquement coupée à :number caractères et le formatage du texte supprimé.';
+$lang['form.enable.author.custom.name']  = 'Personnaliser le nom de l\'auteur';
+$lang['form.author.custom.name']         = 'Nom de l\'auteur';
+$lang['form.category']                   = 'Emplacement';
+$lang['form.rewrited.title']             = 'Titre réécrit dans l\'url';
+$lang['form.rewrited.title.clue']        = 'Contient uniquement des lettres minuscules, des chiffres et des traits d\'union.';
+$lang['form.rewrited.title.personalize'] = 'Personnaliser le titre dans l\'url';
+$lang['form.approve']                    = 'Approuver';
+$lang['form.publication']                = 'Publication';
+$lang['form.publication.draft']          = 'Garder en brouillon';
+$lang['form.publication.now']            = 'Publier maintenant';
+$lang['form.publication.deffered']       = 'Publication differée';
+$lang['form.date.selector']              = 'Ouvrir/fermer le sélecteur de date';
+$lang['form.start.date']                 = 'A partir du';
+$lang['form.enable.end.date']            = 'Définir une date de fin de publication';
+$lang['form.end.date']                   = 'Jusqu\'au';
+$lang['form.creation.date']              = 'Date de création';
+$lang['form.update.creation.date']       = 'Mettre à jour la date de création avec la date du jour';
+$lang['form.last.update']                = 'Dernière modification';
+$lang['form.url']                        = 'Adresse';
+$lang['form.other']                      = 'Autre';
+$lang['form.parameters']                 = 'Paramètres';
+$lang['form.options']                    = 'Options';
+$lang['form.keywords']                   = 'Mots clés';
+$lang['form.keywords.clue']              = 'Un seul mot clé par ligne';
+$lang['form.thumbnail']                  = 'Vignette';
+$lang['form.thumbnail.preview']          = 'Prévisualisation de la vignette';
+$lang['form.picture']                    = 'Image';
+$lang['form.picture.preview']            = 'Prévisualisation de l\'image';
+$lang['form.picture.full.size']          = 'Voir en taille réelle';
+$lang['form.sources']                    = 'Sources';
+$lang['form.add.source']                 = 'Ajouter une source';
+$lang['form.delete.source']              = 'Supprimer la source';
+$lang['form.source.name']                = 'Nom de la source';
+$lang['form.source.url']                 = 'Adresse de la source';
+$lang['form.captcha']                    = 'Code de vérification';
+$lang['form.default']                    = 'Défaut';
+$lang['form.is.default']                 = 'Par défaut';
+$lang['form.default.value']              = 'Valeur par défaut';
+$lang['form.delete.default.value']       = 'Supprimer la valeur par défaut';
 
 // Messages
 $lang['form.success.add']  = 'Le champ <b>:name</b> a été ajouté';

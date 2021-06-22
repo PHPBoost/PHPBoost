@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 20
+ * @version     PHPBoost 6.0 - last update: 2021 06 22
  * @since       PHPBoost 6.0 - 2019 11 11
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -76,7 +76,7 @@ class CategoriesService
 				$elements_number = '';
 				if (!empty($categories_number))
 				{
-					$elements_number .= ($categories_number > 1 ? $categories_number . ' ' . TextHelper::lcfirst($categories_lang['category.categories']) : TextHelper::ucfirst($categories_lang['category.a.category'])) . (!empty($items_number) ? ' ' . TextHelper::lcfirst(LangLoader::get_message('and', 'common')) . ' ' : '');
+					$elements_number .= ($categories_number > 1 ? $categories_number . ' ' . TextHelper::lcfirst($categories_lang['category.categories']) : TextHelper::ucfirst($categories_lang['category.a.category'])) . (!empty($items_number) ? ' ' . TextHelper::lcfirst(LangLoader::get_message('common.and', 'common-lang')) . ' ' : '');
 				}
 				if (!empty($items_number))
 				{

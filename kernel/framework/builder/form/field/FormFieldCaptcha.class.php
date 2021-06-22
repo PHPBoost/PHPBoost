@@ -6,10 +6,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 10 02
+ * @version     PHPBoost 6.0 - last update: 2021 06 22
  * @since       PHPBoost 3.0 - 2010 01 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldCaptcha extends AbstractFormField
@@ -27,7 +28,7 @@ class FormFieldCaptcha extends AbstractFormField
 		$this->captcha = AppContext::get_captcha_service()->get_default_factory();
 
 		$field_options = $this->is_enabled() && $this->captcha->is_visible() ? array('required' => true) : array();
-		parent::__construct($id, LangLoader::get_message('form.captcha', 'common'), false, $field_options);
+		parent::__construct($id, LangLoader::get_message('form.captcha', 'form-lang'), false, $field_options);
 	}
 
 	/**

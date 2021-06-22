@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 20
+ * @version     PHPBoost 6.0 - last update: 2021 06 22
  * @since       PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -121,51 +121,51 @@ $lang['form.required.field.clue'] = 'Required in the member profile and registra
 $lang['form.possible.values']     = 'Possible values';
 
 // Labels
-$lang['form.name']                      = 'Name';
-$lang['form.title']                     = 'Title';
-$lang['form.content']                   = 'Content';
-$lang['form.description']               = 'Description';
-$lang['form.summary']                   = 'Summary';
-$lang['form.enable.summary']            = 'Customize summary';
-$lang['form.summary.clue']              = 'If unchecked, the content is automatically cut to :number characters and formatting of the text deleted.';
-$lang['form.enable.author.custom.name'] = 'Personalize author name';
-$lang['form.author.custom.name']        = 'Author name';
-$lang['form.category']                  = 'Location';
-$lang['form.rewrited.name']             = 'Rewrited name in the url';
-$lang['form.rewrited.name.clue']        = 'Only contains lowercase letters, numbers and hyphens.';
-$lang['form.rewrited.name.personalize'] = 'Personalize rewrited name in the url';
-$lang['form.approve']                   = 'Approve';
-$lang['form.publication']               = 'Publication';
-$lang['form.publication.draft']         = 'Rough draft';
-$lang['form.publication.now']           = 'Publish now';
-$lang['form.publication.deffered']      = 'Deffered Publication';
-$lang['form.date.selector']             = 'Open/close the date selector';
-$lang['form.start.date']                = 'From';
-$lang['form.enable.end.date']           = 'Define a publication end date';
-$lang['form.end.date']                  = 'Until';
-$lang['form.creation.date']             = 'Creation date';
-$lang['form.update.creation.date']      = 'Update creation date with today\'s date';
-$lang['form.last.update']               = 'Last update';
-$lang['form.url']                       = 'Address';
-$lang['form.other']                     = 'Other';
-$lang['form.parameters']                = 'Parameters';
-$lang['form.options']                   = 'Options';
-$lang['form.keywords']                  = 'Keywords';
-$lang['form.keywords.clue']             = 'Only one keyword per row';
-$lang['form.thumbnail']                 = 'Thumbnail';
-$lang['form.thumbnail.preview']         = 'Thumbnail preview';
-$lang['form.picture']                   = 'Picture';
-$lang['form.picture.preview']           = 'Picture preview';
-$lang['form.picture.full.size']         = 'See in full size';
-$lang['form.sources']                   = 'Sources';
-$lang['form.add.source']                = 'Add a source';
-$lang['form.delete.source']             = 'Delete the source';
-$lang['form.source.name']               = 'Source name';
-$lang['form.source.url']                = 'Source address';
-$lang['form.captcha']                   = 'Code de vérification';
-$lang['form.default']                   = 'Default';
-$lang['form.is.default']                = 'By default';
-$lang['form.default.value']             = 'Default value';
+$lang['form.name']                       = 'Name';
+$lang['form.title']                      = 'Title';
+$lang['form.content']                    = 'Content';
+$lang['form.description']                = 'Description';
+$lang['form.summary']                    = 'Summary';
+$lang['form.enable.summary']             = 'Customize summary';
+$lang['form.summary.clue']               = 'If unchecked, the content is automatically cut to :number characters and formatting of the text deleted.';
+$lang['form.enable.author.custom.name']  = 'Personalize author name';
+$lang['form.author.custom.name']         = 'Author name';
+$lang['form.category']                   = 'Location';
+$lang['form.rewrited.title']             = 'Rewrited title in the url';
+$lang['form.rewrited.title.clue']        = 'Only contains lowercase letters, numbers and hyphens.';
+$lang['form.rewrited.title.personalize'] = 'Personalize rewrited title in the url';
+$lang['form.approve']                    = 'Approve';
+$lang['form.publication']                = 'Publication';
+$lang['form.publication.draft']          = 'Rough draft';
+$lang['form.publication.now']            = 'Publish now';
+$lang['form.publication.deffered']       = 'Deffered Publication';
+$lang['form.date.selector']              = 'Open/close the date selector';
+$lang['form.start.date']                 = 'From';
+$lang['form.enable.end.date']            = 'Define a publication end date';
+$lang['form.end.date']                   = 'Until';
+$lang['form.creation.date']              = 'Creation date';
+$lang['form.update.creation.date']       = 'Update creation date with today\'s date';
+$lang['form.last.update']                = 'Last update';
+$lang['form.url']                        = 'Address';
+$lang['form.other']                      = 'Other';
+$lang['form.parameters']                 = 'Parameters';
+$lang['form.options']                    = 'Options';
+$lang['form.keywords']                   = 'Keywords';
+$lang['form.keywords.clue']              = 'Only one keyword per row';
+$lang['form.thumbnail']                  = 'Thumbnail';
+$lang['form.thumbnail.preview']          = 'Thumbnail preview';
+$lang['form.picture']                    = 'Picture';
+$lang['form.picture.preview']            = 'Picture preview';
+$lang['form.picture.full.size']          = 'See in full size';
+$lang['form.sources']                    = 'Sources';
+$lang['form.add.source']                 = 'Add a source';
+$lang['form.delete.source']              = 'Delete the source';
+$lang['form.source.name']                = 'Source name';
+$lang['form.source.url']                 = 'Source address';
+$lang['form.captcha']                    = 'Code de vérification';
+$lang['form.default']                    = 'Default';
+$lang['form.is.default']                 = 'By default';
+$lang['form.default.value']              = 'Default value';
 
 // Messages
 $lang['form.success.add']  = 'The field <b>:name</b> has been added';

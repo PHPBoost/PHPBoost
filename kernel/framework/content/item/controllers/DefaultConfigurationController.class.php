@@ -56,7 +56,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 		$item_class_name = self::get_module_configuration()->get_item_name();
 		$form = new HTMLForm(self::$module_id . '_config_form');
 
-		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['configuration.module.title'], array('module_name' => self::get_module_configuration()->get_name())));
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->lang['config.items.per.page'], $this->config->get_items_per_page(),
@@ -211,7 +211,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 			$this->add_additional_fieldsets($form);
 		}
 
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations', LangLoader::get_message('authorizations', 'common'),
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['form.authorizations'],
 			array('description' => $this->lang['config.authorizations.explain'])
 		);
 

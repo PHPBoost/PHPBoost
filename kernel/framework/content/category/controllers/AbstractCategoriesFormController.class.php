@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2021 06 22
  * @since       PHPBoost 4.0 - 2013 02 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -78,7 +78,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 
 		$fieldset->add_field(new FormFieldTextEditor('name', self::$form_lang['form.name'], $this->get_category()->get_name(), array('required' => true)));
 
-		$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_name', self::$form_lang['form.rewrited.name.personalize'], $this->get_category()->rewrited_name_is_personalized(),
+		$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_name', self::$form_lang['form.rewrited.title.personalize'], $this->get_category()->rewrited_name_is_personalized(),
 			array(
 				'events' => array('click' => '
 					if (HTMLForms.getField("personalize_rewrited_name").getValue()) {
@@ -90,9 +90,9 @@ abstract class AbstractCategoriesFormController extends ModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldTextEditor('rewrited_name', self::$form_lang['form.rewrited.name'], $this->get_category()->get_rewrited_name(),
+		$fieldset->add_field(new FormFieldTextEditor('rewrited_name', self::$form_lang['form.rewrited.title'], $this->get_category()->get_rewrited_name(),
 			array(
-				'description' => self::$form_lang['form.rewrited.name.clue'],
+				'description' => self::$form_lang['form.rewrited.title.clue'],
 				'hidden' => !$this->get_category()->rewrited_name_is_personalized()
 			),
 			array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu'))
@@ -179,7 +179,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 
 	private function build_fieldset_options(HTMLForm $form)
 	{
-		$fieldset = new FormFieldsetHTML('options_fieldset', LangLoader::get_message('form.options', 'common'));
+		$fieldset = new FormFieldsetHTML('options_fieldset', LangLoader::get_message('common.options', 'common-lang'));
 		$this->get_options_fields($fieldset);
 		if ($fieldset->get_fields())
 		{

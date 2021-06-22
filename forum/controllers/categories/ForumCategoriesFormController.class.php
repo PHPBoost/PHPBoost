@@ -58,7 +58,7 @@ class ForumCategoriesFormController extends DefaultCategoriesFormController
 
 		$fieldset->add_field(new FormFieldTextEditor('name', self::$form_lang['form.name'], $this->get_category()->get_name(), array('required' => true)));
 
-		$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_name', self::$form_lang['form.rewrited.name.personalize'], $this->get_category()->rewrited_name_is_personalized(),
+		$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_name', self::$form_lang['form.rewrited.title.personalize'], $this->get_category()->rewrited_name_is_personalized(),
 			array(
 				'events' => array('click' => '
 					if (HTMLForms.getField("personalize_rewrited_name").getValue()) {
@@ -70,9 +70,9 @@ class ForumCategoriesFormController extends DefaultCategoriesFormController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldTextEditor('rewrited_name', self::$form_lang['form.rewrited.name'], $this->get_category()->get_rewrited_name(),
+		$fieldset->add_field(new FormFieldTextEditor('rewrited_name', self::$form_lang['form.rewrited.title'], $this->get_category()->get_rewrited_name(),
 			array(
-				'description' => self::$form_lang['form.rewrited.name.clue'],
+				'description' => self::$form_lang['form.rewrited.title.clue'],
 				'hidden' => !$this->get_category()->rewrited_name_is_personalized()
 			),
 			array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu'))

@@ -6,12 +6,13 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Nicolas Duhamel <akhenathon2@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2020 08 06
+ * @version     PHPBoost 6.0 - last update: 2021 06 22
  * @since       PHPBoost 2.0 - 2008 07 06
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class File extends FileSystemElement
@@ -265,7 +266,7 @@ class File extends FileSystemElement
 	 */
 	public static function get_formated_size($file_size)
 	{
-		$units = array(LangLoader::get_message('unit.bytes', 'common'), LangLoader::get_message('unit.kilobytes', 'common'), LangLoader::get_message('unit.megabytes', 'common'), LangLoader::get_message('unit.gigabytes', 'common'));
+		$units = array(LangLoader::get_message('common.unit.bytes', 'common-lang'), LangLoader::get_message('common.unit.kilobytes', 'common-lang'), LangLoader::get_message('common.unit.megabytes', 'common-lang'), LangLoader::get_message('common.unit.gigabytes', 'common-lang'));
 		$power = $file_size > 0 ? floor(log($file_size, 1024)) : 0;
 		return NumberHelper::round($file_size / pow(1024, $power), 2) . ' ' . $units[$power];
 	}

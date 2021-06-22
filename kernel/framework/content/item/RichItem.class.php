@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 09
+ * @version     PHPBoost 6.0 - last update: 2021 06 22
  * @since       PHPBoost 6.0 - 2020 01 23
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -16,7 +16,7 @@ class RichItem extends Item
 	protected $summary_field_enabled            = true;
 	protected $author_custom_name_field_enabled = true;
 	protected $thumbnail_field_enabled          = true;
-	
+
 	const THUMBNAIL_URL = '/templates/__default__/images/default_item_thumbnail.png';
 
 	protected function set_kernel_additional_attributes_list()
@@ -32,7 +32,7 @@ class RichItem extends Item
 		if ($this->thumbnail_field_enabled)
 			$this->add_additional_attribute('thumbnail', array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''", 'attribute_options_field_parameters' => array(
 				'field_class'     => 'FormFieldThumbnail',
-				'label'           => LangLoader::get_message('form.picture', 'common'),
+				'label'           => LangLoader::get_message('common.image', 'common-lang'),
 				'value'           => FormFieldThumbnail::DEFAULT_VALUE,
 				'default_picture' => self::THUMBNAIL_URL
 				)
@@ -104,7 +104,7 @@ class RichItem extends Item
 			if (!empty($summary))
 				return FormatingHelper::second_parse($summary);
 		}
-		
+
 		return TextHelper::cut_string(@strip_tags($parsed_content ? $parsed_content : FormatingHelper::second_parse($this->content), '<br><br/>'), self::$module->get_configuration()->get_configuration_parameters()->get_auto_cut_characters_number());
 	}
 
@@ -151,7 +151,7 @@ class RichItem extends Item
 			if ($this->summary_field_enabled)
 				$this->set_summary('');
 		}
-		
+
 		$this->set_views_number(0);
 
 		if ($this->author_custom_name_field_enabled)
@@ -163,7 +163,7 @@ class RichItem extends Item
 
 	protected function get_kernel_additional_sorting_fields()
 	{
-		return array('views' => array('database_field' => 'views_number', 'label' => LangLoader::get_message('sort_by.views.number', 'common'), 'icon' => 'fa fa-eye'));
+		return array('views' => array('database_field' => 'views_number', 'label' => LangLoader::get_message('common.sort.by.views.number', 'common-lang'), 'icon' => 'fa fa-eye'));
 	}
 
 	protected function get_kernel_additional_template_vars($parsed_content = '')

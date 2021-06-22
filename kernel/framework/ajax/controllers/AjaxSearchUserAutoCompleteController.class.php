@@ -16,7 +16,6 @@ class AjaxSearchUserAutoCompleteController extends AbstractController
 {
 	public function execute(HTTPRequestCustom $request)
 	{
-		$lang = LangLoader::get('common');
 		$is_admin = AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL);
 		$number_admins = UserService::count_admin_members();
 		$suggestions = array();

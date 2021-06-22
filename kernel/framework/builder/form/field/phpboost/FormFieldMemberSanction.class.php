@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2014 12 22
+ * @version     PHPBoost 6.0 - last update: 2021 06 20
  * @since       PHPBoost 3.0 - 2010 12 26
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldMemberSanction extends FormFieldSimpleSelectChoice
@@ -42,7 +43,7 @@ class FormFieldMemberSanction extends FormFieldSimpleSelectChoice
 
 	private function load_lang()
 	{
-		$this->lang = LangLoader::get('date-common');
+		$this->lang = LangLoader::get('date-lang');
 	}
 
 	private function get_time_value()
@@ -68,21 +69,21 @@ class FormFieldMemberSanction extends FormFieldSimpleSelectChoice
 	public function get_sanctions_duration()
 	{
 		return array(
-			'0' => LangLoader::get_message('no', 'common'),
-			'60' => '1 ' . $this->lang['minute'],
-			'300' => '5 ' . $this->lang['minutes'],
-			'900' => '15 ' . $this->lang['minutes'],
-			'1800' => '30 ' . $this->lang['minutes'],
-			'3600' => '1 ' . $this->lang['hour'],
-			'7200' => '2 ' . $this->lang['hours'],
-			'86400' => '1 ' . $this->lang['day'],
-			'172800' => '2 ' . $this->lang['days'],
-			'604800' => '1 ' . $this->lang['week'],
-			'1209600' => '2 ' . $this->lang['weeks'],
-			'2419200' => '1 ' . $this->lang['month'],
-			'5184000' => '2 ' . $this->lang['month'],
-			'31557600' => '1 ' . $this->lang['year'],
-			'326592000' => LangLoader::get_message('illimited', 'main')
+			'0' => LangLoader::get_message('common.no', 'common-lang'),
+			'60' => '1 ' . $this->lang['date.minute'],
+			'300' => '5 ' . $this->lang['date.minutes'],
+			'900' => '15 ' . $this->lang['date.minutes'],
+			'1800' => '30 ' . $this->lang['date.minutes'],
+			'3600' => '1 ' . $this->lang['date.hour'],
+			'7200' => '2 ' . $this->lang['date.hours'],
+			'86400' => '1 ' . $this->lang['date.day'],
+			'172800' => '2 ' . $this->lang['date.days'],
+			'604800' => '1 ' . $this->lang['date.week'],
+			'1209600' => '2 ' . $this->lang['date.weeks'],
+			'2419200' => '1 ' . $this->lang['date.month'],
+			'5184000' => '2 ' . $this->lang['date.month'],
+			'31557600' => '1 ' . $this->lang['date.year'],
+			'326592000' => LangLoader::get_message('common.unlimited', 'common-lang')
 		);
 	}
 }
