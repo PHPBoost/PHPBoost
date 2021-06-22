@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 18
+ * @version     PHPBoost 6.0 - last update: 2021 06 22
  * @since       PHPBoost 4.1 - 2015 05 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -12,9 +12,9 @@
 
 class AdminServerSystemReportController extends AdminController
 {
-	private $admin_lang;
+	private $lang;
 	private $form;
-	private $tpl;
+	private $view;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -22,16 +22,15 @@ class AdminServerSystemReportController extends AdminController
 
 		$this->build_form();
 
-		$this->tpl->put('FORM', $this->form->display());
+		$this->view->put('FORM', $this->form->display());
 
-		return new AdminServerDisplayResponse($this->tpl, $this->admin_lang['system_report']);
+		return new AdminServerDisplayResponse($this->view, $this->lang['admin.system.report']);
 	}
 
 	private function init()
 	{
-		$this->admin_lang = LangLoader::get('admin');
-		$this->tpl = new StringTemplate('# INCLUDE FORM #');
-		$this->tpl->add_lang($this->admin_lang);
+		$this->lang = LangLoader::get('admin-lang');
+		$this->view = new StringTemplate('# INCLUDE FORM #');
 	}
 
 	private function build_form()
@@ -77,7 +76,7 @@ PHPBOOST CONFIGURATION---------------------------------------------------------
 phpboost version		: " . Environment::get_phpboost_version() . "
 server url			: " . $general_config->get_site_url() . "
 site path			: " . $general_config->get_site_path() . "
-default theme			: " . $default_theme_config->get_name() . " (" . LangLoader::get_message('version', 'admin') . " " . $default_theme_config->get_version() . ")
+default theme			: " . $default_theme_config->get_name() . " (" . LangLoader::get_message('common.version', 'common-lang') . " " . $default_theme_config->get_version() . ")
 default language		: " . $default_lang_config->get_name() . "
 default editor			: " . $default_editor . "
 home page			: " . Environment::get_home_page() . "
@@ -94,35 +93,35 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 
 		$this->get_advice($form);
 
-		$fieldset = new FormFieldsetHTML('server-report', $this->admin_lang['server']);
+		$fieldset = new FormFieldsetHTML('server-report', $this->lang['admin.server']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldFree('php_version', $this->admin_lang['php_version'], ServerConfiguration::get_phpversion()));
-		$fieldset->add_field(new FormFieldFree('dbms_version', $this->admin_lang['dbms_version'], PersistenceContext::get_dbms_utils()->get_dbms_version()));
-		$fieldset->add_field(new FormFieldFree('gd_library', $this->admin_lang['gd_library'], $server_configuration->has_gd_library() ? $picture_yes : $picture_no));
-		$fieldset->add_field(new FormFieldFree('curl_library', $this->admin_lang['curl_library'], $server_configuration->has_curl_library() ? $picture_yes : $picture_no));
-		$fieldset->add_field(new FormFieldFree('mbstring_library', $this->admin_lang['mbstring_library'], $server_configuration->has_mbstring_library() ? $picture_yes : $picture_no));
-		$fieldset->add_field(new FormFieldFree('url_rewriting', $this->admin_lang['url_rewriting'], $url_rewriting_known ? ($url_rewriting_available ? $picture_yes : $picture_no) : $picture_unknown));
-		$fieldset->add_field(new FormFieldFree('apcu_cache', LangLoader::get_message('admin.apcu.cache', 'admin-lang'), DataStoreFactory::is_apc_available() ? $picture_yes : $picture_no));
+		$fieldset->add_field(new FormFieldFree('php_version', $this->lang['admin.php.version'], ServerConfiguration::get_phpversion()));
+		$fieldset->add_field(new FormFieldFree('dbms_version', $this->lang['admin.dbms.version'], PersistenceContext::get_dbms_utils()->get_dbms_version()));
+		$fieldset->add_field(new FormFieldFree('gd_library', $this->lang['admin.gd.library'], $server_configuration->has_gd_library() ? $picture_yes : $picture_no));
+		$fieldset->add_field(new FormFieldFree('curl_library', $this->lang['admin.curl.library'], $server_configuration->has_curl_library() ? $picture_yes : $picture_no));
+		$fieldset->add_field(new FormFieldFree('mbstring_library', $this->lang['admin.mbstring.library'], $server_configuration->has_mbstring_library() ? $picture_yes : $picture_no));
+		$fieldset->add_field(new FormFieldFree('url_rewriting', $this->lang['admin.url.rewriting'], $url_rewriting_known ? ($url_rewriting_available ? $picture_yes : $picture_no) : $picture_unknown));
+		$fieldset->add_field(new FormFieldFree('apcu_cache', $this->lang['admin.apcu.cache'], DataStoreFactory::is_apc_available() ? $picture_yes : $picture_no));
 
-		$fieldset = new FormFieldsetHTML('phpboost-config-report', $this->admin_lang['phpboost_config']);
+		$fieldset = new FormFieldsetHTML('phpboost-config-report', $this->lang['admin.phpboost.config']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldFree('kernel_version', $this->admin_lang['kernel_version'], Environment::get_phpboost_version()));
+		$fieldset->add_field(new FormFieldFree('kernel_version', $this->lang['admin.kernel.version'], Environment::get_phpboost_version()));
 		$fieldset->add_field(new FormFieldFree('site_url', LangLoader::get_message('configuration.site.url', 'configuration-lang'), $general_config->get_site_url()));
 		$fieldset->add_field(new FormFieldFree('site_path', LangLoader::get_message('configuration.site.path', 'configuration-lang'), $general_config->get_site_path()));
 		$fieldset->add_field(new FormFieldFree('default_theme', LangLoader::get_message('configuration.default.theme', 'configuration-lang'), $default_theme_config->get_name() . " (" . LangLoader::get_message('version', 'admin') . " " . $default_theme_config->get_version() . ")"));
 		$fieldset->add_field(new FormFieldFree('default_language', LangLoader::get_message('configuration.default.language', 'configuration-lang'), $default_lang_config->get_name()));
-		$fieldset->add_field(new FormFieldFree('default_editor', LangLoader::get_message('content.config.default-formatting-language', 'admin-contents-common'), $default_editor));
+		$fieldset->add_field(new FormFieldFree('default_editor', $this->lang['admin.default.formatting.language'], $default_editor));
 		$fieldset->add_field(new FormFieldFree('start_page', LangLoader::get_message('configuration.start.page', 'configuration-lang'), Environment::get_home_page()));
-		$fieldset->add_field(new FormFieldFree('phpboost_url_rewriting', $this->admin_lang['url_rewriting'], $server_environment_config->is_url_rewriting_enabled() ? $picture_yes : $picture_no));
-		$fieldset->add_field(new FormFieldFree('phpboost_apcu_cache', LangLoader::get_message('admin.apcu.cache', 'admin-lang'), DataStoreFactory::is_apc_enabled() ? $picture_yes : $picture_no));
-		$fieldset->add_field(new FormFieldFree('output_gz', $this->admin_lang['output_gz'], $server_environment_config->is_output_gziping_enabled() ? $picture_yes : $picture_no));
+		$fieldset->add_field(new FormFieldFree('phpboost_url_rewriting', $this->lang['admin.url.rewriting'], $server_environment_config->is_url_rewriting_enabled() ? $picture_yes : $picture_no));
+		$fieldset->add_field(new FormFieldFree('phpboost_apcu_cache', $this->lang['admin.apcu.cache'], DataStoreFactory::is_apc_enabled() ? $picture_yes : $picture_no));
+		$fieldset->add_field(new FormFieldFree('output_gz', $this->lang['admin.output.gz'], $server_environment_config->is_output_gziping_enabled() ? $picture_yes : $picture_no));
 		$fieldset->add_field(new FormFieldFree('cookie_name', LangLoader::get_message('configuration.cookie.name', 'configuration-lang'), $sessions_config->get_cookie_name()));
 		$fieldset->add_field(new FormFieldFree('session_length', LangLoader::get_message('configuration.cookie.duration', 'configuration-lang'), $sessions_config->get_session_duration()));
 		$fieldset->add_field(new FormFieldFree('session_guest_length', LangLoader::get_message('configuration.active.session.duration', 'configuration-lang'), $sessions_config->get_active_session_duration()));
 
-		$fieldset = new FormFieldsetHTML('directories_auth', $this->admin_lang['directories_auth']);
+		$fieldset = new FormFieldsetHTML('directories_auth', $this->lang['admin.directories.auth']);
 		$form->add_fieldset($fieldset);
 
 		$directories_summerization = '';
@@ -133,14 +132,14 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 ";
 		}
 
-		$fieldset = new FormFieldsetHTML('summerization', $this->admin_lang['system_report_summerization']);
+		$fieldset = new FormFieldsetHTML('summerization', $this->lang['admin.system.report.summary']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldLabel($this->admin_lang['system_report_summerization_explain'],
-			array('class' => 'half-field')
+		$fieldset->add_field(new FormFieldLabel($this->lang['admin.system.report.summary.clue'],
+			array('class' => 'full-field')
 		));
 
-		$fieldset->add_element(new FormButtonButton($this->admin_lang['copy_report'], 'copy_code_clipboard(\'system-report_report-content\')', 'copy_report', 'copy-to-clipboard', '', 'system-report'));
+		$fieldset->add_element(new FormButtonButton('<i class="far fa-fw fa-copy"></i>' . $this->lang['admin.copy.report'], 'copy_code_clipboard(\'system-report_report-content\')', 'copy_report', 'copy-to-clipboard', '', 'system-report'));
 
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('report-content', '', $summerization . $directories_summerization,
 			array('rows' => 20, 'cols' => 15, 'class' => 'system-report')

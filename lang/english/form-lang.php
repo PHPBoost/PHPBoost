@@ -173,9 +173,6 @@ $lang['form.success.edit'] = 'The field <b>:name</b> has been modified';
 
 // Modules
 $lang['form.forbidden.module']                  = 'Forbidden modules';
-$lang['form.comments.forbidden.module.clue']    = 'Select modules in which you do not want to enable comments';
-$lang['form.notation.forbidden.module.clue']    = 'Select modules in which you do not want to enable notation';
-$lang['form.new.content.forbidden.module.clue'] = 'Select modules in which you do not want to enable new-content tag';
 $lang['form.hide.left.column']                  = 'Hide left column in module :module';
 $lang['form.hide.right.column']                 = 'Hide right column in module :module';
 

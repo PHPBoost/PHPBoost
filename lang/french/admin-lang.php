@@ -105,10 +105,58 @@ $lang['admin.high.level']         = 'Haut';
 $lang['admin.level.clue']         = 'Le niveau bas permet de ne supprimer que les tabulations et les espaces tandis que le niveau haut optimise totalement vos fichiers CSS.';
 
 // Content
-$lang['admin.forbidden.module']                  = 'Modules interdits';
-$lang['admin.comments.forbidden.module.clue']    = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer les commentaires';
-$lang['admin.notation.forbidden.module.clue']    = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer la notation';
+$lang['admin.content.configuration'] = 'Configuration du contenu';
+$lang['admin.forbidden.module']      = 'Modules interdits';
+    // Format
+$lang['admin.formatting.language']         = 'Langage de formatage';
+$lang['admin.default.formatting.language'] = 'Langage de formatage du contenu par défaut du site';
+$lang['admin.formatting.language.clue']    = 'Chaque utilisateur pourra choisir';
+$lang['admin.forbidden.tags']              = 'Types de formatage interdits';
+    // HTML
+$lang['admin.html.language']            = 'Langage HTML';
+$lang['admin.html.authorizations']      = 'Niveau d\'autorisation pour insérer du langage HTML';
+$lang['admin.html.authorizations.clue'] = 'Attention : le code HTML peut contenir du code Javascript susceptible de constituer une source de faille de sécurité si quelqu\'un y insère un code malveillant. Veillez donc à autoriser seulement les personnes de confiance à insérer du HTML.';
+    // Messages
+$lang['admin.messages.management'] = 'Gestion des messages';
+$lang['admin.max.pm.number']       = 'Nombre maximum de messages privés';
+$lang['admin.max.pm.number.clue']  = 'Illimité pour administrateurs et modérateurs';
+$lang['admin.anti.flood']          = 'Anti flood';
+$lang['admin.anti.flood.clue']     = 'Empêche les messages trop rapprochés, sauf si les visiteurs sont autorisés';
+$lang['admin.flood.delay']         = 'Intervalle minimum de temps entre les messages';
+$lang['admin.flood.delay.clue']    = 'En secondes. 7 secondes par défaut.';
+    // Share
+$lang['admin.sharing.management']      = 'Gestion des options de partage';
+$lang['admin.display.content.sharing'] = 'Afficher les liens de partage sur les pages de contenu';
+$lang['admin.display.email.sharing']   = 'Afficher le partage par Email';
+$lang['admin.display.print.sharing']   = 'Afficher le lien d\'impression de la page';
+$lang['admin.print.sharing.clue']      = 'Visible sur ordinateur uniquement';
+$lang['admin.display.sms.sharing']     = 'Afficher le partage par SMS';
+$lang['admin.sms.sharing.clue']        = 'Visible sur périphérique mobile uniquement';
+    // S.E.O.
+$lang['admin.opengraph']       = 'Améliorer le référencement avec les balises OpenGraph';
+$lang['admin.opengraph.clue']  = 'Permet de donner des informations précises sur les pages aux moteurs de recherche et réseaux sociaux';
+$lang['admin.default.picture'] = 'Image par défaut du site pour le référencement';
+    // Captcha
+$lang['admin.captcha']      = 'Captcha';
+$lang['admin.used.captcha'] = 'Code de vérification utilisé sur le site';
+$lang['admin.captcha.clue'] = 'Le code de vérification permet de vous prémunir contre le spam sur votre site.';
+    // New content
+$lang['admin.new.content.config']        = 'Gestion du contenu récent';
+$lang['admin.enable.new.content']        = 'Activer l\'option sur les nouveaux éléments';
+$lang['admin.new.content.clue']          = 'Cette option permet d\'identifier les derniers éléments ajoutés';
+$lang['admin.new.content.duration']      = 'Durée d\'affichage du tag';
+$lang['admin.new.content.duration.clue'] = 'En jours. 5 jours par défaut.';
 $lang['admin.new.content.forbidden.module.clue'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer les tags de nouveau contenu';
+    // Notation
+$lang['admin.notation.config'] = 'Configuration de la notation';
+$lang['admin.enable.notation'] = 'Activer la notation';
+$lang['admin.notation.scale']  = 'Echelle de notation';
+$lang['admin.notation.forbidden.module.clue'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer la notation';
+    // ID card
+$lang['admin.id.card']        = 'Gestion des informations sur l\'auteur';
+$lang['admin.enable.id.card'] = 'Activer l\'affichage des informations sur l\'auteur';
+$lang['admin.id.card.clue']   = 'Permet d\'afficher dans un article un encart sur l\'auteur (profil + avatar + biographie)';
+$lang['admin.id.card.forbidden.module.clue'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer des informations sur l\'auteur';
 
 // Errors lists
 $lang['admin.errors']               = 'Erreurs';
@@ -152,6 +200,24 @@ $lang['admin.maintenance.display.duration']       = 'Afficher la durée de la ma
 $lang['admin.maintenance.admin.display.duration'] = 'Afficher la durée de la maintenance à l\'administrateur';
 $lang['admin.maintenance.text']                   = 'Texte à afficher lorsque la maintenance du site est en cours';
 $lang['admin.maintenance.authorization']          = 'Autorisation d\'accès au site durant la maintenance';
+
+// Server report
+$lang['admin.server']                     = 'Serveur';
+$lang['admin.phpinfo']                    = 'PHP info';
+$lang['admin.system.report']              = 'Rapport système';
+$lang['admin.php.version']                = 'Version de PHP';
+$lang['admin.dbms.version']               = 'Version du SGBD';
+$lang['admin.gd.library']                 = 'Librairie GD';
+$lang['admin.curl.library']               = 'Extension Curl';
+$lang['admin.mbstring.library']           = 'Extension Mbstring (UTF-8)';
+$lang['admin.url.rewriting']              = 'Réécriture des URL';
+$lang['admin.phpboost.config']            = 'Configuration de PHPBoost';
+$lang['admin.kernel.version']             = 'Version du noyau';
+$lang['admin.output.gz']                  = 'Compression des pages';
+$lang['admin.directories.auth']           = 'Autorisation des répertoires';
+$lang['admin.system.report.summary']      = 'Récapitulatif';
+$lang['admin.system.report.summary.clue'] = 'Ceci est le récapitulatif du rapport. Cela vous sera particulièrement utile lorsqu\'on vous demandera la configuration de votre système pour du support.';
+$lang['admin.copy.report']                = 'Copier le rapport';
 
 // Smileys
 $lang['admin.smileys.management']     = 'Gestion des smileys';

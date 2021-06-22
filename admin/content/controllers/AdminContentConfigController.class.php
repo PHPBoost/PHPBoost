@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 06 22
  * @since       PHPBoost 4.0 - 2013 07 08
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,7 +15,6 @@
 class AdminContentConfigController extends AdminController
 {
 	private $lang;
-	private $admin_common_lang;
 	/**
 	 * @var HTMLForm
 	 */
@@ -36,12 +35,12 @@ class AdminContentConfigController extends AdminController
 		$this->init();
 		$this->build_form();
 
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
+
 			$this->form->get_field_by_id('forbidden_tags')->set_selected_options($this->content_formatting_config->get_forbidden_tags());
 			$this->form->get_field_by_id('new_content_duration')->set_hidden(!$this->content_management_config->is_new_content_enabled());
 			$this->form->get_field_by_id('new_content_unauthorized_modules')->set_hidden(!$this->content_management_config->is_new_content_enabled());
@@ -55,88 +54,88 @@ class AdminContentConfigController extends AdminController
 			$this->form->get_field_by_id('site_default_picture_url')->set_hidden(!$this->content_management_config->is_opengraph_enabled());
 			$this->form->get_field_by_id('id_card_unauthorized_modules')->set_hidden(!$this->content_management_config->is_id_card_enabled());
 			$this->form->get_field_by_id('id_card_unauthorized_modules')->set_selected_options($this->content_management_config->get_id_card_unauthorized_modules());
-			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+
+			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.config', 'warning-lang'), MessageHelper::SUCCESS, 5));
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$view->put('FORM', $this->form->display());
 
-		return new AdminContentDisplayResponse($tpl, $this->lang['content.config']);
+		return new AdminContentDisplayResponse($view, $this->lang['admin.content.configuration']);
 	}
 
 	private function init()
 	{
-		$this->lang                      = LangLoader::get('admin-contents-common');
-		$this->admin_common_lang         = LangLoader::get('admin-common');
+		$this->lang = LangLoader::get('admin-lang');
 		$this->content_formatting_config = ContentFormattingConfig::load();
 		$this->content_management_config = ContentManagementConfig::load();
-		$this->user_accounts_config      = UserAccountsConfig::load();
+		$this->user_accounts_config = UserAccountsConfig::load();
 	}
 
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('language-config', $this->lang['content.config.language']);
+		$fieldset = new FormFieldsetHTML('language-config', $this->lang['admin.formatting.language']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldEditors('formatting_language', $this->lang['content.config.default-formatting-language'], $this->content_formatting_config->get_default_editor(),
+		$fieldset->add_field(new FormFieldEditors('formatting_language', $this->lang['admin.default.formatting.language'], $this->content_formatting_config->get_default_editor(),
 			array (
 				'class' => 'top-field',
-				'description' => $this->lang['content.config.default-formatting-language-explain']
+				'description' => $this->lang['admin.formatting.language.clue']
 			)
 		));
 
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->lang['comments.config.forbidden-tags'], $this->content_formatting_config->get_forbidden_tags(), $this->generate_forbidden_tags_option(),
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->lang['admin.forbidden.tags'], $this->content_formatting_config->get_forbidden_tags(), $this->generate_forbidden_tags_option(),
 			array('size' => 10)
 		));
 
-		$fieldset = new FormFieldsetHTML('html-language-config', $this->lang['content.config.html-language']);
+		$fieldset = new FormFieldsetHTML('html-language-config', $this->lang['admin.html.language']);
 		$form->add_fieldset($fieldset);
 
-		$auth_settings = new AuthorizationsSettings(array(new VisitorDisabledActionAuthorization($this->lang['content.config.html-language-use-authorization'], self::HTML_USAGE_AUTHORIZATIONS, $this->lang['content.config.html-language-use-authorization-explain'])));
+		$auth_settings = new AuthorizationsSettings(array(new VisitorDisabledActionAuthorization($this->lang['admin.html.authorizations'], self::HTML_USAGE_AUTHORIZATIONS, $this->lang['admin.html.authorizations.clue'])));
 		$auth_settings->build_from_auth_array($this->content_formatting_config->get_html_tag_auth());
 		$fieldset->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
 
-		$fieldset = new FormFieldsetHTML('post-management', $this->lang['content.config.post-management']);
+		$fieldset = new FormFieldsetHTML('post-management', $this->lang['admin.messages.management']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldNumberEditor('max_pm_number', $this->lang['content.config.max-pm-number'], $this->user_accounts_config->get_max_private_messages_number(),
+		$fieldset->add_field(new FormFieldNumberEditor('max_pm_number', $this->lang['admin.max.pm.number'], $this->user_accounts_config->get_max_private_messages_number(),
 			array(
 				'required' => true,
-				'description' => $this->lang['content.config.max-pm-number-explain']
+				'description' => $this->lang['admin.max.pm.number.clue']
 			),
-			array(new FormFieldConstraintRegex('`^([0-9]+)$`iu', '', LangLoader::get_message('form.doesnt_match_number_regex', 'status-messages-common')))
+			array(new FormFieldConstraintRegex('`^([0-9]+)$`iu', '', LangLoader::get_message('warning.regex.number', 'warning-lang')))
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('anti_flood_enabled', $this->lang['content.config.anti-flood-enabled'], $this->content_management_config->is_anti_flood_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('anti_flood_enabled', $this->lang['admin.anti.flood'], $this->content_management_config->is_anti_flood_enabled(),
 			array(
 				'class' => 'custom-checkbox',
-				'description' => $this->lang['content.config.anti-flood-enabled-explain']
+				'description' => $this->lang['admin.anti.flood.clue']
 			)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('delay_flood', $this->lang['content.config.delay-flood'], $this->content_management_config->get_anti_flood_duration(),
+		$fieldset->add_field(new FormFieldNumberEditor('delay_flood', $this->lang['admin.flood.delay'], $this->content_management_config->get_anti_flood_duration(),
 			array(
 				'required' => true,
-				'description' => $this->lang['content.config.delay-flood-explain']
+				'description' => $this->lang['admin.flood.delay.clue']
 			),
-			array(new FormFieldConstraintRegex('`^([0-9]+)$`iu', '', LangLoader::get_message('form.doesnt_match_number_regex', 'status-messages-common')))
+			array(new FormFieldConstraintRegex('`^([0-9]+)$`iu', '', LangLoader::get_message('warning.regex.number', 'warning-lang')))
 		));
 
-		$fieldset = new FormFieldsetHTML('captcha', $this->lang['content.config.captcha']);
+		$fieldset = new FormFieldsetHTML('captcha', $this->lang['admin.captcha']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('captcha_used', $this->lang['content.config.captcha-used'], $this->content_management_config->get_used_captcha_module(), $this->generate_captcha_available_option(),
-			array('description' => $this->lang['content.config.captcha-used-explain'])
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('captcha_used', $this->lang['admin.used.captcha'], $this->content_management_config->get_used_captcha_module(), $this->generate_captcha_available_option(),
+			array('description' => $this->lang['admin.captcha.clue'])
 		));
 
-		$fieldset = new FormFieldsetHTML('tagnew_config', $this->lang['content.config.new-content-config']);
+		$fieldset = new FormFieldsetHTML('tagnew_config', $this->lang['admin.new.content.config']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldCheckbox('new_content_enabled', $this->lang['content.config.new-content'], $this->content_management_config->is_new_content_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('new_content_enabled', $this->lang['admin.enable.new.content'], $this->content_management_config->is_new_content_enabled(),
 			array(
 				'class' => 'top-field custom-checkbox',
-				'description' => $this->lang['content.config.new-content-explain'],
+				'description' => $this->lang['admin.new.content.clue'],
 				'events' => array('click' => '
 					if (HTMLForms.getField("new_content_enabled").getValue()) {
 						HTMLForms.getField("new_content_duration").enable();
@@ -149,27 +148,27 @@ class AdminContentConfigController extends AdminController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('new_content_duration', $this->lang['content.config.new-content-duration'], $this->content_management_config->get_new_content_duration(),
+		$fieldset->add_field(new FormFieldNumberEditor('new_content_duration', $this->lang['admin.new.content.duration'], $this->content_management_config->get_new_content_duration(),
 			array(
 				'class' => 'top-field', 'min' => 1, 'required' => true,
-				'description' => $this->lang['content.config.new-content-duration-explain'],
+				'description' => $this->lang['admin.new.content.duration.clue'],
 				'hidden' => !$this->content_management_config->is_new_content_enabled()
 			),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'), new FormFieldConstraintIntegerRange(1, 9999))
 		));
 
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('new_content_unauthorized_modules', $this->admin_common_lang['config.forbidden-module'], $this->content_management_config->get_new_content_unauthorized_modules(), ModulesManager::generate_unauthorized_module_option('newcontent'),
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('new_content_unauthorized_modules', $this->lang['admin.forbidden.module'], $this->content_management_config->get_new_content_unauthorized_modules(), ModulesManager::generate_unauthorized_module_option('newcontent'),
 			array(
 				'size' => 12,
-				'description' => $this->admin_common_lang['config.new-content.forbidden-module-explain'],
+				'description' => $this->lang['admin.new.content.forbidden.module.clue'],
 				'hidden' => !$this->content_management_config->is_new_content_enabled()
 			)
 		));
 
-		$fieldset = new FormFieldsetHTML('notation_config', $this->lang['notation.config']);
+		$fieldset = new FormFieldsetHTML('notation_config', $this->lang['admin.notation.config']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldCheckbox('notation_enabled', $this->admin_common_lang['config.notation_enabled'], $this->content_management_config->is_notation_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('notation_enabled', $this->lang['admin.enable.notation'], $this->content_management_config->is_notation_enabled(),
 			array(
 				'class' => 'top-field custom-checkbox',
 				'events' => array('click' => '
@@ -184,7 +183,7 @@ class AdminContentConfigController extends AdminController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('notation_scale', $this->admin_common_lang['config.notation_scale'], $this->content_management_config->get_notation_scale(),
+		$fieldset->add_field(new FormFieldNumberEditor('notation_scale', $this->lang['admin.notation.scale'], $this->content_management_config->get_notation_scale(),
 			array(
 				'class' => 'top-field', 'min' => 3, 'max' => 20, 'required' => true,
 				'hidden' => !$this->content_management_config->is_notation_enabled()
@@ -192,18 +191,18 @@ class AdminContentConfigController extends AdminController
 			array(new FormFieldConstraintIntegerRange(3, 20))
 		));
 
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('notation_unauthorized_modules', $this->admin_common_lang['config.forbidden-module'], $this->content_management_config->get_notation_unauthorized_modules(), ModulesManager::generate_unauthorized_module_option('notation'),
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('notation_unauthorized_modules', $this->lang['admin.forbidden.module'], $this->content_management_config->get_notation_unauthorized_modules(), ModulesManager::generate_unauthorized_module_option('notation'),
 			array(
 				'size' => 6,
-				'description' => $this->admin_common_lang['config.notation.forbidden-module-explain'],
+				'description' => $this->lang['admin.notation.forbidden.module.clue'],
 				'hidden' => !$this->content_management_config->is_notation_enabled()
 			)
 		));
 
-		$fieldset = new FormFieldsetHTML('sharing_config', $this->lang['content.config.sharing']);
+		$fieldset = new FormFieldsetHTML('sharing_config', $this->lang['admin.sharing.management']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldCheckbox('content_sharing_enabled', $this->lang['content.config.content-sharing-enabled'], $this->content_management_config->is_content_sharing_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('content_sharing_enabled', $this->lang['admin.display.content.sharing'], $this->content_management_config->is_content_sharing_enabled(),
 			array(
 				'class' => 'top-field custom-checkbox',
 				'events' => array('click' => '
@@ -220,33 +219,33 @@ class AdminContentConfigController extends AdminController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('content_sharing_email_enabled', $this->lang['content.config.content-sharing-email-enabled'], $this->content_management_config->is_content_sharing_email_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('content_sharing_email_enabled', $this->lang['admin.display.email.sharing'], $this->content_management_config->is_content_sharing_email_enabled(),
 			array(
 				'class' => 'custom-checkbox',
 				'hidden' => !$this->content_management_config->is_content_sharing_enabled()
 			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('content_sharing_print_enabled', $this->lang['content.config.content-sharing-print-enabled'], $this->content_management_config->is_content_sharing_print_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('content_sharing_print_enabled', $this->lang['admin.display.print.sharing'], $this->content_management_config->is_content_sharing_print_enabled(),
 			array(
 				'class' => 'custom-checkbox',
-				'description' => $this->lang['content.config.content-sharing-print-enabled.explain'],
+				'description' => $this->lang['admin.print.sharing.clue'],
 				'hidden' => !$this->content_management_config->is_content_sharing_enabled()
 			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('content_sharing_sms_enabled', $this->lang['content.config.content-sharing-sms-enabled'], $this->content_management_config->is_content_sharing_sms_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('content_sharing_sms_enabled', $this->lang['admin.display.sms.sharing'], $this->content_management_config->is_content_sharing_sms_enabled(),
 			array(
 				'class' => 'custom-checkbox',
-				'description' => $this->lang['content.config.content-sharing-sms-enabled.explain'],
+				'description' => $this->lang['admin.sms.sharing.clue'],
 				'hidden' => !$this->content_management_config->is_content_sharing_enabled()
 			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('opengraph_enabled', $this->lang['content.config.opengraph-enabled'], $this->content_management_config->is_opengraph_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('opengraph_enabled', $this->lang['admin.opengraph'], $this->content_management_config->is_opengraph_enabled(),
 			array(
 				'class' => 'top-field custom-checkbox',
-				'description' => $this->lang['content.config.opengraph-enabled.explain'],
+				'description' => $this->lang['admin.opengraph.clue'],
 				'events' => array('click' => '
 					if (HTMLForms.getField("opengraph_enabled").getValue()) {
 						HTMLForms.getField("site_default_picture_url").enable();
@@ -259,20 +258,20 @@ class AdminContentConfigController extends AdminController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldUploadPictureFile('site_default_picture_url', $this->lang['content.config.site-default-picture-url'], $this->content_management_config->get_site_default_picture_url()->relative(),
+		$fieldset->add_field(new FormFieldUploadPictureFile('site_default_picture_url', $this->lang['admin.default.picture'], $this->content_management_config->get_site_default_picture_url()->relative(),
 			array(
 				'class' => 'top-field',
 				'hidden' => !$this->content_management_config->is_opengraph_enabled()
 			)
 		));
 
-		$fieldset = new FormFieldsetHTML('id_card_config', $this->lang['content.config.id.card']);
+		$fieldset = new FormFieldsetHTML('id_card_config', $this->lang['admin.id.card']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldCheckbox('id_card_enabled', $this->lang['content.config.id.card.enabled'], $this->content_management_config->is_id_card_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('id_card_enabled', $this->lang['admin.enable.id.card'], $this->content_management_config->is_id_card_enabled(),
 			array(
 				'class' => 'top-field custom-checkbox',
-				'description' => $this->lang['content.config.id.card.explain'],
+				'description' => $this->lang['admin.id.card.clue'],
 				'events' => array('click' => '
 					if (HTMLForms.getField("id_card_enabled").getValue()) {
 						HTMLForms.getField("id_card_unauthorized_modules").enable();
@@ -283,10 +282,10 @@ class AdminContentConfigController extends AdminController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('id_card_unauthorized_modules', $this->admin_common_lang['config.forbidden-module'], $this->content_management_config->get_id_card_unauthorized_modules(), ModulesManager::generate_unauthorized_module_option('idcard'),
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('id_card_unauthorized_modules', $this->lang['admin.forbidden.module'], $this->content_management_config->get_id_card_unauthorized_modules(), ModulesManager::generate_unauthorized_module_option('idcard'),
 			array(
 				'size' => 6,
-				'description' => $this->lang['config.id.card.forbidden-module-explain'],
+				'description' => $this->lang['admin.id.card.forbidden.module.clue'],
 				'hidden' => !$this->content_management_config->is_id_card_enabled()
 			)
 		));

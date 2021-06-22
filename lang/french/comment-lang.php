@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 04
+ * @version     PHPBoost 6.0 - last update: 2021 06 22
  * @since       PHPBoost 3.0 - 2011 09 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -54,6 +54,8 @@ $lang['comment.max.links']          = 'Nombre de liens autorisés dans un commen
 $lang['comment.display.order']      = 'Ordre d\'affichage des commentaires';
 $lang['comment.display.order.asc']  = 'Du plus ancien au plus récent';
 $lang['comment.display.order.desc'] = 'Du plus récent au plus ancien';
+
+$lang['comment.forbidden.module.clue']    = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer les commentaires';
 
 // TODO:
 $lang['comment.authorization.note']        = 'Autorisation de noter les commentaires';

@@ -105,10 +105,58 @@ $lang['admin.high.level']         = 'High';
 $lang['admin.level.clue']         = 'The low level can only remove the tabs and spaces while the upper level fully optimizes your CSS files.';
 
 // Content
-$lang['admin.forbidden.module']                  = 'Forbidden modules';
-$lang['admin.comments.forbidden.module.clue']    = 'Select modules in which you do not want to enable comments';
-$lang['admin.notation.forbidden.module.clue']    = 'Select modules in which you do not want to enable notation';
+$lang['admin.content.configuration'] = 'Content configuration';
+$lang['admin.forbidden.module']      = 'Forbidden modules';
+    // Format
+$lang['admin.formatting.language']         = 'Formatting language';
+$lang['admin.default.formatting.language'] = 'Default formatting language on the website';
+$lang['admin.formatting.language.clue']    = 'Every user will be able to choose';
+$lang['admin.forbidden.tags']              = 'Forbidden tags';
+    // HTML
+$lang['admin.html.language']            = 'HTML language';
+$lang['admin.html.authorizations']      = 'Authorization level to insert HTML langage in the content';
+$lang['admin.html.authorizations.clue'] = 'Warning : if you can insert HTML tags, you can also insert some JavaScript and this code can be the source of vulnerabilities. People who can insert some HTML language must be people who you trust.';
+    // Messages
+$lang['admin.messages.management'] = 'Post Management';
+$lang['admin.max.pm.number']       = 'Maximum number of private messages';
+$lang['admin.max.pm.number.clue']  = 'Unlimited for administrators and moderators';
+$lang['admin.anti.flood']          = 'Anti flood';
+$lang['admin.anti.flood.clue']     = 'Block too rapid repeat messages, except if the visitors are authorized';
+$lang['admin.flood.delay']         = 'Minimal interval of time between two messages';
+$lang['admin.flood.delay.clue']    = 'In seconds. 7 seconds per default.';
+    // Share
+$lang['admin.sharing.management']      = 'Sharing options management';
+$lang['admin.display.content.sharing'] = 'Display sharing links on content pages';
+$lang['admin.display.email.sharing']   = 'Display Email sharing link';
+$lang['admin.display.print.sharing']   = 'Display page print link';
+$lang['admin.print.sharing.clue']      = 'Visible on computer only';
+$lang['admin.display.sms.sharing']     = 'Display SMS sharing link';
+$lang['admin.sms.sharing.clue']        = 'Visible on mobile device only';
+    // S.E.O.
+$lang['admin.opengraph']       = 'Improve SEO with OpenGraph tags';
+$lang['admin.opengraph.clue']  = 'Allows to give precise information about pages to search engines and social networks';
+$lang['admin.default.picture'] = 'Site default picture for SEO';
+    // Captcha
+$lang['admin.captcha']      = 'Captcha';
+$lang['admin.used.captcha'] = 'Captcha used on your site';
+$lang['admin.captcha.clue'] = 'The captcha allows you to protect yourself against spam on your site.';
+    // New content
+$lang['admin.new.content.config']        = 'Recent content tag management';
+$lang['admin.enable.new.content']        = 'Enable new content tag';
+$lang['admin.new.content.clue']          = 'This option allows to identify newly added elements.';
+$lang['admin.new.content.duration']      = 'Tag display time';
+$lang['admin.new.content.duration.clue'] = 'In days. 5 days by default.';
 $lang['admin.new.content.forbidden.module.clue'] = 'Select modules in which you do not want to enable new-content tag';
+    // Notation
+$lang['admin.notation.config'] = 'Notation configuration';
+$lang['admin.enable.notation'] = 'Enable notation';
+$lang['admin.notation.scale']  = 'Notation scale';
+$lang['admin.notation.forbidden.module.clue'] = 'Select modules in which you do not want to enable notation';
+    // ID card
+$lang['admin.id.card']        = 'Author information management';
+$lang['admin.enable.id.card'] = 'Enable the author information';
+$lang['admin.id.card.clue']   = 'Display the author information of an article (profile + avatar + biography)';
+$lang['admin.id.card.forbidden.module.clue'] = 'Select modules where you don\'t want to enable the author information';
 
 // Errors lists
 $lang['admin.errors']               = 'Errors';
@@ -152,6 +200,24 @@ $lang['admin.maintenance.display.duration']       = 'Display maintenance duratio
 $lang['admin.maintenance.admin.display.duration'] = 'Display maintenance duration to the administrator';
 $lang['admin.maintenance.text']                   = 'Text to display when the website is under maintenance';
 $lang['admin.maintenance.authorization']          = 'Permission to access to the website during maintenance';
+
+// Server report
+$LANG['admin.server']                     = 'Server';
+$LANG['admin.phpinfo']                    = 'PHP info';
+$LANG['admin.system.report']              = 'System report';
+$LANG['admin.php.version']                = 'PHP version';
+$LANG['admin.dbms.version']               = 'DBMS version';
+$LANG['admin.gd.library']                 = 'GD Library';
+$LANG['admin.curl.library']               = 'Curl Extension';
+$LANG['admin.mbstring.library']           = 'Mbstring Extension (UTF-8)';
+$LANG['admin.url.rewriting']              = 'URL rewriting';
+$LANG['admin.phpboost.config']            = 'PHPBoost configuration';
+$LANG['admin.kernel.version']             = 'Kernel version';
+$LANG['admin.output.gz']                  = 'Output pages compression';
+$LANG['admin.directories.auth']           = 'Directories authorization';
+$LANG['admin.system.report.summary']      = 'Summary';
+$LANG['admin.system.report.summary.clue'] = 'This is a summary of the report, it will be useful for support, when you will be asked about your configuration.';
+$LANG['admin.copy.report']                = 'Copy report';
 
 // Smileys
 $lang['admin.smileys.management']     = 'Smiley management';

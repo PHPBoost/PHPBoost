@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 02 11
+ * @version     PHPBoost 6.0 - last update: 2021 06 22
  * @since       PHPBoost 4.1 - 2014 09 11
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminMaintainDisplayResponse extends AdminMenuDisplayResponse
@@ -13,7 +14,7 @@ class AdminMaintainDisplayResponse extends AdminMenuDisplayResponse
 	{
 		parent::__construct($view);
 
-		$title = LangLoader::get_message('maintain', 'user-common');
+		$title = LangLoader::get_message('admin.maintenance', 'admin-lang');
 		$this->set_title($title);
 
 		$this->add_link($title, AdminMaintainUrlBuilder::maintain());

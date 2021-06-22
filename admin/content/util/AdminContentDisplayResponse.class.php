@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2015 11 07
+ * @version     PHPBoost 6.0 - last update: 2021 06 22
  * @since       PHPBoost 4.0 - 2013 07 08
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminContentDisplayResponse extends AdminMenuDisplayResponse
@@ -13,10 +14,10 @@ class AdminContentDisplayResponse extends AdminMenuDisplayResponse
 	{
 		parent::__construct($view);
 
-		$lang = LangLoader::get('admin-contents-common');
-		$this->set_title($lang['content.config']);
+		$lang = LangLoader::get('admin-lang');
+		$this->set_title($lang['admin.content.configuration']);
 
-		$this->add_link($lang['content.config'], AdminContentUrlBuilder::content_configuration());
+		$this->add_link($lang['admin.content.configuration'], AdminContentUrlBuilder::content_configuration());
 
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);

@@ -174,9 +174,6 @@ $lang['form.success.edit'] = 'Le champ <b>:name</b> a été modifié';
 
 // Modules
 $lang['form.forbidden.module']                  = 'Modules interdits';
-$lang['form.comments.forbidden.module.clue']    = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer les commentaires';
-$lang['form.notation.forbidden.module.clue']    = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer la notation';
-$lang['form.new.content.forbidden.module.clue'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer les tags de nouveau contenu';
 $lang['form.hide.left.column']                  = 'Masquer les blocs de gauche du site sur le module :module';
 $lang['form.hide.right.column']                 = 'Masquer les blocs de droite du site sur le module :module';
 
