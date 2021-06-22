@@ -11,7 +11,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 21
+ * @version     PHPBoost 6.0 - last update: 2021 06 22
  * @since       PHPBoost 2.0 - 2008 06 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -44,6 +44,8 @@ class Date
 	 */
 	private $date_time;
 
+	private static $date_lang;
+
 	/**
 	 * Builds and initializes a date.
 	 * The first parameter is the date in a standardized format defined in the PHP documentation. To get the current date, use the Date::DATE_NOW
@@ -57,6 +59,7 @@ class Date
 	public function __construct($time = self::DATE_NOW, $referencial_timezone = Timezone::USER_TIMEZONE)
 	{
 		$date_timezone = Timezone::get_timezone($referencial_timezone);
+		self::$date_lang = LangLoader::get('date-lang');
 
 		if (preg_match('`^([0-9]+)$`iu', $time))
 		{
@@ -91,6 +94,8 @@ class Date
 	 * 	<li>Date::FORMAT_ISO_DAY_MONTH_YEAR</li>
 	 * 	<li>Date::FORMAT_AGO</li>
 	 *  <li>Date::FORMAT_SINCE</li>
+	 *  <li>Date::FORMAT_HOUR_MINUTE</li>
+	 *  <li>Date::FORMAT_DAY_MONTH_TEXT</li>
 	 * </ul>
 	 * @param int $referencial_timezone One of the following enumeration:
 	 * <ul>
@@ -109,22 +114,23 @@ class Date
 			return $this->date_time->format($format);
 		}
 
+
 		switch ($format)
 		{
+			case self::FORMAT_TIMESTAMP:
+				return $this->date_time->getTimestamp();
+				break;
+
 			case self::FORMAT_DAY_MONTH:
-				return $this->date_time->format(LangLoader::get_message('date.format.day.month', 'date-lang'));
+				return $this->date_time->format(self::$date_lang['date.format.day.month']);
 				break;
 
 			case self::FORMAT_DAY_MONTH_YEAR:
-				return $this->date_time->format(LangLoader::get_message('date.format.day.month.year', 'date-lang'));
+				return $this->date_time->format(self::$date_lang['date.format.day.month.year']);
 				break;
 
 			case self::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE:
-				return $this->date_time->format(LangLoader::get_message('date.format.day.month.year.hour.minute', 'date-lang'));
-				break;
-
-			case self::FORMAT_TIMESTAMP:
-				return $this->date_time->getTimestamp();
+				return $this->date_time->format(self::$date_lang['date.format.day.month.year.hour.minute']);
 				break;
 
 			case self::FORMAT_RFC2822:
@@ -136,15 +142,15 @@ class Date
 				break;
 
 			case self::FORMAT_DAY_MONTH_YEAR_LONG:
-				return self::transform_date($this->date_time->format(LangLoader::get_message('date.format.day.month.year.long', 'date-lang')));
+				return self::transform_date($this->date_time->format(self::$date_lang['date.format.day.month.year.long']));
 				break;
 
 			case self::FORMAT_DAY_MONTH_YEAR_TEXT:
-				return self::transform_date($this->date_time->format(LangLoader::get_message('date.format.day.month.year.text', 'date-lang')));
+				return self::transform_date($this->date_time->format(self::$date_lang['date.format.day.month.year.text']));
 				break;
 
 			case self::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT:
-				return self::transform_date($this->date_time->format(LangLoader::get_message('date.format.day.month.year.hour.minute.text', 'date-lang')));
+				return self::transform_date($this->date_time->format(self::$date_lang['date.format.day.month.year.hour.minute.text']));
 				break;
 
 			case self::FORMAT_RELATIVE:
@@ -157,21 +163,30 @@ class Date
 
 			case self::FORMAT_AGO:
 				$time = self::get_date_relative($this->get_timestamp(), $referencial_timezone);
-				if ($time !== LangLoader::get_message('date.instantly', 'date-lang'))
-					$time = StringVars::replace_vars(LangLoader::get_message('date.ago', 'date-lang'), array('time' => $time));
+				if ($time !== self::$date_lang['date.instantly'])
+					$time = StringVars::replace_vars(self::$date_lang['date.ago'], array('time' => $time));
 				return $time;
 				break;
 
 			case self::FORMAT_SINCE:
 				$time = self::get_date_relative($this->get_timestamp(), $referencial_timezone);
-				if ($time !== LangLoader::get_message('date.instantly', 'date-lang'))
-					$time = StringVars::replace_vars(LangLoader::get_message('date.since', 'date-lang'), array('time' => $time));
+				if ($time !== self::$date_lang['date.instantly'])
+					$time = StringVars::replace_vars(self::$date_lang['date.since'], array('time' => $time));
 				return $time;
 				break;
 
-				case self::FORMAT_DELAY:
-					return self::get_date_delay($this, $referencial_timezone);
-					break;
+			case self::FORMAT_DELAY:
+				return self::get_date_delay($this, $referencial_timezone);
+				break;
+
+			case self::FORMAT_HOUR_MINUTE:
+				return self::transform_date($this->date_time->format(self::$date_lang['date.format.hour.minute']));
+				break;
+			
+			case self::FORMAT_DAY_MONTH_TEXT:
+				return self::transform_date($this->date_time->format(self::$date_lang['date.format.day.month.text']));
+				break;
+			
 			default:
 				return '';
 		}
@@ -201,21 +216,21 @@ class Date
 		$years    = round($time_diff/29030400);
 
 		if ($secondes == 1)
-			return LangLoader::get_message('date.instantly', 'date-lang');
+			return self::$date_lang['date.instantly'];
 		elseif ($secondes < 60)
-			return $secondes . ' ' . LangLoader::get_message('date.seconds', 'date-lang');
+			return $secondes . ' ' . self::$date_lang['date.seconds'];
 		elseif ($minutes < 60)
-			return $minutes . ' ' . ($minutes > 1 ? LangLoader::get_message('date.minutes', 'date-lang') : LangLoader::get_message('date.minute', 'date-lang'));
+			return $minutes . ' ' . ($minutes > 1 ? self::$date_lang['date.minutes'] : self::$date_lang['date.minute']);
 		elseif ($hours < 24)
-			return $hours . ' ' . ($hours > 1 ? LangLoader::get_message('date.hours', 'date-lang') : LangLoader::get_message('date.hour', 'date-lang'));
+			return $hours . ' ' . ($hours > 1 ? self::$date_lang['date.hours'] : self::$date_lang['date.hour']);
 		elseif ($days < 7)
-			return $days . ' ' . ($days > 1 ? LangLoader::get_message('date.days', 'date-lang') : LangLoader::get_message('date.day', 'date-lang'));
+			return $days . ' ' . ($days > 1 ? self::$date_lang['date.days'] : self::$date_lang['date.day']);
 		elseif ($weeks < 4)
-			return $weeks . ' ' . ($weeks > 1 ? LangLoader::get_message('date.weeks', 'date-lang') : LangLoader::get_message('date.week', 'date-lang'));
+			return $weeks . ' ' . ($weeks > 1 ? self::$date_lang['date.weeks'] : self::$date_lang['date.week']);
 		elseif ($months < 12)
-			return $months . ' ' . ($months > 1 ? LangLoader::get_message('date.months', 'date-lang') : LangLoader::get_message('date.month', 'date-lang'));
+			return $months . ' ' . ($months > 1 ? self::$date_lang['date.months'] : self::$date_lang['date.month']);
 		else
-			return $years . ' ' . ($years > 1 ? LangLoader::get_message('date.years', 'date-lang') : LangLoader::get_message('date.year', 'date-lang'));
+			return $years . ' ' . ($years > 1 ? self::$date_lang['date.years'] : self::$date_lang['date.year']);
 	}
 
 	/**
@@ -237,15 +252,15 @@ class Date
 		$years    = round($time_diff/29030400);
 
 		if ($time_diff < 30) // Check if less than 30 seconds
-			return LangLoader::get_message('date.instantly', 'date-lang');
+			return self::$date_lang['date.instantly'];
 		elseif ($hours < 24) // Check if it was today
-			return self::transform_date($date->date_time->format(LangLoader::get_message('date.format.hour.minute', 'date-lang')));
+			return self::transform_date($date->date_time->format(self::$date_lang['date.format.hour.minute']));
 		elseif ( ($hours > 24 ) && ( $hours < 48 ) ) // Check if it was yesterday
-			return LangLoader::get_message('date.yesterday', 'date-lang');
+			return self::$date_lang['date.yesterday'];
 		elseif ($years < 1) // Check if it was this year
-			return self::transform_date($date->date_time->format(LangLoader::get_message('date.format.day.month.text', 'date-lang')));
+			return self::transform_date($date->date_time->format(self::$date_lang['date.format.day.month.text']));
 		else
-			return self::transform_date($date->date_time->format(LangLoader::get_message('date.format.day.month.year', 'date-lang')));
+			return self::transform_date($date->date_time->format(self::$date_lang['date.format.day.month.year']));
 	}
 
 	/**
@@ -579,8 +594,6 @@ class Date
 
 	private static function transform_date($date)
 	{
-		$date_lang = LangLoader::get('date-lang');
-
 		$search = array(
 			'january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december',
 			'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec',
@@ -588,12 +601,12 @@ class Date
 			'mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun',
 		);
 		$replace = array(
-			$date_lang['date.january'], $date_lang['date.february'], $date_lang['date.march'], $date_lang['date.april'], $date_lang['date.may'], $date_lang['date.june'],
-			$date_lang['date.july'], $date_lang['date.august'], $date_lang['date.september'], $date_lang['date.october'], $date_lang['date.november'], $date_lang['date.december'],
-			$date_lang['date.january.short'], $date_lang['date.february.short'], $date_lang['date.march.short'], $date_lang['date.april.short'], $date_lang['date.may.short'], $date_lang['date.june.short'],
-			$date_lang['date.july.short'], $date_lang['date.august.short'], $date_lang['date.september.short'], $date_lang['date.october.short'], $date_lang['date.november.short'], $date_lang['date.december.short'],
-			$date_lang['date.monday'], $date_lang['date.tuesday'], $date_lang['date.wednesday'], $date_lang['date.thursday'], $date_lang['date.friday'], $date_lang['date.saturday'], $date_lang['date.sunday'],
-			$date_lang['date.monday.short'], $date_lang['date.tuesday.short'], $date_lang['date.wednesday.short'], $date_lang['date.thursday.short'], $date_lang['date.friday.short'], $date_lang['date.saturday.short'], $date_lang['date.sunday.short']
+			self::$date_lang['date.january'], self::$date_lang['date.february'], self::$date_lang['date.march'], self::$date_lang['date.april'], self::$date_lang['date.may'], self::$date_lang['date.june'],
+			self::$date_lang['date.july'], self::$date_lang['date.august'], self::$date_lang['date.september'], self::$date_lang['date.october'], self::$date_lang['date.november'], self::$date_lang['date.december'],
+			self::$date_lang['date.january.short'], self::$date_lang['date.february.short'], self::$date_lang['date.march.short'], self::$date_lang['date.april.short'], self::$date_lang['date.may.short'], self::$date_lang['date.june.short'],
+			self::$date_lang['date.july.short'], self::$date_lang['date.august.short'], self::$date_lang['date.september.short'], self::$date_lang['date.october.short'], self::$date_lang['date.november.short'], self::$date_lang['date.december.short'],
+			self::$date_lang['date.monday'], self::$date_lang['date.tuesday'], self::$date_lang['date.wednesday'], self::$date_lang['date.thursday'], self::$date_lang['date.friday'], self::$date_lang['date.saturday'], self::$date_lang['date.sunday'],
+			self::$date_lang['date.monday.short'], self::$date_lang['date.tuesday.short'], self::$date_lang['date.wednesday.short'], self::$date_lang['date.thursday.short'], self::$date_lang['date.friday.short'], self::$date_lang['date.saturday.short'], self::$date_lang['date.sunday.short']
 		);
 		return str_replace($search, $replace, TextHelper::strtolower($date));
 	}
