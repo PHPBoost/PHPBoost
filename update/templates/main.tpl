@@ -100,7 +100,7 @@ ${resources('update/update')}
 		</div>
 		<script>
 			jQuery('.lang-selector').selectImg({
-				ariaLabel : ${escapejs(LangLoader::get_message('click.to.select', 'common'))}
+				ariaLabel : ${escapejs(LangLoader::get_message('common.click.to.select', 'common-lang'))}
 			});
 		</script>
 	</body>
