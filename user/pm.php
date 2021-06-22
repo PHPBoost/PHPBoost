@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 21
+ * @version     PHPBoost 6.0 - last update: 2021 06 22
  * @since       PHPBoost 1.5 - 2006 07 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -719,7 +719,15 @@ elseif (!empty($pm_id_get)) // Messages associated with the conversation.
 
 		$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
-		$date = new Date($row['timestamp'],Timezone::SERVER_TIMEZONE);
+		$date = new Date($row['timestamp'], Timezone::SERVER_TIMEZONE);
+
+		if ($j == 0)
+			$new_day = true;
+		else
+			$new_day = ($previous_date->format(Date::FORMAT_DAY_MONTH_YEAR) <> $date->format(Date::FORMAT_DAY_MONTH_YEAR) );
+		
+		if ( $new_day == true )
+			$previous_date = $date ;
 
 		$view->assign_block_vars('pm.msg', array_merge(
 			Date::get_array_tpl_vars($date,'date'),
@@ -736,7 +744,9 @@ elseif (!empty($pm_id_get)) // Messages associated with the conversation.
 			'LEVEL_CLASS'            => UserService::get_level_class($row['level']),
 			'GROUP_COLOR'            => $group_color,
 			'U_PROFILE'              => UserUrlBuilder::profile($row['user_id'])->rel(),
-			'WARNING_LEVEL'          => (($row['warning_percentage'] < '100' || (time() - $row['delay_banned']) < 0) ? UserService::get_level_lang($row['level'] !== null ? $row['level'] : '-1') : $lang['banned'])
+			'WARNING_LEVEL'          => (($row['warning_percentage'] < '100' || (time() - $row['delay_banned']) < 0) ? UserService::get_level_lang($row['level'] !== null ? $row['level'] : '-1') : $lang['banned']),
+			'C_NEW_DAY'              => $new_day,
+			'NEW_DAY_DATE'           => $new_day ? $date->format(Date::FORMAT_DAY_MONTH_YEAR_TEXT) : ""
 			)
 		));
 
