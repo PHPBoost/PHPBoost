@@ -236,7 +236,7 @@
 						</span>
 					</div>
 					<div class="modal-container">
-						<button class="button upload-help" data-modal data-target="upload-helper" aria-label="${LangLoader::get_message('upload.helper', 'upload-common')}"><i class="fa fa-question" aria-hidden="true"></i></button>
+						<button class="button upload-help" data-modal data-target="upload-helper" aria-label="{@upload.upload.helper}"><i class="fa fa-question" aria-hidden="true"></i></button>
 						<div id="upload-helper" class="modal modal-animation">
 							<div class="close-modal" aria-label="{@common.close}"></div>
 							<div class="content-panel">

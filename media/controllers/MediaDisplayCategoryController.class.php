@@ -13,7 +13,6 @@
 class MediaDisplayCategoryController extends ModuleController
 {
 	private $lang;
-	private $common_lang;
 	private $view;
 
 	private $category;
@@ -32,7 +31,6 @@ class MediaDisplayCategoryController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'media');
-		$this->common_lang = LangLoader::get('common');
 		$this->view = new FileTemplate('media/MediaSeveralItemsController.tpl');
 		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 	}

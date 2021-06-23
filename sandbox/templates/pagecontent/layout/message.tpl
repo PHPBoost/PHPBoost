@@ -32,7 +32,7 @@
                         </div>
                         <div class="message-infos">
                             <time datetime="{TODAY_TIME}" itemprop="datePublished">{TODAY_TIME}</time>
-                            <a href="#ID" aria-label="${LangLoader::get_message('link.to.anchor', 'comments-common')}">\#ID</a>
+                            <a href="#ID" aria-label="${LangLoader::get_message('comment.link.to.anchor', 'comment-lang')}">\#ID</a>
                         </div>
                     </div>
                 </header>
@@ -81,7 +81,7 @@
             &lt;/div>
             &lt;div class="message-infos">
                 &lt;time datetime="Date" itemprop="datePublished">Date&lt;/time>
-                &lt;a href="UrlAnchor" aria-label="${LangLoader::get_message('link.to.anchor', 'comments-common')}">AnchorName&lt;/a>
+                &lt;a href="UrlAnchor" aria-label="${LangLoader::get_message('comment.link.to.anchor', 'comment-lang')}">AnchorName&lt;/a>
             &lt;/div>
         &lt;/div>
     &lt;/header>
