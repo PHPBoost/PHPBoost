@@ -62,9 +62,9 @@ class DefaultItemsManagementController extends AbstractItemController
         $table_model->add_filter($filter);
     }
 
-		$status_list = array(Item::PUBLISHED => $this->lang['form.publication.now'], Item::NOT_PUBLISHED => $this->lang['form.publication.draft']);
+		$status_list = array(Item::PUBLISHED => $this->lang['common.status.published'], Item::NOT_PUBLISHED => $this->lang['common.status.draft']);
 		if (self::get_module_configuration()->feature_is_enabled('deferred_publication'))
-			$status_list[Item::DEFERRED_PUBLICATION] = $this->lang['form.publication.deffered'];
+			$status_list[Item::DEFERRED_PUBLICATION] = $this->lang['common.status.deffered.date'];
 		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('published', 'filter5', $this->lang['common.status'], $status_list));
 
 		$table = new HTMLTable($table_model, $this->lang);
