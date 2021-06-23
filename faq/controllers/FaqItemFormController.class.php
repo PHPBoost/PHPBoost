@@ -96,7 +96,7 @@ class FaqItemFormController extends ModuleController
 		if ($this->get_item()->get_id() === null && $this->is_contributor_member())
 		{
 			$fieldset = new FormFieldsetHTML('contribution', $contribution['contribution.contribution']);
-			$fieldset->set_description(MessageHelper::display($contribution['contribution.clue'], MessageHelper::WARNING)->render());
+			$fieldset->set_description(MessageHelper::display($contribution['contribution.warning'], MessageHelper::WARNING)->render());
 			$form->add_fieldset($fieldset);
 
 			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $contribution['contribution.description'], '', array('description' => $contribution['contribution.description.clue'])));

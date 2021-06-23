@@ -172,7 +172,7 @@ class AdminCalendarConfigController extends AdminModuleController
 			array('rows' => 8, 'cols' => 47)
 		));
 
-		$fieldset = new FormFieldsetHTML('authorizations_fieldset', LangLoader::get_message('authorizations', 'common'),
+		$fieldset = new FormFieldsetHTML('authorizations_fieldset', $this->form_lang['form.authorizations'],
 			array('description' => $this->form_lang['form.authorizations.clue'])
 		);
 		$form->add_fieldset($fieldset);

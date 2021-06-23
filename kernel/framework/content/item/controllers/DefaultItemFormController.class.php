@@ -451,7 +451,7 @@ class DefaultItemFormController extends AbstractItemController
 		if ($this->is_new_item && $this->is_contributor_member())
 		{
 			$fieldset = new FormFieldsetHTML('contribution', $contribution['contribution.contribution']);
-			$fieldset->set_description(MessageHelper::display($contribution['contribution.extended.clue'], MessageHelper::WARNING)->render());
+			$fieldset->set_description(MessageHelper::display($contribution['contribution.extended.warning'], MessageHelper::WARNING)->render());
 			$form->add_fieldset($fieldset);
 
 			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $contribution['contribution.description'], '',
@@ -461,11 +461,11 @@ class DefaultItemFormController extends AbstractItemController
 		elseif ($this->get_item()->is_published() && $this->get_item()->is_authorized_to_edit() && !AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL))
 		{
 			$fieldset = new FormFieldsetHTML('member_edition', $contribution['contribution.member.edition']);
-			$fieldset->set_description(MessageHelper::display($contribution['contribution.member.edition.clue'], MessageHelper::WARNING)->render());
+			$fieldset->set_description(MessageHelper::display($contribution['contribution.edition.warning'], MessageHelper::WARNING)->render());
 			$form->add_fieldset($fieldset);
 
-			$fieldset->add_field(new FormFieldRichTextEditor('edition_description', $contribution['contribution.member.edition.description'], '',
-				array('description' => $contribution['contribution.member.edition.description.clue'])
+			$fieldset->add_field(new FormFieldRichTextEditor('edition_description', $contribution['contribution.edition.description'], '',
+				array('description' => $contribution['contribution.edition.description.clue'])
 			));
 		}
 	}
