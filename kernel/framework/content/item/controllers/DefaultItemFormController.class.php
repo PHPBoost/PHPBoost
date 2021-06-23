@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 22
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 6.0 - 2020 05 16
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -447,52 +447,65 @@ class DefaultItemFormController extends AbstractItemController
 
 	protected function build_contribution_fieldset($form)
 	{
+		$contribution = LangLoader::get('contribution-lang');
 		if ($this->is_new_item && $this->is_contributor_member())
 		{
-			$fieldset = new FormFieldsetHTML('contribution', LangLoader::get_message('contribution', 'user-common'));
-			$fieldset->set_description(MessageHelper::display(LangLoader::get_message('contribution.explain', 'user-common'), MessageHelper::WARNING)->render());
+			$fieldset = new FormFieldsetHTML('contribution', $contribution['contribution.contribution']);
+			$fieldset->set_description(MessageHelper::display($contribution['contribution.extended.clue'], MessageHelper::WARNING)->render());
 			$form->add_fieldset($fieldset);
 
-			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', LangLoader::get_message('contribution.description', 'user-common'), '',
-				array('description' => LangLoader::get_message('contribution.description.explain', 'user-common'))));
+			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $contribution['contribution.description'], '',
+				array('description' => $contribution['contribution.description.clue'])
+			));
+		}
+		elseif ($this->get_item()->is_published() && $this->get_item()->is_authorized_to_edit() && !AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL))
+		{
+			$fieldset = new FormFieldsetHTML('member_edition', $contribution['contribution.member.edition']);
+			$fieldset->set_description(MessageHelper::display($contribution['contribution.member.edition.clue'], MessageHelper::WARNING)->render());
+			$form->add_fieldset($fieldset);
+
+			$fieldset->add_field(new FormFieldRichTextEditor('edition_description', $contribution['contribution.member.edition.description'], '',
+				array('description' => $contribution['contribution.member.edition.description.clue'])
+			));
 		}
 	}
 
 	protected function contribution_actions(Item $item, $id)
 	{
-		if ($this->is_new_item)
+		if ($this->is_contributor_member())
 		{
-			if ($this->is_contributor_member())
-			{
-				$contribution = new Contribution();
-				$contribution->set_id_in_module($id);
+			$contribution = new Contribution();
+			$contribution->set_id_in_module($id);
+			if ($this->is_new_item)
 				$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
-				$contribution->set_entitled($item->get_title());
-				$contribution->set_fixing_url(ItemsUrlBuilder::edit($id)->relative());
-				$contribution->set_poster_id(AppContext::get_current_user()->get_id());
-				$contribution->set_module(self::$module_id);
+			else
+				$contribution->set_description(stripslashes($this->form->get_value('edition_description')));
 
-				if (self::get_module_configuration()->has_categories())
-				{
-					$contribution->set_auth(
-						Authorizations::capture_and_shift_bit_auth(
-							CategoriesService::get_categories_manager()->get_heritated_authorizations($item->get_id_category(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
-							Category::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
-						)
-					);
-				}
-				else
-				{
-					$contribution->set_auth(
-						Authorizations::capture_and_shift_bit_auth(
-							$this->config->get_authorizations(),
-							Item::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
-						)
-					);
-				}
+			$contribution->set_entitled($item->get_title());
+			$contribution->set_fixing_url(ItemsUrlBuilder::edit($id)->relative());
+			$contribution->set_poster_id(AppContext::get_current_user()->get_id());
+			$contribution->set_module(self::$module_id);
 
-				ContributionService::save_contribution($contribution);
+			if (self::get_module_configuration()->has_categories())
+			{
+				$contribution->set_auth(
+					Authorizations::capture_and_shift_bit_auth(
+						CategoriesService::get_categories_manager()->get_heritated_authorizations($item->get_id_category(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
+						Category::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
+					)
+				);
 			}
+			else
+			{
+				$contribution->set_auth(
+					Authorizations::capture_and_shift_bit_auth(
+						$this->config->get_authorizations(),
+						Item::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
+					)
+				);
+			}
+
+			ContributionService::save_contribution($contribution);
 		}
 		else
 		{
