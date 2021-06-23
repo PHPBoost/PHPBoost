@@ -6,10 +6,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 03
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 3.0 - 2010 03 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class Mail
@@ -97,7 +98,7 @@ class Mail
 
 		if ($sender_name == self::SENDER_ADMIN || $sender_name == self::SENDER_USER)
 		{
-			$sender_name = $sender_name == self::SENDER_ADMIN ? LangLoader::get_message('administrator', 'user-common') : LangLoader::get_message('user', 'user-common');
+			$sender_name = $sender_name == self::SENDER_ADMIN ? LangLoader::get_message('user.administrator', 'user-lang') : LangLoader::get_message('user.user', 'user-lang');
 		}
 
 		$this->sender_name = str_replace('"', '', $site_name . ' - ' . $sender_name);
@@ -114,7 +115,7 @@ class Mail
 	{
 		if ($reply_to_name == self::SENDER_ADMIN || $reply_to_name == self::SENDER_USER)
 		{
-			$reply_to_name = $reply_to_name == self::SENDER_ADMIN ? LangLoader::get_message('administrator', 'user-common') : LangLoader::get_message('user', 'user-common');
+			$reply_to_name = $reply_to_name == self::SENDER_ADMIN ? LangLoader::get_message('user.administrator', 'user-lang') : LangLoader::get_message('user.user', 'user-lang');
 		}
 
 		$this->reply_to_name = $reply_to_name;

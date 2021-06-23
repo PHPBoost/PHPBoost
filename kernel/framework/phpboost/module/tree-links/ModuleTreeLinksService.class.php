@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 23
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 4.1 - 2013 11 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -28,7 +28,7 @@ class ModuleTreeLinksService
 			$tpl->put_all(array(
 				'C_DISPLAY' => $actions_tree_links->has_visible_links(),
 				'ID' => $module_name,
-				'MODULE_NAME' => $module_name != 'user' ? $module->get_configuration()->get_name() : LangLoader::get_message('users', 'user-common'),
+				'MODULE_NAME' => $module_name != 'user' ? $module->get_configuration()->get_name() : LangLoader::get_message('user.users', 'user-lang'),
 			));
 
 			if ($module_name != 'user')

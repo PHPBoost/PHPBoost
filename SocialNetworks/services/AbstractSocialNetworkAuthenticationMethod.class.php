@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 11 26
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 5.1 - 2018 04 16
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class AbstractSocialNetworkAuthenticationMethod extends AuthenticationMethod
@@ -38,7 +39,7 @@ abstract class AbstractSocialNetworkAuthenticationMethod extends AuthenticationM
 			}
 		}
 		else
-			$this->error_msg = LangLoader::get_message('external-auth.email-not-found', 'user-common');
+			$this->error_msg = LangLoader::get_message('user.external.auth.email.not.found', 'user-lang');
 	}
 
 	/**
@@ -86,7 +87,7 @@ abstract class AbstractSocialNetworkAuthenticationMethod extends AuthenticationM
 						if (!AppContext::get_current_user()->is_guest())
 							$this->associate(AppContext::get_current_user()->get_id(), $data);
 						else
-							$this->error_msg = LangLoader::get_message('external-auth.account-exists', 'user-common');
+							$this->error_msg = LangLoader::get_message('user.external.auth.account.exists', 'user-lang');
 					}
 					else
 					{
@@ -112,22 +113,22 @@ abstract class AbstractSocialNetworkAuthenticationMethod extends AuthenticationM
 							return UserService::create($user, $auth_method, $fields_data, $data);
 						}
 						else
-							$this->error_msg = LangLoader::get_message('error.auth.registration_disabled', 'user-common');
+							$this->error_msg = LangLoader::get_message('warning.registration.disabled', 'warning-lang');
 					}
 				}
 				else
-					$this->error_msg = LangLoader::get_message('external-auth.email-not-found', 'user-common');
+					$this->error_msg = LangLoader::get_message('user.external.auth.email.not.found', 'user-lang');
 			}
 		}
 		else
-			$this->error_msg = LangLoader::get_message('external-auth.user-data-not-found', 'user-common');
+			$this->error_msg = LangLoader::get_message('user.external.auth.user.data.not-found', 'lang-common');
 
 		$this->check_user_bannishment($user_id);
 
 		if (!$this->error_msg)
 		{
 			$maintain_config = MaintenanceConfig::load();
-			
+
 			if ($maintain_config->is_under_maintenance())
 			{
 				$session = AppContext::get_session();
@@ -137,9 +138,9 @@ abstract class AbstractSocialNetworkAuthenticationMethod extends AuthenticationM
 				}
 				$session_data = Session::create($user_id, true);
 				AppContext::set_session($session_data);
-				
+
 				$current_user = CurrentUser::from_session();
-				
+
 				if (!$current_user->check_auth($maintain_config->get_auth(), MaintenanceConfig::ACCESS_WHEN_MAINTAIN_ENABLED_AUTHORIZATIONS))
 				{
 					$session = AppContext::get_session();

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 18
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 3.0 - 2010 02 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -427,13 +427,13 @@ class InstallationServices
 
 	private function add_extended_fields()
 	{
-		$lang = LangLoader::get('user-common');
+		$lang = LangLoader::get('user-lang');
 
 		// Sex
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['extended-field.field.sex']);
+		$extended_field->set_name($lang['user.extended.field.sex']);
 		$extended_field->set_field_name('user_sex');
-		$extended_field->set_description($lang['extended-field.field.sex-explain']);
+		$extended_field->set_description($lang['user.extended.field.sex.clue']);
 		$extended_field->set_field_type('MemberUserSexExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(false);
@@ -442,9 +442,9 @@ class InstallationServices
 
 		// Biography
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['extended-field.field.biography']);
+		$extended_field->set_name($lang['user.extended.field.biography']);
 		$extended_field->set_field_name('user_biography');
-		$extended_field->set_description($lang['extended-field.field.biography-explain']);
+		$extended_field->set_description($lang['user.extended.field.biography.clue']);
 		$extended_field->set_field_type('MemberLongTextExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(false);
@@ -453,9 +453,9 @@ class InstallationServices
 
 		// Mail notofication when receiving PM
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['extended-field.field.pmtomail']);
+		$extended_field->set_name($lang['user.extended.field.pm.to.mail']);
 		$extended_field->set_field_name('user_pmtomail');
-		$extended_field->set_description($lang['extended-field.field.pmtomail-explain']);
+		$extended_field->set_description($lang['user.extended.field.pm.to.mail.clue']);
 		$extended_field->set_field_type('MemberUserPMToMailExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(false);
@@ -464,9 +464,9 @@ class InstallationServices
 
 		// Birth Date
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['extended-field.field.date-birth']);
+		$extended_field->set_name($lang['user.extended.field.birth.date']);
 		$extended_field->set_field_name('user_born');
-		$extended_field->set_description($lang['extended-field.field.date-birth-explain']);
+		$extended_field->set_description($lang['user.extended.field.birth.date.clue']);
 		$extended_field->set_field_type('MemberUserBornExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(false);
@@ -475,9 +475,9 @@ class InstallationServices
 
 		// Avatar
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['extended-field.field.avatar']);
+		$extended_field->set_name($lang['user.extended.field.avatar']);
 		$extended_field->set_field_name('user_avatar');
-		$extended_field->set_description($lang['extended-field.field.avatar-explain']);
+		$extended_field->set_description($lang['user.extended.field.avatar.clue']);
 		$extended_field->set_field_type('MemberUserAvatarExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(true);
@@ -486,9 +486,9 @@ class InstallationServices
 
 		// Website
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['extended.field.website']);
+		$extended_field->set_name($lang['user.extended.field.website']);
 		$extended_field->set_field_name('user_website');
-		$extended_field->set_description($lang['extended.field.website-explain']);
+		$extended_field->set_description($lang['user.extended.field.website.clue']);
 		$extended_field->set_field_type('MemberShortTextExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(true);

@@ -40,7 +40,7 @@ class BugtrackerHistoryListController extends ModuleController
 
 		$history_lines_number = BugtrackerService::count_history($this->bug->get_id());
 		$pagination = $this->get_pagination($history_lines_number, $current_page);
-		$common_lang = LangLoader::get('common');
+		$common_lang = LangLoader::get('common-lang');
 
 		$this->view->put_all(array(
 			'C_PAGINATION'	=> $pagination->has_several_pages(),
@@ -97,8 +97,8 @@ class BugtrackerHistoryListController extends ModuleController
 					break;
 
 				case 'reproductible':
-					$old_value = ($row['old_value']) ? $common_lang['yes'] : $common_lang['no'];
-					$new_value = ($row['new_value']) ? $common_lang['yes'] : $common_lang['no'];
+					$old_value = ($row['old_value']) ? $common_lang['common.yes'] : $common_lang['common.no'];
+					$new_value = ($row['new_value']) ? $common_lang['common.yes'] : $common_lang['common.no'];
 					break;
 
 				default:

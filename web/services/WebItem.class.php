@@ -175,13 +175,13 @@ class WebItem
 	{
 		switch ($this->published) {
 			case self::PUBLISHED:
-				return LangLoader::get_message('status.approved.now', 'common');
+				return LangLoader::get_message('form.publication.draft', 'form-lang');
 			break;
 			case self::DEFERRED_PUBLICATION:
-				return LangLoader::get_message('status.approved.date', 'common');
+				return LangLoader::get_message('form.publication.now', 'form-lang');
 			break;
 			case self::NOT_PUBLISHED:
-				return LangLoader::get_message('status.approved.not', 'common');
+				return LangLoader::get_message('form.publication.deffered', 'form-lang');
 			break;
 		}
 	}

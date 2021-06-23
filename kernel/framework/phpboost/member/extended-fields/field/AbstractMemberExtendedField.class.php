@@ -6,11 +6,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 14
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 3.0 - 2010 12 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
@@ -27,7 +28,7 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 	 */
 	public function __construct()
 	{
-		$this->lang = LangLoader::get('user-common');
+		$this->lang = LangLoader::get('user-lang');
 		$this->field_used_once = false;
 		$this->field_used_phpboost_config = false;
 		$this->name = 'ExtendedField';

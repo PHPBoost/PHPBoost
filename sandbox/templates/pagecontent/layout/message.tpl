@@ -7,7 +7,7 @@
         <div class="content">
             <article id="comID" class="message-container" itemscope="itemscope" itemtype="https://schema.org/Comment">
                 <header class="message-header-container">
-                    <img class="message-user-avatar" src="{NO_AVATAR_URL}" alt="${LangLoader::get_message('avatar', 'user-common')}">
+                    <img class="message-user-avatar" src="{NO_AVATAR_URL}" alt="${LangLoader::get_message('user.avatar', 'user-lang')}">
                     <div class="message-header-infos">
                         <div class="message-user-infos hidden-small-screens">
                             <div>

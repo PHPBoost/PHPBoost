@@ -9,11 +9,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 11 04
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 2.0 - 2008 07 08
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class LinksMenuElement extends Menu
@@ -61,12 +62,12 @@ abstract class LinksMenuElement extends Menu
 	/**
 	 * Assign tpl vars
 	 * @access protected
-	 * @param Template $template the template on which we gonna assign vars
+	 * @param Template $view the template on which we gonna assign vars
 	 * @param int $mode in LinksMenuElement::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING mode, the links menu is
 	 * displayed. With the LinksMenuElement::LINKS_MENU_ELEMENT__FULL_DISPLAYING mode, the authorization form is
 	 * also shown.
 	 */
-	protected function _assign($template, $mode = self::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
+	protected function _assign($view, $mode = self::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
 	{
 		if ($this->image)
 		{
@@ -88,43 +89,46 @@ abstract class LinksMenuElement extends Menu
 				else
 					$image = new Image(PATH_TO_ROOT . $this->image);
 
-				$template->put_all(array(
-					'C_IMG' => !empty($this->image),
+				$view->put_all(array(
+					'C_IMG'        => !empty($this->image),
 					'ABSOLUTE_IMG' => $url->absolute(),
 					'RELATIVE_IMG' => $url->relative(),
-					'REL_IMG' => $url->rel(),
-					'IMG_HEIGHT' => $image->get_height(),
-					'IMG_WIDTH' => $image->get_width()
+					'REL_IMG'      => $url->rel(),
+					'IMG_HEIGHT'   => $image->get_height(),
+					'IMG_WIDTH'    => $image->get_width()
 				));
 			}
 		}
 
-		parent::_assign($template);
+		parent::_assign($view);
 
 		if ($this->url instanceof Url)
 			$url = $this->url;
 		else
 			$url = new Url($this->url);
 
-		$template->put_all(array(
-			'C_MENU' => false,
+		$view->put_all(array(
+			'C_MENU'         => false,
 			'C_DISPLAY_AUTH' => AppContext::get_current_user()->check_auth($this->get_auth(), Menu::MENU_AUTH_BIT),
-			'TITLE' => $this->title,
-			'L_TITLE' => LangLoader::get_message('menu.link-to', 'user-common') . $this->title,
-			'DEPTH' => $this->depth,
+			'C_URL'          => $this->url,
+
+			'TITLE'        => $this->title,
+			'DEPTH'        => $this->depth,
 			'PARENT_DEPTH' => $this->depth - 1,
-			'C_URL' => $this->url,
+			'ID'           => $this->get_uid(),
+			'ID_VAR'       => $this->get_uid(),
+
 			'ABSOLUTE_URL' => $url->absolute(),
 			'RELATIVE_URL' => $url->relative(),
-			'REL_URL' => $url->rel(),
-			'ID' => $this->get_uid(),
-			'ID_VAR' => $this->get_uid()
+			'REL_URL'      => $url->rel(),
+
+			'L_TITLE' => LangLoader::get_message('menu.link.to', 'menu-lang') . $this->title,
 		));
 
 		//Full displaying: we also show the authorization formulary
 		if ($mode)
 		{
-			$template->put_all(array(
+			$view->put_all(array(
 				'C_AUTH_MENU_HIDDEN' => $this->get_auth() == array('r-1' => Menu::MENU_AUTH_BIT, 'r0' => Menu::MENU_AUTH_BIT, 'r1' => Menu::MENU_AUTH_BIT),
 				'AUTH_FORM' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, $this->get_auth(), array(), 'menu_element_' . $this->uid . '_auth')
 			));

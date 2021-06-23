@@ -5,10 +5,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Arnaud GENET <elenwii@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 10 30
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 3.0 - 2010 07 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CookieBarConfig extends AbstractConfigData
@@ -97,9 +98,9 @@ class CookieBarConfig extends AbstractConfigData
 			self::COOKIEBAR_ENABLED             => true,
 			self::COOKIEBAR_DURATION            => 12,
 			self::COOKIEBAR_TRACKING_MODE       => self::NOTRACKING_COOKIE,
-			self::COOKIEBAR_CONTENT             => LangLoader::get_message('cookiebar-message.notracking', 'user-common'),
-			self::COOKIEBAR_ABOUTCOOKIE_TITLE   => LangLoader::get_message('cookiebar-message.aboutcookie.title', 'user-common'),
-			self::COOKIEBAR_ABOUTCOOKIE_CONTENT => LangLoader::get_message('cookiebar-message.aboutcookie', 'user-common')
+			self::COOKIEBAR_CONTENT             => LangLoader::get_message('user.cookiebar.message.notracking', 'user-lang'),
+			self::COOKIEBAR_ABOUTCOOKIE_TITLE   => LangLoader::get_message('user.cookiebar.message.aboutcookie.title', 'user-lang'),
+			self::COOKIEBAR_ABOUTCOOKIE_CONTENT => LangLoader::get_message('user.cookiebar.message.aboutcookie', 'user-lang')
 		);
 	}
 

@@ -57,7 +57,7 @@ class BugtrackerFormController extends ModuleController
 
 	private function build_form(HTTPRequestCustom $request)
 	{
-		$common_lang = LangLoader::get('common');
+		$form_lang = LangLoader::get('form-lang');
 		$bug = $this->get_bug();
 
 		$types = $this->config->get_types();
@@ -83,9 +83,9 @@ class BugtrackerFormController extends ModuleController
 		$fieldset = new FormFieldsetHTML('bug_infos', $this->lang['titles.bugs_infos']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('title', $common_lang['form.title'], $bug->get_title(), array('required' => true)));
+		$fieldset->add_field(new FormFieldTextEditor('title', $form_lang['form.title'], $bug->get_title(), array('required' => true)));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('content', $common_lang['form.description'], $bug->get_content(), array(
+		$fieldset->add_field(new FormFieldRichTextEditor('content', $form_lang['form.description'], $bug->get_content(), array(
 			'description' => $this->lang['explain.content'], 'rows' => 15, 'required' => true)
 		));
 
@@ -415,7 +415,7 @@ class BugtrackerFormController extends ModuleController
 			$display_versions = count($versions) > 1;
 			$status_list = $this->config->get_status_list();
 
-			$common_lang = LangLoader::get('common');
+			$common_lang = LangLoader::get('common-lang');
 
 			$title = $this->form->get_value('title', $old_values->get_title());
 
@@ -493,7 +493,7 @@ class BugtrackerFormController extends ModuleController
 							break;
 
 						case 'reproductible':
-							$new_value = $n_values[$field] ? $common_lang['yes'] : $common_lang['no'];
+							$new_value = $n_values[$field] ? $common_lang['common.yes'] : $common_lang['common.no'];
 							break;
 
 						default:

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 03
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 4.1 - 2015 10 08
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -185,7 +185,7 @@ class AdminCustomizeEditorTPLFilesController extends AdminModuleController
 			{
 				foreach ($folder->get_files('`\.tpl$`') as $file)
 				{
-					$files[] = new FormFieldSelectChoiceOption(LangLoader::get_message('module', 'admin-modules-common') . ' ' . ModulesManager::get_module($module->get_id())->get_configuration()->get_name() . ' : ' . $file->get_name(), $module->get_id() . '/' . $file->get_name_without_extension());
+					$files[] = new FormFieldSelectChoiceOption(LangLoader::get_message('common.module', 'common-lang') . ' ' . ModulesManager::get_module($module->get_id())->get_configuration()->get_name() . ' : ' . $file->get_name(), $module->get_id() . '/' . $file->get_name_without_extension());
 				}
 			}
 		}
@@ -195,7 +195,7 @@ class AdminCustomizeEditorTPLFilesController extends AdminModuleController
 		{
 			foreach ($folder->get_files('`\.tpl$`') as $file)
 			{
-				$files[] = new FormFieldSelectChoiceOption(LangLoader::get_message('users', 'user-common') . ' : ' . $file->get_name(), 'user/' . $file->get_name_without_extension());
+				$files[] = new FormFieldSelectChoiceOption(LangLoader::get_message('user.users', 'user-lang') . ' : ' . $file->get_name(), 'user/' . $file->get_name_without_extension());
 			}
 		}
 

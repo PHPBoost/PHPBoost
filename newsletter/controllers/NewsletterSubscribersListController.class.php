@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 14
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 3.0 - 2011 03 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -78,7 +78,7 @@ class NewsletterSubscribersListController extends ModuleController
 		$table = new HTMLTable($table_model);
 
 		$results = array();
-		$result = $table_model->get_sql_results('subscribers LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON subscribers.user_id = member.user_id', array('*', 'COALESCE(NULLIF(subscribers.mail, \'\'), member.email) AS user_mail', 'COALESCE(NULLIF(member.display_name, \'\'), "' . LangLoader::get_message('visitor', 'user-common') . '") AS name'));
+		$result = $table_model->get_sql_results('subscribers LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON subscribers.user_id = member.user_id', array('*', 'COALESCE(NULLIF(subscribers.mail, \'\'), member.email) AS user_mail', 'COALESCE(NULLIF(member.display_name, \'\'), "' . LangLoader::get_message('user.visitor', 'user-lang') . '") AS name'));
 		foreach ($result as $row)
 		{
 			if ($row['user_mail'])

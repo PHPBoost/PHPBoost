@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 03
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 1.5 - 2006 08 08
  * @contributor Regis VIARRE <crowkait@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -126,7 +126,7 @@ if ($action == 'alert') //Gestion des alertes
 		'L_MODERATION_PANEL'        => $LANG['moderation_panel'],
 		'L_MODERATION_FORUM'        => $LANG['moderation_forum'],
 		'L_FORUM'                   => $LANG['forum'],
-		'L_LOGIN'                   => LangLoader::get_message('display_name', 'user-common')
+		'L_LOGIN'                   => LangLoader::get_message('user.display.name', 'user-lang')
 	));
 
 	if (empty($id_get)) //On liste les alertes
@@ -338,7 +338,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		'L_ALERT' => LangLoader::get_message('user.punishments.management', 'user-lang'),
 		//
 		'L_FORUM'                   => $LANG['forum'],
-		'L_LOGIN'                   => LangLoader::get_message('display_name', 'user-common'),
+		'L_LOGIN'                   => LangLoader::get_message('user.display.name', 'user-lang'),
 		'L_MODERATION_PANEL'        => $LANG['moderation_panel'],
 		'L_MODERATION_FORUM'        => $LANG['moderation_forum'],
 	));
@@ -366,7 +366,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			//
 			'L_PM'              => $LANG['user_contact_pm'],
 			'L_PM'              => $LANG['user_contact_pm'],
-			'L_PROFILE'         => LangLoader::get_message('profile', 'user-common'),
+			'L_PROFILE'         => LangLoader::get_message('user.profile', 'user-lang'),
 			'L_SEARCH_USER'     => $LANG['search_member'],
 			'L_SEARCH'          => $LANG['search'],
 			'L_REQUIRE_LOGIN'   => $LANG['require_pseudo']
@@ -493,7 +493,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],
 			'L_INFO_EXPLAIN'   => $LANG['user_readonly_explain'],
 			'L_PM'             => $LANG['user_contact_pm'],
-			'L_LOGIN'          => LangLoader::get_message('display_name', 'user-common'),
+			'L_LOGIN'          => LangLoader::get_message('user.display.name', 'user-lang'),
 			'L_PM'             => $LANG['user_contact_pm'],
 			'L_CHANGE_INFO'    => $LANG['submit']
 		));
@@ -559,7 +559,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		'L_ALERT'                   => $LANG['warning_management'],
 		//
 		'L_FORUM'                   => $LANG['forum'],
-		'L_LOGIN'                   => LangLoader::get_message('display_name', 'user-common'),
+		'L_LOGIN'                   => LangLoader::get_message('user.display.name', 'user-lang'),
 		'L_MODERATION_PANEL'        => $LANG['moderation_panel'],
 		'L_MODERATION_FORUM'        => $LANG['moderation_forum'],
 	));

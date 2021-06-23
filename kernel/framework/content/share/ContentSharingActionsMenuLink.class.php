@@ -5,10 +5,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 04 14
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 5.1 - 2018 01 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ContentSharingActionsMenuLink
@@ -71,7 +72,7 @@ class ContentSharingActionsMenuLink
 			'C_ONCLICK_TAG'   	=> !empty($this->onclick_tag),
 			'ID'              	=> $this->id,
 			'U_LINK'          	=> $this->get_url()->rel(),
-			'NAME'            	=> (!$this->kernel_element ? LangLoader::get_message('share_on', 'user-common') . ' ' : '') . $this->name,
+			'NAME'            	=> (!$this->kernel_element ? LangLoader::get_message('common.share.on', 'common-lang') . ' ' : '') . $this->name,
 			'IMG_RENDER_HTML' 	=> $this->image_render_html,
 			'ONCLICK_TAG' 		=> $this->onclick_tag,
 		));

@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2017 05 30
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 4.1 - 2013 11 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ModuleLink
@@ -86,7 +87,7 @@ class ModuleLink
 			'C_HAS_SUB_LINK' => $this->has_sub_link(),
 			'C_IS_ACTIVE'    => $this->is_active(),
 			'NAME'           => $this->get_name(),
-			'FULLNAME'       => LangLoader::get_message('menu.link-to', 'user-common') . $this->get_name(),
+			'FULLNAME'       => LangLoader::get_message('menu.link.to', 'menu-lang') . $this->get_name(),
 			'U_LINK'         => $this->get_url()->rel(),
 		));
 

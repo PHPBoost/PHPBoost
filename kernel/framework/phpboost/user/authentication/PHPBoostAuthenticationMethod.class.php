@@ -10,9 +10,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2017 06 08
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 3.0 - 2010 11 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class PHPBoostAuthenticationMethod extends AuthenticationMethod
@@ -158,7 +159,7 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 		}
 
 		if (!empty($auth_infos) && !$auth_infos['approved'])
-			$this->error_msg = LangLoader::get_message('registration.not-approved', 'user-common');
+			$this->error_msg = LangLoader::get_message('user.registration.not.approved', 'user-lang');
 
 		if (!$match)
 		{

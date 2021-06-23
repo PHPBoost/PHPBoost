@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 30
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 2.0 - 2008 03 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -70,10 +70,10 @@ if ($config->is_connexion_form_displayed()) {
 	$display_connexion = array(
 		'C_USER_NOTCONNECTED' => !$is_connected,
 		'C_FORUM_CONNEXION'   => true,
-		'L_CONNECT'           => LangLoader::get_message('connection', 'user-common'),
-		'L_DISCONNECT'        => LangLoader::get_message('disconnect', 'user-common'),
-		'L_AUTOCONNECT'       => LangLoader::get_message('autoconnect', 'user-common'),
-		'L_REGISTER'          => LangLoader::get_message('register', 'user-common')
+		'L_CONNECT'           => LangLoader::get_message('user.sign.in', 'user-lang'),
+		'L_DISCONNECT'        => LangLoader::get_message('user.sign.out', 'user-lang'),
+		'L_AUTOCONNECT'       => LangLoader::get_message('user.auto.connect', 'user-lang'),
+		'L_REGISTER'          => LangLoader::get_message('user.sign.up', 'user-lang')
 	);
 	$top_view->put_all($display_connexion);
 	$bottom_view->put_all($display_connexion);

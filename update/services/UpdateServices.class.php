@@ -265,12 +265,12 @@ class UpdateServices
 
 		if (!isset($columns['user_biography']))
 		{
-			$lang = LangLoader::get('user-common');
+			$lang = LangLoader::get('user-lang');
 
 			$extended_field = new ExtendedField();
-			$extended_field->set_name($lang['extended-field.field.biography']);
+			$extended_field->set_name($lang['user.extended.field.biography']);
 			$extended_field->set_field_name('user_biography');
-			$extended_field->set_description($lang['extended-field.field.biography-explain']);
+			$extended_field->set_description($lang['user.extended.field.biography.clue']);
 			$extended_field->set_field_type('MemberLongTextExtendedField');
 			$extended_field->set_is_required(false);
 			$extended_field->set_display(false);
@@ -929,6 +929,11 @@ class UpdateServices
 		$file = new File(PATH_TO_ROOT . '/lang/english/upload-common.php');
 		$file->delete();
 		$file = new File(PATH_TO_ROOT . '/lang/french/upload-common.php');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/lang/english/user-common.php');
+		$file->delete();
+		$file = new File(PATH_TO_ROOT . '/lang/french/user-common.php');
 		$file->delete();
 	}
 

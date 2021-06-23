@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 20
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 3.0 - 2010 12 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -35,13 +35,13 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 
 		if (UserAccountsConfig::load()->is_avatar_upload_enabled())
 		{
-			$fieldset->add_field(new FormFieldFilePicker('upload_avatar', $this->lang['extended-field.field.avatar.upload_avatar'],
-				array('description' => $this->lang['extended-field.field.avatar.upload_avatar-explain'], 'max_file_size' => $this->user_accounts_config->get_max_avatar_weight_in_kb(), 'authorized_extensions' => implode('|', $this->authorized_pictures_extensions)),
+			$fieldset->add_field(new FormFieldFilePicker('upload_avatar', $this->lang['user.extended.field.upload.avatar'],
+				array('description' => $this->lang['user.extended.field.upload.avatar.clue'], 'max_file_size' => $this->user_accounts_config->get_max_avatar_weight_in_kb(), 'authorized_extensions' => implode('|', $this->authorized_pictures_extensions)),
 				array(new FormFieldConstraintPictureFile())
 			));
 		}
-		$fieldset->add_field(new FormFieldTextEditor('link_avatar', $this->lang['extended-field.field.avatar.link'], '',
-			array('description' => $this->lang['extended-field.field.avatar.link-explain'], 'required' =>(bool)$member_extended_field->get_required())
+		$fieldset->add_field(new FormFieldTextEditor('link_avatar', $this->lang['user.extended.field.avatar.link'], '',
+			array('description' => $this->lang['user.extended.field.avatar.link.clue'], 'required' =>(bool)$member_extended_field->get_required())
 		));
 	}
 
@@ -50,21 +50,21 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		$fieldset = $member_extended_field->get_fieldset();
 
 		$value = $member_extended_field->get_value();
-		$image = !empty($value) ? '<img src="'. Url::to_rel($value) .'" alt="' . LangLoader::get_message('avatar', 'user-common') . '" />' : $this->lang['extended-field.field.avatar.no_avatar'];
-		$fieldset->add_field(new FormFieldFree('current_avatar', $this->lang['extended-field.field.avatar.current_avatar'], $image));
+		$image = !empty($value) ? '<img src="'. Url::to_rel($value) .'" alt="' . $this->lang['user.extended.field.avatar'] . '" />' : $this->lang['user.extended.field.avatar.no.avatar'];
+		$fieldset->add_field(new FormFieldFree('current_avatar', $this->lang['user.extended.field.current.avatar'], $image));
 
 		if (UserAccountsConfig::load()->is_avatar_upload_enabled())
 		{
-			$fieldset->add_field(new FormFieldFilePicker('upload_avatar', $this->lang['extended-field.field.avatar.upload_avatar'],
-				array('description' => $this->lang['extended-field.field.avatar.upload_avatar-explain'], 'max_file_size' => $this->user_accounts_config->get_max_avatar_weight_in_kb(), 'authorized_extensions' => implode('|', $this->authorized_pictures_extensions)),
+			$fieldset->add_field(new FormFieldFilePicker('upload_avatar', $this->lang['user.extended.field.upload.avatar'],
+				array('description' => $this->lang['user.extended.field.upload.avatar.clue'], 'max_file_size' => $this->user_accounts_config->get_max_avatar_weight_in_kb(), 'authorized_extensions' => implode('|', $this->authorized_pictures_extensions)),
 				array(new FormFieldConstraintPictureFile())
 			));
 		}
 
-		$fieldset->add_field(new FormFieldTextEditor('link_avatar', $this->lang['extended-field.field.avatar.link'], '',
-			array('description' => $this->lang['extended-field.field.avatar.link-explain'], 'required' =>(bool)$member_extended_field->get_required())
+		$fieldset->add_field(new FormFieldTextEditor('link_avatar', $this->lang['user.extended.field.avatar.link'], '',
+			array('description' => $this->lang['user.extended.field.avatar.link.clue'], 'required' =>(bool)$member_extended_field->get_required())
 		));
-		$fieldset->add_field(new FormFieldCheckbox('delete_avatar', $this->lang['extended-field.field.avatar.delete'], FormFieldCheckbox::UNCHECKED));
+		$fieldset->add_field(new FormFieldCheckbox('delete_avatar', $this->lang['user.extended.field.delete.avatar'], FormFieldCheckbox::UNCHECKED));
 	}
 
 	public function display_field_profile(MemberExtendedField $member_extended_field)
@@ -72,11 +72,11 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		$value = $member_extended_field->get_value();
 		if (empty($value) && $this->user_accounts_config->is_default_avatar_enabled())
 		{
-			$avatar = '<img src="' . $this->user_accounts_config->get_default_avatar() . '" alt="' . LangLoader::get_message('avatar', 'user-common') . '" />';
+			$avatar = '<img src="' . $this->user_accounts_config->get_default_avatar() . '" alt="' . $this->lang['user.extended.field.avatar'] . '" />';
 		}
 		elseif (!empty($value))
 		{
-			$avatar = '<img src="'. Url::to_rel($value) .'" alt="' . LangLoader::get_message('avatar', 'user-common') . '" />';
+			$avatar = '<img src="'. Url::to_rel($value) .'" alt="' . $this->lang['user.extended.field.avatar'] . '" />';
 		}
 		else
 		{
@@ -109,7 +109,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 
 		if (!$this->authorized_pictures_extensions)
 		{
-			throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('extended_field.avatar_upload_invalid_format', 'status-messages-common'));
+			throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('warning.file.invalid.format', 'warning-lang'));
 		}
 
 		if ($form->get_value('link_avatar'))
@@ -129,14 +129,14 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 						$this->delete_old_avatar($member_extended_field);
 						return $directory;
 					}
-					throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('extended_field.avatar_upload_max_dimension', 'status-messages-common'));
+					throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('warning.file.max.dimension', 'warning-lang'));
 				}
 				$this->delete_old_avatar($member_extended_field);
 				return $form->get_value('link_avatar');
 			}
 			else
 			{
-				throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('extended_field.avatar_upload_invalid_format', 'status-messages-common'));
+				throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('warning.file.invalid.format', 'warning-lang'));
 			}
 		}
 		elseif (!empty($avatar))
@@ -154,7 +154,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 					$extension = array_pop($explode);
 
 					if (!preg_match('`(' . implode('|', array_map('preg_quote', $this->authorized_pictures_extensions)) . ')+$`iu', $extension))
-						throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('extended_field.avatar_upload_invalid_format', 'status-messages-common'));
+						throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('warning.file.max.dimension', 'warning-lang'));
 
 					$explode = explode('.', $avatar->get_name());
 					$name = $explode[0];
@@ -166,7 +166,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 						$this->delete_old_avatar($member_extended_field);
 						return $directory;
 					} catch (UnsupportedOperationException $e) {
-						throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('extended_field.avatar_upload_invalid_format', 'status-messages-common'));
+						throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('warning.file.max.dimension', 'warning-lang'));
 					}
 				}
 				else

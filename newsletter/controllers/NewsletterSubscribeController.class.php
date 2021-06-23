@@ -63,8 +63,6 @@ class NewslettersubscribeController extends ModuleController
 			$email = $mail_request;
 		}
 
-		// $common_lang = LangLoader::get('common');
-
 		$form = new HTMLForm(__CLASS__);
 		// $form->set_layout_title($this->lang['newsletter.subscribe.streams']);
 

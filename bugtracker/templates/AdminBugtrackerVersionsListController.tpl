@@ -58,7 +58,7 @@
 
 				jQuery('<div/>', {id : 'td2_' + id + '_bt', class : 'bt-content'}).appendTo('#td2_' + id);
 
-				jQuery('<input/> ', {type : 'text', id : 'version_' + id, name : 'version_' + id, placeholder : ${escapejs(LangLoader::get_message('form.name', 'common'))}}).appendTo('#td2_' + id + '_bt');
+				jQuery('<input/> ', {type : 'text', id : 'version_' + id, name : 'version_' + id, placeholder : ${escapejs(LangLoader::get_message('form.name', 'form-lang'))}}).appendTo('#td2_' + id + '_bt');
 
 				jQuery('<td/>', {id : 'td3_' + id, 'data-th' : ${escapejs(@labels.fields.version_release_date)}}).appendTo('#tr_' + id);
 

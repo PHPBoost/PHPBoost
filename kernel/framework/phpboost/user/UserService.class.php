@@ -242,23 +242,23 @@ class UserService
 	 */
 	public static function get_level_lang($level)
 	{
-		$lang = LangLoader::get('user-common');
+		$lang = LangLoader::get('user-lang');
 		switch ($level)
 		{
 			case User::ROBOT_LEVEL:
-				return $lang['robot'];
+				return $lang['user.robot'];
 			break;
 			case User::VISITOR_LEVEL:
-				return $lang['visitor'];
+				return $lang['user.visitor'];
 			break;
 			case User::MEMBER_LEVEL:
-				return $lang['member'];
+				return $lang['user.member'];
 			break;
 			case User::MODERATOR_LEVEL:
-			 	return $lang['moderator'];
+			 	return $lang['user.moderator'];
 			break;
 			case User::ADMINISTRATOR_LEVEL:
-				return $lang['administrator'];
+				return $lang['user.administrator'];
 			break;
 		}
 	}

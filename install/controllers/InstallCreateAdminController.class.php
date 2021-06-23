@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 10 27
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 3.0 - 2010 10 04
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -58,7 +58,7 @@ class InstallCreateAdminController extends InstallController
 		$fieldset = new FormFieldsetHTML('adminAccount', $this->lang['admin.account']);
 		$this->form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('display_name', LangLoader::get_message('display_name', 'user-common'), '',
+		$fieldset->add_field(new FormFieldTextEditor('display_name', LangLoader::get_message('user.display.name', 'user-lang'), '',
 			array('maxlength' => 100, 'required' => true, 'events' => array('blur' => '
 				if (!HTMLForms.getField("login").getValue() && HTMLForms.getField("display_name").validate() == "") {
 					HTMLForms.getField("login").setValue(HTMLForms.getField("display_name").getValue().replace(/\s/g, \'\'));
@@ -69,10 +69,10 @@ class InstallCreateAdminController extends InstallController
 
 		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['admin.email'], '', array('required' => true)));
 
-		$fieldset->add_field(new FormFieldCheckbox('custom_login', LangLoader::get_message('login.custom', 'user-common'), false,
+		$fieldset->add_field(new FormFieldCheckbox('custom_login', LangLoader::get_message('user.username.custom', 'user-lang'), false,
 			array(
 				'class' => 'custom-checkbox',
-				'description'=> LangLoader::get_message('login.custom.explain', 'user-common'),
+				'description'=> LangLoader::get_message('user.username.custom.clue', 'user-lang'),
 				'events' => array('click' => '
 					if (HTMLForms.getField("custom_login").getValue()) {
 						HTMLForms.getField("login").enable();
@@ -83,7 +83,7 @@ class InstallCreateAdminController extends InstallController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldTextEditor('login', LangLoader::get_message('login', 'user-common'), '',
+		$fieldset->add_field(new FormFieldTextEditor('login', LangLoader::get_message('user.username', 'user-lang'), '',
 			array('required' => true, 'hidden' => true, 'maxlength' => 25),
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists())
 		));
