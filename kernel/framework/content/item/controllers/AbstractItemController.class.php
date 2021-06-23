@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 22
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -35,6 +35,7 @@ abstract class AbstractItemController extends ModuleController
 			LangLoader::get('comment-lang'),
 			LangLoader::get('common-lang'),
 			LangLoader::get('contribution-lang'),
+			LangLoader::get('form-lang'),
 			LangLoader::filename_exists('common', self::get_module()->get_id()) ? LangLoader::get('common', self::get_module()->get_id()) : array(),
 			ItemsService::get_items_lang(self::get_module()->get_id())
 		);

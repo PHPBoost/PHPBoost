@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 21
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 6.0 - 2020 01 16
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -33,40 +33,40 @@ class DefaultItemsManagementController extends AbstractItemController
 		$display_categories = self::get_module_configuration()->has_categories() && CategoriesService::get_categories_manager()->get_categories_cache()->has_categories();
 
 		$columns = array_merge(array(
-			new HTMLTableColumn($this->lang['form.title'], 'title'),
-			new HTMLTableColumn($this->lang['author'], 'display_name'),
-			new HTMLTableColumn($this->lang['form.date.creation'], 'creation_date'),
-			new HTMLTableColumn($this->lang['status'], 'published')
+			new HTMLTableColumn($this->lang['common.title'], 'title'),
+			new HTMLTableColumn($this->lang['common.author'], 'display_name'),
+			new HTMLTableColumn($this->lang['common.creation.date'], 'creation_date'),
+			new HTMLTableColumn($this->lang['common.status'], 'published')
 		  ),
 		  $this->get_additional_html_table_columns()
 		);
-		$columns[] = new HTMLTableColumn(LangLoader::get_message('actions', 'admin-common'), '', array('sr-only' => true));
+		$columns[] = new HTMLTableColumn($this->lang['common.moderation'], '', array('sr-only' => true));
 
 		if ($display_categories)
 			array_splice($columns, 1, 0, array(new HTMLTableColumn($this->lang['category.category'], 'id_category')));
 
 		$table_model = new SQLHTMLTableModel(self::get_module_configuration()->get_items_table_name(), 'items-manager', $columns, new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
-    
+
 		$table_model->set_layout_title($this->lang['items.management']);
 
 		$table_model->set_filters_menu_title($this->lang['filter.items']);
-		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('creation_date', 'filter1', $this->lang['form.date.creation'] . ' ' . TextHelper::lcfirst($this->lang['minimum'])));
-		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('creation_date', 'filter2', $this->lang['form.date.creation'] . ' ' . TextHelper::lcfirst($this->lang['maximum'])));
-		$table_model->add_filter(new HTMLTableAjaxUserAutoCompleteSQLFilter('display_name', 'filter3', $this->lang['author']));
+		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('creation_date', 'filter1', $this->lang['common.creation.date'] . ' ' . TextHelper::lcfirst($this->lang['common.minimum'])));
+		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('creation_date', 'filter2', $this->lang['common.creation.date'] . ' ' . TextHelper::lcfirst($this->lang['common.maximum'])));
+		$table_model->add_filter(new HTMLTableAjaxUserAutoCompleteSQLFilter('display_name', 'filter3', $this->lang['common.author']));
 		if ($display_categories)
 			$table_model->add_filter(new HTMLTableCategorySQLFilter('filter4'));
-    
+
     if (!empty($this->get_additional_html_table_filters()))
     {
       foreach ($this->get_additional_html_table_filters() as $filter)
         $table_model->add_filter($filter);
     }
-    
-		$status_list = array(Item::PUBLISHED => $this->lang['status.approved.now'], Item::NOT_PUBLISHED => $this->lang['status.approved.not']);
+
+		$status_list = array(Item::PUBLISHED => $this->lang['form.publication.now'], Item::NOT_PUBLISHED => $this->lang['form.publication.draft']);
 		if (self::get_module_configuration()->feature_is_enabled('deferred_publication'))
-			$status_list[Item::DEFERRED_PUBLICATION] = $this->lang['status.approved.date'];
-		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('published', 'filter5', $this->lang['status'], $status_list));
-    
+			$status_list[Item::DEFERRED_PUBLICATION] = $this->lang['form.publication.deffered'];
+		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('published', 'filter5', $this->lang['common.status'], $status_list));
+
 		$table = new HTMLTable($table_model, $this->lang);
 		$table->set_filters_fieldset_class_HTML();
 
@@ -99,7 +99,7 @@ class DefaultItemsManagementController extends AbstractItemController
 			$dates = '';
 			if ($item->get_publishing_start_date() != null && $item->get_publishing_end_date() != null)
 			{
-				$dates = $this->lang['form.date.start'] . ' ' . $item->get_publishing_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . $br->display() . $this->lang['form.date.end'] . ' ' . $item->get_publishing_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE);
+				$dates = $this->lang['form.date.start'] . ' ' . $item->get_publishing_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . $br->display() . $this->lang['form.end.date'] . ' ' . $item->get_publishing_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE);
 			}
 			else
 			{
@@ -120,13 +120,13 @@ class DefaultItemsManagementController extends AbstractItemController
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell($item->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
 				new HTMLTableRowCell($status->display() . $br->display() . ($dates ? $start_and_end_dates->display() : ''))
-			  ), 
+			  ),
 			  $this->get_additional_html_table_row_cells()
 			);
 			$row[] = new HTMLTableRowCell($edit_link->display() . $delete_link->display(), 'controls');
 
 			if ($display_categories)
-				array_splice($row, 1, 0, array(new HTMLTableRowCell(new LinkHTMLElement(CategoriesUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), self::$module_id), ($category->get_id() == Category::ROOT_CATEGORY ? $this->lang['none_e'] : $category->get_name())))));
+				array_splice($row, 1, 0, array(new HTMLTableRowCell(new LinkHTMLElement(CategoriesUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), self::$module_id), ($category->get_id() == Category::ROOT_CATEGORY ? $this->lang['common.none.alt'] : $category->get_name())))));
 
 			$results[] = new HTMLTableRow($row);
 		}
@@ -154,7 +154,7 @@ class DefaultItemsManagementController extends AbstractItemController
 
 			self::get_items_manager()->clear_cache();
 
-			AppContext::get_response()->redirect(ItemsUrlBuilder::manage(), LangLoader::get_message('process.success', 'status-messages-common'));
+			AppContext::get_response()->redirect(ItemsUrlBuilder::manage(), LangLoader::get_message('warning.process.success', 'warning-lang'));
 		}
 	}
 
@@ -172,12 +172,12 @@ class DefaultItemsManagementController extends AbstractItemController
         {
                return array();
         }
-  
+
         protected function get_additional_html_table_row_cells()
         {
                return array();
         }
-  
+
         protected function get_additional_html_table_filters()
         {
                return array();
