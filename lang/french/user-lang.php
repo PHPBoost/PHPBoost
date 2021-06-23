@@ -242,12 +242,6 @@ $lang['user.associate.account.admin']    = 'Associer un compte';
 $lang['user.dissociate.account']         = 'Dissocier votre compte';
 $lang['user.dissociate.account.admin']   = 'Dissocier le compte';
 
-$lang['user.share']      = 'Partager';
-$lang['user.share.on']   = 'Partager sur';
-$lang['user.share.by']   = 'Partager par';
-$lang['user.share.menu'] = 'Menu réseaux sociaux';
-$lang['user.share.sms']  = 'SMS';
-
 // Registration
 $lang['user.registered']   = 'Inscrit';
 $lang['user.register']     = 'S\'inscrire';
@@ -334,21 +328,21 @@ $lang['user.extended.field.error.phpboost.config'] = 'Les champs utilisés par d
 $lang['user.extended.field.sex']      = 'Sexe';
 $lang['user.extended.field.sex.clue'] = '';
 
-$lang['user.extended.field.pmtomail']      = 'Recevoir une notification par mail à la réception d\'un message privé';
-$lang['user.extended.field.pmtomail.clue'] = '';
+$lang['user.extended.field.pm.to.mail']      = 'Recevoir une notification par mail à la réception d\'un message privé';
+$lang['user.extended.field.pm.to.mail.clue'] = '';
 
-$lang['user.extended.field.date.birth']      = 'Date de naissance';
+$lang['user.extended.field.birth.date']      = 'Date de naissance';
 $lang['user.extended.field.date.birth.clue'] = '';
 
 $lang['user.extended.field.avatar']                    = 'Avatar';
+$lang['user.extended.field.no.avatar']          = 'Aucun avatar';
 $lang['user.extended.field.avatar.clue']               = '';
-$lang['user.extended.field.avatar.current.avatar']     = 'Avatar actuel';
-$lang['user.extended.field.avatar.upload.avatar']      = 'Uploader un avatar';
-$lang['user.extended.field.avatar.upload.avatar.clue'] = 'Avatar directement hébergé sur le serveur';
+$lang['user.extended.field.current.avatar']     = 'Avatar actuel';
+$lang['user.extended.field.upload.avatar']      = 'Uploader un avatar';
+$lang['user.extended.field.upload.avatar.clue'] = 'Avatar directement hébergé sur le serveur';
 $lang['user.extended.field.avatar.link']               = 'Lien de l\'avatar';
 $lang['user.extended.field.avatar.link.clue']          = 'Adresse directe de l\'avatar';
 $lang['user.extended.field.avatar.delete']             = 'Supprimer l\'avatar courant';
-$lang['user.extended.field.avatar.no.avatar']          = 'Aucun avatar';
 
 $lang['user.extended.field.location']      = 'Localisation';
 $lang['user.extended.field.location.clue'] = '';
@@ -460,7 +454,7 @@ $lang['user.cookiebar.cookie.management']         = 'Gestion des Cookies';
 $lang['user.cookiebar.message.notracking']        = 'En poursuivant votre navigation sur ce site internet, vous acceptez l\'utilisation de Cookies afin de gérer votre connexion, vos préférences, ainsi que l\'enregistrement de statistiques anonymes des visites.';
 $lang['user.cookiebar.message.tracking']          = 'En poursuivant votre navigation sur ce site internet, vous acceptez l\'utilisation de Cookies ou autres traceurs pour vous proposer une navigation adaptée (publicités ciblées, partage réseaux sociaux, etc...).';
 $lang['user.cookiebar.message.aboutcookie.title'] = 'A propos des Cookies';
-$lang['user.cookiebar.message.aboutcookie']  = 'Pour assurer le bon fonctionnement de ce site, nous devons parfois enregistrer de petits fichiers de données sur l\'équipement de nos utilisateurs.<br />La majorité des sites web font de même.
+$lang['user.cookiebar.message.aboutcookie']       = 'Pour assurer le bon fonctionnement de ce site, nous devons parfois enregistrer de petits fichiers de données sur l\'équipement de nos utilisateurs.<br />La majorité des sites web font de même.
 
 <h2 class="formatter-title">Qu\'est-ce qu\'un cookie ?</h2>
 Un cookie est un petit fichier texte que les sites web sauvegardent sur votre ordinateur ou appareil mobile lorsque vous les consultez.<br />

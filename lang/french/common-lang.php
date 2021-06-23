@@ -99,6 +99,7 @@ $lang['common.download']     = 'Télécharger';
 $lang['common.loading']      = 'Chargement';
 $lang['common.upload']       = 'Uploader';
 $lang['common.print']        = 'Imprimer';
+$lang['common.printable']    = 'Version imprimable';
 $lang['common.open.panels']  = 'Ouvrir tous les panneaux';
 $lang['common.close.panels'] = 'Fermer tous les panneaux';
 
@@ -136,7 +137,7 @@ $lang['common.none.alt']         = 'Aucune';
 $lang['common.no.result']        = 'Aucun résultat';
 $lang['common.item.rate']        = 'Éléments :start à :end sur :total';
 
-//Footer
+// Footer
 $lang['common.powered.by']     = 'Humblement propulsé par';
 $lang['common.phpboost.right'] = 'Open Source';
 $lang['common.phpboost.link']  = 'Lien vers le site PHPBoost officiel';
@@ -242,6 +243,7 @@ $lang['common.click.to.select']     = 'Cliquer pour sélectionner une option';
 
 // Share
 $lang['common.share']       = 'Partager';
+$lang['common.share.on']    = 'Partager sur ';
 $lang['common.share.email'] = 'Partager par email';
 $lang['common.share.sms']   = 'Partager par sms';
 

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 22
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 4.1 - 2015 05 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -110,7 +110,7 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 		$fieldset->add_field(new FormFieldFree('kernel_version', $this->lang['admin.kernel.version'], Environment::get_phpboost_version()));
 		$fieldset->add_field(new FormFieldFree('site_url', LangLoader::get_message('configuration.site.url', 'configuration-lang'), $general_config->get_site_url()));
 		$fieldset->add_field(new FormFieldFree('site_path', LangLoader::get_message('configuration.site.path', 'configuration-lang'), $general_config->get_site_path()));
-		$fieldset->add_field(new FormFieldFree('default_theme', LangLoader::get_message('configuration.default.theme', 'configuration-lang'), $default_theme_config->get_name() . " (" . LangLoader::get_message('version', 'admin') . " " . $default_theme_config->get_version() . ")"));
+		$fieldset->add_field(new FormFieldFree('default_theme', LangLoader::get_message('configuration.default.theme', 'configuration-lang'), $default_theme_config->get_name() . " (" . LangLoader::get_message('common.version', 'common-lang') . " " . $default_theme_config->get_version() . ")"));
 		$fieldset->add_field(new FormFieldFree('default_language', LangLoader::get_message('configuration.default.language', 'configuration-lang'), $default_lang_config->get_name()));
 		$fieldset->add_field(new FormFieldFree('default_editor', $this->lang['admin.default.formatting.language'], $default_editor));
 		$fieldset->add_field(new FormFieldFree('start_page', LangLoader::get_message('configuration.start.page', 'configuration-lang'), Environment::get_home_page()));

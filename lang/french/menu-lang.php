@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 11
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 3.0 - 2011 10 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -103,17 +103,18 @@ $lang['menu.filters.clue']            = 'Les filtres permettent de définir sur 
     // Mini module menu
 $lang['menu.edit.mini'] = 'Modifier le mini module';
     // Content menu
-$lang['menu.content.add'] = 'Ajouter un menu de contenu';
+$lang['menu.content.add']  = 'Ajouter un menu de contenu';
 $lang['menu.content.edit'] = 'Éditer un menu de contenu';
     // Feed menu
-$lang['menu.feed.add'] = 'Ajouter un menu de flux';
-$lang['menu.feed.edit'] = 'Éditer un menu de flux';
-$lang['menu.warning.feed'] = 'Veuillez choisir un flux dans la liste !';
-$lang['menu.module.feed'] = 'Flux de module';
+$lang['menu.feed.add']        = 'Ajouter un menu de flux';
+$lang['menu.feed.edit']       = 'Éditer un menu de flux';
+$lang['menu.warning.feed']    = 'Veuillez choisir un flux dans la liste !';
+$lang['menu.module.feed']     = 'Flux de module';
 $lang['menu.available.feeds'] = 'Flux disponibles';
     // Links menu
-$lang['menu.links.add']  = 'Ajouter un menu de liens';
-$lang['menu.links.edit'] = 'Éditer un menu de liens';
+$lang['menu.links.add']      = 'Ajouter un menu de liens';
+$lang['menu.links.edit']     = 'Éditer un menu de liens';
+$lang['menu.link.to']        = 'Lien vers la page ';
 $lang['menu.automatic']      = 'Automatique';
 $lang['menu.automatic.clue'] = 'Automatique = s\'adapte en fonction de son emplacement <br /> Horizontal déroulant | Vertical déroulant | Static (pied de page)';
 $lang['menu.vertical']       = 'Menu vertical déroulant';

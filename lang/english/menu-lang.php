@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 11
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 3.0 - 2011 10 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -67,17 +67,17 @@ $lang['menu.server.system.report'] = 'System report';
 $lang['menu.users'] = 'Users';
 
 $lang['menu.sanctions.manager'] = 'Sanction manager';
-$lang['menu.groups']             = 'Groups';
-$lang['menu.extended.fields']    = 'Profile fields';
+$lang['menu.groups']            = 'Groups';
+$lang['menu.extended.fields']   = 'Profile fields';
 
 $lang['menu.content'] = 'Content';
 
 $lang['menu.links.menu']   = 'Links menu';
 $lang['menu.content.menu'] = 'Content menu';
 $lang['menu.feed.menu']    = 'Feed menu';
-$lang['menu.smileys']       = 'Smileys';
-$lang['menu.files']         = 'Files';
-$lang['menu.comments']      = 'Comments';
+$lang['menu.smileys']      = 'Smileys';
+$lang['menu.files']        = 'Files';
+$lang['menu.comments']     = 'Comments';
 
 $lang['menu.modules'] = 'Modules';
 
@@ -103,25 +103,26 @@ $lang['menu.filters.clue']            = 'Filters allow you to display this menu 
     // Mini module menu
 $lang['menu.edit.mini'] = 'Edit mini module';
     // Content menu
-$lang['menu.content.add'] = 'Add content menu';
+$lang['menu.content.add']  = 'Add content menu';
 $lang['menu.content.edit'] = 'Edit content menu';
     // Feed menu
-$lang['menu.feed.add'] = 'Add feed menu';
-$lang['menu.feed.edit'] = 'Edit feed menu';
-$lang['menu.warning.feed'] = 'Choose a feed in the list';
-$lang['menu.module.feed'] = 'Module feed';
+$lang['menu.feed.add']        = 'Add feed menu';
+$lang['menu.feed.edit']       = 'Edit feed menu';
+$lang['menu.warning.feed']    = 'Choose a feed in the list';
+$lang['menu.module.feed']     = 'Module feed';
 $lang['menu.available.feeds'] = 'Available feeds';
     // Links menu
 $lang['menu.links.add']      = 'Add links menu';
 $lang['menu.links.edit']     = 'Edit links menu';
+$lang['menu.link.to']        = 'Link to page ';
 $lang['menu.automatic']      = 'Automatic';
 $lang['menu.automatic.clue'] = 'Automatic = adapts to its location <br /> Horizontal scrolling | Vertical scrolling | Static (footer)';
 $lang['menu.vertical']       = 'Vertical scrolling menu';
 $lang['menu.horizontal']     = 'Horizontal scrolling menu';
 $lang['menu.static']         = 'Static menu';
 $lang['menu.push']           = 'Push menu';
-$lang['menu.push.disable.body']          = 'Disable content when menu is open';
-$lang['menu.push.push.content']         = 'Push content when menu is open';
+$lang['menu.push.disable.body']           = 'Disable content when menu is open';
+$lang['menu.push.push.content']           = 'Push content when menu is open';
 $lang['menu.push.opening.type']           = 'Menu opening';
 $lang['menu.push.opening.type.left']      = 'From the left';
 $lang['menu.push.opening.type.right']     = 'From the right';
@@ -132,10 +133,10 @@ $lang['menu.push.expansion.type.overlap'] = 'Overlap';
 $lang['menu.push.expansion.type.expand']  = 'Expand';
 $lang['menu.push.expansion.type.none']    = 'None';
     // Links menu form
-$lang['menu.add.item'] = 'Add item';
+$lang['menu.add.item']     = 'Add item';
 $lang['menu.add.sub.menu'] = 'Add submenu';
-$lang['menu.item'] = 'Menu item';
-$lang['menu.sub.menu'] = 'Submenu';
+$lang['menu.item']         = 'Menu item';
+$lang['menu.sub.menu']     = 'Submenu';
 
 // Validation button
 $lang['menu.position']           = 'Menus position';

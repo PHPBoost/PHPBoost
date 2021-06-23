@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 18
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 5.0 - 2017 03 26
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -33,8 +33,8 @@ class AdminGoogleMapsConfigController extends AdminModuleController
 
 		$this->build_form();
 
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
+		$view->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -48,12 +48,12 @@ class AdminGoogleMapsConfigController extends AdminModuleController
 			else
 				$this->form->get_field_by_id('default_position')->set_hidden(true);
 
-			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.config', 'warning-lang'), MessageHelper::SUCCESS, 5));
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$view->put('FORM', $this->form->display());
 
-		return $this->build_response($tpl);
+		return $this->build_response($view);
 	}
 
 	private function init()
@@ -106,11 +106,11 @@ class AdminGoogleMapsConfigController extends AdminModuleController
 		GoogleMapsConfig::save();
 	}
 
-	private function build_response(View $tpl)
+	private function build_response(View $view)
 	{
-		$title = LangLoader::get_message('configuration', 'admin');
+		$title = LangLoader::get_message('form.configuration', 'form-lang');
 
-		$response = new AdminMenuDisplayResponse($tpl);
+		$response = new AdminMenuDisplayResponse($view);
 		$response->set_title($title);
 		$response->add_link($this->lang['config.title'], GoogleMapsUrlBuilder::configuration());
 		$response->add_link(LangLoader::get_message('form.documentation', 'form-lang'), ModulesManager::get_module('GoogleMaps')->get_configuration()->get_documentation());

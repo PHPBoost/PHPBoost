@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 17
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 6.0 - 2021 04 20
 */
 
@@ -33,23 +33,23 @@ $lang['contribution.contribute.in.modules']     = 'The modules above allow to co
 $lang['contribution.contribute.in.module.name'] = 'Contribute in %s';
 $lang['contribution.no.module.to.contribute']   = 'No module in which you can contribute is installed.';
 
-$lang['contribution.clue'] = '
+$lang['contribution.warning'] = '
     Your contribution will be treated in the contribution panel.
     <span class="error text-strong">Amendment is possible until the contribution has been approved.</span>
     In the next field, you can justify your contribution to explain your approach to a moderator.';
-$lang['contribution.extended.clue'] = '
+$lang['contribution.extended.warning'] = '
     Your contribution will be treated in the contribution panel.
     <span class="error text-strong">Amendment is possible until the contribution has been approved or after.</span>
     In the next field, you can justify your contribution to explain your approach to a moderator.
     If you modify your contribution after <span class="text-strong">its approbation</span>, it will be sent back to the contribution panel, waiting for a new approbation.';
-$lang['contribution.member.edition.clue'] = '
+$lang['contribution.edition.warning'] = '
     You are about to modify your contribution. It will be sent back to the contribution panel to be treated
     and a new alert will be sent to approvers.';
 
 $lang['contribution.description']                     = 'Additional contribution';
 $lang['contribution.description.clue']                = 'Explain the reasons of your contribution. This field is not required but it may help the moderator to make his decision.';
-$lang['contribution.member.edition.description']      = 'Additional modification';
-$lang['contribution.member.edition.description.desc'] = 'Please explain what you have modified to help approvers.';
+$lang['contribution.edition.description']      = 'Additional modification';
+$lang['contribution.edition.description.desc'] = 'Please explain what you have modified to help approvers.';
 $lang['contribution.confirmed']                       = 'Your contribution has been saved.';
 $lang['contribution.confirmed.messages'] = '
     <p>

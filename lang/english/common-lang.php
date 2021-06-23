@@ -99,6 +99,7 @@ $lang['common.download']     = 'Download';
 $lang['common.upload']       = 'Upload';
 $lang['common.loading']      = 'Loading';
 $lang['common.print']        = 'print';
+$lang['common.printable']    = 'Printable version';
 $lang['common.open.panels']  = 'Open all panels';
 $lang['common.close.panels'] = 'Close all panels';
 
@@ -242,6 +243,7 @@ $lang['common.click.to.select']     = 'Click to select an option';
 
 // Share
 $lang['common.share']       = 'Share';
+$lang['common.share.on']    = 'Share on ';
 $lang['common.share.email'] = 'Share by email';
 $lang['common.share.sms']   = 'Share by sms';
 

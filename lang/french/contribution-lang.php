@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 17
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 6.0 - 2021 04 20
 */
 
@@ -33,26 +33,26 @@ $lang['contribution.contribute.in.modules']     = 'Les modules suivants permette
 $lang['contribution.contribute.in.module.name'] = 'Contribuer dans le module %s';
 $lang['contribution.no.module.to.contribute']   = 'Aucun module supportant la contribution n\'est installé.';
 
-$lang['contribution.clue'] = '
+$lang['contribution.warning'] = '
     Votre contribution sera traitée dans le panneau de contribution.
     <span class="error text-strong">La modification est possible tant que la contribution n\'a pas été approuvée.</span>
     Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un modérateur.
 ';
-$lang['contribution.extended.clue'] = '
+$lang['contribution.extended.warning'] = '
     Votre contribution sera traitée dans le panneau de contribution.
     <span class="error text-strong">La modification est possible avant son approbation ainsi qu\'après.</span>
     Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un modérateur.
     Si vous modifiez votre contribution <span class="text-strong">après approbation</span>, elle sera retraitée dans le panneau de contribution, en attente d\'une nouvelle approbation.
 ';
-$lang['contribution.member.edition.clue'] = '
+$lang['contribution.edition.warning'] = '
     Vous êtes sur le point de modifier votre contribution. Elle va être déplacée dans les éléments en attente afin d\'être traitée
     et une nouvelle alerte sera envoyée aux administrateurs.
 ';
 
 $lang['contribution.description']                     = 'Complément de contribution';
 $lang['contribution.description.clue']                = 'Expliquez les raisons de votre contribution. Ce champ est facultatif mais il peut aider un approbateur à prendre sa décision.';
-$lang['contribution.member.edition.description']      = 'Complément de modification';
-$lang['contribution.member.edition.description.clue'] = 'Expliquez ce que vous avez modifié pour un meilleur traitement d\'approbation.';
+$lang['contribution.edition.description']      = 'Complément de modification';
+$lang['contribution.edition.description.clue'] = 'Expliquez ce que vous avez modifié pour un meilleur traitement d\'approbation.';
 $lang['contribution.confirmed']                       = 'Votre contribution a bien été enregistrée.';
 $lang['contribution.confirmed.messages'] = '
     <p>

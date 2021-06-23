@@ -25,6 +25,8 @@ $lang['admin.priority.low']       = 'Faible';
 $lang['admin.priority.very.low']  = 'Très faible';
 $lang['admin.code']               = 'Code';
 
+$lang['admin.unknown.robot'] = 'Robot inconnu';
+
 // Advice
 $lang['admin.advice'] = 'Conseils';
 $lang['admin.advice.modules.management']           = '<a href="' . AdminModulesUrlBuilder::list_installed_modules()->rel() . '">Désactivez ou désinstallez les modules</a> que vous n\'utilisez pas pour économiser les ressources du site.';

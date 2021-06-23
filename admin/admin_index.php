@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 10
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 1.2 - 2005 06 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -90,7 +90,7 @@ if ($request->get_string('delete-selected-comments', false))
 				CommentsManager::delete_comment($ids[$i]);
 		}
 	}
-	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT, LangLoader::get_message('process.success', 'status-messages-common'));
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT, LangLoader::get_message('warning.process.success', 'warning-lang'));
 }
 
 // Advises
@@ -144,7 +144,7 @@ while ($row = $result->fetch())
 	{
 		$cached_data = TextHelper::unserialize($row['cached_data']);
 		$row['level'] = $cached_data['level'];
-		$row['display_name'] = ($cached_data['level'] == User::ROBOT_LEVEL && $cached_data['display_name'] == 'unknow_bot') ? LangLoader::get_message('unknow_bot', 'admin') : $cached_data['display_name'];
+		$row['display_name'] = ($cached_data['level'] == User::ROBOT_LEVEL && $cached_data['display_name'] == 'unknow_bot') ? $lang['admin.unknown.robot'] : $cached_data['display_name'];
 	}
 
 	$group_color = User::get_group_color($row['user_groups'], $row['level']);

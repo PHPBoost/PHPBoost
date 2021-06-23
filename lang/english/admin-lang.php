@@ -25,6 +25,8 @@ $lang['admin.priority.low']       = 'Low';
 $lang['admin.priority.very.low']  = 'Very low';
 $lang['admin.code']               = 'Code';
 
+$lang['admin.unknown.robot'] = 'Unknown robot';
+
 // Advice
 $lang['admin.advice']                              = 'Advice';
 $lang['admin.advice.modules.management']           = '<a href="' . AdminModulesUrlBuilder::list_installed_modules()->rel() . '">Disable or uninstall modules</a> you don\'t need to free ressources on the website.';
