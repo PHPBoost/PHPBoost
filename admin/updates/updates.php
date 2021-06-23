@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 09
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 1.6 - 2008 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -109,7 +109,7 @@ else
 {
 	$view->put_all(array(
 		'C_INCOMPATIBLE_PHP_VERSION' => true,
-		'L_INCOMPATIBLE_PHP_VERSION' => sprintf($lang['admin.php.version'], Updates::PHP_MIN_VERSION_UPDATES),
+		'L_INCOMPATIBLE_PHP_VERSION' => sprintf($lang['admin.update.php.version'], Updates::PHP_MIN_VERSION_UPDATES),
 	));
 }
 

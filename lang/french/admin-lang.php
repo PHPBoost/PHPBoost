@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 18
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 3.0 - 2010 08 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -249,7 +249,7 @@ $lang['admin.download.full.pack']     = 'Télécharger le pack complet';
 $lang['admin.download.update.pack']   = 'Télécharger le pack de mise à jour';
 $lang['admin.no.available.update']    = 'Aucune mise à jour n\'est disponible pour l\'instant.';
 $lang['admin.updates.check']          = 'Vérifier la présence de mises à jour';
-$lang['admin.php.version']            = '
+$lang['admin.update.php.version']     = '
     Impossible de vérifier la présence de mise à jour.<br />
     Veuillez utiliser la version %s ou ultérieure de PHP.<br />
     Si vous ne pouvez utiliser PHP5, veuillez vérifier la présence de ces mises à jour sur notre <a href="https://www.phpboost.com">site officiel</a>.

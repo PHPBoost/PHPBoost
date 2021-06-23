@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 18
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -202,22 +202,22 @@ $lang['admin.maintenance.text']                   = 'Text to display when the we
 $lang['admin.maintenance.authorization']          = 'Permission to access to the website during maintenance';
 
 // Server report
-$LANG['admin.server']                     = 'Server';
-$LANG['admin.phpinfo']                    = 'PHP info';
-$LANG['admin.system.report']              = 'System report';
-$LANG['admin.php.version']                = 'PHP version';
-$LANG['admin.dbms.version']               = 'DBMS version';
-$LANG['admin.gd.library']                 = 'GD Library';
-$LANG['admin.curl.library']               = 'Curl Extension';
-$LANG['admin.mbstring.library']           = 'Mbstring Extension (UTF-8)';
-$LANG['admin.url.rewriting']              = 'URL rewriting';
-$LANG['admin.phpboost.config']            = 'PHPBoost configuration';
-$LANG['admin.kernel.version']             = 'Kernel version';
-$LANG['admin.output.gz']                  = 'Output pages compression';
-$LANG['admin.directories.auth']           = 'Directories authorization';
-$LANG['admin.system.report.summary']      = 'Summary';
-$LANG['admin.system.report.summary.clue'] = 'This is a summary of the report, it will be useful for support, when you will be asked about your configuration.';
-$LANG['admin.copy.report']                = 'Copy report';
+$lang['admin.server']                     = 'Server';
+$lang['admin.phpinfo']                    = 'PHP info';
+$lang['admin.system.report']              = 'System report';
+$lang['admin.php.version']                = 'PHP version';
+$lang['admin.dbms.version']               = 'DBMS version';
+$lang['admin.gd.library']                 = 'GD Library';
+$lang['admin.curl.library']               = 'Curl Extension';
+$lang['admin.mbstring.library']           = 'Mbstring Extension (UTF-8)';
+$lang['admin.url.rewriting']              = 'URL rewriting';
+$lang['admin.phpboost.config']            = 'PHPBoost configuration';
+$lang['admin.kernel.version']             = 'Kernel version';
+$lang['admin.output.gz']                  = 'Output pages compression';
+$lang['admin.directories.auth']           = 'Directories authorization';
+$lang['admin.system.report.summary']      = 'Summary';
+$lang['admin.system.report.summary.clue'] = 'This is a summary of the report, it will be useful for support, when you will be asked about your configuration.';
+$lang['admin.copy.report']                = 'Copy report';
 
 // Smileys
 $lang['admin.smileys.management']     = 'Smiley management';
@@ -249,7 +249,7 @@ $lang['admin.download.full.pack']     = 'Download the full pack';
 $lang['admin.download.update.pack']   = 'Download the update pack';
 $lang['admin.no.available.update']    = 'No update is available for the moment.';
 $lang['admin.updates.check']          = 'Check for updates now!';
-$lang['admin.php.version']            = '
+$lang['admin.update.php.version']     = '
     Can\'t check for updates.<br />
     Please upgrade to PHP version %s or above.<br />
     If you can\'t use PHP5, check for updates on our <a href="https://www.phpboost.com">official website</a>.
