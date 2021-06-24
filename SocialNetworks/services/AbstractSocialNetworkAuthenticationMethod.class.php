@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 23
+ * @version     PHPBoost 6.0 - last update: 2021 06 24
  * @since       PHPBoost 5.1 - 2018 04 16
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -121,7 +121,7 @@ abstract class AbstractSocialNetworkAuthenticationMethod extends AuthenticationM
 			}
 		}
 		else
-			$this->error_msg = LangLoader::get_message('user.external.auth.user.data.not-found', 'lang-common');
+			$this->error_msg = LangLoader::get_message('user.external.auth.user.data.not.found', 'user-lang');
 
 		$this->check_user_bannishment($user_id);
 
