@@ -11,7 +11,7 @@ class PollItemsManagementController extends DefaultItemsManagementController
 {
   protected function get_additional_html_table_columns()
   {
-    return array(new HTMLTableColumn($this->lang['poll.manage.opened.votes'], 'close_poll'));
+    return array(new HTMLTableColumn($this->lang['poll.manage.opened.votes'], ''));
   }
   
   protected function get_additional_html_table_row_cells(&$item)
