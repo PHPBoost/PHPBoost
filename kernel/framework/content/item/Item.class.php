@@ -257,7 +257,7 @@ class Item
 				return LangLoader::get_message('common.status.published', 'common-lang');
 			break;
 			case self::DEFERRED_PUBLICATION:
-				return $this->is_published() ? LangLoader::get_message('common.status.now', 'common-lang') : LangLoader::get_message('common.status.deffered.date', 'common-lang');
+				return $this->is_published() ? LangLoader::get_message('common.status.published', 'common-lang') : LangLoader::get_message('common.status.deffered.date', 'common-lang');
 			break;
 		}
 	}
