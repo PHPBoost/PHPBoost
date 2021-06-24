@@ -160,6 +160,15 @@
 								var filter = filtersObjects[i];
 								var domFilter = jQuery('#' + filter.formId);
 								if (domFilter) {
+									if (domFilter.val() == 'on') {
+										if (domFilter.is(':checked')) {
+											var filterValue = '1';
+										} else {
+											var filterValue = '0';
+										}
+									} else {
+										var filterValue = domFilter.val();
+									}
 									var filterValue = domFilter.val();
 									if (filterValue) {
 										filters[filter.tableId] = filterValue;
