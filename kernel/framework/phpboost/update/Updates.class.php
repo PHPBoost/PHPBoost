@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 12 24
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 2.0 - 2008 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('CHECK_KERNEL', 0X01);
@@ -121,9 +122,9 @@ class Updates
 			$alert = new AdministratorAlert();
 
 			if ($app->get_type() == Application::KERNEL_TYPE)
-				$alert->set_entitled(sprintf(LangLoader::get_message('kernel_update_available', 'admin'), $app->get_version()));
+				$alert->set_entitled(sprintf(LangLoader::get_message('admin.kernel.update', 'admin-lang'), $app->get_version()));
 			else
-				$alert->set_entitled(sprintf(LangLoader::get_message('update_available', 'admin'), $app->get_type(), $app->get_name(), $app->get_version()));
+				$alert->set_entitled(sprintf(LangLoader::get_message('admin.available.update', 'admin-lang'), $app->get_type(), $app->get_name(), $app->get_version()));
 
 			$alert->set_fixing_url('/admin/updates/detail.php?identifier=' . $identifier);
 			$alert->set_priority($app->get_priority());
