@@ -3,11 +3,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 01 14
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 3.0 - 2010 02 06
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class KernelExtensionPointProvider extends ExtensionPointProvider
@@ -65,12 +66,12 @@ class KernelExtensionPointProvider extends ExtensionPointProvider
 		$links = array();
 
 		if ($config->is_content_sharing_email_enabled())
-			$links[] = new ContentSharingActionsMenuLink('mail', LangLoader::get_message('share_by', 'user-common') . ' ' . LangLoader::get_message('email', 'user-common'), new Url('mailto:?'. (defined('TITLE') ? 'subject=' . rawurlencode(TITLE) . '&' : '') . 'body=' . (rawurlencode(HOST . REWRITED_SCRIPT))), (new FileTemplate('framework/content/share/share_email_image_render.tpl'))->render(), null, '', true);
+			$links[] = new ContentSharingActionsMenuLink('mail', LangLoader::get_message('common.share.email', 'common-lang'), new Url('mailto:?'. (defined('TITLE') ? 'subject=' . rawurlencode(TITLE) . '&' : '') . 'body=' . (rawurlencode(HOST . REWRITED_SCRIPT))), (new FileTemplate('framework/content/share/share_email_image_render.tpl'))->render(), null, '', true);
 
 		if (AppContext::get_request()->is_mobile_device() && $config->is_content_sharing_sms_enabled())
-			$links[] = new ContentSharingActionsMenuLink('sms', LangLoader::get_message('share_by', 'user-common') . ' ' . LangLoader::get_message('share.sms', 'user-common'), new Url('sms:?body=' . (rawurlencode(HOST . REWRITED_SCRIPT))), (new FileTemplate('framework/content/share/share_sms_image_render.tpl'))->render(), null, '', true);
+			$links[] = new ContentSharingActionsMenuLink('sms', LangLoader::get_message('common.share.sms', 'common-lang'), new Url('sms:?body=' . (rawurlencode(HOST . REWRITED_SCRIPT))), (new FileTemplate('framework/content/share/share_sms_image_render.tpl'))->render(), null, '', true);
 		else if (!AppContext::get_request()->is_mobile_device() && $config->is_content_sharing_print_enabled())
-			$links[] = new ContentSharingActionsMenuLink('print', LangLoader::get_message('printable_version', 'main'), new Url('#'), (new FileTemplate('framework/content/share/share_print_image_render.tpl'))->render(), null, 'javascript:window.print()', true);
+			$links[] = new ContentSharingActionsMenuLink('print', LangLoader::get_message('common.printable', 'common-lang'), new Url('#'), (new FileTemplate('framework/content/share/share_print_image_render.tpl'))->render(), null, 'javascript:window.print()', true);
 
 		return $links;
 	}
