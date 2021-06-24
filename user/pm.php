@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 22
+ * @version     PHPBoost 6.0 - last update: 2021 06 24
  * @since       PHPBoost 1.5 - 2006 07 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -733,7 +733,7 @@ elseif (!empty($pm_id_get)) // Messages associated with the conversation.
 			Date::get_array_tpl_vars($date,'date'),
 			array(
 			'C_CURRENT_USER_MESSAGE' => AppContext::get_current_user()->get_display_name() == $row['display_name'],
-			'C_MODERATION_TOOLS'     => ($row['id'] === $convers['last_msg_id']) && !$row['view_status'], // Last editable PM if recipient has'nt read it yet
+			'C_MODERATION_TOOLS'     => ($row['user_id'] == AppContext::get_current_user()->get_id()) && !$row['view_status'],
 			'C_NOT_USER'             => $is_system || empty($row['display_name']),
 			'C_AVATAR'               => $row['user_avatar'] || $user_accounts_config->is_default_avatar_enabled(),
 			'C_GROUP_COLOR'          => !empty($group_color),
