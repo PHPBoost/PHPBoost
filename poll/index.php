@@ -22,7 +22,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('PollItemController', '`^/([0-9]+)-([a-z0-9-_]+)/([0-9]+)-([a-z0-9-_]+)/?$`', array('id_category', 'rewrited_name_category', 'id', 'rewrited_name')),
 
 	// Items manage
-	new UrlControllerMapper('PollItemsManagementController', '`^/manage/$`'),
+	new UrlControllerMapper('PollItemsManagementController', '`^/manage/?$`'),
 	
   	// Mini
 	new UrlControllerMapper('AjaxPollMiniController', '`^/ajax_send/$`')
