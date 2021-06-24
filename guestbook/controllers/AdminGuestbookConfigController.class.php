@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 12
+ * @version     PHPBoost 6.0 - last update: 2021 06 24
  * @since       PHPBoost 3.0 - 2012 11 30
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -20,7 +20,7 @@ class AdminGuestbookConfigController extends AdminModuleController
 	private $submit_button;
 
 	private $lang;
-	private $admin_common_lang;
+	private $form_lang;
 
 	/**
 	 * @var GuestbookConfig
@@ -33,41 +33,41 @@ class AdminGuestbookConfigController extends AdminModuleController
 
 		$this->build_form();
 
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
+		$view->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
 			$this->form->get_field_by_id('forbidden_tags')->set_selected_options($this->config->get_forbidden_tags());
 			$this->form->get_field_by_id('max_links_number_per_message')->set_hidden(!$this->config->is_max_links_number_per_message_enabled());
-			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.config', 'warning-lang'), MessageHelper::SUCCESS, 5));
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$view->put('FORM', $this->form->display());
 
-		return new DefaultAdminDisplayResponse($tpl);
+		return new DefaultAdminDisplayResponse($view);
 	}
 
 	private function init()
 	{
 		$this->config = GuestbookConfig::load();
 		$this->lang = LangLoader::get('common', 'guestbook');
-		$this->admin_common_lang = LangLoader::get('admin-common');
+		$this->form_lang = LangLoader::get('form-lang');
 	}
 
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars(LangLoader::get_message('configuration.module.title', 'admin-common'), array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->form_lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->admin_common_lang['config.forbidden-tags'], $this->config->get_forbidden_tags(), $this->generate_forbidden_tags_option(),
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->form_lang['form.forbidden.tags'], $this->config->get_forbidden_tags(), $this->generate_forbidden_tags_option(),
 			array('size' => 10)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_items_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->form_lang['form.items.per.page'], $this->config->get_items_per_page(),
 			array('class' => 'top-field', 'min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));

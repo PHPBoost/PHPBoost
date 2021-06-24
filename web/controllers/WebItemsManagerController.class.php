@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 20
+ * @version     PHPBoost 6.0 - last update: 2021 06 24
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -39,15 +39,16 @@ class WebItemsManagerController extends ModuleController
 
 	private function build_table()
 	{
+		$common_lang = LangLoader::get('common-lang');
 		$display_categories = CategoriesService::get_categories_manager()->get_categories_cache()->has_categories();
 
 		$columns = array(
-			new HTMLTableColumn(LangLoader::get_message('form.name', 'common'), 'title'),
-			new HTMLTableColumn(LangLoader::get_message('category.category', 'category-lang'), 'id_category'),
-			new HTMLTableColumn(LangLoader::get_message('author', 'common'), 'display_name'),
-			new HTMLTableColumn(LangLoader::get_message('form.date.creation', 'common'), 'creation_date'),
-			new HTMLTableColumn(LangLoader::get_message('status', 'common'), 'published'),
-			new HTMLTableColumn(LangLoader::get_message('actions', 'admin-common'), '', array('sr-only' => true))
+			new HTMLTableColumn($common_lang['common.title'], 'title'),
+			new HTMLTableColumn($common_lang['common.category'], 'id_category'),
+			new HTMLTableColumn($common_lang['common.author'], 'display_name'),
+			new HTMLTableColumn($common_lang['common.creation.date'], 'creation_date'),
+			new HTMLTableColumn($common_lang['common.status'], 'published'),
+			new HTMLTableColumn($common_lang['common.moderation'], '', array('sr-only' => true))
 		);
 
 		if (!$display_categories)
@@ -58,14 +59,14 @@ class WebItemsManagerController extends ModuleController
 		$table_model->set_layout_title($this->lang['web.management']);
 
 		$table_model->set_filters_menu_title($this->lang['web.filter.items']);
-		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('creation_date', 'filter1', LangLoader::get_message('form.date.creation', 'common') . ' ' . TextHelper::lcfirst(LangLoader::get_message('minimum', 'common'))));
-		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('creation_date', 'filter2', LangLoader::get_message('form.date.creation', 'common') . ' ' . TextHelper::lcfirst(LangLoader::get_message('maximum', 'common'))));
-		$table_model->add_filter(new HTMLTableAjaxUserAutoCompleteSQLFilter('display_name', 'filter3', LangLoader::get_message('author', 'common')));
+		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('creation_date', 'filter1', $common_lang['common.creation.date'] . ' ' . TextHelper::lcfirst($common_lang['common.minimum'])));
+		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('creation_date', 'filter2', $common_lang['common.creation.date'] . ' ' . TextHelper::lcfirst($common_lang['common.maximum'])));
+		$table_model->add_filter(new HTMLTableAjaxUserAutoCompleteSQLFilter('display_name', 'filter3', $common_lang['common.author']));
 		if ($display_categories)
 			$table_model->add_filter(new HTMLTableCategorySQLFilter('filter4'));
 
-		$status_list = array(Item::PUBLISHED => LangLoader::get_message('status.approved.now', 'common'), Item::NOT_PUBLISHED => LangLoader::get_message('status.approved.not', 'common'), Item::DEFERRED_PUBLICATION => LangLoader::get_message('status.approved.date', 'common'));
-		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('published', 'filter5', LangLoader::get_message('status', 'common'), $status_list));
+		$status_list = array(Item::PUBLISHED => $common_lang['common.status.approved'], Item::NOT_PUBLISHED => $common_lang['common.status.draft'], Item::DEFERRED_PUBLICATION => $common_lang['common.status.deffered.date']);
+		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('published', 'filter5', $common_lang['common.status'], $status_list));
 
 		$table = new HTMLTable($table_model);
 		$table->set_filters_fieldset_class_HTML();
@@ -96,7 +97,7 @@ class WebItemsManagerController extends ModuleController
 
 			$row = array(
 				new HTMLTableRowCell(new LinkHTMLElement(WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()), $item->get_title()), 'left'),
-				new HTMLTableRowCell(new LinkHTMLElement(WebUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), ($category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('none_e', 'common') : $category->get_name()))),
+				new HTMLTableRowCell(new LinkHTMLElement(WebUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), ($category->get_id() == Category::ROOT_CATEGORY ? $common_lang['common.none.alt'] : $category->get_name()))),
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell($item->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
 				new HTMLTableRowCell($item->get_status()),
@@ -131,7 +132,7 @@ class WebItemsManagerController extends ModuleController
             }
             WebService::clear_cache();
 
-            AppContext::get_response()->redirect(WebUrlBuilder::manage(), LangLoader::get_message('process.success', 'status-messages-common'));
+            AppContext::get_response()->redirect(WebUrlBuilder::manage(), LangLoader::get_message('warning.process.success', 'warning-lang'));
         }
     }
 

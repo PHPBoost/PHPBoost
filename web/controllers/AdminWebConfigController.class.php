@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 16
+ * @version     PHPBoost 6.0 - last update: 2021 06 24
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -23,7 +23,6 @@ class AdminWebConfigController extends AdminModuleController
 	private $submit_button;
 
 	private $lang;
-	private $admin_common_lang;
 
 	/**
 	 * @var WebConfig
@@ -61,7 +60,6 @@ class AdminWebConfigController extends AdminModuleController
 		$this->comments_config = CommentsConfig::load();
 		$this->content_management_config = ContentManagementConfig::load();
 		$this->lang = LangLoader::get('common', 'web');
-		$this->admin_common_lang = LangLoader::get('admin-common');
 	}
 
 	private function build_form()
@@ -72,38 +70,38 @@ class AdminWebConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($form_lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldNumberEditor('categories_per_page', $this->admin_common_lang['config.categories.per.page'], $this->config->get_categories_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('categories_per_page', $form_lang['form.categories.per.page'], $this->config->get_categories_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('categories_per_row', $this->admin_common_lang['config.categories.per.row'], $this->config->get_categories_per_row(),
+		$fieldset->add_field(new FormFieldNumberEditor('categories_per_row', $form_lang['form.categories.per.row'], $this->config->get_categories_per_row(),
 			array('min' => 1, 'max' => 4, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->admin_common_lang['config.root_category_description'], $this->config->get_root_category_description(),
+		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $form_lang['form.root.category.description'], $this->config->get_root_category_description(),
 			array('rows' => 8, 'cols' => 47)
 		));
 
-        $fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->admin_common_lang['config.items.per.page'], $this->config->get_items_per_page(),
+        $fieldset->add_field(new FormFieldNumberEditor('items_per_page', $form_lang['form.items.per.page'], $this->config->get_items_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-        $fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort', $this->admin_common_lang['config.items_default_sort'], $this->config->get_items_default_sort_field() . '-' . $this->config->get_items_default_sort_mode(), $this->get_sort_options()));
+        $fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort', $form_lang['form.items.default.sort'], $this->config->get_items_default_sort_field() . '-' . $this->config->get_items_default_sort_mode(), $this->get_sort_options()));
 
-		$fieldset->add_field(new FormFieldCheckbox('display_descriptions_to_guests', $this->admin_common_lang['config.display.summary.to.guests'], $this->config->are_descriptions_displayed_to_guests(),
+		$fieldset->add_field(new FormFieldCheckbox('display_descriptions_to_guests', $form_lang['form.display.summary.to.guests'], $this->config->are_descriptions_displayed_to_guests(),
 			array('class' => 'custom-checkbox')
 		));
 
 		$fieldset->add_field(new FormFieldSpacer('categories_display_type',''));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->admin_common_lang['config.display.type'], $this->config->get_display_type(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $form_lang['form.display.type'], $this->config->get_display_type(),
 			array(
-				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.grid'], WebConfig::GRID_VIEW, array('data_option_icon' => 'far fa-id-card')),
-				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.list'], WebConfig::LIST_VIEW, array('data_option_icon' => 'fa fa-list')),
-				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.table'], WebConfig::TABLE_VIEW, array('data_option_icon' => 'fa fa-table'))
+				new FormFieldSelectChoiceOption($form_lang['form.display.type.grid'], WebConfig::GRID_VIEW, array('data_option_icon' => 'far fa-id-card')),
+				new FormFieldSelectChoiceOption($form_lang['form.display.type.list'], WebConfig::LIST_VIEW, array('data_option_icon' => 'fa fa-list')),
+				new FormFieldSelectChoiceOption($form_lang['form.display.type.table'], WebConfig::TABLE_VIEW, array('data_option_icon' => 'fa fa-table'))
 			),
 			array(
 				'select_to_list' => true,
@@ -122,14 +120,14 @@ class AdminWebConfigController extends AdminModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->admin_common_lang['config.items.per.row'], $this->config->get_items_per_row(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $form_lang['form.items.per.row'], $this->config->get_items_per_row(),
 			array(
 				'hidden' => $this->config->get_display_type() !== WebConfig::GRID_VIEW,
 				'min' => 1, 'max' => 4, 'required' => true),
 				array(new FormFieldConstraintIntegerRange(1, 4))
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('full_item_display', $this->admin_common_lang['config.full.item.display'], $this->config->is_full_item_displayed(),
+		$fieldset->add_field(new FormFieldCheckbox('full_item_display', $form_lang['form.display.full.item'], $this->config->is_full_item_displayed(),
 			array(
 				'class' => 'custom-checkbox',
 				'hidden' => $this->config->get_display_type() !== WebConfig::LIST_VIEW,
@@ -143,7 +141,7 @@ class AdminWebConfigController extends AdminModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('auto_cut_characters_number', $this->admin_common_lang['config.characters.number.to.cut'], $this->config->get_auto_cut_characters_number(),
+		$fieldset->add_field(new FormFieldNumberEditor('auto_cut_characters_number', $form_lang['form.characters.number.to.cut'], $this->config->get_auto_cut_characters_number(),
 			array(
 				'min' => 20, 'max' => 1000, 'required' => true,
 				'hidden' => $this->config->get_display_type() == WebConfig::LIST_VIEW && $this->config->is_full_item_displayed()
@@ -167,8 +165,8 @@ class AdminWebConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', LangLoader::get_message('authorizations', 'common'),
-			array('description' => $this->admin_common_lang['config.authorizations.explain'])
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $form_lang['form.authorizations'],
+			array('description' => $form_lang['form.authorizations.clue'])
 		);
 		$form->add_fieldset($fieldset_authorizations);
 

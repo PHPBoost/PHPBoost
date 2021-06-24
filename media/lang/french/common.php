@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 12
+ * @version     PHPBoost 6.0 - last update: 2021 06 24
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor mipel <mipel@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -52,12 +52,12 @@ $lang['media.invisible.description']    = 'Fichier approuvé mais masqué';
 $lang['media.visible.description']      = 'Fichier approuvé et visible';
 
 // Configuration
-$lang['config.max.video.width'] = 'Largeur maximale d\'une vidéo';
-$lang['config.max.video.height'] = 'Hauteur maximale d\'une vidéo';
-$lang['config.root.category.media.content.type'] = 'Types de fichiers autorisés dans la racine des fichiers';
-$lang['config.constant.host'] = 'Hébergeurs de confiance';
-$lang['config.constant.host.peertube'] = 'Peertube';
-$lang['config.constant.host.peertube.desc'] = '<a href="https://joinpeertube.org">Joinpeertube.org</a> - <a href="https://instances.joinpeertube.org/instances/">Liste des instances</a>';
+$lang['media.max.video.width'] = 'Largeur maximale d\'une vidéo';
+$lang['media.max.video.height'] = 'Hauteur maximale d\'une vidéo';
+$lang['media.root.content.type'] = 'Types de fichiers autorisés dans la racine des fichiers';
+$lang['media.constant.host'] = 'Hébergeurs de confiance';
+$lang['media.constant.host.peertube'] = 'Peertube';
+$lang['media.constant.host.peertube.desc'] = '<a href="https://joinpeertube.org">Joinpeertube.org</a> - <a href="https://instances.joinpeertube.org/instances/">Liste des instances</a>';
 
 // S.E.O.
 $lang['media.seo.description.root'] = 'Tous les fichiers du site :site.';

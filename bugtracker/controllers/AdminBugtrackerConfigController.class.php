@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 16
+ * @version     PHPBoost 6.0 - last update: 2021 06 24
  * @since       PHPBoost 3.0 - 2012 10 18
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -85,7 +85,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTML('config', $this->lang['bugtracker.config.module.title']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', LangLoader::get_message('config.items_number_per_page', 'admin-common'), (int)$this->config->get_items_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $form_lang['form.items.per.page'], (int)$this->config->get_items_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));

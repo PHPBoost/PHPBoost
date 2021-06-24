@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 20
+ * @version     PHPBoost 6.0 - last update: 2021 06 24
  * @since       PHPBoost 6.0 - 2020 02 11
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -43,7 +43,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 			}
 			$this->hide_fields();
 
-			$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('warning.success.config', 'warning-lang'), MessageHelper::SUCCESS, 4));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.config', 'warning-lang'), MessageHelper::SUCCESS, 4));
 		}
 
 		$this->view->put('FORM', $this->form->display());
@@ -66,21 +66,21 @@ class DefaultConfigurationController extends AbstractAdminItemController
 
 		if (self::get_module_configuration()->has_rich_items())
 		{
-			$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort_field', $this->lang['config.items.default.sort.field'], $this->config->get_items_default_sort_field(), $this->module_item->get_sorting_field_options(),
+			$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort_field', $this->lang['form.items.default.sort'], $this->config->get_items_default_sort_field(), $this->module_item->get_sorting_field_options(),
 				array('select_to_list' => true, 'class' => 'third-field')
 			));
 
-			$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort_mode', $this->lang['config.items.default.sort.mode'], $this->config->get_items_default_sort_mode(), $item_class_name::get_sorting_mode_options(),
+			$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort_mode', $this->lang['form.items.default.sort.mode'], $this->config->get_items_default_sort_mode(), $item_class_name::get_sorting_mode_options(),
 				array('select_to_list' => true, 'class' => 'third-field')
 			));
 
 			$fieldset->add_field(new FormFieldSpacer('display', ''));
 
-			$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['config.display.type'], $this->config->get_display_type(),
+			$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['form.display.type'], $this->config->get_display_type(),
 				array(
-					new FormFieldSelectChoiceOption($this->lang['config.display.type.grid'], DefaultRichModuleConfig::GRID_VIEW, array('data_option_icon' => 'far fa-id-card')),
-					new FormFieldSelectChoiceOption($this->lang['config.display.type.list'], DefaultRichModuleConfig::LIST_VIEW, array('data_option_icon' => 'fa fa-list')),
-					new FormFieldSelectChoiceOption($this->lang['config.display.type.table'], DefaultRichModuleConfig::TABLE_VIEW, array('data_option_icon' => 'fa fa-table'))
+					new FormFieldSelectChoiceOption($this->lang['form.display.type.grid'], DefaultRichModuleConfig::GRID_VIEW, array('data_option_icon' => 'far fa-id-card')),
+					new FormFieldSelectChoiceOption($this->lang['form.display.type.list'], DefaultRichModuleConfig::LIST_VIEW, array('data_option_icon' => 'fa fa-list')),
+					new FormFieldSelectChoiceOption($this->lang['form.display.type.table'], DefaultRichModuleConfig::TABLE_VIEW, array('data_option_icon' => 'fa fa-table'))
 				),
 				array('select_to_list' => true,
 					'events' => array('change' => '
@@ -151,23 +151,23 @@ class DefaultConfigurationController extends AbstractAdminItemController
 
 			$fieldset->add_field(new FormFieldSpacer('options', ''));
 
-			$fieldset->add_field(new FormFieldCheckbox('sort_form_displayed', $this->lang['config.sort.form.displayed'], $this->config->get_sort_form_displayed(),
+			$fieldset->add_field(new FormFieldCheckbox('sort_form_displayed', $this->lang['form.display.sort.form'], $this->config->get_sort_form_displayed(),
 				array('class' => 'custom-checkbox')
 			));
 
-			$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->lang['config.author.displayed'], $this->config->get_author_displayed(),
+			$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->lang['form.display.author'], $this->config->get_author_displayed(),
 				array('class' => 'custom-checkbox')
 			));
 
-			$fieldset->add_field(new FormFieldCheckbox('date_displayed', $this->lang['config.date.displayed'], $this->config->get_date_displayed(),
+			$fieldset->add_field(new FormFieldCheckbox('date_displayed', $this->lang['form.display.date'], $this->config->get_date_displayed(),
 				array('class' => 'custom-checkbox')
 			));
 
-			$fieldset->add_field(new FormFieldCheckbox('update_date_displayed', $this->lang['config.update.date.displayed'], $this->config->get_update_date_displayed(),
+			$fieldset->add_field(new FormFieldCheckbox('update_date_displayed', $this->lang['form.display.update.date'], $this->config->get_update_date_displayed(),
 				array('class' => 'custom-checkbox')
 			));
 
-			$fieldset->add_field(new FormFieldCheckbox('views_number_enabled', $this->lang['config.views.number.enabled'], $this->config->get_views_number_enabled(),
+			$fieldset->add_field(new FormFieldCheckbox('views_number_enabled', $this->lang['form.display.views.number'], $this->config->get_views_number_enabled(),
 				array('class' => 'custom-checkbox')
 			));
 
@@ -200,7 +200,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 					));
 				}
 
-				$fieldset_categories->add_field(new FormFieldRichTextEditor('root_category_description', $this->lang['config.root_category_description'], $this->config->get_root_category_description(),
+				$fieldset_categories->add_field(new FormFieldRichTextEditor('root_category_description', $this->lang['form.root.category.description'], $this->config->get_root_category_description(),
 					array('rows' => 8, 'cols' => 47)
 				));
 			}
@@ -212,7 +212,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 		}
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['form.authorizations'],
-			array('description' => $this->lang['config.authorizations.explain'])
+			array('description' => $this->lang['form.authorizations.clue'])
 		);
 
 		$form->add_fieldset($fieldset_authorizations);

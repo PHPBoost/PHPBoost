@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 12
+ * @version     PHPBoost 6.0 - last update: 2021 06 24
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -51,12 +51,12 @@ $lang['media.invisible.description'] = 'Hidden file';
 $lang['media.visible.description'] = 'Approved and visible file';
 
 // Configuration
-$lang['config.max.video.width'] = 'Maximum video width';
-$lang['config.max.video.height'] = 'Maximum video height';
-$lang['config.root.category.media.content.type'] = 'Multimedia root category type of files allowed';
-$lang['config.constant.host'] = 'Trusted hosts';
-$lang['config.constant.host.peertube'] = 'Peertube';
-$lang['config.constant.host.peertube.desc'] = '<a href="https://joinpeertube.org">Joinpeertube.org</a> - <a href="https://instances.joinpeertube.org/instances/">List of instances</a>';
+$lang['media.max.video.width'] = 'Maximum video width';
+$lang['media.max.video.height'] = 'Maximum video height';
+$lang['media.root.content.type'] = 'Multimedia root category type of files allowed';
+$lang['media.constant.host'] = 'Trusted hosts';
+$lang['media.constant.host.peertube'] = 'Peertube';
+$lang['media.constant.host.peertube.desc'] = '<a href="https://joinpeertube.org">Joinpeertube.org</a> - <a href="https://instances.joinpeertube.org/instances/">List of instances</a>';
 
 // SEO
 $lang['media.seo.description.root'] = 'All :site\'s files.';
