@@ -78,7 +78,7 @@
 									<th>${TextHelper::ucfirst(@common.title)}</th>
 									# IF NOT C_MEMBER_ITEMS #
 										# IF C_AUTHOR_DISPLAYED #
-											<th aria-label="${TextHelper::ucfirst(@author)}">
+											<th aria-label="${TextHelper::ucfirst(@common.author)}">
 												<i class="far fa-fw fa-user hidden-small-screens" aria-hidden="true"></i>
 												<span class="hidden-large-screens">{@common.author}</span>
 											</th>
