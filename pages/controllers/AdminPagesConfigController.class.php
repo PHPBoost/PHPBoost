@@ -32,7 +32,7 @@ class AdminPagesConfigController extends DefaultConfigurationController
 
 		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['configuration.module.title'], array('module_name' => self::get_module_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
-		
+
 		$fieldset->add_field(new FormFieldCheckbox('left_column_disabled', $this->lang['config.left.column.disabled'], $this->config->get_left_column_disabled(),
 			array('class' => 'custom-checkbox')
 		));
@@ -52,9 +52,9 @@ class AdminPagesConfigController extends DefaultConfigurationController
 		$fieldset->add_field(new FormFieldRichTextEditor('default_content', $this->lang['config.item.default.content'], $this->config->get_default_content(),
 			array('rows' => 8, 'cols' => 47)
 		));
-		
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations', LangLoader::get_message('authorizations', 'common'),
-			array('description' => $this->lang['config.authorizations.explain'])
+
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['form.authorizations'],
+			array('description' => $this->lang['form.authorizations.clue'])
 		);
 
 		$form->add_fieldset($fieldset_authorizations);
