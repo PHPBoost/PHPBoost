@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 06 25
  * @since       PHPBoost 6.0 - 2020 06 17
 */
 
@@ -11,7 +11,7 @@ class PollItemsManagementController extends DefaultItemsManagementController
 {
   protected function get_additional_html_table_columns()
   {
-    return array(new HTMLTableColumn($this->lang['poll.manage.opened.votes'], 'opened_votes'));
+    return array(new HTMLTableColumn($this->lang['poll.manage.opened.votes'], 'close_poll'));
   }
   
   protected function get_additional_html_table_row_cells(&$item)
