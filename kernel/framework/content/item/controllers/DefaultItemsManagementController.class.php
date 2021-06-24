@@ -35,12 +35,14 @@ class DefaultItemsManagementController extends AbstractItemController
 		$columns = array_merge(array(
 			new HTMLTableColumn($this->lang['common.title'], 'title'),
 			new HTMLTableColumn($this->lang['common.author'], 'display_name'),
-			new HTMLTableColumn($this->lang['common.creation.date'], 'creation_date'),
-			new HTMLTableColumn($this->lang['common.status'], 'published')
-		  ),
-		  $this->get_additional_html_table_columns()
+			new HTMLTableColumn($this->lang['common.creation.date'], 'creation_date')
+			),
+			$this->get_additional_html_table_columns(),
+			array(
+				new HTMLTableColumn($this->lang['common.status'], 'published'),
+				new HTMLTableColumn($this->lang['common.moderation'], '', array('sr-only' => true))
+			)
 		);
-		$columns[] = new HTMLTableColumn($this->lang['common.moderation'], '', array('sr-only' => true));
 
 		if ($display_categories)
 			array_splice($columns, 1, 0, array(new HTMLTableColumn($this->lang['category.category'], 'id_category')));
@@ -56,11 +58,11 @@ class DefaultItemsManagementController extends AbstractItemController
 		if ($display_categories)
 			$table_model->add_filter(new HTMLTableCategorySQLFilter('filter4'));
 
-    if (!empty($this->get_additional_html_table_filters()))
-    {
-      foreach ($this->get_additional_html_table_filters() as $filter)
-        $table_model->add_filter($filter);
-    }
+		if (!empty($this->get_additional_html_table_filters()))
+		{
+			foreach ($this->get_additional_html_table_filters() as $filter)
+				$table_model->add_filter($filter);
+		}
 
 		$status_list = array(Item::PUBLISHED => $this->lang['common.status.published'], Item::NOT_PUBLISHED => $this->lang['common.status.draft']);
 		if (self::get_module_configuration()->feature_is_enabled('deferred_publication'))
@@ -118,12 +120,14 @@ class DefaultItemsManagementController extends AbstractItemController
 			$row = array_merge(array(
 				new HTMLTableRowCell(new LinkHTMLElement(self::get_module_configuration()->has_categories() ? ItemsUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()) : ItemsUrlBuilder::display_item($item->get_id(), $item->get_rewrited_title()), $item->get_title()), 'left'),
 				new HTMLTableRowCell($author),
-				new HTMLTableRowCell($item->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
-				new HTMLTableRowCell($status->display() . $br->display() . ($dates ? $start_and_end_dates->display() : ''))
-			  ),
-			  $this->get_additional_html_table_row_cells()
+				new HTMLTableRowCell($item->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE))
+				),
+				$this->get_additional_html_table_row_cells($item),
+				array(
+					new HTMLTableRowCell($status->display() . $br->display() . ($dates ? $start_and_end_dates->display() : '')),
+					new HTMLTableRowCell($edit_link->display() . $delete_link->display(), 'controls')
+				)
 			);
-			$row[] = new HTMLTableRowCell($edit_link->display() . $delete_link->display(), 'controls');
 
 			if ($display_categories)
 				array_splice($row, 1, 0, array(new HTMLTableRowCell(new LinkHTMLElement(CategoriesUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), self::$module_id), ($category->get_id() == Category::ROOT_CATEGORY ? $this->lang['common.none.alt'] : $category->get_name())))));
@@ -168,20 +172,20 @@ class DefaultItemsManagementController extends AbstractItemController
 		return self::get_module_configuration()->has_categories() ? CategoriesAuthorizationsService::check_authorizations()->moderation() : ItemsAuthorizationsService::check_authorizations()->moderation();
 	}
 
-        protected function get_additional_html_table_columns()
-        {
-               return array();
-        }
+	protected function get_additional_html_table_columns()
+	{
+	return array();
+	}
 
-        protected function get_additional_html_table_row_cells()
-        {
-               return array();
-        }
+	protected function get_additional_html_table_row_cells(&$item)
+	{
+		return array();
+	}
 
-        protected function get_additional_html_table_filters()
-        {
-               return array();
-        }
+	protected function get_additional_html_table_filters()
+	{
+		return array();
+	}
 
 	private function generate_response($page = 1)
 	{
