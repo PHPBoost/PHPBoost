@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 20
+ * @version     PHPBoost 6.0 - last update: 2021 06 24
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -430,23 +430,24 @@ Be careful with your behavior, if you reach 100% you will be permanently banned.
 This is a semi-automatic message.';
 
 // Private messaging
-$lang['user.private.message']       = 'Private message';
-$lang['user.private.messages']      = 'Private messages';
-$lang['user.pm']                    = 'PM';
-$lang['user.pm.box']                = 'Private message box';
-$lang['user.recipient']             = 'Recipient';
-$lang['user.post.new.conversation'] = 'Create a new conversation';
-$lang['user.new.pm']                = 'New private message';
-$lang['user.pm.conversation.link']  = 'Read the full discussion';
-$lang['user.pm.status']             = 'Message status';
-$lang['user.pm.track']              = 'Unread by recipient';
-$lang['user.not.read']              = 'Not read';
-$lang['user.read']                  = 'Read';
-$lang['user.last.message']          = 'Last message';
-$lang['user.mark.pm.as.read']       = 'Mark all privates messages as read';
-$lang['user.participants']          = 'Participant(s)';
-$lang['user.quote.last.message']    = 'Repost of the preceding message';
-$lang['user.select.all.messages']   = 'Select all messages';
+$lang['user.private.message']               = 'Private message';
+$lang['user.private.messages']              = 'Private messages';
+$lang['user.pm']                            = 'PM';
+$lang['user.pm.box']                        = 'Private message box';
+$lang['user.recipient']                     = 'Recipient';
+$lang['user.post.new.conversation']         = 'Create a new conversation';
+$lang['user.post.new.private.conversation'] = 'Create a new private conversation';
+$lang['user.new.pm']                        = 'New private message';
+$lang['user.pm.conversation.link']          = 'Read the full discussion';
+$lang['user.pm.status']                     = 'Message status';
+$lang['user.pm.track']                      = 'Unread by recipient';
+$lang['user.not.read']                      = 'Not read';
+$lang['user.read']                          = 'Read';
+$lang['user.last.message']                  = 'Last message';
+$lang['user.mark.pm.as.read']               = 'Mark all privates messages as read';
+$lang['user.participants']                  = 'Participant(s)';
+$lang['user.quote.last.message']            = 'Repost of the preceding message';
+$lang['user.select.all.messages']           = 'Select all messages';
 
 // Cookies bar
 $lang['user.cookiebar.cookie']                    = 'Cookie';
