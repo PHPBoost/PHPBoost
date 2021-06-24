@@ -172,39 +172,6 @@ class GalleryDisplayCategoryController extends ModuleController
 			'U_SORT_BY_VIEWS'    => PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=views_desc&amp;cat=' . $category->get_id(), '-' . $category->get_id() . '+' . $rewrite_title . '.php?sort=views_desc'),
 			'U_SORT_BY_NOTES'    => PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=notes_desc&amp;cat=' . $category->get_id(), '-' . $category->get_id() . '+' . $rewrite_title . '.php?sort=notes_desc'),
 			'U_SORT_BY_COMMENTS' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=com_desc&amp;cat=' . $category->get_id(), '-' . $category->get_id() . '+' . $rewrite_title . '.php?sort=com_desc'),
-			//
-			'C_SEVERAL_CATS_COLUMNS' => $nbr_column_cats > 1,
-			'MODULE_NAME' => $LANG['gallery'],
-			'GALLERY' => $category->get_id() != Category::ROOT_CATEGORY ? $this->lang['gallery.module.title'] . ' - ' . $category->get_name() : $this->lang['gallery.module.title'],
-			'HEIGHT_MAX' => $config->get_mini_max_height(),
-			'WIDTH_MAX' => $column_width_pics,
-			'MODULE_DATA_PATH' => $module_data_path,
-			'END_THUMB' => 0,
-			'U_INDEX' => url('.php'),
-			'L_TOTAL_IMG' => $nbr_pics > 0 ? ($category->get_id() != Category::ROOT_CATEGORY ? sprintf($LANG['total_img_cat'], $nbr_pics) : ($nbr_pics > 1 ? sprintf($LANG['total_img_root'], $nbr_pics) : $LANG['total_img_root_single'])) : '',
-			'L_CATEGORIES' => ($category->get_id_parent() >= 0) ? $LANG['sub_album'] : $LANG['album'],
-			'L_ORDER_BY' => LangLoader::get_message('sort_by', 'common') . (isset($LANG[$g_type]) ? ' ' . TextHelper::strtolower($LANG[$g_type]) : ''),
-			'L_APROB' => $LANG['aprob'],
-			'L_UNAPROB' => $LANG['unaprob'],
-			'L_FILE_FORBIDDEN_CHARS' => $LANG['file_forbidden_chars'],
-			'L_ADD_IMG' => $LANG['add_pic'],
-			'L_GALLERY' => $this->lang['gallery.module.title'],
-			'L_NAME' => $LANG['name'],
-			'L_EDIT' => LangLoader::get_message('edit', 'common'),
-			'L_MOVETO' => $LANG['moveto'],
-			'L_DELETE' => LangLoader::get_message('delete', 'common'),
-			'L_SUBMIT' => $LANG['submit'],
-			'L_ALREADY_VOTED' => $LANG['already_vote'],
-			'L_DIRECTION' => $LANG['direction'],
-			'L_DISPLAY' => LangLoader::get_message('display', 'common'),
-			'L_BEST_VIEWS' => $LANG['best_views'],
-			'L_BEST_NOTES' => $LANG['best_notes'],
-			'L_ASC' => $LANG['asc'],
-			'L_DESC' => $LANG['desc'],
-			'L_DATE' => LangLoader::get_message('date', 'date-common'),
-			'L_VIEWS' => $LANG['views'],
-			'L_NOTES' => LangLoader::get_message('notes', 'common'),
-			'L_COM' => $LANG['com_s']
 		));
 
 		##### Affichage des photos #####
@@ -416,21 +383,6 @@ class GalleryDisplayCategoryController extends ModuleController
 							'U_NEXT'           => ($pos_pics < ($i - 1)) ? GalleryUrlBuilder::get_link_item($category->get_id(),$id_next) : '',
 							'U_COMMENTS'       => GalleryUrlBuilder::get_link_item($info_pics['id_category'],$info_pics['id'],0,$g_sort) .'#comments-list',
 							'U_ITEM_MAX'       => 'show_pics.php?id=' . $info_pics['id'] . '&amp;cat=' . $info_pics['id_category'] . '&amp;ext=.' . $extension,
-
-							//
-							'IMG_APROB' => ($info_pics['aprob'] == 1) ? 'fa fa-eye-slash' : 'fa fa-eye',
-							'L_KB' => LangLoader::get_message('unit.kilobytes', 'common'),
-							'L_INFORMATIONS' => $LANG['informations'],
-							'L_NAME' => $LANG['name'],
-							'L_POSTOR' => $LANG['postor'],
-							'L_VIEWS' => $LANG['views'],
-							'L_ADD_ON' => $LANG['add_on'],
-							'L_DIMENSION' => $LANG['dimension'],
-							'L_SIZE' => $LANG['size'],
-							'L_NOTE' => LangLoader::get_message('note', 'common'),
-							'L_COM' => $LANG['com'],
-							'L_EDIT' => LangLoader::get_message('edit', 'common'),
-							'L_THUMBNAILS' => $LANG['thumbnails'],
 						)
 					));
 
@@ -479,11 +431,6 @@ class GalleryDisplayCategoryController extends ModuleController
 					'C_PAGINATION'            => $pagination->has_several_pages(),
 
 					'PAGINATION' => $pagination->display(),
-					//
-					'L_EDIT' => LangLoader::get_message('edit', 'common'),
-					'L_BY' => $LANG['by'],
-					'L_VIEW' => $LANG['view'],
-					'L_VIEWS' => $LANG['views']
 				));
 
 				$is_connected = AppContext::get_current_user()->check_level(User::MEMBER_LEVEL);

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 23
+ * @version     PHPBoost 6.0 - last update: 2021 06 24
  * @since       PHPBoost 4.1 - 2015 05 15
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -94,7 +94,7 @@ class ForumCategoriesFormController extends DefaultCategoriesFormController
 			array('hidden' => $this->get_category()->get_type() != ForumCategory::TYPE_FORUM)
 		));
 
-		$fieldset->add_field(new FormFieldUrlEditor('url', LangLoader::get_message('form.url', 'common'), $this->get_category()->get_url(),
+		$fieldset->add_field(new FormFieldUrlEditor('url', LangLoader::get_message('form.url', 'form-lang'), $this->get_category()->get_url(),
 			array('required' => true, 'hidden' => $this->get_category()->get_type() != ForumCategory::TYPE_URL)
 		));
 

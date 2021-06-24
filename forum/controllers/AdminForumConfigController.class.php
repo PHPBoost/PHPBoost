@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 01
+ * @version     PHPBoost 6.0 - last update: 2021 06 24
  * @since       PHPBoost 4.1 - 2015 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -151,19 +151,19 @@ class AdminForumConfigController extends AdminModuleController
 			)
 		));
 
-		$common_lang = LangLoader::get('common');
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $common_lang['authorizations']);
+		$form_lang = LangLoader::get('form-lang');
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $form_lang['form.authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($common_lang['authorizations.read'], Category::READ_AUTHORIZATIONS),
-			new VisitorDisabledActionAuthorization($common_lang['authorizations.write'], Category::WRITE_AUTHORIZATIONS),
-			new MemberDisabledActionAuthorization($common_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
+			new ActionAuthorization($form_lang['form.authorizations.read'], Category::READ_AUTHORIZATIONS),
+			new VisitorDisabledActionAuthorization($form_lang['form.authorizations.write'], Category::WRITE_AUTHORIZATIONS),
+			new MemberDisabledActionAuthorization($form_lang['form.authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['forum.authorizations.read.topics.content'], ForumAuthorizationsService::READ_TOPICS_CONTENT_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['forum.authorizations.flood'], ForumAuthorizationsService::FLOOD_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['forum.authorizations.hide.edition.mark'], ForumAuthorizationsService::HIDE_EDITION_MARK_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['forum.authorizations.unlimited.topics.tracking'], ForumAuthorizationsService::UNLIMITED_TOPICS_TRACKING_AUTHORIZATIONS),
-			new MemberDisabledActionAuthorization($common_lang['authorizations.categories_management'], ForumAuthorizationsService::CATEGORIES_MANAGEMENT_AUTHORIZATIONS),
+			new MemberDisabledActionAuthorization($form_lang['form.authorizations.categories'], ForumAuthorizationsService::CATEGORIES_MANAGEMENT_AUTHORIZATIONS),
 			new VisitorDisabledActionAuthorization($this->lang['forum.authorizations.multiple.posts'], ForumAuthorizationsService::MULTIPLE_POSTS_AUTHORIZATIONS)
 		));
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);

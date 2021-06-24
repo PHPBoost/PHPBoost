@@ -141,7 +141,7 @@ if ($action == 'alert') //Gestion des alertes
 			'L_STATUS'          => $LANG['status'],
 			'L_ALERT_SOLVED'    => $LANG['alert_solved'],
 			'L_ALERT_NOTSOLVED' => $LANG['alert_not_solved'],
-			'L_DELETE'          => LangLoader::get_message('delete', 'common'),
+			'L_DELETE'          => LangLoader::get_message('common.delete', 'common-lang'),
 			'L_DELETE_MESSAGE'  => $LANG['delete_several_alerts']
 		));
 
@@ -201,7 +201,7 @@ if ($action == 'alert') //Gestion des alertes
 		{
 			$view->put_all(array(
 				'C_FORUM_NO_ALERT' => true,
-				'L_NO_ALERT' => LangLoader::get_message('no_item_now', 'common')
+				'L_NO_ALERT' => LangLoader::get_message('common.no.item.now', 'common-lang')
 			));
 		}
 	}
@@ -479,7 +479,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 					break;
 				}
 			}' . "\n" .
-			'if (replace_value != \'' . addslashes(LangLoader::get_message('no', 'common')) . '\')' . "\n" .
+			'if (replace_value != \'' . addslashes(LangLoader::get_message('common.no', 'common-lang')) . '\')' . "\n" .
 			'{' . "\n" .
 				'content = content.replace(regex, replace_value);' . "\n" .
 				'document.getElementById(\'action_content\').disabled = \'\'' . "\n" .

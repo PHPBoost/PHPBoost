@@ -926,6 +926,11 @@ class UpdateServices
 		$file = new File(PATH_TO_ROOT . '/lang/french/comments-common.php');
 		$file->delete();
 
+		$file = new File(PATH_TO_ROOT . '/lang/english/common.php');
+		$file->delete();
+		$file = new File(PATH_TO_ROOT . '/lang/french/common.php');
+		$file->delete();
+
 		$file = new File(PATH_TO_ROOT . '/lang/english/date-common.php');
 		$file->delete();
 		$file = new File(PATH_TO_ROOT . '/lang/french/date-common.php');

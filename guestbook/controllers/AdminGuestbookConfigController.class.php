@@ -90,14 +90,14 @@ class AdminGuestbookConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 20))
 		));
 
-		$common_lang = LangLoader::get('common');
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $common_lang['authorizations']);
+		$form_lang = LangLoader::get('form-lang');
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $form_lang['form.authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($common_lang['authorizations.read'], GuestbookAuthorizationsService::READ_AUTHORIZATIONS),
-			new ActionAuthorization($common_lang['authorizations.write'], GuestbookAuthorizationsService::WRITE_AUTHORIZATIONS),
-			new MemberDisabledActionAuthorization($common_lang['authorizations.moderation'], GuestbookAuthorizationsService::MODERATION_AUTHORIZATIONS)
+			new ActionAuthorization($form_lang['form.authorizations.read'], GuestbookAuthorizationsService::READ_AUTHORIZATIONS),
+			new ActionAuthorization($form_lang['form.authorizations.write'], GuestbookAuthorizationsService::WRITE_AUTHORIZATIONS),
+			new MemberDisabledActionAuthorization($form_lang['form.authorizations.moderation'], GuestbookAuthorizationsService::MODERATION_AUTHORIZATIONS)
 		));
 
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());

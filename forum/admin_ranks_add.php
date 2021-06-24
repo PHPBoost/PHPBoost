@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 30
+ * @version     PHPBoost 6.0 - last update: 2021 06 24
  * @since       PHPBoost 1.2 - 2005 10 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -109,10 +109,10 @@ $view->put_all(array(
 	'L_RANK_NAME'                    => $LANG['rank_name'],
 	'L_MESSAGES_NUMBER'              => $LANG['nbr_msg'],
 	'L_IMG_ASSOC'                    => $LANG['img_assoc'],
-	'L_DELETE'                       => LangLoader::get_message('delete', 'common'),
+	'L_DELETE'                       => LangLoader::get_message('common.delete', 'common-lang'),
 	'L_UPDATE'                       => $LANG['validate'],
 	'L_RESET'                        => $LANG['reset'],
-	'L_ADD'                          => LangLoader::get_message('add', 'common')
+	'L_ADD'                          => LangLoader::get_message('common.add', 'common-lang')
 ));
 
 $view->display();

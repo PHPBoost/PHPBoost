@@ -234,12 +234,12 @@ elseif ($g_add)
 	$search_category_children_options = new SearchCategoryChildrensOptions();
 	$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
 	$view->put_all(array(
-		'CATEGORIES_TREE'    => CategoriesService::get_categories_manager('gallery')->get_select_categories_form_field('cat', LangLoader::get_message('form.category', 'common'), $id_category, $search_category_children_options)->display()->render(),
+		'CATEGORIES_TREE'    => CategoriesService::get_categories_manager('gallery')->get_select_categories_form_field('cat', LangLoader::get_message('common.category', 'common-lang'), $id_category, $search_category_children_options)->display()->render(),
 		'MAX_WIDTH'          => $config->get_max_width(),
 		'MAX_HEIGHT'         => $config->get_max_height(),
 		'ALLOWED_EXTENSIONS' => implode('", "',FileUploadConfig::load()->get_authorized_picture_extensions()),
 		'MAX_FILE_SIZE'      => $config->get_max_weight() * 1024,
-		'MAX_FILE_SIZE_TEXT' => ($config->get_max_weight() / 1024) . ' ' . LangLoader::get_message('unit.megabytes', 'common'),
+		'MAX_FILE_SIZE_TEXT' => ($config->get_max_weight() / 1024) . ' ' . LangLoader::get_message('common.unit.megabytes', 'common-lang'),
 		'IMG_FORMAT'         => 'JPG, PNG, GIF',
 
 		'U_GALLERY_ACTION_ADD' => GalleryUrlBuilder::get_link_cat_add($id_category,null,AppContext::get_session()->get_token()),
@@ -259,8 +259,8 @@ elseif ($g_add)
 		'L_GALLERY_INDEX' => $LANG['gallery_index'],
 		'L_CATEGORIES' => $LANG['categories'],
 		'L_NAME' => $LANG['name'],
-		'L_UNIT_PX' => LangLoader::get_message('unit.pixels', 'common'),
-		'L_UNIT_KO' => LangLoader::get_message('unit.kilobytes', 'common'),
+		'L_UNIT_PX' => LangLoader::get_message('common.unit.pixels', 'common-lang'),
+		'L_UNIT_KO' => LangLoader::get_message('common.unit.kilobytes', 'common-lang'),
 		'L_UPLOAD' => $LANG['upload_img'],
 	));
 

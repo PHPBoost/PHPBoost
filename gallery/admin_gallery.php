@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 01
+ * @version     PHPBoost 6.0 - last update: 2021 06 24
  * @since       PHPBoost 1.2 - 2005 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -135,9 +135,9 @@ $view->put_all(array(
 	'L_NAME' => $LANG['name'],
 	'L_APROB' => $LANG['aprob'],
 	'L_UNAPROB' => $LANG['unaprob'],
-	'L_EDIT' => LangLoader::get_message('edit', 'common'),
+	'L_EDIT' => LangLoader::get_message('common.edit', 'common-lang'),
 	'L_MOVETO' => $LANG['moveto'],
-	'L_DELETE' => LangLoader::get_message('delete', 'common'),
+	'L_DELETE' => LangLoader::get_message('common.delete', 'common-lang'),
 	'L_SUBMIT' => $LANG['submit']
 ));
 
@@ -327,7 +327,7 @@ if ($nbr_pics > 0)
 				'L_ADD_ON' => $LANG['add_on'],
 				'L_DIMENSION' => $LANG['dimension'],
 				'L_SIZE' => $LANG['size'],
-				'L_EDIT' => LangLoader::get_message('edit', 'common'),
+				'L_EDIT' => LangLoader::get_message('common.edit', 'common-lang'),
 				'L_APROB' => $LANG['aprob'],
 				'L_UNAPROB' => $LANG['unaprob'],
 				'L_THUMBNAILS' => $LANG['thumbnails']

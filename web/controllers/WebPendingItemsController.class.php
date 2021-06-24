@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 25
+ * @version     PHPBoost 6.0 - last update: 2021 06 24
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -119,26 +119,26 @@ class WebPendingItemsController extends ModuleController
 
 	private function build_sorting_form($field, $mode)
 	{
-		$common_lang = LangLoader::get('common');
+		$common_lang = LangLoader::get('common-lang');
 
 		$form = new HTMLForm(__CLASS__, '', false);
 		$form->set_css_class('options');
 
-		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $common_lang['sort_by']));
+		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $common_lang['common.sort.by']));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field,
 			array(
-				new FormFieldSelectChoiceOption($common_lang['form.date.creation'], WebItem::SORT_FIELDS_URL_VALUES[WebItem::SORT_DATE]),
-				new FormFieldSelectChoiceOption($common_lang['form.name'], WebItem::SORT_FIELDS_URL_VALUES[WebItem::SORT_ALPHABETIC])
+				new FormFieldSelectChoiceOption($common_lang['common.creation.date'], WebItem::SORT_FIELDS_URL_VALUES[WebItem::SORT_DATE]),
+				new FormFieldSelectChoiceOption($common_lang['common.title'], WebItem::SORT_FIELDS_URL_VALUES[WebItem::SORT_ALPHABETIC])
 			),
 			array('events' => array('change' => 'document.location = "'. WebUrlBuilder::display_pending()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
 			array(
-				new FormFieldSelectChoiceOption($common_lang['sort.asc'], 'asc'),
-				new FormFieldSelectChoiceOption($common_lang['sort.desc'], 'desc')
+				new FormFieldSelectChoiceOption($common_lang['commonsort.asc'], 'asc'),
+				new FormFieldSelectChoiceOption($common_lang['commonsort.desc'], 'desc')
 			),
 			array('events' => array('change' => 'document.location = "' . WebUrlBuilder::display_pending()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));

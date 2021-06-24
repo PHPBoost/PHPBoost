@@ -26,8 +26,8 @@
                                 <a class="Level" href="#" itemprop="author">{@layout.messages.login}</a>
                             </h3>
                             <div class="message-actions">
-                                <a href="#" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit"></i></a>
-                                <a href="#" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt" data-confirmation="delete-element"></i></a>
+                                <a href="#" aria-label="${LangLoader::get_message('common.edit', 'common-lang')}"><i class="far fa-fw fa-edit"></i></a>
+                                <a href="#" aria-label="${LangLoader::get_message('common.delete', 'common-lang')}"><i class="far fa-fw fa-trash-alt" data-confirmation="delete-element"></i></a>
                             </div>
                         </div>
                         <div class="message-infos">

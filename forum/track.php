@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 01
+ * @version     PHPBoost 6.0 - last update: 2021 06 24
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -250,7 +250,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 		'L_FORUM_INDEX'      => $LANG['forum_index'],
 		'L_AUTHOR'           => $LANG['author'],
 		'L_FORUM'            => $LANG['forum'],
-		'L_DELETE'           => LangLoader::get_message('delete', 'common'),
+		'L_DELETE'           => LangLoader::get_message('common.delete', 'common-lang'),
 		'L_MAIL'             => $LANG['mail'],
 		'L_PM'               => $LANG['pm'],
 		'L_EXPLAIN_TRACK'    => $LANG['explain_track'],

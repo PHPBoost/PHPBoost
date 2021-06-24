@@ -11,52 +11,52 @@
                     <div class="fieldset-inset">
                         <ul id="categories" class="sortable-block">
                             <li id="cat-1" class="sortable-element" data-id="1">
-                                <div class="sortable-selector" aria-label="${LangLoader::get_message('position.move', 'common')}"></div>
+                                <div class="sortable-selector" aria-label="${LangLoader::get_message('common.move', 'common-lang')}"></div>
                                 <div class="sortable-title">
                                     <a href="/workspace/phpboost/pbt-53/trunk/news/1-test/">{@layout.title} 1</a>
                                     <em class="h-padding small">{@layout.title.sub}</em>
                                 </div>
                                 <div class="sortable-actions">
-                                    <a href="#" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-1" onclick="return false;" style="display: none;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
-                                    <a href="#" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-1" onclick="return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
-                                    <a href="/workspace/phpboost/pbt-53/trunk/news/categories/1/edit/#AbstractCategoriesFormController_special_authorizations_field" aria-label="${LangLoader::get_message('authorizations.default', 'common')}">
+                                    <a href="#" aria-label="${LangLoader::get_message('common.move.up', 'common-lang')}" id="move-up-1" onclick="return false;" style="display: none;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+                                    <a href="#" aria-label="${LangLoader::get_message('common.move.down', 'common-lang')}" id="move-down-1" onclick="return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
+                                    <a href="/workspace/phpboost/pbt-53/trunk/news/categories/1/edit/#AbstractCategoriesFormController_special_authorizations_field" aria-label="${LangLoader::get_message('form.authorizations.default', 'form-lang')}">
                                         <i class="fa fa-fw fa-user-shield" aria-hidden="true"></i>
                                     </a>
-                                    <a href="/workspace/phpboost/pbt-53/trunk/news/categories/1/edit/" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a>
-                                    <a href="/workspace/phpboost/pbt-53/trunk/news/categories/1/delete/" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="{@layout.delete.confirmation}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+                                    <a href="/workspace/phpboost/pbt-53/trunk/news/categories/1/edit/" aria-label="${LangLoader::get_message('common.edit', 'common-lang')}"><i class="far fa-edit" aria-hidden="true"></i></a>
+                                    <a href="/workspace/phpboost/pbt-53/trunk/news/categories/1/delete/" aria-label="${LangLoader::get_message('common.delete', 'common-lang')}" data-confirmation="{@layout.delete.confirmation}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
                                 </div>
                                 <ul id="subcat-1" class="sortable-block">
                                     <li id="cat-2" class="sortable-element" data-id="2">
-                                        <div class="sortable-selector" aria-label="${LangLoader::get_message('position.move', 'common')}"></div>
+                                        <div class="sortable-selector" aria-label="${LangLoader::get_message('common.move', 'common-lang')}"></div>
                                         <div class="sortable-title">
                                             <a href="/workspace/phpboost/pbt-53/trunk/news/2-categorie-de-test-1-1/">{@layout.title} 1.1 </a>
                                         </div>
                                         <div class="sortable-actions">
-                                            <a href="#" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-2" onclick="return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
-                                            <a href="#" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-2" onclick="return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
-                                            <a href="/workspace/phpboost/pbt-53/trunk/news/categories/2/edit/#AbstractCategoriesFormController_special_authorizations_field" aria-label="${LangLoader::get_message('authorizations.default', 'common')}">
+                                            <a href="#" aria-label="${LangLoader::get_message('common.move.up', 'common-lang')}" id="move-up-2" onclick="return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+                                            <a href="#" aria-label="${LangLoader::get_message('common.move.down', 'common-lang')}" id="move-down-2" onclick="return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
+                                            <a href="/workspace/phpboost/pbt-53/trunk/news/categories/2/edit/#AbstractCategoriesFormController_special_authorizations_field" aria-label="${LangLoader::get_message('form.authorizations.default', 'form-lang')}">
                                                 <i class="fa fa-fw fa-user-shield" aria-hidden="true"></i>
                                             </a>
-                                            <a href="/workspace/phpboost/pbt-53/trunk/news/categories/2/edit/" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a>
-                                            <a href="/workspace/phpboost/pbt-53/trunk/news/categories/2/delete/" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="{@layout.delete.confirmation}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+                                            <a href="/workspace/phpboost/pbt-53/trunk/news/categories/2/edit/" aria-label="${LangLoader::get_message('common.edit', 'common-lang')}"><i class="far fa-edit" aria-hidden="true"></i></a>
+                                            <a href="/workspace/phpboost/pbt-53/trunk/news/categories/2/delete/" aria-label="${LangLoader::get_message('common.delete', 'common-lang')}" data-confirmation="{@layout.delete.confirmation}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
                                         </div>
                                         <ul id="subcat-2" class="sortable-block"></ul>
                                     </li>
                                 </ul>
                             </li>
                             <li id="cat-3" class="sortable-element" data-id="3">
-                                <div class="sortable-selector" aria-label="${LangLoader::get_message('position.move', 'common')}"></div>
+                                <div class="sortable-selector" aria-label="${LangLoader::get_message('common.move', 'common-lang')}"></div>
                                 <div class="sortable-title">
                                     <a href="/workspace/phpboost/pbt-53/trunk/news/3-categorie-de-test-3/">{@layout.title} 2 </a>
                                 </div>
                                 <div class="sortable-actions">
-                                    <a href="#" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-3" onclick="return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
-                                    <a href="#" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-3" onclick="return false;" style="display: none;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
-                                    <a href="/workspace/phpboost/pbt-53/trunk/news/categories/3/edit/#AbstractCategoriesFormController_special_authorizations_field" aria-label="${LangLoader::get_message('authorizations.specials', 'common')}">
+                                    <a href="#" aria-label="${LangLoader::get_message('common.move.up', 'common-lang')}" id="move-up-3" onclick="return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+                                    <a href="#" aria-label="${LangLoader::get_message('common.move.down', 'common-lang')}" id="move-down-3" onclick="return false;" style="display: none;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
+                                    <a href="/workspace/phpboost/pbt-53/trunk/news/categories/3/edit/#AbstractCategoriesFormController_special_authorizations_field" aria-label="${LangLoader::get_message('form.authorizations.specials', 'form-lang')}">
                                         <i class="fa fa-fw fa-user-shield warning" aria-hidden="true"></i>
                                     </a>
-                                    <a href="/workspace/phpboost/pbt-53/trunk/news/categories/3/edit/" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a>
-                                    <a href="/workspace/phpboost/pbt-53/trunk/news/categories/3/delete/" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="{@layout.delete.confirmation}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+                                    <a href="/workspace/phpboost/pbt-53/trunk/news/categories/3/edit/" aria-label="${LangLoader::get_message('common.edit', 'common-lang')}"><i class="far fa-edit" aria-hidden="true"></i></a>
+                                    <a href="/workspace/phpboost/pbt-53/trunk/news/categories/3/delete/" aria-label="${LangLoader::get_message('common.delete', 'common-lang')}" data-confirmation="{@layout.delete.confirmation}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
                                 </div>
                                 <ul id="subcat-3" class="sortable-block"></ul>
                             </li>
@@ -97,52 +97,52 @@
             <div class="formatter-content">
 <pre class="language-html line-numbers"><code class="language-html">&lt;ul id="[ID]" class="sortable-block">
     &lt;li id="cat-1" class="sortable-element" data-id="1">
-        &lt;div class="sortable-selector" aria-label="${LangLoader::get_message('position.move', 'common')}">&lt;/div>
+        &lt;div class="sortable-selector" aria-label="${LangLoader::get_message('common.move', 'common-lang')}">&lt;/div>
         &lt;div class="sortable-title">
             &lt;a href="/workspace/phpboost/pbt-53/trunk/news/1-test/">{@layout.title} 1&lt;/a>
             &lt;em class="h-padding small">{@layout.title.sub}&lt;/em>
         &lt;/div>
         &lt;div class="sortable-actions">
-            &lt;a href="#" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-1" onclick="return false;" style="display: none;">&lt;i class="fa fa-arrow-up" aria-hidden="true">&lt;/i>&lt;/a>
-            &lt;a href="#" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-1" onclick="return false;">&lt;i class="fa fa-arrow-down" aria-hidden="true">&lt;/i>&lt;/a>
-            &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/1/edit/#AbstractCategoriesFormController_special_authorizations_field" aria-label="${LangLoader::get_message('authorizations.default', 'common')}">
+            &lt;a href="#" aria-label="${LangLoader::get_message('common.move.up', 'common-lang')}" id="move-up-1" onclick="return false;" style="display: none;">&lt;i class="fa fa-arrow-up" aria-hidden="true">&lt;/i>&lt;/a>
+            &lt;a href="#" aria-label="${LangLoader::get_message('common.move.down', 'common-lang')}" id="move-down-1" onclick="return false;">&lt;i class="fa fa-arrow-down" aria-hidden="true">&lt;/i>&lt;/a>
+            &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/1/edit/#AbstractCategoriesFormController_special_authorizations_field" aria-label="${LangLoader::get_message('form.authorizations.default', 'form-lang')}">
                 &lt;i class="fa fa-fw fa-user-shield" aria-hidden="true">&lt;/i>
             &lt;/a>
-            &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/1/edit/" aria-label="${LangLoader::get_message('edit', 'common')}">&lt;i class="far fa-edit" aria-hidden="true">&lt;/i>&lt;/a>
-            &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/1/delete/" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="{@layout.delete.confirmation}">&lt;i class="far fa-trash-alt" aria-hidden="true">&lt;/i>&lt;/a>
+            &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/1/edit/" aria-label="${LangLoader::get_message('common.edit', 'common-lang')}">&lt;i class="far fa-edit" aria-hidden="true">&lt;/i>&lt;/a>
+            &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/1/delete/" aria-label="${LangLoader::get_message('common.delete', 'common-lang')}" data-confirmation="{@layout.delete.confirmation}">&lt;i class="far fa-trash-alt" aria-hidden="true">&lt;/i>&lt;/a>
         &lt;/div>
         &lt;ul id="subcat-1" class="sortable-block">
             &lt;li id="cat-2" class="sortable-element" data-id="2">
-                &lt;div class="sortable-selector" aria-label="${LangLoader::get_message('position.move', 'common')}">&lt;/div>
+                &lt;div class="sortable-selector" aria-label="${LangLoader::get_message('common.move', 'common-lang')}">&lt;/div>
                 &lt;div class="sortable-title">
                     &lt;a href="/workspace/phpboost/pbt-53/trunk/news/2-categorie-de-test-1-1/">{@layout.title} 1.1 &lt;/a>
                 &lt;/div>
                 &lt;div class="sortable-actions">
-                    &lt;a href="#" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-2" onclick="return false;">&lt;i class="fa fa-arrow-up" aria-hidden="true">&lt;/i>&lt;/a>
-                    &lt;a href="#" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-2" onclick="return false;">&lt;i class="fa fa-arrow-down" aria-hidden="true">&lt;/i>&lt;/a>
-                    &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/2/edit/#AbstractCategoriesFormController_special_authorizations_field" aria-label="${LangLoader::get_message('authorizations.default', 'common')}">
+                    &lt;a href="#" aria-label="${LangLoader::get_message('common.move.up', 'common-lang')}" id="move-up-2" onclick="return false;">&lt;i class="fa fa-arrow-up" aria-hidden="true">&lt;/i>&lt;/a>
+                    &lt;a href="#" aria-label="${LangLoader::get_message('common.move.down', 'common-lang')}" id="move-down-2" onclick="return false;">&lt;i class="fa fa-arrow-down" aria-hidden="true">&lt;/i>&lt;/a>
+                    &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/2/edit/#AbstractCategoriesFormController_special_authorizations_field" aria-label="${LangLoader::get_message('form.authorizations.default', 'form-lang')}">
                         &lt;i class="fa fa-fw fa-user-shield" aria-hidden="true">&lt;/i>
                     &lt;/a>
-                    &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/2/edit/" aria-label="${LangLoader::get_message('edit', 'common')}">&lt;i class="far fa-edit" aria-hidden="true">&lt;/i>&lt;/a>
-                    &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/2/delete/" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="{@layout.delete.confirmation}">&lt;i class="far fa-trash-alt" aria-hidden="true">&lt;/i>&lt;/a>
+                    &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/2/edit/" aria-label="${LangLoader::get_message('common.edit', 'common-lang')}">&lt;i class="far fa-edit" aria-hidden="true">&lt;/i>&lt;/a>
+                    &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/2/delete/" aria-label="${LangLoader::get_message('common.delete', 'common-lang')}" data-confirmation="{@layout.delete.confirmation}">&lt;i class="far fa-trash-alt" aria-hidden="true">&lt;/i>&lt;/a>
                 &lt;/div>
                 &lt;ul id="subcat-2" class="sortable-block">&lt;/ul>
             &lt;/li>
         &lt;/ul>
     &lt;/li>
     &lt;li id="cat-3" class="sortable-element" data-id="3">
-        &lt;div class="sortable-selector" aria-label="${LangLoader::get_message('position.move', 'common')}">&lt;/div>
+        &lt;div class="sortable-selector" aria-label="${LangLoader::get_message('common.move', 'common-lang')}">&lt;/div>
         &lt;div class="sortable-title">
             &lt;a href="/workspace/phpboost/pbt-53/trunk/news/3-categorie-de-test-3/">{@layout.title} 2 &lt;/a>
         &lt;/div>
         &lt;div class="sortable-actions">
-            &lt;a href="#" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-3" onclick="return false;">&lt;i class="fa fa-arrow-up" aria-hidden="true">&lt;/i>&lt;/a>
-            &lt;a href="#" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-3" onclick="return false;" style="display: none;">&lt;i class="fa fa-arrow-down" aria-hidden="true">&lt;/i>&lt;/a>
-            &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/3/edit/#AbstractCategoriesFormController_special_authorizations_field" aria-label="${LangLoader::get_message('authorizations.specials', 'common')}">
+            &lt;a href="#" aria-label="${LangLoader::get_message('common.move.up', 'common-lang')}" id="move-up-3" onclick="return false;">&lt;i class="fa fa-arrow-up" aria-hidden="true">&lt;/i>&lt;/a>
+            &lt;a href="#" aria-label="${LangLoader::get_message('common.move.down', 'common-lang')}" id="move-down-3" onclick="return false;" style="display: none;">&lt;i class="fa fa-arrow-down" aria-hidden="true">&lt;/i>&lt;/a>
+            &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/3/edit/#AbstractCategoriesFormController_special_authorizations_field" aria-label="${LangLoader::get_message('form.authorizations.specials', 'form-lang')}">
                 &lt;i class="fa fa-fw fa-user-shield warning" aria-hidden="true">&lt;/i>
             &lt;/a>
-            &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/3/edit/" aria-label="${LangLoader::get_message('edit', 'common')}">&lt;i class="far fa-edit" aria-hidden="true">&lt;/i>&lt;/a>
-            &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/3/delete/" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="{@layout.delete.confirmation}">&lt;i class="far fa-trash-alt" aria-hidden="true">&lt;/i>&lt;/a>
+            &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/3/edit/" aria-label="${LangLoader::get_message('common.edit', 'common-lang')}">&lt;i class="far fa-edit" aria-hidden="true">&lt;/i>&lt;/a>
+            &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/3/delete/" aria-label="${LangLoader::get_message('common.delete', 'common-lang')}" data-confirmation="{@layout.delete.confirmation}">&lt;i class="far fa-trash-alt" aria-hidden="true">&lt;/i>&lt;/a>
         &lt;/div>
         &lt;ul id="subcat-3" class="sortable-block">&lt;/ul>
     &lt;/li>

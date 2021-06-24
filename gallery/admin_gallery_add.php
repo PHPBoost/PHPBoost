@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 01
+ * @version     PHPBoost 6.0 - last update: 2021 06 24
  * @since       PHPBoost 1.2 - 2005 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -147,7 +147,7 @@ $view->put_all(array(
 	'MAX_WIDTH'          => $config->get_max_width(),
 	'MAX_HEIGHT'         => $config->get_max_height(),
 	'MAX_FILE_SIZE'      => $config->get_max_weight() * 1024,
-	'MAX_FILE_SIZE_TEXT' => ($config->get_max_weight() / 1024) . ' ' . LangLoader::get_message('unit.megabytes', 'common'),
+	'MAX_FILE_SIZE_TEXT' => ($config->get_max_weight() / 1024) . ' ' . LangLoader::get_message('common.unit.megabytes', 'common-lang'),
 	'ALLOWED_EXTENSIONS' => implode('", "',FileUploadConfig::load()->get_authorized_picture_extensions()),
 	//
 	'IMG_HEIGHT_MAX' => $config->get_mini_max_height()+10,
@@ -161,14 +161,14 @@ $view->put_all(array(
 	'L_AUTH_EXTENSION' => $LANG['auth_extension'],
 	'L_IMG_DISPO_GALLERY' => $LANG['img_dispo'],
 	'L_NAME' => $LANG['name'],
-	'L_UNIT_PX' => LangLoader::get_message('unit.pixels', 'common'),
-	'L_UNIT_KO' => LangLoader::get_message('unit.kilobytes', 'common'),
+	'L_UNIT_PX' => LangLoader::get_message('common.unit.pixels', 'common-lang'),
+	'L_UNIT_KO' => LangLoader::get_message('common.unit.kilobytes', 'common-lang'),
 	'L_SELECT' => $LANG['select'],
 	'L_SELECT_ALL_PICTURES' => $LANG['select_all_pictures'],
 	'L_UNSELECT_ALL_PICTURES' => $LANG['unselect_all_pictures'],
 	'L_GLOBAL_CAT_SELECTION' => $LANG['global_cat_selection'],
 	'L_GLOBAL_CAT_SELECTION_EXPLAIN' => $LANG['global_cat_selection_explain'],
-	'L_DELETE' => LangLoader::get_message('delete', 'common'),
+	'L_DELETE' => LangLoader::get_message('common.delete', 'common-lang'),
 	'L_SUBMIT' => $LANG['submit'],
 	'L_NO_IMG' => $LANG['no_pics']
 ));

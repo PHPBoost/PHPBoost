@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 20
+ * @version     PHPBoost 6.0 - last update: 2021 06 24
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -330,7 +330,7 @@ if (!empty($id_get))
 		'L_FOR_SELECTION'            => $LANG['for_selection'],
 		'L_CHANGE_STATUT_TO_DEFAULT' => $LANG['change_status_to_default'],
 		'L_MOVE_TO'                  => $LANG['move_to'],
-		'L_DELETE'                   => LangLoader::get_message('delete', 'common'),
+		'L_DELETE'                   => LangLoader::get_message('common.delete', 'common-lang'),
 		'L_LOCK'                     => $LANG['forum_lock'],
 		'L_UNLOCK'                   => $LANG['forum_unlock'],
 		'L_GO'                       => $LANG['go']

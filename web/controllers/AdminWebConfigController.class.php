@@ -183,27 +183,27 @@ class AdminWebConfigController extends AdminModuleController
 
 	private function get_sort_options()
 	{
-		$common_lang = LangLoader::get('common');
+		$common_lang = LangLoader::get('common-lang');
 
 		$sort_options = array(
-			new FormFieldSelectChoiceOption($common_lang['form.date.creation'] . ' - ' . $common_lang['sort.asc'], WebItem::SORT_DATE . '-' . WebItem::ASC),
-			new FormFieldSelectChoiceOption($common_lang['form.date.creation'] . ' - ' . $common_lang['sort.desc'], WebItem::SORT_DATE . '-' . WebItem::DESC),
-			new FormFieldSelectChoiceOption($common_lang['sort_by.alphabetic'] . ' - ' . $common_lang['sort.asc'], WebItem::SORT_ALPHABETIC . '-' . WebItem::ASC),
-			new FormFieldSelectChoiceOption($common_lang['sort_by.alphabetic'] . ' - ' . $common_lang['sort.desc'], WebItem::SORT_ALPHABETIC . '-' . WebItem::DESC),
+			new FormFieldSelectChoiceOption($common_lang['common.creation.date'] . ' - ' . $common_lang['common.sort.asc'], WebItem::SORT_DATE . '-' . WebItem::ASC),
+			new FormFieldSelectChoiceOption($common_lang['common.creation.date'] . ' - ' . $common_lang['common.sort.desc'], WebItem::SORT_DATE . '-' . WebItem::DESC),
+			new FormFieldSelectChoiceOption($common_lang['common.sort.by.alphabetic'] . ' - ' . $common_lang['common.sort.asc'], WebItem::SORT_ALPHABETIC . '-' . WebItem::ASC),
+			new FormFieldSelectChoiceOption($common_lang['common.sort.by.alphabetic'] . ' - ' . $common_lang['common.sort.desc'], WebItem::SORT_ALPHABETIC . '-' . WebItem::DESC),
 			new FormFieldSelectChoiceOption($this->lang['web.config.sort.type.visits'] . ' - ' . $common_lang['sort.asc'], WebItem::SORT_NUMBER_VISITS . '-' . WebItem::ASC),
 			new FormFieldSelectChoiceOption($this->lang['web.config.sort.type.visits'] . ' - ' . $common_lang['sort.desc'], WebItem::SORT_NUMBER_VISITS . '-' . WebItem::DESC)
 		);
 
 		if ($this->comments_config->module_comments_is_enabled('web'))
 		{
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.comments.number'] . ' - ' . $common_lang['sort.asc'], WebItem::SORT_COMMENTS_NUMBER . '-' . WebItem::ASC);
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.comments.number'] . ' - ' . $common_lang['sort.desc'], WebItem::SORT_COMMENTS_NUMBER . '-' . WebItem::DESC);
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['common.sort.by.comments.number'] . ' - ' . $common_lang['common.sort.asc'], WebItem::SORT_COMMENTS_NUMBER . '-' . WebItem::ASC);
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['common.sort.by.comments.number'] . ' - ' . $common_lang['common.sort.desc'], WebItem::SORT_COMMENTS_NUMBER . '-' . WebItem::DESC);
 		}
 
 		if ($this->content_management_config->module_notation_is_enabled('web'))
 		{
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best.note'] . ' - ' . $common_lang['sort.asc'], WebItem::SORT_NOTATION . '-' . WebItem::ASC);
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best.note'] . ' - ' . $common_lang['sort.desc'], WebItem::SORT_NOTATION . '-' . WebItem::DESC);
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['common.sort.by.best.note'] . ' - ' . $common_lang['common.sort.asc'], WebItem::SORT_NOTATION . '-' . WebItem::ASC);
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['common.sort.by.best.note'] . ' - ' . $common_lang['common.sort.desc'], WebItem::SORT_NOTATION . '-' . WebItem::DESC);
 		}
 
 		return $sort_options;
