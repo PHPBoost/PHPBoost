@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 06 25
  * @since       PHPBoost 3.0 - 2009 12 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -136,16 +136,12 @@ class HTMLTable extends AbstractHTMLElement
 			$submit_function = str_replace('-', '_', 'submit_filters_' . $this->arg_id);
 			$form->add_button(new FormButtonButton(LangLoader::get_message('common.apply', 'common-lang'), 'return ' . $submit_function . '()', 'submit'));
 
-                        $is_table_in_module = !in_array(Environment::get_running_module_name(), array('admin', 'kernel', 'user'));
-                        $submit_url = strpos(REWRITED_SCRIPT, '?url=') && $is_table_in_module ? '?url=/manage/&' . ltrim($this->parameters->get_js_submit_url(), '?') : $this->parameters->get_js_submit_url();
-      
-
 			$this->view->put_all(array(
 				'C_FILTERS'            => $has_filters,
 				'C_FILTERS_MENU_TITLE' => $this->model->has_filters_menu_title(),
 				'FILTERS_MENU_TITLE'   => $this->model->get_filters_menu_title(),
 				'SUBMIT_FUNCTION'      => $submit_function,
-				'SUBMIT_URL'           => $submit_url,
+				'SUBMIT_URL'           => $this->is_url_rewriting_enabled() && $this->is_table_in_module() ? '?url=/manage/&' . ltrim($this->parameters->get_js_submit_url(), '?') : $this->parameters->get_js_submit_url(),
 				'FILTERS'              => $form->display()
 			));
 		}
@@ -213,8 +209,8 @@ class HTMLTable extends AbstractHTMLElement
 
 				'NAME' => $column->get_value(),
 
-				'U_SORT_ASC'  => $this->parameters->get_ascending_sort_url($sortable_parameter),
-				'U_SORT_DESC' => $this->parameters->get_descending_sort_url($sortable_parameter)
+				'U_SORT_ASC'  => $this->is_url_rewriting_enabled() && $this->is_table_in_module() ? '?url=/manage/&' . ltrim($this->parameters->get_ascending_sort_url($sortable_parameter), '?') : $this->parameters->get_ascending_sort_url($sortable_parameter),
+				'U_SORT_DESC' => $this->is_url_rewriting_enabled() && $this->is_table_in_module() ? '?url=/manage/&' . ltrim($this->parameters->get_descending_sort_url($sortable_parameter), '?') : $this->parameters->get_descending_sort_url($sortable_parameter)
 			);
 			$this->add_css_vars($column, $values);
 			$this->view->assign_block_vars('header_column', $values);
@@ -362,6 +358,16 @@ class HTMLTable extends AbstractHTMLElement
 	public function display_multiple_delete()
 	{
 		$this->multiple_delete_displayed = true;
+	}
+	
+	public function is_table_in_module()
+	{
+		return !in_array(Environment::get_running_module_name(), array('admin', 'kernel', 'user'));
+	}
+	
+	public function is_url_rewriting_enabled()
+	{
+		return strpos(REWRITED_SCRIPT, '?url=');
 	}
 }
 ?>
