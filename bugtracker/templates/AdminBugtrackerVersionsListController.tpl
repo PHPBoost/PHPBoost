@@ -170,7 +170,7 @@
 				</td>
 				<td>
 					<div class="grouped-inputs">
-						<input type="text" size="11" maxlength="10" id="release_date{versions.ID}" class="grouped-element input-date" name="release_date{versions.ID}" value="{versions.RELEASE_DATE}" onclick="xmlhttprequest_calendar('release_date{versions.ID}_date', 'release_date{versions.ID}', ${escapejs(versions.YEAR)}, ${escapejs(versions.MONTH)}, ${escapejs(versions.DAY)}, ${escapejs(versions.ID)});return false;" placeholder="${LangLoader::get_message('date_format', 'date-common')}">
+						<input type="text" size="11" maxlength="10" id="release_date{versions.ID}" class="grouped-element input-date" name="release_date{versions.ID}" value="{versions.RELEASE_DATE}" onclick="xmlhttprequest_calendar('release_date{versions.ID}_date', 'release_date{versions.ID}', ${escapejs(versions.YEAR)}, ${escapejs(versions.MONTH)}, ${escapejs(versions.DAY)}, ${escapejs(versions.ID)});return false;" placeholder="${LangLoader::get_message('date.format', 'date-lang')}">
 						<div class="calendar-container modal-container cell-modal cell-tile grouped-element">
 							<a class="bgc-full link-color" data-modal="" data-target="calendar{versions.ID}" id="release_date{versions.ID}_link" href="#" onclick="xmlhttprequest_calendar('release_date{versions.ID}_date', 'release_date{versions.ID}', ${escapejs(versions.YEAR)}, ${escapejs(versions.MONTH)}, ${escapejs(versions.DAY)}, ${escapejs(versions.ID)}, 1);return false;" aria-label="{@titles.calendar}"><i class="fa fa-calendar-alt" aria-hidden="true"></i></a>
 							<div id="calendar{versions.ID}" class="modal modal-animation">

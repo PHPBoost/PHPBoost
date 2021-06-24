@@ -10,9 +10,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 04 10
+ * @version     PHPBoost 6.0 - last update: 2021 06 24
  * @since       PHPBoost 3.0 - 2010 11 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class AuthenticationMethod
@@ -65,29 +66,29 @@ abstract class AuthenticationMethod
 			$delay = ceil((0 - $delay_ban)/60);
 			if ($delay > 0)
 			{
-				$date_lang = LangLoader::get('date-common');
+				$date_lang = LangLoader::get('date-lang');
 
 				if ($delay < 60)
-					$this->error_msg = LangLoader::get_message('e_member_ban', 'errors') . ' ' . $delay . ' ' . (($delay > 1) ? $date_lang['minutes'] : $date_lang['minute']);
+					$this->error_msg = LangLoader::get_message('e_member_ban', 'errors') . ' ' . $delay . ' ' . (($delay > 1) ? $date_lang['date.minutes'] : $date_lang['date.minute']);
 				elseif ($delay < 1440)
 				{
 					$delay_ban = NumberHelper::round($delay/60, 0);
-					$this->error_msg = LangLoader::get_message('e_member_ban', 'errors') . ' ' . $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['hours'] : $date_lang['hour']);
+					$this->error_msg = LangLoader::get_message('e_member_ban', 'errors') . ' ' . $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['date.hours'] : $date_lang['date.hour']);
 				}
 				elseif ($delay < 10080)
 				{
 					$delay_ban = NumberHelper::round($delay/1440, 0);
-					$this->error_msg = LangLoader::get_message('e_member_ban', 'errors') . ' ' . $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['days'] : $date_lang['day']);
+					$this->error_msg = LangLoader::get_message('e_member_ban', 'errors') . ' ' . $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['date.days'] : $date_lang['date.day']);
 				}
 				elseif ($delay < 43200)
 				{
 					$delay_ban = NumberHelper::round($delay/10080, 0);
-					$this->error_msg = LangLoader::get_message('e_member_ban', 'errors') . ' ' . $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['weeks'] : $date_lang['week']);
+					$this->error_msg = LangLoader::get_message('e_member_ban', 'errors') . ' ' . $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['date.weeks'] : $date_lang['date.week']);
 				}
 				elseif ($delay < 525600)
 				{
 					$delay_ban = NumberHelper::round($delay/43200, 0);
-					$this->error_msg = LangLoader::get_message('e_member_ban', 'errors') . ' ' . $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['months'] : $date_lang['month']);
+					$this->error_msg = LangLoader::get_message('e_member_ban', 'errors') . ' ' . $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['date.months'] : $date_lang['date.month']);
 				}
 				else
 				{

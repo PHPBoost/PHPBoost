@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 30
+ * @version     PHPBoost 6.0 - last update: 2021 06 24
  * @since       PHPBoost 3.0 - 2012 02 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -61,7 +61,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			}
 		}
 
-		$date_lang = LangLoader::get('date-common');
+		$date_lang = LangLoader::get('date-lang');
 		$view->put_all(Array(
 			'IS_SELECTED_30000'    => $time == 30000 ? ' selected="selected"' : '',
 			'IS_SELECTED_1'        => $time == 1 ? ' selected="selected"' : '',
@@ -77,12 +77,12 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 
 			'CATS' => $cat_list,
 			//
-			'L_DATE'      => $date_lang['date'],
-			'L_DAY'       => $date_lang['day'],
-			'L_DAYS'      => $date_lang['days'],
-			'L_MONTH'     => $date_lang['month'],
-			'L_MONTHS'    => $date_lang['month'],
-			'L_YEAR'      => $date_lang['year'],
+			'L_DATE'      => $date_lang['date.date'],
+			'L_DAY'       => $date_lang['date.day'],
+			'L_DAYS'      => $date_lang['date.days'],
+			'L_MONTH'     => $date_lang['date.month'],
+			'L_MONTHS'    => $date_lang['date.month'],
+			'L_YEAR'      => $date_lang['date.year'],
 			'L_OPTIONS'   => $LANG['options'],
 			'L_TITLE'     => $LANG['title'],
 			'L_CONTENT'   => $LANG['content'],

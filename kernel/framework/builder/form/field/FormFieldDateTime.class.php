@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 19
+ * @version     PHPBoost 6.0 - last update: 2021 06 24
  * @since       PHPBoost 3.0 - 2010 01 24
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -34,13 +34,15 @@ class FormFieldDateTime extends FormFieldDate
 		$template = parent::display();
 
 		$template->put_all(array(
-			'C_HOUR' => true,
+			'C_HOUR'              => true,
 			'C_FIVE_MINUTES_STEP' => $this->five_minutes_step,
-			'HOURS' => $this->get_value() ? $this->get_value()->get_hours() : '0',
+
+			'HOURS'   => $this->get_value() ? $this->get_value()->get_hours()   : '0',
 			'MINUTES' => $this->get_value() ? $this->get_value()->get_minutes() : '00',
-			'L_AT' => LangLoader::get_message('at', 'main'),
-			'L_H' => LangLoader::get_message('unit.hour', 'date-common'),
-			'L_MN' => LangLoader::get_message('unit.minute', 'date-common')
+
+			'L_AT' => LangLoader::get_message('common.on.date', 'common-lang'),
+			'L_H'  => LangLoader::get_message('date.unit.hour', 'date-lang'),
+			'L_MN' => LangLoader::get_message('date.unit.minute', 'date-lang')
 		));
 
 		return $template;

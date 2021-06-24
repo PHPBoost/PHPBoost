@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 17
+ * @version     PHPBoost 6.0 - last update: 2021 06 24
  * @since       PHPBoost 1.6 - 2006 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -99,7 +99,7 @@ if (!empty($id_article))
 
 	$view->put_all(array(
 		'L_VERSIONS' => $LANG['wiki_version_list'],
-		'L_DATE' => LangLoader::get_message('date', 'date-common'),
+		'L_DATE' => LangLoader::get_message('date.date', 'date-lang'),
 		'L_AUTHOR' => $LANG['wiki_author'],
 		'L_ACTIONS' => $LANG['wiki_possible_actions'],
 		'L_CHANGE_REASON' => $LANG['wiki_change_reason']
@@ -137,7 +137,7 @@ else //On affiche la liste des modifications
 		'L_HISTORY' => $LANG['wiki_history'],
 		'L_TITLE' => $LANG['wiki_article_title'],
 		'L_AUTHOR' => $LANG['wiki_author'],
-		'L_DATE' => LangLoader::get_message('date', 'date-common'),
+		'L_DATE' => LangLoader::get_message('date.date', 'date-lang'),
 		'TOP_TITLE' => ($field == 'title' && $order == 'asc') ? '' : url('history.php?p=' . $page . '&amp;field=title&amp;order=asc'),
 		'BOTTOM_TITLE' => ($field == 'title' && $order == 'desc') ? '' : url('history.php?p=' . $page . '&amp;field=title&amp;order=desc'),
 		'TOP_DATE' => ($field == 'timestamp' && $order == 'asc') ? '' : url('history.php?p=' . $page . '&amp;field=timestamp&amp;order=asc'),

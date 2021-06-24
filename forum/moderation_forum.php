@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 23
+ * @version     PHPBoost 6.0 - last update: 2021 06 24
  * @since       PHPBoost 1.5 - 2006 08 08
  * @contributor Regis VIARRE <crowkait@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -137,7 +137,7 @@ if ($action == 'alert') //Gestion des alertes
 			'L_TITLE'           => $LANG['alert_title'],
 			'L_TOPIC'           => $LANG['alert_concerned_topic'],
 			'L_LOGIN'           => $LANG['alert_login'],
-			'L_TIME'            => LangLoader::get_message('date', 'date-common'),
+			'L_TIME'            => LangLoader::get_message('date.date', 'date-lang'),
 			'L_STATUS'          => $LANG['status'],
 			'L_ALERT_SOLVED'    => $LANG['alert_solved'],
 			'L_ALERT_NOTSOLVED' => $LANG['alert_not_solved'],
@@ -277,7 +277,7 @@ if ($action == 'alert') //Gestion des alertes
 				'L_TOPIC'            => $LANG['alert_concerned_topic'],
 				'L_CONTENT'          => $LANG['alert_msg'],
 				'L_LOGIN'            => $LANG['alert_login'],
-				'L_TIME'             => LangLoader::get_message('date', 'date-common'),
+				'L_TIME'             => LangLoader::get_message('date.date', 'date-lang'),
 				'L_STATUS'           => $LANG['status'],
 				'L_STATUS_1'         => $LANG['change_status_to_1'],
 				'L_CAT'              => $LANG['alert_concerned_cat']
@@ -419,9 +419,9 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		}
 
 		//Durée de la sanction.
-		$date_lang = LangLoader::get('date-common');
+		$date_lang = LangLoader::get('date-lang');
 		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 5184000, 326592000);
-		$array_sanction = array(LangLoader::get_message('no', 'common'), '1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['days'], '1 ' . $date_lang['week'], '2 ' . $date_lang['weeks'], '1 ' . $date_lang['month'], '2 ' . $date_lang['month'], '10 ' . TextHelper::strtolower($date_lang['years']));
+		$array_sanction = array(LangLoader::get_message('common.no', 'common-lang'), '1 ' . $date_lang['date.minute'], '5 ' . $date_lang['date.minutes'], '15 ' . $date_lang['date.minutes'], '30 ' . $date_lang['date.minutes'], '1 ' . $date_lang['date.hour'], '2 ' . $date_lang['date.hours'], '1 ' . $date_lang['date.day'], '2 ' . $date_lang['date.days'], '1 ' . $date_lang['date.week'], '2 ' . $date_lang['date.weeks'], '1 ' . $date_lang['date.month'], '2 ' . $date_lang['date.month'], '10 ' . TextHelper::strtolower($date_lang['date.years']));
 		$sanctions_number = (count($array_time) - 1);
 
 		$diff = ($member['delay_readonly'] - time());
@@ -458,7 +458,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			'C_USER_GROUP_COLOR' => !empty($group_color),
 
 			'KERNEL_EDITOR'    => $editor->display(),
-			'ALTERNATIVE_PM'   => ($key_sanction > 0) ? str_replace('%date%', $array_sanction[$key_sanction], $LANG['user_readonly_changed']) : str_replace('%date%', '1 ' . LangLoader::get_message('minute', 'date-common'), $LANG['user_readonly_changed']),
+			'ALTERNATIVE_PM'   => ($key_sanction > 0) ? str_replace('%date%', $array_sanction[$key_sanction], $LANG['user_readonly_changed']) : str_replace('%date%', '1 ' . LangLoader::get_message('date.minute', 'date-lang'), LangLoader::get_message('user.readonly.changed', 'user-lang')),
 			'USER_ID'          => UserUrlBuilder::profile($id_get)->rel(),
 			'USER_CSSCLASS'    => UserService::get_level_class($member['level']),
 			'USER_GROUP_COLOR' => $group_color,
@@ -717,8 +717,8 @@ else //Panneau de modération
 		'L_MODO'             => $LANG['modo'],
 		'L_ACTION'           => $LANG['action'],
 		'L_USER_CONCERN'     => $LANG['history_member_concern'],
-		'L_DATE'             => LangLoader::get_message('date', 'date-common'),
-		'L_DELETE'           => LangLoader::get_message('delete', 'common'),
+		'L_DATE'             => LangLoader::get_message('date.date', 'date-lang'),
+		'L_DELETE'           => LangLoader::get_message('common.delete', 'common-lang'),
 		'L_MORE_ACTION'      => $LANG['more_action']
 	));
 
