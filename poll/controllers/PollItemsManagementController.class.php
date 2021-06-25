@@ -11,20 +11,18 @@ class PollItemsManagementController extends DefaultItemsManagementController
 {
   protected function get_additional_html_table_columns()
   {
-    return array(new HTMLTableColumn($this->lang['poll.manage.opened.votes'], ''));
+    return array(new HTMLTableColumn($this->lang['poll.manage.status'], 'close_poll'));
   }
   
   protected function get_additional_html_table_row_cells(&$item)
   {
-	$picture_yes = '<i class="fa fa-check success" aria-hidden="true"></i><span class="sr-only">' . LangLoader::get_message('common.yes', 'common-lang') . '</span>';
-	$picture_no = '<i class="fa fa-times error" aria-hidden="true"></i><span class="sr-only">' . LangLoader::get_message('common.no', 'common-lang') . '</span>';
-		
-    return array(new HTMLTableRowCell(!$item->is_closed() ? $picture_yes : $picture_no));
+    return array(new HTMLTableRowCell(!$item->is_closed() ? $this->lang['poll.manage.in.progress'] : $this->lang['poll.manage.completed']));
   }
   
   protected function get_additional_html_table_filters()
   {
-    return array(new HTMLTableapprovedSQLFilter('close_poll', 'filter6', $this->lang['poll.manage.opened.votes']));
+    $map = array($this->lang['poll.manage.in.progress'], $this->lang['poll.manage.completed']);
+    return array(new HTMLTableEqualsFromListSQLFilter('close_poll', 'filter6', $this->lang['poll.manage.status'], $map));
   }
 }
 ?>
