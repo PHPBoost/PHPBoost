@@ -169,7 +169,6 @@
 									} else {
 										var filterValue = domFilter.val();
 									}
-									var filterValue = domFilter.val();
 									if (filterValue) {
 										filters[filter.tableId] = filterValue;
 										has_filter = true;
