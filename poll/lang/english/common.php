@@ -65,12 +65,12 @@ $lang['poll.mini.form.error']           = 'Error in form';
 
 // Message helper
 $lang['poll.message.no.mini']       = 'This option is disabled because you do not have any poll declared in the mini module.';
-$lang['completed.item'] 			= 'This poll is completed.';
+$lang['completed.item'] 	    = 'This poll is completed.';
 $lang['poll.message.not.allowed']   = 'You don\'t have the authorization to vote.';
 $lang['poll.message.already.voted'] = 'Your vote is saved.';
 
 // Sorting field
-$lang['poll.sorting.field.closed']        = 'Polls completed';
+$lang['poll.sorting.field.closed'] = 'Polls completed';
 
 // Manage
 $lang['poll.manage.status']      = 'Polls status';
