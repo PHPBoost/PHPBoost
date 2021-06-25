@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 19
+ * @version     PHPBoost 6.0 - last update: 2021 06 25
  * @since       PHPBoost 1.2 - 2005 06 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -287,7 +287,7 @@ elseif ($add) // Add group interface
 	$get_success = retrieve(GET, 'success', '');
 	if ($get_success == 1)
 	{
-		$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 10));
+		$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 10));
 	}
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
@@ -296,7 +296,7 @@ elseif ($add) // Add group interface
 	}
 	elseif ($get_error == 'group_already_exists')
 	{
-		$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('element.already_exists', 'status-messages-common'), MessageHelper::NOTICE));
+		$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.element.already.exists', 'warning-lang'), MessageHelper::NOTICE));
 	}
 
 	// Get the groups images folders contained in the /images/group folder.

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 18
+ * @version     PHPBoost 6.0 - last update: 2021 06 25
  * @since       PHPBoost 4.0 - 2014 01 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -37,10 +37,10 @@ class AdminLoggedErrorsControllerList extends AdminController
 		$errors = $this->get_errors_list();
 
 		$types = array(
-			'question' => 'error.unknow',
-			'notice' => 'error.notice',
-			'warning' => 'error.warning',
-			'error' => 'error.fatal'
+			'question' => 'warning.unknow',
+			'notice' => 'warning.notice',
+			'warning' => 'warning.warning',
+			'error' => 'warning.fatal'
 		);
 
 		$table_model = new HTMLTableModel('error-list', array(
@@ -59,7 +59,7 @@ class AdminLoggedErrorsControllerList extends AdminController
 		$results = array();
 		foreach ($errors as $error)
 		{
-			$error_class = new SpanHTMLElement(LangLoader::get_message($types[$error['errclass']], 'status-messages-common') . ' : ', array(), 'text-strong');
+			$error_class = new SpanHTMLElement(LangLoader::get_message($types[$error['errclass']], 'warning-lang') . ' : ', array(), 'text-strong');
 			$error_stacktrace = new SpanHTMLElement(strip_tags($error['errstacktrace'], '<br>'), array(), 'text-italic');
 
 			$error_message = $error_class->display() . strip_tags($error['errmsg'], '<br>') . $br->display() . $br->display() . $br->display() . $error_stacktrace->display();

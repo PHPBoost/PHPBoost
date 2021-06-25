@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 22
+ * @version     PHPBoost 6.0 - last update: 2021 06 25
  * @since       PHPBoost 4.1 - 2015 05 22
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -55,7 +55,6 @@ class AdminSmileysFormController extends AdminController
 	{
 		$this->lang = LangLoader::get('admin-lang');
 		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE UPLOAD_FORM # # INCLUDE SMILEY_FORM #');
-		$this->view->add_lang($this->lang);
 		$this->smileys_path = PATH_TO_ROOT . '/images/smileys/';
 		$this->get_smiley();
 	}
@@ -101,7 +100,7 @@ class AdminSmileysFormController extends AdminController
 
 				if (empty($authorized_pictures_extensions))
 				{
-					$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('e_upload_invalid_format', 'errors'), MessageHelper::NOTICE));
+					$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.file.invalid.format', 'warning-lang'), MessageHelper::NOTICE));
 				}
 
 				$upload = new Upload($this->smileys_path);
@@ -123,7 +122,7 @@ class AdminSmileysFormController extends AdminController
 		}
 		else
 		{
-			$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('e_upload_failed_unwritable', 'errors'), MessageHelper::WARNING));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.folder.unwritable', 'warning-lang'), MessageHelper::WARNING));
 		}
 	}
 
@@ -188,11 +187,11 @@ class AdminSmileysFormController extends AdminController
 				 	// Regenerate smileys cache
 					SmileysCache::invalidate();
 
-					$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['smiley_add_success'], MessageHelper::SUCCESS));
+					$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['admin.smiley.success.add'], MessageHelper::SUCCESS));
 				}
 				else
 				{
-					$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('element.already_exists', 'status-messages-common'), MessageHelper::ERROR));
+					$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.element.already.exists', 'warning-lang'), MessageHelper::ERROR));
 				}
 			}
 			else

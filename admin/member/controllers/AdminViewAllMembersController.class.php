@@ -143,9 +143,9 @@ class AdminViewAllMembersController extends AdminController
 				}
 			}
 			if ($last_admin_delete && $selected_users_number == 1)
-				AppContext::get_response()->redirect(AdminMembersUrlBuilder::management(), LangLoader::get_message('error.action.unauthorized', 'status-messages-common'), MessageHelper::ERROR);
+				AppContext::get_response()->redirect(AdminMembersUrlBuilder::management(), LangLoader::get_message('warning.action.unauthorized', 'warning-lang'), MessageHelper::ERROR);
 			else
-				AppContext::get_response()->redirect(AdminMembersUrlBuilder::management(), LangLoader::get_message('process.success', 'status-messages-common'));
+				AppContext::get_response()->redirect(AdminMembersUrlBuilder::management(), LangLoader::get_message('warning.process.success', 'warning-lang'));
 		}
 	}
 }

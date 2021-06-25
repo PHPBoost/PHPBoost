@@ -132,7 +132,7 @@ class AdminModulesManagementController extends AdminController
 
 			if ($modified_modules && empty($errors))
 			{
-				AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), LangLoader::get_message('process.success', 'status-messages-common'));
+				AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), LangLoader::get_message('warning.process.success', 'warning-lang'));
 			}
 			else
 			{
@@ -161,7 +161,7 @@ class AdminModulesManagementController extends AdminController
 					if (!empty($error))
 						$this->view->put('MSG', MessageHelper::display('<b>' . $module->get_configuration()->get_name() . '</b> : ' . $error, MessageHelper::WARNING));
 					else
-						AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), LangLoader::get_message('process.success', 'status-messages-common'));
+						AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), LangLoader::get_message('warning.process.success', 'warning-lang'));
 				}
 				else if ($request->get_string('disable-' . $module->get_id(), ''))
 				{
@@ -170,7 +170,7 @@ class AdminModulesManagementController extends AdminController
 					if (!empty($error))
 						$this->view->put('MSG', MessageHelper::display('<b>' . $module->get_configuration()->get_name() . '</b> : ' . $error, MessageHelper::WARNING));
 					else
-						AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), LangLoader::get_message('process.success', 'status-messages-common'));
+						AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), LangLoader::get_message('warning.process.success', 'warning-lang'));
 				}
 			}
 		}

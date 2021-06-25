@@ -45,7 +45,7 @@ class AdminThemeDeleteController extends AdminController
 				$drop_files = $this->form->get_value('drop_files')->get_raw_value();
 				$this->delete_theme($drop_files);
 
-				AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), LangLoader::get_message('process.success', 'status-messages-common'));
+				AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), LangLoader::get_message('warning.process.success', 'warning-lang'));
 			}
 
 			if (!$this->multiple)

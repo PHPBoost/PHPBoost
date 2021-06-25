@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 18
+ * @version     PHPBoost 6.0 - last update: 2021 06 25
  * @since       PHPBoost 1.6 - 2008 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -57,7 +57,7 @@ if ($app instanceof Application)
 				$download_status = FileSystemHelper::download_remote_file($url, $temporary_dir_path);
 				if (!$download_status)
 				{
-					$view->put('MESSAGE_HELPER', MessageHelper::display(StringVars::replace_vars(LangLoader::get_message('message.download.file.error', 'status-messages-common'), array('filename' => $url)), MessageHelper::ERROR));
+					$view->put('MESSAGE_HELPER', MessageHelper::display(StringVars::replace_vars(LangLoader::get_message('warning.download.file.error', 'warning-lang'), array('filename' => $url)), MessageHelper::ERROR));
 					$installation_error = true;
 					break;
 				}
