@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 11
+ * @version     PHPBoost 6.0 - last update: 2021 06 25
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -76,9 +76,9 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 		{
 		  $selected_item = $this->get_items_manager()->get_item($selected_item_id);
 			if ($selected_item->user_is_empowered_to_vote())
-			$items_ids_for_polls_displaying[] = $selected_item_id;
+			  $items_ids_for_polls_displaying[] = $selected_item_id;
 			else
-			$items_ids_for_others_polls_not_displaying[] = $selected_item_id; //evolution
+			  $items_ids_for_others_polls_not_displaying[] = $selected_item_id; //evolution
 		}
 
 		if (AppContext::get_current_user()->is_guest())
@@ -108,7 +108,8 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 				{
 					$random_item_id = $this->get_random_item_id($items_ids_for_polls_displaying);
 					$this->item = $this->get_items_manager()->get_item($random_item_id);
-
+					$this->get_items_manager()->update_views_number($this->item);
+					
 					$previous_item_id = $this->get_previous_item_id($random_item_id, $items_ids_for_polls_displaying);
 					$next_item_id = $this->get_next_item_id($random_item_id, $items_ids_for_polls_displaying);
 				}
@@ -120,6 +121,8 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 			else
 			{
 				$this->item = $this->get_items_manager()->get_item($item_id);
+				$this->get_items_manager()->update_views_number($this->item);
+				
 				$previous_item_id = $this->get_previous_item_id($item_id, $items_ids_for_polls_displaying);
 				$next_item_id = $this->get_next_item_id($item_id, $items_ids_for_polls_displaying);
 			}
