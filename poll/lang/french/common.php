@@ -61,12 +61,12 @@ $lang['poll.mini.form.error']           = 'Erreur dans le formulaire';
 
 // Message helper
 $lang['poll.message.no.mini']       = 'Cette option est désactivée car vous n\'avez aucun sondage déclaré dans le mini module.';
-$lang['completed.item'] 			= 'Ce sondage est clos';
+$lang['completed.item'] 	    = 'Ce sondage est clos';
 $lang['poll.message.not.allowed']   = 'Vous n\'avez pas l\'autorisation de voter.';
 $lang['poll.message.already.voted'] = 'Votre vote est enregistré.';
 
 // Sorting field
-$lang['poll.sorting.field.closed']        = 'Sondages clos';
+$lang['poll.sorting.field.closed'] = 'Sondages clos';
 
 // Manage
 $lang['poll.manage.status']      = 'Etat des sondages';
