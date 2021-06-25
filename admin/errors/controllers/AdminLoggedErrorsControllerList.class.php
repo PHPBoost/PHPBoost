@@ -37,7 +37,7 @@ class AdminLoggedErrorsControllerList extends AdminController
 		$errors = $this->get_errors_list();
 
 		$types = array(
-			'question' => 'warning.unknow',
+			'question' => 'warning.unknown',
 			'notice' => 'warning.notice',
 			'warning' => 'warning.warning',
 			'error' => 'warning.fatal'

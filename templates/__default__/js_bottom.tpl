@@ -20,7 +20,7 @@
 		jQuery('a[data-lightbox^=formatter]').attr('data-rel', 'lightcase:collection');
 		jQuery('a[data-rel^=lightcase]').lightcase({
 			labels : {
-				'errorMessage'    : ${escapejs(LangLoader::get_message('warning.element.unexist', 'warning-lang'))},
+				'errorMessage'    : ${escapejs(LangLoader::get_message('warning.element.unexists', 'warning-lang'))},
 				'sequenceInfo.of' : ' ' + ${escapejs(TextHelper::lcfirst(LangLoader::get_message('common.of', 'common-lang')))} + ' ',
 				'close'           : ${escapejs(LangLoader::get_message('common.close', 'common-lang'))},
 				'navigator.prev'  : ${escapejs(LangLoader::get_message('common.previous', 'common-lang'))},

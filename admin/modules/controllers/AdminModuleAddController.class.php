@@ -180,7 +180,7 @@ class AdminModuleAddController extends AdminController
 				return array('msg' => $this->lang['addon.modules.config.conflict'], 'type' => MessageHelper::WARNING);
 				break;
 			case ModulesManager::UNEXISTING_MODULE:
-				return array('msg' => LangLoader::get_message('warning.element.unexist', 'warning-lang'), 'type' => MessageHelper::WARNING);
+				return array('msg' => LangLoader::get_message('warning.element.unexists', 'warning-lang'), 'type' => MessageHelper::WARNING);
 				break;
 			case ModulesManager::MODULE_ALREADY_INSTALLED:
 				return array('msg' => $this->lang['addon.modules.already.installed'], 'type' => MessageHelper::WARNING);

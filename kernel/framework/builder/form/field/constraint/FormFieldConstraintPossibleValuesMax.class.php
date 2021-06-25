@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 06 03
+ * @version     PHPBoost 6.0 - last update: 2021 06 25
  * @since       PHPBoost 6.0 - 2016 06 01
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldConstraintPossibleValuesMax extends AbstractFormFieldConstraint
@@ -17,7 +18,7 @@ class FormFieldConstraintPossibleValuesMax extends AbstractFormFieldConstraint
 	{
 		if (empty($error_message))
 		{
-			$error_message = LangLoader::get_message('form.must_contain_max_input', 'status-messages-common');
+			$error_message = LangLoader::get_message('warning.must.contain.max.input', 'warning-lang');
 		}
 		$this->error_message = $error_message;
 	}

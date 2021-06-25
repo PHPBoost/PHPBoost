@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 11 15
+ * @version     PHPBoost 6.0 - last update: 2021 06 25
  * @since       PHPBoost 4.1 - 2015 08 05
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldConstraintPasswordStrength extends FormFieldConstraintRegex
@@ -27,17 +28,17 @@ class FormFieldConstraintPasswordStrength extends FormFieldConstraintRegex
 		{
 			case SecurityConfig::PASSWORD_STRENGTH_VERY_STRONG :
 				$regex = self::$very_strong_strength_regex;
-				$error_message = empty($error_message) ? LangLoader::get_message('form.doesnt_match_very_strong_password_regex', 'status-messages-common') : $error_message;
+				$error_message = empty($error_message) ? LangLoader::get_message('warning.very.strong.password.regex', 'warning-lang') : $error_message;
 				break;
 
 			case SecurityConfig::PASSWORD_STRENGTH_STRONG :
 				$regex = self::$strong_strength_regex;
-				$error_message = empty($error_message) ? LangLoader::get_message('form.doesnt_match_strong_password_regex', 'status-messages-common') : $error_message;
+				$error_message = empty($error_message) ? LangLoader::get_message('warning.strong.password.regex', 'warning-lang') : $error_message;
 				break;
 
 			case SecurityConfig::PASSWORD_STRENGTH_MEDIUM :
 				$regex = self::$medium_strength_regex;
-				$error_message = empty($error_message) ? LangLoader::get_message('form.doesnt_match_medium_password_regex', 'status-messages-common') : $error_message;
+				$error_message = empty($error_message) ? LangLoader::get_message('warning.medium.password.regex', 'warning-lang') : $error_message;
 				break;
 
 			default :

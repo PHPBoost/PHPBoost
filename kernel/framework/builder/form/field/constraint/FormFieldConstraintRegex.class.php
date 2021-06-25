@@ -5,11 +5,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 10 28
+ * @version     PHPBoost 6.0 - last update: 2021 06 25
  * @since       PHPBoost 3.0 - 2009 12 19
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldConstraintRegex extends AbstractFormFieldConstraint
@@ -30,7 +31,7 @@ class FormFieldConstraintRegex extends AbstractFormFieldConstraint
 
 		if (empty($error_message))
 		{
-			$error_message = LangLoader::get_message('form.doesnt_match_regex', 'status-messages-common');
+			$error_message = LangLoader::get_message('warning.regex', 'warning-lang');
 		}
 		$this->set_validation_error_message($error_message);
 		$this->error_message = $error_message;

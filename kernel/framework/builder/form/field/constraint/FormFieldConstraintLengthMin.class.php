@@ -9,6 +9,7 @@
  * @since       PHPBoost 3.0 - 2009 12 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldConstraintLengthMin extends AbstractFormFieldConstraint
@@ -20,7 +21,7 @@ class FormFieldConstraintLengthMin extends AbstractFormFieldConstraint
 	{
 		if (empty($js_message))
 		{
-			$js_message = LangLoader::get_message('form.doesnt_match_length_min', 'status-messages-common');
+			$js_message = LangLoader::get_message('warning.length.min', 'warning-lang');
 		}
 		$this->error_message = StringVars::replace_vars($js_message, array('lower_bound' => $lower_bound));
 		$this->set_validation_error_message($this->error_message);

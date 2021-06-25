@@ -153,7 +153,7 @@ class AdminModuleUpdateController extends AdminController
 				return array('msg' => $this->lang['addon.modules.not.installed'], 'type' => MessageHelper::WARNING);
 				break;
 			case ModulesManager::UNEXISTING_MODULE:
-				return array('msg' => LangLoader::get_message('warning.element.unexist', 'warning-lang'), 'type' => MessageHelper::WARNING);
+				return array('msg' => LangLoader::get_message('warning.element.unexists', 'warning-lang'), 'type' => MessageHelper::WARNING);
 				break;
 			case ModulesManager::MODULE_UPDATED:
 			default:

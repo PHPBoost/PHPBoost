@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 18
+ * @version     PHPBoost 6.0 - last update: 2021 06 25
  * @since       PHPBoost 2.0 - 2008 10 12
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -452,10 +452,10 @@ class ModulesManager
 				{
 					$default_captcha = ContentManagementConfig::load()->get_used_captcha_module();
 					if ($default_captcha == $module_id)
-						$error = LangLoader::get_message('captcha.is_default', 'status-messages-common');
+						$error = LangLoader::get_message('warning.captcha.is.default', 'warning-lang');
 				}
 				else
-					$error = LangLoader::get_message('captcha.last_installed', 'status-messages-common');
+					$error = LangLoader::get_message('warning.captcha.last.installed', 'warning-lang');
 			}
 		}
 		else

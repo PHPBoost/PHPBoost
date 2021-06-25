@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 17
+ * @version     PHPBoost 6.0 - last update: 2021 06 25
  * @since       PHPBoost 1.5 - 2006 06 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -20,7 +20,7 @@ $lang['warning.fatal']    = 'Fatal';
 $lang['warning.notice']   = 'Notice';
 $lang['warning.warning']  = 'Warning';
 $lang['warning.question'] = 'Question';
-$lang['warning.unknow']   = 'Unknow';
+$lang['warning.unknown']  = 'Unknow';
 
 $lang['warning.username']     = 'Please enter a username !';
 $lang['warning.password']     = 'Please enter a password !';
@@ -34,10 +34,22 @@ $lang['warning.integer']      = 'Please enter an integer number !';
 $lang['warning.items.number'] = 'Please enter an item number !';
 $lang['warning.irreversible'] = 'This action is irreversible !';
 
+// BBcode
+$lang['warning.bbcode.member']       = 'This frame hides content for members only';
+$lang['warning.bbcode.moderator']    = 'This frame hides content for moderators only';
+$lang['warning.bbcode.teaser']       = 'Only members can read the whole following content.';
+$lang['warning.bbcode.is.member']    = 'The following content is only displayed to members';
+$lang['warning.bbcode.is.moderator'] = 'The following content is only displayed to moderators';
+$lang['warning.bbcode.is.teaser']    = 'The following content, the beginning of which is displayed to visitors, is for members only.';
+
 // Captcha
 $lang['warning.captcha.validation.error'] = 'The visual confirmation field has not been properly filled!';
 $lang['warning.captcha.is.default'] = 'The captcha you want to uninstall or disable is set on your site, you must select another captcha in the content management first.';
 $lang['warning.captcha.last.installed'] = 'Last captcha, you can not delete or disable it. Please install another one first.';
+
+// Content
+$lang['warning.locked.content.description'] = 'The item is currently open by :user_display_name, you can not access it, try again later.';
+$lang['warning.locked.content.another.user'] = 'another user';
 
 // Contributions
 $lang['warning.delete.contribution'] = 'Do you really want to delete this contribution?';
@@ -50,7 +62,7 @@ $lang['warning.last.editor.installed'] = 'Last text editor, you can not delete o
 
 // Element
 $lang['warning.element.already.exists'] = 'The item already exists.';
-$lang['warning.element.unexist']        = 'The item you requested does not exist.';
+$lang['warning.element.unexists']       = 'The item you requested does not exist.';
 $lang['warning.element.not.visible']    = 'This element is not yet or no more approved, it is not displayed for the other users.';
 
 // Errors
@@ -62,10 +74,10 @@ $lang['warning.auth']                    = 'You don\'t have the required level!'
 $lang['warning.auth.guest']              = 'Protected content. Please suscribe or connect to access this page.';
 $lang['warning.registration.disabled']   = 'Registration is disabled on the site.';
 $lang['warning.page.forbidden']          = 'This folder access is forbidden!';
-$lang['warning.page.unexist']            = 'This page doesn\'t exist!';
-$lang['warning.action.unauthorized']     = 'Unauthorized action!';
+$lang['warning.page.unexists']           = 'This page doesn\'t exist!';
+$lang['warning.unauthorized.action']     = 'Unauthorized action!';
 $lang['warning.module.uninstalled']      = 'This module isn\'t installed!';
-$lang['warning.module.unactivated']      = 'This module isn\'t activated!';
+$lang['warning.module.disabled']         = 'This module isn\'t activated!';
 $lang['warning.invalid.archive.content'] = 'The content of the archive is invalid!';
 $lang['warning.404.message']             = 'It seems that a tornado has passed through here. <br />Unfortunately nothing more to see.';
 $lang['warning.403.message']             = 'It seems that a tornado has passed through here. <br />Access is forbidden to the public.';
@@ -131,11 +143,14 @@ $lang['warning.strong.password.regex']          = 'The password must contain at 
 $lang['warning.very.strong.password.regex']     = 'The password must contain at least one lower case letter, one upper case letter, one digit and a special character';
 $lang['warning.email.authorized.domains.regex'] = 'This mail domain address is not authorized, please choose another mail address';
 
-$lang['warning.invalid.url']      = 'The url is not valid';
-$lang['warning.invalid.picture']  = 'The file is not a picture';
-$lang['warning.unexisting.file']  = 'The file has not been found, its url must be incorrect';
-$lang['warning.has.to.be.filled'] = 'The field ":name" has to be filled';
-$lang['warning.validation.error'] = 'Please correct the form errors';
+$lang['warning.invalid.url']            = 'The url is not valid';
+$lang['warning.invalid.picture']        = 'The file is not a picture';
+$lang['warning.unexisting.file']        = 'The file has not been found, its url must be incorrect';
+$lang['warning.has.to.be.filled']       = 'The field ":name" has to be filled';
+$lang['warning.must.contain.min.input'] = 'The field ":name" must contain at least :min_input values';
+$lang['warning.must.contain.max.input'] = 'The field ":name" must not contain more :max_input values';
+$lang['warning.unique.input.value']     = 'The field ":name" must not contain same values';
+$lang['warning.validation.error']       = 'Please correct the form errors';
 
 $lang['warning.fields.must.be.equal']                                  = 'Fields ":field1" and ":field2" must be equal';
 $lang['warning.fields.must.not.be.equal']                              = 'Fields ":field1" and ":field2" must have different values';

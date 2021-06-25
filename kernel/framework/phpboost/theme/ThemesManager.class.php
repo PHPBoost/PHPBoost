@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 18
+ * @version     PHPBoost 6.0 - last update: 2021 06 25
  * @since       PHPBoost 3.0 - 2011 04 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -124,7 +124,7 @@ class ThemesManager
 	{
 		if (!file_exists(PATH_TO_ROOT . '/templates/' . $theme_id . '/config.ini'))
 		{
-			self::$error = LangLoader::get_message('misfit.phpboost', 'status-messages-common');
+			self::$error = LangLoader::get_message('warning.misfit.phpboost', 'warning-lang');
 			$folder = new Folder(PATH_TO_ROOT . '/templates/' . $theme_id);
 			$folder->delete();
 		}
@@ -137,7 +137,7 @@ class ThemesManager
 			$phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
 			if (version_compare($phpboost_version, $configuration->get_compatibility(), '>'))
 			{
-				self::$error = LangLoader::get_message('misfit.phpboost', 'status-messages-common');
+				self::$error = LangLoader::get_message('warning.misfit.phpboost', 'warning-lang');
 			}
 			else if (!in_array($configuration->get_parent_theme(), self::get_themes_list()))
 			{
@@ -151,7 +151,7 @@ class ThemesManager
 		}
 		else
 		{
-			self::$error = LangLoader::get_message('element.already_exists', 'status-messages-common');
+			self::$error = LangLoader::get_message('warning.element.already.exists', 'warning-lang');
 		}
 	}
 

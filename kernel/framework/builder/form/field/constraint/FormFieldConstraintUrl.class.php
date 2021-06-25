@@ -10,6 +10,7 @@
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldConstraintUrl extends FormFieldConstraintRegex
@@ -20,7 +21,7 @@ class FormFieldConstraintUrl extends FormFieldConstraintRegex
 	{
 		if (empty($error_message))
 		{
-			$error_message = LangLoader::get_message('form.doesnt_match_url_regex', 'status-messages-common');
+			$error_message = LangLoader::get_message('warning.regex.url', 'warning-lang');
 		}
 		$this->set_validation_error_message($error_message);
 

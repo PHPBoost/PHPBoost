@@ -10,7 +10,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 23
+ * @version     PHPBoost 6.0 - last update: 2021 06 25
  * @since       PHPBoost 3.0 - 2010 11 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -166,11 +166,11 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 			$remaining_attempts = $this->get_remaining_attemps();
 			if ($remaining_attempts > 0)
 			{
-				$this->error_msg = StringVars::replace_vars(LangLoader::get_message('user.auth.passwd_flood', 'status-messages-common'), array('remaining_tries' => $remaining_attempts));
+				$this->error_msg = StringVars::replace_vars(LangLoader::get_message('warning.user.auth.password.flood', 'warning-lang'), array('remaining_tries' => $remaining_attempts));
 			}
 			else
 			{
-				$this->error_msg = LangLoader::get_message('user.auth.passwd_flood_max', 'status-messages-common');
+				$this->error_msg = LangLoader::get_message('warning.user.auth.password.flood.max', 'warning-lang');
 			}
 		}
 
@@ -207,7 +207,7 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 		}
 		elseif ($this->connection_attempts >= self::$MAX_AUTHORIZED_ATTEMPTS)
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('user.auth.passwd_flood_max', 'status-messages-common'));
+			$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), LangLoader::get_message('warninguser.auth.password.flood.max', 'warning-lang'));
 			DispatchManager::redirect($controller);
 		}
 	}

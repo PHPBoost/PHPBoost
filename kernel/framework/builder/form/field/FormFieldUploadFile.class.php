@@ -6,10 +6,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 17
+ * @version     PHPBoost 6.0 - last update: 2021 06 25
  * @since       PHPBoost 4.0 - 2013 12 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldUploadFile extends AbstractFormField
@@ -25,7 +26,7 @@ class FormFieldUploadFile extends AbstractFormField
 	 */
 	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
 	{
-		$constraints[] = new FormFieldConstraintUrlExists(LangLoader::get_message('form.unexisting_file', 'status-messages-common'));
+		$constraints[] = new FormFieldConstraintUrlExists(LangLoader::get_message('warning.unexisting.file', 'warning-lang'));
 		if (isset($field_options['authorized_extensions']))
 			$constraints[] = new FormFieldConstraintFileExtension($field_options['authorized_extensions']);
 		parent::__construct($id, $label, $value, $field_options, $constraints);

@@ -5,10 +5,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 10 24
+ * @version     PHPBoost 6.0 - last update: 2021 06 25
  * @since       PHPBoost 3.0 - 2010 04 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormConstraintFieldsInequality implements FormConstraint
@@ -31,7 +32,7 @@ class FormConstraintFieldsInequality implements FormConstraint
 		}
 		else
 		{
-			$this->js_message = LangLoader::get_message('form.fields_must_not_be_equal', 'status-messages-common');
+			$this->js_message = LangLoader::get_message('warning.fields.must.not.be.equal', 'warning-lang');
 		}
 
 		$this->first_field = $first_field;

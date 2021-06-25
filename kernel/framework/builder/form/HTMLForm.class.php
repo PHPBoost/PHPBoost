@@ -10,7 +10,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 06 25
  * @since       PHPBoost 3.0 - 2009 04 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -235,18 +235,20 @@ class HTMLForm implements HTMLElement
 
 		$template->put_all(array(
 			'C_JS_NOT_ALREADY_INCLUDED' => !self::$js_already_included,
-			'C_HAS_REQUIRED_FIELDS' => (self::$instance_id == 1) ? $this->has_required_fields() : false,
-			'C_TARGET' => !empty($this->target),
-			'C_LAYOUT' => !empty($this->layout_title),
+			'C_HAS_REQUIRED_FIELDS'     => (self::$instance_id == 1) ? $this->has_required_fields() : false,
+			'C_TARGET'                  => !empty($this->target),
+			'C_LAYOUT'                  => !empty($this->layout_title),
+			'C_VALIDATION_ERROR'        => count($this->validation_error_messages),
+
 			'LAYOUT_TITLE' => $this->layout_title,
-			'MODULE_ID' => Environment::get_running_module_name(),
-			'FORMCLASS' => $this->css_class,
-			'TARGET' => $this->target,
-			'HTML_ID' => $this->html_id,
-			'L_REQUIRED_FIELDS' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
-			'C_VALIDATION_ERROR' => count($this->validation_error_messages),
-			'TITLE_VALIDATION_ERROR_MESSAGE' => LangLoader::get_message('form.validation_error', 'status-messages-common'),
-			'METHOD' => $this->method
+			'MODULE_ID'    => Environment::get_running_module_name(),
+			'FORMCLASS'    => $this->css_class,
+			'TARGET'       => $this->target,
+			'HTML_ID'      => $this->html_id,
+			'METHOD'       => $this->method,
+
+			'TITLE_VALIDATION_ERROR_MESSAGE' => LangLoader::get_message('warning.validation.error', 'warning-lang'),
+			'L_REQUIRED_FIELDS'              => LangLoader::get_message('form.required.fields', 'form-lang'),
 		));
 
 		foreach ($this->validation_error_messages as $error_message)
@@ -265,6 +267,7 @@ class HTMLForm implements HTMLElement
 		{
 			$template->assign_block_vars('fieldsets', array(), array(
 				'C_CAPTCHA' => $this->enable_captcha_protection,
+
 				'FIELDSET' => $fieldset->display()
 			));
 

@@ -5,11 +5,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 10 24
+ * @version     PHPBoost 6.0 - last update: 2021 06 25
  * @since       PHPBoost 3.0 - 2009 12 20
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldConstraintIntegerMin extends AbstractFormFieldConstraint
@@ -21,7 +22,7 @@ class FormFieldConstraintIntegerMin extends AbstractFormFieldConstraint
 	{
 		if (empty($js_message))
 		{
-			$js_message = LangLoader::get_message('form.doesnt_match_integer_min', 'status-messages-common');
+			$js_message = LangLoader::get_message('warning.integer.min', 'warning-lang');
 		}
 		$this->error_message = StringVars::replace_vars($js_message, array('lower_bound' => $lower_bound));
 		$this->set_validation_error_message($this->error_message);

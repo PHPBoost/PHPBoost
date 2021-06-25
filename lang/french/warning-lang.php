@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 17
+ * @version     PHPBoost 6.0 - last update: 2021 06 25
  * @since       PHPBoost 1.5 - 2006 06 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -20,7 +20,7 @@ $lang['warning.fatal']    = 'Fatale';
 $lang['warning.notice']   = 'Suggestion';
 $lang['warning.warning']  = 'Avertissement';
 $lang['warning.question'] = 'Question';
-$lang['warning.unknow']   = 'Inconnue';
+$lang['warning.unknown']  = 'Inconnue';
 
 $lang['warning.username']     = 'Veuillez entrer un nom d\'utilisateur !';
 $lang['warning.password']     = 'Veuillez entrer un mot de passe !';
@@ -34,10 +34,22 @@ $lang['warning.integer']      = 'Veuillez entrer nombre entier !';
 $lang['warning.items.number'] = 'Veuillez entrer un nombre d\'éléments !';
 $lang['warning.irreversible'] = 'Cette action est irréversible !';
 
+// BBcode
+$lang['warning.bbcode.member']       = 'Ce cadre cache du contenu réservé aux membres.';
+$lang['warning.bbcode.moderator']    = 'Ce cadre cache du contenu réservé aux modérateurs.';
+$lang['warning.bbcode.teaser']       = 'Seuls les membres peuvent lire l\'intégralité du contenu suivant.';
+$lang['warning.bbcode.is.member']    = 'Le contenu suivant est réservé aux membres.';
+$lang['warning.bbcode.is.moderator'] = 'Le contenu suivant est réservé aux modérateurs.';
+$lang['warning.bbcode.is.teaser']    = 'Le contenu suivant, dont le début est affiché aux visiteurs, est réservé aux membres.';
+
 // Captcha
 $lang['warning.captcha.validation.error'] = 'Le champ de vérification visuel n\'a pas été saisi correctement !';
 $lang['warning.captcha.is.default']       = 'Le captcha que vous souhaitez désinstaller ou désactiver est défini sur le site, veuillez d\'abord sélectionner un autre captcha dans la configuration du contenu.';
 $lang['warning.captcha.last.installed']   = 'Dernier captcha, vous ne pouvez pas le supprimer ou le désactiver. Veuillez d\'abord en installer un autre.';
+
+// Content
+$lang['warning.locked.content.description'] = 'L\'élément est actuellement ouvert par :user_display_name, vous ne pouvez pas y accéder, réessayez plus tard.';
+$lang['warning.locked.content.another_user'] = 'un autre utilisateur';
 
 // Contributions
 $lang['warning.delete.contribution'] = 'Etes-vous sûr de vouloir supprimer cette contribution ?';
@@ -50,7 +62,7 @@ $lang['warning.last.editor.installed'] = 'Dernier éditeur de texte, vous ne pou
 
 // Element
 $lang['warning.element.already.exists'] = 'L\'élément existe déjà.';
-$lang['warning.element.unexist']        = 'L\'élément que vous demandez n\'existe pas.';
+$lang['warning.element.unexists']       = 'L\'élément que vous demandez n\'existe pas.';
 $lang['warning.element.not.visible']    = 'Cet élément n\'est pas encore ou n\'est plus approuvé, il n\'est pas affiché pour les autres utilisateurs du site.';
 
 // Errors
@@ -62,10 +74,10 @@ $lang['warning.auth']                    = 'Vous n\'avez pas le niveau requis !'
 $lang['warning.auth.guest']              = 'Le contenu de cette page est protégé. Veuillez vous inscrire ou vous connecter sur le site pour y accéder.';
 $lang['warning.registration.disabled']   = 'L\'inscription de nouveaux membres est désactivée sur le site.';
 $lang['warning.page.forbidden']          = 'L\'accès à ce dossier est interdit !';
-$lang['warning.page.unexist']            = 'La page que vous demandez n\'existe pas !';
-$lang['warning.action.unauthorized']     = 'Action non autorisée !';
+$lang['warning.page.unexists']           = 'La page que vous demandez n\'existe pas !';
+$lang['warning.unauthorized.action']     = 'Action non autorisée !';
 $lang['warning.module.uninstalled']      = 'Ce module n\'est pas installé !';
-$lang['warning.module.unactivated']      = 'Ce module n\'est pas activé !';
+$lang['warning.module.disabled']         = 'Ce module n\'est pas activé !';
 $lang['warning.invalid.archive.content'] = 'Le contenu de l\'archive est incorrect !';
 $lang['warning.404.message']             = 'Il semblerait qu\'une tornade soit passée par ici.<br />Il ne reste malheureusement plus rien à voir.';
 $lang['warning.403.message']             = 'Il semblerait qu\'une tornade soit passée par ici.<br />L\'accès est interdit au public.';
@@ -131,11 +143,14 @@ $lang['warning.strong.password.regex']          = 'Le mot de passe doit comporte
 $lang['warning.very.strong.password.regex']     = 'Le mot de passe doit comporter au moins une minuscule, une majuscule, un chiffre et un caractère spécial';
 $lang['warning.email.authorized.domains.regex'] = 'Le nom de domaine de cette adresse n\'est pas autorisé sur le site, veuillez choisir une autre adresse email';
 
-$lang['warning.invalid.url']      = 'L\'url n\'est pas valide';
-$lang['warning.invalid.picture']  = 'Le fichier indiqué n\'est pas une image';
-$lang['warning.unexisting.file']  = 'Le fichier n\'a pas été trouvé, son adresse doit être incorrecte';
-$lang['warning.has.to.be.filled'] = 'Le champ ":name" doit être renseigné';
-$lang['warning.validation.error'] = 'Veuillez corriger les erreurs du formulaire';
+$lang['warning.invalid.url']            = 'L\'url n\'est pas valide';
+$lang['warning.invalid.picture']        = 'Le fichier indiqué n\'est pas une image';
+$lang['warning.unexisting.file']        = 'Le fichier n\'a pas été trouvé, son adresse doit être incorrecte';
+$lang['warning.has.to.be.filled']       = 'Le champ ":name" doit être renseigné';
+$lang['warning.must.contain.min.input'] = 'Le champ ":name" doit contenir au moins :min_input valeurs';
+$lang['warning.must.contain.max.input'] = 'Le champ ":name" ne doit pas contenir plus de :max_input valeurs';
+$lang['warning.unique.input.value']     = 'Le champ ":name" ne doit pas contenir de valeurs identiques';
+$lang['warning.validation.error']       = 'Veuillez corriger les erreurs du formulaire';
 
 $lang['warning.fields.must.be.equal']                                  = 'Les champs ":field1" et ":field2" doivent être égaux';
 $lang['warning.fields.must.not.be.equal']                              = 'Les champs ":field1" et ":field2" doivent avoir des valeurs différentes';
@@ -145,6 +160,7 @@ $lang['warning.first.field.must.not.be.contained.in.second.field']     = 'La val
 $lang['warning.login.and.email.must.not.be.contained.in.second.field'] = 'Votre email ou votre identifiant de connexion ne doivent pas être contenus dans le champ ":field2"';
 
 // Upload
+$lang['warning.file.max.size.exceeded'] = 'La taille maximale du fichier ne doit pas dépasser :max_file_size.';
 $lang['warning.file.max.dimension']     = 'Dimensions maximales du fichier dépassées';
 $lang['warning.file.max.weight']        = 'Poids maximum du fichier dépassé';
 $lang['warning.file.invalid.format']    = 'Format du fichier invalide';

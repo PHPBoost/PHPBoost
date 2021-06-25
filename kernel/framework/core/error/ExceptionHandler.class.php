@@ -5,10 +5,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2015 11 10
+ * @version     PHPBoost 6.0 - last update: 2021 06 25
  * @since       PHPBoost 3.0 - 2009 12 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ExceptionHandler
@@ -77,7 +78,7 @@ class ExceptionHandler
 
 	private function prepare_controller()
 	{
-		$title = LangLoader::get_message('error', 'status-messages-common');
+		$title = LangLoader::get_message('warning.error', 'warning-lang');
 
 		if ($this->exception !== null && Debug::is_debug_mode_enabled())
 		{
@@ -89,7 +90,7 @@ class ExceptionHandler
 		}
 		else
 		{
-			$message = TextHelper::htmlspecialchars(LangLoader::get_message('process.error', 'status-messages-common'));
+			$message = TextHelper::htmlspecialchars(LangLoader::get_message('warning.process.error', 'warning-lang'));
 		}
 
 		$controller = new UserErrorController($title, $message, UserErrorController::FATAL);

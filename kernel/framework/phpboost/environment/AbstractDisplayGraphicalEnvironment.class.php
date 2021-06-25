@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 22
+ * @version     PHPBoost 6.0 - last update: 2021 06 25
  * @since       PHPBoost 3.0 - 2009 10 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Kevin MASSY <reidlos@phpboost.com>
@@ -151,7 +151,7 @@
 
 			if ($display_message_install || $display_message_update)
 			{
-				$message = ($display_message_install && $display_message_update ? LangLoader::get_message('message.delete_install_and_update_folders', 'status-messages-common') : StringVars::replace_vars(LangLoader::get_message('message.delete_install_or_update_folders', 'status-messages-common'), array('folder' => $display_message_install ? 'install' : 'update')));
+				$message = ($display_message_install && $display_message_update ? LangLoader::get_message('warning.delete.install.and.update.folders', 'warning-lang') : StringVars::replace_vars(LangLoader::get_message('warning.delete.install.or.update.folders', 'warning-lang'), array('folder' => $display_message_install ? 'install' : 'update')));
 				$template->put('KERNEL_MESSAGE', MessageHelper::display($message . ' ' . $form->display()->render(), MessageHelper::WARNING));
 			}
 		}

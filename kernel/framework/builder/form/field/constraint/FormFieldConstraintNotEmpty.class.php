@@ -9,6 +9,7 @@
  * @since       PHPBoost 3.0 - 2009 12 19
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldConstraintNotEmpty extends AbstractFormFieldConstraint
@@ -19,7 +20,7 @@ class FormFieldConstraintNotEmpty extends AbstractFormFieldConstraint
 	{
 		if (empty($error_message))
 		{
-			$error_message = LangLoader::get_message('form.has_to_be_filled', 'status-messages-common');
+			$error_message = LangLoader::get_message('warning.has.to.be.filled', 'warning-lang');
 		}
 		$this->error_message = $error_message;
 	}

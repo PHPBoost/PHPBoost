@@ -5,10 +5,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 18
+ * @version     PHPBoost 6.0 - last update: 2021 06 25
  * @since       PHPBoost 3.0 - 2012 01 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class LangsManager
@@ -122,7 +123,7 @@ class LangsManager
 			$phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
 			if (version_compare($phpboost_version, $configuration->get_compatibility(), '>'))
 			{
-				self::$error = LangLoader::get_message('misfit.phpboost', 'status-messages-common');
+				self::$error = LangLoader::get_message('warning.misfit.phpboost', 'warning-lang');
 			}
 			else
 			{
@@ -132,11 +133,11 @@ class LangsManager
 		}
 		else if (self::get_lang_existed($id))
 		{
-			self::$error = LangLoader::get_message('element.already_exists', 'status-messages-common');
+			self::$error = LangLoader::get_message('warning.element.already.exists', 'warning-lang');
 		}
 		else
 		{
-			self::$error = LangLoader::get_message('process.error', 'status-messages-common');
+			self::$error = LangLoader::get_message('warning.process.error', 'warning-lang');
 		}
 	}
 

@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 31
+ * @version     PHPBoost 6.0 - last update: 2021 06 25
  * @since       PHPBoost 6.0 - 2020 03 12
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DefaultDisplayItemController extends AbstractItemController
@@ -15,7 +16,7 @@ class DefaultDisplayItemController extends AbstractItemController
 	 * @var Item
 	 */
 	protected $item;
-	
+
 	protected $current_url;
 
 	public function execute(HTTPRequestCustom $request)
@@ -51,7 +52,7 @@ class DefaultDisplayItemController extends AbstractItemController
 	{
 		if (!$this->get_item()->is_published())
 		{
-			$this->view->put('NOT_PUBLISHED_MESSAGE', MessageHelper::display(LangLoader::get_message('element.not_visible', 'status-messages-common'), MessageHelper::WARNING));
+			$this->view->put('NOT_PUBLISHED_MESSAGE', MessageHelper::display(LangLoader::get_message('warning.element.not.visible', 'warning-lang'), MessageHelper::WARNING));
 		}
 		else
 		{
@@ -67,7 +68,7 @@ class DefaultDisplayItemController extends AbstractItemController
 		if (in_array('comments', $this->enabled_features))
 		{
 			$comments_topic = new DefaultCommentsTopic(self::$module_id, $this->get_item(), $this->current_url);
-			
+
 			$this->view->put('COMMENTS', $comments_topic->display());
 		}
 
@@ -116,10 +117,10 @@ class DefaultDisplayItemController extends AbstractItemController
 	protected function check_authorizations()
 	{
 		$authorizations = self::get_module_configuration()->has_categories() ? CategoriesAuthorizationsService::check_authorizations($this->get_item()->get_category()->get_id(), self::$module_id) : ItemsAuthorizationsService::check_authorizations(self::$module_id);
-		
+
 		$current_user = AppContext::get_current_user();
 		$not_authorized = !$authorizations->moderation() && !$authorizations->write() && (!$authorizations->contribution() || $this->get_item()->get_author_user()->get_id() != $current_user->get_id());
-		
+
 		switch ($this->get_item()->get_publishing_state())
 		{
 			case Item::PUBLISHED:
@@ -168,7 +169,7 @@ class DefaultDisplayItemController extends AbstractItemController
 
 		if (self::get_module_configuration()->has_rich_items() && $this->get_item()->has_thumbnail())
 			$graphical_environment->get_seo_meta_data()->set_picture_url($this->get_item()->get_thumbnail());
-		
+
 		if ($seo_page_type = $this->get_seo_page_type())
 			$graphical_environment->get_seo_meta_data()->set_page_type($seo_page_type);
 

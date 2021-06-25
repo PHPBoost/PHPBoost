@@ -15,7 +15,7 @@ class UserError404Controller extends UserErrorController
 	public function __construct()
 	{
 		$error = LangLoader::get_message('warning.error', 'warning-lang');
-		$unexist_page = LangLoader::get_message('warning.page.unexist', 'warning-lang');
+		$unexist_page = LangLoader::get_message('warning.page.unexists', 'warning-lang');
 		$message = '<strong>404.</strong> ' . $unexist_page;
 		parent::__construct($error. ' 404', $message, self::WARNING);
 	}

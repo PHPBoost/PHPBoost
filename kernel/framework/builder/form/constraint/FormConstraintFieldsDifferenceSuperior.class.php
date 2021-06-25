@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 02 11
+ * @version     PHPBoost 6.0 - last update: 2021 06 25
  * @since       PHPBoost 4.1 - 2015 11 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormConstraintFieldsDifferenceSuperior implements FormConstraint
@@ -30,7 +31,7 @@ class FormConstraintFieldsDifferenceSuperior implements FormConstraint
 		}
 		else
 		{
-			$this->js_message = LangLoader::get_message('form.first_field_must_be_superior_to_second_field', 'status-messages-common');
+			$this->js_message = LangLoader::get_message('warning.first.field.must.be.superior.to.second.field', 'warning-lang');
 		}
 
 		$this->first_field = $first_field;

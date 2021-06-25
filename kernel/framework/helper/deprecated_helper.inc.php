@@ -4,10 +4,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 10 26
+ * @version     PHPBoost 6.0 - last update: 2021 06 25
  * @since       PHPBoost 3.0 - 2010 01 22
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ### Variable types ###
@@ -198,7 +199,7 @@ function load_module_lang($module_name, $path = PATH_TO_ROOT)
 		{
 			$error_message = sprintf('Unable to load lang file \'%s\'!', PATH_TO_ROOT . '/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php');
 
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
+			$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'),
                 $error_message, UserErrorController::FATAL);
             DispatchManager::redirect($controller);
 		}
@@ -267,7 +268,7 @@ function find_require_dir($dir_path, $require_dir, $fatal_error = true)
 	{
 		$error_message = sprintf('Unable to load required directory \'%s\'!', $dir_path . $require_dir);
 
-        $controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
+        $controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'),
             $error_message, UserErrorController::FATAL);
         DispatchManager::redirect($controller);
 	}
