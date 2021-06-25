@@ -75,5 +75,5 @@ $lang['poll.sorting.field.closed']        = 'Polls completed';
 // Manage
 $lang['poll.manage.status']      = 'Polls status';
 $lang['poll.manage.in.progress'] = 'In progress';
-$lang['poll.manage.completed']   = 'completed';
+$lang['poll.manage.completed']   = 'Completed';
 ?>
