@@ -6,11 +6,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 08 22
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 2.0 - 2008 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class ContentFormattingParser extends AbstractParser
@@ -306,7 +307,7 @@ abstract class ContentFormattingParser extends AbstractParser
 		$this->content = preg_replace('`\[feed((?: [a-z]+="[^"]+")*)\]([a-z]+)\[/feed\]`uU', '[[FEED$1]]$2[[/FEED]]', $this->content);
 		$this->content = str_replace(array('\[\[FEED', '\[\[/FEED\]\]'), array('[[FEED', '[[/FEED]]'), $this->content);
 	}
-	
+
 	/**
 	 * @desc Callback which parses the font awasome icons tag
 	 * @param string[] $matches Content matched by a regular expression
@@ -340,7 +341,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	 */
 	protected function parse_wikipedia_tag($matches)
 	{
-		$lang = (!empty($matches[2])) ? $matches[2] : LangLoader::get_message('wikipedia_subdomain', 'editor-common');
+		$lang = (!empty($matches[2])) ? $matches[2] : LangLoader::get_message('editor.wikipedia.subdomain', 'editor-lang');
 		$page_url = !empty($matches[1]) ? $matches[1] : $matches[3];
 
 		return '<a href="https://' . $lang . '.wikipedia.org/wiki/' . $page_url . '" class="wikipedia-link">' . $matches[3] . '</a>';

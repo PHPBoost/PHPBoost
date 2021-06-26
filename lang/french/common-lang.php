@@ -146,9 +146,9 @@ $lang['common.sql.request']    = ' Requètes';
 $lang['common.achieved']       = 'Éxécuté en';
 
 // Formatter
-$lang['common.hidden.text']            = 'Ce texte est caché, cliquer ici pour afficher son contenu.';
-$lang['common.hide.text']              = 'Cliquer ici pour cacher le texte.';
-$lang['common.copy.to.clipboard']      = 'Copier vers le presse-papier';
+$lang['common.hidden.text']       = 'Ce texte est caché, cliquer ici pour afficher son contenu.';
+$lang['common.hide.text']         = 'Cliquer ici pour cacher le texte.';
+$lang['common.copy.to.clipboard'] = 'Copier vers le presse-papier';
 
 // Links
 $lang['common.back']                   = 'Retour';

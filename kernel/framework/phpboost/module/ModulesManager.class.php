@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 25
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 2.0 - 2008 10 12
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -439,10 +439,10 @@ class ModulesManager
 						));
 					}
 					else
-						$error = LangLoader::get_message('is_default_editor', 'editor-common');
+						$error = LangLoader::get_message('warning.is.default.editor', 'warning-lang');
 				}
 				else
-					$error = LangLoader::get_message('last_editor_installed', 'editor-common');
+					$error = LangLoader::get_message('warning.last.editor.installed', 'warning-lang');
 			}
 
 			$captchas = AppContext::get_captcha_service()->get_available_captchas();

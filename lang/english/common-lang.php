@@ -145,9 +145,9 @@ $lang['common.sql.request']    = ' Requests';
 $lang['common.achieved']       = 'Achieved in';
 
 // Formatter
-$lang['common.hidden.text']            = 'This text is hidden, click here to reveal its contents.';
-$lang['common.hide.text']              = 'Click here to hide this text.';
-$lang['common.copy.to.clipboard']      = 'Copy to clipboard';
+$lang['common.hidden.text']       = 'This text is hidden, click here to reveal its contents.';
+$lang['common.hide.text']         = 'Click here to hide this text.';
+$lang['common.copy.to.clipboard'] = 'Copy to clipboard';
 
 // Links
 $lang['common.back']                   = 'Back';

@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 24
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -314,14 +314,14 @@ class BBCodeParser extends ContentFormattingParser
 			//Quote tag
 			if (!in_array('quote', $this->forbidden_tags))
 			{
-				$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`suU', '<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title">' . LangLoader::get_message('format_quote', 'editor-common') . ' :</span><div class="formatter-content">$1</div></blockquote>');
+				$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`suU', '<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title">' . LangLoader::get_message('editor.quote', 'editor-lang') . ' :</span><div class="formatter-content">$1</div></blockquote>');
 				$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`suU', '<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">$1 :</span><div class="formatter-content">$2</div></blockquote>');
 			}
 
 			//Hide tag
 			if (!in_array('hide', $this->forbidden_tags))
 			{
-				$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`suU', '<div class="formatter-container formatter-hide no-js"><span class="formatter-title">' . LangLoader::get_message('hidden', 'common') . ' :</span><div class="formatter-content">$1</div></div>');
+				$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`suU', '<div class="formatter-container formatter-hide no-js"><span class="formatter-title">' . LangLoader::get_message('common.hidden', 'common-lang') . ' :</span><div class="formatter-content">$1</div></div>');
 				$this->_parse_imbricated('[hide=', '`\[hide=([^\]]+)\](.+)\[/hide\]`suU', '<div class="formatter-container formatter-hide no-js"><span class="formatter-title title-perso">$1 :</span><div class="formatter-content">$2</div></div>');
 			}
 

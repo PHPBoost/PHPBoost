@@ -1023,7 +1023,7 @@
 				</span>
 			</li>
 			<li id="code-help" class="bbcode-elements">
-				<a class="bbcode-button" href="https://www.phpboost.com/wiki/bbcode" aria-label="{@bbcode.help}<br />{@common.is.new.window}" target="_blank" rel="noopener">
+				<a class="bbcode-button offload" href="https://www.phpboost.com/wiki/bbcode" aria-label="{@bbcode.help}<br />{@common.is.new.window}" target="_blank" rel="noopener">
 					<i class="far fa-fw fa-question-circle" aria-hidden="true"></i>
 				</a>
 			</li>

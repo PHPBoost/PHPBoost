@@ -28,7 +28,7 @@
         </span>
         <div class="formatter-container">
             <div class="formatter-container formatter-code">
-                <span id="copy-code-1" class="copy-code" aria-label="${LangLoader::get_message('tag_copytoclipboard', 'editor-common')}" onclick="copy_code_clipboard(3)"><i class="far fa-copy"></i></span>
+                <span id="copy-code-1" class="copy-code" aria-label="${LangLoader::get_message('common.copy.to.clipboard', 'common-lang')}" onclick="copy_code_clipboard(3)"><i class="far fa-copy"></i></span>
                 <span class="formatter-title">markup</span>
                 <div id="copy-code-3-content" class="formatter-content copy-code-content"><pre class="language-markup line-numbers"><code class="language-markup">// html
 &lt;span class="fa-stack fa-2x logo-stack">

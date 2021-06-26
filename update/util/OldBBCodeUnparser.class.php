@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 11 19
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 5.1 - 2017 03 09
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -353,7 +353,7 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 	protected function unparse_wikipedia_link($matches)
 	{
 		// Default language
-		if ($matches[1] == LangLoader::get_message('wikipedia_subdomain', 'editor-common'))
+		if ($matches[1] == LangLoader::get_message('editor.wikipedia.subdomain', 'editor-lang'))
 		{
 			$lang = '';
 		}

@@ -66,7 +66,7 @@
         <h4>{@H|icons.fa.howto.css}</h4>
         <p>{@H|icons.fa.howto.css.class}</p>
         <div class="formatter-container formatter-code">
-            <span id="copy-code-1" class="copy-code" aria-label="${LangLoader::get_message('tag_copytoclipboard', 'editor-common')}" onclick="copy_code_clipboard(1)"><i class="far fa-copy"></i></span>
+            <span id="copy-code-1" class="copy-code" aria-label="${LangLoader::get_message('common.copy.to.clipboard', 'common-lang')}" onclick="copy_code_clipboard(1)"><i class="far fa-copy"></i></span>
             <span class="formatter-title">{@H|icons.fa.howto.css.css.code}</span>
             <div id="copy-code-1-content" class="formatter-content copy-code-content">
 <pre class="language-css line-numbers" data-line="3-5"><code class="language-css">.success { ... }
@@ -79,7 +79,7 @@
         </div>
 
         <div class="formatter-container formatter-code">
-            <span id="copy-code-2" class="copy-code" aria-label="${LangLoader::get_message('tag_copytoclipboard', 'editor-common')}" onclick="copy_code_clipboard(2)"><i class="far fa-copy"></i></span>
+            <span id="copy-code-2" class="copy-code" aria-label="${LangLoader::get_message('common.copy.to.clipboard', 'common-lang')}" onclick="copy_code_clipboard(2)"><i class="far fa-copy"></i></span>
             <span class="formatter-title">{@H|icons.fa.howto.css.html.code}</span>
             <div id="copy-code-2-content" class="formatter-content copy-code-content">
                 <pre class="language-html"><code class="language-html">&lt;div class="message-helper bgc success">{@component.message.success}&lt;/div></code></pre>

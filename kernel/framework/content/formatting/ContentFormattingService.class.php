@@ -7,9 +7,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 30
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 3.0 - 2009 12 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ContentFormattingService
@@ -140,10 +141,10 @@ class ContentFormattingService
 					));
 				}
 				else
-					return LangLoader::get_message('is_default_editor', 'editor-common');
+					return LangLoader::get_message('warning.is.default.editor', 'warning-lang');
 			}
 			else
-				return LangLoader::get_message('last_editor_installed', 'editor-common');
+				return LangLoader::get_message('warning.last.editor.installed', 'warning-lang');
 		}
 	}
 
@@ -154,50 +155,50 @@ class ContentFormattingService
 	 */
 	public function get_available_tags()
 	{
-		$editor_lang = LangLoader::get('editor-common');
+		$editor_lang = LangLoader::get('editor-lang');
 		return array(
-			'b' => $editor_lang['format_bold'],
-			'i' => $editor_lang['format_italic'],
-			'u' => $editor_lang['format_underline'],
-			's' => $editor_lang['format_strike'],
-			'title' => $editor_lang['format_title'],
-			'style' => $editor_lang['format_style'],
-			'url' => $editor_lang['format_url'],
-			'img' => $editor_lang['format_img'],
-			'quote' => $editor_lang['format_quote'],
-			'hide' => $editor_lang['format_hide'],
-			'list' => $editor_lang['format_list'],
-			'color' => $editor_lang['format_color'],
-			'bgcolor' => $editor_lang['format_bgcolor'],
-			'font' => $editor_lang['format_font'],
-			'size' => $editor_lang['format_size'],
-			'align' => $editor_lang['format_align'],
-			'float' => $editor_lang['format_float'],
-			'sup' => $editor_lang['format_sup'],
-			'sub' => $editor_lang['format_sub'],
-			'indent' => $editor_lang['format_indent'],
-			'pre' => $editor_lang['format_pre'],
-			'table' => $editor_lang['format_table'],
-			'swf' => $editor_lang['format_flash'],
-			'movie' => $editor_lang['format_movie'],
-			'sound' => $editor_lang['format_sound'],
-			'code' => $editor_lang['format_code'],
-			'math' => $editor_lang['format_math'],
-			'anchor' => $editor_lang['format_anchor'],
-			'acronym' => $editor_lang['format_acronym'],
-			'block' => $editor_lang['format_block'],
-			'fieldset' => $editor_lang['format_fieldset'],
-			'mail' => $editor_lang['format_mail'],
-			'line' => $editor_lang['format_line'],
-			'wikipedia' => $editor_lang['format_wikipedia'],
-			'html' => $editor_lang['format_html'],
-			'feed' => $editor_lang['format_feed'],
-			'youtube' => $editor_lang['format_youtube'],
-			'lightbox' => $editor_lang['format_lightbox'],
-			'charmap' => $editor_lang['format_charmap'],
-			'insertdatetime' => $editor_lang['format_insertdatetime'],
-			'fa' => $editor_lang['format_fa'],
-			'p' => $editor_lang['format_paragraph']
+			'b'              => $editor_lang['editor.bold'],
+			'i'              => $editor_lang['editor.italic'],
+			'u'              => $editor_lang['editor.underline'],
+			's'              => $editor_lang['editor.strike'],
+			'title'          => $editor_lang['editor.title'],
+			'style'          => $editor_lang['editor.style'],
+			'url'            => $editor_lang['editor.url'],
+			'img'            => $editor_lang['editor.img'],
+			'quote'          => $editor_lang['editor.quote'],
+			'hide'           => $editor_lang['editor.hide'],
+			'list'           => $editor_lang['editor.list'],
+			'color'          => $editor_lang['editor.color'],
+			'bgcolor'        => $editor_lang['editor.bgcolor'],
+			'font'           => $editor_lang['editor.font'],
+			'size'           => $editor_lang['editor.size'],
+			'align'          => $editor_lang['editor.align'],
+			'float'          => $editor_lang['editor.float'],
+			'sup'            => $editor_lang['editor.sup'],
+			'sub'            => $editor_lang['editor.sub'],
+			'indent'         => $editor_lang['editor.indent'],
+			'pre'            => $editor_lang['editor.pre'],
+			'table'          => $editor_lang['editor.table'],
+			'swf'            => $editor_lang['editor.flash'],
+			'movie'          => $editor_lang['editor.movie'],
+			'sound'          => $editor_lang['editor.sound'],
+			'code'           => $editor_lang['editor.code'],
+			'math'           => $editor_lang['editor.math'],
+			'anchor'         => $editor_lang['editor.anchor'],
+			'acronym'        => $editor_lang['editor.acronym'],
+			'block'          => $editor_lang['editor.block'],
+			'fieldset'       => $editor_lang['editor.fieldset'],
+			'mail'           => $editor_lang['editor.mail'],
+			'line'           => $editor_lang['editor.line'],
+			'wikipedia'      => $editor_lang['editor.wikipedia'],
+			'html'           => $editor_lang['editor.html'],
+			'feed'           => $editor_lang['editor.feed'],
+			'youtube'        => $editor_lang['editor.youtube'],
+			'lightbox'       => $editor_lang['editor.lightbox'],
+			'charmap'        => $editor_lang['editor.charmap'],
+			'insertdatetime' => $editor_lang['editor.insertdatetime'],
+			'fa'             => $editor_lang['editor.fa'],
+			'p'              => $editor_lang['editor.paragraph']
 		);
 	}
 }

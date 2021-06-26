@@ -10,7 +10,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 25
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 2.0 - 2008 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -205,7 +205,7 @@ class ContentSecondParser extends AbstractParser
 
 		if (TextHelper::strlen($content_to_highlight) > self::MAX_CODE_LENGTH)
 		{
-			return '<div class="message-helper error">' . LangLoader::get_message('code_too_long_error', 'editor-common') . '</div>';
+			return '<div class="message-helper error">' . LangLoader::get_message('warning.code.too.long.error', 'warning-lang') . '</div>';
 		}
 
 		if (!empty($matches[1])) {
@@ -463,7 +463,7 @@ class ContentSecondParser extends AbstractParser
 		}
 		else
 		{
-			$error = StringVars::replace_vars(LangLoader::get_message('feed_tag_error', 'editor-common'), array('module' => $module));
+			$error = StringVars::replace_vars(LangLoader::get_message('warning.feed.tag.error', 'warning-lang'), array('module' => $module));
 			return '<div class="message-helper error">' . $error . '</div>';
 		}
 	}
