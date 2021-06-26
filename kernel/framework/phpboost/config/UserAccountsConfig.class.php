@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 03
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 3.0 - 2009 10 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -465,8 +465,8 @@ class UserAccountsConfig extends AbstractConfigData
 			self::ITEMS_PER_ROW                              => 2,
 			self::REGISTRATION_ENABLED_PROPERTY              => FormFieldCheckbox::CHECKED,
 			self::MEMBER_ACCOUNTS_VALIDATION_METHOD_PROPERTY => self::AUTOMATIC_USER_ACCOUNTS_VALIDATION,
-			self::WELCOME_MESSAGE_PROPERTY                   => LangLoader::get_message('site_config_msg_mbr', 'main'),
-			self::REGISTRATION_AGREEMENT_PROPERTY            => LangLoader::get_message('register_agreement', 'main'),
+			self::WELCOME_MESSAGE_PROPERTY                   => LangLoader::get_message('user.site.member.message', 'user-lang'),
+			self::REGISTRATION_AGREEMENT_PROPERTY            => LangLoader::get_message('user.registration.agreement', 'user-lang'),
 			self::UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY      => 20,
 			self::ENABLE_AVATAR_UPLOAD_PROPERTY              => FormFieldCheckbox::CHECKED,
 			self::ENABLE_AVATAR_AUTO_RESIZING                => $server_configuration->has_gd_library() ? FormFieldCheckbox::CHECKED : FormFieldCheckbox::UNCHECKED,

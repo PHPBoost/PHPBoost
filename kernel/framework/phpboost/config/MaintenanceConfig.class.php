@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2015 07 18
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 3.0 - 2010 07 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MaintenanceConfig extends AbstractConfigData
@@ -130,7 +131,7 @@ class MaintenanceConfig extends AbstractConfigData
 			self::ENABLED => false,
 			self::UNLIMITED_DURATION => false,
 			self::END_DATE => new Date(),
-			self::MESSAGE => LangLoader::get_message('maintain', 'main'),
+			self::MESSAGE => LangLoader::get_message('admin.maintenace', 'admin-lang'),
 			self::AUTH => array(),
 			self::DISPLAY_DURATION => true,
 			self::DISPLAY_DURATION_FOR_ADMIN => true

@@ -6,10 +6,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 3.0 - 2012 03 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('RANK_TYPE', 1);
@@ -300,7 +301,7 @@ class User
 	{
 		return array(
 			'user_id'              => Session::VISITOR_SESSION_ID,
-			'display_name'         => $display_name !== null ? $display_name : LangLoader::get_message('guest', 'main'),
+			'display_name'         => $display_name !== null ? $display_name : LangLoader::get_message('user.guest', 'user-lang'),
 			'level'                => $level,
 			'email'                => null,
 			'show_email'           => false,

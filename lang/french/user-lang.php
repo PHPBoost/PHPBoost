@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -243,9 +243,10 @@ $lang['user.dissociate.account']         = 'Dissocier votre compte';
 $lang['user.dissociate.account.admin']   = 'Dissocier le compte';
 
 // Registration
-$lang['user.registered']   = 'Inscrit';
-$lang['user.register']     = 'S\'inscrire';
-$lang['user.registration'] = 'Inscription';
+$lang['user.registered']    = 'Inscrit';
+$lang['user.registered.on'] = 'Inscrit le';
+$lang['user.register']      = 'S\'inscrire';
+$lang['user.registration']  = 'Inscription';
 
 $lang['user.registration.validation.email.clue']         = 'Vous devrez activer votre compte dans l\'email qui vous sera envoyé avant de pouvoir vous connecter';
 $lang['user.registration.validation.administrator.clue'] = 'Un administrateur devra activer votre compte avant de pouvoir vous connecter';
@@ -310,6 +311,9 @@ A bientôt sur :host
 $lang['user.agreement']                = 'Règlement';
 $lang['user.agreement.agree']          = 'J\'accepte le règlement';
 $lang['user.agreement.agree.required'] = 'Vous devez accepter le règlement pour vous inscrire';
+$lang['user.registration.agreement']   = 'Vous vous apprêtez à vous enregistrer sur le site. Nous vous demandons d\'être poli et courtois dans vos interventions.
+Merci, l\'équipe du site.';
+$lang['user.site.member.message']      = 'Bienvenue sur le site. Vous êtes membre du site, vous pouvez accéder à tous les espaces nécessitant un compte utilisateur, éditer votre profil et voir vos contributions.';
 
 // Messages
 $lang['user.message.success.add']           = 'L\'utilisateur <b>:name</b> a été ajouté';
@@ -405,7 +409,7 @@ S\'il s\'agit d\'une erreur veuillez contacter l\'administrateur du site.
 $lang['user.punishments']            = 'Sanctions';
 $lang['user.punishments.management'] = 'Gestion des sanctions';
 $lang['user.punish.until']           = 'Sanction jusqu\'au';
-$lang['user.no.punished.user']              = 'Il n\'y a aucun utilisateur sanctionné.';
+$lang['user.no.punished.user']       = 'Il n\'y a aucun utilisateur sanctionné.';
 $lang['user.life']                   = 'A vie';
 $lang['user.readonly']               = 'Membre en lecture seule';
 $lang['user.readonly.clue']          = 'Celui-ci peut lire mais ne peut plus poster sur la totalité du site (commentaires, etc.)';

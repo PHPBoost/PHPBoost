@@ -58,4 +58,7 @@ $lang['editor.charmap']   = 'Caractères spéciaux';
 $lang['editor.date.time'] = 'Insérer date/heure';
 $lang['editor.fa']        = 'Icône Font Awesome';
 
+$lang['editor.code.tag'] = 'Code : ';
+$lang['editor.code.language'] = 'Code %s : ';
+
 ?>

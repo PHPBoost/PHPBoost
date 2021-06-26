@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 20
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -48,18 +48,20 @@ $lang['common.update']         = 'Update';
 $lang['common.version']        = 'Version';
 $lang['common.website']        = 'Website';
 
-$lang['common.by']      = 'By';
-$lang['common.the']     = 'The';
-$lang['common.on.date'] = 'On';
-$lang['common.in']      = 'In';
-$lang['common.of']      = 'Of';
-$lang['common.and']     = 'And';
-$lang['common.yes']     = 'Yes';
-$lang['common.no']      = 'No';
+$lang['common.by']        = 'By';
+$lang['common.the']       = 'The';
+$lang['common.on.date']   = 'On';
+$lang['common.in']        = 'In';
+$lang['common.of']        = 'Of';
+$lang['common.and']       = 'And';
+$lang['common.yes']       = 'Yes';
+$lang['common.no']        = 'No';
+$lang['common.until']     = 'Until';
+$lang['common.until.alt'] = 'Until';
 
 $lang['common.always']        = 'Always';
 $lang['common.unknown']       = 'Unknown';
-$lang['common.indeterminate'] = 'Indeterminate';
+$lang['common.undetermined']  = 'Undetermined'; 
 $lang['common.never']         = 'Never';
 $lang['common.unspecified']   = 'Unspecified';
 $lang['common.default']       = 'Default';

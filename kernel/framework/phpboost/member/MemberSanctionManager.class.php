@@ -6,9 +6,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 05
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 3.0 - 2011 02 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MemberSanctionManager
@@ -23,7 +24,7 @@ class MemberSanctionManager
 	public static function __static()
 	{
 		self::$db_querier = PersistenceContext::get_querier();
-		self::$lang = LangLoader::get('main');
+		self::$lang = LangLoader::get('user-lang');
 	}
 
 	/*
@@ -37,11 +38,11 @@ class MemberSanctionManager
 
 			if ($send_confirmation == self::SEND_MP || $send_confirmation == self::SEND_MP_AND_MAIL && !empty($content_to_send))
 			{
-				self::send_mp($user_id, self::$lang['read_only_title'], $content_to_send);
+				self::send_mp($user_id, self::$lang['user.read.only.title'], $content_to_send);
 			}
 			if ($send_confirmation == self::SEND_MAIL || $send_confirmation == self::SEND_MP_AND_MAIL && !empty($content_to_send))
 			{
-				self::send_mail($user_id, self::$lang['read_only_title'], $content_to_send);
+				self::send_mail($user_id, self::$lang['user.read.only.title'], $content_to_send);
 			}
 		}
 	}
@@ -60,8 +61,8 @@ class MemberSanctionManager
 
 			if ($send_confirmation == self::SEND_MAIL)
 			{
-				$content = !empty($content_to_send) ? $content_to_send : self::$lang['ban_mail'];
-				self::send_mail($user_id, self::$lang['ban_title_mail'], $content);
+				$content = !empty($content_to_send) ? $content_to_send : self::$lang['user.ban.email'];
+				self::send_mail($user_id, self::$lang['user.ban.title.email'], $content);
 			}
 		}
 	}
@@ -80,17 +81,17 @@ class MemberSanctionManager
 				self::$db_querier->delete(DB_TABLE_SESSIONS, 'WHERE user_id=:user_id', array('user_id' => $user_id));
 				self::$db_querier->update(DB_TABLE_MEMBER, array('autoconnect_key' => ''), 'WHERE user_id=:user_id', array('user_id' => $user_id));
 
-				self::send_mail($user_id, self::$lang['ban_title_mail'], self::$lang['ban_mail']);
+				self::send_mail($user_id, self::$lang['user.ban.title.email'], self::$lang['user.ban.email']);
 			}
 			else
 			{
 				if ($send_confirmation == self::SEND_MP || $send_confirmation == self::SEND_MP_AND_MAIL && !empty($content_to_send))
 				{
-					self::send_mp($user_id, self::$lang['warning_title'], $content_to_send);
+					self::send_mp($user_id, self::$lang['user.warning'], $content_to_send);
 				}
 				if ($send_confirmation == self::SEND_MAIL || $send_confirmation == self::SEND_MP_AND_MAIL && !empty($content_to_send))
 				{
-					self::send_mail($user_id, self::$lang['warning_title'], $content_to_send);
+					self::send_mail($user_id, self::$lang['user.warning'], $content_to_send);
 				}
 			}
 		}

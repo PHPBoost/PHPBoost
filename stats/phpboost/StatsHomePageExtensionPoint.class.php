@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 15
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 3.0 - 2012 02 08
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -38,8 +38,6 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 		$date_lang = LangLoader::get('date-lang');
 		$form_lang = LangLoader::get('form-lang');
 		$user_lang = LangLoader::get('user-lang');
-
-		$main_lang = LangLoader::get('main');
 
 		global $auth_write, $Bread_crumb, $members, $pages, $pages_year, $referer, $keyword, $visit, $visit_year, $os, $browser, $country, $stats_array_browsers, $stats_array_os, $stats_array_lang, $bot, $erase, $erase_occasional;
 
@@ -81,8 +79,6 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 
 		$view = new FileTemplate('stats/stats.tpl');
 		$view->add_lang(array_merge($lang, $common_lang, $date_lang, $form_lang, $user_lang));
-		$view->add_lang($main_lang);
-		$view->add_lang($date_lang);
 
 		$_NBR_ELEMENTS_PER_PAGE = StatsConfig::load()->get_elements_number_per_page();
 
@@ -133,7 +129,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				$view->assign_block_vars('templates', array(
 					'NBR_THEME' => NumberHelper::round(($angle_value*$Stats->nbr_entry)/360, 0),
 					'COLOR'     => 'rgb(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
-					'THEME'     => ($name == 'Other') ? $main_lang['other'] : $name,
+					'THEME'     => ($name == 'Other') ? $common_lang['common.other'] : $name,
 					'PERCENT'   => NumberHelper::round(($angle_value/3.6), 1)
 				));
 			}
@@ -152,10 +148,10 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$name = $common_lang['common.unknown'];
 					break;
 					case 1:
-					$name = $main_lang['male'];
+					$name = $user_lang['user.male'];
 					break;
 					case 2:
-					$name = $main_lang['female'];
+					$name = $user_lang['user.female'];
 					break;
 				}
 				$stats_array[$name] = $row['compt'];
@@ -170,7 +166,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				$view->assign_block_vars('sex', array(
 					'MEMBERS_NUMBER' => NumberHelper                             ::round(($angle_value*$Stats->nbr_entry)/360, 0),
 					'COLOR'          => 'rgb(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
-					'SEX'            => ($name == 'Other') ? $main_lang['other'] : $name,
+					'SEX'            => ($name == 'Other') ? $common_lang['common.other'] : $name,
 					'PERCENT'        => NumberHelper                             ::round(($angle_value/3.6), 1)
 				));
 			}
@@ -1152,8 +1148,8 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$value_name = 'other';
 					$angle_value += $percent_other;
 					$percent_other += $angle_value;
-					$stats_img = !empty($array_stats_info['other'][1]) ? '<img src="'. TPL_PATH_TO_ROOT . '/images/stats/' . $array_stats_info['other'][1] . '" alt="' . $main_lang['other'] . '" />' : '<img src="' . TPL_PATH_TO_ROOT . '/images/stats/other.png" alt="' . $main_lang['other'] . '" />';
-					$name_stats = $main_lang['other'];
+					$stats_img = !empty($array_stats_info['other'][1]) ? '<img src="'. TPL_PATH_TO_ROOT . '/images/stats/' . $array_stats_info['other'][1] . '" alt="' . $common_lang['common.other'] . '" />' : '<img src="' . TPL_PATH_TO_ROOT . '/images/stats/other.png" alt="' . $common_lang['common.other'] . '" />';
+					$name_stats = $common_lang['common.other'];
 				}
 				else
 				{
@@ -1209,7 +1205,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						'C_BOT_DETAILS' => $key != $common_lang['common.unknown'],
 						'COLOR'         => 'rgb(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
 						'VISITS_NUMBER' => $robots_visits[$key],
-						'LAST_SEEN'     => is_array($array_robot[$key]) && isset($array_robot[$key]['last_seen']) ? Date::to_format($array_robot[$key]['last_seen'], Date::FORMAT_DAY_MONTH_YEAR) : $common_lang['common.indeterminate'],
+						'LAST_SEEN'     => is_array($array_robot[$key]) && isset($array_robot[$key]['last_seen']) ? Date::to_format($array_robot[$key]['last_seen'], Date::FORMAT_DAY_MONTH_YEAR) : $common_lang['common.undetermined'],
 						'PERCENT'       => NumberHelper::round(($angle_value/3.6), 1),
 						'L_NAME'        => $key,
 						'U_BOT_DETAILS' => $bot_details_url,

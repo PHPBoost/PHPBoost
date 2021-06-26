@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 10
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 3.0 - 2010 02 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -19,13 +19,11 @@ class NotationService
 
 	private static $user;
 	private static $db_querier;
-	private static $lang;
 
 	public static function __static()
 	{
 		self::$user = AppContext::get_current_user();
 		self::$db_querier = PersistenceContext::get_querier();
-		self::$lang = LangLoader::get('main');
 	}
 
 	/**

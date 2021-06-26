@@ -110,7 +110,7 @@ class DefaultItemsManagementController extends AbstractItemController
 				else
 				{
 					if ($item->get_publishing_end_date() != null)
-						$dates = LangLoader::get_message('until', 'main') . ' ' . $item->get_publishing_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE);
+						$dates = LangLoader::get_message('common.until.alt', 'common-lang') . ' ' . $item->get_publishing_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE);
 				}
 			}
 

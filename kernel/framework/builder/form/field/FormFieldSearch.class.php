@@ -6,9 +6,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 06 03
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 4.1 - 2015 06 01
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldSearch extends FormFieldTextEditor
@@ -25,7 +26,7 @@ class FormFieldSearch extends FormFieldTextEditor
 	 */
 	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
 	{
-		$this->placeholder = LangLoader::get_message('search', 'main') . '...';
+		$this->placeholder = LangLoader::get_message('form.search', 'form-lang') . '...';
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 	}
 }

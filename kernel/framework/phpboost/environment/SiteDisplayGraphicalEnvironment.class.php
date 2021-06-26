@@ -263,7 +263,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		{
 			//Durée de la maintenance.
 			$array_time = array(-1, 60, 300, 600, 900, 1800, 3600, 7200, 10800, 14400, 18000, 21600, 25200, 28800, 57600, 86400, 172800, 604800);
-			$array_delay = array(LangLoader::get_message('unspecified', 'main'),
+			$array_delay = array(LangLoader::get_message('common.unspecified', 'common-lang'),
 				'1 ' . $date_lang['date.minute'], '5 ' . $date_lang['date.minutes'], '10 ' . $date_lang['date.minutes'], '15 ' . $date_lang['date.minutes'], '30 ' . $date_lang['date.minutes'],
 				'1 ' . $date_lang['date.hour'], '2 ' . $date_lang['date.hours'], '3 ' . $date_lang['date.hours'], '4 ' . $date_lang['date.hours'], '5 ' . $date_lang['date.hours'], '6 ' . $date_lang['date.hours'], '7 ' . $date_lang['date.hours'], '8 ' . $date_lang['date.hours'], '16 ' . $date_lang['date.hours'],
 				'1 ' . $date_lang['date.day'], '2 ' . $date_lang['date.day'],

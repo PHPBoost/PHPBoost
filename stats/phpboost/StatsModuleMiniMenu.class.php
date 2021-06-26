@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 12
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -34,11 +34,9 @@ class StatsModuleMiniMenu extends ModuleMiniMenu
 	public function get_menu_content()
 	{
 		$lang = LangLoader::get('common', 'stats');
-		$main_lang = LangLoader::get('main');
 
 		$view = new FileTemplate('stats/stats_mini.tpl');
 		$view->add_lang($lang);
-		$view->add_lang($main_lang);
 		MenuService::assign_positions_conditions($view, $this->get_block());
 
 		$stats_cache = StatsCache::load();

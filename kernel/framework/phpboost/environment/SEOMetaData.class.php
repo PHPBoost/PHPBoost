@@ -6,9 +6,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 10 31
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 3.0 - 2012 10 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class SEOMetaData
@@ -23,7 +24,7 @@ class SEOMetaData
 
 	public function set_title($title, $section = '', $page = 1)
 	{
-		$this->title = $title . ($page > 1 ? ' - ' . LangLoader::get_message('page', 'main') . ' ' . $page : '');
+		$this->title = $title . ($page > 1 ? ' - ' . LangLoader::get_message('common.page', 'common-lang') . ' ' . $page : '');
 
 		if (!Environment::home_page_running())
 		{
@@ -48,7 +49,7 @@ class SEOMetaData
 
 	public function set_description($description, $page = 1)
 	{
-		$this->description = $description . ($page > 1 ? ' (' . TextHelper::lcfirst(LangLoader::get_message('page', 'main')) . ' ' . $page . ')' : '');
+		$this->description = $description . ($page > 1 ? ' (' . TextHelper::lcfirst(LangLoader::get_message('common.page', 'common-lang')) . ' ' . $page . ')' : '');
 	}
 
 	public function complete_description($additional_description)

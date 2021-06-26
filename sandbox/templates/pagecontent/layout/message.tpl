@@ -12,7 +12,7 @@
                         <div class="message-user-infos hidden-small-screens">
                             <div>
                                 <i class="fa fa-user-check success" aria-hidden="true"></i>
-                                ${LangLoader::get_message('registered_on', 'main')} : {TODAY}
+                                ${LangLoader::get_message('user.registered.on', 'user-lang')} : {TODAY}
                             </div>
                             <div class="message-user-links">
                                 <a href="#" class="button submit smaller"><i class="fa fa-people-arrows" aria-hidden="true"></i></a>

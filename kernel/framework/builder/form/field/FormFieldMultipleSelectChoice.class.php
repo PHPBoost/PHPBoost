@@ -10,7 +10,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 07
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 2.0 - 2009 04 28
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -110,10 +110,10 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 
 	private function get_html_code()
 	{
+		$lang = LangLoader::get('form-lang');
 		$view = new FileTemplate('framework/builder/form/FormFieldMultipleSelectChoice.tpl');
-		$view->add_lang(LangLoader::get('form-lang'));
+		$view->add_lang($lang);
 
-		$lang = LangLoader::get('main');
 		$view->put_all(array(
 			'C_DISABLED' => $this->is_disabled(),
 			'C_REQUIRED' => $this->is_required(),
@@ -125,9 +125,9 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 			'FORM_ID' => $this->get_form_id(),
 			'SIZE' => $this->size,
 			'CSS_CLASS' => $this->get_css_class(),
-			'L_SELECT_ALL' => $lang['select_all'],
-			'L_UNSELECT_ALL' => $lang['select_none'],
-			'L_SELECT_EXPLAIN' => $lang['explain_select_multiple']
+			'L_SELECT_ALL' => $lang['form.select.all'],
+			'L_UNSELECT_ALL' => $lang['form.select.none'],
+			'L_SELECT_EXPLAIN' => $lang['form.select.multiple.clue']
 		));
 
 		foreach ($this->get_options() as $multiple_select_option)

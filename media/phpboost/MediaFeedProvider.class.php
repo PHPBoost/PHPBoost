@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 13
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 3.0 - 2010 02 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -34,7 +34,7 @@ class MediaFeedProvider implements FeedProvider
 			$data->set_link(SyndicationUrlBuilder::rss('media', $id_category));
 			$data->set_host(HOST);
 			$data->set_desc($feed_module_name . ' - ' . $site_name);
-			$data->set_lang(LangLoader::get_message('xml_lang', 'main'));
+			$data->set_lang(LangLoader::get_message('common.xml.lang', 'common-lang'));
 			$data->set_auth_bit(Category::READ_AUTHORIZATIONS);
 
 			$categories = CategoriesService::get_categories_manager('media')->get_children($id_category, new SearchCategoryChildrensOptions(), true);

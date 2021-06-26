@@ -41,7 +41,7 @@ class AdminMenuDisplayResponse extends AbstractResponse
 				if (!empty($home_page))
 				{
 					$this->links[] = array(
-						'LINK' => LangLoader::get_message('home', 'main'),
+						'LINK' => LangLoader::get_message('common.home', 'common-lang'),
 						'U_LINK' => Url::to_rel('/' . $this->module->get_id() . '/' . $home_page)
 					);
 				}

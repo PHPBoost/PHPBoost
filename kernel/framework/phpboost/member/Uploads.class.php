@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 01 05
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 1.6 - 2007 04 18
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -327,7 +327,7 @@ class Uploads
 	//Conversion mimetype -> image.
 	public static function get_img_mimetype($type)
 	{
-		$filetype = sprintf(LangLoader::get_message('file_type', 'main'), TextHelper::strtoupper($type));
+		$filetype = sprintf(LangLoader::get_message('upload.file.type', 'upload-lang'), TextHelper::strtoupper($type));
 		switch ($type)
 		{
 			// Images
@@ -343,7 +343,7 @@ class Uploads
 			case 'ico':
 			case 'tif':
 			$img = 'far fa-file-image';
-			$filetype = sprintf(LangLoader::get_message('image_type', 'main'), TextHelper::strtoupper($type));
+			$filetype = sprintf(LangLoader::get_message('upload.image.type', 'upload-lang'), TextHelper::strtoupper($type));
 			break;
 			// Archives
 			case 'rar':
@@ -351,12 +351,12 @@ class Uploads
 			case 'zip':
 			case '7z':
 				$img = 'far fa-file-archive';
-				$filetype = sprintf(LangLoader::get_message('zip_type', 'main'), TextHelper::strtoupper($type));
+				$filetype = sprintf(LangLoader::get_message('upload.zip.type', 'upload-lang'), TextHelper::strtoupper($type));
 				break;
 			// Pdf
 			case 'pdf':
 				$img = 'far fa-file-pdf';
-				$filetype = LangLoader::get_message('adobe_pdf', 'main');
+				$filetype = LangLoader::get_message('upload.adobe.pdf', 'upload-lang');
 				break;
 			// Sound
 			case 'wav':
@@ -364,7 +364,7 @@ class Uploads
 			case 'ogg':
 			case 'mp3':
 				$img = 'far fa-file-audio';
-				$filetype = sprintf(LangLoader::get_message('audio_type', 'main'), TextHelper::strtoupper($type));
+				$filetype = sprintf(LangLoader::get_message('upload.audio.type', 'upload-lang'), TextHelper::strtoupper($type));
 				break;
 			// Sripts
 			case 'html':
@@ -427,7 +427,7 @@ class Uploads
 			//Default
 			default:
 				$img = 'fa fa-file-upload';
-				$filetype = sprintf(LangLoader::get_message('document_type', 'main'), TextHelper::strtoupper($type));
+				$filetype = sprintf(LangLoader::get_message('upload.document.type', 'upload-lang'), TextHelper::strtoupper($type));
 		}
 
 		return array('img' => $img, 'filetype' => $filetype);

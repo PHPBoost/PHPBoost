@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 13
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 4.0 - 2015 02 04
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -39,7 +39,7 @@ class MediaCategoriesCache extends DefaultCategoriesCache
 		$root = new MediaCategory();
 		$root->set_id(Category::ROOT_CATEGORY);
 		$root->set_id_parent(Category::ROOT_CATEGORY);
-		$root->set_name(LangLoader::get_message('root', 'main'));
+		$root->set_name(LangLoader::get_message('common.root', 'common-lang'));
 		$root->set_rewrited_name('root');
 		$root->set_order(0);
 		$root->set_authorizations($config->get_authorizations());

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 20
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 3.0 - 2010 12 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -30,8 +30,8 @@ class MemberUserSexExtendedField extends AbstractMemberExtendedField
 		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), '0',
 		array(
 			new FormFieldSelectChoiceOption('--', ''),
-			new FormFieldSelectChoiceOption(LangLoader::get_message('male', 'main'), '1'),
-			new FormFieldSelectChoiceOption(LangLoader::get_message('female', 'main'), '2'),
+			new FormFieldSelectChoiceOption(LangLoader::get_message('user.male', 'user-lang'), '1'),
+			new FormFieldSelectChoiceOption(LangLoader::get_message('user.female', 'user-lang'), '2'),
 		),
 			array('description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required())
 		));
@@ -44,8 +44,8 @@ class MemberUserSexExtendedField extends AbstractMemberExtendedField
 		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_value(),
 		array(
 			new FormFieldSelectChoiceOption('--', ''),
-			new FormFieldSelectChoiceOption(LangLoader::get_message('male', 'main'), '1'),
-			new FormFieldSelectChoiceOption(LangLoader::get_message('female', 'main'), '2'),
+			new FormFieldSelectChoiceOption(LangLoader::get_message('user.male', 'user-lang'), '1'),
+			new FormFieldSelectChoiceOption(LangLoader::get_message('user.female', 'user-lang'), '2'),
 		),
 			array('description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required())
 		));

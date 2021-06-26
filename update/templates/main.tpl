@@ -95,7 +95,7 @@ ${resources('update/update')}
 				</div>
 			</div>
 			<footer id="footer">
-				<span>${LangLoader::get_message('powered_by', 'main')} <a href="https://www.phpboost.com" aria-label="{@phpboost.link}">PHPBoost</a> {@phpboost.rights}</span>
+				<span>${LangLoader::get_message('common.powered.by', 'common-lang')} <a href="https://www.phpboost.com" aria-label="{@phpboost.link}">PHPBoost</a> {@phpboost.rights}</span>
 			</footer>
 		</div>
 		<script>

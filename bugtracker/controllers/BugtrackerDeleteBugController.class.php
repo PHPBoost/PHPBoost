@@ -91,7 +91,7 @@ class BugtrackerDeleteBugController extends ModuleController
 
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
-		$form->add_button(new FormButtonLink(LangLoader::get_message('back', 'main'), 'javascript:history.back(1);'));
+		$form->add_button(new FormButtonLink(LangLoader::get_message('common.back', 'common-lang'), 'javascript:history.back(1);'));
 
 		$this->form = $form;
 	}

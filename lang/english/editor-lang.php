@@ -57,4 +57,7 @@ $lang['editor.lightbox']  = 'LightBox';
 $lang['editor.charmap']   = 'Special chars';
 $lang['editor.date.time'] = 'Insert date/time';
 $lang['editor.fa']        = 'Font Awesome Icon';
+
+$lang['editor.code.tag'] = 'Code : ';
+$lang['editor.code.language'] = 'Code %s : ';
 ?>

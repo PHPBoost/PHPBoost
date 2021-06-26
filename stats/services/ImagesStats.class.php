@@ -44,7 +44,7 @@ class ImagesStats
 			//Nombre total d'entrées
 			$this->nbr_entry = array_sum($array_stats);
 			if ($this->nbr_entry == 0)
-				$this->data_stats = array(LangLoader::get_message('other', 'main') => 360);
+				$this->data_stats = array(LangLoader::get_message('common.other', 'common-lang') => 360);
 			else
 			{
 				//On classe le tableau par ordre décroissant de hits
@@ -60,7 +60,7 @@ class ImagesStats
 			$this->data_stats = $array_stats;
 		}
 		else
-			$this->data_stats = array(LangLoader::get_message('other', 'main') => 360);
+			$this->data_stats = array(LangLoader::get_message('common.other', 'common-lang') => 360);
 	}
 
 	/**

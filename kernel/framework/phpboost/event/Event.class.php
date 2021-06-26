@@ -10,9 +10,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 10 24
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 2.0 - 2008 07 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class Event
@@ -277,11 +278,11 @@ class Event
 		switch ($this->current_status)
 		{
 			case self::EVENT_STATUS_UNREAD:
-				return LangLoader::get_message('contribution_status_unread', 'main');
+				return LangLoader::get_message('contribution.not.processed', 'contribution-lang');
 			case self::EVENT_STATUS_BEING_PROCESSED:
-				return LangLoader::get_message('contribution_status_being_processed', 'main');
+				return LangLoader::get_message('contribution.in.progress', 'contribution-lang');
 			case self::EVENT_STATUS_PROCESSED:
-				return LangLoader::get_message('contribution_status_processed', 'main');
+				return LangLoader::get_message('contribution.processed', 'contribution-lang');
 		}
 	}
 

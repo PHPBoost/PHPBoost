@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 23
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 4.1 - 2013 11 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -36,7 +36,7 @@ class ModuleTreeLinksService
 				$home_page = $module->get_configuration()->get_home_page();
 				if (!empty($home_page))
 				{
-					$module_home = new ModuleLink(LangLoader::get_message('home', 'main'), new Url('/' . $module->get_id() . '/' . $home_page));
+					$module_home = new ModuleLink(LangLoader::get_message('common.home', 'common-lang'), new Url('/' . $module->get_id() . '/' . $home_page));
 					$tpl->assign_block_vars('element', array(), array(
 						'ELEMENT' => $module_home->export()
 					));
@@ -75,7 +75,7 @@ class ModuleTreeLinksService
 			$home_page = $configuration->get_home_page();
 			if (!empty($home_page))
 			{
-				$module_home = new ModuleLink(LangLoader::get_message('home', 'main'), new Url('/' . $id_module . '/' . $home_page));
+				$module_home = new ModuleLink(LangLoader::get_message('common.home', 'common-lang'), new Url('/' . $id_module . '/' . $home_page));
 				$tpl->assign_block_vars('element', array(), array(
 					'ELEMENT' => $module_home->export()
 				));

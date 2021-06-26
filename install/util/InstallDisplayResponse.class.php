@@ -41,7 +41,7 @@ class InstallDisplayResponse extends AbstractResponse
 			'C_HAS_NEXT_STEP' => false,
 			'C_ADDITIONAL_STYLESHEET' => !empty($additional_stylesheet),
 			'ADDITIONAL_STYLESHEET_URL' => $additional_stylesheet,
-			'L_XML_LANGUAGE' => LangLoader::get_message('xml_lang', 'main'),
+			'L_XML_LANGUAGE' => LangLoader::get_message('common.xml.lang', 'common-lang'),
 			'PROGRESSION' => floor(100 * $this->current_step / ($this->nb_steps -1)),
 			'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version()
 		));

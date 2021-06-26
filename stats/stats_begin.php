@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 15
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 2.0 - 2007 11 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -16,9 +16,6 @@ if (defined('PHPBOOST') !== true)
 $lang   = LangLoader::get('common', 'stats');
 $common_lang = LangLoader::get('common-lang');
 $user_lang   = LangLoader::get('user-lang');
-//
-$main_lang = LangLoader::get('main');
-//
 
 $visit            = (bool)retrieve(GET, 'visit', false);
 $visit_year       = (int)retrieve(GET, 'year', 0);

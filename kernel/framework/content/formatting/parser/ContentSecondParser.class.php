@@ -237,7 +237,7 @@ class ContentSecondParser extends AbstractParser
 		else
 		{
 			$typecode = TextHelper::strtoupper($matches[1]);
-			$title = sprintf(LangLoader::get_message('code_langage', 'main'), TextHelper::strtoupper($matches[1]));
+			$title = sprintf(LangLoader::get_message('editor.code.language', 'editor-lang'), TextHelper::strtoupper($matches[1]));
 		}
 
 		$contents = $this->highlight_code($content_to_highlight, $typecode, $line_number, $inline_code);
@@ -248,7 +248,7 @@ class ContentSecondParser extends AbstractParser
 		}
 		else if (!$inline_code && empty($matches[1]))
 		{
-			$contents = '<div class="formatter-container formatter-code"><span class="formatter-title">' . LangLoader::get_message('code_tag', 'main') . '</span><div class="formatter-content">' . $contents . '</div></div>';
+			$contents = '<div class="formatter-container formatter-code"><span class="formatter-title">' . LangLoader::get_message('editor.code.tag', 'editor-lang') . '</span><div class="formatter-content">' . $contents . '</div></div>';
 		}
 
 		return $contents;

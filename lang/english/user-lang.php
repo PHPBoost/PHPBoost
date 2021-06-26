@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -243,9 +243,10 @@ $lang['user.dissociate.account']         = 'Dissociate your account';
 $lang['user.dissociate.account.admin']   = 'Dissociate the account';
 
 // Registration
-$lang['user.registered']   = 'Registered';
-$lang['user.register']     = 'Register';
-$lang['user.registration'] = 'Registration';
+$lang['user.registered']    = 'Registered';
+$lang['user.registered.on'] = 'Registered on';
+$lang['user.register']      = 'Register';
+$lang['user.registration']  = 'Registration';
 
 $lang['user.registration.validation.email.clue']         = 'You will need to activate your account in the email sent to you before you can log in';
 $lang['user.registration.validation.administrator.clue'] = 'An administrator will need to activate your account before you can log in';
@@ -310,6 +311,9 @@ See you on :host
 $lang['user.agreement']                = 'Agreement';
 $lang['user.agreement.agree']          = 'I agree this agreement';
 $lang['user.agreement.agree.required'] = 'You must agree for registration';
+$lang['user.registration.agreement']   = 'You are just going to register yourself on the site. We ask you to be polite and respectful.
+Thanks, the site team.';
+$lang['user.site.member.message']      = 'Welcome to the website. You are member of the site and you can access all parts of the website requiring a member account.';
 
 // Messages
 $lang['user.message.success.add']           = 'The user <b>:name</b> has been added';

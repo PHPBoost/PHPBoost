@@ -6,10 +6,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 3.0 - 2012 03 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CurrentUser extends User
@@ -159,7 +160,7 @@ class CurrentUser extends User
 	public function update_visitor_display_name()
 	{
 		if ($this->id === Session::VISITOR_SESSION_ID)
-			$this->display_name = LangLoader::get_message('guest', 'main');
+			$this->display_name = LangLoader::get_message('user.guest', 'user-lang');
 	}
 
 	private function sum_auth_groups($array_auth_groups)
