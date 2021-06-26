@@ -188,7 +188,7 @@ class ContentFormattingService
 			'acronym'        => $editor_lang['editor.acronym'],
 			'block'          => $editor_lang['editor.block'],
 			'fieldset'       => $editor_lang['editor.fieldset'],
-			'mail'           => $editor_lang['editor.mail'],
+			'mail'           => $editor_lang['editor.email'],
 			'line'           => $editor_lang['editor.line'],
 			'wikipedia'      => $editor_lang['editor.wikipedia'],
 			'html'           => $editor_lang['editor.html'],
@@ -196,7 +196,7 @@ class ContentFormattingService
 			'youtube'        => $editor_lang['editor.youtube'],
 			'lightbox'       => $editor_lang['editor.lightbox'],
 			'charmap'        => $editor_lang['editor.charmap'],
-			'insertdatetime' => $editor_lang['editor.insertdatetime'],
+			'insertdatetime' => $editor_lang['editor.date.time'],
 			'fa'             => $editor_lang['editor.fa'],
 			'p'              => $editor_lang['editor.paragraph']
 		);
