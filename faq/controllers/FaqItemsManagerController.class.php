@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 20
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -48,7 +48,7 @@ class FaqItemsManagerController extends ModuleController
 			new HTMLTableColumn($common_lang['common.category'], 'id_category'),
 			new HTMLTableColumn($common_lang['common.author'], 'display_name'),
 			new HTMLTableColumn($common_lang['common.creation.date'], 'creation_date'),
-			new HTMLTableColumn($common_lang['common.status.approved'], 'approved'),
+			new HTMLTableColumn($common_lang['common.status.publication'], 'approved'),
 			new HTMLTableColumn($common_lang['common.actions'], '', array('sr-only' => true))
 		);
 
@@ -65,8 +65,8 @@ class FaqItemsManagerController extends ModuleController
 		if ($display_categories)
 			$table_model->add_filter(new HTMLTableCategorySQLFilter('filter4'));
 
-		$status_list = array(Item::PUBLISHED => $common_lang['common.status.approved'], Item::NOT_PUBLISHED => $common_lang['common.status.unapproved']);
-		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('published', 'filter5', $common_lang['common.status'], $status_list));
+		$status_list = array(Item::PUBLISHED => $common_lang['common.status.published'], Item::NOT_PUBLISHED => $common_lang['common.status.draft']);
+		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('published', 'filter5', $common_lang['common.status.publication'], $status_list));
 
 		$table = new HTMLTable($table_model);
 		$table->set_filters_fieldset_class_HTML();
@@ -94,7 +94,7 @@ class FaqItemsManagerController extends ModuleController
 				new HTMLTableRowCell(new LinkHTMLElement(FaqUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), ($category->get_id() == Category::ROOT_CATEGORY ? $common_lang['common.none.alt'] : $category->get_name()))),
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell($faq_question->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR)),
-				new HTMLTableRowCell($faq_question->is_approved() ? $common_lang['common.yes'] : $common_lang['common.no']),
+				new HTMLTableRowCell($faq_question->is_approved() ? $common_lang['common.status.published.alt'] : $common_lang['common.status.draft']),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display(), 'controls')
 			);
 

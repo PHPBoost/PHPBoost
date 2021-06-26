@@ -267,6 +267,7 @@ $lang['common.sort.desc']               = 'Descending';
 
 // Status
 $lang['common.status']               = 'Status';
+$lang['common.status.publication']   = 'Publication';
 $lang['common.status.visible']       = 'Visible';
 $lang['common.status.invisible']     = 'Invisible';
 $lang['common.status.approved']      = 'Approved';
@@ -274,8 +275,16 @@ $lang['common.status.disapproved']   = 'Disapproved';
 $lang['common.status.unapproved']    = 'Unapproved';
 $lang['common.status.draft']         = 'Draft';
 $lang['common.status.published']     = 'Published';
+$lang['common.status.published.alt'] = 'Published';
 $lang['common.status.deffered.date'] = 'Differed publication';
 $lang['common.status.last.update']   = 'Last updated on ';
+$lang['common.status.finished']      = 'Finished';
+$lang['common.status.finished.alt']  = 'Finished';
+$lang['common.status.in.progress']   = 'In progress';
+$lang['common.status.canceled']      = 'Canceled';
+$lang['common.status.canceled.alt']  = 'Canceled';
+$lang['common.status.archived']      = 'Archived';
+$lang['common.status.archived.alt']  = 'Archived';
 
 // Syndication
 $lang['common.syndication']      = 'Syndication';

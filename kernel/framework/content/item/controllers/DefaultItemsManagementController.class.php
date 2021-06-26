@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 6.0 - 2020 01 16
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -39,7 +39,7 @@ class DefaultItemsManagementController extends AbstractItemController
 			),
 			$this->get_additional_html_table_columns(),
 			array(
-				new HTMLTableColumn($this->lang['common.status'], 'published'),
+				new HTMLTableColumn($this->lang['common.status.publication'], 'published'),
 				new HTMLTableColumn($this->lang['common.moderation'], '', array('sr-only' => true))
 			)
 		);
@@ -67,7 +67,7 @@ class DefaultItemsManagementController extends AbstractItemController
 		$status_list = array(Item::PUBLISHED => $this->lang['common.status.published'], Item::NOT_PUBLISHED => $this->lang['common.status.draft']);
 		if (self::get_module_configuration()->feature_is_enabled('deferred_publication'))
 			$status_list[Item::DEFERRED_PUBLICATION] = $this->lang['common.status.deffered.date'];
-		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('published', 'filter5', $this->lang['common.status'], $status_list));
+		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('published', 'filter5', $this->lang['common.status.publication'], $status_list));
 
 		$table = new HTMLTable($table_model, $this->lang);
 		$table->set_filters_fieldset_class_HTML();

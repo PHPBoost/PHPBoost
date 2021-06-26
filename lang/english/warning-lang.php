@@ -20,7 +20,7 @@ $lang['warning.fatal']    = 'Fatal';
 $lang['warning.notice']   = 'Notice';
 $lang['warning.warning']  = 'Warning';
 $lang['warning.question'] = 'Question';
-$lang['warning.unknown']  = 'Unknow';
+$lang['warning.unknown']  = 'Unknown';
 
 $lang['warning.username']     = 'Please enter a username !';
 $lang['warning.password']     = 'Please enter a password !';

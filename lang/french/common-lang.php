@@ -60,6 +60,7 @@ $lang['common.no']      = 'Non';
 $lang['common.always']        = 'Toujours';
 $lang['common.unknown']       = 'Inconnu';
 $lang['common.indeterminate'] = 'Indeterminé';
+$lang['common.indeterminate'] = 'Indeterminé';
 $lang['common.never']         = 'Jamais';
 $lang['common.unspecified']   = 'Non précisé';
 $lang['common.default']       = 'Défaut';
@@ -267,6 +268,7 @@ $lang['common.sort.desc']               = 'Décroissant';
 
 // Status
 $lang['common.status']               = 'État';
+$lang['common.status.publication']   = 'Publication';
 $lang['common.status.visible']       = 'Visible';
 $lang['common.status.invisible']     = 'Invisible';
 $lang['common.status.approved']      = 'Approuvé';
@@ -274,8 +276,16 @@ $lang['common.status.disapproved']   = 'Désapprouvé';
 $lang['common.status.unapproved']    = 'Non approuvé';
 $lang['common.status.draft']         = 'Brouillon';
 $lang['common.status.published']     = 'Publié';
+$lang['common.status.published.alt'] = 'Publiée';
 $lang['common.status.deffered.date'] = 'Publication différée';
 $lang['common.status.last.update']   = 'Dernière mise à jour le ';
+$lang['common.status.finished']      = 'Terminé';
+$lang['common.status.finished.alt']  = 'Terminée';
+$lang['common.status.in.progress']   = 'En cours';
+$lang['common.status.canceled']      = 'Annulé';
+$lang['common.status.canceled.alt']  = 'Annulée';
+$lang['common.status.archived']      = 'Archivé';
+$lang['common.status.archived.alt']  = 'Archivée';
 
 // Syndication
 $lang['common.syndication']      = 'Syndication';

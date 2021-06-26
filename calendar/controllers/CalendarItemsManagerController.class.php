@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 20
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 4.0 - 2013 07 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -48,7 +48,7 @@ class CalendarItemsManagerController extends ModuleController
 			new HTMLTableColumn($common_lang['common.author'], 'display_name'),
 			new HTMLTableColumn(LangLoader::get_message('date.date', 'date-lang'), 'start_date'),
 			new HTMLTableColumn($this->lang['calendar.repetition']),
-			new HTMLTableColumn($common_lang['common.status.approved'], 'approved'),
+			new HTMLTableColumn($common_lang['common.status.publication'], 'approved'),
 			new HTMLTableColumn($common_lang['common.actions'], '', array('sr-only' => true))
 		);
 
@@ -66,7 +66,7 @@ class CalendarItemsManagerController extends ModuleController
 		$table_model->add_filter(new HTMLTableAjaxUserAutoCompleteSQLFilter('display_name', 'filter3', $common_lang['common.author']));
 		if ($display_categories)
 			$table_model->add_filter(new HTMLTableCategorySQLFilter('filter4'));
-		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('approved', 'filter5', $common_lang['common.status'], array(1 => $common_lang['common.status.approved'], 0 => $common_lang['common.status.unapproved'])));
+		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('approved', 'filter5', $common_lang['common.status.publication'], array(1 => $common_lang['common.status.published'], 0 => $common_lang['common.status.draft'])));
 
 		$table = new HTMLTable($table_model);
 		$table->set_filters_fieldset_class_HTML();
@@ -100,7 +100,7 @@ class CalendarItemsManagerController extends ModuleController
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell(LangLoader::get_message('date.from.date', 'date-lang') . ' ' . $item->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR) . $br->display() . LangLoader::get_message('date.to.date', 'date-lang') . ' ' . $item->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR)),
 				new HTMLTableRowCell($item->belongs_to_a_serie() ? $this->get_repeat_type_label($item) . ' - ' . $item->get_content()->get_repeat_number() . ' ' . $this->lang['calendar.repeat.times'] : LangLoader::get_message('common.no', 'common-lang')),
-				new HTMLTableRowCell($item->get_content()->is_approved() ? LangLoader::get_message('common.yes', 'common-lang') : LangLoader::get_message('common.no', 'common-lang')),
+				new HTMLTableRowCell($item->get_content()->is_approved() ? LangLoader::get_message('common.status.published', 'common-lang') : LangLoader::get_message('common.status.draft', 'common-lang')),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display(), 'controls')
 			);
 

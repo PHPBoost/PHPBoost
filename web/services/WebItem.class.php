@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 05
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -175,13 +175,13 @@ class WebItem
 	{
 		switch ($this->published) {
 			case self::PUBLISHED:
-				return LangLoader::get_message('form.publication.draft', 'form-lang');
+				return LangLoader::get_message('common.status.published', 'common-lang');
 			break;
 			case self::DEFERRED_PUBLICATION:
-				return LangLoader::get_message('form.publication.now', 'form-lang');
+				return LangLoader::get_message('common.status.deffered', 'common-lang');
 			break;
 			case self::NOT_PUBLISHED:
-				return LangLoader::get_message('form.publication.deffered', 'form-lang');
+				return LangLoader::get_message('common.status.draft', 'common-lang');
 			break;
 		}
 	}
