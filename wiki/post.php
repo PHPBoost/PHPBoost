@@ -143,8 +143,8 @@ if (!empty($contents)) //On enregistre un article
 			elseif (!$captcha->is_valid() && !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 			{
 				$error_controller = new UserErrorController(
-					LangLoader::get_message('error', 'status-messages-common'),
-					LangLoader::get_message('captcha.validation_error', 'status-messages-common'),
+					LangLoader::get_message('warning.error', 'warning-lang'),
+					LangLoader::get_message('warning.captcha.validation.error', 'warning-lang'),
 					UserErrorController::NOTICE
 				);
 				DispatchManager::redirect($error_controller);
@@ -330,7 +330,7 @@ $view->put_all(array(
 	'L_CONTENTS' => $LANG['wiki_contents'],
 	'L_ALERT_CONTENTS' => $LANG['require_text'],
 	'L_ALERT_TITLE' => $LANG['require_title'],
-	'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
+	'L_REQUIRE' => LangLoader::get_message('form.required.fields', 'form-lang'),
 	'L_RESET' => $LANG['reset'],
 	'L_PREVIEW' => $LANG['preview'],
 	'L_SUBMIT' => $l_action_submit,

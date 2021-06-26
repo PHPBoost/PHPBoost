@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 3.0 - 2012 10 22
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminBugtrackerDeleteParameterController extends AdminModuleController
@@ -70,7 +71,7 @@ class AdminBugtrackerDeleteParameterController extends AdminModuleController
 
 		if (!in_array($this->parameter, array('type', 'category', 'version')) || empty($this->id))
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $this->lang['error.e_unexist_parameter']);
+			$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $this->lang['error.e_unexist_parameter']);
 			$controller->set_response_classname(UserErrorController::ADMIN_RESPONSE);
 			DispatchManager::redirect($controller);
 		}
@@ -85,7 +86,7 @@ class AdminBugtrackerDeleteParameterController extends AdminModuleController
 				if (!isset($types[$this->id]))
 				{
 					//Error : unexist type
-					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $this->lang['error.e_unexist_type']);
+					$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $this->lang['error.e_unexist_type']);
 					$controller->set_response_classname(UserErrorController::ADMIN_RESPONSE);
 					DispatchManager::redirect($controller);
 				}
@@ -94,7 +95,7 @@ class AdminBugtrackerDeleteParameterController extends AdminModuleController
 				if (!isset($categories[$this->id]))
 				{
 					//Error : unexist category
-					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $this->lang['error.e_unexist_category']);
+					$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $this->lang['error.e_unexist_category']);
 					$controller->set_response_classname(UserErrorController::ADMIN_RESPONSE);
 					DispatchManager::redirect($controller);
 				}
@@ -103,7 +104,7 @@ class AdminBugtrackerDeleteParameterController extends AdminModuleController
 				if (!isset($versions[$this->id]))
 				{
 					//Error : unexist version
-					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $this->lang['error.e_unexist_version']);
+					$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $this->lang['error.e_unexist_version']);
 					$controller->set_response_classname(UserErrorController::ADMIN_RESPONSE);
 					DispatchManager::redirect($controller);
 				}

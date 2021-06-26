@@ -127,7 +127,7 @@ class FaqItemsManagerController extends ModuleController
 
             FaqService::clear_cache();
 
-            AppContext::get_response()->redirect(FaqUrlBuilder::manage(), LangLoader::get_message('process.success', 'status-messages-common'));
+            AppContext::get_response()->redirect(FaqUrlBuilder::manage(), LangLoader::get_message('warning.process.success', 'warning-lang'));
         }
     }
 

@@ -46,7 +46,7 @@ if (!empty($idpics) && $move) //Déplacement d'une image.
 	GalleryMiniMenuCache::invalidate();
 	GalleryCategoriesCache::invalidate();
 
-	$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+	$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
 }
 elseif (!empty($del)) //Suppression d'une image.
 {
@@ -58,7 +58,7 @@ elseif (!empty($del)) //Suppression d'une image.
 	GalleryMiniMenuCache::invalidate();
 	GalleryCategoriesCache::invalidate();
 
-	$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+	$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
 }
 
 if (!empty($id_category))

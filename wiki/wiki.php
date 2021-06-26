@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 1.6 - 2006 10 09
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -249,8 +249,8 @@ else
 	}
 	elseif (!$no_alert_on_error)
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
-            'Le module <strong>' . $module_name . '</strong> n\'a pas de fonction get_home_page!', UserErrorController::FATAL);
+		$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'),
+            'The module <strong>' . $module_name . '</strong> doesn\'t have the get_home_page function!', UserErrorController::FATAL);
         DispatchManager::redirect($controller);
 	}
 }

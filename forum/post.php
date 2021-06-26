@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 01
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 1.2 - 2005 10 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -163,7 +163,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 		{
 			if (!ForumAuthorizationsService::check_authorizations($id_get)->write() || $locked_cat)
 			{
-				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $locked_cat ? $LANG['e.category.forum.locked'] : $LANG['e.category.right']);
+				$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $locked_cat ? $LANG['e.category.forum.locked'] : $LANG['e.category.right']);
 				DispatchManager::redirect($controller);
 			}
 
@@ -220,7 +220,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				'L_ACTION'             => $lang['forum.new.topic'],
 				//
 				'L_NEW_SUBJECT'        => $LANG['post_new_subject'],
-				'L_REQUIRE'            => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
+				'L_REQUIRE'            => LangLoader::get_message('form.required.fields', 'form-lang'),
 				'L_REQUIRE_TEXT'       => $LANG['require_text'],
 				'L_REQUIRE_TITLE'      => $LANG['require_title'],
 				'L_REQUIRE_TITLE_POLL' => $LANG['require_title_poll'],
@@ -259,7 +259,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				'id' => $idt_get
 			));
 		} catch (RowNotFoundException $e) {
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e.forum.topic.locked']);
+			$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $LANG['e.forum.topic.locked']);
 			DispatchManager::redirect($controller);
 		}
 
@@ -350,7 +350,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
 		if (empty($id_get) || empty($id_first)) //Topic/message inexistant.
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e.forum.nonexistent.topic']);
+			$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $LANG['e.forum.nonexistent.topic']);
 			DispatchManager::redirect($controller);
 		}
 
@@ -555,7 +555,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					'L_NEW_SUBJECT'        => stripslashes($topic['title']),
 					'L_ACTION'             => $lang['forum.edit.topic'],
 					//
-					'L_REQUIRE'            => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
+					'L_REQUIRE'            => LangLoader::get_message('form.required.fields', 'form-lang'),
 					'L_REQUIRE_TEXT'       => $LANG['require_text'],
 					'L_REQUIRE_TITLE'      => $LANG['require_title'],
 					'L_REQUIRE_TITLE_POLL' => $LANG['require_title_poll'],
@@ -672,7 +672,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
 					'L_NEW_SUBJECT'  => stripslashes($topic['title']),
 
-					'L_REQUIRE'      => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
+					'L_REQUIRE'      => LangLoader::get_message('form.required.fields', 'form-lang'),
 					'L_REQUIRE_TEXT' => $LANG['require_text'],
 					'L_FORUM_INDEX'  => $LANG['forum_index'],
 					'L_EDIT_MESSAGE' => $LANG['edit_message'],
@@ -702,7 +702,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			}
 			if (empty($topic['id_category'])) //Topic inexistant.
 			{
-				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
+				$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'),
                     $LANG['e.forum.nonexistent.topic']);
                 DispatchManager::redirect($controller);
 			}
@@ -752,7 +752,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				'L_NEW_SUBJECT'  => stripslashes($topic['title']),
 
 				'L_ACTION'       => $LANG['respond'],
-				'L_REQUIRE'      => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
+				'L_REQUIRE'      => LangLoader::get_message('form.required.fields', 'form-lang'),
 				'L_REQUIRE_TEXT' => $LANG['require_text'],
 				'L_FORUM_INDEX'  => $LANG['forum_index'],
 				'L_EDIT_MESSAGE' => $LANG['respond'],
@@ -841,7 +841,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				'L_ACTION'             => $lang['forum.new.topic'],
 				//
 				'L_NEW_SUBJECT'        => $LANG['post_new_subject'],
-				'L_REQUIRE'            => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
+				'L_REQUIRE'            => LangLoader::get_message('form.required.fields', 'form-lang'),
 				'L_REQUIRE_TEXT'       => $LANG['require_text'],
 				'L_REQUIRE_TITLE'      => $LANG['require_title'],
 				'L_REQUIRE_TITLE_POLL' => $LANG['require_title_poll'],

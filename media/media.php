@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 01
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -58,7 +58,7 @@ elseif ($id_media > 0)
 
 	if (($media['published'] & MEDIA_STATUS_INVISIBLE) !== 0)
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
+		$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'),
 		$lang['e_unexist_media']);
 		DispatchManager::redirect($controller);
 	}
@@ -167,7 +167,7 @@ elseif ($id_media > 0)
 			        $media_id = $explode[5] . '/' . $media_id; // add video title in final url
 				}
 				else {
-					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
+					$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'),
 					$lang['e_bad_url_odysee']);
 					DispatchManager::redirect($controller);
 				}
@@ -185,7 +185,7 @@ elseif ($id_media > 0)
 			$peertube_embed_link = strpos($dirname, 'embed') !== false;
 			if($player_is_peertube) {
 				if(!$peertube_videos_link && (!$peertube_embed_link || !$peertube_watch_link)) {
-					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
+					$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'),
 					$lang['e_bad_url_peertube']);
 					DispatchManager::redirect($controller);
 				}
@@ -199,7 +199,7 @@ elseif ($id_media > 0)
 
 				$media_tpl->put_all(array(
 					'C_SOUNDCLOUD' => $soundcloud_player,
-					
+
 					'SOUNDCLOUD_TYPE' => $soundcloud_player ? $soundcloud_type : '',
 				));
 			}

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 23
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 2.0 - 2008 03 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -102,7 +102,7 @@ $vars_tpl = array(
 	'L_FORUM_INDEX'            => $LANG['forum_index'],
 	'L_MODERATION_PANEL'       => $LANG['moderation_panel'],
 	'L_CONFIRM_READ_TOPICS'    => $LANG['confirm_mark_as_read'],
-	'L_AUTH_ERROR'             => LangLoader::get_message('error.auth', 'status-messages-common'),
+	'L_AUTH_ERROR'             => LangLoader::get_message('warning.auth', 'warning-lang'),
 	'L_SHOW_MY_MSG'            => $LANG['show_my_msg']
 );
 

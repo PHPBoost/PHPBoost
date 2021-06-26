@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 02 11
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 4.1 - 2015 01 27
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class NewsletterDeleteArchiveController extends ModuleController
@@ -27,7 +28,7 @@ class NewsletterDeleteArchiveController extends ModuleController
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $this->lang['newsletter.archive.not.exists']);
+			$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $this->lang['newsletter.archive.not.exists']);
 			DispatchManager::redirect($controller);
 		}
 	}

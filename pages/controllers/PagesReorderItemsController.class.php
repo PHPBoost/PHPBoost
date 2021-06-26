@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 18
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 5.2 - 2020 06 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -18,7 +18,7 @@ class PagesReorderItemsController extends DefaultSeveralItemsController
 		if ($request->get_value('submit', false))
 		{
 			$this->update_position($request);
-			AppContext::get_response()->redirect(ItemsUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), self::$module_id), LangLoader::get_message('message.success.position.update', 'status-messages-common'));
+			AppContext::get_response()->redirect(ItemsUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), self::$module_id), LangLoader::get_message('warning.success.position.update', 'warning-lang'));
 		}
 
 		$this->build_view();

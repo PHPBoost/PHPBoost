@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -939,6 +939,11 @@ class UpdateServices
 		$file = new File(PATH_TO_ROOT . '/lang/english/items-common.php');
 		$file->delete();
 		$file = new File(PATH_TO_ROOT . '/lang/french/items-common.php');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/lang/english/status-messages-common.php');
+		$file->delete();
+		$file = new File(PATH_TO_ROOT . '/lang/french/status-messages-common.php');
 		$file->delete();
 
 		$file = new File(PATH_TO_ROOT . '/lang/english/upload-common.php');

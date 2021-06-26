@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 3.0 - 2011 03 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -25,7 +25,7 @@ class NewsletterArchivesController extends ModuleController
 
 		if (!NewsletterStreamsCache::load()->stream_exists($this->stream->get_id()))
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('newsletter.stream.not.exists', 'common', 'newsletter'));
+			$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), LangLoader::get_message('newsletter.stream.not.exists', 'common', 'newsletter'));
 			DispatchManager::redirect($controller);
 		}
 
@@ -134,7 +134,7 @@ class NewsletterArchivesController extends ModuleController
 
 			NewsletterStreamsCache::invalidate();
 
-			AppContext::get_response()->redirect(NewsletterUrlBuilder::archives($this->stream->get_id(), $this->stream->get_rewrited_name()), LangLoader::get_message('process.success', 'status-messages-common'));
+			AppContext::get_response()->redirect(NewsletterUrlBuilder::archives($this->stream->get_id(), $this->stream->get_rewrited_name()), LangLoader::get_message('warning.process.success', 'warning-lang'));
 		}
 	}
 

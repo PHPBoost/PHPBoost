@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 5.1 - 2018 04 16
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -145,7 +145,7 @@ abstract class AbstractSocialNetworkAuthenticationMethod extends AuthenticationM
 				{
 					$session = AppContext::get_session();
 					Session::delete($session);
-					$this->error_msg = LangLoader::get_message('user.not_authorized_during_maintain', 'status-messages-common');
+					$this->error_msg = LangLoader::get_message('warning.user.not.authorized.during.maintenance', 'warning-lang');
 				}
 				else
 					AppContext::get_response()->redirect(Environment::get_home_page());

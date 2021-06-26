@@ -183,7 +183,7 @@ $lang['warning.success.upload']         = 'Your file has been uploaded successfu
 $lang['warning.folder.contains.folder'] = 'You try to put this directory in one of its sub-directory or in itself, that\'s impossible !';
 
 // User
-$lang['warning.user.not.authorized.during.maintain'] = 'You are not authorized to connect during the maintenance';
+$lang['warning.user.not.authorized.during.maintenance'] = 'You are not authorized to connect during the maintenance';
 $lang['warning.user.not.exists'] = 'User not exists !';
 $lang['warning.user.auth.password.flood'] = ':remaining_tries tries are remaining. After that, you\'ll have to wait 5 minutes to have 2 more tries (10min for 5)!';
 $lang['warning.user.auth.password.flood.max'] = 'You have failed, too many authentication attempts, your account is locked for 5 minutes.';

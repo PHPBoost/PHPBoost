@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 27
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 1.2 - 2005 08 16
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -366,7 +366,7 @@ class Gallery
 		//Vérification du chargement de la librairie GD.
 		if (!@extension_loaded('gd'))
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
+			$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'),
                 $LANG['e_no_gd'], UserErrorController::FATAL);
             DispatchManager::redirect($controller);
 		}
@@ -386,7 +386,7 @@ class Gallery
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_no_getimagesize'], UserErrorController::FATAL);
+			$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $LANG['e_no_getimagesize'], UserErrorController::FATAL);
 			DispatchManager::redirect($controller);
 		}
 	}

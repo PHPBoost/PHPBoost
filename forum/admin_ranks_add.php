@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 1.2 - 2005 10 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -97,7 +97,7 @@ $view->put_all(array(
 	'MAX_FILE_SIZE' 		         => ServerConfiguration::get_upload_max_filesize(),
 	'MAX_FILE_SIZE_TEXT'             => File::get_formated_size(ServerConfiguration::get_upload_max_filesize()),
 	'ALLOWED_EXTENSIONS'             => implode('", "',FileUploadConfig::load()->get_authorized_picture_extensions()),
-	'L_REQUIRE'                      => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
+	'L_REQUIRE'                      => LangLoader::get_message('form.required.fields', 'form-lang'),
 	'L_REQUIRE_RANK_NAME'            => $LANG['require_rank_name'],
 	'L_REQUIRE_MESSAGES_NUMBER_RANK' => $LANG['require_nbr_msg_rank'],
 	'L_FORUM_MANAGEMENT'             => $LANG['config.ranks.manager'],

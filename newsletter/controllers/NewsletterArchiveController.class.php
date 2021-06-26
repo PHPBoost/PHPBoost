@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 24
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 3.0 - 2011 03 21
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -27,7 +27,7 @@ class NewsletterArchiveController extends ModuleController
 		$archive_exist = PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_archives, "WHERE id = '" . $id . "'") > 0;
 		if (!$archive_exist)
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $this->lang['newsletter.archive.not.exists']);
+			$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $this->lang['newsletter.archive.not.exists']);
 			DispatchManager::redirect($controller);
 		}
 

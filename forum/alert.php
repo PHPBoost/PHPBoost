@@ -3,11 +3,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 01
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 1.5 - 2006 08 07
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once('../kernel/begin.php');
@@ -73,7 +74,7 @@ if (!empty($alert) && empty($alert_post))
 			'L_ALERT_EXPLAIN'  => $LANG['alert_modo_explain'],
 			'L_ALERT_TITLE'    => $LANG['alert_title'],
 			'L_ALERT_CONTENT'  => $LANG['alert_content'],
-			'L_REQUIRE'        => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
+			'L_REQUIRE'        => LangLoader::get_message('form.required.fields', 'form-lang'),
 			'L_REQUIRE_TEXT'   => $LANG['require_text'],
 			'L_REQUIRE_TITLE'  => $LANG['require_title']
 		));

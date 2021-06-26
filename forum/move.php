@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 01
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 1.2 - 2005 10 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -149,7 +149,7 @@ elseif (!empty($id_post)) //Déplacement du topic
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
+			$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'),
                 $LANG['e_incomplete']);
             DispatchManager::redirect($controller);
 		}
@@ -191,7 +191,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	//Scindage du premier message interdite.
 	if ($id_first == $idm)
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e.forum.noncuttable.topic']);
+		$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $LANG['e.forum.noncuttable.topic']);
 		DispatchManager::redirect($controller);
 	}
 
@@ -361,7 +361,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 	//Scindage du premier message interdite.
 	if ($id_first == $id_post_msg)
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
+		$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'),
             $LANG['e.forum.noncuttable.topic']);
         DispatchManager::redirect($controller);
 	}
@@ -410,7 +410,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 	}
 	else
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
+		$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'),
             $LANG['e_incomplete']);
         DispatchManager::redirect($controller);
 	}

@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 02 11
+ * @version     PHPBoost 6.0 - last update: 2021 06 26
  * @since       PHPBoost 3.0 - 2012 10 21
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminBugtrackerDeleteDefaultParameterController extends AdminModuleController
@@ -43,7 +44,7 @@ class AdminBugtrackerDeleteDefaultParameterController extends AdminModuleControl
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('error.e_unexist_parameter', 'common', 'bugtracker'));
+			$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), LangLoader::get_message('error.e_unexist_parameter', 'common', 'bugtracker'));
 			$controller->set_response_classname(UserErrorController::ADMIN_RESPONSE);
 			DispatchManager::redirect($controller);
 		}

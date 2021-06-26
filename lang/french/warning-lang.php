@@ -184,7 +184,7 @@ $lang['warning.success.upload']         = 'Votre fichier a bien été enregistr�
 $lang['warning.folder.contains.folder'] = 'Vous essayez de placer ce répertoire dans un de ses sous-répertoire ou dans lui-même, ce qui est impossible !';
 
 // User
-$lang['warning.user.not.authorized.during.maintain'] = 'Vous n\'avez pas l\'autorisation d\'accéder au site pendant la maintenance';
+$lang['warning.user.not.authorized.during.maintenance'] = 'Vous n\'avez pas l\'autorisation d\'accéder au site pendant la maintenance';
 $lang['warning.user.not.exists'] = 'L\'utilisateur n\'existe pas !';
 $lang['warning.user.auth.password.flood'] = 'Il vous reste :remaining_tries essai(s) après cela il vous faudra attendre 5 minutes pour obtenir 2 nouveaux essais (10min pour 5)!';
 $lang['warning.user.auth.password.flood.max'] = 'Vous avez épuisé tous vos essais de connexion, votre compte est verrouillé pendant 5 minutes.';
