@@ -1,23 +1,25 @@
-    <header>
-        <h2>{@step.server.title}</h2>
-    </header>
-
     <div class="content">
-        <div class="float-right pbt-box align-center">
-            <a href="https://www.php.net/">
-                <img src="templates/images/php.png" alt="PHP" class="float-right" />
-            </a>
+        <div class="cell-flex cell-columns-2">
+            <div class="cell cell-3-4">
+                <div class="cell-body">
+                    <div class="cell-content">{@H|install.server.description}</div>
+                </div>
+            </div>
+            <div class="cell cell-1-4">
+                <div class="cell-thumbnail cell-center">
+                    <img src="templates/images/php.png" alt="PHP" />
+                    <a href="https://www.php.net/" class="cell-thumbnail-caption">php.net</a>
+                </div>
+            </div>
         </div>
 
-        <span class="spacer">&nbsp;</span>
-        {@H|step.server.explanation}
         <fieldset class="fieldset-content">
-            <legend>{@php.version}</legend>
+            <legend>{@install.php.version}</legend>
             <div class="fieldset-inset">
-                <p>${set(@H|php.version.check.explanation, ['min_php_version': MIN_PHP_VERSION])}</p>
+                <p>${set(@H|install.php.version.check.description, ['min_php_version': MIN_PHP_VERSION])}</p>
                 <div class="form-element">
-                    <label>${set(@php.version.check, ['min_php_version': MIN_PHP_VERSION])}</label>
-                    <div class="form-field"# IF PHP_VERSION_OK # aria-label="{@yes}"# ELSE # aria-label="{@no}"# ENDIF #>
+                    <label>${set(@install.php.version.check, ['min_php_version': MIN_PHP_VERSION])}</label>
+                    <div class="form-field"# IF PHP_VERSION_OK # aria-label="{@common.yes}"# ELSE # aria-label="{@common.no}"# ENDIF #>
                     # IF PHP_VERSION_OK #
                         <i class="fa fa-check fa-2x success" aria-hidden="true"></i>
                     # ELSE #
@@ -29,12 +31,12 @@
         </fieldset>
 
         <fieldset class="fieldset-content">
-            <legend>{@php.extensions}</legend>
+            <legend>{@install.php.extensions}</legend>
             <div class="fieldset-inset">
-                <p>{@php.extensions.check}</p>
+                <p>{@install.php.extensions.check}</p>
                 <div class="form-element">
-                    <label>{@php.extensions.check.gdLibrary} <span class="field-description">{@php.extensions.check.gdLibrary.explanation}</span></label>
-                    <div class="form-field"# IF HAS_GD_LIBRARY # aria-label="{@yes}"# ELSE # aria-label="{@no}"# ENDIF #>
+                    <label>{@install.php.extensions.check.gd} <span class="field-description">{@install.php.extensions.check.gd.clue}</span></label>
+                    <div class="form-field"# IF HAS_GD_LIBRARY # aria-label="{@common.yes}"# ELSE # aria-label="{@common.no}"# ENDIF #>
                     # IF HAS_GD_LIBRARY #
                         <i class="fa fa-check fa-2x success" aria-hidden="true"></i>
                     # ELSE #
@@ -43,8 +45,8 @@
                     </div>
                 </div>
                 <div class="form-element">
-                    <label>{@php.extensions.check.curlLibrary} <span class="field-description">{@php.extensions.check.curlLibrary.explanation}</span></label>
-                    <div class="form-field"# IF HAS_CURL_LIBRARY # aria-label="{@yes}"# ELSE # aria-label="{@no}"# ENDIF #>
+                    <label>{@install.php.extensions.check.curl} <span class="field-description">{@install.php.extensions.check.curl.clue}</span></label>
+                    <div class="form-field"# IF HAS_CURL_LIBRARY # aria-label="{@common.yes}"# ELSE # aria-label="{@common.no}"# ENDIF #>
                     # IF HAS_CURL_LIBRARY #
                         <i class="fa fa-check fa-2x success" aria-hidden="true"></i>
                     # ELSE #
@@ -53,8 +55,8 @@
                     </div>
                 </div>
                 <div class="form-element">
-                    <label>{@php.extensions.check.mbstringLibrary} <span class="field-description">{@php.extensions.check.mbstringLibrary.explanation}</span></label>
-                    <div class="form-field"# IF HAS_MBSTRING_LIBRARY # aria-label="{@yes}"# ELSE # aria-label="{@no}"# ENDIF #>
+                    <label>{@install.php.extensions.check.mbstring} <span class="field-description">{@install.php.extensions.check.mbstring.clue}</span></label>
+                    <div class="form-field"# IF HAS_MBSTRING_LIBRARY # aria-label="{@common.yes}"# ELSE # aria-label="{@common.no}"# ENDIF #>
                     # IF HAS_MBSTRING_LIBRARY #
                         <i class="fa fa-check fa-2x success" aria-hidden="true"></i>
                     # ELSE #
@@ -63,8 +65,8 @@
                     </div>
                 </div>
                 <div class="form-element">
-                    <label>{@server.urlRewriting} <span class="field-description">{@server.urlRewriting.explanation}</span></label>
-                    <div class="form-field"# IF URL_REWRITING_KNOWN ## IF URL_REWRITING_AVAILABLE # aria-label="{@yes}"# ELSE # aria-label="{@no}"# ENDIF ## ELSE # aria-label="{@unknown}"# ENDIF #>
+                    <label>{@install.url.rewriting} <span class="field-description">{@install.url.rewriting.clue}</span></label>
+                    <div class="form-field"# IF URL_REWRITING_KNOWN ## IF URL_REWRITING_AVAILABLE # aria-label="{@common.yes}"# ELSE # aria-label="{@common.no}"# ENDIF ## ELSE # aria-label="{@common.unknown}"# ENDIF #>
                     # IF URL_REWRITING_KNOWN #
                         # IF URL_REWRITING_AVAILABLE #
                         <i class="fa fa-check fa-2x success" aria-hidden="true"></i>
@@ -80,22 +82,22 @@
         </fieldset>
 
         <fieldset class="fieldset-content">
-            <legend>{@folders.chmod}</legend>
+            <legend>{@install.folders.chmod}</legend>
             <div id="chmod" class="fieldset-inset">
-                <p>{@H|folders.chmod.check}</p>
+                <p>{@H|install.folders.chmod.check}</p>
                 # START folder #
                     <div class="form-element">
                         <label>{folder.NAME}</label>
                         <div class="form-field">
                             # IF folder.EXISTS #
-                                <div class="message-helper bgc success">{@folder.exists}</div>
+                                <div class="message-helper bgc success">{@install.folder.existing}</div>
                             # ELSE #
-                                <div class="message-helper bgc error">{@folder.doesNotExist}</div>
+                                <div class="message-helper bgc error">{@install.folder.non.existent}</div>
                             # ENDIF #
                             # IF folder.IS_WRITABLE #
-                                <div class="message-helper bgc success">{@folder.isWritable}</div>
+                                <div class="message-helper bgc success">{@install.folder.writable}</div>
                             # ELSE #
-                                <div class="message-helper bgc error">{@folder.isNotWritable}</div>
+                                <div class="message-helper bgc error">{@install.folder.not.writable}</div>
                             # ENDIF #
                         </div>
                     </div>
@@ -104,10 +106,10 @@
         </fieldset>
 
 		# IF C_MBSTRING_ERROR #
-		<fieldset id="mbstring-error"><div class="message-helper bgc error">{@php.extensions.check.mbstringLibrary.error}</div></fieldset>
+		    <fieldset id="mbstring-error"><div class="message-helper bgc error">{@install.php.extensions.check.mbstring.error}</div></fieldset>
 		# END #
 		# IF C_FOLDERS_ERROR #
-		<fieldset id="folders-error"><div class="message-helper bgc error">{@folders.chmod.error}</div></fieldset>
+		    <fieldset id="folders-error"><div class="message-helper bgc error">{@install.folders.chmod.error}</div></fieldset>
 		# END #
     </div>
 

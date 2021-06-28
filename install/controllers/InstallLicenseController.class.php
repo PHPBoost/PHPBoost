@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 10 16
+ * @version     PHPBoost 6.0 - last update: 2021 06 28
  * @since       PHPBoost 3.0 - 2010 09 12
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -43,12 +43,8 @@ class InstallLicenseController extends InstallController
 	{
 		$this->form = new HTMLForm('licenseForm', '', false);
 
-		$fieldset = new FormFieldsetHTML('agreementFieldset', $this->lang['step.license.terms.title']);
+		$fieldset = new FormFieldsetHTML('agreementFieldset', $this->lang['install.license.terms']);
 		$this->form->add_fieldset($fieldset);
-
-		$fieldset->add_field(new FormFieldHTML('agreementExplanation', $this->lang['step.license.require.agreement'] . '<br /><br />',
-			array('class' => 'full-field')
-		));
 
 		$license_content = file_get_contents('gpl-license.txt');
 		$license_block = '<div class="license-container"><div class="license-content">' . $license_content . '</div></div>';
@@ -56,13 +52,13 @@ class InstallLicenseController extends InstallController
 			array('class' => 'full-field')
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('agree', $this->lang['step.license.please_agree'], FormFieldCheckbox::UNCHECKED,
-			array('class' => 'full-field custom-checkbox', 'required' => $this->lang['step.license.submit.alert'])
+		$fieldset->add_field(new FormFieldCheckbox('agree', $this->lang['install.license.agreement'], FormFieldCheckbox::UNCHECKED,
+			array('class' => 'full-field custom-checkbox', 'required' => $this->lang['install.license.warning.agreement'])
 		));
 
 		$action_fieldset = new FormFieldsetSubmit('actions', array('css_class' => 'fieldset-submit next-step'));
-		$action_fieldset->add_element(new FormButtonLinkCssImg($this->lang['step.previous'], InstallUrlBuilder::welcome(), 'fa fa-arrow-left'));
-		$this->submit = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'license');
+		$action_fieldset->add_element(new FormButtonLinkCssImg($this->lang['common.previous'], InstallUrlBuilder::welcome(), 'fa fa-arrow-left'));
+		$this->submit = new FormButtonSubmitCssImg($this->lang['common.next'], 'fa fa-arrow-right', 'license');
 		$action_fieldset->add_element($this->submit);
 		$this->form->add_fieldset($action_fieldset);
 	}
@@ -75,7 +71,7 @@ class InstallLicenseController extends InstallController
 	{
 		$view = new FileTemplate('install/license.tpl');
 		$view->put('LICENSE_FORM', $this->form->display());
-		$step_title = $this->lang['step.license.title'];
+		$step_title = $this->lang['install.license.title'];
 		$response = new InstallDisplayResponse(1, $step_title, $view);
 		return $response;
 	}

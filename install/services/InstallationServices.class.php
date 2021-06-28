@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 23
+ * @version     PHPBoost 6.0 - last update: 2021 06 28
  * @since       PHPBoost 3.0 - 2010 02 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -600,7 +600,7 @@ class InstallationServices
 	private function send_installation_mail($login, $password, $email)
 	{
 		$general_config = GeneralConfig::load();
-		AppContext::get_mail_service()->send_from_properties($email, $this->messages['admin.created.email.object'], sprintf($this->messages['admin.created.email.unlockCode'], stripslashes($login),
+		AppContext::get_mail_service()->send_from_properties($email, $this->messages['install.admin.created.email.object'], sprintf($this->messages['install.admin.created.email.unlock.code'], stripslashes($login),
 		stripslashes($login), UserUrlBuilder::forget_password()->absolute(), $general_config->get_site_url() . $general_config->get_site_path()));
 	}
 

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 23
+ * @version     PHPBoost 6.0 - last update: 2021 06 28
  * @since       PHPBoost 3.0 - 2010 10 04
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -55,7 +55,7 @@ class InstallCreateAdminController extends InstallController
 		$security_config = SecurityConfig::load();
 		$this->form = new HTMLForm('adminForm', '', false);
 
-		$fieldset = new FormFieldsetHTML('adminAccount', $this->lang['admin.account']);
+		$fieldset = new FormFieldsetHTML('adminAccount', '');
 		$this->form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('display_name', LangLoader::get_message('user.display.name', 'user-lang'), '',
@@ -64,10 +64,10 @@ class InstallCreateAdminController extends InstallController
 					HTMLForms.getField("login").setValue(HTMLForms.getField("display_name").getValue().replace(/\s/g, \'\'));
 				}')
 			),
-			array(new FormFieldConstraintLengthRange(3, 100, $this->lang['admin.login.length']))
+			array(new FormFieldConstraintLengthRange(3, 100, $this->lang['install.admin.login.length']))
 		));
 
-		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['admin.email'], '', array('required' => true)));
+		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['install.admin.email'], '', array('required' => true)));
 
 		$fieldset->add_field(new FormFieldCheckbox('custom_login', LangLoader::get_message('user.username.custom', 'user-lang'), false,
 			array(
@@ -90,30 +90,30 @@ class InstallCreateAdminController extends InstallController
 
 		$fieldset->add_field(new FormFieldSpacer('1_separator', ''));
 
-		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['admin.password'], '',
-			array('description' => StringVars::replace_vars($this->lang['admin.password.explanation'], array('number' => $security_config->get_internal_password_min_length())), 'required' => true),
-			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length(), StringVars::replace_vars($this->lang['admin.password.length'], array('number' => $security_config->get_internal_password_min_length()))), new FormFieldConstraintPasswordStrength())
+		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['install.admin.password'], '',
+			array('description' => StringVars::replace_vars($this->lang['install.admin.password.clue'], array('number' => $security_config->get_internal_password_min_length())), 'required' => true),
+			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length(), StringVars::replace_vars($this->lang['install.admin.password.length'], array('number' => $security_config->get_internal_password_min_length()))), new FormFieldConstraintPasswordStrength())
 		));
 
-		$fieldset->add_field($repeatPassword = new FormFieldPasswordEditor('repeatPassword', $this->lang['admin.password.repeat'], '',
+		$fieldset->add_field($repeatPassword = new FormFieldPasswordEditor('repeatPassword', $this->lang['install.admin.password.repeat'], '',
 			array('required' => true),
 			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
 		));
 
 		$this->form->add_constraint(new FormConstraintFieldsEquality($password, $repeatPassword));
 
-		$fieldset->add_field(new FormFieldCheckbox('createSession', $this->lang['admin.connectAfterInstall'], true,
+		$fieldset->add_field(new FormFieldCheckbox('createSession', $this->lang['install.admin.connect.after.install'], true,
 			array('class' => 'custom-checkbox')
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('autoconnect', $this->lang['admin.autoconnect'], true,
+		$fieldset->add_field(new FormFieldCheckbox('autoconnect', $this->lang['install.admin.autoconnect'], true,
 			array('class' => 'custom-checkbox')
 		));
 
 		$action_fieldset = new FormFieldsetSubmit('actions', array('css_class' => 'fieldset-submit next-step'));
-		$back = new FormButtonLinkCssImg($this->lang['step.previous'], InstallUrlBuilder::website(), 'fa fa-arrow-left');
+		$back = new FormButtonLinkCssImg($this->lang['common.previous'], InstallUrlBuilder::website(), 'fa fa-arrow-left');
 		$action_fieldset->add_element($back);
-		$this->submit_button = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'admin');
+		$this->submit_button = new FormButtonSubmitCssImg($this->lang['common.next'], 'fa fa-arrow-right', 'admin');
 		$action_fieldset->add_element($this->submit_button);
 		$this->form->add_fieldset($action_fieldset);
 	}
@@ -125,7 +125,7 @@ class InstallCreateAdminController extends InstallController
 	{
 		$this->view = new FileTemplate('install/admin.tpl');
 		$this->view->put('ADMIN_FORM', $this->form->display());
-		$step_title = $this->lang['step.admin.title'];
+		$step_title = $this->lang['install.admin.title'];
 		$response = new InstallDisplayResponse(5, $step_title, $this->view);
 		return $response;
 	}

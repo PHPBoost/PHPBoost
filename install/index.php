@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 10 28
+ * @version     PHPBoost 6.0 - last update: 2021 06 28
  * @since       PHPBoost 3.0 - 2009 12 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '..');
@@ -23,7 +24,7 @@ InstallEnvironment::init();
 $permissions = PHPBoostFoldersPermissions::get_permissions();
 if (!$permissions['/cache']->is_writable() || !$permissions['/cache/tpl']->is_writable())
 {
-	die(LangLoader::get_message('chmod.cache.notWritable', 'install', 'install'));
+	die(LangLoader::get_message('install.chmod.cache.not.writable', 'install', 'install'));
 }
 
 if ($_GET || $_POST)

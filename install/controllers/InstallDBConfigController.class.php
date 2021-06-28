@@ -3,11 +3,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 10 16
+ * @version     PHPBoost 6.0 - last update: 2021 06 28
  * @since       PHPBoost 3.0 - 2010 10 04
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class InstallDBConfigController extends InstallController
@@ -65,55 +66,55 @@ class InstallDBConfigController extends InstallController
 	{
 		$this->form = new HTMLForm('databaseForm', '', false);
 
-		$fieldset_server = new FormFieldsetHTML('serverConfig', $this->lang['dbms.parameters']);
+		$fieldset_server = new FormFieldsetHTML('serverConfig', $this->lang['install.dbms.parameters']);
 		$this->form->add_fieldset($fieldset_server);
 
-		$fieldset_server->add_field(new FormFieldTextEditor('host', $this->lang['dbms.host'], 'localhost',
-			array('description' => $this->lang['dbms.host.explanation'], 'required' => $this->lang['db.required.host'])
+		$fieldset_server->add_field(new FormFieldTextEditor('host', $this->lang['install.dbms.host'], 'localhost',
+			array('description' => $this->lang['install.dbms.host.clue'], 'required' => $this->lang['install.db.required.host'])
 		));
 
-		$fieldset_server->add_field(new FormFieldTextEditor('port', $this->lang['dbms.port'], '3306',
-			array('description' => $this->lang['dbms.port.explanation'], 'required' => $this->lang['db.required.port']),
+		$fieldset_server->add_field(new FormFieldTextEditor('port', $this->lang['install.dbms.port'], '3306',
+			array('description' => $this->lang['install.dbms.port.clue'], 'required' => $this->lang['install.db.required.port']),
 			array(new FormFieldConstraintIntegerRange(1, 65536))
 		));
 
-		$fieldset_server->add_field(new FormFieldTextEditor('login', $this->lang['dbms.login'], 'root',
-			array('description' => $this->lang['dbms.login.explanation'], 'required' => $this->lang['db.required.login'])
+		$fieldset_server->add_field(new FormFieldTextEditor('login', $this->lang['install.dbms.login'], 'root',
+			array('description' => $this->lang['install.dbms.login.clue'], 'required' => $this->lang['install.db.required.login'])
 		));
 
-		$fieldset_server->add_field(new FormFieldPasswordEditor('password', $this->lang['dbms.password'], '',
-			array('description' => $this->lang['dbms.password.explanation'])
+		$fieldset_server->add_field(new FormFieldPasswordEditor('password', $this->lang['install.dbms.password'], '',
+			array('description' => $this->lang['install.dbms.password.clue'])
 		));
 
-		$fieldset_schema = new FormFieldsetHTML('schemaConfig', $this->lang['schema.properties']);
+		$fieldset_schema = new FormFieldsetHTML('schemaConfig', $this->lang['install.schema.properties']);
 		$this->form->add_fieldset($fieldset_schema);
 
-		$schema = new FormFieldTextEditor('schema', $this->lang['schema'], '',
-		array('description' => $this->lang['schema.explanation'], 'required' => $this->lang['db.required.schema']),
+		$schema = new FormFieldTextEditor('schema', $this->lang['install.schema'], '',
+		array('description' => $this->lang['install.schema.clue'], 'required' => $this->lang['install.db.required.schema']),
 		array(new FormFieldConstraintRegex('`^[a-z0-9_-]+$`iu')));
 		$schema->add_event('change', '$FFS(\'overwriteFieldset\').disable()');
 		$fieldset_schema->add_field($schema);
 
-		$fieldset_schema->add_field(new FormFieldTextEditor('tablesPrefix', $this->lang['schema.tablePrefix'], 'phpboost_',
-			array('description' => $this->lang['schema.tablePrefix.explanation'], 'required' => true),
+		$fieldset_schema->add_field(new FormFieldTextEditor('tablesPrefix', $this->lang['install.schema.table.prefix'], 'phpboost_',
+			array('description' => $this->lang['install.schema.table.prefix.clue'], 'required' => true),
 			array(new FormFieldConstraintRegex('`^[a-z0-9_]+$`iu'))
 		));
 
-		$this->overwrite_fieldset = new FormFieldsetHTML('overwriteFieldset', $this->lang['phpboost.alreadyInstalled']);
+		$this->overwrite_fieldset = new FormFieldsetHTML('overwriteFieldset', $this->lang['install.phpboost.already.installed']);
 		$this->form->add_fieldset($this->overwrite_fieldset);
 
-		$overwrite_message = new FormFieldHTML('', $this->lang['phpboost.alreadyInstalled.explanation'], array('class' => 'half-field'));
+		$overwrite_message = new FormFieldHTML('', $this->lang['install.phpboost.already.installed.description'], array('class' => 'half-field'));
 		$this->overwrite_fieldset->add_field($overwrite_message);
-		$this->overwrite_field = new FormFieldCheckbox('overwrite', $this->lang['phpboost.alreadyInstalled.overwrite'], false,
-			array('class' => 'half-field top-field custom-checkbox', 'required' => $this->lang['phpboost.alreadyInstalled.overwrite.confirm']));
+		$this->overwrite_field = new FormFieldCheckbox('overwrite', $this->lang['install.phpboost.already.installed.overwrite'], false,
+			array('class' => 'half-field top-field custom-checkbox', 'required' => $this->lang['install.phpboost.already.installed.overwrite.confirm']));
 		$this->overwrite_fieldset->add_field($this->overwrite_field);
 		$this->overwrite_fieldset->disable();
 
 		$action_fieldset = new FormFieldsetSubmit('actions', array('css_class' => 'fieldset-submit next-step'));
-		$action_fieldset->add_element(new FormButtonLinkCssImg($this->lang['step.previous'], InstallUrlBuilder::server_configuration(), 'fa fa-arrow-left'));
-		$this->check_button = new FormButtonSubmitCssImg($this->lang['db.config.check'], 'fa fa-sync', 'check_database');
+		$action_fieldset->add_element(new FormButtonLinkCssImg($this->lang['common.previous'], InstallUrlBuilder::server_configuration(), 'fa fa-arrow-left'));
+		$this->check_button = new FormButtonSubmitCssImg($this->lang['install.db.config.check'], 'fa fa-sync', 'check_database');
 		$action_fieldset->add_element($this->check_button);
-		$this->submit_button = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'database');
+		$this->submit_button = new FormButtonSubmitCssImg($this->lang['common.next'], 'fa fa-arrow-right', 'database');
 		$action_fieldset->add_element($this->submit_button);
 		$this->form->add_fieldset($action_fieldset);
 	}
@@ -125,17 +126,17 @@ class InstallDBConfigController extends InstallController
 		switch ($status)
 		{
 			case InstallationServices::CONNECTION_SUCCESSFUL:
-				$this->success = $this->lang['db.connection.success'];
+				$this->success = $this->lang['install.db.connection.success'];
 				break;
 			case InstallationServices::CONNECTION_ERROR:
-				$this->error = $this->lang['db.connection.error'];
+				$this->error = $this->lang['install.db.connection.error'];
 				break;
 			case InstallationServices::UNABLE_TO_CREATE_DATABASE:
-				$this->error = $this->lang['db.creation.error'];
+				$this->error = $this->lang['install.db.creation.error'];
 				break;
 			case InstallationServices::UNKNOWN_ERROR:
 			default:
-				$this->error = $this->lang['db.unknown.error.detail'];
+				$this->error = $this->lang['install.db.unknown.error.detail'];
 				break;
 		}
 	}
@@ -150,14 +151,14 @@ class InstallDBConfigController extends InstallController
 				$this->create_tables($service, $host, $port, $login, $password, $schema, $tables_prefix);
 				break;
 			case InstallationServices::CONNECTION_ERROR:
-				$this->error = $this->lang['db.connection.error'];
+				$this->error = $this->lang['install.db.connection.error'];
 				break;
 			case InstallationServices::UNABLE_TO_CREATE_DATABASE:
-				$this->error = $this->lang['db.creation.error'];
+				$this->error = $this->lang['install.db.creation.error'];
 				break;
 			case InstallationServices::UNKNOWN_ERROR:
 			default:
-				$this->error = $this->lang['db.unknown.error'];
+				$this->error = $this->lang['install.db.unknown.error'];
 				break;
 		}
 	}
@@ -173,7 +174,7 @@ class InstallDBConfigController extends InstallController
 		else
 		{
 			$this->overwrite_fieldset->enable();
-			$this->error = $this->lang['phpboost.alreadyInstalled.explanation'];
+			$this->error = $this->lang['install.phpboost.already.installed.description'];
 		}
 	}
 
@@ -192,7 +193,7 @@ class InstallDBConfigController extends InstallController
 		{
 			$this->view->put('ERROR', $this->error);
 		}
-		$step_title = $this->lang['step.dbConfig.title'];
+		$step_title = $this->lang['install.db.config.title'];
 		$response = new InstallDisplayResponse(3, $step_title, $this->view);
 		return $response;
 	}

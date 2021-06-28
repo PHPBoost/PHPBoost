@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 05 05
+ * @version     PHPBoost 6.0 - last update: 2021 06 28
  * @since       PHPBoost 3.0 - 2010 06 13
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class InstallWelcomeController extends InstallController
@@ -24,7 +25,7 @@ class InstallWelcomeController extends InstallController
 	 */
 	private function create_response(Template $view)
 	{
-		$step_title = $this->lang['step.welcome.title'];
+		$step_title = $this->lang['install.welcome.title'];
 		$response = new InstallDisplayResponse(0, $step_title, $view);
 		return $response;
 	}
@@ -34,7 +35,7 @@ class InstallWelcomeController extends InstallController
 		$form = new HTMLForm('preambleForm', InstallUrlBuilder::license()->rel(), false);
 
 		$action_fieldset = new FormFieldsetSubmit('actions');
-		$next = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'welcome');
+		$next = new FormButtonSubmitCssImg($this->lang['common.next'], 'fa fa-arrow-right', 'welcome');
 		$action_fieldset->add_element($next);
 		$form->add_fieldset($action_fieldset);
 		$view->put('LICENSE_FORM', $form->display());

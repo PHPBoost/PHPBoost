@@ -1,11 +1,10 @@
     <header>
-        <h2>{@websiteConfig}</h2>
+        <h2>{@install.website.config}</h2>
     </header>
 
     <div class="content">
-        {@H|websiteConfig.explanation}
+        {@H|install.website.config.description}
         # INCLUDE WEBSITE_FORM #
     </div>
-    
-    <footer></footer>
 
+    <footer></footer>

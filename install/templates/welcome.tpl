@@ -1,15 +1,28 @@
 
 	<header>
-		<h2>{@step.welcome.message}</h2>
+		<h2>{@install.welcome.message}</h2>
 	</header>
 
 	<div class="content">
-		<div class="float-right pbt-box align-center">
-			<img src="templates/images/PHPBoost_car.png" alt="{@phpboost.logo}" />
+		<div class="cell-flex cell-columns-2">
+			<div class="cell">
+				<div class="cell-body">
+					<div class="cell-content">
+						{@H|install.welcome.description}
+					</div>
+				</div>
+			</div>
+			<div class="cell align-center">
+				<div class="cell-body">
+					<div class="cell-thumbnail">
+						<img src="templates/images/PHPBoost_car.png" alt="{@install.title}" />
+					</div>
+				</div>
+			</div>
 		</div>
-		<p>{@H|step.welcome.explanation}</p>
-		<h3>${set(@step.welcome.distribution, ['distribution': @distribution.name])}</h3>
-		<p>${html(@step.welcome.distribution.explanation)}</p>
+
+		<h3>${set(@install.welcome.distribution, ['distribution': @distribution.name])}</h3>
+		<p>${html(@install.welcome.distribution.description)}</p>
 		<p>${html(@distribution.description)}</p>
 	</div>
 

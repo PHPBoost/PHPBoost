@@ -1,9 +1,9 @@
 ${resources('install/install')}
 <!DOCTYPE html>
-<html lang="{L_XML_LANGUAGE}">
+<html lang="{@common.xml.lang}">
 	<head>
 		<meta charset="UTF-8" />
-		<title>{@installation.title} - {STEP_TITLE}</title>
+		<title>{@install.title} - {STEP_TITLE}</title>
 		<meta name="description" content="PHPBoost" />
 		<meta name="robots" content="noindex, follow" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,7 +34,7 @@ ${resources('install/install')}
 					# IF NOT C_HAS_PREVIOUS_STEP #
 						<h5 class="menu-title">
 							<div class="site-logo"></div>
-							<span>{@language.change}</span>
+							<span>{@install.change.language}</span>
 						</h5>
 						<form class="align-center" action="{U_CHANGE_LANG}" method="post">
 							<select
@@ -48,19 +48,12 @@ ${resources('install/install')}
 									</option>
 								# END lang #
 							</select>
-							<p id="button_change_lang">
-								<button type="submit" value="true" class="button submit">{@change}</button>
-								<input type="hidden" name="token" value="{TOKEN}">
-							</p>
-							<script>
-								jQuery('#button_change_lang').hide();
-							</script>
 						</form>
-					# END IF #
+					# ENDIF #
 
 					<h5 class="menu-title">
 						<div class="site-logo"></div>
-						<span>{@steps.list}</span>
+						<span>{@install.steps.list}</span>
 					</h5>
 					<nav class="cssmenu cssmenu-vertical step-menu">
 						<ul>
@@ -76,18 +69,18 @@ ${resources('install/install')}
 
 					<h5 class="menu-title">
 						<div class="site-logo"></div>
-						<span>{@appendices}</span>
+						<span>{@install.appendices}</span>
 					</h5>
 					<nav class="cssmenu cssmenu-vertical help-menu">
 						<ul>
 							<li>
-								<a class="cssmenu-title" href="{@documentation.link}">
-									<i class="fa fa-book fa-fw" aria-hidden="true"></i> <span>{@documentation}</span>
+								<a class="cssmenu-title" href="{@install.documentation.link}">
+									<i class="fa fa-book fa-fw" aria-hidden="true"></i> <span>{@form.documentation} (fr)</span>
 								</a>
 							</li>
 							<li>
-								<a class="cssmenu-title" href="{RESTART}" onclick="return confirm('${escapejs(@installation.confirmRestart)}');">
-									<i class="fa fa-sync fa-fw" aria-hidden="true"></i> <span>{@installation.restart}</span>
+								<a class="cssmenu-title" href="{U_RESTART}" onclick="return confirm('${escapejs(@install.confirm.restart)}');">
+									<i class="fa fa-sync fa-fw" aria-hidden="true"></i> <span>{@install.restart}</span>
 								</a>
 							</li>
 						</ul>
@@ -101,22 +94,22 @@ ${resources('install/install')}
 				<div id="admin-contents">
 					<section>
 						<header>
-							<h1><div id="site-logo"></div> {STEP_TITLE}</h1>
+							<h1>{STEP_TITLE}</h1>
 						</header>
 						<article>
-							# INCLUDE installStep #
+							# INCLUDE INSTALL_STEP #
 						</article>
 						<footer></footer>
 					</section>
 				</div>
 			</div>
 			<footer id="footer">
-				<span>${LangLoader::get_message('common.powered.by', 'common-lang')} <a href="https://www.phpboost.com" aria-label="{@phpboost.link}">PHPBoost</a> {@phpboost.rights}</span>
+				<span>{@common.powered.by} <a href="https://www.phpboost.com" aria-label="{@common.phpboost.link}">PHPBoost</a> {@common.phpboost.right}</span>
 			</footer>
 		</div>
 		<script>
 			jQuery('.lang-selector').selectImg({
-				ariaLabel : ${escapejs(LangLoader::get_message('common.click.to.select', 'common-lang'))}
+				ariaLabel : ${escapejs(@common.click.to.select)}
 			});
 		</script>
 	</body>

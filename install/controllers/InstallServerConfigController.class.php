@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 05 05
+ * @version     PHPBoost 6.0 - last update: 2021 06 28
  * @since       PHPBoost 3.0 - 2010 10 02
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class InstallServerConfigController extends InstallController
@@ -50,9 +51,9 @@ class InstallServerConfigController extends InstallController
 		$this->form = new HTMLForm('continueForm', '', false);
 
 		$action_fieldset = new FormFieldsetSubmit('actions');
-		$action_fieldset->add_element(new FormButtonLinkCssImg($this->lang['step.previous'], InstallUrlBuilder::license(), 'fa fa-arrow-left'));
-		$action_fieldset->add_element(new FormButtonLinkCssImg($this->lang['folders.chmod.refresh'], InstallUrlBuilder::server_configuration()->rel(), 'fa fa-sync'));
-		$this->submit = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'server');
+		$action_fieldset->add_element(new FormButtonLinkCssImg($this->lang['common.previous'], InstallUrlBuilder::license(), 'fa fa-arrow-left'));
+		$action_fieldset->add_element(new FormButtonLinkCssImg($this->lang['install.folders.chmod.refresh'], InstallUrlBuilder::server_configuration()->rel(), 'fa fa-sync'));
+		$this->submit = new FormButtonSubmitCssImg($this->lang['common.next'], 'fa fa-arrow-right', 'server');
 		$action_fieldset->add_element($this->submit);
 		$this->form->add_fieldset($action_fieldset);
 	}
@@ -69,11 +70,11 @@ class InstallServerConfigController extends InstallController
 	{
 		$this->view = new FileTemplate('install/server-config.tpl');
 		$this->view->put_all(array(
-			'MIN_PHP_VERSION' => ServerConfiguration::MIN_PHP_VERSION,
-			'PHP_VERSION_OK' => $this->server_conf->is_php_compatible(),
-			'HAS_GD_LIBRARY'=> $this->server_conf->has_gd_library(),
-			'HAS_CURL_LIBRARY'=> $this->server_conf->has_curl_library(),
-			'HAS_MBSTRING_LIBRARY'=> $this->server_conf->has_mbstring_library()
+			'MIN_PHP_VERSION'      => ServerConfiguration::MIN_PHP_VERSION,
+			'PHP_VERSION_OK'       => $this->server_conf->is_php_compatible(),
+			'HAS_GD_LIBRARY'       => $this->server_conf->has_gd_library(),
+			'HAS_CURL_LIBRARY'     => $this->server_conf->has_curl_library(),
+			'HAS_MBSTRING_LIBRARY' => $this->server_conf->has_mbstring_library()
 		));
 		if (!$this->server_conf->has_mbstring_library())
 		{
@@ -102,8 +103,8 @@ class InstallServerConfigController extends InstallController
 		foreach (PHPBoostFoldersPermissions::get_permissions() as $folder_name => $folder)
 		{
 			$folders[] = array(
-			   'NAME' => $folder_name,
-			   'EXISTS' => $folder->exists(),
+			   'NAME'        => $folder_name,
+			   'EXISTS'      => $folder->exists(),
 			   'IS_WRITABLE' => $folder->is_writable(),
 			);
 		}
@@ -115,7 +116,7 @@ class InstallServerConfigController extends InstallController
 	 */
 	private function create_response()
 	{
-		$step_title = $this->lang['step.server.title'];
+		$step_title = $this->lang['install.server.title'];
 		$response = new InstallDisplayResponse(2, $step_title, $this->view);
 		return $response;
 	}

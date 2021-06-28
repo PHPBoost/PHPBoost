@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 20
+ * @version     PHPBoost 6.0 - last update: 2021 06 28
  * @since       PHPBoost 3.0 - 2010 10 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -60,29 +60,29 @@ class InstallWebsiteConfigController extends InstallController
 		$user_lang = LangLoader::get('user-lang');
 		$this->form = new HTMLForm('websiteForm', '', false);
 
-		$fieldset = new FormFieldsetHTML('yourSite', $this->lang['website.yours']);
+		$fieldset = new FormFieldsetHTML('yourSite', $this->lang['install.website.yours']);
 		$this->form->add_fieldset($fieldset);
 
-		$host = new FormFieldUrlEditor('host', $this->lang['website.host'], $this->current_server_host(),
-		array('description' => $this->lang['website.host.explanation'], 'required' => $this->lang['website.host.required']));
-		$host->add_event('change', $this->warning_if_not_equals($host, $this->lang['website.host.warning']));
+		$host = new FormFieldUrlEditor('host', $this->lang['install.website.host'], $this->current_server_host(),
+		array('description' => $this->lang['install.website.host.clue'], 'required' => $this->lang['install.website.host.required']));
+		$host->add_event('change', $this->warning_if_not_equals($host, $this->lang['install.website.host.warning']));
 		$fieldset->add_field($host);
 
-		$path = new FormFieldTextEditor('path', $this->lang['website.path'], $this->current_server_path(),
-		array('description' => $this->lang['website.path.explanation']));
-		$path->add_event('change', $this->warning_if_not_equals($path, $this->lang['website.path.warning']));
+		$path = new FormFieldTextEditor('path', $this->lang['install.website.path'], $this->current_server_path(),
+		array('description' => $this->lang['install.website.path.clue']));
+		$path->add_event('change', $this->warning_if_not_equals($path, $this->lang['install.website.path.warning']));
 		$fieldset->add_field($path);
 
-		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['website.name'], '', array('required' => $this->lang['website.name.required'])));
+		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['install.website.name'], '', array('required' => $this->lang['install.website.name.required'])));
 
-		$fieldset->add_field(new FormFieldTextEditor('slogan', $this->lang['website.slogan'], ''));
+		$fieldset->add_field(new FormFieldTextEditor('slogan', $this->lang['install.website.slogan'], ''));
 
-		$fieldset->add_field(new FormFieldMultiLineTextEditor('description', $this->lang['website.description'], '',
-			array('description' => $this->lang['website.description.explanation'])
+		$fieldset->add_field(new FormFieldMultiLineTextEditor('description', $this->lang['install.website.description'], '',
+			array('description' => $this->lang['install.website.description.clue'])
 		));
 
-		$fieldset->add_field(new FormFieldTimezone('timezone', $this->lang['website.timezone'], 'Europe/Paris',
-			array('description' => $this->lang['website.timezone.explanation'])
+		$fieldset->add_field(new FormFieldTimezone('timezone', $this->lang['install.website.timezone'], 'Europe/Paris',
+			array('description' => $this->lang['install.website.timezone.clue'])
 		));
 
 		$fieldset = new FormFieldsetHTML('security_config', $user_lang['user.security']);
@@ -108,7 +108,7 @@ class InstallWebsiteConfigController extends InstallController
 
 		if ($this->distribution_config['default_captcha'])
 		{
-			$fieldset = new FormFieldsetHTML('captcha_config', $this->lang['website.captcha.config']);
+			$fieldset = new FormFieldsetHTML('captcha_config', $this->lang['install.website.captcha.config']);
 			$this->form->add_fieldset($fieldset);
 
 			$default_captcha = $this->distribution_config['default_captcha'];
@@ -116,9 +116,9 @@ class InstallWebsiteConfigController extends InstallController
 		}
 
 		$action_fieldset = new FormFieldsetSubmit('actions', array('css_class' => 'fieldset-submit next-step'));
-		$back = new FormButtonLinkCssImg($this->lang['step.previous'], InstallUrlBuilder::database(), 'fa fa-arrow-left');
+		$back = new FormButtonLinkCssImg($this->lang['common.previous'], InstallUrlBuilder::database(), 'fa fa-arrow-left');
 		$action_fieldset->add_element($back);
-		$this->submit_button = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'website');
+		$this->submit_button = new FormButtonSubmitCssImg($this->lang['common.next'], 'fa fa-arrow-right', 'website');
 		$action_fieldset->add_element($this->submit_button);
 		$this->form->add_fieldset($action_fieldset);
 	}
@@ -183,7 +183,7 @@ if (field.getValue()!=value && !confirm(${escapejs(MESSAGE)})){field.setValue(va
 	{
 		$this->view = new FileTemplate('install/website.tpl');
 		$this->view->put('WEBSITE_FORM', $this->form->display());
-		$step_title = $this->lang['step.websiteConfig.title'];
+		$step_title = $this->lang['install.website.config.title'];
 		$default_captcha = $this->distribution_config['default_captcha'];
 		$additional_stylesheet = $default_captcha ? $default_captcha::get_css_stylesheet() : '';
 		$response = new InstallDisplayResponse(4, $step_title, $this->view, $additional_stylesheet);
