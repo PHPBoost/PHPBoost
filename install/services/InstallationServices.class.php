@@ -40,7 +40,7 @@ class InstallationServices
 		$this->load_distribution_configuration();
 		$this->set_default_locale($locale);
 		LangLoader::set_locale($this->distribution_config['default_lang']);
-		$this->messages = LangLoader::get('install', 'install');
+		$this->messages = LangLoader::get('common', 'install');
 	}
 
 	public static function get_available_langs()

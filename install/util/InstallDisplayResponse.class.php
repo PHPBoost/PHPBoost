@@ -72,7 +72,7 @@ class InstallDisplayResponse extends AbstractResponse
 
 	public function load_language_resources()
 	{
-		$this->lang = LangLoader::get('install', 'install');
+		$this->lang = LangLoader::get('common', 'install');
 		$this->distribution_lang = LangLoader::get('distribution', 'install');
 	}
 

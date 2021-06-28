@@ -1,4 +1,4 @@
-${resources('install/install')}
+${resources('install/common')}
 <!DOCTYPE html>
 <html lang="{@common.xml.lang}">
 	<head>

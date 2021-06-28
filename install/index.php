@@ -24,7 +24,7 @@ InstallEnvironment::init();
 $permissions = PHPBoostFoldersPermissions::get_permissions();
 if (!$permissions['/cache']->is_writable() || !$permissions['/cache/tpl']->is_writable())
 {
-	die(LangLoader::get_message('install.chmod.cache.not.writable', 'install', 'install'));
+	die(LangLoader::get_message('install.chmod.cache.not.writable', 'common', 'install'));
 }
 
 if ($_GET || $_POST)

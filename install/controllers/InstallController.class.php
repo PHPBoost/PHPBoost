@@ -20,7 +20,7 @@ abstract class InstallController extends AbstractController
 		LangLoader::set_locale($locale);
 		InstallUrlBuilder::set_locale($locale);
 		$this->lang = array_merge(
-			LangLoader::get('install', 'install'),
+			LangLoader::get('common', 'install'),
 			LangLoader::get('common-lang'),
 			LangLoader::get('form-lang')
 		);
