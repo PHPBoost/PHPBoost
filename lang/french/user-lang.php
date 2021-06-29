@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 06 29
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -336,7 +336,7 @@ $lang['user.extended.field.pm.to.mail']      = 'Recevoir une notification par ma
 $lang['user.extended.field.pm.to.mail.clue'] = '';
 
 $lang['user.extended.field.birth.date']      = 'Date de naissance';
-$lang['user.extended.field.date.birth.clue'] = '';
+$lang['user.extended.field.birth.date.clue'] = '';
 
 $lang['user.extended.field.avatar']                    = 'Avatar';
 $lang['user.extended.field.no.avatar']          = 'Aucun avatar';
