@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 03
+ * @version     PHPBoost 6.0 - last update: 2021 06 30
  * @since       PHPBoost 1.6 - 2007 03 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -46,7 +46,7 @@ if (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL)) // If u
 }
 
 $view = new FileTemplate('user/moderation_panel.tpl');
-$view->add_lang(array_merge($lang, LangLoader::get('warning-lang'), LangLoader::get('form-lang')));
+$view->add_lang(array_merge($lang, LangLoader::get('common-lang'), LangLoader::get('form-lang'), LangLoader::get('warning-lang')));
 
 $view->put_all(array(
 	'U_WARNING'          => UserUrlBuilder::moderation_panel('warning')->rel(),
@@ -108,7 +108,6 @@ if ($action == 'punish')
 		$view->put_all(array(
 			'C_USER_LIST' => true,
 			'L_TITLE'				 => $lang['user.punishments.management'],
-			'L_ACTION_USER'          => $lang['user.punishments'],
 			'L_INFO'                 => $lang['user.punish.until'],
 		));
 
@@ -125,13 +124,15 @@ if ($action == 'punish')
 
 			$view->assign_block_vars('member_list', array(
 				'C_USER_GROUP_COLOR' => !empty($group_color),
-				'LOGIN'              => $row['display_name'],
-				'USER_LEVEL_CLASS'   => UserService::get_level_class($row['level']),
-				'USER_GROUP_COLOR'   => $group_color,
-				'INFO'               => Date::to_format($row['delay_readonly'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-				'U_PROFILE'          => UserUrlBuilder::profile($row['user_id'])->rel(),
-				'U_ACTION_USER'      => '<a href="'. UserUrlBuilder::moderation_panel('punish', $row['user_id'])->rel() .'" class="fa fa-lock"></a>',
-				'U_PM'               => UserUrlBuilder::personnal_message($row['user_id'])->rel(),
+
+				'LOGIN'            => $row['display_name'],
+				'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
+				'USER_GROUP_COLOR' => $group_color,
+				'INFO'             => Date::to_format($row['delay_readonly'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
+
+				'U_PROFILE'     => UserUrlBuilder::profile($row['user_id'])->rel(),
+				'U_ACTION_USER' => UserUrlBuilder::moderation_panel('punish', $row['user_id'])->rel(),
+				'U_PM'          => UserUrlBuilder::personnal_message($row['user_id'])->rel(),
 			));
 
 			$i++;
@@ -282,7 +283,6 @@ else if ($action == 'warning')
 		$view->put_all(array(
 			'C_USER_LIST' => true,
 			'L_TITLE'				 => $lang['user.warnings.management'],
-			'L_ACTION_USER'          => $lang['user.warnings'],
 			'L_INFO'                 => $lang['user.warning.level'],
 		));
 
@@ -297,13 +297,15 @@ else if ($action == 'warning')
 
 			$view->assign_block_vars('member_list', array(
 				'C_USER_GROUP_COLOR' => !empty($group_color),
-				'LOGIN'              => $row['display_name'],
-				'USER_LEVEL_CLASS'   => UserService::get_level_class($row['level']),
-				'USER_GROUP_COLOR'   => $group_color,
-				'INFO'               => $row['warning_percentage'] . '%',
-				'U_ACTION_USER'      => '<a href="'. UserUrlBuilder::moderation_panel('warning', $row['user_id'])->rel() .'" class="fa fa-exclamation-triangle"></a>',
-				'U_PROFILE'          => UserUrlBuilder::profile($row['user_id'])->rel(),
-				'U_PM'               => UserUrlBuilder::personnal_message($row['user_id'])->rel()
+
+				'LOGIN'            => $row['display_name'],
+				'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
+				'USER_GROUP_COLOR' => $group_color,
+				'INFO'             => $row['warning_percentage'] . '%',
+
+				'U_ACTION_USER' => UserUrlBuilder::moderation_panel('warning', $row['user_id'])->rel(),
+				'U_PROFILE'     => UserUrlBuilder::profile($row['user_id'])->rel(),
+				'U_PM'          => UserUrlBuilder::personnal_message($row['user_id'])->rel()
 			));
 
 			$i++;
@@ -410,9 +412,9 @@ else
 
 		$view->put_all(array(
 			'C_USER_LIST' => true,
-			'L_TITLE'				 => $lang['user.bans.management'],
-			'L_ACTION_USER'   => $lang['user.bans'],
-			'L_INFO'          => $lang['user.ban.until'],
+
+			'L_TITLE' => $lang['user.bans.management'],
+			'L_INFO'  => $lang['user.ban.until'],
 		));
 
 		$i = 0;
@@ -429,14 +431,14 @@ else
 			$view->assign_block_vars('member_list', array(
 				'C_USER_GROUP_COLOR' => !empty($group_color),
 
-				'LOGIN'              => $row['display_name'],
-				'USER_LEVEL_CLASS'   => UserService::get_level_class($row['level']),
-				'USER_GROUP_COLOR'   => $group_color,
-				'INFO'               => ($row['warning_percentage'] != 100) ? Date::to_format($row['delay_banned'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) : $lang['user.unlimited'],
+				'LOGIN'            => $row['display_name'],
+				'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
+				'USER_GROUP_COLOR' => $group_color,
+				'INFO'             => ($row['warning_percentage'] != 100) ? Date::to_format($row['delay_banned'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) : $lang['user.unlimited'],
 
-				'U_PROFILE'          => UserUrlBuilder::profile($row['user_id'])->rel(),
-				'U_ACTION_USER'      => '<a href="'. UserUrlBuilder::moderation_panel('ban', $row['user_id'])->rel() .'" class="fa fa-minus-circle error"></a>',
-				'U_PM'               => UserUrlBuilder::personnal_message($row['user_id'])->rel(),
+				'U_PROFILE'     => UserUrlBuilder::profile($row['user_id'])->rel(),
+				'U_ACTION_USER' => UserUrlBuilder::moderation_panel('ban', $row['user_id'])->rel(),
+				'U_PM'          => UserUrlBuilder::personnal_message($row['user_id'])->rel(),
 			));
 
 			$i++;

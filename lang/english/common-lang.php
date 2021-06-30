@@ -61,7 +61,7 @@ $lang['common.until.alt'] = 'Until';
 
 $lang['common.always']        = 'Always';
 $lang['common.unknown']       = 'Unknown';
-$lang['common.undetermined']  = 'Undetermined'; 
+$lang['common.undetermined']  = 'Undetermined';
 $lang['common.never']         = 'Never';
 $lang['common.unspecified']   = 'Unspecified';
 $lang['common.default']       = 'Default';

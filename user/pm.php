@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 06 30
  * @since       PHPBoost 1.5 - 2006 07 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -256,11 +256,11 @@ elseif ($prw && empty($pm_edit) && empty($pm_del)) // Message preview
 
 	$view->put('KERNEL_EDITOR', $editor->display());
 
-	$view->assign_block_vars('show_pm', array(
-		'DATE'            => Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-		'CONTENTS'        => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($contents))),
-		'U_TITLE_CONVERS' => '<a href="pm' . url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get) . '">' . $convers_title . '</a>'
-	));
+	// $view->assign_block_vars('show_pm', array(
+	// 	'DATE'            => Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
+	// 	'CONTENTS'        => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($contents))),
+	// 	'U_TITLE_CONVERS' => '<a href="pm' . url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get) . '">' . $convers_title . '</a>'
+	// ));
 
 	$view->assign_block_vars('post_pm', array(
 		'CONTENTS'         => $contents,
@@ -711,7 +711,7 @@ elseif (!empty($pm_id_get)) // Messages associated with the conversation.
 			$row['level'] = -1;
 			$is_guest_in_convers = empty($row['display_name']);
 		}
-			
+
 
 		// Resumption of the last message from the previous page.
 		$row['contents'] = ($quote_last_msg == 1 && $i == 0) ? '<span class="text-strong">' . $lang['user.quote.last.message'] . '</span><br /><br />' . $row['contents'] : $row['contents'];
@@ -725,7 +725,7 @@ elseif (!empty($pm_id_get)) // Messages associated with the conversation.
 			$new_day = true;
 		else
 			$new_day = ($previous_date->format(Date::FORMAT_DAY_MONTH_YEAR) <> $date->format(Date::FORMAT_DAY_MONTH_YEAR) );
-		
+
 		if ( $new_day == true )
 			$previous_date = $date ;
 
@@ -981,7 +981,7 @@ else // Conversation list in the user email box
 				$participant_id     = "";
 				$participant_avatar = $user_accounts_config->get_default_avatar();
 			}
-				
+
 		}
 
 		// Display of last message

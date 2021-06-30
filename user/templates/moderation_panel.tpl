@@ -82,8 +82,8 @@
 							<tr>
 								<th>{@user.display.name}</th>
 								<th>{L_INFO}</th>
-								<th>{L_ACTION_USER}</th>
 								<th>{@user.contact.pm}</th>
+								<th><span class="sr-only">{@common.modify}</span></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -103,10 +103,12 @@
 											{member_list.INFO}
 										</td>
 										<td>
-											{member_list.U_ACTION_USER}
+											<a href="{member_list.U_PM}" class="button alt-button smaller">MP</a>
 										</td>
 										<td>
-											<a href="{member_list.U_PM}" class="button alt-button smaller">MP</a>
+											<a href="{member_list.U_ACTION_USER}" class="offload" aria-label="{@common.modify}">
+												<i class="fa fa-edit" aria-hidden="true"></i>
+											</a>
 										</td>
 									</tr>
 								# END member_list #

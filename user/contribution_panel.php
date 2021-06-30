@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 18
+ * @version     PHPBoost 6.0 - last update: 2021 06 30
  * @since       PHPBoost 2.0 - 2008 07 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -155,20 +155,22 @@ if ($contribution_id > 0)
 	$contributor_group_color = User::get_group_color($contributor['user_groups'], $contributor['level']);
 
 	$view->put_all(array(
-		'C_WRITE_AUTH' => AppContext::get_current_user()->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT),
+		'C_WRITE_AUTH'               => AppContext::get_current_user()->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT),
 		'C_UNPROCESSED_CONTRIBUTION' => $contribution->get_status() != Event::EVENT_STATUS_PROCESSED,
-		'C_CONTRIBUTOR_GROUP_COLOR' => !empty($contributor_group_color),
-		'ENTITLED' => $contribution->get_entitled(),
-		'DESCRIPTION' => FormatingHelper::second_parse($contribution->get_description()),
-		'STATUS' => $contribution->get_status_name(),
-		'CONTRIBUTOR' => $contributor['display_name'],
+		'C_CONTRIBUTOR_GROUP_COLOR'  => !empty($contributor_group_color),
+
+		'ENTITLED'                => $contribution->get_entitled(),
+		'DESCRIPTION'             => FormatingHelper::second_parse($contribution->get_description()),
+		'STATUS'                  => $contribution->get_status_name(),
+		'CONTRIBUTOR'             => $contributor['display_name'],
 		'CONTRIBUTOR_LEVEL_CLASS' => UserService::get_level_class($contributor['level']),
 		'CONTRIBUTOR_GROUP_COLOR' => $contributor_group_color,
-		'COMMENTS' => CommentsService::display($comments_topic)->render(),
-		'CREATION_DATE' => $contribution->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR),
-		'MODULE' => $contribution->get_module_name(),
+		'COMMENTS'                => CommentsService::display($comments_topic)->render(),
+		'CREATION_DATE'           => $contribution->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR),
+		'MODULE'                  => $contribution->get_module_name(),
+
 		'U_CONTRIBUTOR_PROFILE' => UserUrlBuilder::profile($contribution->get_poster_id())->rel(),
-		'FIXING_URL' => Url::to_rel($contribution->get_fixing_url())
+		'FIXING_URL'            => Url::to_rel($contribution->get_fixing_url())
 	));
 
 	// If contribution has been validated
@@ -182,12 +184,12 @@ if ($contribution_id > 0)
 
 		$view->put_all(array(
 			'C_CONTRIBUTION_FIXED' => true,
-			'C_FIXER_GROUP_COLOR' => !empty($fixer_group_color),
+			'C_REFEREE_GROUP_COLOR' => !empty($fixer_group_color),
 			'FIXER' => $fixer['display_name'],
-			'FIXER_LEVEL_CLASS' => UserService::get_level_class($fixer['level']),
-			'FIXER_GROUP_COLOR' => $fixer_group_color,
+			'REFEREE_LEVEL_CLASS' => UserService::get_level_class($fixer['level']),
+			'REFEREE_GROUP_COLOR' => $fixer_group_color,
 			'FIXING_DATE' => $contribution->get_fixing_date()->format(Date::FORMAT_DAY_MONTH_YEAR),
-			'U_FIXER_PROFILE' => UserUrlBuilder::profile($contribution->get_fixer_id())->rel()
+			'U_REFEREE_PROFILE' => UserUrlBuilder::profile($contribution->get_fixer_id())->rel()
 		));
 	}
 
@@ -205,13 +207,14 @@ elseif ($id_update > 0)
 
 	$view->put_all(array(
 		'C_EDIT_CONTRIBUTION' => true,
-		'KERNEL_EDITOR' => $editor->display(),
-		'ENTITLED' => $contribution->get_entitled(),
-		'DESCRIPTION' => FormatingHelper::unparse($contribution->get_description()),
-		'CONTRIBUTION_ID' => $contribution->get_id(),
-		'EVENT_STATUS_UNREAD_SELECTED' => $contribution->get_status() == Event::EVENT_STATUS_UNREAD ? ' selected="selected"' : '',
+
+		'KERNEL_EDITOR'                         => $editor->display(),
+		'ENTITLED'                              => $contribution->get_entitled(),
+		'DESCRIPTION'                           => FormatingHelper::unparse($contribution->get_description()),
+		'CONTRIBUTION_ID'                       => $contribution->get_id(),
+		'EVENT_STATUS_UNREAD_SELECTED'          => $contribution->get_status() == Event::EVENT_STATUS_UNREAD ? ' selected="selected"' : '',
 		'EVENT_STATUS_BEING_PROCESSED_SELECTED' => $contribution->get_status() == Event::EVENT_STATUS_BEING_PROCESSED ? ' selected="selected"' : '',
-		'EVENT_STATUS_PROCESSED_SELECTED' => $contribution->get_status() == Event::EVENT_STATUS_PROCESSED ? ' selected="selected"' : '',
+		'EVENT_STATUS_PROCESSED_SELECTED'       => $contribution->get_status() == Event::EVENT_STATUS_PROCESSED ? ' selected="selected"' : '',
 	));
 }
 else
@@ -247,25 +250,27 @@ else
 				$fixer_group_color = User::get_group_color($this_contribution->get_fixer_groups(), $this_contribution->get_fixer_level());
 
 				$view->assign_block_vars('contributions', array(
-					'C_POSTER_GROUP_COLOR' => !empty($poster_group_color),
-					'C_FIXER_GROUP_COLOR'  => !empty($fixer_group_color),
-					'ENTITLED' => $this_contribution->get_entitled(),
-					'MODULE' => $this_contribution->get_module_name(),
-					'STATUS' => $this_contribution->get_status_name(),
-					'CREATION_DATE' => $this_contribution->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR),
-					'FIXING_DATE' => $this_contribution->get_fixing_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-					'POSTER' => $this_contribution->get_poster_login(),
-					'POSTER_LEVEL_CLASS' => UserService::get_level_class($this_contribution->get_poster_level()),
-					'POSTER_GROUP_COLOR' => $poster_group_color,
-					'FIXER' => $this_contribution->get_fixer_login(),
-					'FIXER_LEVEL_CLASS' => UserService::get_level_class($this_contribution->get_fixer_level()),
-					'FIXER_GROUP_COLOR' => $fixer_group_color,
-					'ACTIONS' => '',
-					'U_FIXER_PROFILE' => UserUrlBuilder::profile($this_contribution->get_fixer_id())->rel(),
-					'U_POSTER_PROFILE' => UserUrlBuilder::profile($this_contribution->get_poster_id())->rel(),
-					'U_CONSULT' => PATH_TO_ROOT . '/user/' . url('contribution_panel.php?id=' . $this_contribution->get_id()),
-					'C_FIXED' => $this_contribution->get_status() == Event::EVENT_STATUS_PROCESSED,
-					'C_PROCESSING' => $this_contribution->get_status() == Event::EVENT_STATUS_BEING_PROCESSED
+					'C_AUTHOR_GROUP_COLOR'  => !empty($poster_group_color),
+					'C_REFEREE_GROUP_COLOR' => !empty($fixer_group_color),
+
+					'ENTITLED'            => $this_contribution->get_entitled(),
+					'MODULE'              => $this_contribution->get_module_name(),
+					'STATUS'              => $this_contribution->get_status_name(),
+					'CREATION_DATE'       => $this_contribution->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR),
+					'FIXING_DATE'         => $this_contribution->get_fixing_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
+					'POSTER'              => $this_contribution->get_poster_login(),
+					'AUTHOR_LEVEL_CLASS'  => UserService::get_level_class($this_contribution->get_poster_level()),
+					'AUTHOR_GROUP_COLOR'  => $poster_group_color,
+					'FIXER'               => $this_contribution->get_fixer_login(),
+					'REFEREE_LEVEL_CLASS' => UserService::get_level_class($this_contribution->get_fixer_level()),
+					'REFEREE_GROUP_COLOR' => $fixer_group_color,
+					'ACTIONS'             => '',
+
+					'U_REFEREE_PROFILE' => UserUrlBuilder::profile($this_contribution->get_fixer_id())->rel(),
+					'U_AUTHOR_PROFILE'  => UserUrlBuilder::profile($this_contribution->get_poster_id())->rel(),
+					'U_CONSULT'         => PATH_TO_ROOT . '/user/' . url('contribution_panel.php?id=' . $this_contribution->get_id()),
+					'C_FIXED'           => $this_contribution->get_status() == Event::EVENT_STATUS_PROCESSED,
+					'C_PROCESSING'      => $this_contribution->get_status() == Event::EVENT_STATUS_BEING_PROCESSED
 				));
 			}
 
@@ -349,14 +354,14 @@ else
 		'U_ORDER_FIXING_DATE_ASC'    => url('contribution_panel.php?p =' . $page . '&amp;criteria =fixing_date&amp;order=asc'),
 		'C_ORDER_FIXING_DATE_DESC'   => $criteria == 'fixing_date' && $order == 'desc',
 		'U_ORDER_FIXING_DATE_DESC'   => url('contribution_panel.php?p =' . $page . '&amp;criteria =fixing_date&amp;order=desc'),
-		'C_ORDER_POSTER_ASC'         => $criteria == 'poster_id' && $order == 'asc',
-		'U_ORDER_POSTER_ASC'         => url('contribution_panel.php?p =' . $page . '&amp;criteria =poster_id&amp;order=asc'),
-		'C_ORDER_POSTER_DESC'        => $criteria == 'poster_id' && $order == 'desc',
-		'U_ORDER_POSTER_DESC'        => url('contribution_panel.php?p =' . $page . '&amp;criteria =poster_id&amp;order=desc'),
-		'C_ORDER_FIXER_ASC'          => $criteria == 'fixer_id' && $order == 'asc',
-		'U_ORDER_FIXER_ASC'          => url('contribution_panel.php?p =' . $page . '&amp;criteria =fixer_id&amp;order=asc'),
-		'C_ORDER_FIXER_DESC'         => $criteria == 'fixer_id' && $order == 'desc',
-		'U_ORDER_FIXER_DESC'         => url('contribution_panel.php?p =' . $page . '&amp;criteria =fixer_id&amp;order=desc')
+		'C_ORDER_AUTHOR_ASC'         => $criteria == 'poster_id' && $order == 'asc',
+		'U_ORDER_AUTHOR_ASC'         => url('contribution_panel.php?p =' . $page . '&amp;criteria =poster_id&amp;order=asc'),
+		'C_ORDER_AUTHOR_DESC'        => $criteria == 'poster_id' && $order == 'desc',
+		'U_ORDER_AUTHOR_DESC'        => url('contribution_panel.php?p =' . $page . '&amp;criteria =poster_id&amp;order=desc'),
+		'C_ORDER_REFEREE_ASC'        => $criteria == 'fixer_id' && $order == 'asc',
+		'U_ORDER_REFEREE_ASC'        => url('contribution_panel.php?p =' . $page . '&amp;criteria =fixer_id&amp;order=asc'),
+		'C_ORDER_REFEREE_DESC'       => $criteria == 'fixer_id' && $order == 'desc',
+		'U_ORDER_REFEREE_DESC'       => url('contribution_panel.php?p =' . $page . '&amp;criteria =fixer_id&amp;order=desc')
 	));
 }
 

@@ -18,7 +18,7 @@
 									# START row.module #
 										<div class="cell">
 											<div class="cell-header">
-												<div class="cell-name"><a href="{row.module.U_MODULE_LINK}">{row.module.MODULE_NAME}</a></div>
+												<div class="cell-name"><a class="offload" href="{row.module.U_MODULE_LINK}">{row.module.MODULE_NAME}</a></div>
 												<img src="{PATH_TO_ROOT}/{row.module.MODULE_ID}/{row.module.MODULE_ID}_mini.png" alt="{row.module.LINK_TITLE}" />
 											</div>
 										</div>
@@ -116,27 +116,27 @@
 												</span>
 											</th>
 											<th>
-												<span class="html-table-header-sortable# IF C_ORDER_POSTER_ASC # sort-active# ENDIF #">
-													<a href="{U_ORDER_POSTER_ASC}" aria-label="{@common.sort.asc}">
+												<span class="html-table-header-sortable# IF C_ORDER_AUTHOR_ASC # sort-active# ENDIF #">
+													<a href="{U_ORDER_AUTHOR_ASC}" aria-label="{@common.sort.asc}">
 														<i class="fa fa-caret-up" aria-hidden="true"></i>
 													</a>
 												</span>
 												{@common.author}
-												<span class="html-table-header-sortable# IF C_ORDER_POSTER_DESC # sort-active# ENDIF #">
-													<a href="{U_ORDER_POSTER_DESC}" aria-label="{@common.sort.desc}">
+												<span class="html-table-header-sortable# IF C_ORDER_AUTHOR_DESC # sort-active# ENDIF #">
+													<a href="{U_ORDER_AUTHOR_DESC}" aria-label="{@common.sort.desc}">
 														<i class="fa fa-caret-down" aria-hidden="true"></i>
 													</a>
 												</span>
 											</th>
 											<th>
-												<span class="html-table-header-sortable# IF C_ORDER_FIXER_ASC # sort-active# ENDIF #">
-													<a href="{U_ORDER_FIXER_ASC}" aria-label="{@common.sort.asc}">
+												<span class="html-table-header-sortable# IF C_ORDER_REFEREE_ASC # sort-active# ENDIF #">
+													<a href="{U_ORDER_REFEREE_ASC}" aria-label="{@common.sort.asc}">
 														<i class="fa fa-caret-up" aria-hidden="true"></i>
 													</a>
 												</span>
-												${LangLoader::get_message('user.supervisor', 'user-lang')}
-												<span class="html-table-header-sortable# IF C_ORDER_FIXER_DESC # sort-active# ENDIF #">
-													<a href="{U_ORDER_FIXER_DESC}" aria-label="{@common.sort.desc}">
+												${LangLoader::get_message('user.referee', 'user-lang')}
+												<span class="html-table-header-sortable# IF C_ORDER_REFEREE_DESC # sort-active# ENDIF #">
+													<a href="{U_ORDER_REFEREE_DESC}" aria-label="{@common.sort.desc}">
 														<i class="fa fa-caret-down" aria-hidden="true"></i>
 													</a>
 												</span>
@@ -147,7 +147,7 @@
 										# START contributions #
 											<tr>
 												<td>
-													<a href="{contributions.U_CONSULT}">{contributions.ENTITLED}</a>
+													<a class="offload" href="{contributions.U_CONSULT}">{contributions.ENTITLED}</a>
 												</td>
 												<td >
 													{contributions.MODULE}
@@ -178,11 +178,11 @@
 													# ENDIF #
 												</td>
 												<td >
-													<a href="{contributions.U_POSTER_PROFILE}" class="{contributions.POSTER_LEVEL_CLASS}" # IF contributions.C_POSTER_GROUP_COLOR # style="color:{contributions.POSTER_GROUP_COLOR}" # ENDIF #>{contributions.POSTER}</a>
+													<a href="{contributions.U_AUTHOR_PROFILE}" class="{contributions.AUTHOR_LEVEL_CLASS} offload" # IF contributions.C_AUTHOR_GROUP_COLOR # style="color:{contributions.AUTHOR_GROUP_COLOR}" # ENDIF #>{contributions.POSTER}</a>
 												</td>
 												<td >
 													# IF contributions.C_FIXED #
-														<a href="{contributions.U_FIXER_PROFILE}" class="{contributions.FIXER_LEVEL_CLASS}" # IF contributions.C_FIXER_GROUP_COLOR # style="color:{contributions.FIXER_GROUP_COLOR}" # ENDIF #>{contributions.FIXER}</a>
+														<a href="{contributions.U_REFEREE_PROFILE}" class="{contributions.REFEREE_LEVEL_CLASS} offload" # IF contributions.C_REFEREE_GROUP_COLOR # style="color:{contributions.REFEREE_GROUP_COLOR}" # ENDIF #>{contributions.FIXER}</a>
 													# ELSE #
 														-
 													# ENDIF #
@@ -294,8 +294,8 @@
 								</li>
 								# IF C_CONTRIBUTION_FIXED #
 								<li class="li-stretch">
-									<span class="text-strong">${LangLoader::get_message('user.supervisor', 'user-lang')}</span>
-									<span><a href="{U_FIXER_PROFILE}" class="{FIXER_LEVEL_CLASS}" # IF C_FIXER_GROUP_COLOR # style="color:{FIXER_GROUP_COLOR}" # ENDIF #>{FIXER}</a></span>
+									<span class="text-strong">${LangLoader::get_message('user.referee', 'user-lang')}</span>
+									<span><a href="{U_REFEREE_PROFILE}" class="{REFEREE_LEVEL_CLASS}" # IF C_REFEREE_GROUP_COLOR # style="color:{REFEREE_GROUP_COLOR}" # ENDIF #>{FIXER}</a></span>
 								</li>
 								<li class="li-stretch">
 									<span class="text-strong">{@contribution.closing.date}</span>

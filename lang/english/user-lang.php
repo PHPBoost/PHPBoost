@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 06 30
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -151,7 +151,7 @@ $lang['user.moderator']      = 'Moderator';
 $lang['user.moderators']     = 'Moderators';
 $lang['user.administrator']  = 'Administrator';
 $lang['user.administrators'] = 'Administrators';
-$lang['user.supervisor']     = 'Supervisor';
+$lang['user.referee']     = 'Referee';
 $lang['user.sex']            = 'Sex';
 $lang['user.male']           = 'Male';
 $lang['user.female']         = 'Female';
