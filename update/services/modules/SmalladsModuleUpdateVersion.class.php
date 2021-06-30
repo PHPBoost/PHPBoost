@@ -27,7 +27,7 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 			'/controllers/SmalladsDisplayUsageTermsController.class.php',
 			'/fields/SmalladsFormFieldSelectSources.class.php',
 			'/lang/english/smallads_english.php',
-			'/lang/english/smallads_french.php',
+			'/lang/french/smallads_french.php',
 			'/phpboost/SmalladsComments.class.php',
 			'/phpboost/SmalladsLastItemsMiniMenu.class.php',
 			'/phpboost/SmalladsNewContent.class.php',
