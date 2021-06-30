@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 06 30
  * @since       PHPBoost 1.6 - 2006 10 09
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -56,7 +56,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 	$num_rows = 1;
 	$id_article = $article_infos['id'];
 
-	if (!empty($article_infos['redirect']))//Si on est redirig¦
+	if (!empty($article_infos['redirect']))//Si on est redirigé
 	{
 		try {
 			$encoded_title = PersistenceContext::get_querier()->get_column_value(PREFIX . "wiki_articles", 'encoded_title', 'WHERE id=:id', array('id' => $article_infos['redirect']));
@@ -94,7 +94,7 @@ elseif (!empty($id_contents))
 $bread_crumb_key = 'wiki';
 require_once('../wiki/wiki_bread_crumb.php');
 
-$page_title = (!empty($article_infos['title']) ? stripslashes($article_infos['title']) . ' - ' : '') . ($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']);
+$page_title = (!empty($article_infos['title']) ? stripslashes($article_infos['title']) . ' - ' : '') . ($config->get_wiki_name() ? $config->get_wiki_name() : $lang['wiki.module.title']);
 define('TITLE', $page_title);
 
 if (isset($article_infos['content']))
@@ -124,16 +124,16 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 		if ($parse_redirection)
 		{
 			$view->assign_block_vars('redirect', array(
-				'REDIRECTED' => sprintf($LANG['wiki_redirecting_from'], '<a href="' . url('wiki.php?title=' . $encoded_title, $encoded_title) . '">' . $ex_title . '</a>')
+				'REDIRECTED' => sprintf($lang['wiki.redirecting.from'], '<a href="' . url('wiki.php?title=' . $encoded_title, $encoded_title) . '">' . $ex_title . '</a>')
 			));
 			$general_auth = empty($article_infos['auth']) ? true : false;
 
 			if (((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_REDIRECT)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_REDIRECT))))
 			{
 				$view->assign_block_vars('redirect.remove_redirection', array(
-					'L_REMOVE_REDIRECTION' => $LANG['wiki_remove_redirection'],
+					'L_REMOVE_REDIRECTION' => $lang['wiki.remove.redirection'],
 					'U_REMOVE_REDIRECTION' => url('action.php?del_redirection=' . $id_redirection . '&amp;token=' . AppContext::get_session()->get_token()),
-					'L_ALERT_REMOVE_REDIRECTION' => str_replace('\'', '\\\'', $LANG['wiki_alert_delete_redirection'])
+					'L_ALERT_REMOVE_REDIRECTION' => str_replace('\'', '\\\'', $lang['wiki.alert.delete.redirection'])
 				));
 			}
 		}
@@ -146,9 +146,9 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 			$view->assign_block_vars('status', array(
 				'ARTICLE_STATUS' => FormatingHelper::second_parse(wiki_no_rewrite($article_infos['undefined_status']))
 			));
-			elseif ($article_infos['defined_status'] > 0 && is_array($LANG['wiki_status_list'][$article_infos['defined_status'] - 1]))
+			elseif ($article_infos['defined_status'] > 0 && is_array($lang['wiki.status.list'][$article_infos['defined_status'] - 1]))
 			$view->assign_block_vars('status', array(
-				'ARTICLE_STATUS' => $LANG['wiki_status_list'][$article_infos['defined_status'] - 1][1]
+				'ARTICLE_STATUS' => $lang['wiki.status.list'][$article_infos['defined_status'] - 1][1]
 			));
 		}
 	}
@@ -168,15 +168,12 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 			'C_NEW_CONTENT' => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('wiki', $article_infos['timestamp']),
 
 			'ID'             => $article_infos['id'],
-			'ID_CAT'         => $article_infos['id_cat'],
-			'CATEGORY_TITLE' => $article_infos['id_cat'] == 0 ? ($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']) : stripslashes($categories[$article_infos['id_cat']]['title']),
+			'ID_CATEGORY'    => $article_infos['id_cat'],
+			'CATEGORY_TITLE' => $article_infos['id_cat'] == 0 ? ($config->get_wiki_name() ? $config->get_wiki_name() : $lang['wiki.module.title']) : stripslashes($categories[$article_infos['id_cat']]['title']),
 			'TITLE'          => stripslashes($article_infos['title']),
-			'CONTENT'       => FormatingHelper::second_parse(wiki_no_rewrite($article_infos['content'])),
-			'HITS'           => ($config->is_hits_counter_enabled() && $id_contents == 0) ? sprintf($lang['wiki.item.views.number'], (int)$article_infos['hits']) : '',
-			//
-			'L_SUB_CATS' => $LANG['wiki_subcats'],
-			'L_SUB_ARTICLES' => $LANG['wiki_subarticles'],
-			'L_TABLE_OF_CONTENTS' => $LANG['wiki_table_of_contents'],
+			'CONTENT'        => FormatingHelper::second_parse(wiki_no_rewrite($article_infos['content'])),
+
+			'L_VIEWS_NUMBER' => ($config->is_hits_counter_enabled() && $id_contents == 0) ? sprintf($lang['wiki.page.views.number'], (int)$article_infos['hits']) : '',
 		)
 	));
 
@@ -200,15 +197,18 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 		while ($row = $result->fetch())
 		{
 			$view->assign_block_vars('cat.list_art', array(
+				'C_ITEMS' => count($row['id']) > 0,
+
 				'TITLE' => stripslashes($row['title']),
-				'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
+
+				'U_ITEM' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
 			));
 		}
 		$result->dispose();
 
 		if ($num_articles == 0)
 		$view->assign_block_vars('cat.no_sub_article', array(
-			'NO_SUB_ARTICLE' => $LANG['wiki_no_sub_article']
+			'NO_SUB_ARTICLE' => $lang['wiki.no.sub.item']
 		));
 
 		$i = 0;
@@ -218,7 +218,8 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 			{
 				$view->assign_block_vars('cat.list_cats', array(
 					'NAME' => stripslashes($cat['title']),
-					'U_CAT' => url('wiki.php?title=' . $cat['encoded_title'], $cat['encoded_title'])
+					
+					'U_CATEGORY' => url('wiki.php?title=' . $cat['encoded_title'], $cat['encoded_title'])
 				));
 				$i++;
 			}

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2021 06 30
  * @since       PHPBoost 1.6 - 2006 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -68,8 +68,7 @@ elseif ($select_cat && empty($open_cat) && $root == 0)
 	}
 	else
 	{
-		load_module_lang('wiki');
-		echo $LANG['wiki_no_selected_cat'];
+		echo LangLoader::get_message('wiki.no.selected.category');
 	}
 }
 elseif (!empty($open_cat) || $root == 1)

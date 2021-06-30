@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 02
+ * @version     PHPBoost 6.0 - last update: 2021 06 30
  * @since       PHPBoost 1.6 - 2007 05 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once('../kernel/begin.php');
@@ -15,8 +16,8 @@ load_module_lang('wiki'); // to be deleted
 
 $lang = LangLoader::get('common', 'wiki');
 
-define('TITLE', $LANG['wiki_explorer']);
-define('DESCRIPTION', $LANG['wiki_explorer_seo']);
+define('TITLE', $lang['wiki.explorer']);
+define('DESCRIPTION', $lang['wiki.explorer.seo']);
 
 $bread_crumb_key = 'wiki_explorer';
 require_once('../wiki/wiki_bread_crumb.php');
@@ -53,7 +54,8 @@ while ($row = $result->fetch())
 {
 	$view->assign_block_vars('list_files', array(
 		'TITLE' => stripslashes($row['title']),
-		'URL_FILE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
+
+		'U_ITEM' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
 	));
 }
 $result->dispose();
@@ -70,16 +72,17 @@ while ($row = $result->fetch())
 	$sub_cats_number = PersistenceContext::get_querier()->count(PREFIX . "wiki_cats", 'WHERE id_parent = :id', array('id' => $row['id']));
 
 	$view->assign_block_vars('list', array(
-		'ID' => $row['id'],
+		'ID'    => $row['id'],
 		'TITLE' => stripslashes($row['title']),
+
 		'U_FOLDER' => $sub_cats_number > 0
 	));
 }
 $result->dispose();
 $view->put_all(array(
-	'SELECTED_CAT' => 0,
-	'CAT_0'        => 'selected',
-	'CAT_LIST'     => ''
+	'SELECTED_CAT'    => 0,
+	'ROOT_CATEGORY'   => 'selected',
+	'CATEGORIES_LIST' => ''
 ));
 
 echo $view->render();

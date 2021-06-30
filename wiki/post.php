@@ -3,11 +3,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 03
+ * @version     PHPBoost 6.0 - last update: 2021 06 30
  * @since       PHPBoost 1.6 - 2006 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once('../kernel/begin.php');
@@ -23,8 +24,6 @@ if (AppContext::get_current_user()->is_readonly())
 	$controller = PHPBoostErrors::user_in_read_only();
 	DispatchManager::redirect($controller);
 }
-
-define('TITLE', $LANG['wiki_contribuate']);
 
 $bread_crumb_key = 'wiki_post';
 require_once('../wiki/wiki_bread_crumb.php');
@@ -46,6 +45,8 @@ $preview = (bool)retrieve(POST, 'preview', false);
 $id_edit_get = (int)retrieve(GET, 'id', 0);
 $id_edit = $id_edit > 0 ? $id_edit : $id_edit_get;
 
+define('TITLE', $id_edit ? $lang['wiki.edit.item'] : $lang['wiki.create.item']);
+
 $location_id = $id_edit ? 'wiki-edit-'. $id_edit : '';
 
 require_once('../kernel/header.php');
@@ -56,7 +57,12 @@ $categories = WikiCategoriesCache::load()->get_categories();
 $error = '';
 
 $view = new FileTemplate('wiki/post.tpl');
-$view->add_lang(array_merge($lang, LangLoader::get('form-lang'), LangLoader::get('warning-lang')));
+$view->add_lang(array_merge(
+	$lang,
+	LangLoader::get('common-lang'),
+	LangLoader::get('form-lang'),
+	LangLoader::get('warning-lang')
+));
 
 $captcha = AppContext::get_captcha_service()->get_default_factory();
 if (!empty($contents)) //On enregistre un article
@@ -152,10 +158,9 @@ if (!empty($contents)) //On enregistre un article
 
 			//On vérifie que le titre n'existe pas
 			$article_exists = PersistenceContext::get_querier()->count(PREFIX . "wiki_articles", 'WHERE encoded_title = :encoded_title', array('encoded_title' => Url::encode_rewrite($title)));
-
 			//Si il existe: message d'erreur
 			if ($article_exists > 0)
-				$errstr = $LANG['wiki_title_already_exists'];
+				$errstr = $lang['wiki.title.already.exists'];
 			else //On enregistre
 			{
 				$result = PersistenceContext::get_querier()->insert(PREFIX . "wiki_articles", array('title' => $title, 'encoded_title' => Url::encode_rewrite($title), 'id_cat' => $new_id_cat, 'is_cat' => $is_cat, 'undefined_status' => '', 'auth' => ''));
@@ -224,8 +229,6 @@ if ($id_edit > 0)//On édite
 		$contents = trim($contents);
 	}
 
-	$l_action_submit = $LANG['validate'];
-
 	$view->put_all(array(
 		'SELECTED_CATEGORY' => $id_edit,
 	));
@@ -245,7 +248,7 @@ else
 	}
 
 	if (!empty($encoded_title))
-		$view->put('MESSAGE_HELPER', MessageHelper::display($LANG['wiki_article_does_not_exist'], MessageHelper::WARNING));
+		$view->put('MESSAGE_HELPER', MessageHelper::display($lang['wiki.item.unexists'], MessageHelper::WARNING));
 
 	if ($id_cat > 0 && array_key_exists($id_cat, $categories)) //Catégorie préselectionnée
 	{
@@ -285,8 +288,8 @@ else
 			$module_data_path = PATH_TO_ROOT . '/wiki/templates';
 			$sub_cats_number = PersistenceContext::get_querier()->count(PREFIX . "wiki_cats", 'WHERE id_parent = :id', array('id' => $row['id']));
 			$view->assign_block_vars('create.list', array(
-				'ID' => $row['id'],
-				'TITLE' => stripslashes($row['title']),
+				'ID'        => $row['id'],
+				'TITLE'     => stripslashes($row['title']),
 				'C_SUB_CAT' => $sub_cats_number > 0
 			));
 
@@ -296,51 +299,34 @@ else
 			'SELECTED_CATEGORY' => 0,
 			'CATEGORY_0'        => 'selected',
 			'CATEGORY_LIST'     => '',
-			'CURRENT_CATEGORY'  => $LANG['wiki_no_selected_cat']
+			'CURRENT_CATEGORY'  => $lang['wiki.no.selected.category']
 		));
 	}
-	$l_action_submit = $LANG['submit'];
 }
 
 //On travaille uniquement en BBCode, on force le langage de l'éditeur
 $content_editor = AppContext::get_content_formatting_service()->get_default_factory();
 $editor = $content_editor->get_editor();
 $editor->set_identifier('contents');
-// Debug::dump($is_cat);
-$view->put_all(array(
-	'C_CAPTCHA' => !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
-	'C_IS_CATEGORY' => $is_cat == 1,
-	'C_EDIT_CATEGORY' => $is_cat == 1 && $id_edit > 1,
-	'C_EDIT_ITEM' => $is_cat == 0 && $id_edit > 0,
-	'C_EDIT' => $id_edit > 0,
 
-	'TITLE' => $id_edit = 0 ? stripslashes($article_infos['title']) : '',
-	'EDIT_TITLE' => ($id_edit == 0 ? (!empty($encoded_title) ? $encoded_title : stripslashes($title)) : stripslashes($article_infos['title'])),
+$view->put_all(array(
+	'C_CAPTCHA'       => !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
+	'C_IS_CATEGORY'   => $is_cat == 1,
+	'C_EDIT_CATEGORY' => $is_cat == 1 && $id_edit > 1,
+	'C_EDIT_ITEM'     => $is_cat == 0 && $id_edit > 0,
+	'C_EDIT'          => $id_edit > 0,
+
+	'TITLE'         => $id_edit = 0 ? stripslashes($article_infos['title']) : '',
+	'EDIT_TITLE'    => ($id_edit == 0 ? (!empty($encoded_title) ? $encoded_title : stripslashes($title)) : stripslashes($article_infos['title'])),
 	'KERNEL_EDITOR' => $editor->display(),
-	'ID_CATEGORY' => $id_edit ? $article_infos['id_cat'] : '',
-	'CONTENT' => ($id_edit && $contents_preview) || !$id_edit ? wiki_unparse(stripslashes($contents_preview)) : wiki_unparse($contents),
+	'ID_CATEGORY'   => $id_edit ? $article_infos['id_cat'] : '',
+	'CONTENT'       => (($id_edit && $contents_preview) || !$id_edit) ? wiki_unparse(stripslashes($contents_preview)) : wiki_unparse($contents),
     'CHANGE_REASON' => $id_edit ? wiki_unparse(stripslashes($change_reason_preview)) : wiki_unparse($change_reason),
-	'ID_EDIT' => $id_edit,
-	'IS_CAT' => $is_cat,
-	'ID_CAT' => $id_cat,
-	'CAPTCHA' => $captcha->display(),
-	'TARGET' => url('post.php' . ($is_cat == 1 ? '?type=cat' : '')),
-	//
-	'L_TITLE_FIELD' => $LANG['title'],
-	'L_CONTENTS' => $LANG['wiki_contents'],
-	'L_ALERT_CONTENTS' => $LANG['require_text'],
-	'L_ALERT_TITLE' => $LANG['require_title'],
-	'L_REQUIRE' => LangLoader::get_message('form.required.fields', 'form-lang'),
-	'L_RESET' => $LANG['reset'],
-	'L_PREVIEW' => $LANG['preview'],
-	'L_SUBMIT' => $l_action_submit,
-	'L_CAT' => $LANG['wiki_article_cat'],
-	'L_CURRENT_CAT' => $LANG['wiki_current_cat'],
-	'L_DO_NOT_SELECT_ANY_CAT' => $LANG['wiki_do_not_select_any_cat'],
-	'L_PREVIEWING' => $LANG['wiki_previewing'],
-	'L_TABLE_OF_CONTENTS' => $LANG['wiki_table_of_contents'],
-	'L_CHANGE_REASON_LABEL' => $LANG['wiki_change_reason_label'],
-	'L_CHANGE_REASON' => $LANG['wiki_change_reason'],
+	'ID_EDIT'       => $id_edit,
+	'IS_CATEGORY'   => $is_cat,
+	'CAPTCHA'       => $captcha->display(),
+
+	'U_TARGET' => url('post.php' . ($is_cat == 1 ? '?type=cat' : '')),
 ));
 
 //outils BBcode en javascript

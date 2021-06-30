@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 02
+ * @version     PHPBoost 6.0 - last update: 2021 06 30
  * @since       PHPBoost 1.6 - 2007 05 24
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,8 +15,8 @@ load_module_lang('wiki'); // to be deleted
 
 $lang = LangLoader::get('common', 'wiki');
 
-define('TITLE' , $LANG['wiki_favorites']);
-define('DESCRIPTION', $LANG['wiki_favorites_seo']);
+define('TITLE' , $lang['wiki.tracked.items']);
+define('DESCRIPTION', $lang['wiki.tracked.items.seo']);
 
 $bread_crumb_key = 'wiki_favorites';
 require_once('../wiki/wiki_bread_crumb.php');
@@ -92,9 +92,9 @@ else
 	$error = AppContext::get_request()->get_getvalue('error', '');
 	$error = !empty($error) ? TextHelper::strprotect($error) : '';
 	if ($error == 'e_no_favorite')
-		$errstr = $LANG['wiki_article_is_not_a_favorite'];
+		$errstr = $lang['wiki.article.is.not.a.favorite'];
 	elseif ($error == 'e_already_favorite')
-		$errstr = $LANG['wiki_already_favorite'];
+		$errstr = $lang['wiki.already.favorite'];
 	else
 		$errstr = '';
 	if (!empty($errstr))
@@ -109,20 +109,17 @@ else
 	));
 
 	$view->put_all(array(
-		'C_TRACKED_ITEMS' => $result->get_rows_count() > 0,
-		'L_FAVORITES' => $LANG['wiki_favorites'],
-		'L_NO_FAVORITE' => $LANG['wiki_no_favorite'],
-		'L_TITLE' => $LANG['title'],
-		'L_UNTRACK' => $LANG['wiki_unwatch']
+		'C_TRACKED_ITEMS' => $result->get_rows_count() > 0
 	));
 
 	$module_data_path = $view->get_pictures_data_path();
 	while ($row = $result->fetch())
 	{
 		$view->assign_block_vars('list', array(
-			'U_ITEM' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']),
 			'TITLE' => stripslashes($row['title']),
 			'ID' => $row['id'],
+
+			'U_ITEM'    => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']),
 			'U_UNTRACK' => url('favorites.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
 		));
 	}

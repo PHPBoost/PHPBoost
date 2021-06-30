@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 06 30
  * @since       PHPBoost 1.5 - 2007 05 25
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,7 +15,7 @@ load_module_lang('wiki'); // to be deleted
 
 $lang = LangLoader::get('common', 'wiki');
 
-define('TITLE', $LANG['administration']);
+define('TITLE', $lang['wiki.config.module.title']);
 require_once('../admin/admin_header.php');
 
 include_once('../wiki/wiki_auth.php');
@@ -56,26 +56,6 @@ $view->put_all(array(
 	'SELECT_COM'             => Authorizations::generate_select(WIKI_COM, $config->get_authorizations()),
 	'SELECT_RESTRICTION'     => Authorizations::generate_select(WIKI_RESTRICTION, $config->get_authorizations()),
 	'SELECT_READ'            => Authorizations::generate_select(WIKI_READ, $config->get_authorizations()),
-	//
-	'L_WIKI_MANAGEMENT' => $LANG['wiki_management'],
-	'L_WIKI_GROUPS' => $LANG['wiki_groups_config'],
-	'L_CONFIG_WIKI' => $LANG['wiki_config'],
-	'EXPLAIN_WIKI_GROUPS' => $LANG['explain_wiki_groups'],
-	'L_UPDATE' => $LANG['validate'],
-	'L_RESET' => $LANG['reset'],
-	'L_CREATE_ARTICLE' => $LANG['wiki_auth_create_article'],
-	'L_CREATE_CAT' => $LANG['wiki_auth_create_cat'],
-	'L_RESTORE_ARCHIVE' => $LANG['wiki_auth_restore_archive'],
-	'L_DELETE_ARCHIVE' => $LANG['wiki_auth_delete_archive'],
-	'L_EDIT' =>  $LANG['wiki_auth_edit'],
-	'L_DELETE' =>  $LANG['wiki_auth_delete'],
-	'L_RENAME' => $LANG['wiki_auth_rename'],
-	'L_REDIRECT' => $LANG['wiki_auth_redirect'],
-	'L_MOVE' => $LANG['wiki_auth_move'],
-	'L_STATUS' => $LANG['wiki_auth_status'],
-	'L_COM' => $LANG['wiki_auth_com'],
-	'L_RESTRICTION' => $LANG['wiki_auth_restriction'],
-	'L_READ' => $LANG['wiki_auth_read']
 ));
 
 $view->display();

@@ -31,11 +31,11 @@ if (!empty($id_article))
 		DispatchManager::redirect($error_controller);
 	}
 
-	define('TITLE', sprintf($LANG['wiki_history_article'], stripslashes($article_infos['title'])));
-	define('DESCRIPTION', sprintf($LANG['wiki_history_seo'], stripslashes($article_infos['title'])));
+	define('TITLE', sprintf($lang['wiki.item.history'], stripslashes($article_infos['title'])));
+	define('DESCRIPTION', sprintf($lang['wiki.history.seo'], stripslashes($article_infos['title'])));
 }
 else
-	define('TITLE', $LANG['wiki_history_all']);
+	define('TITLE', $lang['wiki.full.history']);
 
 $bread_crumb_key = !empty($id_article) ? 'wiki_history_article' : 'wiki_history';
 require_once('../wiki/wiki_bread_crumb.php');
@@ -45,7 +45,7 @@ require_once('../kernel/header.php');
 if (!empty($id_article))
 {
 	$view = new FileTemplate('wiki/history.tpl');
-	$view->add_lang(array_merge($lang, LangLoader::get('common-lang')));
+	$view->add_lang(array_merge($lang, LangLoader::get('common-lang'), LangLoader::get('user-lang')));
 
 	$view->put_all(array(
 		'C_ITEM' => true,
@@ -86,24 +86,18 @@ if (!empty($id_article))
 			'C_RESTORE'         => $row['activ'] != 1 && $restore_auth,
 			'C_DELETE'          => $row['activ'] != 1 && $delete_auth,
 			'C_CURRENT_VERSION' => $row['activ'] == 1,
-			'TITLE'           => $LANG['wiki_consult_article'],
+
 			'AUTHOR'          => !empty($row['display_name']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() . '" class="'.UserService::get_level_class($row['level']).' offload"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>' : $row['user_ip'],
 			'DATE'            => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
+
 			'U_ARTICLE'       => $row['activ'] == 1 ? url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']) : url('wiki.php?id_contents=' . $row['id_contents']),
 			'U_RESTORE'       => url('action.php?restore=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()),
 			'U_DELETE'        => url('action.php?del_contents=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()),
+
 			'L_CHANGE_REASON' => $row['change_reason']
 		));
 	}
 	$result->dispose();
-
-	$view->put_all(array(
-		'L_VERSIONS' => $LANG['wiki_version_list'],
-		'L_DATE' => LangLoader::get_message('date.date', 'date-lang'),
-		'L_AUTHOR' => $LANG['wiki_author'],
-		'L_ACTIONS' => $LANG['wiki_possible_actions'],
-		'L_CHANGE_REASON' => $LANG['wiki_change_reason']
-		));
 
 	$view->display();
 }
@@ -134,15 +128,12 @@ else //On affiche la liste des modifications
 
 	$view->put_all(array(
 		'C_PAGINATION' => $pagination->has_several_pages(),
-		'L_HISTORY' => $LANG['wiki_history'],
-		'L_TITLE' => $LANG['wiki_article_title'],
-		'L_AUTHOR' => $LANG['wiki_author'],
-		'L_DATE' => LangLoader::get_message('date.date', 'date-lang'),
-		'TOP_TITLE' => ($field == 'title' && $order == 'asc') ? '' : url('history.php?p=' . $page . '&amp;field=title&amp;order=asc'),
+
+		'TOP_TITLE'    => ($field == 'title' && $order == 'asc') ? ''  : url('history.php?p=' . $page . '&amp;field=title&amp;order=asc'),
 		'BOTTOM_TITLE' => ($field == 'title' && $order == 'desc') ? '' : url('history.php?p=' . $page . '&amp;field=title&amp;order=desc'),
-		'TOP_DATE' => ($field == 'timestamp' && $order == 'asc') ? '' : url('history.php?p=' . $page . '&amp;field=timestamp&amp;order=asc'),
-		'BOTTOM_DATE' => ($field == 'timestamp' && $order == 'desc') ? '' : url('history.php?p=' . $page . '&amp;field=timestamp&amp;order=desc'),
-		'PAGINATION' => $pagination->display(),
+		'TOP_DATE'     => ($field == 'timestamp' && $order == 'asc') ? ''  : url('history.php?p=' . $page . '&amp;field=timestamp&amp;order=asc'),
+		'BOTTOM_DATE'  => ($field == 'timestamp' && $order == 'desc') ? '' : url('history.php?p=' . $page . '&amp;field=timestamp&amp;order=desc'),
+		'PAGINATION'   => $pagination->display(),
 	));
 
 	$result = PersistenceContext::get_querier()->select("SELECT
@@ -166,10 +157,18 @@ else //On affiche la liste des modifications
 		$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
 		$view->assign_block_vars('list', array(
-			'TITLE'       => stripslashes($row['title']),
-			'AUTHOR'      => !empty($row['display_name']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() . '" class="'.UserService::get_level_class($row['level']).' offload"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>' : $row['user_ip'],
-			'LAST_UPDATE' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-			'U_ITEM'      => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
+			'C_AUTHOR_EXISTS'      => !empty($row['display_name']),
+			'C_AUTHOR_GROUP_COLOR' => !empty($group_color),
+
+			'TITLE'               => stripslashes($row['title']),
+			'AUTHOR_DISPLAY_NAME' => $row['display_name'],
+			'AUTHOR_LEVEL_CLASS'  => UserService::get_level_class($row['level']),
+			'AUTHOR_IP'           =>$row['user_ip'],
+			'AUTHOR_GROUP_COLOR'  =>$group_color,
+			'LAST_UPDATE'         => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
+
+			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
+			'U_ITEM'           => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
 		));
 	}
 	$result->dispose();

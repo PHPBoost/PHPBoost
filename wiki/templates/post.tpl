@@ -49,7 +49,7 @@
 			# ENDIF #
 		# ELSE #
 			# IF C_EDIT_ITEM #
-				{@wiki.item.edit}
+				{@wiki.edit.item}
 				<h3 class="align-center">{TITLE}</h3>
 			# ELSE #
 				{@wiki.create.item}
@@ -60,7 +60,7 @@
 	<div class="sub-section">
 		<div class="content-container">
 			<div class="content">
-				<form action="{TARGET}" method="post" onsubmit="return check_form_post();" class="fieldset-content wiki-edit">
+				<form action="{U_TARGET}" method="post" onsubmit="return check_form_post();" class="fieldset-content wiki-edit">
 					<p class="align-center small text-italic">{@form.required.fields}</p>
 					<fieldset>
 						<legend>{@form.parameters}</legend>
@@ -83,12 +83,12 @@
 										<div class="cats">
 											<div class="content no-list">
 												<ul>
-													<li><a class="{CATEGORY_0}" id="class-0" href="javascript:select_cat(0);"><i class="fa fa-folder" aria-hidden="true"></i>{L_DO_NOT_SELECT_ANY_CAT}</a>
+													<li><a class="{CATEGORY_0}" id="class-0" href="javascript:select_cat(0);"><i class="fa fa-folder" aria-hidden="true"></i>{@common.root}</a>
 														<ul>
 															# START create.list #
 																<li class="sub">
 																	# IF create.list.C_SUB_CAT #
-																		<a class="parent" href="javascript:show_wiki_cat_contents({create.list.ID}, 1);" aria-label="${LangLoader::get_message('common.display', 'common-lang')}">
+																		<a class="parent" href="javascript:show_wiki_cat_contents({create.list.ID}, 1);" aria-label="{@common.display}">
 																			<i class="fa fa-plus-square" id="img-subfolder-{create.list.ID}"></i>
 																			<i class="fa fa-folder" id="img-folder-{create.list.ID}"></i>
 																		</a>
@@ -147,7 +147,7 @@
 					</fieldset>
 					<fieldset class="fieldset-submit">
 						<legend>{@form.submit}</legend>
-						<input type="hidden" name="is_cat" value="{IS_CAT}">
+						<input type="hidden" name="is_cat" value="{IS_CATEGORY}">
 						<input type="hidden" name="id_edit" value="{ID_EDIT}">
 						<input type="hidden" name="token" value="{TOKEN}">
 						<button type="submit" class="button submit" name="submit">{@form.submit}</button>

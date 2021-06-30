@@ -17,40 +17,43 @@
 
 $lang['wiki.module.title'] = 'Wiki';
 
-$lang['wiki.item.views.number']          = 'This page has been seen %d times';
-$lang['wiki.contribution.tools']         = 'Contribute';
-$lang['wiki.tools']                      = 'Tools';
-$lang['wiki.author']                     = 'Author';
-$lang['wiki.empty.index']                = 'The wiki is empty. If you have an administrator account you can create pages and edit the wiki index into the administration panel.';
-$lang['wiki.summary.menu']               = 'Table of contents';
-$lang['wiki.read.feed']                  = 'Read the article';
-$lang['wiki.random.page']                = 'Random page';
-$lang['wiki.restriction.level']          = 'Permission level';
-$lang['wiki.define.status']              = 'Define status';
-$lang['wiki.last.articles.list']         = 'Last updated articles :';
-$lang['wiki.categories.list']            = 'List of main categories';
-$lang['wiki.items.in.category']          = 'Articles of this category';
-$lang['wiki.sub.categories.in.category'] = 'Categories contained by this category :';
+$lang['wiki.page.views.number'] = 'This page has been seen %d times';
+$lang['wiki.contribution']      = 'Contribute';
+$lang['wiki.tools']             = 'Tools';
+$lang['wiki.author']            = 'Author';
+$lang['wiki.empty.index']       = 'The wiki is empty. If you have an administrator account you can create pages and edit the wiki index into the administration panel.';
+$lang['wiki.summary.menu']      = 'Table of contents';
+$lang['wiki.random.page']       = 'Random page';
+$lang['wiki.restriction.level'] = 'Permission level';
+$lang['wiki.define.status']     = 'Define status';
+$lang['wiki.last.items.list']   = 'Last updated articles :';
+$lang['wiki.categories.list']   = 'List of main categories';
+$lang['wiki.items.in.category'] = 'Articles of this category';
+$lang['wiki.sub.categories']    = 'Categories contained by this category :';
+$lang['wiki.no.sub.item']       = 'No existing sub-article';
 
 // Archives
-$lang['wiki.history']                = 'History';
-$lang['wiki.history.all']            = 'Wiki history';
-$lang['wiki.history.article']        = 'History of article %s';
-$lang['wiki.history.seo']            = 'All history of article %s';
-$lang['wiki.versions']           	 = 'Versions';
-$lang['wiki.version.date']           = 'Version date';
-$lang['wiki.current.version']        = 'Current version';
-$lang['wiki.article.does.not.exist'] = 'The article you want to read doesn\'t exist, if you want to create it you can do it on this page.';
-$lang['wiki.cat.does.not.exist']     = 'Error : the category you want to read doesn\'t exist. <a class="offload" href="wiki.php">Go back to wiki index.</a>';
-$lang['wiki.consult.article']        = 'Read';
-$lang['wiki.restore.version']        = 'Restore this version';
-$lang['wiki.actions']                = 'Possible actions';
-$lang['wiki.no.action']              = 'No action possible';
+$lang['wiki.history']         = 'History';
+$lang['wiki.full.history']    = 'Wiki history';
+$lang['wiki.item.history']    = 'History of article %s';
+$lang['wiki.history.seo']     = 'All history of article %s';
+$lang['wiki.versions'] 	      = 'Versions';
+$lang['wiki.version.date']    = 'Version date';
+$lang['wiki.current.version'] = 'Current version';
+$lang['wiki.item.unexists']   = 'The article you want to read doesn\'t exist, if you want to create it you can do it on this page.';
+$lang['wiki.consult']         = 'Read';
+$lang['wiki.restore.version'] = 'Restore this version';
+$lang['wiki.actions']         = 'Possible actions';
+$lang['wiki.no.action']       = 'No action possible';
 
-// Changing reason
-$lang['wiki.changing.reason.label'] = 'Reason for the change (optional 100 car max)';
-$lang['wiki.changing.reason']       = 'Reason for the change';
-$lang['wiki.item.init']             = 'Initialization';
+// Categories
+$lang['wiki.current.category']         = 'Current category';
+$lang['wiki.select.category']          = 'Select a category';
+$lang['wiki.selected.category']        = 'Selected category';
+$lang['wiki.no.category']              = 'No existing category';
+$lang['wiki.no.selected.category']     = 'No category selected';
+$lang['wiki.no.existing.category']     = 'No existing category';
+$lang['wiki.no.existing.sub.category'] = 'No existing sub-category';
 
 // Configuration
 $lang['wiki.config.module.title']        = 'Wiki configuration';
@@ -81,7 +84,7 @@ $lang['wiki.authorizations.status']           = 'Edit an article status';
 $lang['wiki.authorizations.comment']          = 'Comment an article';
 $lang['wiki.authorizations.restriction']      = 'Edit restrictions level of an article';
 $lang['wiki.authorizations.restriction.clue'] = 'It is advised to keep it for moderators only';
-	// Default
+	// Default install
 $lang['wiki.name'] = 'Wiki ' . GeneralConfig::load()->get_site_name();
 $lang['wiki.index.text'] = '
 	Welcome on the wiki module!
@@ -95,38 +98,30 @@ $lang['wiki.index.text'] = '
 	For more information about the features of this module, feel free to ask questions on the <a class="offload" href="https://www.phpboost.com/forum/">support forum</a>.
 ';
 
-// Categories
-$lang['wiki.current.category']         = 'Current category';
-$lang['wiki.select.category']          = 'Select a category';
-$lang['wiki.selected.category']        = 'Selected category';
-$lang['wiki.no.category']              = 'No existing category';
-$lang['wiki.no.selected.category']     = 'No category selected';
-$lang['wiki.no.existing.category']     = 'No existing category';
-$lang['wiki.no.existing.sub.category'] = 'No existing sub-category';
+// Changing reason
+$lang['wiki.changing.reason.label'] = 'Reason for the change (optional 100 car max)';
+$lang['wiki.changing.reason']       = 'Reason for the change';
+$lang['wiki.item.init']             = 'Initialization';
 
 // Explorer
-$lang['wiki.explorer']       = 'Wiki explorer';
-$lang['wiki.explorer.short'] = 'Explorer';
-$lang['wiki.explorer.seo']   = 'Explorer to navigate the tree of different pages of the wiki.';
-$lang['wiki.root']           = 'Wiki root';
-$lang['wiki.content']        = 'Content';
-$lang['wiki.cats.tree']      = 'Category tree';
+$lang['wiki.explorer']        = 'Wiki explorer';
+$lang['wiki.explorer.short']  = 'Explorer';
+$lang['wiki.explorer.seo']    = 'Explorer to navigate the tree of different pages of the wiki.';
+$lang['wiki.root']            = 'Wiki root';
+$lang['wiki.content']         = 'Content';
+$lang['wiki.categories.tree'] = 'Category tree';
 
 // Post | edit
-$lang['wiki.preview']         = 'Preview';
 $lang['wiki.create.item']     = 'Create an article';
 $lang['wiki.create.category'] = 'Create a category';
 $lang['wiki.warning.update']  = 'This article has been updated, you are now consulting an old release of this article!';
 $lang['wiki.contribute']      = 'Contribute to the wiki';
-$lang['wiki.item.edit']       = 'Edition of the article';
+$lang['wiki.edit.item']       = 'Edition of the article';
 $lang['wiki.category.edit']   = 'Edition of the category';
-
-$lang['wiki.no.item']         = 'No existing article';
-$lang['wiki.no.sub.item']     = 'No existing subarticle';
 	// js_tools
-$lang['wiki.link.name.add'] = 'Please enter a link name';
-$lang['wiki.insert.link']   = 'Insert a link into the article';
-$lang['wiki.link.title']    = 'Article title';
+$lang['wiki.warning.link.name'] = 'Please enter a link name';
+$lang['wiki.insert.link']       = 'Insert a link into the article';
+$lang['wiki.link.title']        = 'Article title';
 $lang['wiki.no.js.insert.link'] = '
 	If you want to insert a link to an article you can use the link tag :
 	[link=a]b[/link] where a is the title of the article in which you want to create a link (enough special characters) and b represents the name of the link.
@@ -138,9 +133,9 @@ $lang['wiki.paragraph.name']         = 'Paragraph title';
 
 // Properties
 	// Comments
-$lang['wiki.article.com']         = 'Discussion about the article %s';
-$lang['wiki.article.com.article'] = 'Discussion';
-$lang['wiki.article.com.seo']     = 'All discussions for article %s';
+$lang['wiki.comments.management'] = 'Discussion about the article %s';
+$lang['wiki.comments']            = 'Discussion';
+$lang['wiki.comments.seo']        = 'All discussions for article %s';
 	//Delete
 $lang['wiki.confirm.delete.archive']  = 'Are you sure you want to delete this version of the article?';
 $lang['wiki.remove.category']         = 'Delete a category';
@@ -149,8 +144,7 @@ $lang['wiki.remove.category.clue']    = 'You want to delete this category. You c
 $lang['wiki.remove.all.contents']     = 'Delete all its content (irreversible actions)';
 $lang['wiki.move.all.contents']       = 'Move all the content in this folder:';
 $lang['wiki.future.category']         = 'Category in which you want to move these element:';
-$lang['wiki.alert.removing.category'] = 'Are you sure you want to delete this category? (definitive)';
-$lang['wiki.confirm.remove.article']  = 'Are you sure you want to delete this article?';
+$lang['wiki.confirm.remove.category'] = 'Are you sure you want to delete this category? (definitive)';
 $lang['wiki.no.valid.category']       = 'You have not selected a valid category!';
 	// Move
 $lang['wiki.moving.management']          = 'Moving of an article';
@@ -178,22 +172,14 @@ $lang['wiki.renaming.redirection'] = 'Create an automatic redirection from the o
 $lang['wiki.title.already.exists'] = 'The title you want to choose already exists. Please choose another one';
 	// Restrictions
 $lang['wiki.authorizations.management']   = 'Permissions management';
-$lang['wiki.member.restriction']          = 'This article is protected, only members can edit it.';
-$lang['wiki.modo.restriction']            = 'This article is protected, only moderators can edit it.';
-$lang['wiki.admin.restriction']           = 'This article is protected, only administrators can edit it.';
-$lang['wiki.edition.restriction']         = 'Edition permissions';
-$lang['wiki.no.restriction']              = 'No restrictions';
-$lang['wiki.auth.management.article']     = 'Permissions management of the article <em>%s</em>';
 $lang['wiki.default.authorizations.clue'] = 'Don\'t take into account any particular restriction to this article; permissions of this article will be global permissions.';
 $lang['wiki.default.authorizations']      = 'Default permissions';
 	// Status
-$lang['wiki.status.management']         = 'Articles status management';
-$lang['wiki.status.management.article'] = 'Status management of the article <em>%s</em>';
-$lang['wiki.defined.status']            = 'Defined status';
-$lang['wiki.undefined.status']          = 'Personalized status';
-$lang['wiki.no.status']                 = 'No status';
-$lang['wiki.status.explain']            = 'Here you can select the status of this article. Several different status permit you to order your articles and to show a particular point for each article.<br />You can assign as well defined status to you articles or personalized one. To use a defined status let the personalized field empty.';
-$lang['wiki.current.status']            = 'Current status';
+$lang['wiki.status.management'] = 'Articles status management';
+$lang['wiki.defined.status']    = 'Defined status';
+$lang['wiki.undefined.status']  = 'Personalized status';
+$lang['wiki.no.status']         = 'No status';
+$lang['wiki.current.status']    = 'Current status';
 $lang['wiki.status.list'] = array(
 	array('Quality article', '<span class="message-helper bgc notice">This article is very good.</span>'),
 	array('Unachieved article', '<span class="message-helper bgc question">This article lacks sources. <br />Your knowlegde is welcome to complete it.</span>'),
@@ -202,9 +188,9 @@ $lang['wiki.status.list'] = array(
 	array('Article discussion', '<span class="message-helper bgc error">This article was a subject of discussion and its content seems to be incorrect. You can eventually read discussions and maybe use your knowledge to complete it.</span>')
 );
 
-//RSS
-$lang['wiki.rss.cat']           = 'Last articles of the category: %s';
-$lang['wiki.rss.last.articles'] = '%s                           : last articles';
+// RSS
+$lang['wiki.rss.category']   = 'Last articles of the category: %s';
+$lang['wiki.rss.last.items'] = '%s : last articles';
 
 // Tools menu
 $lang['wiki.update.index'] = 'Edit wiki index';

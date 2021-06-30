@@ -3,21 +3,20 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 10 24
+ * @version     PHPBoost 6.0 - last update: 2021 06 30
  * @since       PHPBoost 3.0 - 2010 02 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class WikiFeedProvider implements FeedProvider
 {
 	public function get_feeds_list()
 	{
-		global $LANG;
-
 		require_once(PATH_TO_ROOT.'/wiki/wiki_functions.php');
 
-		$cats_tree = new FeedsCat('wiki', 0, $LANG['root']);
+		$cats_tree = new FeedsCat('wiki', 0, LangLoader::get_message('common.root', 'common-lang'));
 		$categories = WikiCategoriesCache::load()->get_categories();
 		build_wiki_cat_children($cats_tree, array_values($categories));
 		$feeds = new FeedsList();
@@ -28,33 +27,31 @@ class WikiFeedProvider implements FeedProvider
 	public function get_feed_data_struct($idcat = 0, $name = '')
 	{
 		$querier = PersistenceContext::get_querier();
-		global $LANG;
-
-		load_module_lang('wiki');
+		$lang = LangLoader::get('common', 'wiki');
 
 		$categories = WikiCategoriesCache::load()->get_categories();
 		$config = WikiConfig::load();
 		$parameters = array('limit' => 20);
 		if (($idcat > 0) && array_key_exists($idcat, $categories))//Catégorie
 		{
-			$desc = sprintf($LANG['wiki_rss_cat'], stripslashes($categories[$idcat]['title']));
+			$desc = sprintf($lang['wiki.rss.category'], stripslashes($categories[$idcat]['title']));
 			$where = 'AND a.id_cat = :idcat';
 			$parameters['idcat'] = $idcat;
 		}
 		else //Sinon derniers messages
 		{
-			$desc = sprintf($LANG['wiki_rss_last_articles'], ($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']));
+			$desc = sprintf($lang['wiki.rss.last.items'], ($config->get_wiki_name() ? $config->get_wiki_name() : $lang['wiki.module.title']));
 			$where = '';
 		}
 
 		$data = new FeedData();
 
-		$data->set_title($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']);
+		$data->set_title($config->get_wiki_name() ? $config->get_wiki_name() : $lang['wiki.module.title']);
 		$data->set_date(new Date());
 		$data->set_link(SyndicationUrlBuilder::rss('wiki', $idcat));
 		$data->set_host(HOST);
 		$data->set_desc($desc);
-		$data->set_lang($LANG['xml_lang']);
+		$data->set_lang(LangLoader::get_message('common.xml.lang', 'common-lang'));
 
 		// Last news
 		$results = $querier->select('SELECT a.title, a.encoded_title, c.content, c.timestamp

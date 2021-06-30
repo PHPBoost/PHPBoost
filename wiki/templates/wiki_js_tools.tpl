@@ -1,6 +1,6 @@
 <script>
 	var tinymce_editor       = {C_TINYMCE_EDITOR};
-	var enter_text           = "{@wiki.link.name.add}";
+	var enter_text           = "{@wiki.warning.link.name}";
 	var title_link           = "{@wiki.link.title}";
 	var enter_paragraph_name = "{@wiki.warning.paragraph.name}";
 	var title_paragraph      = "{@wiki.paragraph.name}";

@@ -27,7 +27,7 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		$lang = LangLoader::get('common', 'wiki');
 
-		global $Bread_crumb, $LANG, $encoded_title, $id_article, $article_infos, $id_cat;
+		global $Bread_crumb, $encoded_title, $id_article, $article_infos, $id_cat;
 
 		include_once(PATH_TO_ROOT . '/wiki/wiki_functions.php');
 		$bread_crumb_key = 'wiki';

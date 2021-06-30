@@ -31,13 +31,17 @@
 								# START list #
 									<tr# IF list.C_CURRENT_VERSION # class="bgc visitor"# ENDIF #>
 										<td>
-											<a class="offload" href="{list.U_ARTICLE}">{list.TITLE}</a>
+											<a class="offload" href="{list.U_ARTICLE}">{@wiki.consult}</a>
 										</td>
 										<td>
 											{list.DATE}
 										</td>
 										<td>
-											{list.AUTHOR}
+											# IF list.C_AUTHOR_EXISTS #
+												<a href="{list.U_AUTHOR_PROFILE}" class="{list.AUTHOR_LEVEL_CLASS} offload"# IF list.C_AUTHOR_GROUP_COLOR # style="color: {list.AUTHOR_GROUP_COLOR};"# ENDIF #>{list.AUTHOR_DISPLAY_NAME}</a>
+											# ELSE #
+												<span aria-label="{list.AUTHOR_IP}">{@user.guest}</span>
+											# ENDIF #
 										</td>
 										<td>
 											{list.L_CHANGE_REASON}

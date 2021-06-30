@@ -13,12 +13,12 @@
 			<div class="cell-flex cell-tile cell-columns-2">
 				<div class="cats cell">
 					<div class="cell-header">
-						<h6 class="cell-name">{@wiki.cats.tree}</h6>
+						<h6 class="cell-name">{@wiki.categories.tree}</h6>
 					</div>
 					<div class="cell-list no-list">
 						<ul>
 							<li>
-								<a id="class-0" class="{CAT_0}" href="javascript:open_cat(0);"><i class="fa fa-fw fa-folder" aria-hidden="true"></i> {@common.root}</a>
+								<a id="class-0" class="{ROOT_CATEGORY}" href="javascript:open_cat(0);"><i class="fa fa-fw fa-folder" aria-hidden="true"></i> {@common.root}</a>
 								<ul>
 									# START list #
 										<li class="sub-cat-tree">
@@ -34,7 +34,7 @@
 											<span id="cat-{list.ID}"></span>
 										</li>
 									# END list #
-									{CAT_LIST}
+									{CATEGORIES_LIST}
 								</ul>
 							</li>
 						</ul>
@@ -55,7 +55,7 @@
 							# END list_cats #
 							# START list_files #
 								<li>
-									<a class="explorer-list-file-link offload" href="{list_files.URL_FILE}">
+									<a class="explorer-list-file-link offload" href="{list_files.U_ITEM}">
 										<i class="fa fa-fw fa-file" aria-hidden="true"></i> {list_files.TITLE}
 									</a>
 								</li>

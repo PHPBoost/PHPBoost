@@ -1,7 +1,7 @@
 <section id="module-wiki">
 	<header class="section-header">
 		<div class="controls align-right">
-			<a class="offload" href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
+			<a class="offload" href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CATEGORY))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 			{CATEGORY_TITLE}
 		</div>
 		<h1 itemprop="name">{TITLE}</h1>
@@ -13,13 +13,13 @@
 					# IF cat.list_cats #
 						<aside class="cell">
 							<div class="cell-header">
-								<h6 class="cell-name">{@wiki.sub.categories.in.category}</h6>
+								<h6 class="cell-name">{@wiki.sub.categories}</h6>
 							</div>
 							<div class="cell-list">
 								<ul>
 									# START cat.list_cats #
 										<li>
-											<i class="fa fa-folder" aria-hidden="true"></i> <a class="offload" href="{cat.list_cats.U_CAT}">{cat.list_cats.NAME}</a>
+											<i class="fa fa-folder" aria-hidden="true"></i> <a class="offload" href="{cat.list_cats.U_CATEGORY}">{cat.list_cats.NAME}</a>
 										</li>
 									# END cat.list_cats #
 								</ul>
@@ -34,7 +34,7 @@
 							<ul>
 								# START cat.list_art #
 									<li>
-										<i class="fa fa-file" aria-hidden="true"></i> <a class="offload" href="{cat.list_art.U_ARTICLE}">{cat.list_art.TITLE}</a>
+										<i class="fa fa-file" aria-hidden="true"></i> <a class="offload" href="{cat.list_art.U_ITEM}">{cat.list_art.TITLE}</a>
 									</li>
 								# END cat.list_art #
 							</ul>
@@ -72,13 +72,13 @@
 
 					# START menu #
 						# IF C_STICKY_MENU #
-							<span class="wiki-sticky-title blink">{L_TABLE_OF_CONTENTS}</span>
+							<span class="wiki-sticky-title blink">{@wiki.summary.menu}</span>
 							<div class="wiki-sticky">
 								{menu.MENU}
 							</div>
 						# ELSE #
 							<div class="wiki-summary">
-								<div class="wiki-summary-title">{L_TABLE_OF_CONTENTS}</div>
+								<div class="wiki-summary-title">{@wiki.summary.menu}</div>
 								{menu.MENU}
 							</div>
 						# ENDIF #
@@ -90,7 +90,7 @@
 			</article>
 		</div>
 	</div>
-	<footer><div class="wiki-hits">{HITS}</div></footer>
+	<footer><div class="wiki-hits">{L_VIEWS_NUMBER}</div></footer>
 </section>
 
 # IF C_STICKY_MENU #

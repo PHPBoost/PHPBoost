@@ -165,7 +165,7 @@
 						<fieldset class="fieldset-submit">
 							<legend>{@form.submit}</legend>
 							<div class="fieldset-inset">
-								<input type="hidden" name="id_change_status" value="{status.ID_ARTICLE}">
+								<input type="hidden" name="id_change_status" value="{status.ITEM_ID}">
 								<input type="hidden" name="token" value="{TOKEN}">
 								<button type="submit" class="button submit" value="true">{@form.submit}</button>
 								<button type="button" class="button preview-button" onclick="XMLHttpRequest_preview();jQuery('#xmlhttprequest_result').fadeOut();">{@form.preview}</button>
@@ -213,7 +213,7 @@
 										<div class="content no-list">
 											<ul>
 												<li>
-													<a id="class-0" class="{move.CAT_0}" href="javascript:select_cat(0);"><i class="fa fa-folder" aria-hidden="true"></i> {@wiki.no.category}</a>
+													<a id="class-0" class="{move.ROOT_CATEGORY}" href="javascript:select_cat(0);"><i class="fa fa-folder" aria-hidden="true"></i> {@wiki.no.category}</a>
 													{move.CATEGORIES_LIST}
 												</li>
 											</ul>
@@ -226,7 +226,7 @@
 						<fieldset class="fieldset-submit">
 							<legend>{@form.submit}</legend>
 							<div class="fieldset-inset">
-								<input type="hidden" name="id_to_move" value="{move.ID_ARTICLE}">
+								<input type="hidden" name="id_to_move" value="{move.ITEM_ID}">
 								<input type="hidden" name="token" value="{TOKEN}">
 								<button type="submit" value="true" class="button submit">{@form.submit}</button>
 							</div>
@@ -282,7 +282,7 @@
 						<fieldset class="fieldset-submit">
 							<legend>{@form.submit}</legend>
 							<div class="fieldset-inset">
-								<input type="hidden" name="id_to_rename" value="{rename.ID_ARTICLE}">
+								<input type="hidden" name="id_to_rename" value="{rename.ITEM_ID}">
 								<input type="hidden" name="token" value="{TOKEN}">
 								<button type="submit" value="true" class="button submit">{@form.submit}</button>
 							</div>
@@ -337,7 +337,7 @@
 						</tbody>
 					</table>
 					<p class="align-center">
-						<a href="{U_CREATE_REDIRECTION}" class="button submit"><i class="fa fa-fast-forward" aria-hidden="true"></i> {L_CREATE_REDIRECTION}</a>
+						<a href="{U_CREATE_REDIRECTION}" class="button submit offload"><i class="fa fa-fast-forward" aria-hidden="true"></i> {@wiki.create.redirection}</a>
 					</p>
 				</div>
 			</div>
@@ -378,7 +378,7 @@
 
 						<fieldset class="fieldset-submit">
 							<legend>{@form.submit}</legend>
-							<input type="hidden" name="create_redirection" value="{create.ID_ARTICLE}">
+							<input type="hidden" name="create_redirection" value="{create.ITEM_ID}">
 							<input type="hidden" name="token" value="{TOKEN}">
 							<button type="submit" value="true" class="button submit">{@form.submit}</button>
 						</fieldset>
@@ -428,7 +428,7 @@
 								<div class="form-element">
 									<label for="id_cat">{@wiki.selected.category}</label>
 									<div class="form-field">
-										<input type="hidden" name="report_cat" value="{remove.ID_CAT}" id="id_cat">
+										<input type="hidden" name="report_cat" value="{remove.ID_CATEGORY}" id="id_cat">
 										<div id="selected_cat">{remove.CURRENT_CAT}</div>
 									</div>
 								</div>
@@ -438,7 +438,7 @@
 										<div class="content no-list">
 											<ul>
 												<li>
-													<a href="javascript:select_cat(0);"><i class="fa fa-folder" aria-hidden="true"></i> <span id="class-0" class="{remove.CAT_0}">{@wiki.no.category}</span></a>
+													<a href="javascript:select_cat(0);"><i class="fa fa-folder" aria-hidden="true"></i> <span id="class-0" class="{remove.ROOT_CATEGORY}">{@wiki.no.category}</span></a>
 													{remove.CATEGORIES_LIST}
 												</li>
 											</ul>
@@ -451,7 +451,7 @@
 						<fieldset class="fieldset-submit">
 							<legend>{@form.submit}</legend>
 							<div class="fieldset-inset">
-								<input type="hidden" name="id_to_remove" value="{remove.ID_ARTICLE}">
+								<input type="hidden" name="id_to_remove" value="{remove.ITEM_ID}">
 								<input type="hidden" name="token" value="{TOKEN}">
 								<button type="submit" value="true" class="button submit">{@form.submit}</button>
 							</div>

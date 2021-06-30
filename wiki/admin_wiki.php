@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 06 30
  * @since       PHPBoost 1.6 - 2006 11 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,7 +15,7 @@ load_module_lang('wiki'); // to be deleted
 
 $lang = LangLoader::get('common', 'wiki');
 
-define('TITLE', $LANG['administration']);
+define('TITLE', $lang['wiki.config.module.title']);
 require_once('../admin/admin_header.php');
 include_once('../wiki/wiki_functions.php');
 
@@ -35,7 +35,7 @@ $view->add_lang(array_merge($lang, LangLoader::get('form-lang')));
 // Execute on validation
 if ($update)
 {
-	$config->set_wiki_name(TextHelper::strprotect(retrieve(POST, 'wiki_name', $LANG['wiki'], TSTRING_AS_RECEIVED), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE));
+	$config->set_wiki_name(TextHelper::strprotect(retrieve(POST, 'wiki_name', $lang['wiki.module.title'], TSTRING_AS_RECEIVED), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE));
 	$config->set_number_articles_on_index(retrieve(POST, 'number_articles_on_index', 0));
 	if ($display_categories_on_index)
 		$config->display_categories_on_index();
@@ -71,26 +71,8 @@ $view->put_all(array(
 	'WIKI_NAME'                   => $config->get_wiki_name(),
 	'HIDE_CATEGORIES_ON_INDEX'    => !$config->are_categories_displayed_on_index() ? 'checked="checked"' : '',
 	'DISPLAY_CATEGORIES_ON_INDEX' => $config->are_categories_displayed_on_index() ? 'checked="checked"' : '',
-	'NUMBER_ARTICLES_ON_INDEX'    => $config->get_number_articles_on_index(),
+	'ITEMS_NUMBER_ON_INDEX'       => $config->get_number_articles_on_index(),
 	'DESCRIPTION'                 => FormatingHelper::unparse($config->get_index_text()),
-	//
-	'L_UPDATE' => $LANG['validate'],
-	'L_RESET' => $LANG['reset'],
-	'L_PREVIEW' => $LANG['preview'],
-	'L_WIKI_MANAGEMENT' => $LANG['wiki_management'],
-	'L_WIKI_GROUPS' => $LANG['wiki_groups_config'],
-	'L_CONFIG_WIKI' => $LANG['wiki_config'],
-	'L_WHOLE_WIKI' => $LANG['wiki_config_whole'],
-	'L_INDEX_WIKI' => $LANG['wiki_index'],
-	'L_HITS_COUNTER' => $LANG['wiki_count_hits'],
-	'L_STICKY_MENU' => $LANG['wiki_sticky_menu'],
-	'L_WIKI_NAME' => $LANG['wiki_name'],
-	'L_DISPLAY_CATEGORIES_ON_INDEX' => $LANG['wiki_display_cats'],
-	'L_NOT_DISPLAY' => $LANG['wiki_no_display'],
-	'L_DISPLAY' => $LANG['wiki_display'],
-	'L_NUMBER_ARTICLES_ON_INDEX' => $LANG['wiki_last_articles'],
-	'L_NUMBER_ARTICLES_ON_INDEX_EXPLAIN' => $LANG['wiki_last_articles_explain'],
-	'L_DESCRIPTION' => $LANG['wiki_desc']
 ));
 
 $view->display();

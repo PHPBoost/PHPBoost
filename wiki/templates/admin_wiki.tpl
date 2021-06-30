@@ -77,7 +77,7 @@
 				<div class="form-element">
 					<label for="number_articles_on_index">{@wiki.config.last.items} <span class="field-description">{@wiki.config.last.items.clue}</span></label>
 					<div class="form-field form-field-text">
-						<input type="text" name="number_articles_on_index" id="number_articles_on_index" value="{NUMBER_ARTICLES_ON_INDEX}">
+						<input type="text" name="number_articles_on_index" id="number_articles_on_index" value="{ITEMS_NUMBER_ON_INDEX}">
 					</div>
 				</div>
 				<div class="form-element form-element-textarea">
@@ -88,16 +88,16 @@
 					<div id="xmlhttprequest-preview-contents" class="xmlhttprequest-preview" style="display: none;"></div>
 					{KERNEL_EDITOR}
 					<textarea rows="10" cols="60" id="contents" name="contents">{DESCRIPTION}</textarea>
-					<div class="align-center"><button type="button" class="button preview-button" onclick="XMLHttpRequest_preview('contents');">{L_PREVIEW}</button></div>
+					<div class="align-center"><button type="button" class="button preview-button" onclick="XMLHttpRequest_preview('contents');">{@form.preview}</button></div>
 				</div>
 			</div>
 		</fieldset>
 
 		<fieldset class="fieldset-submit">
-			<legend>{L_UPDATE}</legend>
+			<legend>{@form.submit}</legend>
 			<div class="fieldset-inset">
-				<button type="submit" name="update" value="true" class="button submit">{L_UPDATE}</button>
-				<button type="reset" class="button reset-button" value="true">{L_RESET}</button>
+				<button type="submit" name="update" value="true" class="button submit">{@form.submit}</button>
+				<button type="reset" class="button reset-button" value="true">{@form.reset}</button>
 				<input type="hidden" name="token" value="{TOKEN}">
 			</div>
 		</fieldset>

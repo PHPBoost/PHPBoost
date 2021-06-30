@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2015 11 24
+ * @version     PHPBoost 6.0 - last update: 2021 06 30
  * @since       PHPBoost 3.0 - 2010 06 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class WikiSitemapExtensionPoint implements SitemapExtensionPoint
@@ -22,14 +23,11 @@ class WikiSitemapExtensionPoint implements SitemapExtensionPoint
 
 	private function get_module_map($auth_mode)
 	{
-		global $LANG;
-
-		load_module_lang('wiki');
-
+		$lang = LangLoader::get('common', 'wiki');
 		$categories_cache = WikiCategoriesCache::load();
 		$categories = $categories_cache->get_categories();
 
-		$wiki_link = new SitemapLink($LANG['wiki'], new Url('/wiki/wiki.php'), Sitemap::FREQ_DEFAULT, Sitemap::PRIORITY_LOW);
+		$wiki_link = new SitemapLink($lang['wiki.module.title'], new Url('/wiki/wiki.php'), Sitemap::FREQ_DEFAULT, Sitemap::PRIORITY_LOW);
 		$module_map = new ModuleMap($wiki_link, 'wiki');
 
 		$id_cat = 0;
@@ -52,8 +50,6 @@ class WikiSitemapExtensionPoint implements SitemapExtensionPoint
 
 	private function create_module_map_sections($id_cat, $auth_mode)
 	{
-		global $LANG;
-
 		$categories_cache = WikiCategoriesCache::load();
 		$categories = $categories_cache->get_categories();
 

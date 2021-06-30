@@ -53,7 +53,7 @@
 					<aside class="cell">
 						<div class="cell-header">
 							<h6 class="cell-name">
-								{@wiki.last.articles.list}
+								{@wiki.last.items.list}
 							</h6>
 							# IF last_articles.C_ITEMS #
 								<a class="offload" href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" aria-label="{@common.syndication}">

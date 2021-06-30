@@ -6,14 +6,13 @@
  * @version     PHPBoost 6.0 - last update: 2021 05 02
  * @since       PHPBoost 3.0 - 2013 12 03
  * @contributor xela <xela@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class WikiTreeLinks implements ModuleTreeLinksExtensionPoint
 {
 	public function get_actions_tree_links()
 	{
-		global $LANG;
-		load_module_lang('wiki'); //Chargement de la langue du module.
 		$lang = LangLoader::get('common', 'wiki');
 		require_once(PATH_TO_ROOT . '/wiki/wiki_auth.php');
 		$id_cat = AppContext::get_request()->get_getstring('id_cat', 0);

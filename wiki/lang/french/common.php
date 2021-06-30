@@ -17,40 +17,43 @@
 
 $lang['wiki.module.title'] = 'Wiki';
 
-$lang['wiki.item.views.number']          = 'Cette page a été vue %d fois';
-$lang['wiki.contribution.tools']         = 'Contribuer';
-$lang['wiki.tools']                      = 'Outils';
-$lang['wiki.author']                     = 'Auteur';
-$lang['wiki.empty.index']                = 'Le wiki est vide. Si vous êtes administrateur, vous pouvez créer et modifier sa page d\'accueil dans le panneau d\'administration.';
-$lang['wiki.summary.menu']               = 'Table des matières';
-$lang['wiki.read.feed']                  = 'Lire l\'article';
-$lang['wiki.random.page']                = 'Page aléatoire';
-$lang['wiki.restriction.level']          = 'Niveau de restriction';
-$lang['wiki.define.status']              = 'Définir un statut';
-$lang['wiki.last.articles.list']         = 'Derniers articles mis à jour :';
-$lang['wiki.categories.list']            = 'Liste des catégories principales :';
-$lang['wiki.items.in.category']          = 'Articles présents dans cette catégorie';
-$lang['wiki.sub.categories.in.category'] = 'Catégories contenues par cette catégorie :';
+$lang['wiki.page.views.number'] = 'Cette page a été vue %d fois';
+$lang['wiki.contribution']      = 'Contribuer';
+$lang['wiki.tools']             = 'Outils';
+$lang['wiki.author']            = 'Auteur';
+$lang['wiki.empty.index']       = 'Le wiki est vide. Si vous êtes administrateur, vous pouvez créer et modifier sa page d\'accueil dans le panneau d\'administration.';
+$lang['wiki.summary.menu']      = 'Table des matières';
+$lang['wiki.random.page']       = 'Page aléatoire';
+$lang['wiki.restriction.level'] = 'Niveau de restriction';
+$lang['wiki.define.status']     = 'Définir un statut';
+$lang['wiki.last.items.list']   = 'Derniers articles mis à jour :';
+$lang['wiki.categories.list']   = 'Liste des catégories principales :';
+$lang['wiki.items.in.category'] = 'Articles présents dans cette catégorie';
+$lang['wiki.sub.categories']    = 'Catégories contenues par cette catégorie :';
+$lang['wiki.no.sub.item']       = 'Aucun sous article existant';
 
 // Archives
-$lang['wiki.history']                = 'Historique';
-$lang['wiki.history.all']            = 'Historique du wiki';
-$lang['wiki.history.article']        = 'Historique l\'article %s';
-$lang['wiki.history.seo']            = 'Tout l\'historique de l\'article %s';
-$lang['wiki.versions']           	 = 'Versions';
-$lang['wiki.version.date']           = 'Date de version';
-$lang['wiki.current.version']        = 'Version courante';
-$lang['wiki.article.does.not.exist'] = 'L\'article que vous demandez n\'existe pas, vous pouvez le créer ici.';
-$lang['wiki.cat.does.not.exist']     = 'Erreur : la catégorie demandée n\'existe pas. <a class="offload" href="wiki.php">Retour au wiki</a>';
-$lang['wiki.consult.article']        = 'Consulter';
-$lang['wiki.restore.version']        = 'Restaurer cette version';
-$lang['wiki.actions']                = 'Actions possibles';
-$lang['wiki.no.action']              = 'Aucune action possible';
+$lang['wiki.history']         = 'Historique';
+$lang['wiki.full.history']    = 'Historique du wiki';
+$lang['wiki.item.history']    = 'Historique l\'article %s';
+$lang['wiki.history.seo']     = 'Tout l\'historique de l\'article %s';
+$lang['wiki.versions'] 	      = 'Versions';
+$lang['wiki.version.date']    = 'Date de version';
+$lang['wiki.current.version'] = 'Version courante';
+$lang['wiki.item.unexists']   = 'L\'article que vous demandez n\'existe pas, vous pouvez le créer ici.';
+$lang['wiki.consult']         = 'Consulter';
+$lang['wiki.restore.version'] = 'Restaurer cette version';
+$lang['wiki.actions']         = 'Actions possibles';
+$lang['wiki.no.action']       = 'Aucune action possible';
 
-// Changing reason
-$lang['wiki.changing.reason.label'] = 'Nature de la modification (facultatif, 100 caractères max)';
-$lang['wiki.changing.reason']       = 'Nature de la modification';
-$lang['wiki.item.init']             = 'Initialisation';
+// Categories
+$lang['wiki.current.category']         = 'Catégorie courante';
+$lang['wiki.select.category']          = 'Sélectionner une catégorie';
+$lang['wiki.selected.category']        = 'Catégorie sélectionnée';
+$lang['wiki.no.category']              = 'Aucune catégorie';
+$lang['wiki.no.selected.category']     = 'Aucune catégorie sélectionnée';
+$lang['wiki.no.existing.category']     = 'Aucune catégorie existante';
+$lang['wiki.no.existing.sub.category'] = 'Aucune sous-catégorie existante';
 
 // Configuration
 $lang['wiki.config.module.title']        = 'Configuration du module Wiki';
@@ -81,7 +84,7 @@ $lang['wiki.authorizations.status']           = 'Modifier le statut d\'un articl
 $lang['wiki.authorizations.comment']          = 'Commenter un article';
 $lang['wiki.authorizations.restriction']      = 'Modifier le niveau de restrictions d\'un article';
 $lang['wiki.authorizations.restriction.clue'] = 'Il est conseillé de le laisser aux modérateurs uniquement';
-	// Default
+	// Default install
 $lang['wiki.name'] = 'Wiki ' . GeneralConfig::load()->get_site_name();
 $lang['wiki.index.text'] = '
 	Bienvenue sur le module wiki !
@@ -95,38 +98,30 @@ $lang['wiki.index.text'] = '
 	Pour en savoir plus, n\'hésitez pas à consulter la documentation du module sur le site de <a class="offload" href="https://www.phpboost.com/forum/">PHPBoost</a>.
 ';
 
-// Categories
-$lang['wiki.current.category']         = 'Catégorie courante';
-$lang['wiki.select.category']          = 'Sélectionner une catégorie';
-$lang['wiki.selected.category']        = 'Catégorie sélectionnée';
-$lang['wiki.no.category']              = 'Aucune catégorie';
-$lang['wiki.no.selected.category']     = 'Aucune catégorie sélectionnée';
-$lang['wiki.no.existing.category']     = 'Aucune catégorie existante';
-$lang['wiki.no.existing.sub.category'] = 'Aucune sous-catégorie existante';
+// Changing reason
+$lang['wiki.changing.reason.label'] = 'Nature de la modification (facultatif, 100 caractères max)';
+$lang['wiki.changing.reason']       = 'Nature de la modification';
+$lang['wiki.item.init']             = 'Initialisation';
 
 // Explorer
-$lang['wiki.explorer']       = 'Explorateur du wiki';
-$lang['wiki.explorer.short'] = 'Explorateur';
-$lang['wiki.explorer.seo']   = 'Explorateur permettant de naviguer dans l\'arborescence des différentes pages du wiki.';
-$lang['wiki.root']           = 'Racine du wiki';
-$lang['wiki.content']        = 'Contenu';
-$lang['wiki.cats.tree']      = 'Arborescence';
+$lang['wiki.explorer']        = 'Explorateur du wiki';
+$lang['wiki.explorer.short']  = 'Explorateur';
+$lang['wiki.explorer.seo']    = 'Explorateur permettant de naviguer dans l\'arborescence des différentes pages du wiki.';
+$lang['wiki.root']            = 'Racine du wiki';
+$lang['wiki.content']         = 'Contenu';
+$lang['wiki.categories.tree'] = 'Arborescence';
 
 // Post | edit
-$lang['wiki.preview']         = 'Prévisualisation';
 $lang['wiki.create.item']     = 'Créer un article';
 $lang['wiki.create.category'] = 'Créer une catégorie';
 $lang['wiki.warning.update']  = 'Cet article a été mis à jour, vous consultez ici une archive de cet article!';
 $lang['wiki.contribute']      = 'Contribuer au wiki';
-$lang['wiki.item.edit']       = 'Edition de l\'article';
+$lang['wiki.edit.item']       = 'Edition de l\'article';
 $lang['wiki.category.edit']   = 'Edition de la catégorie';
-
-$lang['wiki.no.item']         = 'Aucun article existant';
-$lang['wiki.no.sub.item']     = 'Aucun sous article existant';
 	// js_tools
-$lang['wiki.link.name.add'] = 'Veuillez entrer un nom de lien';
-$lang['wiki.insert.link']   = 'Insérer un lien vers un article';
-$lang['wiki.link.title']    = 'Titre de l\'article';
+$lang['wiki.warning.link.name'] = 'Veuillez entrer un nom de lien';
+$lang['wiki.insert.link']       = 'Insérer un lien vers un article';
+$lang['wiki.link.title']        = 'Titre de l\'article';
 $lang['wiki.no.js.insert.link'] = '
 	Pour insérer un lien vers un article veuillez utiliser la balise link :
 	[link=$a]$b[/link] où $a représente le titre de l\'article (sans caractères spéciaux, tel qu\'il apparaît dans l\'adresse) et $b représente le nom du lien
@@ -139,8 +134,8 @@ $lang['wiki.paragraph.name']         = 'Titre du paragraphe';
 // Properties
 	// Comments
 $lang['wiki.comments.management'] = 'Discussion à propos de l\'article';
-$lang['wiki.article.com.article'] = 'Discussion';
-$lang['wiki.article.com.seo']     = 'Toutes les discussions sur l\'article %s';
+$lang['wiki.comments']            = 'Discussion';
+$lang['wiki.comments.seo']        = 'Toutes les discussions sur l\'article %s';
 	// Delete
 $lang['wiki.confirm.delete.archive']  = 'Etes-vous sûr de vouloir supprimer cette version de l\'article ?';
 $lang['wiki.remove.category']         = 'Suppression d\'une catégorie';
@@ -149,8 +144,7 @@ $lang['wiki.remove.category.clue']    = 'Vous souhaitez supprimer cette catégor
 $lang['wiki.remove.all.contents']     = 'Supprimer tout son contenu (action irréversible)';
 $lang['wiki.move.all.contents']       = 'Déplacer tout son contenu dans le dossier suivant :';
 $lang['wiki.future.category']         = 'Catégorie dans laquelle vous souhaitez déplacer ses éléments';
-$lang['wiki.alert.removing.category'] = 'Etes-vous sûr de vouloir supprimer cette catégorie (définitif) ?';
-$lang['wiki.confirm.remove.article']  = 'Etes-vous sur de vouloir supprimer cet article ?';
+$lang['wiki.confirm.remove.category'] = 'Etes-vous sûr de vouloir supprimer cette catégorie (définitif) ?';
 $lang['wiki.no.valid.category']       = 'Vous n\'avez pas sélectionné de catégorie valide !';
 	// Move
 $lang['wiki.moving.management']          = 'Déplacement d\'un article';
@@ -178,22 +172,14 @@ $lang['wiki.renaming.redirection'] = 'Créer une redirection automatique depuis 
 $lang['wiki.title.already.exists'] = 'Le titre que vous avez choisi existe déjà. Veuillez en choisir un autre';
 	// Restrictions
 $lang['wiki.authorizations.management']   = 'Gestion des niveaux d\'autorisation';
-$lang['wiki.member.restriction']          = 'Cet article est protégé, seuls les membres peuvent le modifier';
-$lang['wiki.modo.restriction']            = 'Cet article est protégé, seuls les modérateurs peuvent le modifier';
-$lang['wiki.admin.restriction']           = 'Cet article est protégé, seuls les administrateurs peuvent le modifier';
-$lang['wiki.edition.restriction']         = 'Restriction à l\'édition';
-$lang['wiki.no.restriction']              = 'Aucune restriction';
-$lang['wiki.auth.management.article']     = 'Gestion du niveau d\'autorisation de l\'article <span class="field-description align-center">%s</span>';
 $lang['wiki.default.authorizations.clue'] = 'Ne pas considérer de restriction particulière pour cet article; les autorisations seront les autorisations globales du wiki';
 $lang['wiki.default.authorizations']      = 'Autorisations par défaut';
 	// Status
-$lang['wiki.status.management']         = 'Gestion des statuts des articles';
-$lang['wiki.status.management.article'] = 'Gestion des statuts de l\' article %s';
-$lang['wiki.defined.status']            = 'Statut prédéfini';
-$lang['wiki.undefined.status']          = 'Statut personnalisé';
-$lang['wiki.no.status']                 = 'Aucun statut';
-$lang['wiki.status.explain']            = 'Vous pouvez ici sélectionner le type d\'article. Plusieurs statuts différents permettent de classer vos articles, et mettre en évidence quelque chose qui leur est remarquable.<br />Pour cela vous pouvez soit utiliser des statuts prédéfinis soit créer vos propres statuts. Pour utiliser un statut prédéfini veuillez laisser le champ statut personnalisé vide.';
-$lang['wiki.current.status']            = 'Statut courant';
+$lang['wiki.status.management'] = 'Gestion des statuts des articles';
+$lang['wiki.defined.status']    = 'Statut prédéfini';
+$lang['wiki.undefined.status']  = 'Statut personnalisé';
+$lang['wiki.no.status']         = 'Aucun statut';
+$lang['wiki.current.status']    = 'Statut courant';
 $lang['wiki.status.list'] = array(
 	array('Article de qualité', '<span class="message-helper bgc notice">Cet article est de grande qualité il est complet et fiable.</span>'),
 	array('Article incomplet', '<span class="message-helper bgc question">Cet article manque de sources.<br />Vos connaissances sont les bienvenues afin de le compléter.</span>'),
@@ -202,9 +188,9 @@ $lang['wiki.status.list'] = array(
 	array('Article remis en cause', '<span class="message-helper bgc error">Cet article a été discuté et son contenu ne paraît pas correct. Vous pouvez éventuellement consulter les discussions à ce propos et peut-être y apporter vos connaissances.</span>')
 );
 
-//RSS
-$lang['wiki.rss.cat']           = 'Derniers articles de la catégorie %s';
-$lang['wiki.rss.last.articles'] = '%s : derniers articles';
+// RSS
+$lang['wiki.rss.category']   = 'Derniers articles de la catégorie %s';
+$lang['wiki.rss.last.items'] = '%s : derniers articles';
 
 // Tools menu
 $lang['wiki.update.index'] = 'Modifier l\'accueil';
