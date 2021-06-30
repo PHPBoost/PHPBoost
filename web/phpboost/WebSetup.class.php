@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 05
+ * @version     PHPBoost 6.0 - last update: 2021 06 30
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -103,9 +103,9 @@ class WebSetup extends DefaultModuleSetup
 			'id_parent' => 0,
 			'c_order' => 1,
 			'auth' => '',
-			'rewrited_name' => Url::encode_rewrite($this->messages['default.cat.name']),
-			'name' => $this->messages['default.cat.name'],
-			'description' => $this->messages['default.cat.description'],
+			'rewrited_name' => Url::encode_rewrite($this->messages['default.category.name']),
+			'name' => $this->messages['default.category.name'],
+			'description' => $this->messages['default.category.description'],
 			'thumbnail' =>  FormFieldThumbnail::DEFAULT_VALUE
 		));
 	}
@@ -115,10 +115,10 @@ class WebSetup extends DefaultModuleSetup
 		PersistenceContext::get_querier()->insert(self::$web_table, array(
 			'id' => 1,
 			'id_category' => 1,
-			'title' => $this->messages['default.weblink.name'],
-			'rewrited_title' => Url::encode_rewrite($this->messages['default.weblink.name']),
+			'title' => $this->messages['default.item.title'],
+			'rewrited_title' => Url::encode_rewrite($this->messages['default.item.title']),
 			'website_url' => 'https://www.phpboost.com',
-			'content' => $this->messages['default.weblink.content'],
+			'content' => $this->messages['default.item.content'],
 			'summary' => '',
 			'published' => WebItem::PUBLISHED,
 			'publishing_start_date' => 0,
