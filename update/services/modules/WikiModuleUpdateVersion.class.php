@@ -12,9 +12,15 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 	public function __construct()
 	{
 		parent::__construct('wiki');
-		
-		self::$delete_old_files_list = array('/phpboost/WikiNewContent.class.php');
-		
+
+		self::$delete_old_files_list = array(
+			'/phpboost/WikiNewContent.class.php',
+			'/lang/english/config.php',
+			'/lang/english/wiki_english.php',
+			'/lang/french/config.php',
+			'/lang/french/wiki_french.php',
+		);
+
 		$this->database_columns_to_add = array(
 			array(
 				'table_name' => PREFIX . 'wiki_contents',
@@ -23,7 +29,7 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 				)
 			)
 		);
-		
+
 		$this->database_columns_to_modify = array(
 			array(
 				'table_name' => PREFIX . 'wiki_contents',
