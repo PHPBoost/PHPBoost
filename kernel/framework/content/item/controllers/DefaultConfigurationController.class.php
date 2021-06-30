@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 06 30
  * @since       PHPBoost 6.0 - 2020 02 11
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -189,12 +189,12 @@ class DefaultConfigurationController extends AbstractAdminItemController
 
 				if ($this->module_item->sub_categories_displayed())
 				{
-					$fieldset_categories->add_field(new FormFieldNumberEditor('categories_per_page', $this->lang['config.categories.per.page'], $this->config->get_categories_per_page(),
+					$fieldset_categories->add_field(new FormFieldNumberEditor('categories_per_page', $this->lang['form.categories.per.page'], $this->config->get_categories_per_page(),
 						array('min' => 1, 'max' => 50, 'required' => true),
 						array(new FormFieldConstraintIntegerRange(1, 50))
 					));
 
-					$fieldset_categories->add_field(new FormFieldNumberEditor('categories_per_row', $this->lang['config.categories.per.row'], $this->config->get_categories_per_row(),
+					$fieldset_categories->add_field(new FormFieldNumberEditor('categories_per_row', $this->lang['form.categories.per.row'], $this->config->get_categories_per_row(),
 						array('min' => 1, 'max' => 4, 'required' => true),
 						array(new FormFieldConstraintIntegerRange(1, 4))
 					));
