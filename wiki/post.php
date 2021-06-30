@@ -316,7 +316,7 @@ $view->put_all(array(
 	'C_EDIT_ITEM'     => $is_cat == 0 && $id_edit > 0,
 	'C_EDIT'          => $id_edit > 0,
 
-	'TITLE'         => $id_edit = 0 ? stripslashes($article_infos['title']) : '',
+	'TITLE'         => $id_edit == 0 ? stripslashes($article_infos['title']) : '',
 	'EDIT_TITLE'    => ($id_edit == 0 ? (!empty($encoded_title) ? $encoded_title : stripslashes($title)) : stripslashes($article_infos['title'])),
 	'KERNEL_EDITOR' => $editor->display(),
 	'ID_CATEGORY'   => $id_edit ? $article_infos['id_cat'] : '',
