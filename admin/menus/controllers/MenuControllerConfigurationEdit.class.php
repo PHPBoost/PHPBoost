@@ -70,13 +70,11 @@ class MenuControllerConfigurationEdit extends AdminController
 
 	private function load_env()
 	{
-		global $LANG;
-
 		$this->view = new FileTemplate('admin/menus/configuration/edit.tpl');
 		$this->response = new AdminMenusDisplayResponse($this->view);
 		$env = $this->response->get_graphical_environment();
 
-		$env->set_page_title($LANG['menu_configuration_edition']);
+		$env->set_page_title(LangLoader::get_message('menu.edit.menu', 'menu-lang'));
 	}
 }
 ?>

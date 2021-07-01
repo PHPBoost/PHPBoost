@@ -47,13 +47,11 @@ class MenuControllerConfigurationsList extends AdminController
 
 	private function load_env()
 	{
-		global $LANG;
-
 		$this->view = new FileTemplate('admin/menus/configuration/list.tpl');
 		$this->response = new AdminMenusDisplayResponse($this->view);
 		$env = $this->response->get_graphical_environment();
 
-		$env->set_page_title($LANG['menu_configurations']);
+		$env->set_page_title(LangLoader::get_message('menu.manager', 'menu-lang'));
 	}
 }
 ?>

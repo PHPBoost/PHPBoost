@@ -202,11 +202,11 @@ elseif (!empty($idgroup)) // Group editing interface
 		$get_error = retrieve(GET, 'error', '');
 		if ($get_error == 'incomplete')
 		{
-			$view->put('MESSAGE_HELPER', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
+			$view->put('MESSAGE_HELPER', MessageHelper::display($warning_lang['warning.incomplete'], MessageHelper::NOTICE));
 		}
 		elseif ($get_error == 'already_group')
 		{
-			$view->put('MESSAGE_HELPER', MessageHelper::display($LANG['e_already_group'], MessageHelper::NOTICE));
+			$view->put('MESSAGE_HELPER', MessageHelper::display($warning_lang['warning.already.group'], MessageHelper::NOTICE));
 		}
 
 		// Get the groups images folders
@@ -292,7 +292,7 @@ elseif ($add) // Add group interface
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
 	{
-		$view->put('MESSAGE_HELPER', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
+		$view->put('MESSAGE_HELPER', MessageHelper::display($warning_lang['warning.incomplete'], MessageHelper::NOTICE));
 	}
 	elseif ($get_error == 'group_already_exists')
 	{
