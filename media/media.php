@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 07 01
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -156,7 +156,6 @@ elseif ($id_media > 0)
 				list($media_id) = explode('&', $media_id);
 			}
 
-
 			// Odysee
 			$odysee_player =  strpos($dirname, 'odysee') !== false;
 			$odysee_dl_link = strpos($dirname, 'download') !== false;
@@ -189,6 +188,17 @@ elseif ($id_media > 0)
 					$lang['e_bad_url_peertube']);
 					DispatchManager::redirect($controller);
 				}
+			}
+
+			// Twitch
+			$twitch_player = strpos($dirname, 'twitch') !== false;
+			$parent = pathinfo(GeneralConfig::load()->get_site_url());
+			$parent = $parent['basename'];
+			if($twitch_player) {
+				$media_tpl->put_all(array(
+					'C_TWITCH' => true,
+					'PARENT' => $parent
+				));
 			}
 
 			// Soudcloud

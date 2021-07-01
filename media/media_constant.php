@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 01 05
+ * @version     PHPBoost 6.0 - last update: 2021 07 01
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -59,6 +59,8 @@ $host_ok = array(
 		'player.vimeo.com',
 		'www.youtube.com',
 		'youtu.be',
+		'www.twitch.tv',
+		'player.twitch.tv',
 		'odysee.com',
 		$peertube_host[2]
 	)
@@ -71,10 +73,10 @@ $peertube_player = implode('.', $sliced_name);
 $host_players = array(
 	'youtu'          => 'https://www.youtube.com/embed/',
     'vimeo'          => 'https://player.vimeo.com/video/',
+    'twitch'         => 'https://player.twitch.tv/?video=',
     'dailymotion'    => 'https://www.dailymotion.com/embed/video/',
     'odysee'         => 'https://odysee.com/$/embed/',
     $peertube_player => $peertube_link . '/videos/embed/',
-    'arte'           => 'https://www.arte.tv/player/v5/',
     'soundcloud'     => 'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/',
 )
 
