@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 30
+ * @version     PHPBoost 6.0 - last update: 2021 07 01
  * @since       PHPBoost 1.6 - 2006 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -13,7 +13,6 @@
 
 require_once('../kernel/begin.php');
 include_once('../wiki/wiki_functions.php');
-load_module_lang('wiki'); // To be deleted
 
 $lang = LangLoader::get('common', 'wiki');
 
@@ -316,7 +315,7 @@ $view->put_all(array(
 	'C_EDIT_ITEM'     => $is_cat == 0 && $id_edit > 0,
 	'C_EDIT'          => $id_edit > 0,
 
-	'TITLE'         => $id_edit == 0 ? stripslashes($article_infos['title']) : '',
+	'TITLE'         => $id_edit != 0 ? stripslashes($article_infos['title']) : '',
 	'EDIT_TITLE'    => ($id_edit == 0 ? (!empty($encoded_title) ? $encoded_title : stripslashes($title)) : stripslashes($article_infos['title'])),
 	'KERNEL_EDITOR' => $editor->display(),
 	'ID_CATEGORY'   => $id_edit ? $article_infos['id_cat'] : '',
