@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 14
+ * @version     PHPBoost 6.0 - last update: 2021 07 01
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -64,9 +64,9 @@ if ($invisible > 0)
 
 	bread_crumb($media['id_category']);
 	$Bread_crumb->add($media['title'], url('media.php?id=' . $media['id'], 'media-' . $media['id'] . '-' . $media['id_category'] . '+' . Url::encode_rewrite($media['title']) . '.php'));
-	$Bread_crumb->add($lang['hide_media'], url('media_action.php?invisible=' . $media['id'] . '&amp;token=' . AppContext::get_session()->get_token()));
+	$Bread_crumb->add($lang['media.hide.item'], url('media_action.php?invisible=' . $media['id'] . '&amp;token=' . AppContext::get_session()->get_token()));
 
-	define('TITLE', $lang['media_moderation']);
+	define('TITLE', $lang['media.management']);
 
 	PersistenceContext::get_querier()->update(PREFIX . 'media', array('published' => MEDIA_STATUS_INVISIBLE), 'WHERE id=:id', array('id' => $invisible));
 
@@ -110,9 +110,9 @@ elseif ($delete > 0)
 
 	$category = CategoriesService::get_categories_manager('media')->get_categories_cache()->get_category($media['id_category']);
 	bread_crumb($media['id_category']);
-	$Bread_crumb->add($lang['delete_media'], url('media.php?cat=' . $media['id_category'], 'media-0-' . $media['id_category'] . '+' . $category->get_rewrited_name() . '.php'));
+	$Bread_crumb->add($lang['media.delete.item'], url('media.php?cat=' . $media['id_category'], 'media-0-' . $media['id_category'] . '+' . $category->get_rewrited_name() . '.php'));
 
-	define('TITLE', $lang['delete_media']);
+	define('TITLE', $lang['media.delete.item']);
 	require_once('../kernel/header.php');
 
 	AppContext::get_response()->redirect('media' . url('.php?cat=' . $media['id_category'], '-0-' . $media['id_category'] . '.php'));
@@ -274,13 +274,13 @@ elseif ($submit)
 	if ($media['idedit'])
 	{
 		$Bread_crumb->add($media['title'], url('media.php?id=' . $media['idedit'], 'media-' . $media['idedit'] . '-' . $media['id_category'] . '+' . Url::encode_rewrite($media['title']) . '.php'));
-		$Bread_crumb->add($lang['edit_media'], url('media_action.php?edit=' . $media['idedit']));
-		define('TITLE', $lang['edit_media']);
+		$Bread_crumb->add($lang['media.edit.item'], url('media_action.php?edit=' . $media['idedit']));
+		define('TITLE', $lang['media.edit.item']);
 	}
 	else
 	{
-		$Bread_crumb->add($lang['add_media'], url('media_action.php?add=' . $media['id_category']));
-		define('TITLE', $lang['add_media']);
+		$Bread_crumb->add($lang['media.add.item'], url('media_action.php?add=' . $media['id_category']));
+		define('TITLE', $lang['media.add.item']);
 	}
 
 	require_once('../kernel/header.php');
