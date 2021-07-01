@@ -13,8 +13,6 @@
 if (defined('PHPBOOST') !== true)
 	exit;
 
-load_module_lang('gallery'); //Chargement de la langue du module.
-
 //Création de l'arborescence des catégories.
 $module_title = LangLoader::get_message('gallery.module.title', 'common', 'gallery');
 $Bread_crumb->add($module_title, GalleryUrlBuilder::home());

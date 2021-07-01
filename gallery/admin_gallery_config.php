@@ -11,7 +11,6 @@
 */
 
 require_once('../admin/admin_begin.php');
-load_module_lang('gallery'); //Chargement de la langue du module.
 
 $lang = LangLoader::get('common', 'gallery');
 

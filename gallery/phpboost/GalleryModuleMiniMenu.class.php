@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 12
+ * @version     PHPBoost 6.0 - last update: 2021 07 01
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -46,7 +46,6 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 		MenuService::assign_positions_conditions($view, $this->get_block());
 
 		//Chargement de la langue du module.
-		load_module_lang('gallery');
 		$config = GalleryConfig::load();
 
 		$array_random_pics = GalleryMiniMenuCache::load()->get_pictures();
