@@ -11,6 +11,7 @@
  * @contributor mipel <mipel@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor xela <xela@phpboost.com>
 */
 
 class ArticlesItem extends RichItem
@@ -25,7 +26,7 @@ class ArticlesItem extends RichItem
 		}
 		else
 		{
-			$clean_content = preg_split('`\[page\].+\[/page\](.*)`usU', $parsed_content, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+			$clean_content = preg_split('`\[page\].+\[/page\](.*)`usU', $this->content, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 			return TextHelper::cut_string(@strip_tags($clean_content[0], '<br><br/>'), (int)ArticlesConfig::load()->get_auto_cut_characters_number());
 		}
 	}
