@@ -45,7 +45,7 @@ if (!empty($g_idpics))
 }
 else
 {
-	die($LANG['no_random_img']); //Echec paramètres images incorrects.
+	die(LangLoader::get_message('gallery.no.random.item', 'common', 'gallery')); //Echec paramètres images incorrects.
 }
 
 require_once('../kernel/footer_no_display.php');

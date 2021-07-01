@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 07 01
  * @since       PHPBoost 1.2 - 2005 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -12,11 +12,10 @@
 */
 
 require_once('../admin/admin_begin.php');
-load_module_lang('gallery'); // loading of the module lang
 
 $lang = LangLoader::get('common', 'gallery');
 
-define('TITLE', $LANG['administration']);
+define('TITLE', $lang['gallery.add.items']);
 require_once('../admin/admin_header.php');
 
 $Gallery = new Gallery();
@@ -138,8 +137,6 @@ if (!empty($add_pic))
 
 		'U_ITEM'     => 'admin_gallery.php?cat=' . $imageup['id_category'] . '&amp;id=' . $add_pic . '#pics_max',
 		'U_CATEGORY' => 'admin_gallery.php?cat=' . $imageup['id_category'],
-		//
-		'L_SUCCESS_UPLOAD' => $LANG['success_upload_img'],
 	));
 }
 
@@ -149,28 +146,6 @@ $view->put_all(array(
 	'MAX_FILE_SIZE'      => $config->get_max_weight() * 1024,
 	'MAX_FILE_SIZE_TEXT' => ($config->get_max_weight() / 1024) . ' ' . LangLoader::get_message('common.unit.megabytes', 'common-lang'),
 	'ALLOWED_EXTENSIONS' => implode('", "',FileUploadConfig::load()->get_authorized_picture_extensions()),
-	//
-	'IMG_HEIGHT_MAX' => $config->get_mini_max_height()+10,
-	'L_GALLERY_MANAGEMENT' => LangLoader::get_message('gallery.management', 'common', 'gallery'),
-	'L_GALLERY_CONFIG' => $LANG['gallery_config'],
-	'L_ADD_IMG' => $LANG['add_pic'],
-	'L_WEIGHT_MAX' => $LANG['weight_max'],
-	'L_HEIGHT_MAX' => $LANG['height_max'],
-	'L_WIDTH_MAX' => $LANG['width_max'],
-	'L_UPLOAD_IMG' => $LANG['upload_pics'],
-	'L_AUTH_EXTENSION' => $LANG['auth_extension'],
-	'L_IMG_DISPO_GALLERY' => $LANG['img_dispo'],
-	'L_NAME' => $LANG['name'],
-	'L_UNIT_PX' => LangLoader::get_message('common.unit.pixels', 'common-lang'),
-	'L_UNIT_KO' => LangLoader::get_message('common.unit.kilobytes', 'common-lang'),
-	'L_SELECT' => $LANG['select'],
-	'L_SELECT_ALL_PICTURES' => $LANG['select_all_pictures'],
-	'L_UNSELECT_ALL_PICTURES' => $LANG['unselect_all_pictures'],
-	'L_GLOBAL_CAT_SELECTION' => $LANG['global_cat_selection'],
-	'L_GLOBAL_CAT_SELECTION_EXPLAIN' => $LANG['global_cat_selection_explain'],
-	'L_DELETE' => LangLoader::get_message('common.delete', 'common-lang'),
-	'L_SUBMIT' => $LANG['submit'],
-	'L_NO_IMG' => $LANG['no_pics']
 ));
 
 //Affichage photos
@@ -225,12 +200,9 @@ if (is_dir($dir)) //Si le dossier existe
 		}
 
 		$view->put_all(array(
-			'ITEMS_NUMBER' => $nbr_pics,
-			'CATEGORIES_LIST' => $categories_list,
+			'ITEMS_NUMBER'         => $nbr_pics,
+			'CATEGORIES_LIST'      => $categories_list,
 			'ROOT_CATEGORIES_LIST' => $root_categories_list,
-			//
-			'COLUMN_WIDTH_PICS' => $column_width_pics,
-			'SELECTBOX_WIDTH' => $selectbox_width,
 		));
 
 		$j = 0;
@@ -295,19 +267,6 @@ if (is_dir($dir)) //Si le dossier existe
 				'NAME' => $pics,
 				'UNIQ_NAME' => $pics,
 				'CATEGORIES_LIST' => $categories_list,
-				//
-				'C_DISPLAY_TR_START' => $display_tr_start,
-				'C_DISPLAY_TR_END' => $display_tr_end,
-			));
-		}
-
-		//Création des cellules du tableau si besoin est.
-		while (!is_int($j/$nbr_column_pics))
-		{
-			$j++;
-			$view->assign_block_vars('end_td_pics', array(
-				'COLUMN_WIDTH_PICS' => $column_width_pics,
-				'C_DISPLAY_TR_END' => (is_int($j/$nbr_column_pics))
 			));
 		}
 	}

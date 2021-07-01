@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 11
+ * @version     PHPBoost 6.0 - last update: 2021 07 01
  * @since       PHPBoost 4.1 - 2015 02 10
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -15,6 +15,7 @@
 $lang['gallery.module.title']        = 'Gallery';
 $lang['gallery.config.module.title'] = 'Gallery module configuration';
 $lang['gallery.random.items']        = 'Random pictures';
+$lang['gallery.no.random.item']      = 'No random pictures';
 
 // Configuration
 $lang['gallery.max.height']                   = 'Picture max height';
@@ -78,6 +79,19 @@ $lang['gallery.category.selection.clue'] = 'Allows to change category for all se
     // manager
 $lang['gallery.items.in.category']          = 'Pictures in the catégorie';
 $lang['gallery.category.items.number.clue'] = 'Pictures number<br />(<em>(hidden ones)</em>)';
+
+// Errors
+$lang['e_no_gd']                = 'Gallery -> Gd Library not loaded';
+$lang['e_unabled_create_pics']  = 'Gallery -> Error creating picture';
+$lang['e_no_graphic_support']   = 'Gallery -> No graphic support on this server';
+$lang['e_no_getimagesize']      = 'Gallery -> Function getimagesize() unsupported, please contact your internet provider';
+$lang['e_unsupported_format']   = 'Gallery -> Unsupported format (jpg, gif, png, webp only)';
+$lang['e_unabled_incrust_logo'] = 'Gallery -> Unable to inlay logo, deactivate it in the gallery configuration';
+$lang['e_error_resize']         = 'Gallery -> Resizing error';
+$lang['e_unable_display_pics']  = 'Gallery -> Unabled to display picture!';
+$lang['e_delete_thumbnails']    = 'Gallery -> Delete thumbnail error';
+$lang['e_error_img']            = 'Picture error';
+$lang['e_unexist_img']          = 'This picture doesn\'t exist';
 
 // Labels
 $lang['gallery.item']         = 'Picture';

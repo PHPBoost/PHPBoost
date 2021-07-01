@@ -202,8 +202,6 @@ elseif ($g_add)
 			'PATH'          => $imageup['path'],
 			'ID_CATEGORY'   => $imageup['id_category'],
 			'CATEGORY_NAME' => $categories[$imageup['id_category']]->get_name(),
-			//
-			'L_SUCCESS_UPLOAD' => $LANG['success_upload_img'],
 		));
 	}
 
@@ -243,25 +241,6 @@ elseif ($g_add)
 		'IMG_FORMAT'         => 'JPG, PNG, GIF',
 
 		'U_GALLERY_ACTION_ADD' => GalleryUrlBuilder::get_link_cat_add($id_category,null,AppContext::get_session()->get_token()),
-		//
-		'CATEGORY_NAME' => $categories[$id_category]->get_name(),
-		'C_ROOT_CATEGORY' => $categories[$id_category]->get_id() == Category::ROOT_CATEGORY,
-		'MODULE_NAME' => $LANG['gallery'],
-		'CAT_ID' => $id_category,
-		'U_GALLERY_CAT_LINKS' => $cat_links,
-		'U_INDEX' => url('.php'),
-		'L_IMG_FORMAT' => $LANG['img_format'],
-		'L_WIDTH_MAX' => $LANG['width_max'],
-		'L_HEIGHT_MAX' => $LANG['height_max'],
-		'L_WEIGHT_MAX' => $LANG['weight_max'],
-		'L_ADD_IMG' => $LANG['add_pic'],
-		'L_GALLERY' => $LANG['gallery'],
-		'L_GALLERY_INDEX' => $LANG['gallery_index'],
-		'L_CATEGORIES' => $LANG['categories'],
-		'L_NAME' => $LANG['name'],
-		'L_UNIT_PX' => LangLoader::get_message('common.unit.pixels', 'common-lang'),
-		'L_UNIT_KO' => LangLoader::get_message('common.unit.kilobytes', 'common-lang'),
-		'L_UPLOAD' => $LANG['upload_img'],
 	));
 
 	$view->display();

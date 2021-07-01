@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 11
+ * @version     PHPBoost 6.0 - last update: 2021 07 01
  * @since       PHPBoost 4.1 - 2015 02 10
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -15,6 +15,7 @@
 $lang['gallery.module.title']        = 'Galerie';
 $lang['gallery.config.module.title'] = 'Configuration du module Galerie';
 $lang['gallery.random.items']        = 'Images aléatoires';
+$lang['gallery.no.random.item']      = 'Aucune image aléatoires';
 
 // Configuration
 $lang['gallery.max.height']                   = 'Hauteur max des images';
@@ -78,6 +79,19 @@ $lang['gallery.category.selection.clue'] = 'Permet de changer la catégorie pour
     // manager
 $lang['gallery.items.in.category']          = 'Images dans la catégorie';
 $lang['gallery.category.items.number.clue'] = 'Nombre d\'images<br />(<em>dont cachées</em>)';
+
+// Errors
+$lang['e_no_gd']                = 'Galerie -> Librairie GD non chargée';
+$lang['e_unabled_create_pics']  = 'Galerie -> Echec création image';
+$lang['e_no_graphic_support']   = 'Galerie -> Pas de support graphique avec PHP sur ce serveur';
+$lang['e_no_getimagesize']      = 'Galerie -> Fonction getimagesize() non supportée, contactez votre hébergeur';
+$lang['e_unsupported_format']   = 'Galerie -> Format image non supporté (jpg, gif, png, webp uniquement)';
+$lang['e_unabled_incrust_logo'] = 'Galerie -> Incrustation du logo impossible, désactivez le dans la configuration de la galerie';
+$lang['e_error_resize']         = 'Galerie -> Erreur redimensionnement';
+$lang['e_unable_display_pics']  = 'Galerie -> Impossible d\'afficher l\'image !';
+$lang['e_delete_thumbnails']    = 'Galerie -> Suppression des miniatures impossible';
+$lang['e_error_img']            = 'Erreur image';
+$lang['e_unexist_img']          = 'L\'image que vous demandez n\'existe pas';
 
 // Labels
 $lang['gallery.item']         = 'image';

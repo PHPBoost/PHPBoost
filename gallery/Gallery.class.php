@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 07 01
  * @since       PHPBoost 1.2 - 2005 08 16
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -23,7 +23,7 @@ class Gallery
 	//Redimensionnement
 	public function Resize_pics($path, $width_max = 0, $height_max = 0)
 	{
-		global $LANG;
+		$lang = LangLoader::get('common', 'gallery');
 
 		if (file_exists($path))
 		{
@@ -147,7 +147,6 @@ class Gallery
 	//Incrustation du logo (possible en transparent si jpg).
 	public function Incrust_pics($path)
 	{
-		global $LANG;
 		$config = GalleryConfig::load();
 
 		if ($config->is_logo_enabled() && is_file($config->get_logo())) //Incrustation du logo.
@@ -361,13 +360,12 @@ class Gallery
 	//Arguments de l'image, hauteur, largeur, extension.
 	public function Arg_pics($path)
 	{
-		global $LANG;
+		$lang = LangLoader::get('common', 'gallery');
 
 		//Vérification du chargement de la librairie GD.
 		if (!@extension_loaded('gd'))
 		{
-			$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'),
-                $LANG['e_no_gd'], UserErrorController::FATAL);
+			$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $lang['e_no_gd'], UserErrorController::FATAL);
             DispatchManager::redirect($controller);
 		}
 
@@ -386,7 +384,7 @@ class Gallery
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $LANG['e_no_getimagesize'], UserErrorController::FATAL);
+			$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $lang['e_no_getimagesize'], UserErrorController::FATAL);
 			DispatchManager::redirect($controller);
 		}
 	}
@@ -431,7 +429,7 @@ class Gallery
 	//Header image.
 	public function Send_header($ext)
 	{
-		global $LANG;
+		$lang = LangLoader::get('common', 'gallery');
 
 		switch ($ext)
 		{
@@ -450,7 +448,7 @@ class Gallery
 				break;
 			default:
 				$header = '';
-				$this->error = $LANG['e_unable_display_pics'];
+				$this->error = $lang['e_unable_display_pics'];
 		}
 		return $header;
 	}
@@ -479,7 +477,7 @@ class Gallery
 	//Création de l'image d'erreur
 	private function _create_pics_error($path, $width, $height)
 	{
-		global $LANG;
+		$lang = LangLoader::get('common', 'gallery');
 		$config = GalleryConfig::load();
 
 		$width = ($width == 0) ? $config->get_mini_max_width() : $width;
@@ -495,14 +493,14 @@ class Gallery
 		$text_color = @imagecolorallocate($thumbnail, 0, 0, 0);
 
 		//Centrage du texte.
-		$array_size_ttf = imagettfbbox($font_size, 0, $font, $LANG['e_error_img']);
+		$array_size_ttf = imagettfbbox($font_size, 0, $font, $lang['e_error_img']);
 		$text_width = abs($array_size_ttf[2] - $array_size_ttf[0]);
 		$text_height = abs($array_size_ttf[7] - $array_size_ttf[1]);
 		$text_x = ($width/2) - ($text_width/2);
 		$text_y = ($height/2) + ($text_height/2);
 
 		//Ecriture du code.
-		imagettftext($thumbnail, $font_size, 0, $text_x, $text_y, $text_color, $font, $LANG['e_error_img']);
+		imagettftext($thumbnail, $font_size, 0, $text_x, $text_y, $text_color, $font, $lang['e_error_img']);
 		@imagejpeg($thumbnail, $path, 75);
 	}
 

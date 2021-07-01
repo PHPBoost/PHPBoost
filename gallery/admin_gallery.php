@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 07 01
  * @since       PHPBoost 1.2 - 2005 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -11,11 +11,10 @@
 */
 
 require_once('../admin/admin_begin.php');
-load_module_lang('gallery'); //Chargement de la langue du module.
 
 $lang = LangLoader::get('common', 'gallery');
 
-define('TITLE', $LANG['administration']);
+define('TITLE', $lang['gallery.management']);
 require_once('../admin/admin_header.php');
 
 $request = AppContext::get_request();
@@ -120,25 +119,6 @@ $view->put_all(array(
 	'ITEMS_NUMBER'             => $nbr_pics,
 
 	'U_PARENT_CATEGORY' => $category->get_id_parent(),
-	//
-	'HEIGHT_MAX' => ($config->get_mini_max_height() - 15),
-	'END_THUMB' => 0,
-	//
-	'L_GALLERY_MANAGEMENT' => LangLoader::get_message('gallery.management', 'common', 'gallery'),
-	'L_GALLERY_CONFIG' => $LANG['gallery_config'],
-	'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
-	'L_FILE_FORBIDDEN_CHARS' => $LANG['file_forbidden_chars'],
-	'L_TOTAL_IMG' => sprintf($LANG['total_img_cat'], $nbr_pics),
-	'L_ADD_IMG' => $LANG['add_pic'],
-	'L_GALLERY' => $LANG['gallery'],
-	'L_CATEGORIES' => ($category->get_id_parent() >= 0) ? $LANG['sub_album'] : $LANG['album'],
-	'L_NAME' => $LANG['name'],
-	'L_APROB' => $LANG['aprob'],
-	'L_UNAPROB' => $LANG['unaprob'],
-	'L_EDIT' => LangLoader::get_message('common.edit', 'common-lang'),
-	'L_MOVETO' => $LANG['moveto'],
-	'L_DELETE' => LangLoader::get_message('common.delete', 'common-lang'),
-	'L_SUBMIT' => $LANG['submit']
 ));
 
 ##### Catégorie disponibles #####
@@ -174,10 +154,6 @@ if ($total_cat > 0)
 				'HIDDEN_ITEMS_NUMBER' => $elements_number['pics_unaprob'],
 
 				'U_THUMBNAIL' => $category_thumbnail,
-				//
-				'C_DISPLAY_TR_START' => $display_tr_start,
-				'C_DISPLAY_TR_END' => $display_tr_end,
-				'L_NBR_PICS' => sprintf($LANG['nbr_pics_info_admin'], $elements_number['pics_aprob'], $elements_number['pics_unaprob']),
 			));
 		}
 	}
@@ -227,10 +203,6 @@ if ($nbr_pics > 0)
 	$view->put_all(array(
 		'C_PAGINATION' => $pagination->has_several_pages(),
 		'PAGINATION'   => $pagination->display(),
-		//
-		'L_BY' => $LANG['by'],
-		'L_PREVIOUS' => $LANG['previous'],
-		'L_NEXT' => $LANG['next'],
 	));
 
 	if (!empty($idpics))
@@ -318,19 +290,6 @@ if ($nbr_pics > 0)
 				'JS_ITEMS_NUMBER' => ($i - 1),
 				'MAX_START'       => ($i - 1) - $nbr_column_pics,
 				'START_THUMB'     => (($pos_pics - $start_thumbnails) > 0) ? ($pos_pics - $start_thumbnails) : 0,
-				//
-				'END_THUMB' => ($pos_pics + $end_thumbnails),
-				'L_INFORMATIONS' => $LANG['informations'],
-				'L_NAME' => $LANG['name'],
-				'L_POSTOR' => $LANG['postor'],
-				'L_VIEWS' => $LANG['views'],
-				'L_ADD_ON' => $LANG['add_on'],
-				'L_DIMENSION' => $LANG['dimension'],
-				'L_SIZE' => $LANG['size'],
-				'L_EDIT' => LangLoader::get_message('common.edit', 'common-lang'),
-				'L_APROB' => $LANG['aprob'],
-				'L_UNAPROB' => $LANG['unaprob'],
-				'L_THUMBNAILS' => $LANG['thumbnails']
 			));
 
 			//Liste des catégories.
@@ -471,25 +430,9 @@ if ($nbr_pics > 0)
 
 				'U_ITEM'           => $display_link,
 				'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
-				//
-				'C_DISPLAY_TR_START' => $display_tr_start,
-				'C_DISPLAY_TR_END' => $display_tr_end,
 			));
 		}
 		$result->dispose();
-
-		//Création des cellules du tableau si besoin est.
-		if ($j > $nbr_column_pics)
-		{
-			while (!is_int($j/$nbr_column_pics))
-			{
-				$j++;
-				$view->assign_block_vars('pics.end_td_pics', array(
-					'COLUMN_WIDTH_PICS' => $column_width_pics,
-					'C_DISPLAY_TR_END' => (is_int($j/$nbr_column_pics))
-				));
-			}
-		}
 	}
 }
 
