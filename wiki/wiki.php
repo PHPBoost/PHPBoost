@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 30
+ * @version     PHPBoost 6.0 - last update: 2021 07 01
  * @since       PHPBoost 1.6 - 2006 10 09
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -12,7 +12,6 @@
 */
 
 require_once('../kernel/begin.php');
-load_module_lang('wiki'); // to be deleted
 
 $lang = LangLoader::get('common', 'wiki');
 
@@ -218,7 +217,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 			{
 				$view->assign_block_vars('cat.list_cats', array(
 					'NAME' => stripslashes($cat['title']),
-					
+
 					'U_CATEGORY' => url('wiki.php?title=' . $cat['encoded_title'], $cat['encoded_title'])
 				));
 				$i++;
