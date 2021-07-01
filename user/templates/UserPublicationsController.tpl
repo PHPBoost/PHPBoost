@@ -14,7 +14,7 @@
 								<i class="{user_publications.MODULE_THUMBNAIL}" aria-hidden="true"></i>
 							# ENDIF #
 							<div class="cell-name">
-								<a href="{user_publications.U_MODULE_VIEW}">
+								<a class="offload" href="{user_publications.U_MODULE_VIEW}">
 									{user_publications.MODULE_NAME}
 								</a>
 							</div>

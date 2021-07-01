@@ -19,7 +19,7 @@
 				<div class="spacer"></div>
 				# IF HAS_LINK #
 					<div class="align-center">
-						<strong><a href="{U_LINK}">${escape(LINK_NAME)}</a></strong>
+						<strong><a class="offload" href="{U_LINK}">${escape(LINK_NAME)}</a></strong>
 					</div>
 				# ENDIF #
 			</div>

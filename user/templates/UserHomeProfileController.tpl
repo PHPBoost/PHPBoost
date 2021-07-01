@@ -17,7 +17,7 @@
 				<article class="dashboard-item several-items cell">
 					<div class="cell-body">
 						<div class="cell-content align-center">
-							<a href="{U_VIEW_PROFILE}">
+							<a class="offload" href="{U_VIEW_PROFILE}">
 								<i class="fa fa-user fa-2x" aria-hidden="true"></i>
 								<span class="d-block">{@user.my.profile}</span>
 							</a>
@@ -27,7 +27,7 @@
 				<article class="dashboard-item several-items cell">
 					<div class="cell-body">
 						<div class="cell-content align-center">
-							<a href="{U_USER_PM}">
+							<a class="offload" href="{U_USER_PM}">
 								# IF C_HAS_PM #
 									<span class="stacked blink">
 										<i class="fa fa-people-arrows fa-2x" aria-hidden="true"></i>
@@ -45,7 +45,7 @@
 					<article class="dashboard-item several-items cell">
 						<div class="cell-body">
 							<div class="cell-content align-center">
-								<a href="{U_UPLOAD}">
+								<a class="offload" href="{U_UPLOAD}">
 									<i class="fa fa-cloud-upload-alt fa-2x" aria-hidden="true"></i>
 									<span class="d-block">${LangLoader::get_message('upload.files.management', 'upload-lang')}</span>
 								</a>
@@ -57,7 +57,7 @@
 					<article class="dashboard-item several-items cell">
 						<div class="cell-body">
 							<div class="cell-content align-center">
-								<a href="{PATH_TO_ROOT}/admin/">
+								<a class="offload" href="{PATH_TO_ROOT}/admin/">
 									# IF C_UNREAD_ALERT #
 										<span class="stacked blink">
 											<i class="fa fa-wrench fa-2x" aria-hidden="true"></i>
@@ -76,7 +76,7 @@
 					<article class="dashboard-item several-items cell">
 						<div class="cell-body">
 							<div class="cell-content align-center">
-								<a href="{U_MODERATION_PANEL}">
+								<a class="offload" href="{U_MODERATION_PANEL}">
 									<i class="fa fa-gavel fa-2x" aria-hidden="true"></i>
 									<span class="d-block">{@user.moderation.panel}</span>
 								</a>
@@ -87,7 +87,7 @@
 				<article class="dashboard-item several-items cell">
 					<div class="cell-body">
 						<div class="cell-content align-center">
-							<a href="{U_CONTRIBUTION_PANEL}">
+							<a class="offload" href="{U_CONTRIBUTION_PANEL}">
 								# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION #
 									<span class="stacked blink">
 										<i class="fa fa-file-alt fa-2x" aria-hidden="true"></i>
@@ -104,7 +104,7 @@
 				<article class="dashboard-item several-items cell">
 					<div class="cell-body">
 						<div class="cell-content align-center">
-							<a href="${relative_url(UserUrlBuilder::disconnect())}">
+							<a class="offload" href="${relative_url(UserUrlBuilder::disconnect())}">
 								<i class="fa fa-sign-out-alt fa-2x" aria-hidden="true"></i>
 								<span class="d-block">{@user.sign.out}</span>
 							</a>
@@ -124,7 +124,7 @@
 					<article class="dashboard-item several-items cell">
 						<div class="cell-body">
 							<div class="cell-content align-center">
-								<a href="{user_publications.U_MODULE_VIEW}">
+								<a class="offload" href="{user_publications.U_MODULE_VIEW}">
 									# IF user_publications.C_ICON_IS_PICTURE #
 										<img src="{user_publications.MODULE_THUMBNAIL}" alt="{user_publications.MODULE_NAME}">
 									# ELSE #

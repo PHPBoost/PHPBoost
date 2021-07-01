@@ -109,9 +109,9 @@
 												${LangLoader::get_message('user.administrator', 'user-lang')}
 												# ELSE #
 													# IF convers.list.C_AUTHOR_EXIST #
-													<a href="{convers.list.U_AUTHOR_PROFILE}" class="{convers.list.AUTHOR_CSSCLASS}"# IF convers.list.C_AUTHOR_GROUP_COLOR #style="color:{convers.list.AUTHOR_GROUP_COLOR}"# ENDIF #>{convers.list.AUTHOR_NAME}</a>
+														<a href="{convers.list.U_AUTHOR_PROFILE}" class="{convers.list.AUTHOR_CSSCLASS} offload"# IF convers.list.C_AUTHOR_GROUP_COLOR #style="color:{convers.list.AUTHOR_GROUP_COLOR}"# ENDIF #>{convers.list.AUTHOR_NAME}</a>
 													# ELSE #
-													<del>${LangLoader::get_message('user.guest', 'user-lang')}</del>
+														<del>${LangLoader::get_message('user.guest', 'user-lang')}</del>
 													# ENDIF #
 												# ENDIF #
 											]</span>
@@ -121,11 +121,11 @@
 											${LangLoader::get_message('user.administrator', 'user-lang')}
 											# ELSE #
 												# IF convers.list.C_PARTICIPANT_EXIST #
-												<a href="{convers.list.U_PARTICIPANT}" class="{convers.list.PARTICIPANT_CSSCLASS}"# IF convers.list.C_PARTICIPANT_GROUP_COLOR #style="color:{convers.list.PARTICIPANT_GROUP_COLOR}"# ENDIF #>
-													# IF convers.list.C_PARTICIPANT_LEAVE #<del>{convers.list.PARTICIPANT_NAME}</del># ELSE #{convers.list.PARTICIPANT_NAME}# ENDIF #
-												</a>
+													<a href="{convers.list.U_PARTICIPANT}" class="{convers.list.PARTICIPANT_CSSCLASS} offload"# IF convers.list.C_PARTICIPANT_GROUP_COLOR #style="color:{convers.list.PARTICIPANT_GROUP_COLOR}"# ENDIF #>
+														# IF convers.list.C_PARTICIPANT_LEAVE #<del>{convers.list.PARTICIPANT_NAME}</del># ELSE #{convers.list.PARTICIPANT_NAME}# ENDIF #
+													</a>
 												# ELSE #
-												<del>${LangLoader::get_message('user.guest', 'user-lang')}</del>
+													<del>${LangLoader::get_message('user.guest', 'user-lang')}</del>
 												# ENDIF #
 											# ENDIF #
 										</td>
@@ -133,13 +133,13 @@
 											{convers.list.MSG}
 										</td>
 										<td class="small">
-											<a href="{convers.list.U_LAST_MSG}"><i class="far fa-hand-point-right"></i></a>
+											<a class="offload" href="{convers.list.U_LAST_MSG}"><i class="far fa-hand-point-right"></i></a>
 											{@common.on.date} {convers.list.LAST_MSG_DATE} <br />
 											{@common.by}
 											# IF convers.list.C_PARTICIPANT_IS_ADMINISTRATOR #
-											${LangLoader::get_message('user.administrator', 'user-lang')}
+												${LangLoader::get_message('user.administrator', 'user-lang')}
 											# ELSE #
-											<a href="{convers.list.U_LAST_USER}" class="{convers.list.LAST_USER_CSSCLASS}"# IF convers.list.C_LAST_USER_GROUP_COLOR #style="color:{convers.list.LAST_USER_GROUP_COLOR}"# ENDIF #>{convers.list.LAST_USER_NAME}</a>
+												<a href="{convers.list.U_LAST_USER}" class="{convers.list.LAST_USER_CSSCLASS} offload"# IF convers.list.C_LAST_USER_GROUP_COLOR #style="color:{convers.list.LAST_USER_GROUP_COLOR}"# ENDIF #>{convers.list.LAST_USER_NAME}</a>
 											# ENDIF #
 										</td>
 									</tr>
@@ -195,7 +195,7 @@
 	<section id="module-user-pm">
 		<header class="section-header">
 			<div class="controls align-right">{@user.private.messaging}</div>
-			<h1><a href="{pm.U_TITLE_CONVERS}">{pm.TITLE}</a></h1>
+			<h1><a class="offload" href="{pm.U_TITLE_CONVERS}">{pm.TITLE}</a></h1>
 		</header>
 		<div class="sub-section">
 			<div class="content-container">
@@ -221,7 +221,7 @@
 						                <div class="controls message-user-infos-preview">
 											# IF pm.msg.C_MODERATION_TOOLS #
 												<a href="pm.php?edit={pm.msg.ID}" class="offload" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
-												<a href="pm.php?del={pm.msg.ID}&amp;token={TOKEN}" class="offload" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+												<a href="pm.php?del={pm.msg.ID}&amp;token={TOKEN}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 											# ENDIF #
 											{pm.msg.WARNING_LEVEL}
 						            	</div>

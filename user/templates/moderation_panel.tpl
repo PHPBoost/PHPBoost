@@ -9,7 +9,7 @@
 					<div class="cell">
 						<div class="cell-body">
 							<div class="cell-content align-center">
-								<a href="{U_WARNING}">
+								<a class="offload" href="{U_WARNING}">
 									<i class="fa fa-exclamation-triangle fa-2x warning" aria-hidden="true"></i>
 									<span class="d-block">{@user.warnings.management}</span>
 								</a>
@@ -19,7 +19,7 @@
 					<div class="cell">
 						<div class="cell-body">
 							<div class="cell-content align-center">
-								<a href="{U_PUNISH}">
+								<a class="offload" href="{U_PUNISH}">
 									<i class="fa fa-times fa-2x error" aria-hidden="true"></i>
 									<span class="d-block">{@user.punishments.management}</span>
 								</a>
@@ -29,7 +29,7 @@
 					<div class="cell">
 						<div class="cell-body">
 							<div class="cell-content align-center">
-								<a href="{U_BAN}">
+								<a class="offload" href="{U_BAN}">
 									<i class="fa fa-minus-circle fa-2x error" aria-hidden="true"></i>
 									<span class="d-block">{@user.bans.management}</span>
 								</a>
@@ -97,13 +97,13 @@
 								# START member_list #
 									<tr>
 										<td>
-											<a href="{member_list.U_PROFILE}" class="{member_list.USER_LEVEL_CLASS}" # IF member_list.C_USER_GROUP_COLOR # style="color:{member_list.USER_GROUP_COLOR}" # ENDIF #>{member_list.LOGIN}</a>
+											<a href="{member_list.U_PROFILE}" class="{member_list.USER_LEVEL_CLASS} offload" # IF member_list.C_USER_GROUP_COLOR # style="color:{member_list.USER_GROUP_COLOR}" # ENDIF #>{member_list.LOGIN}</a>
 										</td>
 										<td>
 											{member_list.INFO}
 										</td>
 										<td>
-											<a href="{member_list.U_PM}" class="button alt-button smaller">MP</a>
+											<a href="{member_list.U_PM}" class="button alt-button smaller offload">MP</a>
 										</td>
 										<td>
 											<a href="{member_list.U_ACTION_USER}" class="offload" aria-label="{@common.modify}">
@@ -136,13 +136,13 @@
 								<div class="form-element">
 									<label>{@user.display.name}</label>
 									<div class="form-field">
-										<a href="{U_PROFILE}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{LOGIN}</a>
+										<a href="{U_PROFILE}" class="{USER_LEVEL_CLASS} offload" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{LOGIN}</a>
 									</div>
 								</div>
 								<div class="form-element">
 									<label>{@user.private.message}</label>
 									<div class="form-field">
-										<a href="{U_PM}" class="button alt-button smaller">{@user.pm}</a>
+										<a href="{U_PM}" class="button alt-button smaller offload">{@user.pm}</a>
 									</div>
 								</div>
 								<div class="form-element form-element-textarea">
@@ -183,13 +183,13 @@
 								<div class="form-element">
 									<label>{@user.display.name}</label>
 									<div class="form-field">
-										<a href="{U_PROFILE}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{LOGIN}</a>
+										<a href="{U_PROFILE}" class="{USER_LEVEL_CLASS} offload" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{LOGIN}</a>
 									</div>
 								</div>
 								<div class="form-element">
 									<label>{@user.private.message}</label>
 									<div class="form-field">
-										<a href="{U_PM}" class="button alt-button smaller">MP</a>
+										<a href="{U_PM}" class="button alt-button smaller offload">MP</a>
 									</div>
 								</div>
 								<div class="form-element">

@@ -12,7 +12,7 @@
 	<div class="sub-section">
 		<div class="content-container">
 			<div class="upload-address-bar">
-				<a href="upload.php?root=1{POPUP}"><i class="fa fa-home" aria-hidden="true"></i> {@common.root}</a>{U_FOLDER}
+				<a class="offload"  href="upload.php?root=1{POPUP}"><i class="fa fa-home" aria-hidden="true"></i> {@common.root}</a>{U_FOLDER}
 			</div>
 			# INCLUDE MESSAGE_HELPER #
 			<form action="{TARGET}" method="post">

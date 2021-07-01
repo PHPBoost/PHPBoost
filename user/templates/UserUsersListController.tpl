@@ -132,20 +132,20 @@
 								# START users #
 									<tr data-listorder-item>
 										<td class="lo-name">
-											<a href="{users.U_PROFILE}"# IF users.C_IS_GROUP # style="color: {users.GROUP_COLOR};"# ELSE # class="{users.LEVEL_COLOR}"# ENDIF #>{users.DISPLAYED_NAME}</a>
+											<a href="{users.U_PROFILE}"# IF users.C_IS_GROUP # style="color: {users.GROUP_COLOR};"# ELSE # class="{users.LEVEL_COLOR} offload"# ENDIF #>{users.DISPLAYED_NAME}</a>
 										</td>
 										<td>{users.REGISTRATION_DATE}<span class="lo-registration-date hidden">{users.REGISTRATION_DATE_TIMESTAMP}</span></td>
 										<td>{users.LAST_CONNECTION}<span class="lo-last-connection hidden">{users.LAST_CONNECTION_TIMESTAMP}</span></td>
 										<td class="lo-publications-number" aria-label="# START users.modules # {users.modules.MODULE_NAME}: {users.modules.MODULE_PUBLICATIONS_NUMBER}<br /># END users.modules #">
-											<a href="{users.U_PUBLICATIONS}" aria-label="{@user.view.publications}">{users.PUBLICATIONS_NUMBER}</a>
+											<a class="offload" href="{users.U_PUBLICATIONS}" aria-label="{@user.view.publications}">{users.PUBLICATIONS_NUMBER}</a>
 										</td>
 										<td>
-											<a href="{users.U_MP}" class="pinned bgc-full notice" aria-label="{@user.private.message}"}><i class="fa fa-fw fa-people-arrows"></i></a>
+											<a href="{users.U_MP}" class="pinned bgc-full notice offload" aria-label="{@user.private.message}"}><i class="fa fa-fw fa-people-arrows"></i></a>
 											# IF users.C_ENABLED_EMAIL #
 												<span><a href="mailto:{users.U_EMAIL}" class="pinned bgc-full member" aria-label="{@user.email}"><i class="iboost fa fa-iboost-email"></i></a></span>
 											# ENDIF #
 											# IF users.C_HAS_WEBSITE #
-												<a href="{users.U_WEBSITE}" class="pinned bgc-full link-color" aria-label="${LangLoader::get_message('form.website', 'form-lang')}"><i class="fa fa-globe"></i></a>
+												<a href="{users.U_WEBSITE}" class="pinned bgc-full link-color offload" aria-label="${LangLoader::get_message('form.website', 'form-lang')}"><i class="fa fa-globe"></i></a>
 											# ENDIF #
 										</td>
 										<td>
@@ -156,7 +156,7 @@
 										</td>
 										# IF IS_ADMIN #
 											<td>
-												<a href="{users.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-edit"></i></a>
+												<a class="offload" href="{users.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-edit"></i></a>
 												# IF users.C_DELETE #<a href="{users.U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-trash-alt"></i></a># ENDIF #
 											</td>
 										# ENDIF #
@@ -174,7 +174,7 @@
 							<article data-listorder-item class="cell">
 								<header class="cell-header">
 									<h5 class="cell-name">
-										<a href="{users.U_PROFILE}"# IF users.C_IS_GROUP # style="color: {users.GROUP_COLOR};"# ELSE # class="{users.LEVEL_COLOR} is-{users.LEVEL_COLOR} lo-name"# ENDIF #>{users.DISPLAYED_NAME}</a>
+										<a href="{users.U_PROFILE}"# IF users.C_IS_GROUP # style="color: {users.GROUP_COLOR};"# ELSE # class="{users.LEVEL_COLOR} is-{users.LEVEL_COLOR} lo-name offload"# ENDIF #>{users.DISPLAYED_NAME}</a>
 										# IF users.C_CONTROLS #<span class="description-field smaller">{users.RANK_LEVEL}</span># ENDIF #
 									</h5>
 									# IF C_ENABLED_AVATAR #<img class="user-card-avatar" src="{users.U_AVATAR}" alt="{users.DISPLAYED_NAME}"># ENDIF #
@@ -191,17 +191,17 @@
 										</li>
 										<li class="li-stretch lo-publications-number" aria-label="# START users.modules # {users.modules.MODULE_NAME}: {users.modules.MODULE_PUBLICATIONS_NUMBER}<br /># END users.modules #">
 											<span class="small">{@user.publications}</span>
-											<a href="{users.U_PUBLICATIONS}" aria-label="{@user.view.publications}">{users.PUBLICATIONS_NUMBER}</a>
+											<a class="offload" href="{users.U_PUBLICATIONS}" aria-label="{@user.view.publications}">{users.PUBLICATIONS_NUMBER}</a>
 										</li>
 										<li class="li-stretch">
 											<span class="small">{@user.contact}</span>
 											<span>
-												<a href="{users.U_MP}" class="pinned bgc-full notice" aria-label="{@user.private.message}"}><i class="fa fa-fw fa-people-arrows"></i></a>
+												<a href="{users.U_MP}" class="pinned bgc-full notice offload" aria-label="{@user.private.message}"}><i class="fa fa-fw fa-people-arrows"></i></a>
 												# IF users.C_ENABLED_EMAIL #
 													<span><a href="mailto:{users.U_EMAIL}" class="pinned bgc-full member" aria-label="{@user.email}"><i class="iboost fa fa-iboost-email"></i></a></span>
 												# ENDIF #
 												# IF users.C_HAS_WEBSITE #
-													<a href="{users.U_WEBSITE}" class="pinned bgc-full link-color" aria-label="${LangLoader::get_message('form.website', 'form-lang')}"><i class="fa fa-globe"></i></a>
+													<a href="{users.U_WEBSITE}" class="pinned bgc-full link-color offload" aria-label="${LangLoader::get_message('form.website', 'form-lang')}"><i class="fa fa-globe"></i></a>
 												# ENDIF #
 											</span>
 										</li>
@@ -215,7 +215,7 @@
 										# ENDIF #
 										# IF IS_ADMIN #
 											<li class="li-stretch controls">
-												<a href="{users.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-edit"></i></a>
+												<a class="offload" href="{users.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-edit"></i></a>
 												# IF users.C_DELETE #<a href="{users.U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-trash-alt"></i></a># ENDIF #
 											</li>
 										# ENDIF #

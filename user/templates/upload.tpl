@@ -178,7 +178,7 @@
 									<a href="upload.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="' + ${escapejs(@common.delete)} + '">\
 										<i class="far fa-trash-alt" aria-hidden="true"></i>\
 									</a>\
-									<a href="upload.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}{POPUP}" aria-label="{@common.move.to}">\
+									<a class="offload" href="upload.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}{POPUP}" aria-label="{@common.move.to}">\
 										<i class="fa fa-share" aria-hidden="true"></i>\
 									</a>\
 								</li>\
@@ -425,11 +425,11 @@
 		                    </div>
 
 		                    <div class="upload-address-bar">
-		                        <a href="upload.php?root=1{POPUP}"><i class="fa fa-home" aria-hidden="true"></i> {@common.root}</a>{URL}
+		                        <a class="offload" href="upload.php?root=1{POPUP}"><i class="fa fa-home" aria-hidden="true"></i> {@common.root}</a>{URL}
 		                    </div>
 
 		                    <div class="upload-address-bar-links">
-		                        <a href="upload.php?fup={FOLDER_ID}{POPUP}">
+		                        <a class="offload" href="upload.php?fup={FOLDER_ID}{POPUP}">
 		                            <i class="fa fa-level-up-alt" aria-hidden="true"></i> {@upload.folder.up}
 		                        </a>
 		                        <a href="javascript:display_new_folder();">
@@ -446,7 +446,7 @@
 			                        <div class="cell">
 		                                <span id="img{folder.ID}"></span>
 										<div class="cell-header">
-											<div class="cell-name ellipsis"><a id="f{folder.ID}" href="upload.php?f={folder.ID}{POPUP}">{folder.NAME}</a></div>
+											<div class="cell-name ellipsis"><a class="offload" id="f{folder.ID}" href="upload.php?f={folder.ID}{POPUP}">{folder.NAME}</a></div>
 		                                    <a id="f{folder.ID}" href="upload.php?f={folder.ID}{POPUP}"><i class="fa fa-folder"></i></a>
 										</div>
 			                            <div class="cell-list">
@@ -454,7 +454,7 @@
 												<li class="li-stretch">
 													{folder.RENAME_FOLDER}
 													<a href="upload.php?delf={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
-													<a href="upload{folder.U_MOVE}" aria-label="{@common.move.to}"><i class="fa fa-share" aria-hidden="true"></i></a>
+													<a class="offload" href="upload{folder.U_MOVE}" aria-label="{@common.move.to}"><i class="fa fa-share" aria-hidden="true"></i></a>
 												</li>
 											</ul>
 			                            </div>
@@ -508,13 +508,13 @@
 													<li class="li-stretch">
 						                                {personal_files.RENAME_FILE}
 						                                <a href="upload.php?del={personal_files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
-						                                <a href="upload{personal_files.U_MOVE}" aria-label="{@common.move.to}"><i class="fa fa-share" aria-hidden="true"></i></a>
+						                                <a class="offload" href="upload{personal_files.U_MOVE}" aria-label="{@common.move.to}"><i class="fa fa-share" aria-hidden="true"></i></a>
 							                            # IF personal_files.C_IS_SHARED_FILE #
-								                            <a href="#" id="status_function_{personal_files.ID}" onclick="change_status({personal_files.ID}, 0);return false;" aria-label="{@upload.change.to.personal}">
+								                            <a class="offload" href="#" id="status_function_{personal_files.ID}" onclick="change_status({personal_files.ID}, 0);return false;" aria-label="{@upload.change.to.personal}">
 								                                <i id="status_{personal_files.ID}" class="fas fa-users"></i>
 								                            </a>
 							                            # ELSE #
-								                            <a href="#" id="status_function_{personal_files.ID}" onclick="change_status({personal_files.ID}, 1);return false;" aria-label="{@upload.change.to.shared}">
+								                            <a class="offload" href="#" id="status_function_{personal_files.ID}" onclick="change_status({personal_files.ID}, 1);return false;" aria-label="{@upload.change.to.shared}">
 								                                <i id="status_{personal_files.ID}" class="fas fa-user-shield"></i>
 								                            </a>
 							                            # ENDIF #

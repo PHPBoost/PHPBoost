@@ -52,91 +52,91 @@
 										<tr>
 											<th>
 												<span class="html-table-header-sortable# IF C_ORDER_ENTITLED_ASC # sort-active# ENDIF #">
-													<a href="{U_ORDER_ENTITLED_ASC}" aria-label="{@common.sort.asc}">
+													<a class="offload" href="{U_ORDER_ENTITLED_ASC}" aria-label="{@common.sort.asc}">
 														<i class="fa fa-caret-up" aria-hidden="true"></i>
 													</a>
 												</span>
 												{@common.title}
 												<span class="html-table-header-sortable# IF C_ORDER_ENTITLED_DESC # sort-active# ENDIF #">
-													<a href="{U_ORDER_ENTITLED_DESC}" aria-label="{@common.sort.desc}">
+													<a class="offload" href="{U_ORDER_ENTITLED_DESC}" aria-label="{@common.sort.desc}">
 														<i class="fa fa-caret-down" aria-hidden="true"></i>
 													</a>
 												</span>
 											</th>
 											<th>
 												<span class="html-table-header-sortable# IF C_ORDER_MODULE_ASC # sort-active# ENDIF #">
-													<a href="{U_ORDER_MODULE_ASC}" aria-label="{@common.sort.asc}">
+													<a class="offload" href="{U_ORDER_MODULE_ASC}" aria-label="{@common.sort.asc}">
 														<i class="fa fa-caret-up" aria-hidden="true"></i>
 													</a>
 												</span>
 												{@common.module}
 												<span class="html-table-header-sortable# IF C_ORDER_MODULE_DESC # sort-active# ENDIF #">
-													<a href="{U_ORDER_MODULE_DESC}" aria-label="{@common.sort.desc}">
+													<a class="offload" href="{U_ORDER_MODULE_DESC}" aria-label="{@common.sort.desc}">
 														<i class="fa fa-caret-down" aria-hidden="true"></i>
 													</a>
 												</span>
 											</th>
 											<th>
 												<span class="html-table-header-sortable# IF C_ORDER_STATUS_ASC # sort-active# ENDIF #">
-													<a href="{U_ORDER_STATUS_ASC}" aria-label="{@common.sort.asc}">
+													<a class="offload" href="{U_ORDER_STATUS_ASC}" aria-label="{@common.sort.asc}">
 														<i class="fa fa-caret-up" aria-hidden="true"></i>
 													</a>
 												</span>
 												{@common.status}
 												<span class="html-table-header-sortable# IF C_ORDER_STATUS_DESC # sort-active# ENDIF #">
-													<a href="{U_ORDER_STATUS_DESC}" aria-label="{@common.sort.desc}">
+													<a class="offload" href="{U_ORDER_STATUS_DESC}" aria-label="{@common.sort.desc}">
 														<i class="fa fa-caret-down" aria-hidden="true"></i>
 													</a>
 												</span>
 											</th>
 											<th>
 												<span class="html-table-header-sortable# IF C_ORDER_CREATION_DATE_ASC # sort-active# ENDIF #">
-													<a href="{U_ORDER_CREATION_DATE_ASC}" aria-label="{@common.sort.asc}">
+													<a class="offload" href="{U_ORDER_CREATION_DATE_ASC}" aria-label="{@common.sort.asc}">
 														<i class="fa fa-caret-up" aria-hidden="true"></i>
 													</a>
 												</span>
 												{@common.creation.date}
 												<span class="html-table-header-sortable# IF C_ORDER_CREATION_DATE_DESC # sort-active# ENDIF #">
-													<a href="{U_ORDER_CREATION_DATE_DESC}" aria-label="{@common.sort.desc}">
+													<a class="offload" href="{U_ORDER_CREATION_DATE_DESC}" aria-label="{@common.sort.desc}">
 														<i class="fa fa-caret-down" aria-hidden="true"></i>
 													</a>
 												</span>
 											</th>
 											<th>
 												<span class="html-table-header-sortable# IF C_ORDER_FIXING_DATE_ASC # sort-active# ENDIF #">
-													<a href="{U_ORDER_FIXING_DATE_ASC}" aria-label="{@common.sort.asc}">
+													<a class="offload" href="{U_ORDER_FIXING_DATE_ASC}" aria-label="{@common.sort.asc}">
 														<i class="fa fa-caret-up" aria-hidden="true"></i>
 													</a>
 												</span>
 												{@contribution.closing.date}
 												<span class="html-table-header-sortable# IF C_ORDER_FIXING_DATE_DESC # sort-active# ENDIF #">
-													<a href="{U_ORDER_FIXING_DATE_DESC}" aria-label="{@common.sort.desc}">
+													<a class="offload" href="{U_ORDER_FIXING_DATE_DESC}" aria-label="{@common.sort.desc}">
 														<i class="fa fa-caret-down" aria-hidden="true"></i>
 													</a>
 												</span>
 											</th>
 											<th>
 												<span class="html-table-header-sortable# IF C_ORDER_AUTHOR_ASC # sort-active# ENDIF #">
-													<a href="{U_ORDER_AUTHOR_ASC}" aria-label="{@common.sort.asc}">
+													<a class="offload" href="{U_ORDER_AUTHOR_ASC}" aria-label="{@common.sort.asc}">
 														<i class="fa fa-caret-up" aria-hidden="true"></i>
 													</a>
 												</span>
 												{@common.author}
 												<span class="html-table-header-sortable# IF C_ORDER_AUTHOR_DESC # sort-active# ENDIF #">
-													<a href="{U_ORDER_AUTHOR_DESC}" aria-label="{@common.sort.desc}">
+													<a class="offload" href="{U_ORDER_AUTHOR_DESC}" aria-label="{@common.sort.desc}">
 														<i class="fa fa-caret-down" aria-hidden="true"></i>
 													</a>
 												</span>
 											</th>
 											<th>
 												<span class="html-table-header-sortable# IF C_ORDER_REFEREE_ASC # sort-active# ENDIF #">
-													<a href="{U_ORDER_REFEREE_ASC}" aria-label="{@common.sort.asc}">
+													<a class="offload" href="{U_ORDER_REFEREE_ASC}" aria-label="{@common.sort.asc}">
 														<i class="fa fa-caret-up" aria-hidden="true"></i>
 													</a>
 												</span>
 												${LangLoader::get_message('user.referee', 'user-lang')}
 												<span class="html-table-header-sortable# IF C_ORDER_REFEREE_DESC # sort-active# ENDIF #">
-													<a href="{U_ORDER_REFEREE_DESC}" aria-label="{@common.sort.desc}">
+													<a class="offload" href="{U_ORDER_REFEREE_DESC}" aria-label="{@common.sort.desc}">
 														<i class="fa fa-caret-down" aria-hidden="true"></i>
 													</a>
 												</span>
@@ -215,7 +215,7 @@
 		<header class="section-header">
 			# IF C_WRITE_AUTH #
 				<div class="controls align-right">
-					<a href="{U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+					<a class="offload" href="{U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 					<a href="{U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 				</div>
 			# ENDIF #
@@ -230,7 +230,7 @@
 								<div class="cell">
 									<div class="cell-body">
 										<div class="cell-content align-center">
-											<a href="{FIXING_URL}">
+											<a class="offload" href="{FIXING_URL}">
 												<i class="fa fa-wrench fa-2x"aria-hidden="true"></i>
 												<span class="d-block">{@contribution.process}</span>
 											</a>
@@ -240,7 +240,7 @@
 								<div class="cell">
 									<div class="cell-body">
 										<div class="cell-content align-center">
-											<a href="{U_UPDATE}">
+											<a class="offload" href="{U_UPDATE}">
 												<i class="fa fa-check fa-2x success"aria-hidden="true"></i>
 												<span class="d-block">{@contribution.change.status}</span>
 											</a>
@@ -286,7 +286,7 @@
 								</li>
 								<li class="li-stretch">
 									<span class="text-strong">{@contribution.contributor}</span>
-									<span><a href="{U_CONTRIBUTOR_PROFILE}" class="{CONTRIBUTOR_LEVEL_CLASS}" # IF C_CONTRIBUTOR_GROUP_COLOR # style="color:{CONTRIBUTOR_GROUP_COLOR}" # ENDIF #>{CONTRIBUTOR}</a></span>
+									<span><a href="{U_CONTRIBUTOR_PROFILE}" class="{CONTRIBUTOR_LEVEL_CLASS} offload" # IF C_CONTRIBUTOR_GROUP_COLOR # style="color:{CONTRIBUTOR_GROUP_COLOR}" # ENDIF #>{CONTRIBUTOR}</a></span>
 								</li>
 								<li class="li-stretch">
 									<span class="text-strong">{@common.creation.date}</span>
@@ -295,7 +295,7 @@
 								# IF C_CONTRIBUTION_FIXED #
 								<li class="li-stretch">
 									<span class="text-strong">${LangLoader::get_message('user.referee', 'user-lang')}</span>
-									<span><a href="{U_REFEREE_PROFILE}" class="{REFEREE_LEVEL_CLASS}" # IF C_REFEREE_GROUP_COLOR # style="color:{REFEREE_GROUP_COLOR}" # ENDIF #>{FIXER}</a></span>
+									<span><a href="{U_REFEREE_PROFILE}" class="{REFEREE_LEVEL_CLASS} offload" # IF C_REFEREE_GROUP_COLOR # style="color:{REFEREE_GROUP_COLOR}" # ENDIF #>{FIXER}</a></span>
 								</li>
 								<li class="li-stretch">
 									<span class="text-strong">{@contribution.closing.date}</span>

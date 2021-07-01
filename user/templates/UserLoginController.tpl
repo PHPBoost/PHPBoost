@@ -6,7 +6,7 @@
 			# INCLUDE LOGIN_FORM #
 			<div class="align-center">
 				# IF C_REGISTRATION_ENABLED #
-					<a href="{U_REGISTER}"><i class="fa fa-ticket-alt" aria-hidden="true"></i> {@user.sign.up}</a>
+					<a class="offload" href="{U_REGISTER}"><i class="fa fa-ticket-alt" aria-hidden="true"></i> {@user.sign.up}</a>
 				# ENDIF #
 				# IF C_DISPLAY_EXTERNAL_AUTHENTICATION #
 					# START external_auth #
@@ -14,7 +14,7 @@
 					# END external_auth #
 				# ENDIF #
 				<div class="spacer"></div>
-				<a href="{U_FORGOTTEN_PASSWORD}"><i class="fa fa-question-circle" aria-hidden="true"></i> {@user.forgotten.password}</a>
+				<a class="offload" href="{U_FORGOTTEN_PASSWORD}"><i class="fa fa-question-circle" aria-hidden="true"></i> {@user.forgotten.password}</a>
 			</div>
 		</article>
 		<footer></footer>
@@ -25,7 +25,7 @@
 			<div id="site-infos" role="banner">
 				<div id="site-logo" # IF C_HEADER_LOGO #style="background-image: url({HEADER_LOGO});"# ENDIF #></div>
 				<div id="site-name-container">
-					<a id="site-name" href="{PATH_TO_ROOT}/">{SITE_NAME}</a>
+					<a class="offload" id="site-name" href="{PATH_TO_ROOT}/">{SITE_NAME}</a>
 					<span id="site-slogan">{SITE_SLOGAN}</span>
 				</div>
 			</div>

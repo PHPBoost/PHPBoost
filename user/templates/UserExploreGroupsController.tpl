@@ -4,7 +4,7 @@
 			<div class="controls align-right">
 				{@user.members.list} {@user.group.of.group}
 				# IF C_ADMIN #
-					<a href="{U_ADMIN_GROUPS}" aria-label="${LangLoader::get_message('common.edit', 'common-lang')}"><i class="far fa-edit" aria-hidden="true"></i></a>
+					<a class="offload" href="{U_ADMIN_GROUPS}" aria-label="${LangLoader::get_message('common.edit', 'common-lang')}"><i class="far fa-edit" aria-hidden="true"></i></a>
 				# ENDIF #
 			</div>
 			<h1>
@@ -20,7 +20,7 @@
 						# START members_list #
 							<article class="user-groups-item several-item cell">
 								<header class="cell-header">
-									<h5 class="cell-name"><a href="{members_list.U_PROFILE}" class="{members_list.LEVEL_CLASS}" # IF members_list.C_GROUP_COLOR # style="color:{members_list.GROUP_COLOR}" # ENDIF #>{members_list.PSEUDO}</a></h5>
+									<h5 class="cell-name"><a href="{members_list.U_PROFILE}" class="{members_list.LEVEL_CLASS} offload" # IF members_list.C_GROUP_COLOR # style="color:{members_list.GROUP_COLOR}" # ENDIF #>{members_list.PSEUDO}</a></h5>
 									# IF members_list.C_AVATAR #<img class="user-card-avatar" src="{members_list.U_AVATAR}" alt="{members_list.PSEUDO}" /># ENDIF #
 								</header>
 								<div class="cell-list">
@@ -43,7 +43,7 @@
 			<div class="sub-section">
 				<div class="content-container">
 					<div class="content align-center">
-						<a href="{U_GROUP_LIST}" class="button">{@user.groups.list}</a>
+						<a href="{U_GROUP_LIST}" class="button offload">{@user.groups.list}</a>
 					</div>
 				</div>
 			</div>
@@ -83,7 +83,7 @@
 								# START admins_list #
 									<article class="user-groups-item several-items cell">
 										<header class="cell-header">
-											<h5 class="cell-name"><a href="{admins_list.U_PROFILE}" class="{admins_list.LEVEL_CLASS}" # IF admins_list.C_GROUP_COLOR # style="color:{admins_list.GROUP_COLOR}" # ENDIF #>{admins_list.PSEUDO}</a></h5>
+											<h5 class="cell-name"><a href="{admins_list.U_PROFILE}" class="{admins_list.LEVEL_CLASS} offload" # IF admins_list.C_GROUP_COLOR # style="color:{admins_list.GROUP_COLOR}" # ENDIF #>{admins_list.PSEUDO}</a></h5>
 											# IF admins_list.C_AVATAR #<img class="user-card-avatar" src="{admins_list.U_AVATAR}" alt="{admins_list.PSEUDO}" /># ENDIF #
 										</header>
 										<div class="cell-list">
@@ -117,7 +117,7 @@
 								# START modos_list #
 									<article class="user-groups-item several-items cell">
 										<header class="cell-header">
-											<h5 class="cell-name"><a href="{modos_list.U_PROFILE}" class="{modos_list.LEVEL_CLASS}" # IF modos_list.C_GROUP_COLOR # style="color:{modos_list.GROUP_COLOR}" # ENDIF #>{modos_list.PSEUDO}</a></h5>
+											<h5 class="cell-name"><a href="{modos_list.U_PROFILE}" class="{modos_list.LEVEL_CLASS} offload" # IF modos_list.C_GROUP_COLOR # style="color:{modos_list.GROUP_COLOR}" # ENDIF #>{modos_list.PSEUDO}</a></h5>
 											# IF modos_list.C_AVATAR #<img class="user-card-avatar" src="{modos_list.U_AVATAR}" alt="{modos_list.PSEUDO}" /># ENDIF #
 										</header>
 										<div class="cell-list">
@@ -147,7 +147,7 @@
 									</span>
 									<a href="{group.U_GROUP}" class="group-name">{group.GROUP_NAME} <span class="small">({group.NUMBER_MEMBERS})</span></a>
 									# IF C_ADMIN #
-										<a href="{group.U_ADMIN_GROUPS}" aria-label="${LangLoader::get_message('common.edit', 'common-lang')}"><i class="far fa-edit" aria-hidden="true"></i></a>
+										<a class="offload" href="{group.U_ADMIN_GROUPS}" aria-label="${LangLoader::get_message('common.edit', 'common-lang')}"><i class="far fa-edit" aria-hidden="true"></i></a>
 									# ENDIF #
 								</h2>
 							</header>
@@ -156,7 +156,7 @@
 									# START group.group_members_list #
 										<article class="user-groups-item several-items cell">
 											<header class="cell-header">
-												<h5 class="cell-name"><a href="{group.group_members_list.U_PROFILE}" class="{group.group_members_list.LEVEL_CLASS}" # IF group.group_members_list.C_GROUP_COLOR # style="color:{group.group_members_list.GROUP_COLOR}" # ENDIF #>{group.group_members_list.PSEUDO}</a></h5>
+												<h5 class="cell-name"><a href="{group.group_members_list.U_PROFILE}" class="{group.group_members_list.LEVEL_CLASS} offload" # IF group.group_members_list.C_GROUP_COLOR # style="color:{group.group_members_list.GROUP_COLOR}" # ENDIF #>{group.group_members_list.PSEUDO}</a></h5>
 												# IF group.group_members_list.C_AVATAR #<img class="user-card-avatar" src="{group.group_members_list.U_AVATAR}" alt="{group.group_members_list.PSEUDO}" /># ENDIF #
 											</header>
 											<div class="cell-list">
