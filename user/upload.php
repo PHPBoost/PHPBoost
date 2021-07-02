@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2021 07 02
  * @since       PHPBoost 1.6 - 2007 07 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -13,6 +13,8 @@
 
 require_once('../kernel/begin.php');
 $upload_lang = LangLoader::get('upload-lang');
+$error_lang = LangLoader::get('errors');
+$warning_lang = LangLoader::get('warning-lang');
 define('TITLE', $upload_lang['upload.files.management']);
 
 $popup = retrieve(GET, 'popup', '');
@@ -375,12 +377,12 @@ else
     // errors management
     $array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable', 'e_unlink_disabled', 'e_max_data_reach');
     if (in_array($get_error, $array_error))
-        $view->put('MESSAGE_HELPER', MessageHelper::display($LANG[$get_error], MessageHelper::WARNING));
+        $view->put('MESSAGE_HELPER', MessageHelper::display($error_lang[$get_error], MessageHelper::WARNING));
     if ($get_error == 'incomplete')
-        $view->put('MESSAGE_HELPER', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
+        $view->put('MESSAGE_HELPER', MessageHelper::display($warning_lang['warning.incomplete'], MessageHelper::NOTICE));
 
-    if (isset($LANG[$get_l_error]))
-        $view->put('MESSAGE_HELPER', MessageHelper::display($LANG[$get_l_error], MessageHelper::WARNING));
+    if (isset($error_lang[$get_l_error]))
+        $view->put('MESSAGE_HELPER', MessageHelper::display($error_lang[$get_l_error], MessageHelper::WARNING));
 
     $view->put_all(array(
         'C_POPUP'                => !empty($popup),

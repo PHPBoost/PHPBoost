@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 01
+ * @version     PHPBoost 6.0 - last update: 2021 07 02
  * @since       PHPBoost 1.6 - 2007 03 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -14,6 +14,7 @@ require_once('../admin/admin_begin.php');
 
 $lang = LangLoader::get('admin-lang');
 $common_lang = LangLoader::get('admin-lang');
+$error_lang = LangLoader::get('errors');
 $upload_lang = LangLoader::get('upload-lang');
 $user_lang = LangLoader::get('user-lang');
 $warning_lang = LangLoader::get('warning-lang');
@@ -339,12 +340,12 @@ else
 	// Errors management
 	$array_error = array('e_upload_no_file', 'e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_unlink_disabled');
 	if (in_array($get_error, $array_error))
-		$view->put('MESSAGE_HELPER', MessageHelper::display($LANG[$get_error], MessageHelper::WARNING));
+		$view->put('MESSAGE_HELPER', MessageHelper::display($error_lang[$get_error], MessageHelper::WARNING));
 	if ($get_error == 'incomplete')
 		$view->put('MESSAGE_HELPER', MessageHelper::display($warning_lang['warning.incomplete'], MessageHelper::NOTICE));
 
-	if (isset($LANG[$get_l_error]))
-		$view->put('MESSAGE_HELPER', MessageHelper::display($LANG[$get_l_error], MessageHelper::WARNING));
+	if (isset($error_lang[$get_l_error]))
+		$view->put('MESSAGE_HELPER', MessageHelper::display($error_lang[$get_l_error], MessageHelper::WARNING));
 
 	if ($show_member)
 		$url = Uploads::get_admin_url($folder, ' | <a href="admin_files.php?showm=1">' . $user_lang['user.members'] . '</a> |');

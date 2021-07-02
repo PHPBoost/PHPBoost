@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 01
+ * @version     PHPBoost 6.0 - last update: 2021 07 02
  * @since       PHPBoost 1.2 - 2005 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -57,26 +57,26 @@ if (isset($_FILES['gallery'])) // Upload
 		$error = 'e_upload_invalid_format';
 
 	if ($error != '') // Error, then stop here
-		$view->put('MESSAGE_HELPER', MessageHelper::display($LANG[$error], MessageHelper::WARNING));
+		$view->put('MESSAGE_HELPER', MessageHelper::display($lang[$error], MessageHelper::WARNING));
 	else
 	{
 		$path = $dir . $Upload->get_filename();
 		$error = $Upload->check_img($config->get_max_width(), $config->get_max_height(), Upload::DELETE_ON_ERROR);
 		if (!empty($error)) // Error, then stop here
-			$view->put('MESSAGE_HELPER', MessageHelper::display($LANG[$error], MessageHelper::WARNING));
+			$view->put('MESSAGE_HELPER', MessageHelper::display($lang[$error], MessageHelper::WARNING));
 		else
 		{
 			// Saving the picture in database.
 			$Gallery->Resize_pics($path);
 			if ($Gallery->get_error() != '')
-				$view->put('MESSAGE_HELPER', MessageHelper::display($LANG[$Gallery->get_error()], MessageHelper::WARNING));
+				$view->put('MESSAGE_HELPER', MessageHelper::display($lang[$Gallery->get_error()], MessageHelper::WARNING));
 
 			$name = TextHelper::strprotect($request->get_postvalue('name', ''));
 			foreach ($Upload->get_files_parameters() as $parameters)
 			{
 				$idpic = $Gallery->Add_pics($id_category_post, $name, $parameters['path'], AppContext::get_current_user()->get_id());
 				if ($Gallery->get_error() != '')
-					$view->put('MESSAGE_HELPER', MessageHelper::display($LANG[$Gallery->get_error()], MessageHelper::WARNING));
+					$view->put('MESSAGE_HELPER', MessageHelper::display($lang[$Gallery->get_error()], MessageHelper::WARNING));
 			}
 
 			// Regenerate cache of mini module
