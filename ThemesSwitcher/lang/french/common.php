@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 26
+ * @version     PHPBoost 6.0 - last update: 2021 07 02
  * @since       PHPBoost 3.0 - 2009 08 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -12,6 +12,6 @@
 #                    French                        #
 ####################################################
 
-$LANG['ts.switch.theme']  = 'Changer le thème';
-$LANG['ts.default.theme'] = 'Thème par défaut';
+$lang['ts.switch.theme']  = 'Changer le thème';
+$lang['ts.default.theme'] = 'Thème par défaut';
 ?>
