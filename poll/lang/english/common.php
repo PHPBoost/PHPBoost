@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 25
+ * @version     PHPBoost 6.0 - last update: 2021 07 02
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -73,7 +73,7 @@ $lang['poll.message.already.voted'] = 'Your vote is saved.';
 $lang['poll.sorting.field.closed'] = 'Polls completed';
 
 // Manage
-$lang['poll.manage.status']      = 'Polls status';
+$lang['poll.manage.status']      = 'Status';
 $lang['poll.manage.in.progress'] = 'In progress';
 $lang['poll.manage.completed']   = 'Completed';
 ?>
