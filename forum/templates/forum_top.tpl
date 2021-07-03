@@ -89,7 +89,7 @@
 						</li>
 						<li>
 							<span class="cssmenu-title">
-								class="offload" href="{U_UNANSWERED_TOPICS}" aria-label="{@forum.unanswered.topics}"><i class="fa fa-fw fa-comment-slash" aria-hidden="true"></i> <span class="hidden-large-screens">{@forum.unanswered.topics}</span></a>
+								<a class="offload" href="{U_UNANSWERED_TOPICS}" aria-label="{@forum.unanswered.topics}"><i class="fa fa-fw fa-comment-slash" aria-hidden="true"></i> <span class="hidden-large-screens">{@forum.unanswered.topics}</span></a>
 							</span>
 						</li>
 						<li>
