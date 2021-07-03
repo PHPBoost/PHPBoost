@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 07 03
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -85,12 +85,13 @@ if ($category->get_url())
 }
 
 $warning_lang = LangLoader::get('warning-lang');
+$user_lang = LangLoader::get('user-lang');
 $view = new FileTemplate('forum/forum_topic.tpl');
 $view->add_lang(array_merge(
 	$lang,
 	LangLoader::get('common-lang'),
 	LangLoader::get('form-lang'),
-	LangLoader::get('user-lang'),
+	$user_lang,
 	$warning_lang
 ));
 
@@ -108,15 +109,6 @@ if ($check_group_edit_auth)
 		'U_TOPIC_LOCK'         => url('.php?id=' . $id_get . '&amp;lock=true&amp;token=' . AppContext::get_session()->get_token()),
 		'U_TOPIC_UNLOCK'       => url('.php?id=' . $id_get . '&amp;lock=false&amp;token=' . AppContext::get_session()->get_token()),
 		'U_TOPIC_MOVE'         => url('.php?id=' . $id_get),
-
-		//
-		'L_TOPIC_LOCK'         => ($topic['status'] == '1') ? $LANG['forum_lock'] : $LANG['forum_unlock'],
-		'L_TOPIC_MOVE'         => $LANG['forum_move'],
-		'L_ALERT_DELETE_TOPIC' => $LANG['alert_delete_topic'],
-		'L_ALERT_LOCK_TOPIC'   => $LANG['alert_lock_topic'],
-		'L_ALERT_UNLOCK_TOPIC' => $LANG['alert_unlock_topic'],
-		'L_ALERT_MOVE_TOPIC'   => $LANG['alert_move_topic'],
-		'L_ALERT_CUT_TOPIC'    => $LANG['alert_cut_topic']
 	));
 }
 else
@@ -192,23 +184,6 @@ $vars_tpl = array(
 	'U_ONCHANGE_CAT'          => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
 	'U_CATEGORY'              => !empty($forum_cats) ? $forum_cats : '',
 	'U_TITLE_T'               => 'topic' . url('.php?id=' . $id_get, '-' . $id_get . $rewrited_title . '.php'),
-	//
-	'L_REQUIRE_MESSAGE'       => $LANG['require_text'],
-	'L_DELETE_MESSAGE'        => $LANG['alert_delete_msg'],
-	'L_GUEST'                 => $LANG['guest'],
-	'L_DELETE'                => LangLoader::get_message('common.delete', 'common-lang'),
-	'L_EDIT'                  => LangLoader::get_message('common.edit', 'common-lang'),
-	'L_CUT_TOPIC'             => $LANG['cut_topic'],
-	'L_EDIT_BY'               => $LANG['edit_by'],
-	'L_PUNISHMENT_MANAGEMENT' => $LANG['punishment_management'],
-	'L_WARNING_MANAGEMENT'    => $LANG['warning_management'],
-	'L_FORUM_INDEX'           => $LANG['forum_index'],
-	'L_QUOTE'                 => $LANG['quote'],
-	'L_ON'                    => $LANG['on'],
-	'L_RESPOND'               => $LANG['respond'],
-	'L_SUBMIT'                => $LANG['submit'],
-	'L_PREVIEW'               => $LANG['preview'],
-	'L_RESET'                 => $LANG['reset']
 );
 
 $extended_fields_cache = ExtendedFieldsCache::load();
@@ -280,9 +255,6 @@ while ( $row = $result->fetch() )
 			'U_POLL_RESULT' => url('.php?id=' . $id_get . '&amp;r=1&amp;pt=' . $page),
 			'U_POLL_ACTION' => url('.php?id=' . $id_get . '&amp;p=' . $page . '&amp;token=' . AppContext::get_session()->get_token()),
 
-			'L_POLL'        => $LANG['poll'],
-			'L_VOTE'        => $LANG['poll_vote'],
-			'L_RESULT'      => $LANG['poll_result']
 		));
 
 		$array_voter = explode('|', $row['voter_id']);
@@ -303,7 +275,9 @@ while ( $row = $result->fetch() )
 					'ANSWERS'      => stripslashes($answer),
 					'VOTES_NUMBER' => $total,
 					'WIDTH'        => $percent * 4, //x 4 Pour agrandir la barre de vote.
-					'PERCENT'      => $percent
+					'PERCENT'      => $percent,
+
+					'L_VOTES'      => $total > 1 ? $lang['forum.poll.vote'] : $lang['forum.poll.vote']
 				));
 			}
 		}
@@ -344,7 +318,7 @@ while ( $row = $result->fetch() )
 	}
 
 	//Rang de l'utilisateur.
-	$user_rank = ($row['level'] === '0') ? $LANG['member'] : $LANG['guest'];
+	$user_rank = ($row['level'] === '0') ? $user_lang['user.member'] : $user_lang['user.guest'];
 	$user_group = $user_rank;
 	$user_rank_icon = '';
 	if ($row['level'] === '2') //Rang spécial (admins).
@@ -457,13 +431,14 @@ while ( $row = $result->fetch() )
 			{
 				$view->assign_block_vars('msg.usergroups', array(
 					'C_IMG_USERGROUP'   => !empty($array_group_info['img']),
-					'U_IMG_USERGROUP'   => $array_group_info['img'],
-					'U_USERGROUP'       => UserUrlBuilder::group($idgroup)->rel(),
 					'C_USERGROUP_COLOR' => !empty($group_color),
-					'L_USER_GROUP'      => $LANG['group'],
-					'USERGROUP_COLOR'   => $group_color,
-					'USERGROUP_NAME'    => $array_group_info['name'],
-					'USERGROUP_ID'      => $idgroup
+
+					'USERGROUP_COLOR' => $group_color,
+					'USERGROUP_NAME'  => $array_group_info['name'],
+					'USERGROUP_ID'    => $idgroup,
+
+					'U_IMG_USERGROUP' => $array_group_info['img'],
+					'U_USERGROUP'     => UserUrlBuilder::group($idgroup)->rel(),
 				));
 			}
 		}
@@ -567,8 +542,9 @@ foreach ($categories_tree_options as $option)
 
 $vars_tpl= array_merge($vars_tpl, array(
 	'C_USER_CONNECTED'             => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
-	'TOTAL_ONLINE'                 => $total_online,
 	'C_NO_USER_ONLINE'             => (($total_online - $total_visit) == 0),
+
+	'TOTAL_ONLINE'                 => $total_online,
 	'ONLINE_USERS_LIST'            => $users_list,
 	'ADMINISTRATORS_NUMBER'        => $total_admin,
 	'MODERATORS_NUMBER'            => $total_modo,
@@ -579,24 +555,14 @@ $vars_tpl= array_merge($vars_tpl, array(
 	'IS_TRACK_PM'                  => $track_pm ? 'true' : 'false',
 	'IS_TRACK_MAIL'                => $track_mail ? 'true' : 'false',
 	'IS_CHANGE'                    => $topic['display_msg'] ? 'true' : 'false',
+
 	'U_ALERT'                      => url('.php?id=' . $id_get),
-	'L_DEFAULT_TRACK'              => ($track) ? $LANG['untrack_topic'] : $LANG['track_topic'],
-	'L_DEFAULT_EMAIL_SUBSCRIPTION' => ($track_mail) ? $LANG['untrack_topic_mail'] : $LANG['track_topic_mail'],
-	'L_DEFAULT_PM_SUBSCRIPTION'    => ($track_pm) ? $LANG['untrack_topic_pm'] : $LANG['track_topic_pm'],
-	'L_TRACK'                      => $LANG['track_topic'],
-	'L_UNTRACK'                    => $LANG['untrack_topic'],
-	'L_SUBSCRIBE_PM'               => $LANG['track_topic_pm'],
-	'L_UNSUBSCRIBE_PM'             => $LANG['untrack_topic_pm'],
-	'L_SUBSCRIBE'                  => $LANG['track_topic_mail'],
-	'L_UNSUBSCRIBE'                => $LANG['untrack_topic_mail'],
-	'L_ALERT'                      => $LANG['alert_topic'],
-	'L_USER'                       => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
-	'L_ADMIN'                      => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
-	'L_MODO'                       => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],
-	'L_MEMBER'                     => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
-	'L_GUEST'                      => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
-	'L_AND'                        => $LANG['and'],
-	'L_ONLINE'                     => TextHelper::strtolower($LANG['online'])
+
+	'L_USER'   => ($total_online > 1) ? $user_lang['user.users'] : $user_lang['user.user'],
+	'L_ADMIN'  => ($total_admin > 1) ? $user_lang['user.administrators'] : $user_lang['user.administrator'],
+	'L_MODO'   => ($total_modo > 1) ? $user_lang['user.moderators']    : $user_lang['user.moderator'],
+	'L_MEMBER' => ($total_member > 1) ? $user_lang['user.members'] : $user_lang['user.member'],
+	'L_GUEST'  => ($total_visit > 1) ? $user_lang['user.guests'] : $user_lang['user.guest'],
 ));
 
 //Récupération du message quoté.
@@ -623,14 +589,14 @@ if ($topic['status'] == '0' && !$check_group_edit_auth)
 {
 	$view->put_all(array(
 		'C_ERROR_AUTH_WRITE' => true,
-		'L_ERROR_AUTH_WRITE' => $LANG['e.forum.topic.locked']
+		'L_ERROR_AUTH_WRITE' => $lang['forum.error.locked.topic']
 	));
 }
 elseif (!ForumAuthorizationsService::check_authorizations($topic['id_category'])->write()) //On vérifie si l'utilisateur a les droits d'écritures.
 {
 	$view->put_all(array(
 		'C_ERROR_AUTH_WRITE' => true,
-		'L_ERROR_AUTH_WRITE' => $LANG['e.category.right']
+		'L_ERROR_AUTH_WRITE' => $lang['forum.error.category.right']
 	));
 }
 else

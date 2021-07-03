@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 07 03
  * @since       PHPBoost 2.0 - 2008 03 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -70,10 +70,6 @@ if ($config->is_connexion_form_displayed()) {
 	$display_connexion = array(
 		'C_USER_NOTCONNECTED' => !$is_connected,
 		'C_FORUM_CONNEXION'   => true,
-		'L_CONNECT'           => LangLoader::get_message('user.sign.in', 'user-lang'),
-		'L_DISCONNECT'        => LangLoader::get_message('user.sign.out', 'user-lang'),
-		'L_AUTOCONNECT'       => LangLoader::get_message('user.auto.connect', 'user-lang'),
-		'L_REGISTER'          => LangLoader::get_message('user.sign.up', 'user-lang')
 	);
 	$top_view->put_all($display_connexion);
 	$bottom_view->put_all($display_connexion);
@@ -83,6 +79,7 @@ $vars_tpl = array(
 	'C_USER_CONNECTED'         => $is_connected,
 	'C_DISPLAY_UNREAD_DETAILS' => !$is_guest,
 	'C_MODERATION_PANEL'       => AppContext::get_current_user()->check_level(1),
+	'C_IS_GUEST'               => !$is_guest,
 
 	'FORUM_NAME'               => $config->get_forum_name(),
 	'UNREAD_MESSAGES_NUMBER'   => $nbr_msg_not_read,
@@ -92,18 +89,6 @@ $vars_tpl = array(
 	'U_UNREAD_MESSAGES'        => Url::to_rel('/forum/unread.php'),
 	'U_UNANSWERED_TOPICS'      => Url::to_rel('/forum/noanswer.php'),
 	'U_MARK_AS_READ'           => Url::to_rel('/forum/action' . url('.php?read=1', '')),
-
-	'L_SHOW_TOPIC_TRACK'       => $LANG['show_topic_track'],
-	'L_SHOW_LAST_READ'         => $LANG['show_last_read'],
-	'L_SHOW_NOT_READS'         => $LANG['show_not_reads'],
-	'L_SHOW_NO_ANSWER'         => $LANG['show.no.answer'],
-	'L_MARK_AS_READ'           => $LANG['mark_as_read'],
-	'C_IS_GUEST'               => !$is_guest,
-	'L_FORUM_INDEX'            => $LANG['forum_index'],
-	'L_MODERATION_PANEL'       => $LANG['moderation_panel'],
-	'L_CONFIRM_READ_TOPICS'    => $LANG['confirm_mark_as_read'],
-	'L_AUTH_ERROR'             => LangLoader::get_message('warning.auth', 'warning-lang'),
-	'L_SHOW_MY_MSG'            => $LANG['show_my_msg']
 );
 
 $top_view->put_all($vars_tpl);

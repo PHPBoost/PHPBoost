@@ -131,7 +131,7 @@
 						<ul>
 							<li>
 								<span class="cssmenu-title">
-									<a href="${relative_url(UserUrlBuilder::connect())}" aria-label="{@user.sing.in}"><i class="fa fa-fw fa-sign-in-alt" aria-hidden="true"></i> <span class="hidden-large-screens">{@user.sing.in}</span></a>
+									<a href="${relative_url(UserUrlBuilder::connect())}" aria-label="{@user.sign.in}"><i class="fa fa-fw fa-sign-in-alt" aria-hidden="true"></i> <span class="hidden-large-screens">{@user.sign.in}</span></a>
 								</span>
 							</li>
 							<li>

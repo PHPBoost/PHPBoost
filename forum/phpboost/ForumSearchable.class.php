@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 07 03
  * @since       PHPBoost 3.0 - 2012 02 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -25,8 +25,6 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 	 *  Renvoie le formulaire de recherche du forum
 	 */
 	{
-		global $LANG;
-
 		$view = new FileTemplate('forum/forum_search_form.tpl');
 		$view->add_lang(array_merge(
 			LangLoader::get('common', 'forum'),
@@ -76,19 +74,6 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			'IS_ALL_CATS_SELECTED' => ($id_category == '-1') ? ' selected="selected"' : '',
 
 			'CATS' => $cat_list,
-			//
-			'L_DATE'      => $date_lang['date.date'],
-			'L_DAY'       => $date_lang['date.day'],
-			'L_DAYS'      => $date_lang['date.days'],
-			'L_MONTH'     => $date_lang['date.month'],
-			'L_MONTHS'    => $date_lang['date.month'],
-			'L_YEAR'      => $date_lang['date.year'],
-			'L_OPTIONS'   => $LANG['options'],
-			'L_TITLE'     => $LANG['title'],
-			'L_CONTENT'   => $LANG['content'],
-			'L_CATEGORY'  => $LANG['category'],
-			'L_ALL_CATS'  => $LANG['all'],
-			'L_ALL_DATES' => $LANG['all']
 		));
 		return $view->render();
 	}
@@ -211,19 +196,10 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 	 */
 	public function parse_search_result($result_data)
 	{
-		global $LANG;
-
-		load_module_lang('forum'); //Chargement de la langue du module.
-
 		$view = new FileTemplate('forum/forum_generic_results.tpl');
 		$view->add_lang(array_merge(
 			LangLoader::get('common', 'forum'),
 			LangLoader::get('common-lang')
-		));
-
-		$view->put_all(Array(
-			'L_ON'    => $LANG['on'],
-			'L_TOPIC' => $LANG['topic']
 		));
 
 		$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($result_data['title']) : '';

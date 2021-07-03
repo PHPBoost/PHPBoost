@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 20
+ * @version     PHPBoost 6.0 - last update: 2021 07 03
  * @since       PHPBoost 1.6 - 2007 04 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -16,12 +16,15 @@ require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
 $lang = LangLoader::get('common', 'forum');
+$common_lang = LangLoader::get('common-lang');
+$form_lang = LangLoader::get('form-lang');
+$user_lang = LangLoader::get('user-lang');
 
 $member = UserService::get_user(AppContext::get_request()->get_getint('id', AppContext::get_current_user()->get_id()));
 if (!$member)
 	DispatchManager::redirect(PHPBoostErrors::unexisting_element());
 
-$page_title = $member->get_id() == AppContext::get_current_user()->get_id() ? LangLoader::get_message('forum.my.items', 'common', 'forum') : LangLoader::get_message('forum.member.items', 'common', 'forum') . ' ' . $member->get_display_name();
+$page_title = $member->get_id() == AppContext::get_current_user()->get_id() ? $lang['forum.my.items'] : $lang['forum.member.items'] . ' ' . $member->get_display_name();
 
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
 $Bread_crumb->add($page_title, 'membermsg.php?id=' . $member->get_id());
@@ -48,9 +51,9 @@ foreach ($displayed_extended_fields as $field_type)
 
 $view = new FileTemplate('forum/forum_membermsg.tpl');
 $view->add_lang(array_merge(
-	LangLoader::get('common', 'forum'),
-	LangLoader::get('common-lang'),
-	LangLoader::get('user-lang')
+	$lang,
+	$common_lang,
+	$user_lang
 ));
 
 $authorized_categories = CategoriesService::get_authorized_categories();
@@ -87,9 +90,6 @@ if (ForumAuthorizationsService::check_authorizations()->read_topics_content())
 		'PAGINATION'      => $pagination->display(),
 
 		'L_VIEW_MSG_USER' => $page_title,
-
-		'L_BACK'          => $LANG['back'],
-		'L_FORUM_INDEX'   => $LANG['forum_index']
 	));
 
 	$result = PersistenceContext::get_querier()->select("SELECT
@@ -125,12 +125,12 @@ if (ForumAuthorizationsService::check_authorizations()->read_topics_content())
 		$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['title']) : '';
 
 		//Ajout du marqueur d'édition si activé.
-		$edit_mark = ($row['timestamp_edit'] > 0 && $config->is_edit_mark_enabled()) ? '<span class="edit-pseudo">' . $LANG['edit_by'] . ' <a href="'. UserUrlBuilder::profile($row['user_id_edit'])->rel() .'">' . $row['login_edit'] . '</a> ' . $LANG['on'] . ' ' . Date::to_format($row['timestamp_edit'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '</span><br />' : '';
+		$edit_mark = ($row['timestamp_edit'] > 0 && $config->is_edit_mark_enabled()) ? '<span class="edit-pseudo">' . $lang['forum.edited.by'] . ' <a href="'. UserUrlBuilder::profile($row['user_id_edit'])->rel() .'">' . $row['login_edit'] . '</a> ' . $common_lang['common.on.date'] . ' ' . Date::to_format($row['timestamp_edit'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '</span><br />' : '';
 
 		$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
 		//Rang de l'utilisateur.
-		$user_rank = ($row['level'] === '0') ? $LANG['member'] : $LANG['guest'];
+		$user_rank = ($row['level'] === '0') ? $user_lang['user.member'] : $user_lang['user.guest'];
 		$user_group = $user_rank;
 		$user_rank_icon = '';
 		if ($row['level'] === '2') //Rang spécial (admins).
@@ -229,7 +229,7 @@ if (ForumAuthorizationsService::check_authorizations()->read_topics_content())
 			'U_USER_AVATAR'    => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : $user_accounts_config->get_default_avatar(),
 			'U_USER_MSG'       => UserUrlBuilder::publications($row['user_id'])->rel(),
 			'U_USER_MEMBERMSG' => PATH_TO_ROOT . '/forum/membermsg' . url('.php?id=' . $row['user_id'], ''),
-			'U_USER_MAIL'      => 'mailto:' . $row['email'],
+			'U_USER_EMAIL'     => 'mailto:' . $row['email'],
 			'U_USER_PM'        => UserUrlBuilder::personnal_message($row['user_id'])->rel(),
 			'U_USER_PROFILE'   => UserUrlBuilder::profile($row['user_id'])->rel(),
 			'U_VARS_ANCHOR'    => url('.php?' . ($topic_page > 1 ? 'pt=' . $topic_page . '&amp;' : '') . 'id=' . $row['idtopic'], '-' . $row['idtopic'] . ($topic_page > 1 ? '-' . $topic_page : '') . $rewrited_title . '.php'),
@@ -257,9 +257,7 @@ if (ForumAuthorizationsService::check_authorizations()->read_topics_content())
 						'USERGROUP_ID'      => $idgroup,
 
 						'U_IMG_USERGROUP'   => $array_group_info['img'],
-						'U_USERGROUP'       => UserUrlBuilder::group($idgroup)->rel(),
-
-						'L_USER_GROUP'      => $LANG['group']
+						'U_USERGROUP'       => UserUrlBuilder::group($idgroup)->rel()
 					));
 				}
 			}
@@ -290,19 +288,19 @@ if (ForumAuthorizationsService::check_authorizations()->read_topics_content())
 					}
 					if ($title == '')
 					{
-						$title = LangLoader::get_message('form.mail', 'form-lang');
-						$icon_fa = 'fa-mail';
+						$title = $form_lang['form.email'];
+						$icon_fa = 'iboot fa-iboost-email';
 					}
 				}
 				else if ($field['regex'] == 5)
 				{
-					$button = '<a href="' . $row[$field_type] . '" class="button alt-button smaller">' . LangLoader::get_message('form.website', 'form-lang') . '</a>';
+					$button = '<a href="' . $row[$field_type] . '" class="button alt-button smaller offload">' . $form_lang['form.website'] . '</a>';
 
 					foreach (MemberShortTextExtendedField::$brands_pictures_list as $id => $parameters)
 					{
 						if (TextHelper::strstr($row[$field_type], $id))
 						{
-							$button = '<a href="' . $row[$field_type] . '" class="button alt-button smaller"><i class="fa ' . $parameters['picture'] . '" aria-hidden="true"></i> ' . $parameters['title'] . '</a>';
+							$button = '<a href="' . $row[$field_type] . '" class="button alt-button smaller offload"><i class="fa ' . $parameters['picture'] . '" aria-hidden="true"></i> ' . $parameters['title'] . '</a>';
 							$title = $parameters['title'];
 							$icon_fa = $parameters['picture'];
 							$unknown_field = false;
@@ -310,8 +308,8 @@ if (ForumAuthorizationsService::check_authorizations()->read_topics_content())
 					}
 					if ($title == '')
 					{
-						$title = LangLoader::get_message('form.website', 'form-lang');
-						$icon_fa = 'fa-website';
+						$title = $form_lang['form.website'];
+						$icon_fa = 'fa-globe';
 					}
 				}
 
@@ -351,15 +349,11 @@ $vars_tpl = array(
 	'GUESTS_NUMBER'         => $total_visit,
 	'FORUM_NAME'            => $config->get_forum_name(),
 
-	'L_USER'                => ($total_online > 1) ? $LANG['user_s']   : $LANG['user'],
-	'L_ADMIN'               => ($total_admin > 1) ? $LANG['admin_s']   : $LANG['admin'],
-	'L_MODO'                => ($total_modo > 1) ? $LANG['modo_s']     : $LANG['modo'],
-	'L_MEMBER'              => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
-	'L_GUEST'               => ($total_visit > 1) ? $LANG['guest_s']   : $LANG['guest'],
-
-	'L_FORUM_INDEX'         => $LANG['forum_index'],
-	'L_AND'                 => $LANG['and'],
-	'L_ONLINE'              => TextHelper::strtolower($LANG['online'])
+	'L_USER'   => ($total_online > 1) ? $user_lang['user.users'] : $user_lang['user.user'],
+	'L_ADMIN'  => ($total_admin > 1) ? $user_lang['user.administrators'] : $user_lang['user.administrator'],
+	'L_MODO'   => ($total_modo > 1) ? $user_lang['user.moderators']    : $user_lang['user.moderator'],
+	'L_MEMBER' => ($total_member > 1) ? $user_lang['user.members'] : $user_lang['user.member'],
+	'L_GUEST'  => ($total_visit > 1) ? $user_lang['user.guests'] : $user_lang['user.guest'],
 );
 
 $view->put_all($vars_tpl);

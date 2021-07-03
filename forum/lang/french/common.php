@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 05
+ * @version     PHPBoost 6.0 - last update: 2021 07 03
  * @since       PHPBoost 4.1 - 2015 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -108,25 +108,27 @@ $lang['forum.no.message.now']    = 'Il n\'y a aucun message pour l\'instant';
 $lang['forum.no.unread.message'] = 'Aucun message non lu';
 
 // History
-$lang['forum.history']          = 'Historique des actions';
-$lang['forum.concerned.user']   = 'Membre concerné';
-$lang['forum.no.action']        = 'Aucune action enregistrée';
-$lang['forum.delete.message']   = 'Suppression d\'un message';
-$lang['forum.delete.topic']     = 'Suppression d\'un sujet';
-$lang['forum.lock.topic']       = 'Verrouillage d\'un sujet';
-$lang['forum.unlock.topic']     = 'Déverrouillage d\'un sujet';
-$lang['forum.moving.topic']     = 'Déplacement d\'un sujet';
-$lang['forum.cutting.topic']    = 'Scindement d\'un sujet';
-$lang['forum.warning.on.user']  = '+10% à un membre';
-$lang['forum.warning.off.user'] = '-10% à un membre';
-$lang['forum.set.warning.user'] = 'Modifier le pourcentage';
-$lang['forum.more.action']      = 'Voir les 100 prochaines actions';
-$lang['forum.ban.user']         = 'Bannissement d\'un membre';
-$lang['forum.edit.message']     = 'Edition message d\'un membre';
-$lang['forum.edit.topic']       = 'Edition sujet d\'un membre';
-$lang['forum.solve.alert']      = 'Résolution d\'une alerte';
-$lang['forum.wait.alert']       = 'Mise en attente d\'une alerte';
-$lang['forum.del.alert']        = 'Suppression d\'une alerte';
+$lang['forum.history']        = 'Historique des actions';
+$lang['forum.concerned.user'] = 'Membre concerné';
+    // actions
+$lang['no_action']            = 'Aucune action enregistrée';
+$lang['delete_msg']           = 'Suppression d\'un message';
+$lang['delete_topic']         = 'Suppression d\'un sujet';
+$lang['lock_topic']           = 'Verrouillage d\'un sujet';
+$lang['unlock_topic']         = 'Déverrouillage d\'un sujet';
+$lang['move_topic']           = 'Déplacement d\'un sujet';
+$lang['cut_topic']            = 'Scindement d\'un sujet';
+$lang['warning_on_user']      = '+10% à un membre';
+$lang['warning_off_user']     = '-10% à un membre';
+$lang['set_warning_user']     = 'Modification du % d\'avertissement';
+$lang['more_action']          = 'Voir 100 actions en plus';
+$lang['ban_user']             = 'Bannissement d\'un membre';
+$lang['readonly_user']        = 'Membre en lecture seule';
+$lang['edit_msg']             = 'Edition message d\'un membre';
+$lang['edit_topic']           = 'Edition sujet d\'un membre';
+$lang['solve_alert']          = 'Résolution d\'une alerte';
+$lang['wait_alert']           = 'Mise en attente d\'une alerte';
+$lang['del_alert']            = 'Suppression d\'une alerte';
 
 // Links (top | bottom)
 $lang['forum.links']                  = 'Liens';
@@ -144,12 +146,11 @@ $lang['forum.for.selection']          = 'Pour la sélection';
 $lang['forum.change.issue.status.to'] = 'Mettre le statut: %s';
 $lang['forum.default.issue.status']   = 'Mettre le statut par défaut';
 $lang['forum.no.moderation']          = 'Aucune action';
-    // Warnings
-$lang['forum.warnings.management'] = 'Aucune action';
     // Reports
         // User reports
-$lang['forum.reports.management']        = 'Gestion des signalement';
+$lang['forum.reports.management']        = 'Gestion des signalements';
 $lang['forum.report.topic']              = 'Signaler ce sujet';
+$lang['forum.report.topic.title']        = 'Signaler un sujet';
 $lang['forum.report.concerned.topic']    = 'Sujet concerné';
 $lang['forum.report.concerned.category'] = 'Catégorie du sujet concerné';
 $lang['forum.report.author']             = 'Signalé par';
@@ -180,7 +181,6 @@ $lang['forum.report.alternative.pm'] = '
     <p class="smaller">(Laisser vide pour aucun message privé)</p>
     Le membre averti ne pourra pas répondre à ce message, et ne connaîtra pas l\'expéditeur.
 ';
-        // Report moderation
 
 // Poll
 $lang['forum.poll']               = 'Sondage';
@@ -251,11 +251,10 @@ $lang['forum.forum.message']  = 'Message sur le forum';
 $lang['forum.forum.messages'] = 'Messages sur le forum';
 
 $lang['forum.quote.last.message']   = 'Reprise du message précédent';
-$lang['forum.edit.message']         = 'Editer le message';
-$lang['forum.edited.by']            = 'Edité par';
-$lang['forum.edited.on']            = 'Edité le';
-$lang['forum.new.topic']            = 'Nouveau sujet';
-$lang['forum.edit.in.topic']        = 'Editer un message dans le sujet';
+$lang['forum.edit.message']         = 'Éditer le message';
+$lang['forum.edited.by']            = 'Édité par';
+$lang['forum.edited.on']            = 'Édité le';
+$lang['forum.edit.in.topic']        = 'Éditer un message dans le sujet';
 $lang['forum.reply']                = 'Répondre';
 
     // Profile
@@ -265,7 +264,7 @@ $lang['forum.show.member.messages'] = 'Voir tous les messages du membre';
     // Controls
 $lang['forum.message.controls']     = 'Gestion du message';
 $lang['forum.quote.message']        = 'Citer ce message';
-$lang['forum.edit.topic']           = 'Editer le sujet';
+$lang['forum.edit.topic']           = 'Éditer le sujet';
 $lang['forum.move.topic']           = 'Déplacer le sujet';
 $lang['forum.cut.topic']            = 'Scinder le sujet à partir de ce message';
 $lang['forum.alert.cut.topic']      = 'Voulez-vous scinder le sujet à partir de ce message ?';

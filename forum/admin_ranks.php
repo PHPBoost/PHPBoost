@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 07 03
  * @since       PHPBoost 1.2 - 2005 10 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -65,22 +65,6 @@ elseif (!empty($del) && !empty($get_id)) //Suppression du rang.
 	$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
 }
 
-$view->put_all(array(
-	'L_REQUIRE_RANK_NAME'            => $LANG['require_rank_name'],
-	'L_REQUIRE_MESSAGES_NUMBER_RANK' => $LANG['require_nbr_msg_rank'],
-	'L_CONFIRM_DEL_RANK'             => LangLoader::get_message('warning.confirm.delete', 'warning-lang'),
-	'L_FORUM_MANAGEMENT'             => $LANG['config.ranks.manager'],
-	'L_FORUM_RANKS_MANAGEMENT'       => LangLoader::get_message('forum.ranks.management', 'common', 'forum'),
-	'L_FORUM_ADD_RANKS'              => LangLoader::get_message('forum.rank.add', 'common', 'forum'),
-	'L_RANK_NAME'                    => $LANG['rank_name'],
-	'L_MESSAGES_NUMBER'              => $LANG['nbr_msg'],
-	'L_IMG_ASSOC'                    => $LANG['img_assoc'],
-	'L_DELETE'                       => LangLoader::get_message('common.delete', 'common-lang'),
-	'L_UPDATE'                       => $LANG['validate'],
-	'L_RESET'                        => $LANG['reset'],
-	'L_ADD'                          => LangLoader::get_message('common.add', 'common-lang')
-));
-
 //On recupère les images des groupes
 $rank_options_array = array();
 
@@ -110,16 +94,17 @@ foreach($ranks_cache as $msg => $row)
 	}
 
 	$view->assign_block_vars('rank', array(
-		'ID'               => $row['id'],
-		'RANK'             => $row['name'],
-		'MESSAGE'          => $msg,
-		'RANK_OPTIONS'     => $rank_options,
-		'RANK_THUMBNAIL'   => $row['icon'],
+		'C_CUSTOM_RANK' => $row['special'] == 0,
+
+		'ID'             => $row['id'],
+		'RANK'           => $row['name'],
+		'MESSAGE'        => $msg,
+		'RANK_OPTIONS'   => $rank_options,
+		'RANK_THUMBNAIL' => $row['icon'],
+
 		'U_RANK_THUMBNAIL' => $rank_folder . '/' . $row['icon'],
 		'JS_PATH_RANKS'    => $rank_folder . '/',
 		'U_DELETE'         => 'admin_ranks.php?del=1&amp;id=' . $row['id'],
-		'C_CUSTOM_RANK'    => $row['special'] == 0,
-		'L_SPECIAL_RANK'   => $LANG['special_rank']
 	));
 }
 

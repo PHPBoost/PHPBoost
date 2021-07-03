@@ -93,15 +93,15 @@
 						</div>
 					# ENDIF #
 					<div class="form-element">
-						<label for="title">* {L_TITLE}</label>
+						<label for="title">* {@form.title}</label>
 						<div class="form-field"><input type="text" id="title" name="title" value="{TITLE}"></div>
 					</div>
 					<div class="form-element">
-						<label for="desc">{L_DESCRIPTION}</label>
+						<label for="desc">{@form.description}</label>
 						<div class="form-field"><input type="text" id="desc" name="desc" value="{DESCRIPTION}"></div>
 					</div>
 					<div class="form-element form-element-textarea">
-						<label for="content">* {L_MESSAGE}</label>
+						<label for="content">* {@common.message}</label>
 						{KERNEL_EDITOR}
 						<div class="form-field-textarea">
 							<textarea rows="25" id="content" name="content">{CONTENT}</textarea>
@@ -109,19 +109,19 @@
 					</div>
 					# IF C_FORUM_POST_TYPE #
 					<div class="form-element inline-radio">
-						<label for="type">{L_TYPE}</label>
+						<label for="type">* {@common.type}</label>
 						<div class="form-field">
 							<label class="radio">
 								<input type="radio" name="type" id="type" value="0" {CHECKED_NORMAL}>
-								<span>{L_DEFAULT}</span>
+								<span>{@common.default}</span>
 							</label>
 							<label class="radio">
 								<input type="radio" name="type" value="1" {CHECKED_POSTIT}>
-								<span>{L_POST_IT}</span>
+								<span>{@forum.announce}</span>
 							</label>
 							<label class="radio">
 								<input type="radio" name="type" value="2" {CHECKED_ANNONCE}>
-								<span>{L_ANOUNCE}</span>
+								<span>{@forum.pinned}</span>
 							</label>
 						</div>
 					</div>
@@ -129,42 +129,42 @@
 				</fieldset>
 
 				<fieldset>
-					<legend>{L_POLL}</legend>
+					<legend>{@forum.poll}</legend>
 					<p id="hidepoll_link" class="align-center"><a href="#" onclick="hide_poll('hidepoll');return false;">{@forum.open.poll.menu}</a></p>
 					<div id="hidepoll">
 						<div class="form-element">
-							<label for="question">* {L_QUESTION}</label>
+							<label for="question">* {@forum.question}</label>
 							<div class="form-field"><input type="text" name="question" id="question" value="{POLL_QUESTION}"></div>
 						</div>
 						<div class="form-element inline-radio">
-							<label for="poll_type">{L_POLL_TYPE}</label>
+							<label for="poll_type">{@forum.poll.type}</label>
 							<div class="form-field">
 								<label class="radio">
 									<input type="radio" name="poll_type" id="poll_type" value="0" {SELECTED_SIMPLE}>
-									<span>{L_SINGLE}</span>
+									<span>{@forum.simple.answer}</span>
 								</label>
 								<label class="radio">
 									<input type="radio" name="poll_type" value="1" {SELECTED_MULTIPLE}>
-									<span>{L_MULTIPLE}</span>
+									<span>{@forum.multiple.answer}</span>
 								</label>
 							</div>
 						</div>
 						# IF C_DELETE_POLL #
-						<div class="form-element">
-							<label for="del_poll">{L_DELETE_POLL}</label>
-							<div class="form-field">
-								<label class="checkbox">
-									<input type="checkbox" name="del_poll" id="del_poll" value="true">
-									<span></span>
-								</label>
+							<div class="form-element">
+								<label for="del_poll">{@forum.delete.poll}</label>
+								<div class="form-field">
+									<label class="checkbox">
+										<input type="checkbox" name="del_poll" id="del_poll" value="true">
+										<span></span>
+									</label>
+								</div>
 							</div>
-						</div>
 						# ENDIF #
 						<div class="form-element">
-							<label>{L_ANSWERS}</label>
+							<label>{@forum.answers}</label>
 							<div class="form-field">
 								# START answers_poll #
-								<label class="d-block"><input type="text" name="a{answers_poll.ID}" value="{answers_poll.ANSWER}" /> <em>{answers_poll.NBR_VOTES} {answers_poll.L_VOTES}</em></label>
+									<label class="d-block"><input type="text" name="a{answers_poll.ID}" value="{answers_poll.ANSWER}" /> <em>{answers_poll.NBR_VOTES} {answers_poll.L_VOTES}</em></label>
 								# END answers_poll #
 								<span id="add_poll_field{NBR_POLL_FIELD}"></span>
 

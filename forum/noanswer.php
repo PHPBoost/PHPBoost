@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Arnaud GENET <elenwii@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 17
+ * @version     PHPBoost 6.0 - last update: 2021 07 03
  * @since       PHPBoost 5.0 - 2016 09 18
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -16,12 +16,13 @@ require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
 $lang = LangLoader::get('common', 'forum');
+$user_lang = LangLoader::get('user-lang');
 
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
-$Bread_crumb->add($LANG['show_no_answer'], '');
+$Bread_crumb->add($lang['forum.unanswered.topics'], '');
 
-define('TITLE', $LANG['show_no_answer']);
-define('DESCRIPTION', $LANG['show_no_answer_seo']);
+define('TITLE', $lang['forum.unanswered.topics']);
+define('DESCRIPTION', $lang['forum.show.no.answer.seo']);
 require_once('../kernel/header.php');
 $request = AppContext::get_request();
 
@@ -39,7 +40,7 @@ if (!empty($change_cat))
 if (ForumAuthorizationsService::check_authorizations()->read() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 {
 	$view = new FileTemplate('forum/forum_forum.tpl');
-	$view->add_lang(array_merge(LangLoader::get('common', 'forum'), LangLoader::get('common-lang'), LangLoader::get('user-lang')));
+	$view->add_lang(array_merge($lang, LangLoader::get('common-lang'), $user_lang));
 
 	$nbr_topics = 0;
 
@@ -85,7 +86,7 @@ if (ForumAuthorizationsService::check_authorizations()->read() && AppContext::ge
 		$last_group_color = User::get_group_color($row['last_user_groups'], $row['last_user_level']);
 
 		//On définit un array pour l'appelation correspondant au type de champ
-		$type = array('2' => $LANG['forum_announce'] . ':', '1' => $LANG['forum_postit'] . ':', '0' => '');
+		$type = array('2' => $lang['forum.announce'] . ':', '1' => $lang['forum.pinned'] . ':', '0' => '');
 
 		//Vérifications des topics Lu/non Lus.
 		$topic_icon = 'fa-announce';
@@ -152,7 +153,6 @@ if (ForumAuthorizationsService::check_authorizations()->read() && AppContext::ge
 
 			'U_ANCHOR'                => $new_anchor,
 			'U_AUTHOR_PROFILE'        => UserUrlBuilder::profile($row['user_id'])->rel(),
-			'L_GUEST'                 => $LANG['guest'],
 			'U_TOPIC'                 => url('.php?id=' . $row['id'], '-' . $row['id'] . $rewrited_title . '.php'),
 			'U_LAST_MESSAGE'          => "topic" . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id,
 			'U_LAST_USER_PROFILE'     => UserUrlBuilder::profile($row['last_user_id'])->rel(),
@@ -161,6 +161,14 @@ if (ForumAuthorizationsService::check_authorizations()->read() && AppContext::ge
 		)));
 	}
 	$result->dispose();
+
+	// no unaswered topics
+	if ($nbr_topics == 0)
+	{
+		$view->put_all(array(
+			'C_NO_TOPICS' => true
+		));
+	}
 
 	//Listes les utilisateurs en ligne.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" ."/forum/lastread.php%'");
@@ -185,7 +193,7 @@ if (ForumAuthorizationsService::check_authorizations()->read() && AppContext::ge
 
 	$view->assign_block_vars('syndication_cats', array(
 		'LINK'  => PATH_TO_ROOT . '/forum/noanswer.php',
-		'LABEL' => $LANG['show_no_answer']
+		'LABEL' => $lang['forum.unanswered.topics']
 	));
 
 	$vars_tpl = array(
@@ -208,23 +216,11 @@ if (ForumAuthorizationsService::check_authorizations()->read() && AppContext::ge
 		'U_ONCHANGE_CAT'        => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
 		'U_POST_NEW_SUBJECT'    => '',
 
-		'L_USER'                => ($total_online > 1) ? $LANG['user_s']   : $LANG['user'],
-		'L_ADMIN'               => ($total_admin > 1) ? $LANG['admin_s']   : $LANG['admin'],
-		'L_MODO'                => ($total_modo > 1) ? $LANG['modo_s']     : $LANG['modo'],
-		'L_MEMBER'              => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
-		'L_GUEST'               => ($total_visit > 1) ? $LANG['guest_s']   : $LANG['guest'],
-		'L_TOPIC'               => ($nbr_topics > 1) ? $LANG['topic_s']    : $LANG['topic'],
-		//
-		'CATEGORY_NAME'         => $LANG['show_no_answer'],
-		'L_AND'                 => $LANG['and'],
-		'L_ONLINE'              => TextHelper::strtolower($LANG['online']),
-		'L_FORUM_INDEX'         => $LANG['forum_index'],
-		'L_FORUM'               => $LANG['forum'],
-		'L_AUTHOR'              => $LANG['author'],
-		'L_MESSAGE'             => $LANG['replies'],
-		'L_ANSWERS'             => $LANG['answers'],
-		'L_VIEW'                => $LANG['views'],
-		'L_LAST_MESSAGE'        => $LANG['last_message']
+		'L_USER'   => ($total_online > 1) ? $user_lang['user.users'] : $user_lang['user.user'],
+		'L_ADMIN'  => ($total_admin > 1) ? $user_lang['user.administrators'] : $user_lang['user.administrator'],
+		'L_MODO'   => ($total_modo > 1) ? $user_lang['user.moderators']    : $user_lang['user.moderator'],
+		'L_MEMBER' => ($total_member > 1) ? $user_lang['user.members'] : $user_lang['user.member'],
+		'L_GUEST'  => ($total_visit > 1) ? $user_lang['user.guests'] : $user_lang['user.guest'],
 	);
 
 	$view->put_all($vars_tpl);

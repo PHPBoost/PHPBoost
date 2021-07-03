@@ -91,11 +91,6 @@
 
 <article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-forum" class="forum-content">
 	<header>
-		<!-- <div class="controls align-right small">
-			# START syndication_cats #
-				# IF syndication_cats.C_DISPLAY_RAQUO # <i class="fa fa-angle-double-right" aria-hidden="true"></i> # ENDIF #<a href="{syndication_cats.LINK}">{syndication_cats.LABEL}</a>
-			# END syndication_cats #
-		</div> -->
 		<div class="flex-between">
 			<h2>
 				{CURRENT_SUBCAT_NAME}

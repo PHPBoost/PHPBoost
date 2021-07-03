@@ -3,12 +3,13 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 01
+ * @version     PHPBoost 6.0 - last update: 2021 07 03
  * @since       PHPBoost 2.0 - 2007 12 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
  * @contributor ph-7 <me@ph7.me>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('NO_HISTORY', false);
@@ -20,8 +21,8 @@ class Forum
 	//Ajout d'un message.
 	function Add_msg($idtopic, $id_category, $content, $title, $last_page, $last_page_rewrite, $new_topic = false)
 	{
-		global $LANG;
-
+		$lang = LangLoader::get('common', 'forum');
+		$user_lang = LangLoader::get('user-lang');
 		##### Insertion message #####
 		$last_timestamp = time();
 		$result = PersistenceContext::get_querier()->insert(PREFIX . 'forum_msg', array('idtopic' => $idtopic, 'user_id' => AppContext::get_current_user()->get_id(), 'content' => FormatingHelper::strparse($content),
@@ -63,8 +64,8 @@ class Forum
 			}
 			else
 			{
-				$pseudo = $LANG['guest'];
-				$pseudo_pm = $LANG['guest'];
+				$pseudo = $user_lang['user.guest'];
+				$pseudo_pm = $user_lang['user.guest'];
 			}
 			$next_msg_link = '/forum/topic' . url('.php?id=' . $idtopic . $last_page, '-' . $idtopic . $last_page_rewrite . '.php') . ($previous_msg_id ? '#m' . $previous_msg_id : '');
 
@@ -93,19 +94,19 @@ class Forum
 					$mail_content = FormatingHelper::second_parse($preview_content);
 					AppContext::get_mail_service()->send_from_properties(
 						$row['email'],
-						$LANG['forum_mail_title_new_post'],
-						nl2br(sprintf($LANG['forum_mail_new_post'], $row['display_name'], $title_subject, AppContext::get_current_user()->get_display_name(), $mail_content, '<a href="' . HOST . DIR . $next_msg_link . '">' . $next_msg_link . '</a>', '<a href="' . HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=1">' . HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=1</a>', 1))
+						$lang['forum.email.title.new.post'],
+						nl2br(sprintf($lang['forum.email.new.post'], $row['display_name'], $title_subject, AppContext::get_current_user()->get_display_name(), $mail_content, '<a href="' . HOST . DIR . $next_msg_link . '">' . $next_msg_link . '</a>', '<a href="' . HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=1">' . HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=1</a>', 1))
 					);
 				}
 
 				//Envoi un MP à ceux dont le last_view_id est le message précedent.
 				if ($row['last_view_id'] == $previous_msg_id && $row['pm'] == '1')
 				{
-					$content = sprintf($LANG['forum_mail_new_post'], $row['display_name'], $title_subject_pm, AppContext::get_current_user()->get_display_name(), $preview_content, '<a href="' . $next_msg_link . '">' . $next_msg_link . '</a>', '<a href="/forum/action.php?ut=' . $idtopic . '&trt=2">/forum/action.php?ut=' . $idtopic . '&trt=2</a>');
+					$content = sprintf($lang['forum.email.new.post'], $row['display_name'], $title_subject_pm, AppContext::get_current_user()->get_display_name(), $preview_content, '<a href="' . $next_msg_link . '">' . $next_msg_link . '</a>', '<a href="/forum/action.php?ut=' . $idtopic . '&trt=2">/forum/action.php?ut=' . $idtopic . '&trt=2</a>');
 
 					PrivateMsg::start_conversation(
 						$row['user_id'],
-						$LANG['forum_mail_title_new_post'],
+						$lang['forum.email.tit.e_new_post'],
 						nl2br($content),
 						'-1',
 						PrivateMsg::SYSTEM_PM
@@ -505,7 +506,7 @@ class Forum
 	//Ajoute une alerte sur un sujet.
 	function Alert_topic($alert_post, $alert_title, $alert_content)
 	{
-		global $LANG;
+		$lang = LangLoader::get('common', 'forum');
 
 		try {
 			$topic_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array("id_category", "title"), 'WHERE id=:id', array('id' => $alert_post));
@@ -523,7 +524,7 @@ class Forum
 		//The id of the file in the module. It's useful when the module wants to search a contribution (we will need it in the file edition)
 		$contribution->set_id_in_module($alert_id);
 		//The entitled of the contribution
-		$contribution->set_entitled(sprintf($LANG['contribution_alert_moderators_for_topics'], stripslashes($alert_title)));
+		$contribution->set_entitled(sprintf($lang['forum.non.compliant.topic'], stripslashes($alert_title)));
 		//The URL where a validator can treat the contribution (in the file edition panel)
 		$contribution->set_fixing_url('/forum/moderation_forum.php?action=alert&id=' . $alert_id);
 		//Description

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 21
+ * @version     PHPBoost 6.0 - last update: 2021 07 03
  * @since       PHPBoost 5.0 - 2017 03 09
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -18,6 +18,10 @@ class ForumModuleUpdateVersion extends ModuleUpdateVersion
 		self::$delete_old_files_list = array(
 			'/controllers/categories/ForumCategoriesManageController.class.php',
 			'/controllers/categories/ForumDeleteCategoryController.class.php',
+			'/lang/english/config.php',
+			'/lang/english/forum_english.php',
+			'/lang/french/config.php',
+			'/lang/french/forum_french.php',
 			'/phpboost/ForumHomePageExtensionPoint.class.php',
 			'/phpboost/ForumSitemapExtensionPoint.class.php'
 		);

@@ -48,9 +48,9 @@
 
 	# START alert_confirm #
 		<fieldset>
-			<legend>{L_ALERT}</legend>
+			<legend>{@forum.report.topic.title}</legend>
 			<div class="message-helper bgc success">
-				{alert_confirm.MSG}
+				{alert_confirm.L_CONFIRM_MESSAGE}
 				<div class="align-center"><a href="{URL_TOPIC}">{@forum.report.back}</a></div>
 			</div>
 		</fieldset>

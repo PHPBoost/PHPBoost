@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 07 03
  * @since       PHPBoost 1.2 - 2005 10 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -12,8 +12,12 @@
 */
 
 require_once('../admin/admin_begin.php');
-load_module_lang('forum'); //Chargement de la langue du module.
-define('TITLE', $LANG['administration']);
+
+$lang = LangLoader::get('common', 'forum');
+$error_lang = LangLoader::get('errors');
+$warning_lang = LangLoader::get('warning-lang');
+
+define('TITLE', $lang['forum.ranks.management']);
 require_once('../admin/admin_header.php');
 
 $request = AppContext::get_request();
@@ -22,11 +26,11 @@ $add = $request->get_postbool('add', false);
 
 $view = new FileTemplate('forum/admin_ranks_add.tpl');
 $view->add_lang(array_merge(
-	LangLoader::get('common', 'forum'),
+	$lang,
 	LangLoader::get('common-lang'),
 	LangLoader::get('form-lang'),
 	LangLoader::get('upload-lang'),
-	LangLoader::get('warning-lang')
+	$warning_lang
 ));
 
 //Ajout du rang.
@@ -44,10 +48,10 @@ if ($add)
 		###### Régénération du cache des rangs #######
 		ForumRanksCache::invalidate();
 
-		$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
+		$view->put('MESSAGE_HELPER', MessageHelper::display($warning_lang['warning.process.success'], MessageHelper::SUCCESS, 4));
 	}
 	else
-		$view->put('MESSAGE_HELPER', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
+		$view->put('MESSAGE_HELPER', MessageHelper::display($warning_lang['warning.incomplete'], MessageHelper::NOTICE));
 }
 elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 {
@@ -76,7 +80,7 @@ elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 		$error = 'e_upload_failed_unwritable';
 
 	if (!empty($error))
-		$view->put('MESSAGE_HELPER', MessageHelper::display($LANG[$error], MessageHelper::WARNING));
+		$view->put('MESSAGE_HELPER', MessageHelper::display($error_lang[$error], MessageHelper::WARNING));
 	else
 		$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
 }
@@ -93,26 +97,10 @@ foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`iu') as $image)
 }
 
 $view->put_all(array(
-	'RANK_OPTIONS'                   => $rank_options,
-	'MAX_FILE_SIZE' 		         => ServerConfiguration::get_upload_max_filesize(),
-	'MAX_FILE_SIZE_TEXT'             => File::get_formated_size(ServerConfiguration::get_upload_max_filesize()),
-	'ALLOWED_EXTENSIONS'             => implode('", "',FileUploadConfig::load()->get_authorized_picture_extensions()),
-	'L_REQUIRE'                      => LangLoader::get_message('form.required.fields', 'form-lang'),
-	'L_REQUIRE_RANK_NAME'            => $LANG['require_rank_name'],
-	'L_REQUIRE_MESSAGES_NUMBER_RANK' => $LANG['require_nbr_msg_rank'],
-	'L_FORUM_MANAGEMENT'             => $LANG['config.ranks.manager'],
-	'L_FORUM_RANKS_MANAGEMENT'       => LangLoader::get_message('forum.ranks.management', 'common', 'forum'),
-	'L_FORUM_ADD_RANKS'              => LangLoader::get_message('forum.rank.add', 'common', 'forum'),
-	'L_UPLOAD_RANKS'                 => $LANG['upload_rank'],
-	'L_UPLOAD_FORMAT'                => $LANG['explain_upload_img'],
-	'L_UPLOAD'                       => $LANG['upload'],
-	'L_RANK_NAME'                    => $LANG['rank_name'],
-	'L_MESSAGES_NUMBER'              => $LANG['nbr_msg'],
-	'L_IMG_ASSOC'                    => $LANG['img_assoc'],
-	'L_DELETE'                       => LangLoader::get_message('common.delete', 'common-lang'),
-	'L_UPDATE'                       => $LANG['validate'],
-	'L_RESET'                        => $LANG['reset'],
-	'L_ADD'                          => LangLoader::get_message('common.add', 'common-lang')
+	'RANK_OPTIONS'       => $rank_options,
+	'MAX_FILE_SIZE'      => ServerConfiguration::get_upload_max_filesize(),
+	'MAX_FILE_SIZE_TEXT' => File::get_formated_size(ServerConfiguration::get_upload_max_filesize()),
+	'ALLOWED_EXTENSIONS' => implode('", "',FileUploadConfig::load()->get_authorized_picture_extensions()),
 ));
 
 $view->display();

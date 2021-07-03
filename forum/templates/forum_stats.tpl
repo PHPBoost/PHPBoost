@@ -2,7 +2,7 @@
 
 <article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-stats">
 	<header>
-		<h2>{L_STATS}</h2>
+		<h2>{@forum.statistics}</h2>
 	</header>
 	<div class="content">
 		<div class="cell-flex cell-tile cell-columns-2">

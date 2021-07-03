@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 07 03
  * @since       PHPBoost 1.2 - 2005 10 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -17,7 +17,7 @@ require_once('../forum/forum_tools.php');
 $lang = LangLoader::get('common', 'forum');
 
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
-define('TITLE', $LANG['title_forum']);
+define('TITLE', $lang['forum.module.title']);
 require_once('../kernel/header.php');
 
 $request = AppContext::get_request();
@@ -91,7 +91,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 		'C_USER_CONNECTED'      => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 		'C_NO_USER_ONLINE'      => (($total_online - $total_visit) == 0),
 
-		'FORUM_NAME'            => $config->get_forum_name() . ' : ' . $LANG['move_topic'],
+		'FORUM_NAME'            => $config->get_forum_name() . ' : ' . $lang['move_topic'],
 		'CATEGORY_NAME'         => $cat['name'],
 		'CATEGORIES'            => $cat_list,
 		'ID'                    => $id_get,
@@ -107,19 +107,11 @@ if (!empty($id_get)) //Déplacement du sujet.
 		'U_CATEGORY'            => 'forum' . url('.php?id=' . $cat['id'], '-' . $cat['id'] . '.php'),
 		'U_TITLE_T'             => 'topic' . url('.php?id=' . $id_get, '-' . $id_get . '.php'),
 
-		'L_USER'                => ($total_online > 1) ? $LANG['user_s']   : $LANG['user'],
-		'L_ADMIN'               => ($total_admin > 1) ? $LANG['admin_s']   : $LANG['admin'],
-		'L_MODO'                => ($total_modo > 1) ? $LANG['modo_s']     : $LANG['modo'],
-		'L_MEMBER'              => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
-		'L_GUEST'               => ($total_visit > 1) ? $LANG['guest_s']   : $LANG['guest'],
-		//
-		'L_AND'                 => $LANG['and'],
-		'L_ONLINE'              => TextHelper::strtolower($LANG['online']),
-		'L_SELECT_SUBCAT'       => $LANG['require_subcat'],
-		'L_MOVE_SUBJECT'        => $LANG['forum_move_subject'],
-		'L_CAT'                 => $LANG['category'],
-		'L_FORUM_INDEX'         => $LANG['forum_index'],
-		'L_SUBMIT'              => $LANG['submit']
+		'L_USER'   => ($total_online > 1) ? $user_lang['user.users'] : $user_lang['user.user'],
+		'L_ADMIN'  => ($total_admin > 1) ? $user_lang['user.administrators'] : $user_lang['user.administrator'],
+		'L_MODO'   => ($total_modo > 1) ? $user_lang['user.moderators']    : $user_lang['user.moderator'],
+		'L_MEMBER' => ($total_member > 1) ? $user_lang['user.members'] : $user_lang['user.member'],
+		'L_GUEST'  => ($total_visit > 1) ? $user_lang['user.guests'] : $user_lang['user.guest'],
 	);
 
 	$view->put_all($vars_tpl);
@@ -149,8 +141,7 @@ elseif (!empty($id_post)) //Déplacement du topic
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'),
-                $LANG['e_incomplete']);
+			$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), LangLoader::get_message('warning.incomplete', 'warning-lang'));
             DispatchManager::redirect($controller);
 		}
 	}
@@ -191,7 +182,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	//Scindage du premier message interdite.
 	if ($id_first == $idm)
 	{
-		$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $LANG['e.forum.noncuttable.topic']);
+		$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $lang['forum.error.non.cuttable.topic']);
 		DispatchManager::redirect($controller);
 	}
 
@@ -239,7 +230,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	$vars_tpl = array(
 		'C_FORUM_CUT_CAT'  => true,
 
-		'FORUM_NAME'       => $config->get_forum_name() . ' : ' . $LANG['cut_topic'],
+		'FORUM_NAME'       => $config->get_forum_name() . ' : ' . $lang['cut_topic'],
 		'CATEGORY_NAME'    => $cat['name'],
 		'CATEGORIES'       => $cat_list,
 		'KERNEL_EDITOR'    => $editor->display(),
@@ -248,23 +239,6 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 
 		'U_CATEGORY'       => 'forum' . url('.php?id=' . $cat['id'], '-' . $cat['id'] . '.php'),
 		'U_TITLE_T'        => 'topic' . url('.php?id=' . $msg['idtopic'], '-' . $msg['idtopic'] . '.php'),
-		//
-		'L_ACTION'         => $LANG['forum_cut_subject'] . ' : ' . $topic['title'],
-		'L_FORUM_INDEX'    => $LANG['forum_index'],
-		'L_CAT'            => $LANG['category'],
-		'L_TITLE'          => $LANG['title'],
-		'L_DESCRIPTION'    => $LANG['description'],
-		'L_MESSAGE'        => $LANG['message'],
-		'L_SUBMIT'         => $LANG['forum_cut_subject'],
-		'L_PREVIEW'        => $LANG['preview'],
-		'L_RESET'          => $LANG['reset'],
-		'L_POLL'           => $LANG['poll'],
-		'L_OPEN_MENU_POLL' => $LANG['open_menu_poll'],
-		'L_QUESTION'       => $LANG['question'],
-		'L_ANSWERS'        => $LANG['answers'],
-		'L_POLL_TYPE'      => $LANG['poll_type'],
-		'L_SINGLE'         => $LANG['simple_answer'],
-		'L_MULTIPLE'       => $LANG['multiple_answer']
 	);
 
 	if (empty($post_topic))
@@ -292,11 +266,6 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 			'SELECTED_SIMPLE'   => 'checked="checked"',
 			'NO_DISPLAY_POLL'   => 'true',
 			'NBR_POLL_FIELD'    => $nbr_poll_field,
-			//
-			'L_TYPE'            => '* ' . $LANG['type'],
-			'L_DEFAULT'         => $LANG['default'],
-			'L_POST_IT'         => $LANG['forum_postit'],
-			'L_ANOUNCE'         => $LANG['forum_announce']
 		));
 	}
 
@@ -314,14 +283,11 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		'MEMBERS_NUMBER'        => $total_member,
 		'GUESTS_NUMBER'         => $total_visit,
 
-		'L_USER'                => ($total_online > 1) ? $LANG['user_s']   : $LANG['user'],
-		'L_ADMIN'               => ($total_admin > 1) ? $LANG['admin_s']   : $LANG['admin'],
-		'L_MODO'                => ($total_modo > 1) ? $LANG['modo_s']     : $LANG['modo'],
-		'L_MEMBER'              => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
-		'L_GUEST'               => ($total_visit > 1) ? $LANG['guest_s']   : $LANG['guest'],
-
-		'L_AND'                 => $LANG['and'],
-		'L_ONLINE'              => TextHelper::strtolower($LANG['online'])
+		'L_USER'   => ($total_online > 1) ? $user_lang['user.users'] : $user_lang['user.user'],
+		'L_ADMIN'  => ($total_admin > 1) ? $user_lang['user.administrators'] : $user_lang['user.administrator'],
+		'L_MODO'   => ($total_modo > 1) ? $user_lang['user.moderators']    : $user_lang['user.moderator'],
+		'L_MEMBER' => ($total_member > 1) ? $user_lang['user.members'] : $user_lang['user.member'],
+		'L_GUEST'  => ($total_visit > 1) ? $user_lang['user.guests'] : $user_lang['user.guest'],
 	));
 
 	$view->put_all($vars_tpl);
@@ -361,8 +327,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 	//Scindage du premier message interdite.
 	if ($id_first == $id_post_msg)
 	{
-		$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'),
-            $LANG['e.forum.noncuttable.topic']);
+		$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $lang['forum.error.non.cuttable.topic']);
         DispatchManager::redirect($controller);
 	}
 
@@ -410,8 +375,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 	}
 	else
 	{
-		$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'),
-            $LANG['e_incomplete']);
+		$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), LangLoader::get_message('warning.incomplete', 'warning-lang'));
         DispatchManager::redirect($controller);
 	}
 }

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 07 03
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -17,6 +17,7 @@ require_once('../forum/forum_tools.php');
 $request = AppContext::get_request();
 
 $lang = LangLoader::get('common', 'forum');
+$user_lang = LangLoader::get('user-lang');
 
 $id_get = $request->get_getint('id', 0);
 $categories_cache = CategoriesService::get_categories_manager('forum')->get_categories_cache();
@@ -68,11 +69,11 @@ foreach ($categories as $id => $cat)
 if (!empty($id_get))
 	define('TITLE', $category->get_name());
 else
-	define('TITLE', $LANG['title_forum']);
+	define('TITLE', $lang['forum.module.title']);
 
 $description = $category->get_description();
 if (empty($description))
-	$description = StringVars::replace_vars($LANG['root_description_seo'], array('site' => GeneralConfig::load()->get_site_name())) . ($category->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category.category', 'category-lang') . ' ' . $category->get_name() : '');
+	$description = StringVars::replace_vars($lang['forum.root.description.seo'], array('site' => GeneralConfig::load()->get_site_name())) . ($category->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category.category', 'category-lang') . ' ' . $category->get_name() : '');
 define('DESCRIPTION', $description);
 
 require_once('../kernel/header.php');
@@ -236,9 +237,6 @@ if (!empty($id_get))
 					'U_LAST_TOPIC'            => "topic" . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 					'U_LAST_MESSAGE'          => !empty($row['last_topic_id']) ? "topic" . url('.php?' . $last_page . 'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title']) . '.php') . '#m' . $last_msg_id : '',
 					'U_LAST_USER_PROFILE'     => UserUrlBuilder::profile($row['last_user_id'])->rel(),
-					//
-					'L_SUBFORUMS'             => $LANG['subforum_s'],
-					'L_NO_MSG'                => $LANG['no_message']
 				)));
 			}
 		}
@@ -250,7 +248,7 @@ if (!empty($id_get))
 	if (!$check_group_write_auth)
 	{
 		$view->assign_block_vars('error_auth_write', array(
-			'L_ERROR_AUTH_WRITE' => $LANG['e.category.right']
+			'L_ERROR_AUTH_WRITE' => $lang['forum.error.category.right']
 		));
 	}
 	//Catégorie verrouillée?
@@ -258,7 +256,7 @@ if (!empty($id_get))
 	{
 		$check_group_write_auth = false;
 		$view->assign_block_vars('error_auth_write', array(
-			'L_ERROR_AUTH_WRITE' => $LANG['e.category.forum.locked']
+			'L_ERROR_AUTH_WRITE' => $lang['forum.error.locked.category']
 		));
 	}
 
@@ -314,26 +312,6 @@ if (!empty($id_get))
 		'U_POST_NEW_SUBJECT'         => 'post' . url('.php?new=topic&amp;id=' . $id_get, ''),
 
 		'L_CHANGE_STATUT_TO'         => sprintf($lang['forum.change.issue.status.to'], $config->get_message_before_topic_title()),
-		//
-		'L_FORUM_INDEX'              => $LANG['forum_index'],
-		'L_SUBFORUMS'                => $LANG['sub_forums'],
-		'L_DISPLAY_UNREAD_MSG'       => $LANG['show_not_reads'],
-		'L_FORUM'                    => $LANG['forum'],
-		'L_AUTHOR'                   => $LANG['author'],
-		'L_TOPIC'                    => $LANG['topic_s'],
-		'L_ANSWERS'                  => $LANG['replies'],
-		'L_MESSAGE'                  => $LANG['message_s'],
-		'L_POLL'                     => $LANG['poll'],
-		'L_VIEW'                     => $LANG['views'],
-		'L_LAST_MESSAGE'             => $LANG['last_messages'],
-		'L_POST_NEW_SUBJECT'         => $LANG['post_new_subject'],
-		'L_FOR_SELECTION'            => $LANG['for_selection'],
-		'L_CHANGE_STATUT_TO_DEFAULT' => $LANG['change_status_to_default'],
-		'L_MOVE_TO'                  => $LANG['move_to'],
-		'L_DELETE'                   => LangLoader::get_message('common.delete', 'common-lang'),
-		'L_LOCK'                     => $LANG['forum_lock'],
-		'L_UNLOCK'                   => $LANG['forum_unlock'],
-		'L_GO'                       => $LANG['go']
 	);
 
 	$nbr_topics_display = 0;
@@ -363,7 +341,7 @@ if (!empty($id_get))
 	while ($row = $result->fetch())
 	{
 		//On définit un array pour l'appellation correspondant au type de champ
-		$type = array('2' => $LANG['forum_announce'] . ':', '1' => $LANG['forum_postit'] . ':', '0' => '');
+		$type = array('2' => $lang['forum.announce'] . ':', '1' => $lang['forum.pinned'] . ':', '0' => '');
 
 		//Vérifications des topics Lu/non Lus.
 		$topic_icon = 'fa-announce';
@@ -436,22 +414,21 @@ if (!empty($id_get))
 			'TYPE'                    => $type[$row['type']],
 			'CATEGORY_ID'             => $row['id_category'],
 			'TITLE'                   => stripslashes($row['title']),
-			'U_AUTHOR_PROFILE'        => UserUrlBuilder::profile($row['user_id'])->rel(),
 			'AUTHOR_LEVEL'            => UserService::get_level_class($row['user_level']),
 			'AUTHOR'                  => $row['login'],
 			'GROUP_COLOR'             => $group_color,
-			'L_GUEST'                 => $LANG['guest'],
 			'DESCRIPTION'             => stripslashes($row['subtitle']),
 			'PAGINATION'              => $topic_pagination->display(),
 			'MESSAGES_NUMBER'         => ($row['nbr_msg'] - 1),
 			'VIEWS_NUMBER'            => $row['nbr_views'],
-			'U_LAST_USER_PROFILE'     => UserUrlBuilder::profile($row['last_user_id'])->rel(),
 			'LAST_USER_LOGIN'         => $row['last_login'],
 			'LAST_USER_LEVEL'         => UserService::get_level_class($row['last_user_level']),
 			'LAST_USER_GROUP_COLOR'   => $last_group_color,
 
-			'U_TOPIC'                 => url('.php?id=' . $row['id'], '-' . $row['id'] . $rewrited_title_topic . '.php'),
-			'U_LAST_MESSAGE'          => "topic" . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title_topic . '.php') . '#m' . $last_msg_id,
+			'U_TOPIC'             => url('.php?id=' . $row['id'], '-' . $row['id'] . $rewrited_title_topic . '.php'),
+			'U_AUTHOR_PROFILE'    => UserUrlBuilder::profile($row['user_id'])->rel(),
+			'U_LAST_USER_PROFILE' => UserUrlBuilder::profile($row['last_user_id'])->rel(),
+			'U_LAST_MESSAGE'      => "topic" . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title_topic . '.php') . '#m' . $last_msg_id,
 
 			'L_ISSUE_STATUS_MESSAGE'  => ($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : ''
 			)
@@ -465,7 +442,6 @@ if (!empty($id_get))
 	{
 		$view->put_all(array(
 			'C_NO_TOPICS' => true,
-			'L_NO_TOPICS' => $LANG['no_topics']
 		));
 	}
 
@@ -491,8 +467,8 @@ if (!empty($id_get))
 	}
 
 	$vars_tpl = array_merge($vars_tpl, array(
-		'C_USER_CONNECTED'      => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
-		'C_NO_USER_ONLINE'      => (($total_online - $total_visit) == 0),
+		'C_USER_CONNECTED' => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
+		'C_NO_USER_ONLINE' => (($total_online - $total_visit) == 0),
 
 		'TOTAL_ONLINE'          => $total_online,
 		'ONLINE_USERS_LIST'     => $users_list,
@@ -502,13 +478,11 @@ if (!empty($id_get))
 		'GUESTS_NUMBER'         => $total_visit,
 		'SELECT_CAT'            => $cat_list, //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 
-		'L_USER'                => ($total_online > 1) ? $LANG['user_s']   : $LANG['user'],
-		'L_ADMIN'               => ($total_admin > 1) ? $LANG['admin_s']   : $LANG['admin'],
-		'L_MODO'                => ($total_modo > 1) ? $LANG['modo_s']     : $LANG['modo'],
-		'L_MEMBER'              => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
-		'L_GUEST'               => ($total_visit > 1) ? $LANG['guest_s']   : $LANG['guest'],
-		'L_AND'                 => $LANG['and'],
-		'L_ONLINE'              => TextHelper::strtolower($LANG['online'])
+		'L_USER'   => ($total_online > 1) ? $user_lang['user.users'] : $user_lang['user.user'],
+		'L_ADMIN'  => ($total_admin > 1) ? $user_lang['user.administrators'] : $user_lang['user.administrator'],
+		'L_MODO'   => ($total_modo > 1) ? $user_lang['user.moderators'] : $user_lang['user.moderator'],
+		'L_MEMBER' => ($total_member > 1) ? $user_lang['user.members'] : $user_lang['user.member'],
+		'L_GUEST'  => ($total_visit > 1) ? $user_lang['user.guests'] : $user_lang['user.guest'],
 	));
 
 	$view->put_all($vars_tpl);

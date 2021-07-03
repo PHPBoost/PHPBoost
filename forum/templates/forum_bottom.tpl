@@ -121,10 +121,10 @@
 					# IF C_TOTAL_POST #
 						<div>
 							<span class="float-left">
-								{L_TOTAL_POST}: <strong>{MESSAGES_NUMBER}</strong> {L_MESSAGE} {L_DISTRIBUTED} <strong>{TOPICS_NUMBER}</strong> {L_TOPIC}
+								{@forum.messages.number}: <strong>{MESSAGES_NUMBER}</strong> {L_MESSAGE} {L_DISTRIBUTED} / <strong>{TOPICS_NUMBER}</strong> {L_TOPIC}
 							</span>
 							<span class="float-right forum-stats">
-								<a href="{PATH_TO_ROOT}/forum/stats.php"><i class="fa fa-fw fa-chart-bar" aria-hidden="true"></i> {L_STATS}</a>
+								<a href="{PATH_TO_ROOT}/forum/stats.php"><i class="fa fa-fw fa-chart-bar" aria-hidden="true"></i> {@forum.statistics}</a>
 							</span>
 							<div class="spacer"></div>
 						</div>

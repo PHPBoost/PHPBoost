@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 07 03
  * @since       PHPBoost 1.2 - 2005 10 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -46,13 +46,15 @@ $locked_cat = ($category->get_status() == ForumCategory::STATUS_LOCKED && !AppCo
 //Récupération de la barre d'arborescence.
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
 $categories = array_reverse(CategoriesService::get_categories_manager('forum')->get_parents($id_get, true));
+
 foreach ($categories as $id => $cat)
 {
 	if ($cat->get_id() != Category::ROOT_CATEGORY)
 		$Bread_crumb->add($cat->get_name(), 'forum' . url('.php?id=' . $cat->get_id(), '-' . $cat->get_id() . '+' . $cat->get_rewrited_name() . '.php'));
 }
-$Bread_crumb->add($LANG['title_post'], '');
-define('TITLE', $LANG['title_forum']);
+
+define('TITLE', LangLoader::get_message('contribution.contribution', 'contribution-lang'));
+
 require_once('../kernel/header.php');
 
 $new_get = retrieve(GET, 'new', '');
@@ -81,7 +83,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 	//Affichage de l'arborescence des catégories.
 	$i = 0;
 	$forum_cats = '';
-	$Bread_crumb->remove_last();
+	// $Bread_crumb->remove_last();
 	foreach ($Bread_crumb->get_links() as $key => $array)
 	{
 		if ($i == 2)
@@ -93,6 +95,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
 	if ($new_get === 'topic' && empty($error_get)) //Nouveau topic.
 	{
+		$Bread_crumb->add($lang['forum.new.topic'], '');
 		if ($post_topic && !empty($id_get))
 		{
 			if (!ForumAuthorizationsService::check_authorizations($id_get)->write() || $locked_cat)
@@ -163,7 +166,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 		{
 			if (!ForumAuthorizationsService::check_authorizations($id_get)->write() || $locked_cat)
 			{
-				$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $locked_cat ? $LANG['e.category.forum.locked'] : $LANG['e.category.right']);
+				$controller = new UserErrorController($warning_lang['warning.error'], $locked_cat ? $lang['forum.error.locked.category'] : $lang['forum.error.category.right']);
 				DispatchManager::redirect($controller);
 			}
 
@@ -181,11 +184,6 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				$view->put_all(array(
 					'C_FORUM_POST_TYPE' => true,
 					'CHECKED_NORMAL'    => 'checked="ckecked"',
-
-					'L_TYPE'            => '* ' . $LANG['type'],
-					'L_DEFAULT'         => $LANG['default'],
-					'L_POST_IT'         => $LANG['forum_postit'],
-					'L_ANOUNCE'         => $LANG['forum_announce']
 				));
 			}
 
@@ -218,26 +216,6 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				'U_TITLE_T'            => 'post' . url('.php?new=topic&amp;id=' . $id_get),
 
 				'L_ACTION'             => $lang['forum.new.topic'],
-				//
-				'L_NEW_SUBJECT'        => $LANG['post_new_subject'],
-				'L_REQUIRE'            => LangLoader::get_message('form.required.fields', 'form-lang'),
-				'L_REQUIRE_TEXT'       => $LANG['require_text'],
-				'L_REQUIRE_TITLE'      => $LANG['require_title'],
-				'L_REQUIRE_TITLE_POLL' => $LANG['require_title_poll'],
-				'L_FORUM_INDEX'        => $LANG['forum_index'],
-				'L_TITLE'              => $LANG['title'],
-				'L_DESCRIPTION'        => $LANG['description'],
-				'L_MESSAGE'            => $LANG['message'],
-				'L_SUBMIT'             => $LANG['submit'],
-				'L_PREVIEW'            => $LANG['preview'],
-				'L_RESET'              => $LANG['reset'],
-				'L_POLL'               => $LANG['poll'],
-				'L_OPEN_MENU_POLL'     => $LANG['open_menu_poll'],
-				'L_QUESTION'           => $LANG['question'],
-				'L_POLL_TYPE'          => $LANG['poll_type'],
-				'L_ANSWERS'            => $LANG['answers'],
-				'L_SINGLE'             => $LANG['simple_answer'],
-				'L_MULTIPLE'           => $LANG['multiple_answer']
 			);
 
 			$view->put_all($vars_tpl);
@@ -259,7 +237,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				'id' => $idt_get
 			));
 		} catch (RowNotFoundException $e) {
-			$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $LANG['e.forum.topic.locked']);
+			$controller = new UserErrorController($warning_lang['warning.error'], $lang['forum.error.locked.topic']);
 			DispatchManager::redirect($controller);
 		}
 
@@ -309,14 +287,14 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
 					if (AppContext::get_current_user()->get_editor() == 'TinyMCE')
 					{
-						$message_content .= '<br /><br />-------------------------------------------<br /><em>' . $LANG['edit_on'] . ' ' . $now->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) . '</em><br /><br />' . $content;
+						$message_content .= '<br /><br />-------------------------------------------<br /><em>' . $lang['forum.edited.on'] . ' ' . $now->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) . '</em><br /><br />' . $content;
 					}
 					else
 					{
 						$message_content .= '
 
 -------------------------------------------
-[i]' . $LANG['edit_on'] . ' ' . $now->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) . '[/i]
+[i]' . $lang['forum.edited.on'] . ' ' . $now->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) . '[/i]
 
 ' . $content;
 					}
@@ -350,7 +328,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
 		if (empty($id_get) || empty($id_first)) //Topic/message inexistant.
 		{
-			$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $LANG['e.forum.nonexistent.topic']);
+			$controller = new UserErrorController($warning_lang['warning.error'], $lang['forum.error.non.existent.topic']);
 			DispatchManager::redirect($controller);
 		}
 
@@ -364,6 +342,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 		//Edition du topic complet
 		if ($id_first == $id_m)
 		{
+			$Bread_crumb->add($lang['forum.edit.topic'], '');
 			//User_id du message correspondant à l'utilisateur connecté => autorisation.
 			$user_id_msg = 0;
 			try {
@@ -449,7 +428,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				//Gestion des erreurs à l'édition.
 				$get_error_e = retrieve(GET, 'errore', '');
 				if ($get_error_e == 'incomplete_t')
-					$view->put('MESSAGE_HELPER', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
+					$view->put('MESSAGE_HELPER', MessageHelper::display($warning_lang['warning.incomplete'], MessageHelper::NOTICE));
 
 				if ($is_modo)
 				{
@@ -459,11 +438,6 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 						'CHECKED_NORMAL'    => (($topic['type'] == '0') ? 'checked ="ckecked"' : ''),
 						'CHECKED_POSTIT'    => (($topic['type'] == '1') ? 'checked ="ckecked"' : ''),
 						'CHECKED_ANNONCE'   => (($topic['type'] == '2') ? 'checked ="ckecked"' : ''),
-
-						'L_TYPE'            => '* ' . $LANG['type'],
-						'L_DEFAULT'         => $LANG['default'],
-						'L_POST_IT'         => $LANG['forum_postit'],
-						'L_ANOUNCE'         => $LANG['forum_announce']
 					));
 				}
 
@@ -517,7 +491,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 							'ANSWER'    => stripslashes($answer),
 							'NBR_VOTES' => $nbr_votes,
 
-							'L_VOTES'   => ($nbr_votes > 1) ? $LANG['votes'] : $LANG['vote']
+							'L_VOTES'   => ($nbr_votes > 1) ? $lang['forum.poll.votes'] : $lang['forum.poll.vote']
 						));
 						$nbr_poll_field++;
 					}
@@ -554,26 +528,6 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
 					'L_NEW_SUBJECT'        => stripslashes($topic['title']),
 					'L_ACTION'             => $lang['forum.edit.topic'],
-					//
-					'L_REQUIRE'            => LangLoader::get_message('form.required.fields', 'form-lang'),
-					'L_REQUIRE_TEXT'       => $LANG['require_text'],
-					'L_REQUIRE_TITLE'      => $LANG['require_title'],
-					'L_REQUIRE_TITLE_POLL' => $LANG['require_title_poll'],
-					'L_FORUM_INDEX'        => $LANG['forum_index'],
-					'L_TITLE'              => $LANG['title'],
-					'L_DESCRIPTION'        => $LANG['description'],
-					'L_MESSAGE'            => $LANG['message'],
-					'L_SUBMIT'             => $LANG['validate'],
-					'L_PREVIEW'            => $LANG['preview'],
-					'L_RESET'              => $LANG['reset'],
-					'L_POLL'               => $LANG['poll'],
-					'L_OPEN_MENU_POLL'     => $LANG['open_menu_poll'],
-					'L_QUESTION'           => $LANG['question'],
-					'L_POLL_TYPE'          => $LANG['poll_type'],
-					'L_ANSWERS'            => $LANG['answers'],
-					'L_SINGLE'             => $LANG['simple_answer'],
-					'L_MULTIPLE'           => $LANG['multiple_answer'],
-					'L_DELETE_POLL'        => $LANG['delete_poll']
 				);
 
 				//Type de réponses du sondage.
@@ -600,6 +554,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 		//Sinon on édite simplement le message
 		elseif ($id_m > $id_first)
 		{
+			$Bread_crumb->add($lang['forum.edit.message'], '');
 			//User_id du message correspondant à l'utilisateur connecté => autorisation.
 			$user_id_msg = 0;
 			try {
@@ -655,7 +610,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				//Gestion des erreurs à l'édition.
 				$get_error_e = retrieve(GET, 'errore', '');
 				if ($get_error_e == 'incomplete')
-					$view->put('MESSAGE_HELPER', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
+					$view->put('MESSAGE_HELPER', MessageHelper::display($warning_lang['warning.incomplete'], MessageHelper::NOTICE));
 
 				$vars_tpl = array(
 					'P_UPDATE'       => url('?update=1&amp;new =msg&amp;id =' . $id_get . '&amp;idt =' . $idt_get . '&amp;idm =' . $id_m),
@@ -671,15 +626,6 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					'U_TITLE_T'      => 'topic' . url('.php?id    =' . $idt_get, '-' . $idt_get . '.php'),
 
 					'L_NEW_SUBJECT'  => stripslashes($topic['title']),
-
-					'L_REQUIRE'      => LangLoader::get_message('form.required.fields', 'form-lang'),
-					'L_REQUIRE_TEXT' => $LANG['require_text'],
-					'L_FORUM_INDEX'  => $LANG['forum_index'],
-					'L_EDIT_MESSAGE' => $LANG['edit_message'],
-					'L_MESSAGE'      => $LANG['message'],
-					'L_SUBMIT'       => $LANG['validate'],
-					'L_PREVIEW'      => $LANG['preview'],
-					'L_RESET'        => $LANG['reset']
 				);
 
 				$view->put_all($vars_tpl);
@@ -702,8 +648,8 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			}
 			if (empty($topic['id_category'])) //Topic inexistant.
 			{
-				$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'),
-                    $LANG['e.forum.nonexistent.topic']);
+				$controller = new UserErrorController($warning_lang['warning.error'],
+                    $lang['forum.error.non.existent.topic']);
                 DispatchManager::redirect($controller);
 			}
 
@@ -750,16 +696,6 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				'U_TITLE_T'      => 'topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php'),
 
 				'L_NEW_SUBJECT'  => stripslashes($topic['title']),
-
-				'L_ACTION'       => $LANG['respond'],
-				'L_REQUIRE'      => LangLoader::get_message('form.required.fields', 'form-lang'),
-				'L_REQUIRE_TEXT' => $LANG['require_text'],
-				'L_FORUM_INDEX'  => $LANG['forum_index'],
-				'L_EDIT_MESSAGE' => $LANG['respond'],
-				'L_MESSAGE'      => $LANG['message'],
-				'L_SUBMIT'       => $LANG['submit'],
-				'L_PREVIEW'      => $LANG['preview'],
-				'L_RESET'        => $LANG['reset']
 			);
 		}
 		elseif (!empty($id_get) && ($error_get === 'c_locked' || $error_get === 'c_write' || $error_get === 'incomplete_t' || $error_get === 'false_t'))
@@ -779,10 +715,6 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				$view->put_all(array(
 					'C_FORUM_POST_TYPE' => true,
 					'CHECKED_NORMAL'    => 'checked="ckecked"',
-					'L_TYPE'            => '* ' . $LANG['type'],
-					'L_DEFAULT'         => $LANG['default'],
-					'L_POST_IT'         => $LANG['forum_postit'],
-					'L_ANOUNCE'         => $LANG['forum_announce']
 				));
 			}
 
@@ -790,19 +722,19 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			switch ($error_get)
 			{
 				case 'flood_t':
-				$errstr = $LANG['e_flood'];
+				$errstr = LangLoader::get_message('e_flood', 'errors');
 				$type = MessageHelper::WARNING;
 				break;
 				case 'incomplete_t':
-				$errstr = $LANG['e_incomplete'];
+				$errstr = $warning_lang['warning.incomplete'];
 				$type = MessageHelper::NOTICE;
 				break;
 				case 'c_locked':
-				$errstr = $LANG['e.category.forum.locked'];
+				$errstr = $lang['forum.error.locked.category'];
 				$type = MessageHelper::WARNING;
 				break;
 				case 'c_write':
-				$errstr = $LANG['e.category.right'];
+				$errstr = $lang['forum.error.category.right'];
 				$type = MessageHelper::WARNING;
 				break;
 				default:
@@ -839,26 +771,6 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				'U_TITLE_T'            => 'post' . url('.php?new=topic&amp;id=' . $id_get),
 
 				'L_ACTION'             => $lang['forum.new.topic'],
-				//
-				'L_NEW_SUBJECT'        => $LANG['post_new_subject'],
-				'L_REQUIRE'            => LangLoader::get_message('form.required.fields', 'form-lang'),
-				'L_REQUIRE_TEXT'       => $LANG['require_text'],
-				'L_REQUIRE_TITLE'      => $LANG['require_title'],
-				'L_REQUIRE_TITLE_POLL' => $LANG['require_title_poll'],
-				'L_FORUM_INDEX'        => $LANG['forum_index'],
-				'L_TITLE'              => $LANG['title'],
-				'L_DESCRIPTION'        => $LANG['description'],
-				'L_MESSAGE'            => $LANG['message'],
-				'L_SUBMIT'             => $LANG['submit'],
-				'L_PREVIEW'            => $LANG['preview'],
-				'L_RESET'              => $LANG['reset'],
-				'L_POLL'               => $LANG['poll'],
-				'L_OPEN_MENU_POLL'     => $LANG['open_menu_poll'],
-				'L_QUESTION'           => $LANG['question'],
-				'L_POLL_TYPE'          => $LANG['poll_type'],
-				'L_ANSWERS'            => $LANG['answers'],
-				'L_SINGLE'             => $LANG['simple_answer'],
-				'L_MULTIPLE'           => $LANG['multiple_answer']
 			);
 		}
 		else

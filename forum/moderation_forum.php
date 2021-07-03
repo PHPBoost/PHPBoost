@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 07 03
  * @since       PHPBoost 1.5 - 2006 08 08
  * @contributor Regis VIARRE <crowkait@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -16,6 +16,7 @@ require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
 $lang = LangLoader::get('common', 'forum');
+$user_lang = LangLoader::get('user-lang');
 
 $action = retrieve(GET, 'action', '');
 $id_get = (int)retrieve(GET, 'id', 0);
@@ -23,13 +24,9 @@ $new_status = retrieve(GET, 'new_status', '');
 $get_del = retrieve(GET, 'del', '');
 
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
-if ($action == 'alert')
-	$Bread_crumb->add($LANG['alert_management'], url('moderation_forum.php?action=alert'));
-elseif ($action == 'users')
-	$Bread_crumb->add($LANG['warning_management'], url('moderation_forum.php?action=warning'));
-$Bread_crumb->add($LANG['moderation_panel'], '../forum/moderation_forum.php');
+$Bread_crumb->add($user_lang['user.moderation.panel'], '../forum/moderation_forum.php');
 
-define('TITLE', $LANG['moderation_panel']);
+define('TITLE', $user_lang['user.moderation.panel']);
 require_once('../kernel/header.php');
 
 //Au moins modérateur sur une catégorie du forum, ou modérateur global.
@@ -61,10 +58,6 @@ $view->add_lang(array_merge(
 $vars_tpl = array(
 	'C_TINYMCE_EDITOR'   => AppContext::get_current_user()->get_editor() == 'TinyMCE',
 	'FORUM_NAME'         => $config->get_forum_name(),
-	//
-	'L_USERS_PUNISHMENT' => $LANG['punishment_management'],
-	'L_USERS_WARNING'    => $LANG['warning_management'],
-	'L_ALERT_MANAGEMENT' => $LANG['alert_management']
 );
 
 //Redirection changement de catégorie.
@@ -80,6 +73,7 @@ if (!empty($change_cat))
 
 if ($action == 'alert') //Gestion des alertes
 {
+	$Bread_crumb->add($lang['forum.reports.management'], url('moderation_forum.php?action=alert'));
 	//Changement de statut ou suppression
 	if ((!empty($id_get) && ($new_status == '0' || $new_status == '1')) || !empty($get_del))
 	{
@@ -122,27 +116,12 @@ if ($action == 'alert') //Gestion des alertes
 		'U_ACTION_ALERT'            => url('.php?action=alert&amp;del=1&amp;' . AppContext::get_session()->get_token()),
 
 		'L_ALERT' => $lang['forum.reports.management'],
-		//
-		'L_MODERATION_PANEL'        => $LANG['moderation_panel'],
-		'L_MODERATION_FORUM'        => $LANG['moderation_forum'],
-		'L_FORUM'                   => $LANG['forum'],
-		'L_LOGIN'                   => LangLoader::get_message('user.display.name', 'user-lang')
 	));
 
 	if (empty($id_get)) //On liste les alertes
 	{
 		$view->put_all(array(
 			'C_FORUM_ALERTS'    => true,
-			//
-			'L_TITLE'           => $LANG['alert_title'],
-			'L_TOPIC'           => $LANG['alert_concerned_topic'],
-			'L_LOGIN'           => $LANG['alert_login'],
-			'L_TIME'            => LangLoader::get_message('date.date', 'date-lang'),
-			'L_STATUS'          => $LANG['status'],
-			'L_ALERT_SOLVED'    => $LANG['alert_solved'],
-			'L_ALERT_NOTSOLVED' => $LANG['alert_not_solved'],
-			'L_DELETE'          => LangLoader::get_message('common.delete', 'common-lang'),
-			'L_DELETE_MESSAGE'  => $LANG['delete_several_alerts']
 		));
 
 		//Vérification des autorisations.
@@ -201,7 +180,6 @@ if ($action == 'alert') //Gestion des alertes
 		{
 			$view->put_all(array(
 				'C_FORUM_NO_ALERT' => true,
-				'L_NO_ALERT' => LangLoader::get_message('common.no.item.now', 'common-lang')
 			));
 		}
 	}
@@ -270,30 +248,19 @@ if ($action == 'alert') //Gestion des alertes
 				'U_CHANGE_STATUS'    => ($row['status'] == '0') ? 'moderation_forum.php' . url('?action=alert&amp;id=' . $id_get . '&amp;new_status=1&amp;token=' . AppContext::get_session()->get_token()) : 'moderation_forum.php' . url('?action=alert&amp;id=' . $id_get . '&amp;new_status=0&amp;token=' . AppContext::get_session()->get_token()),
 
 				'L_CHANGE_STATUS'    => ($row['status'] == '0') ? $lang['forum.report.change.to.solved'] : $lang['forum.report.change.to.unsolved'],
-				//
-				'L_ALERT_SOLVED'     => $LANG['alert_solved'],
-				'L_ALERT_NOTSOLVED'  => $LANG['alert_not_solved'],
-				'L_TITLE'            => $LANG['alert_title'],
-				'L_TOPIC'            => $LANG['alert_concerned_topic'],
-				'L_CONTENT'          => $LANG['alert_msg'],
-				'L_LOGIN'            => $LANG['alert_login'],
-				'L_TIME'             => LangLoader::get_message('date.date', 'date-lang'),
-				'L_STATUS'           => $LANG['status'],
-				'L_STATUS_1'         => $LANG['change_status_to_1'],
-				'L_CAT'              => $LANG['alert_concerned_cat']
 			)));
 		}
 		else //Groupe, modérateur partiel qui n'a pas accès à cette alerte car elle ne concerne pas son forum
 		{
 			$view->put_all(array(
 				'C_FORUM_ALERT_NOT_AUTH' => true,
-				'L_NO_ALERT'             => $LANG['alert_not_auth']
 			));
 		}
 	}
 }
 elseif ($action == 'punish') //Gestion des utilisateurs
 {
+	$Bread_crumb->add($user_lang['user.punishments.management'], url('moderation_forum.php?action=alert'));
 	$readonly = (int)retrieve(POST, 'new_info', 0);
 	$readonly = $readonly > 0 ? (time() + $readonly) : 0;
 	$readonly_content = retrieve(POST, 'action_content', '', TSTRING_UNCHANGE);
@@ -317,7 +284,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 				if (!empty($readonly_content) && !empty($readonly))
 				{
 					//Envoi du message.
-					PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($LANG['read_only_title']), nl2br(str_replace('%date', Date::to_format($readonly, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE), $readonly_content)), '-1', PrivateMsg::SYSTEM_PM);
+					PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($user_lang['user.read.only.title']), nl2br(str_replace('%date', Date::to_format($readonly, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE), $readonly_content)), '-1', PrivateMsg::SYSTEM_PM);
 				}
 			}
 
@@ -336,11 +303,6 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		'U_ACTION'                  => url('.php?action=punish&amp;token=' . AppContext::get_session()->get_token()),
 
 		'L_ALERT' => LangLoader::get_message('user.punishments.management', 'user-lang'),
-		//
-		'L_FORUM'                   => $LANG['forum'],
-		'L_LOGIN'                   => LangLoader::get_message('user.display.name', 'user-lang'),
-		'L_MODERATION_PANEL'        => $LANG['moderation_panel'],
-		'L_MODERATION_FORUM'        => $LANG['moderation_forum'],
 	));
 
 	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
@@ -363,13 +325,6 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			'C_FORUM_USER_LIST' => true,
 			'L_INFO_TYPE'   => LangLoader::get_message('user.punish.until', 'user-lang'),
 			'L_ACTION_USER' => LangLoader::get_message('user.punishments.management', 'user-lang'),
-			//
-			'L_PM'              => $LANG['user_contact_pm'],
-			'L_PM'              => $LANG['user_contact_pm'],
-			'L_PROFILE'         => LangLoader::get_message('user.profile', 'user-lang'),
-			'L_SEARCH_USER'     => $LANG['search_member'],
-			'L_SEARCH'          => $LANG['search'],
-			'L_REQUIRE_LOGIN'   => $LANG['require_pseudo']
 		));
 
 		$i = 0;
@@ -405,7 +360,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		{
 			$view->put_all( array(
 				'C_FORUM_NO_USER' => true,
-				'L_NO_USER' => $lang['user.no.punished.user']
+				'L_NO_USER' => $user_lang['user.no.punished.user']
 			));
 		}
 	}
@@ -458,7 +413,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			'C_USER_GROUP_COLOR' => !empty($group_color),
 
 			'KERNEL_EDITOR'    => $editor->display(),
-			'ALTERNATIVE_PM'   => ($key_sanction > 0) ? str_replace('%date%', $array_sanction[$key_sanction], $LANG['user_readonly_changed']) : str_replace('%date%', '1 ' . LangLoader::get_message('date.minute', 'date-lang'), LangLoader::get_message('user.readonly.changed', 'user-lang')),
+			'ALTERNATIVE_PM'   => ($key_sanction > 0) ? str_replace('%date%', $array_sanction[$key_sanction], $user_lang['user.readonly.changed']) : str_replace('%date%', '1 ' . LangLoader::get_message('date.minute', 'date-lang'), LangLoader::get_message('user.readonly.changed', 'user-lang')),
 			'USER_ID'          => UserUrlBuilder::profile($id_get)->rel(),
 			'USER_CSSCLASS'    => UserService::get_level_class($member['level']),
 			'USER_GROUP_COLOR' => $group_color,
@@ -489,18 +444,12 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 
 			'U_PM'          => UserUrlBuilder::personnal_message($id_get)->rel(),
 			'U_ACTION_INFO' => url('.php?action=punish&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
-			//
-			'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],
-			'L_INFO_EXPLAIN'   => $LANG['user_readonly_explain'],
-			'L_PM'             => $LANG['user_contact_pm'],
-			'L_LOGIN'          => LangLoader::get_message('user.display.name', 'user-lang'),
-			'L_PM'             => $LANG['user_contact_pm'],
-			'L_CHANGE_INFO'    => $LANG['submit']
 		));
 	}
 }
 elseif ($action == 'warning') //Gestion des utilisateurs
 {
+	$Bread_crumb->add($user_lang['user.warnings.management'], url('moderation_forum.php?action=alert'));
 	$new_warning_level = (int)retrieve(POST, 'new_info', 0);
 	$warning_content = retrieve(POST, 'action_content', '', TSTRING_UNCHANGE);
 	if ($new_warning_level >= 0 && $new_warning_level <= 100 && !empty($id_get) && (bool)retrieve(POST, 'valid_user', false)) //On met à  jour le niveau d'avertissement
@@ -525,7 +474,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 					if (!empty($warning_content))
 					{
 						//Envoi du message.
-						PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($LANG['warning_title']), nl2br($warning_content), '-1', PrivateMsg::SYSTEM_PM);
+						PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($user_lang['user.warning']), nl2br($warning_content), '-1', PrivateMsg::SYSTEM_PM);
 					}
 				}
 
@@ -542,7 +491,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 
 				//Envoi du mail
 
-				AppContext::get_mail_service()->send_from_properties($info_mbr['email'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes(MailServiceConfig::load()->get_mail_signature())));
+				AppContext::get_mail_service()->send_from_properties($info_mbr['email'], addslashes($user_lang['user.ban.title.email']), sprintf(addslashes($user_lang['user.ban.email']), HOST, addslashes(MailServiceConfig::load()->get_mail_signature())));
 			}
 		}
 
@@ -556,12 +505,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		'U_MODERATION_FORUM_ACTION' => 'moderation_forum.php' . url('?action=warning&amp;token=' . AppContext::get_session()->get_token()),
 		'U_ACTION'                  => url('.php?action=warning&amp;token=' . AppContext::get_session()->get_token()),
 
-		'L_ALERT'                   => $LANG['warning_management'],
-		//
-		'L_FORUM'                   => $LANG['forum'],
-		'L_LOGIN'                   => LangLoader::get_message('user.display.name', 'user-lang'),
-		'L_MODERATION_PANEL'        => $LANG['moderation_panel'],
-		'L_MODERATION_FORUM'        => $LANG['moderation_forum'],
+		'L_ALERT'                   => $user_lang['user.warnings.management'],
 	));
 
 	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
@@ -584,12 +528,6 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			'C_FORUM_USER_LIST' => true,
 			'L_INFO_TYPE'   => LangLoader::get_message('user.warning.level', 'user-lang'),
 			'L_ACTION_USER' => $lang['forum.set.warning.user'],
-			//
-			'L_PM'              => $LANG['user_contact_pm'],
-			'L_PM'              => $LANG['user_contact_pm'],
-			'L_SEARCH_USER'     => $LANG['search_member'],
-			'L_SEARCH'          => $LANG['search'],
-			'L_REQUIRE_LOGIN'   => $LANG['require_pseudo']
 		));
 
 		$i = 0;
@@ -622,7 +560,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		{
 			$view->put_all( array(
 				'C_FORUM_NO_USER' => true,
-				'L_NO_USER' => $lang['user.no.user.warning']
+				'L_NO_USER' => $user_lang['user.no.user.warning']
 			));
 		}
 	}
@@ -654,28 +592,22 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			'C_FORUM_USER_INFO'  => true,
 			'C_USER_GROUP_COLOR' => !empty($group_color),
 
-			'KERNEL_EDITOR'      => $editor->display(),
-			'ALTERNATIVE_PM'     => str_replace('%level%', $member['warning_percentage'], $LANG['user_warning_level_changed']),
-			'USER_ID'            => UserUrlBuilder::profile($id_get)->rel(),
-			'USER_CSSCLASS'      => UserService::get_level_class($member['level']),
-			'USER_GROUP_COLOR'   => $group_color,
-			'LOGIN_USER'         => $member['display_name'],
-			'INFO'               => $LANG['user_warning_level'] . ': ' . $member['warning_percentage'] . '%',
-			'INFO_SELECT'        => $select,
-			'REGEX'              => '/ [0-9]+%/',
+			'KERNEL_EDITOR'    => $editor->display(),
+			'ALTERNATIVE_PM'   => str_replace('%level%', $member['warning_percentage'], $user_lang['user.warning.level.changed']),
+			'USER_ID'          => UserUrlBuilder::profile($id_get)->rel(),
+			'USER_CSSCLASS'    => UserService::get_level_class($member['level']),
+			'USER_GROUP_COLOR' => $group_color,
+			'LOGIN_USER'       => $member['display_name'],
+			'INFO'             => $user_lang['user.warning.level'] . ': ' . $member['warning_percentage'] . '%',
+			'INFO_SELECT'      => $select,
+			'REGEX'            => '/ [0-9]+%/',
 
-			'REPLACE_VALUE'      => 'content = content.replace(regex, \' \' + replace_value + \'%\');' . "\n" . 'document.getElementById(\'action_info\').innerHTML = \'' . addslashes($LANG['user_warning_level']) . ': \' + replace_value + \'%\';',
+			'REPLACE_VALUE' => 'content = content.replace(regex, \' \' + replace_value + \'%\');' . "\n" . 'document.getElementById(\'action_info\').innerHTML = \'' . addslashes($user_lang['user.warning.level']) . ': \' + replace_value + \'%\';',
 
-			'U_ACTION_INFO'      => url('.php?action=warning&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
-			'U_PM'               => url('.php?pm='. $id_get, '-' . $id_get . '.php'),
+			'U_ACTION_INFO' => url('.php?action=warning&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
+			'U_PM' 			=> url('.php?pm='. $id_get, '-' . $id_get . '.php'),
 
-			'L_INFO_TYPE'             => LangLoader::get_message('user.warning.level', 'user-lang'),
-			//
-			'L_ALTERNATIVE_PM'   => $LANG['user_alternative_pm'],
-			'L_INFO_EXPLAIN'     => $LANG['user_warning_explain'],
-			'L_PM'               => $LANG['user_contact_pm'],
-			'L_PM'               => $LANG['user_contact_pm'],
-			'L_CHANGE_INFO'      => $LANG['change_user_warning']
+			'L_INFO_TYPE' => $user_lang['user.warning.level'],
 		));
 	}
 }
@@ -705,23 +637,6 @@ else //Panneau de modération
 		));
 	}
 
-	$view->put_all(array(
-		'L_DEL_HISTORY'      => $LANG['alert_history'],
-		'L_MODERATION_PANEL' => $LANG['moderation_panel'],
-		'L_MODERATION_FORUM' => $LANG['moderation_forum'],
-		'L_FORUM'            => $LANG['forum'],
-		'L_USERS_PUNISHMENT' => $LANG['punishment_management'],
-		'L_ALERT_MANAGEMENT' => $LANG['alert_management'],
-		'L_USERS_MANAGEMENT' => $LANG['warning_management'],
-		'L_HISTORY'          => $LANG['history'],
-		'L_MODO'             => $LANG['modo'],
-		'L_ACTION'           => $LANG['action'],
-		'L_USER_CONCERN'     => $LANG['history_member_concern'],
-		'L_DATE'             => LangLoader::get_message('date.date', 'date-lang'),
-		'L_DELETE'           => LangLoader::get_message('common.delete', 'common-lang'),
-		'L_MORE_ACTION'      => $LANG['more_action']
-	));
-
 	$end = !empty($get_more) ? $get_more : 15; //Limit.
 	$i = 0;
 
@@ -749,7 +664,7 @@ else //Panneau de modération
 			'C_USER_CONCERN_GROUP_COLOR' => !empty($member_group_color),
 			'C_ACTION'                   => !empty($row['url']),
 
-			'LOGIN'                      => !empty($row['display_name']) ? $row['display_name'] : $LANG['guest'],
+			'LOGIN'                      => !empty($row['display_name']) ? $row['display_name'] : $user_lang['user.guest'],
 			'LEVEL_CLASS'                => UserService::get_level_class($row['user_level']),
 			'GROUP_COLOR'                => $group_color,
 			'USER_CONCERN_GROUP_COLOR'   => $member_group_color,
@@ -760,7 +675,7 @@ else //Panneau de modération
 			'USER_CONCERN_CSSCLASS'      => UserService::get_level_class($row['member_level']),
 			'USER_LOGIN'                 => $row['member'],
 
-			'L_ACTION'                   => $LANG[$row['action']]
+			'L_ACTION' => $lang[$row['action']]
 		)));
 
 		$i++;
@@ -769,8 +684,7 @@ else //Panneau de modération
 
 	$view->put_all(array(
 		'C_DISPLAY_LINK_MORE_ACTION' => $i == $end,
-		'C_FORUM_NO_ACTION'          => $i == 0,
-		'L_NO_ACTION'                => $LANG['no_action']
+		'C_FORUM_NO_ACTION'          => $i == 0
 	));
 }
 
@@ -810,15 +724,11 @@ $vars_tpl = array_merge($vars_tpl, array(
 	'U_ONCHANGE'            => url(".php?id=' + this.options[this.selectedIndex].value + '", "forum-' + this.options[this.selectedIndex].value + '.php"),
 	'U_ONCHANGE_CAT'        => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
 
-	'L_USER'                => ($total_online > 1) ? $LANG['user_s']   : $LANG['user'],
-	'L_ADMIN'               => ($total_admin > 1) ? $LANG['admin_s']   : $LANG['admin'],
-	'L_MODO'                => ($total_modo > 1) ? $LANG['modo_s']     : $LANG['modo'],
-	'L_MEMBER'              => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
-	'L_GUEST'               => ($total_visit > 1) ? $LANG['guest_s']   : $LANG['guest'],
-	//
-	'L_AND'                 => $LANG['and'],
-	'L_ONLINE'              => TextHelper::strtolower($LANG['online']),
-	'L_FORUM_INDEX'         => $LANG['forum_index']
+	'L_USER'   => ($total_online > 1) ? $user_lang['user.users'] : $user_lang['user.user'],
+	'L_ADMIN'  => ($total_admin > 1) ? $user_lang['user.administrators'] : $user_lang['user.administrator'],
+	'L_MODO'   => ($total_modo > 1) ? $user_lang['user.moderators']    : $user_lang['user.moderator'],
+	'L_MEMBER' => ($total_member > 1) ? $user_lang['user.members'] : $user_lang['user.member'],
+	'L_GUEST'  => ($total_visit > 1) ? $user_lang['user.guests'] : $user_lang['user.guest'],
 ));
 
 $view->put_all($vars_tpl);

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 03
+ * @version     PHPBoost 6.0 - last update: 2021 07 03
  * @since       PHPBoost 4.1 - 2015 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -109,25 +109,27 @@ $lang['forum.no.message.now']    = 'There are no messages by now';
 $lang['forum.no.unread.message'] = 'There are no unread messages';
 
 // History
-$lang['forum.history']          = 'Actions history';
-$lang['forum.concerned.user']   = 'Concerned Member ';
-$lang['forum.no.action']        = 'No action in database';
-$lang['forum.delete.message']   = 'Delete message';
-$lang['forum.delete.topic']     = 'Delete topic';
-$lang['forum.lock.topic']       = 'Lock topic';
-$lang['forum.unlock.topic']     = 'Unlock topic';
-$lang['forum.moving.topic']     = 'Moving topic';
-$lang['forum.cutting.topic']    = 'Cut topic';
-$lang['forum.warning.on.user']  = '+10% to member';
-$lang['forum.warning.off.user'] = '-10% to member';
-$lang['forum.set.warning.user'] = 'Modify percentage';
-$lang['forum.more.action']      = 'Show 100 more action ';
-$lang['forum.ban.user']         = 'Ban member';
-$lang['forum.edit.message']     = 'Edit member\'s message ';
-$lang['forum.edit.topic']       = 'Edit member\'s topic';
-$lang['forum.solve.alert']      = 'Set alert status to solve';
-$lang['forum.wait.alert']       = 'Set alert status to standby';
-$lang['forum.del.alert']        = 'Delete alert';
+$lang['forum.history']        = 'Actions history';
+$lang['forum.concerned.user'] = 'Concerned Member ';
+    // actions
+$lang['no_action']            = 'No action in database';
+$lang['delete_msg']           = 'Delete message';
+$lang['delete_topic']         = 'Delete thread';
+$lang['lock_topic']           = 'Lock thread';
+$lang['unlock_topic']         = 'Unlock thread';
+$lang['move_topic']           = 'Move thread';
+$lang['cut_topic']            = 'Cut thread';
+$lang['warning_on_user']      = '+10% to member';
+$lang['warning_off_user']     = '-10% to member';
+$lang['set_warning_user']     = 'Warning percent modification';
+$lang['more_action']          = 'Show 100 more action ';
+$lang['ban_user']             = 'Ban member';
+$lang['readonly_user']        = 'Ready only user';
+$lang['edit_msg']             = 'Edit member\'s message ';
+$lang['edit_topic']           = 'Edit member\'s thread';
+$lang['solve_alert']          = 'Set alert status to solve';
+$lang['wait_alert']           = 'Set alert status to standby';
+$lang['del_alert']            = 'Delete alert';
 
 // Links (top | bottom)
 $lang['forum.links']                  = 'Links';
@@ -145,12 +147,11 @@ $lang['forum.for.selection'] = 'For the selection';
 $lang['forum.change.issue.status.to'] = 'Set status: %s';
 $lang['forum.default.issue.status'] = 'Set default status';
 $lang['forum.no.moderation'] = 'No action';
-    // Warnings
-
     // Reports
         // User reports
-$lang['forum.reports.management']        = 'Report management';
+$lang['forum.reports.management']        = 'Reports management';
 $lang['forum.report.topic']              = 'Report this topic';
+$lang['forum.report.topic.title']        = 'Report a topic';
 $lang['forum.report.concerned.topic']    = 'Concerned topic';
 $lang['forum.report.concerned.category'] = 'Concerned topic\'s category';
 $lang['forum.report.author']             = 'Reported by';
@@ -256,7 +257,6 @@ $lang['forum.quote.last.message'] = 'Resuming the previous message';
 $lang['forum.edit.message']       = 'Edit Message';
 $lang['forum.edited.by']          = 'Edited by';
 $lang['forum.edited.on']          = 'Edited on';
-$lang['forum.new.topic']          = 'New topic';
 $lang['forum.edit.in.topic']      = 'Edit a message in the topic';
 $lang['forum.reply']              = 'Reply';
 

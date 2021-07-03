@@ -174,7 +174,7 @@
 								<td>
 									{poll_result.ANSWERS}
 
-									{poll_result.PERCENT}% - [{poll_result.VOTES_NUMBER} {L_VOTE}]
+									{poll_result.PERCENT}% - [{poll_result.VOTES_NUMBER} {poll_result.L_VOTES}]
 									<div class="progressbar-container" role="progressbar" aria-valuenow="{poll_result.PERCENT}" aria-valuemin="0" aria-valuemax="100">
 										<div class="progressbar-infos">{poll_result.PERCENT}%</div>
 										<div class="progressbar" style="width:{poll_result.PERCENT}%"></div>
@@ -275,7 +275,7 @@
 				</div>
 			</div>
 			<div id="message-user-datas-{msg.ID}" class="modal modal-animation">
-				<div class="close-modal">{@common.close}</div>
+				<div class="close-modal" aria-label="{@common.close}"></div>
 				<div class="content-panel cell">
 					<div class="cell-list">
 						<ul>
@@ -344,7 +344,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="message-content" >
+			<div class="message-content">
 
 				# IF msg.C_QUOTE_LAST_MESSAGE # <p class="message-helper bgc notice">{@forum.quote.last.message}</p> # ENDIF #
 

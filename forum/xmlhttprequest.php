@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 30
+ * @version     PHPBoost 6.0 - last update: 2021 07 03
  * @since       PHPBoost 1.6 - 2007 02 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -14,6 +14,9 @@ require_once('../kernel/begin.php');
 AppContext::get_session()->no_session_location(); //Permet de ne pas mettre jour la page dans la session.
 require_once('../forum/forum_begin.php');
 require_once('../kernel/header_no_display.php');
+
+$lang = LangLoader::get('common', 'forum');
+$user_lang = LangLoader::get('user-lang');
 
 $track        = retrieve(GET, 't', '');
 $untrack      = retrieve(GET, 'ut', '');
@@ -66,10 +69,10 @@ if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 
 			$last_topic_title = (($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '') . ' ' . $row['title'];
 			$last_topic_title = addslashes($last_topic_title);
-			$row['login'] = !empty($row['login']) ? $row['login'] : $LANG['guest'];
+			$row['login'] = !empty($row['login']) ? $row['login'] : $user_lang['user.guest'];
 			$group_color = User::get_group_color($row['user_groups'], $row['user_level']);
 
-			$content .= '<tr><td class="forum-notread" style="width:100%"><a href="topic' . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . addslashes(Url::encode_rewrite($row['title']))  . '.php') . '#m' .  $last_msg_id . '"><i class="fa fa-hand-point-right" aria-hidden="true"></i></a> <a href="topic' . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . addslashes(Url::encode_rewrite($row['title']))  . '.php') . '" class="small">' . $last_topic_title . '</a></td><td class="forum-notread" style="white-space:nowrap">' . ($row['last_user_id'] != '-1' ? '<a href="'. UserUrlBuilder::profile($row['last_user_id'])->rel() .'" class="small '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . addslashes($row['login']) . '</a>' : '<em>' . addslashes($LANG['guest']) . '</em>') . '</td><td class="forum-notread" style="white-space:nowrap">' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '</td></tr>';
+			$content .= '<tr><td class="forum-notread" style="width:100%"><a href="topic' . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . addslashes(Url::encode_rewrite($row['title']))  . '.php') . '#m' .  $last_msg_id . '"><i class="fa fa-hand-point-right" aria-hidden="true"></i></a> <a href="topic' . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . addslashes(Url::encode_rewrite($row['title']))  . '.php') . '" class="small">' . $last_topic_title . '</a></td><td class="forum-notread" style="white-space:nowrap">' . ($row['last_user_id'] != '-1' ? '<a href="'. UserUrlBuilder::profile($row['last_user_id'])->rel() .'" class="small '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . addslashes($row['login']) . '</a>' : '<em>' . addslashes($user_lang['user.guest']) . '</em>') . '</td><td class="forum-notread" style="white-space:nowrap">' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '</td></tr>';
 			$nbr_msg_not_read++;
 		}
 		$result->dispose();
@@ -78,7 +81,7 @@ if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 		$height_visible_topics = ($nbr_msg_not_read < $max_visible_topics) ? (23 * $nbr_msg_not_read) : 23 * $max_visible_topics;
 
 		echo "array_unread_topics[0] = '" . $nbr_msg_not_read . "';\n";
-		echo "array_unread_topics[1] = '" . '<a class="small" href="' . PATH_TO_ROOT . '/forum/unread.php">' . addslashes($LANG['show_not_reads']) . (AppContext::get_current_user()->get_id() !== -1 ? ' (' . $nbr_msg_not_read . ')' : '') . '</a>' . "';\n";
+		echo "array_unread_topics[1] = '" . '<a class="small" href="' . PATH_TO_ROOT . '/forum/unread.php">' . addslashes($lang['forum.unread.messages']) . (AppContext::get_current_user()->get_id() !== -1 ? ' (' . $nbr_msg_not_read . ')' : '') . '</a>' . "';\n";
 		echo "array_unread_topics[2] = '" . '<div style="width:438px;height:' . max($height_visible_topics, 65) . 'px;overflow:auto;padding:0px;" onmouseover="forum_hide_block(\\\'forum_unread\\\', 1);" onmouseout="forum_hide_block(\\\'forum_unread\\\', 0);"><table class="module-table" style="margin:2px;width:99%">' . $content . "</table></div>';";
 	}
 	else
@@ -207,10 +210,10 @@ elseif ((bool)retrieve(GET, 'warning_moderation_panel', false) || (bool)retrieve
 		}
 
 		if ($i == 0) //Aucun membre trouvé.
-			echo $LANG['no_result'];
+			echo $lang['forum.no.result'];
 	}
 	else
-		echo $LANG['no_result'];
+		echo $lang['forum.no.result'];
 }
 else
 {

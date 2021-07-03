@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 07 03
  * @since       PHPBoost 1.5 - 2006 08 07
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -16,6 +16,7 @@ require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
 $lang = LangLoader::get('common', 'forum');
+$user_lang = LangLoader::get('user-lang');
 
 $request = AppContext::get_request();
 
@@ -36,9 +37,9 @@ $topic_name = !empty($topic['title']) ? stripslashes($topic['title']) : '';
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
 $Bread_crumb->add($category->get_name(), 'forum' . url('.php?id=' . $topic['id_category'], '-' . $topic['id_category'] . '+' . $category->get_rewrited_name() . '.php'));
 $Bread_crumb->add($topic['title'], 'topic' . url('.php?id=' . $alert, '-' . $alert . '-' . Url::encode_rewrite($topic_name) . '.php'));
-$Bread_crumb->add($LANG['alert_topic'], '');
+$Bread_crumb->add($lang['forum.report.topic.title'], '');
 
-define('TITLE', $LANG['alert_topic']);
+define('TITLE', $lang['forum.report.topic.title']);
 require_once('../kernel/header.php');
 
 if (empty($alert) && empty($alert_post) || empty($topic['id_category']))
@@ -69,14 +70,7 @@ if (!empty($alert) && empty($alert_post))
 		$editor->set_identifier('content');
 
 		$view->put_all(array(
-			'KERNEL_EDITOR'    => $editor->display(),
-			'L_ALERT'          => $LANG['alert_topic'],
-			'L_ALERT_EXPLAIN'  => $LANG['alert_modo_explain'],
-			'L_ALERT_TITLE'    => $LANG['alert_title'],
-			'L_ALERT_CONTENT'  => $LANG['alert_content'],
-			'L_REQUIRE'        => LangLoader::get_message('form.required.fields', 'form-lang'),
-			'L_REQUIRE_TEXT'   => $LANG['require_text'],
-			'L_REQUIRE_TITLE'  => $LANG['require_title']
+			'KERNEL_EDITOR'    => $editor->display()
 		));
 
 		$view->assign_block_vars('alert_form', array(
@@ -89,12 +83,10 @@ if (!empty($alert) && empty($alert_post))
 	{
 		$view->put_all(array(
 			'URL_TOPIC'    => 'topic' . url('.php?id=' . $alert, '-' . $alert . '-' . Url::encode_rewrite($topic_name) . '.php'),
-			'L_ALERT'      => $LANG['alert_topic'],
-			'L_BACK_TOPIC' => $LANG['alert_back']
 		));
 
 		$view->assign_block_vars('alert_confirm', array(
-			'MSG' => $LANG['alert_topic_already_done']
+			'L_CONFIRM_MESSAGE' => $lang['forum.report.topic.already.done']
 		));
 	}
 }
@@ -104,8 +96,6 @@ if (!empty($alert_post))
 {
 	$view->put_all(array(
 		'URL_TOPIC'    => 'topic' . url('.php?id=' . $alert_post, '-' . $alert_post . '-' . Url::encode_rewrite($topic_name) . '.php'),
-		'L_ALERT'      => $LANG['alert_topic'],
-		'L_BACK_TOPIC' => $LANG['alert_back']
 	));
 
 	//On vérifie qu'une alerte sur le même sujet n'ait pas été postée
@@ -121,13 +111,13 @@ if (!empty($alert_post))
 		$Forumfct->Alert_topic($alert_post, $alert_title, $alert_content);
 
 		$view->assign_block_vars('alert_confirm', array(
-			'MSG' => str_replace('%title', $topic_name, $LANG['alert_success'])
+			'L_CONFIRM_MESSAGE' => str_replace('%title', $topic_name, $lang['forum.report.success'])
 		));
 	}
 	else //Une alerte a déjà été postée
 	{
 		$view->assign_block_vars('alert_confirm', array(
-			'MSG' => $LANG['alert_topic_already_done']
+			'L_CONFIRM_MESSAGE' => $lang['forum.report.topic.already.done']
 		));
 	}
 
@@ -141,7 +131,7 @@ $vars_tpl = array(
 	'C_NO_USER_ONLINE'      => (($total_online - $total_visit) == 0),
 
 	'CATEGORY_NAME'         => $category->get_name(),
-	'FORUM_NAME'            => $config->get_forum_name() . ' : ' . $LANG['alert_topic'],
+	'FORUM_NAME'            => $config->get_forum_name(),
 	'TITLE_T'               => stripslashes($topic['title']),
 	'TOTAL_ONLINE'          => $total_online,
 	'ONLINE_USERS_LIST'     => $users_list,
@@ -153,18 +143,11 @@ $vars_tpl = array(
 	'U_CATEGORY'            => 'forum' . url('.php?id=' . $topic['id_category'], '-' . $topic['id_category'] . '.php'),
 	'U_TITLE_T'             => 'topic' . url('.php?id=' . $topic_id, '-' . $topic_id . '.php'),
 
-	'L_USER'                => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
-	'L_ADMIN'               => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
-	'L_MODO'                => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],
-	'L_MEMBER'              => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
-	'L_GUEST'               => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
-	//
-	'L_FORUM_INDEX'         => $LANG['forum_index'],
-	'L_SUBMIT'              => $LANG['submit'],
-	'L_PREVIEW'             => $LANG['preview'],
-	'L_RESET'               => $LANG['reset'],
-	'L_AND'                 => $LANG['and'],
-	'L_ONLINE'              => TextHelper::strtolower($LANG['online'])
+	'L_USER'                => ($total_online > 1) ? $user_lang['user.users'] : $user_lang['user.user'],
+	'L_ADMIN'               => ($total_admin > 1) ? $user_lang['user.administrators'] : $user_lang['user.administrator'],
+	'L_MODO'                => ($total_modo > 1) ? $user_lang['user.moderators'] : $user_lang['user.moderator'],
+	'L_MEMBER'              => ($total_member > 1) ? $user_lang['user.members'] : $user_lang['user.member'],
+	'L_GUEST'               => ($total_visit > 1) ? $user_lang['user.guests'] : $user_lang['user.guest'],
 );
 
 $view->put_all($vars_tpl);
