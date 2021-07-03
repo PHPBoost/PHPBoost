@@ -40,7 +40,7 @@
 				<div class="cell-list">
 					<ul>
 						# START last_msg #
-							<li><a href="{PATH_TO_ROOT}/forum/topic{last_msg.U_TOPIC_ID}">{last_msg.TITLE}</a></li>
+							<li><a class="offload" href="{PATH_TO_ROOT}/forum/topic{last_msg.U_TOPIC_ID}">{last_msg.TITLE}</a></li>
 						# END last_msg #
 					</ul>
 				</div>
@@ -52,7 +52,7 @@
 				<div class="cell-list">
 					<ul>
 						# START popular #
-							<li><a href="{PATH_TO_ROOT}/forum/topic{popular.U_TOPIC_ID}">{popular.TITLE}</a></li>
+							<li><a class="offload" href="{PATH_TO_ROOT}/forum/topic{popular.U_TOPIC_ID}">{popular.TITLE}</a></li>
 						# END popular #
 					</ul>
 				</div>
@@ -64,7 +64,7 @@
 				<div class="cell-list">
 					<ul>
 						# START answers #
-							<li><a href="{PATH_TO_ROOT}/forum/topic{answers.U_TOPIC_ID}">{answers.TITLE}</a></li>
+							<li><a class="offload" href="{PATH_TO_ROOT}/forum/topic{answers.U_TOPIC_ID}">{answers.TITLE}</a></li>
 						# END answers #
 					</ul>
 				</div>

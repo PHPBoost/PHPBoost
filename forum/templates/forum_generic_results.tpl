@@ -10,7 +10,7 @@
                 <h3 class="message-user-pseudo">
 					<i class="fa fa-# IF C_USER_ONLINE #fa-user-check success# ELSE #fa-user-times error# ENDIF #" aria-hidden="true"></i>
                     # IF C_USER_PSEUDO #
-                        <a href="{U_USER_PROFILE}">{USER_PSEUDO}</a>
+                        <a class="offload" href="{U_USER_PROFILE}">{USER_PSEUDO}</a>
                         <span class="sr-only"># IF C_USER_ONLINE #{@forum.connected.member)}# ELSE #{@forum.not.connected.member)}# ENDIF #</span>
                     # ELSE #
                         <span>${LangLoader::get_message('user.guest', 'user-lang')}</span>
@@ -21,7 +21,7 @@
             </div>
             <div class="message-infos">
                 <time datetime="{DATE}" itemprop="datePublished">{@common.on.date} : {DATE}</time>
-                <a href="{U_TOPIC}" aria-label="Lien vers ce message">{@forum.topic} : {TITLE}</a>
+                <a class="offload" href="{U_TOPIC}">{@forum.topic} : {TITLE}</a>
             </div>
         </div>
     </header>

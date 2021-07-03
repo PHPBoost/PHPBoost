@@ -60,7 +60,7 @@ class Forum
 					$pseudo = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id = :id', array('id' => AppContext::get_current_user()->get_id()));
 				} catch (RowNotFoundException $e) {}
 
-				$pseudo_pm = '<a href="'. UserUrlBuilder::profile(AppContext::get_current_user()->get_id())->rel() .'">' . $pseudo . '</a>';
+				$pseudo_pm = '<a href="'. UserUrlBuilder::profile(AppContext::get_current_user()->get_id())->rel() .'" class="offload">' . $pseudo . '</a>';
 			}
 			else
 			{

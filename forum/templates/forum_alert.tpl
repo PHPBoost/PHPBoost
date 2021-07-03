@@ -2,7 +2,7 @@
 
 <article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-moderation" class="forum-content">
 	<header class="section-header">
-		<h2><a href="{U_CATEGORY}">{CATEGORY_NAME}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_TITLE_T}">{TITLE_T}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="#">{@forum.report.topic}</a></h2>
+		<h2><a href="{U_CATEGORY}" class="offload">{CATEGORY_NAME}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_TITLE_T}" class="offload">{TITLE_T}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="#">{@forum.report.topic}</a></h2>
 	</header>
 
 	# START alert_form #
@@ -22,7 +22,7 @@
 
 		<form method="post" action="alert.php" onsubmit="javascript:return check_form_alert();">
 			<fieldset>
-				<div class="message-helper bgc warning">{@H|forum.report.clue}: <a href="{alert_form.U_TOPIC}">{alert_form.TITLE}</a></div>
+				<div class="message-helper bgc warning">{@H|forum.report.clue}: <a href="{alert_form.U_TOPIC}" class="offload">{alert_form.TITLE}</a></div>
 				<div class="form-element">
 					<label for="title">* {@forum.report.title}</label>
 					<div class="form-field">
@@ -51,11 +51,11 @@
 			<legend>{@forum.report.topic.title}</legend>
 			<div class="message-helper bgc success">
 				{alert_confirm.L_CONFIRM_MESSAGE}
-				<div class="align-center"><a href="{URL_TOPIC}">{@forum.report.back}</a></div>
+				<div class="align-center"><a href="{URL_TOPIC}" class="offload">{@forum.report.back}</a></div>
 			</div>
 		</fieldset>
 	# END alert_confirm #
-	<footer><a href="{U_CATEGORY}">{CATEGORY_NAME}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_TITLE_T}">{TITLE_T}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="#">{@forum.report.topic}</a></footer>
+	<footer><a href="{U_CATEGORY}" class="offload">{CATEGORY_NAME}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_TITLE_T}" class="offload">{TITLE_T}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="#">{@forum.report.topic}</a></footer>
 </article>
 
 # INCLUDE FORUM_BOTTOM #

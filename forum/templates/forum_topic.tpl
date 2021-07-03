@@ -121,7 +121,7 @@
 <article id="article-forum-{ID}" class="forum-item forum-content category-{CATEGORY_ID}" itemscope="itemscope" itemtype="https://schema.org/Creativework">
 	<header>
 		<div class="controls align-right">
-			<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
+			<a class="offload" href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 			# IF C_CONTROLS #
 				# IF C_FORUM_LOCK_TOPIC #
 					<a href="action{U_TOPIC_LOCK}" data-confirmation="{@forum.alert.lock.topic}" aria-label="{@forum.lock}"><i class="fa fa-ban error" aria-hidden="true"></i></a>
@@ -133,7 +133,7 @@
 		</div>
 		<div class="flex-between flex-between-large">
 			<h2>
-				{U_CATEGORY} <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a itemscope="name" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_ISSUE_STATUS}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESCRIPTION}</em></span>
+				{U_CATEGORY} <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a class="offload" itemscope="name" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_ISSUE_STATUS}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESCRIPTION}</em></span>
 			</h2>
 			# IF C_PAGINATION #<span class="d-inline-block"># INCLUDE PAGINATION #</span># ENDIF #
 		</div>
@@ -191,7 +191,7 @@
 						<input type="hidden" name="token" value="{TOKEN}">
 						<button type="submit" name="valid_forum_poll" value="true" class="button submit">{@forum.cast.vote}</button>
 						<div class="spacer"></div>
-						<a class="small" href="topic{U_POLL_RESULT}">{@forum.poll.results}</a>
+						<a class="small offload" href="topic{U_POLL_RESULT}">{@forum.poll.results}</a>
 					</fieldset>
 				# ENDIF #
 			</form>
@@ -225,7 +225,7 @@
 						<div class="controls message-user-infos-preview">
 							# IF msg.C_USER_GROUPS #
 								# START msg.usergroups #
-									<a href="{msg.usergroups.U_USERGROUP}" class="user-group small group-{msg.usergroups.USERGROUP_ID}"# IF msg.usergroups.C_USERGROUP_COLOR # style="color: {msg.usergroups.USERGROUP_COLOR}"# ENDIF #>{msg.usergroups.USERGROUP_NAME}</a>
+									<a href="{msg.usergroups.U_USERGROUP}" class="user-group small group-{msg.usergroups.USERGROUP_ID} offload"# IF msg.usergroups.C_USERGROUP_COLOR # style="color: {msg.usergroups.USERGROUP_COLOR}"# ENDIF #>{msg.usergroups.USERGROUP_NAME}</a>
 								# END msg.usergroups #
 							# ENDIF #
 							# IF msg.C_USER_RANK #<span class="pinned {msg.FORUM_USER_LEVEL} small">{msg.USER_RANK}</span># ELSE #<span class="error">{@user.banned}</span># ENDIF #
@@ -241,8 +241,8 @@
 									<i class="fa fa-ellipsis-v"></i>
 								</a>
 								<div class="message-actions-content-{msg.ID} controls">
-									# IF C_AUTH_POST #<a href="topic{msg.U_QUOTE}#go-bottom" aria-label="{@forum.quote.message}"><i class="fa fa-quote-right" aria-hidden="true"></i></a># ENDIF #
-									# IF msg.C_FORUM_MSG_EDIT #<a href="post{msg.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
+									# IF C_AUTH_POST #<a class="offload" href="topic{msg.U_QUOTE}#go-bottom" aria-label="{@forum.quote.message}"><i class="fa fa-quote-right" aria-hidden="true"></i></a># ENDIF #
+									# IF msg.C_FORUM_MSG_EDIT #<a class="offload" href="post{msg.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 
 									# IF msg.C_DELETE #
 										# IF msg.C_DELETE_MESSAGE #
@@ -285,7 +285,7 @@
 							</li>
 							<li class="li-stretch">
 								<span>{@common.see.profile}</span>
-								<a href="{msg.U_FORUM_USER_PROFILE}" class="msg-link-pseudo {msg.FORUM_USER_LEVEL}" # IF msg.FORUM_USER_GROUP_COLOR # style="color:{msg.FORUM_USER_GROUP_COLOR}"# ENDIF #>{msg.FORUM_USER_LOGIN}</a>
+								<a href="{msg.U_FORUM_USER_PROFILE}" class="msg-link-pseudo {msg.FORUM_USER_LEVEL} offload"# IF msg.FORUM_USER_GROUP_COLOR # style="color:{msg.FORUM_USER_GROUP_COLOR}"# ENDIF #>{msg.FORUM_USER_LOGIN}</a>
 							</li>
 							<li class="li-stretch">
 								<span>{@forum.registred.on} :</span>
@@ -295,20 +295,20 @@
 								# IF msg.C_USER_HAS_MESSAGE #
 									<li class="li-stretch">
 										<span>{@forum.messages} :</span>
-										<a href="{msg.U_USER_MEMBERMSG}" class="button submit smaller" aria-label="{@forum.show.member.messages}">{msg.USER_MSG}</a>
+										<a href="{msg.U_USER_MEMBERMSG}" class="button submit smaller offload" aria-label="{@forum.show.member.messages}">{msg.USER_MSG}</a>
 									</li>
 								# ENDIF #
 							# ENDIF #
 							# IF msg.C_USER_PM #
 								<li class="li-stretch">
 									<span>{@user.pm} :</span>
-									<a href="{msg.U_USER_PM}" class="button submit smaller user-pm" aria-label="{@user.contact.pm}"><i class="fa fa-people-arrows fa-fw"></i></a>
+									<a href="{msg.U_USER_PM}" class="button submit smaller user-pm offload" aria-label="{@user.contact.pm}"><i class="fa fa-people-arrows fa-fw"></i></a>
 								</li>
 							# ENDIF #
 							# IF msg.C_USER_EMAIL #
 								<li class="li-stretch">
 									<span>{@user.email}</span>
-									<a href="{msg.U_USER_MAIL}" class="button submit smaller user-mail" aria-label="{@user.contact.email}"><i class="fa iboost fa-iboost-email fa-fw"></i></a>
+									<a href="{msg.U_USER_MAIL}" class="button submit smaller user-mail offload" aria-label="{@user.contact.email}"><i class="fa iboost fa-iboost-email fa-fw"></i></a>
 								</li>
 							# ENDIF #
 							# START msg.ext_fields #
@@ -322,9 +322,9 @@
 								</li>
 									# START msg.usergroups #
 										<li class="li-stretch">
-											<a href="{msg.usergroups.U_USERGROUP}" class="user-group group-{msg.usergroups.USERGROUP_ID}"# IF msg.usergroups.C_USERGROUP_COLOR # style="color: {msg.usergroups.USERGROUP_COLOR}"# ENDIF #>{msg.usergroups.USERGROUP_NAME}</a>
+											<a href="{msg.usergroups.U_USERGROUP}" class="user-group group-{msg.usergroups.USERGROUP_ID} offload"# IF msg.usergroups.C_USERGROUP_COLOR # style="color: {msg.usergroups.USERGROUP_COLOR}"# ENDIF #>{msg.usergroups.USERGROUP_NAME}</a>
 											# IF msg.usergroups.C_IMG_USERGROUP #
-												<a href="{msg.usergroups.U_USERGROUP}" class="user-group user-group-img group-{msg.usergroups.USERGROUP_ID} "# IF msg.usergroups.C_USERGROUP_COLOR # style="color: {msg.usergroups.USERGROUP_COLOR}"# ENDIF #><img src="{PATH_TO_ROOT}/images/group/{msg.usergroups.U_IMG_USERGROUP}" alt="{msg.usergroups.USERGROUP_NAME}" /></a>
+												<a href="{msg.usergroups.U_USERGROUP}" class="user-group user-group-img group-{msg.usergroups.USERGROUP_ID} offload"# IF msg.usergroups.C_USERGROUP_COLOR # style="color: {msg.usergroups.USERGROUP_COLOR}"# ENDIF #><img src="{PATH_TO_ROOT}/images/group/{msg.usergroups.U_IMG_USERGROUP}" alt="{msg.usergroups.USERGROUP_NAME}" /></a>
 											# ENDIF #
 										</li>
 									# END msg.usergroups #
@@ -335,8 +335,8 @@
 								<li class="li-stretch">
 									<span>Sanctions: {msg.USER_WARNING}%</span>
 									<span>
-										<a href="moderation_forum{msg.U_FORUM_WARNING}" aria-label="{@user.warnings.management}"><i class="fa fa-exclamation-triangle warning" aria-hidden="true"></i></a>
-										<a href="moderation_forum{msg.U_FORUM_PUNISHEMENT}" aria-label="{@user.punishments.management}"><i class="fa fa-user-lock" aria-hidden="true"></i></a>
+										<a class="offload" href="moderation_forum{msg.U_FORUM_WARNING}" aria-label="{@user.warnings.management}"><i class="fa fa-exclamation-triangle warning" aria-hidden="true"></i></a>
+										<a class="offload" href="moderation_forum{msg.U_FORUM_PUNISHEMENT}" aria-label="{@user.punishments.management}"><i class="fa fa-user-lock" aria-hidden="true"></i></a>
 									</span>
 								</li>
 							# ENDIF #
@@ -354,7 +354,7 @@
 					<p class="message-edition">
 						{@forum.edited.by}
 						# IF msg.C_FORUM_USER_EDITOR_LOGIN #
-							<a href="{msg.U_FORUM_USER_EDITOR_PROFILE}">{msg.FORUM_USER_EDITOR_LOGIN}</a>
+							<a class="offload" href="{msg.U_FORUM_USER_EDITOR_PROFILE}">{msg.FORUM_USER_EDITOR_LOGIN}</a>
 						# ELSE #
 							{@user.guest}
 						# ENDIF #
@@ -369,9 +369,9 @@
 		# IF C_PAGINATION ## INCLUDE PAGINATION ## ENDIF #
 	</div>
 	<footer class="footer-forum flex-between">
-		<div>{U_CATEGORY} <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a itemscope="name" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_ISSUE_STATUS}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESCRIPTION}</em></span></div>
+		<div>{U_CATEGORY} <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a class="offload" itemscope="name" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_ISSUE_STATUS}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESCRIPTION}</em></span></div>
 		<div class="controls">
-			<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
+			<a class="offload" href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 			# IF C_CONTROLS #
 				# IF C_FORUM_LOCK_TOPIC #
 					<a href="action{U_TOPIC_LOCK}" aria-label="{@forum.lock}" data-confirmation="{@forum.alert.lock.topic}"><i class="fa fa-ban error" aria-hidden="true"></i></a>

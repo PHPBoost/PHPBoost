@@ -11,7 +11,7 @@
 		<header class="flex-between">
 			<h2>{@forum.sub.forums}</h2>
 			<div class="controls">
-				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',CATEGORY_ID))}"><i class="fa fa-rss warning" aria-hidden="true"></i><span class="sr-only">{@common.syndication}</span></a>
+				<a class="offload" href="${relative_url(SyndicationUrlBuilder::rss('forum',CATEGORY_ID))}"><i class="fa fa-rss warning" aria-hidden="true"></i><span class="sr-only">{@common.syndication}</span></a>
 			</div>
 		</header>
 		<div class="content">
@@ -33,7 +33,7 @@
 									<i class="fa fa-globe fa-2x" aria-hidden="true"></i>
 								</td>
 								<td class="forum-topic" colspan="4">
-									<a href="{subcats.U_LINK}">{subcats.CATEGORY_NAME}</a>
+									<a class="offload" href="{subcats.U_LINK}">{subcats.CATEGORY_NAME}</a>
 									<span class="small d-block">{subcats.DESCRIPTION}</span>
 								</td>
 							# ELSE #
@@ -41,7 +41,7 @@
 									<i class="fa # IF subcats.C_BLINK #blink # ENDIF #{subcats.TOPIC_ICON}" aria-hidden="true"></i>
 								</td>
 								<td class="forum-topic">
-									<a href="forum{subcats.U_CATEGORY}">{subcats.CATEGORY_NAME}</a>
+									<a class="offload" href="forum{subcats.U_CATEGORY}">{subcats.CATEGORY_NAME}</a>
 									<span class="small d-block">{subcats.DESCRIPTION}</span>
 									# IF subcats.C_SUBFORUMS #<span class="d-block small"><span class="pinned notice">{@forum.sub.forums}</span> : {subcats.SUBFORUMS}</span># ENDIF #
 								</td>
@@ -55,16 +55,16 @@
 									# IF subcats.C_LAST_TOPIC_MSG #
 										<span class="d-block">
 											<i class="far fa-comment fa-fw"></i>
-											<a href="{subcats.U_LAST_TOPIC}">{subcats.LAST_TOPIC_TITLE}</a>
+											<a class="offload" href="{subcats.U_LAST_TOPIC}">{subcats.LAST_TOPIC_TITLE}</a>
 										</span>
 										<span class="d-block">
 											<i class="fa fa-hand-point-right fa-fw" aria-hidden="true"></i>
-											<a href="{subcats.U_LAST_MESSAGE}">{subcats.LAST_MESSAGE_DATE_FULL}</a>
+											<a class="offload" href="{subcats.U_LAST_MESSAGE}">{subcats.LAST_MESSAGE_DATE_FULL}</a>
 										</span>
 										<span class="d-block">
 											<i class="far fa-user fa-fw"></i>
 											# IF subcats.C_LAST_MESSAGE_GUEST #
-												<a href="{subcats.U_LAST_USER_PROFILE}" class="small {subcats.LAST_USER_LEVEL}"# IF subcats.C_LAST_USER_GROUP_COLOR #  style="color:{subcats.LAST_USER_GROUP_COLOR}"# ENDIF #>{subcats.LAST_USER_LOGIN}</a>
+												<a class="offload" href="{subcats.U_LAST_USER_PROFILE}" class="small {subcats.LAST_USER_LEVEL}"# IF subcats.C_LAST_USER_GROUP_COLOR #  style="color:{subcats.LAST_USER_GROUP_COLOR}"# ENDIF #>{subcats.LAST_USER_LOGIN}</a>
 											# ELSE #
 												<span class="small">{@user.guest}</span>
 											# ENDIF #
@@ -97,10 +97,10 @@
 			</h2>
 			<div class="controls align-right">
 				# IF C_POST_NEW_TOPIC #
-					<a href="{U_POST_NEW_SUBJECT}" class="button bgc member small">{@forum.post.new.topic}</a>
+					<a href="{U_POST_NEW_SUBJECT}" class="button bgc member small offload">{@forum.post.new.topic}</a>
 				# ENDIF #
-				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',CATEGORY_ID))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning"></i></a>
-				# IF CATEGORY_ID #<a href="unread.php?cat={CATEGORY_ID}" aria-label="{@forum.unread.messages}"><i class="far fa-file-alt" aria-hidden="true"></i></a># ENDIF #
+				<a class="offload" href="${relative_url(SyndicationUrlBuilder::rss('forum',CATEGORY_ID))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning"></i></a>
+				# IF CATEGORY_ID #<a class="offload" href="unread.php?cat={CATEGORY_ID}" aria-label="{@forum.unread.messages}"><i class="far fa-file-alt" aria-hidden="true"></i></a># ENDIF #
 				# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
 			</div>
 		</div>
@@ -151,14 +151,14 @@
 							# IF topics.C_IMG_TRACK #<i class="fa fa-heartbeat error" aria-hidden="true"></i># ENDIF #
 						</td>
 						<td class="forum-topic">
-							# IF topics.C_ANCHOR #<a href="{topics.U_ANCHOR}"><i class="fa fa-hand-point-right" aria-hidden="true"></i></a># ENDIF #
+							# IF topics.C_ANCHOR #<a class="offload" href="{topics.U_ANCHOR}"><i class="fa fa-hand-point-right" aria-hidden="true"></i></a># ENDIF #
 							# IF topics.TYPE # <strong>{topics.TYPE}</strong> # ENDIF #
-							<a href="topic{topics.U_TOPIC}">{topics.L_ISSUE_STATUS_MESSAGE} {topics.TITLE}</a>
+							<a class="offload" href="topic{topics.U_TOPIC}">{topics.L_ISSUE_STATUS_MESSAGE} {topics.TITLE}</a>
 							<span class="small d-block">{topics.DESCRIPTION}</span>
 						</td>
 						<td class="forum-author">
 							# IF topics.C_AUTHOR #
-								<a href="{topics.U_AUTHOR_PROFILE}" class="small {topics.AUTHOR_LEVEL}"# IF topics.C_GROUP_COLOR # style="color:{topics.GROUP_COLOR}"# ENDIF #>{topics.AUTHOR}</a>
+								<a href="{topics.U_AUTHOR_PROFILE}" class="small {topics.AUTHOR_LEVEL} offload"# IF topics.C_GROUP_COLOR # style="color:{topics.GROUP_COLOR}"# ENDIF #>{topics.AUTHOR}</a>
 							# ELSE #
 								<span class="small">{@user.guest}</span>
 							# ENDIF #
@@ -172,12 +172,12 @@
 						<td class="forum-last-topic">
 							<span class="d-block">
 								<i class="far fa-hand-point-right fa-fw" aria-hidden="true"></i>
-								<a href={topics.U_LAST_MESSAGE} aria-label="{@forum.see.message}">{topics.LAST_MESSAGE_DATE_FULL}</a>
+								<a class="offload" href={topics.U_LAST_MESSAGE} aria-label="{@forum.see.message}">{topics.LAST_MESSAGE_DATE_FULL}</a>
 							</span>
 							<span class="d-block">
 								<i class="far fa-user fa-fw" aria-hidden="true"></i>
 								# IF topics.C_LAST_MESSAGE_GUEST #
-									<a href="{topics.U_LAST_USER_PROFILE}" class="small {topics.LAST_USER_LEVEL}"# IF topics.C_LAST_USER_GROUP_COLOR # style="color:{topics.LAST_USER_GROUP_COLOR}"# ENDIF #>{topics.LAST_USER_LOGIN}</a>
+									<a href="{topics.U_LAST_USER_PROFILE}" class="small {topics.LAST_USER_LEVEL} offload"# IF topics.C_LAST_USER_GROUP_COLOR # style="color:{topics.LAST_USER_GROUP_COLOR}"# ENDIF #>{topics.LAST_USER_LOGIN}</a>
 								# ELSE #
 									<span class="small">{@user.guest}</span>
 								# ENDIF #
@@ -198,12 +198,12 @@
 				<tr>
 					<th colspan="# IF C_CONTROLS #8# ELSE #7# ENDIF #">
 						<div class="footer-forum">
-							<a href="${relative_url(SyndicationUrlBuilder::rss('forum',CATEGORY_ID))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
+							<a class="offload" href="${relative_url(SyndicationUrlBuilder::rss('forum',CATEGORY_ID))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 							# START syndication_cats #
-								# IF syndication_cats.C_DISPLAY_RAQUO # <i class="fa fa-angle-double-right" aria-hidden="true"></i> # ENDIF #<a href="{syndication_cats.LINK}">{syndication_cats.LABEL}</a>
+								# IF syndication_cats.C_DISPLAY_RAQUO # <i class="fa fa-angle-double-right" aria-hidden="true"></i> # ENDIF #<a class="offload" href="{syndication_cats.LINK}">{syndication_cats.LABEL}</a>
 							# END syndication_cats #
 							# IF C_POST_NEW_TOPIC #
-								<i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_POST_NEW_SUBJECT}" class="button bgc member small">{@forum.post.new.topic}</a>
+								<i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_POST_NEW_SUBJECT}" class="button bgc member small offload">{@forum.post.new.topic}</a>
 							# ENDIF #
 						</div>
 						# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #

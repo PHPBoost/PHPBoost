@@ -160,7 +160,7 @@ class ForumHomeController extends ModuleController
 							if ($child->get_id_parent() == $row['cid'] && ForumAuthorizationsService::check_authorizations($child->get_id())->read()) //Sous forum distant d'un niveau au plus.
 							{
 								$is_sub_forum[] = $child->get_id();
-								$link = $child->get_url() ? '<a href="' . $child->get_url() . '" class="forum-subform-element">' : '<a href="forum' . url('.php?id=' . $child->get_id(), '-' . $child->get_id() . '+' . $child->get_rewrited_name() . '.php') . '" class="forum-subform-element">';
+								$link = $child->get_url() ? '<a href="' . $child->get_url() . '" class="forum-subform-element offload">' : '<a href="forum' . url('.php?id=' . $child->get_id(), '-' . $child->get_id() . '+' . $child->get_rewrited_name() . '.php') . '" class="forum-subform-element offload">';
 								$subforums .= !empty($subforums) ? ', ' . $link . $child->get_name() . '</a>' : $link . $child->get_name() . '</a>';
 							}
 						}

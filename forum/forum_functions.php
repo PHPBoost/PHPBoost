@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 01
+ * @version     PHPBoost 6.0 - last update: 2021 07 03
  * @since       PHPBoost 2.0 - 2007 12 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -40,7 +40,7 @@ function forum_list_user_online($condition)
 			break;
 		}
 		$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
-		$users_list .= (!empty($row['display_name']) && $row['level'] != -1) ?  $coma . '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'" class="' . UserService::get_level_class($row['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>' : '';
+		$users_list .= (!empty($row['display_name']) && $row['level'] != -1) ?  $coma . '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'" class="' . UserService::get_level_class($row['level']) . ' offload"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>' : '';
 	}
 	$result->dispose();
 
@@ -65,7 +65,7 @@ function forum_list_user_online($condition)
 				$total_admin++;
 				break;
 			}
-			$users_list .= '<a href="'. UserUrlBuilder::profile($current_user->get_id())->rel() .'" class="' . UserService::get_level_class($current_user->get_level()) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $current_user->get_display_name() . '</a>';
+			$users_list .= '<a href="'. UserUrlBuilder::profile($current_user->get_id())->rel() .'" class="' . UserService::get_level_class($current_user->get_level()) . ' offload"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $current_user->get_display_name() . '</a>';
 		}
 		else
 			$total_visit++;

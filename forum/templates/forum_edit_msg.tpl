@@ -11,9 +11,9 @@
 <article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-edit-message" class="forum-content">
 	<header>
 		<h2>
-			<a href="index.php">{@forum.index}</a> <i class="fa fa-angle-double-right small" aria-hidden="true"></i>
-			<a href="{U_CATEGORY}">{CATEGORY_NAME}</a> <i class="fa fa-angle-double-right small" aria-hidden="true"></i>
-			<a href="{U_TITLE_T}">{TITLE_T}</a> <span><em>{DESCRIPTION}</em></span>
+			<a class="offload" href="index.php">{@forum.index}</a> <i class="fa fa-angle-double-right small" aria-hidden="true"></i>
+			<a class="offload" href="{U_CATEGORY}">{CATEGORY_NAME}</a> <i class="fa fa-angle-double-right small" aria-hidden="true"></i>
+			<a class="offload" href="{U_TITLE_T}">{TITLE_T}</a> <span><em>{DESCRIPTION}</em></span>
 		</h2>
 	</header>
 	<div class="content">
@@ -45,9 +45,9 @@
 		</form>
 	</div>
 	<footer>
-		<a href="index.php">{@forum.index}</a> <i class="fa fa-angle-double-right small" aria-hidden="true"></i>
-		<a href="{U_CATEGORY}">{CATEGORY_NAME}</a> <i class="fa fa-angle-double-right small" aria-hidden="true"></i>
-		<a href="{U_TITLE_T}">{TITLE_T}</a> <span><em>{DESCRIPTION}</em></span>
+		<a class="offload" href="index.php">{@forum.index}</a> <i class="fa fa-angle-double-right small" aria-hidden="true"></i>
+		<a class="offload" href="{U_CATEGORY}">{CATEGORY_NAME}</a> <i class="fa fa-angle-double-right small" aria-hidden="true"></i>
+		<a class="offload" href="{U_TITLE_T}">{TITLE_T}</a> <span><em>{DESCRIPTION}</em></span>
 	</footer>
 </article>
 

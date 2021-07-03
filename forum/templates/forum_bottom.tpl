@@ -9,42 +9,42 @@
 							<ul>
 								<li>
 									<span class="cssmenu-title">
-										<a href="index.php" aria-label="{@forum.index}"><i class="fa fa-fw fa-home" aria-hidden="true"></i> <span class="hidden-large-screens">{@forum.index}</span></a>
+										<a class="offload" href="index.php" aria-label="{@forum.index}"><i class="fa fa-fw fa-home" aria-hidden="true"></i> <span class="hidden-large-screens">{@forum.index}</span></a>
 									</span>
 								</li>
 								<li>
 									<span class="cssmenu-title">
-										<a href="{U_UNANSWERED_TOPICS}" aria-label="{@forum.unanswered.topics}"><i class="fa fa-fw fa-comment-slash" aria-hidden="true"></i> <span class="hidden-large-screens">{@forum.unanswered.topics}</span></a>
+										<a class="offload" href="{U_UNANSWERED_TOPICS}" aria-label="{@forum.unanswered.topics}"><i class="fa fa-fw fa-comment-slash" aria-hidden="true"></i> <span class="hidden-large-screens">{@forum.unanswered.topics}</span></a>
 									</span>
 								</li>
 								<li>
 									<span class="cssmenu-title">
-										<a href="{U_TRACKED_TOPICS}" aria-label="{@forum.tracked.topics}"><i class="fa fa-fw fa-heartbeat error" aria-hidden="true"></i> <span class="hidden-large-screens">{@forum.tracked.topics}</span></a>
+										<a class="offload" href="{U_TRACKED_TOPICS}" aria-label="{@forum.tracked.topics}"><i class="fa fa-fw fa-heartbeat error" aria-hidden="true"></i> <span class="hidden-large-screens">{@forum.tracked.topics}</span></a>
 									</span>
 								</li>
 								<li class="forum-index">
 									<span class="cssmenu-title">
-										<a href="{U_LAST_MESSAGE_READ}" aria-label="{@forum.last.read.messages}"><i class="far fa-fw fa-clock" aria-hidden="true"></i> <span class="hidden-large-screens">{@forum.last.read.messages}</span></a>
+										<a class="offload" href="{U_LAST_MESSAGE_READ}" aria-label="{@forum.last.read.messages}"><i class="far fa-fw fa-clock" aria-hidden="true"></i> <span class="hidden-large-screens">{@forum.last.read.messages}</span></a>
 									</span>
 								</li>
 								<li>
 									<div class="cssmenu-title">
-										<a href="{U_UNREAD_MESSAGES}" aria-label="{@forum.unread.messages}"><i class="far fa-fw fa-file-alt" aria-hidden="true"></i><span id="nbr_unread_messages_bottom">{UNREAD_MESSAGES_NUMBER}</span><span class="hidden-large-screens">{@forum.unread.messages}</span></a>
+										<a class="offload" href="{U_UNREAD_MESSAGES}" aria-label="{@forum.unread.messages}"><i class="far fa-fw fa-file-alt" aria-hidden="true"></i><span id="nbr_unread_messages_bottom">{UNREAD_MESSAGES_NUMBER}</span><span class="hidden-large-screens">{@forum.unread.messages}</span></a>
 										<div class="forum-refresh">
 											<div id="forum_block_forum_unread_bottom" style="display: none;"></div>
 										</div>
-										<a href="#" class="reload-unread" onclick="XMLHttpRequest_unread_topics('forum_unread_bottom');return false;" onmouseover="forum_hide_block('forum_unread_bottom', 1);" onmouseout="forum_hide_block('forum_unread_bottom', 0);" aria-label="{@forum.reload.unread.messages}"><i class="fa fa-fw fa-sync" id="refresh_forum_unread_bottom"></i><span class="sr-only">{@forum.reload.unread.messages}</span></a>
+										<a class="offload" href="#" class="reload-unread" onclick="XMLHttpRequest_unread_topics('forum_unread_bottom');return false;" onmouseover="forum_hide_block('forum_unread_bottom', 1);" onmouseout="forum_hide_block('forum_unread_bottom', 0);" aria-label="{@forum.reload.unread.messages}"><i class="fa fa-fw fa-sync" id="refresh_forum_unread_bottom"></i><span class="sr-only">{@forum.reload.unread.messages}</span></a>
 									</div>
 								</li>
 								<li>
 									<span class="cssmenu-title">
-										<a href="{U_MARK_AS_READ}" aria-label="{L_MARK_AS_READ}" onclick="javascript:return Confirm_read_topics();"><i class="fa fa-fw fa-eraser" aria-hidden="true"></i> <span class="hidden-large-screens">{L_MARK_AS_READ}</span></a>
+										<a class="offload" href="{U_MARK_AS_READ}" aria-label="{L_MARK_AS_READ}" onclick="javascript:return Confirm_read_topics();"><i class="fa fa-fw fa-eraser" aria-hidden="true"></i> <span class="hidden-large-screens">{L_MARK_AS_READ}</span></a>
 									</span>
 								</li>
 								# IF C_FORUM_CONNEXION #
 									<li>
 										<span class="cssmenu-title">
-											<a href="${relative_url(UserUrlBuilder::disconnect())}" aria-label="{@user.sign.out}"><i class="fa fa-fw fa-sign-out-alt" aria-hidden="true"></i> <span class="hidden-large-screens">{@user.sign.out}</span></a>
+											<a class="offload" href="${relative_url(UserUrlBuilder::disconnect())}" aria-label="{@user.sign.out}"><i class="fa fa-fw fa-sign-out-alt" aria-hidden="true"></i> <span class="hidden-large-screens">{@user.sign.out}</span></a>
 										</span>
 									</li>
 								# ENDIF #
@@ -56,12 +56,12 @@
 								<ul>
 									<li>
 										<span class="cssmenu-title">
-											<a href="${relative_url(UserUrlBuilder::connect())}" aria-label="{@user.sign.in}"><i class="fa fa-fw fa-sign-in-alt" aria-hidden="true"></i> <span class="hidden-large-screens">{@user.sign.in}</span></a>
+											<a class="offload" href="${relative_url(UserUrlBuilder::connect())}" aria-label="{@user.sign.in}"><i class="fa fa-fw fa-sign-in-alt" aria-hidden="true"></i> <span class="hidden-large-screens">{@user.sign.in}</span></a>
 										</span>
 									</li>
 									<li>
 										<span class="cssmenu-title">
-											<a href="${relative_url(UserUrlBuilder::registration())}" aria-label="{@user.sign.up}"><i class="fa fa-fw fa-ticket-alt" aria-hidden="true"></i> <span class="hidden-large-screens">{@user.sign.up}</span></a>
+											<a class="offload" href="${relative_url(UserUrlBuilder::registration())}" aria-label="{@user.sign.up}"><i class="fa fa-fw fa-ticket-alt" aria-hidden="true"></i> <span class="hidden-large-screens">{@user.sign.up}</span></a>
 										</span>
 									</li>
 								</ul>
@@ -124,7 +124,7 @@
 								{@forum.messages.number}: <strong>{MESSAGES_NUMBER}</strong> {L_MESSAGE} {L_DISTRIBUTED} / <strong>{TOPICS_NUMBER}</strong> {L_TOPIC}
 							</span>
 							<span class="float-right forum-stats">
-								<a href="{PATH_TO_ROOT}/forum/stats.php"><i class="fa fa-fw fa-chart-bar" aria-hidden="true"></i> {@forum.statistics}</a>
+								<a class="offload" href="{PATH_TO_ROOT}/forum/stats.php"><i class="fa fa-fw fa-chart-bar" aria-hidden="true"></i> {@forum.statistics}</a>
 							</span>
 							<div class="spacer"></div>
 						</div>

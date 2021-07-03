@@ -12,7 +12,7 @@
 	<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-track">
 		<header>
 			<h2>
-				<a href="{U_CATEGORY}">{CATEGORY_NAME}</a>
+				<a class="offload" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
 				# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #
 			</h2>
 		</header>
@@ -88,12 +88,12 @@
 								# IF topics.C_DISPLAY_ISSUE_STATUS #<i class="fa fa-check success"></i># ENDIF # # IF C_POLL #<i class="fa fa-tasks"></i># ENDIF #
 							</td>
 							<td class="forum-topic">
-								<a href="{topics.U_ANCHOR}" aria-label="{topics.TITLE}"><i class="fa fa-hand-point-right" aria-hidden="true"></i></a> <strong>{topics.TYPE}</strong> <a href="topic{topics.U_TOPIC}">{topics.L_ISSUE_STATUS_MESSAGE} {topics.TITLE}</a>
+								<a class="offload" href="{topics.U_ANCHOR}" aria-label="{topics.TITLE}"><i class="fa fa-hand-point-right" aria-hidden="true"></i></a> <strong>{topics.TYPE}</strong> <a class="offload" href="topic{topics.U_TOPIC}">{topics.L_ISSUE_STATUS_MESSAGE} {topics.TITLE}</a>
 								<span class="smaller">{topics.DESCRIPTION}</span>
 							</td>
 							<td class="forum-author">
 								# IF topics.C_AUTHOR #
-									<a href="{topics.U_AUTHOR_PROFILE}" class="small {topics.AUTHOR_LEVEL}"# IF topics.C_GROUP_COLOR # style="color:{topics.GROUP_COLOR}"# ENDIF #>{topics.AUTHOR}</a>
+									<a href="{topics.U_AUTHOR_PROFILE}" class="small {topics.AUTHOR_LEVEL} offload"# IF topics.C_GROUP_COLOR # style="color:{topics.GROUP_COLOR}"# ENDIF #>{topics.AUTHOR}</a>
 								# ELSE #
 									<span class="small">${LangLoader::get_message('user.guest', 'user-lang')}</span>
 								# ENDIF #
@@ -115,12 +115,12 @@
 							</td>
 							<td class="forum-last-topic">
 								<span class="d-block">
-									<a href={topics.U_LAST_MESSAGE} aria-label="{topics.TITLE}<br /> {topics.LAST_MESSAGE_DATE_FULL}"> {topics.LAST_MESSAGE_DATE_FULL}</a>
+									<a class="offload" href={topics.U_LAST_MESSAGE} aria-label="{topics.TITLE}<br /> {topics.LAST_MESSAGE_DATE_FULL}"> {topics.LAST_MESSAGE_DATE_FULL}</a>
 								</span>
 								<span class="d-block">
 									<i class="fa fa-user fa-fw"></i>
 									# IF topics.C_LAST_MESSAGE_GUEST #
-										<a href="{topics.U_LAST_USER_PROFILE}" class="small {topics.LAST_USER_LEVEL}"# IF topics.C_LAST_USER_GROUP_COLOR # style="color:{topics.LAST_USER_GROUP_COLOR}"# ENDIF #>{topics.LAST_USER_LOGIN}</a>
+										<a href="{topics.U_LAST_USER_PROFILE}" class="small {topics.LAST_USER_LEVEL} offload"# IF topics.C_LAST_USER_GROUP_COLOR # style="color:{topics.LAST_USER_GROUP_COLOR}"# ENDIF #>{topics.LAST_USER_LOGIN}</a>
 									# ELSE #
 										<span class="small">${LangLoader::get_message('user.guest', 'user-lang')}</span>
 									# ENDIF #

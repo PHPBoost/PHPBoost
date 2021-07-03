@@ -12,7 +12,7 @@
 
 <article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-move" class="forum-content">
 	<header>
-		<h2><a href="{U_CATEGORY}">{CATEGORY_NAME}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_TITLE_T}">{TITLE_T}</a></h2>
+		<h2><a class="offload" href="{U_CATEGORY}">{CATEGORY_NAME}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a class="offload" href="{U_TITLE_T}">{TITLE_T}</a></h2>
 	</header>
 
 	<div class="content">
@@ -36,7 +36,7 @@
 			</fieldset>
 		</form>
 	</div>
-	<footer><a href="{U_CATEGORY}">{CATEGORY_NAME}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_TITLE_T}">{TITLE_T}</a></footer>
+	<footer><a class="offload" href="{U_CATEGORY}">{CATEGORY_NAME}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a class="offload" href="{U_TITLE_T}">{TITLE_T}</a></footer>
 </article>
 
 # INCLUDE FORUM_BOTTOM #

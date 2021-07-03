@@ -70,7 +70,7 @@
 <article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-post" class="forum-content">
 	<header>
 		<h2>
-			<a href="{U_CATEGORY}">{CATEGORY_NAME}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_TITLE_T}">{L_NEW_SUBJECT}</a> <span class="small"><em>{DESCRIPTION}</em></span>
+			<a class="offload" href="{U_CATEGORY}">{CATEGORY_NAME}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a class="offload" href="{U_TITLE_T}">{L_NEW_SUBJECT}</a> <span class="small"><em>{DESCRIPTION}</em></span>
 		</h2>
 	</header>
 
@@ -170,7 +170,7 @@
 
 								<p class="align-center" id="add_poll_field_link">
 									# IF C_ADD_POLL_FIELD #
-									<a aria-label="{@common.add}" href="#" onclick="add_poll_field({NBR_POLL_FIELD});return false;"><i class="fa fa-plus" aria-hidden="true"></i></a>
+										<a aria-label="{@common.add}" href="#" onclick="add_poll_field({NBR_POLL_FIELD});return false;"><i class="fa fa-plus" aria-hidden="true"></i></a>
 									# ENDIF #
 								</p>
 							</div>
@@ -211,7 +211,7 @@
 		</form>
 	</div>
 	<footer class="footer-forum">
-		<a href="{U_CATEGORY}">{CATEGORY_NAME}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_TITLE_T}">{L_NEW_SUBJECT}</a> <span class="small"><em>{DESCRIPTION}</em></span>
+		<a class="offload" href="{U_CATEGORY}">{CATEGORY_NAME}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a class="offload" href="{U_TITLE_T}">{L_NEW_SUBJECT}</a> <span class="small"><em>{DESCRIPTION}</em></span>
 	</footer>
 </article>
 

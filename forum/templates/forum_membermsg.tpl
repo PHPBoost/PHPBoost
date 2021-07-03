@@ -19,7 +19,7 @@
 							<div class="message-user-container">
 								<h3 class="message-user-name">
 									# IF NOT list.C_GUEST #
-										<a class="{list.LEVEL_CLASS}" # IF list.C_GROUP_COLOR # style="color:{list.GROUP_COLOR}" # ENDIF # href="{list.U_USER_PROFILE}">
+										<a class="{list.LEVEL_CLASS} offload" # IF list.C_GROUP_COLOR # style="color:{list.GROUP_COLOR}" # ENDIF # href="{list.U_USER_PROFILE}">
 											{list.USER_PSEUDO}
 										</a>
 										<span class="smaller" aria-label="{@common.see.profile.datas}" data-modal data-target="message-user-datas-{list.ID}">
@@ -34,9 +34,9 @@
 									# IF list.C_USER_GROUPS #
 										# START list.usergroups #
 											# IF list.usergroups.C_IMG_USERGROUP #
-												<a href="{list.usergroups.U_USERGROUP}" class="user-group user-group-img group-{list.usergroups.USERGROUP_ID} "# IF list.usergroups.C_USERGROUP_COLOR # style="color: {list.usergroups.USERGROUP_COLOR}"# ENDIF #><img src="{PATH_TO_ROOT}/images/group/{list.usergroups.U_IMG_USERGROUP}" alt="{list.usergroups.USERGROUP_NAME}" /></a>
+												<a href="{list.usergroups.U_USERGROUP}" class="user-group user-group-img group-{list.usergroups.USERGROUP_ID} offload"# IF list.usergroups.C_USERGROUP_COLOR # style="color: {list.usergroups.USERGROUP_COLOR}"# ENDIF #><img src="{PATH_TO_ROOT}/images/group/{list.usergroups.U_IMG_USERGROUP}" alt="{list.usergroups.USERGROUP_NAME}" /></a>
 											# ELSE #
-												{@user.groups} : <a href="{list.usergroups.U_USERGROUP}" class="user-group group-{list.usergroups.USERGROUP_ID} small"# IF list.usergroups.C_USERGROUP_COLOR # style="color: {list.usergroups.USERGROUP_COLOR}"# ENDIF #>{list.usergroups.USERGROUP_NAME}</a>
+												{@user.groups} : <a href="{list.usergroups.U_USERGROUP}" class="user-group group-{list.usergroups.USERGROUP_ID} small offload"# IF list.usergroups.C_USERGROUP_COLOR # style="color: {list.usergroups.USERGROUP_COLOR}"# ENDIF #>{list.usergroups.USERGROUP_NAME}</a>
 											# ENDIF #
 										# END list.usergroups #
 									# ENDIF #
@@ -45,7 +45,7 @@
 							</div>
 							<div class="message-infos">
 								<time datetime="{list.TOPIC_DATE_FULL}" itemprop="datePublished">{@common.on.date} {list.TOPIC_DATE_FULL}</time>
-								<a href="topic{list.U_VARS_ANCHOR}#m{list.ID}" aria-label="{@forum.link.to.topic}">\#{list.ID}</i></a>
+								<a class="offload" href="topic{list.U_VARS_ANCHOR}#m{list.ID}" aria-label="{@forum.link.to.topic}">\#{list.ID}</i></a>
 							</div>
 						</div>
 					</header>
@@ -60,7 +60,7 @@
 									</li>
 									<li class="li-stretch">
 										<span>{@common.see.profile}</span>
-										<a href="{list.U_USER_PROFILE}" class="msg-link-pseudo {list.LEVEL_CLASS}" # IF list.C_GROUP_COLOR # style="color:{list.GROUP_COLOR}"# ENDIF #>{list.USER_PSEUDO}</a>
+										<a href="{list.U_USER_PROFILE}" class="msg-link-pseudo {list.LEVEL_CLASS} offload" # IF list.C_GROUP_COLOR # style="color:{list.GROUP_COLOR}"# ENDIF #>{list.USER_PSEUDO}</a>
 									</li>
 									<li class="li-stretch">
 										<span>{@forum.registred.on} :</span>
@@ -70,20 +70,20 @@
 										# IF list.C_USER_MSG #
 											<li class="li-stretch">
 												<span>{@forum.messages} :</span>
-												<a href="{list.U_USER_MEMBERMSG}" class="button submit smaller" aria-label="{@forum.show.member.messages}">{list.USER_MSG}</a>
+												<a href="{list.U_USER_MEMBERMSG}" class="button submit smaller offload" aria-label="{@forum.show.member.messages}">{list.USER_MSG}</a>
 											</li>
 										# ENDIF #
 									# ENDIF #
 									# IF list.C_USER_PM #
 										<li class="li-stretch">
 											<span>{@user.pm} :</span>
-											<a href="{list.U_USER_PM}" class="button submit smaller user-pm" aria-label="{@user.contact.pm}"><i class="fa fa-people-arrows fa-fw"></i></a>
+											<a href="{list.U_USER_PM}" class="button submit smaller user-pm offload" aria-label="{@user.contact.pm}"><i class="fa fa-people-arrows fa-fw"></i></a>
 										</li>
 									# ENDIF #
 									# IF list.C_USER_EMAIL #
 										<li class="li-stretch">
 											<span>{@user.email}</span>
-											<a href="{list.U_USER_EMAIL}" class="button submit smaller user-mail" aria-label="{@user.contact.email}"><i class="fa iboost fa-iboost-email fa-fw"></i></a>
+											<a href="{list.U_USER_EMAIL}" class="button submit smaller user-mail offload" aria-label="{@user.contact.email}"><i class="fa iboost fa-iboost-email fa-fw"></i></a>
 										</li>
 									# ENDIF #
 									# START list.ext_fields #
@@ -97,9 +97,9 @@
 										</li>
 											# START list.usergroups #
 												<li class="li-stretch">
-													<a href="{list.usergroups.U_USERGROUP}" class="user-group group-{list.usergroups.USERGROUP_ID}"# IF list.usergroups.C_USERGROUP_COLOR # style="color: {list.usergroups.USERGROUP_COLOR}"# ENDIF #>{list.usergroups.USERGROUP_NAME}</a>
+													<a href="{list.usergroups.U_USERGROUP}" class="user-group group-{list.usergroups.USERGROUP_ID} offload"# IF list.usergroups.C_USERGROUP_COLOR # style="color: {list.usergroups.USERGROUP_COLOR}"# ENDIF #>{list.usergroups.USERGROUP_NAME}</a>
 													# IF list.usergroups.C_IMG_USERGROUP #
-														<a href="{list.usergroups.U_USERGROUP}" class="user-group user-group-img group-{list.usergroups.USERGROUP_ID} "# IF list.usergroups.C_USERGROUP_COLOR # style="color: {list.usergroups.USERGROUP_COLOR}"# ENDIF #><img src="{PATH_TO_ROOT}/images/group/{list.usergroups.U_IMG_USERGROUP}" alt="{list.usergroups.USERGROUP_NAME}" /></a>
+														<a href="{list.usergroups.U_USERGROUP}" class="user-group user-group-img group-{list.usergroups.USERGROUP_ID} offload"# IF list.usergroups.C_USERGROUP_COLOR # style="color: {list.usergroups.USERGROUP_COLOR}"# ENDIF #><img src="{PATH_TO_ROOT}/images/group/{list.usergroups.U_IMG_USERGROUP}" alt="{list.usergroups.USERGROUP_NAME}" /></a>
 													# ENDIF #
 												</li>
 											# END list.usergroups #
@@ -110,8 +110,8 @@
 										<li class="li-stretch">
 											<span>Sanctions: {list.USER_WARNING}%</span>
 											<span>
-												<a href="moderation_forum{list.USER_WARNING}" aria-label="{@user.warnings.management}"><i class="fa fa-exclamation-triangle warning" aria-hidden="true"></i></a>
-												<a href="moderation_forum{list.U_FORUM_PUNISHEMENT}" aria-label="{@user.punishments.management}"><i class="fa fa-user-lock" aria-hidden="true"></i></a>
+												<a class="offload" href="moderation_forum{list.USER_WARNING}" aria-label="{@user.warnings.management}"><i class="fa fa-exclamation-triangle warning" aria-hidden="true"></i></a>
+												<a class="offload" href="moderation_forum{list.U_FORUM_PUNISHEMENT}" aria-label="{@user.punishments.management}"><i class="fa fa-user-lock" aria-hidden="true"></i></a>
 											</span>
 										</li>
 									# ENDIF #

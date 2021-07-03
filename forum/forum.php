@@ -190,7 +190,7 @@ if (!empty($id_get))
 						if ($child->get_id_parent() == $row['cid'] && ForumAuthorizationsService::check_authorizations($child->get_id())->read()) //Sous forum distant d'un niveau au plus.
 						{
 							$is_sub_forum[] = $child->get_id();
-							$link = $child->get_url() ? '<a href="' . $child->get_url() . '" class="forum-subforum-element">' : '<a href="forum' . url('.php?id=' . $child->get_id(), '-' . $child->get_id() . '+' . $child->get_rewrited_name() . '.php') . '" class="forum-subforum-element">';
+							$link = $child->get_url() ? '<a href="' . $child->get_url() . '" class="forum-subforum-element offload">' : '<a href="forum' . url('.php?id=' . $child->get_id(), '-' . $child->get_id() . '+' . $child->get_rewrited_name() . '.php') . '" class="forum-subforum-element">';
 							$subforums .= !empty($subforums) ? ', ' . $link . $child->get_name() . '</a>' : $link . $child->get_name() . '</a>';
 						}
 					}

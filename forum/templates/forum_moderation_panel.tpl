@@ -3,9 +3,9 @@
 <article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-moderation-panel" class="forum-content">
 	<header>
 		<h2>
-			<a href="index.php">{FORUM_NAME}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-			<a href="moderation_forum.php">{@forum.moderation.forum}</a>
-			# IF NOT C_HOME # <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_MODERATION_FORUM_ACTION}">{L_ALERT}</a># ENDIF #
+			<a class="offload" href="index.php">{FORUM_NAME}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+			<a class="offload" href="moderation_forum.php">{@forum.moderation.forum}</a>
+			# IF NOT C_HOME # <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a class="offload" href="{U_MODERATION_FORUM_ACTION}">{L_ALERT}</a># ENDIF #
 		</h2>
 	</header>
 	<div class="content">
@@ -13,7 +13,7 @@
 			<div class="cell">
 				<div class="cell-body">
 					<div class="cell-content align-center">
-						<a href="moderation_forum.php?action=warning" class="moderation-type-block">
+						<a href="moderation_forum.php?action=warning" class="moderation-type-block offload">
 							<i class="fa fa-exclamation-triangle fa-2x warning" aria-hidden="true"></i>
 							<span class="d-block">{@user.warnings.management}</span>
 						</a>
@@ -23,7 +23,7 @@
 			<div class="cell">
 				<div class="cell-body">
 					<div class="cell-content align-center">
-						<a href="moderation_forum.php?action=punish" class="moderation-type-block">
+						<a href="moderation_forum.php?action=punish" class="moderation-type-block offload">
 							<i class="fa fa-times fa-2x error" aria-hidden="true"></i>
 							<span class="d-block">{@user.punishments.management}</span>
 						</a>
@@ -33,7 +33,7 @@
 			<div class="cell">
 				<div class="cell-body">
 					<div class="cell-content align-center">
-						<a href="moderation_forum.php?action=alert" class="moderation-type-block">
+						<a href="moderation_forum.php?action=alert" class="moderation-type-block offload">
 							<i class="fa fa-minus-circle fa-2x error" aria-hidden="true"></i>
 							<span class="d-block">{@forum.reports.management}</span>
 						</a>
@@ -73,18 +73,18 @@
 					# START action_list #
 						<tr>
 							<td>
-								<a href="{action_list.U_USER_PROFILE}" class="{action_list.LEVEL_CLASS}" # IF action_list.C_GROUP_COLOR # style="color: {action_list.GROUP_COLOR};"# ENDIF #>{action_list.LOGIN}</a>
+								<a href="{action_list.U_USER_PROFILE}" class="{action_list.LEVEL_CLASS} offload" # IF action_list.C_GROUP_COLOR # style="color: {action_list.GROUP_COLOR};"# ENDIF #>{action_list.LOGIN}</a>
 							</td>
 							<td>
 								# IF action_list.C_ACTION #
-									<a href="{action_list.U_ACTION}">{action_list.L_ACTION}</a>
+									<a class="offload" href="{action_list.U_ACTION}">{action_list.L_ACTION}</a>
 								# ELSE #
 									{action_list.L_ACTION}
 								# ENDIF #
 							</td>
 							<td>
 								# IF action_list.C_USER_CONCERN #
-									<a href="{action_list.U_USER_CONCERN}" class="{action_list.USER_CONCERN_CSSCLASS}"# IF action_list.C_USER_CONCERN_GROUP_COLOR # style="color: {action_list.USER_CONCERN_GROUP_COLOR};"# ENDIF #>{action_list.USER_LOGIN}</a>
+									<a href="{action_list.U_USER_CONCERN}" class="{action_list.USER_CONCERN_CSSCLASS} offload"# IF action_list.C_USER_CONCERN_GROUP_COLOR # style="color: {action_list.USER_CONCERN_GROUP_COLOR};"# ENDIF #>{action_list.USER_LOGIN}</a>
 								# ELSE #
 									-
 								# ENDIF #
@@ -109,7 +109,7 @@
 									<span class="float-left"><button type="submit" name="valid" value="true" class="button submit">{@common.delete}</button></span>
 								# ENDIF #
 								# IF C_DISPLAY_LINK_MORE_ACTION #
-									<a href="moderation_forum{U_MORE_ACTION}">{@forum.more.action}</a>
+									<a class="offload" href="moderation_forum{U_MORE_ACTION}">{@forum.more.action}</a>
 								# ENDIF #
 							</td>
 						</tr>
@@ -148,20 +148,20 @@
 									<input type="checkbox" name="a{alert_list.ID}">
 								</td>
 								<td class="td20P">
-									<a href="{alert_list.U_TITLE}">{alert_list.TITLE}</a> <a href="{alert_list.U_TITLE}"><i class="far fa-edit"></i></a>
+									<a class="offload" href="{alert_list.U_TITLE}"> <i class="far fa-edit"></i> {alert_list.TITLE}</a>
 								</td>
 								<td class="td20P">
-									<a href="{alert_list.U_TOPIC}">{alert_list.TOPIC}</a>
+									<a class="offload" href="{alert_list.U_TOPIC}">{alert_list.TOPIC}</a>
 								</td>
 								<td class="td100 {alert_list.BACKGROUND_COLOR}">
 									# IF alert_list.C_STATUS #
-										{@forum.report.solved}<a href="{alert_list.U_IDMODO_REL}" class="{alert_list.MODO_CSSCLASS}" # IF alert_list.C_MODO_GROUP_COLOR # style="color: {alert_list.MODO_GROUP_COLOR};"# ENDIF #>{alert_list.LOGIN_MODO}</a>
+										{@forum.report.solved}<a href="{alert_list.U_IDMODO_REL}" class="{alert_list.MODO_CSSCLASS} offload" # IF alert_list.C_MODO_GROUP_COLOR # style="color: {alert_list.MODO_GROUP_COLOR};"# ENDIF #>{alert_list.LOGIN_MODO}</a>
 									# ELSE #
 										{@forum.report.unsolved}
 									# ENDIF #
 								</td>
 								<td class="td70">
-									<a href="{alert_list.USER_ID}" class="{alert_list.USER_CSSCLASS}"# IF alert_list.C_USER_GROUP_COLOR # style="color:{alert_list.USER_GROUP_COLOR};"# ENDIF #>{alert_list.LOGIN_USER}</a>
+									<a href="{alert_list.USER_ID}" class="{alert_list.USER_CSSCLASS} offload"# IF alert_list.C_USER_GROUP_COLOR # style="color:{alert_list.USER_GROUP_COLOR};"# ENDIF #>{alert_list.LOGIN_USER}</a>
 								</td>
 								<td class="td70">
 									{alert_list.DATE}
@@ -205,11 +205,11 @@
 					</tr>
 					<tr>
 						<td>{@forum.report.concerned.topic}</td>
-						<td><a href="{U_TOPIC}">{TOPIC}</a></td>
+						<td><a class="offload" href="{U_TOPIC}">{TOPIC}</a></td>
 					</tr>
 					<tr>
 						<td>{@forum.report.concerned.category}</td>
-						<td><a href="{U_CAT}">{CAT_NAME}</a></td>
+						<td><a class="offload" href="{U_CAT}">{CAT_NAME}</a></td>
 					</tr>
 					<tr>
 						<td>{@forum.report.message}</td>
@@ -219,7 +219,7 @@
 						<td>{@common.status}</td>
 						<td>
 							# IF C_STATUS #
-								{@forum.report.solved}<a href="{U_IDMODO_REL}" class="{MODO_CSSCLASS}" # IF C_MODO_GROUP_COLOR # style="color: {MODO_GROUP_COLOR};"# ENDIF #>{LOGIN_MODO}</a>
+								{@forum.report.solved}<a href="{U_IDMODO_REL}" class="{MODO_CSSCLASS} offload" # IF C_MODO_GROUP_COLOR # style="color: {MODO_GROUP_COLOR};"# ENDIF #>{LOGIN_MODO}</a>
 							# ELSE #
 								{@forum.report.unsolved}
 							# ENDIF #
@@ -228,7 +228,7 @@
 					<tr>
 						<td>{@forum.report.author}</td>
 						<td>
-							<a href="{USER_ID}" class="{USER_CSSCLASS}"# IF C_USER_GROUP_COLOR # style="color: {USER_GROUP_COLOR};"# ENDIF #>{LOGIN_USER}</a>
+							<a href="{USER_ID}" class="{USER_CSSCLASS} offload"# IF C_USER_GROUP_COLOR # style="color: {USER_GROUP_COLOR};"# ENDIF #>{LOGIN_USER}</a>
 						</td>
 					</tr>
 					<tr>
@@ -335,16 +335,16 @@
 					# START user_list #
 					<tr>
 						<td class="td25P">
-							<a href="{user_list.U_PROFILE}" class="{user_list.LEVEL_CLASS}" # IF user_list.C_GROUP_COLOR # style="color: {user_list.GROUP_COLOR};"# ENDIF #>{user_list.LOGIN}</a>
+							<a href="{user_list.U_PROFILE}" class="{user_list.LEVEL_CLASS} offload" # IF user_list.C_GROUP_COLOR # style="color: {user_list.GROUP_COLOR};"# ENDIF #>{user_list.LOGIN}</a>
 						</td>
 						<td class="td25P">
 							{user_list.INFO}
 						</td>
 						<td class="td25P">
-							<a href="{user_list.U_ACTION_USER}"><i class="fa fa-lock"></i></a>
+							<a class="offload" href="{user_list.U_ACTION_USER}"><i class="fa fa-lock"></i></a>
 						</td>
 						<td class="td25P">
-							<a href="{user_list.U_PM}" class="button alt-button smaller">MP</a>
+							<a href="{user_list.U_PM}" class="button alt-button smaller offload">MP</a>
 						</td>
 					</tr>
 					# END user_list #
@@ -390,7 +390,7 @@
 								{@user.display.name}
 							</td>
 							<td>
-								<a href="{USER_ID}" class="{USER_CSSCLASS}"# IF C_USER_GROUP_COLOR # style="color: {USER_GROUP_COLOR};"# ENDIF #>{LOGIN_USER}</a>
+								<a href="{USER_ID}" class="{USER_CSSCLASS} offload"# IF C_USER_GROUP_COLOR # style="color: {USER_GROUP_COLOR};"# ENDIF #>{LOGIN_USER}</a>
 							</td>
 						</tr>
 						<tr>
@@ -398,7 +398,7 @@
 								{@user.contact.pm}
 							</td>
 							<td>
-								<a href="{U_PM}" class="button submit smaller">{@user.pm}</a>
+								<a href="{U_PM}" class="button submit smaller offload">{@user.pm}</a>
 							</td>
 						</tr>
 						<tr>
@@ -430,9 +430,9 @@
 
 	</div>
 	<footer>
-		<a href="index.php">{FORUM_NAME}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-		<a href="moderation_forum.php">{@forum.moderation.forum}</a>
-		# IF NOT C_HOME # <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_MODERATION_FORUM_ACTION}">{L_ALERT}</a># ENDIF #
+		<a class="offload" href="index.php">{FORUM_NAME}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+		<a class="offload" href="moderation_forum.php">{@forum.moderation.forum}</a>
+		# IF NOT C_HOME # <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a class="offload" href="{U_MODERATION_FORUM_ACTION}">{L_ALERT}</a># ENDIF #
 	</footer>
 </article>
 

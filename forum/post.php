@@ -87,9 +87,9 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 	foreach ($Bread_crumb->get_links() as $key => $array)
 	{
 		if ($i == 2)
-			$forum_cats .= '<a href="' . $array[1] . '">' . $array[0] . '</a>';
+			$forum_cats .= '<a href="' . $array[1] . '" class="offload">' . $array[0] . '</a>';
 		elseif ($i > 2)
-			$forum_cats .= ' <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="' . $array[1] . '">' . $array[0] . '</a>';
+			$forum_cats .= ' <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="' . $array[1] . '" class="offload">' . $array[0] . '</a>';
 		$i++;
 	}
 
