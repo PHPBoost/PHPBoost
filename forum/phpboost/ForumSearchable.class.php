@@ -34,7 +34,6 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 
 		require_once(PATH_TO_ROOT . '/forum/forum_functions.php');
 		require_once(PATH_TO_ROOT . '/forum/forum_defines.php');
-		load_module_lang('forum'); //Chargement de la langue du module.
 
 		$search      = $args['search'];
 		$id_category = !empty($args['ForumIdcat']) ? NumberHelper::numeric($args['ForumIdcat']) : -1;

@@ -3,16 +3,16 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 28
+ * @version     PHPBoost 6.0 - last update: 2021 07 03
  * @since       PHPBoost 1.6 - 2007 10 18
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 if (defined('PHPBOOST') !== true)
     exit;
 
-load_module_lang('forum');
 $lang = LangLoader::get('common', 'forum');
 
 $config = ForumConfig::load();
