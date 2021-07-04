@@ -214,7 +214,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			if ($visit_year)
 				$year = $visit_year;
 
-			//Gestion des mois pour s'adapter au array défini dans lang/main.php
+			//Gestion des mois pour s'adapter au array défini dans lang/{locale}/date-lang.php
 			$array_l_months = array($date_lang['date.january'], $date_lang['date.february'], $date_lang['date.march'], $date_lang['date.april'], $date_lang['date.may'], $date_lang['date.june'],
 			$date_lang['date.july'], $date_lang['date.august'], $date_lang['date.september'], $date_lang['date.october'], $date_lang['date.november'], $date_lang['date.december']);
 
@@ -588,7 +588,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			$pages_total = $pages_total + $pages_day;
 			$pages_day = !empty($pages_day) ? $pages_day : 1;
 
-			//Gestion des mois pour s'adapter au array défini dans lang/main.php
+			//Gestion des mois pour s'adapter au array défini dans lang/{locale}/date-lang.php
 			$array_l_months = array($date_lang['date.january'], $date_lang['date.february'], $date_lang['date.march'], $date_lang['date.april'], $date_lang['date.may'], $date_lang['date.june'],
 			$date_lang['date.july'], $date_lang['date.august'], $date_lang['date.september'], $date_lang['date.october'], $date_lang['date.november'], $date_lang['date.december']);
 

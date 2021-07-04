@@ -49,11 +49,11 @@ $lang['contribution.edition.warning'] = '
     et une nouvelle alerte sera envoyée aux administrateurs.
 ';
 
-$lang['contribution.description']                     = 'Complément de contribution';
-$lang['contribution.description.clue']                = 'Expliquez les raisons de votre contribution. Ce champ est facultatif mais il peut aider un approbateur à prendre sa décision.';
+$lang['contribution.description']              = 'Complément de contribution';
+$lang['contribution.description.clue']         = 'Expliquez les raisons de votre contribution. Ce champ est facultatif mais il peut aider un approbateur à prendre sa décision.';
 $lang['contribution.edition.description']      = 'Complément de modification';
 $lang['contribution.edition.description.clue'] = 'Expliquez ce que vous avez modifié pour un meilleur traitement d\'approbation.';
-$lang['contribution.confirmed']                       = 'Votre contribution a bien été enregistrée.';
+$lang['contribution.confirmed']                = 'Votre contribution a bien été enregistrée.';
 $lang['contribution.confirmed.messages'] = '
     <p>
         Vous pourrez la suivre dans le <a class="offload" href="' . UserUrlBuilder::contribution_panel()->rel() . '">panneau de contribution</a>

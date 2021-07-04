@@ -951,6 +951,11 @@ class UpdateServices
 		$file = new File(PATH_TO_ROOT . '/lang/french/items-common.php');
 		$file->delete();
 
+		$file = new File(PATH_TO_ROOT . '/lang/english/main.php');
+		$file->delete();
+		$file = new File(PATH_TO_ROOT . '/lang/french/main.php');
+		$file->delete();
+
 		$file = new File(PATH_TO_ROOT . '/lang/english/status-messages-common.php');
 		$file->delete();
 		$file = new File(PATH_TO_ROOT . '/lang/french/status-messages-common.php');

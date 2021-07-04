@@ -8,7 +8,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 05
+ * @version     PHPBoost 6.0 - last update: 2021 07 01
  * @since       PHPBoost 3.0 - 2009 09 28
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -187,7 +187,6 @@ class Environment
 
 		global $LANG;
 		$LANG = array();
-		require_once(PATH_TO_ROOT . '/lang/' . $locale . '/main.php');
 		require_once(PATH_TO_ROOT . '/lang/' . $locale . '/errors.php');
 
 		AppContext::get_current_user()->update_visitor_display_name();
