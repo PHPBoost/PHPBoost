@@ -9,6 +9,8 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  *
  * @patch       replace <span class="bt-content" /> by <div class="bt-content" />
+ * @patch       add condition on headingText var to avoid errors if a th is missing
+ *                  if(typeof heading !== 'undefined') headingText += $heading.text();
 */
 
 (function($) {
