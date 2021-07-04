@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 22
+ * @version     PHPBoost 6.0 - last update: 2021 07 04
  * @since       PHPBoost 4.0 - 2013 08 01
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -39,6 +39,15 @@ $lang['contact.date.in.tracking.number.clue']    = 'Génère un numéro de suivi
 $lang['contact.sender.acknowledgment.enabled']   = 'Envoyer une copie de l\'email à l\'émetteur';
 $lang['contact.authorizations.read']             = 'Autorisation d\'afficher le formulaire de contact';
 $lang['contact.authorizations.display.field']    = 'Autorisation d\'afficher le champ';
+    // Default 
+$lang['contact.fieldset.title']     = 'Contacter les gestionnaires du site';
+$lang['contact.email.address']      = 'Adresse email';
+$lang['contact.email.address.clue'] = 'Votre adresse email doit être valide pour que vous puissiez obtenir une réponse';
+$lang['contact.subject']            = 'Objet';
+$lang['contact.subject.clue']       = 'Résumez en quelques mot l\'objet de votre demande';
+$lang['contact.recipients']         = 'Destinataire(s)';
+$lang['contact.recipients.admins']  = 'Administrateurs';
+$lang['contact.message']            = 'Message';
 
 // Map
 $lang['contact.map.location']        = 'Localisation sur une carte';
@@ -55,7 +64,7 @@ $lang['contact.fields.edit.field']       = 'Edition d\'un champ';
 $lang['contact.fields.edit.field.title'] = 'Edition d\'un champ dans le formulaire du module contact';
 
 // Field
-$lang['contact.possible.values.email']          = 'Adresse.s email';
+$lang['contact.possible.values.email']          = 'Adresses email';
 $lang['contact.possible.values.email.clue']     = 'Il est possible d\'indiquer plusieurs adresses email séparées par une virgule';
 $lang['contact.possible.values.subject']        = 'Objet';
 $lang['contact.possible.values.recipient']      = 'Destinataire.s';

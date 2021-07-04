@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 22
+ * @version     PHPBoost 6.0 - last update: 2021 07 04
  * @since       PHPBoost 4.0 - 2013 08 01
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -38,6 +38,15 @@ $lang['contact.date.in.tracking.number.clue']    = 'Generates a tracking number 
 $lang['contact.sender.acknowledgment.enabled']   = 'Send a copy of the email to the sender';
 $lang['contact.authorizations.read']             = 'Permission to display the contact form';
 $lang['contact.authorizations.display.field']    = 'Permission to display the field';
+    // Default
+$lang['contact.fieldset.title']     = 'Contact the site\'s managers';
+$lang['contact.email.address']      = 'Email address';
+$lang['contact.email.address.clue'] = 'Must be valid if you want to be answered';
+$lang['contact.subject']            = 'Subject';
+$lang['contact.subject.clue']       = 'Sum up in a few words the subject of your request';
+$lang['contact.recipients']         = 'Recipient(s)';
+$lang['contact.recipients.admins']  = 'Administrators';
+$lang['contact.message']            = 'Message';
 
 // Map
 $lang['contact.map.location']        = 'Location on a map';
@@ -54,7 +63,7 @@ $lang['contact.fields.edit.field']       = 'Field edition';
 $lang['contact.fields.edit.field.title'] = 'Field edition in the contact form';
 
 // Field
-$lang['contact.possible.values.email']          = 'Emai address.es';
+$lang['contact.possible.values.email']          = 'Email addresses';
 $lang['contact.possible.values.email.clue']     = 'It is possible to put more than one email address separated by a comma';
 $lang['contact.possible.values.subject']        = 'Subject';
 $lang['contact.possible.values.recipient']      = 'Recipient.s';

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 01
+ * @version     PHPBoost 6.0 - last update: 2021 07 04
  * @since       PHPBoost 5.2 - 2020 03 09
 */
 
@@ -14,6 +14,8 @@ class HomeLandingModuleUpdateVersion extends ModuleUpdateVersion
 		parent::__construct('HomeLanding');
 
 		self::$delete_old_files_list = array(
+			'/lang/english/config.php',
+			'/lang/french/config.php',
 			'/templates/pagecontent/onepage.tpl',
 			'/templates/pagecontent/articles.tpl',
 			'/templates/pagecontent/articles-cat.tpl',

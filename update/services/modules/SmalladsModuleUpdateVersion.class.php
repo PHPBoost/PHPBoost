@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 30
+ * @version     PHPBoost 6.0 - last update: 2021 07 04
  * @since       PHPBoost 5.1 - 2018 09 20
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -26,7 +26,11 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 			'/controllers/SmalladsDisplayTagController.class.php',
 			'/controllers/SmalladsDisplayUsageTermsController.class.php',
 			'/fields/SmalladsFormFieldSelectSources.class.php',
+			'/lang/english/config.php',
+			'/lang/english/currencies.php',
 			'/lang/english/smallads_english.php',
+			'/lang/french/config.php',
+			'/lang/french/currencies.php',
 			'/lang/french/smallads_french.php',
 			'/phpboost/SmalladsComments.class.php',
 			'/phpboost/SmalladsLastItemsMiniMenu.class.php',
