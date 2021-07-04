@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2014 12 22
+ * @version     PHPBoost 6.0 - last update: 2021 07 04
  * @since       PHPBoost 3.0 - 2011 03 13
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldConstraintAntiFlood extends AbstractFormFieldConstraint
@@ -34,7 +35,7 @@ class FormFieldConstraintAntiFlood extends AbstractFormFieldConstraint
 
 		if (empty($error_message))
 		{
-			$error_message = LangLoader::get_message('e_flood', 'errors');
+			$error_message = LangLoader::get_message('warning.flood', 'warning-lang');
 		}
 
 		$this->set_validation_error_message($error_message);

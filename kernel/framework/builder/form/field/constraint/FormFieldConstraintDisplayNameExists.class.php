@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 02 11
+ * @version     PHPBoost 6.0 - last update: 2021 07 04
  * @since       PHPBoost 4.1 - 2015 07 12
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldConstraintDisplayNameExists extends AbstractFormFieldConstraint
@@ -23,7 +24,7 @@ class FormFieldConstraintDisplayNameExists extends AbstractFormFieldConstraint
 
 		if (empty($error_message))
 		{
-			$error_message = LangLoader::get_message('e_display_name_auth', 'errors');
+			$error_message = LangLoader::get_message('warning.display.name.auth', 'warning-lang');
 		}
 		$this->set_validation_error_message($error_message);
 		$this->error_message = TextHelper::to_js_string($error_message);
