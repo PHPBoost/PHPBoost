@@ -4,7 +4,7 @@
  * @license     https://www.opensource.org/licenses/mit-license.php
  * @author      Jerry Low
  * @link        https://github.com/jerrylow/basictable
- * @version     PHPBoost 6.0 - last update: 2020 02 19
+ * @version     PHPBoost 6.0 - last update: 2021 07 04
  * @since       PHPBoost 5.0 - 2016 03 30
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  *
@@ -82,7 +82,8 @@
             }
 
             var $heading = headings[j][cellIndex];
-            headingText += $heading.text();
+            if(typeof heading !== 'undefined')
+                headingText += $heading.text();
           }
 
           $cell.attr('data-th', headingText);
