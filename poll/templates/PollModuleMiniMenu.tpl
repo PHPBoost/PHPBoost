@@ -12,7 +12,7 @@
 				<ul>
 					# START polls_map #
 						<li>
-							<a href="{polls_map.U_ITEM}">
+							<a class="offload" href="{polls_map.U_ITEM}">
 								<span>{polls_map.TITLE}</span>
 							</a>
 						</li>
@@ -119,6 +119,6 @@
 		# ENDIF #
 	# ENDIF #
 	<div class="cell-footer align-center">
-		<a class="button small" href="${relative_url(ModulesUrlBuilder::home('poll'))}">{@poll.mini.more}</a>
+		<a class="button small offload" href="${relative_url(ModulesUrlBuilder::home('poll'))}">{@poll.mini.more}</a>
 	</div>
 </div>
