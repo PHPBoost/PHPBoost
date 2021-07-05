@@ -287,10 +287,11 @@ function bbcode_wikipedia(field)
 	var word = document.getElementById('bb_wikipedia_word' + field).value,
 		encoded_word = '',
 		lang = document.getElementById('bb_wikipedia_lang' + field).value,
-		insert_lang = (lang != '' && lang != null) ? ' lang="' + lang + '"' : '',
+		cbLang = document.getElementById('bb_wikipedia_lang_cb' + field),
+		insert_lang = cbLang.checked ? ((lang != '' && lang != null) ? ' lang="' + lang + '"' : '') : '',
 		insert_word = (word != '' && word != null) ? word : '',
 		insert_page = '';
-
+		
 	if (word != '' && word != null) {
 		encoded_word = url_encode_rewrite(word);
 		if (encoded_word != word) {

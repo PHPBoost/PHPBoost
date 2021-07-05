@@ -632,6 +632,18 @@
 							</div>
 						</div>
 						<div class="cell-form">
+							<label class="cell-label" for="bb_wikipedia_lang_cb{FIELD}">
+								{@bbcode.wikipedia.add.lang}
+								<span class="field-description">{@H|bbcode.wikipedia.add.lang.clue}</span>
+							</label>
+							<div class="cell-input">
+								<label class="checkbox" for="">
+									<input class="checkbox-revealer" id="bb_wikipedia_lang_cb{FIELD}" type="checkbox" name="bb_anchor_url{FIELD}" />
+									<span>&nbsp;<span class="sr-only">{@common.select}</span></span>
+								</label>
+							</div>
+						</div>
+						<div class="cell-form cell-hidden hidden">
 							<label for="bb_wikipedia_lang{FIELD}" class="cell-label">{@bbcode.wikipedia.lang}</label>
 							<div class="cell-input">
 								<select id="bb_wikipedia_lang{FIELD}">

@@ -225,7 +225,7 @@ class BBCodeParser extends ContentFormattingParser
 			'url1' => '<a class="offload" href="$1">$1</a>',
 			'url2' => '<a class="offload" href="$1">$6</a>',
 			'url3' => '<a class="offload" href="$1">$1</a>',
-			'url4' => '$1<a class="offload" href="$2">$2</a>',
+			'url4' => '$1<a class="offload" href="$2">$2</a><',
 			'url5' => '$1<a class="offload" href="$2">$2</a> ',
 			'url6' => '$1(<a class="offload" href="$2">$2</a>) ',
 			'url7' => '$1(<a class="offload" href="$2">$2</a> ) ',

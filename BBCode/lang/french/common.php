@@ -93,6 +93,8 @@ $lang['bbcode.mail.label'] = 'Texte de la balise';
 
 $lang['bbcode.wikipedia'] = 'Lien wikipedia';
 $lang['bbcode.wikipedia.word'] = 'Mot';
+$lang['bbcode.wikipedia.add.lang'] = 'Définir une langue dans le lien';
+$lang['bbcode.wikipedia.add.lang.clue'] = 'Sinon <strong>fr</strong> est ajouté automatiquement';
 $lang['bbcode.wikipedia.lang'] = 'Langue';
 
 $lang['bbcode.feed'] = 'Flux RSS';

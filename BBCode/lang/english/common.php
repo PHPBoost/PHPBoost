@@ -92,6 +92,8 @@ $lang['bbcode.mail.label'] = 'Mail label';
 
 $lang['bbcode.wikipedia'] = 'Wikipedia link';
 $lang['bbcode.wikipedia.word'] = 'Word';
+$lang['bbcode.wikipedia.add.lang'] = 'Define a language in the link';
+$lang['bbcode.wikipedia.add.lang.clue'] = 'If not <strong>en</strong> is automaticaly added';
 $lang['bbcode.wikipedia.lang'] = 'Language';
 
 $lang['bbcode.feed'] = 'RSS flux';
