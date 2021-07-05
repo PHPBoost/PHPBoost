@@ -48,7 +48,7 @@ $lang['warning.captcha.is.default']       = 'Le captcha que vous souhaitez dési
 $lang['warning.captcha.last.installed']   = 'Dernier captcha, vous ne pouvez pas le supprimer ou le désactiver. Veuillez d\'abord en installer un autre.';
 
 // Content
-$lang['warning.locked.content.description'] = 'L\'élément est actuellement ouvert par :user_display_name, vous ne pouvez pas y accéder, réessayez plus tard.';
+$lang['warning.locked.content.description']  = 'L\'élément est actuellement ouvert par :user_display_name, vous ne pouvez pas y accéder, réessayez plus tard.';
 $lang['warning.locked.content.another_user'] = 'un autre utilisateur';
 
 // Contributions

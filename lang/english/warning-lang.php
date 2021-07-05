@@ -44,11 +44,11 @@ $lang['warning.bbcode.is.teaser']    = 'The following content, the beginning of 
 
 // Captcha
 $lang['warning.captcha.validation.error'] = 'The visual confirmation field has not been properly filled!';
-$lang['warning.captcha.is.default'] = 'The captcha you want to uninstall or disable is set on your site, you must select another captcha in the content management first.';
-$lang['warning.captcha.last.installed'] = 'Last captcha, you can not delete or disable it. Please install another one first.';
+$lang['warning.captcha.is.default']       = 'The captcha you want to uninstall or disable is set on your site, you must select another captcha in the content management first.';
+$lang['warning.captcha.last.installed']   = 'Last captcha, you can not delete or disable it. Please install another one first.';
 
 // Content
-$lang['warning.locked.content.description'] = 'The item is currently open by :user_display_name, you can not access it, try again later.';
+$lang['warning.locked.content.description']  = 'The item is currently open by :user_display_name, you can not access it, try again later.';
 $lang['warning.locked.content.another.user'] = 'another user';
 
 // Contributions
