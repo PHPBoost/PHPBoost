@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 07 05
  * @since       PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -371,18 +371,17 @@ class TinyMCEParser extends ContentFormattingParser
 		if (!in_array('url', $this->forbidden_tags))
 		{
 			array_push($array_preg, '`&lt;a href="(' . Url::get_wellformness_regex() . ')"&gt;(.+)&lt;/a&gt;`suU');
-			array_push($array_preg_replace, '<a href="$1">$6</a>');
-			array_push($array_preg, '`&lt;a(?: title="([^"]+)?")? href="(' . Url::get_wellformness_regex() . ')"&gt;(.+)&lt;/a&gt;`suU');
-			array_push($array_preg_replace, '<a href="$2">$7</a>');
-			array_push($array_preg, '`&lt;a(?: title="")? href="(' . Url::get_wellformness_regex() . ')"&gt;(.+)&lt;/a&gt;`suU');
-			array_push($array_preg_replace, '<a href="$1">$6</a>');
+			array_push($array_preg_replace, '<a class="offload" href="$1">$6</a>');
+			array_push($array_preg, '`&lt;a class="offload"(?: aria-label="([^"]+)?")? href="(' . Url::get_wellformness_regex() . ')"&gt;(.+)&lt;/a&gt;`suU');
+			array_push($array_preg_replace, '<a class="offload" href="$2">$7</a>');
+			array_push($array_preg, '`&lt;a class="offload"(?: aria-label="")? href="(' . Url::get_wellformness_regex() . ')"&gt;(.+)&lt;/a&gt;`suU');
+			array_push($array_preg_replace, '<a class="offload" href="$1">$6</a>');
 		}
 		//Link tag with target
 		if (!in_array('url', $this->forbidden_tags))
 		{
-
-			array_push($array_preg, '`&lt;a(?: title="([^"]+)?")? href="(' . Url::get_wellformness_regex() . ')" target="_blank"&gt;(.+)&lt;/a&gt;`suU');
-			array_push($array_preg_replace, '<a href="$2" target="_blank">$7</a>');
+			array_push($array_preg, '`&lt;a class="offload"(?: aria-label="([^"]+)?")? href="(' . Url::get_wellformness_regex() . ')" target="_blank"&gt;(.+)&lt;/a&gt;`suU');
+			array_push($array_preg_replace, '<a class="offload" href="$2" target="_blank">$7</a>');
 		}
 		//Sub tag
 		if (!in_array('sub', $this->forbidden_tags))
@@ -676,13 +675,13 @@ class TinyMCEParser extends ContentFormattingParser
 			'movie2'    => '[[MEDIA]]insertMoviePlayer(\'$4\', $1, $2, \'$3\');[[/MEDIA]]',
 			'sound'     => "[[MEDIA]]insertSoundPlayer('$1');[[/MEDIA]]",
 			'math'      => '[[MATH]]$1[[/MATH]]',
-			'url1'      => '<a href="$1">$1</a>',
-			'url2'      => '<a href="$1">$6</a>',
-			'url3'      => '<a href="$1">$1</a>',
-			'url4'      => '$1<a href="$2">$2</a><',
-			'url5'      => '$1<a href="$2">$2</a> ',
-			'url6'      => '$1(<a href="$2">$2</a>) ',
-			'url7'      => '$1(<a href="$2">$2</a> ) ',
+			'url1'      => '<a class="offload" href="$1">$1</a>',
+			'url2'      => '<a class="offload" href="$1">$6</a>',
+			'url3'      => '<a class="offload" href="$1">$1</a>',
+			'url4'      => '$1<a class="offload" href="$2">$2</a><',
+			'url5'      => '$1<a class="offload" href="$2">$2</a> ',
+			'url6'      => '$1(<a class="offload" href="$2">$2</a>) ',
+			'url7'      => '$1(<a class="offload" href="$2">$2</a> ) ',
 			'mail'      => "$1<a href=\"mailto:$2\">$2</a>$3",
 			'lightbox'  => '<a href="$1" data-lightbox="formatter" class="formatter-lightbox">$6</a>',
 			'figure'    => '<figure>$2<figcaption>$1</figcation></figure>',

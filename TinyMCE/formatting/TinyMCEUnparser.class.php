@@ -8,7 +8,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 07 05
  * @since       PHPBoost 2.0 - 2008 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -149,9 +149,9 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			'`<th(?: class="([^"]+)?")?></th>`isuU'
 			);
 			$array_preg_replace = array(
-			"<a id=\"$1\"></a>",
-			"<a id=\"$1\"></a>",
-			"<a title=\"$1\" name=\"$1\">$2</a>",
+			"<a class=\"offload\" id=\"$1\"></a>",
+			"<a class=\"offload\" id=\"$1\"></a>",
+			"<a class=\"offload\" aria-label=\"$1\" name=\"$1\">$2</a>",
 			"<h1>$2</h1>",
 			"<h1>$2</h1>",
 			"<h2>$2</h2>",
@@ -318,7 +318,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		}
 
 		//Liens Wikipédia
-		$this->content = preg_replace_callback('`<a href="https?://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia-link">(.*)</a>`suU', array($this, 'unparse_wikipedia_tag'), $this->content);
+		$this->content = preg_replace_callback('`<a href="https?://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia-link offload">(.*)</a>`suU', array($this, 'unparse_wikipedia_tag'), $this->content);
 
 		//Div
 		while (preg_match('`<div id="([^"]*)" class="([^"]*)" style="([^"]*)">(.+)</div>`suU', $this->content))

@@ -344,7 +344,7 @@ abstract class ContentFormattingParser extends AbstractParser
 		$lang = (!empty($matches[2])) ? $matches[2] : LangLoader::get_message('editor.wikipedia.subdomain', 'editor-lang');
 		$page_url = !empty($matches[1]) ? $matches[1] : $matches[3];
 
-		return '<a href="https://' . $lang . '.wikipedia.org/wiki/' . $page_url . '" class="wikipedia-link">' . $matches[3] . '</a>';
+		return '<a href="https://' . $lang . '.wikipedia.org/wiki/' . $page_url . '" class="wikipedia-link offload">' . $matches[3] . '</a>';
 	}
 }
 ?>

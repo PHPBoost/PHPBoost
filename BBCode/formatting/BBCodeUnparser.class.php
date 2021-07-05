@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 17
+ * @version     PHPBoost 6.0 - last update: 2021 07 05
  * @since       PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -89,7 +89,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			'`<abbr class="formatter-abbr">(.*)</abbr>`isuU',
 			'`<abbr title="([^"]+)?" class="formatter-abbr">(.*)</abbr>`isuU',
 			'`<a href="mailto:(.*)">(.*)</a>`isuU',
-			'`<a(?: aria-label="([^"]+)?")? href="([^"]+)"(?: target="([^"]+)")?>(.*)</a>`isuU',
+			'`<a class="offload"(?: aria-label="([^"]+)?")? href="([^"]+)"(?: target="([^"]+)")?>(.*)</a>`isuU',
 			'`<h1 class="formatter-title">(.*)</h1>`isuU',
 			'`<h2 class="formatter-title">(.*)</h2>`isuU',
 			'`<h3 class="formatter-title">(.*)</h3>`isuU',
@@ -209,7 +209,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		}
 
 		//Wikipedia link
-		$this->content = preg_replace_callback('`<a href="https?://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia-link">(.*)</a>`suU', array($this, 'unparse_wikipedia_tag'), $this->content);
+		$this->content = preg_replace_callback('`<a href="https?://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia-link offload">(.*)</a>`suU', array($this, 'unparse_wikipedia_tag'), $this->content);
 
 		//Indentation
 		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`suU', '[indent]$1[/indent]', $this->content);
