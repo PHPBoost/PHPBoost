@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 28
+ * @version     PHPBoost 6.0 - last update: 2021 07 05
  * @since       PHPBoost 4.1 - 2014 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -103,10 +103,6 @@ $lang['bbcode.feed.number'] = 'Nombre d\'éléments à afficher';
 $lang['bbcode.anchor'] = 'Ancre vers un endroit de la page';
 $lang['bbcode.anchor.name'] = 'Nom de l\'ancre';
 $lang['bbcode.anchor.url'] = 'Ajouter le lien vers l\'ancre';
-$lang['bbcode.anchor.url.desc'] = '
-    il faudra ajouter l\'adresse de l\'item devant le #, après validation. <br />
-    exemple : [url=/news/1-categorie/1-article#nom-de-l-ancre]lien vers l\'ancre[/url]
-';
 
 $lang['bbcode.sound'] = 'Son';
 $lang['bbcode.sound.url'] = 'Adresse du fichier audio';

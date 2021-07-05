@@ -2,7 +2,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 23
+ * @version     PHPBoost 6.0 - last update: 2021 07 05
  * @since       PHPBoost 1.2 - 2005 08 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -324,7 +324,7 @@ function bbcode_anchor(field)
 	var name = document.getElementById('bb_anchor_id' + field).value,
 		url = document.getElementById('bb_anchor_url' + field).checked,
 		insert_name = (name != '' && name != null) ? '=' + url_encode_rewrite(name) : '',
-		insert_url = url ? '[url=#' + url_encode_rewrite(name) + '][/url]\n' : '';
+		insert_url = url ? '[url=/scrollto#' + url_encode_rewrite(name) + '][/url]\n' : '';
 
 	insertbbcode(insert_url + '[anchor' + insert_name + ']', '[/anchor]', field);
 }

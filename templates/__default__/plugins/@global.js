@@ -587,3 +587,17 @@ document.querySelectorAll('.copy-link-to-clipboard').forEach( el => {
 			}
 		});
 	});
+
+// Recognise an anchor link then scroll to
+	jQuery('a[href*="/scrollto#"]').each(function() {
+		if(jQuery(this).hasClass('offload'))
+			jQuery(this).removeClass('offload');
+		var getLink = jQuery(this).attr('href'),
+			anchorSplit = getLink.split('#'),
+			realAnchor = '#' + anchorSplit[1];
+		jQuery(this).on('click', function(e) {
+			e.preventDefault();
+			history.pushState('', '', realAnchor);
+			jQuery('html, body').animate({scrollTop:jQuery(realAnchor).offset().top}, 'slow');
+		})
+	});

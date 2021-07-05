@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 28
+ * @version     PHPBoost 6.0 - last update: 2021 07 05
  * @since       PHPBoost 4.1 - 2014 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -102,10 +102,6 @@ $lang['bbcode.feed.number'] = 'Items number to display';
 $lang['bbcode.anchor'] = 'Anchor somewhere in the page [anchor=x]text[/anchor]';
 $lang['bbcode.anchor.name'] = 'Anchor name (format : anchor-name)?';
 $lang['bbcode.anchor.url'] = 'Add the link to the anchor';
-$lang['bbcode.anchor.url.desc'] = '
-    After validation, edit the item to complete the link url <br />
-    eg: [url=/news/1-category/1-article#anchor-name]Link to anchor[/url]
-';
 
 $lang['bbcode.sound'] = 'Sound';
 $lang['bbcode.sound.url'] = 'Audio file url';

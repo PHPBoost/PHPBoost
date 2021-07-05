@@ -706,14 +706,9 @@
 							<label class="cell-label" for="bb_anchor_url{FIELD}">{@bbcode.anchor.url}</label>
 							<div class="cell-input">
 								<label class="checkbox" for="">
-									<input class="checkbox-revealer" id="bb_anchor_url{FIELD}" type="checkbox" name="bb_anchor_url{FIELD}" />
+									<input id="bb_anchor_url{FIELD}" type="checkbox" name="bb_anchor_url{FIELD}" />
 									<span>&nbsp;<span class="sr-only">{@common.select}</span></span>
 								</label>
-							</div>
-						</div>
-						<div class="cell-body cell-hidden hidden">
-							<div class="cell-content">
-								<span class="message-helper bgc notice">{@H|bbcode.anchor.url.desc}</span>
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
