@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 29
+ * @version     PHPBoost 6.0 - last update: 2021 07 05
  * @since       PHPBoost 5.2 - 2019 11 24
 */
 
@@ -11,42 +11,42 @@
 #                     French                       #
 ####################################################
 $lang = array(
+    'de'  => 'Allemand',
+    'en'  => 'Anglais',
     'ar'  => 'Arabe',
+    'hy'  => 'Arménien',
     'az'  => 'Azéri',
+    'eu'  => 'Basque',
     'be'  => 'Bélarusse',
     'bu'  => 'Bulgare',
     'ca'  => 'Catalan',
-    'ce'  => 'Tchétchène',
-    'cs'  => 'Tchèque',
     'ceb' => 'Cebuano',
+    'zh'  => 'Chinois',
+    'hr'  => 'Croate',
     'da'  => 'Danois',
-    'de'  => 'Allemand',
-    'el'  => 'Grec',
-    'en'  => 'Anglais',
-    'eo'  => 'Espéranto',
     'es'  => 'Espagnol',
+    'eo'  => 'Espéranto',
     'et'  => 'Estonien',
-    'eu'  => 'Basque',
-    'fa'  => 'Persan',
     'fi'  => 'Finlandais',
     'fr'  => 'Français',
     'gl'  => 'Galicien',
+    'ka'  => 'Géorgien',
+    'el'  => 'Grec',
     'he'  => 'Hebreu',
     'hi'  => 'Hindi',
-    'hr'  => 'Croate',
+    'nl'  => 'Hollandais',
     'hu'  => 'Hongrois',
-    'hy'  => 'Arménien',
     'id'  => 'Indonésien',
     'it'  => 'Italien',
     'ja'  => 'Japonais',
-    'ka'  => 'Géorgien',
     'kk'  => 'Kazakh',
     'ko'  => 'Koréen',
     'lt'  => 'Lituanien',
     'ms'  => 'Malais',
-    'nl'  => 'Hollandais',
     'nn'  => 'Norvegien (nn)',
     'no'  => 'Norvegien (no)',
+    'ur'  => 'Ourdou',
+    'fa'  => 'Persan',
     'pl'  => 'Polonais',
     'pt'  => 'Portugais',
     'ro'  => 'Roumain',
@@ -56,12 +56,12 @@ $lang = array(
     'sl'  => 'Slovène',
     'sr'  => 'Serbe',
     'sv'  => 'Suédois',
+    'ce'  => 'Tchétchène',
+    'cs'  => 'Tchèque',
     'th'  => 'Thai',
     'tr'  => 'Turc',
     'uk'  => 'Ukrainien',
-    'ur'  => 'Ourdou',
     'vi'  => 'Vietnamien',
     'war' => 'Winaray',
-    'zh'  => 'Chinois',
 );
 ?>
