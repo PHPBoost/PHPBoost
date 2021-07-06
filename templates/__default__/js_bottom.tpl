@@ -75,25 +75,20 @@
 
 // sizes of .cell-thumbnail
 	jQuery('.cell-thumbnail.cell-landscape').each(function() {
-		var widthRef = $(this).innerWidth();
-		$(this).outerHeight(widthRef * 9 / 16);
+		var widthRef = jQuery(this).innerWidth();
+		jQuery(this).outerHeight(widthRef * 9 / 16);
 	});
 	jQuery('.cell-thumbnail.cell-square').each(function() {
-		var widthRef = $(this).innerWidth();
-		$(this).outerHeight(widthRef);
+		var widthRef = jQuery(this).innerWidth();
+		jQuery(this).outerHeight(widthRef);
 	});
 	jQuery('.cell-thumbnail.cell-portrait').each(function() {
-		var widthRef = $(this).innerWidth();
-		$(this).outerHeight(widthRef * 16 / 9);
-	});
-
-// Display the page only when it's loaded
-	jQuery(window).ready(function() {
-  		jQuery('.content-preloader').animate({opacity: 1}, 300);
+		var widthRef = jQuery(this).innerWidth();
+		jQuery(this).outerHeight(widthRef * 16 / 9);
 	});
 
 // Autoresize Textareas
-	// $(document).autoboxOn('textarea:not(.lined textarea)');
+	// jQuery(document).autoboxOn('textarea:not(.lined textarea)');
 
 // Add a colored square to the element and color its borders if it has
  	jQuery('[data-color-surround]').colorSurround();
@@ -115,6 +110,11 @@
 				1024: { items: 3},
 				1366: { items: 4}
 			}
+	});
+
+// Display the page only when it's loaded
+	jQuery(window).ready(function() {
+  		jQuery('.content-preloader').animate({opacity: 1}, 300);
 	});
 </script>
 
