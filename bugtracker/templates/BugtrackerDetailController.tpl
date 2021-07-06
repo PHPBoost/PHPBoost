@@ -1,18 +1,18 @@
 <div class="more">
-	<span class="pinned">{@common.by} # IF C_AUTHOR_EXISTS #<a href="{U_AUTHOR_PROFILE}" class="{AUTHOR_LEVEL_CLASS}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR}</a># ELSE #{AUTHOR}# ENDIF #</span>
+	<span class="pinned">{@common.by} # IF C_AUTHOR_EXISTS #<a href="{U_AUTHOR_PROFILE}" class="{AUTHOR_LEVEL_CLASS} offload" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR}</a># ELSE #{AUTHOR}# ENDIF #</span>
 	<span class="pinned">{@common.on.date} {SUBMIT_DATE_FULL}</span>
 </div>
 <nav id="cssmenu-bugtrackeractions" class="cssmenu cssmenu-group">
 	<ul>
 		# IF C_CHANGE_STATUS #
-			<li><a href="{U_CHANGE_STATUS}" class="cssmenu-title"><i class="fa fa-fw fa-cogs" aria-hidden="true"></i><span>{@bugtracker.change.status}</span></a></li>
+			<li><a href="{U_CHANGE_STATUS}" class="cssmenu-title offload"><i class="fa fa-fw fa-cogs" aria-hidden="true"></i><span>{@bugtracker.change.status}</span></a></li>
 		# ENDIF #
-		<li><a href="{U_HISTORY}" class="cssmenu-title"><i class="fa fa-fw fa-history" aria-hidden="true"></i> <span>{@bugtracker.history}</span></a></li>
+		<li><a href="{U_HISTORY}" class="cssmenu-title offload"><i class="fa fa-fw fa-history" aria-hidden="true"></i> <span>{@bugtracker.history}</span></a></li>
 		# IF C_EDIT_BUG #
-			<li><a href="{U_EDIT}" aria-label="{@common.edit}" class="cssmenu-title cssmenu-title-icon"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a></li>
+			<li><a href="{U_EDIT}" aria-label="{@common.edit}" class="cssmenu-title cssmenu-title-icon offload"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a></li>
 		# ENDIF #
 		# IF C_DELETE_BUG #
-			<li><a href="{U_DELETE}" aria-label="{@common.delete}" class="cssmenu-title cssmenu-title-icon"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a></li>
+			<li><a href="{U_DELETE}" aria-label="{@common.delete}" class="cssmenu-title cssmenu-title-icon offload"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a></li>
 		# ENDIF #
 	</ul>
 </nav>
@@ -48,7 +48,7 @@
 				</li>
 				<li class="li-stretch">
 					<span>{@bugtracker.assigned}</span>
-					<span># IF C_USER_ASSIGNED #<a href="{LINK_USER_ASSIGNED_PROFILE}" class="{USER_ASSIGNED_LEVEL_CLASS}" # IF C_USER_ASSIGNED_GROUP_COLOR # style="color:{USER_ASSIGNED_GROUP_COLOR}" # ENDIF #>{USER_ASSIGNED}</a># ELSE #{@common.nobody}# ENDIF #</span>
+					<span># IF C_USER_ASSIGNED #<a href="{LINK_USER_ASSIGNED_PROFILE}" class="{USER_ASSIGNED_LEVEL_CLASS} offload" # IF C_USER_ASSIGNED_GROUP_COLOR # style="color:{USER_ASSIGNED_GROUP_COLOR}" # ENDIF #>{USER_ASSIGNED}</a># ELSE #{@common.nobody}# ENDIF #</span>
 
 				</li>
 				# IF C_FIXED_IN #

@@ -64,7 +64,7 @@
         						{fixed_version.RELEASE_DATE}
         					</td>
         					<td>
-        						# IF C_ROADMAP_ENABLED #<a href="{fixed_version.LINK_VERSION_ROADMAP}">{fixed_version.NUMBER}</a># ELSE #{fixed_version.NUMBER}# ENDIF #
+        						# IF C_ROADMAP_ENABLED #<a class="offload" href="{fixed_version.LINK_VERSION_ROADMAP}">{fixed_version.NUMBER}</a># ELSE #{fixed_version.NUMBER}# ENDIF #
         					</td>
         				</tr>
     				# END fixed_version #
@@ -103,7 +103,7 @@
     						{top_poster.ID}
     					</td>
     					<td>
-    						# IF top_poster.AUTHOR #<a href="{top_poster.LINK_AUTHOR_PROFILE}" class="{top_poster.AUTHOR_LEVEL_CLASS}" # IF top_poster.C_AUTHOR_GROUP_COLOR # style="color:{top_poster.AUTHOR_GROUP_COLOR}" # ENDIF #>{top_poster.AUTHOR}</a># ELSE #${LangLoader::get_message('user.visitor', 'user-lang')}# ENDIF #
+    						# IF top_poster.AUTHOR #<a href="{top_poster.LINK_AUTHOR_PROFILE}" class="{top_poster.AUTHOR_LEVEL_CLASS} offload" # IF top_poster.C_AUTHOR_GROUP_COLOR # style="color:{top_poster.AUTHOR_GROUP_COLOR}" # ENDIF #>{top_poster.AUTHOR}</a># ELSE #${LangLoader::get_message('user.visitor', 'user-lang')}# ENDIF #
     					</td>
     					<td>
     						{top_poster.USER_BUGS}

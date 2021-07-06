@@ -8,20 +8,20 @@
 				<tr>
 					<th>
 						<span class="html-table-header-sortable">
-							<a href="{LINK_BUG_ID_TOP}" aria-label="{@common.sort.asc}"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
+							<a class="offload" href="{LINK_BUG_ID_TOP}" aria-label="{@common.sort.asc}"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
 						</span>
 						{@common.id}
 						<span class="html-table-header-sortable">
-							<a href="{LINK_BUG_ID_BOTTOM}" aria-label="{@common.sort.desc}"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
+							<a class="offload" href="{LINK_BUG_ID_BOTTOM}" aria-label="{@common.sort.desc}"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
 						</span>
 					</th>
-					<th class="col-33">
+					<th>
 						<span class="html-table-header-sortable">
-							<a href="{LINK_BUG_TITLE_TOP}" aria-label="{@common.sort.asc}"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
+							<a class="offload" href="{LINK_BUG_TITLE_TOP}" aria-label="{@common.sort.asc}"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
 						</span>
 						{@common.title}
 						<span class="html-table-header-sortable">
-							<a href="{LINK_BUG_TITLE_BOTTOM}" aria-label="{@common.sort.desc}"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
+							<a class="offload" href="{LINK_BUG_TITLE_BOTTOM}" aria-label="{@common.sort.desc}"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
 						</span>
 					</th>
 					# IF C_DISPLAY_TYPE_COLUMN #
@@ -46,20 +46,20 @@
 					# ENDIF #
 					<th>
 						<span class="html-table-header-sortable">
-							<a href="{LINK_BUG_STATUS_TOP}" aria-label="{@common.sort.asc}"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
+							<a class="offload" href="{LINK_BUG_STATUS_TOP}" aria-label="{@common.sort.asc}"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
 						</span>
 						{@common.informations}
 						<span class="html-table-header-sortable">
-							<a href="{LINK_BUG_STATUS_BOTTOM}" aria-label="{@common.sort.desc}"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
+							<a class="offload" href="{LINK_BUG_STATUS_BOTTOM}" aria-label="{@common.sort.desc}"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
 						</span>
 					</th>
 					<th>
 						<span class="html-table-header-sortable">
-							<a href="{LINK_BUG_DATE_TOP}" aria-label="{@common.sort.asc}"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
+							<a class="offload" href="{LINK_BUG_DATE_TOP}" aria-label="{@common.sort.asc}"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
 						</span>
 						# IF C_UNSOLVED #{@bugtracker.detected.date}# ELSE #{@bugtracker.solved.date}# ENDIF #
 						<span class="html-table-header-sortable">
-							<a href="{LINK_BUG_DATE_BOTTOM}" aria-label="{@common.sort.desc}"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
+							<a class="offload" href="{LINK_BUG_DATE_BOTTOM}" aria-label="{@common.sort.desc}"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
 						</span>
 					</th>
 					# IF C_IS_ADMIN #
@@ -73,7 +73,7 @@
 				# START bug #
 				<tr>
 					<td# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
-						<a href="{bug.U_LINK}">\#{bug.ID}</a>
+						<a class="offload" href="{bug.U_LINK}">\#{bug.ID}</a>
 					</td>
 					<td class="align-left"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
 						{bug.TITLE}
@@ -106,21 +106,21 @@
 								<div class="progressbar" style="width:{bug.PROGRESS}%"></div>
 							</div>
 						# ENDIF #
-						<a href="{bug.U_COMMENTS}">{bug.COMMENTS_NUMBER} # IF bug.C_MORE_THAN_ONE_COMMENT #{@common.comments}# ELSE #${@common.comment}# ENDIF #</a>
+						<a class="offload" href="{bug.U_COMMENTS}">{bug.COMMENTS_NUMBER} # IF bug.C_MORE_THAN_ONE_COMMENT #{@common.comments}# ELSE #${@common.comment}# ENDIF #</a>
 					</td>
 					<td # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
 						# IF C_UNSOLVED #{bug.SUBMIT_DATE_FULL}# ELSE ## IF bug.C_FIX_DATE #{bug.FIX_DATE_FULL}# ELSE #{@bugtracker.not.solved}# ENDIF ## ENDIF #
 						<div class="spacer"></div>
-						# IF C_DISPLAY_AUTHOR #{@common.by} # IF bug.C_AUTHOR_EXISTS #<a href="{bug.U_AUTHOR_PROFILE}" class="{bug.AUTHOR_LEVEL_CLASS}" # IF bug.C_AUTHOR_GROUP_COLOR # style="color:{bug.AUTHOR_GROUP_COLOR}" # ENDIF #>{bug.AUTHOR}</a># ELSE #{bug.AUTHOR}# ENDIF ## ENDIF #
+						# IF C_DISPLAY_AUTHOR #{@common.by} # IF bug.C_AUTHOR_EXISTS #<a<a href="{bug.U_AUTHOR_PROFILE}" class="{bug.AUTHOR_LEVEL_CLASS} offload" # IF bug.C_AUTHOR_GROUP_COLOR # style="color:{bug.AUTHOR_GROUP_COLOR}" # ENDIF #>{bug.AUTHOR}</a># ELSE #{bug.AUTHOR}# ENDIF ## ENDIF #
 					</td>
 					# IF C_IS_ADMIN #
-					<td class="bugtracker-actions" # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
-						<a href="{bug.U_CHANGE_STATUS}" aria-label="{@bugtracker.change.status}"><i class="fa fa-fw fa-cogs" aria-hidden="true"></i></a>
-						<a href="{bug.U_HISTORY}" aria-label="{@bugtracker.history}"><i class="fa fa-fw fa-history" aria-hidden="true"></i></a>
-						<div class="spacer"></div>
-						<a href="{bug.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
-						<a href="{bug.U_DELETE}" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
-					</td>
+						<td class="bugtracker-actions controls" # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
+							<a class="offload" href="{bug.U_CHANGE_STATUS}" aria-label="{@bugtracker.change.status}"><i class="fa fa-fw fa-cogs" aria-hidden="true"></i></a>
+							<a class="offload" href="{bug.U_HISTORY}" aria-label="{@bugtracker.history}"><i class="fa fa-fw fa-history" aria-hidden="true"></i></a>
+							<div class="spacer"></div>
+							<a href="{bug.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+							<a href="{bug.U_DELETE}" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+						</td>
 					# ENDIF #
 				</tr>
 				# END bug #

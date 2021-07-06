@@ -82,7 +82,7 @@
 				# ENDIF #
 				# IF C_DISPLAY_SAVE_BUTTON #
 					<td>
-						<a href="{LINK_FILTER_SAVE}" aria-label="{@labels.save_filters}"><i class="fa fa-fw fa-save" aria-hidden="true"></i></a>
+						<a class="offload" href="{LINK_FILTER_SAVE}" aria-label="{@labels.save_filters}"><i class="fa fa-fw fa-save" aria-hidden="true"></i></a>
 					</td>
 				# ENDIF #
 			</tr>
@@ -90,7 +90,7 @@
 				# START filters #
 					<tr id="filter{filters.ID}">
 						<td colspan="{FILTERS_NUMBER}" class="controls">
-							<a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
+							<a class="offload" href="{filters.LINK_FILTER}">{filters.FILTER}</a>
 							<a href="#" aria-label="{@common.delete}" onclick="delete_filter('{filters.ID}'); return false;"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
 						</td>
 					</tr>
