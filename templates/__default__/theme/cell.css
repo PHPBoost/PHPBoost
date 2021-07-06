@@ -28,7 +28,7 @@
 	border-color: transparent;
 }
 
-.cell .hidden { display: none; }
+.cell .hidden { display: none !important; }
 
 [class*="cell-"] + [class*="cell-"],
 legend + [class*="cell-"],
