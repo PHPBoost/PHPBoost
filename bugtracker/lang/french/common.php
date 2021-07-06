@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 09
+ * @version     PHPBoost 6.0 - last update: 2021 07 06
  * @since       PHPBoost 3.0 - 2012 11 09
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -25,6 +25,7 @@ $lang['bugtracker.stats']         = 'Statistiques';
 $lang['bugtracker.roadmap']       = 'Feuille de route';
 $lang['bugtracker.history']       = 'Historique du ticket';
 $lang['bugtracker.edit']          = 'Éditer le ticket';
+$lang['bugtracker.add']           = 'Ouvrir un ticket';
 $lang['bugtracker.detail']        = 'Ticket';
 $lang['bugtracker.change_status'] = 'Changer l\'état du ticket';
 
@@ -294,14 +295,14 @@ $lang['config.display_category_column'] = 'Afficher la colonne <b>Catégorie</b>
 $lang['config.display_priority_column'] = 'Afficher la colonne <b>Priorité</b> dans les tableaux';
 $lang['config.display_detected_in_column'] = 'Afficher la colonne <b>Détecté dans</b> dans les tableaux';
 
-//Autorisations
+// Authorizations
 $lang['config.auth.read'] = 'Autorisation d\'afficher la liste des tickets';
 $lang['config.auth.create'] = 'Autorisation de signaler un ticket';
 $lang['config.auth.create_advanced'] = 'Autorisation avancée pour signaler un ticket';
 $lang['config.auth.create_advanced_explain'] = 'Permet de choisir le niveau et la priorité du ticket';
 $lang['config.auth.moderate'] = 'Autorisation de modération des tickets';
 
-//Erreurs
+// Errors
 $lang['error.e_unexist_bug'] = 'Ce ticket n\'existe pas';
 $lang['error.e_unexist_parameter'] = 'Ce paramètre n\'existe pas';
 $lang['error.e_unexist_type'] = 'Ce type n\'existe pas';
@@ -315,7 +316,7 @@ $lang['error.e_already_fixed_bug'] = 'Ce ticket est déjà corrigé';
 $lang['error.e_already_pending_bug'] = 'Ce ticket est déjà en attente';
 $lang['error.e_status_not_changed'] = 'Veuillez changer l\'état du ticket';
 
-//Succès
+// Success
 $lang['success.add'] = 'Le ticket #:id a été ajouté';
 $lang['success.edit'] = 'Le ticket #:id a été modifié';
 $lang['success.new'] = 'Le ticket a été passé à l\'état <b>Nouveau</b>';
@@ -329,6 +330,6 @@ $lang['success.pending'] = 'Le ticket a été mis en attente';
 $lang['success.add.filter'] = 'Le filtre a été ajouté';
 $lang['success.add.details'] = '<p>Votre demande sera traitée dans les plus brefs délais. Un retour vous sera fait si nécessaire en commentaire (vous en recevrez également une copie dans votre messagerie privée).</p><p>Merci d\'avoir participé à la vie du site !</p>';
 
-//Warning
+// Warning
 $lang['warning.restrict_display_to_own_elements_enabled'] = 'Seuls les tickets que vous avez déclaré sont affichés dans la liste.';
 ?>

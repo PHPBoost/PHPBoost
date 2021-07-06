@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 09
+ * @version     PHPBoost 6.0 - last update: 2021 07 06
  * @since       PHPBoost 3.0 - 2012 11 09
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -18,18 +18,19 @@ $lang['bugtracker.config.module.title']         = 'Bugtracker module configurati
 $lang['bugtracker.authorizations.module.title'] = 'Bugtracker module authorizations';
 
 // Current page
-$lang['bugtracker.stats']         = 'Statistics';
-$lang['bugtracker.roadmap']       = 'Roadmap';
 $lang['bugtracker.solved']        = 'Solved tickets';
 $lang['bugtracker.unsolved']      = 'Unsolved tickets';
+$lang['bugtracker.stats']         = 'Statistics';
+$lang['bugtracker.roadmap']       = 'Roadmap';
 $lang['bugtracker.history']       = 'Ticket History';
 $lang['bugtracker.edit']          = 'Edit ticket';
+$lang['bugtracker.add']           = 'Open new ticket';
 $lang['bugtracker.detail']        = 'Ticket';
-$lang['bugtracker.change.status'] = 'Change ticket status';
+$lang['bugtracker.change_status'] = 'Change ticket status';
 
 // Labels
 $lang['bugtracker.add.item']      = 'Open new ticket';
-$lang['bugtracker.item.number']   = 'Tickets number';
+$lang['bugtracker.items.number']  = 'Tickets number';
 $lang['bugtracker.severity']      = 'Level';
 $lang['bugtracker.priority']      = 'Priority';
 $lang['bugtracker.assigned']      = 'Assigned to';
@@ -293,14 +294,14 @@ $lang['config.display_category_column'] = 'Display <b>Category</b> column in tab
 $lang['config.display_priority_column'] = 'Display <b>Priority</b> column in tables';
 $lang['config.display_detected_in_column'] = 'Display <b>Detected in</b> column in tables';
 
-//Authorizations
+// Authorizations
 $lang['config.auth.read'] = 'Permission to display the tickets list';
 $lang['config.auth.create'] = 'Permission to post a ticket';
 $lang['config.auth.create_advanced'] = 'Advanced permission to post a ticket';
 $lang['config.auth.create_advanced_explain'] = 'Permits to choose the severity and the priority of the ticket';
 $lang['config.auth.moderate'] = 'Permission to moderate the Bugtracker';
 
-//Errors
+// Errors
 $lang['error.e_unexist_bug'] = 'This ticket does not exist';
 $lang['error.e_unexist_parameter'] = 'This parameter does not exist';
 $lang['error.e_unexist_type'] = 'This type does not exist';
@@ -314,7 +315,7 @@ $lang['error.e_already_fixed_bug'] = 'This ticket is already fixed';
 $lang['error.e_already_pending_bug'] = 'This ticket is already pending';
 $lang['error.e_status_not_changed'] = 'The ticket status has not changed';
 
-//Success
+// Success
 $lang['success.add'] = 'The ticket #:id has been committed';
 $lang['success.edit'] = 'The ticket #:id has been updated';
 $lang['success.new'] = 'The ticket has been set to <b>New</b>';
@@ -328,6 +329,6 @@ $lang['success.pending'] = 'The ticket has been put on hold';
 $lang['success.add.filter'] = 'The filter has been added';
 $lang['success.add.details'] = '<p>Your request will be taken into account as soon as possible. Comments will be added if necessary (you will receive a copy in your private messages box).</p><p>Thank you for participating in the life of the site!</p>';
 
-//Warning
+// Warning
 $lang['warning.restrict_display_to_own_elements_enabled'] = 'Only your own reported tickets are displayed on this list.';
 ?>
