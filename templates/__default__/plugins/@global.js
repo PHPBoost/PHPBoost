@@ -6,7 +6,7 @@
 	}
 
 // BBCode block: Hide
-// Add the informations : icon to hide/text to reveal content
+	// Add the informations : icon to hide/text to reveal content
 	var add_icon_bbcodeblockhide = (callback) => {
 		if (document.readyState != "loading") callback();
 		else document.addEventListener("DOMContentLoaded", callback);
@@ -26,7 +26,7 @@
 				var content1 = document.createTextNode(L_HIDE_MESSAGE);
 	   			parent1.appendChild(content1);
 
-	   			el.insertBefore(parent1, el.childNodes[1]);
+	   			el.insertBefore(parent1, el.childNodes[1].nextSibling);
 
 				var parent2 = document.createElement("span");
 	   			parent2.setAttribute('id', "formatter-hide-close-button-" + i);
@@ -44,7 +44,7 @@
 		})
 	});
 
-// Hide/show content
+	// Hide/show content
 	function bb_hide(idcode, show, event)
 	{
 		var idcode = (typeof idcode !== 'undefined') ? idcode : 0;
@@ -55,7 +55,7 @@
 
 		elem.classList.toggle('formatter-show');
 
-		if (show == 1) elem.removeAttr('onClick');
+		if (show == 1) elem.removeAttribute('onClick');
 		else elem.setAttribute('onclick', "bb_hide(" + idcode + ", 1, event)");
 	}
 
