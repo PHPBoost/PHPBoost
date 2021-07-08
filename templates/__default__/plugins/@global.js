@@ -20,7 +20,7 @@
 				el.classList.remove('no-js');
 				el.setAttribute('onClick', "bb_hide(" + i + ", 1, event);");
 
-	   			var parent1 = document.createElement("span");
+	   			var parent1 = document.createElement("div");
 	   			parent1.setAttribute('id', "formatter-hide-message-" + i);
 	   			parent1.setAttribute('class', "formatter-hide-message");
 				var content1 = document.createTextNode(L_HIDE_MESSAGE);
@@ -28,7 +28,7 @@
 
 	   			el.insertBefore(parent1, el.childNodes[1].nextSibling);
 
-				var parent2 = document.createElement("span");
+				var parent2 = document.createElement("div");
 	   			parent2.setAttribute('id', "formatter-hide-close-button-" + i);
 	   			parent2.setAttribute('class', "formatter-hide-close-button pinned error");
 	   			parent2.setAttribute('aria-label', L_HIDE_HIDEBLOCK);
