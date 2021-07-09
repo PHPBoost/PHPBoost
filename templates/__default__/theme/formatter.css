@@ -79,7 +79,6 @@ h6.formatter-title { font-size: 2.0rem; margin-left: 6.472rem; }
 	font-size: 0.809em;
 	padding: 0.228em 0.456em;
 	width: 100%;
-	margin: 0 auto 0 auto;
 	cursor: pointer;
 	border-width: 1px;
 	border-style: solid;
@@ -92,7 +91,7 @@ h6.formatter-title { font-size: 2.0rem; margin-left: 6.472rem; }
 	padding: 0.228em 1em;
 	position: absolute;
 	display: none;
-	top: 1.618em;
+	top: -0.618em;
 	right: 0;
 	font-size: 0.8em;
 	font-style: italic;
