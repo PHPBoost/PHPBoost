@@ -317,24 +317,23 @@
 								</li>
 							# END msg.ext_fields #
 							# IF msg.C_USER_GROUPS #
-								<li class="li-stretch">
+								<li>
 									<span>{@user.groups} :</span>
 								</li>
-									# START msg.usergroups #
-										<li class="li-stretch">
-											<a href="{msg.usergroups.U_USERGROUP}" class="user-group group-{msg.usergroups.USERGROUP_ID} offload"# IF msg.usergroups.C_USERGROUP_COLOR # style="color: {msg.usergroups.USERGROUP_COLOR}"# ENDIF #>{msg.usergroups.USERGROUP_NAME}</a>
-											# IF msg.usergroups.C_IMG_USERGROUP #
-												<a href="{msg.usergroups.U_USERGROUP}" class="user-group user-group-img group-{msg.usergroups.USERGROUP_ID} offload"# IF msg.usergroups.C_USERGROUP_COLOR # style="color: {msg.usergroups.USERGROUP_COLOR}"# ENDIF #><img src="{PATH_TO_ROOT}/images/group/{msg.usergroups.U_IMG_USERGROUP}" alt="{msg.usergroups.USERGROUP_NAME}" /></a>
-											# ENDIF #
-										</li>
-									# END msg.usergroups #
-								</li>
+								# START msg.usergroups #
+									<li# IF msg.usergroups.C_IMG_USERGROUP # class="li-stretch"# ENDIF #>
+										<a href="{msg.usergroups.U_USERGROUP}" class="user-group group-{msg.usergroups.USERGROUP_ID} offload"# IF msg.usergroups.C_USERGROUP_COLOR # style="color: {msg.usergroups.USERGROUP_COLOR}"# ENDIF #>{msg.usergroups.USERGROUP_NAME}</a>
+										# IF msg.usergroups.C_IMG_USERGROUP #
+											<a href="{msg.usergroups.U_USERGROUP}" class="user-group user-group-img group-{msg.usergroups.USERGROUP_ID} offload"# IF msg.usergroups.C_USERGROUP_COLOR # style="color: {msg.usergroups.USERGROUP_COLOR}"# ENDIF #><img src="{PATH_TO_ROOT}/images/group/{msg.usergroups.U_IMG_USERGROUP}" alt="{msg.usergroups.USERGROUP_NAME}" /></a>
+										# ENDIF #
+									</li>
+								# END msg.usergroups #
 							# ENDIF #
 							# IF msg.C_USER_SIGN #<li>{msg.USER_SIGN}</li># ENDIF #
 							# IF msg.C_CONTROLS #
 								<li class="li-stretch">
-									<span>Sanctions: {msg.USER_WARNING}%</span>
-									<span>
+									<span>{@user.punishments} : {msg.USER_WARNING}%</span>
+									<span class="controls">
 										<a class="offload" href="moderation_forum{msg.U_FORUM_WARNING}" aria-label="{@user.warnings.management}"><i class="fa fa-exclamation-triangle warning" aria-hidden="true"></i></a>
 										<a class="offload" href="moderation_forum{msg.U_FORUM_PUNISHEMENT}" aria-label="{@user.punishments.management}"><i class="fa fa-user-lock" aria-hidden="true"></i></a>
 									</span>
