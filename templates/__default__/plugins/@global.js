@@ -586,6 +586,16 @@ document.querySelectorAll('.copy-link-to-clipboard').forEach( el => {
 				jQuery('html, body').animate({scrollTop:jQuery(hash).offset().top - menuOffset}, 'slow');
 			}
 		});
+		// remove offload class if # is in current page
+        var path = window.location.pathname,
+            pathSplit = path.split('/');
+        pathSplit = pathSplit[pathSplit.length-1];
+        jQuery('#component-submenu .has-sub ul .cssmenu-title.offload').each(function() {
+            var href = jQuery(this).attr('href');
+            if ( href.indexOf(pathSplit) != -1 )
+                jQuery(this).removeClass("offload");
+        });
+
 	});
 
 // Recognise an anchor link then scroll to
