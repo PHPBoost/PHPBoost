@@ -1,6 +1,6 @@
 <div id="bbcode-typography" class="sandbox-block">
     <article>
-        <h2>{@bbcode.title.typography}</h2>
+        <h2>{@bbcode.typography}</h2>
         <div class="content">
             <h2 class="formatter-title">{@bbcode.title} 1 : Lorem ipsum dolor sit amet.</h2>
             <div class="spacer"></div>
@@ -15,7 +15,7 @@
     </article>
     <!-- Source code -->
     <div class="formatter-container formatter-hide no-js">
-        <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
+        <span class="formatter-title">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="formatter-content">
 <pre class="language-html"><code class="language-html">&lt;h2 class="formatter-title">{@bbcode.title} 1&lt;/h2>

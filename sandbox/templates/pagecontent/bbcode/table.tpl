@@ -1,5 +1,5 @@
 <article id="bbcode-table" class="sandbox-block">
-    <h2>{@bbcode.title.table}</h2>
+    <h2>{@bbcode.table}</h2>
     <table class="table formatter-table">
         <tbody>
             <tr class="formatter-table-row">
@@ -7,15 +7,15 @@
             </tr>
             <tr class="formatter-table-row">
                 <td class="formatter-table-col">{@bbcode.table.name}</td>
-                <td class="formatter-table-col">{@bbcode.table.description}</td>
+                <td class="formatter-table-col">{@bbcode.table.clueription}</td>
             </tr>
             <tr class="formatter-table-row">
                 <td class="formatter-table-col">{@bbcode.table.name}</td>
-                <td class="formatter-table-col">{@bbcode.table.description}</td>
+                <td class="formatter-table-col">{@bbcode.table.clueription}</td>
             </tr>
             <tr class="formatter-table-row">
                 <td class="formatter-table-col">{@bbcode.table.name}</td>
-                <td class="formatter-table-col">{@bbcode.table.description}</td>
+                <td class="formatter-table-col">{@bbcode.table.clueription}</td>
             </tr>
         </tbody>
     </table>

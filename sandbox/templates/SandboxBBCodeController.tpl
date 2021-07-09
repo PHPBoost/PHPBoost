@@ -1,13 +1,13 @@
 <section id="module-sandbox-bbcode">
 	<header class="section-header">
 		<h1>
-			{@sandbox.module.title} - {@title.bbcode}
+			{@sandbox.module.title} - {@sandbox.bbcode}
 		</h1>
 	</header>
 
 	# INCLUDE SANDBOX_SUBMENU #
 	
-	<div class="sub-section"><div class="content-container"><div class="content">{@H|bbcode.explain}</div></div></div>
+	<div class="sub-section"><div class="content-container"><div class="content">{@H|bbcode.clueription}</div></div></div>
 
 	<div class="sub-section"><div class="content-container"><div class="content"># INCLUDE TYPOGRAPHY #</div></div></div>
 
@@ -23,14 +23,14 @@
 		<div class="content-container">
 			<div class="content">
 				<div id="bbcode-wiki" class="sandbox-block">
-					<h2>{@wiki.module}</h2>
+					<h2>{@bbcode.wiki.module}</h2>
 					# IF C_WIKI #
 						<article>
-							<p class="message-helper bgc notice">{@wiki.conditions}</p>
+							<p class="message-helper bgc notice">{@bbcode.wiki.conditions}</p>
 							<div class="content">
 								# START wikimenu #
 									<div class="wiki-summary">
-										<div class="wiki-summary-title">{@wiki.table.of.contents}</div>
+										<div class="wiki-summary-title">{@bbcode.wiki.table.of.contents}</div>
 										{wikimenu.MENU}
 									</div>
 								# END wikimenu #
@@ -38,7 +38,7 @@
 							</div>
 						</article>
 					# ELSE #
-					 	{@wiki.not}
+					 	{@bbcode.wiki.disabled}
 					# ENDIF #
 				</div>
 			</div>

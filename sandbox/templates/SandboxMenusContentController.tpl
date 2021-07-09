@@ -1,7 +1,7 @@
 <section id="module-sandbox-content-menus">
 	<header class="section-header">
 		<h1>
-			{@sandbox.module.title} - {@title.menu.content}
+			{@sandbox.module.title} - {@sandbox.menus.content}
 		</h1>
 	</header>
 	

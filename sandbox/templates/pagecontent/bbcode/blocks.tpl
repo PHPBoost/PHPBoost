@@ -1,5 +1,5 @@
 <div id="bbcode-blocks" class="sandbox-block">
-    <h2>{@bbcode.title.blocks}</h2>
+    <h2>{@bbcode.blocks}</h2>
     <article id="block" class="tpl">
         <header>
             <h5>{@bbcode.block}</h5>

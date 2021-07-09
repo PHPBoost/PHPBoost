@@ -1,6 +1,6 @@
 <article id="component-lists" class="sandbox-block">
     <header>
-        <h2>{@component.lists}  {@H|pinned.bbcode}</h2>
+        <h2>{@component.lists}  {@H|sandbox.pinned.bbcode}</h2>
     </header>
     <div class="cell-flex cell-columns-2">
         <div class="cell">

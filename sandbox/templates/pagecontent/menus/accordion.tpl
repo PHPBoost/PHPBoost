@@ -1,6 +1,6 @@
 <article id="menu-accordion" class="sandbox-block">
     <header>
-        <h2>{@menu.accordion.title} {@H|pinned.php}</h2>
+        <h2>{@menu.accordion.title} {@H|sandbox.pinned.php}</h2>
     </header>
     <div class="content">
         # INCLUDE ACCORDION_FORM #

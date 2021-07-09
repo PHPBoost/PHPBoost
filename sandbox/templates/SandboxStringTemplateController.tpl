@@ -1,6 +1,6 @@
 <section id="module-sandbox-template">
 	<header class="section-header">
-		<h1>{@sandbox.module.title} - {@title.template}</h1>
+		<h1>{@sandbox.module.title} - {@sandbox.template}</h1>
 	</header>
 
 	# INCLUDE SANDBOX_SUBMENU #

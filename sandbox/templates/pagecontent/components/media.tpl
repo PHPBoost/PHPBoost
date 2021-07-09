@@ -1,8 +1,8 @@
 <div id="component-media" class="sandbox-block">
-    <h2>{@component.title.media}</h2>
+    <h2>{@sandbox.media}</h2>
     <article>
         <header>
-			<h5>{@component.image} {@H|pinned.bbcode}</h5>
+			<h5>{@component.image} {@H|sandbox.pinned.bbcode}</h5>
 		</header>
 		<div class="content">
             <figure style="max-width:300px">
@@ -16,7 +16,7 @@
     </article>
     <article id="lightbox">
 		<header>
-			<h5>{@component.lightbox} {@H|pinned.bbcode}</h5>
+			<h5>{@component.lightbox} {@H|sandbox.pinned.bbcode}</h5>
 		</header>
 		<div class="content">
 			<a href="{PATH_TO_ROOT}/sandbox/templates/images/paysage.png" data-lightbox="formatter" data-rel="lightcase:collection">
@@ -30,7 +30,7 @@
 
 	<article id="youtube">
 		<header>
-			<h5>{@component.youtube} {@H|pinned.bbcode}</h5>
+			<h5>{@component.youtube} {@H|sandbox.pinned.bbcode}</h5>
 		</header>
 		<div class="media-content" style="width: 800px; height: 450px">
 			<iframe class="youtube-player" src="https://www.youtube.com/embed/YE7VzlLtp-4" allowfullscreen=""></iframe>
@@ -38,7 +38,7 @@
 	</article>
 	<article id="movie">
 		<header>
-			<h5>{@component.movie} {@H|pinned.bbcode}</h5>
+			<h5>{@component.movie} {@H|sandbox.pinned.bbcode}</h5>
 		</header>
 		<div class="media-content" style="width: 800px; height: 450px">
 			<video class="video-player" controls="">
@@ -49,7 +49,7 @@
 
 	<article id="audio">
 		<header>
-			<h5>{@component.audio} {@H|pinned.bbcode}</h5>
+			<h5>{@component.audio} {@H|sandbox.pinned.bbcode}</h5>
 		</header>
 		<div class="content">
 			<audio class="audio-player" controls>

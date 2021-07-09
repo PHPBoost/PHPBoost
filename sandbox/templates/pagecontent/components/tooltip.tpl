@@ -4,7 +4,7 @@
     </header>
     <div class="content">
         <p>
-			{@H|component.tooltip.desc}
+			{@H|component.tooltip.clue}
 		</p>
 		<p>
 			<span aria-label="{@component.tooltip.label.basic}" class="pinned member">Lorem ipsum</span>

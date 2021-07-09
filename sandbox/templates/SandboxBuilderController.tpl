@@ -1,7 +1,7 @@
 <section id="module-sandbox-builder">
 	<header class="section-header">
 		<h1>
-			{@sandbox.module.title} - {@title.builder}
+			{@sandbox.module.title} - {@sandbox.forms}
 		</h1>
 	</header>
 	
@@ -10,7 +10,7 @@
 	<div class="sub-section">
 		<div class="content-container">
 			<div class="content">
-				{@H|builder.explain}
+				{@H|builder.clueription}
 			</div>
 		</div>
 	</div>

@@ -1,6 +1,6 @@
 <article id="component-table" class="sandbox-block">
     <header>
-        <h2>{@component.table} {@H|pinned.bbcode}</h2>
+        <h2>{@component.table} {@H|sandbox.pinned.bbcode}</h2>
     </header>
     <table class="table">
         <caption>
@@ -21,24 +21,24 @@
                         </a>
                     </span>
                 </th>
-                <th>{@component.table.description}</th>
+                <th>{@component.table.clueription}</th>
                 <th>{@component.table.author}</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td>{@component.table.test}</td>
-                <td>{@component.table.description}</td>
+                <td>{@component.table.clueription}</td>
                 <td>{@component.table.author}</td>
             </tr>
             <tr>
                 <td>{@component.table.test}</td>
-                <td>{@component.table.description}</td>
+                <td>{@component.table.clueription}</td>
                 <td>{@component.table.author}</td>
             </tr>
             <tr>
                 <td>{@component.table.test}</td>
-                <td>{@component.table.description}</td>
+                <td>{@component.table.clueription}</td>
                 <td>{@component.table.author}</td>
             </tr>
         </tbody>
@@ -56,17 +56,17 @@
         <tbody>
             <tr>
                 <td>{@component.table.test}</td>
-                <td>{@component.table.description}</td>
+                <td>{@component.table.clueription}</td>
                 <td>{@component.table.author}</td>
             </tr>
             <tr>
                 <td>{@component.table.test}</td>
-                <td>{@component.table.description}</td>
+                <td>{@component.table.clueription}</td>
                 <td>{@component.table.author}</td>
             </tr>
             <tr>
                 <td>{@component.table.test}</td>
-                <td>{@component.table.description}</td>
+                <td>{@component.table.clueription}</td>
                 <td>{@component.table.author}</td>
             </tr>
         </tbody>

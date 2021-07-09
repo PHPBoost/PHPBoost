@@ -55,7 +55,7 @@
 								<span class="stacked">
 									<i class="fa fa-fw fa-bars" aria-hidden="true"></i>
 									<i class="fa fa-cog stack-event stack-icon stack-sup stack-right notice" aria-hidden="true"></i>
-								</span> <span>{@mini.menus} <span class="smaller">{@title.config} /  {@mini.add}</span></span>
+								</span> <span>{@mini.menus} <span class="smaller">{@form.configuration} /  {@mini.add}</span></span>
 							</a>
 						</li>
 						<li>
@@ -125,7 +125,7 @@
 								<span class="stacked">
 									<i class="fa fa-fw fa-university" aria-hidden="true"></i>
 									<i class="fa fa-cog stack-event stack-icon stack-sup stack-right notice" aria-hidden="true"></i>
-								</span> <span>{@title.config} <span class="smaller">{@mini.general.config}</span></span>
+								</span> <span>{@form.configuration} <span class="smaller">{@mini.general.config}</span></span>
 							</a>
 						</li>
 						<li>
@@ -133,7 +133,7 @@
 								<span class="stacked">
 									<i class="fa fa-fw fa-university" aria-hidden="true"></i>
 									<i class="fa fa-plus stack-event stack-icon stack-sup stack-right success" aria-hidden="true"></i>
-								</span> <span>{@title.config} <span class="smaller">{@mini.advanced.config}</span></span>
+								</span> <span>{@form.configuration} <span class="smaller">{@mini.advanced.config}</span></span>
 							</a>
 						</li>
 					</ul>
@@ -144,43 +144,43 @@
 						<li>
 							<a href="${relative_url(SandboxUrlBuilder::builder())}">
 								<i class="far fa-square fa-fw" aria-hidden="true"></i>
-								<span>{@title.builder}</span>
+								<span>{@sandbox.forms}</span>
 							</a>
 						</li>
 						<li>
 							<a href="${relative_url(SandboxUrlBuilder::component())}">
 								<i class="fab fa-css3 fa-fw" aria-hidden="true"></i>
-								<span>{@title.component}</span>
+								<span>{@sandbox.components}</span>
 							</a>
 						</li>
 						<li>
 							<a href="${relative_url(SandboxUrlBuilder::layout())}">
 								<i class="fab fa-html5 fa-fw" aria-hidden="true"></i>
-								<span>{@title.layout}</span>
+								<span>{@sandbox.layout}</span>
 							</a>
 						</li>
 						<li>
 							<a href="${relative_url(SandboxUrlBuilder::bbcode())}">
 								<i class="fa fa-code fa-fw" aria-hidden="true"></i>
-								<span>{@title.bbcode}</span>
+								<span>{@sandbox.bbcode}</span>
 							</a>
 						</li>
 						<li class="has-sub">
 							<span>
 								<i class="fa fa-bars fa-fw" aria-hidden="true"></i>
-								<span>{@title.menu}</span>
+								<span>{@sandbox.menus}</span>
 							</span>
 							<ul>
 								<li>
 									<a href="${relative_url(SandboxUrlBuilder::menus_nav())}">
 										<i class="fa fa-bars fa-fw" aria-hidden="true"></i>
-										<span>{@title.menu.nav}</span>
+										<span>{@sandbox.menus.nav}</span>
 									</a>
 								</li>
 								<li>
 									<a href="${relative_url(SandboxUrlBuilder::menus_content())}">
 										<i class="fa fa-list fa-fw" aria-hidden="true"></i>
-										<span>{@title.menu.content}</span>
+										<span>{@sandbox.menus.content}</span>
 									</a>
 								</li>
 							</ul>
@@ -188,25 +188,25 @@
 						<li class="has-sub">
 							<span>
 								<i class="fa fa-terminal fa-fw" aria-hidden="true"></i>
-								<span>{@title.php}</span>
+								<span>{@sandbox.php}</span>
 							</span>
 							<ul>
 								<li>
 									<a href="${relative_url(SandboxUrlBuilder::table())}">
 										<i class="fa fa-table fa-fw" aria-hidden="true"></i>
-										<span>{@title.table}</span>
+										<span>{@sandbox.table}</span>
 									</a>
 								</li>
 								<li>
 									<a href="${relative_url(SandboxUrlBuilder::email())}">
 										<i class="fa iboost fa-iboost-email fa-fw" aria-hidden="true"></i>
-										<span>{@title.email}</span>
+										<span>{@sandbox.email}</span>
 									</a>
 								</li>
 								<li>
 									<a href="${relative_url(SandboxUrlBuilder::template())}">
 										<i class="fa fa-terminal fa-fw" aria-hidden="true"></i>
-										<span>{@title.template}</span>
+										<span>{@sandbox.template}</span>
 									</a>
 								</li>
 							</ul>
@@ -214,19 +214,19 @@
 						<li class="has-sub">
 							<span>
 								<i class="fa fa-cog fa-fw" aria-hidden="true"></i>
-								<span>{@title.admin.component}</span>
+								<span>{@sandbox.admin.render}</span>
 							</span>
 							<ul>
 								<li>
 									<a href="${relative_url(SandboxUrlBuilder::admin_builder())}">
 										<i class="far fa-square fa-fw" aria-hidden="true"></i>
-										<span>{@title.builder}</span>
+										<span>{@sandbox.forms}</span>
 									</a>
 								</li>
 								<li>
 									<a href="${relative_url(SandboxUrlBuilder::admin_component())}">
 										<i class="fab fa-html5 fa-fw" aria-hidden="true"></i>
-										<span>{@title.component}</span>
+										<span>{@sandbox.components}</span>
 									</a>
 								</li>
 							</ul>

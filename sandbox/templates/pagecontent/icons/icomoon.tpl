@@ -4,7 +4,7 @@
         <h2>{@H|icons.icomoon}</h2>
     </header>
     <div class="content">
-        <p>{@H|icons.icomoon.howto.explain}</p>
+        <p>{@H|icons.icomoon.howto.clue}</p>
         <p>{@H|icons.icomoon.howto.update}</p>
     </div>
     <div class="content">

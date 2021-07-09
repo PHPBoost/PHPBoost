@@ -1,6 +1,6 @@
 <article id="component-modal" class="sandbox-block">
     <header>
-        <h2>{@component.modal} {@H|pinned.php}</h2>
+        <h2>{@component.modal} {@H|sandbox.pinned.php}</h2>
     </header>
     <div class="content">
         # INCLUDE MODAL_FORM #

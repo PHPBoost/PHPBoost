@@ -3,7 +3,7 @@
     <header>
         <h2>{@H|icons.fa}</h2>
     </header>
-        <p>{@H|icons.fa.howto.explain}</p>
+        <p>{@H|icons.fa.howto.clue}</p>
         <p>{@H|icons.fa.howto.update}</p>
         <h3>{@H|icons.fa.sample}</h3>
     <div>
@@ -47,7 +47,7 @@
             </tbody>
         </table>
     </div>
-    <footer>{@H|icons.fa.list}<a class="pinned bgc-full moderator" href="https://fontawesome.com/icons?d=listing&m=free"><i class="fa fa-share"></i> Cheatsheet Font-Awesome</a></footer>
+    <footer>{@H|icons.fa.list}<a class="pinned bgc-full moderator offload" href="https://fontawesome.com/icons?d=listing&m=free"><i class="fa fa-share"></i> Cheatsheet Font-Awesome</a></footer>
 </article>
 
 <article>
@@ -60,7 +60,7 @@
         <pre class="language-html"><code class="language-html">&lt;i class="far fa-edit">&lt;/i> Edition</code></pre>
         <p>{@H|icons.fa.howto.html.class.result.i}<i class="far fa-edit"></i> Edition</p>
         <pre class="language-html"><code class="language-html">&lt;a class="fa fa-globe" href="https://www.phpboost.com">PHPBoost&lt;/a></code></pre>
-        <p>{@H|icons.fa.howto.html.class.result.a}<a href="https://www.phpboost.com"><i class="fa fa-globe"></i>PHPBoost</a></p>
+        <p>{@H|icons.fa.howto.html.class.result.a}<a class="offload" href="https://www.phpboost.com"><i class="fa fa-globe"></i>PHPBoost</a></p>
         <p>{@H|icons.fa.howto.html.class.result.all}</p>
 
         <h4>{@H|icons.fa.howto.css}</h4>
@@ -93,12 +93,12 @@
         <p>{@H|icons.fa.howto.bbcode.tag}</p>
         <p>{@H|icons.fa.howto.bbcode.icon.name}</p>
         <p>{@H|icons.fa.howto.bbcode.icon.test} <i class="fa fa-cubes"></i></p>
-        <p>{@H|icons.fa.howto.bbcode.icon.variants}<a class="pinned bgc-full link-color" href="https://www.phpboost.com/wiki/la-bibliotheque-font-awesome"><i class="fa fa-share"></i> {@phpboost.doc}</a>.</p>
+        <p>{@H|icons.fa.howto.bbcode.icon.variants}<a class="pinned bgc-full link-color offload" href="https://www.phpboost.com/wiki/la-bibliotheque-font-awesome"><i class="fa fa-share"></i> {@sandbox.phpboost.doc}</a>.</p>
 
         <br />
         <h4>{@H|icons.fa.howto.variants}</h4>
-        <p>{@H|icons.fa.howto.variants.explain}</p>
-        <p>{@H|icons.fa.howto.variants.list}<a class="pinned bgc moderator" href="https://fortawesome.github.io/Font-Awesome/examples/" target="_blank" rel="noopener noreferer"><i class="fa fa-share"></i> Font-Awesome/examples</a></p>
+        <p>{@H|icons.fa.howto.variants.clue}</p>
+        <p>{@H|icons.fa.howto.variants.list}<a class="pinned bgc moderator offload" href="https://fortawesome.github.io/Font-Awesome/examples/" target="_blank" rel="noopener noreferer"><i class="fa fa-share"></i> Font-Awesome/examples</a></p>
 
         <pre class="language-html"><code class="language-html">&lt;i class="fa fa-spinner fa-spin fa-2x">&lt;/i></code></pre>
 

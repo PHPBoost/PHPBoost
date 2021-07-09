@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 08 16
+ * @version     PHPBoost 6.0 - last update: 2021 07 09
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,42 +15,42 @@
 ####################################################
 
 // fa
-$lang['icons.fa'] = ' Font-Awesome';
+$lang['icons.fa']        = ' Font-Awesome';
 $lang['icons.fa.sample'] = 'Quelques exemples';
 $lang['icons.fa.social'] = 'Réseaux sociaux';
 $lang['icons.fa.screen'] = 'Ecrans';
-$lang['icons.fa.icon'] = 'Icône';
-$lang['icons.fa.name'] = 'Nom';
-$lang['icons.fa.code'] = 'Code';
-$lang['icons.fa.list'] = 'La liste complète des icônes et de leur code associé : ';
+$lang['icons.fa.icon']   = 'Icône';
+$lang['icons.fa.name']   = 'Nom';
+$lang['icons.fa.code']   = 'Code';
+$lang['icons.fa.list']   = 'La liste complète des icônes et de leur code associé : ';
 
-$lang['icons.fa.howto'] = 'Comment ça marche ?';
-$lang['icons.fa.howto.explain'] = 'Font-Awesome est une <span class="text-strong">icon font</span>: une police de caractère qui permet d\'afficher des icônes simplement.';
-$lang['icons.fa.howto.update'] = 'Elle est implémentée depuis la version 4.1 de PHPBoost. Chaque mise à jour de Font-Awesome est implémentée dans la mise à jour suivante de PHPBoost.';
-$lang['icons.fa.howto.html'] = 'En HTML';
-$lang['icons.fa.howto.html.class'] = 'On utilise le nom de l\'icône en tant que classe : ';
-$lang['icons.fa.howto.html.class.result.i'] = 'donnera l\'icône "edit" suivie du texte : ';
-$lang['icons.fa.howto.html.class.result.a'] = 'donnera le lien précédé de l\'icône "globe" : ';
+$lang['icons.fa.howto']                       = 'Comment ça marche ?';
+$lang['icons.fa.howto.clue']               = 'Font-Awesome est une <span class="text-strong">icon font</span>: une police de caractère qui permet d\'afficher des icônes simplement.';
+$lang['icons.fa.howto.update']                = 'Elle est implémentée depuis la version 4.1 de PHPBoost. Chaque mise à jour de Font-Awesome est implémentée dans la mise à jour suivante de PHPBoost.';
+$lang['icons.fa.howto.html']                  = 'En HTML';
+$lang['icons.fa.howto.html.class']            = 'On utilise le nom de l\'icône en tant que classe : ';
+$lang['icons.fa.howto.html.class.result.i']   = 'donnera l\'icône "edit" suivie du texte : ';
+$lang['icons.fa.howto.html.class.result.a']   = 'donnera le lien précédé de l\'icône "globe" : ';
 $lang['icons.fa.howto.html.class.result.all'] = 'Il en est de même pour tout type de balise HTML.';
-$lang['icons.fa.howto.css'] = 'En CSS';
-$lang['icons.fa.howto.css.class'] = 'Il faut définir votre classe, puis le code de votre icône en tant que contenu du ::before ou du ::after de la classe :';
-$lang['icons.fa.howto.css.css.code'] = 'Code CSS :';
-$lang['icons.fa.howto.css.html.code'] = 'Code HTML :';
-$lang['icons.fa.howto.bbcode'] = 'En BBCode';
-$lang['icons.fa.howto.bbcode.some.icons'] = 'Les icônes les plus utilisées dans PHPBoost sont déjà implémentées dans le menu bbcode. Vous pouvez les sélectionner en cliquant sur l\'icône du menu:';
-$lang['icons.fa.howto.bbcode.tag'] = 'Si l\'icône que vous désirez utiliser n\'apparait pas dans la liste, vous pouvez utiliser la balise [fa] comme suit:';
-$lang['icons.fa.howto.bbcode.icon.name'] = '[fa]nom de l\'icône[/fa]';
-$lang['icons.fa.howto.bbcode.icon.test'] = 'Par exemple, <code class="language-markup">[fa]cubes[/fa]</code> donnera l\'icône:';
-$lang['icons.fa.howto.bbcode.icon.variants'] = 'Les variantes sont possibles en BBCode et sont expliquées dans ';
-$lang['icons.fa.howto.variants'] = 'Les variantes';
-$lang['icons.fa.howto.variants.explain'] = 'Font-Awesome propose une panoplie de variantes telles que la taille de l\'icône, l\'animation, la rotation, l\'empilement et bien d\'autres.';
-$lang['icons.fa.howto.variants.list'] = 'Leur fonctionnement est expliqué ici (anglais) : ';
-$lang['icons.fa.howto.variants.spinner'] = 'donnera l\'icône "spinner", animée en rotation et faisant 2 fois sa taille initiale : ';
+$lang['icons.fa.howto.css']                   = 'En CSS';
+$lang['icons.fa.howto.css.class']             = 'Il faut définir votre classe, puis le code de votre icône en tant que contenu du ::before ou du ::after de la classe :';
+$lang['icons.fa.howto.css.css.code']          = 'Code CSS :';
+$lang['icons.fa.howto.css.html.code']         = 'Code HTML :';
+$lang['icons.fa.howto.bbcode']                = 'En BBCode';
+$lang['icons.fa.howto.bbcode.some.icons']     = 'Les icônes les plus utilisées dans PHPBoost sont déjà implémentées dans le menu bbcode. Vous pouvez les sélectionner en cliquant sur l\'icône du menu:';
+$lang['icons.fa.howto.bbcode.tag']            = 'Si l\'icône que vous désirez utiliser n\'apparait pas dans la liste, vous pouvez utiliser la balise [fa] comme suit:';
+$lang['icons.fa.howto.bbcode.icon.name']      = '[fa]nom de l\'icône[/fa]';
+$lang['icons.fa.howto.bbcode.icon.test']      = 'Par exemple, <code class="language-markup">[fa]cubes[/fa]</code> donnera l\'icône:';
+$lang['icons.fa.howto.bbcode.icon.variants']  = 'Les variantes sont possibles en BBCode et sont expliquées dans ';
+$lang['icons.fa.howto.variants']              = 'Les variantes';
+$lang['icons.fa.howto.variants.clue']      = 'Font-Awesome propose une panoplie de variantes telles que la taille de l\'icône, l\'animation, la rotation, l\'empilement et bien d\'autres.';
+$lang['icons.fa.howto.variants.list']         = 'Leur fonctionnement est expliqué ici (anglais) : ';
+$lang['icons.fa.howto.variants.spinner']      = 'donnera l\'icône "spinner", animée en rotation et faisant 2 fois sa taille initiale : ';
 
 // Icomoon
 $lang['icons.icomoon'] = 'IcoMoon';
 
-$lang['icons.icomoon.howto.explain'] = '
+$lang['icons.icomoon.howto.clue'] = '
     <p>L\'application Icomoon permet d\'ajouter des icônes personnalisées sous forme d\'icon font à l\'instar de Font-Awesome.</p>
     <p>Ainsi, moyennant une petite astuce à la création des icônes, il sera possible de les utiliser autant en html que dans le contenu des articles via le bbcode.</p>
 ';
@@ -58,7 +58,7 @@ $lang['icons.icomoon.howto.update'] = 'Cette méthode est implémentable quelque
 $lang['icons.icomoon.howto.guide.title'] = 'L\'application';
 $lang['icons.icomoon.howto.guide'] = '
     <p>
-        Sur <a href="https://icomoon.io/" class="pinned bgc moderator" target="_blank" rel="noopener noreferer"><i class="fa fa-share"></i> icomoon.io</a>, cliquer sur <span class="pinned bgc-full moderator"><i class="fa fa-puzzle-piece"></i> IcoMoon App</span>.
+        Sur <a href="https://icomoon.io/" class="pinned bgc moderator offload" target="_blank" rel="noopener noreferer"><i class="fa fa-share"></i> icomoon.io</a>, cliquer sur <span class="pinned bgc-full moderator"><i class="fa fa-puzzle-piece"></i> IcoMoon App</span>.
         <ul>
             <li>
                 Avec le menu hamburger, choisir autant de <code class="language-markup">New Empty Set</code> que l\'on souhaite (1 par catégorie d\'icônes par exemple).

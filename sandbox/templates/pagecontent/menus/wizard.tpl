@@ -1,6 +1,6 @@
 <article id="menu-wizard" class="sandbox-block">
     <header>
-        <h2>{@menu.wizard.title} {@H|pinned.php}</h2>
+        <h2>{@menu.wizard.title} {@H|sandbox.pinned.php}</h2>
     </header>
     <div class="content">
         # INCLUDE WIZARD_FORM #

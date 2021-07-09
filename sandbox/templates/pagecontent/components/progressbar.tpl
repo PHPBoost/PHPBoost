@@ -1,6 +1,6 @@
 <article id="component-progressbar" class="sandbox-block">
     <header>
-        <h2>{@component.progress_bar}</h2>
+        <h2>{@component.progress.bar}</h2>
     </header>
     <h6>25%</h6>
     <div class="progressbar-container" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">

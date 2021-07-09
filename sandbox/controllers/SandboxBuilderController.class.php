@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 08
+ * @version     PHPBoost 6.0 - last update: 2021 07 09
  * @since       PHPBoost 5.2 - 2020 05 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -104,214 +104,214 @@ class SandboxBuilderController extends ModuleController
 		$form = new HTMLForm('Sandbox_Builder');
 
 		// TEXT FIELDS
-		$text_fields = new FormFieldsetHTML('text_field', $this->lang['builder.title.inputs']);
+		$text_fields = new FormFieldsetHTML('text_field', $this->lang['builder.text.fields']);
 			$form->add_fieldset($text_fields);
 
 			// Text
-			$text_fields->add_field(new FormFieldTextEditor('text', $this->lang['builder.input.text'], $this->lang['builder.input.text.lorem'],
-				array('maxlength' => 25, 'description' => $this->lang['builder.input.text.desc'], 'class' => 'css-class'),
+			$text_fields->add_field(new FormFieldTextEditor('text', $this->lang['builder.text.field'], $this->lang['builder.text.field.lorem'],
+				array('maxlength' => 25, 'description' => $this->lang['builder.text.field.clue'], 'class' => 'css-class'),
 				array(new FormFieldConstraintRegex('`^[a-z0-9_ ]+$`iu'))
 			));
 
 			// Url
-			$text_fields->add_field(new FormFieldUrlEditor('siteweb', $this->lang['builder.input.url'], $this->lang['builder.input.url.placeholder'],
-				array('description' => $this->lang['builder.input.url.desc'], 'class' => 'css-class')
+			$text_fields->add_field(new FormFieldUrlEditor('siteweb', $this->lang['builder.url.field'], $this->lang['builder.url.field.placeholder'],
+				array('description' => $this->lang['builder.url.field.clue'], 'class' => 'css-class')
 			));
 
 			// Email
-			$text_fields->add_field(new FormFieldMailEditor('email', $this->lang['builder.input.email'], $this->lang['builder.input.email.placeholder'],
-				array('description' => $this->lang['builder.input.email.desc'], 'class' => 'css-class')
+			$text_fields->add_field(new FormFieldMailEditor('email', $this->lang['builder.email.field'], $this->lang['builder.email.field.placeholder'],
+				array('description' => $this->lang['builder.email.field.clue'], 'class' => 'css-class')
 			));
-			$text_fields->add_field(new FormFieldMailEditor('multiple_email', $this->lang['builder.input.email.multiple'], $this->lang['builder.input.email.multiple.placeholder'],
-				array('description' => $this->lang['builder.input.email.multiple.desc'], 'multiple' => true, 'class' => 'css-class')
+			$text_fields->add_field(new FormFieldMailEditor('multiple_email', $this->lang['builder.email.field.multiple'], $this->lang['builder.email.field.multiple.placeholder'],
+				array('description' => $this->lang['builder.email.field.multiple.clue'], 'multiple' => true, 'class' => 'css-class')
 			));
 
 			// Phone
-			$text_fields->add_field(new FormFieldTelEditor('tel', $this->lang['builder.input.phone'], $this->lang['builder.input.phone.placeholder'],
-				array('description' => $this->lang['builder.input.phone.desc'], 'class' => 'css-class')
+			$text_fields->add_field(new FormFieldTelEditor('tel', $this->lang['builder.phone.field'], $this->lang['builder.phone.field.placeholder'],
+				array('description' => $this->lang['builder.phone.field.clue'], 'class' => 'css-class')
 			));
 
 			// Disabled
-			$text_fields->add_field(new FormFieldTextEditor('text_disabled', $this->lang['builder.input.text.disabled'], '',
-				array('maxlength' => 25, 'description' => $this->lang['builder.input.text.disabled.desc'], 'disabled' => true, 'class' => 'css-class')
+			$text_fields->add_field(new FormFieldTextEditor('text_disabled', $this->lang['builder.text.field.disabled'], '',
+				array('maxlength' => 25, 'description' => $this->lang['builder.text.field.disabled.clue'], 'disabled' => true, 'class' => 'css-class')
 			));
 
 			// Readonly
-			$text_fields->add_field(new FormFieldTextEditor('text_readonly', $this->lang['builder.input.text.readonly'], '',
-				array('maxlength' => 25, 'description' => $this->lang['builder.input.text.disabled.desc'], 'readonly' => true, 'class' => 'css-class')
+			$text_fields->add_field(new FormFieldTextEditor('text_readonly', $this->lang['builder.text.field.readonly'], '',
+				array('maxlength' => 25, 'description' => $this->lang['builder.text.field.disabled.clue'], 'readonly' => true, 'class' => 'css-class')
 			));
 
 			// Required
-			$text_fields->add_field(new FormFieldTextEditor('required', $this->lang['builder.input.text.required'], $this->lang['builder.input.text.lorem'],
-				array('maxlength' => 25, 'description' => $this->lang['builder.input.text.required.filled'], 'required' => true, 'class' => 'css-class')
+			$text_fields->add_field(new FormFieldTextEditor('required', $this->lang['builder.text.field.required'], $this->lang['builder.text.field.lorem'],
+				array('maxlength' => 25, 'description' => $this->lang['builder.text.field.required.filled'], 'required' => true, 'class' => 'css-class')
 			));
-			$text_fields->add_field(new FormFieldTextEditor('required_empty', $this->lang['builder.input.text.required'], '',
-				array('maxlength' => 25, 'description' => $this->lang['builder.input.text.required.empty'], 'required' => true, 'class' => 'css-class')
+			$text_fields->add_field(new FormFieldTextEditor('required_empty', $this->lang['builder.text.field.required'], '',
+				array('maxlength' => 25, 'description' => $this->lang['builder.text.field.required.empty'], 'required' => true, 'class' => 'css-class')
 			));
 
 			// Number
-			$text_fields->add_field(new FormFieldNumberEditor('number', $this->lang['builder.input.number'], $this->lang['builder.input.number.placeholder'],
-				array('min' => 10, 'max' => 100, 'description' => $this->lang['builder.input.number.desc'], 'class' => 'css-class'),
+			$text_fields->add_field(new FormFieldNumberEditor('number', $this->lang['builder.number.field'], $this->lang['builder.number.field.placeholder'],
+				array('min' => 10, 'max' => 100, 'description' => $this->lang['builder.number.field.clue'], 'class' => 'css-class'),
 				array(new FormFieldConstraintIntegerRange(10, 100))
 			));
-			$text_fields->add_field(new FormFieldDecimalNumberEditor('decimal', $this->lang['builder.input.number.decimal'], $this->lang['builder.input.number.decimal.placeholder'],
-				array('min' => 0, 'step' => 0.1, 'description' => $this->lang['builder.input.number.decimal.desc'], 'class' => 'css-class')
+			$text_fields->add_field(new FormFieldDecimalNumberEditor('decimal', $this->lang['builder.number.field.decimal'], $this->lang['builder.number.field.decimal.placeholder'],
+				array('min' => 0, 'step' => 0.1, 'description' => $this->lang['builder.number.field.decimal.clue'], 'class' => 'css-class')
 			));
 
 			// Password
-			$text_fields->add_field($password = new FormFieldPasswordEditor('password', $this->lang['builder.input.password'], $this->lang['builder.input.password.placeholder'],
-				array('description' => $security_config->get_internal_password_min_length() . $this->lang['builder.input.password.desc'], 'class' => 'css-class'),
+			$text_fields->add_field($password = new FormFieldPasswordEditor('password', $this->lang['builder.password.field'], $this->lang['builder.password.field.placeholder'],
+				array('description' => $security_config->get_internal_password_min_length() . $this->lang['builder.password.field.clue'], 'class' => 'css-class'),
 				array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
 			));
-			$text_fields->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['builder.input.password.confirm'], $this->lang['builder.input.password.placeholder'],
-				array('description' => $security_config->get_internal_password_min_length() . $this->lang['builder.input.password.desc'], 'class' => 'css-class'),
+			$text_fields->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['builder.password.field.confirm'], $this->lang['builder.password.field.placeholder'],
+				array('description' => $security_config->get_internal_password_min_length() . $this->lang['builder.password.field.clue'], 'class' => 'css-class'),
 				array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
 			));
 
 		// TEXTAREA
-		$textarea = new FormFieldsetHTML('textarea', $this->lang['builder.title.textarea']);
+		$textarea = new FormFieldsetHTML('textarea', $this->lang['builder.textarea']);
 			$form->add_fieldset($textarea);
 
 			// Short multi line text
-			$textarea->add_field(new FormFieldShortMultiLineTextEditor('short_multi_line_text', $this->lang['builder.input.multiline.medium'], $this->lang['builder.input.multiline.lorem'],
+			$textarea->add_field(new FormFieldShortMultiLineTextEditor('short_multi_line_text', $this->lang['builder.multiline.medium'], $this->lang['builder.multiline.lorem'],
 				array('rows' => 3, 'required' => true, 'class' => 'css-class')
 			));
 
 			// Multi line text
-			$textarea->add_field(new FormFieldMultiLineTextEditor('multi_line_text', $this->lang['builder.input.multiline'], $this->lang['builder.input.multiline.lorem'],
-				array('rows' => 6, 'cols' => 47, 'description' => $this->lang['builder.input.multiline.desc'], 'required' => true, 'class' => 'css-class')
+			$textarea->add_field(new FormFieldMultiLineTextEditor('multi_line_text', $this->lang['builder.multiline'], $this->lang['builder.multiline.lorem'],
+				array('rows' => 6, 'cols' => 47, 'description' => $this->lang['builder.multiline.clue'], 'required' => true, 'class' => 'css-class')
 			));
 
 			// Rich text
-			$textarea->add_field(new FormFieldRichTextEditor('rich_text', $this->lang['builder.input.rich.text'], $this->lang['builder.input.rich.text.placeholder'],
+			$textarea->add_field(new FormFieldRichTextEditor('rich_text', $this->lang['builder.rich.text'], $this->lang['builder.rich.text.placeholder'],
 				array('required' => true, 'class' => 'css-class')
 			));
 
 		// RADIO / CHECKBOX
-		$choices = new FormFieldsetHTML('choices', $this->lang['builder.title.choices']);
+		$choices = new FormFieldsetHTML('choices', $this->lang['builder.checked.choices']);
 			$form->add_fieldset($choices);
 
 			// Checkboxes
-			$choices->add_field(new FormFieldCheckbox('checkbox', $this->lang['builder.input.checkbox'], FormFieldCheckbox::CHECKED,
+			$choices->add_field(new FormFieldCheckbox('checkbox', $this->lang['builder.checkbox'], FormFieldCheckbox::CHECKED,
 				array('class' => 'css-class')
 			));
-			$choices->add_field(new FormFieldMultipleCheckbox('multiple_check_box', $this->lang['builder.input.multiple.checkbox'],
+			$choices->add_field(new FormFieldMultipleCheckbox('multiple_check_box', $this->lang['builder.multiple.checkbox'],
 				array('1'),
 				array(
-					new FormFieldMultipleCheckboxOption('1', $this->lang['builder.input.choice'].'1'),
-					new FormFieldMultipleCheckboxOption('2', $this->lang['builder.input.choice'].'2')
+					new FormFieldMultipleCheckboxOption('1', $this->lang['builder.choice'].'1'),
+					new FormFieldMultipleCheckboxOption('2', $this->lang['builder.choice'].'2')
 				),
 				array('required' => true, 'class' => 'css-class')
 			));
 
 			// Radios
-			$default_option = new FormFieldRadioChoiceOption($this->lang['builder.input.choice'].'1', '1');
-			$choices->add_field(new FormFieldRadioChoice('inline_radio', $this->lang['builder.input.radio'] . ' inline', '',
+			$default_option = new FormFieldRadioChoiceOption($this->lang['builder.choice'].'1', '1');
+			$choices->add_field(new FormFieldRadioChoice('inline_radio', $this->lang['builder.radio'] . ' inline', '',
 				array(
 					$default_option,
-					new FormFieldRadioChoiceOption($this->lang['builder.input.choice'].'2', '2')
+					new FormFieldRadioChoiceOption($this->lang['builder.choice'].'2', '2')
 				),
 				array('required' => true, 'class' => 'css-class inline-radio')
 			));
-			$default_option = new FormFieldRadioChoiceOption($this->lang['builder.input.choice'].'1', '1');
-			$choices->add_field(new FormFieldRadioChoice('radio', $this->lang['builder.input.radio'], '',
+			$default_option = new FormFieldRadioChoiceOption($this->lang['builder.choice'].'1', '1');
+			$choices->add_field(new FormFieldRadioChoice('radio', $this->lang['builder.radio'], '',
 				array(
 					$default_option,
-					new FormFieldRadioChoiceOption($this->lang['builder.input.choice'].'2', '2')
+					new FormFieldRadioChoiceOption($this->lang['builder.choice'].'2', '2')
 				),
 				array('required' => true, 'class' => 'css-class')
 			));
 
 		// SELECTORS
-		$select = new FormFieldsetHTML('selects', $this->lang['builder.title.select']);
+		$select = new FormFieldsetHTML('selects', $this->lang['builder.selects']);
 			$form->add_fieldset($select);
 
 			// SELECT
-			$select->add_field(new FormFieldSimpleSelectChoice('select', $this->lang['builder.input.select'], '',
+			$select->add_field(new FormFieldSimpleSelectChoice('select', $this->lang['builder.select'], '',
 				array(
 					new FormFieldSelectChoiceOption('&nbsp;', '0'),
-					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'1', '1'),
-					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'2', '2'),
-					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'3', '3'),
-					new FormFieldSelectChoiceGroupOption($this->lang['builder.input.choice.group'].'1',
+					new FormFieldSelectChoiceOption($this->lang['builder.choice'].'1', '1'),
+					new FormFieldSelectChoiceOption($this->lang['builder.choice'].'2', '2'),
+					new FormFieldSelectChoiceOption($this->lang['builder.choice'].'3', '3'),
+					new FormFieldSelectChoiceGroupOption($this->lang['builder.choice.group'].'1',
 						array(
-							new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'4', '4'),
-							new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'5', '5'),
+							new FormFieldSelectChoiceOption($this->lang['builder.choice'].'4', '4'),
+							new FormFieldSelectChoiceOption($this->lang['builder.choice'].'5', '5'),
 						)
 					),
-					new FormFieldSelectChoiceGroupOption($this->lang['builder.input.choice.group'].'2',
+					new FormFieldSelectChoiceGroupOption($this->lang['builder.choice.group'].'2',
 						array(
-							new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'6', '6'),
-							new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'7', '7'),
+							new FormFieldSelectChoiceOption($this->lang['builder.choice'].'6', '6'),
+							new FormFieldSelectChoiceOption($this->lang['builder.choice'].'7', '7'),
 						)
 					)
 				),
 				array('required' => true, 'class' => 'css-class')
 			));
-			$select->add_field(new FormFieldMultipleSelectChoice('multiple_select', $this->lang['builder.input.multiple.select'],
+			$select->add_field(new FormFieldMultipleSelectChoice('multiple_select', $this->lang['builder.multiple.select'],
 				array('1', '2'),
 				array(
-					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'1', '1'),
-					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'2', '2'),
-					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'3', '3')
+					new FormFieldSelectChoiceOption($this->lang['builder.choice'].'1', '1'),
+					new FormFieldSelectChoiceOption($this->lang['builder.choice'].'2', '2'),
+					new FormFieldSelectChoiceOption($this->lang['builder.choice'].'3', '3')
 				),
 				array('required' => true, 'class' => 'css-class')
 			));
 
 			// Fake select
-			$select->add_field(new FormFieldSimpleSelectChoice('fake_select', $this->lang['builder.input.select.to.list'],
+			$select->add_field(new FormFieldSimpleSelectChoice('fake_select', $this->lang['builder.select.to.list'],
 				array('1'),
 				array(
 					new FormFieldSelectChoiceOption('&nbsp;', '0'),
-					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'1', '1', array('data_option_class' => 'bgc-full question', 'selected' => true, 'data_option_icon' => 'far fa-id-card')),
-					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'2', '2', array('data_option_icon' => 'far fa-id-card')),
-					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'3', '3', array('data_option_icon' => 'far fa-id-card'))
+					new FormFieldSelectChoiceOption($this->lang['builder.choice'].'1', '1', array('data_option_class' => 'bgc-full question', 'selected' => true, 'data_option_icon' => 'far fa-id-card')),
+					new FormFieldSelectChoiceOption($this->lang['builder.choice'].'2', '2', array('data_option_icon' => 'far fa-id-card')),
+					new FormFieldSelectChoiceOption($this->lang['builder.choice'].'3', '3', array('data_option_icon' => 'far fa-id-card'))
 				),
 				array('class' => 'css-class', 'select_to_list' => true)
 			));
-			$select->add_field(new FormFieldMultipleSelectChoice('fake_multiple_select', $this->lang['builder.input.multiple.select.to.list'],
+			$select->add_field(new FormFieldMultipleSelectChoice('fake_multiple_select', $this->lang['builder.multiple.select.to.list'],
 				array(),
 				array(
-					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'1', '1', array('data_option_class' => 'bgc-full question', 'data_option_icon' => 'far fa-id-card')),
-					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'2', '2', array('data_option_class' => 'bgc error', 'disable' => true)),
-					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'3', '3', array('data_option_class' => 'indent')),
-					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'4', '4', array('data_option_class' => 'bgc-full question', 'selected' => true, 'data_option_icon' => 'far fa-id-card')),
-					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'5', '5', array('data_option_img' => '../templates/__default__/theme/images/logo_mini.png')),
-					new FormFieldSelectChoiceOption($this->lang['builder.input.choice'].'6', '6')
+					new FormFieldSelectChoiceOption($this->lang['builder.choice'].'1', '1', array('data_option_class' => 'bgc-full question', 'data_option_icon' => 'far fa-id-card')),
+					new FormFieldSelectChoiceOption($this->lang['builder.choice'].'2', '2', array('data_option_class' => 'bgc error', 'disable' => true)),
+					new FormFieldSelectChoiceOption($this->lang['builder.choice'].'3', '3', array('data_option_class' => 'indent')),
+					new FormFieldSelectChoiceOption($this->lang['builder.choice'].'4', '4', array('data_option_class' => 'bgc-full question', 'selected' => true, 'data_option_icon' => 'far fa-id-card')),
+					new FormFieldSelectChoiceOption($this->lang['builder.choice'].'5', '5', array('data_option_img' => '../templates/__default__/theme/images/logo_mini.png')),
+					new FormFieldSelectChoiceOption($this->lang['builder.choice'].'6', '6')
 				),
 				array('class' => 'css-class', 'multiple_select_to_list' => true)
 			));
 
 			// Autocomplete
-			$select->add_field(new FormFieldTimezone('timezone', $this->lang['builder.input.timezone'], 'UTC+0',
+			$select->add_field(new FormFieldTimezone('timezone', $this->lang['builder.timezone'], 'UTC+0',
 				array('class' => 'css-class')
 			));
 
-			$select->add_field(new FormFieldAjaxSearchUserAutoComplete('user_completition', $this->lang['builder.input.user.completion'], '',
+			$select->add_field(new FormFieldAjaxSearchUserAutoComplete('user_completition', $this->lang['builder.user.completion'], '',
 				array('class' => 'css-class')
 			));
 
 		// MISCELLANEOUS
-		$miscellaneous = new FormFieldsetHTML('miscellaneous', $this->lang['builder.title.miscellaneous']);
+		$miscellaneous = new FormFieldsetHTML('miscellaneous', $this->lang['sandbox.miscellaneous']);
 			$form->add_fieldset($miscellaneous);
 
 			// HIDDEN
-			$miscellaneous->add_field(new FormFieldHidden('hidden', $this->lang['builder.input.hidden']));
+			$miscellaneous->add_field(new FormFieldHidden('hidden', $this->lang['builder.hidden']));
 
 			// Description
-			$miscellaneous->set_description($this->lang['builder.desc']);
+			$miscellaneous->set_description($this->lang['builder.clue']);
 
 			// Separator
 			$miscellaneous->add_field(new FormFieldSpacer('spacer', '<span class="smaller">' . $this->lang['builder.spacer'] . '</span>', array('class' => 'css-class')));
 
 			// Free field
-			$miscellaneous->add_field(new FormFieldFree('free', $this->lang['builder.free.html'], $this->lang['builder.input.text.lorem'],
+			$miscellaneous->add_field(new FormFieldFree('free', $this->lang['builder.free.html'], $this->lang['builder.text.field.lorem'],
 				array('class' => 'css-class')
 			));
 
 			// Range
-			$miscellaneous->add_field($password = new FormFieldRangeEditor('range', $this->lang['builder.input.length'], $this->lang['builder.input.length.placeholder'],
-				array('min' => 1, 'max' => 10, 'description' => $this->lang['builder.input.length.desc'], 'class' => 'css-class')
+			$miscellaneous->add_field($password = new FormFieldRangeEditor('range', $this->lang['builder.slider.field'], $this->lang['builder.slider.field.placeholder'],
+				array('min' => 1, 'max' => 10, 'description' => $this->lang['builder.slider.field.clue'], 'class' => 'css-class')
 			));
 
 			// Date
@@ -371,23 +371,23 @@ class SandboxBuilderController extends ModuleController
 			$form->add_fieldset($fieldset_maps);
 
 			// Simple address
-			$fieldset_maps->add_field(new GoogleMapsFormFieldSimpleAddress('simple_address', $this->lang['builder.googlemap.simple_address'], '', array('class' => 'css-class')));
+			$fieldset_maps->add_field(new GoogleMapsFormFieldSimpleAddress('simple_address', $this->lang['builder.googlemap.simple.address'], '', array('class' => 'css-class')));
 
 			// Map address
-			$fieldset_maps->add_field(new GoogleMapsFormFieldMapAddress('map_address', $this->lang['builder.googlemap.map_address'], '', array('class' => 'css-class', 'include_api' => false)));
+			$fieldset_maps->add_field(new GoogleMapsFormFieldMapAddress('map_address', $this->lang['builder.googlemap.map.address'], '', array('class' => 'css-class', 'include_api' => false)));
 
 			// Simple marker
-			$fieldset_maps->add_field(new GoogleMapsFormFieldSimpleMarker('simple_marker', $this->lang['builder.googlemap.simple_marker'], '', array('class' => 'css-class', 'include_api' => false)));
+			$fieldset_maps->add_field(new GoogleMapsFormFieldSimpleMarker('simple_marker', $this->lang['builder.googlemap.simple.marker'], '', array('class' => 'css-class', 'include_api' => false)));
 
 			// Multiple markers
-			$fieldset_maps->add_field(new GoogleMapsFormFieldMultipleMarkers('multiple_markers', $this->lang['builder.googlemap.multiple_markers'], '', array('class' => 'css-class', 'include_api' => false)));
+			$fieldset_maps->add_field(new GoogleMapsFormFieldMultipleMarkers('multiple_markers', $this->lang['builder.googlemap.multiple.markers'], '', array('class' => 'css-class', 'include_api' => false)));
 		}
 
 		// AUTH
 		$authorizations = new FormFieldsetHTML('authorizations', $this->lang['builder.authorization']);
 			$auth_settings = new AuthorizationsSettings(
 				array(
-					new ActionAuthorization($this->lang['builder.authorization.1'], 1, $this->lang['builder.authorization.1.desc']),
+					new ActionAuthorization($this->lang['builder.authorization.1'], 1, $this->lang['builder.authorization.1.clue']),
 					new ActionAuthorization($this->lang['builder.authorization.2'], 2))
 				);
 			$auth_settings->build_from_auth_array(array('r1' => 3, 'r0' => 2, 'm1' => 1, 1 => 2));
@@ -397,17 +397,17 @@ class SandboxBuilderController extends ModuleController
 
 		// VERTICAL FIELDSET
 		$vertical_fieldset = new FormFieldsetVertical('vertical_fieldset');
-			$vertical_fieldset->set_description($this->lang['builder.vertical.desc']);
+			$vertical_fieldset->set_description($this->lang['builder.vertical.clue']);
 			$form->add_fieldset($vertical_fieldset);
-			$vertical_fieldset->add_field(new FormFieldTextEditor('alone', $this->lang['builder.input.text'], $this->lang['builder.input.text.lorem'], array('class' => 'css-class')));
-			$vertical_fieldset->add_field(new FormFieldCheckbox('cbhor', $this->lang['builder.input.checkbox'], FormFieldCheckbox::UNCHECKED, array('class' => 'css-class')));
+			$vertical_fieldset->add_field(new FormFieldTextEditor('alone', $this->lang['builder.text.field'], $this->lang['builder.text.field.lorem'], array('class' => 'css-class')));
+			$vertical_fieldset->add_field(new FormFieldCheckbox('cbhor', $this->lang['builder.checkbox'], FormFieldCheckbox::UNCHECKED, array('class' => 'css-class')));
 
 		// HORIZONTAL FIELDSET
 		$horizontal_fieldset = new FormFieldsetHorizontal('horizontal_fieldset');
-			$horizontal_fieldset->set_description($this->lang['builder.horizontal.desc']);
+			$horizontal_fieldset->set_description($this->lang['builder.horizontal.clue']);
 			$form->add_fieldset($horizontal_fieldset);
-			$horizontal_fieldset->add_field(new FormFieldTextEditor('texthor', $this->lang['builder.input.text'], $this->lang['builder.input.text.lorem'], array('required' => true, 'class' => 'css-class')));
-			$horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert', $this->lang['builder.input.checkbox'], FormFieldCheckbox::CHECKED, array('class' => 'css-class')));
+			$horizontal_fieldset->add_field(new FormFieldTextEditor('texthor', $this->lang['builder.text.field'], $this->lang['builder.text.field.lorem'], array('required' => true, 'class' => 'css-class')));
+			$horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert', $this->lang['builder.checkbox'], FormFieldCheckbox::CHECKED, array('class' => 'css-class')));
 
 		// CAPTCHA
 			$captcha = new FormFieldsetHTML('captcha', 'Captchas');
@@ -419,7 +419,7 @@ class SandboxBuilderController extends ModuleController
 
 
 		// BUTTONS
-		$buttons = new FormFieldsetHTML('buttons', $this->lang['builder.title.buttons']);
+		$buttons = new FormFieldsetHTML('buttons', $this->lang['builder.buttons']);
 			$form->add_fieldset($buttons);
 			$buttons->add_field(new FormFieldSpacer('all_buttons_explain', $this->lang['builder.all.buttons']));
 
@@ -470,11 +470,11 @@ class SandboxBuilderController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->common_lang['title.builder'], $this->common_lang['sandbox.module.title']);
+		$graphical_environment->set_page_title($this->common_lang['sandbox.forms'], $this->common_lang['sandbox.module.title']);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->common_lang['sandbox.module.title'], SandboxUrlBuilder::home()->rel());
-		$breadcrumb->add($this->common_lang['title.builder'], SandboxUrlBuilder::builder()->rel());
+		$breadcrumb->add($this->common_lang['sandbox.forms'], SandboxUrlBuilder::builder()->rel());
 
 		return $response;
 	}

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 08
+ * @version     PHPBoost 6.0 - last update: 2021 07 09
  * @since       PHPBoost 3.0 - 2012 05 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -62,7 +62,7 @@ class SandboxComponentController extends ModuleController
 	private function build_floating_messages()
 	{
 		$floating_messages = new HTMLForm('floating_messages', '', false);
-		$this->floating_messages_button = new FormButtonDefaultSubmit($this->lang['component.message.float-display'], 'floating_messages');
+		$this->floating_messages_button = new FormButtonDefaultSubmit($this->lang['component.message.float.display'], 'floating_messages');
 		$floating_messages->add_button($this->floating_messages_button);
 		$this->floating_messages = $floating_messages;
 	}
@@ -161,10 +161,10 @@ class SandboxComponentController extends ModuleController
 		$this->build_floating_messages();
 		if ($this->floating_messages_button->has_been_submited() && $this->floating_messages->validate()) {
 			$view->put_all(array(
-				'FLOATING_SUCCESS'  => MessageHelper::display($this->lang['component.message.float-unlimited'], MessageHelper::SUCCESS, -1),
-				'FLOATING_NOTICE'   => MessageHelper::display($this->lang['component.message.float-limited'], MessageHelper::NOTICE, 3),
-				'FLOATING_WARNING'  => MessageHelper::display($this->lang['component.message.float-unlimited'], MessageHelper::WARNING, -1),
-				'FLOATING_ERROR'    => MessageHelper::display($this->lang['component.message.float-limited'], MessageHelper::ERROR, 6)
+				'FLOATING_SUCCESS'  => MessageHelper::display($this->lang['component.message.float.unlimited'], MessageHelper::SUCCESS, -1),
+				'FLOATING_NOTICE'   => MessageHelper::display($this->lang['component.message.float.limited'], MessageHelper::NOTICE, 3),
+				'FLOATING_WARNING'  => MessageHelper::display($this->lang['component.message.float.unlimited'], MessageHelper::WARNING, -1),
+				'FLOATING_ERROR'    => MessageHelper::display($this->lang['component.message.float.limited'], MessageHelper::ERROR, 6)
 			));
 		}
 		$view->put('FLOATING_MESSAGES', $this->floating_messages->display());
@@ -185,12 +185,12 @@ class SandboxComponentController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->common_lang['title.component'],$this->common_lang['title.component'],  $this->common_lang['sandbox.module.title']);
+		$graphical_environment->set_page_title($this->common_lang['sandbox.components'],$this->common_lang['sandbox.components'],  $this->common_lang['sandbox.module.title']);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->common_lang['sandbox.module.title'], SandboxUrlBuilder::home()->rel());
-		$breadcrumb->add($this->common_lang['title.component']);
-		$breadcrumb->add($this->common_lang['title.component']);
+		$breadcrumb->add($this->common_lang['sandbox.components']);
+		$breadcrumb->add($this->common_lang['sandbox.components']);
 
 		return $response;
 	}

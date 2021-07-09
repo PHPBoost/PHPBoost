@@ -5,56 +5,77 @@
             <h5>{@layout.messages.and.coms}</h5>
         </header>
         <div class="content">
-            <article id="comID" class="message-container" itemscope="itemscope" itemtype="https://schema.org/Comment">
+            <article id="comID" class="message-container cell-tile cell-modal modal-container" itemscope="itemscope" itemtype="https://schema.org/Comment">
                 <header class="message-header-container">
-                    <img class="message-user-avatar" src="{NO_AVATAR_URL}" alt="${LangLoader::get_message('user.avatar', 'user-lang')}">
+                    <img class="message-user-avatar" src="{NO_AVATAR_URL}" alt="${LangLoader::get_message('common.avatar', 'common-lang')}">
                     <div class="message-header-infos">
-                        <div class="message-user-infos hidden-small-screens">
-                            <div>
-                                <i class="fa fa-user-check success" aria-hidden="true"></i>
-                                ${LangLoader::get_message('user.registered.on', 'user-lang')} : {TODAY}
-                            </div>
-                            <div class="message-user-links">
-                                <a href="#" class="button submit smaller"><i class="fa fa-people-arrows" aria-hidden="true"></i></a>
-                                <a href="#" class="button submit smaller">Facebook</a>
-                                <a href="#" class="button submit smaller">Twitter</a>
-                                <a href="#" class="button submit smaller"><i class="fa iboost fa-iboost-email" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                        <div class="message-user">
-                            <h3 class="message-user-pseudo">
-                                <a class="Level" href="#" itemprop="author">{@layout.messages.login}</a>
+                        <div class="message-user-container">
+                            <h3 class="message-user-name">
+    							<span class="smaller" aria-label="${LangLoader::get_message('user.online', 'user-lang')}/${LangLoader::get_message('user.offline', 'user-lang')}">
+    								<i class="fa fa-user" aria-hidden="true"></i>
+    							</span>
+                                <span class="administrator" itemprop="author">{@layout.messages.login}</span>
+								<span class="smaller" aria-label="${LangLoader::get_message('common.see.profile.datas', 'common-lang')}" data-modal data-target="message-user-datas-ID">
+									<i class="far fa-eye" aria-hidden="true"></i>
+								</span>
                             </h3>
-                            <div class="message-actions">
-                                <a href="#" aria-label="${LangLoader::get_message('common.edit', 'common-lang')}"><i class="far fa-fw fa-edit"></i></a>
-                                <a href="#" aria-label="${LangLoader::get_message('common.delete', 'common-lang')}"><i class="far fa-fw fa-trash-alt" data-confirmation="delete-element"></i></a>
+                            <div class="controls message-user-infos-preview">
+                                <a href="#" class="user-group small group-ID offload"></a>
+                                <span class="pinned administrator small">${LangLoader::get_message('user.administrator', 'user-lang')}</span>
                             </div>
                         </div>
                         <div class="message-infos">
                             <time datetime="{TODAY_TIME}" itemprop="datePublished">{TODAY_TIME}</time>
-                            <a href="#ID" aria-label="${LangLoader::get_message('comment.link.to.anchor', 'comment-lang')}">\#ID</a>
+                            <a href="#ID" class="copy-link-to-clipboard" aria-label="${LangLoader::get_message('common.copy.link.to.clipboard', 'common-lang')}">\#ID</a>
                         </div>
                     </div>
                 </header>
+                <div id="message-user-datas-ID" class="modal modal-animation">
+    				<div class="close-modal" aria-label="${LangLoader::get_message('common.close', 'common-lang')}"></div>
+                    <div class="content-panel cell">
+                        <div class="cell-list">
+                            <ul>
+                                <li class="li-stretch">
+                                    <span>{@layout.messages.level}</span>
+                                    <img src="{PATH_TO_ROOT}/forum/templates/images/ranks/rank_admin.png" />
+                                </li>
+                                <li class="li-stretch">
+                                    <span>${LangLoader::get_message('common.see.profile', 'common-lang')}</span>
+                                    <a href="#" class="msg-link-pseudo administrator offload">admin</a>
+                                </li>
+                                <li class="li-stretch">
+                                    <span>${LangLoader::get_message('user.pm', 'user-lang')}</span>
+                                    <a href="#" class="button submit smaller offload"><i class="fa fa-people-arrows" aria-hidden="true"></i></a>
+                                </li>
+                                <li class="li-stretch">
+                                    <span>${LangLoader::get_message('user.email', 'user-lang')}</span>
+                                    <a href="#" class="button submit smaller offload"><i class="fa iboost fa-iboost-email" aria-hidden="true"></i></a>
+                                </li>
+                                <li>${LangLoader::get_message('user.groups', 'user-lang')} :</li>
+                                <li class="li-stretch">
+                                    <a href="#">Com</a>
+                                    <img src="http://data.babsoweb.com/babsodata/phpboost/graph/group-icon/com.png" alt="group picture" />
+                                </li>
+                                <li>
+                                    <span>{@layout.user.sign}</span>
+                                </li>
+                                <li>
+                                    <img src="https://resources.phpboost.com/documentation/banners/banner_phpboost_01.jpg" alt="group picture" />
+                                </li>
+                                <li class="li-stretch">
+                                    <span>${LangLoader::get_message('user.punishments', 'user-lang')} : 0% </span>
+                                    <span>
+                                        <a href="#"><i class="fa fa-exclamation-trianglewarning"></i></a>
+                                        <a href="#"><i class="fa fa-user-lock link-color"></i></a>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
                 <div class="message-content">
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi autem sequi quam ab amet culpa nobis vitae rerum laborum nulla!</p>
                 </div>
-                <div class="message-user-sign"><p>{@layout.user.sign}</p> <img src="https://resources.phpboost.com/documentation/banners/banner_phpboost_01.jpg" alt="group picture" /></div>
-                <footer class="message-footer-container">
-                    <div class="message-user-assoc">
-                        <div class="message-group-level">
-                            <a href="#" class="user-group user-group-img"><img src="http://data.babsoweb.com/babsodata/phpboost/graph/group-icon/com.png" alt="group picture" /></a>
-                        </div>
-                        <div class="message-user-rank">
-                            <span>{@layout.messages.level}</span>
-                            <img src="{PATH_TO_ROOT}/forum/templates/images/ranks/rank_admin.png" />
-                        </div>
-                    </div>
-                    <div class="message-user-management">
-                        <div></div>
-                        <div class="message-moderation-level">0% <i class="fa fa-exclamation-triangle"></i> <i class="fa fa-user-lock"></i></div>
-                    </div>
-                </footer>
             </article>
         </div>
     </article>
@@ -63,46 +84,77 @@
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="formatter-content">
-<pre class="language-html line-numbers"><code class="language-html">&lt;article id="Id" class="message-container (message-small/message-offset)" itemscope="itemscope" itemtype="https://schema.org/Comment">
-    &lt;header class="message-header-container (#IF CURRENT#current-user-message)">
-        &lt;img class="message-user-avatar" src="Url" alt="Text">
+<pre class="language-html line-numbers"><code class="language-html">&lt;article id="Id" class="message-container (message-small/message-offset) cell-tile cell-modal modal-container" itemscope="itemscope" itemtype="https://schema.org/Comment">
+    &lt;header class="message-header-container">
+        &lt;img class="message-user-avatar" src="/image/avatar/link" alt="${LangLoader::get_message('common.avatar', 'common-lang')}">
         &lt;div class="message-header-infos">
-            &lt;div class="message-user-infos hidden-small-screens">
-                &lt;div>&lt;/div>
-                &lt;div class="message-user-links">&lt;/div>
-            &lt;/div>
-            &lt;div class="message-user">
-                &lt;h3 class="message-user-pseudo">
-                    &lt;a class="Level" href="UrlProfil" itemprop="author">MemberName&lt;/a>
+            &lt;div class="message-user-container">
+                &lt;h3 class="message-user-name">
+                    &lt;span class="smaller" aria-label="${LangLoader::get_message('user.online', 'user-lang')}/${LangLoader::get_message('user.offline', 'user-lang')}">
+                        &lt;i class="fa fa-user" aria-hidden="true">&lt;/i>
+                    &lt;/span>
+                    &lt;span class="administrator" itemprop="author">{@layout.messages.login}&lt;/span>
+                    &lt;span class="smaller" aria-label="${LangLoader::get_message('common.see.profile.datas', 'common-lang')}" data-modal data-target="message-user-datas-ID">
+                        &lt;i class="far fa-eye" aria-hidden="true">&lt;/i>
+                    &lt;/span>
                 &lt;/h3>
-                &lt;div class="message-actions">
-                    &lt;a href="UrlAction" aria-label="ActionName">&lt;i class="fa fa-fw fa-action" data-confirmation="delete-element">&lt;/i>&lt;/a>
+                &lt;div class="controls message-user-infos-preview">
+                    &lt;a href="#" class="user-group small group-ID offload">&lt;/a>
+                    &lt;span class="pinned administrator small">${LangLoader::get_message('user.administrator', 'user-lang')}&lt;/span>
                 &lt;/div>
             &lt;/div>
             &lt;div class="message-infos">
-                &lt;time datetime="Date" itemprop="datePublished">Date&lt;/time>
-                &lt;a href="UrlAnchor" aria-label="${LangLoader::get_message('comment.link.to.anchor', 'comment-lang')}">AnchorName&lt;/a>
+                &lt;time datetime="{TODAY_TIME}" itemprop="datePublished">{TODAY_TIME}&lt;/time>
+                &lt;a href="#ID" class="copy-link-to-clipboard" aria-label="${LangLoader::get_message('common.copy.link.to.clipboard', 'common-lang')}">\#ID&lt;/a>
             &lt;/div>
         &lt;/div>
     &lt;/header>
-
-    &lt;div class="message-content">
-        ...
+    &lt;div id="message-user-datas-ID" class="modal modal-animation">
+        &lt;div class="close-modal" aria-label="${LangLoader::get_message('common.close', 'common-lang')}">&lt;/div>
+        &lt;div class="content-panel cell">
+            &lt;div class="cell-list">
+                &lt;ul>
+                    &lt;li class="li-stretch">
+                        &lt;span>{@layout.messages.level}&lt;/span>
+                        &lt;img src="/images/group/link" alt="alt name" />
+                    &lt;/li>
+                    &lt;li class="li-stretch">
+                        &lt;span>${LangLoader::get_message('common.see.profile', 'common-lang')}&lt;/span>
+                        &lt;a href="#" class="msg-link-pseudo administrator offload">admin&lt;/a>
+                    &lt;/li>
+                    &lt;li class="li-stretch">
+                        &lt;span>${LangLoader::get_message('user.pm', 'user-lang')}&lt;/span>
+                        &lt;a href="#" class="button submit smaller offload">&lt;i class="fa fa-people-arrows" aria-hidden="true">&lt;/i>&lt;/a>
+                    &lt;/li>
+                    &lt;li class="li-stretch">
+                        &lt;span>${LangLoader::get_message('user.email', 'user-lang')}&lt;/span>
+                        &lt;a href="#" class="button submit smaller offload">&lt;i class="fa iboost fa-iboost-email" aria-hidden="true">&lt;/i>&lt;/a>
+                    &lt;/li>
+                    &lt;li>${LangLoader::get_message('user.groups', 'user-lang')} :&lt;/li>
+                    &lt;li class="li-stretch">
+                        &lt;a href="#">Com&lt;/a>
+                        &lt;img src="http://data.babsoweb.com/babsodata/phpboost/graph/group-icon/com.png" alt="group picture" />
+                    &lt;/li>
+                    &lt;li>
+                        &lt;span>{@layout.user.sign}&lt;/span>
+                    &lt;/li>
+                    &lt;li>
+                        &lt;img src="/image/link" alt="alt name" />
+                    &lt;/li>
+                    &lt;li class="li-stretch">
+                        &lt;span>${LangLoader::get_message('user.punishments', 'user-lang')} : 0% &lt;/span>
+                        &lt;span>
+                            &lt;a href="#">&lt;i class="fa fa-exclamation-trianglewarning">&lt;/i>&lt;/a>
+                            &lt;a href="#">&lt;i class="fa fa-user-lock link-color">&lt;/i>&lt;/a>
+                        &lt;/span>
+                    &lt;/li>
+                &lt;/ul>
+            &lt;/div>
+        &lt;/div>
     &lt;/div>
-
-    &lt;div class="message-user-sign">&lt;/div>
-
-    &lt;footer class="message-footer-container">
-        &lt;div class="message-user-assoc">
-            &lt;div class="message-group-level">RankImg - GroupImg&lt;/div>
-            &lt;div class="message-user-rank">UserLevel&lt;/div>
-        &lt;/div>
-        &lt;div class="message-user-management">
-            &lt;div class="">&lt;/div>
-            &lt;div class="message-moderation-level">Lorem ipsum&lt;/div>
-        &lt;/div>
-    &lt;/footer>
-
+    &lt;div class="message-content">
+        &lt;p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi autem sequi quam ab amet culpa nobis vitae rerum laborum nulla!&lt;/p>
+    &lt;/div>
 &lt;/article></code></pre>
             </div>
         </div>

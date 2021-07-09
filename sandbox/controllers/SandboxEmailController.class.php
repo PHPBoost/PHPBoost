@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 08
+ * @version     PHPBoost 6.0 - last update: 2021 07 09
  * @since       PHPBoost 3.0 - 2010 03 12
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -64,25 +64,25 @@ class SandboxEmailController extends ModuleController
 
 		$fieldset = new FormFieldsetHTML('email_properties', $this->lang['email.title']);
 		$this->form->add_fieldset($fieldset);
-		$sender_email = new FormFieldMailEditor('sender_email', $this->lang['email.sender_email'], '');
+		$sender_email = new FormFieldMailEditor('sender_email', $this->lang['email.sender.email'], '');
 		$fieldset->add_field($sender_email);
 
-		$fieldset->add_field(new FormFieldTextEditor('sender_name', $this->lang['email.sender_name'], '', array(), array(new FormFieldConstraintNotEmpty())));
+		$fieldset->add_field(new FormFieldTextEditor('sender_name', $this->lang['email.sender.name'], '', array(), array(new FormFieldConstraintNotEmpty())));
 
-		$recipient_email = new FormFieldMailEditor('recipient_email', $this->lang['email.recipient_email'], '');
+		$recipient_email = new FormFieldMailEditor('recipient_email', $this->lang['email.recipient.email'], '');
 		$fieldset->add_field($recipient_email);
 
-		$fieldset->add_field(new FormFieldTextEditor('recipient_name', $this->lang['email.recipient_name'], '', array(), array(new FormFieldConstraintNotEmpty())));
+		$fieldset->add_field(new FormFieldTextEditor('recipient_name', $this->lang['email.recipient.name'], '', array(), array(new FormFieldConstraintNotEmpty())));
 		$fieldset->add_field(new FormFieldTextEditor('email_subject', $this->lang['email.subject'], '', array(), array(new FormFieldConstraintNotEmpty())));
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('email_content', $this->lang['email.content'], ''));
 
-		$fieldset = new FormFieldsetHTML('send_configuration', $this->lang['email.smtp_config'], array('description' => $this->lang['email.smtp_config.explain']));
+		$fieldset = new FormFieldsetHTML('send_configuration', $this->lang['email.smtp.config'], array('description' => $this->lang['email.smtp.config.clue']));
 		$this->form->add_fieldset($fieldset);
-		$fieldset->add_field(new FormFieldCheckbox('use_smtp', $this->lang['email.use_smtp'], false,
+		$fieldset->add_field(new FormFieldCheckbox('use_smtp', $this->lang['email.use.smtp'], false,
 			array('events' => array('click' => 'if ($FF("use_smtp").getValue()) { $FFS("smtp_configuration").enable(); } else { $FFS("smtp_configuration").disable(); }'))));
 
 
-		$fieldset = new FormFieldsetHTML('smtp_configuration', $this->lang['email.smtp_configuration'], array('disabled' => true));
+		$fieldset = new FormFieldsetHTML('smtp_configuration', $this->lang['email.smtp.configuration'], array('disabled' => true));
 		$this->form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('smtp_host', $this->lang['email.smtp.host'], '', array('disabled' => true), array(new FormFieldConstraintRegex('`^[a-z0-9-]+(?:\.[a-z0-9-]+)*$`iu'))));
@@ -90,8 +90,8 @@ class SandboxEmailController extends ModuleController
 		$fieldset->add_field(new FormFieldTextEditor('smtp_login', $this->lang['email.smtp.login'], '', array('disabled' => true), array(new FormFieldConstraintNotEmpty())));
 		$fieldset->add_field(new FormFieldPasswordEditor('smtp_password', $this->lang['email.smtp.password'], '', array('disabled' => true)));
 
-		$select_option = new FormFieldSelectChoiceOption($this->lang['email.smtp.secure_protocol.none'], 'none');
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('secure_protocol', $this->lang['email.smtp.secure_protocol'], $select_option, array($select_option, new FormFieldSelectChoiceOption($this->lang['email.smtp.secure_protocol.tls'], 'tls'), new FormFieldSelectChoiceOption($this->lang['email.smtp.secure_protocol.ssl'], 'ssl')), array('disabled' => true)));
+		$select_option = new FormFieldSelectChoiceOption($this->lang['email.smtp.secure.protocol.none'], 'none');
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('secure_protocol', $this->lang['email.smtp.secure.protocol'], $select_option, array($select_option, new FormFieldSelectChoiceOption($this->lang['email.smtp.secure.protocol.tls'], 'tls'), new FormFieldSelectChoiceOption($this->lang['email.smtp.secure.protocol.ssl'], 'ssl')), array('disabled' => true)));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$this->form->add_button($this->submit_button);
@@ -138,11 +138,11 @@ class SandboxEmailController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->common_lang['title.email'], $this->common_lang['sandbox.module.title']);
+		$graphical_environment->set_page_title($this->common_lang['sandbox.email'], $this->common_lang['sandbox.module.title']);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->common_lang['sandbox.module.title'], SandboxUrlBuilder::home()->rel());
-		$breadcrumb->add($this->common_lang['title.email'], SandboxUrlBuilder::email()->rel());
+		$breadcrumb->add($this->common_lang['sandbox.email'], SandboxUrlBuilder::email()->rel());
 
 		return $response;
 	}

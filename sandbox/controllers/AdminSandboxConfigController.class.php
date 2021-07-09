@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 07 09
  * @since       PHPBoost 5.1 - 2017 09 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -45,12 +45,12 @@ class AdminSandboxConfigController extends AdminModuleController
 
 		$view->put('FORM', $this->form->display());
 
-		return new AdminSandboxDisplayResponse($view, $this->lang['mini.config.title']);
+		return new AdminSandboxDisplayResponse($view, $this->lang['sandbox.config.module.title']);
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('config', 'sandbox');
+		$this->lang = LangLoader::get('common', 'sandbox');
 		$this->config = SandboxConfig::load();
 	}
 
@@ -59,7 +59,7 @@ class AdminSandboxConfigController extends AdminModuleController
 		$menu_lang = LangLoader::get('menu-lang');
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('config', $this->lang['mini.config.title']);
+		$fieldset = new FormFieldsetHTML('config', $this->lang['sandbox.config.module.title']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('menu_opening_type', $menu_lang['menu.push.opening.type'], $this->config->get_menu_opening_type(),
@@ -89,7 +89,7 @@ class AdminSandboxConfigController extends AdminModuleController
 			array('class' => 'custom-checkbox')
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('superadmin_enabled', $this->lang['mini.superadmin.enabled'], $this->config->get_superadmin_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('superadmin_enabled', $this->lang['sandbox.superadmin.enabled'], $this->config->get_superadmin_enabled(),
 			array(
 				'class' => 'custom-checkbox',
 				'events' => array('click' => '
@@ -102,7 +102,7 @@ class AdminSandboxConfigController extends AdminModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldAjaxSearchUserAutoComplete('superadmin_name', $this->lang['mini.superadmin.id'], $this->config->get_superadmin_name(),
+		$fieldset->add_field(new FormFieldAjaxSearchUserAutoComplete('superadmin_name', $this->lang['sandbox.superadmin.id'], $this->config->get_superadmin_name(),
 			array('hidden' => !$this->config->get_superadmin_enabled()),
 			array(new SandboxConstraintUserIsAdmin)
 		));

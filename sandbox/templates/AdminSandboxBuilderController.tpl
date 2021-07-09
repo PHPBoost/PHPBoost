@@ -1,7 +1,7 @@
 <section id="admin-sandbox-builder">
 	<header>
 		<h1>
-			{@sandbox.module.title} - {@title.builder}
+			{@sandbox.module.title} - {@sandbox.forms}
 		</h1>
 	</header>
 

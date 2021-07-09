@@ -1,5 +1,5 @@
 <div id="bbcode-code" class="sandbox-block">
-    <h2>{@bbcode.title.code}</h2>
+    <h2>{@bbcode.blocs.code}</h2>
     <article id="quote-code" class="sandbox-block">
         <header>
             <h5>{@bbcode.quote}</h5>
@@ -16,7 +16,7 @@
             <h5>{@bbcode.hidden}</h5>
         </header>
         <div class="formatter-container formatter-hide no-js">
-            <span class="formatter-title title-perso">{@bbcode.hidden} :</span>
+            <span class="formatter-title">{@bbcode.hidden} :</span>
             <div class="formatter-content">
                 {@lorem.medium.content}
             </div>
@@ -26,9 +26,10 @@
         <header>
             <h5>{@bbcode.code.php}</h5>
         </header>
+        <p>{@bbcode.code.with.html}</p>
         <div class="formatter-container formatter-code">
             <span class="formatter-title">{@bbcode.code.php} : CategoriesCache.class.php</span>
-            <div class="formatter-content">
+            <div class="formatter-content copy-code-content">
 <pre class="language-php line-numbers"><code class="language-php">&lt;?php
 abstract class CategoriesCache implements CacheData
 {
@@ -58,12 +59,12 @@ abstract class CategoriesCache implements CacheData
     </article>
     <!-- Source code -->
     <div class="formatter-container formatter-hide no-js tpl">
-        <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
+        <span class="formatter-title">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="formatter-content">
 <pre class="language-html line-numbers"><code class="language-html">// {@bbcode.quote}
 &lt;blockquote class="formatter-container formatter-blockquote">
-    &lt;span class="formatter-title title-perso">John Doe&lt;/span>
+    &lt;span class="formatter-title">John Doe&lt;/span>
     &lt;div class="formatter-content">
         Lorem ipsum
     &lt;/div>
@@ -88,6 +89,6 @@ abstract class CategoriesCache implements CacheData
 &lt;/div>
 </code></pre>
             </div>
-        </div>        
+        </div>
     </div>
 </div>

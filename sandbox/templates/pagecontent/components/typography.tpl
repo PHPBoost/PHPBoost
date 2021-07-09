@@ -1,9 +1,9 @@
 <div id="component-typography">
-    <h2>{@component.title.typography}</h2>
+    <h2>{@sandbox.typography}</h2>
 
     <article id="component-titles" class="sandbox-block">
         <header>
-            <h5>{@component.titles} {@H|pinned.bbcode}</h5>
+            <h5>{@component.titles} {@H|sandbox.pinned.bbcode}</h5>
         </header>
         <h1>h1. {@component.title} 1</h1>
         <h2>h2. {@component.title} 2</h2>
@@ -15,7 +15,7 @@
 
     <article id="component-sizes" class="sandbox-block">
         <header>
-            <h5>{@component.title.sizes} {@H|pinned.bbcode}</h5>
+            <h5>{@sandbox.sizes} {@H|sandbox.pinned.bbcode}</h5>
         </header>
         <p class="smallest">{@component.item.smallest}</p>
         <p class="smaller">{@component.item.smaller}</p>
@@ -42,7 +42,7 @@
     </article>
     <article id="component-styles" class="sandbox-block">
         <header>
-            <h5>{@component.styles} {@H|pinned.bbcode}</h5>
+            <h5>{@component.styles} {@H|sandbox.pinned.bbcode}</h5>
         </header>
         <p class="text-strong">{@component.item.bold}</p>
         <p class="text-italic">{@component.item.italic}</p>

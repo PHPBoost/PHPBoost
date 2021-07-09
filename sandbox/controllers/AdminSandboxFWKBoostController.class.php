@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 08
+ * @version     PHPBoost 6.0 - last update: 2021 07 09
  * @since       PHPBoost 3.0 - 2012 05 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -30,7 +30,7 @@ class AdminSandboxFWKBoostController extends AdminModuleController
 
 		$this->build_view();
 
-		return new AdminSandboxDisplayResponse($this->view, $this->common_lang['sandbox.module.title'] . ' - ' . $this->common_lang['title.component']);
+		return new AdminSandboxDisplayResponse($this->view, $this->common_lang['sandbox.module.title'] . ' - ' . $this->common_lang['sandbox.components']);
 	}
 
 	private function init()
@@ -61,7 +61,7 @@ class AdminSandboxFWKBoostController extends AdminModuleController
 	private function build_floating_messages()
 	{
 		$floating_messages = new HTMLForm('floating_messages', '', false);
-		$this->floating_messages_button = new FormButtonDefaultSubmit($this->component_lang['component.message.float-display'], 'floating_messages');
+		$this->floating_messages_button = new FormButtonDefaultSubmit($this->component_lang['component.message.float.display'], 'floating_messages');
 		$floating_messages->add_button($this->floating_messages_button);
 		$this->floating_messages = $floating_messages;
 	}
@@ -161,10 +161,10 @@ class AdminSandboxFWKBoostController extends AdminModuleController
 		$this->build_floating_messages();
 		if ($this->floating_messages_button->has_been_submited() && $this->floating_messages->validate()) {
 			$view->put_all(array(
-				'FLOATING_SUCCESS'  => MessageHelper::display($this->component_lang['component.message.float-unlimited'], MessageHelper::SUCCESS, -1),
-				'FLOATING_NOTICE'   => MessageHelper::display($this->component_lang['component.message.float-limited'], MessageHelper::NOTICE, 3),
-				'FLOATING_WARNING'  => MessageHelper::display($this->component_lang['component.message.float-unlimited'], MessageHelper::WARNING, -1),
-				'FLOATING_ERROR'    => MessageHelper::display($this->component_lang['component.message.float-limited'], MessageHelper::ERROR, 6)
+				'FLOATING_SUCCESS'  => MessageHelper::display($this->component_lang['component.message.float.unlimited'], MessageHelper::SUCCESS, -1),
+				'FLOATING_NOTICE'   => MessageHelper::display($this->component_lang['component.message.float.limited'], MessageHelper::NOTICE, 3),
+				'FLOATING_WARNING'  => MessageHelper::display($this->component_lang['component.message.float.unlimited'], MessageHelper::WARNING, -1),
+				'FLOATING_ERROR'    => MessageHelper::display($this->component_lang['component.message.float.limited'], MessageHelper::ERROR, 6)
 			));
 		}
 		$view->put('FLOATING_MESSAGES', $this->floating_messages->display());

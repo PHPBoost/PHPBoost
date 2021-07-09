@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 12
+ * @version     PHPBoost 6.0 - last update: 2021 07 09
  * @since       PHPBoost 5.1 - 2017 09 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -43,7 +43,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 		$this->mini_lang = LangLoader::get('module-mini', 'sandbox');
 		$common_lang = LangLoader::get('common', 'sandbox');
 		$view = new FileTemplate('sandbox/SandboxModuleMiniMenu.tpl');
-		$view->add_lang(array_merge($this->mini_lang, $common_lang));
+		$view->add_lang(array_merge($this->mini_lang, $common_lang, LangLoader::get('form-lang')));
 		$config = SandboxConfig::load();
 
 		MenuService::assign_positions_conditions($view, $this->get_block());

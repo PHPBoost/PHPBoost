@@ -1,7 +1,7 @@
 <section id="module-sandbox-layout">
 	<header class="section-header">
 		<h1>
-			{@sandbox.module.title} - {@layout.title.layouts}
+			{@sandbox.module.title} - {@sandbox.layout}
 		</h1>
 	</header>
 

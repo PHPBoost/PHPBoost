@@ -22,7 +22,7 @@
             <div class="cell-body">
                 <div class="cell-thumbnail">
                     <img src="{U_PICTURE}" alt="{@layout.title}">
-                    <a href="" class="cell-thumbnail-caption"><i class="fa fa-eye"></i></a>
+                    <a href="#" class="cell-thumbnail-caption"><i class="fa fa-eye"></i></a>
                 </div>
                 <div class="cell-content">{@lorem.short.content}</div>
             </div>
@@ -48,7 +48,7 @@
             <div class="cell-body">
                 <div class="cell-thumbnail">
                     <img src="{U_PICTURE}" alt="{@layout.title}">
-                    <a href="" class="cell-thumbnail-caption"><i class="fa fa-eye"></i></a>
+                    <a href="#" class="cell-thumbnail-caption"><i class="fa fa-eye"></i></a>
                 </div>
                 <div class="cell-content">{@lorem.short.content}</div>
             </div>
@@ -117,14 +117,14 @@
                         <option value="">{@layout.item}</option>
                         <option value="">{@layout.item}</option>
                     </select>
-                    <a href="" class="grouped-element"><i class="fa fa-caret-right"></i></a>
+                    <a href="#" class="grouped-element"><i class="fa fa-caret-right"></i></a>
                 </div>
             </div>
             <div class="cell-textarea">
 				<textarea name="textarea" rows="3">Textarea : {@lorem.short.content}</textarea>
             </div>
-            <div class="cell-form cell-center">
-                <fieldset class="fieldset-submit">
+            <div class="cell-form">
+                <fieldset class="fieldset-submit cell-center">
                     <button type="submit" class="button submit" name="submit" value="true">{@layout.item}</button>
                     <button type="reset" class="button reset-button" value="true">{@layout.item}</button>
                 </fieldset>
@@ -137,7 +137,7 @@
             <div class="cell-body">
                 <div class="cell-thumbnail">
                     <img src="{U_PICTURE}" alt="{@layout.title}">
-                    <a href="" class="cell-thumbnail-caption"><i class="fa fa-eye"></i></a>
+                    <a href="#" class="cell-thumbnail-caption"><i class="fa fa-eye"></i></a>
                 </div>
                 <div class="cell-content">{@lorem.medium.content}</div>
             </div>
@@ -163,7 +163,7 @@
         </article>
         <article class="cell">
             <header class="cell-header">
-                <h6 class="cell-name">{@layout.title.table}</h6>
+                <h6 class="cell-name">{@layout.sandbox.table}</h6>
             </header>
             <div class="cell-table">
                 <table class="table">
