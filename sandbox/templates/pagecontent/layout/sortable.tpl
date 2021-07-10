@@ -4,6 +4,7 @@
         <header>
             <h5>{@layout.sortables}</h5>
         </header>
+        <div class="more">{@layout.sortables.description}</div>
         <div class="content">
             <form action="/workspace/phpboost/pbt-53/trunk/news/categories/" method="post" onsubmit="serialize_sortable();">
                 <fieldset>
@@ -23,7 +24,7 @@
                                         <i class="fa fa-fw fa-user-shield" aria-hidden="true"></i>
                                     </a>
                                     <a href="#" aria-label="${LangLoader::get_message('common.edit', 'common-lang')}"><i class="far fa-edit" aria-hidden="true"></i></a>
-                                    <a href="#" aria-label="${LangLoader::get_message('common.delete', 'common-lang')}" data-confirmation="{@layout.delete.confirmation}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+                                    <a href="#" aria-label="${LangLoader::get_message('common.delete', 'common-lang')}" data-confirmation="{@delete-element}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
                                 </div>
                                 <ul id="subcat-1" class="sortable-block">
                                     <li id="cat-2" class="sortable-element" data-id="2">
@@ -38,7 +39,7 @@
                                                 <i class="fa fa-fw fa-user-shield" aria-hidden="true"></i>
                                             </a>
                                             <a href="#" aria-label="${LangLoader::get_message('common.edit', 'common-lang')}"><i class="far fa-edit" aria-hidden="true"></i></a>
-                                            <a href="#" aria-label="${LangLoader::get_message('common.delete', 'common-lang')}" data-confirmation="{@layout.delete.confirmation}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+                                            <a href="#" aria-label="${LangLoader::get_message('common.delete', 'common-lang')}" data-confirmation="delete-element"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
                                         </div>
                                         <ul id="subcat-2" class="sortable-block"></ul>
                                     </li>
@@ -56,7 +57,7 @@
                                         <i class="fa fa-fw fa-user-shield warning" aria-hidden="true"></i>
                                     </a>
                                     <a href="#" aria-label="${LangLoader::get_message('common.edit', 'common-lang')}"><i class="far fa-edit" aria-hidden="true"></i></a>
-                                    <a href="#" aria-label="${LangLoader::get_message('common.delete', 'common-lang')}" data-confirmation="{@layout.delete.confirmation}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+                                    <a href="#" aria-label="${LangLoader::get_message('common.delete', 'common-lang')}" data-confirmation="{@delete-element}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
                                 </div>
                                 <ul id="subcat-3" class="sortable-block"></ul>
                             </li>
@@ -64,7 +65,7 @@
                     </div>
                 </fieldset>
                 <fieldset class="fieldset-submit">
-                    <button type="submit" class="button submit" name="submit" value="true">Change positions</button>
+                    <button type="submit" class="button submit" name="submit" value="true">${LangLoader::get_message('form.submit', 'form-lang')}</button>
                     <input type="hidden" name="token" value="5b548e3ec5255af9">
                     <input type="hidden" name="tree" id="tree" value="">
                 </fieldset>
@@ -109,7 +110,7 @@
                 &lt;i class="fa fa-fw fa-user-shield" aria-hidden="true">&lt;/i>
             &lt;/a>
             &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/1/edit/" aria-label="${LangLoader::get_message('common.edit', 'common-lang')}">&lt;i class="far fa-edit" aria-hidden="true">&lt;/i>&lt;/a>
-            &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/1/delete/" aria-label="${LangLoader::get_message('common.delete', 'common-lang')}" data-confirmation="{@layout.delete.confirmation}">&lt;i class="far fa-trash-alt" aria-hidden="true">&lt;/i>&lt;/a>
+            &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/1/delete/" aria-label="${LangLoader::get_message('common.delete', 'common-lang')}" data-confirmation="{@delete-element}">&lt;i class="far fa-trash-alt" aria-hidden="true">&lt;/i>&lt;/a>
         &lt;/div>
         &lt;ul id="subcat-1" class="sortable-block">
             &lt;li id="cat-2" class="sortable-element" data-id="2">
@@ -124,7 +125,7 @@
                         &lt;i class="fa fa-fw fa-user-shield" aria-hidden="true">&lt;/i>
                     &lt;/a>
                     &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/2/edit/" aria-label="${LangLoader::get_message('common.edit', 'common-lang')}">&lt;i class="far fa-edit" aria-hidden="true">&lt;/i>&lt;/a>
-                    &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/2/delete/" aria-label="${LangLoader::get_message('common.delete', 'common-lang')}" data-confirmation="{@layout.delete.confirmation}">&lt;i class="far fa-trash-alt" aria-hidden="true">&lt;/i>&lt;/a>
+                    &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/2/delete/" aria-label="${LangLoader::get_message('common.delete', 'common-lang')}" data-confirmation="{@delete-element}">&lt;i class="far fa-trash-alt" aria-hidden="true">&lt;/i>&lt;/a>
                 &lt;/div>
                 &lt;ul id="subcat-2" class="sortable-block">&lt;/ul>
             &lt;/li>
@@ -142,7 +143,7 @@
                 &lt;i class="fa fa-fw fa-user-shield warning" aria-hidden="true">&lt;/i>
             &lt;/a>
             &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/3/edit/" aria-label="${LangLoader::get_message('common.edit', 'common-lang')}">&lt;i class="far fa-edit" aria-hidden="true">&lt;/i>&lt;/a>
-            &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/3/delete/" aria-label="${LangLoader::get_message('common.delete', 'common-lang')}" data-confirmation="{@layout.delete.confirmation}">&lt;i class="far fa-trash-alt" aria-hidden="true">&lt;/i>&lt;/a>
+            &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/3/delete/" aria-label="${LangLoader::get_message('common.delete', 'common-lang')}" data-confirmation="{@delete-element}">&lt;i class="far fa-trash-alt" aria-hidden="true">&lt;/i>&lt;/a>
         &lt;/div>
         &lt;ul id="subcat-3" class="sortable-block">&lt;/ul>
     &lt;/li>

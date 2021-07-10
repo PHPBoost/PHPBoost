@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 09
+ * @version     PHPBoost 6.0 - last update: 2021 07 10
  * @since       PHPBoost 5.2 - 2020 05 22
 */
 
@@ -51,9 +51,9 @@ $lang['layout.messages.level']    = 'Administrator';
 $lang['layout.user.sign']         = 'Membre signature';
 
 // Sortables
-$lang['layout.sortables']           = 'Sortable elements';
-$lang['layout.sortables.legend']    = 'Elements list';
-$lang['layout.delete.confirmation'] = 'Do you really want to delete this element?';
+$lang['layout.sortables']             = 'Sortable elements';
+$lang['layout.sortables.legend']      = 'Elements list';
+$lang['layout.sortables.description'] = '!! Movings are disabled !!';
 
 $lang['layout.sortable.dnd']    = 'Drag & Drop';
 $lang['layout.static.sortable'] = 'Psotioned element';
