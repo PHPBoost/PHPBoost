@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 09
+ * @version     PHPBoost 6.0 - last update: 2021 07 11
  * @since       PHPBoost 5.2 - 2020 05 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -292,7 +292,7 @@ class SandboxBuilderController extends ModuleController
 			));
 
 		// MISCELLANEOUS
-		$miscellaneous = new FormFieldsetHTML('miscellaneous', $this->lang['sandbox.miscellaneous']);
+		$miscellaneous = new FormFieldsetHTML('miscellaneous', $this->common_lang['sandbox.miscellaneous']);
 			$form->add_fieldset($miscellaneous);
 
 			// HIDDEN
