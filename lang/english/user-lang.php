@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 30
+ * @version     PHPBoost 6.0 - last update: 2021 07 11
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -151,7 +151,7 @@ $lang['user.moderator']      = 'Moderator';
 $lang['user.moderators']     = 'Moderators';
 $lang['user.administrator']  = 'Administrator';
 $lang['user.administrators'] = 'Administrators';
-$lang['user.referee']     = 'Referee';
+$lang['user.referee']        = 'Referee';
 $lang['user.sex']            = 'Sex';
 $lang['user.male']           = 'Male';
 $lang['user.female']         = 'Female';
@@ -338,15 +338,15 @@ $lang['user.extended.field.pm.to.mail.clue'] = '';
 $lang['user.extended.field.birth.date']      = 'Birth date';
 $lang['user.extended.field.birth.date.clue'] = '';
 
-$lang['user.extended.field.avatar']                    = 'Avatar';
+$lang['user.extended.field.avatar']             = 'Avatar';
 $lang['user.extended.field.no.avatar']          = 'No avatar';
-$lang['user.extended.field.avatar.clue']               = '';
+$lang['user.extended.field.avatar.clue']        = '';
 $lang['user.extended.field.current.avatar']     = 'Current avatar';
 $lang['user.extended.field.upload.avatar']      = 'Upload an avatar';
 $lang['user.extended.field.upload.avatar.clue'] = 'Avatar hosted on the server';
-$lang['user.extended.field.avatar.link']               = 'Avatar link';
-$lang['user.extended.field.avatar.link.clue']          = 'Url of the avatar';
-$lang['user.extended.field.avatar.delete']             = 'Delete current avatar';
+$lang['user.extended.field.avatar.link']        = 'Avatar link';
+$lang['user.extended.field.avatar.link.clue']   = 'Url of the avatar';
+$lang['user.extended.field.avatar.delete']      = 'Delete current avatar';
 
 $lang['user.extended.field.location']      = 'Location';
 $lang['user.extended.field.location.clue'] = '';
@@ -366,22 +366,22 @@ $lang['user.extended.field.website']      = 'Website';
 $lang['user.extended.field.website.clue'] = 'Please enter a valid url (ex : https://www.phpboost.com)';
 
 // Fields type
-$lang['user.field.type.short.text'] = 'Short text (max 255 characters)';
-$lang['user.field.type.long.text'] = 'Long text (unlimited)';
-$lang['user.field.type.half.text'] = 'Medium text';
-$lang['user.field.type.simple.select'] = 'Single selection (between several values)';
+$lang['user.field.type.short.text']      = 'Short text (max 255 characters)';
+$lang['user.field.type.long.text']       = 'Long text (unlimited)';
+$lang['user.field.type.half.text']       = 'Medium text';
+$lang['user.field.type.simple.select']   = 'Single selection (between several values)';
 $lang['user.field.type.multiple.select'] = 'Multiple selection (between several values)';
-$lang['user.field.type.simple.check'] = 'Single choice (between several values)';
-$lang['user.field.type.multiple.check'] = 'Multiple choice (between several values)';
-$lang['user.field.type.date'] = 'Date';
-$lang['user.field.type.theme.choice'] = 'Theme';
-$lang['user.field.type.lang.choice'] = 'Language';
-$lang['user.field.type.born'] = 'Date of birth';
-$lang['user.field.type.pm.eomail'] = 'Email notification when receiving PM';
-$lang['user.field.type.editor'] = 'Editor';
-$lang['user.field.type.timezone'] = 'Timezone choice';
-$lang['user.field.type.sex'] = 'Sex';
-$lang['user.field.type.avatar'] = 'Avatar';
+$lang['user.field.type.simple.check']    = 'Single choice (between several values)';
+$lang['user.field.type.multiple.check']  = 'Multiple choice (between several values)';
+$lang['user.field.type.date']            = 'Date';
+$lang['user.field.type.theme.choice']    = 'Theme';
+$lang['user.field.type.lang.choice']     = 'Language';
+$lang['user.field.type.born']            = 'Date of birth';
+$lang['user.field.type.pm.eomail']       = 'Email notification when receiving PM';
+$lang['user.field.type.editor']          = 'Editor';
+$lang['user.field.type.timezone']        = 'Timezone choice';
+$lang['user.field.type.sex']             = 'Sex';
+$lang['user.field.type.avatar']          = 'Avatar';
 
 // Moderation
     // Moderation panel

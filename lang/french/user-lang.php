@@ -110,7 +110,7 @@ $lang['user.modos.list']              = 'Liste des modérateurs';
 $lang['user.no.member']               = 'Aucun membre dans ce groupe';
 $lang['user.group.view.list.members'] = 'Voir les membres du groupe';
 $lang['user.group.hide.list.members'] = 'Masquer les membres du groupe';
-    // configuration
+    // Configuration
 $lang['user.groups.management']    = 'Gestion des groupes';
 $lang['user.edit.group']           = 'Modifier le groupe';
 $lang['user.add.group']            = 'Ajouter un groupe';
@@ -151,7 +151,7 @@ $lang['user.moderator']      = 'Modérateur';
 $lang['user.moderators']     = 'Modérateurs';
 $lang['user.administrator']  = 'Administrateur';
 $lang['user.administrators'] = 'Administrateurs';
-$lang['user.referee']     = 'Responsable';
+$lang['user.referee']        = 'Responsable';
 $lang['user.sex']            = 'Sexe';
 $lang['user.male']           = 'Homme';
 $lang['user.female']         = 'Femme';
@@ -322,10 +322,10 @@ $lang['user.message.success.delete']        = 'L\'utilisateur <b>:name</b> a ét
 $lang['user.message.success.delete.member'] = 'Votre compte a été supprimé';
 
 // Extended Fields
-$lang['user.extended.fields.management']            = 'Gestion des champs du profil';
-$lang['user.extended.field.add']                    = 'Ajouter un champ au profil';
-$lang['user.extended.field.edit']                   = 'Editer un champ du profil';
-$lang['user.extended.field']                        = 'Champs du profil';
+$lang['user.extended.fields.management']           = 'Gestion des champs du profil';
+$lang['user.extended.field.add']                   = 'Ajouter un champ au profil';
+$lang['user.extended.field.edit']                  = 'Editer un champ du profil';
+$lang['user.extended.field']                       = 'Champs du profil';
 $lang['user.extended.field.error.already.exists']  = 'Le champ existe déjà.';
 $lang['user.extended.field.error.phpboost.config'] = 'Les champs utilisés par défaut par PHPBoost ne peuvent pas être créés plusieurs fois, veuillez choisir un autre type de champ.';
 
@@ -338,15 +338,15 @@ $lang['user.extended.field.pm.to.mail.clue'] = '';
 $lang['user.extended.field.birth.date']      = 'Date de naissance';
 $lang['user.extended.field.birth.date.clue'] = '';
 
-$lang['user.extended.field.avatar']                    = 'Avatar';
+$lang['user.extended.field.avatar']             = 'Avatar';
 $lang['user.extended.field.no.avatar']          = 'Aucun avatar';
-$lang['user.extended.field.avatar.clue']               = '';
+$lang['user.extended.field.avatar.clue']        = '';
 $lang['user.extended.field.current.avatar']     = 'Avatar actuel';
 $lang['user.extended.field.upload.avatar']      = 'Uploader un avatar';
 $lang['user.extended.field.upload.avatar.clue'] = 'Avatar directement hébergé sur le serveur';
-$lang['user.extended.field.avatar.link']               = 'Lien de l\'avatar';
-$lang['user.extended.field.avatar.link.clue']          = 'Adresse directe de l\'avatar';
-$lang['user.extended.field.avatar.delete']             = 'Supprimer l\'avatar courant';
+$lang['user.extended.field.avatar.link']        = 'Lien de l\'avatar';
+$lang['user.extended.field.avatar.link.clue']   = 'Adresse directe de l\'avatar';
+$lang['user.extended.field.avatar.delete']      = 'Supprimer l\'avatar courant';
 
 $lang['user.extended.field.location']      = 'Localisation';
 $lang['user.extended.field.location.clue'] = '';
@@ -366,22 +366,22 @@ $lang['user.extended.field.website']      = 'Site internet';
 $lang['user.extended.field.website.clue'] = 'Veuillez renseigner un site web valide (ex : https://www.phpboost.com)';
 
 // Fields type
-$lang['user.field.type.short.text'] = 'Texte court (max 255 caractères)';
-$lang['user.field.type.long.text'] = 'Texte long (illimité)';
-$lang['user.field.type.half.text'] = 'Texte semi long';
-$lang['user.field.type.simple.select'] = 'Sélection unique (parmi plusieurs valeurs)';
+$lang['user.field.type.short.text']      = 'Texte court (max 255 caractères)';
+$lang['user.field.type.long.text']       = 'Texte long (illimité)';
+$lang['user.field.type.half.text']       = 'Texte semi long';
+$lang['user.field.type.simple.select']   = 'Sélection unique (parmi plusieurs valeurs)';
 $lang['user.field.type.multiple.select'] = 'Sélection multiple (parmi plusieurs valeurs)';
-$lang['user.field.type.simple.check'] = 'Choix unique (parmi plusieurs valeurs)';
-$lang['user.field.type.multiple.check'] = 'Choix multiples (parmi plusieurs valeurs)';
-$lang['user.field.type.date'] = 'Date';
-$lang['user.field.type.theme.choice'] = 'Choix des thèmes';
-$lang['user.field.type.lang.choice'] = 'Choix des langues';
-$lang['user.field.type.born'] = 'Date de naissance';
-$lang['user.field.type.pm.email'] = 'Notification par email à la réception d\'un MP';
-$lang['user.field.type.editor'] = 'Choix de l\'éditeur';
-$lang['user.field.type.timezone'] = 'Choix du fuseau horaire';
-$lang['user.field.type.sex'] = 'Choix du sexe';
-$lang['user.field.type.avatar'] = 'Gestion de l\'avatar';
+$lang['user.field.type.simple.check']    = 'Choix unique (parmi plusieurs valeurs)';
+$lang['user.field.type.multiple.check']  = 'Choix multiples (parmi plusieurs valeurs)';
+$lang['user.field.type.date']            = 'Date';
+$lang['user.field.type.theme.choice']    = 'Choix des thèmes';
+$lang['user.field.type.lang.choice']     = 'Choix des langues';
+$lang['user.field.type.born']            = 'Date de naissance';
+$lang['user.field.type.pm.email']        = 'Notification par email à la réception d\'un MP';
+$lang['user.field.type.editor']          = 'Choix de l\'éditeur';
+$lang['user.field.type.timezone']        = 'Choix du fuseau horaire';
+$lang['user.field.type.sex']             = 'Choix du sexe';
+$lang['user.field.type.avatar']          = 'Gestion de l\'avatar';
 
 // Moderation
     // Moderation panel
