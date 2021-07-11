@@ -60,6 +60,7 @@ h6.formatter-title { font-size: 2.0rem; margin-left: 6.472rem; }
 	transform: scaleY(0);
 	transition: transform 0.15s linear;
 	transform-origin: 50% 0;
+	margin-top: 0.618em;
 }
 
 .formatter-show .formatter-content,
@@ -83,6 +84,7 @@ h6.formatter-title { font-size: 2.0rem; margin-left: 6.472rem; }
 	border-width: 1px;
 	border-style: solid;
 	border-color: transparent;
+	margin-top: 0.618em;
 }
 
 .formatter-show .formatter-hide-message { display: none; }
@@ -91,7 +93,7 @@ h6.formatter-title { font-size: 2.0rem; margin-left: 6.472rem; }
 	padding: 0.228em 1em;
 	position: absolute;
 	display: none;
-	top: -0.618em;
+	top: 0;
 	right: 0;
 	font-size: 0.8em;
 	font-style: italic;
