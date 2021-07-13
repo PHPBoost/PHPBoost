@@ -110,6 +110,7 @@ h6.formatter-title { font-size: 2.0rem; margin-left: 6.472rem; }
 .formatter-code .formatter-content {
 	overflow: auto;
 	max-height: 500px;
+	clear: both;
 }
 
 .copy-code-content { border-style: dashed; }
