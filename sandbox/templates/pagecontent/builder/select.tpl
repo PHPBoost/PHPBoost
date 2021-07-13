@@ -1,7 +1,7 @@
 <div class="formatter-container formatter-hide no-js tpl">
     <span class="formatter-title title-perso">{@sandbox.source.code} : select</span>
     <div class="formatter-content formatter-code">
-        <div class="formatter-content"><pre class="language-html line-numbers"><code class="language-html">&lt;div class="form-element">
+        <div class="no-style"><pre class="language-html line-numbers"><code class="language-html">&lt;div class="form-element">
     &lt;label for="[ID]">...&lt;/label>
     &lt;div class="form-field form-field-select"> //  || form-field-multi-select
         &lt;select name="[NAME]" id="[ID]"> // class="select-to-list" for options with images/font-icons / || name="[NAME][]" && multiple="multiple" for multiple options

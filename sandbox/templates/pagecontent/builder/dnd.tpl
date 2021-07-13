@@ -1,7 +1,7 @@
 <div class="formatter-container formatter-hide no-js tpl">
     <span class="formatter-title title-perso">{@sandbox.source.code} : drag and drop / upload</span>
     <div class="formatter-content formatter-code">
-        <div class="formatter-content"><pre class="language-html line-numbers"><code class="language-html">&lt;div class="dnd-area">
+        <div class="no-style"><pre class="language-html line-numbers"><code class="language-html">&lt;div class="dnd-area">
     &lt;div class="dnd-dropzone">
         &lt;label for="inputfiles" class="dnd-label">
             \# IF C_MULTIPLE \#

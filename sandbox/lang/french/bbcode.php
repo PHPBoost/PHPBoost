@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 09
+ * @version     PHPBoost 6.0 - last update: 2021 07 13
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -46,7 +46,7 @@ $lang['bbcode.blocs.code']     = 'Blocs code';
 $lang['bbcode.quote']          = 'Citation';
 $lang['bbcode.hidden']         = 'Caché';
 $lang['bbcode.code.php']       = 'Code';
-$lang['bbcode.code.with.html'] = 'Contrairement au bbcode qui utilise la librairie geshi.php, en HTML, phpboost utilise la librairie prism.js';
+$lang['bbcode.code.with.html'] = 'Contrairement au bbcode qui utilise la librairie geshi.php, PHPBoost utilise la librairie prism.js en HTML.';
 
 $lang['bbcode.table']             = 'Tableaux';
 $lang['bbcode.table.header']      = 'Entête';

@@ -13,7 +13,7 @@
                             <li class="sub">
                                 <a class="parent" href="#">
                                     <i class="far fa-minus-square" id="img2_2"></i> <i class="fa fa-fw fa-folder-open" id="img_2"></i>
-                                </a> 
+                                </a>
                                 <a class="selected" id="class_2" href="#">{@component.cat} 2</a>
                                 <ul>
                                     <li class="sub"><a href="#"><i class="fa fa-fw fa-folder"></i> {@component.cat} 3</a></li>
@@ -42,7 +42,7 @@
     <div class="formatter-container formatter-hide no-js tpl">
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
-            <div class="formatter-content">
+            <div class="no-style">
 <pre class="language-html line-numbers"><code class="language-html">&lt;div class="explorer">
     &lt;div class="cats">
             &lt;h2>{@component.explorer}&lt;/h2>

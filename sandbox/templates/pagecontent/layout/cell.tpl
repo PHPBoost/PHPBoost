@@ -200,7 +200,7 @@
     <div class="formatter-container formatter-hide no-js tpl">
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
-            <div class="formatter-content">
+            <div class="no-style">
 <pre class="language-html line-numbers"><code class="language-html">// header
 &lt;div class="cell-header">
     &lt;h1 class="cell-name">...&lt;/h1>

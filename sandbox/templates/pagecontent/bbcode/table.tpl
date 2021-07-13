@@ -23,7 +23,7 @@
     <div class="formatter-container formatter-hide no-js tpl">
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
-            <div class="formatter-content">
+            <div class="no-style">
 <pre class="language-html"><code class="language-html">&lt;table class="table formatter-table">
     &lt;tbody>
         &lt;tr class="formatter-table-row">

@@ -17,7 +17,7 @@
     <div class="formatter-container formatter-hide no-js">
         <span class="formatter-title">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
-            <div class="formatter-content">
+            <div class="no-style">
 <pre class="language-html"><code class="language-html">&lt;h2 class="formatter-title">{@bbcode.title} 1&lt;/h2>
 &lt;h3 class="formatter-title">{@bbcode.title} 2&lt;/h3>
 &lt;h4 class="formatter-title">{@bbcode.title} 3&lt;/h4>

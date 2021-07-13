@@ -25,7 +25,7 @@
     <div class="formatter-container formatter-hide no-js tpl">
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
-            <div class="formatter-content"><pre class="language-html line-numbers"><code class="language-html">&lt;ul class="sortable-block">
+            <div class="no-style"><pre class="language-html line-numbers"><code class="language-html">&lt;ul class="sortable-block">
     &lt;li class="sortable-element">
         &lt;div class="sortable-selector" aria-label="{@component.sortable.move}">&lt;/div>
         &lt;div class="sortable-title">
@@ -43,6 +43,6 @@
     &lt;/li>
 &lt;/ul></code></pre>
             </div>
-        </div>        
+        </div>
     </div>
 </article>

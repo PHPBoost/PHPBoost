@@ -28,7 +28,7 @@
         <div class="formatter-container formatter-hide no-js">
             <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
             <div class="formatter-content formatter-code">
-                <div class="formatter-content">
+                <div class="no-style">
 <pre class="language-html line-numbers"><code class="language-html">&lt;span class="smallest">{@component.item.smallest}&lt;/span>
 &lt;span class="smaller">{@component.item.smaller}&lt;/span>
 &lt;span class="small">{@component.item.small}&lt;/span>
@@ -64,7 +64,7 @@
         <div class="formatter-container formatter-hide no-js">
             <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
             <div class="formatter-content formatter-code">
-                <div class="formatter-content">
+                <div class="no-style">
 <pre class="language-html line-numbers"><code class="language-html">&lt;p class="text-strong">{@component.item.bold}&lt;/p>
 &lt;p class="text-italic">{@component.item.italic}&lt;/p>
 &lt;p class="text-underline">{@component.item.underline}&lt;/p>

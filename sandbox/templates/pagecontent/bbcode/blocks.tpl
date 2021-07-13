@@ -21,7 +21,7 @@
     <div class="formatter-container formatter-hide no-js">
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
-            <div class="formatter-content">
+            <div class="no-style">
 <pre class="language-html line-numbers"><code class="language-html">// {@bbcode.block}
 &lt;div class="formatter-container formatter-block">Lorem ipsum&lt;/div>
 <br />

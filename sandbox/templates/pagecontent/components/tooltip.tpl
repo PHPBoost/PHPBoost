@@ -24,12 +24,12 @@
     <div class="formatter-container formatter-hide no-js tpl">
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
-            <div class="formatter-content"><pre class="language-html line-numbers"><code class="language-html">// {@component.tooltip}
+            <div class="no-style"><pre class="language-html line-numbers"><code class="language-html">// {@component.tooltip}
 &lt;span aria-label="Lorem ipsum....">Tooltip&lt;/span>
 <br />
 // {@component.tooltip.custom}
 &lt;span data-tooltip="{@component.tooltip.alt.options}" data-tooltip-class="bigger bgc-full error" aria-label="Lorem ipsum....">Tooltip&lt;/span></code></pre>
             </div>
-        </div>        
+        </div>
     </div>
 </article>

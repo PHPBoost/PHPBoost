@@ -58,7 +58,7 @@
     <div class="formatter-container formatter-hide no-js">
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
-            <div class="formatter-content">
+            <div class="no-style">
 <pre class="language-html line-numbers"><code class="language-html">&lt;span class="... notice">lorem ipsum&lt;/span>
 &lt;span class="... bgc notice">lorem ipsum&lt;/span>
 &lt;span class="... bgc-full notice">lorem ipsum&lt;/span></code></pre>

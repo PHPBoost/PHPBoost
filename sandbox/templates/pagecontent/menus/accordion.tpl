@@ -12,7 +12,7 @@
     <div class="formatter-container formatter-hide no-js tpl">
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
-            <div class="formatter-content"><pre class="language-html line-numbers"><code class="language-html">&lt;div class="accordion-container basic"> // basic|siblings
+            <div class="no-style"><pre class="language-html line-numbers"><code class="language-html">&lt;div class="accordion-container basic"> // basic|siblings
     &lt;div class="accordion-controls">
         &lt;span class="open-all-accordions" aria-label="{@menu.accordion.open}">&lt;i class="fa fa-fw fa-chevron-down">&lt;/i>&lt;/span>
         &lt;span class="close-all-accordions" aria-label="{@menu.accordion.close}">&lt;i class="fa fa-fw fa-chevron-up">&lt;/i>&lt;/span>

@@ -27,9 +27,10 @@
             <h5>{@bbcode.code.php}</h5>
         </header>
         <p>{@bbcode.code.with.html}</p>
-        <div class="formatter-container formatter-code">
-            <span class="formatter-title">{@bbcode.code.php} : CategoriesCache.class.php</span>
-            <div class="formatter-content copy-code-content">
+        <div class="formatter-container code-php">
+            <span class="formatter-title title-perso">{@bbcode.code.php} : CategoriesCache.class.php</span>
+            <div class="formatter-content formatter-code">
+                <div class="no-style">
 <pre class="language-php line-numbers"><code class="language-php">&lt;?php
 abstract class CategoriesCache implements CacheData
 {
@@ -54,6 +55,7 @@ abstract class CategoriesCache implements CacheData
     }
 }
 ?></code></pre>
+                </div>
             </div>
         </div>
     </article>
@@ -61,7 +63,7 @@ abstract class CategoriesCache implements CacheData
     <div class="formatter-container formatter-hide no-js tpl">
         <span class="formatter-title">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
-            <div class="formatter-content">
+            <div class="no-style">
 <pre class="language-html line-numbers"><code class="language-html">// {@bbcode.quote}
 &lt;blockquote class="formatter-container formatter-blockquote">
     &lt;span class="formatter-title">John Doe&lt;/span>
@@ -78,13 +80,15 @@ abstract class CategoriesCache implements CacheData
     &lt;/div>
 &lt;/div>
 <br />
-// {@bbcode.code.php}
+// {@bbcode.code.php} (php)
 &lt;div class="formatter-container formatter-code">
     &lt;span class="formatter-title">Code : PHP&lt;/span> <em>// file.ext</em>
-    &lt;div class="formatter-content">
-        &lt;pre class="language-php line-numbers">&lt;code class="language-php"> // class="language-" => php, html, css, bbcode, txt ...
-            [code /]
-        &lt;/code>&lt;/pre>
+    &lt;div class="formatter-content formatter-code">
+        &lt;div class="no-style">
+&lt;pre class="language-php line-numbers">&lt;code class="language-php"> // class="language-" => php, html, css, bbcode, txt ...
+    ...[code /]...
+&lt;/code>&lt;/pre>
+        &lt;/div>
     &lt;/div>
 &lt;/div>
 </code></pre>

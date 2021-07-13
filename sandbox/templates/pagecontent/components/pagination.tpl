@@ -10,7 +10,7 @@
     <div class="formatter-container formatter-hide no-js tpl">
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
-            <div class="formatter-content"><pre class="language-html line-numbers"><code class="language-html">&lt;nav class="pagination">
+            <div class="no-style"><pre class="language-html line-numbers"><code class="language-html">&lt;nav class="pagination">
     &lt;ul> // class="light-pagination"
         &lt;li class="pagination-item">
             &lt;a href="#" rel="prev" aria-label="{@component.pagination.prev}" class="prev-page">&lt;i class="fa fa-angle-left">&lt;/i>&lt;/a>
@@ -30,6 +30,6 @@
     &lt;/ul>
 &lt;/nav></code></pre>
             </div>
-        </div>        
+        </div>
     </div>
 </article>

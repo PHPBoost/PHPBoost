@@ -78,7 +78,7 @@
     <div class="formatter-container formatter-hide no-js tpl">
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
-            <div class="formatter-content">
+            <div class="no-style">
 <pre class="language-html line-numbers"><code class="language-html">// {@layout.grid.free}
 &lt;div class="cell-flex">
     &lt;article class="cell">... &lt;/article>
