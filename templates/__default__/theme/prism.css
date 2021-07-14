@@ -8,9 +8,11 @@
  * Contains links menu properties for menus built with MenuMaker
 */
 
-pre[class*="language-"] {
-	overflow-x: auto;
-}
+pre[class*="language-"] { overflow-x: auto; }
+
+.copy-code-content pre[class*="language-"] { padding-bottom: 1.618em; }
+
+code[class*="language-"] { padding: 0 0.309em 0.228em; }
 
 code[class*="language-"],
 pre[class*="language-"] {
@@ -61,8 +63,7 @@ pre[class*="language-"] {
 
 /* Inline code */
 :not(pre) > code[class*="language-"] {
-	padding: .1em;
-	border-radius: .3em;
+	border-radius: 0.309em;
 	white-space: normal;
 }
 

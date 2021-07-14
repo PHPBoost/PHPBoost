@@ -98,6 +98,7 @@ body {
 /* --- Source code ---------------------------------------------------------- */
 .copy-code { float: none; }
 
-.formatter-show .formatter-content .formatter-content { padding: 0; max-height: none; border-width: 0; }
-
-.formatter-content.formatter-code { text-align: right;}
+.formatter-content.formatter-code {
+	text-align: right;
+	margin-bottom: 1.618em;
+}
