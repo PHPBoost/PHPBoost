@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 07 14
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -190,8 +190,8 @@ class AdminWebConfigController extends AdminModuleController
 			new FormFieldSelectChoiceOption($common_lang['common.creation.date'] . ' - ' . $common_lang['common.sort.desc'], WebItem::SORT_DATE . '-' . WebItem::DESC),
 			new FormFieldSelectChoiceOption($common_lang['common.sort.by.alphabetic'] . ' - ' . $common_lang['common.sort.asc'], WebItem::SORT_ALPHABETIC . '-' . WebItem::ASC),
 			new FormFieldSelectChoiceOption($common_lang['common.sort.by.alphabetic'] . ' - ' . $common_lang['common.sort.desc'], WebItem::SORT_ALPHABETIC . '-' . WebItem::DESC),
-			new FormFieldSelectChoiceOption($this->lang['web.config.sort.type.visits'] . ' - ' . $common_lang['sort.asc'], WebItem::SORT_NUMBER_VISITS . '-' . WebItem::ASC),
-			new FormFieldSelectChoiceOption($this->lang['web.config.sort.type.visits'] . ' - ' . $common_lang['sort.desc'], WebItem::SORT_NUMBER_VISITS . '-' . WebItem::DESC)
+			new FormFieldSelectChoiceOption($this->lang['web.config.sort.type.visits'] . ' - ' . $common_lang['common.sort.asc'], WebItem::SORT_NUMBER_VISITS . '-' . WebItem::ASC),
+			new FormFieldSelectChoiceOption($this->lang['web.config.sort.type.visits'] . ' - ' . $common_lang['common.sort.desc'], WebItem::SORT_NUMBER_VISITS . '-' . WebItem::DESC)
 		);
 
 		if ($this->comments_config->module_comments_is_enabled('web'))

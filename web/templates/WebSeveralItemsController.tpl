@@ -173,7 +173,7 @@
 														<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
 													# ENDIF #
 												# ENDIF #
-												<a class="offload" class="cell-thumbnail-caption" href="{items.U_ITEM}">
+												<a class="offload cell-thumbnail-caption" href="{items.U_ITEM}">
 													{@common.see.details}
 												</a>
 											</div>
