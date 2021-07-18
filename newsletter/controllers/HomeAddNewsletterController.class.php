@@ -77,7 +77,7 @@ class HomeAddNewsletterController extends ModuleController
 		}
 		else
 		{
-			$fieldset->add_field(new FormFieldHTML('mail_sender_not_configured_msg', MessageHelper::display($this->lang['newsletter.sender.email.not.configured' . (AppContext::get_current_user()->is_admin() ? '-for-admin' : '')], MessageHelper::WARNING)->render()));
+			$fieldset->add_field(new FormFieldHTML('mail_sender_not_configured_msg', MessageHelper::display($this->lang['newsletter.sender.email.not.configured' . (AppContext::get_current_user()->is_admin() ? '.for.admin' : '')], MessageHelper::WARNING)->render()));
 
 			$this->submit_button = new FormButtonDefaultSubmit();
 		}

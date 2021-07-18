@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 03
+ * @version     PHPBoost 6.0 - last update: 2021 07 28
  * @since       PHPBoost 4.1 - 2015 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -246,6 +246,7 @@ $lang['forum.connected.member']     = 'Membre connecté';
 $lang['forum.not.connected.member'] = 'Membre non connecté';
 $lang['forum.link.to.topic']        = 'Lien vers le sujet';
 
+$lang['forum.message']        = 'Message';
 $lang['forum.messages']       = 'Messages';
 $lang['forum.forum.message']  = 'Message sur le forum';
 $lang['forum.forum.messages'] = 'Messages sur le forum';
