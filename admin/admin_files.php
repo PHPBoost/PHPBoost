@@ -3,17 +3,18 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 02
+ * @version     PHPBoost 6.0 - last update: 2021 07 18
  * @since       PHPBoost 1.6 - 2007 03 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  */
+
 require_once('../admin/admin_begin.php');
 
 $lang = LangLoader::get('admin-lang');
-$common_lang = LangLoader::get('admin-lang');
+$common_lang = LangLoader::get('common-lang');
 $error_lang = LangLoader::get('errors');
 $upload_lang = LangLoader::get('upload-lang');
 $user_lang = LangLoader::get('user-lang');
@@ -289,7 +290,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 			'C_REAL_IMG' => $display_real_img,
 			'NAME' => $info_move['name'],
 			'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
-			'SIZE' => ($info_move['size'] > 1024) ? NumberHelper::round($info_move['size'] / 1024, 2) . ' ' . $common_lang['unit.megabytes'] : NumberHelper::round($info_move['size'], 0) . ' ' . $common_lang['unit.kilobytes'],
+			'SIZE' => ($info_move['size'] > 1024) ? NumberHelper::round($info_move['size'] / 1024, 2) . ' ' . $common_lang['common.unit.megabytes'] : NumberHelper::round($info_move['size'], 0) . ' ' . $common_lang['common.unit.kilobytes'],
 			'FILE_ICON' => FileUploadConfig::load()->get_display_file_thumbnail() ? ($display_real_img ? $info_move['path'] : $get_img_mimetype['img']) : $get_img_mimetype['img']
 		));
 		$view->put_all(array(
@@ -532,7 +533,7 @@ else
 				'FILETYPE'              => $get_img_mimetype['filetype'] . $size_img,
 				'BBCODE'                => '<input readonly="readonly" type="text" onclick="select_div(\'text_' . $row['id'] . '\');" id="text_' . $row['id'] . '" value="' . $bbcode . '">',
 				'DISPLAYED_CODE'        => '/upload/' . $row['path'],
-                'SIZE'                  => ($row['size'] > 1024) ? NumberHelper::round($row['size'] / 1024, 2) . ' ' . $common_lang['unit.megabytes'] : NumberHelper::round($row['size'], 0) . ' ' . $common_lang['unit.kilobytes'],
+                'SIZE'                  => ($row['size'] > 1024) ? NumberHelper::round($row['size'] / 1024, 2) . ' ' . $common_lang['common.unit.megabytes'] : NumberHelper::round($row['size'], 0) . ' ' . $common_lang['common.unit.kilobytes'],
 
 				'LIGHTBOX'         => !empty($size_img) ? ' data-lightbox ="1" data-rel="lightcase:collection"' : '',
 				'URL'              => $link,
