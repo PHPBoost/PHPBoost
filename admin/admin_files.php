@@ -9,7 +9,7 @@
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- */
+*/
 
 require_once('../admin/admin_begin.php');
 

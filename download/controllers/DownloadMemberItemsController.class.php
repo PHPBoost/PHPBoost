@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 23
+ * @version     PHPBoost 6.0 - last update: 2021 07 18
  * @since       PHPBoost 6.0 - 2020 12 04
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -170,7 +170,7 @@ class DownloadMemberItemsController extends ModuleController
 	private function generate_response(HTTPRequestCustom $request)
 	{
 		$page = $request->get_getint('page', 1);
-		$page_title = $this->is_current_member_displayed() ? $this->lang['my.items'] : $this->lang['member.items'] . ' ' . $this->get_member()->get_display_name();
+		$page_title = $this->is_current_member_displayed() ? $this->lang['download.my.items'] : $this->lang['download.member.items'] . ' ' . $this->get_member()->get_display_name();
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();

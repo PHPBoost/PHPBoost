@@ -137,8 +137,8 @@ class WebPendingItemsController extends ModuleController
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
 			array(
-				new FormFieldSelectChoiceOption($common_lang['commonsort.asc'], 'asc'),
-				new FormFieldSelectChoiceOption($common_lang['commonsort.desc'], 'desc')
+				new FormFieldSelectChoiceOption($common_lang['common.sort.asc'], 'asc'),
+				new FormFieldSelectChoiceOption($common_lang['common.sort.desc'], 'desc')
 			),
 			array('events' => array('change' => 'document.location = "' . WebUrlBuilder::display_pending()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));

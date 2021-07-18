@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 06 23
  * @since       PHPBoost 4.0 - 2014 05 09
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -38,7 +38,7 @@ class AdminQuestionCaptchaConfig extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.config', 'warning-lang'), MessageHelper::SUCCESS, 5));
 		}
 
 		$view->put('FORM', $this->form->display());
@@ -56,7 +56,7 @@ class AdminQuestionCaptchaConfig extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars(LangLoader::get_message('configuration.module.title', 'admin-common'), array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars(LangLoader::get_message('form.module.title', 'form-lang'), array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
 		$this->display_fields($fieldset);
@@ -84,7 +84,7 @@ class AdminQuestionCaptchaConfig extends AdminModuleController
 
 	private function build_response(View $view)
 	{
-		$title = LangLoader::get_message('configuration', 'admin');
+		$title = LangLoader::get_message('form.configuration', 'form-lang');
 
 		$response = new AdminMenuDisplayResponse($view);
 		$response->set_title($title);

@@ -10,7 +10,7 @@
 				{@download.pending.items}
 			# ELSE #
 				# IF C_MEMBER_ITEMS #
-					# IF C_MY_ITEMS #{@my.items}# ELSE #{@member.items} {MEMBER_NAME}# ENDIF #
+					# IF C_MY_ITEMS #{@download.my.items}# ELSE #{@download.member.items} {MEMBER_NAME}# ENDIF #
 				# ELSE #
 					# IF C_ROOT_CATEGORY #{@download.module.title}# ELSE ## IF C_TAG_ITEMS #<span class="smaller">{@common.keyword}: </span># ENDIF #{CATEGORY_NAME}# ENDIF #
 				# ENDIF #
