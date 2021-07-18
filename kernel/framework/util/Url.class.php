@@ -13,12 +13,13 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 16
+ * @version     PHPBoost 6.0 - last update: 2021 07 18
  * @since       PHPBoost 2.0 - 2009 01 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
+ * @contributor xela <xela@phpboost.com>
 */
 
 define('SERVER_URL', $_SERVER['PHP_SELF']);
@@ -229,10 +230,10 @@ class Url
 		{
 			// Remove all illegal characters from a url
 			$url = filter_var($url, FILTER_SANITIZE_URL);
-		
+
 			if ($url[0] == '/' && file_exists(PATH_TO_ROOT . $url))
 				return true;
-			
+
 			$url = new Url($url);
 		}
 
@@ -240,6 +241,9 @@ class Url
 		$folder = new Folder($url->relative());
 		if ($file->exists() || $folder->exists())
 			return true;
+
+		if ($url->is_relative() && !($file->exists() || $folder->exists()))
+		  	return false;
 
 		if ($url->absolute())
 		{
@@ -271,7 +275,7 @@ class Url
 			else
 				$status = self::STATUS_OK;
 		}
-		
+
 		return $status == self::STATUS_OK || ($status > 200 && $status < 400) || $status == 429; // 429 status code for Youtube video sometimes
 	}
 
