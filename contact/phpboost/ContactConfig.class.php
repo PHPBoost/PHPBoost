@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 04
+ * @version     PHPBoost 6.0 - last update: 2021 07 19
  * @since       PHPBoost 3.0 - 2010 05 02
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -298,7 +298,7 @@ class ContactConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::TITLE => LangLoader::get_message('contact.fieldset.title', 'config', 'contact'),
+			self::TITLE => LangLoader::get_message('contact.fieldset.title', 'common', 'contact'),
 			self::INFORMATIONS_ENABLED => false,
 			self::INFORMATIONS => '',
 			self::INFORMATIONS_POSITION => self::TOP,
