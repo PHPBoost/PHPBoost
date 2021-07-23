@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 25
+ * @version     PHPBoost 6.0 - last update: 2021 07 23
  * @since       PHPBoost 5.2 - 2019 07 26
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -30,7 +30,7 @@ class FormConstraintFieldsNotIncluded implements FormConstraint
 		}
 		else
 		{
-			$this->js_message = LangLoader::get_message('warning.first.field.must.not_be.contained.in.second.field', 'warning-lang');
+			$this->js_message = LangLoader::get_message('warning.first.field.must.not.be.contained.in.second.field', 'warning-lang');
 		}
 
 		$this->first_field = $first_field;
