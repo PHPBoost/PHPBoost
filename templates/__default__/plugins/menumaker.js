@@ -4,7 +4,7 @@
  * @license     https://www.opensource.org/licenses/mit-license.php
  * @author      CssMenuMaker
  * @link        https://github.com/cssmenumaker/jQuery-Plugin-Responsive-Drop-Down
- * @version     PHPBoost 6.0 - last update: 2019 11 18
+ * @version     PHPBoost 6.0 - last update: 2021 07 23
  * @since       PHPBoost 5.0 - 2016 03 30
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -99,10 +99,12 @@
 
 jQuery(document).ready(function(){
 
+	var	location = window.location.href;
+	location = location.replace(window.location.origin, '');
 	jQuery('.cssmenu-title').each(function(){
-		// Current li - send class .current to an item from a cssmenu and it's parents if the item href correspond to the page url
+		// Current li - send class .current to an item from a cssmenu and it's parents if the item href corresponds to the page url
 		var link = jQuery(this).attr('href');
-		if(window.location.href.indexOf(link) > -1) { // if page url contains href of one of the cssmenu items
+		if(location == link) { // if page url contains href of one of the cssmenu items
 			jQuery(this).parent().addClass('current'); // add class to it's parent (should be 'li')
 			if(jQuery(this).closest('.has-sub').length) { // if item is in subfolder
 				jQuery(this).closest('.has-sub').addClass('current');  // add class to the parent subfolder
@@ -118,10 +120,10 @@ jQuery(document).ready(function(){
 		}
 	});
 
-	// Current li - send class .current to an item from the admin menu and it's parents if the item href correspond to the page url
+	// Current li - send class .current to an item from the admin menu and it's parents if the item href corresponds to the page url
 	jQuery('.modal-menu a').each(function(){
 		var link = jQuery(this).attr('href');
-		if(window.location.href.indexOf(link) > -1) { // if page url contains href of one of the cssmenu items
+		if(location == link) { // if page url contains href of one of the cssmenu items
 			jQuery(this).parent().addClass('current'); // add class to it's parent (should be 'li')
 			if(jQuery(this).closest('.modal-menu > li').length) { // if item is in subfolder
 				jQuery(this).closest('.modal-menu > li').addClass('current'); // and to the first ancestor in admin panel
