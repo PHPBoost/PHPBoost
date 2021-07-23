@@ -104,14 +104,14 @@ jQuery(document).ready(function(){
 	jQuery('.cssmenu-title').each(function(){
 		// Current li - send class .current to an item from a cssmenu and it's parents if the item href corresponds to the page url
 		var link = jQuery(this).attr('href');
-		if((location.indexOf(link) > -1) && (link != PATH_TO_ROOT + '/')) { // if page url contains href of one of the cssmenu items
+		if((location.indexOf(link) > -1) && (link != PATH_TO_ROOT + '/')) { // if page url contains href of one of the cssmenu items and page url is not website root
 			jQuery(this).parent().addClass('current'); // add class to it's parent (should be 'li')
 			if(jQuery(this).closest('.has-sub').length) { // if item is in subfolder
 				jQuery(this).closest('.has-sub').addClass('current');  // add class to the parent subfolder
 				jQuery(this).closest('.cssmenu > ul > li').addClass('current'); // and to the first ancestor
 			}
 		}
-		else if (location == link) { // if page url contains href of one of the cssmenu items
+		else if (location == link) { // if page url is website root
 			jQuery(this).parent().addClass('current'); // add class to it's parent (should be 'li')
 		}
 
