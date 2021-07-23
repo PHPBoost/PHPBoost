@@ -95,37 +95,64 @@ class PollManager extends ItemsManager
 
 	public function user_has_voted (int $voter_user_id, int $item_id)
 	{
+	  $request = AppContext::get_request();
+	  
 		if ($voter_user_id == -1)
 		{
-			$request = AppContext::get_request();
-
-			$search_guest_by_ip = self::$db_querier->count(
-			PREFIX . 'poll_voters',
-			'WHERE voter_user_id < 0 AND voter_ip =:voter_ip AND poll_id =:poll_id',
-			array( 'voter_ip' => $request->get_ip_address(), 'poll_id' => $item_id)) > 0;
-
-			return $this->guest_has_vote_cookie($request, $item_id) || $search_guest_by_ip;
+			return $this->check_user_by_cookie($request, $item_id) || $this->check_user_by_ip($request, $voter_user_id, $item_id);
+		}
+		else
+		{
+		  
+			$check_member_by_id = self::$db_querier->count(
+				PREFIX . 'poll_voters',
+				'WHERE voter_user_id > 0 AND voter_user_id =:voter_user_id AND poll_id =:poll_id',
+				array('voter_user_id' => $voter_user_id, 'poll_id' => $item_id)) > 0;
+				
+			return $check_member_by_id || $this->check_user_by_cookie($request, $item_id) || $this->check_user_by_ip($request, $voter_user_id, $item_id);
+		}
+	}
+  
+        public function check_user_by_ip(HTTPRequestCustom $request, int $voter_user_id, int $item_id)
+        {
+                if ($voter_user_id == -1)
+		{
+			return self::$db_querier->count(
+			  PREFIX . 'poll_voters',
+			  'WHERE voter_user_id < 0 AND voter_ip =:voter_ip AND poll_id =:poll_id',
+			  array( 'voter_ip' => $request->get_ip_address(), 'poll_id' => $item_id)) > 0;
 		}
 		else
 		{
 			return self::$db_querier->count(
-				PREFIX . 'poll_voters',
-				'WHERE voter_user_id > 0 AND voter_user_id =:voter_user_id AND poll_id =:poll_id',
-				array('voter_user_id' => $voter_user_id, 'poll_id' => $item_id)) > 0;
+			  PREFIX . 'poll_voters',
+			  'WHERE voter_user_id > 0 AND voter_ip =:voter_ip AND poll_id =:poll_id',
+			  array( 'voter_ip' => $request->get_ip_address(), 'poll_id' => $item_id)) > 0;
 		}
-	}
-
-	public function guest_has_vote_cookie(HTTPRequestCustom $request, int $item_id)
+        }
+  
+	public function check_user_by_cookie(HTTPRequestCustom $request, int $item_id)
 	{
 		$cookie_name = self::$module->get_configuration()->get_configuration_parameters()->get_cookie_name();
-		$search_by_cookie = '';
 		if ($request->has_cookieparameter($cookie_name))
 		{
 			$array_cookie = explode('/', $request->get_cookie($cookie_name));
-			return $search_by_cookie = in_array($item_id, $array_cookie);
+			return in_array($item_id, $array_cookie);
 		}
 		else
 		  return false;
+	}
+	
+	public function set_cookie(int $item_id)
+	{
+	  $request = AppContext::get_request();
+		$config = self::$module->get_configuration()->get_configuration_parameters();
+		$cookie_name = $config->get_cookie_name();
+		$array_cookie = $request->has_cookieparameter($cookie_name) ? explode('/', $request->get_cookie($cookie_name)) : array();
+		$array_cookie[] = $item_id;
+		$value_cookie = implode('/', array_unique($array_cookie, SORT_NUMERIC));
+
+		AppContext::get_response()->set_cookie(new HTTPCookie($cookie_name, $value_cookie, time() + $config->get_cookie_lenght_in_seconds()));
 	}
 }
 ?>
