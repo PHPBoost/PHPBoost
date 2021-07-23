@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 15
+ * @version     PHPBoost 6.0 - last update: 2021 07 24
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -26,7 +26,6 @@ class PollItemController extends DefaultDisplayItemController
 		{
 			if ($this->submit_button->has_been_submited() && $this->vote_form->validate())
 			{
-				$this->set_cookie();
 				$this->save_vote();
 
 				AppContext::get_response()->redirect(ItemsUrlBuilder::display($this->get_item()->get_category()->get_id(), $this->get_item()->get_category()->get_rewrited_name(), $this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id));
@@ -38,7 +37,7 @@ class PollItemController extends DefaultDisplayItemController
 			'C_PUBLISHED' 	      => $this->get_item()->is_published(),
 			'C_MORE_OPTIONS'      => true,
 			'C_ENABLED_COUNTDOWN' => $this->get_item()->is_published() && $this->get_item()->end_date_enabled() && $this->get_item()->get_countdown_display() > 0,
-			'COUNTDOWN'		      => PollCountdownService::display($this->get_item()),
+			'COUNTDOWN'	      => PollCountdownService::display($this->get_item()),
 			'VOTE_FORM' 	      => $this->vote_form->display(),
 			'VOTES_RESULT'        => PollVotesResultService::display($this->get_item())
 		));
@@ -122,6 +121,7 @@ class PollItemController extends DefaultDisplayItemController
 
 		self::get_items_manager()->update_votes($this->retrieve_vote(), $this->get_item()->get_votes_number(), $this->get_item()->get_id());
 		self::get_items_manager()->insert_voter($this->get_item()->get_id());
+                self::get_items_manager()->set_cookie($this->get_item()->get_id());
   	}
 
 	//Si pas encore de vote, retourne un tableau avec pour clés les réponses et pour valeurs 0
@@ -148,20 +148,6 @@ class PollItemController extends DefaultDisplayItemController
 			}
 		}
 		return $result_vote;
-	}
-
-	protected function set_cookie()
-	{
-		if (AppContext::get_current_user()->is_guest())
-		{
-			$cookie_name = $this->config->get_cookie_name();
-			$array_cookie = $this->request->has_cookieparameter($cookie_name) ? explode('/', $this->request->get_cookie($cookie_name)) : array();
-
-			$array_cookie[] = $this->get_item()->get_id();
-			$value_cookie = implode('/', array_unique($array_cookie, SORT_NUMERIC));
-
-			AppContext::get_response()->set_cookie(new HTTPCookie($cookie_name, $value_cookie, time() + $this->config->get_cookie_lenght_in_seconds()));
-		}
 	}
 
 	protected function get_template_to_use()
