@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 18
+ * @version     PHPBoost 6.0 - last update: 2021 07 24
  * @since       PHPBoost 6.0 - 2020 05 14
 */
 
@@ -95,7 +95,7 @@ class PollManager extends ItemsManager
 
 	public function user_has_voted (int $voter_user_id, int $item_id)
 	{
-	  $request = AppContext::get_request();
+	        $request = AppContext::get_request();
 	  
 		if ($voter_user_id == -1)
 		{
@@ -118,16 +118,16 @@ class PollManager extends ItemsManager
                 if ($voter_user_id == -1)
 		{
 			return self::$db_querier->count(
-			  PREFIX . 'poll_voters',
-			  'WHERE voter_user_id < 0 AND voter_ip =:voter_ip AND poll_id =:poll_id',
-			  array( 'voter_ip' => $request->get_ip_address(), 'poll_id' => $item_id)) > 0;
+			        PREFIX . 'poll_voters',
+			        'WHERE voter_user_id < 0 AND voter_ip =:voter_ip AND poll_id =:poll_id',
+			        array( 'voter_ip' => $request->get_ip_address(), 'poll_id' => $item_id)) > 0;
 		}
 		else
 		{
 			return self::$db_querier->count(
-			  PREFIX . 'poll_voters',
-			  'WHERE voter_user_id > 0 AND voter_ip =:voter_ip AND poll_id =:poll_id',
-			  array( 'voter_ip' => $request->get_ip_address(), 'poll_id' => $item_id)) > 0;
+			        PREFIX . 'poll_voters',
+			        'WHERE voter_user_id > 0 AND voter_ip =:voter_ip AND poll_id =:poll_id',
+			        array( 'voter_ip' => $request->get_ip_address(), 'poll_id' => $item_id)) > 0;
 		}
         }
   
@@ -145,7 +145,7 @@ class PollManager extends ItemsManager
 	
 	public function set_cookie(int $item_id)
 	{
-	  $request = AppContext::get_request();
+	        $request = AppContext::get_request();
 		$config = self::$module->get_configuration()->get_configuration_parameters();
 		$cookie_name = $config->get_cookie_name();
 		$array_cookie = $request->has_cookieparameter($cookie_name) ? explode('/', $request->get_cookie($cookie_name)) : array();
