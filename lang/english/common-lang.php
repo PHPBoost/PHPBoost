@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 07 26
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -172,6 +172,8 @@ $lang['common.copied.to.clipboard']    = 'Copied to clipboard';
 $lang['common.open.new.window']        = 'Open in a new window';
 $lang['common.is.new.window']          = 'Opens in a new window';
 $lang['common.url']                    = 'Url';
+$lang['common.dark.mode']              = 'Dark mode';
+$lang['common.light.mode']             = 'Lightened mode';
 
 // List order
 $lang['common.listorder.item.start']   = '{startItem}';

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 22
+ * @version     PHPBoost 6.0 - last update: 2021 07 26
  * @since       PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -93,6 +93,9 @@ $lang['form.items.default.sort.mode']   = 'Items default sort direction';
 $lang['form.display.sort.form']         = 'Display items sort form';
 $lang['form.root.category.description'] = 'Root category description';
 $lang['form.item.default.content']      = 'Item default content';
+$lang['form.enable.suggestions']        = 'Enable suggestions display';
+$lang['form.enable.navigation']         = 'Enable display navigation';
+$lang['form.enable.navigation.clue']    = 'Display of previous/next items';
 
 // Fields
 $lang['form.fields.management']   = 'Fields management';

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 22
+ * @version     PHPBoost 6.0 - last update: 2021 07 26
  * @since       PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -93,6 +93,11 @@ $lang['form.items.default.sort.mode']   = 'Sens du tri par défaut des élément
 $lang['form.display.sort.form']         = 'Afficher le formulaire de tri des éléments';
 $lang['form.root.category.description'] = 'Description de la catégorie racine';
 $lang['form.item.default.content']      = 'Contenu par défaut d\'un élément';
+$lang['form.enable.suggestions']        = 'Activer l\'affichage des suggestions';
+$lang['form.enable.navigation']         = 'Activer l\'affichage de la navigation';
+$lang['form.enable.navigation.clue']    = 'Affichage des éléments précédents/suivants';
+$lang['form.new.window']                = 'Nouvelle fenêtre.';
+$lang['form.new.window.clue']           = 'Ouvrir les liens externes dans une nouvelle fenêtre.';
 
 // Fields
 $lang['form.fields.management']   = 'Gestion des champs';
