@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 19
+ * @version     PHPBoost 6.0 - last update: 2021 07 26
  * @since       PHPBoost 3.0 - 2010 04 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -99,7 +99,7 @@ $lang['configuration.cookiebar.trackers']          = 'Utilisation de cookies tra
 $lang['configuration.cookiebar.no.tracker']        = 'Utilisation de cookies techniques';
 $lang['configuration.cookiebar.content']           = 'Message affiché dans la barre d\'avertissement';
 $lang['configuration.cookiebar.content.clue']      = 'Vous pouvez personnaliser le message, mais celui-çi doit impérativement préciser si vous utilisez des cookies traceurs';
-$lang['configuration.cookiebar.aboutcookie.title'] = 'Titre de la page "<a href="' . UserUrlBuilder::aboutcookie()->rel() . '">En savoir plus</a>"';
+$lang['configuration.cookiebar.aboutcookie.title'] = 'Titre de la page "<a class="offload" href="' . UserUrlBuilder::aboutcookie()->rel() . '">En savoir plus</a>"';
 $lang['configuration.cookiebar.aboutcookie']       = 'Message affiché dans la page "En savoir plus"';
 $lang['configuration.cookiebar.aboutcookie.clue']  = 'Vous pouvez personnaliser le message en indiquant les cookies traceurs que vous utilisez';
 	// Miscellaneous

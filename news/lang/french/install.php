@@ -38,7 +38,7 @@ $lang['items'][] = array(
     <br />
     <ul class="formatter-ul">
         <li class="formatter-li"><a class="offload" href="' . AdminMaintainUrlBuilder::maintain()->relative() . '">Mettez votre site en maintenance</a> en attendant que vous le configuriez à votre guise.
-        </li><li class="formatter-li">Rendez vous à la <a href="' . AdminConfigUrlBuilder::general_config()->relative() . '">Configuration générale du site</a>.
+        </li><li class="formatter-li">Rendez vous à la <a class="offload" href="' . AdminConfigUrlBuilder::general_config()->relative() . '">Configuration générale du site</a>.
         </li><li class="formatter-li"><a class="offload" href="' . AdminModulesUrlBuilder::list_installed_modules()->relative() . '">Configurez les modules</a> disponibles et donnez leur les droits d\'accès (si vous n\'avez pas installé le pack complet, tous les modules sont disponibles sur le site de <a href="https://www.phpboost.com/download/">phpboost.com</a> dans la section téléchargement).
         </li><li class="formatter-li"><a class="offload" href="' . AdminContentUrlBuilder::content_configuration()->relative() . '">Choisissez le langage de formatage du contenu</a> par défaut du site.
         </li><li class="formatter-li"><a class="offload" href="' . AdminMembersUrlBuilder::configuration()->relative() . '">Configurez l\'inscription des membres</a>.
