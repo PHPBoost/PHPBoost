@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 30
+ * @version     PHPBoost 6.0 - last update: 2021 08 24
  * @since       PHPBoost 6.0 - 2020 02 11
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -37,7 +37,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 				if ($this->module_item->content_field_enabled() && $this->module_item->summary_field_enabled())
 				{
 					$this->form->get_field_by_id('full_item_display')->set_hidden($this->config->get_display_type() != DefaultRichModuleConfig::LIST_VIEW);
-					$this->form->get_field_by_id('auto_cut_characters_number')->set_hidden($this->config->get_display_type() != DefaultRichModuleConfig::LIST_VIEW || $this->config->get_full_item_display());
+					$this->form->get_field_by_id('auto_cut_characters_number')->set_hidden(($this->config->get_display_type() == DefaultRichModuleConfig::LIST_VIEW && $this->config->get_full_item_display()) || ($this->config->get_display_type() == DefaultRichModuleConfig::TABLE_VIEW));
 					$this->form->get_field_by_id('summary_displayed_to_guests')->set_hidden($this->config->get_display_type() == DefaultRichModuleConfig::TABLE_VIEW);
 				}
 			}
@@ -87,7 +87,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 					if (HTMLForms.getField("display_type").getValue() == \'' . DefaultRichModuleConfig::GRID_VIEW . '\') {
 						HTMLForms.getField("items_per_row").enable();
 						HTMLForms.getField("full_item_display").disable();
-						HTMLForms.getField("auto_cut_characters_number").disable();
+						HTMLForms.getField("auto_cut_characters_number").enable();
 						HTMLForms.getField("summary_displayed_to_guests").enable();
 					} else if (HTMLForms.getField("display_type").getValue() == \'' . DefaultRichModuleConfig::LIST_VIEW . '\') {
 						HTMLForms.getField("items_per_row").disable();
@@ -137,7 +137,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 						'min' => 20, 'max' => 1000,
 						'description' => $this->lang['config.auto.cut.characters.number.explain'],
 						'required' => true,
-						'hidden' => $this->config->get_display_type() != DefaultRichModuleConfig::LIST_VIEW || $this->config->get_full_item_display()),
+						'hidden' => ($this->config->get_display_type() == DefaultRichModuleConfig::LIST_VIEW && $this->config->get_full_item_display()) || $this->config->get_display_type() == DefaultRichModuleConfig::TABLE_VIEW),
 					array(new FormFieldConstraintIntegerRange(20, 1000))
 				));
 
@@ -252,6 +252,8 @@ class DefaultConfigurationController extends AbstractAdminItemController
 					if ($this->config->get_display_type() == DefaultRichModuleConfig::LIST_VIEW)
 						$this->config->set_full_item_display($this->form->get_value('full_item_display'));
 					if ($this->config->get_display_type() == DefaultRichModuleConfig::LIST_VIEW && !$this->config->get_full_item_display())
+						$this->config->set_auto_cut_characters_number($this->form->get_value('auto_cut_characters_number'));
+					if ($this->config->get_display_type() == DefaultRichModuleConfig::GRID_VIEW)
 						$this->config->set_auto_cut_characters_number($this->form->get_value('auto_cut_characters_number'));
 					if ($this->config->get_display_type() != DefaultRichModuleConfig::TABLE_VIEW)
 						$this->config->set_summary_displayed_to_guests($this->form->get_value('summary_displayed_to_guests'));
