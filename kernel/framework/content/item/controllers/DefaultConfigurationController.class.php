@@ -253,8 +253,10 @@ class DefaultConfigurationController extends AbstractAdminItemController
 						$this->config->set_full_item_display($this->form->get_value('full_item_display'));
 					if ($this->config->get_display_type() == DefaultRichModuleConfig::LIST_VIEW && !$this->config->get_full_item_display())
 						$this->config->set_auto_cut_characters_number($this->form->get_value('auto_cut_characters_number'));
-					if ($this->config->get_display_type() == DefaultRichModuleConfig::GRID_VIEW)
+					if ($this->config->get_display_type() == DefaultRichModuleConfig::GRID_VIEW) {
 						$this->config->set_auto_cut_characters_number($this->form->get_value('auto_cut_characters_number'));
+						$this->config->set_full_item_display(false);
+					}
 					if ($this->config->get_display_type() != DefaultRichModuleConfig::TABLE_VIEW)
 						$this->config->set_summary_displayed_to_guests($this->form->get_value('summary_displayed_to_guests'));
 				}
