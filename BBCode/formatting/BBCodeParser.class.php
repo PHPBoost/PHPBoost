@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 05
+ * @version     PHPBoost 6.0 - last update: 2021 09 06
  * @since       PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -214,7 +214,7 @@ class BBCodeParser extends ContentFormattingParser
 			'acronym2' => "<acronym title=\"$1\" class=\"formatter-acronym\">$2</acronym>",
 			'abbr' => "<abbr class=\"formatter-abbr\">$1</abbr>",
 			'abbr2' => "<abbr title=\"$1\" class=\"formatter-abbr\">$2</abbr>",
-			'style' => "<span class=\"message-helper $1\">$2</span>",
+			'style' => "<span class=\"message-helper bgc $1\">$2</span>",
 			'swf' => '[[MEDIA]]insertSwfPlayer(\'$3\', $1, $2);[[/MEDIA]]',
 			'movie' => '[[MEDIA]]insertMoviePlayer(\'$3\', $1, $2);[[/MEDIA]]',
 			'movie2' => '[[MEDIA]]insertMoviePlayer(\'$4\', $1, $2, \'$3\');[[/MEDIA]]',

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 05
+ * @version     PHPBoost 6.0 - last update: 2021 09 06
  * @since       PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -96,7 +96,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			'`<h4 class="formatter-title">(.*)</h4>`isuU',
 			'`<h5 class="formatter-title">(.*)</h5>`isuU',
 			'`<h6 class="formatter-title">(.*)</h6>`isuU',
-			'`<span class="message-helper (success|question|notice|warning|error)">(.*)</span>`isuU',
+			'`<span class="message-helper bgc (success|question|notice|warning|error)">(.*)</span>`isuU',
 			'`<hr(?: class="([^"]+)?")? />`isuU',
 			'`<audio controls><source src="(.*)" /></audio>`isuU',
 			'`<script><!--\s{1,5}insertSoundPlayer\("([^"]+)"\);\s{1,5}--></script>`suU',

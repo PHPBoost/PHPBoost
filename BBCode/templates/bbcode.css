@@ -58,3 +58,8 @@
 	cursor: pointer;
 	font-size: 1.228em
 }
+
+/* --- BBCode bar styles --- */
+#html-style .button.bgc-full {
+	padding: 0.228em 1.618em;
+}
