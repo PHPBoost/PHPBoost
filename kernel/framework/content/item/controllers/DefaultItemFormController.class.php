@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 23
+ * @version     PHPBoost 6.0 - last update: 2021 09 22
  * @since       PHPBoost 6.0 - 2020 05 16
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -145,18 +145,22 @@ class DefaultItemFormController extends AbstractItemController
 
 		if ((self::get_module_configuration()->has_categories() && CategoriesAuthorizationsService::check_authorizations($this->get_item()->get_id_category(), self::$module_id)->moderation()) || (!self::get_module_configuration()->has_categories() && ItemsAuthorizationsService::check_authorizations(self::$module_id)->moderation()))
 		{
+			$publication_fieldset = new FormFieldsetHTML('publication', $this->form_lang['form.publication']);
+			$form->add_fieldset($publication_fieldset);
+
+			$publication_fieldset->add_field(new FormFieldDateTime('creation_date', $this->form_lang['form.creation.date'], $this->get_item()->get_creation_date(),
+				array('required' => true)
+			));
+
+			if (!$this->is_new_item && !$this->get_item()->is_published())
+			{
+				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->form_lang['form.update.creation.date'], FormFieldCheckbox::UNCHECKED,
+					array('hidden' => $this->get_item()->get_status() != Item::NOT_PUBLISHED)
+				));
+			}
+
 			if (self::get_module_configuration()->feature_is_enabled('deferred_publication'))
 			{
-				$publication_fieldset = new FormFieldsetHTML('publication', $this->form_lang['form.publication']);
-				$form->add_fieldset($publication_fieldset);
-
-				if (!$this->is_new_item && !$this->get_item()->is_published())
-				{
-					$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->form_lang['form.update.creation.date'], FormFieldCheckbox::UNCHECKED,
-						array('hidden' => $this->get_item()->get_status() != Item::NOT_PUBLISHED)
-					));
-				}
-
 				$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('publishing_state', $this->form_lang['form.publication'], $this->get_item()->get_publishing_state(),
 					array(
 						new FormFieldSelectChoiceOption($this->form_lang['form.publication.draft'], Item::NOT_PUBLISHED),
@@ -363,11 +367,13 @@ class DefaultItemFormController extends AbstractItemController
 			$rewrited_title = $this->form->get_value('personalize_rewrited_' . $this->item_class::get_title_label()) && !empty($rewrited_title) ? $rewrited_title : Url::encode_rewrite($this->get_item()->get_title());
 			$this->get_item()->set_rewrited_title($rewrited_title);
 
+			if (!$this->is_new_item && $this->form->get_value('update_creation_date'))
+				$this->get_item()->set_creation_date(new Date());
+			else
+				$this->get_item()->set_creation_date($this->form->get_value('creation_date'));
+
 			if (self::get_module_configuration()->feature_is_enabled('deferred_publication'))
 			{
-				if (!$this->is_new_item && $this->form->get_value('update_creation_date'))
-					$this->get_item()->set_creation_date(new Date());
-
 				$this->get_item()->set_publishing_state($this->form->get_value('publishing_state')->get_raw_value());
 				if ($this->get_item()->get_publishing_state() == Item::DEFERRED_PUBLICATION)
 				{
