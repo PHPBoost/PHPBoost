@@ -10,7 +10,9 @@
 
 	<div class="sub-section">
 		<div class="content-container">
-			# INCLUDE NOT_VISIBLE_MESSAGE #
+			# IF NOT C_PUBLISHED #
+				<div class="content"># INCLUDE NOT_PUBLISHED_MESSAGE #</div>
+			# ENDIF #
 			<article id="article-articles-{ID}" class="articles-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="https://schema.org/Article">
 				<div class="flex-between">
 					<div class="more">
