@@ -3,7 +3,7 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-.content .media-content { margin-top: 1.618em; }
+.content .media-content { margin: 1.618em 0; }
 
 .media-filter fieldset { margin: 0; }
 

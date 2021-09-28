@@ -38,8 +38,8 @@
 					# ENDIF #
 				</div>
 				<div class="content" itemprop="text">
-					{CONTENT}
 					# INCLUDE MEDIA_FORMAT #
+					{CONTENT}
 				</div>
 				<aside>${ContentSharingActionsMenuService::display()}</aside>
 				# IF C_ENABLED_COMMENTS #
