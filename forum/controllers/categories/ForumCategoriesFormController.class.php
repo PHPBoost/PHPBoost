@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 09 28
  * @since       PHPBoost 4.1 - 2015 05 15
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -14,8 +14,9 @@ class ForumCategoriesFormController extends DefaultCategoriesFormController
 	protected function build_form(HTTPRequestCustom $request)
 	{
 		$form = new HTMLForm(__CLASS__);
+		$form->set_layout_title($this->get_title());
 
-		$fieldset = new FormFieldsetHTML('category', $this->get_title());
+		$fieldset = new FormFieldsetHTML('category', self::$form_lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('type', LangLoader::get_message('common.type', 'common-lang'), $this->get_category()->get_type(),
