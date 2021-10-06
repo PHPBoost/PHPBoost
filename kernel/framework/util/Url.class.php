@@ -13,7 +13,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 18
+ * @version     PHPBoost 6.0 - last update: 2021 10 06
  * @since       PHPBoost 2.0 - 2009 01 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -242,8 +242,8 @@ class Url
 		if ($file->exists() || $folder->exists())
 			return true;
 
-		if ($url->is_relative() && !($file->exists() || $folder->exists()))
-		  	return false;
+		// if ($url->is_relative() && !($file->exists() || $folder->exists()))
+		  	// return false;
 
 		if ($url->absolute())
 		{
