@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 03
+ * @version     PHPBoost 6.0 - last update: 2021 10 09
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -601,8 +601,8 @@ elseif (!ForumAuthorizationsService::check_authorizations($topic['id_category'])
 }
 else
 {
-	$img_track_display = $track ? 'heart-broken' : 'heart error';
-	$img_track_pm_display = $track_pm ? 'envelope error' : 'envelope-open-text success';
+	$img_track_display = $track ? 'heart-broken moderator' : 'heartbeat error';
+	$img_track_pm_display = $track_pm ? 'people-arrows error' : 'people-arrows success';
 	$img_track_mail_display = $track_mail ? 'at error' : 'at success';
 
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
@@ -615,7 +615,11 @@ else
 		'TRACK_ICON'              => $img_track_display,
 		'PM_SUBSCRIPTION_ICON'    => $img_track_pm_display,
 		'EMAIL_SUBSCRIPTION_ICON' => $img_track_mail_display,
-		'U_FORUM_ACTION_POST'     => url('.php?idt=' . $id_get . '&amp;id=' . $topic['id_category'] . '&amp;new=n_msg&amp;token=' . AppContext::get_session()->get_token())
+		'U_FORUM_ACTION_POST'     => url('.php?idt=' . $id_get . '&amp;id=' . $topic['id_category'] . '&amp;new=n_msg&amp;token=' . AppContext::get_session()->get_token()),
+
+		'L_DEFAULT_TRACK'              => $track ? $lang['forum.untrack.topic'] : $lang['forum.track.topic'],
+		'L_DEFAULT_PM_SUBSCRIPTION'    => $track_pm ? $lang['forum.untrack.topic.pm'] : $lang['forum.track.topic.pm'],
+		'L_DEFAULT_EMAIL_SUBSCRIPTION' => $track_mail ? $lang['forum.untrack.topic.email'] : $lang['forum.track.topic.email'],
 	));
 
 	//Affichage du lien pour changer le display_msg du topic et autorisation d'édition du statut.

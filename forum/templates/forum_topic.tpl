@@ -53,7 +53,7 @@
 			if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 			{
 				if( document.getElementById('forum_track_img') )
-					document.getElementById('forum_track_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-heart-broken"></i>' : '<i class="fa fa-heartbeat error"></i>';
+					document.getElementById('forum_track_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-heart-broken moderator"></i>' : '<i class="fa fa-heartbeat error"></i>';
 				if( document.getElementById('forum_track_msg') )
 					document.getElementById('forum_track_msg').innerHTML = xhr_object.responseText == '1' ? "{@forum.untrack.topic}" : "{@forum.track.topic}";
 				is_track = xhr_object.responseText == '1' ? true : false;
@@ -74,7 +74,7 @@
 			if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 			{
 				if( document.getElementById('forum_track_pm_img') )
-					document.getElementById('forum_track_pm_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-people-arrows error"></i>' : '<i class="fa fa-people-arrows-open-text success"></i>';
+					document.getElementById('forum_track_pm_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-people-arrows error"></i>' : '<i class="fa fa-people-arrows success"></i>';
 				if( document.getElementById('forum_track_pm_msg') )
 					document.getElementById('forum_track_pm_msg').innerHTML = xhr_object.responseText == '1' ? "{@forum.untrack.topic.pm}" : "{@forum.track.topic.pm}";
 				is_track_pm = xhr_object.responseText == '1' ? true : false;
