@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 20
+ * @version     PHPBoost 6.0 - last update: 2021 10 10
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -47,7 +47,7 @@ class MediaDisplayCategoryController extends ModuleController
 		$subcategories_page = AppContext::get_request()->get_getint('subcategories_page', 1);
 		$get_sort = retrieve(GET, 'sort', '');
 		$get_mode = retrieve(GET, 'mode', '');
-		$mode = ($get_mode == 'desc') ? 'DESC' : 'ASC';
+		$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
 		$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
 		$subcategories = CategoriesService::get_categories_manager('media')->get_categories_cache()->get_children($this->get_category()->get_id(), CategoriesService::get_authorized_categories($this->get_category()->get_id(), true, 'media'));
@@ -103,18 +103,18 @@ class MediaDisplayCategoryController extends ModuleController
 			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? MediaUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->get_category()->get_id())->rel(),
 		));
 
-		$selected_fields = array('alpha' => '', 'date' => '', 'views' => '', 'note' => '', 'com' => '', 'asc' => '', 'desc' => '');
+		$selected_fields = array('date' => '', 'alpha' => '', 'views' => '', 'note' => '', 'com' => '', 'asc' => '', 'desc' => '');
 
 		switch ($get_sort)
 		{
 			default:
-			case 'alpha':
-				$sort = 'title';
-				$selected_fields['alpha'] = ' selected="selected"';
-				break;
 			case 'date':
 				$sort = 'creation_date';
 				$selected_fields['date'] = ' selected="selected"';
+				break;
+			case 'alpha':
+				$sort = 'title';
+				$selected_fields['alpha'] = ' selected="selected"';
 				break;
 			case 'views':
 				$sort = 'views_number';
