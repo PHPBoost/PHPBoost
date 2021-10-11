@@ -25,7 +25,7 @@
  	}
 
  	#footer span { color: var(--txt-alt); }
-	
+
  	#footer a { color: var(--logo-tone); }
 
 /* --- Content --- */
@@ -255,7 +255,7 @@ nav.admin-index a { color: var(--txt-alt); }
 	border-color: var(--bdr-main);
 }
 
-#mod_header, #mod_subheader, #mod_left,
+#mod_topheader, #mod_header, #mod_subheader, #mod_left,
 #mod_right, #mod_topcentral,
 #mod_central, #mod_bottomcentral,
 #mod_topfooter, #mod_footer { border-color: var(--bdr-main); }

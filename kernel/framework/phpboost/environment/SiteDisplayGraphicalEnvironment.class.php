@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 02
+ * @version     PHPBoost 6.0 - last update: 2021 10 11
  * @since       PHPBoost 3.0 - 2009 10 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -205,6 +205,11 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 					$menu_content = $cached_menu->has_cached_string() ? $cached_menu->get_cached_string() : $menu->display();
 					$block = $menu->get_block();
 					switch ($block) {
+						case Menu::BLOCK_POSITION__TOP_HEADER:
+							$view->put('C_MENUS_TOP_HEADER_CONTENT', true);
+							$view->assign_block_vars('menus_top_header', array('MENU' => $menu_content));
+						break;
+
 						case Menu::BLOCK_POSITION__HEADER:
 							$view->put('C_MENUS_HEADER_CONTENT', true);
 							$view->assign_block_vars('menus_header', array('MENU' => $menu_content));

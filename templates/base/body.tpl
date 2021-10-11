@@ -2,6 +2,16 @@
 <a href="#global" aria-label="{@common.go.to.content}"></a>
 <header id="header">
 	<div id="top-header">
+		# IF C_MENUS_TOP_HEADER_CONTENT #
+			<div id="top-header-content">
+				# START menus_top_header #
+					{menus_top_header.MENU}
+				# END menus_top_header #
+				<div class="spacer"></div>
+			</div>
+		# ENDIF #
+	</div>
+	<div id="inner-header">
 		<div id="site-infos" role="banner">
 			<div id="site-logo" # IF C_HEADER_LOGO #style="background-image: url({U_HEADER_LOGO});"# ENDIF #></div>
 			<div id="site-name-container">
@@ -9,13 +19,14 @@
 				<span id="site-slogan">{SITE_SLOGAN}</span>
 			</div>
 		</div>
-		<div id="top-header-content">
-			# IF C_MENUS_HEADER_CONTENT #
+		# IF C_MENUS_HEADER_CONTENT #
+			<div id="inner-header-content">
 				# START menus_header #
 					{menus_header.MENU}
 				# END menus_header #
-			# ENDIF #
-		</div>
+				<div class="spacer"></div>
+			</div>
+		# ENDIF #
 
 		# IF C_VISIT_COUNTER #
 			<div id="visit-counter" class="hidden-small-screens">
@@ -29,17 +40,16 @@
 				</div>
 			</div>
 		# ENDIF #
-
 	</div>
 	<div id="sub-header">
-		<div id="sub-header-content">
-			# IF C_MENUS_SUB_HEADER_CONTENT #
+		# IF C_MENUS_SUB_HEADER_CONTENT #
+			<div id="sub-header-content">
 				# START menus_sub_header #
 					{menus_sub_header.MENU}
 				# END menus_sub_header #
-			# ENDIF #
-		</div>
-		<div class="spacer"></div>
+				<div class="spacer"></div>
+			</div>
+		# ENDIF #
 	</div>
 	<div class="spacer"></div>
 </header>

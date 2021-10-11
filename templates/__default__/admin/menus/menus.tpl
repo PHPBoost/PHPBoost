@@ -57,6 +57,7 @@
 
 	// Sortable drag and drop
 	var menusContainerList = new Array(
+		'mod_topheader',
 		'mod_header',
 		'mod_subheader',
 		'mod_left',
@@ -91,7 +92,7 @@
 				handle: '.fa-arrows-alt',
 				group: 'menus',
 				placeholder: '<div class="dropzone">' + ${escapejs(@common.drop.here)} + '</div>',
-				containerSelector: '#mod_header, #mod_subheader, #mod_left, #mod_right, #mod_topcentral, #mod_central, #mod_bottomcentral, #mod_topfooter, #mod_footer',
+				containerSelector: '#mod_topheader, #mod_header, #mod_subheader, #mod_left, #mod_right, #mod_topcentral, #mod_central, #mod_bottomcentral, #mod_topfooter, #mod_footer',
 				itemSelector: 'div.menus-block-container'
 			});
 		}
@@ -114,6 +115,43 @@
 	<div id="admin-contents">
 		<div class="menusmanagement">
 			<div id="container-top-header">
+				<div class="container-block">
+					<p class="menu-block-libelle mini-checkbox flex-between">
+						<span>
+							<span class="form-field-checkbox">
+								<label class="checkbox" for="top_header_enabled">
+									<input id="top_header_enabled" onclick="minimize_container(this, 'topheader')" type="checkbox" name="top_header_enabled" {CHECKED_TOP_HEADER_COLUMN} />
+									<span>&nbsp;</span>
+								</label>
+							</span>
+							<span class="text-strong">{@menu.top.header}</span>
+						</span>
+						<span class="pinned notice">{TOP_HEADER_MENUS_NUMBER}</span>
+					</p>
+					<p class="menus-block-add" onclick="menu_display_block('addmenu9');" onmouseover="menu_hide_block('addmenu9', 1);" onmouseout="menu_hide_block('addmenu9', 0);">
+						<i class="fa fa-plus" aria-hidden="true"></i> {@menu.add.menu}
+					</p>
+					<div class="container-block-absolute" id="moveaddmenu9">
+						<div onmouseover="menu_hide_block('addmenu9', 1);" onmouseout="menu_hide_block('addmenu9', 0);">
+							<p class="menus-block-add menus-block-add-links">
+								<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=1" class="small">{@menu.links.menu}</a>
+							</p>
+							<p class="menus-block-add menus-block-add-links">
+								<a href="{PATH_TO_ROOT}/admin/menus/content.php?s=1" class="small">{@menu.content.menu}</a>
+							</p>
+							<p class="menus-block-add menus-block-add-links">
+								<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=1" class="small">{@menu.feed.menu}</a>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div id="mod_topheader" class="menus-block-list">
+					# START mod_topheader #
+						{mod_topheader.MENU}
+					# END mod_topheader #
+				</div>
+			</div>
+			<div id="container-inner-header">
 				<div class="container-block">
 					<p class="menu-block-libelle mini-checkbox flex-between">
 						<span>

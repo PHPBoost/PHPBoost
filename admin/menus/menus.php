@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 12
+ * @version     PHPBoost 6.0 - last update: 2021 10 11
  * @since       PHPBoost 1.6 - 2007 03 05
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -105,6 +105,7 @@ $menus_blocks = MenuService::get_menus_map();
 function get_block($position)
 {
 	$blocks = array(
+		Menu::BLOCK_POSITION__TOP_HEADER     => 'mod_topheader',
 		Menu::BLOCK_POSITION__HEADER         => 'mod_header',
 		Menu::BLOCK_POSITION__SUB_HEADER     => 'mod_subheader',
 		Menu::BLOCK_POSITION__TOP_CENTRAL    => 'mod_topcentral',
@@ -140,6 +141,7 @@ function save_position($block_position)
 
 if ($action == 'save') // Save menus positions.
 {
+	save_position(Menu::BLOCK_POSITION__TOP_HEADER);
 	save_position(Menu::BLOCK_POSITION__HEADER);
 	save_position(Menu::BLOCK_POSITION__SUB_HEADER);
 	save_position(Menu::BLOCK_POSITION__TOP_CENTRAL);
@@ -151,6 +153,7 @@ if ($action == 'save') // Save menus positions.
 	save_position(Menu::BLOCK_POSITION__NOT_ENABLED);
 
 	$columns_disabled = new ColumnsDisabled();
+	$columns_disabled->set_disable_top_header(!AppContext::get_request()->get_bool('top_header_enabled', false));
 	$columns_disabled->set_disable_header(!AppContext::get_request()->get_bool('header_enabled', false));
 	$columns_disabled->set_disable_sub_header(!AppContext::get_request()->get_bool('sub_header_enabled', false));
 	$columns_disabled->set_disable_top_central(!AppContext::get_request()->get_bool('top_central_enabled', false));
@@ -181,6 +184,7 @@ $menu_template->add_lang(array_merge(
 	LangLoader::get('common-lang')
 ));
 $menu_template->put_all(array(
+	'I_TOPHEADER'     => Menu::BLOCK_POSITION__TOP_HEADER,
 	'I_HEADER'        => Menu::BLOCK_POSITION__HEADER,
 	'I_SUBHEADER'     => Menu::BLOCK_POSITION__SUB_HEADER,
 	'I_TOPCENTRAL'    => Menu::BLOCK_POSITION__TOP_CENTRAL,
@@ -262,6 +266,7 @@ $view->put_all(array(
 	'C_BOTTOM_CENTRAL_COLUMN' => $columns_disable->bottom_central_is_disabled(),
 	'C_TOP_CENTRAL_COLUMN'    => $columns_disable->top_central_is_disabled(),
 	'C_SUB_HEADER_COLUMN'     => $columns_disable->sub_header_is_disabled(),
+	'C_TOP_HEADER_COLUMN'     => $columns_disable->top_header_is_disabled(),
 	'C_HEADER_COLUMN'         => $columns_disable->header_is_disabled(),
 
 	'THEME_NAME' => $theme_name,
@@ -272,7 +277,9 @@ $view->put_all(array(
 	'CHECKED_BOTTOM_CENTRAL_COLUMN' => !$columns_disable->bottom_central_is_disabled() ? 'checked="checked"' : '',
 	'CHECKED_TOP_CENTRAL_COLUMN'    => !$columns_disable->top_central_is_disabled() ? 'checked="checked"' : '',
 	'CHECKED_SUB_HEADER_COLUMN'     => !$columns_disable->sub_header_is_disabled() ? 'checked="checked"' : '',
+	'CHECKED_TOP_HEADER_COLUMN'     => !$columns_disable->top_header_is_disabled() ? 'checked="checked"' : '',
 	'CHECKED_HEADER_COLUMN'         => !$columns_disable->header_is_disabled() ? 'checked="checked"' : '',
+	'I_TOPHEADER'     => Menu::BLOCK_POSITION__TOP_HEADER,
 	'I_HEADER'        => Menu::BLOCK_POSITION__HEADER,
 	'I_SUBHEADER'     => Menu::BLOCK_POSITION__SUB_HEADER,
 	'I_TOPCENTRAL'    => Menu::BLOCK_POSITION__TOP_CENTRAL,
@@ -283,6 +290,7 @@ $view->put_all(array(
 	'I_RIGHT'         => Menu::BLOCK_POSITION__RIGHT,
 	'AVAILABLE_MENUS_NUMBER'      => count($menus_blocks[Menu::BLOCK_POSITION__NOT_ENABLED]),
 	'HEADER_MENUS_NUMBER'         => count($menus_blocks[Menu::BLOCK_POSITION__HEADER]),
+	'TOP_HEADER_MENUS_NUMBER'     => count($menus_blocks[Menu::BLOCK_POSITION__TOP_HEADER]),
 	'SUB_HEADER_MENUS_NUMBER'     => count($menus_blocks[Menu::BLOCK_POSITION__SUB_HEADER]),
 	'TOP_CENTRAL_MENUS_NUMBER'    => count($menus_blocks[Menu::BLOCK_POSITION__TOP_CENTRAL]),
 	'BOTTOM_CENTRAL_MENUS_NUMBER' => count($menus_blocks[Menu::BLOCK_POSITION__BOTTOM_CENTRAL]),

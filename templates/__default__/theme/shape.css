@@ -36,39 +36,42 @@ body {
 #global,
 #footer {
 	width: 100%;
-	padding: 0.809em;
+	padding: 0 0.309em;
 }
 
 @media (min-width: 769px)  {
-	#header { padding: 1.618em 0; }
+	#header { padding: 0; }
 
-	#top-header,
-	#sub-header,
+	#inner-header,
 	#global,
 	#footer {
 		margin: 0 auto;
 		padding: 1.618em 0;
 	}
 
+	#sub-header,
+	#top-header { margin: 0 auto; }
+
 	#top-header,
+	#inner-header,
 	#sub-header,
 	#global,
 	#footer { width: 768px; }
 }
 
-@media (min-width: 1025px) { #top-header, #sub-header, #global, #footer { width: 1024px; } }
-@media (min-width: 1367px) { #top-header, #sub-header, #global, #footer { width: 1280px; } }
+@media (min-width: 1025px) { #top-header, #inner-header, #sub-header, #global, #footer { width: 1024px; } }
+@media (min-width: 1367px) { #top-header, #inner-header, #sub-header, #global, #footer { width: 1280px; } }
 
 
 /* --- Header --------------------------------------------------------------- */
 #header { position: relative; }
 
-#top-header {
+#inner-header {
 	display: flex;
 	flex-direction: column;
 }
 
-#top-header-content { flex: 1 1 auto; }
+#inner-header-content { flex: 1 1 auto; }
 
 #site-infos {
 	display: flex;
@@ -102,9 +105,9 @@ body {
 }
 
 @media (min-width: 769px) {
-	#top-header { flex-direction: row; }
+	#inner-header { flex-direction: row; }
 
-	#top-header-content { align-self: flex-end; }
+	#inner-header { align-self: flex-end; }
 
 	#site-logo {
 		width: 90px;

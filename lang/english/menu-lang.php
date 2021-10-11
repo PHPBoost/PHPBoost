@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 01
+ * @version     PHPBoost 6.0 - last update: 2021 10 11
  * @since       PHPBoost 3.0 - 2011 10 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -85,6 +85,7 @@ $lang['menu.modules'] = 'Modules';
 $lang['menu.menus.management'] = 'Menu management';
 $lang['menu.theme.management'] = 'Theme management';
 $lang['menu.add.menu']         = 'Add menu';
+$lang['menu.top.header']       = 'Top header';
 $lang['menu.header']           = 'Header';
 $lang['menu.sub.header']       = 'Sub header';
 $lang['menu.left']             = 'Left menu';

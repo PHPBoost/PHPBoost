@@ -467,7 +467,7 @@ ul.level-2 ul { padding: 0; }
 }
 
 /* --- Menus contents --- */
-#mod_header, #mod_subheader, #mod_left,
+#mod_topheader, #mod_header, #mod_subheader, #mod_left,
 #mod_right, #mod_topcentral,
 #mod_central, #mod_bottomcentral,
 #mod_topfooter, #mod_footer {
@@ -481,14 +481,13 @@ ul.level-2 ul { padding: 0; }
 
 /* --- Menu Containers --- */
 #container-top-header,
+#container-inner-header,
 #container-sub-header,
 #container-top-footer,
 #container-footer-content {
 	padding: 0.618em;
 	vertical-align: top;
 }
-
-#container-top-header { padding-top: 10px; }
 
 #container-main-content .menus-block-container {
 	display: inline-block;

@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 04
+ * @version     PHPBoost 6.0 - last update: 2021 10 11
  * @since       PHPBoost 2.0 - 2008 11 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -358,7 +358,7 @@ class MenuService
 			$installed_menus[str_replace(' ', '_', $row['title'])] = $row;
 		}
 		$results->dispose();
-		
+
 		$new_menus = array();
 		foreach (MenusProvidersService::get_extension_point() as $module_id => $extension_point)
 		{
@@ -379,13 +379,13 @@ class MenuService
 				}
 			}
 		}
-		
+
 		// Delete old menus that should not be there anymore
 		foreach ($installed_menus as $menu)
 		{
 			self::delete(self::initialize($menu));
 		}
-		
+
 		// Add new menus
 		foreach ($new_menus as $menu)
 		{
@@ -462,16 +462,17 @@ class MenuService
 	{
 		$vertical_position = in_array($position, array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT));
 		$template->put_all(array(
-			'C_HEADER' => $position == Menu::BLOCK_POSITION__HEADER,
-			'C_SUBHEADER' => $position == Menu::BLOCK_POSITION__SUB_HEADER,
-			'C_TOP_CENTRAL' => $position == Menu::BLOCK_POSITION__TOP_CENTRAL,
+			'C_TOP_HEADER'     => $position == Menu::BLOCK_POSITION__TOP_HEADER,
+			'C_HEADER'         => $position == Menu::BLOCK_POSITION__HEADER,
+			'C_SUBHEADER'      => $position == Menu::BLOCK_POSITION__SUB_HEADER,
+			'C_TOP_CENTRAL'    => $position == Menu::BLOCK_POSITION__TOP_CENTRAL,
 			'C_BOTTOM_CENTRAL' => $position == Menu::BLOCK_POSITION__BOTTOM_CENTRAL,
-			'C_TOP_FOOTER' => $position == Menu::BLOCK_POSITION__TOP_FOOTER,
-			'C_FOOTER' => $position == Menu::BLOCK_POSITION__FOOTER,
-			'C_LEFT' => $position == Menu::BLOCK_POSITION__LEFT,
-			'C_RIGHT' => $position == Menu::BLOCK_POSITION__RIGHT,
-			'C_VERTICAL' => $vertical_position,
-			'C_HORIZONTAL' => !$vertical_position
+			'C_TOP_FOOTER'     => $position == Menu::BLOCK_POSITION__TOP_FOOTER,
+			'C_FOOTER'         => $position == Menu::BLOCK_POSITION__FOOTER,
+			'C_LEFT'           => $position == Menu::BLOCK_POSITION__LEFT,
+			'C_RIGHT'          => $position == Menu::BLOCK_POSITION__RIGHT,
+			'C_VERTICAL'       => $vertical_position,
+			'C_HORIZONTAL'     => !$vertical_position
 		));
 	}
 	## Tools ##
@@ -485,6 +486,8 @@ class MenuService
 	{
 		switch ($str_location)
 		{
+			case 'topheader':
+				return Menu::BLOCK_POSITION__TOP_HEADER;
 			case 'header':
 				return Menu::BLOCK_POSITION__HEADER;
 			case 'subheader':
@@ -555,6 +558,7 @@ class MenuService
 	private static function initialize_menus_map()
 	{
 		return array(
+		Menu::BLOCK_POSITION__TOP_HEADER => array(),
 		Menu::BLOCK_POSITION__HEADER => array(),
 		Menu::BLOCK_POSITION__SUB_HEADER => array(),
 		Menu::BLOCK_POSITION__TOP_CENTRAL => array(),
