@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 13
+ * @version     PHPBoost 6.0 - last update: 2021 10 12
  * @since       PHPBoost 3.0 - 2010 01 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -61,6 +61,7 @@ class MediaSetup extends DefaultModuleSetup
 			'summary' => array('type' => 'text', 'length' => 65000),
 			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => -1),
 			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'update_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'published' => array('type' => 'integer', 'length' => 6, 'notnull' => 1, 'default' => 0),
 			'file_url' => array('type' => 'text', 'length' => 2048),
 			'mime_type' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => 0),
@@ -68,6 +69,7 @@ class MediaSetup extends DefaultModuleSetup
 			'height' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 100),
 			'thumbnail' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'views_number' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'sources' => array('type' => 'text', 'length' => 65000),
 		);
 		$options = array(
 			'primary' => array('id'),
