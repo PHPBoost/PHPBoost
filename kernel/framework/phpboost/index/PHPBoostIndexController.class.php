@@ -60,7 +60,7 @@ class PHPBoostIndexController extends AbstractController
 		}
 		$site_path = ($site_path == '/') ? '' : $site_path;
 		
-		if (file_exists(PATH_TO_ROOT . '/change_subdomain.php') && (($request->get_is_subdomain() && $this->general_config->get_site_url() != $request->get_site_url()) || ($request->get_domain_name($this->general_config->get_site_url()) != $request->get_domain_name()) || ($site_path && !preg_match('/\/error/', $site_path) && $this->general_config->get_site_path() != $site_path)))
+		if (file_exists(PATH_TO_ROOT . '/change_domain.php') && (($request->get_is_subdomain() && $this->general_config->get_site_url() != $request->get_site_url()) || ($request->get_domain_name($this->general_config->get_site_url()) != $request->get_domain_name()) || ($site_path && !preg_match('/\/error/', $site_path) && $this->general_config->get_site_path() != $site_path)))
 		{
 			$this->general_config->set_site_url($request->get_site_url());
 			$this->general_config->set_site_path($site_path);
@@ -69,7 +69,7 @@ class PHPBoostIndexController extends AbstractController
 			AppContext::get_cache_service()->clear_cache();
 			HtaccessFileCache::regenerate();
 			
-			$file = new File(PATH_TO_ROOT . '/change_subdomain.php');
+			$file = new File(PATH_TO_ROOT . '/change_domain.php');
 			$file->delete();
 			
 			AppContext::get_response()->redirect('/');
