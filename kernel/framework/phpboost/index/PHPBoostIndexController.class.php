@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2020 08 24
+ * @version     PHPBoost 5.2 - last update: 2021 10 13
  * @since       PHPBoost 3.0 - 2012 02 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -60,7 +60,7 @@ class PHPBoostIndexController extends AbstractController
 		}
 		$site_path = ($site_path == '/') ? '' : $site_path;
 		
-		if (($request->get_is_subdomain() && $this->general_config->get_site_url() != $request->get_site_url()) || ($request->get_domain_name($this->general_config->get_site_url()) != $request->get_domain_name()) || ($site_path && !preg_match('/\/error/', $site_path) && $this->general_config->get_site_path() != $site_path))
+		if (file_exists(PATH_TO_ROOT . '/change_subdomain.php') && (($request->get_is_subdomain() && $this->general_config->get_site_url() != $request->get_site_url()) || ($request->get_domain_name($this->general_config->get_site_url()) != $request->get_domain_name()) || ($site_path && !preg_match('/\/error/', $site_path) && $this->general_config->get_site_path() != $site_path)))
 		{
 			$this->general_config->set_site_url($request->get_site_url());
 			$this->general_config->set_site_path($site_path);
@@ -68,6 +68,9 @@ class PHPBoostIndexController extends AbstractController
 			GeneralConfig::save();
 			AppContext::get_cache_service()->clear_cache();
 			HtaccessFileCache::regenerate();
+			
+			$file = new File(PATH_TO_ROOT . '/change_subdomain.php');
+			$file->delete();
 			
 			AppContext::get_response()->redirect('/');
 		}
