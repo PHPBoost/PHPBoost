@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 23
+ * @version     PHPBoost 6.0 - last update: 2021 10 15
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -15,9 +15,6 @@
 
 // Module titles
 $lang['download.module.title'] = 'Downloads';
-
-$lang['download.items'] = 'fichiers';
-$lang['download.item']  = 'fichier';
 
 // TreeLinks
 $lang['items'] = 'files';
@@ -54,15 +51,15 @@ $lang['download.config.max.items.age']   = 'Maximum age (in days)';
 $lang['download.config.download.link'] = 'Display download link permission';
 
 // SEO
-$lang['download.seo.description.root'] = 'All :site\'s download files.';
-$lang['download.seo.description.tag'] = 'All downloads on :subject.';
+$lang['download.seo.description.root']    = 'All :site\'s download files.';
+$lang['download.seo.description.tag']     = 'All downloads on :subject.';
 $lang['download.seo.description.pending'] = 'All pending downloads.';
-$lang['download.seo.description.member'] = 'All :author\'s downloads.';
+$lang['download.seo.description.member']  = 'All :author\'s downloads.';
 
 // Form
 $lang['download.form.reset.downloads.number'] = 'Reset downloads number';
-$lang['download.form.file.size'] = 'File size';
-$lang['download.form.file.size.auto'] = 'Determine file size automatically';
+$lang['download.form.file.size']              = 'File size';
+$lang['download.form.file.size.auto']         = 'Determine file size automatically';
 
 // Messages helper
 $lang['download.message.success.add']                   = 'The file <b>:title</b> has been added';
