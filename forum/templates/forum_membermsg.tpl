@@ -122,9 +122,6 @@
 					<div class="message-content" >
 						{list.CONTENT}
 					</div>
-					<div class="message-user-sign# IF list.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
-						# IF list.C_USER_SIGN #{list.USER_SIGN}# ENDIF #
-					</div>
 				</article>
 			# END list #
 		# ELSE #
