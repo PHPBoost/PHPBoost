@@ -3,12 +3,13 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 18
+ * @version     PHPBoost 6.0 - last update: 2021 10 18
  * @since       PHPBoost 1.6 - 2007 03 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor janus57 <janus57@janus57.fr>
 */
 
 require_once('../admin/admin_begin.php');
@@ -259,7 +260,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 			'ID_FILE'      => $move_folder,
 			'TARGET'       => url('admin_files.php?movefd=' . $move_folder . '&amp;f=0&amp;token=' . AppContext::get_session()->get_token())
 		));
-		$cat_explorer = display_cat_explorer($id_cat, $cats, 1, $folder_member);
+		$cat_explorer = display_cat_explorer($id_cat, $cats, $folder_member, 1);
 	}
 	else
 	{
@@ -283,7 +284,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 				$display_real_img = true;
 		}
 
-		$cat_explorer = display_cat_explorer($info_move['idcat'], $cats, 1, $folder_member);
+		$cat_explorer = display_cat_explorer($info_move['idcat'], $cats, $folder_member, 1);
 
 		$view->assign_block_vars('file', array(
 			'C_ENABLED_THUMBNAILS' => FileUploadConfig::load()->get_display_file_thumbnail(),

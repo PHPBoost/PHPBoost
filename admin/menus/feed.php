@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 11
+ * @version     PHPBoost 6.0 - last update: 2021 10 18
  * @since       PHPBoost 2.0 - 2009 02 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor janus57 <janus57@janus57.fr>
 */
 
 define('PATH_TO_ROOT', '../..');
@@ -157,10 +158,10 @@ else
 
 function get_feeds($feed_cat, $module_id, $feed_type, $feed_url_edit = '', $level = 0)
 {
-	return get_feeds_children($feed_cat->get_children(), $module_id, $feed_type, $feed_url_edit, $level +1);
+	return get_feeds_children($feed_cat->get_children(), $module_id, $feed_type, $level +1, $feed_url_edit);
 }
 
-function get_feeds_children(Array $children, $module_id, $feed_type, $feed_url_edit = '', $level)
+function get_feeds_children(Array $children, $module_id, $feed_type, $level, $feed_url_edit = '')
 {
 	if (!empty($children))
 	{
@@ -177,7 +178,7 @@ function get_feeds_children(Array $children, $module_id, $feed_type, $feed_url_e
 			);
 		}
 
-		return array_merge($urls, get_feeds_children($feed_cat->get_children(), $module_id, $feed_type, $feed_url_edit, $level +1));
+		return array_merge($urls, get_feeds_children($feed_cat->get_children(), $module_id, $feed_type, $level +1, $feed_url_edit));
 	}
 	return array();
 }
