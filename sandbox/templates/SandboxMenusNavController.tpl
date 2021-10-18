@@ -10,6 +10,12 @@
 					<h2>{@cssmenu.h2}</h2>
 				</header>
 				<div class="content">
+					# IF IS_ADMIN #
+						<a href="{PATH_TO_ROOT}/admin/menus/menus.php">
+							<i class="fa fa-cogs" aria-hidden="true"></i>
+							{@menu.management} - {@menu.menus}
+						</a>
+					# ENDIF #
 					<div class="message-helper bgc warning">
 						{@H|cssmenu.warning}
 					</div>
@@ -25,7 +31,8 @@
 
 <script>
 	jQuery(document).ready(function() {
-		jQuery('#top-header-content > div:not(#module-mini-sandbox)').load('{PATH_TO_ROOT}/sandbox/templates/pagecontent/menus/header.tpl');
+		jQuery('#top-header-content').load('{PATH_TO_ROOT}/sandbox/templates/pagecontent/menus/header.tpl');
+		jQuery('#inner-header-content').load('{PATH_TO_ROOT}/sandbox/templates/pagecontent/menus/header.tpl');
 		jQuery('#sub-header-content').load('{PATH_TO_ROOT}/sandbox/templates/pagecontent/menus/sub-header.tpl');
 		jQuery('#top-content').load('{PATH_TO_ROOT}/sandbox/templates/pagecontent/menus/top-content.tpl');
 		jQuery('aside#menu-left').load('{PATH_TO_ROOT}/sandbox/templates/pagecontent/menus/vertical-left.tpl');

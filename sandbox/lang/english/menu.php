@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 09
+ * @version     PHPBoost 6.0 - last update: 2021 10 18
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -48,8 +48,7 @@ $lang['cssmenu.static.footer']            = 'Footer static menu';
 
 $lang['cssmenu.warning'] = '
     This page has a specific structure to display all kind of links menus regarding to all places they can be setted.
-    <br /><br />It could be ugly if you don\'t use the rules of the Base template.
-    <br />File to modify if necessaray: /sandbox/html/menu
+    <br /><br />To see a navigation menu in a menu location, at least one mini module must be declared in it.
     <br /><br />If nothing is declared in a place you won\'t see any menu in it.
 ';
 
