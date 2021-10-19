@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 04
+ * @version     PHPBoost 6.0 - last update: 2021 10 19
  * @since       PHPBoost 5.1 - 2018 09 20
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -43,6 +43,10 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 			'/templates/smallads.tpl',
 			'/templates/SmalladsLastItemsMiniMenu.tpl',
 			'/templates/fields/SmalladsFormFieldSelectSources.tpl',
+			'/templates/js/jplist.core.min.js',
+			'/templates/js/jplist.filter-toggle-bundle.min.js',
+			'/templates/js/jplist.pagination-bundle.min.js ',
+			'/templates/js/jplist.sort-bundle.min.js ',
 			'/smallads.class.php',
 			'/smallads.php',
 			'/smallads_begin.php'
