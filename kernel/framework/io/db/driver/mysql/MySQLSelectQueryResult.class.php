@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2014 12 22
+ * @version     PHPBoost 6.0 - last update: 2021 10 19
  * @since       PHPBoost 3.0 - 2009 10 01
+ * @contributor janus57 <janus57@janus57.fr>
 */
 
 class MySQLSelectQueryResult extends AbstractSelectQueryResult
@@ -58,6 +59,7 @@ class MySQLSelectQueryResult extends AbstractSelectQueryResult
 		return mysqli_num_rows($this->resource);
 	}
 
+	#[\ReturnTypeWillChange]
 	public function rewind()
 	{
 		if ($this->index > 0)
@@ -68,21 +70,25 @@ class MySQLSelectQueryResult extends AbstractSelectQueryResult
 		$this->next();
 	}
 
+	#[\ReturnTypeWillChange]
 	public function valid()
 	{
 		return $this->current !== null;
 	}
 
+	#[\ReturnTypeWillChange]
 	public function current()
 	{
 		return $this->current;
 	}
 
+	#[\ReturnTypeWillChange]
 	public function key()
 	{
 		return $this->index;
 	}
 
+	#[\ReturnTypeWillChange]
 	public function next()
 	{
 		switch ($this->fetch_mode)

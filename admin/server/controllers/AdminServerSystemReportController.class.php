@@ -3,11 +3,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 23
+ * @version     PHPBoost 6.0 - last update: 2021 10 19
  * @since       PHPBoost 4.1 - 2015 05 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor janus57 <janus57@janus57.fr>
 */
 
 class AdminServerSystemReportController extends AdminController
@@ -128,7 +129,7 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 		foreach(PHPBoostFoldersPermissions::get_permissions() as $key => $folder)
 		{
 			$fieldset->add_field(new FormFieldFree(str_replace('/', '_', $key), $key, $folder->is_writable() ? $picture_yes : $picture_no));
-			$directories_summerization .= $key . str_repeat('	', 5 - (TextHelper::strlen($key) / 8)) . ": " . (int)($folder->is_writable()) . "
+			$directories_summerization .= $key . str_repeat('	', 5 - (TextHelper::strlen($key) / 8)) . ": " . intval(($folder->is_writable())) . "
 ";
 		}
 
