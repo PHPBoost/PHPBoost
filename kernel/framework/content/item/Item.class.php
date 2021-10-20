@@ -723,14 +723,13 @@ class Item
 			'C_DEFFERED_PUBLISHING' => $this->published == self::DEFERRED_PUBLICATION,
 
 			// Item parameters
-			'ID'                                                        => $this->get_id(),
-			TextHelper::strtoupper(self::get_title_label())             => $this->get_title(),
-			TextHelper::strtoupper(self::get_content_label())           => $this->content_field_enabled ? $content : '',
-			'RICH_' . TextHelper::strtoupper(self::get_content_label()) => $this->content_field_enabled ? $rich_content : '',
-			'AUTHOR_DISPLAY_NAME'                                       => $author->get_display_name(),
-			'AUTHOR_LEVEL_CLASS'                                        => UserService::get_level_class($author->get_level()),
-			'AUTHOR_GROUP_COLOR'                                        => $author_group_color,
-			'STATUS'                                                    => $this->get_status(),
+			'ID'                                              => $this->get_id(),
+			TextHelper::strtoupper(self::get_title_label())   => $this->get_title(),
+			TextHelper::strtoupper(self::get_content_label()) => $this->content_field_enabled ? $rich_content : '',
+			'AUTHOR_DISPLAY_NAME'                             => $author->get_display_name(),
+			'AUTHOR_LEVEL_CLASS'                              => UserService::get_level_class($author->get_level()),
+			'AUTHOR_GROUP_COLOR'                              => $author_group_color,
+			'STATUS'                                          => $this->get_status(),
 
 			// Links
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($author->get_id())->rel(),
