@@ -112,7 +112,7 @@
 		# IF NOT C_MEMBER #
 			<label for="shout-pseudo" class="cell-form grouped-inputs">
 				<span class="grouped-element">{@common.name}</span>
-				<input type="text" name="shout-pseudo" id="shout-pseudo" class="grouped-element shout-pseudo not-connected" value="${LangLoader::get_message('user.visitor', 'user-lang')}">
+				<input type="text" name="shout-pseudo" id="shout-pseudo" class="grouped-element shout-pseudo not-connected" value="${LangLoader::get_message('user.guest', 'user-lang')}">
 			</label>
 		# ELSE #
 			<input type="hidden" name="shout-pseudo" id="shout-pseudo" class="shout-pseudo connected" value="{SHOUTBOX_PSEUDO}">

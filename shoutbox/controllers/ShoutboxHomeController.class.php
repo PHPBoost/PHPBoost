@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 10 19
  * @since       PHPBoost 4.1 - 2014 10 14
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor janus57 <janus57@janus57.fr>
 */
 
 class ShoutboxHomeController extends ModuleController
@@ -135,7 +136,7 @@ class ShoutboxHomeController extends ModuleController
 			if ($forbidden_to_write)
 				$this->view->put_all(array(
 					'C_FORBIDDEN_TO_WRITE' => $forbidden_to_write,
-					'MESSAGE_HELPER' => MessageHelper::display($this->lang['error.post.unauthorized'], MessageHelper::WARNING)
+					'MESSAGE_HELPER' => MessageHelper::display($this->lang['shoutbox.error.post.unauthorized'], MessageHelper::WARNING)
 				));
 		}
 

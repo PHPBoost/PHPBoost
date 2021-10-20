@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 22
+ * @version     PHPBoost 6.0 - last update: 2021 10 19
  * @since       PHPBoost 4.1 - 2014 11 28
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -46,4 +46,5 @@ $lang['shoutbox.message.unauthorized']   = 'You are not authorized to post a mes
 
 // Warnings
 $lang['shoutbox.warning.delete.message'] = 'An error occurred while message deleting';
+$lang['shoutbox.error.post.unauthorized'] = 'You are not authorized to post a message!';
 ?>

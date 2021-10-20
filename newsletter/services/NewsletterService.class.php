@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 23
+ * @version     PHPBoost 6.0 - last update: 2021 10 19
  * @since       PHPBoost 3.0 - 2011 02 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor janus57 <janus57@janus57.fr>
 */
 
 class NewsletterService
@@ -151,7 +152,7 @@ class NewsletterService
 				'id' => $row['id'],
 				'user_id' => $row['user_id'],
 				'mail' => $row['mail'],
-				'display_name' => isset($row['display_name']) ? $row['display_name'] : TextHelper::lcfirst(LangLoader::get_message('user.visitor', 'user-lang')),
+				'display_name' => isset($row['display_name']) ? $row['display_name'] : TextHelper::lcfirst(LangLoader::get_message('user.guest', 'user-lang')),
 			);
 		}
 		$result->dispose();

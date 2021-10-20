@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 22
+ * @version     PHPBoost 6.0 - last update: 2021 10 19
  * @since       PHPBoost 4.1 - 2014 11 28
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -47,4 +47,5 @@ $lang['shoutbox.message.unauthorized']   = 'Vous n\'êtes pas autorisé à ajout
 
 // Warnings
 $lang['shoutbox.warning.delete.message'] = 'Erreur lors de la suppression du message';
+$lang['shoutbox.error.post.unauthorized'] = 'Vous n\'êtes pas autorisé à ajouter un message !';
 ?>
