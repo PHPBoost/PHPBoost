@@ -48,5 +48,18 @@ class HooksService
 			}
 		}
 	}
+
+	public static function execute_hook_display_action($content, $other_parameters = array())
+	{
+		foreach (self::get_hooks() as $hook)
+		{
+			if (method_exists($hook->get_hook_name(), 'on_display_action') && is_callable(array($hook->get_hook_name(), 'on_display_action')))
+			{
+				$content = $hook->on_display_action($module_id, $id_in_module, $content, $other_parameters);
+			}
+		}
+
+		return $content;
+	}
 }
 ?>

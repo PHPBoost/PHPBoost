@@ -697,7 +697,7 @@ class Item
 		}
 
 		$content            = FormatingHelper::second_parse($this->content);
-		$rich_content       = $this->execute_hook_display_action($content);
+		$rich_content       = HooksService::execute_hook_display_action($content);
 		$author             = $this->get_author_user();
 		$author_group_color = User::get_group_color($author->get_groups(), $author->get_level(), true);
 
@@ -782,19 +782,6 @@ class Item
 		}
 
 		return $vars;
-	}
-
-	public function execute_hook_display_action($content)
-	{
-		foreach (HooksService::get_hooks() as $hook)
-		{
-			if (method_exists($hook->get_hook_name(), 'on_display_action') && is_callable(array($hook->get_hook_name(), 'on_display_action')))
-			{
-				$content = $hook->on_display_action($module_id, $id_in_module, $content);
-			}
-		}
-
-		return $content;
 	}
 
 	public static function create_items_table($module_id)
