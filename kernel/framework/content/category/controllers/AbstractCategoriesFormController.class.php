@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 22
+ * @version     PHPBoost 6.0 - last update: 2021 10 20
  * @since       PHPBoost 4.0 - 2013 02 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -108,7 +108,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 			$fieldset->add_field(self::$categories_manager->get_select_categories_form_field('id_parent', self::$lang['category.location'], $this->get_category()->get_id_parent(), $search_category_children_options));
 		}
 
-		$this->build_fieldset_options($form);
+		$this->build_options_fieldset($form);
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', self::$form_lang['form.authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
@@ -177,7 +177,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		}
 	}
 
-	private function build_fieldset_options(HTMLForm $form)
+	private function build_options_fieldset(HTMLForm $form)
 	{
 		$fieldset = new FormFieldsetHTML('options_fieldset', LangLoader::get_message('common.options', 'common-lang'));
 		$this->get_options_fields($fieldset);

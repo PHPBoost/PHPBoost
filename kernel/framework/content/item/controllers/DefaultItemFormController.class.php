@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 09 22
+ * @version     PHPBoost 6.0 - last update: 2021 10 20
  * @since       PHPBoost 6.0 - 2020 05 16
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -141,8 +141,86 @@ class DefaultItemFormController extends AbstractItemController
 
 		$this->build_post_content_fields($fieldset);
 
-		$this->build_fieldset_options($form);
+		$this->build_options_fieldset($form);
 
+		$this->build_publication_fieldset($form);
+
+		$this->build_contribution_fieldset($form);
+
+		$fieldset->add_field(new FormFieldHidden('referrer', $this->request->get_url_referrer()));
+
+		$this->submit_button = new FormButtonDefaultSubmit();
+		$form->add_button($this->submit_button);
+		$form->add_button(new FormButtonReset());
+
+		$this->form = $form;
+	}
+
+	protected function build_pre_content_fields(FormFieldset $fieldset)
+	{
+		$this->get_additional_attributes_fields($fieldset, 'attribute_pre_content_field_parameters');
+	}
+
+	protected function build_post_content_fields(FormFieldset $fieldset)
+	{
+		if (self::get_module_configuration()->has_rich_items())
+		{
+			if ($this->get_item()->content_field_enabled() && $this->get_item()->summary_field_enabled())
+			{
+				$fieldset->add_field(new FormFieldCheckbox('summary_enabled', $this->form_lang['form.enable.summary'], $this->get_item()->is_summary_enabled(),
+					array('description' => StringVars::replace_vars($this->form_lang['form.summary.clue'], array('number' => $this->config->get_auto_cut_characters_number())), 'events' => array('click' => '
+					if (HTMLForms.getField("summary_enabled").getValue()) {
+						HTMLForms.getField("summary").enable();
+					} else {
+						HTMLForms.getField("summary").disable();
+					}'))
+				));
+
+				$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->form_lang['form.summary'], $this->get_item()->get_summary(),
+					array('required' => true, 'hidden' => ($this->request->is_post_method() ? !$this->request->get_postbool(self::$module_id . '_form_summary_enabled', false) : !$this->get_item()->is_summary_enabled()))
+				));
+			}
+
+			if ($this->config->get_author_displayed() && $this->get_item()->author_custom_name_field_enabled())
+			{
+				$fieldset->add_field(new FormFieldCheckbox('author_custom_name_enabled', $this->form_lang['form.enable.author.custom.name'], $this->get_item()->is_author_custom_name_enabled(),
+					array('events' => array('click' => '
+					if (HTMLForms.getField("author_custom_name_enabled").getValue()) {
+						HTMLForms.getField("author_custom_name").enable();
+					} else {
+						HTMLForms.getField("author_custom_name").disable();
+					}'))
+				));
+
+				$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->form_lang['form.author.custom.name'], $this->get_item()->get_author_custom_name(),
+					array('required' => true, 'hidden' => ($this->request->is_post_method() ? !$this->request->get_postbool(self::$module_id . '_form_author_custom_name_enabled', false) : !$this->get_item()->is_author_custom_name_enabled()))
+				));
+			}
+		}
+		$this->get_additional_attributes_fields($fieldset, 'attribute_post_content_field_parameters');
+	}
+
+	protected function build_options_fieldset(HTMLForm $form)
+	{
+		$fieldset = new FormFieldsetHTML('options', $this->form_lang['form.options']);
+		$this->get_additional_attributes_fields($fieldset, 'attribute_options_field_parameters');
+
+		if (self::get_module_configuration()->feature_is_enabled('keywords'))
+			$fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_item()->get_id(), 'keywords', $this->form_lang['form.keywords'],
+				array('description' => $this->form_lang['form.keywords.clue'])
+			));
+
+		if (self::get_module_configuration()->feature_is_enabled('sources'))
+			$fieldset->add_field(new FormFieldSelectSources('sources', $this->form_lang['form.sources'], $this->get_item()->get_sources()));
+
+		if ($fieldset->get_fields())
+		{
+			$form->add_fieldset($fieldset);
+		}
+	}
+
+	protected function build_publication_fieldset(HTMLForm $form)
+	{
 		if ((self::get_module_configuration()->has_categories() && CategoriesAuthorizationsService::check_authorizations($this->get_item()->get_id_category(), self::$module_id)->moderation()) || (!self::get_module_configuration()->has_categories() && ItemsAuthorizationsService::check_authorizations(self::$module_id)->moderation()))
 		{
 			$publication_fieldset = new FormFieldsetHTML('publication', $this->form_lang['form.publication']);
@@ -213,79 +291,6 @@ class DefaultItemFormController extends AbstractItemController
 			{
 				$fieldset->add_field(new FormFieldCheckbox('publishing_state', $this->form_lang['form.approve'], $this->get_item()->get_publishing_state()));
 			}
-		}
-
-		$this->build_contribution_fieldset($form);
-
-		$fieldset->add_field(new FormFieldHidden('referrer', $this->request->get_url_referrer()));
-
-		$this->submit_button = new FormButtonDefaultSubmit();
-		$form->add_button($this->submit_button);
-		$form->add_button(new FormButtonReset());
-
-		$this->form = $form;
-	}
-
-	protected function build_pre_content_fields(FormFieldset $fieldset)
-	{
-		$this->get_additional_attributes_fields($fieldset, 'attribute_pre_content_field_parameters');
-	}
-
-	protected function build_post_content_fields(FormFieldset $fieldset)
-	{
-		if (self::get_module_configuration()->has_rich_items())
-		{
-			if ($this->get_item()->content_field_enabled() && $this->get_item()->summary_field_enabled())
-			{
-				$fieldset->add_field(new FormFieldCheckbox('summary_enabled', $this->form_lang['form.enable.summary'], $this->get_item()->is_summary_enabled(),
-					array('description' => StringVars::replace_vars($this->form_lang['form.summary.clue'], array('number' => $this->config->get_auto_cut_characters_number())), 'events' => array('click' => '
-					if (HTMLForms.getField("summary_enabled").getValue()) {
-						HTMLForms.getField("summary").enable();
-					} else {
-						HTMLForms.getField("summary").disable();
-					}'))
-				));
-
-				$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->form_lang['form.summary'], $this->get_item()->get_summary(),
-					array('required' => true, 'hidden' => ($this->request->is_post_method() ? !$this->request->get_postbool(self::$module_id . '_form_summary_enabled', false) : !$this->get_item()->is_summary_enabled()))
-				));
-			}
-
-			if ($this->config->get_author_displayed() && $this->get_item()->author_custom_name_field_enabled())
-			{
-				$fieldset->add_field(new FormFieldCheckbox('author_custom_name_enabled', $this->form_lang['form.enable.author.custom.name'], $this->get_item()->is_author_custom_name_enabled(),
-					array('events' => array('click' => '
-					if (HTMLForms.getField("author_custom_name_enabled").getValue()) {
-						HTMLForms.getField("author_custom_name").enable();
-					} else {
-						HTMLForms.getField("author_custom_name").disable();
-					}'))
-				));
-
-				$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->form_lang['form.author.custom.name'], $this->get_item()->get_author_custom_name(),
-					array('required' => true, 'hidden' => ($this->request->is_post_method() ? !$this->request->get_postbool(self::$module_id . '_form_author_custom_name_enabled', false) : !$this->get_item()->is_author_custom_name_enabled()))
-				));
-			}
-		}
-		$this->get_additional_attributes_fields($fieldset, 'attribute_post_content_field_parameters');
-	}
-
-	protected function build_fieldset_options(HTMLForm $form)
-	{
-		$fieldset = new FormFieldsetHTML('options', $this->form_lang['form.options']);
-		$this->get_additional_attributes_fields($fieldset, 'attribute_options_field_parameters');
-
-		if (self::get_module_configuration()->feature_is_enabled('keywords'))
-			$fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_item()->get_id(), 'keywords', $this->form_lang['form.keywords'],
-				array('description' => $this->form_lang['form.keywords.clue'])
-			));
-
-		if (self::get_module_configuration()->feature_is_enabled('sources'))
-			$fieldset->add_field(new FormFieldSelectSources('sources', $this->form_lang['form.sources'], $this->get_item()->get_sources()));
-
-		if ($fieldset->get_fields())
-		{
-			$form->add_fieldset($fieldset);
 		}
 	}
 
