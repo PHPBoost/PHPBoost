@@ -435,12 +435,14 @@ class DefaultItemFormController extends AbstractItemController
 		if ($this->is_new_item)
 		{
 			$id = self::get_items_manager()->add($this->get_item());
+			HooksService::execute_hook_action('add', self::$module_id, $id, $this->get_item()->get_title(), $this->get_item()->get_content(), $this->get_item()->get_author_user());
 		}
 		else
 		{
 			$this->get_item()->set_update_date(new Date());
 			$id = $this->get_item()->get_id();
 			self::get_items_manager()->update($this->get_item());
+			HooksService::execute_hook_action('edit', self::$module_id, $id, $this->get_item()->get_title(), $this->get_item()->get_content(), $this->get_item()->get_author_user());
 		}
 
 		$this->contribution_actions($this->get_item(), $id);

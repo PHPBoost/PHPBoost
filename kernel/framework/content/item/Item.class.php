@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 10 20
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -697,6 +697,7 @@ class Item
 		}
 
 		$content            = FormatingHelper::second_parse($this->content);
+		$rich_content       = $this->execute_hook_display_action($content);
 		$author             = $this->get_author_user();
 		$author_group_color = User::get_group_color($author->get_groups(), $author->get_level(), true);
 
@@ -722,13 +723,14 @@ class Item
 			'C_DEFFERED_PUBLISHING' => $this->published == self::DEFERRED_PUBLICATION,
 
 			// Item parameters
-			'ID'                                              => $this->get_id(),
-			TextHelper::strtoupper(self::get_title_label())   => $this->get_title(),
-			TextHelper::strtoupper(self::get_content_label()) => $this->content_field_enabled ? $content : '',
-			'AUTHOR_DISPLAY_NAME'                             => $author->get_display_name(),
-			'AUTHOR_LEVEL_CLASS'                              => UserService::get_level_class($author->get_level()),
-			'AUTHOR_GROUP_COLOR'                              => $author_group_color,
-			'STATUS'                                          => $this->get_status(),
+			'ID'                                                        => $this->get_id(),
+			TextHelper::strtoupper(self::get_title_label())             => $this->get_title(),
+			TextHelper::strtoupper(self::get_content_label())           => $this->content_field_enabled ? $content : '',
+			'RICH_' . TextHelper::strtoupper(self::get_content_label()) => $this->content_field_enabled ? $rich_content : '',
+			'AUTHOR_DISPLAY_NAME'                                       => $author->get_display_name(),
+			'AUTHOR_LEVEL_CLASS'                                        => UserService::get_level_class($author->get_level()),
+			'AUTHOR_GROUP_COLOR'                                        => $author_group_color,
+			'STATUS'                                                    => $this->get_status(),
 
 			// Links
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($author->get_id())->rel(),
@@ -780,6 +782,19 @@ class Item
 		}
 
 		return $vars;
+	}
+
+	public function execute_hook_display_action($content)
+	{
+		foreach (HooksService::get_hooks() as $hook)
+		{
+			if (method_exists($hook->get_hook_name(), 'on_display_action') && is_callable(array($hook->get_hook_name(), 'on_display_action')))
+			{
+				$content = $hook->on_display_action($module_id, $id_in_module, $content);
+			}
+		}
+
+		return $content;
 	}
 
 	public static function create_items_table($module_id)
