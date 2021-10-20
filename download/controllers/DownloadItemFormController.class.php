@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 23
+ * @version     PHPBoost 6.0 - last update: 2021 10 20
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -442,12 +442,14 @@ class DownloadItemFormController extends ModuleController
 		if ($this->is_new_item)
 		{
 			$id = DownloadService::add($item);
+			HooksService::execute_hook_action('add', self::$module_id, $id, $item->get_title(), $item->get_content(), $item->get_author_user());
 		}
 		else
 		{
 			$item->set_update_date(new Date());
 			$id = $item->get_id();
 			DownloadService::update($item);
+			HooksService::execute_hook_action('edit', self::$module_id, $id, $item->get_title(), $item->get_content(), $item->get_author_user());
 		}
 
 		$this->contribution_actions($item, $id);

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 10 20
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -380,12 +380,14 @@ class WebItemFormController extends ModuleController
 		if ($this->item->get_id() === null)
 		{
 			$id = WebService::add($this->item);
+			HooksService::execute_hook_action('edit', self::$module_id, $id, $this->item->get_title(), $this->item->get_content(), $this->item->get_author_user());
 		}
 		else
 		{
 			$this->item->set_update_date(new Date());
 			$id = $this->item->get_id();
 			WebService::update($this->item);
+			HooksService::execute_hook_action('edit', self::$module_id, $id, $this->item->get_title(), $this->item->get_content(), $this->item->get_author_user());
 		}
 
 		$this->contribution_actions($this->item, $id);

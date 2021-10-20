@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 10 20
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -449,6 +449,7 @@ class WebItem
 	{
 		$category = $this->get_category();
 		$content = FormatingHelper::second_parse($this->content);
+		$rich_content = HooksService::execute_hook_display_action($content);
 		$real_summary = $this->get_real_summary();
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
@@ -479,7 +480,7 @@ class WebItem
 				// Item
 				'ID'               => $this->id,
 				'TITLE'            => $this->title,
-				'CONTENT'          => $content,
+				'CONTENT'          => $rich_content,
 				'SUMMARY'   	   => $real_summary,
 				'STATUS'           => $this->get_status(),
 				'C_AUTHOR_EXISTS'  => $user->get_id() !== User::VISITOR_LEVEL,

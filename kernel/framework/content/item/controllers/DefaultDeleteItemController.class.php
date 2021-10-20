@@ -26,7 +26,7 @@ class DefaultDeleteItemController extends AbstractItemController
 			
 			self::get_items_manager()->delete($this->item->get_id());
 			self::get_items_manager()->clear_cache();
-			HooksService::execute_hook_action('delete', self::get_module()->get_id(), $this->item->get_id(), $this->item->get_title(), $this->item->get_content(), $this->item->get_author_user());
+			HooksService::execute_hook_action('delete', self::$module_id, $this->item->get_id(), $this->item->get_title(), $this->item->get_content(), $this->item->get_author_user());
 			
 			if (self::get_module_configuration()->has_contribution() && ((self::get_module_configuration()->has_categories() && !CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, self::$module_id)->write() && CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, self::$module_id)->contribution()) || (!self::get_module_configuration()->has_categories() && !ItemsAuthorizationsService::check_authorizations(self::$module_id)->write() && ItemsAuthorizationsService::check_authorizations(self::$module_id)->contribution())))
 				ContributionService::generate_cache();
