@@ -223,22 +223,23 @@
 											</div>
 										# ENDIF #
 									# ENDIF #
-									<div class="cell-content">
-										# IF items.C_VISIBLE #
-											<div class="cell-infos">
-												<span></span>
-												<span>
-													<a href="{items.U_DOWNLOAD}" class="button submit small offload">
-														<i class="fa fa-download" aria-hidden="true"></i> {@download.download}
-													</a>
+									<div class="cell-list">
+										<ul>
+											<li class="li-stretch">
+												<a href="{items.U_DOWNLOAD}" class="button submit small offload">
+													<i class="fa fa-download" aria-hidden="true"></i> {@download.download}
+												</a>
+												# IF items.C_VISIBLE #
 													# IF IS_USER_CONNECTED #
 														<a href="{items.U_DEADLINK}" data-confirmation="${LangLoader::get_message('contribution.dead.link.confirmation', 'contribution-lang')}" class="button bgc-full warning small" aria-label="${LangLoader::get_message('contribution.report.dead.link', 'contribution-lang')}">
 															<i class="fa fa-unlink" aria-hidden="true"></i>
 														</a>
 													# ENDIF #
-												</span>
-											</div>
-										# ENDIF #
+												# ENDIF #
+											</li>
+										</ul>
+									</div>
+									<div class="cell-content">
 										<div itemprop="text">
 											# IF C_FULL_ITEM_DISPLAY #
 												# IF items.C_HAS_THUMBNAIL #

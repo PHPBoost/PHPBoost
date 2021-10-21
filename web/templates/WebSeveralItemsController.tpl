@@ -179,28 +179,23 @@
 											</div>
 										# ENDIF #
 									# ENDIF #
-									<div class="cell-content">
-										<div class="cell-infos">
-											<span></span>
-											# IF items.C_VISIBLE #
-												<span>
-													<a class="offload" href="{items.U_VISIT}" class="button submit small">
-														<i class="fa fa-globe" aria-hidden="true"></i> {@common.visit}
-													</a>
+									<div class="cell-list">
+										<ul>
+											<li class="li-stretch">
+												<a href="{items.U_VISIT}" class="button submit small offload">
+													<i class="fa fa-globe" aria-hidden="true"></i> {@common.visit}
+												</a>
+												# IF items.C_VISIBLE #
 													# IF IS_USER_CONNECTED #
 														<a href="{items.U_DEADLINK}" data-confirmation="{@contribution.dead.link.confirmation}" class="button bgc-full warning small" aria-label="{@contribution.report.dead.link}">
 															<i class="fa fa-unlink" aria-hidden="true"></i>
 														</a>
 													# ENDIF #
-												</span>
-											# ELSE #
-												# IF C_PENDING_ITEMS #
-													<a class="offload" href="{items.U_VISIT}" class="button submit small">
-														<i class="fa fa-globe" aria-hidden="true"></i> {@common.visit}
-													</a>
 												# ENDIF #
-											# ENDIF #
-										</div>
+											</li>
+										</ul>
+									</div>
+									<div class="cell-content">
 										# IF C_FULL_ITEM_DISPLAY #
 											# IF items.C_IS_ADORNED #
 												<a class="offload" class="item-thumbnail" href="{items.U_ITEM}">

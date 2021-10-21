@@ -39,7 +39,7 @@
 								# IF C_VISIBLE #
 									# IF C_DISPLAY_DOWNLOAD_LINK #
 										<li class="li-stretch">
-											<a class="offload" href="{U_DOWNLOAD}" class="button submit">
+											<a href="{U_DOWNLOAD}" class="button submit offload">
 												<i class="fa fa-download" aria-hidden="true"></i> {@download.download}
 											</a>
 											# IF IS_USER_CONNECTED #
