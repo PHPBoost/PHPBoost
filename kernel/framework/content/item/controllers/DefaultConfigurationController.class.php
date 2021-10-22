@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 08 24
+ * @version     PHPBoost 6.0 - last update: 2021 10 22
  * @since       PHPBoost 6.0 - 2020 02 11
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -66,11 +66,11 @@ class DefaultConfigurationController extends AbstractAdminItemController
 
 		if (self::get_module_configuration()->has_rich_items())
 		{
-			$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort_field', $this->lang['form.items.default.sort'], $this->config->get_items_default_sort_field(), $this->module_item->get_sorting_field_options(),
+			$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort_field', $this->lang['config.items.default.sort'], $this->config->get_items_default_sort_field(), $this->module_item->get_sorting_field_options(),
 				array('select_to_list' => true, 'class' => 'third-field')
 			));
 
-			$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort_mode', $this->lang['form.items.default.sort.mode'], $this->config->get_items_default_sort_mode(), $item_class_name::get_sorting_mode_options(),
+			$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort_mode', $this->lang['config.items.default.sort.mode'], $this->config->get_items_default_sort_mode(), $item_class_name::get_sorting_mode_options(),
 				array('select_to_list' => true, 'class' => 'third-field')
 			));
 
@@ -151,7 +151,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 
 			$fieldset->add_field(new FormFieldSpacer('options', ''));
 
-			$fieldset->add_field(new FormFieldCheckbox('sort_form_displayed', $this->lang['form.display.sort.form'], $this->config->get_sort_form_displayed(),
+			$fieldset->add_field(new FormFieldCheckbox('sort_form_displayed', $this->lang['config.display.sort.form'], $this->config->get_sort_form_displayed(),
 				array('class' => 'custom-checkbox')
 			));
 

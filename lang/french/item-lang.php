@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 29
+ * @version     PHPBoost 6.0 - last update: 2021 10 22
  * @since       PHPBoost 6.0 - 2020 01 08
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -51,8 +51,9 @@ $lang['filter.items']      = 'Filtrer les :items';
 // Configuration
 $lang['config.items.per.page']                     = ':Items_number par page';
 $lang['config.items.per.row']                      = ':Items_number par ligne';
-$lang['config.items.default.sort.field']           = 'Ordre d\'affichage des :items par défaut';
-$lang['config.items.default.sort.mode']            = 'Sens d\'affichage des :items par défaut';
+$lang['config.items.default.sort']                 = 'Tri par défaut des :items';
+$lang['config.items.default.sort.mode']            = 'Sens du tri par défaut des :items';
+$lang['config.display.sort.form']                  = 'Afficher le formulaire de tri des :items';
 $lang['config.full.item.display']                  = 'Affichage complet des :items dans les listes';
 $lang['config.auto.cut.characters.number']         = 'Longueur par défaut du résumé des :items';
 $lang['config.auto.cut.characters.number.explain'] = 'Nombre de caractères affichés dans le résumé par défaut';
