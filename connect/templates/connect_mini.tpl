@@ -152,8 +152,8 @@
 									# ENDIF #
 								# ENDIF #
 								<a href="${relative_url(UserUrlBuilder::home_profile())}" class="offload">
-									<span class="hidden-small-screens {USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF # aria-label="{@user.my.profile}">{USER_DISPLAYED_NAME}</span>
-									<span class="hidden-large-screens">{@user.dashboard}</span>
+									<span class="hidden-small-screens {USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF # aria-label="{@user.my.account}">{USER_DISPLAYED_NAME}</span>
+									<span class="hidden-large-screens">{@user.my.account}</span>
 								</a>
 							# ENDIF #
 						</li>
