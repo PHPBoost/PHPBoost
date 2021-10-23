@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 20
+ * @version     PHPBoost 6.0 - last update: 2021 10 24
  * @since       PHPBoost 6.0 - 2019 12 20
 */
 
@@ -26,7 +26,7 @@ class DefaultDeleteItemController extends AbstractItemController
 			
 			self::get_items_manager()->delete($this->item->get_id());
 			self::get_items_manager()->clear_cache();
-			HooksService::execute_hook_action('delete', self::$module_id, $this->item->get_id(), $this->item->get_title(), $this->item->get_content(), $this->item->get_author_user());
+			HooksService::execute_hook_action('delete', self::$module_id, $this->item->get_properties());
 			
 			if (self::get_module_configuration()->has_contribution() && ((self::get_module_configuration()->has_categories() && !CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, self::$module_id)->write() && CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, self::$module_id)->contribution()) || (!self::get_module_configuration()->has_categories() && !ItemsAuthorizationsService::check_authorizations(self::$module_id)->write() && ItemsAuthorizationsService::check_authorizations(self::$module_id)->contribution())))
 				ContributionService::generate_cache();

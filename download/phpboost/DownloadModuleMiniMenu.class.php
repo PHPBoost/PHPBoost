@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 12
+ * @version     PHPBoost 6.0 - last update: 2021 10 24
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -71,7 +71,7 @@ class DownloadModuleMiniMenu extends ModuleMiniMenu
 			$item = new DownloadItem();
 			$item->set_properties($file);
 
-			$view->assign_block_vars('items', array_merge($item->get_array_tpl_vars(), array(
+			$view->assign_block_vars('items', array_merge($item->get_template_vars(), array(
 				'DISPLAYED_POSITION' => $displayed_position
 			)));
 

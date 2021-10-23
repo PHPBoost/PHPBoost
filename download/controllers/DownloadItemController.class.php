@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 23
+ * @version     PHPBoost 6.0 - last update: 2021 10 24
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -83,7 +83,7 @@ class DownloadItemController extends ModuleController
 		$keywords = $item->get_keywords();
 		$has_keywords = count($keywords) > 0;
 
-		$this->view->put_all(array_merge($item->get_array_tpl_vars(), array(
+		$this->view->put_all(array_merge($item->get_template_vars(), array(
 			'C_AUTHOR_DISPLAYED' => $config->is_author_displayed(),
 			'C_ENABLED_COMMENTS' => $comments_config->module_comments_is_enabled('download'),
 			'C_ENABLED_NOTATION' => $content_management_config->module_notation_is_enabled('download'),
