@@ -125,7 +125,7 @@ class ConfigManager
 
 		CacheManager::save($data, $module_name, $entry_name);
 		
-		HooksService::execute_hook_action('edit_config', self::$module_id, array('entry_name' => $entry_name));
+		HooksService::execute_hook_action('edit_config', $module_name, array('entry_name' => $entry_name));
 	}
 
 	/**
