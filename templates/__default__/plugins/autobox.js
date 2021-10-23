@@ -1,6 +1,6 @@
 /**
  * Autobox jQuery plugin - Version: 3.0.1
- * @copyright   &copy; 2005-2020 PHPBoost - 2018 Dumitru Uzun
+ * @copyright   &copy; 2005-2021 PHPBoost - 2018 Dumitru Uzun
  * @license     https://www.opensource.org/licenses/mit-license.php
  * @author      Dumitru Uzun
  * @link        https://duzun.me

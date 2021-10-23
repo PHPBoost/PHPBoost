@@ -1,6 +1,6 @@
 /**
  * Multi Tabs jQuery plugin - Version: 1.0
- * @copyright   &copy; 2005-2020 PHPBoost - 2019 babsolune
+ * @copyright   &copy; 2005-2021 PHPBoost - 2019 babsolune
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @version     PHPBoost 6.0 - last update: 2019 11 17
