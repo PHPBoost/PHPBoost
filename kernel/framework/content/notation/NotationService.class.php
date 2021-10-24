@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 10 25
  * @since       PHPBoost 3.0 - 2010 02 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -307,12 +307,15 @@ class NotationService
 
 			if (!$member_already_notation && $note_is_valid)
 			{
-				self::$db_querier->insert(DB_TABLE_NOTE, array(
-					'module_name' => $notation->get_module_name(),
+				$properties = array(
+					'module_name'  => $notation->get_module_name(),
 					'id_in_module' => $notation->get_id_in_module(),
-					'user_id' => $notation->get_user_id(),
-					'note' => $notation->get_note()
-				));
+					'user_id'      => $notation->get_user_id(),
+					'note'         => $notation->get_note()
+				);
+				
+				self::$db_querier->insert(DB_TABLE_NOTE, $properties);
+				HooksService::execute_hook_action('notation', $notation->get_module_name(), $properties);
 
 				$condition = 'WHERE module_name=:module_name AND id_in_module=:id_in_module';
 				$parameters = array('module_name' => $notation->get_module_name(), 'id_in_module' => $notation->get_id_in_module());

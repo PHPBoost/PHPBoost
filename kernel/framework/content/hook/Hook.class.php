@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 24
+ * @version     PHPBoost 6.0 - last update: 2021 10 25
  * @since       PHPBoost 6.0 - 2021 09 14
 */
 
@@ -47,6 +47,46 @@ abstract class Hook implements ExtensionPoint
 	 * @param string[] $properties Properties of the item (title, content, ...)
 	 */
 	public function on_delete_action($module_id, array $properties)
+	{
+		return true;
+	}
+
+	/**
+	 * @desc Execute action after comment add if needed.
+	 * @param string $module_id Name of the current module
+	 * @param string[] $properties Properties of the comment (id, message, url, ...)
+	 */
+	public function on_add_comment_action($module_id, array $properties)
+	{
+		return true;
+	}
+
+	/**
+	 * @desc Execute action after comment edition if needed.
+	 * @param string $module_id Name of the current module
+	 * @param string[] $properties Properties of the comment (id, message, url, ...)
+	 */
+	public function on_edit_comment_action($module_id, array $properties)
+	{
+		return true;
+	}
+
+	/**
+	 * @desc Execute action after comment removal if needed.
+	 * @param string $module_id Name of the current module
+	 * @param string[] $properties Properties of the comment (id, ...)
+	 */
+	public function on_delete_comment_action($module_id, array $properties)
+	{
+		return true;
+	}
+
+	/**
+	 * @desc Execute action after notation on a item if needed.
+	 * @param string $module_id Name of the current module
+	 * @param string[] $properties Properties of the notation (user_id, note, ...)
+	 */
+	public function on_notation_action($module_id, array $properties)
 	{
 		return true;
 	}
