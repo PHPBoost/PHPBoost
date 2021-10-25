@@ -70,7 +70,7 @@ class CommentsManager
 			'message'   => $message,
 			'user_id'   => self::$user->get_id(),
 			'user_name' => self::$user->get_display_name(),
-			'url'       => CommentsUrlBuilder::comment_added($comment['path'], $id_comment)->rel()
+			'url'       => CommentsUrlBuilder::comment_added($comment['path'], $comment_id)->rel()
 		);
 		HooksService::execute_hook_action('edit_comment', $comment['module_id'], $properties);
 	}
