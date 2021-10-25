@@ -118,6 +118,7 @@ class NotationService
 
 		if (!empty($note_post) && !empty($id_post))
 		{
+			$notation->set_module_name(Environment::get_running_module_name());
 			$notation->set_id_in_module($id_post);
 			$notation->set_note($note_post);
 			self::register_notation($notation);
