@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 10 24
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -106,7 +106,7 @@ class WebPendingItemsController extends ModuleController
 			$keywords = $item->get_keywords();
 			$has_keywords = count($keywords) > 0;
 
-			$this->view->assign_block_vars('items', array_merge($item->get_array_tpl_vars(), array(
+			$this->view->assign_block_vars('items', array_merge($item->get_template_vars(), array(
 				'C_KEYWORDS' => $has_keywords
 			)));
 

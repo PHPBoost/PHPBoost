@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 10 24
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -70,7 +70,7 @@ class WebItemController extends ModuleController
 		$keywords = $this->item->get_keywords();
 		$has_keywords = count($keywords) > 0;
 
-		$this->view->put_all(array_merge($this->item->get_array_tpl_vars(), array(
+		$this->view->put_all(array_merge($this->item->get_template_vars(), array(
 			'C_ENABLED_COMMENTS' => $comments_config->module_comments_is_enabled('web'),
 			'C_ENABLED_NOTATION' => $content_management_config->module_notation_is_enabled('web'),
 			'C_KEYWORDS' => $has_keywords,

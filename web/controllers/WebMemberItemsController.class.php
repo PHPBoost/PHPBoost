@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 25
+ * @version     PHPBoost 6.0 - last update: 2021 10 24
  * @since       PHPBoost 5.2 - 2020 12 05
 */
 
@@ -97,7 +97,7 @@ class WebMemberItemsController extends ModuleController
 			$keywords = $item->get_keywords();
 			$has_keywords = count($keywords) > 0;
 
-			$this->view->assign_block_vars('items', array_merge($item->get_array_tpl_vars(), array(
+			$this->view->assign_block_vars('items', array_merge($item->get_template_vars(), array(
 				'C_KEYWORDS' => $has_keywords
 			)));
 

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 20
+ * @version     PHPBoost 6.0 - last update: 2021 10 24
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -58,12 +58,12 @@ class WebItemFormController extends ModuleController
 	private function build_form(HTTPRequestCustom $request)
 	{
 		$form = new HTMLForm(__CLASS__);
-		$form->set_layout_title($this->item->get_id() === null ? $this->lang['web.add.item'] : ($this->lang['web.edit.item'] . ': ' . $this->item->get_title()));
+		$form->set_layout_title($this->get_item()->get_id() === null ? $this->lang['web.add.item'] : ($this->lang['web.edit.item'] . ': ' . $this->get_item()->get_title()));
 
 		$fieldset = new FormFieldsetHTML('web', $this->form_lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('title', $this->form_lang['form.title'], $this->item->get_title(),
+		$fieldset->add_field(new FormFieldTextEditor('title', $this->form_lang['form.title'], $this->get_item()->get_title(),
 			array('required' => true)
 		));
 
@@ -72,18 +72,18 @@ class WebItemFormController extends ModuleController
 			$search_category_children_options = new SearchCategoryChildrensOptions();
 			$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
 			$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->form_lang['form.category'], $this->item->get_id_category(), $search_category_children_options));
+			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->form_lang['form.category'], $this->get_item()->get_id_category(), $search_category_children_options));
 		}
 
-		$fieldset->add_field(new FormFieldUrlEditor('website_url', $this->form_lang['form.url'], $this->item->get_website_url()->absolute(),
+		$fieldset->add_field(new FormFieldUrlEditor('website_url', $this->form_lang['form.url'], $this->get_item()->get_website_url()->absolute(),
 			array('required' => true)
 		));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('content', $this->form_lang['form.description'], $this->item->get_content(),
+		$fieldset->add_field(new FormFieldRichTextEditor('content', $this->form_lang['form.description'], $this->get_item()->get_content(),
 			array('rows' => 15, 'required' => true)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('summary_enabled', $this->form_lang['form.enable.summary'], $this->item->is_summary_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('summary_enabled', $this->form_lang['form.enable.summary'], $this->get_item()->is_summary_enabled(),
 			array(
 				'description' => StringVars::replace_vars($this->form_lang['form.summary.clue'], array('number' => WebConfig::AUTO_CUT_CHARACTERS_NUMBER)),
 				'events' => array('click' => '
@@ -96,16 +96,16 @@ class WebItemFormController extends ModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->form_lang['form.description'], $this->item->get_summary(),
-			array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_summary_enabled', false) : !$this->item->is_summary_enabled()))
+		$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->form_lang['form.description'], $this->get_item()->get_summary(),
+			array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_summary_enabled', false) : !$this->get_item()->is_summary_enabled()))
 		));
 
 		$options_fieldset = new FormFieldsetHTML('options', $this->form_lang['form.options']);
 		$form->add_fieldset($options_fieldset);
 
-		$options_fieldset->add_field(new FormFieldThumbnail('thumbnail', $this->form_lang['form.picture'], $this->item->get_thumbnail()->relative(), WebItem::THUMBNAIL_URL));
+		$options_fieldset->add_field(new FormFieldThumbnail('thumbnail', $this->form_lang['form.picture'], $this->get_item()->get_thumbnail()->relative(), WebItem::THUMBNAIL_URL));
 
-		$options_fieldset->add_field(new FormFieldCheckbox('partner', $this->lang['web.form.partner'], $this->item->is_partner(), array(
+		$options_fieldset->add_field(new FormFieldCheckbox('partner', $this->lang['web.form.partner'], $this->get_item()->is_partner(), array(
 			'events' => array('click' => '
 				if (HTMLForms.getField("partner").getValue()) {
 					HTMLForms.getField("partner_thumbnail").enable();
@@ -120,38 +120,38 @@ class WebItemFormController extends ModuleController
 			)
 		)));
 
-		$options_fieldset->add_field(new FormFieldUploadPictureFile('partner_thumbnail', $this->lang['web.form.partner.thumbnail'], $this->item->get_partner_thumbnail()->relative(),
-			array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_partner', false) : !$this->item->is_partner()))
+		$options_fieldset->add_field(new FormFieldUploadPictureFile('partner_thumbnail', $this->lang['web.form.partner.thumbnail'], $this->get_item()->get_partner_thumbnail()->relative(),
+			array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_partner', false) : !$this->get_item()->is_partner()))
 		));
 
-		$options_fieldset->add_field(new FormFieldCheckbox('privileged_partner', $this->lang['web.form.privileged.partner'], $this->item->is_privileged_partner(),
+		$options_fieldset->add_field(new FormFieldCheckbox('privileged_partner', $this->lang['web.form.privileged.partner'], $this->get_item()->is_privileged_partner(),
 			array(
 				'description' => $this->lang['web.form.privileged.partner.clue'],
-				'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_partner', false) : !$this->item->is_partner())
+				'hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_partner', false) : !$this->get_item()->is_partner())
 			))
 		);
 
-		$options_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->item->get_id(), 'keywords', $this->form_lang['form.keywords'],
+		$options_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_item()->get_id(), 'keywords', $this->form_lang['form.keywords'],
 			array('description' => $this->form_lang['form.keywords.clue']))
 		);
 
-		if (CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->moderation())
+		if (CategoriesAuthorizationsService::check_authorizations($this->get_item()->get_id_category())->moderation())
 		{
 			$publication_fieldset = new FormFieldsetHTML('publication', $this->form_lang['form.publication']);
 			$form->add_fieldset($publication_fieldset);
 
-			$publication_fieldset->add_field(new FormFieldDateTime('creation_date', $this->form_lang['form.creation.date'], $this->item->get_creation_date(),
+			$publication_fieldset->add_field(new FormFieldDateTime('creation_date', $this->form_lang['form.creation.date'], $this->get_item()->get_creation_date(),
 				array('required' => true)
 			));
 
-			if (!$this->item->is_published())
+			if (!$this->get_item()->is_published())
 			{
 				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->form_lang['form.update.date'], false,
-					array('hidden' => $this->item->get_status() != WebItem::NOT_PUBLISHED)
+					array('hidden' => $this->get_item()->get_status() != WebItem::NOT_PUBLISHED)
 				));
 			}
 
-			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('published', $this->form_lang['form.publication'], $this->item->get_publishing_state(),
+			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('published', $this->form_lang['form.publication'], $this->get_item()->get_publishing_state(),
 				array(
 					new FormFieldSelectChoiceOption($this->form_lang['form.publication.draft'], WebItem::NOT_PUBLISHED),
 					new FormFieldSelectChoiceOption($this->form_lang['form.publication.now'], WebItem::PUBLISHED),
@@ -174,13 +174,13 @@ class WebItemFormController extends ModuleController
 				)
 			));
 
-			$publication_fieldset->add_field($publishing_start_date = new FormFieldDateTime('publishing_start_date', $this->form_lang['form.start.date'], ($this->item->get_publishing_start_date() === null ? new Date() : $this->item->get_publishing_start_date()),
-				array('hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_publication_state', 0) != WebItem::DEFERRED_PUBLICATION) : ($this->item->get_publishing_state() != WebItem::DEFERRED_PUBLICATION)))
+			$publication_fieldset->add_field($publishing_start_date = new FormFieldDateTime('publishing_start_date', $this->form_lang['form.start.date'], ($this->get_item()->get_publishing_start_date() === null ? new Date() : $this->get_item()->get_publishing_start_date()),
+				array('hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_publication_state', 0) != WebItem::DEFERRED_PUBLICATION) : ($this->get_item()->get_publishing_state() != WebItem::DEFERRED_PUBLICATION)))
 			));
 
-			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->form_lang['form.enable.end.date'], $this->item->is_end_date_enabled(),
+			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->form_lang['form.enable.end.date'], $this->get_item()->is_end_date_enabled(),
 				array(
-					'hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_publication_state', 0) != WebItem::DEFERRED_PUBLICATION) : ($this->item->get_publishing_state() != WebItem::DEFERRED_PUBLICATION)),
+					'hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_publication_state', 0) != WebItem::DEFERRED_PUBLICATION) : ($this->get_item()->get_publishing_state() != WebItem::DEFERRED_PUBLICATION)),
 					'events' => array('click' => '
 						if (HTMLForms.getField("end_date_enabled").getValue()) {
 							HTMLForms.getField("publishing_end_date").enable();
@@ -191,8 +191,8 @@ class WebItemFormController extends ModuleController
 				)
 			));
 
-			$publication_fieldset->add_field($publishing_end_date = new FormFieldDateTime('publishing_end_date', $this->form_lang['form.end.date'], ($this->item->get_publishing_end_date() === null ? new Date() : $this->item->get_publishing_end_date()),
-				array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_end_date_enabled', false) : !$this->item->is_end_date_enabled()))
+			$publication_fieldset->add_field($publishing_end_date = new FormFieldDateTime('publishing_end_date', $this->form_lang['form.end.date'], ($this->get_item()->get_publishing_end_date() === null ? new Date() : $this->get_item()->get_publishing_end_date()),
+				array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_end_date_enabled', false) : !$this->get_item()->is_end_date_enabled()))
 			));
 
 			$publishing_end_date->add_form_constraint(new FormConstraintFieldsDifferenceSuperior($publishing_start_date, $publishing_end_date));
@@ -212,7 +212,7 @@ class WebItemFormController extends ModuleController
 	private function build_contribution_fieldset($form)
 	{
 		$contribution = LangLoader::get('contribution-lang');
-		if ($this->item->get_id() === null && $this->is_contributor_member())
+		if ($this->get_item()->get_id() === null && $this->is_contributor_member())
 		{
 			$fieldset = new FormFieldsetHTML('contribution', $contribution['contribution.contribution']);
 			$fieldset->set_description(MessageHelper::display($contribution['contribution.extended.warning'], MessageHelper::WARNING)->render());
@@ -222,7 +222,7 @@ class WebItemFormController extends ModuleController
 				array('description' => $contribution['contribution.description.clue'])
 			));
 		}
-		elseif ($this->item->is_published() && $this->item->is_authorized_to_edit() && !AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL))
+		elseif ($this->get_item()->is_published() && $this->get_item()->is_authorized_to_edit() && !AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL))
 		{
 			$fieldset = new FormFieldsetHTML('member_edition', $contribution['contribution.member.edition']);
 			$fieldset->set_description(MessageHelper::display($contribution['contribution.edition.warning'], MessageHelper::WARNING)->render());
@@ -265,11 +265,11 @@ class WebItemFormController extends ModuleController
 
 	private function check_authorizations()
 	{
-		$this->item = $this->get_item();
+		$item = $this->get_item();
 
-		if ($this->item->get_id() === null)
+		if ($item->get_id() === null)
 		{
-			if (!$this->item->is_authorized_to_add())
+			if (!$item->is_authorized_to_add())
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -277,7 +277,7 @@ class WebItemFormController extends ModuleController
 		}
 		else
 		{
-			if (!$this->item->is_authorized_to_edit())
+			if (!$item->is_authorized_to_edit())
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -292,52 +292,54 @@ class WebItemFormController extends ModuleController
 
 	private function save()
 	{
-		$this->item->set_title($this->form->get_value('title'));
-		$this->item->set_rewrited_title(Url::encode_rewrite($this->item->get_title()));
+		$item = $this->get_item();
+
+		$item->set_title($this->form->get_value('title'));
+		$item->set_rewrited_title(Url::encode_rewrite($item->get_title()));
 
 		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
-			$this->item->set_id_category($this->form->get_value('id_category')->get_raw_value());
+			$item->set_id_category($this->form->get_value('id_category')->get_raw_value());
 
-		$this->item->set_website_url(new Url($this->form->get_value('website_url')));
-		$this->item->set_content($this->form->get_value('content'));
-		$this->item->set_summary(($this->form->get_value('summary_enabled') ? $this->form->get_value('summary') : ''));
-		$this->item->set_thumbnail($this->form->get_value('thumbnail'));
+		$item->set_website_url(new Url($this->form->get_value('website_url')));
+		$item->set_content($this->form->get_value('content'));
+		$item->set_summary(($this->form->get_value('summary_enabled') ? $this->form->get_value('summary') : ''));
+		$item->set_thumbnail($this->form->get_value('thumbnail'));
 
-		$this->item->set_partner($this->form->get_value('partner'));
+		$item->set_partner($this->form->get_value('partner'));
 		if ($this->form->get_value('partner'))
 		{
-			$this->item->set_partner_thumbnail(new Url($this->form->get_value('partner_thumbnail')));
-			$this->item->set_privileged_partner($this->form->get_value('privileged_partner'));
+			$item->set_partner_thumbnail(new Url($this->form->get_value('partner_thumbnail')));
+			$item->set_privileged_partner($this->form->get_value('privileged_partner'));
 		}
 
-		if (!CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->moderation())
+		if (!CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->moderation())
 		{
-			if ($this->item->get_id() === null )
-				$this->item->set_creation_date(new Date());
+			if ($item->get_id() === null )
+				$item->set_creation_date(new Date());
 
-			$this->item->clean_publishing_start_and_end_date();
+			$item->clean_publishing_start_and_end_date();
 
-			if (CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->contribution() && !CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->write())
-				$this->item->set_publishing_state(WebItem::NOT_PUBLISHED);
+			if (CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->contribution() && !CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->write())
+				$item->set_publishing_state(WebItem::NOT_PUBLISHED);
 		}
 		else
 		{
 			if ($this->form->get_value('update_creation_date'))
 			{
-				$this->item->set_creation_date(new Date());
+				$item->set_creation_date(new Date());
 			}
 			else
 			{
-				$this->item->set_creation_date($this->form->get_value('creation_date'));
+				$item->set_creation_date($this->form->get_value('creation_date'));
 			}
-			$this->item->set_publishing_state($this->form->get_value('published')->get_raw_value());
-			if ($this->item->get_publishing_state() == WebItem::DEFERRED_PUBLICATION)
+			$item->set_publishing_state($this->form->get_value('published')->get_raw_value());
+			if ($item->get_publishing_state() == WebItem::DEFERRED_PUBLICATION)
 			{
 				$deferred_operations = $this->config->get_deferred_operations();
 
-				$old_publishing_start_date = $this->item->get_publishing_start_date();
+				$old_publishing_start_date = $item->get_publishing_start_date();
 				$publishing_start_date = $this->form->get_value('publishing_start_date');
-				$this->item->set_publishing_start_date($publishing_start_date);
+				$item->set_publishing_start_date($publishing_start_date);
 
 				if ($old_publishing_start_date !== null && $old_publishing_start_date->get_timestamp() != $publishing_start_date->get_timestamp() && in_array($old_publishing_start_date->get_timestamp(), $deferred_operations))
 				{
@@ -350,9 +352,9 @@ class WebItemFormController extends ModuleController
 
 				if ($this->form->get_value('end_date_enabled'))
 				{
-					$old_publishing_end_date = $this->item->get_publishing_end_date();
+					$old_publishing_end_date = $item->get_publishing_end_date();
 					$publishing_end_date = $this->form->get_value('publishing_end_date');
-					$this->item->set_publishing_end_date($publishing_end_date);
+					$item->set_publishing_end_date($publishing_end_date);
 
 					if ($old_publishing_end_date !== null && $old_publishing_end_date->get_timestamp() != $publishing_end_date->get_timestamp() && in_array($old_publishing_end_date->get_timestamp(), $deferred_operations))
 					{
@@ -365,7 +367,7 @@ class WebItemFormController extends ModuleController
 				}
 				else
 				{
-					$this->item->clean_publishing_end_date();
+					$item->clean_publishing_end_date();
 				}
 
 				$this->config->set_deferred_operations($deferred_operations);
@@ -373,24 +375,25 @@ class WebItemFormController extends ModuleController
 			}
 			else
 			{
-				$this->item->clean_publishing_start_and_end_date();
+				$item->clean_publishing_start_and_end_date();
 			}
 		}
 
-		if ($this->item->get_id() === null)
+		if ($item->get_id() === null)
 		{
-			$id = WebService::add($this->item);
-			HooksService::execute_hook_action('edit', self::$module_id, $id, $this->item->get_title(), $this->item->get_content(), $this->item->get_author_user());
+			$id = WebService::add($item);
+			$item->set_id($id);
+			HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
 		}
 		else
 		{
-			$this->item->set_update_date(new Date());
-			$id = $this->item->get_id();
-			WebService::update($this->item);
-			HooksService::execute_hook_action('edit', self::$module_id, $id, $this->item->get_title(), $this->item->get_content(), $this->item->get_author_user());
+			$item->set_update_date(new Date());
+			$id = $item->get_id();
+			WebService::update($item);
+			HooksService::execute_hook_action('edit', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
 		}
 
-		$this->contribution_actions($this->item, $id);
+		$this->contribution_actions($item, $id);
 
 		KeywordsService::get_keywords_manager()->put_relations($id, $this->form->get_value('keywords'));
 
@@ -437,31 +440,34 @@ class WebItemFormController extends ModuleController
 
 	private function redirect()
 	{
-		$category = $this->item->get_category();
+		$item = $this->get_item();
+		$category = $item->get_category();
 
-		if ($this->is_new_item && $this->is_contributor_member() && !$this->item->is_published())
+		if ($this->is_new_item && $this->is_contributor_member() && !$item->is_published())
 		{
 			DispatchManager::redirect(new UserContributionSuccessController());
 		}
-		elseif ($this->item->is_published())
+		elseif ($item->is_published())
 		{
 			if ($this->is_new_item)
-				AppContext::get_response()->redirect(WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title()), StringVars::replace_vars($this->lang['web.message.success.add'], array('title' => $this->item->get_title())));
+				AppContext::get_response()->redirect(WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()), StringVars::replace_vars($this->lang['web.message.success.add'], array('title' => $item->get_title())));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title())), StringVars::replace_vars($this->lang['web.message.success.edit'], array('title' => $this->item->get_title())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title())), StringVars::replace_vars($this->lang['web.message.success.edit'], array('title' => $item->get_title())));
 		}
 		else
 		{
 			if ($this->is_new_item)
-				AppContext::get_response()->redirect(WebUrlBuilder::display_pending(), StringVars::replace_vars($this->lang['web.message.success.add'], array('title' => $this->item->get_title())));
+				AppContext::get_response()->redirect(WebUrlBuilder::display_pending(), StringVars::replace_vars($this->lang['web.message.success.add'], array('title' => $item->get_title())));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : WebUrlBuilder::display_pending()), StringVars::replace_vars($this->lang['web.message.success.edit'], array('title' => $this->item->get_title())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : WebUrlBuilder::display_pending()), StringVars::replace_vars($this->lang['web.message.success.edit'], array('title' => $item->get_title())));
 		}
 	}
 
 	private function generate_response(View $view)
 	{
-		$location_id = $this->item->get_id() ? 'web-edit-'. $this->item->get_id() : '';
+		$item = $this->get_item();
+
+		$location_id = $item->get_id() ? 'web-edit-'. $item->get_id() : '';
 
 		$response = new SiteDisplayResponse($view, $location_id);
 		$graphical_environment = $response->get_graphical_environment();
@@ -469,12 +475,12 @@ class WebItemFormController extends ModuleController
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['web.module.title'], WebUrlBuilder::home());
 
-		if ($this->item->get_id() === null)
+		if ($item->get_id() === null)
 		{
-			$breadcrumb->add($this->lang['web.add.item'], WebUrlBuilder::add($this->item->get_id_category()));
+			$breadcrumb->add($this->lang['web.add.item'], WebUrlBuilder::add($item->get_id_category()));
 			$graphical_environment->set_page_title($this->lang['web.add.item']);
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['web.add.item'], $this->lang['web.module.title']);
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::add($this->item->get_id_category()));
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::add($item->get_id_category()));
 		}
 		else
 		{
@@ -483,17 +489,17 @@ class WebItemFormController extends ModuleController
 
 			$graphical_environment->set_page_title($this->lang['web.edit.item']);
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['web.edit.item'], $this->lang['web.module.title']);
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::edit($this->item->get_id()));
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::edit($item->get_id()));
 
-			$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->item->get_id_category(), true));
+			$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($item->get_id_category(), true));
 			foreach ($categories as $id => $category)
 			{
 				if ($category->get_id() != Category::ROOT_CATEGORY)
 					$breadcrumb->add($category->get_name(), WebUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
 			}
-			$category = $this->item->get_category();
-			$breadcrumb->add($this->item->get_title(), WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title()));
-			$breadcrumb->add($this->lang['web.edit.item'], WebUrlBuilder::edit($this->item->get_id()));
+			$category = $item->get_category();
+			$breadcrumb->add($item->get_title(), WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()));
+			$breadcrumb->add($this->lang['web.edit.item'], WebUrlBuilder::edit($item->get_id()));
 		}
 
 		return $response;
