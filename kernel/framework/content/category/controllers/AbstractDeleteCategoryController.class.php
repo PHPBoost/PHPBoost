@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 24
+ * @version     PHPBoost 6.0 - last update: 2021 10 28
  * @since       PHPBoost 4.0 - 2013 02 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -76,6 +76,7 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 			$categories_cache = self::$categories_manager->get_categories_cache()->get_class();
 			$categories_cache::invalidate();
 			$this->clear_cache();
+			HooksService::execute_hook_action('delete_category', self::$module_id, $this->get_category()->get_properties());
 			AppContext::get_response()->redirect($this->get_categories_management_url(), StringVars::replace_vars($this->get_success_message(), array('name' => $this->get_category()->get_name())));
 		}
 

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 20
+ * @version     PHPBoost 6.0 - last update: 2021 10 28
  * @since       PHPBoost 4.0 - 2013 02 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -219,10 +219,13 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		if ($category->get_id())
 		{
 			self::$categories_manager->update($category);
+			HooksService::execute_hook_action('edit_category', self::$module_id, $category->get_properties());
 		}
 		else
 		{
-			self::$categories_manager->add($category);
+			$id = self::$categories_manager->add($category);
+			$category->set_id($id);
+			HooksService::execute_hook_action('add_category', self::$module_id, $category->get_properties());
 		}
 	}
 
