@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 26
+ * @version     PHPBoost 6.0 - last update: 2021 10 28
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -252,7 +252,6 @@ $lang['common.share.email'] = 'Share by email';
 $lang['common.share.sms']   = 'Share by sms';
 
 // Sort
-$lang['common.filters']                 = 'Filters';
 $lang['common.sort']                    = 'Sort';
 $lang['common.sort.options']            = 'Sort options';
 $lang['common.sort.by']                 = 'Sort by';
