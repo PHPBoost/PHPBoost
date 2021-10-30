@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 15
+ * @version     PHPBoost 6.0 - last update: 2021 10 30
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -83,18 +83,21 @@ class DownloadService
 	}
 
 	 /**
-	 * @desc Return the properties of an item.
-	 * @param string $condition : Restriction to apply to the list
-	 * @param string[] $parameters : Parameters of the condition
+	 * @desc Return the item with all its properties from its id.
+	 * @param int $id Item identifier
 	 */
-	public static function get_item($condition, array $parameters)
+	public static function get_item(int $id)
 	{
-		$row = self::$db_querier->select_single_row_query('SELECT download.*, member.*, notes.average_notes, notes.notes_number, note.note
-		FROM ' . DownloadSetup::$download_table . ' download
-		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = download.author_user_id
-		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = download.id AND notes.module_name = \'download\'
-		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = download.id AND note.module_name = \'download\' AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
-		' . $condition, $parameters);
+		$row = self::$db_querier->select_single_row_query('SELECT ' . self::$module_id . '.*, member.*, notes.average_notes, notes.notes_number, note.note
+		FROM ' . DownloadSetup::$download_table . ' ' . self::$module_id . '
+		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = ' . self::$module_id . '.author_user_id
+		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = ' . self::$module_id . '.id AND notes.module_name = :module_id
+		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = ' . self::$module_id . '.id AND note.module_name = :module_id AND note.user_id = :current_user_id
+		WHERE ' . self::$module_id . '.id=:id', array(
+			'module_id'       => self::$module_id,
+			'id'              => $id,
+			'current_user_id' => AppContext::get_current_user()->get_id()
+		));
 
 		$item = new DownloadItem();
 		$item->set_properties($row);

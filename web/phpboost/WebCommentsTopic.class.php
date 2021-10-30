@@ -3,7 +3,7 @@
   * @copyright   &copy; 2005-2021 PHPBoost
   * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
   * @author      Julien BRISWALTER <j1.seth@phpboost.com>
-  * @version     PHPBoost 6.0 - last update: 2021 03 15
+  * @version     PHPBoost 6.0 - last update: 2021 10 30
   * @since       PHPBoost 4.1 - 2014 08 21
   * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  */
@@ -34,7 +34,7 @@ class WebCommentsTopic extends CommentsTopic
 	{
 		if ($this->item === null)
 		{
-			$this->item = WebService::get_item('WHERE web.id=:id', array('id' => $this->get_id_in_module()));
+			$this->item = WebService::get_item($this->get_id_in_module());
 		}
 		return $this->item;
 	}
