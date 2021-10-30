@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 25
+ * @version     PHPBoost 6.0 - last update: 2021 10 30
  * @since       PHPBoost 3.0 - 2011 09 25
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -47,11 +47,12 @@ class CommentsManager
 		CommentsTopicDAO::increment_comments_number_topic($id_topic);
 		
 		$properties = array(
-			'id'        => $comment_id,
-			'message'   => $message,
-			'user_id'   => self::$user->get_id(),
-			'user_name' => self::$user->check_level(User::MEMBER_LEVEL) ? self::$user->get_display_name() : $pseudo,
-			'url'       => CommentsUrlBuilder::comment_added($topic_path, $comment_id)->rel()
+			'id'           => $comment_id,
+			'id_in_module' => $id_in_module,
+			'message'      => $message,
+			'user_id'      => self::$user->get_id(),
+			'user_name'    => self::$user->check_level(User::MEMBER_LEVEL) ? self::$user->get_display_name() : $pseudo,
+			'url'          => CommentsUrlBuilder::comment_added($topic_path, $comment_id)->rel()
 		);
 		HooksService::execute_hook_action('add_comment', $module_id, $properties);
 
