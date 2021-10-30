@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 22
+ * @version     PHPBoost 6.0 - last update: 2021 10 30
  * @since       PHPBoost 3.0 - 2010 02 25
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -16,10 +16,10 @@ abstract class HTMLTableEqualsFromListFilter extends AbstractHTMLTableFilter
 	private $allowed_values;
 	private $options;
 
-	public function __construct($name, $label, array $allowed_values)
+	public function __construct($name, $label, array $allowed_values, $alt_all_label = false)
 	{
 		$this->allowed_values = array_keys($allowed_values);
-		$default_value = new FormFieldSelectChoiceOption(LangLoader::get_message('common.all', 'common-lang'), 'all');
+		$default_value = new FormFieldSelectChoiceOption(LangLoader::get_message('common.all' . ($alt_all_label ? '.alt' : ''), 'common-lang'), 'all');
 		$this->options = array($default_value);
 		foreach ($allowed_values as $option_value => $option_label)
 		{
