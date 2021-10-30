@@ -12,6 +12,7 @@
 class WebService
 {
 	private static $db_querier;
+	protected static $module_id = 'web';
 
 	public static function __static()
 	{

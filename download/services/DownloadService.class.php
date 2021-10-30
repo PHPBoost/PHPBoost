@@ -12,6 +12,7 @@
 class DownloadService
 {
 	private static $db_querier;
+	protected static $module_id = 'download';
 
 	public static function __static()
 	{
