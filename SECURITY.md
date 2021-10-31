@@ -18,4 +18,4 @@ Security vulnerabilities can be reported on our bugtracker with a high priority.
 
 [![PHPBoost](https://img.shields.io/badge/PHPBoost-official_website-366493)](https://www.phpboost.com/bugtracker "link to PHPBoost CMS Bugtracker")
 
-You can also contact us by mail : security[at]phpboost.com
+You can also contact us by mail : security@phpboost.com
