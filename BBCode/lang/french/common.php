@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 09 06
+ * @version     PHPBoost 6.0 - last update: 2021 11 01
  * @since       PHPBoost 4.1 - 2014 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -109,12 +109,16 @@ $lang['bbcode.anchor.url']  = 'Ajouter le lien vers l\'ancre';
 $lang['bbcode.sound']     = 'Son';
 $lang['bbcode.sound.url'] = 'Adresse du fichier audio';
 
-$lang['bbcode.movie']        = 'Vidéo';
-$lang['bbcode.movie.url']    = 'Adresse de la vidéo';
-$lang['bbcode.movie.format'] = 'Vous pouvez ajouter l\'adresse d\'une vidéo hébergée, youtube, dailymotion ou vimeo.';
-$lang['bbcode.movie.width']  = 'Largeur de la vidéo';
-$lang['bbcode.movie.height'] = 'Hauteur de la vidéo';
-$lang['bbcode.movie.poster'] = 'Ajouter une vignette';
+$lang['bbcode.movie']                  = 'Vidéo';
+$lang['bbcode.movie.url']              = 'Adresse de la vidéo';
+$lang['bbcode.movie.host']             = 'Hébergeur';
+$lang['bbcode.movie.host.local']       = 'Fichier distant';
+$lang['bbcode.movie.host.youtube']     = 'Youtube';
+$lang['bbcode.movie.host.dailymotion'] = 'Dailymotion';
+$lang['bbcode.movie.host.vimeo']       = 'Vimeo';
+$lang['bbcode.movie.width']            = 'Largeur de la vidéo';
+$lang['bbcode.movie.height']           = 'Hauteur de la vidéo';
+$lang['bbcode.movie.poster']           = 'Ajouter une vignette';
 
 $lang['bbcode.lightbox']        = 'Ajouter une image avec un effet lightbox';
 $lang['bbcode.picture.url']     = 'Adresse de l\'image';

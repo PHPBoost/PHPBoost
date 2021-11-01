@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 09 06
+ * @version     PHPBoost 6.0 - last update: 2021 11 01
  * @since       PHPBoost 4.1 - 2014 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -108,12 +108,16 @@ $lang['bbcode.anchor.url']  = 'Add the link to the anchor';
 $lang['bbcode.sound']     = 'Sound';
 $lang['bbcode.sound.url'] = 'Audio file url';
 
-$lang['bbcode.movie']        = 'Video';
-$lang['bbcode.movie.url']    = 'Video file url';
-$lang['bbcode.movie.format'] = 'You can also add hosted video url from Youtube, Dailymotion or Vimeo';
-$lang['bbcode.movie.width']  = 'Video width';
-$lang['bbcode.movie.height'] = 'Video height';
-$lang['bbcode.movie.poster'] = 'Add thumbnail/poster';
+$lang['bbcode.movie']                  = 'Video';
+$lang['bbcode.movie.url']              = 'Video file url';
+$lang['bbcode.movie.host']             = 'Host';
+$lang['bbcode.movie.host.local']       = 'Remote file';
+$lang['bbcode.movie.host.youtube']     = 'Youtube';
+$lang['bbcode.movie.host.dailymotion'] = 'Dailymotion';
+$lang['bbcode.movie.host.vimeo']       = 'Vimeo';
+$lang['bbcode.movie.width']            = 'Video width';
+$lang['bbcode.movie.height']           = 'Video height';
+$lang['bbcode.movie.poster']           = 'Add thumbnail/poster';
 
 $lang['bbcode.lightbox']        = 'Add a picture with lightbox effect';
 $lang['bbcode.picture.url']     = 'Picture url';

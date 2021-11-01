@@ -2,7 +2,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 05
+ * @version     PHPBoost 6.0 - last update: 2021 11 01
  * @since       PHPBoost 1.2 - 2005 08 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -291,7 +291,7 @@ function bbcode_wikipedia(field)
 		insert_lang = cbLang.checked ? ((lang != '' && lang != null) ? ' lang="' + lang + '"' : '') : '',
 		insert_word = (word != '' && word != null) ? word : '',
 		insert_page = '';
-		
+
 	if (word != '' && word != null) {
 		encoded_word = url_encode_rewrite(word);
 		if (encoded_word != word) {
@@ -341,6 +341,7 @@ function bbcode_sound(field)
 function bbcode_movie(field)
 {
 	var movie_url = document.getElementById('bb_movie_url' + field).value,
+		movie_host = document.getElementById('bb_movie_host' + field).value,
 		movie_width = document.getElementById('bb_movie_width' + field).value,
 		movie_height = document.getElementById('bb_movie_height' + field).value,
 		movie_poster = document.getElementById('bb_movie_poster' + field).value
@@ -350,7 +351,15 @@ function bbcode_movie(field)
 	if(movie_width <= 100) movie_width = 100;
 	if(movie_height <= 100) movie_height = 100;
 
-	insertbbcode('[movie='+ movie_width +',' + movie_height + insert_poster + ']' + insert_url, '[/movie]', field);
+console.log(movie_host);
+	if (movie_host == 'youtube')
+		insertbbcode('[youtube='+ movie_width +',' + movie_height + insert_poster + ']' + insert_url, '[/youtube]', field);
+	else if (movie_host == 'dailymotion')
+		insertbbcode('[dailymotion='+ movie_width +',' + movie_height + insert_poster + ']' + insert_url, '[/dailymotion]', field);
+	else if (movie_host == 'vimeo')
+		insertbbcode('[vimeo='+ movie_width +',' + movie_height + insert_poster + ']' + insert_url, '[/vimeo]', field);
+	else
+		insertbbcode('[movie='+ movie_width +',' + movie_height + insert_poster + ']' + insert_url, '[/movie]', field);
 }
 
 function bbcode_lightbox(field)

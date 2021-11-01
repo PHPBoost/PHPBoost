@@ -775,9 +775,15 @@
 								</a>
 							</div>
 						</div>
-						<div class="cell-body">
-							<div class="cell-content">
-								{@bbcode.movie.format}
+						<div class="cell-form">
+							<label for="bb_movie_host{FIELD}" class="cell-label">{@bbcode.movie.host}</label>
+							<div class="cell-input">
+								<select name="bb_movie_host{FIELD}" id="bb_movie_host{FIELD}">
+									<option value="local">{@bbcode.movie.host.local}</option>
+									<option value="youtube">{@bbcode.movie.host.youtube}</option>
+									<option value="dailymotion">{@bbcode.movie.host.dailymotion}</option>
+									<option value="vimeo">{@bbcode.movie.host.vimeo}</option>
+								</select>
 							</div>
 						</div>
 						<div class="cell-form">
