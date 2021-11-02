@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 06
+ * @version     PHPBoost 6.0 - last update: 2021 11 02
  * @since       PHPBoost 4.0 - 2014 05 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -115,8 +115,8 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 		$this->database_keys_to_add = array(
 			array(
 				'table_name' => PREFIX . 'pages',
-				'indexes' => array(
-					'id_category',
+				'keys' => array(
+					'id_category' => true
 				)
 			)
 		);
