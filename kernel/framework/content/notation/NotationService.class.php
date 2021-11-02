@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 25
+ * @version     PHPBoost 6.0 - last update: 2021 11 02
  * @since       PHPBoost 3.0 - 2010 02 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -309,10 +309,11 @@ class NotationService
 			if (!$member_already_notation && $note_is_valid)
 			{
 				$properties = array(
-					'module_name'  => $notation->get_module_name(),
-					'id_in_module' => $notation->get_id_in_module(),
-					'user_id'      => $notation->get_user_id(),
-					'note'         => $notation->get_note()
+					'module_name'    => $notation->get_module_name(),
+					'id_in_module'   => $notation->get_id_in_module(),
+					'user_id'        => $notation->get_user_id(),
+					'note'           => $notation->get_note(),
+					'notation_scale' => $notation->get_notation_scale()
 				);
 				
 				self::$db_querier->insert(DB_TABLE_NOTE, $properties);
