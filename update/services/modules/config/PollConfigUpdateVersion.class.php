@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 24
+ * @version     PHPBoost 6.0 - last update: 2021 11 02
  * @since       PHPBoost 6.0 - 2021 04 24
 */
 
@@ -14,7 +14,10 @@ class PollConfigUpdateVersion extends ConfigUpdateVersion
 		parent::__construct('poll');
 
 		$this->config_parameters_to_modify = array(
-			'displayed_in_mini_module_list' => 'mini_module_selected_items'
+			'displayed_in_mini_module_list' => array(
+				'parameter_name' => 'mini_module_selected_items',
+				'values'         => $this->get_old_config()->get_property('displayed_in_mini_module_list')
+			)
 		);
 	}
 
