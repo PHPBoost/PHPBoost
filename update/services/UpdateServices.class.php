@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 08
+ * @version     PHPBoost 6.0 - last update: 2021 11 03
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -194,8 +194,8 @@ class UpdateServices
 		// Maintenance of the site if it is not already
 		$this->put_site_under_maintenance();
 
-		// Updating configurations
-		$this->update_configurations();
+		// Updating kernel configurations
+		$this->update_kernel_configurations();
 
 		// Updating kernel tables
 		$this->update_kernel_tables();
@@ -205,6 +205,9 @@ class UpdateServices
 
 		// Updating modules
 		$this->update_modules();
+
+		// Updating modules configurations
+		$this->update_modules_configurations();
 
 		// Updating themes
 		$this->update_themes();
@@ -314,7 +317,7 @@ class UpdateServices
 		GeneralConfig::save();
 	}
 
-	private function update_configurations()
+	private function update_kernel_configurations()
 	{
 		// Update kernel configs
 		foreach ($this->get_class(PATH_TO_ROOT . self::$directory . '/kernel/config/', self::$configuration_pattern, 'config') as $class)
@@ -330,7 +333,10 @@ class UpdateServices
 			}
 			$this->add_error_to_file($class['type'] . ' ' . $object->get_config_name(), $success, $message);
 		}
+	}
 
+	private function update_modules_configurations()
+	{
 		// Update modules configs
 		$update_modules_configs_class = array();
 

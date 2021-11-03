@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 02
+ * @version     PHPBoost 6.0 - last update: 2021 11 03
  * @since       PHPBoost 4.0 - 2014 05 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -116,7 +116,7 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 			array(
 				'table_name' => PREFIX . 'pages',
 				'keys' => array(
-					'id_category' => true
+					'id_category' => false
 				)
 			)
 		);
