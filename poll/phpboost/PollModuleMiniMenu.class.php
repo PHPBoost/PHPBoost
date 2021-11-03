@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 25
+ * @version     PHPBoost 6.0 - last update: 2021 11 03
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class PollModuleMiniMenu extends ModuleMiniMenu
@@ -54,11 +55,11 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 	public function is_displayed()
 	{
 		return  !Url::is_current_url(self::MODULE_ID);
-		        //&& ItemsAuthorizationsService::check_authorizations(self::MODULE_ID)->read()
+			//&& ItemsAuthorizationsService::check_authorizations(self::MODULE_ID)->read()
 	}
 
 	// $msg_return = array(key of var lang => const MessageHelper::[SUCCESS, WARNING etc])
-	public function get_menu_content($item_id = '', array $msg_return = array())
+	public function get_menu_content($item_id = 0, array $msg_return = array())
 	{
 		$this->view = new FileTemplate('poll/PollModuleMiniMenu.tpl');
 		MenuService::assign_positions_conditions($this->view, $this->get_block());
@@ -74,11 +75,11 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 		$selected_items_in_config = $this->get_config()->get_mini_module_selected_items();
 		foreach ($selected_items_in_config as $selected_item_id)
 		{
-		  $selected_item = $this->get_items_manager()->get_item($selected_item_id);
+			$selected_item = $this->get_items_manager()->get_item((int)$selected_item_id);
 			if ($selected_item->user_is_empowered_to_vote())
-			  $items_ids_for_polls_displaying[] = $selected_item_id;
+				$items_ids_for_polls_displaying[] = (int)$selected_item_id;
 			else
-			  $items_ids_for_others_polls_not_displaying[] = $selected_item_id; //evolution
+				$items_ids_for_others_polls_not_displaying[] = (int)$selected_item_id; //evolution
 		}
 
 		if (AppContext::get_current_user()->is_guest())
@@ -106,7 +107,7 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 			{
 				if (!empty($items_ids_for_polls_displaying))
 				{
-					$random_item_id = $this->get_random_item_id($items_ids_for_polls_displaying);
+					$random_item_id = (int)$this->get_random_item_id($items_ids_for_polls_displaying);
 					$this->item = $this->get_items_manager()->get_item($random_item_id);
 					$this->get_items_manager()->update_views_number($this->item);
 					

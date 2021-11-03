@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 24
+ * @version     PHPBoost 6.0 - last update: 2021 11 03
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class AjaxPollMiniController extends AbstractController
@@ -194,7 +195,7 @@ class AjaxPollMiniController extends AbstractController
 
 	protected function set_view(ModuleMiniMenu $moduleminimenu, $item_id, $msg_return = array())
 	{
-		return $moduleminimenu->get_menu_content($item_id, $msg_return);
+		return $moduleminimenu->get_menu_content((int)$item_id, $msg_return);
 	}
 
 	protected function get_pollminimenu()
