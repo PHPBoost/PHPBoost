@@ -8,8 +8,9 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2014 12 22
+ * @version     PHPBoost 6.0 - last update: 2021 11 03
  * @since       PHPBoost 3.0 - 2009 09 16
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 interface ConfigData extends CacheData
@@ -35,5 +36,12 @@ interface ConfigData extends CacheData
 	 * If some entries doesn't exist, they can be created here.
 	 */
 	function set_default_values();
+
+	/**
+	 * Remove a property from the list of properties.
+	 * Usefull to remove an old property when the config evolves between two versions.
+	 * @param string $name Name of the property
+	 */
+	function delete_property($name);
 }
 ?>

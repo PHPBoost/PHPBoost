@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 21
+ * @version     PHPBoost 6.0 - last update: 2021 11 03
  * @since       PHPBoost 3.0 - 2012 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -51,12 +51,17 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 
 	protected function get_old_config($serialize = true)
 	{
+		$old_config = array();
+		try {
+			$old_config = $this->querier->get_column_value(DB_TABLE_CONFIGS, 'value', 'WHERE name = :config_name', array('config_name' => $this->get_config_name()));
+		} catch (RowNotFoundException $e) {}
+		
 		if ($serialize)
 		{
 			mb_internal_encoding('utf-8');
-			return @unserialize($this->querier->get_column_value(DB_TABLE_CONFIGS, 'value', 'WHERE name = :config_name', array('config_name' => $this->get_config_name())));
+			return @unserialize($old_config);
 		}
-		return $this->querier->get_column_value(DB_TABLE_CONFIGS, 'value', 'WHERE name = :config_name', array('config_name' => $this->get_config_name()));
+		return $old_config;
 	}
 
 	protected function save_new_config($name, ConfigData $data)

@@ -6,8 +6,9 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 26
+ * @version     PHPBoost 6.0 - last update: 2021 11 03
  * @since       PHPBoost 3.0 - 2009 09 16
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 abstract class AbstractConfigData implements ConfigData
@@ -54,6 +55,17 @@ abstract class AbstractConfigData implements ConfigData
 		else
 		{
 			return $this->get_default_value($name);
+		}
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function delete_property($name)
+	{
+		if (array_key_exists($name, $this->properties_map))
+		{
+			unset($this->properties_map[$name]);
 		}
 	}
 
