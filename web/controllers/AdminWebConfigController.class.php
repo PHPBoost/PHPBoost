@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 14
+ * @version     PHPBoost 6.0 - last update: 2021 11 04
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -243,12 +243,14 @@ class AdminWebConfigController extends AdminModuleController
 		$this->config->set_partners_sort_field($partners_sort[0]);
 		$this->config->set_partners_sort_mode($partners_sort[1]);
 		$this->config->set_partners_number_in_menu($this->form->get_value('partners_number_in_menu'));
-                $this->config->set_default_content($this->form->get_value('default_content'));
+		$this->config->set_default_content($this->form->get_value('default_content'));
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 
 		WebConfig::save();
 		CategoriesService::get_categories_manager()->regenerate_cache();
 		WebCache::invalidate();
+		
+		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()));
 	}
 }
 ?>

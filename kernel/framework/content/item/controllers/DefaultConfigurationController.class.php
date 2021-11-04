@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 22
+ * @version     PHPBoost 6.0 - last update: 2021 11 04
  * @since       PHPBoost 6.0 - 2020 02 11
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -282,6 +282,8 @@ class DefaultConfigurationController extends AbstractAdminItemController
 
 		if (self::get_module_configuration()->has_categories())
 			CategoriesService::get_categories_manager(self::$module_id)->regenerate_cache();
+		
+		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()));
 	}
 
 	protected function hide_fields() {}
