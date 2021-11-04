@@ -26,6 +26,12 @@
 		<div id="push-container">
 			# INCLUDE BODY #
 		</div>
+
+		<script>
+			jQuery(window).ready(function() {
+				jQuery('#preloader-status').animate({opacity: 0}, 100).animate({height: 0}, 200);
+			});
+		</script>
 		# INCLUDE JS_BOTTOM #
 	</body>
 </html>

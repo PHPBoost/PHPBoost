@@ -5,6 +5,18 @@
  * Contains specific css properties for dashboard
 */
 
+/* --- Dashboard preloader --- */
+#preloader-status {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    visibility: visible;
+}
+
 /* --- Dashboard homepage --- */
 #admin-index .cell h3 { font-size: 1.482em; }
 

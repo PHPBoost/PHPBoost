@@ -69,8 +69,10 @@
 	</div>
 </header>
 
+<div id="preloader-status">
+	<i class="fa iboost fa-iboost-logo fa-5x blink link-color"></i>
+</div>
 <div id="global" class="body-wrapper content-preloader">
-
 	<div id="admin-main">
 		# INCLUDE KERNEL_MESSAGE #
 		{CONTENT}
