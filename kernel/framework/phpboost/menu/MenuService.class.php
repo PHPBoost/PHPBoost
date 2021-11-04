@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 11
+ * @version     PHPBoost 6.0 - last update: 2021 11 04
  * @since       PHPBoost 2.0 - 2008 11 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -351,11 +351,12 @@ class MenuService
 	 */
 	public static function update_mini_modules_list($update_cache = true)
 	{
-		$installed_menus = array();
+		$installed_menus = $installed_menus_classes = array();
 		$results = self::$querier->select_rows(DB_TABLE_MENUS, array('*'), 'WHERE class NOT IN :class_list', array('class_list' => array(ContentMenu::CONTENT_MENU__CLASS, FeedMenu::FEED_MENU__CLASS, LinksMenu::LINKS_MENU__CLASS)));
 		foreach ($results as $row)
 		{
 			$installed_menus[str_replace(' ', '_', $row['title'])] = $row;
+			$installed_menus_classes[$row['class']] = $row;
 		}
 		$results->dispose();
 
@@ -364,18 +365,37 @@ class MenuService
 		{
 			if ($extension_point !== null)
 			{
-				foreach ($extension_point->get_menus() as $menu)
+				$menus = $extension_point->get_menus();
+				if (count($menus) > 1)
 				{
-					$rewrited_title = $module_id . '/' . str_replace(' ', '_', $menu->get_title());
-					if (!array_key_exists($rewrited_title, $installed_menus))
+					foreach ($menus as $menu)
+					{
+						$rewrited_title = $module_id . '/' . str_replace(' ', '_', $menu->get_title());
+						if (!array_key_exists($rewrited_title, $installed_menus))
+						{
+							$new_menus[] = array(
+								'module_id' => $module_id,
+								'title'     => $module_id . '/' . $menu->get_title(),
+								'menu'      => $menu
+							);
+						}
+						unset($installed_menus[$rewrited_title]);
+					}
+				}
+				else
+				{
+					$menu = $menus[0];
+					$menu_class = get_class($menu);
+					$title = $module_id . '/' . $menu_class;
+					if (!array_key_exists($menu_class, $installed_menus_classes))
 					{
 						$new_menus[] = array(
 							'module_id' => $module_id,
-							'title'     => $module_id . '/' . $menu->get_title(),
+							'title'     => $title,
 							'menu'      => $menu
 						);
 					}
-					unset($installed_menus[$rewrited_title]);
+					unset($installed_menus[$title]);
 				}
 			}
 		}
