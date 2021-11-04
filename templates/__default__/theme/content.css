@@ -303,3 +303,11 @@ a.wikipedia-link:after {
 	border-left-width: 5px !important;
 	border-left-style: solid;
 }
+
+/* --- Slideboost --- */
+[id|="slideboost"]::before,
+[id|="slideboost"]::after {
+	content:'';
+	display: block;
+	clear: both;
+}
