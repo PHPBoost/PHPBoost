@@ -59,49 +59,52 @@ class AdminWebConfigController extends AdminModuleController
 		$this->config = WebConfig::load();
 		$this->comments_config = CommentsConfig::load();
 		$this->content_management_config = ContentManagementConfig::load();
-		$this->lang = LangLoader::get('common', 'web');
+		$this->lang = array_merge(
+			LangLoader::get('form-lang'),
+			LangLoader::get('common-lang'),
+			LangLoader::get('common', 'web')
+		);
 	}
 
 	private function build_form()
 	{
-		$form_lang = LangLoader::get('form-lang');
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($form_lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldNumberEditor('categories_per_page', $form_lang['form.categories.per.page'], $this->config->get_categories_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('categories_per_page', $this->lang['form.categories.per.page'], $this->config->get_categories_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('categories_per_row', $form_lang['form.categories.per.row'], $this->config->get_categories_per_row(),
+		$fieldset->add_field(new FormFieldNumberEditor('categories_per_row', $this->lang['form.categories.per.row'], $this->config->get_categories_per_row(),
 			array('min' => 1, 'max' => 4, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $form_lang['form.root.category.description'], $this->config->get_root_category_description(),
+		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->lang['form.root.category.description'], $this->config->get_root_category_description(),
 			array('rows' => 8, 'cols' => 47)
 		));
 
-        $fieldset->add_field(new FormFieldNumberEditor('items_per_page', $form_lang['form.items.per.page'], $this->config->get_items_per_page(),
+        $fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->lang['form.items.per.page'], $this->config->get_items_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-        $fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort', $form_lang['form.items.default.sort'], $this->config->get_items_default_sort_field() . '-' . $this->config->get_items_default_sort_mode(), $this->get_sort_options()));
+        $fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort', $this->lang['form.items.default.sort'], $this->config->get_items_default_sort_field() . '-' . $this->config->get_items_default_sort_mode(), $this->get_sort_options()));
 
-		$fieldset->add_field(new FormFieldCheckbox('display_descriptions_to_guests', $form_lang['form.display.summary.to.guests'], $this->config->are_descriptions_displayed_to_guests(),
+		$fieldset->add_field(new FormFieldCheckbox('display_descriptions_to_guests', $this->lang['form.display.summary.to.guests'], $this->config->are_descriptions_displayed_to_guests(),
 			array('class' => 'custom-checkbox')
 		));
 
 		$fieldset->add_field(new FormFieldSpacer('categories_display_type',''));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $form_lang['form.display.type'], $this->config->get_display_type(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['form.display.type'], $this->config->get_display_type(),
 			array(
-				new FormFieldSelectChoiceOption($form_lang['form.display.type.grid'], WebConfig::GRID_VIEW, array('data_option_icon' => 'far fa-id-card')),
-				new FormFieldSelectChoiceOption($form_lang['form.display.type.list'], WebConfig::LIST_VIEW, array('data_option_icon' => 'fa fa-list')),
-				new FormFieldSelectChoiceOption($form_lang['form.display.type.table'], WebConfig::TABLE_VIEW, array('data_option_icon' => 'fa fa-table'))
+				new FormFieldSelectChoiceOption($this->lang['form.display.type.grid'], WebConfig::GRID_VIEW, array('data_option_icon' => 'far fa-id-card')),
+				new FormFieldSelectChoiceOption($this->lang['form.display.type.list'], WebConfig::LIST_VIEW, array('data_option_icon' => 'fa fa-list')),
+				new FormFieldSelectChoiceOption($this->lang['form.display.type.table'], WebConfig::TABLE_VIEW, array('data_option_icon' => 'fa fa-table'))
 			),
 			array(
 				'select_to_list' => true,
@@ -120,14 +123,14 @@ class AdminWebConfigController extends AdminModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $form_lang['form.items.per.row'], $this->config->get_items_per_row(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->lang['form.items.per.row'], $this->config->get_items_per_row(),
 			array(
 				'hidden' => $this->config->get_display_type() !== WebConfig::GRID_VIEW,
 				'min' => 1, 'max' => 4, 'required' => true),
 				array(new FormFieldConstraintIntegerRange(1, 4))
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('full_item_display', $form_lang['form.display.full.item'], $this->config->is_full_item_displayed(),
+		$fieldset->add_field(new FormFieldCheckbox('full_item_display', $this->lang['form.display.full.item'], $this->config->is_full_item_displayed(),
 			array(
 				'class' => 'custom-checkbox',
 				'hidden' => $this->config->get_display_type() !== WebConfig::LIST_VIEW,
@@ -141,7 +144,7 @@ class AdminWebConfigController extends AdminModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('auto_cut_characters_number', $form_lang['form.characters.number.to.cut'], $this->config->get_auto_cut_characters_number(),
+		$fieldset->add_field(new FormFieldNumberEditor('auto_cut_characters_number', $this->lang['form.characters.number.to.cut'], $this->config->get_auto_cut_characters_number(),
 			array(
 				'min' => 20, 'max' => 1000, 'required' => true,
 				'hidden' => $this->config->get_display_type() == WebConfig::LIST_VIEW && $this->config->is_full_item_displayed()
@@ -165,8 +168,8 @@ class AdminWebConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $form_lang['form.authorizations'],
-			array('description' => $form_lang['form.authorizations.clue'])
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $this->lang['form.authorizations'],
+			array('description' => $this->lang['form.authorizations.clue'])
 		);
 		$form->add_fieldset($fieldset_authorizations);
 
@@ -183,27 +186,25 @@ class AdminWebConfigController extends AdminModuleController
 
 	private function get_sort_options()
 	{
-		$common_lang = LangLoader::get('common-lang');
-
 		$sort_options = array(
-			new FormFieldSelectChoiceOption($common_lang['common.creation.date'] . ' - ' . $common_lang['common.sort.asc'], WebItem::SORT_DATE . '-' . WebItem::ASC),
-			new FormFieldSelectChoiceOption($common_lang['common.creation.date'] . ' - ' . $common_lang['common.sort.desc'], WebItem::SORT_DATE . '-' . WebItem::DESC),
-			new FormFieldSelectChoiceOption($common_lang['common.sort.by.alphabetic'] . ' - ' . $common_lang['common.sort.asc'], WebItem::SORT_ALPHABETIC . '-' . WebItem::ASC),
-			new FormFieldSelectChoiceOption($common_lang['common.sort.by.alphabetic'] . ' - ' . $common_lang['common.sort.desc'], WebItem::SORT_ALPHABETIC . '-' . WebItem::DESC),
-			new FormFieldSelectChoiceOption($this->lang['web.config.sort.type.visits'] . ' - ' . $common_lang['common.sort.asc'], WebItem::SORT_NUMBER_VISITS . '-' . WebItem::ASC),
-			new FormFieldSelectChoiceOption($this->lang['web.config.sort.type.visits'] . ' - ' . $common_lang['common.sort.desc'], WebItem::SORT_NUMBER_VISITS . '-' . WebItem::DESC)
+			new FormFieldSelectChoiceOption($this->lang['common.creation.date'] . ' - ' . $this->lang['common.sort.asc'], WebItem::SORT_DATE . '-' . WebItem::ASC),
+			new FormFieldSelectChoiceOption($this->lang['common.creation.date'] . ' - ' . $this->lang['common.sort.desc'], WebItem::SORT_DATE . '-' . WebItem::DESC),
+			new FormFieldSelectChoiceOption($this->lang['common.sort.by.alphabetic'] . ' - ' . $this->lang['common.sort.asc'], WebItem::SORT_ALPHABETIC . '-' . WebItem::ASC),
+			new FormFieldSelectChoiceOption($this->lang['common.sort.by.alphabetic'] . ' - ' . $this->lang['common.sort.desc'], WebItem::SORT_ALPHABETIC . '-' . WebItem::DESC),
+			new FormFieldSelectChoiceOption($this->lang['web.config.sort.type.visits'] . ' - ' . $this->lang['common.sort.asc'], WebItem::SORT_NUMBER_VISITS . '-' . WebItem::ASC),
+			new FormFieldSelectChoiceOption($this->lang['web.config.sort.type.visits'] . ' - ' . $this->lang['common.sort.desc'], WebItem::SORT_NUMBER_VISITS . '-' . WebItem::DESC)
 		);
 
 		if ($this->comments_config->module_comments_is_enabled('web'))
 		{
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['common.sort.by.comments.number'] . ' - ' . $common_lang['common.sort.asc'], WebItem::SORT_COMMENTS_NUMBER . '-' . WebItem::ASC);
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['common.sort.by.comments.number'] . ' - ' . $common_lang['common.sort.desc'], WebItem::SORT_COMMENTS_NUMBER . '-' . WebItem::DESC);
+			$sort_options[] = new FormFieldSelectChoiceOption($this->lang['common.sort.by.comments.number'] . ' - ' . $this->lang['common.sort.asc'], WebItem::SORT_COMMENTS_NUMBER . '-' . WebItem::ASC);
+			$sort_options[] = new FormFieldSelectChoiceOption($this->lang['common.sort.by.comments.number'] . ' - ' . $this->lang['common.sort.desc'], WebItem::SORT_COMMENTS_NUMBER . '-' . WebItem::DESC);
 		}
 
 		if ($this->content_management_config->module_notation_is_enabled('web'))
 		{
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['common.sort.by.best.note'] . ' - ' . $common_lang['common.sort.asc'], WebItem::SORT_NOTATION . '-' . WebItem::ASC);
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['common.sort.by.best.note'] . ' - ' . $common_lang['common.sort.desc'], WebItem::SORT_NOTATION . '-' . WebItem::DESC);
+			$sort_options[] = new FormFieldSelectChoiceOption($this->lang['common.sort.by.best.note'] . ' - ' . $this->lang['common.sort.asc'], WebItem::SORT_NOTATION . '-' . WebItem::ASC);
+			$sort_options[] = new FormFieldSelectChoiceOption($this->lang['common.sort.by.best.note'] . ' - ' . $this->lang['common.sort.desc'], WebItem::SORT_NOTATION . '-' . WebItem::DESC);
 		}
 
 		return $sort_options;

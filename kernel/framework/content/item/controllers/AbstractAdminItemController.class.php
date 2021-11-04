@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 11 04
  * @since       PHPBoost 6.0 - 2020 02 08
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -28,6 +28,7 @@ abstract class AbstractAdminItemController extends AdminModuleController
 		$this->request = AppContext::get_request();
 		$this->config = self::get_module_configuration()->get_configuration_parameters();
 		$this->lang = array_merge(
+			LangLoader::get('common-lang'),
 			LangLoader::get('form-lang'),
 			LangLoader::filename_exists('common', self::get_module()->get_id()) ? LangLoader::get('common', self::get_module()->get_id()) : array(),
 			ItemsService::get_items_lang(self::get_module()->get_id())
