@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 23
+ * @version     PHPBoost 6.0 - last update: 2021 11 04
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -62,7 +62,7 @@ class FaqItemFormController extends ModuleController
 		$fieldset = new FormFieldsetHTML('faq', $this->form_lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('question', $this->lang['faq.form.question'], $this->get_item()->get_title(), array('required' => true)));
+		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['faq.form.question'], $this->get_item()->get_title(), array('required' => true)));
 
 		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
 		{
@@ -163,7 +163,7 @@ class FaqItemFormController extends ModuleController
 	{
 		$item = $this->get_item();
 
-		$item->set_title($this->form->get_value('question'));
+		$item->set_title($this->form->get_value('title'));
 		$item->set_rewrited_title(Url::encode_rewrite($item->get_title()));
 
 		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
