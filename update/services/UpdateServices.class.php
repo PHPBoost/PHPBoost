@@ -303,7 +303,7 @@ class UpdateServices
 
 		self::$db_querier->inject('UPDATE ' . PREFIX . 'authentication_method SET method = replace(method, \'fb\', \'facebook\')');
 		self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'sessions CHANGE location_script location_script VARCHAR(200) NOT NULL DEFAULT ""');
-		self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'sessions CHANGE location_title location_script VARCHAR(255) NOT NULL DEFAULT ""');
+		self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'sessions CHANGE location_title location_title VARCHAR(255) NOT NULL DEFAULT ""');
 
 		$columns = self::$db_utils->desc_table(PREFIX . 'member');
 
