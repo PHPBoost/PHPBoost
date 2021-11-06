@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 17
+ * @version     PHPBoost 6.0 - last update: 2021 11 06
  * @since       PHPBoost 3.0 - 2012 04 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -30,7 +30,7 @@ $lang['addon.not.compatible']      = 'Incompatible';
 $lang['addon.compatibility']       = 'Compatibilité';
 $lang['addon.authorizations']      = 'Autorisations';
 $lang['addon.authorizations.save'] = 'Save autorisations';
-$lang['addon.upload.clue']         = 'The uploaded archive must be in <span class="text-strong">zip or gzip</span> format and must not exceed <span class="text-strong">:max_size</span>. If exceeded, drop the folder extracted from the archive into the <span class="text-strong">lang</span> folder of your site on your FTP. ';
+$lang['addon.upload.clue']         = 'The uploaded archive must be in <span class="text-strong">zip or gzip</span> format and must not exceed <span class="text-strong">:max_size</span>. If exceeded, drop the folder extracted from the archive into the <span class="text-strong">templates</span> folder of your site on your FTP. ';
 
 // Langs
 $lang['addon.langs']                 = 'Languages';
