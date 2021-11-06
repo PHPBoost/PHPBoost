@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 31
+ * @version     PHPBoost 6.0 - last update: 2021 11 06
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -11,12 +11,12 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class ArticlesFormController extends DefaultItemFormController
+class ArticlesItemFormController extends DefaultItemFormController
 {
 	protected function build_post_content_fields(FormFieldset $fieldset)
 	{
 		$fieldset->add_field(new FormFieldActionLink('add_page', $this->lang['articles.add.page'] , 'javascript:bbcode_page();', 'fa-pagebreak'));
-		
+
 		// Put the cursor on the good page when we edit an article with several pages
 		if (!$this->is_new_item)
 		{
@@ -42,7 +42,7 @@ class ArticlesFormController extends DefaultItemFormController
 				$this->view->put('PAGE', TextHelper::to_js_string($page_name));
 			}
 		}
-		
+
 		parent::build_post_content_fields($fieldset);
 	}
 }

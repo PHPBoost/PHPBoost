@@ -50,4 +50,4 @@
 	window.onload = function(){setPagePosition({PAGE})};
 	# ENDIF #
 </script>
-# INCLUDE MSG # # INCLUDE FORM #
+# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #
