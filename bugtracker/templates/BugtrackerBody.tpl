@@ -1,4 +1,4 @@
-# INCLUDE MSG #
+# INCLUDE MESSAGE_HELPER #
 <section id="module-bugtracker">
 	<header class="section-header">
 		<h1> {L_TITLE} </h1>

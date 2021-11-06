@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 06
+ * @version     PHPBoost 6.0 - last update: 2021 11 06
  * @since       PHPBoost 3.0 - 2011 09 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -141,7 +141,7 @@ class AdminModulesManagementController extends AdminController
 				foreach ($errors as $module_name => $error)
 				{
 					$this->view->assign_block_vars('errors', array(
-						'MSG' => MessageHelper::display($module_name . ' : ' . $error, MessageHelper::WARNING)
+						'MESSAGE_HELPER' => MessageHelper::display($module_name . ' : ' . $error, MessageHelper::WARNING)
 					));
 				}
 			}
@@ -159,7 +159,7 @@ class AdminModulesManagementController extends AdminController
 					$error = ModulesManager::update_module($module->get_id(), 1);
 
 					if (!empty($error))
-						$this->view->put('MSG', MessageHelper::display('<b>' . $module->get_configuration()->get_name() . '</b> : ' . $error, MessageHelper::WARNING));
+						$this->view->put('MESSAGE_HELPER', MessageHelper::display('<b>' . $module->get_configuration()->get_name() . '</b> : ' . $error, MessageHelper::WARNING));
 					else
 						AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), LangLoader::get_message('warning.process.success', 'warning-lang'));
 				}
@@ -168,7 +168,7 @@ class AdminModulesManagementController extends AdminController
 					$error = ModulesManager::update_module($module->get_id(), 0);
 
 					if (!empty($error))
-						$this->view->put('MSG', MessageHelper::display('<b>' . $module->get_configuration()->get_name() . '</b> : ' . $error, MessageHelper::WARNING));
+						$this->view->put('MESSAGE_HELPER', MessageHelper::display('<b>' . $module->get_configuration()->get_name() . '</b> : ' . $error, MessageHelper::WARNING));
 					else
 						AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), LangLoader::get_message('warning.process.success', 'warning-lang'));
 				}

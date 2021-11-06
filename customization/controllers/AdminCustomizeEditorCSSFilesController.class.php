@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 11 06
  * @since       PHPBoost 3.0 - 2011 09 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -57,7 +57,7 @@ class AdminCustomizeEditorCSSFilesController extends AdminModuleController
 			if ($this->submit_button->has_been_submited() && $this->form->validate())
 			{
 				$this->save($id_theme, $id_module, $file_name);
-				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
+				$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
 			}
 		}
 
@@ -69,7 +69,7 @@ class AdminCustomizeEditorCSSFilesController extends AdminModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'customization');
-		$this->view = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
 		$this->view->add_lang($this->lang);
 	}
 
@@ -188,7 +188,7 @@ class AdminCustomizeEditorCSSFilesController extends AdminModuleController
 			}
 		}
 		else
-			$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('warning.page.unexists', 'warning-lang'), MessageHelper::WARNING));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.page.unexists', 'warning-lang'), MessageHelper::WARNING));
 
 		foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $id => $module)
 		{

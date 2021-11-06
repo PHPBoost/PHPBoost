@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 06
+ * @version     PHPBoost 6.0 - last update: 2021 11 06
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -98,7 +98,7 @@ class UserEditProfileController extends AbstractController
 	private function init()
 	{
 		$this->lang = LangLoader::get('user-lang');
-		$this->tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+		$this->tpl = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
 		$this->tpl->add_lang($this->lang);
 		$this->user_accounts_config = UserAccountsConfig::load();
 	}
@@ -349,7 +349,7 @@ class UserEditProfileController extends AbstractController
 			UserService::update($this->user, $this->member_extended_fields_service);
 		} catch (MemberExtendedFieldErrorsMessageException $e) {
 			$has_error = true;
-			$this->tpl->put('MSG', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
+			$this->tpl->put('MESSAGE_HELPER', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
 		}
 
 		$login = $this->form->get_value('email');
@@ -385,7 +385,7 @@ class UserEditProfileController extends AbstractController
 				else
 				{
 					$has_error = true;
-					$this->tpl->put('MSG', MessageHelper::display($this->lang['user.profile.edit.password.error'], MessageHelper::NOTICE));
+					$this->tpl->put('MESSAGE_HELPER', MessageHelper::display($this->lang['user.profile.edit.password.error'], MessageHelper::NOTICE));
 				}
 			}
 		}

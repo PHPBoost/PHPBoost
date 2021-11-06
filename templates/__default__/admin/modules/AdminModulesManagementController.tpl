@@ -1,6 +1,6 @@
-# INCLUDE MSG #
+# INCLUDE MESSAGE_HELPER #
 # START errors #
-	# INCLUDE errors.MSG #
+	# INCLUDE errors.MESSAGE_HELPER #
 # END errors #
 
 <div class="text-helper">

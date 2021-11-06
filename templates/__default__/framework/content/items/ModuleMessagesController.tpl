@@ -4,7 +4,7 @@
 	</header>
 	<div class="sub-section">
 		<div class="content-container">
-			# INCLUDE MSG #
+			# INCLUDE MESSAGE_HELPER #
 
 			# INCLUDE FORM #
 

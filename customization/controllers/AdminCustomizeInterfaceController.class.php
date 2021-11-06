@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 11 06
  * @since       PHPBoost 3.0 - 2011 09 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -37,7 +37,7 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 
 		$this->build_form($theme);
 
-		$view = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
 		$view->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
@@ -54,11 +54,11 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 					$header_logo_file = new File(PATH_TO_ROOT . $header_logo_path);
 					$picture = '<img src="' . Url::to_rel($header_logo_file->get_path()) . '" alt="' . $this->lang['customization.interface.logo.current'] . '" />';
 					$this->form->get_field_by_id('current_logo')->set_value($picture);
-					$view->put('MSG', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
+					$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
 				}
 				else
 				{
-					$view->put('MSG', MessageHelper::display(LangLoader::get_message('warning.invalid.picture', 'warning-lang'), MessageHelper::ERROR, 4));
+					$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.invalid.picture', 'warning-lang'), MessageHelper::ERROR, 4));
 				}
 			}
 			elseif ($this->form->get_value('use_default_logo'))
@@ -66,7 +66,7 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 				$this->delete_pictures_saved($theme);
 				$this->form->get_field_by_id('current_logo')->set_value($this->lang['customization.interface.logo.current.null']);
 				$this->form->get_field_by_id('use_default_logo')->set_value(FormFieldCheckbox::UNCHECKED);
-				$view->put('MSG', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
+				$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
 			}
 		}
 

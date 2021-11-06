@@ -83,7 +83,7 @@ class AdminPagesConfigController extends DefaultConfigurationController
 		PagesConfig::save(self::$module_id);
 
 		CategoriesService::get_categories_manager()->regenerate_cache();
-		
+
 		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
 	}
 }

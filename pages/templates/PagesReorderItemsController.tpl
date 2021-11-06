@@ -56,7 +56,7 @@
 		});
 	</script>
 # ENDIF #
-# INCLUDE MSG #
+# INCLUDE MESSAGE_HELPER #
 <section id="module-page">
 	<header class="section-header">
 		<div class="controls align-right">
