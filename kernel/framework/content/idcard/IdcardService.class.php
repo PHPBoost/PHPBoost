@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 28
+ * @version     PHPBoost 6.0 - last update: 2021 11 06
  * @since       PHPBoost 5.2 - 2019 04 23
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -36,7 +36,7 @@ class IdcardService
 			}
 
 			$avatar = !empty($user_extended_fields) && $user_extended_fields['user_avatar'] ? Url::to_rel($user_extended_fields['user_avatar']) : $user_accounts_config->get_default_avatar();
-			$biography = !empty($user_extended_fields) && $user_extended_fields['user_biography'] ? $user_extended_fields['user_biography'] : $lang['user.extended.field.no.biography'];
+			$biography = !empty($user_extended_fields) && $user_extended_fields['user_biography'] ? FormatingHelper::second_parse($user_extended_fields['user_biography']) : $lang['user.extended.field.no.biography'];
 		}
 		else
 		{
