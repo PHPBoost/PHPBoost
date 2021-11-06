@@ -143,6 +143,8 @@ li:last-child .accordion .content-panel { border-width: 0 1px 1px; }
     transition: all 0.3s cubic-bezier(0.5,0.5,0.5,0.5) 0.3s;
 }
 
+.modal .content-panel .button { padding: 0.228em 0.618em; }
+
 .close-modal {
     position: fixed;
     top: 0;
