@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 28
+ * @version     PHPBoost 6.0 - last update: 2021 11 06
  * @since       PHPBoost 4.0 - 2014 02 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -22,6 +22,7 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 			'/controllers/ArticlesDisplayArticlesTagController.class.php',
 			'/controllers/ArticlesDisplayCategoryController.class.php',
 			'/controllers/ArticlesDisplayPendingArticlesController.class.php',
+			'/controllers/ArticlesFormController.class.php',
 			'/controllers/ArticlesManageController.class.php',
 			'/controllers/ArticlesPrintArticlesController.class.php',
 			'/lang/english/config.php',
@@ -40,6 +41,7 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 			'/phpboost/ArticlesTreeLinks.class.php',
 			'/templates/ArticlesDisplayArticlesController.tpl',
 			'/templates/ArticlesDisplaySeveralArticlesController.tpl',
+			'/templates/ArticlesFormController.tpl',
 			'/templates/ArticlesFormFieldSelectSources.tpl'
 		);
 		self::$delete_old_folders_list = array(
