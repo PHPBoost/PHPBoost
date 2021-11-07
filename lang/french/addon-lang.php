@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 06
+ * @version     PHPBoost 6.0 - last update: 2021 11 07
  * @since       PHPBoost 3.0 - 2012 04 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -30,9 +30,10 @@ $lang['addon.not.compatible']      = 'Incompatible';
 $lang['addon.compatibility']       = 'Compatibilité';
 $lang['addon.authorizations']      = 'Autorisations';
 $lang['addon.authorizations.save'] = 'Sauvegarder les autorisations';
-$lang['addon.upload.clue']         = 'L\'archive uploadée doit être au format <span class="text-strong">zip ou gzip</span> et ne doit pas dépasser <span class="text-strong">:max_size</span>. En cas de dépassement, déposez le dossier extrait de l\'archive dans le dossier <span class="text-strong">templates</span> de votre site sur votre FTP.';
+$lang['addon.upload.clue']         = 'L\'archive uploadée doit être au format <span class="text-strong">zip ou gzip</span> et ne doit pas dépasser <span class="text-strong">:max_size</span>. En cas de dépassement, déposez le dossier extrait de l\'archive :addon de votre site sur votre FTP.';
 
 // Langs
+$lang['addon.langs.directory']       = 'dans le dossier <span class ="text-strong pinned question">lang</span>';
 $lang['addon.langs']                 = 'Langues';
 $lang['addon.langs.management']      = 'Gestion des langues';
 $lang['addon.langs.add']             = 'Ajouter une langue';
@@ -54,6 +55,7 @@ $lang['addon.langs.drop.multiple'] = 'Supprimer tous les fichiers des langues';
 $lang['addon.langs.default.clue']  = 'La langue par défaut ne peut pas être désinstallée, désactivée ou réservée';
 
 // Modules
+$lang['addon.modules.directory']       = 'à la <span class ="text-strong pinned question">racine</span>';
 $lang['addon.modules']                 = 'Modules';
 $lang['addon.modules.management']      = 'Gestion des modules';
 $lang['addon.modules.add']             = 'Ajouter un module';
@@ -87,6 +89,7 @@ $lang['addon.modules.upgrade']     = 'Mettre à jour';
 $lang['addon.modules.upgrade.all'] = 'Mettre à jour les modules sélectionnés';
 
 // Themes
+$lang['addon.themes.directory']       = 'dans le dossier <span class ="text-strong pinned question">templates</span>';
 $lang['addon.themes']                 = 'Thèmes';
 $lang['addon.themes.management']      = 'Gestion des thèmes';
 $lang['addon.themes.add']             = 'Ajouter un thème';

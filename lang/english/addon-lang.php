@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 06
+ * @version     PHPBoost 6.0 - last update: 2021 11 07
  * @since       PHPBoost 3.0 - 2012 04 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -30,9 +30,10 @@ $lang['addon.not.compatible']      = 'Incompatible';
 $lang['addon.compatibility']       = 'Compatibilité';
 $lang['addon.authorizations']      = 'Autorisations';
 $lang['addon.authorizations.save'] = 'Save autorisations';
-$lang['addon.upload.clue']         = 'The uploaded archive must be in <span class="text-strong">zip or gzip</span> format and must not exceed <span class="text-strong">:max_size</span>. If exceeded, drop the folder extracted from the archive into the <span class="text-strong">templates</span> folder of your site on your FTP. ';
+$lang['addon.upload.clue']         = 'The uploaded archive must be in <span class="text-strong">zip or gzip</span> format and must not exceed <span class="text-strong">:max_size</span>. If exceeded, drop the folder extracted from the archive :addon of your site on your FTP. ';
 
 // Langs
+$lang['addon.langs.directory']       = 'in the <span class ="text-strong pinned question">lang</span> folder';
 $lang['addon.langs']                 = 'Languages';
 $lang['addon.langs.management']      = 'Languages management';
 $lang['addon.langs.add']             = 'Add language';
@@ -54,6 +55,7 @@ $lang['addon.langs.drop.multiple'] = 'Delete all languages\'s files';
 $lang['addon.langs.default.clue']  = 'The default language can not be uninstalled, disabled or reserved';
 
 // Modules
+$lang['addon.modules.directory']       = 'at the <span class ="text-strong pinned question">root</span>';
 $lang['addon.modules']                 = 'Modules';
 $lang['addon.modules.management']      = 'Module management';
 $lang['addon.modules.add']             = 'Add a module';
@@ -68,8 +70,7 @@ $lang['addon.modules.warning.delete']  = 'A module must be enabled, disabled or 
 $lang['addon.modules.warning.install'] = 'The installed modules are automatically enabled. Do not forget to disable them if necessary.';
 $lang['addon.modules.warning.update']  = 'The updated modules are automatically enabled. Do not forget to disable them if necessary.';
     // Upload
-$lang['addon.modules.upload'] = 'Install a module';
-$lang['addon.upload.clue']    = 'The file must be uploaded as a zip or gzip archive and must not exceed :max_size. In case of overrun, drop the extracted folder from the archive to the <b>root</b> of your site on your FTP.';
+$lang['addon.modules.upload'] = 'Upload a module';
     // Module
 $lang['addon.modules.php.version']   = 'PHP version';
 $lang['addon.modules.documentation'] = 'Documentation';
@@ -88,6 +89,7 @@ $lang['addon.modules.upgrade']     = 'Update';
 $lang['addon.modules.upgrade.all'] = 'Update selected modules';
 
 // Themes
+$lang['addon.themes.directory']       = 'in the <span class ="text-strong pinned question">templates</span> folder';
 $lang['addon.themes']                 = 'Themes';
 $lang['addon.themes.management']      = 'Themes management';
 $lang['addon.themes.add']             = 'Add theme';
