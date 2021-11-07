@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 15
+ * @version     PHPBoost 6.0 - last update: 2021 11 07
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -65,6 +65,5 @@ $lang['download.form.file.size.auto']         = 'Determine file size automatical
 $lang['download.message.success.add']                   = 'The file <b>:title</b> has been added';
 $lang['download.message.success.edit']                  = 'The file <b>:title</b> has been modified';
 $lang['download.message.success.delete']                = 'The file <b>:title</b> has been deleted';
-$lang['download.message.error.file.not.found']          = 'File not found, the link may be dead.';
 $lang['download.message.warning.unauthorized.download'] = 'You are not authorized to download the file.';
 ?>
