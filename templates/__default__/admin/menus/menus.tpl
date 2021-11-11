@@ -134,13 +134,13 @@
 					<div class="container-block-absolute" id="moveaddmenu9">
 						<div onmouseover="menu_hide_block('addmenu9', 1);" onmouseout="menu_hide_block('addmenu9', 0);">
 							<p class="menus-block-add menus-block-add-links">
-								<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=1" class="small">{@menu.links.menu}</a>
+								<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=9" class="small">{@menu.links.menu}</a>
 							</p>
 							<p class="menus-block-add menus-block-add-links">
-								<a href="{PATH_TO_ROOT}/admin/menus/content.php?s=1" class="small">{@menu.content.menu}</a>
+								<a href="{PATH_TO_ROOT}/admin/menus/content.php?s=9" class="small">{@menu.content.menu}</a>
 							</p>
 							<p class="menus-block-add menus-block-add-links">
-								<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=1" class="small">{@menu.feed.menu}</a>
+								<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=9" class="small">{@menu.feed.menu}</a>
 							</p>
 						</div>
 					</div>
