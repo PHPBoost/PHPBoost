@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 05
+ * @version     PHPBoost 6.0 - last update: 2021 11 11
  * @since       PHPBoost 6.0 - 2020 07 29
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class HomeLandingConfigUpdateVersion extends ConfigUpdateVersion
@@ -46,6 +47,15 @@ class HomeLandingConfigUpdateVersion extends ConfigUpdateVersion
 			}
 
 			$config->set_modules($modules);
+
+			if (!isset($modules[HomeLandingConfig::MODULE_PINNED_NEWS]))
+			{
+				$module = new HomeLandingModule();
+				$module->set_module_id(HomeLandingConfig::MODULE_PINNED_NEWS);
+				$module->set_phpboost_module_id(HomeLandingConfig::MODULE_NEWS);
+				$module->hide();
+				$new_modules_list[22] = $module->get_properties();
+			}
 
 			if (!isset($modules[HomeLandingConfig::MODULE_SMALLADS]))
 			{
