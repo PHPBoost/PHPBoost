@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 19
+ * @version     PHPBoost 6.0 - last update: 2021 11 07
  * @since       PHPBoost 3.0 - 2010 01 24
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -360,6 +360,35 @@ class TextHelper
 		}
 		return implode($break, $lines);
 	}
-}
 
+	/**
+	 * Strip the content from tags
+	 *
+	 * @param string $string the input string
+	 * @return string the given string without tags
+	 */
+
+	public static function strip_content_tags($string)
+	{
+		$string = preg_replace("/<div.*?formatter-.*?(?:<\/div>){1,}/", "", $string); 
+		$string = preg_replace("/<h.*?formatter-.*?(?:<\/h>){1,}/", "", $string); 
+		$string = preg_replace("/<span.*?message-helper.*?(?:<\/span>){1,}/", "", $string);  
+		return $string;
+	}
+
+	/**
+	 * Strip the content from extra line break
+	 *
+	 * @param string $string the input string
+	 * @return string the given string without extra line break
+	 */
+
+	public static function strip_content_extra_line_break($string)
+	{
+		$string = preg_replace("/\n<br\W*?\/?>/", "", $string);
+		$string = preg_replace("/^<br\W*?\/?>/", "", $string); 
+		return $string;
+	}
+
+}
 ?>
