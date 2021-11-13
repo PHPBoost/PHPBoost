@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 20
+ * @version     PHPBoost 6.0 - last update: 2021 11 14
  * @since       PHPBoost 3.0 - 2010 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -48,7 +48,7 @@ class AdminMemberConfigController extends AdminController
 
 		$view->put('FORM', $this->form->display());
 
-		return new AdminMembersDisplayResponse($view, $this->lang['user.members.management']);
+		return new AdminMembersDisplayResponse($view, $this->lang['user.members.config']);
 	}
 
 	private function init()
@@ -289,6 +289,8 @@ class AdminMemberConfigController extends AdminController
 		$this->user_accounts_config->set_welcome_message($this->form->get_value('welcome_message_contents'));
 		$this->user_accounts_config->set_registration_agreement($this->form->get_value('registration_agreement'));
 		UserAccountsConfig::save();
+		
+		HooksService::execute_hook_action('edit_config', 'kernel', array('title' => $this->lang['user.members.config'], 'url' => AdminMembersUrlBuilder::configuration()->rel()));
 	}
 }
 ?>

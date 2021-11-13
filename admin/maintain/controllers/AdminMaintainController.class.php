@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 22
+ * @version     PHPBoost 6.0 - last update: 2021 11 14
  * @since       PHPBoost 4.1 - 2014 09 11
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -262,6 +262,8 @@ class AdminMaintainController extends AdminController
 		$this->maintenance_config->set_auth($this->form->get_value('authorizations')->build_auth_array());
 
 		MaintenanceConfig::save();
+		
+		HooksService::execute_hook_action('edit_config', 'kernel', array('title' => $this->lang['admin.maintenance'], 'url' => AdminMaintainUrlBuilder::maintain()->rel()));
 	}
 }
 ?>

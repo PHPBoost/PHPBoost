@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 18
+ * @version     PHPBoost 6.0 - last update: 2021 11 14
  * @since       PHPBoost 3.0 - 2011 08 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -176,6 +176,8 @@ class AdminGeneralConfigController extends AdminController
 		$this->user_accounts_config->set_default_lang($this->form->get_value('default_language')->get_raw_value());
 		$this->user_accounts_config->set_default_theme($this->form->get_value('default_theme')->get_raw_value());
 		UserAccountsConfig::save();
+		
+		HooksService::execute_hook_action('edit_config', 'kernel', array('title' => $this->lang['configuration.general'], 'url' => AdminConfigUrlBuilder::general_config()->rel()));
 	}
 
 	private function construct_javascript_picture_theme()

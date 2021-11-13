@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 22
+ * @version     PHPBoost 6.0 - last update: 2021 11 14
  * @since       PHPBoost 3.0 - 2011 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -187,6 +187,8 @@ class AdminCommentsConfigController extends AdminController
 
 		$this->configuration->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		CommentsConfig::save();
+		
+		HooksService::execute_hook_action('edit_config', 'kernel', array('title' => $this->lang['comment.configuration'], 'url' => DispatchManager::get_url('/admin/content/', '/comments/config/')->rel()));
 	}
 
 	private function generate_forbidden_tags_option()
