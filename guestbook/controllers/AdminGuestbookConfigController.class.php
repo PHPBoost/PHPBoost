@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 11 14
  * @since       PHPBoost 3.0 - 2012 11 30
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -20,7 +20,6 @@ class AdminGuestbookConfigController extends AdminModuleController
 	private $submit_button;
 
 	private $lang;
-	private $form_lang;
 
 	/**
 	 * @var GuestbookConfig
@@ -52,22 +51,25 @@ class AdminGuestbookConfigController extends AdminModuleController
 	private function init()
 	{
 		$this->config = GuestbookConfig::load();
-		$this->lang = LangLoader::get('common', 'guestbook');
-		$this->form_lang = LangLoader::get('form-lang');
+		$this->lang = array_merge(
+			LangLoader::get('form-lang'),
+			LangLoader::get('common-lang'),
+			LangLoader::get('common', 'guestbook')
+		);
 	}
 
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->form_lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->form_lang['form.forbidden.tags'], $this->config->get_forbidden_tags(), $this->generate_forbidden_tags_option(),
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->lang['form.forbidden.tags'], $this->config->get_forbidden_tags(), $this->generate_forbidden_tags_option(),
 			array('size' => 10)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->form_lang['form.items.per.page'], $this->config->get_items_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->lang['form.items.per.page'], $this->config->get_items_per_page(),
 			array('class' => 'top-field', 'min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
@@ -90,14 +92,13 @@ class AdminGuestbookConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 20))
 		));
 
-		$form_lang = LangLoader::get('form-lang');
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $form_lang['form.authorizations']);
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['form.authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($form_lang['form.authorizations.read'], GuestbookAuthorizationsService::READ_AUTHORIZATIONS),
-			new ActionAuthorization($form_lang['form.authorizations.write'], GuestbookAuthorizationsService::WRITE_AUTHORIZATIONS),
-			new MemberDisabledActionAuthorization($form_lang['form.authorizations.moderation'], GuestbookAuthorizationsService::MODERATION_AUTHORIZATIONS)
+			new ActionAuthorization($this->lang['form.authorizations.read'], GuestbookAuthorizationsService::READ_AUTHORIZATIONS),
+			new ActionAuthorization($this->lang['form.authorizations.write'], GuestbookAuthorizationsService::WRITE_AUTHORIZATIONS),
+			new MemberDisabledActionAuthorization($this->lang['form.authorizations.moderation'], GuestbookAuthorizationsService::MODERATION_AUTHORIZATIONS)
 		));
 
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());
@@ -144,6 +145,8 @@ class AdminGuestbookConfigController extends AdminModuleController
 
 		GuestbookConfig::save();
 		GuestbookCache::invalidate();
+		
+		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
 	}
 }
 ?>

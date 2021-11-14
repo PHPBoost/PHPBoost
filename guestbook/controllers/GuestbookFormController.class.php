@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 11 14
  * @since       PHPBoost 4.0 - 2013 06 27
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -167,11 +167,14 @@ class GuestbookFormController extends ModuleController
 		if ($message->get_id() === null)
 		{
 			$id_message = GuestbookService::add($message);
+			$message->set_id($id_message);
+			HooksService::execute_hook_action('add', self::$module_id, array_merge($message->get_properties(), array('item_url' => GuestbookUrlBuilder::home(1, $id_message)->rel())));
 		}
 		else
 		{
 			$id_message = $message->get_id();
 			GuestbookService::update($message);
+			HooksService::execute_hook_action('edit', self::$module_id, array_merge($message->get_properties(), array('item_url' => GuestbookUrlBuilder::home(AppContext::get_request()->get_getint('page', 1), $id_message)->rel())));
 		}
 
 		GuestbookCache::invalidate();
