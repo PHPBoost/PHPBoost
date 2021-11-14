@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 02 11
+ * @version     PHPBoost 6.0 - last update: 2021 11 14
  * @since       PHPBoost 4.1 - 2014 12 01
 */
 
@@ -31,6 +31,8 @@ class ShoutboxAjaxDeleteMessageController extends AbstractController
 		AppContext::get_session()->csrf_post_protect();
 
 		ShoutboxService::delete('WHERE id=:id', array('id' => $this->shoutbox_message->get_id()));
+		
+		HooksService::execute_hook_action('delete', 'shoutbox', $this->shoutbox_message->get_properties());
 	}
 
 	private function get_shoutbox_message(HTTPRequestCustom $request)

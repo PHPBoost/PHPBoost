@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 16
+ * @version     PHPBoost 6.0 - last update: 2021 11 14
  * @since       PHPBoost 4.1 - 2014 10 14
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -54,19 +54,22 @@ class AdminShoutboxConfigController extends AdminModuleController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'shoutbox');
 		$this->config = ShoutboxConfig::load();
+		$this->lang = array_merge(
+			LangLoader::get('form-lang'),
+			LangLoader::get('common-lang'),
+			LangLoader::get('common', 'shoutbox')
+		);
 	}
 
 	private function build_form()
 	{
-		$form_lang = LangLoader::get('form-lang');
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($form_lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $form_lang['form.items.per.page'], $this->config->get_items_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->lang['form.items.per.page'], $this->config->get_items_per_page(),
 			array('class' => 'third-field', 'min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
@@ -118,7 +121,7 @@ class AdminShoutboxConfigController extends AdminModuleController
 
 		$fieldset->add_field(new FormFieldSpacer('2_separator', ''));
 
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_formatting_tags', $form_lang['form.forbidden.tags'], $this->config->get_forbidden_formatting_tags(), $this->generate_forbidden_formatting_tags_option(),
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_formatting_tags', $this->lang['form.forbidden.tags'], $this->config->get_forbidden_formatting_tags(), $this->generate_forbidden_formatting_tags_option(),
 			array('size' => 10)
 		));
 
@@ -179,14 +182,14 @@ class AdminShoutboxConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(5, 1000))
 		));
 
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $form_lang['form.authorizations']);
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['form.authorizations']);
 
 		$form->add_fieldset($fieldset_authorizations);
 
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($form_lang['form.authorizations.read'], ShoutboxAuthorizationsService::READ_AUTHORIZATIONS),
-			new ActionAuthorization($form_lang['form.authorizations.write'], ShoutboxAuthorizationsService::WRITE_AUTHORIZATIONS),
-			new MemberDisabledActionAuthorization($form_lang['form.authorizations.moderation'], ShoutboxAuthorizationsService::MODERATION_AUTHORIZATIONS)
+			new ActionAuthorization($this->lang['form.authorizations.read'], ShoutboxAuthorizationsService::READ_AUTHORIZATIONS),
+			new ActionAuthorization($this->lang['form.authorizations.write'], ShoutboxAuthorizationsService::WRITE_AUTHORIZATIONS),
+			new MemberDisabledActionAuthorization($this->lang['form.authorizations.moderation'], ShoutboxAuthorizationsService::MODERATION_AUTHORIZATIONS)
 		));
 
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
@@ -272,6 +275,8 @@ class AdminShoutboxConfigController extends AdminModuleController
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 
 		ShoutboxConfig::save();
+		
+		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
 	}
 
 	private function generate_forbidden_formatting_tags_option()

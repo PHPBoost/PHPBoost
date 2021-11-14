@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 24
+ * @version     PHPBoost 6.0 - last update: 2021 11 14
  * @since       PHPBoost 4.1 - 2014 12 12
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -40,6 +40,8 @@ class ShoutboxAjaxAddMessageController extends AbstractController
 				$shoutbox_message->set_content(stripslashes($content));
 				$shoutbox_message->set_creation_date(new Date());
 				$code = ShoutboxService::add($shoutbox_message);
+				$shoutbox_message->set_id($code);
+				HooksService::execute_hook_action('add', 'shoutbox', array_merge($shoutbox_message->get_properties(), array('item_url' => ShoutboxUrlBuilder::home(1, $code)->rel())));
 			}
 			else
 				$code = -3;
