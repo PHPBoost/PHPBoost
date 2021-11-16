@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 11
+ * @version     PHPBoost 6.0 - last update: 2021 11 16
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -117,7 +117,7 @@ class PollItem extends RichItem
 
 	public function has_votes()
 	{
-		return $this->get_votes_number() ? $this->get_votes_number() > 0 : false;
+		return $this->get_votes_number() > 0;
 	}
 
 	public function set_votes(array $value)
@@ -146,7 +146,7 @@ class PollItem extends RichItem
 		return $this->get_close_poll() > 0;
 	}
 
-        public function set_close_poll(int $value)
+	public function set_close_poll(int $value)
 	{
 		$this->set_additional_property('close_poll', $value);
 	}
@@ -206,7 +206,7 @@ class PollItem extends RichItem
 		return $this->has_votes() ? ItemsService::get_items_manager()->user_has_voted($this->current_user_id, $this->get_id()) : false;
 	}
 
-  public function user_is_empowered_to_vote()
+	public function user_is_empowered_to_vote()
 	{
 		return !$this->is_closed()
 				&& $this->is_published()

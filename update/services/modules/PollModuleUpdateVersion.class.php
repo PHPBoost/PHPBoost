@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 03
+ * @version     PHPBoost 6.0 - last update: 2021 11 16
  * @since       PHPBoost 6.0 - 2021 04 06
 */
 
@@ -126,7 +126,7 @@ class PollModuleUpdateVersion extends ModuleUpdateVersion
 				foreach (explode('|', $row['votes']) as $id => $vote)
 				{
 					$votes[$answers_titles[$id]] = (int)$vote;
-					$votes_number += (int)$vote;
+					$votes_number++;
 				}
 				$this->querier->update(PREFIX . 'poll', array('answers' => TextHelper::serialize($answers), 'votes_number' => $votes_number, 'votes' => TextHelper::serialize($votes)), 'WHERE id = :id', array('id' => $row['id']));
 			}

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 24
+ * @version     PHPBoost 6.0 - last update: 2021 11 16
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -121,7 +121,7 @@ class PollItemController extends DefaultDisplayItemController
 
 		self::get_items_manager()->update_votes($this->retrieve_vote(), $this->get_item()->get_votes_number(), $this->get_item()->get_id());
 		self::get_items_manager()->insert_voter($this->get_item()->get_id());
-                self::get_items_manager()->set_cookie($this->get_item()->get_id());
+		self::get_items_manager()->set_cookie($this->get_item()->get_id());
   	}
 
 	//Si pas encore de vote, retourne un tableau avec pour clés les réponses et pour valeurs 0

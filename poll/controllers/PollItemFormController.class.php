@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 07
+ * @version     PHPBoost 6.0 - last update: 2021 11 16
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -49,7 +49,7 @@ class PollItemFormController extends DefaultItemFormController
 		parent::build_pre_content_fields($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('close_poll', $this->lang['poll.form.close.poll'], $this->is_new_item ? FormFieldCheckbox::UNCHECKED : $this->get_item()->get_close_poll(), array('hidden' => $this->is_new_item ? true : false)));
-                $fieldset->add_field(new FormFieldCheckbox('display_poll_in_mini_module', $this->lang['poll.form.display.poll.in.mini'], $this->is_new_item ? FormFieldCheckbox::CHECKED : $this->get_item()->is_in_mini_module_map()));
+		$fieldset->add_field(new FormFieldCheckbox('display_poll_in_mini_module', $this->lang['poll.form.display.poll.in.mini'], $this->is_new_item ? FormFieldCheckbox::CHECKED : $this->get_item()->is_in_mini_module_map()));
 	}
 
 	protected function build_countdown_field()
