@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 04
+ * @version     PHPBoost 6.0 - last update: 2021 11 17
  * @since       PHPBoost 6.0 - 2020 02 11
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -31,6 +31,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
+			$this->execute_edit_config_hook();
 			if (self::get_module_configuration()->has_rich_items())
 			{
 				$this->form->get_field_by_id('items_per_row')->set_hidden($this->config->get_display_type() != DefaultRichModuleConfig::GRID_VIEW);
@@ -282,7 +283,10 @@ class DefaultConfigurationController extends AbstractAdminItemController
 
 		if (self::get_module_configuration()->has_categories())
 			CategoriesService::get_categories_manager(self::$module_id)->regenerate_cache();
-		
+	}
+
+	protected function execute_edit_config_hook()
+	{
 		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
 	}
 
