@@ -10,7 +10,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 11 18
  * @since       PHPBoost 2.0 - 2008 07 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -308,6 +308,25 @@ class Event
 		$this->identifier = $identifier;
 		$this->type = $type;
 		$this->must_regenerate_cache = false;
+	}
+
+	/**
+	 * Gets all the properties of the event.
+	 * @return mixed[] The properties array.
+	 */
+	public function get_properties()
+	{
+		return array(
+			'id'            => $this->get_id(),
+			'entitled'      => $this->get_entitled(),
+			'fixing_url'    => $this->get_fixing_url(),
+			'status'        => $this->get_status(),
+			'status_name'   => $this->get_status_name(),
+			'creation_date' => $this->get_creation_date(),
+			'id_in_module'  => $this->get_id_in_module(),
+			'identifier'    => $this->get_identifier(),
+			'type'          => $this->get_type()
+		);
 	}
 }
 ?>

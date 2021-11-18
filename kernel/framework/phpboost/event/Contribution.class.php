@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 11 18
  * @since       PHPBoost 2.0 - 2008 07 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -379,6 +379,28 @@ class Contribution extends Event
 		{
 			return '';
 		}
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get_properties()
+	{
+		return array_merge(parent::get_properties(), array(
+			'description'   => $this->get_description(),
+			'module_id'     => $this->get_module(),
+			'fixing_date'   => $this->get_fixing_date(),
+			'auth'          => $this->get_auth(),
+			'poster_id'     => $this->get_poster_id(),
+			'poster_login'  => $this->get_poster_login(),
+			'poster_level'  => $this->get_poster_level(),
+			'poster_groups' => $this->get_poster_groups(),
+			'fixer_id'      => $this->get_fixer_id(),
+			'fixer_login'   => $this->get_fixer_login(),
+			'fixer_level'   => $this->get_fixer_level(),
+			'fixer_groups'  => $this->get_fixer_groups(),
+			'status_name'   => $this->get_status_name()
+		));
 	}
 }
 ?>

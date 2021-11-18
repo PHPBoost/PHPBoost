@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 23
+ * @version     PHPBoost 6.0 - last update: 2021 11 18
  * @since       PHPBoost 1.6 - 2008 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -43,7 +43,7 @@ if (ServerConfiguration::get_phpversion() > Updates::PHP_MIN_VERSION_UPDATES)
 	foreach ($update_alerts as $update_alert)
 	{
 		// Builds the asked updates (kernel updates, module updates, theme updates or all of them)
-		$update = TextHelper::unserialize($update_alert->get_properties());
+		$update = TextHelper::unserialize($update_alert->get_alert_properties());
 		if (($update instanceof Application) && ($update_type == '' || $update->get_type() == $update_type))
 		{
 			if ($update->check_compatibility() && $update_alert->get_status() != AdministratorAlert::ADMIN_ALERT_STATUS_PROCESSED)

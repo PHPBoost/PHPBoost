@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 01
+ * @version     PHPBoost 6.0 - last update: 2021 11 18
  * @since       PHPBoost 2.0 - 2008 08 29
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -204,7 +204,7 @@ class AdministratorAlertService
 		// If it exists already in the data base
 		if ($alert->get_id() > 0)
 		{
-			self::$db_querier->update(DB_TABLE_EVENTS, array('entitled' => $alert->get_entitled(), 'description' => $alert->get_properties(), 'fixing_url' => $alert->get_fixing_url(), 'module' => '', 'current_status' => $alert->get_status(), 'creation_date' => $alert->get_creation_date()->get_timestamp(), 'id_in_module' => $alert->get_id_in_module(), 'identifier' => $alert->get_identifier(), 'type' => $alert->get_type(), 'priority' => $alert->get_priority()), 'WHERE id = :id', array('id' => $alert->get_id()));
+			self::$db_querier->update(DB_TABLE_EVENTS, array('entitled' => $alert->get_entitled(), 'description' => $alert->get_alert_properties(), 'fixing_url' => $alert->get_fixing_url(), 'module' => '', 'current_status' => $alert->get_status(), 'creation_date' => $alert->get_creation_date()->get_timestamp(), 'id_in_module' => $alert->get_id_in_module(), 'identifier' => $alert->get_identifier(), 'type' => $alert->get_type(), 'priority' => $alert->get_priority()), 'WHERE id = :id', array('id' => $alert->get_id()));
 
 			//Regeneration of the member cache file
 			if ($alert->get_must_regenerate_cache())
@@ -216,7 +216,7 @@ class AdministratorAlertService
 		else //We create it
 		{
 			$creation_date = new Date();
-			$result = self::$db_querier->insert(DB_TABLE_EVENTS, array('entitled' => $alert->get_entitled(), 'description' => $alert->get_properties(), 'fixing_url' => $alert->get_fixing_url(), 'module' => '', 'current_status' => $alert->get_status(), 'creation_date' => $creation_date->get_timestamp(), 'id_in_module' => $alert->get_id_in_module(), 'identifier' => $alert->get_identifier(), 'type' => $alert->get_type(), 'priority' => $alert->get_priority()));
+			$result = self::$db_querier->insert(DB_TABLE_EVENTS, array('entitled' => $alert->get_entitled(), 'description' => $alert->get_alert_properties(), 'fixing_url' => $alert->get_fixing_url(), 'module' => '', 'current_status' => $alert->get_status(), 'creation_date' => $creation_date->get_timestamp(), 'id_in_module' => $alert->get_id_in_module(), 'identifier' => $alert->get_identifier(), 'type' => $alert->get_type(), 'priority' => $alert->get_priority()));
 			$alert->set_id($result->get_last_inserted_id());
 
 			//Cache regeneration

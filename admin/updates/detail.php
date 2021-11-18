@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 25
+ * @version     PHPBoost 6.0 - last update: 2021 11 18
  * @since       PHPBoost 1.6 - 2008 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -29,7 +29,7 @@ $server_configuration = new ServerConfiguration();
 
 if (($update = AdministratorAlertService::find_by_identifier($identifier, 'updates')) !== null)
 {
-	$app = TextHelper::unserialize($update->get_properties());
+	$app = TextHelper::unserialize($update->get_alert_properties());
 }
 
 if ($app instanceof Application)
@@ -64,7 +64,7 @@ if ($app instanceof Application)
 
 				foreach ($unread_alerts as $key => $alert)
 				{
-					$details = TextHelper::unserialize($alert->get_properties());
+					$details = TextHelper::unserialize($alert->get_alert_properties());
 					if ($details instanceof Application && $details->get_version() == $major_version . '.' . ($processed_version + 1))
 					{
 						// Set admin alert status to processed

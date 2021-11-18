@@ -8,7 +8,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 23
+ * @version     PHPBoost 6.0 - last update: 2021 11 18
  * @since       PHPBoost 2.0 - 2008 08 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -43,7 +43,7 @@ class AdministratorAlert extends Event
 	/**
 	 * @var string Properties of the alert (string field of unlimited length) which can for example contain a serializes array of object.
 	 */
-	private $properties = '';
+	private $alert_properties = '';
 
 	/**
 	 * Builds an AdministratorAlert object.
@@ -52,7 +52,7 @@ class AdministratorAlert extends Event
 	{
 		parent::__construct();
 		$this->priority = self::ADMIN_ALERT_MEDIUM_PRIORITY;
-		$this->properties = '';
+		$this->alert_properties = '';
 	}
 
 	/**
@@ -72,7 +72,7 @@ class AdministratorAlert extends Event
 	{
 		parent::build_event($id, $entitled, $fixing_url, $current_status, $creation_date, $id_in_module, $identifier, $type);
 		$this->set_priority($priority);
-		$this->set_properties($properties);
+		$this->set_alert_properties($properties);
 	}
 
 	/**
@@ -95,9 +95,9 @@ class AdministratorAlert extends Event
 	 * Gets the alert properties.
 	 * @return string The properties.
 	 */
-	public function get_properties()
+	public function get_alert_properties()
 	{
-		return $this->properties;
+		return $this->alert_properties;
 	}
 
 	/**
@@ -128,12 +128,12 @@ class AdministratorAlert extends Event
 	 * Sets the properties of the alert.
 	 * @param string $properties Properties.
 	 */
-	public function set_properties($properties)
+	public function set_alert_properties($properties)
 	{
 		//If properties has the good type
 		if (is_string($properties))
 		{
-			$this->properties = $properties;
+			$this->alert_properties = $properties;
 		}
 	}
 
@@ -164,6 +164,18 @@ class AdministratorAlert extends Event
 			default:
 				return $admin_lang['admin.priority.medium'];
 		}
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get_properties()
+	{
+		return array_merge(parent::get_properties(), array(
+			'priority'         => $this->get_priority(),
+			'priority_name'    => $this->get_priority_name(),
+			'alert_properties' => $this->get_alert_properties()
+		));
 	}
 }
 ?>
