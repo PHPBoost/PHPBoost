@@ -38,20 +38,27 @@
 	//  Opacity when block menu is unchecked
 	function minimize_container(input, containerName)
 	{
-		var container = document.getElementById('mod_' + containerName);
+		let container = document.getElementById('mod_' + containerName);
+		let content = container.querySelector('div');
 
 		if (!container)
 			return;
 
 		if(input.checked == false)
 		{
-			container.style.opacity = 0.5;
-			container.style.filter='alpha(opacity=50)';
+			if(content)
+			{
+				content.style.opacity = 0.5;
+				content.style.filter='alpha(opacity=50)';
+			}
 		}
 		else
 		{
-			container.style.opacity = 1;
-			container.style.filter='alpha(opacity=100)';
+			if(content)
+			{
+				content.style.opacity = 1;
+				content.style.filter='alpha(opacity=100)';
+			}
 		}
 	}
 
@@ -522,7 +529,7 @@
 			// opacity for unchecked block on page loading
 			jQuery('.container-block').each(function(){
 				let cb = jQuery(this).find('[type="checkbox"]');
-				if(!cb.is(':checked')) jQuery(this).next().css('opacity', 0.5);
+				if(!cb.is(':checked')) jQuery(this).siblings().find('.menus-block-container').css('opacity', 0.5);
 			});
 		});
 	</script>

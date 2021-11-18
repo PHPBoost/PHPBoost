@@ -363,7 +363,6 @@ ul.level-2 ul { padding: 0; }
 	margin: 0.618em auto 0;
 	width: 210px;
 	position: relative;
-	z-index: 2;
 }
 
 .container-block-absolute {
@@ -371,6 +370,7 @@ ul.level-2 ul { padding: 0; }
 	width: 210px;
 	display: none;
 	top: calc(100% - 3px);
+	z-index: 2;
 }
 
 .menu-block-libelle {
