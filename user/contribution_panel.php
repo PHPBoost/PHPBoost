@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 30
+ * @version     PHPBoost 6.0 - last update: 2021 11 19
  * @since       PHPBoost 2.0 - 2008 07 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -97,6 +97,7 @@ elseif ($id_to_update > 0)
 
 		// Saving in database
 		ContributionService::save_contribution($contribution);
+		HooksService::execute_hook_action($status == Event::EVENT_STATUS_PROCESSED ? 'process_contribution' : 'edit_contribution', $contribution->get_module(), array_merge($contribution->get_properties(), array('title' => $contribution->get_entitled(), 'url' => $contribution->get_fixing_url())));
 
 		AppContext::get_response()->redirect(UserUrlBuilder::contribution_panel($contribution->get_id()));
 	}
@@ -123,6 +124,7 @@ elseif ($id_to_delete > 0)
 
 	CommentsService::delete_comments_topic_module('user', $id_to_delete);
 	ContributionService::delete_contribution($contribution);
+	HooksService::execute_hook_action('delete_contribution', $contribution->get_module(), array_merge($contribution->get_properties(), array('title' => $contribution->get_entitled(), 'url' => $contribution->get_fixing_url())));
 
 	AppContext::get_response()->redirect(UserUrlBuilder::contribution_panel());
 }

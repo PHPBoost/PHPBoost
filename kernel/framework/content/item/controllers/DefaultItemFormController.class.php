@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 24
+ * @version     PHPBoost 6.0 - last update: 2021 11 19
  * @since       PHPBoost 6.0 - 2020 05 16
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -436,14 +436,18 @@ class DefaultItemFormController extends AbstractItemController
 		{
 			$id = self::get_items_manager()->add($this->get_item());
 			$this->get_item()->set_id($id);
-			HooksService::execute_hook_action('add', self::$module_id, array_merge($this->get_item()->get_properties(), array('item_url' => $this->get_item()->get_item_url())));
+			
+			if (!$this->is_contributor_member())
+				HooksService::execute_hook_action('add', self::$module_id, array_merge($this->get_item()->get_properties(), array('item_url' => $this->get_item()->get_item_url())));
 		}
 		else
 		{
 			$this->get_item()->set_update_date(new Date());
 			$id = $this->get_item()->get_id();
 			self::get_items_manager()->update($this->get_item());
-			HooksService::execute_hook_action('edit', self::$module_id, array_merge($this->get_item()->get_properties(), array('item_url' => $this->get_item()->get_item_url())));
+			
+			if (!$this->is_contributor_member())
+				HooksService::execute_hook_action('edit', self::$module_id, array_merge($this->get_item()->get_properties(), array('item_url' => $this->get_item()->get_item_url())));
 		}
 
 		$this->contribution_actions($this->get_item(), $id);
@@ -520,6 +524,7 @@ class DefaultItemFormController extends AbstractItemController
 			}
 
 			ContributionService::save_contribution($contribution);
+			HooksService::execute_hook_action($this->is_new_item ? 'add_contribution' : 'edit_contribution', self::$module_id, array_merge($contribution->get_properties(), $this->get_item()->get_properties(), array('item_url' => $this->get_item()->get_item_url())));
 		}
 		else
 		{
@@ -531,9 +536,9 @@ class DefaultItemFormController extends AbstractItemController
 					$contribution->set_status(Event::EVENT_STATUS_PROCESSED);
 					ContributionService::save_contribution($contribution);
 				}
+				HooksService::execute_hook_action('process_contribution', self::$module_id, array_merge($contribution->get_properties(), $this->get_item()->get_properties(), array('item_url' => $this->get_item()->get_item_url())));
 			}
 		}
-		$item->set_id($id);
 	}
 
 	protected function redirect()

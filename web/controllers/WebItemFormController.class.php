@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 30
+ * @version     PHPBoost 6.0 - last update: 2021 11 19
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -383,14 +383,18 @@ class WebItemFormController extends ModuleController
 		{
 			$id = WebService::add($item);
 			$item->set_id($id);
-			HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
+			
+			if (!$this->is_contributor_member())
+				HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
 		}
 		else
 		{
 			$item->set_update_date(new Date());
 			$id = $item->get_id();
 			WebService::update($item);
-			HooksService::execute_hook_action('edit', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
+			
+			if (!$this->is_contributor_member())
+				HooksService::execute_hook_action('edit', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
 		}
 
 		$this->contribution_actions($item, $id);
@@ -402,27 +406,28 @@ class WebItemFormController extends ModuleController
 
 	private function contribution_actions(WebItem $item, $id)
 	{
-			if ($this->is_contributor_member())
-			{
-				$contribution = new Contribution();
-				$contribution->set_id_in_module($id);
-				if ($item->get_id() === null)
-					$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
-				else
-					$contribution->set_description(stripslashes($this->form->get_value('edition_description')));
+		if ($this->is_contributor_member())
+		{
+			$contribution = new Contribution();
+			$contribution->set_id_in_module($id);
+			if ($item->get_id() === null)
+				$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
+			else
+				$contribution->set_description(stripslashes($this->form->get_value('edition_description')));
 
-				$contribution->set_entitled($item->get_title());
-				$contribution->set_fixing_url(WebUrlBuilder::edit($id)->relative());
-				$contribution->set_poster_id(AppContext::get_current_user()->get_id());
-				$contribution->set_module('web');
-				$contribution->set_auth(
-					Authorizations::capture_and_shift_bit_auth(
-						CategoriesService::get_categories_manager()->get_heritated_authorizations($item->get_id_category(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
-						Category::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
-					)
-				);
-				ContributionService::save_contribution($contribution);
-			}
+			$contribution->set_entitled($item->get_title());
+			$contribution->set_fixing_url(WebUrlBuilder::edit($id)->relative());
+			$contribution->set_poster_id(AppContext::get_current_user()->get_id());
+			$contribution->set_module('web');
+			$contribution->set_auth(
+				Authorizations::capture_and_shift_bit_auth(
+					CategoriesService::get_categories_manager()->get_heritated_authorizations($item->get_id_category(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
+					Category::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
+				)
+			);
+			ContributionService::save_contribution($contribution);
+			HooksService::execute_hook_action($this->is_new_item ? 'add_contribution' : 'edit_contribution', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
+		}
 		else
 		{
 			$corresponding_contributions = ContributionService::find_by_criteria('web', $id);
@@ -433,9 +438,9 @@ class WebItemFormController extends ModuleController
 					$contribution->set_status(Event::EVENT_STATUS_PROCESSED);
 					ContributionService::save_contribution($contribution);
 				}
+				HooksService::execute_hook_action('process_contribution', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
 			}
 		}
-		$item->set_id($id);
 	}
 
 	private function redirect()

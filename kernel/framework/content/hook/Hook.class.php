@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 28
+ * @version     PHPBoost 6.0 - last update: 2021 11 19
  * @since       PHPBoost 6.0 - 2021 09 14
 */
 
@@ -82,6 +82,46 @@ abstract class Hook implements ExtensionPoint
 	}
 
 	/**
+	 * @desc Execute action after item contribution if needed.
+	 * @param string $module_id Name of the current module
+	 * @param string[] $properties Properties of the item (title, content, ...)
+	 */
+	public function on_add_contribution_action($module_id, array $properties)
+	{
+		return true;
+	}
+
+	/**
+	 * @desc Execute action after contribution edition if needed.
+	 * @param string $module_id Name of the current module
+	 * @param string[] $properties Properties of the contribution (id, title, ...)
+	 */
+	public function on_edit_contribution_action($module_id, array $properties)
+	{
+		return true;
+	}
+
+	/**
+	 * @desc Execute action after contribution removal if needed.
+	 * @param string $module_id Name of the current module
+	 * @param string[] $properties Properties of the contribution (id, title, ...)
+	 */
+	public function on_delete_contribution_action($module_id, array $properties)
+	{
+		return true;
+	}
+
+	/**
+	 * @desc Execute action after contribution process if needed.
+	 * @param string $module_id Name of the current module
+	 * @param string[] $properties Properties of the item (title, content, ...)
+	 */
+	public function on_process_contribution_action($module_id, array $properties)
+	{
+		return true;
+	}
+
+	/**
 	 * @desc Execute action after comment add if needed.
 	 * @param string $module_id Name of the current module
 	 * @param string[] $properties Properties of the comment (id, message, url, ...)
@@ -122,9 +162,9 @@ abstract class Hook implements ExtensionPoint
 	}
 
 	/**
-	 * @desc Execute action after config page edition if needed.
+	 * @desc Execute action after configuration page edition if needed.
 	 * @param string $module_id Name of the current module
-	 * @param string[] $properties (optional) Properties of the item (title, content, ...)
+	 * @param string[] $properties (optional) Properties of the configuration page (title, url, ...)
 	 */
 	public function on_edit_config_action($module_id, array $properties = array())
 	{
