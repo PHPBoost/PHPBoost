@@ -348,6 +348,11 @@ class BugtrackerItem
 		$this->fix_date = null;
 	}
 
+	public function get_item_url()
+	{
+		return BugtrackerUrlBuilder::detail($this->id . '-' . $this->rewrited_title)->rel();
+	}
+
 	public function get_template_vars()
 	{
 		$config = BugtrackerConfig::load();
@@ -398,7 +403,7 @@ class BugtrackerItem
 			'COMMENTS_NUMBER'     => $comments_number,
 
 			'U_AUTHOR_PROFILE' => UserUrlBuilder      ::profile($user->get_id())->rel(),
-			'U_LINK'           => BugtrackerUrlBuilder::detail($this->id . '-' . $this->rewrited_title)->rel(),
+			'U_LINK'           => $this->get_item_url(),
 			'U_HISTORY'        => BugtrackerUrlBuilder::history($this->id)->rel(),
 			'U_COMMENTS'       => BugtrackerUrlBuilder::detail($this->id . '-' . $this->rewrited_title . '#comments-list')->rel()
 		));

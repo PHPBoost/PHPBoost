@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 11 20
  * @since       PHPBoost 3.0 - 2012 10 08
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -86,6 +86,8 @@ class AdminBugtrackerAuthorizationsController extends AdminModuleController
 		//Save the authorizations list
 		BugtrackerConfig::load()->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		BugtrackerConfig::save();
+		
+		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => $this->lang['bugtracker.authorizations.module.title'], 'url' => BugtrackerUrlBuilder::authorizations()->rel()));
 	}
 }
 ?>

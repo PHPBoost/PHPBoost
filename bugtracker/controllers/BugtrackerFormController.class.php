@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 09
+ * @version     PHPBoost 6.0 - last update: 2021 11 20
  * @since       PHPBoost 4.0 - 2014 01 29
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -279,6 +279,8 @@ class BugtrackerFormController extends ModuleController
 
 			//Bug creation
 			$bug->set_id(BugtrackerService::add($bug));
+			
+			HooksService::execute_hook_action('add', self::$module_id, array_merge($bug->get_properties(), array('item_url' => $bug->get_item_url())));
 
 			if ($this->config->are_admin_alerts_enabled() && in_array($bug->get_severity(), $this->config->get_admin_alerts_levels()))
 			{
@@ -519,6 +521,8 @@ class BugtrackerFormController extends ModuleController
 			{
 				//Bug update
 				BugtrackerService::update($bug);
+			
+				HooksService::execute_hook_action('edit', self::$module_id, array_merge($bug->get_properties(), array('item_url' => $bug->get_item_url())));
 
 				//Send PM to updaters if the option is enabled
 				if ($this->config->are_pm_enabled() && $this->config->are_pm_edit_enabled() && !empty($pm_comment))

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 11 20
  * @since       PHPBoost 3.0 - 2012 10 18
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -65,13 +65,17 @@ class AdminBugtrackerConfigController extends AdminModuleController
 
 		$view->put('FORM', $this->form->display());
 
-		return new AdminBugtrackerDisplayResponse($view, $this->lang['bugtracker.config.module.title']);
+		return new AdminBugtrackerDisplayResponse($view, StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 	}
 
 	private function init()
 	{
 		$this->config = BugtrackerConfig::load();
-		$this->lang = LangLoader::get('common', 'bugtracker');
+		$this->lang = array_merge(
+			LangLoader::get('form-lang'),
+			LangLoader::get('common-lang'),
+			LangLoader::get('common', 'bugtracker')
+		);
 	}
 
 	private function build_form()
@@ -82,7 +86,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 
 		$severities = $this->config->get_severities();
 
-		$fieldset = new FormFieldsetHTML('config', $this->lang['bugtracker.config.module.title']);
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $form_lang['form.items.per.page'], (int)$this->config->get_items_per_page(),
@@ -836,6 +840,8 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		BugtrackerConfig::save();
 
 		BugtrackerStatsCache::invalidate();
+		
+		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
 	}
 }
 ?>

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 06
+ * @version     PHPBoost 6.0 - last update: 2021 11 20
  * @since       PHPBoost 3.0 - 2012 11 09
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -14,7 +14,6 @@
 ####################################################
 
 $lang['bugtracker.module.title']                = 'Bugtracker';
-$lang['bugtracker.config.module.title']         = 'Bugtracker module configuration';
 $lang['bugtracker.authorizations.module.title'] = 'Bugtracker module authorizations';
 
 // Current page
