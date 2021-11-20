@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 09
+ * @version     PHPBoost 6.0 - last update: 2021 11 21
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -86,7 +86,6 @@ $lang['string_template.result'] = '
 ';
 
 // Configuration
-$lang['sandbox.config.module.title'] = 'Configuration of the mini module Sandbox';
 $lang['sandbox.superadmin.enabled'] = 'Limit the access to only one administrator';
 $lang['sandbox.superadmin.id'] = 'Choose the administrator';
 $lang['sandbox.is.not.admin'] = 'The member is not an administrator or don\'t exists';

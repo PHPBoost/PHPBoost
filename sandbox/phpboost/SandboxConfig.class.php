@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 09
+ * @version     PHPBoost 6.0 - last update: 2021 11 21
  * @since       PHPBoost 5.1 - 2017 09 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -125,7 +125,7 @@ class SandboxConfig extends AbstractConfigData
 
 	/**
 	 * Returns the configuration.
-	 * @return GoogleMapsConfig
+	 * @return SandboxConfig
 	 */
 	public static function load()
 	{

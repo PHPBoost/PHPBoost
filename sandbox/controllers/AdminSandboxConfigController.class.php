@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 09
+ * @version     PHPBoost 6.0 - last update: 2021 11 21
  * @since       PHPBoost 5.1 - 2017 09 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -22,7 +22,7 @@ class AdminSandboxConfigController extends AdminModuleController
 	private $lang;
 
 	/**
-	 * @var GoogleMapsConfig
+	 * @var SandboxConfig
 	 */
 	private $config;
 
@@ -45,47 +45,51 @@ class AdminSandboxConfigController extends AdminModuleController
 
 		$view->put('FORM', $this->form->display());
 
-		return new AdminSandboxDisplayResponse($view, $this->lang['sandbox.config.module.title']);
+		return new AdminSandboxDisplayResponse($view, StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'sandbox');
 		$this->config = SandboxConfig::load();
+		$this->lang = array_merge(
+			LangLoader::get('form-lang'),
+			LangLoader::get('common-lang'),
+			LangLoader::get('menu-lang'),
+			LangLoader::get('common', 'sandbox')
+		);
 	}
 
 	private function build_form()
 	{
-		$menu_lang = LangLoader::get('menu-lang');
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('config', $this->lang['sandbox.config.module.title']);
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('menu_opening_type', $menu_lang['menu.push.opening.type'], $this->config->get_menu_opening_type(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('menu_opening_type', $this->lang['menu.push.opening.type'], $this->config->get_menu_opening_type(),
 			array(
-				new FormFieldSelectChoiceOption($menu_lang['menu.push.opening.type.top'], SandboxConfig::TOP_MENU, array('data_option_icon' => 'fa fa-arrow-down')),
-				new FormFieldSelectChoiceOption($menu_lang['menu.push.opening.type.right'], SandboxConfig::RIGHT_MENU, array('data_option_icon' => 'fa fa-arrow-left')),
-				new FormFieldSelectChoiceOption($menu_lang['menu.push.opening.type.bottom'], SandboxConfig::BOTTOM_MENU, array('data_option_icon' => 'fa fa-arrow-up')),
-				new FormFieldSelectChoiceOption($menu_lang['menu.push.opening.type.left'], SandboxConfig::LEFT_MENU, array('data_option_icon' => 'fa fa-arrow-right'))
+				new FormFieldSelectChoiceOption($this->lang['menu.push.opening.type.top'], SandboxConfig::TOP_MENU, array('data_option_icon' => 'fa fa-arrow-down')),
+				new FormFieldSelectChoiceOption($this->lang['menu.push.opening.type.right'], SandboxConfig::RIGHT_MENU, array('data_option_icon' => 'fa fa-arrow-left')),
+				new FormFieldSelectChoiceOption($this->lang['menu.push.opening.type.bottom'], SandboxConfig::BOTTOM_MENU, array('data_option_icon' => 'fa fa-arrow-up')),
+				new FormFieldSelectChoiceOption($this->lang['menu.push.opening.type.left'], SandboxConfig::LEFT_MENU, array('data_option_icon' => 'fa fa-arrow-right'))
 			),
 			array('select_to_list' => true)
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('expansion_type', $menu_lang['menu.push.expansion.type'], $this->config->get_expansion_type(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('expansion_type', $this->lang['menu.push.expansion.type'], $this->config->get_expansion_type(),
 			array(
-				new FormFieldSelectChoiceOption($menu_lang['menu.push.expansion.type.overlap'], SandboxConfig::OVERLAP, array('data_option_icon' => 'fa fa-sign-in-alt')),
-				new FormFieldSelectChoiceOption($menu_lang['menu.push.expansion.type.expand'], SandboxConfig::EXPANSION, array('data_option_icon' => 'fa fa-chevron-down')),
-				new FormFieldSelectChoiceOption($menu_lang['menu.push.expansion.type.none'], SandboxConfig::NO_EXPANSION, array('data_option_icon' => 'fa fa-times-circle'))
+				new FormFieldSelectChoiceOption($this->lang['menu.push.expansion.type.overlap'], SandboxConfig::OVERLAP, array('data_option_icon' => 'fa fa-sign-in-alt')),
+				new FormFieldSelectChoiceOption($this->lang['menu.push.expansion.type.expand'], SandboxConfig::EXPANSION, array('data_option_icon' => 'fa fa-chevron-down')),
+				new FormFieldSelectChoiceOption($this->lang['menu.push.expansion.type.none'], SandboxConfig::NO_EXPANSION, array('data_option_icon' => 'fa fa-times-circle'))
 			),
 			array('select_to_list' => true)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('disabled_body', $menu_lang['menu.push.disable.body'], $this->config->get_disabled_body(),
+		$fieldset->add_field(new FormFieldCheckbox('disabled_body', $this->lang['menu.push.disable.body'], $this->config->get_disabled_body(),
 			array('class' => 'custom-checkbox')
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('pushed_content', $menu_lang['menu.push.push.content'], $this->config->get_pushed_content(),
+		$fieldset->add_field(new FormFieldCheckbox('pushed_content', $this->lang['menu.push.push.content'], $this->config->get_pushed_content(),
 			array('class' => 'custom-checkbox')
 		));
 
@@ -136,6 +140,8 @@ class AdminSandboxConfigController extends AdminModuleController
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 
 		SandboxConfig::save();
+		
+		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
 	}
 }
 ?>

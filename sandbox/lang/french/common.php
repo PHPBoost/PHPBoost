@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 09
+ * @version     PHPBoost 6.0 - last update: 2021 11 21
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -86,7 +86,6 @@ $lang['string_template.result'] = '
 ';
 
 // Configuration
-$lang['sandbox.config.module.title'] = 'Configuration du mini-module Bac à sable';
 $lang['sandbox.superadmin.enabled'] = 'Limiter l\'accès au menu à un seul administrateur';
 $lang['sandbox.superadmin.id'] = 'Choix de l\'administrateur';
 $lang['sandbox.is.not.admin'] = 'Le membre choisi n\'est pas un administrateur ou n\'existe pas';
