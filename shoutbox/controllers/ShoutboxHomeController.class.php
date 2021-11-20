@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 19
+ * @version     PHPBoost 6.0 - last update: 2021 11 20
  * @since       PHPBoost 4.1 - 2014 10 14
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -82,7 +82,7 @@ class ShoutboxHomeController extends ModuleController
 			else
 				$this->hide_delete_input[] = $message->get_id();
 
-			$this->view->assign_block_vars('messages', array_merge($message->get_array_tpl_vars($page), array(
+			$this->view->assign_block_vars('messages', array_merge($message->get_template_vars($page), array(
 				'C_CURRENT_USER_MESSAGE' => AppContext::get_current_user()->get_display_name() == $row['login'],
 				'C_AVATAR'               => $row['user_avatar'] || $user_accounts_config->is_default_avatar_enabled(),
 				'C_USER_GROUPS'          => array_filter($message->get_author_user()->get_groups()),

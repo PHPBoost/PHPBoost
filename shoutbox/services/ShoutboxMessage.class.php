@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 10 19
+ * @version     PHPBoost 6.0 - last update: 2021 11 20
  * @since       PHPBoost 4.1 - 2014 10 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -128,7 +128,7 @@ class ShoutboxMessage
 			$this->login = $current_user->get_display_name();
 	}
 
-	public function get_array_tpl_vars($page = 1)
+	public function get_template_vars($page = 1)
 	{
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);

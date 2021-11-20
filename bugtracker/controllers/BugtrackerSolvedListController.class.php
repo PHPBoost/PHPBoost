@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 09
+ * @version     PHPBoost 6.0 - last update: 2021 11 20
  * @since       PHPBoost 3.0 - 2012 11 13
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -106,7 +106,7 @@ class BugtrackerSolvedListController extends ModuleController
 
 			if (!in_array($bug->get_status(), $displayed_status)) $displayed_status[] = $bug->get_status();
 
-			$this->view->assign_block_vars('bug', array_merge($bug->get_array_tpl_vars(), array(
+			$this->view->assign_block_vars('bug', array_merge($bug->get_template_vars(), array(
 				'C_LINE_COLOR'		=> true,
 				'LINE_COLOR' 		=> $bug->is_fixed() ? $config->get_fixed_bug_color() : $config->get_rejected_bug_color(),
 				'U_CHANGE_STATUS'	=> BugtrackerUrlBuilder::change_status($bug->get_id())->rel(),

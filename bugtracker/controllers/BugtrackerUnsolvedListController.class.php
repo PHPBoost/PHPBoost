@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 09
+ * @version     PHPBoost 6.0 - last update: 2021 11 20
  * @since       PHPBoost 3.0 - 2012 11 12
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -107,7 +107,7 @@ class BugtrackerUnsolvedListController extends ModuleController
 
 			if (!in_array($bug->get_severity(), $displayed_severities)) $displayed_severities[] = $bug->get_severity();
 
-			$this->view->assign_block_vars('bug', array_merge($bug->get_array_tpl_vars(), array(
+			$this->view->assign_block_vars('bug', array_merge($bug->get_template_vars(), array(
 				'C_LINE_COLOR'		=> $bug->get_severity() && isset($severities[$bug->get_severity()]),
 				'LINE_COLOR' 		=> stripslashes($severities[$bug->get_severity()]['color']),
 				'U_CHANGE_STATUS'	=> BugtrackerUrlBuilder::change_status($bug->get_id())->rel(),

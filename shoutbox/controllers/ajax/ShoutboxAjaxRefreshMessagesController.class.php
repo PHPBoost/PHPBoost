@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 22
+ * @version     PHPBoost 6.0 - last update: 2021 11 20
  * @since       PHPBoost 4.1 - 2014 12 02
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -38,7 +38,7 @@ class ShoutboxAjaxRefreshMessagesController extends AbstractController
 			$shoutbox_message = new ShoutboxMessage();
 			$shoutbox_message->set_properties($row);
 
-			$this->view->assign_block_vars('messages', $shoutbox_message->get_array_tpl_vars());
+			$this->view->assign_block_vars('messages', $shoutbox_message->get_template_vars());
 		}
 		$result->dispose();
 	}
