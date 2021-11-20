@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 30
+ * @version     PHPBoost 6.0 - last update: 2021 11 20
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -20,7 +20,7 @@ class DownloadDeleteItemController extends ModuleController
 
 		$item = $this->get_item($request);
 
-		if (!$item->is_authorized_to_delete())
+		if (!$item->is_authorized_to_delete() || AppContext::get_current_user()->is_readonly())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
