@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 11 20
  * @since       PHPBoost 3.0 - 2012 01 29
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -48,33 +48,36 @@ class AdminOnlineConfigController extends AdminModuleController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'online');
 		$this->config = OnlineConfig::load();
+		$this->lang = array_merge(
+			LangLoader::get('form-lang'),
+			LangLoader::get('common-lang'),
+			LangLoader::get('user-lang'),
+			LangLoader::get('common', 'online')
+		);
 	}
 
 	private function build_form()
 	{
-		$form_lang = LangLoader::get('form-lang');
-		$user_lang = LangLoader::get('user-lang');
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset_config = new FormFieldsetHTML('configuration', StringVars::replace_vars($form_lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$fieldset_config = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset_config);
 
-		$fieldset_config->add_field(new FormFieldNumberEditor('number_member_displayed', $form_lang['form.items.in.menu'], $this->config->get_members_number_displayed(),
+		$fieldset_config->add_field(new FormFieldNumberEditor('number_member_displayed', $this->lang['form.items.in.menu'], $this->config->get_members_number_displayed(),
 			array('min' => 1, 'max' => 1000, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 1000))
 		));
 
-		$fieldset_config->add_field(new FormFieldNumberEditor('number_members_per_page', $form_lang['form.items.per.page'], $this->config->get_number_members_per_page(),
+		$fieldset_config->add_field(new FormFieldNumberEditor('number_members_per_page', $this->lang['form.items.per.page'], $this->config->get_number_members_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-		$fieldset_config->add_field(new FormFieldSimpleSelectChoice('display_order', $form_lang['form.items.default.sort'], $this->config->get_display_order(), array(
-				new FormFieldSelectChoiceOption($user_lang['user.ranks'], OnlineConfig::LEVEL_DISPLAY_ORDER),
-				new FormFieldSelectChoiceOption($user_lang['user.last.connection'], OnlineConfig::SESSION_TIME_DISPLAY_ORDER),
-				new FormFieldSelectChoiceOption($user_lang['user.ranks'] . ' + ' . $user_lang['user.last.connection'], OnlineConfig::LEVEL_AND_SESSION_TIME_DISPLAY_ORDER)
+		$fieldset_config->add_field(new FormFieldSimpleSelectChoice('display_order', $this->lang['form.items.default.sort'], $this->config->get_display_order(), array(
+				new FormFieldSelectChoiceOption($this->lang['user.ranks'], OnlineConfig::LEVEL_DISPLAY_ORDER),
+				new FormFieldSelectChoiceOption($this->lang['user.last.connection'], OnlineConfig::SESSION_TIME_DISPLAY_ORDER),
+				new FormFieldSelectChoiceOption($this->lang['user.ranks'] . ' + ' . $this->lang['user.last.connection'], OnlineConfig::LEVEL_AND_SESSION_TIME_DISPLAY_ORDER)
 			)
 		));
 
@@ -82,12 +85,12 @@ class AdminOnlineConfigController extends AdminModuleController
 			array('class' => 'custom-checkbox')
 		));
 
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $form_lang['form.authorizations']);
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['form.authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 
 		//Authorizations list
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($form_lang['form.authorizations.read'], OnlineAuthorizationsService::READ_AUTHORIZATIONS)
+			new ActionAuthorization($this->lang['form.authorizations.read'], OnlineAuthorizationsService::READ_AUTHORIZATIONS)
 		));
 
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());
@@ -113,6 +116,8 @@ class AdminOnlineConfigController extends AdminModuleController
 
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		OnlineConfig::save();
+		
+		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
 	}
 }
 ?>
