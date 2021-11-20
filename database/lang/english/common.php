@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 27
+ * @version     PHPBoost 6.0 - last update: 2021 11 20
  * @since       PHPBoost 4.1 - 2015 09 30
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -11,9 +11,6 @@
 ####################################################
 #                    English                       #
 ####################################################
-
-// Module titles
-$lang['database.config.module.title'] = 'Database module configuration';
 
 $lang['database.management']  = 'Tables management';
 $lang['database.sql.queries'] = 'SQL queries';

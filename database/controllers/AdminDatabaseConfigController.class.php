@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 16
+ * @version     PHPBoost 6.0 - last update: 2021 11 20
  * @since       PHPBoost 4.1 - 2015 09 30
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -44,20 +44,24 @@ class AdminDatabaseConfigController extends AdminModuleController
 
 		$view->put('FORM', $this->form->display());
 
-		return new AdminDatabaseDisplayResponse($view, $this->lang['database.config.module.title']);
+		return new AdminDatabaseDisplayResponse($view, StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 	}
 
 	private function init()
 	{
 		$this->config = DatabaseConfig::load();
-		$this->lang = LangLoader::get('common', 'database');
+		$this->lang = array_merge(
+			LangLoader::get('form-lang'),
+			LangLoader::get('common-lang'),
+			LangLoader::get('common', 'database')
+		);
 	}
 
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('config', $this->lang['database.config.module.title']);
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('database_tables_optimization_enabled', $this->lang['database.config.enable.tables.optimization'], $this->config->is_database_tables_optimization_enabled(),
@@ -108,6 +112,8 @@ class AdminDatabaseConfigController extends AdminModuleController
 		}
 
 		DatabaseConfig::save();
+		
+		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
 	}
 }
 ?>
