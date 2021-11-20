@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 23
+ * @version     PHPBoost 6.0 - last update: 2021 11 21
  * @since       PHPBoost 3.0 - 2009 12 23
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -14,9 +14,8 @@
 #                    French                         #
 #####################################################
 
-$lang['sitemap.module.title']        = 'Plan du site';
-$lang['sitemap.config.module.title'] = 'Configuration du module Plan du site';
-$lang['sitemap.generate.xml']        = 'Générer le fichier sitemap.xml';
+$lang['sitemap.module.title'] = 'Plan du site';
+$lang['sitemap.generate.xml'] = 'Générer le fichier sitemap.xml';
 
 $lang['sitemap.warning.xml.authorizations'] = 'Le fichier sitemap.xml généré par le module sitemap n\'a pas pu être écrit probablement à cause d\'un problème d\'autorisation à la racine du site.';
 $lang['sitemap.try.again']                  = 'Réessayer';

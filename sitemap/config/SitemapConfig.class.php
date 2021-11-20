@@ -4,8 +4,9 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2014 12 22
+ * @version     PHPBoost 6.0 - last update: 2021 11 21
  * @since       PHPBoost 3.0 - 2009 12 22
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class SitemapConfig extends AbstractConfigData
@@ -95,11 +96,10 @@ class SitemapConfig extends AbstractConfigData
 
 	/**
 	 * Saves the configuration in the database. Has it become persistent.
-	 * @param SitemapConfig $config The configuration to push in the database.
 	 */
-	public static function save(SitemapConfig $config)
+	public static function save()
 	{
-		ConfigManager::save('sitemap', $config, 'config');
+		ConfigManager::save('sitemap', self::load(), 'config');
 	}
 }
 ?>
