@@ -17,7 +17,7 @@ class FaqDeleteItemController extends ModuleController
 
 		$item = $this->get_item($request);
 
-		if (!$item->is_authorized_to_delete())
+		if (!$item->is_authorized_to_delete() || AppContext::get_current_user()->is_readonly())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
