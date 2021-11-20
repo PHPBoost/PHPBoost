@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 16
+ * @version     PHPBoost 6.0 - last update: 2021 11 20
  * @since       PHPBoost 4.0 - 2013 03 01
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -51,20 +51,24 @@ class AdminContactConfigController extends AdminModuleController
 
 		$view->put('FORM', $this->form->display());
 
-		return new AdminContactDisplayResponse($view, $this->lang['contact.config.module.title']);
+		return new AdminContactDisplayResponse($view, StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'contact');
 		$this->config = ContactConfig::load();
+		$this->lang = array_merge(
+			LangLoader::get('form-lang'),
+			LangLoader::get('common-lang'),
+			LangLoader::get('common', 'contact')
+		);
 	}
 
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('configuration', $this->lang['contact.config.module.title']);
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['contact.form.title'], $this->config->get_title(),
@@ -233,6 +237,8 @@ class AdminContactConfigController extends AdminModuleController
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 
 		ContactConfig::save();
+		
+		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
 	}
 }
 ?>

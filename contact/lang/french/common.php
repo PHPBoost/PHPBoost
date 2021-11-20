@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 04
+ * @version     PHPBoost 6.0 - last update: 2021 11 20
  * @since       PHPBoost 4.0 - 2013 08 01
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -14,7 +14,6 @@
 ####################################################
 
 $lang['contact.module.title']        = 'Contact';
-$lang['contact.config.module.title'] = 'Configuration du module Contact';
 
 // Form
 $lang['contact.form.message']         = 'Message';
