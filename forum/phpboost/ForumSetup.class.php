@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 04
+ * @version     PHPBoost 6.0 - last update: 2021 11 20
  * @since       PHPBoost 3.0 - 2010 05 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -252,7 +252,6 @@ class ForumSetup extends DefaultModuleSetup
 	private function delete_member_extended_field()
 	{
 		ExtendedFieldsService::delete_by_field_name(self::$member_extended_field_last_view_forum_column);
-		ExtendedFieldsService::delete_by_field_name('user_website');
 		ExtendedFieldsService::delete_by_field_name('user_skype');
 		ExtendedFieldsService::delete_by_field_name('user_sign');
 	}

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 04
+ * @version     PHPBoost 6.0 - last update: 2021 11 20
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -278,6 +278,22 @@ class UpdateServices
 			$extended_field->set_is_required(false);
 			$extended_field->set_display(false);
 			$extended_field->set_is_freeze(true);
+			ExtendedFieldsService::add($extended_field);
+		}
+
+		if (!isset($columns['user_website']))
+		{
+			$lang = LangLoader::get('user-lang');
+			
+			$extended_field = new ExtendedField();
+			$extended_field->set_name($lang['user.extended.field.website']);
+			$extended_field->set_field_name('user_website');
+			$extended_field->set_description($lang['user.extended.field.website.clue']);
+			$extended_field->set_field_type('MemberShortTextExtendedField');
+			$extended_field->set_is_required(false);
+			$extended_field->set_display(true);
+			$extended_field->set_is_freeze(true);
+			$extended_field->set_regex(5);
 			ExtendedFieldsService::add($extended_field);
 		}
 
