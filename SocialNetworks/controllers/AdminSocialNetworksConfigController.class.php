@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 20
+ * @version     PHPBoost 6.0 - last update: 2021 11 21
  * @since       PHPBoost 5.1 - 2018 01 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -21,7 +21,6 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 	private $submit_button;
 
 	private $lang;
-	private $form_lang;
 	private $view;
 
 	/**
@@ -73,20 +72,23 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 		));
 
 		$response = new AdminMenuDisplayResponse($this->view);
-		$response->add_link($this->form_lang['form.configuration'], DispatchManager::get_url('/SocialNetworks', '/admin/'));
-		$response->get_graphical_environment()->set_page_title(StringVars::replace_vars($this->form_lang['form.module.title'], array('module_name' => $this->lang['sn.module.title'])));
+		$response->add_link($this->lang['form.configuration'], DispatchManager::get_url('/SocialNetworks', '/admin/'));
+		$response->get_graphical_environment()->set_page_title(StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 
 		return $response;
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'SocialNetworks');
-		$this->form_lang = LangLoader::get('form-lang');
+		$this->lang = array_merge(
+			LangLoader::get('form-lang'),
+			LangLoader::get('common-lang'),
+			LangLoader::get('common', 'SocialNetworks')
+		);
 		$this->config = SocialNetworksConfig::load();
 		$this->server_configuration = new ServerConfiguration();
 		$this->view = new FileTemplate('SocialNetworks/AdminSocialNetworksConfigController.tpl');
-		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang'), $this->form_lang));
+		$this->view->add_lang($this->lang);
 
 		$social_networks_list = new SocialNetworksList();
 		$this->social_networks = $social_networks_list->get_social_networks_list();
@@ -210,6 +212,8 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 						$this->form->get_field_by_id($id . '_client_secret')->set_hidden(!$this->config->is_authentication_enabled($id));
 				}
 			}
+		
+			HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
 		}
 	}
 
@@ -235,6 +239,8 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 		$this->config->set_social_networks_order($sorted_social_networks);
 
 		SocialNetworksConfig::save();
+		
+		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
 	}
 }
 ?>
