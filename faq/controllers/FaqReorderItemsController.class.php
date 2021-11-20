@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 16
+ * @version     PHPBoost 6.0 - last update: 2021 11 20
  * @since       PHPBoost 4.0 - 2014 08 02
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -75,7 +75,7 @@ class FaqReorderItemsController extends ModuleController
 			$item = new FaqItem();
 			$item->set_properties($row);
 
-			$this->view->assign_block_vars('items', $item->get_array_tpl_vars());
+			$this->view->assign_block_vars('items', $item->get_template_vars());
 		}
 		$result->dispose();
 	}

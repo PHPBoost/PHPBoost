@@ -3,23 +3,23 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 23
+ * @version     PHPBoost 6.0 - last update: 2021 11 20
  * @since       PHPBoost 4.0 - 2014 11 27
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FaqAjaxDeleteItemController extends AbstractController
 {
-	private $faq_question;
+	private $item;
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->get_faq_question($request);
+		$this->get_item($request);
 
-		if ($this->faq_question !== null && $this->check_authorizations())
+		if ($this->item !== null && $this->item->is_authorized_to_delete())
 		{
-			$this->delete_question();
-			$deleted_id = $this->faq_question->get_id();
+			$this->delete_item();
+			$deleted_id = $this->item->get_id();
 		}
 		else
 			$deleted_id = 0;
@@ -27,33 +27,29 @@ class FaqAjaxDeleteItemController extends AbstractController
 		return new JSONResponse(array('deleted_id' => $deleted_id));
 	}
 
-	private function delete_question()
+	private function delete_item()
 	{
 		AppContext::get_session()->csrf_post_protect();
 
-		FaqService::delete($this->faq_question->get_id());
+		FaqService::delete($this->item->get_id());
+		
+        if (!FaqAuthorizationsService::check_authorizations()->write() && FaqAuthorizationsService::check_authorizations()->contribution())
+			ContributionService::generate_cache();
 
-		Feed::clear_cache('faq');
-		FaqCache::invalidate();
-		FaqCategoriesCache::invalidate();
+		FaqService::clear_cache();
+		HooksService::execute_hook_action('delete', self::$module_id, $item->get_properties());
 	}
 
-	private function get_faq_question(HTTPRequestCustom $request)
+	private function get_item(HTTPRequestCustom $request)
 	{
-		$id = $request->get_int('id', 0);
+		$id = $request->get_getint('id', 0);
 
 		if (!empty($id))
 		{
 			try {
-				$this->faq_question = FaqService::get_item('WHERE id=:id', array('id' => $id));
-			} catch (RowNotFoundException $e) {
-			}
+				$this->item = FaqService::get_item($id);
+			} catch (RowNotFoundException $e) {}
 		}
-	}
-
-	private function check_authorizations()
-	{
-		return ($this->faq_question->is_authorized_to_delete() && !AppContext::get_current_user()->is_readonly());
 	}
 }
 ?>

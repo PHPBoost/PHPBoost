@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 23
+ * @version     PHPBoost 6.0 - last update: 2021 11 20
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -184,9 +184,17 @@ class FaqItem
 			$this->unapprove();
 	}
 
-	public function get_array_tpl_vars()
+	public function get_item_url()
 	{
 		$category = $this->get_category();
+		return FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->id)->rel();
+	}
+
+	public function get_template_vars()
+	{
+		$category = $this->get_category();
+		$content = FormatingHelper::second_parse($this->content);
+		$rich_content = HooksService::execute_hook_display_action('faq', $content, $this->get_properties());
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 
@@ -205,7 +213,7 @@ class FaqItem
 			// Item
 			'ID'               => $this->id,
 			'TITLE'           => $this->title,
-			'CONTENT'          => FormatingHelper::second_parse($this->content),
+			'CONTENT'          => $rich_content,
 			'PSEUDO'           => $user->get_display_name(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR' => $user_group_color,
@@ -221,7 +229,7 @@ class FaqItem
 
 			'U_SYNDICATION'    => SyndicationUrlBuilder::rss('faq', $this->id_category)->rel(),
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
-			'U_ITEM'           => FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->id)->rel(),
+			'U_ITEM'           => $this->get_item_url(),
 			'U_ABSOLUTE_LINK'  => FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->id)->absolute(),
 			'U_CATEGORY'       => FaqUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
 			'U_EDIT'           => FaqUrlBuilder::edit($this->id)->rel(),
