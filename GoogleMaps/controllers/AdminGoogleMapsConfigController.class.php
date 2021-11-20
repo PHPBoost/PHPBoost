@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 23
+ * @version     PHPBoost 6.0 - last update: 2021 11 21
  * @since       PHPBoost 5.0 - 2017 03 26
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -34,7 +34,6 @@ class AdminGoogleMapsConfigController extends AdminModuleController
 		$this->build_form();
 
 		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
-		$view->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -58,15 +57,19 @@ class AdminGoogleMapsConfigController extends AdminModuleController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'GoogleMaps');
 		$this->config = GoogleMapsConfig::load();
+		$this->lang = array_merge(
+			LangLoader::get('form-lang'),
+			LangLoader::get('common-lang'),
+			LangLoader::get('common', 'GoogleMaps')
+		);
 	}
 
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('config', $this->lang['config.title']);
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('api_key', $this->lang['config.api.key'], $this->config->get_api_key(),
@@ -104,6 +107,8 @@ class AdminGoogleMapsConfigController extends AdminModuleController
 		}
 
 		GoogleMapsConfig::save();
+		
+		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
 	}
 
 	private function build_response(View $view)
@@ -112,10 +117,9 @@ class AdminGoogleMapsConfigController extends AdminModuleController
 
 		$response = new AdminMenuDisplayResponse($view);
 		$response->set_title($title);
-		$response->add_link($this->lang['config.title'], GoogleMapsUrlBuilder::configuration());
+		$response->add_link($title, GoogleMapsUrlBuilder::configuration());
 		$response->add_link(LangLoader::get_message('form.documentation', 'form-lang'), ModulesManager::get_module('GoogleMaps')->get_configuration()->get_documentation());
-		$env = $response->get_graphical_environment();
-		$env->set_page_title($title);
+		$response->get_graphical_environment()->set_page_title(StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 
 		return $response;
 	}

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 19
+ * @version     PHPBoost 6.0 - last update: 2021 11 21
  * @since       PHPBoost 5.0 - 2017 04 03
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -12,7 +12,6 @@
 #                     French                        #
 #####################################################
 
-$lang['config.title'] = 'Configuration de Google map';
 $lang['config.api.key'] = 'Votre clé api Google map';
 $lang['config.api.key.desc'] = '<a href="https://console.developers.google.com/flows/enableapi?apiid=maps_backend,geocoding_backend,directions_backend,distance_matrix_backend,elevation_backend,places_backend&reusekey=true&hl=Fr">Suivez ce lien</a> pour obtenir une clé Google map gratuite.
 <br /><span style="color: #CC0000">Entrez la clé puis validez le formulaire pour accéder à la déclaration des pointeurs et/ou adresses dans les différents modules</span>';
