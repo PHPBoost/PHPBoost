@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 20
+ * @version     PHPBoost 6.0 - last update: 2021 11 24
  * @since       PHPBoost 4.0 - 2014 01 29
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -35,29 +35,31 @@ class BugtrackerFormController extends ModuleController
 
 		$this->build_form($request);
 
-		$tpl = new StringTemplate('# INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$view = new StringTemplate('# INCLUDE FORM #');
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$view->put('FORM', $this->form->display());
 
-		return $this->generate_response($tpl);
+		return $this->generate_response($view);
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'bugtracker');
+		$this->lang = array_merge(
+			LangLoader::get('form-lang'),
+			LangLoader::get('common-lang'),
+			LangLoader::get('common', 'bugtracker')
+		);
 		$this->current_user = AppContext::get_current_user();
 		$this->config = BugtrackerConfig::load();
 	}
 
 	private function build_form(HTTPRequestCustom $request)
 	{
-		$form_lang = LangLoader::get('form-lang');
 		$bug = $this->get_bug();
 
 		$types = $this->config->get_types();
@@ -83,9 +85,9 @@ class BugtrackerFormController extends ModuleController
 		$fieldset = new FormFieldsetHTML('bug_infos', $this->lang['titles.bugs_infos']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('title', $form_lang['form.title'], $bug->get_title(), array('required' => true)));
+		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['form.title'], $bug->get_title(), array('required' => true)));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('content', $form_lang['form.description'], $bug->get_content(), array(
+		$fieldset->add_field(new FormFieldRichTextEditor('content', $this->lang['form.description'], $bug->get_content(), array(
 			'description' => $this->lang['explain.content'], 'rows' => 15, 'required' => true)
 		));
 
@@ -279,7 +281,7 @@ class BugtrackerFormController extends ModuleController
 
 			//Bug creation
 			$bug->set_id(BugtrackerService::add($bug));
-			
+
 			HooksService::execute_hook_action('add', self::$module_id, array_merge($bug->get_properties(), array('item_url' => $bug->get_item_url())));
 
 			if ($this->config->are_admin_alerts_enabled() && in_array($bug->get_severity(), $this->config->get_admin_alerts_levels()))
@@ -417,8 +419,6 @@ class BugtrackerFormController extends ModuleController
 			$display_versions = count($versions) > 1;
 			$status_list = $this->config->get_status_list();
 
-			$common_lang = LangLoader::get('common-lang');
-
 			$title = $this->form->get_value('title', $old_values->get_title());
 
 			$bug->set_title($title);
@@ -495,7 +495,7 @@ class BugtrackerFormController extends ModuleController
 							break;
 
 						case 'reproductible':
-							$new_value = $n_values[$field] ? $common_lang['common.yes'] : $common_lang['common.no'];
+							$new_value = $n_values[$field] ? $this->lang['common.yes'] : $this->lang['common.no'];
 							break;
 
 						default:
@@ -521,7 +521,7 @@ class BugtrackerFormController extends ModuleController
 			{
 				//Bug update
 				BugtrackerService::update($bug);
-			
+
 				HooksService::execute_hook_action('edit', self::$module_id, array_merge($bug->get_properties(), array('item_url' => $bug->get_item_url())));
 
 				//Send PM to updaters if the option is enabled

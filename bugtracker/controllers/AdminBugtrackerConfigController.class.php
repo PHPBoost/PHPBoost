@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 20
+ * @version     PHPBoost 6.0 - last update: 2021 11 24
  * @since       PHPBoost 3.0 - 2012 10 18
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -80,8 +80,6 @@ class AdminBugtrackerConfigController extends AdminModuleController
 
 	private function build_form()
 	{
-		$form_lang = LangLoader::get('form-lang');
-
 		$form = new HTMLForm(__CLASS__);
 
 		$severities = $this->config->get_severities();
@@ -89,7 +87,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $form_lang['form.items.per.page'], (int)$this->config->get_items_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->lang['form.items.per.page'], (int)$this->config->get_items_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
@@ -840,7 +838,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		BugtrackerConfig::save();
 
 		BugtrackerStatsCache::invalidate();
-		
+
 		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
 	}
 }

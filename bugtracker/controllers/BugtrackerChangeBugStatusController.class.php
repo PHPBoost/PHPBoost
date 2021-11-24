@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 11 24
  * @since       PHPBoost 4.1 - 2014 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -53,7 +53,10 @@ class BugtrackerChangeBugStatusController extends ModuleController
 	{
 		$id = $request->get_int('id', 0);
 
-		$this->lang = LangLoader::get('common', 'bugtracker');
+		$this->lang = array_merge(
+			LangLoader::get('common-lang'),
+			LangLoader::get('common', 'bugtracker')
+		);
 
 		try {
 			$this->bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));
@@ -157,7 +160,6 @@ class BugtrackerChangeBugStatusController extends ModuleController
 
 	private function save()
 	{
-		$common_lang = LangLoader::get('common-lang');
 		$now = new Date();
 		$pm_recipients_list = array();
 		$send_pm = true;
@@ -214,8 +216,8 @@ class BugtrackerChangeBugStatusController extends ModuleController
 					'updater_id'	=> $this->current_user->get_id(),
 					'update_date'	=> $now->get_timestamp(),
 					'updated_field'	=> 'assigned_to_id',
-					'old_value'		=> $old_user_assigned ? $old_user_assigned->get_display_name() : $common_lang['common.nobody'],
-					'new_value'		=> $new_user_assigned ? $new_user_assigned->get_display_name() : $common_lang['common.nobody']
+					'old_value'		=> $old_user_assigned ? $old_user_assigned->get_display_name() : $this->lang['common.nobody'],
+					'new_value'		=> $new_user_assigned ? $new_user_assigned->get_display_name() : $this->lang['common.nobody']
 				));
 
 				//Bug update

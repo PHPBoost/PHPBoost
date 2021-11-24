@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 11 24
  * @since       PHPBoost 3.0 - 2012 11 11
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -40,7 +40,6 @@ class BugtrackerHistoryListController extends ModuleController
 
 		$history_lines_number = BugtrackerService::count_history($this->bug->get_id());
 		$pagination = $this->get_pagination($history_lines_number, $current_page);
-		$common_lang = LangLoader::get('common-lang');
 
 		$this->view->put_all(array(
 			'C_PAGINATION'	=> $pagination->has_several_pages(),
@@ -97,8 +96,8 @@ class BugtrackerHistoryListController extends ModuleController
 					break;
 
 				case 'reproductible':
-					$old_value = ($row['old_value']) ? $common_lang['common.yes'] : $common_lang['common.no'];
-					$new_value = ($row['new_value']) ? $common_lang['common.yes'] : $common_lang['common.no'];
+					$old_value = ($row['old_value']) ? $this->lang['common.yes'] : $this->lang['common.no'];
+					$new_value = ($row['new_value']) ? $this->lang['common.yes'] : $this->lang['common.no'];
 					break;
 
 				default:
@@ -137,7 +136,10 @@ class BugtrackerHistoryListController extends ModuleController
 
 	private function init($request)
 	{
-		$this->lang = LangLoader::get('common', 'bugtracker');
+		$this->lang = array_merge(
+			LangLoader::get('common-lang'),
+			LangLoader::get('common', 'bugtracker')
+		);
 		$id = $request->get_int('id', 0);
 
 		try {
