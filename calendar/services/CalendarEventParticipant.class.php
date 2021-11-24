@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 02
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 4.0 - 2013 11 27
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -73,7 +73,7 @@ class CalendarEventParticipant
 		$this->user_groups = explode('|', $properties['user_groups']);
 	}
 
-	public function get_array_tpl_vars()
+	public function get_template_vars()
 	{
 		$group_color = User::get_group_color($this->user_groups, $this->level, true);
 

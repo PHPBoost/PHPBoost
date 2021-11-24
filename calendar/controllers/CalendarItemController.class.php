@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 24
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 4.0 - 2013 07 29
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -63,7 +63,7 @@ class CalendarItemController extends ModuleController
 		$item = $this->get_item();
 		$category = $item->get_content()->get_category();
 
-		$this->view->put_all(array_merge($item->get_array_tpl_vars(), array(
+		$this->view->put_all(array_merge($item->get_template_vars(), array(
 			'NOT_VISIBLE_MESSAGE' => MessageHelper::display(LangLoader::get_message('warning.element.not.visible', 'warning-lang'), MessageHelper::WARNING)
 		)));
 
@@ -72,7 +72,7 @@ class CalendarItemController extends ModuleController
 		foreach ($item->get_participants() as $participant)
 		{
 			$i++;
-			$this->view->assign_block_vars('participant', array_merge($participant->get_array_tpl_vars(), array(
+			$this->view->assign_block_vars('participant', array_merge($participant->get_template_vars(), array(
 				'C_LAST_PARTICIPANT' => $i == $participants_number
 			)));
 		}

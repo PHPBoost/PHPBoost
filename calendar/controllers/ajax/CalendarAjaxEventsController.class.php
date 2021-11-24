@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 24
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 4.0 - 2014 03 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -145,14 +145,14 @@ class CalendarAjaxEventsController extends AbstractController
 				if (isset($participants[$item->get_id()]))
 					$item->set_participants($participants[$item->get_id()]);
 
-				$this->view->assign_block_vars('items', $item->get_array_tpl_vars());
+				$this->view->assign_block_vars('items', $item->get_template_vars());
 
 				$participants_number = count($item->get_participants());
 				$i = 0;
 				foreach ($item->get_participants() as $participant)
 				{
 					$i++;
-					$this->view->assign_block_vars('items.participant', array_merge($participant->get_array_tpl_vars(), array(
+					$this->view->assign_block_vars('items.participant', array_merge($participant->get_template_vars(), array(
 						'C_LAST_PARTICIPANT' => $i == $participants_number
 					)));
 				}

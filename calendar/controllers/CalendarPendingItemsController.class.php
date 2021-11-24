@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 22
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 4.0 - 2013 09 29
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -72,7 +72,7 @@ class CalendarPendingItemsController extends ModuleController
 			$item = new CalendarItem();
 			$item->set_properties($row);
 
-			$this->items_view->assign_block_vars('items', $item->get_array_tpl_vars());
+			$this->items_view->assign_block_vars('items', $item->get_template_vars());
 		}
 		$result->dispose();
 

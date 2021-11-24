@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 23
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -141,11 +141,19 @@ class CalendarItem
 		$this->participants = array();
 	}
 
-	public function get_array_tpl_vars()
+	public function get_item_url()
+	{
+		$category = $this->content->get_category();
+		return CalendarUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $this->id, $this->content->get_rewrited_title())->rel();
+	}
+
+	public function get_template_vars()
 	{
 		$lang = LangLoader::get('common', 'calendar');
 
 		$category = $this->content->get_category();
+		$content = FormatingHelper::second_parse($this->content->get_content());
+		$rich_content = HooksService::execute_hook_display_action('calendar', $content, $this->get_properties());
 		$author = $this->content->get_author_user();
 		$author_group_color = User::get_group_color($author->get_groups(), $author->get_level(), true);
 
@@ -207,7 +215,7 @@ class CalendarItem
 				'ID'                       => $this->id,
 				'CONTENT_ID'               => $this->content->get_id(),
 				'TITLE'                    => $this->content->get_title(),
-				'CONTENT'                  => FormatingHelper::second_parse($this->content->get_content()),
+				'CONTENT'                  => $rich_content,
 				'SUMMARY'                  => FormatingHelper::second_parse($this->content->get_summary()),
 				'LOCATION'                 => $location,
 				'LOCATION_MAP'             => $location_map,
@@ -230,7 +238,7 @@ class CalendarItem
 
 				'U_SYNDICATION'    => SyndicationUrlBuilder::rss('calendar', $category->get_id())->rel(),
 				'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($author->get_id())->rel(),
-				'U_ITEM'           => CalendarUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $this->id, $this->content->get_rewrited_title())->rel(),
+				'U_ITEM'           => $this->get_item_url(),
 				'U_EDIT'           => CalendarUrlBuilder::edit_item(!$this->parent_id ? $this->id : $this->parent_id)->rel(),
 				'U_DELETE'         => CalendarUrlBuilder::delete_item($this->id)->rel(),
 				'U_THUMBNAIL'      => $this->content->get_thumbnail()->rel(),

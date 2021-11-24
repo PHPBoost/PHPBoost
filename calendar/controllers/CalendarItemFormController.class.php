@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 24
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -392,7 +392,7 @@ class CalendarItemFormController extends ModuleController
 		$item->set_start_date($this->form->get_value('start_date'));
 		$item->set_end_date($this->form->get_value('end_date'));
 
-		if ($item->get_id() === null)
+		if ($this->is_new_item)
 		{
 			$id_content = CalendarService::add_item_content($item_content);
 			$item_content->set_id($id_content);
@@ -400,6 +400,10 @@ class CalendarItemFormController extends ModuleController
 			$item->set_content($item_content);
 
 			$item_id = CalendarService::add_item($item);
+			$item->set_id($item_id);
+			
+			if (!$this->is_contributor_member())
+				HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
 
 			if ($item->get_content()->is_repeatable())
 			{
@@ -425,6 +429,9 @@ class CalendarItemFormController extends ModuleController
 		{
 			CalendarService::update_item_content($item_content);
 			$item_id = CalendarService::update_item($item);
+			
+			if (!$this->is_contributor_member())
+				HooksService::execute_hook_action('edit', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
 
 			if ($item->get_content()->is_repeatable() || $item_content->is_repeatable() && ($item->get_content()->get_repeat_number() != $item_content->get_repeat_number() || $item->get_content()->get_repeat_type() != $item_content->get_repeat_type()))
 			{
@@ -528,19 +535,19 @@ class CalendarItemFormController extends ModuleController
 		return $item;
 	}
 
-	private function contribution_actions(CalendarItem $item, $item_id)
+	private function contribution_actions(CalendarItem $item, $id)
 	{
 		if($this->is_contributor_member())
 		{
 			$contribution = new Contribution();
-			$contribution->set_id_in_module($item_id);
-			if ($item->get_id() === null)
+			$contribution->set_id_in_module($id);
+			if ($this->is_new_item)
 				$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
 			else
 				$contribution->set_description(stripslashes($this->form->get_value('edition_description')));
 
 			$contribution->set_entitled($item->get_content()->get_title());
-			$contribution->set_fixing_url(CalendarUrlBuilder::edit_item($item_id)->relative());
+			$contribution->set_fixing_url(CalendarUrlBuilder::edit_item($id)->relative());
 			$contribution->set_poster_id(AppContext::get_current_user()->get_id());
 			$contribution->set_module('calendar');
 			$contribution->set_auth(
@@ -550,10 +557,11 @@ class CalendarItemFormController extends ModuleController
 				)
 			);
 			ContributionService::save_contribution($contribution);
+			HooksService::execute_hook_action($this->is_new_item ? 'add_contribution' : 'edit_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), array('item_url' => $item->get_item_url())));
 		}
 		else
 		{
-			$corresponding_contributions = ContributionService::find_by_criteria('calendar', $item_id);
+			$corresponding_contributions = ContributionService::find_by_criteria('calendar', $id);
 			if (count($corresponding_contributions) > 0)
 			{
 				foreach ($corresponding_contributions as $contribution)
@@ -561,9 +569,9 @@ class CalendarItemFormController extends ModuleController
 					$contribution->set_status(Event::EVENT_STATUS_PROCESSED);
 					ContributionService::save_contribution($contribution);
 				}
+				HooksService::execute_hook_action('process_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), array('item_url' => $item->get_item_url())));
 			}
 		}
-		$item->set_id($item_id);
 	}
 
 	private function redirect()
