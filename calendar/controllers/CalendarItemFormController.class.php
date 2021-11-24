@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2021 11 24
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -36,7 +36,6 @@ class CalendarItemFormController extends ModuleController
 		$this->build_form($request);
 
 		$view = new StringTemplate('# INCLUDE FORM #');
-		$view->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -51,23 +50,25 @@ class CalendarItemFormController extends ModuleController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'calendar');
+		$this->lang = array_merge(
+			LangLoader::get('form-lang'),
+			LangLoader::get('date-lang'),
+			LangLoader::get('common', 'calendar')
+		);
 		$this->config = CalendarConfig::load();
 	}
 
 	private function build_form(HTTPRequestCustom $request)
 	{
-		$form_lang = LangLoader::get('form-lang');
-		$date_lang = LangLoader::get('date-lang');
 		$item_content = $this->get_item()->get_content();
 
 		$form = new HTMLForm(__CLASS__);
 		$form->set_layout_title($item_content->get_id() === null ? $this->lang['calendar.item.add'] : $this->lang['calendar.item.edit']);
 
-		$fieldset = new FormFieldsetHTML('event', $form_lang['form.parameters']);
+		$fieldset = new FormFieldsetHTML('event', $this->lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('title', $form_lang['form.title'], $item_content->get_title(),
+		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['form.title'], $item_content->get_title(),
 			array('required' => true)
 		));
 
@@ -79,11 +80,11 @@ class CalendarItemFormController extends ModuleController
 			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', LangLoader::get_message('category.category', 'category-lang'), $item_content->get_id_category(), $search_category_children_options));
 		}
 
-		$fieldset->add_field(new FormFieldRichTextEditor('content', $form_lang['form.content'], $item_content->get_content(),
+		$fieldset->add_field(new FormFieldRichTextEditor('content', $this->lang['form.content'], $item_content->get_content(),
 			array('rows' => 15, 'required' => true)
 		));
 
-		$fieldset->add_field(new FormFieldThumbnail('thumbnail', $form_lang['form.picture'], $item_content->get_thumbnail()->relative(), CalendarItemContent::THUMBNAIL_URL));
+		$fieldset->add_field(new FormFieldThumbnail('thumbnail', $this->lang['form.picture'], $item_content->get_thumbnail()->relative(), CalendarItemContent::THUMBNAIL_URL));
 
 		$fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->lang['calendar.start.date'], $this->get_item()->get_start_date(),
 			array('required' => true, 'five_minutes_step' => true)
@@ -98,10 +99,10 @@ class CalendarItemFormController extends ModuleController
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('repeat_type', $this->lang['calendar.form.repeat.type'], $item_content->get_repeat_type(),
 			array(
 				new FormFieldSelectChoiceOption($this->lang['calendar.form.repeat.never'], CalendarItemContent::NEVER),
-				new FormFieldSelectChoiceOption($date_lang['date.every.day'], CalendarItemContent::DAILY),
-				new FormFieldSelectChoiceOption($date_lang['date.every.week'], CalendarItemContent::WEEKLY),
-				new FormFieldSelectChoiceOption($date_lang['date.every.month'], CalendarItemContent::MONTHLY),
-				new FormFieldSelectChoiceOption($date_lang['date.every.year'], CalendarItemContent::YEARLY),
+				new FormFieldSelectChoiceOption($this->lang['date.every.day'], CalendarItemContent::DAILY),
+				new FormFieldSelectChoiceOption($this->lang['date.every.week'], CalendarItemContent::WEEKLY),
+				new FormFieldSelectChoiceOption($this->lang['date.every.month'], CalendarItemContent::MONTHLY),
+				new FormFieldSelectChoiceOption($this->lang['date.every.year'], CalendarItemContent::YEARLY),
 			),
 			array(
 				'events' => array('change' => '
@@ -217,7 +218,7 @@ class CalendarItemFormController extends ModuleController
 			$fieldset->add_field(new FormFieldCheckbox('cancelled', $this->lang['calendar.form.cancel'], $this->get_item()->get_content()->is_cancelled()));
 
 		if (CategoriesAuthorizationsService::check_authorizations($item_content->get_id_category())->moderation())
-			$fieldset->add_field(new FormFieldCheckbox('approved', $form_lang['form.approve'], $item_content->is_approved()));
+			$fieldset->add_field(new FormFieldCheckbox('approved', $this->lang['form.approve'], $item_content->is_approved()));
 
 		$this->build_contribution_fieldset($form);
 

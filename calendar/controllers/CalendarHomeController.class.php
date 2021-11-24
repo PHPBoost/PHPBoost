@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 22
+ * @version     PHPBoost 6.0 - last update: 2021 11 24
  * @since       PHPBoost 4.0 - 2013 08 21
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -28,9 +28,12 @@ class CalendarHomeController extends ModuleController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'calendar');
+		$this->lang = array_merge(
+			LangLoader::get('common-lang'),
+			LangLoader::get('common', 'calendar')
+		);
 		$this->view = new FileTemplate('calendar/CalendarSeveralItemsController.tpl');
-		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
+		$this->view->add_lang($this->lang);
 	}
 
 	private function build_view(HTTPRequestCustom $request)

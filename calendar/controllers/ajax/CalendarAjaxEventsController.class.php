@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 11 24
  * @since       PHPBoost 4.0 - 2014 03 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -50,7 +50,6 @@ class CalendarAjaxEventsController extends AbstractController
 	{
 		$db_querier = PersistenceContext::get_querier();
 
-		$date_lang = LangLoader::get('date-lang');
 		$items_list = $participants = array();
 
 		$config = CalendarConfig::load();
@@ -64,7 +63,7 @@ class CalendarAjaxEventsController extends AbstractController
 		$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 
 		$array_month = array(31, $bissextile, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
-		$array_l_month = array($date_lang['date.january'], $date_lang['date.february'], $date_lang['date.march'], $date_lang['date.april'], $date_lang['date.may'], $date_lang['date.june'], $date_lang['date.july'], $date_lang['date.august'], $date_lang['date.september'], $date_lang['date.october'], $date_lang['date.november'], $date_lang['date.december']);
+		$array_l_month = array($this->lang['date.january'], $this->lang['date.february'], $this->lang['date.march'], $this->lang['date.april'], $this->lang['date.may'], $this->lang['date.june'], $this->lang['date.july'], $this->lang['date.august'], $this->lang['date.september'], $this->lang['date.october'], $this->lang['date.november'], $this->lang['date.december']);
 
 		$month_days = $array_month[$month - 1];
 
@@ -163,9 +162,13 @@ class CalendarAjaxEventsController extends AbstractController
 
 	private function init(HTTPRequestCustom $request)
 	{
-		$this->lang = LangLoader::get('common', 'calendar');
+		$this->lang = array_merge(
+			LangLoader::get('common-lang'),
+			LangLoader::get('date-lang'),
+			LangLoader::get('common', 'calendar')
+		);
 		$this->view = new FileTemplate('calendar/CalendarAjaxEventsController.tpl');
-		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
+		$this->view->add_lang($this->lang);
 
 		if ($request->has_getparameter('id_category'))
 			$this->set_id_category($request->get_getvalue('id_category'));

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 11 24
  * @since       PHPBoost 4.0 - 2013 07 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -32,24 +32,26 @@ class CalendarItemsManagerController extends ModuleController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'calendar');
+		$this->lang = array_merge(
+			LangLoader::get('common-lang'),
+			LangLoader::get('common', 'calendar')
+		);
 		$this->view = new StringTemplate('# INCLUDE TABLE #');
 	}
 
 	private function build_table()
 	{
-		$common_lang = LangLoader::get('common-lang');
 		$display_categories = CategoriesService::get_categories_manager()->get_categories_cache()->has_categories();
 		$config = CalendarConfig::load();
 
 		$columns = array(
-			new HTMLTableColumn($common_lang['common.title'], 'title'),
+			new HTMLTableColumn($this->lang['common.title'], 'title'),
 			new HTMLTableColumn(LangLoader::get_message('category.category', 'category-lang'), 'id_category'),
-			new HTMLTableColumn($common_lang['common.author'], 'display_name'),
+			new HTMLTableColumn($this->lang['common.author'], 'display_name'),
 			new HTMLTableColumn(LangLoader::get_message('date.date', 'date-lang'), 'start_date'),
 			new HTMLTableColumn($this->lang['calendar.repetition']),
-			new HTMLTableColumn($common_lang['common.status.publication'], 'approved'),
-			new HTMLTableColumn($common_lang['common.actions'], '', array('sr-only' => true))
+			new HTMLTableColumn($this->lang['common.status.publication'], 'approved'),
+			new HTMLTableColumn($this->lang['common.actions'], '', array('sr-only' => true))
 		);
 
 		if (!$display_categories)
@@ -61,12 +63,12 @@ class CalendarItemsManagerController extends ModuleController
 		$table_model->add_permanent_filter('parent_id = 0');
 
 		$table_model->set_filters_menu_title($this->lang['calendar.filter.items']);
-		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('start_date', 'filter1', $this->lang['calendar.start.date'] . ' ' . TextHelper::lcfirst($common_lang['common.minimum'])));
-		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('start_date', 'filter2', $this->lang['calendar.start.date'] . ' ' . TextHelper::lcfirst($common_lang['common.maximum'])));
-		$table_model->add_filter(new HTMLTableAjaxUserAutoCompleteSQLFilter('display_name', 'filter3', $common_lang['common.author']));
+		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('start_date', 'filter1', $this->lang['calendar.start.date'] . ' ' . TextHelper::lcfirst($this->lang['common.minimum'])));
+		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('start_date', 'filter2', $this->lang['calendar.start.date'] . ' ' . TextHelper::lcfirst($this->lang['common.maximum'])));
+		$table_model->add_filter(new HTMLTableAjaxUserAutoCompleteSQLFilter('display_name', 'filter3', $this->lang['common.author']));
 		if ($display_categories)
 			$table_model->add_filter(new HTMLTableCategorySQLFilter('filter4'));
-		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('approved', 'filter5', $common_lang['common.status.publication'], array(1 => $common_lang['common.status.published'], 0 => $common_lang['common.status.draft'])));
+		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('approved', 'filter5', $this->lang['common.status.publication'], array(1 => $this->lang['common.status.published'], 0 => $this->lang['common.status.draft'])));
 
 		$table = new HTMLTable($table_model);
 		$table->set_filters_fieldset_class_HTML();
