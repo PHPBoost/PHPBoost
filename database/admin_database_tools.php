@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 27
+ * @version     PHPBoost 6.0 - last update: 2021 11 24
  * @since       PHPBoost 2.0 - 2008 08 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -12,8 +12,11 @@
 
 require_once('../admin/admin_begin.php');
 
-$lang = LangLoader::get('common', 'database');
-$common_lang = LangLoader::get('common-lang');
+$lang = array_merge(
+	LangLoader::get('common-lang'),
+	LangLoader::get('form-lang'),
+	LangLoader::get('common', 'database')
+);
 define('TITLE', $lang['database.management']);
 require_once('../admin/admin_header.php');
 
@@ -21,11 +24,7 @@ $table = retrieve(GET, 'table', '');
 $action = retrieve(GET, 'action', '');
 
 $view = new FileTemplate('database/admin_database_tools.tpl');
-$view->add_lang(array_merge(
-	$lang,
-	$common_lang,
-	LangLoader::get('form-lang')
-));
+$view->add_lang($lang);
 
 // Database save tools
 
@@ -92,7 +91,7 @@ if (!empty($table) && $action == 'data')
 			if ($j == 0)
 			{
 				$view->assign_block_vars('line.field', array(
-					'FIELD_NAME' => '<span class="text-strong"><a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=update&amp;token=' . AppContext::get_session()->get_token() . '" aria-label="' . $common_lang['common.edit'] . '"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a> <a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value .  '&amp;action=delete&amp;token=' . AppContext::get_session()->get_token() . '" aria-label="' . $common_lang['common.delete'] . '" data-confirmation ="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a></span>',
+					'FIELD_NAME' => '<span class="text-strong"><a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=update&amp;token=' . AppContext::get_session()->get_token() . '" aria-label="' . $lang['common.edit'] . '"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a> <a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value .  '&amp;action=delete&amp;token=' . AppContext::get_session()->get_token() . '" aria-label="' . $lang['common.delete'] . '" data-confirmation ="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a></span>',
 					'STYLE'      => ''
 				));
 			}
@@ -165,7 +164,7 @@ elseif (!empty($table) && $action == 'update') // Update
 			$view->assign_block_vars('fields', array(
 				'FIELD_NAME'          => $field_name,
 				'FIELD_TYPE'          => $table_structure['fields'][$i]['type'],
-				'FIELD_NULL'          => $table_structure['fields'][$i]['null'] ? $common_lang['common.yes'] : $common_lang['common.no'],
+				'FIELD_NULL'          => $table_structure['fields'][$i]['null'] ? $lang['common.yes'] : $lang['common.no'],
 				'FIELD_VALUE'         => TextHelper::strprotect($field_value, TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE),
 				'C_FIELD_FORM_EXTEND' => ($table_structure['fields'][$i]['type'] == 'text' || $table_structure['fields'][$i]['type'] == 'mediumtext') ? true : false
 			));
@@ -221,7 +220,7 @@ elseif (!empty($table) && $action == 'insert') // Update
 			$view->assign_block_vars('fields', array(
 				'FIELD_NAME'          => $fields_info['name'],
 				'FIELD_TYPE'          => $fields_info['type'],
-				'FIELD_NULL'          => $fields_info['null'] ? $common_lang['common.yes'] : $common_lang['common.no'],
+				'FIELD_NULL'          => $fields_info['null'] ? $lang['common.yes'] : $lang['common.no'],
 				'FIELD_VALUE'         => TextHelper::strprotect($fields_info['default']),
 				'C_FIELD_FORM_EXTEND' => ($fields_info['type'] == 'text' || $fields_info['type'] == 'mediumtext') ? true : false
 			));
@@ -327,7 +326,7 @@ elseif (!empty($table))
 			'FIELD_NAME'      => ($primary_key) ? '<span style ="text-decoration: underline">' . $fields_info['name'] . '<span>' : $fields_info['name'],
 			'FIELD_TYPE'      => $fields_info['type'],
 			'FIELD_ATTRIBUTE' => $fields_info['attribute'],
-			'FIELD_NULL'      => $fields_info['null'] ? '<strong>' . $common_lang['common.yes'] . '</strong>' : $common_lang['common.no'],
+			'FIELD_NULL'      => $fields_info['null'] ? '<strong>' . $lang['common.yes'] . '</strong>' : $lang['common.no'],
 			'FIELD_DEFAULT'   => $fields_info['default'],
 			'FIELD_EXTRA'     => $fields_info['extra']
 		));

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 20
+ * @version     PHPBoost 6.0 - last update: 2021 11 24
  * @since       PHPBoost 4.1 - 2015 09 30
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -51,9 +51,10 @@ class AdminDatabaseConfigController extends AdminModuleController
 	{
 		$this->config = DatabaseConfig::load();
 		$this->lang = array_merge(
-			LangLoader::get('form-lang'),
 			LangLoader::get('common-lang'),
-			LangLoader::get('common', 'database')
+			LangLoader::get('date-lang'),
+			LangLoader::get('form-lang'),
+			LangLoader::get('common', self::$module_id)
 		);
 	}
 
@@ -77,17 +78,16 @@ class AdminDatabaseConfigController extends AdminModuleController
 			)
 		));
 
-		$date_lang = LangLoader::get('date-lang');
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('database_tables_optimization_day', $this->lang['database.config.tables.optimization.day'], $this->config->get_database_tables_optimization_day(),
 			array(
-				new FormFieldSelectChoiceOption($date_lang['date.sunday'], 0),
-				new FormFieldSelectChoiceOption($date_lang['date.monday'], 1),
-				new FormFieldSelectChoiceOption($date_lang['date.tuesday'], 2),
-				new FormFieldSelectChoiceOption($date_lang['date.wednesday'], 3),
-				new FormFieldSelectChoiceOption($date_lang['date.thursday'], 4),
-				new FormFieldSelectChoiceOption($date_lang['date.friday'], 5),
-				new FormFieldSelectChoiceOption($date_lang['date.saturday'], 6),
-				new FormFieldSelectChoiceOption($date_lang['date.every.month'], 7)
+				new FormFieldSelectChoiceOption($this->lang['date.sunday'], 0),
+				new FormFieldSelectChoiceOption($this->lang['date.monday'], 1),
+				new FormFieldSelectChoiceOption($this->lang['date.tuesday'], 2),
+				new FormFieldSelectChoiceOption($this->lang['date.wednesday'], 3),
+				new FormFieldSelectChoiceOption($this->lang['date.thursday'], 4),
+				new FormFieldSelectChoiceOption($this->lang['date.friday'], 5),
+				new FormFieldSelectChoiceOption($this->lang['date.saturday'], 6),
+				new FormFieldSelectChoiceOption($this->lang['date.every.month'], 7)
 			),
 			array(
 				'description' => $this->lang['database.config.tables.optimization.day.clue'],
@@ -112,7 +112,7 @@ class AdminDatabaseConfigController extends AdminModuleController
 		}
 
 		DatabaseConfig::save();
-		
+
 		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
 	}
 }
