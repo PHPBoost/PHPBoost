@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 22
+ * @version     PHPBoost 6.0 - last update: 2021 11 24
  * @since       PHPBoost 4.0 - 2013 08 04
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -11,9 +11,8 @@
 class AdminContactFieldFormController extends AdminModuleController
 {
 	private $view;
-
 	private $lang;
-	private $form_lang;
+
 	/**
 	 * @var HTMLForm
 	 */
@@ -36,7 +35,6 @@ class AdminContactFieldFormController extends AdminModuleController
 		$this->build_form($request);
 
 		$this->view = new FileTemplate('contact/AdminContactFieldFormController.tpl');
-		$this->view->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -52,13 +50,15 @@ class AdminContactFieldFormController extends AdminModuleController
 		if (!$this->get_field()->is_readonly())
 			$this->view->put('JS_EVENT_SELECT_TYPE', $this->get_events_select_type());
 
-		return new AdminContactDisplayResponse($this->view, !empty($this->id) ? $this->form_lang['form.field.edit'] : $this->form_lang['form.field.add']);
+		return new AdminContactDisplayResponse($this->view, !empty($this->id) ? $this->lang['form.field.edit'] : $this->lang['form.field.add']);
 	}
 
 	private function init(HTTPRequestCustom $request)
 	{
-		$this->lang = LangLoader::get('common', 'contact');
-		$this->form_lang = LangLoader::get('form-lang');
+		$this->lang = array_merge(
+			LangLoader::get('form-lang'),
+			LangLoader::get('common', 'contact')
+		);
 		$this->config = ContactConfig::load();
 		$this->id = $request->get_getint('id', 0);
 	}
@@ -72,42 +72,42 @@ class AdminContactFieldFormController extends AdminModuleController
 
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('field', !empty($this->id) ? $this->form_lang['form.field.edit'] : $this->form_lang['form.field.add']);
+		$fieldset = new FormFieldsetHTML('field', !empty($this->id) ? $this->lang['form.field.edit'] : $this->lang['form.field.add']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('name', $this->form_lang['form.name'], $field->get_name(),
+		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['form.name'], $field->get_name(),
 			array('class' => 'top-field', 'required' => true),
 			array(new ContactConstraintFieldExist($this->id))
 		));
 
-		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('description', $this->form_lang['form.description'], $field->get_description(),
+		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('description', $this->lang['form.description'], $field->get_description(),
 			array('class' => 'top-field', 'rows' => 4, 'cols' => 47)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('field_required', $this->form_lang['form.required.field'], (int)$field->is_required(),
+		$fieldset->add_field(new FormFieldCheckbox('field_required', $this->lang['form.required.field'], (int)$field->is_required(),
 			array(
 				'class' => 'top-field custom-checkbox',
 				'disabled' => $field->is_readonly()
 			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('display', $this->form_lang['form.display'], (int)$field->is_displayed(),
+		$fieldset->add_field(new FormFieldCheckbox('display', $this->lang['form.display'], (int)$field->is_displayed(),
 			array(
 				'class' => 'top-field custom-checkbox',
 				'disabled' => $field->is_readonly()
 			)
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('field_type', $this->form_lang['form.field.type'], $field->get_field_type(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('field_type', $this->lang['form.field.type'], $field->get_field_type(),
 			$this->get_array_select_type($field->get_field_name()),
 			array('class' => 'top-field', 'disabled' => $field->is_readonly(), 'events' => array('change' => $this->get_events_select_type()))
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('regex_type', $this->form_lang['form.regex'], $regex_type,
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('regex_type', $this->lang['form.regex'], $regex_type,
 			$this->get_array_select_regex(),
 			array(
 				'disabled' => $field->is_readonly(),
-				'description' => $this->form_lang['form.regex.clue'],
+				'description' => $this->lang['form.regex.clue'],
 				'events' => array('change' => '
 					if (HTMLForms.getField("regex_type").getValue() == 6) {
 						HTMLForms.getField("regex").enable();
@@ -119,13 +119,13 @@ class AdminContactFieldFormController extends AdminModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldTextEditor('regex', $this->form_lang['form.personnal.regex'], $regex,
+		$fieldset->add_field(new FormFieldTextEditor('regex', $this->lang['form.personnal.regex'], $regex,
 			array('class' => 'top-field', 'hidden' => $field->is_readonly())
 		));
 
 		if ($field->get_field_name() == 'f_recipients')
 		{
-			$fieldset->add_field(new ContactFormFieldRecipientsPossibleValues('possible_values', $this->form_lang['form.possible.values'], $field->get_possible_values(),
+			$fieldset->add_field(new ContactFormFieldRecipientsPossibleValues('possible_values', $this->lang['form.possible.values'], $field->get_possible_values(),
 				array(
 					'class' => 'top-field half-field',
 					'description' => $this->lang['contact.possible.values.email.clue']
@@ -134,7 +134,7 @@ class AdminContactFieldFormController extends AdminModuleController
 		}
 		else if ($field->get_field_name() == 'f_subject')
 		{
-			$fieldset->add_field(new ContactFormFieldObjectPossibleValues('possible_values', $this->form_lang['form.possible.values'], $field->get_possible_values(),
+			$fieldset->add_field(new ContactFormFieldObjectPossibleValues('possible_values', $this->lang['form.possible.values'], $field->get_possible_values(),
 				array(
 					'class' => 'top-field half-field',
 					'description' => $this->lang['contact.possible.values.recipient.clue']
@@ -143,16 +143,16 @@ class AdminContactFieldFormController extends AdminModuleController
 		}
 		else
 		{
-			$fieldset->add_field(new FormFieldPossibleValues('possible_values', $this->form_lang['form.possible.values'], $field->get_possible_values(),
+			$fieldset->add_field(new FormFieldPossibleValues('possible_values', $this->lang['form.possible.values'], $field->get_possible_values(),
 				array('class' => 'half-field', 'hidden' => $field->is_readonly())
 			));
 		}
 
-		$fieldset->add_field(new FormFieldTextEditor('default_value_small', $this->form_lang['form.default.value'], $field->get_default_value(),
+		$fieldset->add_field(new FormFieldTextEditor('default_value_small', $this->lang['form.default.value'], $field->get_default_value(),
 			array('class' => 'top-field', 'disabled' => $field->is_readonly()
 		)));
 
-		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('default_value_medium', $this->form_lang['form.default.value'], $field->get_default_value(),
+		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('default_value_medium', $this->lang['form.default.value'], $field->get_default_value(),
 			array('rows' => 4, 'cols' => 47, 'hidden' => $field->is_readonly())
 		));
 
@@ -267,14 +267,14 @@ class AdminContactFieldFormController extends AdminModuleController
 	{
 		return array(
 			new FormFieldSelectChoiceOption('--', 0),
-			new FormFieldSelectChoiceOption($this->form_lang['form.figures'], 1),
-			new FormFieldSelectChoiceOption($this->form_lang['form.letters'], 2),
-			new FormFieldSelectChoiceOption($this->form_lang['form.figures.letters'], 3),
-			new FormFieldSelectChoiceOption($this->form_lang['form.word'], 7),
-			new FormFieldSelectChoiceOption($this->form_lang['form.email'], 4),
-			new FormFieldSelectChoiceOption($this->form_lang['form.website'], 5),
-			new FormFieldSelectChoiceOption($this->form_lang['form.phone.number'], 8),
-			new FormFieldSelectChoiceOption($this->form_lang['form.personnal.regex'], 6),
+			new FormFieldSelectChoiceOption($this->lang['form.figures'], 1),
+			new FormFieldSelectChoiceOption($this->lang['form.letters'], 2),
+			new FormFieldSelectChoiceOption($this->lang['form.figures.letters'], 3),
+			new FormFieldSelectChoiceOption($this->lang['form.word'], 7),
+			new FormFieldSelectChoiceOption($this->lang['form.email'], 4),
+			new FormFieldSelectChoiceOption($this->lang['form.website'], 5),
+			new FormFieldSelectChoiceOption($this->lang['form.phone.number'], 8),
+			new FormFieldSelectChoiceOption($this->lang['form.personnal.regex'], 6),
 		);
 	}
 
