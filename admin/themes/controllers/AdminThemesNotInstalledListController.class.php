@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 07
+ * @version     PHPBoost 6.0 - last update: 2021 11 24
  * @since       PHPBoost 3.0 - 2011 04 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -14,7 +14,6 @@
 class AdminThemesNotInstalledListController extends AdminController
 {
 	private $lang;
-	private $common_lang;
 	private $view;
 	private $form;
 	private $submit_button;
@@ -79,12 +78,12 @@ class AdminThemesNotInstalledListController extends AdminController
 				'AUTHOR'         => $configuration->get_author_name(),
 				'AUTHOR_EMAIL'   => $author_email,
 				'AUTHOR_WEBSITE' => $author_website,
-				'DESCRIPTION'    => $configuration->get_description() !== '' ? $configuration->get_description() : $this->common_lang['common.unspecified'],
+				'DESCRIPTION'    => $configuration->get_description() !== '' ? $configuration->get_description() : $this->lang['common.unspecified'],
 				'COMPATIBILITY'  => $configuration->get_compatibility(),
 				'AUTHORIZATIONS' => Authorizations::generate_select(Theme::ACCES_THEME, array('r-1' => 1, 'r0' => 1, 'r1' => 1), array(2 => true), $theme->get_id()),
-				'HTML_VERSION'   => $configuration->get_html_version() !== '' ? $configuration->get_html_version() : $this->common_lang['common.unspecified'],
-				'CSS_VERSION'    => $configuration->get_css_version() !== '' ? $configuration->get_css_version() : $this->common_lang['common.unspecified'],
-				'MAIN_COLOR'     => $configuration->get_main_color() !== '' ? $configuration->get_main_color() : $this->common_lang['common.unspecified'],
+				'HTML_VERSION'   => $configuration->get_html_version() !== '' ? $configuration->get_html_version() : $this->lang['common.unspecified'],
+				'CSS_VERSION'    => $configuration->get_css_version() !== '' ? $configuration->get_css_version() : $this->lang['common.unspecified'],
+				'MAIN_COLOR'     => $configuration->get_main_color() !== '' ? $configuration->get_main_color() : $this->lang['common.unspecified'],
 				'WIDTH'          => $configuration->get_variable_width() ? $this->lang['addon.themes.variable.width'] : $configuration->get_width(),
 				'PARENT_THEME'   => $theme_has_parent ? (ThemesManager::get_theme_existed($configuration->get_parent_theme()) ? ThemesManager::get_theme($configuration->get_parent_theme())->get_configuration()->get_name() : $configuration->get_parent_theme()) : '',
 
@@ -117,10 +116,12 @@ class AdminThemesNotInstalledListController extends AdminController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('addon-lang');
-		$this->common_lang = LangLoader::get('common-lang');
+		$this->lang = array_merge(
+			LangLoader::get('addon-lang'),
+			LangLoader::get('common-lang')
+		);
 		$this->view = new FileTemplate('admin/themes/AdminThemesNotInstalledListController.tpl');
-		$this->view->add_lang(array_merge($this->lang, $this->common_lang));
+		$this->view->add_lang($this->lang);
 	}
 
 	private function get_not_installed_themes()

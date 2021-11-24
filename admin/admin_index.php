@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 23
+ * @version     PHPBoost 6.0 - last update: 2021 11 24
  * @since       PHPBoost 1.2 - 2005 06 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -12,12 +12,14 @@
 
 require_once('../admin/admin_begin.php');
 
-$lang = LangLoader::get('admin-lang');
-$addon_lang = LangLoader::get('addon-lang');
-$common_lang = LangLoader::get('common-lang');
-$form_lang = LangLoader::get('form-lang');
-$menu_lang = LangLoader::get('menu-lang');
-$user_lang = LangLoader::get('user-lang');
+$lang = array_merge(
+	LangLoader::get('admin-lang'),
+	LangLoader::get('addon-lang'),
+	LangLoader::get('common-lang'),
+	LangLoader::get('form-lang'),
+	LangLoader::get('menu-lang'),
+	LangLoader::get('user-lang')
+);
 
 define('TITLE', $lang['admin.administration']);
 require_once('../admin/admin_header.php');
@@ -36,7 +38,7 @@ if (!empty($writingpad))
 }
 
 $view = new FileTemplate('admin/admin_index.tpl');
-$view->add_lang(array_merge($lang, $addon_lang, $common_lang, $form_lang, $menu_lang, $user_lang));
+$view->add_lang($lang);
 
 $result = PersistenceContext::get_querier()->select("
 	SELECT comments.*, comments.timestamp AS comment_timestamp, topic.*, member.*
@@ -64,7 +66,7 @@ while ($row = $result->fetch())
 
 		'COMMENTS_NUMBER'   => $comments_number,
 		'CONTENT'           => FormatingHelper::second_parse($row['message']),
-		'USER_DISPLAY_NAME' => ($row['level'] != User::VISITOR_LEVEL) && !empty($row['display_name']) ? $row['display_name'] : (!empty($row['pseudo']) ? $row['pseudo'] : $user_lang['user.guest']),
+		'USER_DISPLAY_NAME' => ($row['level'] != User::VISITOR_LEVEL) && !empty($row['display_name']) ? $row['display_name'] : (!empty($row['pseudo']) ? $row['pseudo'] : $lang['user.guest']),
 		'VISITOR_EMAIL'     => $row['visitor_email'],
 		'USER_LEVEL_CLASS'  => UserService::get_level_class($row['level']),
 		'USER_GROUP_COLOR'  => $group_color,
@@ -155,7 +157,7 @@ while ($row = $result->fetch())
 		'C_USER_GROUP_COLOR' => !empty($group_color),
 		'C_LOCATION'         => !empty($row['location_title']) ,
 
-		'USER_DISPLAY_NAME' => ($row['level'] != User::VISITOR_LEVEL) && !empty($row['display_name']) ? $row['display_name'] : $user_lang['user.guest'],
+		'USER_DISPLAY_NAME' => ($row['level'] != User::VISITOR_LEVEL) && !empty($row['display_name']) ? $row['display_name'] : $lang['user.guest'],
 		'USER_LEVEL_CLASS'  => UserService::get_level_class($row['level']),
 		'USER_GROUP_COLOR'  => $group_color,
 		'USER_IP'           => $row['ip'],

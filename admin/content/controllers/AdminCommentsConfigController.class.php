@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 14
+ * @version     PHPBoost 6.0 - last update: 2021 11 24
  * @since       PHPBoost 3.0 - 2011 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -31,7 +31,6 @@ class AdminCommentsConfigController extends AdminController
 		$this->build_form();
 
 		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
-		$view->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -55,13 +54,15 @@ class AdminCommentsConfigController extends AdminController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('comment-lang');
+		$this->lang = array_merge(
+			LangLoader::get('comment-lang'),
+			LangLoader::get('form-lang')
+		);
 		$this->configuration = CommentsConfig::load();
 	}
 
 	private function build_form()
 	{
-		$form_lang = LangLoader::get('form-lang');
 		$form = new HTMLForm(__CLASS__);
 
 		$fieldset = new FormFieldsetHTML('comments-config', $this->lang['comment.configuration']);
@@ -123,14 +124,14 @@ class AdminCommentsConfigController extends AdminController
 
 		$fieldset->add_field(new FormFieldSpacer('format', ''));
 
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $form_lang['form.forbidden.tags'], $this->configuration->get_forbidden_tags(), $this->generate_forbidden_tags_option(),
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->lang['form.forbidden.tags'], $this->configuration->get_forbidden_tags(), $this->generate_forbidden_tags_option(),
 			array(
 				'size' => 12,
 				'hidden' => !$this->configuration->are_comments_enabled()
 			)
 		));
 
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('comments_unauthorized_modules', $form_lang['form.forbidden.module'], $this->configuration->get_comments_unauthorized_modules(), ModulesManager::generate_unauthorized_module_option('comments'),
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('comments_unauthorized_modules', $this->lang['form.forbidden.module'], $this->configuration->get_comments_unauthorized_modules(), ModulesManager::generate_unauthorized_module_option('comments'),
 			array(
 				'size' => 12,
 				'description' => $this->lang['comment.forbidden.module.clue'],
@@ -138,13 +139,13 @@ class AdminCommentsConfigController extends AdminController
 			)
 		));
 
-		$fieldset = new FormFieldsetHTML('authorization', $form_lang['form.authorizations']);
+		$fieldset = new FormFieldsetHTML('authorization', $this->lang['form.authorizations']);
 		$form->add_fieldset($fieldset);
 
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($form_lang['form.authorizations.read'], CommentsAuthorizations::READ_AUTHORIZATIONS),
-			new ActionAuthorization($form_lang['form.authorizations.write'], CommentsAuthorizations::POST_AUTHORIZATIONS),
-			new MemberDisabledActionAuthorization($form_lang['form.authorizations.moderation'], CommentsAuthorizations::MODERATE_AUTHORIZATIONS)
+			new ActionAuthorization($this->lang['form.authorizations.read'], CommentsAuthorizations::READ_AUTHORIZATIONS),
+			new ActionAuthorization($this->lang['form.authorizations.write'], CommentsAuthorizations::POST_AUTHORIZATIONS),
+			new MemberDisabledActionAuthorization($this->lang['form.authorizations.moderation'], CommentsAuthorizations::MODERATE_AUTHORIZATIONS)
 		));
 		$auth_settings->build_from_auth_array($this->configuration->get_authorizations());
 		$fieldset->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
@@ -187,7 +188,7 @@ class AdminCommentsConfigController extends AdminController
 
 		$this->configuration->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		CommentsConfig::save();
-		
+
 		HooksService::execute_hook_action('edit_config', 'kernel', array('title' => $this->lang['comment.configuration'], 'url' => DispatchManager::get_url('/admin/content/', '/comments/config/')->rel()));
 	}
 

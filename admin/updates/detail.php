@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 18
+ * @version     PHPBoost 6.0 - last update: 2021 11 24
  * @since       PHPBoost 1.6 - 2008 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -14,15 +14,18 @@ define('PATH_TO_ROOT', '../..');
 
 require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
 
-$lang = LangLoader::get('admin-lang');
-$addon_lang = LangLoader::get('addon-lang');
+$lang = array_merge(
+	LangLoader::get('addon-lang'),
+	LangLoader::get('admin-lang'),
+	LangLoader::get('common-lang')
+);
 
 define('TITLE', $lang['admin.updates'] . ' - ' . $lang['admin.administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
 $identifier = retrieve(GET, 'identifier', '');
 $view = new FileTemplate('admin/updates/detail.tpl');
-$view->add_lang(array_merge($lang, $addon_lang, LangLoader::get('common-lang')));
+$view->add_lang($lang);
 
 $app = null;
 $server_configuration = new ServerConfiguration();
@@ -104,7 +107,7 @@ if ($app instanceof Application)
 								$installation_error = true;
 								break;
 							case ModulesManager::MODULE_NOT_UPGRADABLE:
-								$view->put('MESSAGE_HELPER', MessageHelper::display($addon_lang['addon.modules.not.upgradable'], MessageHelper::WARNING));
+								$view->put('MESSAGE_HELPER', MessageHelper::display($lang['addon.modules.not.upgradable'], MessageHelper::WARNING));
 								$installation_error = true;
 								break;
 							case ModulesManager::MODULE_UPDATED:
@@ -114,7 +117,7 @@ if ($app instanceof Application)
 					}
 					else
 					{
-						$view->put('MESSAGE_HELPER', MessageHelper::display($addon_lang['addon.modules.not.installed'], MessageHelper::ERROR));
+						$view->put('MESSAGE_HELPER', MessageHelper::display($lang['addon.modules.not.installed'], MessageHelper::ERROR));
 						$installation_error = true;
 					}
 				}

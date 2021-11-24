@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 18
+ * @version     PHPBoost 6.0 - last update: 2021 11 24
  * @since       PHPBoost 3.0 - 2009 12 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -40,21 +40,23 @@ class AdminErrorsController404List extends AdminController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-lang');
+		$this->lang = array_merge(
+			LangLoader::get('admin-lang'),
+			LangLoader::get('common-lang')
+		);
 		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM # # INCLUDE TABLE #');
 	}
 
 	private function build_table()
 	{
-		$common_lang = LangLoader::get('common-lang');
 		$table_model = new SQLHTMLTableModel(PREFIX . 'errors_404', 'error-list404', array(
 			new HTMLTableColumn($this->lang['admin.404.requested.url']),
 			new HTMLTableColumn($this->lang['admin.404.from.url']),
-			new HTMLTableColumn($common_lang['common.number'], 'times', array('css_class' => 'col-medium')),
-			new HTMLTableColumn($common_lang['common.delete'], '', array('css_class' => 'col-small'))
+			new HTMLTableColumn($this->lang['common.number'], 'times', array('css_class' => 'col-medium')),
+			new HTMLTableColumn($this->lang['common.delete'], '', array('css_class' => 'col-small'))
 		), new HTMLTableSortingRule('times', HTMLTableSortingRule::DESC));
 
-		$table = new HTMLTable($table_model, $common_lang, 'error-list404');
+		$table = new HTMLTable($table_model, $this->lang, 'error-list404');
 
 		$table_model->set_caption($this->lang['admin.404.errors.list']);
 		$table_model->set_footer_css_class('footer-error-list404');
@@ -86,7 +88,7 @@ class AdminErrorsController404List extends AdminController
 			$this->view->put('TABLE', $table->display());
 		}
 		else
-			$this->view->put('MESSAGE_HELPER', MessageHelper::display($common_lang['common.no.item.now'], MessageHelper::SUCCESS, 0, true));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['common.no.item.now'], MessageHelper::SUCCESS, 0, true));
 
 		return $table->get_page_number();
 	}

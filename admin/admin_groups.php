@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 25
+ * @version     PHPBoost 6.0 - last update: 2021 11 24
  * @since       PHPBoost 1.2 - 2005 06 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -14,14 +14,16 @@
 
 require_once('../admin/admin_begin.php');
 
-$lang = LangLoader::get('admin-lang');
-$common_lang = LangLoader::get('common-lang');
-$form_lang = LangLoader::get('form-lang');
-$upload_lang = LangLoader::get('upload-lang');
-$user_lang = LangLoader::get('user-lang');
-$warning_lang = LangLoader::get('warning-lang');
+$lang = array_merge(
+	LangLoader::get('admin-lang'),
+	LangLoader::get('common-lang'),
+	LangLoader::get('form-lang'),
+	LangLoader::get('upload-lang'),
+	LangLoader::get('user-lang'),
+	LangLoader::get('warning-lang')
+);
 
-define('TITLE', $user_lang['user.groups.management'] . ' - ' . $lang['admin.administration']);
+define('TITLE', $lang['user.groups.management'] . ' - ' . $lang['admin.administration']);
 require_once('../admin/admin_header.php');
 
 $request = AppContext::get_request();
@@ -187,7 +189,7 @@ elseif (!empty($_FILES['upload_groups']['name'])) // Upload
 elseif (!empty($idgroup)) // Group editing interface
 {
 	$view = new FileTemplate('admin/admin_groups_management2.tpl');
-	$view->add_lang(array_merge($lang, $common_lang, $form_lang, $upload_lang, $user_lang, $warning_lang));
+	$view->add_lang($lang);
 
 	try {
 		$group = PersistenceContext::get_querier()->select_single_row(DB_TABLE_GROUP, array('id', 'name', 'img', 'color', 'auth', 'members'), 'WHERE id=:id', array('id' => $idgroup));
@@ -202,11 +204,11 @@ elseif (!empty($idgroup)) // Group editing interface
 		$get_error = retrieve(GET, 'error', '');
 		if ($get_error == 'incomplete')
 		{
-			$view->put('MESSAGE_HELPER', MessageHelper::display($warning_lang['warning.incomplete'], MessageHelper::NOTICE));
+			$view->put('MESSAGE_HELPER', MessageHelper::display($lang['warning.incomplete'], MessageHelper::NOTICE));
 		}
 		elseif ($get_error == 'already_group')
 		{
-			$view->put('MESSAGE_HELPER', MessageHelper::display($warning_lang['warning.already.group'], MessageHelper::NOTICE));
+			$view->put('MESSAGE_HELPER', MessageHelper::display($lang['warning.already.group'], MessageHelper::NOTICE));
 		}
 
 		// Get the groups images folders
@@ -281,7 +283,7 @@ elseif (!empty($idgroup)) // Group editing interface
 elseif ($add) // Add group interface
 {
 	$view = new FileTemplate('admin/admin_groups_management2.tpl');
-	$view->add_lang(array_merge($lang, $common_lang, $form_lang, $upload_lang, $user_lang, $warning_lang));
+	$view->add_lang($lang);
 
 	// Errors management
 	$get_success = retrieve(GET, 'success', '');
@@ -292,7 +294,7 @@ elseif ($add) // Add group interface
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
 	{
-		$view->put('MESSAGE_HELPER', MessageHelper::display($warning_lang['warning.incomplete'], MessageHelper::NOTICE));
+		$view->put('MESSAGE_HELPER', MessageHelper::display($lang['warning.incomplete'], MessageHelper::NOTICE));
 	}
 	elseif ($get_error == 'group_already_exists')
 	{
@@ -324,7 +326,7 @@ elseif ($add) // Add group interface
 else // Groups list
 {
 	$view = new FileTemplate('admin/admin_groups_management.tpl');
-	$view->add_lang(array_merge($lang, $common_lang, $user_lang));
+	$view->add_lang($lang);
 
 	$result = PersistenceContext::get_querier()->select("SELECT id, name, img, color
 	FROM " . DB_TABLE_GROUP . "

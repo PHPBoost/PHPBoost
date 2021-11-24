@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 25
+ * @version     PHPBoost 6.0 - last update: 2021 11 24
  * @since       PHPBoost 4.0 - 2014 01 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -27,13 +27,15 @@ class AdminLoggedErrorsControllerList extends AdminController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-lang');
+		$this->lang =array_merge(
+			LangLoader::get('admin-lang'),
+			LangLoader::get('common-lang')
+		);
 		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM # # INCLUDE table #');
 	}
 
 	private function build_table()
 	{
-		$common_lang = LangLoader::get('common-lang');
 		$errors = $this->get_errors_list();
 
 		$types = array(
@@ -44,8 +46,8 @@ class AdminLoggedErrorsControllerList extends AdminController
 		);
 
 		$table_model = new HTMLTableModel('error-list', array(
-			new HTMLTableColumn($common_lang['common.date'], '', array('css_class' => 'col-medium')),
-			new HTMLTableColumn($common_lang['common.description'])
+			new HTMLTableColumn($this->lang['common.date'], '', array('css_class' => 'col-medium')),
+			new HTMLTableColumn($this->lang['common.description'])
 		), new HTMLTableSortingRule(''), self::NUMBER_ITEMS_PER_PAGE);
 
 		$table = new HTMLTable($table_model, $this->lang, 'admin.logged.errors.list');
@@ -80,7 +82,7 @@ class AdminLoggedErrorsControllerList extends AdminController
 			));
 		}
 		else
-			$this->view->put('MESSAGE_HELPER', MessageHelper::display($common_lang['common.no.item.now'], MessageHelper::SUCCESS, 0, true));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['common.no.item.now'], MessageHelper::SUCCESS, 0, true));
 
 		return $table->get_page_number();
 	}

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 14
+ * @version     PHPBoost 6.0 - last update: 2021 11 24
  * @since       PHPBoost 3.0 - 2011 07 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -24,7 +24,11 @@ class AdminAdvancedConfigController extends AdminController
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->load_lang();
+		$this->lang = array_merge(
+			LangLoader::get('configuration-lang'),
+			LangLoader::get('warning-lang')
+		);
+
 		$this->load_config();
 
 		$this->build_form($request);
@@ -55,11 +59,6 @@ class AdminAdvancedConfigController extends AdminController
 		return new AdminConfigDisplayResponse($view, $this->lang['configuration.advanced']);
 	}
 
-	private function load_lang()
-	{
-		$this->lang = LangLoader::get('configuration-lang');
-	}
-
 	private function load_config()
 	{
 		$this->general_config = GeneralConfig::load();
@@ -70,7 +69,6 @@ class AdminAdvancedConfigController extends AdminController
 
 	private function build_form(HTTPRequestCustom $request)
 	{
-		$warning_lang = LangLoader::get('warning-lang');
 		$form = new HTMLForm(__CLASS__);
 
 		$fieldset = new FormFieldsetHTML('advanced_configuration', $this->lang['configuration.advanced']);
@@ -188,7 +186,7 @@ class AdminAdvancedConfigController extends AdminController
 				'description' => $this->lang['configuration.hsts.duration.clue'],
 				'hidden' => !$this->server_environment_config->is_hsts_security_enabled()
 			),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`iu', '', $warning_lang['warning.regex.number']))
+			array(new FormFieldConstraintRegex('`^[0-9]+$`iu', '', $this->lang['warning.regex.number']))
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('hsts_security_subdomain', $this->lang['configuration.hsts.subdomain'], $this->server_environment_config->is_hsts_security_subdomain_enabled(),
@@ -264,7 +262,7 @@ class AdminAdvancedConfigController extends AdminController
 
 		$sessions_config_fieldset->add_field(new FormFieldTextEditor('cookie_name', $this->lang['configuration.cookie.name'], $this->sessions_config->get_cookie_name(),
 			array('required' => true, 'class' => 'third-field'),
-			array(new FormFieldConstraintRegex('`^[A-Za-z0-9]+$`iu', '', $warning_lang['warning.regex.letters.numbers']))
+			array(new FormFieldConstraintRegex('`^[A-Za-z0-9]+$`iu', '', $this->lang['warning.regex.letters.numbers']))
 		));
 
 		$sessions_config_fieldset->add_field(new FormFieldNumberEditor('session_duration', $this->lang['configuration.cookie.duration'], $this->sessions_config->get_session_duration(),
@@ -272,7 +270,7 @@ class AdminAdvancedConfigController extends AdminController
 				'description' => $this->lang['configuration.cookie.duration.clue'],
 				'required' => true, 'class' => 'third-field'
 			),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`iu', '', $warning_lang['warning.regex.number']))
+			array(new FormFieldConstraintRegex('`^[0-9]+$`iu', '', $this->lang['warning.regex.number']))
 		));
 
 		$sessions_config_fieldset->add_field(new FormFieldNumberEditor('active_session_duration', $this->lang['configuration.active.session.duration'], $this->sessions_config->get_active_session_duration(),
@@ -280,7 +278,7 @@ class AdminAdvancedConfigController extends AdminController
 				'description' => $this->lang['configuration.active.session.duration.clue'],
 				'required' => true, 'class' => 'third-field'
 			),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`iu', '', $warning_lang['warning.regex.number']))
+			array(new FormFieldConstraintRegex('`^[0-9]+$`iu', '', $this->lang['warning.regex.number']))
 		));
 
 		$cookiebar_config_fieldset = new FormFieldsetHTML('cookiebar_config', $this->lang['configuration.cookiebar']);
@@ -521,7 +519,7 @@ class AdminAdvancedConfigController extends AdminController
 
 		HtaccessFileCache::regenerate();
 		NginxFileCache::regenerate();
-		
+
 		HooksService::execute_hook_action('edit_config', 'kernel', array('title' => $this->lang['configuration.advanced'], 'url' => AdminConfigUrlBuilder::advanced_config()->rel()));
 	}
 

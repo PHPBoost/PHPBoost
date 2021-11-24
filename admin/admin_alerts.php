@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 09
+ * @version     PHPBoost 6.0 - last update: 2021 11 24
  * @since       PHPBoost 2.0 - 2008 08 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -12,13 +12,16 @@
 
 require_once('../admin/admin_begin.php');
 
-$lang = LangLoader::get('admin-lang');
+$lang = array_merge(
+	LangLoader::get('admin-lang'),
+	LangLoader::get('common-lang')
+);
 
 define('TITLE', $lang['admin.alerts'] . ' - ' . $lang['admin.administration']);
 require_once('../admin/admin_header.php');
 
 $view = new FileTemplate('admin/admin_alerts.tpl');
-$view->add_lang(array_merge($lang, LangLoader::get('common-lang')));
+$view->add_lang($lang);
 
 define('NUM_ALERTS_PER_PAGE', 20);
 

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 14
+ * @version     PHPBoost 6.0 - last update: 2021 11 24
  * @since       PHPBoost 3.0 - 2010 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -33,7 +33,6 @@ class AdminMemberConfigController extends AdminController
 		$this->build_form();
 
 		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
-		$view->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -53,7 +52,10 @@ class AdminMemberConfigController extends AdminController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('user-lang');
+		$this->lang = array_merge(
+			LangLoader::get('user-lang'),
+			LangLoader::get('form-lang')
+		);
 		$this->user_accounts_config = UserAccountsConfig::load();
 		$this->security_config = SecurityConfig::load();
 		$this->server_configuration = new ServerConfiguration();
@@ -61,7 +63,6 @@ class AdminMemberConfigController extends AdminController
 
 	private function build_form()
 	{
-		$form_lang = LangLoader::get('form-lang');
 		$form = new HTMLForm(__CLASS__);
 
 		$fieldset = new FormFieldsetHTML('members_config', $this->lang['user.members.config']);
@@ -125,10 +126,10 @@ class AdminMemberConfigController extends AdminController
 		$fieldset = new FormFieldsetHTML('display_view', $this->lang['user.display.type']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $form_lang['form.display.type'], $this->user_accounts_config->get_display_type(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['form.display.type'], $this->user_accounts_config->get_display_type(),
 			array(
-				new FormFieldSelectChoiceOption($form_lang['form.display.type.grid'], UserAccountsConfig::GRID_VIEW, array('data_option_icon' => 'fa fa-th-large')),
-				new FormFieldSelectChoiceOption($form_lang['form.display.type.table'], UserAccountsConfig::TABLE_VIEW, array('data_option_icon' => 'fa fa-table'))
+				new FormFieldSelectChoiceOption($this->lang['form.display.type.grid'], UserAccountsConfig::GRID_VIEW, array('data_option_icon' => 'fa fa-th-large')),
+				new FormFieldSelectChoiceOption($this->lang['form.display.type.table'], UserAccountsConfig::TABLE_VIEW, array('data_option_icon' => 'fa fa-table'))
 			),
 			array(
 				'select_to_list' => true,
@@ -141,14 +142,14 @@ class AdminMemberConfigController extends AdminController
 			))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $form_lang['form.items.per.page'], $this->user_accounts_config->get_items_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->lang['form.items.per.page'], $this->user_accounts_config->get_items_per_page(),
 			array(
 				'min' => 1, 'max' => 50, 'required' => true,
 			),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $form_lang['form.items.per.row'], $this->user_accounts_config->get_items_per_row(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->lang['form.items.per.row'], $this->user_accounts_config->get_items_per_row(),
 			array(
 				'hidden' => $this->user_accounts_config->get_display_type() !== UserAccountsConfig::GRID_VIEW,
 				'min' => 1, 'max' => 4, 'required' => true),
@@ -216,7 +217,7 @@ class AdminMemberConfigController extends AdminController
 			array('class' => 'half-field')
 		));
 
-		$fieldset = new FormFieldsetHTML('authorization', $form_lang['form.authorizations']);
+		$fieldset = new FormFieldsetHTML('authorization', $this->lang['form.authorizations']);
 		$form->add_fieldset($fieldset);
 
 		$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization($this->lang['user.authorization.description'], UserAccountsConfig::AUTH_READ_MEMBERS_BIT)));
@@ -289,7 +290,7 @@ class AdminMemberConfigController extends AdminController
 		$this->user_accounts_config->set_welcome_message($this->form->get_value('welcome_message_contents'));
 		$this->user_accounts_config->set_registration_agreement($this->form->get_value('registration_agreement'));
 		UserAccountsConfig::save();
-		
+
 		HooksService::execute_hook_action('edit_config', 'kernel', array('title' => $this->lang['user.members.config'], 'url' => AdminMembersUrlBuilder::configuration()->rel()));
 	}
 }

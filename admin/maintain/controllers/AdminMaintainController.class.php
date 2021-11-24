@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 14
+ * @version     PHPBoost 6.0 - last update: 2021 11 24
  * @since       PHPBoost 4.1 - 2014 09 11
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -27,23 +27,21 @@ class AdminMaintainController extends AdminController
 
 	public function __construct()
 	{
-		$date_lang = LangLoader::get('date-lang');
-
 		$this->maintain_delay_list = array(
-			60 => '1 ' . $date_lang['date.minute'],
-			300 => '5 ' . $date_lang['date.minutes'],
-			600 => '10 ' . $date_lang['date.minutes'],
-			900 => '15 ' . $date_lang['date.minutes'],
-			1800 => '30 ' . $date_lang['date.minutes'],
-			3600 => '1 ' . $date_lang['date.hour'],
-			7200 => '2 ' . $date_lang['date.hours'],
-			10800 => '3 ' . $date_lang['date.hours'],
-			14400 => '4 ' . $date_lang['date.hours'],
-			18000 => '5 ' . $date_lang['date.hours'],
-			21600 => '6 ' . $date_lang['date.hours'],
-			25200 => '7 ' . $date_lang['date.hours'],
-			28800 => '8 ' . $date_lang['date.hours'],
-			57600 => '16 ' . $date_lang['date.hours']
+			60    => '1 ' . $this->lang['date.minute'],
+			300   => '5 ' . $this->lang['date.minutes'],
+			600   => '10 ' . $this->lang['date.minutes'],
+			900   => '15 ' . $this->lang['date.minutes'],
+			1800  => '30 ' . $this->lang['date.minutes'],
+			3600  => '1 ' . $this->lang['date.hour'],
+			7200  => '2 ' . $this->lang['date.hours'],
+			10800 => '3 ' . $this->lang['date.hours'],
+			14400 => '4 ' . $this->lang['date.hours'],
+			18000 => '5 ' . $this->lang['date.hours'],
+			21600 => '6 ' . $this->lang['date.hours'],
+			25200 => '7 ' . $this->lang['date.hours'],
+			28800 => '8 ' . $this->lang['date.hours'],
+			57600 => '16 ' . $this->lang['date.hours']
 		);
 	}
 
@@ -70,8 +68,10 @@ class AdminMaintainController extends AdminController
 	{
 		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
 
-		$this->lang = LangLoader::get('admin-lang');
-		$this->view->add_lang($this->lang);
+		$this->lang = array_merge(
+			LangLoader::get('admin-lang'),
+			LangLoader::get('date-lang')
+		);
 
 		$this->maintenance_config = MaintenanceConfig::load();
 	}
@@ -262,7 +262,7 @@ class AdminMaintainController extends AdminController
 		$this->maintenance_config->set_auth($this->form->get_value('authorizations')->build_auth_array());
 
 		MaintenanceConfig::save();
-		
+
 		HooksService::execute_hook_action('edit_config', 'kernel', array('title' => $this->lang['admin.maintenance'], 'url' => AdminMaintainUrlBuilder::maintain()->rel()));
 	}
 }
