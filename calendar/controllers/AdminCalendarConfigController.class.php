@@ -23,7 +23,6 @@ class AdminCalendarConfigController extends AdminModuleController
 	private $submit_button;
 
 	private $lang;
-	private $form_lang;
 
 	private $user_born_field;
 
