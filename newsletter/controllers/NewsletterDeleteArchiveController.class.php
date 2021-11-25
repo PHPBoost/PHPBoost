@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 11 26
  * @since       PHPBoost 4.1 - 2015 01 27
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -21,8 +21,12 @@ class NewsletterDeleteArchiveController extends ModuleController
 			{
 				NewsletterAuthorizationsService::get_errors()->moderation_archives();
 			}
-
+			
+			$row = PersistenceContext::get_querier()->select_single_row(NewsletterSetup::$newsletter_table_archives, array('*'), "WHERE id = '". $id ."'");
+			
 			NewsletterService::delete_archive($id);
+			
+			HooksService::execute_hook_action('delete', self::$module_id, array('id' => $id, 'title' => $row['subject']));
 
 			AppContext::get_response()->redirect(($request->get_url_referrer() ? $request->get_url_referrer() : NewsletterUrlBuilder::archives($id_stream)), LangLoader::get_message('newsletter.archive.success.delete', 'common', 'newsletter'));
 		}

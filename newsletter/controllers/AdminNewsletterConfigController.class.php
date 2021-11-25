@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 11 26
  * @since       PHPBoost 3.0 - 2011 02 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -55,7 +55,7 @@ class AdminNewsletterConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset_config = new FormFieldsetHTML('configuration', StringVars::replace_vars(LangLoader::get_message('form.module.title', 'form-lang'), array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$fieldset_config = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset_config);
 
 		$fieldset_config->add_field(new FormFieldMailEditor('mail_sender', $this->lang['newsletter.email.sender'], $this->config->get_mail_sender(),
@@ -107,6 +107,8 @@ class AdminNewsletterConfigController extends AdminModuleController
 		$this->config->set_default_content($this->form->get_value('default_content'));
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		NewsletterConfig::save();
+
+		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
 	}
 }
 ?>

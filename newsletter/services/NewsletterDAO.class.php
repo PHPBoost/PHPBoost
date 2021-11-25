@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 24
+ * @version     PHPBoost 6.0 - last update: 2021 11 26
  * @since       PHPBoost 3.0 - 2011 02 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -29,9 +29,11 @@ class NewsletterDAO
 			'language_type' => $language_type,
 			'nbr_subscribers' => count(NewsletterService::list_subscribers_by_stream($stream_id))
 		);
-		self::$db_querier->insert(NewsletterSetup::$newsletter_table_archives, $columns);
+		$result = self::$db_querier->insert(NewsletterSetup::$newsletter_table_archives, $columns);
 
 		NewsletterStreamsCache::invalidate();
+		
+		return $result->get_last_inserted_id();
 	}
 
 	public static function delete_archive($id)

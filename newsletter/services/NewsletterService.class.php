@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 19
+ * @version     PHPBoost 6.0 - last update: 2021 11 26
  * @since       PHPBoost 3.0 - 2011 02 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -33,9 +33,19 @@ class NewsletterService
 			if (in_array($id, $streams))
 			{
 				//Add archive
-				NewsletterDAO::add_archive($id, $subject, $content, $language_type);
+				$archive_id = NewsletterDAO::add_archive($id, $subject, $content, $language_type);
 				//Send mail
 				NewsletterMailFactory::send_mail(self::list_subscribers_by_stream($id), $language_type, NewsletterConfig::load()->get_mail_sender(), $subject, $content);
+				
+				$properties = array(
+					'id'            => $archive_id,
+					'title'         => $subject,
+					'content'       => $content,
+					'language_type' => $language_type,
+					'url'           => NewsletterUrlBuilder::archive($archive_id),
+				);
+		
+				HooksService::execute_hook_action('add', 'newsletter', $properties);
 			}
 		}
 	}
