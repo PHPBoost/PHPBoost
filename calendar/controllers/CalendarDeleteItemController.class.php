@@ -35,7 +35,6 @@ class CalendarDeleteItemController extends ModuleController
 		$this->check_authorizations();
 
 		$view = new StringTemplate('# INCLUDE FORM #');
-		$view->add_lang($this->lang);
 
 		if ($this->item->belongs_to_a_serie())
 			$this->build_form($request);

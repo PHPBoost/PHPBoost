@@ -224,7 +224,7 @@ class AdminCalendarConfigController extends AdminModuleController
 		CalendarConfig::save();
 		CategoriesService::get_categories_manager()->regenerate_cache();
 		CalendarService::clear_cache();
-		
+
 		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
 	}
 }

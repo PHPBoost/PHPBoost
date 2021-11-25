@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 14
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 4.1 - 2015 05 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -29,7 +29,6 @@ class AdminFilesConfigController extends AdminController
 		$this->build_form();
 
 		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
-		$view->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -145,7 +144,7 @@ class AdminFilesConfigController extends AdminController
 		// Regeneration of .htaccess and nginx.conf
 		HtaccessFileCache::regenerate();
 		NginxFileCache::regenerate();
-		
+
 		HooksService::execute_hook_action('edit_config', 'kernel', array('title' => $this->lang['upload.files.config'], 'url' => AdminFilesUrlBuilder::configuration()->rel()));
 	}
 

@@ -67,7 +67,6 @@ class ShoutboxFormController extends ModuleController
 			LangLoader::get('common', 'shoutbox')
 		);
 		$this->view = new StringTemplate('# INCLUDE FORM #');
-		$this->view->add_lang($this->lang);
 	}
 
 	private function build_form(HTTPRequestCustom $request)

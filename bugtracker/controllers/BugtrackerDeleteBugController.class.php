@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 20
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 3.0 - 2012 11 11
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -58,7 +58,6 @@ class BugtrackerDeleteBugController extends ModuleController
 		}
 
 		$this->view = new StringTemplate('# INCLUDE FORM #');
-		$this->view->add_lang($this->lang);
 		$this->config = BugtrackerConfig::load();
 	}
 
@@ -130,7 +129,7 @@ class BugtrackerDeleteBugController extends ModuleController
 		BugtrackerStatsCache::invalidate();
 
 		Feed::clear_cache('bugtracker');
-		
+
 		HooksService::execute_hook_action('delete', self::$module_id, $this->bug->get_properties());
 	}
 

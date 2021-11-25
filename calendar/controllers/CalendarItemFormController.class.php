@@ -401,7 +401,7 @@ class CalendarItemFormController extends ModuleController
 
 			$item_id = CalendarService::add_item($item);
 			$item->set_id($item_id);
-			
+
 			if (!$this->is_contributor_member())
 				HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
 
@@ -429,7 +429,7 @@ class CalendarItemFormController extends ModuleController
 		{
 			CalendarService::update_item_content($item_content);
 			$item_id = CalendarService::update_item($item);
-			
+
 			if (!$this->is_contributor_member())
 				HooksService::execute_hook_action('edit', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
 
