@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 19
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 3.0 - 2011 03 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -50,23 +50,26 @@ class NewsletterSubscribersListController extends ModuleController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'newsletter');
+		$this->lang = array_merge(
+			LangLoader::get('common-lang'),
+			LangLoader::get('user-lang'),
+			LangLoader::get('common', 'newsletter')
+		);
 		$this->view = new StringTemplate('# INCLUDE TABLE #');
 	}
 
 	private function build_table()
 	{
-		$user_lang = LangLoader::get('user-lang');
 		$moderation_authorization = NewsletterAuthorizationsService::id_stream($this->stream->get_id())->moderation_subscribers();
 
 		$columns = array(
-			new HTMLTableColumn($user_lang['user.display.name'], 'name'),
-			new HTMLTableColumn($user_lang['user.email'], 'user_mail'),
-			new HTMLTableColumn($user_lang['user.registration.date'], 'subscription_date')
+			new HTMLTableColumn($this->lang['user.display.name'], 'name'),
+			new HTMLTableColumn($this->lang['user.email'], 'user_mail'),
+			new HTMLTableColumn($this->lang['user.registration.date'], 'subscription_date')
 		);
 
 		if ($moderation_authorization)
-			$columns[] = new HTMLTableColumn(LangLoader::get_message('common.moderatio', 'common-lang'), '', array('sr-only' => true));
+			$columns[] = new HTMLTableColumn($this->lang['common.moderation'], '', array('sr-only' => true));
 
 		$table_model = new SQLHTMLTableModel(NewsletterSetup::$newsletter_table_subscribers, 'subscribers-list', $columns, new HTMLTableSortingRule('name', HTMLTableSortingRule::ASC));
 
@@ -79,7 +82,7 @@ class NewsletterSubscribersListController extends ModuleController
 		$table = new HTMLTable($table_model);
 
 		$results = array();
-		$result = $table_model->get_sql_results('subscribers LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON subscribers.user_id = member.user_id', array('*', 'COALESCE(NULLIF(subscribers.mail, \'\'), member.email) AS user_mail', 'COALESCE(NULLIF(member.display_name, \'\'), "' . LangLoader::get_message('user.guest', 'user-lang') . '") AS name'));
+		$result = $table_model->get_sql_results('subscribers LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON subscribers.user_id = member.user_id', array('*', 'COALESCE(NULLIF(subscribers.mail, \'\'), member.email) AS user_mail', 'COALESCE(NULLIF(member.display_name, \'\'), "' . $this->lang['user.guest'] . '") AS name'));
 		foreach ($result as $row)
 		{
 			if ($row['user_mail'])

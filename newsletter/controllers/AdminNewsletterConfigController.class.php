@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 3.0 - 2011 02 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -45,13 +45,15 @@ class AdminNewsletterConfigController extends AdminModuleController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'newsletter');
+		$this->lang = array_merge(
+			LangLoader::get('form-lang'),
+			LangLoader::get('common', 'newsletter')
+		);
 		$this->config = NewsletterConfig::load();
 	}
 
 	private function build_form()
 	{
-		$form_lang = LangLoader::get('form-lang');
 		$form = new HTMLForm(__CLASS__);
 
 		$fieldset_config = new FormFieldsetHTML('configuration', StringVars::replace_vars(LangLoader::get_message('form.module.title', 'form-lang'), array('module_name' => self::get_module()->get_configuration()->get_name())));
@@ -73,7 +75,7 @@ class AdminNewsletterConfigController extends AdminModuleController
 			array('rows' => 8, 'cols' => 47, 'description' => $this->lang['newsletter.content.clue'])
 		));
 
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $form_lang['form.authorizations']);
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['form.authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 
 		$auth_settings = new AuthorizationsSettings(array(
