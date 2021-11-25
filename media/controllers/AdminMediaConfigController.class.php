@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 4.1 - 2015 02 03
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -22,7 +22,6 @@ class AdminMediaConfigController extends AdminModuleController
 	private $submit_button;
 
 	private $lang;
-	private $form_lang;
 
 	/**
 	 * @var MediaConfig
@@ -53,23 +52,25 @@ class AdminMediaConfigController extends AdminModuleController
 	private function init()
 	{
 		$this->config = MediaConfig::load();
-		$this->lang = LangLoader::get('common', 'media');
-		$this->form_lang = LangLoader::get('form-lang');
+		$this->lang = array_merge(
+			LangLoader::get('form-lang'),
+			LangLoader::get('common', 'media')
+		);
 	}
 
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->form_lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldNumberEditor('categories_per_page', $this->form_lang['form.categories.per.page'], $this->config->get_categories_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('categories_per_page', $this->lang['form.categories.per.page'], $this->config->get_categories_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('categories_per_row', $this->form_lang['form.categories.per.row'], $this->config->get_categories_per_row(),
+		$fieldset->add_field(new FormFieldNumberEditor('categories_per_row', $this->lang['form.categories.per.row'], $this->config->get_categories_per_row(),
 			array('min' => 1, 'max' => 4, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
@@ -82,11 +83,11 @@ class AdminMediaConfigController extends AdminModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->form_lang['form.root.category.description'], $this->config->get_root_category_description(),
+		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->lang['form.root.category.description'], $this->config->get_root_category_description(),
 			array('rows' => 8, 'cols' => 47)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->form_lang['form.items.per.page'], $this->config->get_items_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->lang['form.items.per.page'], $this->config->get_items_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
@@ -101,14 +102,14 @@ class AdminMediaConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(50, 2000))
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->form_lang['form.display.author'], $this->config->is_author_displayed(),
+		$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->lang['form.display.author'], $this->config->is_author_displayed(),
 			array('class' => 'custom-checkbox')
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->form_lang['form.display.type'], $this->config->get_display_type(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['form.display.type'], $this->config->get_display_type(),
 			array(
-				new FormFieldSelectChoiceOption($this->form_lang['form.display.type.grid'], MediaConfig::GRID_VIEW, array('data_option_icon' => 'fa fa-th-large')),
-				new FormFieldSelectChoiceOption($this->form_lang['form.display.type.list'], MediaConfig::LIST_VIEW, array('data_option_icon' => 'fa fa-list')),
+				new FormFieldSelectChoiceOption($this->lang['form.display.type.grid'], MediaConfig::GRID_VIEW, array('data_option_icon' => 'fa fa-th-large')),
+				new FormFieldSelectChoiceOption($this->lang['form.display.type.list'], MediaConfig::LIST_VIEW, array('data_option_icon' => 'fa fa-list')),
 			),
 			array(
 				'select_to_list' => true,
@@ -122,7 +123,7 @@ class AdminMediaConfigController extends AdminModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->form_lang['form.items.per.row'], $this->config->get_items_per_row(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->lang['form.items.per.row'], $this->config->get_items_per_row(),
 			array(
 				'min' => 1, 'max' => 4, 'required' => true,
 				'hidden' => $this->config->get_display_type() !== MediaConfig::GRID_VIEW
@@ -137,8 +138,8 @@ class AdminMediaConfigController extends AdminModuleController
 			array('description' => $this->lang['media.constant.host.peertube.desc'])
 		));
 
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $this->form_lang['form.authorizations'],
-			array('description' => $this->form_lang['form.authorizations.clue'])
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $this->lang['form.authorizations'],
+			array('description' => $this->lang['form.authorizations.clue'])
 		);
 		$form->add_fieldset($fieldset_authorizations);
 
@@ -176,6 +177,8 @@ class AdminMediaConfigController extends AdminModuleController
 
 		MediaConfig::save();
 		CategoriesService::get_categories_manager('media')->regenerate_cache();
+		
+		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
 	}
 }
 ?>

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 10
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -30,9 +30,12 @@ class MediaDisplayCategoryController extends ModuleController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'media');
+		$this->lang = array_merge(
+			LangLoader::get('common-lang'),
+			LangLoader::get('common', 'media')
+		);
 		$this->view = new FileTemplate('media/MediaSeveralItemsController.tpl');
-		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
+		$this->view->add_lang($this->lang);
 	}
 
 	private function build_view()
