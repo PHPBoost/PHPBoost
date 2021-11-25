@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 22
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 2.0 - 2008 01 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -14,8 +14,10 @@ require_once('../kernel/begin.php');
 AppContext::get_session()->no_session_location(); //Permet de ne pas mettre jour la page dans la session.
 
 //------------------------------------------------------------------- Language
-$lang = LangLoader::get('common','search');
-$common_lang = LangLoader::get('common-lang');
+$lang = array_merge(
+	LangLoader::get('common-lang'),
+	LangLoader::get('common','search')
+);
 
 //--------------------------------------------------------------------- Params
 $request = AppContext::get_request();
@@ -106,7 +108,7 @@ if (($id_search >= 0) && ($module_id != ''))
 	else
 	{
 		echo   'nbResults[\'' . $module_id . '\'] = 0;
-				resultsAJAX[\'nbResults\'] = \''.addslashes($common_lang['common.no.item.now']) . '\';
+				resultsAJAX[\'nbResults\'] = \''.addslashes($lang['common.no.item.now']) . '\';
 				resultsAJAX[\'results\'] = \'\';
 				resultWarning = \'notice\';';
 	}
