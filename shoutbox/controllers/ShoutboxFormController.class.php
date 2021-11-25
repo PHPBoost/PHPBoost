@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 14
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 4.1 - 2014 10 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -62,14 +62,16 @@ class ShoutboxFormController extends ModuleController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'shoutbox');
+		$this->lang = array_merge(
+			LangLoader::get('form-lang'),
+			LangLoader::get('common', 'shoutbox')
+		);
 		$this->view = new StringTemplate('# INCLUDE FORM #');
 		$this->view->add_lang($this->lang);
 	}
 
 	private function build_form(HTTPRequestCustom $request)
 	{
-		$form_lang = LangLoader::get('form-lang');
 		$config = ShoutboxConfig::load();
 		$current_user = AppContext::get_current_user();
 
@@ -79,12 +81,12 @@ class ShoutboxFormController extends ModuleController
 		$form = new HTMLForm(__CLASS__);
 		$form->set_layout_title($this->is_new_message ? $this->lang['shoutbox.add.item'] : $this->lang['shoutbox.edit.item']);
 
-		$fieldset = new FormFieldsetHTML('message', $form_lang['form.parameters']);
+		$fieldset = new FormFieldsetHTML('message', $this->lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
 		if (!$current_user->check_level(User::MEMBER_LEVEL))
 		{
-			$fieldset->add_field(new FormFieldTextEditor('pseudo', $form_lang['form.name'], $this->get_message()->get_login(), array(
+			$fieldset->add_field(new FormFieldTextEditor('pseudo', $this->lang['form.name'], $this->get_message()->get_login(), array(
 				'required' => true, 'maxlength' => 25)
 			));
 		}
