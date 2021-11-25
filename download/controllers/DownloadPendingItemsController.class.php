@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 24
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -14,7 +14,7 @@ class DownloadPendingItemsController extends ModuleController
 {
 	private $view;
 	private $lang;
-	private $common_lang;
+
 	private $config;
 
 	public function execute(HTTPRequestCustom $request)
@@ -30,10 +30,12 @@ class DownloadPendingItemsController extends ModuleController
 
 	public function init()
 	{
-		$this->lang = LangLoader::get('common', 'download');
-		$this->common_lang = LangLoader::get('common-lang');
+		$this->lang = array_merge(
+			LangLoader::get('common-lang'),
+			LangLoader::get('common', 'download')
+		);
 		$this->view = new FileTemplate('download/DownloadSeveralItemsController.tpl');
-		$this->view->add_lang(array_merge($this->lang, $this->common_lang));
+		$this->view->add_lang($this->lang);
 		$this->config = DownloadConfig::load();
 	}
 
@@ -127,22 +129,22 @@ class DownloadPendingItemsController extends ModuleController
 		$form = new HTMLForm(__CLASS__, '', false);
 		$form->set_css_class('options');
 
-		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $this->common_lang['common.sort.by']));
+		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $this->lang['common.sort.by']));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field,
 			array(
-				new FormFieldSelectChoiceOption($this->common_lang['common.sort.by.date'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_DATE]),
-				new FormFieldSelectChoiceOption($this->common_lang['common.sort.by.alphabetic'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_ALPHABETIC]),
-				new FormFieldSelectChoiceOption($this->common_lang['common.sort.by.author'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_AUTHOR])
+				new FormFieldSelectChoiceOption($this->lang['common.sort.by.date'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_DATE]),
+				new FormFieldSelectChoiceOption($this->lang['common.sort.by.alphabetic'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_ALPHABETIC]),
+				new FormFieldSelectChoiceOption($this->lang['common.sort.by.author'], DownloadItem::SORT_FIELDS_URL_VALUES[DownloadItem::SORT_AUTHOR])
 			),
 			array('events' => array('change' => 'document.location = "'. DownloadUrlBuilder::display_pending()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
 			array(
-				new FormFieldSelectChoiceOption($this->common_lang['common.sort.asc'], 'asc'),
-				new FormFieldSelectChoiceOption($this->common_lang['common.sort.desc'], 'desc')
+				new FormFieldSelectChoiceOption($this->lang['common.sort.asc'], 'asc'),
+				new FormFieldSelectChoiceOption($this->lang['common.sort.desc'], 'desc')
 			),
 			array('events' => array('change' => 'document.location = "' . DownloadUrlBuilder::display_pending()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
