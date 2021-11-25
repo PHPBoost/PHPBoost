@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 30
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 1.5 - 2006 07 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -12,7 +12,12 @@
 
 require_once('../kernel/begin.php');
 
-$lang = LangLoader::get('user-lang');
+$lang = array_merge(
+	LangLoader::get('common-lang'),
+	LangLoader::get('form-lang'),
+	LangLoader::get('user-lang'),
+	LangLoader::get('warning-lang')
+);
 
 define('TITLE', $lang['user.private.messaging']);
 $Bread_crumb->add($lang['user.user'], UserUrlBuilder::profile(AppContext::get_current_user()->get_id())->rel());
@@ -151,11 +156,8 @@ if ($convers && empty($pm_edit) && empty($pm_del)) // Sending conversation.
 }
 elseif (!empty($post) || (!empty($pm_get) && $pm_get != $current_user->get_id()) && $pm_get > '0') // Message form interface
 {
-	$view         = new FileTemplate('user/pm.tpl');
-	$common_lang  = LangLoader::get('common-lang');
-	$form_lang    = LangLoader::get('form-lang');
-	$warning_lang = LangLoader::get('warning-lang');
-	$view->add_lang(array_merge($lang, $common_lang, $form_lang, $warning_lang));
+	$view = new FileTemplate('user/pm.tpl');
+	$view->add_lang($lang);
 
 	$Bread_crumb->add($lang['user.post.new.conversation'], '');
 
@@ -176,12 +178,12 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $current_user->get_id())
 	$limit_group = $current_user->check_max_value(PM_GROUP_LIMIT, $user_accounts_config->get_max_private_messages_number());
 	$nbr_pm = PrivateMsg::count_conversations($current_user->get_id());
 	if (!$current_user->check_level(User::MODERATOR_LEVEL) && !($limit_group === -1) && $nbr_pm >= $limit_group)
-		$view->put('MESSAGE_HELPER', MessageHelper::display($warning_lang['warning.pm.full.post'], MessageHelper::WARNING));
+		$view->put('MESSAGE_HELPER', MessageHelper::display($lang['warning.pm.full.post'], MessageHelper::WARNING));
 	else
 	{
 		// Errors management
 		$get_error = retrieve(GET, 'error', '');
-		$warning_lang  = LangLoader::get('warning-lang');
+		$lang  = LangLoader::get('warning-lang');
 		switch ($get_error)
 		{
 			case 'e_unexist_user':
@@ -189,11 +191,11 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $current_user->get_id())
 				$type = MessageHelper::WARNING;
 				break;
 			case 'e_pm_full_post':
-				$errstr = $warning_lang['warning.pm.full.post'];
+				$errstr = $lang['warning.pm.full.post'];
 				$type = MessageHelper::WARNING;
 				break;
 			case 'e_incomplete':
-				$errstr = $warning_lang['warning.incomplete'];
+				$errstr = $lang['warning.incomplete'];
 				$type = MessageHelper::NOTICE;
 			break;
 			default:
@@ -214,11 +216,8 @@ elseif ($prw_convers && empty($mp_edit)) // Conversation preview.
 	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 	$login = retrieve(POST, 'login', '');
 
-	$view         = new FileTemplate('user/pm.tpl');
-	$common_lang  = LangLoader::get('common-lang');
-	$form_lang    = LangLoader::get('form-lang');
-	$warning_lang = LangLoader::get('warning-lang');
-	$view->add_lang(array_merge($lang, $common_lang, $form_lang, $warning_lang));
+	$view = new FileTemplate('user/pm.tpl');
+	$view->add_lang($lang);
 
 	$view->put('KERNEL_EDITOR', $editor->display());
 
@@ -248,11 +247,8 @@ elseif ($prw && empty($pm_edit) && empty($pm_del)) // Message preview
 		$convers_title = PersistenceContext::get_querier()->get_column_value(DB_TABLE_PM_TOPIC, 'title', 'WHERE id = :id', array('id' => $pm_id_get));
 	} catch (RowNotFoundException $ex) {}
 
-	$view         = new FileTemplate('user/pm.tpl');
-	$common_lang  = LangLoader::get('common-lang');
-	$form_lang    = LangLoader::get('form-lang');
-	$warning_lang = LangLoader::get('warning-lang');
-	$view->add_lang(array_merge($lang, $common_lang, $form_lang, $warning_lang));
+	$view = new FileTemplate('user/pm.tpl');
+	$view->add_lang($lang);
 
 	$view->put('KERNEL_EDITOR', $editor->display());
 
@@ -466,9 +462,9 @@ elseif (!empty($pm_del)) // Deleting message if recipient hasn't read yet
 			}
 			else // User has already read the message, it can't be deleted anymore
 			{
-				$warning_lang  = LangLoader::get('warning-lang');
+				$lang  = LangLoader::get('warning-lang');
 				$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'),
-                    $warning_lang['warning.pm.no.del']);
+                    $lang['warning.pm.no.del']);
                 DispatchManager::redirect($controller);
 			}
 		}
@@ -545,9 +541,9 @@ elseif (!empty($pm_edit)) // Edit PM, if recipient hasn't read it yet
 				}
 				else // Missing fields
 				{
-					$warning_lang  = LangLoader::get('warning-lang');
+					$lang  = LangLoader::get('warning-lang');
 					$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'),
-                        $warning_lang['warning.incomplete']);
+                        $lang['warning.incomplete']);
                     DispatchManager::redirect($controller);
 				}
 
@@ -556,18 +552,15 @@ elseif (!empty($pm_edit)) // Edit PM, if recipient hasn't read it yet
 			}
 			else // Edition interface
 			{
-				$view         = new FileTemplate('user/pm.tpl');
-				$common_lang  = LangLoader::get('common-lang');
-				$form_lang    = LangLoader::get('form-lang');
-				$warning_lang = LangLoader::get('warning-lang');
-				$view->add_lang(array_merge($lang, $common_lang, $form_lang, $warning_lang));
+				$view = new FileTemplate('user/pm.tpl');
+				$view->add_lang($lang);
 
 				$view->put('KERNEL_EDITOR', $editor->display());
 
 				$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 				$title = retrieve(POST, 'title', '', TSTRING_UNCHANGE);
 
-				$Bread_crumb->add($common_lang['common.edit']);
+				$Bread_crumb->add($lang['common.edit']);
 
 				$view->assign_block_vars('edit_pm', array(
 					'CONTENTS'      => ($prw_convers XOR $prw) ? $contents : FormatingHelper::unparse($pm['contents']),
@@ -598,8 +591,8 @@ elseif (!empty($pm_edit)) // Edit PM, if recipient hasn't read it yet
 		}
 		else // User has already read the message => edition is disabled
 		{
-			$warning_lang  = LangLoader::get('warning-lang');
-			$controller = new UserErrorController($warning_lang['warning.error'], $warning_lang['warning.pm.no.edit']);
+			$lang  = LangLoader::get('warning-lang');
+			$controller = new UserErrorController($lang['warning.error'], $lang['warning.pm.no.edit']);
             DispatchManager::redirect($controller);
 		}
 	}
@@ -612,10 +605,7 @@ elseif (!empty($pm_edit)) // Edit PM, if recipient hasn't read it yet
 elseif (!empty($pm_id_get)) // Messages associated with the conversation.
 {
 	$view         = new FileTemplate('user/pm.tpl');
-	$common_lang  = LangLoader::get('common-lang');
-	$form_lang    = LangLoader::get('form-lang');
-	$warning_lang = LangLoader::get('warning-lang');
-	$view->add_lang(array_merge($lang, $common_lang, $form_lang, $warning_lang));
+	$view->add_lang($lang);
 
 	// Retrieve the conversation infos
 	try {
@@ -788,15 +778,15 @@ elseif (!empty($pm_id_get)) // Messages associated with the conversation.
 
 		// Errors management
 		$get_error = retrieve(GET, 'error', '');
-		$warning_lang  = LangLoader::get('warning-lang');
+		$lang  = LangLoader::get('warning-lang');
 		switch ($get_error)
 		{
 			case 'e_incomplete':
-				$errstr = $warning_lang['warning.incomplete'];
+				$errstr = $lang['warning.incomplete'];
 				$type = MessageHelper::NOTICE;
 				break;
 			case 'e_pm_del':
-				$errstr = $warning_lang['warning.pm.del'];
+				$errstr = $lang['warning.pm.del'];
 				$type = MessageHelper::WARNING;
 				break;
 			default:
@@ -810,11 +800,8 @@ elseif (!empty($pm_id_get)) // Messages associated with the conversation.
 }
 else // Conversation list in the user email box
 {
-	$view         = new FileTemplate('user/pm.tpl');
-	$common_lang  = LangLoader::get('common-lang');
-	$form_lang    = LangLoader::get('form-lang');
-	$warning_lang = LangLoader::get('warning-lang');
-	$view->add_lang(array_merge($lang, $common_lang, $form_lang, $warning_lang));
+	$view = new FileTemplate('user/pm.tpl');
+	$view->add_lang($lang);
 
 	$nbr_pm = PrivateMsg::count_conversations($current_user->get_id());
 
@@ -857,7 +844,7 @@ else // Conversation list in the user email box
 		// Errors management
 		if ($nbr_waiting_pm > 0)
 		{
-			$view->put('MESSAGE_HELPER', MessageHelper::display(sprintf($warning_lang['warning.pm.full'], $nbr_waiting_pm), MessageHelper::WARNING));
+			$view->put('MESSAGE_HELPER', MessageHelper::display(sprintf($lang['warning.pm.full'], $nbr_waiting_pm), MessageHelper::WARNING));
 		}
 	}
 

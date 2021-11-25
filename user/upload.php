@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 18
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 1.6 - 2007 07 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -13,10 +13,16 @@
 */
 
 require_once('../kernel/begin.php');
-$upload_lang = LangLoader::get('upload-lang');
-$error_lang = LangLoader::get('errors');
-$warning_lang = LangLoader::get('warning-lang');
-define('TITLE', $upload_lang['upload.files.management']);
+
+$lang = array_merge(
+    LangLoader::get('common-lang'),
+    LangLoader::get('form-lang'),
+    LangLoader::get('errors'),
+    LangLoader::get('upload-lang'),
+    LangLoader::get('warning-lang')
+);
+
+define('TITLE', $lang['upload.files.management']);
 
 $popup = retrieve(GET, 'popup', '');
 $editor = retrieve(GET, 'edt', '');
@@ -49,7 +55,7 @@ if (!empty($popup)) // Popup
 else // Display management interface.
 {
     $Bread_crumb->add(LangLoader::get_message('user.user', 'user-lang'), UserUrlBuilder::profile(AppContext::get_current_user()->get_id())->rel());
-    $Bread_crumb->add($upload_lang['upload.files.management'], UserUrlBuilder::upload_files_panel()->rel());
+    $Bread_crumb->add($lang['upload.files.management'], UserUrlBuilder::upload_files_panel()->rel());
     require_once('../kernel/header.php');
     $field = '';
     $popup = '';
@@ -280,7 +286,7 @@ elseif (!empty($move_file) && $to != -1) // file move
 elseif (!empty($move_folder) || !empty($move_file))
 {
     $view = new FileTemplate('user/upload_move.tpl');
-    $view->add_lang(array_merge(LangLoader::get('common-lang'),LangLoader::get('form-lang'), LangLoader::get('upload-lang')));
+    $view->add_lang($lang);
 
     $view->put_all(array(
         'C_DISPLAY_CLOSE_BUTTON' => $display_close_button,
@@ -373,17 +379,17 @@ else
     $is_admin = AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL);
 
     $view = new FileTemplate('user/upload.tpl');
-    $view->add_lang(array_merge(LangLoader::get('common-lang'), LangLoader::get('form-lang'),  LangLoader::get('upload-lang'), LangLoader::get('warning-lang')));
+    $view->add_lang($lang);
 
     // errors management
     $array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable', 'e_unlink_disabled', 'e_max_data_reach');
     if (in_array($get_error, $array_error))
-        $view->put('MESSAGE_HELPER', MessageHelper::display($error_lang[$get_error], MessageHelper::WARNING));
+        $view->put('MESSAGE_HELPER', MessageHelper::display($lang[$get_error], MessageHelper::WARNING));
     if ($get_error == 'incomplete')
-        $view->put('MESSAGE_HELPER', MessageHelper::display($warning_lang['warning.incomplete'], MessageHelper::NOTICE));
+        $view->put('MESSAGE_HELPER', MessageHelper::display($lang['warning.incomplete'], MessageHelper::NOTICE));
 
-    if (isset($error_lang[$get_l_error]))
-        $view->put('MESSAGE_HELPER', MessageHelper::display($error_lang[$get_l_error], MessageHelper::WARNING));
+    if (isset($lang[$get_l_error]))
+        $view->put('MESSAGE_HELPER', MessageHelper::display($lang[$get_l_error], MessageHelper::WARNING));
 
     $view->put_all(array(
         'C_POPUP'                => !empty($popup),
