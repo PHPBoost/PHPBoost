@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 20
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -21,7 +21,6 @@ class FaqItemFormController extends ModuleController
 	private $submit_button;
 
 	private $lang;
-	private $form_lang;
 
 	private $item;
 	private $is_new_item;
@@ -35,7 +34,6 @@ class FaqItemFormController extends ModuleController
 		$this->build_form($request);
 
 		$view = new StringTemplate('# INCLUDE FORM #');
-		$view->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -50,8 +48,10 @@ class FaqItemFormController extends ModuleController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'faq');
-		$this->form_lang = LangLoader::get('form-lang');
+		$this->lang = array_merge(
+			LangLoader::get('form-lang'),
+			LangLoader::get('common', 'faq')
+		);
 	}
 
 	private function build_form(HTTPRequestCustom $request)
@@ -59,7 +59,7 @@ class FaqItemFormController extends ModuleController
 		$form = new HTMLForm(__CLASS__);
 		$form->set_layout_title($this->get_item()->get_id() === null ? $this->lang['faq.add.item'] : ($this->lang['faq.edit.item']));
 
-		$fieldset = new FormFieldsetHTML('faq', $this->form_lang['form.parameters']);
+		$fieldset = new FormFieldsetHTML('faq', $this->lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['faq.form.question'], $this->get_item()->get_title(), array('required' => true)));
@@ -69,14 +69,14 @@ class FaqItemFormController extends ModuleController
 			$search_category_children_options = new SearchCategoryChildrensOptions();
 			$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
 			$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->form_lang['form.category'], $this->get_item()->get_id_category(), $search_category_children_options));
+			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->lang['form.category'], $this->get_item()->get_id_category(), $search_category_children_options));
 		}
 
 		$fieldset->add_field(new FormFieldRichTextEditor('answer', $this->lang['faq.form.answer'], $this->get_item()->get_content(), array('rows' => 15, 'required' => true)));
 
 		if (CategoriesAuthorizationsService::check_authorizations($this->get_item()->get_id_category())->moderation())
 		{
-			$fieldset->add_field(new FormFieldCheckbox('approved', $this->form_lang['form.approve'], $this->get_item()->is_approved()));
+			$fieldset->add_field(new FormFieldCheckbox('approved', $this->lang['form.approve'], $this->get_item()->is_approved()));
 		}
 
 		$this->build_contribution_fieldset($form);
@@ -191,7 +191,7 @@ class FaqItemFormController extends ModuleController
 		{
 			$id = FaqService::add($item);
 			$item->set_id($id);
-			
+
 			if (!$this->is_contributor_member())
 				HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
 		}
@@ -199,7 +199,7 @@ class FaqItemFormController extends ModuleController
 		{
 			$id = $item->get_id();
 			FaqService::update($item);
-			
+
 			if (!$this->is_contributor_member())
 				HooksService::execute_hook_action('edit', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
 		}

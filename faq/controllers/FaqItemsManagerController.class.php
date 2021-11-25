@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -34,22 +34,24 @@ class FaqItemsManagerController extends ModuleController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'faq');
+		$this->lang = array_merge(
+			LangLoader::get('common-lang'),
+			LangLoader::get('common', 'faq')
+		);
 		$this->view = new StringTemplate('# INCLUDE TABLE #');
 	}
 
 	private function build_table()
 	{
-		$common_lang = LangLoader::get('common-lang');
 		$display_categories = CategoriesService::get_categories_manager()->get_categories_cache()->has_categories();
 
 		$columns = array(
 			new HTMLTableColumn($this->lang['faq.form.question'], 'title'),
-			new HTMLTableColumn($common_lang['common.category'], 'id_category'),
-			new HTMLTableColumn($common_lang['common.author'], 'display_name'),
-			new HTMLTableColumn($common_lang['common.creation.date'], 'creation_date'),
-			new HTMLTableColumn($common_lang['common.status.publication'], 'approved'),
-			new HTMLTableColumn($common_lang['common.actions'], '', array('sr-only' => true))
+			new HTMLTableColumn($this->lang['common.category'], 'id_category'),
+			new HTMLTableColumn($this->lang['common.author'], 'display_name'),
+			new HTMLTableColumn($this->lang['common.creation.date'], 'creation_date'),
+			new HTMLTableColumn($this->lang['common.status.publication'], 'approved'),
+			new HTMLTableColumn($this->lang['common.actions'], '', array('sr-only' => true))
 		);
 
 		if (!$display_categories)
@@ -59,14 +61,14 @@ class FaqItemsManagerController extends ModuleController
 
 		$table_model->set_layout_title($this->lang['faq.items.management']);
 
-		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('creation_date', 'filter1', $common_lang['common.sort.by.date'] . ' ' . TextHelper::lcfirst($common_lang['common.minimum'])));
-		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('creation_date', 'filter2', $common_lang['common.sort.by.date'] . ' ' . TextHelper::lcfirst($common_lang['common.maximum'])));
-		$table_model->add_filter(new HTMLTableAjaxUserAutoCompleteSQLFilter('display_name', 'filter3', $common_lang['common.sort.by.author']));
+		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('creation_date', 'filter1', $this->lang['common.sort.by.date'] . ' ' . TextHelper::lcfirst($this->lang['common.minimum'])));
+		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('creation_date', 'filter2', $this->lang['common.sort.by.date'] . ' ' . TextHelper::lcfirst($this->lang['common.maximum'])));
+		$table_model->add_filter(new HTMLTableAjaxUserAutoCompleteSQLFilter('display_name', 'filter3', $this->lang['common.sort.by.author']));
 		if ($display_categories)
 			$table_model->add_filter(new HTMLTableCategorySQLFilter('filter4'));
 
-		$status_list = array(Item::PUBLISHED => $common_lang['common.status.published'], Item::NOT_PUBLISHED => $common_lang['common.status.draft']);
-		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('published', 'filter5', $common_lang['common.status.publication'], $status_list));
+		$status_list = array(Item::PUBLISHED => $this->lang['common.status.published'], Item::NOT_PUBLISHED => $this->lang['common.status.draft']);
+		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('published', 'filter5', $this->lang['common.status.publication'], $status_list));
 
 		$table = new HTMLTable($table_model);
 		$table->set_filters_fieldset_class_HTML();
@@ -91,10 +93,10 @@ class FaqItemsManagerController extends ModuleController
 
 			$row = array(
 				new HTMLTableRowCell(new LinkHTMLElement(FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $faq_question->get_id()), $faq_question->get_title()), 'left'),
-				new HTMLTableRowCell(new LinkHTMLElement(FaqUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), ($category->get_id() == Category::ROOT_CATEGORY ? $common_lang['common.none.alt'] : $category->get_name()))),
+				new HTMLTableRowCell(new LinkHTMLElement(FaqUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), ($category->get_id() == Category::ROOT_CATEGORY ? $this->lang['common.none.alt'] : $category->get_name()))),
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell($faq_question->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR)),
-				new HTMLTableRowCell($faq_question->is_approved() ? $common_lang['common.status.published.alt'] : $common_lang['common.status.draft']),
+				new HTMLTableRowCell($faq_question->is_approved() ? $this->lang['common.status.published.alt'] : $this->lang['common.status.draft']),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display(), 'controls')
 			);
 

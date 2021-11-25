@@ -212,7 +212,7 @@ class FaqItem
 
 			// Item
 			'ID'               => $this->id,
-			'TITLE'           => $this->title,
+			'TITLE'            => $this->title,
 			'CONTENT'          => $rich_content,
 			'PSEUDO'           => $user->get_display_name(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
