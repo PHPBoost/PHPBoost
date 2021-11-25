@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 11 26
  * @since       PHPBoost 4.1 - 2015 09 18
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -47,7 +47,10 @@ class AdminReCaptchaConfig extends AdminModuleController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'ReCaptcha');
+		$this->lang = array_merge(
+			LangLoader::get('form-lang'),
+			LangLoader::get('common', 'ReCaptcha')
+		);
 		$this->config = ReCaptchaConfig::load();
 	}
 
@@ -99,11 +102,13 @@ class AdminReCaptchaConfig extends AdminModuleController
 			$this->config->disable_invisible_mode();
 
 		ReCaptchaConfig::save();
+
+		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
 	}
 
 	private function build_response(View $view)
 	{
-		$title = LangLoader::get_message('form.configuration', 'form-lang');
+		$title = $this->lang['form.configuration'];
 
 		$response = new AdminMenuDisplayResponse($view);
 		$response->set_title($title);
