@@ -25,7 +25,6 @@ $id_to_delete = (int)retrieve(GET, 'del', 0);
 $id_to_update = (int)retrieve(POST, 'idedit', 0);
 $id_update = (int)retrieve(GET, 'edit', 0);
 
-
 if ($contribution_id > 0)
 {
 	$contribution = new Contribution();

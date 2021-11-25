@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 11 25S
  * @since       PHPBoost 3.0 - 2012 04 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -104,7 +104,10 @@ class UserLoginController extends AbstractController
 	{
 		$this->request = $request;
 		$this->view = new FileTemplate('user/UserLoginController.tpl');
-		$this->lang = LangLoader::get('user-lang');
+		$this->lang = array_merge(
+			LangLoader::get('date-lang'),
+			LangLoader::get('user-lang')
+		);
 		$this->view->add_lang($this->lang);
 		$this->maintain_config = MaintenanceConfig::load();
 	}
@@ -268,9 +271,8 @@ class UserLoginController extends AbstractController
 
 	private function init_maintain_delay()
 	{
-		$date_lang = LangLoader::get('date-lang');
 		$array_time = array(0 => '-1', 1 => '0', 2 => '60', 3 => '300', 4 => '900', 5 => '1800', 6 => '3600', 7 => '7200', 8 => '86400', 9 => '172800', 10 => '604800');
-		$array_delay = array(0 => LangLoader::get_message('common.unspecified', 'common-lang'), 1 => '', 2 => '1 ' . $date_lang['date.minute'], 3 => '5 ' . $date_lang['date.minutes'], 4 => '15 ' . $date_lang['date.minutes'], 5 => '30 ' . $date_lang['date.minutes'], 6 => '1 ' . $date_lang['date.hour'], 7 => '2 ' . $date_lang['date.hours'], 8 => '1 ' . $date_lang['date.day'], 9 => '2 ' . $date_lang['date.days'], 10 => '1 ' . $date_lang['date.week']);
+		$array_delay = array(0 => LangLoader::get_message('common.unspecified', 'common-lang'), 1 => '', 2 => '1 ' . $this->lang['date.minute'], 3 => '5 ' . $this->lang['date.minutes'], 4 => '15 ' . $this->lang['date.minutes'], 5 => '30 ' . $this->lang['date.minutes'], 6 => '1 ' . $this->lang['date.hour'], 7 => '2 ' . $this->lang['date.hours'], 8 => '1 ' . $this->lang['date.day'], 9 => '2 ' . $this->lang['date.days'], 10 => '1 ' . $this->lang['date.week']);
 
 		if (!$this->maintain_config->is_unlimited_maintenance())
 		{
