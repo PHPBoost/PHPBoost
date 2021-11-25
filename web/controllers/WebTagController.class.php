@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 24
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -34,13 +34,13 @@ class WebTagController extends ModuleController
 
 	public function init()
 	{
-		$this->lang = LangLoader::get('common', 'web');
-		$this->view = new FileTemplate('web/WebSeveralItemsController.tpl');
-		$this->view->add_lang(array_merge(
-			$this->lang,
+		$this->lang = array_merge(
 			LangLoader::get('common-lang'),
-			LangLoader::get('contribution-lang')
-		));
+			LangLoader::get('contribution-lang'),
+			LangLoader::get('common', 'web')
+		);
+		$this->view = new FileTemplate('web/WebSeveralItemsController.tpl');
+		$this->view->add_lang($this->lang);
 		$this->config = WebConfig::load();
 		$this->comments_config = CommentsConfig::load();
 		$this->content_management_config = ContentManagementConfig::load();
@@ -127,25 +127,23 @@ class WebTagController extends ModuleController
 
 	private function build_sorting_form($field, $mode)
 	{
-		$common_lang = LangLoader::get('common-lang');
-
 		$form = new HTMLForm(__CLASS__, '', false);
 		$form->set_css_class('options');
 
-		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $common_lang['common.sort.by']));
+		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $this->lang['common.sort.by']));
 		$form->add_fieldset($fieldset);
 
 		$sort_options = array(
-			new FormFieldSelectChoiceOption($common_lang['common.creation.date'], WebItem::SORT_FIELDS_URL_VALUES[WebItem::SORT_DATE]),
-			new FormFieldSelectChoiceOption($common_lang['common.title'], WebItem::SORT_FIELDS_URL_VALUES[WebItem::SORT_ALPHABETIC]),
+			new FormFieldSelectChoiceOption($this->lang['common.creation.date'], WebItem::SORT_FIELDS_URL_VALUES[WebItem::SORT_DATE]),
+			new FormFieldSelectChoiceOption($this->lang['common.title'], WebItem::SORT_FIELDS_URL_VALUES[WebItem::SORT_ALPHABETIC]),
 			new FormFieldSelectChoiceOption($this->lang['web.config.sort.type.visits'], WebItem::SORT_FIELDS_URL_VALUES[WebItem::SORT_NUMBER_VISITS])
 		);
 
 		if ($this->comments_config->module_comments_is_enabled('web'))
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['common.sort.by.comments.number'], WebItem::SORT_FIELDS_URL_VALUES[WebItem::SORT_COMMENTS_NUMBER]);
+			$sort_options[] = new FormFieldSelectChoiceOption($this->lang['common.sort.by.comments.number'], WebItem::SORT_FIELDS_URL_VALUES[WebItem::SORT_COMMENTS_NUMBER]);
 
 		if ($this->content_management_config->module_notation_is_enabled('web'))
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['common.sort.by.best.note'], WebItem::SORT_FIELDS_URL_VALUES[WebItem::SORT_NOTATION]);
+			$sort_options[] = new FormFieldSelectChoiceOption($this->lang['common.sort.by.best.note'], WebItem::SORT_FIELDS_URL_VALUES[WebItem::SORT_NOTATION]);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_options,
 			array('events' => array('change' => 'document.location = "'. WebUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
@@ -153,8 +151,8 @@ class WebTagController extends ModuleController
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
 			array(
-				new FormFieldSelectChoiceOption($common_lang['common.sort.asc'], 'asc'),
-				new FormFieldSelectChoiceOption($common_lang['common.sort.desc'], 'desc')
+				new FormFieldSelectChoiceOption($this->lang['common.sort.asc'], 'asc'),
+				new FormFieldSelectChoiceOption($this->lang['common.sort.desc'], 'desc')
 			),
 			array('events' => array('change' => 'document.location = "' . WebUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));

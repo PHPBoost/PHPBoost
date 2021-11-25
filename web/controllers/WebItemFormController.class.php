@@ -22,7 +22,6 @@ class WebItemFormController extends ModuleController
 	private $submit_button;
 
 	private $lang;
-	private $form_lang;
 
 	private $item;
 	private $is_new_item;
@@ -36,7 +35,6 @@ class WebItemFormController extends ModuleController
 		$this->build_form($request);
 
 		$view = new StringTemplate('# INCLUDE FORM #');
-		$view->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -51,8 +49,10 @@ class WebItemFormController extends ModuleController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'web');
-		$this->form_lang = LangLoader::get('form-lang');
+		$this->lang = array_merge(
+			LangLoader::get('form-lang'),
+			LangLoader::get('common', 'web')
+		);
 	}
 
 	private function build_form(HTTPRequestCustom $request)
@@ -60,10 +60,10 @@ class WebItemFormController extends ModuleController
 		$form = new HTMLForm(__CLASS__);
 		$form->set_layout_title($this->get_item()->get_id() === null ? $this->lang['web.add.item'] : ($this->lang['web.edit.item'] . ': ' . $this->get_item()->get_title()));
 
-		$fieldset = new FormFieldsetHTML('web', $this->form_lang['form.parameters']);
+		$fieldset = new FormFieldsetHTML('web', $this->lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('title', $this->form_lang['form.title'], $this->get_item()->get_title(),
+		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['form.title'], $this->get_item()->get_title(),
 			array('required' => true)
 		));
 
@@ -72,20 +72,20 @@ class WebItemFormController extends ModuleController
 			$search_category_children_options = new SearchCategoryChildrensOptions();
 			$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
 			$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->form_lang['form.category'], $this->get_item()->get_id_category(), $search_category_children_options));
+			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->lang['form.category'], $this->get_item()->get_id_category(), $search_category_children_options));
 		}
 
-		$fieldset->add_field(new FormFieldUrlEditor('website_url', $this->form_lang['form.url'], $this->get_item()->get_website_url()->absolute(),
+		$fieldset->add_field(new FormFieldUrlEditor('website_url', $this->lang['form.url'], $this->get_item()->get_website_url()->absolute(),
 			array('required' => true)
 		));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('content', $this->form_lang['form.description'], $this->get_item()->get_content(),
+		$fieldset->add_field(new FormFieldRichTextEditor('content', $this->lang['form.description'], $this->get_item()->get_content(),
 			array('rows' => 15, 'required' => true)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('summary_enabled', $this->form_lang['form.enable.summary'], $this->get_item()->is_summary_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('summary_enabled', $this->lang['form.enable.summary'], $this->get_item()->is_summary_enabled(),
 			array(
-				'description' => StringVars::replace_vars($this->form_lang['form.summary.clue'], array('number' => WebConfig::AUTO_CUT_CHARACTERS_NUMBER)),
+				'description' => StringVars::replace_vars($this->lang['form.summary.clue'], array('number' => WebConfig::AUTO_CUT_CHARACTERS_NUMBER)),
 				'events' => array('click' => '
 					if (HTMLForms.getField("summary_enabled").getValue()) {
 						HTMLForms.getField("summary").enable();
@@ -96,14 +96,14 @@ class WebItemFormController extends ModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->form_lang['form.description'], $this->get_item()->get_summary(),
+		$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->lang['form.description'], $this->get_item()->get_summary(),
 			array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_summary_enabled', false) : !$this->get_item()->is_summary_enabled()))
 		));
 
-		$options_fieldset = new FormFieldsetHTML('options', $this->form_lang['form.options']);
+		$options_fieldset = new FormFieldsetHTML('options', $this->lang['form.options']);
 		$form->add_fieldset($options_fieldset);
 
-		$options_fieldset->add_field(new FormFieldThumbnail('thumbnail', $this->form_lang['form.picture'], $this->get_item()->get_thumbnail()->relative(), WebItem::THUMBNAIL_URL));
+		$options_fieldset->add_field(new FormFieldThumbnail('thumbnail', $this->lang['form.picture'], $this->get_item()->get_thumbnail()->relative(), WebItem::THUMBNAIL_URL));
 
 		$options_fieldset->add_field(new FormFieldCheckbox('partner', $this->lang['web.form.partner'], $this->get_item()->is_partner(), array(
 			'events' => array('click' => '
@@ -131,31 +131,31 @@ class WebItemFormController extends ModuleController
 			))
 		);
 
-		$options_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_item()->get_id(), 'keywords', $this->form_lang['form.keywords'],
-			array('description' => $this->form_lang['form.keywords.clue']))
+		$options_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_item()->get_id(), 'keywords', $this->lang['form.keywords'],
+			array('description' => $this->lang['form.keywords.clue']))
 		);
 
 		if (CategoriesAuthorizationsService::check_authorizations($this->get_item()->get_id_category())->moderation())
 		{
-			$publication_fieldset = new FormFieldsetHTML('publication', $this->form_lang['form.publication']);
+			$publication_fieldset = new FormFieldsetHTML('publication', $this->lang['form.publication']);
 			$form->add_fieldset($publication_fieldset);
 
-			$publication_fieldset->add_field(new FormFieldDateTime('creation_date', $this->form_lang['form.creation.date'], $this->get_item()->get_creation_date(),
+			$publication_fieldset->add_field(new FormFieldDateTime('creation_date', $this->lang['form.creation.date'], $this->get_item()->get_creation_date(),
 				array('required' => true)
 			));
 
 			if (!$this->get_item()->is_published())
 			{
-				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->form_lang['form.update.date'], false,
+				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->lang['form.update.date'], false,
 					array('hidden' => $this->get_item()->get_status() != WebItem::NOT_PUBLISHED)
 				));
 			}
 
-			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('published', $this->form_lang['form.publication'], $this->get_item()->get_publishing_state(),
+			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('published', $this->lang['form.publication'], $this->get_item()->get_publishing_state(),
 				array(
-					new FormFieldSelectChoiceOption($this->form_lang['form.publication.draft'], WebItem::NOT_PUBLISHED),
-					new FormFieldSelectChoiceOption($this->form_lang['form.publication.now'], WebItem::PUBLISHED),
-					new FormFieldSelectChoiceOption($this->form_lang['form.publication.deffered'], WebItem::DEFERRED_PUBLICATION),
+					new FormFieldSelectChoiceOption($this->lang['form.publication.draft'], WebItem::NOT_PUBLISHED),
+					new FormFieldSelectChoiceOption($this->lang['form.publication.now'], WebItem::PUBLISHED),
+					new FormFieldSelectChoiceOption($this->lang['form.publication.deffered'], WebItem::DEFERRED_PUBLICATION),
 				),
 				array(
 					'events' => array('change' => '
@@ -174,11 +174,11 @@ class WebItemFormController extends ModuleController
 				)
 			));
 
-			$publication_fieldset->add_field($publishing_start_date = new FormFieldDateTime('publishing_start_date', $this->form_lang['form.start.date'], ($this->get_item()->get_publishing_start_date() === null ? new Date() : $this->get_item()->get_publishing_start_date()),
+			$publication_fieldset->add_field($publishing_start_date = new FormFieldDateTime('publishing_start_date', $this->lang['form.start.date'], ($this->get_item()->get_publishing_start_date() === null ? new Date() : $this->get_item()->get_publishing_start_date()),
 				array('hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_publication_state', 0) != WebItem::DEFERRED_PUBLICATION) : ($this->get_item()->get_publishing_state() != WebItem::DEFERRED_PUBLICATION)))
 			));
 
-			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->form_lang['form.enable.end.date'], $this->get_item()->is_end_date_enabled(),
+			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->lang['form.enable.end.date'], $this->get_item()->is_end_date_enabled(),
 				array(
 					'hidden' => ($request->is_post_method() ? ($request->get_postint(__CLASS__ . '_publication_state', 0) != WebItem::DEFERRED_PUBLICATION) : ($this->get_item()->get_publishing_state() != WebItem::DEFERRED_PUBLICATION)),
 					'events' => array('click' => '
@@ -191,7 +191,7 @@ class WebItemFormController extends ModuleController
 				)
 			));
 
-			$publication_fieldset->add_field($publishing_end_date = new FormFieldDateTime('publishing_end_date', $this->form_lang['form.end.date'], ($this->get_item()->get_publishing_end_date() === null ? new Date() : $this->get_item()->get_publishing_end_date()),
+			$publication_fieldset->add_field($publishing_end_date = new FormFieldDateTime('publishing_end_date', $this->lang['form.end.date'], ($this->get_item()->get_publishing_end_date() === null ? new Date() : $this->get_item()->get_publishing_end_date()),
 				array('hidden' => ($request->is_post_method() ? !$request->get_postbool(__CLASS__ . '_end_date_enabled', false) : !$this->get_item()->is_end_date_enabled()))
 			));
 
@@ -383,7 +383,7 @@ class WebItemFormController extends ModuleController
 		{
 			$id = WebService::add($item);
 			$item->set_id($id);
-			
+
 			if (!$this->is_contributor_member())
 				HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
 		}
@@ -392,7 +392,7 @@ class WebItemFormController extends ModuleController
 			$item->set_update_date(new Date());
 			$id = $item->get_id();
 			WebService::update($item);
-			
+
 			if (!$this->is_contributor_member())
 				HooksService::execute_hook_action('edit', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
 		}
