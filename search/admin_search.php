@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 11 26
  * @since       PHPBoost 2.0 - 2008 03 22
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -18,10 +18,6 @@ $lang = array_merge(
 	LangLoader::get('common','search')
 );
 
-//--------------------------------------------------------------------- Header
-define('TITLE', $lang['form.configuration']);
-require_once('../admin/admin_header.php');
-
 //--------------------------------------------------------------------- Params
 $request = AppContext::get_request();
 
@@ -33,6 +29,10 @@ $view = new FileTemplate('search/admin_search.tpl');
 $view->add_lang($lang);
 
 $config = SearchConfig::load();
+
+//--------------------------------------------------------------------- Header
+define('TITLE', $weighting ? $lang['search.config.weighting'] : $lang['form.configuration']);
+require_once('../admin/admin_header.php');
 
 //Si c'est confirmé on execute
 if ($valid)
@@ -49,6 +49,8 @@ if ($valid)
 		$config->set_authorizations(Authorizations::build_auth_array_from_form(SearchAuthorizationsService::READ_AUTHORIZATIONS));
 		SearchConfig::save();
 
+		HooksService::execute_hook_action('edit_config', 'search', array('title' => StringVars::replace_vars($lang['form.module.title'], array('module_name' => ModulesManager::get_module('search')->get_configuration()->get_name())), 'url' => Url::to_rel('/search/admin_search.php')));
+
 		$view->put('MESSAGE_HELPER', MessageHelper::display($lang['warning.success.config'], MessageHelper::SUCCESS, 4));
 	}
 	else
@@ -63,6 +65,8 @@ if ($valid)
 		SearchConfig::load()->set_weightings($search_weightings);
 		SearchConfig::save();
 
+		HooksService::execute_hook_action('edit_config', 'search', array('title' => $lang['search.config.weighting'], 'url' => Url::to_rel('/search/admin_search.php?weighting=true')));
+		
 		$view->put('MESSAGE_HELPER', MessageHelper::display($lang['warning.success.config'], MessageHelper::SUCCESS, 4));
 	}
 }
@@ -83,7 +87,6 @@ if (!$weighting)
 	$provider_service = AppContext::get_extension_provider_service();
 	$search_extensions_point_modules = array_keys($provider_service->get_extension_point(SearchableExtensionPoint::EXTENSION_POINT));
 	$providers = $provider_service->get_providers(SearchableExtensionPoint::EXTENSION_POINT);
-
 
 	foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $id => $module)
 	{
