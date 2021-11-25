@@ -109,7 +109,7 @@
 									<span class="float-left"><button type="submit" name="valid" value="true" class="button submit">{@common.delete}</button></span>
 								# ENDIF #
 								# IF C_DISPLAY_LINK_MORE_ACTION #
-									<a class="offload" href="moderation_forum{U_MORE_ACTION}">{@forum.more.action}</a>
+									<a class="offload" href="moderation_forum{U_MORE_ACTION}">{@more_action}</a>
 								# ENDIF #
 							</td>
 						</tr>

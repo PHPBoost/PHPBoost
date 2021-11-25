@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 4.1 - 2015 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -21,7 +21,6 @@ class AdminForumConfigController extends AdminModuleController
 	private $submit_button;
 
 	private $lang;
-	private $form_lang;
 
 	/**
 	 * @var ForumConfig
@@ -48,21 +47,23 @@ class AdminForumConfigController extends AdminModuleController
 
 		$view->put('FORM', $this->form->display());
 
-		return new AdminForumDisplayResponse($view, $this->form_lang['form.configuration'] . ': ' . $this->lang['forum.module.title']);
+		return new AdminForumDisplayResponse($view, $this->lang['form.configuration'] . ': ' . $this->lang['forum.module.title']);
 	}
 
 	private function init()
 	{
 		$this->config = ForumConfig::load();
-		$this->lang = LangLoader::get('common', 'forum');
-		$this->form_lang = LangLoader::get('form-lang');
+		$this->lang = array_merge(
+			LangLoader::get('form-lang'),
+			LangLoader::get('common', 'forum')
+		);
 	}
 
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('config', $this->form_lang['form.configuration'] . ': ' . $this->lang['forum.module.title']);
+		$fieldset = new FormFieldsetHTML('config', $this->lang['form.configuration'] . ': ' . $this->lang['forum.module.title']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('forum_name', $this->lang['forum.config.forum.name'], $this->config->get_forum_name(),
@@ -103,11 +104,11 @@ class AdminForumConfigController extends AdminModuleController
 			array('class' => 'custom-checkbox')
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('left_column_disabled', StringVars::replace_vars($this->form_lang['form.hide.left.column'], array('module' => "forum")), $this->config->is_left_column_disabled(),
+		$fieldset->add_field(new FormFieldCheckbox('left_column_disabled', StringVars::replace_vars($this->lang['form.hide.left.column'], array('module' => "forum")), $this->config->is_left_column_disabled(),
 			array('class' => 'custom-checkbox')
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('right_column_disabled', StringVars::replace_vars($this->form_lang['form.hide.right.column'], array('module' => "forum")), $this->config->is_right_column_disabled(),
+		$fieldset->add_field(new FormFieldCheckbox('right_column_disabled', StringVars::replace_vars($this->lang['form.hide.right.column'], array('module' => "forum")), $this->config->is_right_column_disabled(),
 			array('class' => 'custom-checkbox')
 		));
 
@@ -151,19 +152,18 @@ class AdminForumConfigController extends AdminModuleController
 			)
 		));
 
-		$form_lang = LangLoader::get('form-lang');
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $form_lang['form.authorizations']);
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $this->lang['form.authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($form_lang['form.authorizations.read'], Category::READ_AUTHORIZATIONS),
-			new VisitorDisabledActionAuthorization($form_lang['form.authorizations.write'], Category::WRITE_AUTHORIZATIONS),
-			new MemberDisabledActionAuthorization($form_lang['form.authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
+			new ActionAuthorization($this->lang['form.authorizations.read'], Category::READ_AUTHORIZATIONS),
+			new VisitorDisabledActionAuthorization($this->lang['form.authorizations.write'], Category::WRITE_AUTHORIZATIONS),
+			new MemberDisabledActionAuthorization($this->lang['form.authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['forum.authorizations.read.topics.content'], ForumAuthorizationsService::READ_TOPICS_CONTENT_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['forum.authorizations.flood'], ForumAuthorizationsService::FLOOD_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['forum.authorizations.hide.edition.mark'], ForumAuthorizationsService::HIDE_EDITION_MARK_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['forum.authorizations.unlimited.topics.tracking'], ForumAuthorizationsService::UNLIMITED_TOPICS_TRACKING_AUTHORIZATIONS),
-			new MemberDisabledActionAuthorization($form_lang['form.authorizations.categories'], ForumAuthorizationsService::CATEGORIES_MANAGEMENT_AUTHORIZATIONS),
+			new MemberDisabledActionAuthorization($this->lang['form.authorizations.categories'], ForumAuthorizationsService::CATEGORIES_MANAGEMENT_AUTHORIZATIONS),
 			new VisitorDisabledActionAuthorization($this->lang['forum.authorizations.multiple.posts'], ForumAuthorizationsService::MULTIPLE_POSTS_AUTHORIZATIONS)
 		));
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);

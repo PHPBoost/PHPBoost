@@ -110,7 +110,7 @@
 										<li class="li-stretch">
 											<span>Sanctions: {list.USER_WARNING}%</span>
 											<span>
-												<a class="offload" href="moderation_forum{list.USER_WARNING}" aria-label="{@user.warnings.management}"><i class="fa fa-exclamation-triangle warning" aria-hidden="true"></i></a>
+												<a class="offload" href="moderation_forum{list.U_FORUM_WARNING}" aria-label="{@user.warnings.management}"><i class="fa fa-exclamation-triangle warning" aria-hidden="true"></i></a>
 												<a class="offload" href="moderation_forum{list.U_FORUM_PUNISHEMENT}" aria-label="{@user.punishments.management}"><i class="fa fa-user-lock" aria-hidden="true"></i></a>
 											</span>
 										</li>

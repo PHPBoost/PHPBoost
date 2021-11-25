@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 03
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 1.6 - 2007 03 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -14,8 +14,11 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$lang = LangLoader::get('common', 'forum');
-$user_lang = LangLoader::get('user-lang');
+$lang = array_merge(
+	LangLoader::get('common-lang'),
+	LangLoader::get('user-lang'),
+	LangLoader::get('common', 'forum')
+);
 
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
 $Bread_crumb->add($lang['forum.stats'], '');
@@ -24,10 +27,7 @@ define('DESCRIPTION', $lang['forum.stats.seo']);
 require_once('../kernel/header.php');
 
 $view = new FileTemplate('forum/forum_stats.tpl');
-$view->add_lang(array_merge(
-	LangLoader::get('common', 'forum'),
-	LangLoader::get('common-lang')
-));
+$view->add_lang($lang);
 
 $total_day = NumberHelper::round((time() - GeneralConfig::load()->get_site_install_date()->get_timestamp())/(3600*24), 0);
 $timestamp_today = @mktime(0, 0, 1, Date::to_format(Date::DATE_NOW, 'm'), Date::to_format(Date::DATE_NOW, 'd'), Date::to_format(Date::DATE_NOW, 'y'));
@@ -134,11 +134,11 @@ $vars_tpl = array_merge($vars_tpl, array(
 	'MEMBERS_NUMBER'        => $total_member,
 	'GUESTS_NUMBER'         => $total_visit,
 
-	'L_USER'   => ($total_online > 1) ? $user_lang['user.users'] : $user_lang['user.user'],
-	'L_ADMIN'  => ($total_admin > 1) ? $user_lang['user.administrators'] : $user_lang['user.administrator'],
-	'L_MODO'   => ($total_modo > 1) ? $user_lang['user.moderators']    : $user_lang['user.moderator'],
-	'L_MEMBER' => ($total_member > 1) ? $user_lang['user.members'] : $user_lang['user.member'],
-	'L_GUEST'  => ($total_visit > 1) ? $user_lang['user.guests'] : $user_lang['user.guest'],
+	'L_USER'   => ($total_online > 1) ? $lang['user.users'] : $lang['user.user'],
+	'L_ADMIN'  => ($total_admin > 1) ? $lang['user.administrators'] : $lang['user.administrator'],
+	'L_MODO'   => ($total_modo > 1) ? $lang['user.moderators']    : $lang['user.moderator'],
+	'L_MEMBER' => ($total_member > 1) ? $lang['user.members'] : $lang['user.member'],
+	'L_GUEST'  => ($total_visit > 1) ? $lang['user.guests'] : $lang['user.guest'],
 ));
 
 $view->put_all($vars_tpl);

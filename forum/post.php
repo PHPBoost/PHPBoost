@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 04
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 1.2 - 2005 10 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -14,8 +14,13 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$lang = LangLoader::get('common', 'forum');
-$warning_lang = LangLoader::get('warning-lang');
+$lang = array_merge(
+	LangLoader::get('common-lang'),
+	LangLoader::get('form-lang'),
+	LangLoader::get('user-lang'),
+	LangLoader::get('warning-lang'),
+	LangLoader::get('common', 'forum')
+);
 
 $id_get = (int)retrieve(GET, 'id', 0);
 
@@ -166,18 +171,12 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 		{
 			if (!ForumAuthorizationsService::check_authorizations($id_get)->write() || $locked_cat)
 			{
-				$controller = new UserErrorController($warning_lang['warning.error'], $locked_cat ? $lang['forum.error.locked.category'] : $lang['forum.error.category.right']);
+				$controller = new UserErrorController($lang['warning.error'], $locked_cat ? $lang['forum.error.locked.category'] : $lang['forum.error.category.right']);
 				DispatchManager::redirect($controller);
 			}
 
 			$view = new FileTemplate('forum/forum_post.tpl');
-			$view->add_lang(array_merge(
-				$lang,
-				LangLoader::get('common-lang'),
-				LangLoader::get('form-lang'),
-				LangLoader::get('user-lang'),
-				$warning_lang
-			));
+			$view->add_lang($lang);
 
 			if (ForumAuthorizationsService::check_authorizations($id_get)->moderation())
 			{
@@ -237,7 +236,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				'id' => $idt_get
 			));
 		} catch (RowNotFoundException $e) {
-			$controller = new UserErrorController($warning_lang['warning.error'], $lang['forum.error.locked.topic']);
+			$controller = new UserErrorController($lang['warning.error'], $lang['forum.error.locked.topic']);
 			DispatchManager::redirect($controller);
 		}
 
@@ -328,7 +327,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
 		if (empty($id_get) || empty($id_first)) //Topic/message inexistant.
 		{
-			$controller = new UserErrorController($warning_lang['warning.error'], $lang['forum.error.non.existent.topic']);
+			$controller = new UserErrorController($lang['warning.error'], $lang['forum.error.non.existent.topic']);
 			DispatchManager::redirect($controller);
 		}
 
@@ -412,13 +411,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			else
 			{
 				$view = new FileTemplate('forum/forum_post.tpl');
-				$view->add_lang(array_merge(
-					$lang,
-					LangLoader::get('common-lang'),
-					LangLoader::get('form-lang'),
-					LangLoader::get('user-lang'),
-					$warning_lang
-				));
+				$view->add_lang($lang);
 
 				$content = '';
 				try {
@@ -428,7 +421,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				//Gestion des erreurs à l'édition.
 				$get_error_e = retrieve(GET, 'errore', '');
 				if ($get_error_e == 'incomplete_t')
-					$view->put('MESSAGE_HELPER', MessageHelper::display($warning_lang['warning.incomplete'], MessageHelper::NOTICE));
+					$view->put('MESSAGE_HELPER', MessageHelper::display($lang['warning.incomplete'], MessageHelper::NOTICE));
 
 				if ($is_modo)
 				{
@@ -594,13 +587,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			else
 			{
 				$view = new FileTemplate('forum/forum_edit_msg.tpl');
-				$view->add_lang(array_merge(
-					$lang,
-					LangLoader::get('common-lang'),
-					LangLoader::get('form-lang'),
-					LangLoader::get('user-lang'),
-					$warning_lang
-				));
+				$view->add_lang($lang);
 
 				$content = '';
 				try {
@@ -610,7 +597,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				//Gestion des erreurs à l'édition.
 				$get_error_e = retrieve(GET, 'errore', '');
 				if ($get_error_e == 'incomplete')
-					$view->put('MESSAGE_HELPER', MessageHelper::display($warning_lang['warning.incomplete'], MessageHelper::NOTICE));
+					$view->put('MESSAGE_HELPER', MessageHelper::display($lang['warning.incomplete'], MessageHelper::NOTICE));
 
 				$vars_tpl = array(
 					'P_UPDATE'       => url('?update=1&amp;new =msg&amp;id =' . $id_get . '&amp;idt =' . $idt_get . '&amp;idm =' . $id_m),
@@ -648,29 +635,23 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			}
 			if (empty($topic['id_category'])) //Topic inexistant.
 			{
-				$controller = new UserErrorController($warning_lang['warning.error'],
+				$controller = new UserErrorController($lang['warning.error'],
                     $lang['forum.error.non.existent.topic']);
                 DispatchManager::redirect($controller);
 			}
 
 			$view = new FileTemplate('forum/forum_edit_msg.tpl');
-			$view->add_lang(array_merge(
-				$lang,
-				LangLoader::get('common-lang'),
-				LangLoader::get('form-lang'),
-				LangLoader::get('user-lang'),
-				$warning_lang
-			));
+			$view->add_lang($lang);
 
 			//Gestion erreur.
 			switch ($error_get)
 			{
 				case 'flood':
-				$errstr = $warning_lang['warning.flood'];
+				$errstr = $lang['warning.flood'];
 				$type = MessageHelper::WARNING;
 				break;
 				case 'incomplete':
-				$errstr = $warning_lang['warning.incomplete'];
+				$errstr = $lang['warning.incomplete'];
 				$type = MessageHelper::NOTICE;
 				break;
 				case 'locked':
@@ -701,13 +682,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 		elseif (!empty($id_get) && ($error_get === 'c_locked' || $error_get === 'c_write' || $error_get === 'incomplete_t' || $error_get === 'false_t'))
 		{
 			$view = new FileTemplate('forum/forum_post.tpl');
-			$view->add_lang(array_merge(
-				$lang,
-				LangLoader::get('common-lang'),
-				LangLoader::get('form-lang'),
-				LangLoader::get('user-lang'),
-				$warning_lang
-			));
+			$view->add_lang($lang);
 
 
 			if (ForumAuthorizationsService::check_authorizations($id_get)->moderation())
@@ -722,11 +697,11 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			switch ($error_get)
 			{
 				case 'flood_t':
-				$errstr = $warning_lang['warning.flood'];
+				$errstr = $lang['warning.flood'];
 				$type = MessageHelper::WARNING;
 				break;
 				case 'incomplete_t':
-				$errstr = $warning_lang['warning.incomplete'];
+				$errstr = $lang['warning.incomplete'];
 				$type = MessageHelper::NOTICE;
 				break;
 				case 'c_locked':

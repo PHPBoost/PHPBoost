@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 03
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 1.6 - 2007 02 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,8 +15,10 @@ AppContext::get_session()->no_session_location(); //Permet de ne pas mettre jour
 require_once('../forum/forum_begin.php');
 require_once('../kernel/header_no_display.php');
 
-$lang = LangLoader::get('common', 'forum');
-$user_lang = LangLoader::get('user-lang');
+$lang = array_merge(
+	LangLoader::get('user-lang'),
+	LangLoader::get('common', 'forum')
+);
 
 $track        = retrieve(GET, 't', '');
 $untrack      = retrieve(GET, 'ut', '');
@@ -69,10 +71,10 @@ if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 
 			$last_topic_title = (($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '') . ' ' . $row['title'];
 			$last_topic_title = addslashes($last_topic_title);
-			$row['login'] = !empty($row['login']) ? $row['login'] : $user_lang['user.guest'];
+			$row['login'] = !empty($row['login']) ? $row['login'] : $lang['user.guest'];
 			$group_color = User::get_group_color($row['user_groups'], $row['user_level']);
 
-			$content .= '<tr><td class="forum-notread" style="width:100%"><a class="offload" href="topic' . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . addslashes(Url::encode_rewrite($row['title']))  . '.php') . '#m' .  $last_msg_id . '"><i class="fa fa-hand-point-right" aria-hidden="true"></i></a> <a class="offload" href="topic' . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . addslashes(Url::encode_rewrite($row['title']))  . '.php') . '" class="small">' . $last_topic_title . '</a></td><td class="forum-notread" style="white-space:nowrap">' . ($row['last_user_id'] != '-1' ? '<a href="'. UserUrlBuilder::profile($row['last_user_id'])->rel() .'" class="small offload' . UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . addslashes($row['login']) . '</a>' : '<em>' . addslashes($user_lang['user.guest']) . '</em>') . '</td><td class="forum-notread" style="white-space:nowrap">' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '</td></tr>';
+			$content .= '<tr><td class="forum-notread" style="width:100%"><a class="offload" href="topic' . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . addslashes(Url::encode_rewrite($row['title']))  . '.php') . '#m' .  $last_msg_id . '"><i class="fa fa-hand-point-right" aria-hidden="true"></i></a> <a class="offload" href="topic' . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . addslashes(Url::encode_rewrite($row['title']))  . '.php') . '" class="small">' . $last_topic_title . '</a></td><td class="forum-notread" style="white-space:nowrap">' . ($row['last_user_id'] != '-1' ? '<a href="'. UserUrlBuilder::profile($row['last_user_id'])->rel() .'" class="small offload' . UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . addslashes($row['login']) . '</a>' : '<em>' . addslashes($lang['user.guest']) . '</em>') . '</td><td class="forum-notread" style="white-space:nowrap">' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '</td></tr>';
 			$nbr_msg_not_read++;
 		}
 		$result->dispose();

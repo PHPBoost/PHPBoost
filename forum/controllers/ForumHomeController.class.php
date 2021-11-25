@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 03
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 4.1 - 2015 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -27,19 +27,18 @@ class ForumHomeController extends ModuleController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'forum');
+		$this->lang = array_merge(
+			LangLoader::get('common-lang'),
+			LangLoader::get('user-lang'),
+			LangLoader::get('common', 'forum')
+		);
 		$this->config = ForumConfig::load();
 		$this->view = new FileTemplate('forum/forum_index.tpl');
-		$this->view->add_lang(array_merge(
-			$this->lang,
-			LangLoader::get('common-lang'),
-			LangLoader::get('user-lang')
-		));
+		$this->view->add_lang($this->lang);
 	}
 
 	private function build_view()
 	{
-		$user_lang = LangLoader::get('user-lang');
 		global $nbr_msg_not_read, $top_view, $bottom_view;
 
 		$id_get = (int)retrieve(GET, 'id', 0);
@@ -184,7 +183,7 @@ class ForumHomeController extends ModuleController
 						}
 
 						$last_topic_title = (($this->config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $this->config->get_message_before_topic_title() : '') . ' ' . $row['title'];
-						$row['login'] = !empty($row['login']) ? $row['login'] : $user_lang['user.guest'];
+						$row['login'] = !empty($row['login']) ? $row['login'] : $this->lang['user.guest'];
 						$last_group_color = User::get_group_color($row['user_groups'], $row['user_level']);
 					}
 					else
@@ -303,11 +302,11 @@ class ForumHomeController extends ModuleController
 
 			'L_TOPIC'   => ($total_topic > 1) ? $this->lang['forum.topics'] : $this->lang['forum.topic'],
 			'L_MESSAGE' => ($total_msg > 1) ? $this->lang['forum.messages'] : $this->lang['forum.message'],
-			'L_USER'    => ($total_online > 1) ? $user_lang['user.users'] : $user_lang['user.user'],
-			'L_ADMIN'   => ($total_admin > 1) ? $user_lang['user.administrators'] : $user_lang['user.administrator'],
-			'L_MODO'    => ($total_modo > 1) ? $user_lang['user.moderators'] : $user_lang['user.moderator'],
-			'L_MEMBER'  => ($total_member > 1) ? $user_lang['user.members'] : $user_lang['user.member'],
-			'L_GUEST'   => ($total_visit > 1) ? $user_lang['user.guests'] : $user_lang['user.guest'],
+			'L_USER'    => ($total_online > 1) ? $this->lang['user.users'] : $this->lang['user.user'],
+			'L_ADMIN'   => ($total_admin > 1) ? $this->lang['user.administrators'] : $this->lang['user.administrator'],
+			'L_MODO'    => ($total_modo > 1) ? $this->lang['user.moderators'] : $this->lang['user.moderator'],
+			'L_MEMBER'  => ($total_member > 1) ? $this->lang['user.members'] : $this->lang['user.member'],
+			'L_GUEST'   => ($total_visit > 1) ? $this->lang['user.guests'] : $this->lang['user.guest'],
 		);
 
 		$this->view->put_all($vars_tpl);

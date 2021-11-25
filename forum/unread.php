@@ -15,8 +15,11 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$lang = LangLoader::get('common', 'forum');
-$user_lang = LangLoader::get('user-lang');
+$lang = array_merge(
+	LangLoader::get('common-lang'),
+	LangLoader::get('user-lang'),
+	LangLoader::get('common', 'forum')
+);
 
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
 $Bread_crumb->add($lang['forum.unread.messages'], '');
@@ -41,11 +44,7 @@ if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //RÃ©servÃ
 }
 
 $view = new FileTemplate('forum/forum_forum.tpl');
-$view->add_lang(array_merge(
-	LangLoader::get('common', 'forum'),
-	LangLoader::get('common-lang'),
-	LangLoader::get('user-lang')
-));
+$view->add_lang($lang);
 
 $id_category_unread = $request->get_getint('cat', 0);
 
@@ -239,11 +238,11 @@ $vars_tpl = array(
 	'U_ONCHANGE_CAT'     => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
 	'U_POST_NEW_SUBJECT' => '',
 
-	'L_USER'   => ($total_online > 1) ? $user_lang['user.users'] : $user_lang['user.user'],
-	'L_ADMIN'  => ($total_admin > 1) ? $user_lang['user.administrators'] : $user_lang['user.administrator'],
-	'L_MODO'   => ($total_modo > 1) ? $user_lang['user.moderators']    : $user_lang['user.moderator'],
-	'L_MEMBER' => ($total_member > 1) ? $user_lang['user.members'] : $user_lang['user.member'],
-	'L_GUEST'  => ($total_visit > 1) ? $user_lang['user.guests'] : $user_lang['user.guest'],
+	'L_USER'   => ($total_online > 1) ? $lang['user.users'] : $lang['user.user'],
+	'L_ADMIN'  => ($total_admin > 1) ? $lang['user.administrators'] : $lang['user.administrator'],
+	'L_MODO'   => ($total_modo > 1) ? $lang['user.moderators']    : $lang['user.moderator'],
+	'L_MEMBER' => ($total_member > 1) ? $lang['user.members'] : $lang['user.member'],
+	'L_GUEST'  => ($total_visit > 1) ? $lang['user.guests'] : $lang['user.guest'],
 	'L_TOPIC'  => ($nbr_topics > 1) ? $lang['forum.topics'] : $lang['forum.topic'],
 );
 

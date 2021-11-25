@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 03
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 1.2 - 2005 10 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -14,7 +14,14 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$lang = LangLoader::get('common', 'forum');
+$lang = array_merge(
+	LangLoader::get('category-lang'),
+	LangLoader::get('common-lang'),
+	LangLoader::get('form-lang'),
+	LangLoader::get('user-lang'),
+	LangLoader::get('warning-lang'),
+	LangLoader::get('common', 'forum')
+);
 
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
 define('TITLE', $lang['forum.module.title']);
@@ -32,11 +39,7 @@ $post_topic = $request->get_postvalue('post_topic', ''); //Création du topic sc
 if (!empty($id_get)) //Déplacement du sujet.
 {
 	$view = new FileTemplate('forum/forum_move.tpl');
-	$view->add_lang(array_merge(
-		LangLoader::get('category-lang'),
-		LangLoader::get('form-lang'),
-		LangLoader::get('warning-lang')
-	));
+	$view->add_lang($lang);
 
 	try {
 		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id_category', 'title'), 'WHERE id=:id', array('id' => $id_get));
@@ -107,11 +110,11 @@ if (!empty($id_get)) //Déplacement du sujet.
 		'U_CATEGORY'            => 'forum' . url('.php?id=' . $cat['id'], '-' . $cat['id'] . '.php'),
 		'U_TITLE_T'             => 'topic' . url('.php?id=' . $id_get, '-' . $id_get . '.php'),
 
-		'L_USER'   => ($total_online > 1) ? $user_lang['user.users'] : $user_lang['user.user'],
-		'L_ADMIN'  => ($total_admin > 1) ? $user_lang['user.administrators'] : $user_lang['user.administrator'],
-		'L_MODO'   => ($total_modo > 1) ? $user_lang['user.moderators']    : $user_lang['user.moderator'],
-		'L_MEMBER' => ($total_member > 1) ? $user_lang['user.members'] : $user_lang['user.member'],
-		'L_GUEST'  => ($total_visit > 1) ? $user_lang['user.guests'] : $user_lang['user.guest'],
+		'L_USER'   => ($total_online > 1) ? $lang['user.users'] : $lang['user.user'],
+		'L_ADMIN'  => ($total_admin > 1) ? $lang['user.administrators'] : $lang['user.administrator'],
+		'L_MODO'   => ($total_modo > 1) ? $lang['user.moderators']    : $lang['user.moderator'],
+		'L_MEMBER' => ($total_member > 1) ? $lang['user.members'] : $lang['user.member'],
+		'L_GUEST'  => ($total_visit > 1) ? $lang['user.guests'] : $lang['user.guest'],
 	);
 
 	$view->put_all($vars_tpl);
@@ -154,7 +157,7 @@ elseif (!empty($id_post)) //Déplacement du topic
 elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //Choix de la nouvelle catégorie, titre, sous-titre du topic à scinder.
 {
 	$view = new FileTemplate('forum/forum_post.tpl');
-	$view->add_lang(array_merge(LangLoader::get('common', 'forum'), LangLoader::get('common-lang')));
+	$view->add_lang($lang);
 
 	$idm = !empty($id_get_msg) ? $id_get_msg : $id_post_msg;
 
@@ -283,11 +286,11 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		'MEMBERS_NUMBER'        => $total_member,
 		'GUESTS_NUMBER'         => $total_visit,
 
-		'L_USER'   => ($total_online > 1) ? $user_lang['user.users'] : $user_lang['user.user'],
-		'L_ADMIN'  => ($total_admin > 1) ? $user_lang['user.administrators'] : $user_lang['user.administrator'],
-		'L_MODO'   => ($total_modo > 1) ? $user_lang['user.moderators']    : $user_lang['user.moderator'],
-		'L_MEMBER' => ($total_member > 1) ? $user_lang['user.members'] : $user_lang['user.member'],
-		'L_GUEST'  => ($total_visit > 1) ? $user_lang['user.guests'] : $user_lang['user.guest'],
+		'L_USER'   => ($total_online > 1) ? $lang['user.users'] : $lang['user.user'],
+		'L_ADMIN'  => ($total_admin > 1) ? $lang['user.administrators'] : $lang['user.administrator'],
+		'L_MODO'   => ($total_modo > 1) ? $lang['user.moderators']    : $lang['user.moderator'],
+		'L_MEMBER' => ($total_member > 1) ? $lang['user.members'] : $lang['user.member'],
+		'L_GUEST'  => ($total_visit > 1) ? $lang['user.guests'] : $lang['user.guest'],
 	));
 
 	$view->put_all($vars_tpl);

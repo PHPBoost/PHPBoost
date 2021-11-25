@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 03
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -16,8 +16,12 @@ require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 $request = AppContext::get_request();
 
-$lang = LangLoader::get('common', 'forum');
-$user_lang = LangLoader::get('user-lang');
+$lang = array_merge(
+	LangLoader::get('common-lang'),
+	LangLoader::get('form-lang'),
+	LangLoader::get('user-lang'),
+	LangLoader::get('common', 'forum')
+);
 
 $id_get = $request->get_getint('id', 0);
 $categories_cache = CategoriesService::get_categories_manager('forum')->get_categories_cache();
@@ -91,14 +95,8 @@ if (!empty($change_cat))
 
 if (!empty($id_get))
 {
-	$lang = LangLoader::get('common', 'forum');
 	$view = new FileTemplate('forum/forum_forum.tpl');
-	$view->add_lang(array_merge(
-		$lang,
-		LangLoader::get('common-lang'),
-		LangLoader::get('form-lang'),
-		LangLoader::get('user-lang')
-	));
+	$view->add_lang($lang);
 
 	//Invité?
 	$is_guest = AppContext::get_current_user()->get_id() == -1;
@@ -478,11 +476,11 @@ if (!empty($id_get))
 		'GUESTS_NUMBER'         => $total_visit,
 		'SELECT_CAT'            => $cat_list, //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 
-		'L_USER'   => ($total_online > 1) ? $user_lang['user.users'] : $user_lang['user.user'],
-		'L_ADMIN'  => ($total_admin > 1) ? $user_lang['user.administrators'] : $user_lang['user.administrator'],
-		'L_MODO'   => ($total_modo > 1) ? $user_lang['user.moderators'] : $user_lang['user.moderator'],
-		'L_MEMBER' => ($total_member > 1) ? $user_lang['user.members'] : $user_lang['user.member'],
-		'L_GUEST'  => ($total_visit > 1) ? $user_lang['user.guests'] : $user_lang['user.guest'],
+		'L_USER'   => ($total_online > 1) ? $lang['user.users'] : $lang['user.user'],
+		'L_ADMIN'  => ($total_admin > 1) ? $lang['user.administrators'] : $lang['user.administrator'],
+		'L_MODO'   => ($total_modo > 1) ? $lang['user.moderators'] : $lang['user.moderator'],
+		'L_MEMBER' => ($total_member > 1) ? $lang['user.members'] : $lang['user.member'],
+		'L_GUEST'  => ($total_visit > 1) ? $lang['user.guests'] : $lang['user.guest'],
 	));
 
 	$view->put_all($vars_tpl);

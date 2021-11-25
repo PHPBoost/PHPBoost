@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 03
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 1.6 - 2007 04 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,10 +15,12 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$lang = LangLoader::get('common', 'forum');
-$common_lang = LangLoader::get('common-lang');
-$form_lang = LangLoader::get('form-lang');
-$user_lang = LangLoader::get('user-lang');
+$lang = array_merge(
+	LangLoader::get('common-lang'),
+	LangLoader::get('form-lang'),
+	LangLoader::get('user-lang'),
+	LangLoader::get('common', 'forum')
+);
 
 $member = UserService::get_user(AppContext::get_request()->get_getint('id', AppContext::get_current_user()->get_id()));
 if (!$member)
@@ -50,11 +52,7 @@ foreach ($displayed_extended_fields as $field_type)
 }
 
 $view = new FileTemplate('forum/forum_membermsg.tpl');
-$view->add_lang(array_merge(
-	$lang,
-	$common_lang,
-	$user_lang
-));
+$view->add_lang($lang);
 
 $authorized_categories = CategoriesService::get_authorized_categories();
 
@@ -125,12 +123,12 @@ if (ForumAuthorizationsService::check_authorizations()->read_topics_content())
 		$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['title']) : '';
 
 		//Ajout du marqueur d'édition si activé.
-		$edit_mark = ($row['timestamp_edit'] > 0 && $config->is_edit_mark_enabled()) ? '<span class="edit-pseudo">' . $lang['forum.edited.by'] . ' <a href="'. UserUrlBuilder::profile($row['user_id_edit'])->rel() .'" class="offload">' . $row['login_edit'] . '</a> ' . $common_lang['common.on.date'] . ' ' . Date::to_format($row['timestamp_edit'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '</span><br />' : '';
+		$edit_mark = ($row['timestamp_edit'] > 0 && $config->is_edit_mark_enabled()) ? '<span class="edit-pseudo">' . $lang['forum.edited.by'] . ' <a href="'. UserUrlBuilder::profile($row['user_id_edit'])->rel() .'" class="offload">' . $row['login_edit'] . '</a> ' . $lang['common.on.date'] . ' ' . Date::to_format($row['timestamp_edit'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '</span><br />' : '';
 
 		$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
 		//Rang de l'utilisateur.
-		$user_rank = ($row['level'] === '0') ? $user_lang['user.member'] : $user_lang['user.guest'];
+		$user_rank = ($row['level'] === '0') ? $lang['user.member'] : $lang['user.guest'];
 		$user_group = $user_rank;
 		$user_rank_icon = '';
 		if ($row['level'] === '2') //Rang spécial (admins).
@@ -226,15 +224,17 @@ if (ForumAuthorizationsService::check_authorizations()->read_topics_content())
 			'LEVEL_CLASS'      => UserService::get_level_class($row['level']),
 			'GROUP_COLOR'      => $group_color,
 
-			'U_USER_AVATAR'    => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : $user_accounts_config->get_default_avatar(),
-			'U_USER_MSG'       => UserUrlBuilder::publications($row['user_id'])->rel(),
-			'U_USER_MEMBERMSG' => PATH_TO_ROOT . '/forum/membermsg' . url('.php?id=' . $row['user_id'], ''),
-			'U_USER_EMAIL'     => 'mailto:' . $row['email'],
-			'U_USER_PM'        => UserUrlBuilder::personnal_message($row['user_id'])->rel(),
-			'U_USER_PROFILE'   => UserUrlBuilder::profile($row['user_id'])->rel(),
-			'U_VARS_ANCHOR'    => url('.php?' . ($topic_page > 1 ? 'pt=' . $topic_page . '&amp;' : '') . 'id=' . $row['idtopic'], '-' . $row['idtopic'] . ($topic_page > 1 ? '-' . $topic_page : '') . $rewrited_title . '.php'),
-			'U_CATEGORY'       => PATH_TO_ROOT . '/forum/forum' . url('.php?id=' . $row['id_category'], '-' . $row['id_category'] . $rewrited_cat_title . '.php'),
-			'U_TITLE_T'        => PATH_TO_ROOT . '/forum/topic' . url('.php?' . ($topic_page > 1 ? 'pt=' . $topic_page . '&amp;' : '') . 'id=' . $row['idtopic'], '-' . $row['idtopic'] . ($topic_page > 1 ? '-' . $topic_page : '') . $rewrited_title . '.php')
+			'U_USER_AVATAR'    	  => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : $user_accounts_config->get_default_avatar(),
+			'U_USER_MSG'       	  => UserUrlBuilder::publications($row['user_id'])->rel(),
+			'U_USER_MEMBERMSG' 	  => PATH_TO_ROOT . '/forum/membermsg' . url('.php?id=' . $row['user_id'], ''),
+			'U_USER_EMAIL'     	  => 'mailto:' . $row['email'],
+			'U_USER_PM'        	  => UserUrlBuilder::personnal_message($row['user_id'])->rel(),
+			'U_USER_PROFILE'   	  => UserUrlBuilder::profile($row['user_id'])->rel(),
+			'U_FORUM_WARNING'     => url('.php?action=warning&amp;id=' . $row['user_id']),
+			'U_FORUM_PUNISHEMENT' => url('.php?action=punish&amp;id=' . $row['user_id']),
+			'U_VARS_ANCHOR'    	  => url('.php?' . ($topic_page > 1 ? 'pt=' . $topic_page . '&amp;' : '') . 'id=' . $row['idtopic'], '-' . $row['idtopic'] . ($topic_page > 1 ? '-' . $topic_page : '') . $rewrited_title . '.php'),
+			'U_CATEGORY'       	  => PATH_TO_ROOT . '/forum/forum' . url('.php?id=' . $row['id_category'], '-' . $row['id_category'] . $rewrited_cat_title . '.php'),
+			'U_TITLE_T'        	  => PATH_TO_ROOT . '/forum/topic' . url('.php?' . ($topic_page > 1 ? 'pt=' . $topic_page . '&amp;' : '') . 'id=' . $row['idtopic'], '-' . $row['idtopic'] . ($topic_page > 1 ? '-' . $topic_page : '') . $rewrited_title . '.php')
 		)));
 
 		//Affichage des groupes du membre.
@@ -288,13 +288,13 @@ if (ForumAuthorizationsService::check_authorizations()->read_topics_content())
 					}
 					if ($title == '')
 					{
-						$title = $form_lang['form.email'];
+						$title = $lang['form.email'];
 						$icon_fa = 'iboot fa-iboost-email';
 					}
 				}
 				else if ($field['regex'] == 5)
 				{
-					$button = '<a href="' . $row[$field_type] . '" class="button alt-button smaller offload">' . $form_lang['form.website'] . '</a>';
+					$button = '<a href="' . $row[$field_type] . '" class="button alt-button smaller offload">' . $lang['form.website'] . '</a>';
 
 					foreach (MemberShortTextExtendedField::$brands_pictures_list as $id => $parameters)
 					{
@@ -308,7 +308,7 @@ if (ForumAuthorizationsService::check_authorizations()->read_topics_content())
 					}
 					if ($title == '')
 					{
-						$title = $form_lang['form.website'];
+						$title = $lang['form.website'];
 						$icon_fa = 'fa-globe';
 					}
 				}
@@ -349,11 +349,11 @@ $vars_tpl = array(
 	'GUESTS_NUMBER'         => $total_visit,
 	'FORUM_NAME'            => $config->get_forum_name(),
 
-	'L_USER'   => ($total_online > 1) ? $user_lang['user.users'] : $user_lang['user.user'],
-	'L_ADMIN'  => ($total_admin > 1) ? $user_lang['user.administrators'] : $user_lang['user.administrator'],
-	'L_MODO'   => ($total_modo > 1) ? $user_lang['user.moderators']    : $user_lang['user.moderator'],
-	'L_MEMBER' => ($total_member > 1) ? $user_lang['user.members'] : $user_lang['user.member'],
-	'L_GUEST'  => ($total_visit > 1) ? $user_lang['user.guests'] : $user_lang['user.guest'],
+	'L_USER'   => ($total_online > 1) ? $lang['user.users'] : $lang['user.user'],
+	'L_ADMIN'  => ($total_admin > 1) ? $lang['user.administrators'] : $lang['user.administrator'],
+	'L_MODO'   => ($total_modo > 1) ? $lang['user.moderators']    : $lang['user.moderator'],
+	'L_MEMBER' => ($total_member > 1) ? $lang['user.members'] : $lang['user.member'],
+	'L_GUEST'  => ($total_visit > 1) ? $lang['user.guests'] : $lang['user.guest'],
 );
 
 $view->put_all($vars_tpl);

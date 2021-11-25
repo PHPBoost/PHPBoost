@@ -15,8 +15,11 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$lang = LangLoader::get('common', 'forum');
-$user_lang = LangLoader::get('user-lang');
+$lang = array_merge(
+	LangLoader::get('common-lang'),
+	LangLoader::get('user-lang'),
+	LangLoader::get('common', 'forum')
+);
 
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
 $Bread_crumb->add($lang['forum.tracked.topics'], '');
@@ -64,10 +67,7 @@ if ($request->get_postvalue('valid', false))
 elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage des message()s non lu(s) du membre.
 {
 	$view = new FileTemplate('forum/forum_track.tpl');
-	$view->add_lang(array_merge(
-		LangLoader::get('common', 'forum'),
-		LangLoader::get('common-lang')
-	));
+	$view->add_lang($lang);
 
 	$nbr_topics = 0;
 
@@ -278,11 +278,11 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 		'GUESTS_NUMBER'         => $total_visit,
 		'SELECT_CAT'            => $cat_list, //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 
-		'L_USER'   => ($total_online > 1) ? $user_lang['user.users'] : $user_lang['user.user'],
-		'L_ADMIN'  => ($total_admin > 1) ? $user_lang['user.administrators'] : $user_lang['user.administrator'],
-		'L_MODO'   => ($total_modo > 1) ? $user_lang['user.moderators']    : $user_lang['user.moderator'],
-		'L_MEMBER' => ($total_member > 1) ? $user_lang['user.members'] : $user_lang['user.member'],
-		'L_GUEST'  => ($total_visit > 1) ? $user_lang['user.guests'] : $user_lang['user.guest'],
+		'L_USER'   => ($total_online > 1) ? $lang['user.users'] : $lang['user.user'],
+		'L_ADMIN'  => ($total_admin > 1) ? $lang['user.administrators'] : $lang['user.administrator'],
+		'L_MODO'   => ($total_modo > 1) ? $lang['user.moderators']    : $lang['user.moderator'],
+		'L_MEMBER' => ($total_member > 1) ? $lang['user.members'] : $lang['user.member'],
+		'L_GUEST'  => ($total_visit > 1) ? $lang['user.guests'] : $lang['user.guest'],
 	));
 
 	$view->put_all($vars_tpl);

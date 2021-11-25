@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 09
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -14,7 +14,13 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$lang = LangLoader::get('common', 'forum');
+$lang = array_merge(
+	LangLoader::get('common-lang'),
+	LangLoader::get('form-lang'),
+	LangLoader::get('user-lang'),
+	LangLoader::get('warning-lang'),
+	LangLoader::get('common', 'forum')
+);
 
 $request = AppContext::get_request();
 
@@ -84,16 +90,8 @@ if ($category->get_url())
 	DispatchManager::redirect($error_controller);
 }
 
-$warning_lang = LangLoader::get('warning-lang');
-$user_lang = LangLoader::get('user-lang');
 $view = new FileTemplate('forum/forum_topic.tpl');
-$view->add_lang(array_merge(
-	$lang,
-	LangLoader::get('common-lang'),
-	LangLoader::get('form-lang'),
-	$user_lang,
-	$warning_lang
-));
+$view->add_lang($lang);
 
 $TmpTemplate = new FileTemplate('forum/forum_generic_results.tpl');
 $module_data_path = $TmpTemplate->get_pictures_data_path();
@@ -318,7 +316,7 @@ while ( $row = $result->fetch() )
 	}
 
 	//Rang de l'utilisateur.
-	$user_rank = ($row['level'] === '0') ? $user_lang['user.member'] : $user_lang['user.guest'];
+	$user_rank = ($row['level'] === '0') ? $lang['user.member'] : $lang['user.guest'];
 	$user_group = $user_rank;
 	$user_rank_icon = '';
 	if ($row['level'] === '2') //Rang spécial (admins).
@@ -469,13 +467,13 @@ while ( $row = $result->fetch() )
 				}
 				if ($title == '')
 				{
-					$title = LangLoader::get_message('form.email', 'form-lang');
+					$title = $lang['form.email'];
 					$icon_fa = 'fa-mail';
 				}
 			}
 			else if ($field['regex'] == 5)
 			{
-				$button = '<a href="' . $row[$field_type] . '" class="button submit smaller user-website offload">' . LangLoader::get_message('form.website', 'form-lang') . '</a>';
+				$button = '<a href="' . $row[$field_type] . '" class="button submit smaller user-website offload">' . $lang['form.website'] . '</a>';
 
 				foreach (MemberShortTextExtendedField::$brands_pictures_list as $id => $parameters)
 				{
@@ -489,7 +487,7 @@ while ( $row = $result->fetch() )
 				}
 				if ($title == '')
 				{
-					$title = LangLoader::get_message('form.website', 'form-lang');
+					$title = $lang['form.website'];
 					$icon_fa = 'fa-website';
 				}
 			}
@@ -558,11 +556,11 @@ $vars_tpl= array_merge($vars_tpl, array(
 
 	'U_ALERT'                      => url('.php?id=' . $id_get),
 
-	'L_USER'   => ($total_online > 1) ? $user_lang['user.users'] : $user_lang['user.user'],
-	'L_ADMIN'  => ($total_admin > 1) ? $user_lang['user.administrators'] : $user_lang['user.administrator'],
-	'L_MODO'   => ($total_modo > 1) ? $user_lang['user.moderators']    : $user_lang['user.moderator'],
-	'L_MEMBER' => ($total_member > 1) ? $user_lang['user.members'] : $user_lang['user.member'],
-	'L_GUEST'  => ($total_visit > 1) ? $user_lang['user.guests'] : $user_lang['user.guest'],
+	'L_USER'   => ($total_online > 1) ? $lang['user.users'] : $lang['user.user'],
+	'L_ADMIN'  => ($total_admin > 1) ? $lang['user.administrators'] : $lang['user.administrator'],
+	'L_MODO'   => ($total_modo > 1) ? $lang['user.moderators']    : $lang['user.moderator'],
+	'L_MEMBER' => ($total_member > 1) ? $lang['user.members'] : $lang['user.member'],
+	'L_GUEST'  => ($total_visit > 1) ? $lang['user.guests'] : $lang['user.guest'],
 ));
 
 //Récupération du message quoté.

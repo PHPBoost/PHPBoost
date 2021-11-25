@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 03
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 2.0 - 2007 12 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -21,8 +21,10 @@ class Forum
 	//Ajout d'un message.
 	function Add_msg($idtopic, $id_category, $content, $title, $last_page, $last_page_rewrite, $new_topic = false)
 	{
-		$lang = LangLoader::get('common', 'forum');
-		$user_lang = LangLoader::get('user-lang');
+		$lang = array_merge(
+			LangLoader::get('user-lang'),
+			LangLoader::get('common', 'forum')
+		);
 		##### Insertion message #####
 		$last_timestamp = time();
 		$result = PersistenceContext::get_querier()->insert(PREFIX . 'forum_msg', array('idtopic' => $idtopic, 'user_id' => AppContext::get_current_user()->get_id(), 'content' => FormatingHelper::strparse($content),
@@ -64,8 +66,8 @@ class Forum
 			}
 			else
 			{
-				$pseudo = $user_lang['user.guest'];
-				$pseudo_pm = $user_lang['user.guest'];
+				$pseudo = $lang['user.guest'];
+				$pseudo_pm = $lang['user.guest'];
 			}
 			$next_msg_link = '/forum/topic' . url('.php?id=' . $idtopic . $last_page, '-' . $idtopic . $last_page_rewrite . '.php') . ($previous_msg_id ? '#m' . $previous_msg_id : '');
 
