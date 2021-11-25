@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 18
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 5.2 - 2020 05 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,8 +15,7 @@ class AdminSandboxBuilderController extends AdminModuleController
 {
 	private $view;
 	private $lang;
-	private $sub_lang;
-	private $common_lang;
+
 	private $g_map_enabled;
 
 	/**
@@ -80,15 +79,17 @@ class AdminSandboxBuilderController extends AdminModuleController
 			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
 		));
 
-		return new AdminSandboxDisplayResponse($this->view, $this->common_lang['sandbox.module.title'] . ' - ' . $this->common_lang['sandbox.forms']);
+		return new AdminSandboxDisplayResponse($this->view, $this->lang['sandbox.module.title'] . ' - ' . $this->lang['sandbox.forms']);
 	}
 
 	private function init()
 	{
-		$this->common_lang = LangLoader::get('common', 'sandbox');
-		$this->lang = LangLoader::get('builder', 'sandbox');
+		$this->lang = array_merge(
+			LangLoader::get('common', 'sandbox'),
+			LangLoader::get('builder', 'sandbox')
+		);
 		$this->view = new FileTemplate('sandbox/AdminSandboxBuilderController.tpl');
-		$this->view->add_lang(array_merge($this->lang, $this->common_lang));
+		$this->view->add_lang($this->lang);
 		$this->g_map_enabled = (ModulesManager::is_module_installed('GoogleMaps') && ModulesManager::is_module_activated('GoogleMaps') && GoogleMapsConfig::load()->get_api_key());
 	}
 
@@ -96,7 +97,6 @@ class AdminSandboxBuilderController extends AdminModuleController
 	{
 		$view = new FileTemplate($tpl);
 		$view->add_lang($this->lang);
-		$view->add_lang($this->common_lang);
 		return $view;
 	}
 
@@ -295,7 +295,7 @@ class AdminSandboxBuilderController extends AdminModuleController
 			));
 
 		// MISCELLANEOUS
-		$miscellaneous = new FormFieldsetHTML('miscellaneous', $this->common_lang['sandbox.miscellaneous']);
+		$miscellaneous = new FormFieldsetHTML('miscellaneous', $this->lang['sandbox.miscellaneous']);
 			$form->add_fieldset($miscellaneous);
 
 			// HIDDEN

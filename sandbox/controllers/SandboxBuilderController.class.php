@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 11
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 5.2 - 2020 05 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,8 +15,6 @@ class SandboxBuilderController extends ModuleController
 {
 	private $view;
 	private $lang;
-	private $sub_lang;
-	private $common_lang;
 	private $g_map_enabled;
 
 	/**
@@ -83,10 +81,12 @@ class SandboxBuilderController extends ModuleController
 
 	private function init()
 	{
-		$this->common_lang = LangLoader::get('common', 'sandbox');
-		$this->lang = LangLoader::get('builder', 'sandbox');
+		$this->lang = array_merge(
+			LangLoader::get('builder', 'sandbox'),
+			LangLoader::get('common', 'sandbox')
+		);
 		$this->view = new FileTemplate('sandbox/SandboxBuilderController.tpl');
-		$this->view->add_lang(array_merge($this->lang, $this->common_lang));
+		$this->view->add_lang($this->lang);
 		$this->g_map_enabled = (ModulesManager::is_module_installed('GoogleMaps') && ModulesManager::is_module_activated('GoogleMaps') && GoogleMapsConfig::load()->get_api_key());
 		$this->content_management_config = ContentManagementConfig::load();
 	}
@@ -94,7 +94,7 @@ class SandboxBuilderController extends ModuleController
 	private function build_markup($tpl)
 	{
 		$view = new FileTemplate($tpl);
-		$view->add_lang(array_merge($this->lang, $this->common_lang));
+		$view->add_lang($this->lang);
 		return $view;
 	}
 
@@ -292,7 +292,7 @@ class SandboxBuilderController extends ModuleController
 			));
 
 		// MISCELLANEOUS
-		$miscellaneous = new FormFieldsetHTML('miscellaneous', $this->common_lang['sandbox.miscellaneous']);
+		$miscellaneous = new FormFieldsetHTML('miscellaneous', $this->lang['sandbox.miscellaneous']);
 			$form->add_fieldset($miscellaneous);
 
 			// HIDDEN
@@ -470,11 +470,11 @@ class SandboxBuilderController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->common_lang['sandbox.forms'], $this->common_lang['sandbox.module.title']);
+		$graphical_environment->set_page_title($this->lang['sandbox.forms'], $this->lang['sandbox.module.title']);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->common_lang['sandbox.module.title'], SandboxUrlBuilder::home()->rel());
-		$breadcrumb->add($this->common_lang['sandbox.forms'], SandboxUrlBuilder::builder()->rel());
+		$breadcrumb->add($this->lang['sandbox.module.title'], SandboxUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['sandbox.forms'], SandboxUrlBuilder::builder()->rel());
 
 		return $response;
 	}

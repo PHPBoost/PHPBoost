@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 09
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 3.0 - 2009 12 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -13,7 +13,6 @@
 class SandboxTableController extends ModuleController
 {
 	private $view;
-	private $common_lang;
 	private $lang;
 
 	public function execute(HTTPRequestCustom $request)
@@ -31,10 +30,12 @@ class SandboxTableController extends ModuleController
 
 	private function init()
 	{
-		$this->common_lang = LangLoader::get('common', 'sandbox');
-		$this->lang = LangLoader::get('table', 'sandbox');
+		$this->lang = array_merge(
+			LangLoader::get('common', 'sandbox'),
+			LangLoader::get('table', 'sandbox')
+		);
 		$this->view = new FileTemplate('sandbox/SandboxTableController.tpl');
-		$this->view->add_lang(array_merge($this->lang, $this->common_lang));
+		$this->view->add_lang($this->lang);
 	}
 
 	private function build_table()
@@ -104,11 +105,11 @@ class SandboxTableController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->common_lang['sandbox.table'], $this->common_lang['sandbox.module.title'], $page);
+		$graphical_environment->set_page_title($this->lang['sandbox.table'], $this->lang['sandbox.module.title'], $page);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->common_lang['sandbox.module.title'], SandboxUrlBuilder::home()->rel());
-		$breadcrumb->add($this->common_lang['sandbox.table'], SandboxUrlBuilder::table()->rel());
+		$breadcrumb->add($this->lang['sandbox.module.title'], SandboxUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['sandbox.table'], SandboxUrlBuilder::table()->rel());
 
 		return $response;
 	}

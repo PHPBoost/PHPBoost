@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 09
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 3.0 - 2012 05 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -13,7 +13,6 @@
 class SandboxComponentController extends ModuleController
 {
 	private $view;
-	private $common_lang;
 	private $lang;
 
 	/**
@@ -34,10 +33,12 @@ class SandboxComponentController extends ModuleController
 
 	private function init()
 	{
-		$this->common_lang = LangLoader::get('common', 'sandbox');
-		$this->lang = LangLoader::get('component', 'sandbox');
+		$this->lang = array_merge(
+			LangLoader::get('common', 'sandbox'),
+			LangLoader::get('component', 'sandbox')
+		);
 		$this->view = new FileTemplate('sandbox/SandboxComponentController.tpl');
-		$this->view->add_lang(array_merge($this->lang, $this->common_lang));
+		$this->view->add_lang($this->lang);
 	}
 
 	private function build_view()
@@ -70,7 +71,7 @@ class SandboxComponentController extends ModuleController
 	private function build_markup($tpl)
 	{
 		$view = new FileTemplate($tpl);
-		$view->add_lang(array_merge($this->lang, $this->common_lang));
+		$view->add_lang($this->lang);
 
 		$pagination_full = new ModulePagination(2, 15, 5);
 		$pagination_full->set_url(new Url('#%d'));
@@ -111,28 +112,28 @@ class SandboxComponentController extends ModuleController
 			);
 			$modal_form->add_fieldset($modal_01);
 
-			$modal_01->set_description($this->common_lang['lorem.short.content']);
+			$modal_01->set_description($this->lang['lorem.short.content']);
 
 			$modal_02 = new FormFieldsetMultitabsHTML('modal_02', $this->lang['component.panel'].' 2',
 				array('css_class' => 'modal modal-animation', 'modal' => true)
 			);
 			$modal_form->add_fieldset($modal_02);
 
-			$modal_02->set_description($this->common_lang['lorem.medium.content']);
+			$modal_02->set_description($this->lang['lorem.medium.content']);
 
 			$modal_03 = new FormFieldsetMultitabsHTML('modal_03', $this->lang['component.panel'].' 3',
 				array('css_class' => 'modal modal-animation', 'modal' => true)
 			);
 			$modal_form->add_fieldset($modal_03);
 
-			$modal_03->set_description($this->common_lang['lorem.large.content']);
+			$modal_03->set_description($this->lang['lorem.large.content']);
 
 			$modal_04 = new FormFieldsetMultitabsHTML('modal_04', $this->lang['component.panel'].' 4',
 				array('css_class' => 'modal modal-animation', 'modal' => true)
 			);
 			$modal_form->add_fieldset($modal_04);
 
-			$modal_04->set_description($this->common_lang['lorem.short.content']);
+			$modal_04->set_description($this->lang['lorem.short.content']);
 
 		return $modal_form;
 	}
@@ -140,7 +141,7 @@ class SandboxComponentController extends ModuleController
 	private function build_alert_markup()
 	{
 		$view = new FileTemplate('sandbox/pagecontent/components/alert.tpl');
-		$view->add_lang(array_merge($this->lang, $this->common_lang));
+		$view->add_lang(array_merge($this->lang, $this->lang));
 
 		$messages = array(
 			MessageHelper::display($this->lang['component.message.notice'], MessageHelper::NOTICE),
@@ -185,12 +186,12 @@ class SandboxComponentController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->common_lang['sandbox.components'],$this->common_lang['sandbox.components'],  $this->common_lang['sandbox.module.title']);
+		$graphical_environment->set_page_title($this->lang['sandbox.components'],$this->lang['sandbox.components'],  $this->lang['sandbox.module.title']);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->common_lang['sandbox.module.title'], SandboxUrlBuilder::home()->rel());
-		$breadcrumb->add($this->common_lang['sandbox.components']);
-		$breadcrumb->add($this->common_lang['sandbox.components']);
+		$breadcrumb->add($this->lang['sandbox.module.title'], SandboxUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['sandbox.components']);
+		$breadcrumb->add($this->lang['sandbox.components']);
 
 		return $response;
 	}

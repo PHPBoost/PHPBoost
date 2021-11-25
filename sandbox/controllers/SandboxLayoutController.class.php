@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 09
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 6.0 - 2020 03 04
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -11,7 +11,6 @@
 class SandboxLayoutController extends ModuleController
 {
 	private $view;
-	private $common_lang;
 	private $lang;
 
 	public function execute(HTTPRequestCustom $request)
@@ -27,10 +26,12 @@ class SandboxLayoutController extends ModuleController
 
 	private function init()
 	{
-		$this->common_lang = LangLoader::get('common', 'sandbox');
-		$this->lang = LangLoader::get('layout', 'sandbox');
+		$this->lang = array_merge(
+			LangLoader::get('common', 'sandbox'),
+			LangLoader::get('layout', 'sandbox')
+		);
 		$this->view = new FileTemplate('sandbox/SandboxLayoutController.tpl');
-		$this->view->add_lang(array_merge($this->lang, $this->common_lang));
+		$this->view->add_lang($this->lang);
 	}
 
 	private function build_view()
@@ -47,7 +48,7 @@ class SandboxLayoutController extends ModuleController
 	private function build_markup($tpl)
 	{
 		$view = new FileTemplate($tpl);
-		$view->add_lang(array_merge($this->lang, $this->common_lang));
+		$view->add_lang($this->lang);
 
 		$date = new Date();
 		$view->put_all(array(
@@ -73,11 +74,11 @@ class SandboxLayoutController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->common_lang['sandbox.layout'], $this->common_lang['sandbox.module.title']);
+		$graphical_environment->set_page_title($this->lang['sandbox.layout'], $this->lang['sandbox.module.title']);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->common_lang['sandbox.module.title'], SandboxUrlBuilder::home()->rel());
-		$breadcrumb->add($this->common_lang['sandbox.layout']);
+		$breadcrumb->add($this->lang['sandbox.module.title'], SandboxUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['sandbox.layout']);
 
 		return $response;
 	}

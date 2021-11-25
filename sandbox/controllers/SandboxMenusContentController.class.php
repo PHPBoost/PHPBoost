@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 09
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 5.2 - 2019 07 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -18,7 +18,6 @@ class SandboxMenusContentController extends ModuleController
 	private $tabs_form;
 	private $wizard_form;
 
-	private $common_lang;
 	private $lang;
 
 	/**
@@ -40,10 +39,12 @@ class SandboxMenusContentController extends ModuleController
 
 	private function init()
 	{
-		$this->common_lang = LangLoader::get('common', 'sandbox');
-		$this->lang = LangLoader::get('menu', 'sandbox');
+		$this->lang = array_merge(
+			LangLoader::get('common', 'sandbox'),
+			LangLoader::get('menu', 'sandbox')
+		);
 		$this->view = new FileTemplate('sandbox/SandboxMenusContentController.tpl');
-		$this->view->add_lang(array_merge($this->lang, $this->common_lang));
+		$this->view->add_lang($this->lang);
 	}
 
 	private function build_view()
@@ -63,7 +64,7 @@ class SandboxMenusContentController extends ModuleController
 	private function build_basic_markup()
 	{
 		$basic_tpl = new FileTemplate('sandbox/pagecontent/menus/basic.tpl');
-		$basic_tpl->add_lang(array_merge($this->lang, $this->common_lang));
+		$basic_tpl->add_lang($this->lang);
 		$basic_tpl->put('BASIC_FORM', $this->build_basic_form()->display());
 		return $basic_tpl;
 	}
@@ -91,7 +92,7 @@ class SandboxMenusContentController extends ModuleController
 	private function build_accordion_markup()
 	{
 		$accordion_tpl = new FileTemplate('sandbox/pagecontent/menus/accordion.tpl');
-		$accordion_tpl->add_lang(array_merge($this->lang, $this->common_lang));
+		$accordion_tpl->add_lang($this->lang);
 		$accordion_tpl->put('ACCORDION_FORM', $this->build_accordion_form()->display());
 		return $accordion_tpl;
 	}
@@ -122,28 +123,28 @@ class SandboxMenusContentController extends ModuleController
 			);
 			$accordion_form->add_fieldset($accordion_01);
 
-			$accordion_01->add_field(new FormFieldHTML('accordion_content_01', $this->common_lang['lorem.short.content']));
+			$accordion_01->add_field(new FormFieldHTML('accordion_content_01', $this->lang['lorem.short.content']));
 
 			$accordion_02 = new FormFieldsetMultitabsHTML('accordion_02', $this->lang['menu.panel'].' 2',
 				array('css_class' => 'accordion accordion-animation')
 			);
 			$accordion_form->add_fieldset($accordion_02);
 
-			$accordion_02->add_field(new FormFieldHTML('accordion_content_02', $this->common_lang['lorem.medium.content']));
+			$accordion_02->add_field(new FormFieldHTML('accordion_content_02', $this->lang['lorem.medium.content']));
 
 			$accordion_03 = new FormFieldsetMultitabsHTML('accordion_03', $this->lang['menu.panel'].' 3',
 				array('css_class' => 'accordion accordion-animation')
 			);
 			$accordion_form->add_fieldset($accordion_03);
 
-			$accordion_03->add_field(new FormFieldHTML('accordion_content_03', $this->common_lang['lorem.large.content']));
+			$accordion_03->add_field(new FormFieldHTML('accordion_content_03', $this->lang['lorem.large.content']));
 
 			$accordion_04 = new FormFieldsetMultitabsHTML('accordion_04', $this->lang['menu.panel'].' 4',
 				array('css_class' => 'accordion accordion-animation')
 			);
 			$accordion_form->add_fieldset($accordion_04);
 
-			$accordion_04->add_field(new FormFieldHTML('accordion_content_04', $this->common_lang['lorem.short.content']));
+			$accordion_04->add_field(new FormFieldHTML('accordion_content_04', $this->lang['lorem.short.content']));
 
 		return $accordion_form;
 	}
@@ -151,7 +152,7 @@ class SandboxMenusContentController extends ModuleController
 	private function build_tabs_markup()
 	{
 		$tabs_tpl = new FileTemplate('sandbox/pagecontent/menus/tabs.tpl');
-		$tabs_tpl->add_lang(array_merge($this->lang, $this->common_lang));
+		$tabs_tpl->add_lang($this->lang);
 		$tabs_tpl->put('TABS_FORM', $this->build_tabs_form()->display());
 		return $tabs_tpl;
 	}
@@ -179,28 +180,28 @@ class SandboxMenusContentController extends ModuleController
 			);
 			$tabs_form->add_fieldset($tabs_01);
 
-			$tabs_01->add_field(new FormFieldHTML('tabs_content_01', $this->common_lang['lorem.short.content']));
+			$tabs_01->add_field(new FormFieldHTML('tabs_content_01', $this->lang['lorem.short.content']));
 
 			$tabs_02 = new FormFieldsetMultitabsHTML('tabs_02', $this->lang['menu.panel'].' 2',
 				array('css_class' => 'tabs tabs-animation')
 			);
 			$tabs_form->add_fieldset($tabs_02);
 
-			$tabs_02->add_field(new FormFieldHTML('tabs_content_02', $this->common_lang['lorem.medium.content']));
+			$tabs_02->add_field(new FormFieldHTML('tabs_content_02', $this->lang['lorem.medium.content']));
 
 			$tabs_03 = new FormFieldsetMultitabsHTML('tabs_03', $this->lang['menu.panel'].' 3',
 				array('css_class' => 'tabs tabs-animation')
 			);
 			$tabs_form->add_fieldset($tabs_03);
 
-			$tabs_03->add_field(new FormFieldHTML('tabs_content_03', $this->common_lang['lorem.large.content']));
+			$tabs_03->add_field(new FormFieldHTML('tabs_content_03', $this->lang['lorem.large.content']));
 
 			$tabs_04 = new FormFieldsetMultitabsHTML('tabs_04', $this->lang['menu.panel'].' 4',
 				array('css_class' => 'tabs tabs-animation')
 			);
 			$tabs_form->add_fieldset($tabs_04);
 
-			$tabs_04->add_field(new FormFieldHTML('tabs_content_04', $this->common_lang['lorem.short.content']));
+			$tabs_04->add_field(new FormFieldHTML('tabs_content_04', $this->lang['lorem.short.content']));
 
 		return $tabs_form;
 	}
@@ -208,7 +209,7 @@ class SandboxMenusContentController extends ModuleController
 	private function build_wizard_markup()
 	{
 		$wizard_tpl = new FileTemplate('sandbox/pagecontent/menus/wizard.tpl');
-		$wizard_tpl->add_lang(array_merge($this->lang, $this->common_lang));
+		$wizard_tpl->add_lang($this->lang);
 		$wizard_tpl->put('WIZARD_FORM', $this->build_wizard_form()->display());
 		return $wizard_tpl;
 	}
@@ -234,7 +235,7 @@ class SandboxMenusContentController extends ModuleController
 		$wizard_form->add_fieldset($fieldset_tab_one);
 		$fieldset_tab_one->set_css_class('wizard-step');
 
-		$fieldset_tab_one->set_description($this->common_lang['lorem.large.content']);
+		$fieldset_tab_one->set_description($this->lang['lorem.large.content']);
 
 		$fieldset_tab_one->add_field(new FormFieldSubTitle('tab_01b', $this->lang['menu.panel.subtitle'],''));
 
@@ -244,7 +245,7 @@ class SandboxMenusContentController extends ModuleController
 		$wizard_form->add_fieldset($fieldset_tab_two);
 		$fieldset_tab_two->set_css_class('wizard-step');
 
-		$fieldset_tab_two->set_description($this->common_lang['lorem.medium.content']);
+		$fieldset_tab_two->set_description($this->lang['lorem.medium.content']);
 
 		if (ModulesManager::is_module_installed('news') & ModulesManager::is_module_activated('news'))
 		{
@@ -252,7 +253,7 @@ class SandboxMenusContentController extends ModuleController
 			$wizard_form->add_fieldset($fieldset_tab_three);
 			$fieldset_tab_three->set_css_class('wizard-step');
 
-			$fieldset_tab_three->set_description($this->common_lang['lorem.short.content']);
+			$fieldset_tab_three->set_description($this->lang['lorem.short.content']);
 		}
 
 		$this->submit_wizard_button = new FormButtonDefaultSubmit();
@@ -274,11 +275,11 @@ class SandboxMenusContentController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->common_lang['sandbox.menus.content'], $this->common_lang['sandbox.module.title']);
+		$graphical_environment->set_page_title($this->lang['sandbox.menus.content'], $this->lang['sandbox.module.title']);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->common_lang['sandbox.module.title'], SandboxUrlBuilder::home()->rel());
-		$breadcrumb->add($this->common_lang['sandbox.menus.content'], SandboxUrlBuilder::menus_content()->rel());
+		$breadcrumb->add($this->lang['sandbox.module.title'], SandboxUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['sandbox.menus.content'], SandboxUrlBuilder::menus_content()->rel());
 
 		return $response;
 	}
