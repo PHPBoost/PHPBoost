@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 01
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 1.2 - 2005 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -12,7 +12,11 @@
 
 require_once('../admin/admin_begin.php');
 
-$lang = LangLoader::get('common', 'gallery');
+$lang = array_merge(
+	LangLoader::get('common-lang'),
+	LangLoader::get('form-lang'),
+	LangLoader::get('common', 'gallery')
+);
 
 define('TITLE', $lang['gallery.config.module.title']);
 require_once('../admin/admin_header.php');
@@ -24,11 +28,7 @@ $valid = $request->get_postvalue('valid', false);
 $gallery_cache = $request->get_postvalue('gallery_cache', false);
 
 $view = new FileTemplate('gallery/admin_gallery_config.tpl');
-$view->add_lang(array_merge(
-	$lang,
-	LangLoader::get('common-lang'),
-	LangLoader::get('form-lang')
-));
+$view->add_lang($lang);
 
 //Si c'est confirmé on execute
 if ($valid)
@@ -80,6 +80,8 @@ if ($valid)
 
 	###### Régénération du cache de la gallery #######
 	GalleryMiniMenuCache::invalidate();
+
+	HooksService::execute_hook_action('edit_config', 'gallery', array('title' => StringVars::replace_vars($lang['form.module.title'], array('module_name' => ModulesManager::get_module('gallery')->get_configuration()->get_name())), 'url' => GalleryUrlBuilder::configuration()->rel()));
 
 	$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.config', 'warning-lang'), MessageHelper::SUCCESS, 4));
 }
