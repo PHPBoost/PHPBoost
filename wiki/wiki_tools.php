@@ -12,12 +12,15 @@
 
 if (defined('PHPBOOST') !== true)	exit;
 
-$lang = LangLoader::get('common', 'wiki');
+$lang = array_merge(
+	LangLoader::get('common-lang'),
+	LangLoader::get('common', 'wiki')
+);
 
 $config = WikiConfig::load();
 
 $tools_view = new FileTemplate('wiki/wiki_tools.tpl');
-$tools_view->add_lang(array_merge($lang, LangLoader::get('common-lang')));
+$tools_view->add_lang($lang);
 
 // Get authorizations
 if (!empty($article_infos['auth']))
@@ -73,7 +76,7 @@ if (($page_type == 'article' || $page_type == 'cat') && (!$general_auth || AppCo
 	$tools_view->put_all(array(
 		'C_ACTIVE_COMMENTS' => true,
 		'U_COMMENTS'        => url('property.php?idcom=' . $id_article . '&amp;com=0'),
-		'COMMENTS_NUMBER'   => (isset($article_infos['comments_number']) && ($article_infos['comments_number'] > 0) ? $article_infos['comments_number'] : '')
+		'COMMENTS_NUMBER'   => (isset($article_infos['comments_number']) && ($article_infos['comments_number'] > 0) ? $article_infos['comments_number'] : '0')
 	));
 }
 ?>

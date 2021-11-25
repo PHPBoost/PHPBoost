@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 01
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 1.6 - 2007 05 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -13,7 +13,10 @@
 require_once('../kernel/begin.php');
 include_once('../wiki/wiki_functions.php');
 
-$lang = LangLoader::get('common', 'wiki');
+$lang = array_merge(
+	LangLoader::get('common-lang'),
+	LangLoader::get('common', 'wiki')
+);
 
 define('TITLE', $lang['wiki.explorer']);
 define('DESCRIPTION', $lang['wiki.explorer.seo']);
@@ -28,7 +31,7 @@ $cat = $request->get_getint('cat', 0);
 require_once('../kernel/header.php');
 
 $view = new FileTemplate('wiki/explorer.tpl');
-$view->add_lang(array_merge($lang, LangLoader::get('common-lang')));
+$view->add_lang($lang);
 
 $module_data_path = $view->get_pictures_data_path();
 

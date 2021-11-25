@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 01
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 1.5 - 2007 05 25
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -12,7 +12,10 @@
 
 require_once('../admin/admin_begin.php');
 
-$lang = LangLoader::get('common', 'wiki');
+$lang = array_merge(
+	LangLoader::get('form-lang'),
+	LangLoader::get('common', 'wiki')
+);
 
 define('TITLE', $lang['wiki.config.module.title']);
 require_once('../admin/admin_header.php');
@@ -25,7 +28,7 @@ $request = AppContext::get_request();
 $valid = $request->get_postvalue('valid', false);
 
 $view = new FileTemplate('wiki/admin_wiki_groups.tpl');
-$view->add_lang(array_merge($lang, LangLoader::get('form-lang')));
+$view->add_lang($lang);
 
 // Execute on validation
 if ($valid)

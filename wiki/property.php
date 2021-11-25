@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 01
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 1.6 - 2007 05 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,7 +15,11 @@
 require_once('../kernel/begin.php');
 include_once('../wiki/wiki_functions.php');
 
-$lang = LangLoader::get('common', 'wiki');
+$lang = array_merge(
+	LangLoader::get('form-lang'),
+	LangLoader::get('warning-lang'),
+	LangLoader::get('common', 'wiki')
+);
 
 $config = WikiConfig::load();
 
@@ -189,7 +193,7 @@ require_once('../wiki/wiki_bread_crumb.php');
 require_once('../kernel/header.php');
 
 $view = new FileTemplate('wiki/property.tpl');
-$view->add_lang(array_merge($lang, LangLoader::get('form-lang'), LangLoader::get('warning-lang')));
+$view->add_lang($lang);
 
 if ($random) // Recherche d'une page aléatoire
 {

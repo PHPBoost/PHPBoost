@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 01
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 1.6 - 2006 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -13,7 +13,11 @@
 
 require_once('../kernel/begin.php');
 
-$lang = LangLoader::get('common', 'wiki');
+$lang = array_merge(
+	LangLoader::get('common-lang'),
+	LangLoader::get('user-lang'),
+	LangLoader::get('common', 'wiki')
+);
 
 $config = WikiConfig::load();
 
@@ -44,7 +48,7 @@ require_once('../kernel/header.php');
 if (!empty($id_article))
 {
 	$view = new FileTemplate('wiki/history.tpl');
-	$view->add_lang(array_merge($lang, LangLoader::get('common-lang'), LangLoader::get('user-lang')));
+	$view->add_lang($lang);
 
 	$view->put_all(array(
 		'C_ITEM' => true,
@@ -123,7 +127,7 @@ else //On affiche la liste des modifications
 	}
 
 	$view = new FileTemplate('wiki/history.tpl');
-	$view->add_lang(array_merge($lang, LangLoader::get('common-lang')));
+	$view->add_lang($lang);
 
 	$view->put_all(array(
 		'C_PAGINATION' => $pagination->has_several_pages(),

@@ -13,7 +13,10 @@
 
 require_once('../kernel/begin.php');
 
-$lang = LangLoader::get('common', 'wiki');
+$lang = array_merge(
+	LangLoader::get('common-lang'),
+	LangLoader::get('common', 'wiki')
+);
 
 $config = WikiConfig::load();
 
@@ -105,7 +108,7 @@ require_once('../kernel/header.php');
 if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 {
 	$view = new FileTemplate('wiki/wiki.tpl');
-	$view->add_lang(array_merge($lang, LangLoader::get('common-lang')));
+	$view->add_lang($lang);
 
 	if ($config->is_hits_counter_enabled())//Si on prend en compte le nombre de vus
 		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "wiki_articles SET hits = hits + 1 WHERE id = " . $article_infos['id']);
@@ -196,8 +199,6 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 		while ($row = $result->fetch())
 		{
 			$view->assign_block_vars('cat.list_art', array(
-				'C_ITEMS' => count($row['id']) > 0,
-
 				'TITLE' => stripslashes($row['title']),
 
 				'U_ITEM' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
