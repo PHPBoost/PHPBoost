@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 11 27
  * @since       PHPBoost 1.6 - 2006 11 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -17,7 +17,7 @@ $lang = array_merge(
 	LangLoader::get('common', 'wiki')
 );
 
-define('TITLE', $lang['wiki.config.module.title']);
+define('TITLE', StringVars::replace_vars($lang['form.module.title'], array('module_name' => ModulesManager::get_module('wiki')->get_configuration()->get_name())));
 require_once('../admin/admin_header.php');
 include_once('../wiki/wiki_functions.php');
 
@@ -57,6 +57,8 @@ if ($update)
 
 	//Régénération du cache
 	WikiCategoriesCache::invalidate();
+
+	HooksService::execute_hook_action('edit_config', 'wiki', array('title' => StringVars::replace_vars($lang['form.module.title'], array('module_name' => ModulesManager::get_module('wiki')->get_configuration()->get_name())), 'url' => WikiUrlBuilder::configuration()->rel()));
 
 	$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.config', 'warning-lang'), MessageHelper::SUCCESS, 4));
 }
