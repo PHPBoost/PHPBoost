@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 09 28
+ * @version     PHPBoost 6.0 - last update: 2021 11 25
  * @since       PHPBoost 4.1 - 2015 05 15
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -57,6 +57,19 @@ class ForumCategoriesFormController extends DefaultCategoriesFormController
 			)
 		));
 
+		$search_category_children_options = new SearchCategoryChildrensOptions();
+		$search_category_children_options->add_category_in_excluded_categories(Category::ROOT_CATEGORY);
+
+		if ($this->get_category()->get_id())
+			$search_category_children_options->add_category_in_excluded_categories($this->get_category()->get_id());
+
+		$fieldset->add_field(self::get_categories_manager()->get_select_categories_form_field('id_parent', self::$form_lang['form.category'], $this->get_category()->get_id_parent(), $search_category_children_options,
+			array(
+				'required' => true,
+				'hidden' => $this->get_category()->get_type() == ForumCategory::TYPE_CATEGORY
+			)
+		));
+
 		$fieldset->add_field(new FormFieldTextEditor('name', self::$form_lang['form.name'], $this->get_category()->get_name(), array('required' => true)));
 
 		$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_name', self::$form_lang['form.rewrited.title.personalize'], $this->get_category()->rewrited_name_is_personalized(),
@@ -82,14 +95,6 @@ class ForumCategoriesFormController extends DefaultCategoriesFormController
 		$fieldset->add_field(new FormFieldRichTextEditor('description', self::$form_lang['form.description'], $this->get_category()->get_description(),
 			array('hidden' => $this->get_category()->get_type() == ForumCategory::TYPE_CATEGORY)
 		));
-
-		$search_category_children_options = new SearchCategoryChildrensOptions();
-		$search_category_children_options->add_category_in_excluded_categories(Category::ROOT_CATEGORY);
-
-		if ($this->get_category()->get_id())
-			$search_category_children_options->add_category_in_excluded_categories($this->get_category()->get_id());
-
-		$fieldset->add_field(self::get_categories_manager()->get_select_categories_form_field('id_parent', self::$form_lang['form.category'], $this->get_category()->get_id_parent(), $search_category_children_options, array('required' => true, 'hidden' => $this->get_category()->get_type() == ForumCategory::TYPE_CATEGORY)));
 
 		$fieldset->add_field(new FormFieldCheckbox('status', LangLoader::get_message('forum.category.status.locked', 'common', 'forum'), $this->get_category()->get_status(),
 			array('hidden' => $this->get_category()->get_type() != ForumCategory::TYPE_FORUM)
