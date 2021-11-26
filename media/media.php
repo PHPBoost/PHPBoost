@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 01
+ * @version     PHPBoost 6.0 - last update: 2021 11 27
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -88,21 +88,24 @@ elseif ($id_media > 0)
 	$group_color = User::get_group_color($media['user_groups'], $media['level']);
 
 	$date = new Date($media['creation_date'], Timezone::SERVER_TIMEZONE);
-
+	
+	$content = FormatingHelper::second_parse(stripslashes($media['content']));
+	$rich_content = HooksService::execute_hook_display_action('media', $content, $media);
+	
 	$view->put_all(array_merge(
 		Date::get_array_tpl_vars($date, 'date'),
 		array(
 			'C_ROOT_CATEGORY'      => $media['id_category'] == Category::ROOT_CATEGORY,
-			'C_CONTROLS'           => CategoriesAuthorizationsService   ::check_authorizations($media['id_category'])->moderation(),
+			'C_CONTROLS'           => CategoriesAuthorizationsService::check_authorizations($media['id_category'])->moderation(),
 			'C_ENABLED_NOTATION'   => $content_management_config->module_notation_is_enabled('media'),
 			'C_ENABLED_COMMENTS'   => $comments_config->module_comments_is_enabled('media'),
-			'C_NEW_CONTENT'        => ContentManagementConfig           ::load()->module_new_content_is_enabled_and_check_date('media', $media['creation_date']),
+			'C_NEW_CONTENT'        => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('media', $media['creation_date']),
 			'C_AUTHOR_EXISTS'      => !empty($media['display_name']),
 			'C_AUTHOR_GROUP_COLOR' => !empty($group_color),
 
 			'ID'                  => $id_media,
 			'TITLE'               => $media['title'],
-			'CONTENT'             => FormatingHelper::second_parse(stripslashes($media['content'])),
+			'CONTENT'             => $rich_content,
 			'KERNEL_NOTATION'     => NotationService::display_active_image($notation),
 			'VIEWS_NUMBER'        => (int)$media['views_number']+1,
 			'COMMENTS_NUMBER'     => CommentsService::get_comments_number('media', $id_media),

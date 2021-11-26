@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 01
+ * @version     PHPBoost 6.0 - last update: 2021 11 27
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -107,7 +107,8 @@ elseif ($delete > 0)
 	Feed::clear_cache('media');
 
 	MediaCategoriesCache::invalidate();
-
+	HooksService::execute_hook_action('delete', 'media', $media);
+	
 	$category = CategoriesService::get_categories_manager('media')->get_categories_cache()->get_category($media['id_category']);
 	bread_crumb($media['id_category']);
 	$Bread_crumb->add($lang['media.delete.item'], url('media.php?cat=' . $media['id_category'], 'media-0-' . $media['id_category'] . '+' . $category->get_rewrited_name() . '.php'));
@@ -377,8 +378,22 @@ elseif ($submit)
 	// Edit
 	if ($media['idedit'] && CategoriesAuthorizationsService::check_authorizations($media['id_category'])->moderation())
 	{
-		PersistenceContext::get_querier()->update(PREFIX . "media", array('id_category' => $media['id_category'], 'title' => $media['title'], 'file_url' => $media['file_url']->relative(), 'thumbnail' => $media['thumbnail']->relative(), 'mime_type' => $media['mime_type'], 'content' => $media['content'], 'published' => (CategoriesAuthorizationsService::check_authorizations($media['id_category'])->write() ? MEDIA_STATUS_APPROVED : 0), 'width' => $media['width'], 'height' => $media['height']), 'WHERE id = :id', array('id' => $media['idedit']));
+		$properties = array(
+			'id_category'    => $media['id_category'],
+			'title'          => $media['title'],
+			'content'        => $media['content'],
+			'file_url'       => $media['file_url']->relative(),
+			'thumbnail'      => $media['thumbnail']->relative(),
+			'mime_type'      => $media['mime_type'],
+			'published'      => (CategoriesAuthorizationsService::check_authorizations($media['id_category'])->write() ? MEDIA_STATUS_APPROVED : 0),
+			'width'          => $media['width'],
+			'height'         => $media['height']
+		);
+		
+		PersistenceContext::get_querier()->update(PREFIX . "media", $properties, 'WHERE id = :id', array('id' => $media['idedit']));
 
+		$properties['id'] = $media['idedit'];
+		
 		if ($media['approved'])
 		{
 			$corresponding_contributions = ContributionService::find_by_criteria('media', $media['idedit']);
@@ -390,6 +405,7 @@ elseif ($submit)
 					$contribution->set_status(Event::EVENT_STATUS_PROCESSED);
 					ContributionService::save_contribution($contribution);
 				}
+				HooksService::execute_hook_action('process_contribution', 'media', array_merge($contribution->get_properties(), $properties, array('item_url' => PATH_TO_ROOT . '/media/' . url('media.php?id=' . $media['idedit'], 'media-' . $media['idedit'] . '-' . $media['id_category'] . '+' . Url::encode_rewrite($media['title']) . '.php'))));
 			}
 		}
 
@@ -397,15 +413,33 @@ elseif ($submit)
 		Feed::clear_cache('media');
 
 		MediaCategoriesCache::invalidate();
-
+		
+		HooksService::execute_hook_action('edit', 'media', array_merge($properties, array('item_url' => PATH_TO_ROOT . '/media/' . url('media.php?id=' . $media['idedit'], 'media-' . $media['idedit'] . '-' . $media['id_category'] . '+' . Url::encode_rewrite($media['title']) . '.php'))));
+		
 		AppContext::get_response()->redirect('media' . url('.php?id=' . $media['idedit']));
 	}
 	// Add
 	elseif (!$media['idedit'] && (($auth_write = CategoriesAuthorizationsService::check_authorizations($media['id_category'])->write()) || CategoriesAuthorizationsService::check_authorizations($media['id_category'])->contribution()))
 	{
-		$result = PersistenceContext::get_querier()->insert(PREFIX . "media", array('id_category' => $media['id_category'], 'author_user_id' => AppContext::get_current_user()->get_id(), 'creation_date' => time(), 'title' => $media['title'], 'content' => $media['content'], 'file_url' => $media['file_url']->relative(), 'thumbnail' => $media['thumbnail']->relative(), 'mime_type' => $media['mime_type'], 'published' => (CategoriesAuthorizationsService::check_authorizations($media['id_category'])->write() ? MEDIA_STATUS_APPROVED : 0), 'width' => $media['width'], 'height' => $media['height']));
+		$properties = array(
+			'id_category'    => $media['id_category'],
+			'author_user_id' => AppContext::get_current_user()->get_id(),
+			'creation_date'  => time(),
+			'title'          => $media['title'],
+			'content'        => $media['content'],
+			'file_url'       => $media['file_url']->relative(),
+			'thumbnail'      => $media['thumbnail']->relative(),
+			'mime_type'      => $media['mime_type'],
+			'published'      => (CategoriesAuthorizationsService::check_authorizations($media['id_category'])->write() ? MEDIA_STATUS_APPROVED : 0),
+			'width'          => $media['width'],
+			'height'         => $media['height']
+		);
+		
+		$result = PersistenceContext::get_querier()->insert(PREFIX . "media", $properties);
 
 		$new_id_media = $result->get_last_inserted_id();
+		$properties['id'] = $new_id_media;
+		
 		// Feeds Regeneration
 		Feed::clear_cache('media');
 
@@ -428,11 +462,13 @@ elseif ($submit)
 			);
 
 			ContributionService::save_contribution($media_contribution);
+			HooksService::execute_hook_action('add_contribution', 'media', array_merge($media_contribution->get_properties(), $properties, array('item_url' => PATH_TO_ROOT . '/media/' . url('media.php?id=' . $new_id_media, 'media-' . $new_id_media . '-' . $media['id_category'] . '+' . Url::encode_rewrite($media['title']) . '.php'))));
 
 			DispatchManager::redirect(new UserContributionSuccessController());
 		}
 		else
 		{
+			HooksService::execute_hook_action('add', 'media', array_merge($properties, array('item_url' => PATH_TO_ROOT . '/media/' . url('media.php?id=' . $new_id_media, 'media-' . $new_id_media . '-' . $media['id_category'] . '+' . Url::encode_rewrite($media['title']) . '.php'))));
 			AppContext::get_response()->redirect('media' . url('.php?id=' . $new_id_media));
 		}
 	}
