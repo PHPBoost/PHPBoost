@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 02
+ * @version     PHPBoost 6.0 - last update: 2021 11 27
  * @since       PHPBoost 3.0 - 2009 10 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -104,7 +104,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		$view->put_all(array(
 			'C_FAVICON' => $customization_config->favicon_exists(),
 
-			'FAVICON'      => Url ::to_rel($customization_config->get_favicon_path()),
+			'FAVICON'      => Url::to_rel($customization_config->get_favicon_path()),
 			'FAVICON_TYPE' => $customization_config->favicon_type(),
 			'TITLE'        => $this->get_seo_meta_data()->get_full_title(),
 			'MODULES_CSS'  => $this->get_modules_css_files_html_code(),

@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 25
+ * @version     PHPBoost 6.0 - last update: 2021 11 27
  * @since       PHPBoost 3.0 - 2011 03 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -300,7 +300,7 @@ class CommentsService
 					Date::get_array_tpl_vars($timestamp,'date'),
 					array(
 					'C_CURRENT_USER_MESSAGE' => AppContext::get_current_user()->get_display_name() == $row['display_name'],
-					'C_MODERATOR'            => self      ::is_authorized_edit_or_delete_comment($authorizations, $id),
+					'C_MODERATOR'            => self::is_authorized_edit_or_delete_comment($authorizations, $id),
 					'C_VISITOR'              => empty($row['display_name']),
 					'C_GROUP_COLOR'          => !empty($group_color),
 					'C_AVATAR'               => $row['user_avatar'] || $user_accounts_config->is_default_avatar_enabled(),

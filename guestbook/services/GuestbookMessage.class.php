@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 20
+ * @version     PHPBoost 6.0 - last update: 2021 11 27
  * @since       PHPBoost 4.0 - 2013 06 27
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -147,7 +147,7 @@ class GuestbookMessage
 				'AUTHOR_GROUP_COLOR'  => $user_group_color,
 
 				'U_ANCHOR'         => GuestbookUrlBuilder::home($page, $this->id)->rel(),
-				'U_AUTHOR_PROFILE' => UserUrlBuilder     ::profile($this->get_author_user()->get_id())->rel(),
+				'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
 				'U_EDIT'           => GuestbookUrlBuilder::edit($this->id, $page)->rel(),
 				'U_DELETE'         => GuestbookUrlBuilder::delete($this->id)->rel()
 			)

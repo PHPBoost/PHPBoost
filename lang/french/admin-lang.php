@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 23
+ * @version     PHPBoost 6.0 - last update: 2021 11 27
  * @since       PHPBoost 3.0 - 2010 08 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -38,7 +38,7 @@ $lang['admin.advice.enable.output.gz']             = '<a href="' . AdminConfigUr
 $lang['admin.advice.enable.apcu.cache']            = '<a href="' . AdminCacheUrlBuilder::configuration()->rel() . '">Activez le cache APCu</a> pour permettre de charger le cache en RAM sur le serveur et non sur le disque-dur et ainsi gagner d\'avantage en performance.';
 $lang['admin.advice.save.database']                = 'Pensez à sauvegarder votre base de données régulièrement.';
 $lang['admin.advice.optimize.database.tables']     = '<a href="' . AdminConfigUrlBuilder::advanced_config()->rel() . '">Activez l\'optimisation automatique des tables</a> ou optimisez de temps en temps vos tables dans le module <strong>Base de données</strong> (s\'il est installé) ou dans votre outil de gestion de base de données pour récupérer de la place perdue en base.';
-$lang['admin.advice.password.security']            = 'Augmentez la complexité et la longueur des mots de passe dans la <a href="' . AdminMembersUrlBuilder ::configuration()->rel() . '">configuration des membres</a> pour renforcer la sécurité.';
+$lang['admin.advice.password.security']            = 'Augmentez la complexité et la longueur des mots de passe dans la <a href="' . AdminMembersUrlBuilder::configuration()->rel() . '">configuration des membres</a> pour renforcer la sécurité.';
 $lang['admin.advice.upgrade.php.version']          = '
     La version PHP ' . ServerConfiguration::get_phpversion() . ' configurée sur votre serveur est obsolète, elle ne reçoit plus de mise à jour de sécurité et peut potentiellement contenir des vulnérabilités permettant à une personne mal intentionnée d\'attaquer votre site.
     <br />Mettez à jour votre version PHP pour passer en ' . ServerConfiguration::RECOMMENDED_PHP_VERSION . ' minimum si votre hébergeur le permet, les nouvelles versions sont plus rapides et sécurisées.

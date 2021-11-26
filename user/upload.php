@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 11 27
  * @since       PHPBoost 1.6 - 2007 07 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -538,7 +538,7 @@ else
     $total_size = !empty($folder) ? Uploads::Member_memory_used(AppContext::get_current_user()->get_id()) : $total_size;
     $view->put_all(array(
         'PERCENT'              => !$unlimited_data ? '(' . NumberHelper::round($total_size / $group_limit, 3) * 100 . '%)' : '',
-        'SIZE_LIMIT'           => !$unlimited_data ? (($group_limit > 1024) ? NumberHelper::round($group_limit / 1024, 2) . ' ' . LangLoader  ::get_message('common.unit.megabytes', 'common-lang') : NumberHelper::round($group_limit, 0) . ' ' . LangLoader::get_message('common.unit.kilobytes', 'common-lang')) : LangLoader::get_message('common.unlimited', 'common-lang'),
+        'SIZE_LIMIT'           => !$unlimited_data ? (($group_limit > 1024) ? NumberHelper::round($group_limit / 1024, 2) . ' ' . LangLoader::get_message('common.unit.megabytes', 'common-lang') : NumberHelper::round($group_limit, 0) . ' ' . LangLoader::get_message('common.unit.kilobytes', 'common-lang')) : LangLoader::get_message('common.unlimited', 'common-lang'),
         'MAX_FILES_SIZE'       => !$unlimited_data ? (($group_limit * 1024 > 1024 * 1024) ? NumberHelper::round($group_limit * 1024, 2) : NumberHelper::round($group_limit * 1024, 0)) : -1,
         'TOTAL_SIZE'           => File::get_formated_size($total_size * 1024),
         'TOTAL_SHARED_SIZE'    => File::get_formated_size($total_shared_size * 1024),

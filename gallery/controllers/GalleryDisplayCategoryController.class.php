@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 26
+ * @version     PHPBoost 6.0 - last update: 2021 11 27
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -380,7 +380,7 @@ class GalleryDisplayCategoryController extends ModuleController
 
 							'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($info_pics['user_id'])->rel(),
 							'U_DELETE'         => url('gallery.php?del=' . $info_pics['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;cat=' . $category->get_id()),
-							'U_MOVE'           => url('gallery.php?id=' . $info_pics['id'] . '&amp;token=' . AppContext ::get_session()->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value'),
+							'U_MOVE'           => url('gallery.php?id=' . $info_pics['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value'),
 							'U_PREVIOUS'       => ($pos_pics > 0) ? GalleryUrlBuilder::get_link_item($category->get_id(),$id_previous) : '',
 							'U_NEXT'           => ($pos_pics < ($i - 1)) ? GalleryUrlBuilder::get_link_item($category->get_id(),$id_next) : '',
 							'U_COMMENTS'       => GalleryUrlBuilder::get_link_item($info_pics['id_category'],$info_pics['id'],0,$g_sort) .'#comments-list',

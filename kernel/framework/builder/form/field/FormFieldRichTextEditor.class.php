@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 07
+ * @version     PHPBoost 6.0 - last update: 2021 11 27
  * @since       PHPBoost 3.0 - 2010 01 09
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -89,7 +89,7 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 			'HTML_ID' => $this->get_html_id(),
 			'CLASS'   => 'small',
 
-			'L_RESET'         => LangLoader ::get_message('form.reset', 'form-lang'),
+			'L_RESET'         => LangLoader::get_message('form.reset', 'form-lang'),
 			'ONCLICK_ACTIONS' => (AppContext::get_current_user()->get_editor() == 'TinyMCE' ? 'setTinyMceContent(' . TextHelper::to_js_string($this->unparse_value($this->reset_value)) . ');' :
 				'HTMLForms.getField("' . $this->get_id() . '").setValue(' . TextHelper::to_js_string($this->unparse_value($this->reset_value)) . ');')
 		));

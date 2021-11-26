@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 20
+ * @version     PHPBoost 6.0 - last update: 2021 11 27
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -402,7 +402,7 @@ class BugtrackerItem
 			'AUTHOR_GROUP_COLOR'  => $user_group_color,
 			'COMMENTS_NUMBER'     => $comments_number,
 
-			'U_AUTHOR_PROFILE' => UserUrlBuilder      ::profile($user->get_id())->rel(),
+			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($user->get_id())->rel(),
 			'U_LINK'           => $this->get_item_url(),
 			'U_HISTORY'        => BugtrackerUrlBuilder::history($this->id)->rel(),
 			'U_COMMENTS'       => BugtrackerUrlBuilder::detail($this->id . '-' . $this->rewrited_title . '#comments-list')->rel()
