@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 12
+ * @version     PHPBoost 6.0 - last update: 2021 11 26
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -41,14 +41,14 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 
 	public function get_menu_content()
 	{
-		$tpl = new FileTemplate('online/OnlineModuleMiniMenu.tpl');
+		$view = new FileTemplate('online/OnlineModuleMiniMenu.tpl');
 
 		$lang = LangLoader::get('common', 'online');
 		$common_lang = LangLoader::get('common-lang');
 		$user_lang = LangLoader::get('user-lang');
-		$tpl->add_lang(array_merge($lang, $common_lang, $user_lang));
+		$view->add_lang(array_merge($lang, $common_lang, $user_lang));
 
-		MenuService::assign_positions_conditions($tpl, $this->get_block());
+		MenuService::assign_positions_conditions($view, $this->get_block());
 
 		$online_config = OnlineConfig::load();
 		$condition = 'WHERE s.timestamp > :time ORDER BY '. $online_config->get_display_order_request();
@@ -69,7 +69,7 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 
 					if ($user->get_level() != User::VISITOR_LEVEL)
 					{
-						$tpl->assign_block_vars('items', array(
+						$view->assign_block_vars('items', array(
 							'C_ROBOT'            => $user->get_level() == User::ROBOT_LEVEL,
 							'C_USER_GROUP_COLOR' => !empty($group_color),
 
@@ -85,7 +85,7 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 		if (!$online_config->are_robots_displayed())
 			$this->visitor_number += $this->robot_number;
 
-		$tpl->put_all(array(
+		$view->put_all(array(
 			'C_DISPLAY_ROBOTS' => $online_config->are_robots_displayed(),
 			'C_SEVERAL_USERS'  => $this->total_users > 1,
 			'C_MORE_USERS'     => $this->total_users > $online_config->get_members_number_displayed(),
@@ -98,7 +98,7 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 			'ADMINISTRATORS_NUMBER' => $this->administrator_number,
 		));
 
-		return $tpl->render();
+		return $view->render();
 	}
 
 	private function increment_level(User $user)

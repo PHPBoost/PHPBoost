@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 20
+ * @version     PHPBoost 6.0 - last update: 2021 11 26
  * @since       PHPBoost 3.0 - 2012 11 11
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -12,7 +12,7 @@
 class BugtrackerDetailController extends ModuleController
 {
 	private $lang;
-	private $tpl;
+	private $view;
 	private $bug;
 	private $config;
 	private $current_user;
@@ -25,7 +25,7 @@ class BugtrackerDetailController extends ModuleController
 
 		$this->build_view($request);
 
-		return $this->build_response($this->tpl);
+		return $this->build_response($this->view);
 	}
 
 	private function init()
@@ -34,10 +34,13 @@ class BugtrackerDetailController extends ModuleController
 		$request = AppContext::get_request();
 		$id = $request->get_int('id', 0);
 
-		$this->tpl = new FileTemplate('bugtracker/BugtrackerDetailController.tpl');
+		$this->view = new FileTemplate('bugtracker/BugtrackerDetailController.tpl');
 
-		$this->lang = LangLoader::get('common', 'bugtracker');
-		$this->tpl->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
+		$this->lang = array_merge(
+			LangLoader::get('common-lang'),
+			LangLoader::get('common', 'bugtracker')
+		);
+		$this->view->add_lang($this->lang);
 		$this->config = BugtrackerConfig::load();
 
 		try {
@@ -60,9 +63,9 @@ class BugtrackerDetailController extends ModuleController
 		$user_assigned = $this->bug->get_assigned_to_id() && UserService::user_exists("WHERE user_id=:user_id", array('user_id' => $this->bug->get_assigned_to_id())) ? UserService::get_user($this->bug->get_assigned_to_id()) : '';
 		$user_assigned_group_color = $user_assigned ? User::get_group_color($user_assigned->get_groups(), $user_assigned->get_level(), true) : '';
 
-		$this->tpl->put_all($this->bug->get_template_vars());
+		$this->view->put_all($this->bug->get_template_vars());
 
-		$this->tpl->put_all(array(
+		$this->view->put_all(array(
 			'C_ENABLED_COMMENTS' 			=> $comments_config->module_comments_is_enabled('bugtracker'),
 			'C_TYPES' 						=> $types,
 			'C_CATEGORIES' 					=> $categories,
@@ -85,7 +88,7 @@ class BugtrackerDetailController extends ModuleController
 		$comments_topic = new BugtrackerCommentsTopic();
 		$comments_topic->set_id_in_module($this->bug->get_id());
 		$comments_topic->set_url(BugtrackerUrlBuilder::detail_comments($this->bug->get_id() . '-' . $this->bug->get_rewrited_title()));
-		$this->tpl->put('COMMENTS', $comments_topic->display());
+		$this->view->put('COMMENTS', $comments_topic->display());
 	}
 
 	private function check_authorizations()
@@ -97,9 +100,9 @@ class BugtrackerDetailController extends ModuleController
 		}
 	}
 
-	private function build_response(View $tpl)
+	private function build_response(View $view)
 	{
-		$body_view = BugtrackerViews::build_body_view($tpl, 'detail', $this->bug->get_id(), $this->bug->get_type());
+		$body_view = BugtrackerViews::build_body_view($view, 'detail', $this->bug->get_id(), $this->bug->get_type());
 
 		$response = new SiteDisplayResponse($body_view);
 		$graphical_environment = $response->get_graphical_environment();

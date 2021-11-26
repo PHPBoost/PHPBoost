@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 22
+ * @version     PHPBoost 6.0 - last update: 2021 11 26
  * @since       PHPBoost 2.0 - 2008 01 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -11,9 +11,12 @@
 
 //------------------------------------------------------------------- Language
 require_once('../kernel/begin.php');
-$lang         = LangLoader::get('common','search');
-$form_lang    = LangLoader::get('form-lang');
-$warning_lang = LangLoader::get('warning-lang');
+$lang = array_merge(
+	LangLoader::get('common-lang'),
+	LangLoader::get('form-lang'),
+	LangLoader::get('warning-lang'),
+	LangLoader::get('common','search')
+);
 
 //------------------------------------------------------------- Authorizations
 if (!SearchAuthorizationsService::check_authorizations()->read())
@@ -24,7 +27,7 @@ if (!SearchAuthorizationsService::check_authorizations()->read())
 
 //------------------------------------------------------------------- Template
 $view = new FileTemplate('search/search_forms.tpl');
-$view->add_lang(array_merge($lang, $form_lang, $warning_lang));
+$view->add_lang($lang);
 
 //--------------------------------------------------------------------- Params
 $request = AppContext::get_request();
@@ -146,7 +149,7 @@ $view->display();
 if (!empty($search))
 {
 	$view = new FileTemplate('search/search_results.tpl');
-	$view->add_lang(array_merge($lang, LangLoader::get('common-lang')));
+	$view->add_lang($lang);
 
 	$results = array();
 	$idsSearch = array();

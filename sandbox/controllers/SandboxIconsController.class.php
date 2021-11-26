@@ -12,7 +12,6 @@
 class SandboxIconsController extends ModuleController
 {
 	private $view;
-	private $icons_lang;
 	private $lang;
 
 	public function execute(HTTPRequestCustom $request)
@@ -28,10 +27,12 @@ class SandboxIconsController extends ModuleController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'sandbox');
-		$this->icons_lang = LangLoader::get('icons', 'sandbox');
+		$this->lang = array_merge(
+			LangLoader::get('common', 'sandbox'),
+			LangLoader::get('icons', 'sandbox')
+		);
 		$this->view = new FileTemplate('sandbox/SandboxIconsController.tpl');
-		$this->view->add_lang(array_merge($this->lang, $this->icons_lang));
+		$this->view->add_lang($this->lang);
 	}
 
 	private function build_view()
@@ -47,7 +48,7 @@ class SandboxIconsController extends ModuleController
 	{
 		$css_lang = LangLoader::get('component', 'sandbox');
 		$view = new FileTemplate('sandbox/pagecontent/icons/fa.tpl');
-		$view->add_lang(array_merge($this->lang, $this->icons_lang, $css_lang));
+		$view->add_lang(array_merge($this->lang, $this->lang, $css_lang));
 
 		// Social
 		$icons = array(
@@ -91,7 +92,7 @@ class SandboxIconsController extends ModuleController
 	{
 		$css_lang = LangLoader::get('component', 'sandbox');
 		$view = new FileTemplate($tpl);
-		$view->add_lang(array_merge($this->lang, $this->icons_lang, $css_lang));
+		$view->add_lang(array_merge($this->lang, $this->lang, $css_lang));
 
 		return $view;
 	}
