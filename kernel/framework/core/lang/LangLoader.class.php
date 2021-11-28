@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 06 09
+ * @version     PHPBoost 6.0 - last update: 2020 11 28
  * @since       PHPBoost 3.0 - 2009 09 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -173,6 +173,49 @@ class LangLoader
 			throw new LangNotFoundException($folder, $filename);
 		else
 			return false;
+	}
+
+	public static function get_kernel_langs()
+	{
+		$lang_directory = new Folder(PATH_TO_ROOT . '/lang/' . self::get_locale());
+		$files = $lang_directory->get_files();
+		$langloader = array();
+		foreach($files as $file)
+		{
+			$filename = $file->get_name_without_extension();
+			if (!in_array($filename, array('config')))
+			{
+				foreach(self::get($filename) as $var => $desc)
+				{
+					$langloader[$var] = $desc;
+				}
+			}
+		}
+		return $langloader;
+	}
+
+	public static function get_module_langs($module_id)
+    {
+		$module_lang_directory = new Folder(PATH_TO_ROOT . '/' . $module_id . '/lang/' . self::get_locale());
+		$files = $module_lang_directory->get_files();
+		$module_langloader = array();
+		foreach($files as $file)
+		{
+			$filename = $file->get_name_without_extension();
+			if (!in_array($filename, array('desc')))
+			{
+				foreach(self::get($filename, $module_id) as $var => $desc)
+				{
+					$module_langloader[$var] = $desc;
+				}
+			}
+		}
+		return $module_langloader;
+    }
+
+	public static function get_all_langs($module_id)
+	{
+		return array_merge(self::get_kernel_langs(), self::get_module_langs($module_id));
 	}
 
 	/**
