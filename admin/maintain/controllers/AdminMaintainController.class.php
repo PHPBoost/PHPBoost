@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 28
+ * @version     PHPBoost 6.0 - last update: 2021 11 29
  * @since       PHPBoost 4.1 - 2014 09 11
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -24,30 +24,6 @@ class AdminMaintainController extends AdminController
 
 	private $maintain_delay_list;
 	private $maintain_type;
-
-	public function __construct()
-	{
-		$this->lang = array_merge(
-			LangLoader::get('admin-lang'),
-			LangLoader::get('date-lang')
-		);
-		$this->maintain_delay_list = array(
-			60    => '1 ' . $this->lang['date.minute'],
-			300   => '5 ' . $this->lang['date.minutes'],
-			600   => '10 ' . $this->lang['date.minutes'],
-			900   => '15 ' . $this->lang['date.minutes'],
-			1800  => '30 ' . $this->lang['date.minutes'],
-			3600  => '1 ' . $this->lang['date.hour'],
-			7200  => '2 ' . $this->lang['date.hours'],
-			10800 => '3 ' . $this->lang['date.hours'],
-			14400 => '4 ' . $this->lang['date.hours'],
-			18000 => '5 ' . $this->lang['date.hours'],
-			21600 => '6 ' . $this->lang['date.hours'],
-			25200 => '7 ' . $this->lang['date.hours'],
-			28800 => '8 ' . $this->lang['date.hours'],
-			57600 => '16 ' . $this->lang['date.hours']
-		);
-	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -70,6 +46,23 @@ class AdminMaintainController extends AdminController
 
 	private function init()
 	{
+		$this->lang = LangLoader::get_all_langs('admin');
+		$this->maintain_delay_list = array(
+			60    => '1 ' . $this->lang['date.minute'],
+			300   => '5 ' . $this->lang['date.minutes'],
+			600   => '10 ' . $this->lang['date.minutes'],
+			900   => '15 ' . $this->lang['date.minutes'],
+			1800  => '30 ' . $this->lang['date.minutes'],
+			3600  => '1 ' . $this->lang['date.hour'],
+			7200  => '2 ' . $this->lang['date.hours'],
+			10800 => '3 ' . $this->lang['date.hours'],
+			14400 => '4 ' . $this->lang['date.hours'],
+			18000 => '5 ' . $this->lang['date.hours'],
+			21600 => '6 ' . $this->lang['date.hours'],
+			25200 => '7 ' . $this->lang['date.hours'],
+			28800 => '8 ' . $this->lang['date.hours'],
+			57600 => '16 ' . $this->lang['date.hours']
+		);
 		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
 		$this->maintenance_config = MaintenanceConfig::load();
 	}
