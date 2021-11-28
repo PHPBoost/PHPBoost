@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 24
+ * @version     PHPBoost 6.0 - last update: 2021 11 28
  * @since       PHPBoost 4.1 - 2014 09 11
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -27,6 +27,10 @@ class AdminMaintainController extends AdminController
 
 	public function __construct()
 	{
+		$this->lang = array_merge(
+			LangLoader::get('admin-lang'),
+			LangLoader::get('date-lang')
+		);
 		$this->maintain_delay_list = array(
 			60    => '1 ' . $this->lang['date.minute'],
 			300   => '5 ' . $this->lang['date.minutes'],
@@ -67,12 +71,6 @@ class AdminMaintainController extends AdminController
 	private function init()
 	{
 		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
-
-		$this->lang = array_merge(
-			LangLoader::get('admin-lang'),
-			LangLoader::get('date-lang')
-		);
-
 		$this->maintenance_config = MaintenanceConfig::load();
 	}
 
