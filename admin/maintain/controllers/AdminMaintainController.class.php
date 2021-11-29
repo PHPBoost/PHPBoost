@@ -8,11 +8,10 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminMaintainController extends AdminController
+class AdminMaintainController extends DefaultAdminController
 {
-	private $lang;
-	private $maintenance_config;
-	private $view;
+	protected $config;
+
 	/**
 	 * @var HTMLForm
 	 */
@@ -46,7 +45,6 @@ class AdminMaintainController extends AdminController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get_all_langs('admin');
 		$this->maintain_delay_list = array(
 			60    => '1 ' . $this->lang['date.minute'],
 			300   => '5 ' . $this->lang['date.minutes'],
@@ -63,7 +61,7 @@ class AdminMaintainController extends AdminController
 			28800 => '8 ' . $this->lang['date.hours'],
 			57600 => '16 ' . $this->lang['date.hours']
 		);
-		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
+		
 		$this->maintenance_config = MaintenanceConfig::load();
 	}
 

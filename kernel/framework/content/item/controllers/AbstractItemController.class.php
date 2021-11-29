@@ -5,22 +5,15 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 23
+ * @version     PHPBoost 6.0 - last update: 2021 11 29
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor xela <xela@phpboost.com>
 */
 
-abstract class AbstractItemController extends ModuleController
+abstract class AbstractItemController extends DefaultModuleController
 {
-	/**
-	 * @var HTTPRequestCustom
-	 */
-	protected $request;
-
-	protected $config;
-	protected $lang;
 	protected $view;
 	protected $enabled_features = array();
 	protected $module_item;
@@ -28,15 +21,8 @@ abstract class AbstractItemController extends ModuleController
 	public function __construct($module_id = '')
 	{
 		parent::__construct($module_id);
-		$this->request = AppContext::get_request();
-		$this->config = self::get_module_configuration()->get_configuration_parameters();
 		$this->lang = array_merge(
-			LangLoader::get('category-lang'),
-			LangLoader::get('comment-lang'),
-			LangLoader::get('common-lang'),
-			LangLoader::get('contribution-lang'),
-			LangLoader::get('form-lang'),
-			LangLoader::filename_exists('common', self::get_module()->get_id()) ? LangLoader::get('common', self::get_module()->get_id()) : array(),
+			LangLoader::get_all_langs(self::$module_id),
 			ItemsService::get_items_lang(self::get_module()->get_id())
 		);
 		$this->view = $this->get_template_to_use();
