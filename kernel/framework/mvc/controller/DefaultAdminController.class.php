@@ -8,6 +8,7 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.0 - last update: 2021 11 30
  * @since       PHPBoost 6.0 - 2021 11 29
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class DefaultAdminController extends AdminController
@@ -20,20 +21,20 @@ abstract class DefaultAdminController extends AdminController
 	 * @var FormButtonDefaultSubmit
 	 */
 	protected $submit_button;
-	
+
 	protected $config;
 	protected $lang;
 	protected $view;
-	
+
 	public function __construct()
 	{
-		$this->lang = LangLoader::get_all_langs('admin');
-		
+		$this->lang = LangLoader::get_all_langs();
+
 		$this->view = $this->get_template_to_use();
 
 		$this->view->add_lang($this->lang);
 	}
-	
+
 	/**
 	 * @return Template
 	 */
@@ -41,7 +42,7 @@ abstract class DefaultAdminController extends AdminController
 	{
 		return new StringTemplate($this->get_template_string_content());
 	}
-	
+
 	protected function get_template_string_content()
 	{
 		return '# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #';
