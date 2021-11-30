@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 19
+ * @version     PHPBoost 6.0 - last update: 2021 11 30
  * @since       PHPBoost 6.0 - 2020 05 16
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -48,7 +48,6 @@ class DefaultItemFormController extends AbstractItemController
 
 	protected function init()
 	{
-		$this->form_lang = LangLoader::get('form-lang');
 		$this->get_item();
 		$this->item_class = self::get_module_configuration()->get_item_name();
 	}
@@ -95,16 +94,16 @@ class DefaultItemFormController extends AbstractItemController
 		$form = new HTMLForm(self::$module_id . '_form');
 		$form->set_layout_title($this->is_new_item ? $this->lang['item.add'] : ($this->lang['item.edition']));
 
-		$fieldset = new FormFieldsetHTML(self::$module_id, $this->form_lang['form.parameters']);
+		$fieldset = new FormFieldsetHTML(self::$module_id, $this->lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor($this->item_class::get_title_label(), $this->form_lang['form.' . $this->item_class::get_title_label()], $this->get_item()->get_title(),
+		$fieldset->add_field(new FormFieldTextEditor($this->item_class::get_title_label(), $this->lang['form.' . $this->item_class::get_title_label()], $this->get_item()->get_title(),
 			array('required' => true)
 		));
 
 		if ((self::get_module_configuration()->has_categories() && CategoriesAuthorizationsService::check_authorizations($this->get_item()->get_id_category(), self::$module_id)->moderation()) || (!self::get_module_configuration()->has_categories() && ItemsAuthorizationsService::check_authorizations(self::$module_id)->moderation()))
 		{
-			$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_' . $this->item_class::get_title_label(), $this->form_lang['form.rewrited.title.personalize'], $this->get_item()->rewrited_title_is_personalized(),
+			$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_' . $this->item_class::get_title_label(), $this->lang['form.rewrited.title.personalize'], $this->get_item()->rewrited_title_is_personalized(),
 				array(
 					'events' => array('click' =>'
 						if (HTMLForms.getField("personalize_rewrited_' . $this->item_class::get_title_label() . '").getValue()) {
@@ -116,8 +115,8 @@ class DefaultItemFormController extends AbstractItemController
 				)
 			));
 
-			$fieldset->add_field(new FormFieldTextEditor('rewrited_' . $this->item_class::get_title_label(), $this->form_lang['form.rewrited.title'], $this->get_item()->get_rewrited_title(),
-				array('description' => $this->form_lang['form.rewrited.title.clue'], 'hidden' => ($this->request->is_post_method() ? !$this->request->get_postbool(self::$module_id . '_form_personalize_rewrited_' . $this->item_class::get_title_label(), false) : !$this->get_item()->rewrited_title_is_personalized())),
+			$fieldset->add_field(new FormFieldTextEditor('rewrited_' . $this->item_class::get_title_label(), $this->lang['form.rewrited.title'], $this->get_item()->get_rewrited_title(),
+				array('description' => $this->lang['form.rewrited.title.clue'], 'hidden' => ($this->request->is_post_method() ? !$this->request->get_postbool(self::$module_id . '_form_personalize_rewrited_' . $this->item_class::get_title_label(), false) : !$this->get_item()->rewrited_title_is_personalized())),
 				array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu'))
 			));
 		}
@@ -127,14 +126,14 @@ class DefaultItemFormController extends AbstractItemController
 			$search_category_children_options = new SearchCategoryChildrensOptions();
 			$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
 			$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->form_lang['form.category'], $this->get_item()->get_id_category(), $search_category_children_options));
+			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->lang['form.category'], $this->get_item()->get_id_category(), $search_category_children_options));
 		}
 
 		$this->build_pre_content_fields($fieldset);
 
 		if ($this->get_item()->content_field_enabled())
 		{
-			$fieldset->add_field(new FormFieldRichTextEditor($this->item_class::get_content_label(), $this->form_lang['form.content'], $this->get_item()->get_content(),
+			$fieldset->add_field(new FormFieldRichTextEditor($this->item_class::get_content_label(), $this->lang['form.content'], $this->get_item()->get_content(),
 				array('rows' => 15, 'required' => $this->get_item()->content_field_required())
 			));
 		}
@@ -167,8 +166,8 @@ class DefaultItemFormController extends AbstractItemController
 		{
 			if ($this->get_item()->content_field_enabled() && $this->get_item()->summary_field_enabled())
 			{
-				$fieldset->add_field(new FormFieldCheckbox('summary_enabled', $this->form_lang['form.enable.summary'], $this->get_item()->is_summary_enabled(),
-					array('description' => StringVars::replace_vars($this->form_lang['form.summary.clue'], array('number' => $this->config->get_auto_cut_characters_number())), 'events' => array('click' => '
+				$fieldset->add_field(new FormFieldCheckbox('summary_enabled', $this->lang['form.enable.summary'], $this->get_item()->is_summary_enabled(),
+					array('description' => StringVars::replace_vars($this->lang['form.summary.clue'], array('number' => $this->config->get_auto_cut_characters_number())), 'events' => array('click' => '
 					if (HTMLForms.getField("summary_enabled").getValue()) {
 						HTMLForms.getField("summary").enable();
 					} else {
@@ -176,14 +175,14 @@ class DefaultItemFormController extends AbstractItemController
 					}'))
 				));
 
-				$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->form_lang['form.summary'], $this->get_item()->get_summary(),
+				$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->lang['form.summary'], $this->get_item()->get_summary(),
 					array('required' => true, 'hidden' => ($this->request->is_post_method() ? !$this->request->get_postbool(self::$module_id . '_form_summary_enabled', false) : !$this->get_item()->is_summary_enabled()))
 				));
 			}
 
 			if ($this->config->get_author_displayed() && $this->get_item()->author_custom_name_field_enabled())
 			{
-				$fieldset->add_field(new FormFieldCheckbox('author_custom_name_enabled', $this->form_lang['form.enable.author.custom.name'], $this->get_item()->is_author_custom_name_enabled(),
+				$fieldset->add_field(new FormFieldCheckbox('author_custom_name_enabled', $this->lang['form.enable.author.custom.name'], $this->get_item()->is_author_custom_name_enabled(),
 					array('events' => array('click' => '
 					if (HTMLForms.getField("author_custom_name_enabled").getValue()) {
 						HTMLForms.getField("author_custom_name").enable();
@@ -192,7 +191,7 @@ class DefaultItemFormController extends AbstractItemController
 					}'))
 				));
 
-				$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->form_lang['form.author.custom.name'], $this->get_item()->get_author_custom_name(),
+				$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->lang['form.author.custom.name'], $this->get_item()->get_author_custom_name(),
 					array('required' => true, 'hidden' => ($this->request->is_post_method() ? !$this->request->get_postbool(self::$module_id . '_form_author_custom_name_enabled', false) : !$this->get_item()->is_author_custom_name_enabled()))
 				));
 			}
@@ -202,16 +201,16 @@ class DefaultItemFormController extends AbstractItemController
 
 	protected function build_options_fieldset(HTMLForm $form)
 	{
-		$fieldset = new FormFieldsetHTML('options', $this->form_lang['form.options']);
+		$fieldset = new FormFieldsetHTML('options', $this->lang['form.options']);
 		$this->get_additional_attributes_fields($fieldset, 'attribute_options_field_parameters');
 
 		if (self::get_module_configuration()->feature_is_enabled('keywords'))
-			$fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_item()->get_id(), 'keywords', $this->form_lang['form.keywords'],
-				array('description' => $this->form_lang['form.keywords.clue'])
+			$fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_item()->get_id(), 'keywords', $this->lang['form.keywords'],
+				array('description' => $this->lang['form.keywords.clue'])
 			));
 
 		if (self::get_module_configuration()->feature_is_enabled('sources'))
-			$fieldset->add_field(new FormFieldSelectSources('sources', $this->form_lang['form.sources'], $this->get_item()->get_sources()));
+			$fieldset->add_field(new FormFieldSelectSources('sources', $this->lang['form.sources'], $this->get_item()->get_sources()));
 
 		if ($fieldset->get_fields())
 		{
@@ -223,27 +222,27 @@ class DefaultItemFormController extends AbstractItemController
 	{
 		if ((self::get_module_configuration()->has_categories() && CategoriesAuthorizationsService::check_authorizations($this->get_item()->get_id_category(), self::$module_id)->moderation()) || (!self::get_module_configuration()->has_categories() && ItemsAuthorizationsService::check_authorizations(self::$module_id)->moderation()))
 		{
-			$publication_fieldset = new FormFieldsetHTML('publication', $this->form_lang['form.publication']);
+			$publication_fieldset = new FormFieldsetHTML('publication', $this->lang['form.publication']);
 			$form->add_fieldset($publication_fieldset);
 
-			$publication_fieldset->add_field(new FormFieldDateTime('creation_date', $this->form_lang['form.creation.date'], $this->get_item()->get_creation_date(),
+			$publication_fieldset->add_field(new FormFieldDateTime('creation_date', $this->lang['form.creation.date'], $this->get_item()->get_creation_date(),
 				array('required' => true)
 			));
 
 			if (!$this->is_new_item && !$this->get_item()->is_published())
 			{
-				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->form_lang['form.update.creation.date'], FormFieldCheckbox::UNCHECKED,
+				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->lang['form.update.creation.date'], FormFieldCheckbox::UNCHECKED,
 					array('hidden' => $this->get_item()->get_status() != Item::NOT_PUBLISHED)
 				));
 			}
 
 			if (self::get_module_configuration()->feature_is_enabled('deferred_publication'))
 			{
-				$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('publishing_state', $this->form_lang['form.publication'], $this->get_item()->get_publishing_state(),
+				$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('publishing_state', $this->lang['form.publication'], $this->get_item()->get_publishing_state(),
 					array(
-						new FormFieldSelectChoiceOption($this->form_lang['form.publication.draft'], Item::NOT_PUBLISHED),
-						new FormFieldSelectChoiceOption($this->form_lang['form.publication.now'], Item::PUBLISHED),
-						new FormFieldSelectChoiceOption($this->form_lang['form.publication.deffered'], Item::DEFERRED_PUBLICATION),
+						new FormFieldSelectChoiceOption($this->lang['form.publication.draft'], Item::NOT_PUBLISHED),
+						new FormFieldSelectChoiceOption($this->lang['form.publication.now'], Item::PUBLISHED),
+						new FormFieldSelectChoiceOption($this->lang['form.publication.deffered'], Item::DEFERRED_PUBLICATION),
 					),
 					array(
 						'events' => array('change' => '
@@ -262,12 +261,12 @@ class DefaultItemFormController extends AbstractItemController
 					)
 				));
 
-				$publication_fieldset->add_field($publishing_start_date = new FormFieldDateTime('publishing_start_date', $this->form_lang['form.start.date'],
+				$publication_fieldset->add_field($publishing_start_date = new FormFieldDateTime('publishing_start_date', $this->lang['form.start.date'],
 					($this->get_item()->get_publishing_start_date() === null ? new Date() : $this->get_item()->get_publishing_start_date()),
 					array('hidden' => ($this->request->is_post_method() ? ($this->request->get_postint(self::$module_id . '_form_publishing_state', 0) != Item::DEFERRED_PUBLICATION) : ($this->get_item()->get_publishing_state() != Item::DEFERRED_PUBLICATION)))
 				));
 
-				$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->form_lang['form.enable.end.date'], $this->get_item()->end_date_enabled(),
+				$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->lang['form.enable.end.date'], $this->get_item()->end_date_enabled(),
 					array(
 						'hidden' => ($this->request->is_post_method() ? ($this->request->get_postint(self::$module_id . '_form_publishing_state', 0) != Item::DEFERRED_PUBLICATION) : ($this->get_item()->get_publishing_state() != Item::DEFERRED_PUBLICATION)),
 						'events' => array('click' => '
@@ -280,7 +279,7 @@ class DefaultItemFormController extends AbstractItemController
 					)
 				));
 
-				$publication_fieldset->add_field($publishing_end_date = new FormFieldDateTime('publishing_end_date', $this->form_lang['form.end.date'],
+				$publication_fieldset->add_field($publishing_end_date = new FormFieldDateTime('publishing_end_date', $this->lang['form.end.date'],
 					($this->get_item()->get_publishing_end_date() === null ? new date() : $this->get_item()->get_publishing_end_date()),
 					array('hidden' => ($this->request->is_post_method() ? !$this->request->get_postbool(self::$module_id . '_form_end_date_enabled', false) : !$this->get_item()->end_date_enabled()))
 				));
@@ -289,7 +288,7 @@ class DefaultItemFormController extends AbstractItemController
 			}
 			else
 			{
-				$fieldset->add_field(new FormFieldCheckbox('publishing_state', $this->form_lang['form.approve'], $this->get_item()->get_publishing_state()));
+				$fieldset->add_field(new FormFieldCheckbox('publishing_state', $this->lang['form.approve'], $this->get_item()->get_publishing_state()));
 			}
 		}
 	}
@@ -468,22 +467,22 @@ class DefaultItemFormController extends AbstractItemController
 		$contribution = LangLoader::get('contribution-lang');
 		if ($this->is_new_item && $this->is_contributor_member())
 		{
-			$fieldset = new FormFieldsetHTML('contribution', $contribution['contribution.contribution']);
-			$fieldset->set_description(MessageHelper::display($contribution['contribution.extended.warning'], MessageHelper::WARNING)->render());
+			$fieldset = new FormFieldsetHTML('contribution', $this->lang['contribution.contribution']);
+			$fieldset->set_description(MessageHelper::display($this->lang['contribution.extended.warning'], MessageHelper::WARNING)->render());
 			$form->add_fieldset($fieldset);
 
-			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $contribution['contribution.description'], '',
-				array('description' => $contribution['contribution.description.clue'])
+			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $this->lang['contribution.description'], '',
+				array('description' => $this->lang['contribution.description.clue'])
 			));
 		}
 		elseif ($this->get_item()->is_published() && $this->get_item()->is_authorized_to_edit() && !AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL))
 		{
-			$fieldset = new FormFieldsetHTML('member_edition', $contribution['contribution.member.edition']);
-			$fieldset->set_description(MessageHelper::display($contribution['contribution.edition.warning'], MessageHelper::WARNING)->render());
+			$fieldset = new FormFieldsetHTML('member_edition', $this->lang['contribution.member.edition']);
+			$fieldset->set_description(MessageHelper::display($this->lang['contribution.edition.warning'], MessageHelper::WARNING)->render());
 			$form->add_fieldset($fieldset);
 
-			$fieldset->add_field(new FormFieldRichTextEditor('edition_description', $contribution['contribution.edition.description'], '',
-				array('description' => $contribution['contribution.edition.description.clue'])
+			$fieldset->add_field(new FormFieldRichTextEditor('edition_description', $this->lang['contribution.edition.description'], '',
+				array('description' => $this->lang['contribution.edition.description.clue'])
 			));
 		}
 	}

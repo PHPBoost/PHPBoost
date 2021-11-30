@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 20
+ * @version     PHPBoost 6.0 - last update: 2021 11 30
  * @since       PHPBoost 6.0 - 2020 01 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -153,7 +153,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 				$this->page_title = $this->category->get_id() != Category::ROOT_CATEGORY ? $this->category->get_name() : self::get_module_configuration()->get_name();
 				$this->page_description = method_exists($this->category, 'get_description') ? $this->category->get_description() : '';
 				if (!$this->page_description)
-					$this->page_description = StringVars::replace_vars($this->lang['items.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->category->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category.category', 'category-lang') . ' ' . $this->category->get_name() : '');
+					$this->page_description = StringVars::replace_vars($this->lang['items.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->category->get_id() != Category::ROOT_CATEGORY ? ' ' . $this->lang['category.category'] . ' ' . $this->category->get_name() : '');
 				$this->current_url = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
 				$this->pagination_url = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id, $this->sort_field, $this->sort_mode, '%d', $this->subcategories_page);
 				$this->url_without_sorting_parameters = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id, true);

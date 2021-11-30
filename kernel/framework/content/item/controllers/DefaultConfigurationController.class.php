@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 17
+ * @version     PHPBoost 6.0 - last update: 2021 11 30
  * @since       PHPBoost 6.0 - 2020 02 11
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,15 +13,6 @@
 
 class DefaultConfigurationController extends AbstractAdminItemController
 {
-	/**
-	 * @var HTMLForm
-	 */
-	protected $form;
-	/**
-	 * @var FormButtonSubmit
-	 */
-	protected $submit_button;
-
 	protected $additional_fields_list = array();
 
 	public function execute(HTTPRequestCustom $request)
@@ -44,7 +35,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 			}
 			$this->hide_fields();
 
-			$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.config', 'warning-lang'), MessageHelper::SUCCESS, 4));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.success.config'], MessageHelper::SUCCESS, 4));
 		}
 
 		$this->view->put('FORM', $this->form->display());
@@ -185,7 +176,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 
 			if (self::get_module_configuration()->has_categories())
 			{
-				$fieldset_categories = new FormFieldsetHTML('categories', LangLoader::get_message('category.categories', 'category-lang'));
+				$fieldset_categories = new FormFieldsetHTML('categories', $this->lang['category.categories']);
 				$form->add_fieldset($fieldset_categories);
 
 				if ($this->module_item->sub_categories_displayed())

@@ -3,24 +3,13 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 29
+ * @version     PHPBoost 6.0 - last update: 2021 11 30
  * @since       PHPBoost 4.1 - 2014 09 11
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminMaintainController extends DefaultAdminController
 {
-	protected $config;
-
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonDefaultSubmit
-	 */
-	private $submit_button;
-
 	private $maintain_delay_list;
 	private $maintain_type;
 
@@ -35,7 +24,7 @@ class AdminMaintainController extends DefaultAdminController
 			$this->form->get_field_by_id('maintain_during')->set_hidden($this->get_maintain_type() != 'during');
 			$this->form->get_field_by_id('maintain_until')->set_hidden($this->get_maintain_type() != 'until');
 			$this->form->get_field_by_id('display_duration_for_admin')->set_hidden(!$this->maintenance_config->get_display_duration());
-			$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.config', 'warning-lang'), MessageHelper::SUCCESS, 5));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.success.config'], MessageHelper::SUCCESS, 5));
 		}
 
 		$this->view->put('FORM', $this->form->display());

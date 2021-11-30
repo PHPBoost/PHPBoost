@@ -6,17 +6,27 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 29
- * @since       PHPBoost 6.0 - 2021 11 29
+ * @version     PHPBoost 6.0 - last update: 2021 11 30
+ * @since       PHPBoost 6.0 - 2021 11 30
 */
 
-abstract class DefaultModuleController extends ModuleController
+abstract class DefaultAdminModuleController extends AdminModuleController
 {
 	/**
 	 * @var HTTPRequestCustom
 	 */
 	protected $request;
-
+	
+	/**
+	 * @var HTMLForm
+	 */
+	protected $form;
+	
+	/**
+	 * @var FormButtonSubmit
+	 */
+	protected $submit_button;
+	
 	protected $config;
 	protected $lang;
 	protected $view;
@@ -48,7 +58,7 @@ abstract class DefaultModuleController extends ModuleController
 	
 	protected function get_template_string_content()
 	{
-		return '';
+		return '# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #';
 	}
 }
 ?>

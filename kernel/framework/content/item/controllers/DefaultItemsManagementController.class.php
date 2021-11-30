@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 11 30
  * @since       PHPBoost 6.0 - 2020 01 16
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -110,7 +110,7 @@ class DefaultItemsManagementController extends AbstractItemController
 				else
 				{
 					if ($item->get_publishing_end_date() != null)
-						$dates = LangLoader::get_message('common.until.alt', 'common-lang') . ' ' . $item->get_publishing_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE);
+						$dates = $this->lang['common.until.alt'] . ' ' . $item->get_publishing_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE);
 				}
 			}
 
@@ -158,7 +158,7 @@ class DefaultItemsManagementController extends AbstractItemController
 
 			self::get_items_manager()->clear_cache();
 
-			AppContext::get_response()->redirect(ItemsUrlBuilder::manage(), LangLoader::get_message('warning.process.success', 'warning-lang'));
+			AppContext::get_response()->redirect(ItemsUrlBuilder::manage(), $this->lang['warning.process.success']);
 		}
 	}
 
