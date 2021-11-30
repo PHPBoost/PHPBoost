@@ -38,7 +38,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.success.config'], MessageHelper::SUCCESS, 4));
 		}
 
-		$this->view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
 		return new DefaultAdminDisplayResponse($this->view);
 	}

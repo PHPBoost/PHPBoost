@@ -98,7 +98,7 @@ class CalendarItemsManagerController extends DefaultModuleController
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 
-		$this->view->put('TABLE', $table->display());
+		$this->view->put('CONTENT', $table->display());
 
 		return $table->get_page_number();
 	}
@@ -172,11 +172,6 @@ class CalendarItemsManagerController extends DefaultModuleController
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
-	}
-	
-	protected function get_template_string_content()
-	{
-		return '# INCLUDE MESSAGE_HELPER # # INCLUDE TABLE #';
 	}
 
 	private function generate_response($page = 1)

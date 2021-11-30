@@ -32,7 +32,7 @@ class AdminCalendarConfigController extends DefaultAdminModuleController
 			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.success.config'], MessageHelper::SUCCESS, 5));
 		}
 
-		$this->view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
 		return new DefaultAdminDisplayResponse($this->view);
 	}

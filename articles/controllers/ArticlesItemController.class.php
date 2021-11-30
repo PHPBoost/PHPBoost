@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 28
+ * @version     PHPBoost 6.0 - last update: 2021 11 30
  * @since       PHPBoost 6.0 - 2021 03 15
 */
 
@@ -60,7 +60,7 @@ class ArticlesItemController extends DefaultDisplayItemController
 			array('class' => 'summary', 'events' => array('change' => 'document.location = "' . ItemsUrlBuilder::display($this->item->get_category()->get_id(), $this->item->get_category()->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title(), 'articles', '')->rel() . '" + HTMLForms.getField("article_pages").getValue();'))
 		));
 
-		$this->view->put('FORM', $form->display());
+		$this->view->put('CONTENT', $form->display());
 	}
 
 	private function build_pages_pagination($current_page, $pages_number, $array_page)

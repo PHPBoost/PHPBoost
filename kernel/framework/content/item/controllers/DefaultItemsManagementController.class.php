@@ -136,7 +136,7 @@ class DefaultItemsManagementController extends AbstractItemController
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 
-		$this->view->put('TABLE', $table->display());
+		$this->view->put('CONTENT', $table->display());
 
 		return $table->get_page_number();
 	}
@@ -162,11 +162,6 @@ class DefaultItemsManagementController extends AbstractItemController
 		}
 	}
 
-	protected function get_template_string_content()
-	{
-		return '# INCLUDE TABLE #';
-	}
-
 	protected function check_authorizations()
 	{
 		return self::get_module_configuration()->has_categories() ? CategoriesAuthorizationsService::check_authorizations()->moderation() : ItemsAuthorizationsService::check_authorizations()->moderation();
@@ -174,7 +169,7 @@ class DefaultItemsManagementController extends AbstractItemController
 
 	protected function get_additional_html_table_columns()
 	{
-	return array();
+		return array();
 	}
 
 	protected function get_additional_html_table_row_cells(&$item)

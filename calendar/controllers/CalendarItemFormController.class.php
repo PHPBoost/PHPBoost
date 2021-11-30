@@ -36,7 +36,7 @@ class CalendarItemFormController extends DefaultModuleController
 			$this->redirect();
 		}
 
-		$this->view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
 		return $this->generate_response($this->view);
 	}

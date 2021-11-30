@@ -171,11 +171,6 @@ abstract class AbstractItemController extends DefaultModuleController
 		return '';
 	}
 
-	protected function get_template_string_content()
-	{
-		return '';
-	}
-
 	/**
 	 * @return boolean Authorization to display the controller
 	 */

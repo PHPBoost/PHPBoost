@@ -139,7 +139,7 @@ class CalendarItemsListController extends DefaultModuleController
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 
-		$this->view->put('TABLE', $table->display());
+		$this->view->put('CONTENT', $table->display());
 
 		return $table->get_page_number();
 	}
@@ -221,11 +221,6 @@ class CalendarItemsListController extends DefaultModuleController
 		}
 
 		return $label;
-	}
-	
-	protected function get_template_string_content()
-	{
-		return '# INCLUDE MESSAGE_HELPER # # INCLUDE TABLE #';
 	}
 
 	private function generate_response($page = 1)

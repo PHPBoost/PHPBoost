@@ -45,7 +45,7 @@ abstract class DefaultAdminController extends AdminController
 
 	protected function get_template_string_content()
 	{
-		return '# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #';
+		return '# INCLUDE MESSAGE_HELPER # # INCLUDE CONTENT #';
 	}
 }
 ?>
