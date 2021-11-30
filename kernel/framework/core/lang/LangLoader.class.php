@@ -215,7 +215,7 @@ class LangLoader
 
 	public static function get_all_langs($module_id = '')
 	{
-		if(!in_array($module_id, array('', 'admin', 'kernel', 'user')))
+		if(!empty($module_id) && !in_array($module_id, array('admin', 'kernel', 'user')))
 			return array_merge(self::get_kernel_langs(), self::get_module_langs($module_id));
 		else
 			return self::get_kernel_langs();
