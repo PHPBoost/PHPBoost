@@ -48,7 +48,7 @@ abstract class DefaultModuleController extends ModuleController
 	
 	protected function get_template_string_content()
 	{
-		return '';
+		return '# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #';
 	}
 }
 ?>
