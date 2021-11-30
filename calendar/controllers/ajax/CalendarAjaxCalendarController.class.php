@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 22
+ * @version     PHPBoost 6.0 - last update: 2021 11 30
  * @since       PHPBoost 3.0 - 2012 11 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -51,7 +51,10 @@ class CalendarAjaxCalendarController extends AbstractController
 
 	private function init(HTTPRequestCustom $request)
 	{
-		$this->lang = LangLoader::get('date-lang');
+		$this->lang = array_merge(
+			LangLoader::get('date-lang'),
+			LangLoader::get('common', 'calendar')
+		);
 		$this->view = new FileTemplate('calendar/CalendarAjaxCalendarController.tpl');
 		$this->view->add_lang($this->lang);
 
@@ -142,7 +145,7 @@ class CalendarAjaxCalendarController extends AbstractController
 						$color = isset($array_items[$j]['color']) ? $array_items[$j]['color'] : array();
 						$color[] = ($item['type'] == 'BIRTHDAY' ? $config->get_birthday_color() : ($item['id_category'] != Category::ROOT_CATEGORY && isset($categories[$item['id_category']]) && $categories[$item['id_category']]->get_color() ? $categories[$item['id_category']]->get_color() : $config->get_event_color()));
 						$array_items[$j] = array(
-							'title'       => $title . (!empty($title) ? '<br />' : '') . ($item['type'] != 'BIRTHDAY' ? (($j == $start_date->get_day() && $month == $start_date->get_month() && $year == $start_date->get_year()) ? $start_date->get_hours() . 'h' . $start_date->get_minutes() . ' : ' : '') : LangLoader::get_message('calendar.birthday.of', 'common', 'calendar') . ' ') . $item['title'],
+							'title'       => $title . (!empty($title) ? '<br />' : '') . ($item['type'] != 'BIRTHDAY' ? (($j == $start_date->get_day() && $month == $start_date->get_month() && $year == $start_date->get_year()) ? $start_date->get_hours() . 'h' . $start_date->get_minutes() . ' : ' : '') : $this->lang['calendar.birthday.of'] . ' ') . $item['title'],
 							'type'        => $item['type'],
 							'color'       => $color,
 							'id_category' => $item['id_category'],
@@ -152,7 +155,7 @@ class CalendarAjaxCalendarController extends AbstractController
 						{
 							$items_legend_list[] = array(
 								'id_category' => Category::ROOT_CATEGORY,
-								'name'        => LangLoader::get_message('calendar.birthday', 'common', 'calendar'),
+								'name'        => $this->lang['calendar.birthday'],
 								'color'       => $config->get_birthday_color()
 							);
 						}
@@ -160,7 +163,7 @@ class CalendarAjaxCalendarController extends AbstractController
 						{
 							$items_legend_list[] = array(
 								'id_category' => $item['id_category'],
-								'name'        => LangLoader::get_message('calendar.item', 'common', 'calendar'),
+								'name'        => $this->lang['calendar.item'],
 								'color'       => $config->get_event_color()
 							);
 						}

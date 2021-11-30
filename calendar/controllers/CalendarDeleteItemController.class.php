@@ -3,13 +3,13 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 11 30
  * @since       PHPBoost 3.0 - 2012 11 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class CalendarDeleteItemController extends ModuleController
+class CalendarDeleteItemController extends DefaultModuleController
 {
 	/**
 	 * @var HTMLForm
@@ -20,21 +20,15 @@ class CalendarDeleteItemController extends ModuleController
 	 */
 	private $submit_button;
 
-	private $lang;
-
 	private $item;
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		AppContext::get_session()->csrf_get_protect();
 
-		$this->init();
-
 		$this->get_item($request);
 
 		$this->check_authorizations();
-
-		$view = new StringTemplate('# INCLUDE FORM #');
 
 		if ($this->item->belongs_to_a_serie())
 			$this->build_form($request);
@@ -45,14 +39,9 @@ class CalendarDeleteItemController extends ModuleController
 			$this->redirect($request);
 		}
 
-		$view->put('FORM', $this->form->display());
+		$this->view->put('FORM', $this->form->display());
 
-		return $this->generate_response($view);
-	}
-
-	private function init()
-	{
-		$this->lang = LangLoader::get('common', 'calendar');
+		return $this->generate_response($this->view);
 	}
 
 	private function build_form(HTTPRequestCustom $request)
@@ -60,10 +49,10 @@ class CalendarDeleteItemController extends ModuleController
 		$form = new HTMLForm(__CLASS__);
 		$form->set_layout_title($this->lang['calendar.item.delete']);
 
-		$fieldset = new FormFieldsetHTML('delete_serie', LangLoader::get_message('form.parameters', 'form-lang'));
+		$fieldset = new FormFieldsetHTML('delete_serie', $this->lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldRadioChoice('delete_serie', LangLoader::get_message('common.delete', 'common-lang'), 0,
+		$fieldset->add_field(new FormFieldRadioChoice('delete_serie', $this->lang['common.delete'], 0,
 			array(
 				new FormFieldRadioChoiceOption($this->lang['calendar.delete.occurrence'], 0),
 				new FormFieldRadioChoiceOption($this->lang['calendar.delete.serie'], 1)

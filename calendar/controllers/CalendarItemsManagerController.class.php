@@ -3,25 +3,20 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 24
+ * @version     PHPBoost 6.0 - last update: 2021 11 30
  * @since       PHPBoost 4.0 - 2013 07 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class CalendarItemsManagerController extends ModuleController
+class CalendarItemsManagerController extends DefaultModuleController
 {
-	private $lang;
-	private $view;
-
 	private $items_number = 0;
 	private $ids = array();
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
-
-		$this->init();
 
 		$current_page = $this->build_table();
 
@@ -30,25 +25,15 @@ class CalendarItemsManagerController extends ModuleController
 		return $this->generate_response($current_page);
 	}
 
-	private function init()
-	{
-		$this->lang = array_merge(
-			LangLoader::get('common-lang'),
-			LangLoader::get('common', 'calendar')
-		);
-		$this->view = new StringTemplate('# INCLUDE TABLE #');
-	}
-
 	private function build_table()
 	{
 		$display_categories = CategoriesService::get_categories_manager()->get_categories_cache()->has_categories();
-		$config = CalendarConfig::load();
 
 		$columns = array(
 			new HTMLTableColumn($this->lang['common.title'], 'title'),
-			new HTMLTableColumn(LangLoader::get_message('category.category', 'category-lang'), 'id_category'),
+			new HTMLTableColumn($this->lang['category.category'], 'id_category'),
 			new HTMLTableColumn($this->lang['common.author'], 'display_name'),
-			new HTMLTableColumn(LangLoader::get_message('date.date', 'date-lang'), 'start_date'),
+			new HTMLTableColumn($this->lang['date.date'], 'start_date'),
 			new HTMLTableColumn($this->lang['calendar.repetition']),
 			new HTMLTableColumn($this->lang['common.status.publication'], 'approved'),
 			new HTMLTableColumn($this->lang['common.actions'], '', array('sr-only' => true))
@@ -98,11 +83,11 @@ class CalendarItemsManagerController extends ModuleController
 
 			$row = array(
 				new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()), $item->get_content()->get_title()), 'left'),
-				new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), ($category->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('common.none.alt', 'common-lang') : $category->get_name()), array('data-color-surround' => $category->get_id() != Category::ROOT_CATEGORY && $category->get_color() ? $category->get_color() : ($category->get_id() == Category::ROOT_CATEGORY ? $config->get_event_color() : '')), 'pinned')),
+				new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), ($category->get_id() == Category::ROOT_CATEGORY ? $this->lang['common.none.alt'] : $category->get_name()), array('data-color-surround' => $category->get_id() != Category::ROOT_CATEGORY && $category->get_color() ? $category->get_color() : ($category->get_id() == Category::ROOT_CATEGORY ? $this->config->get_event_color() : '')), 'pinned')),
 				new HTMLTableRowCell($author),
-				new HTMLTableRowCell(LangLoader::get_message('date.from.date', 'date-lang') . ' ' . $item->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR) . $br->display() . LangLoader::get_message('date.to.date', 'date-lang') . ' ' . $item->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR)),
-				new HTMLTableRowCell($item->belongs_to_a_serie() ? $this->get_repeat_type_label($item) . ' - ' . $item->get_content()->get_repeat_number() . ' ' . $this->lang['calendar.repeat.times'] : LangLoader::get_message('common.no', 'common-lang')),
-				new HTMLTableRowCell($item->get_content()->is_approved() ? LangLoader::get_message('common.status.published', 'common-lang') : LangLoader::get_message('common.status.draft', 'common-lang')),
+				new HTMLTableRowCell($this->lang['date.from.date'] . ' ' . $item->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR) . $br->display() . $this->lang['date.to.date'] . ' ' . $item->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR)),
+				new HTMLTableRowCell($item->belongs_to_a_serie() ? $this->get_repeat_type_label($item) . ' - ' . $item->get_content()->get_repeat_number() . ' ' . $this->lang['calendar.repeat.times'] : $this->lang['common.no']),
+				new HTMLTableRowCell($item->get_content()->is_approved() ? $this->lang['common.status.published'] : $this->lang['common.status.draft']),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display(), 'controls')
 			);
 
@@ -150,7 +135,7 @@ class CalendarItemsManagerController extends ModuleController
 
 			CalendarService::clear_cache();
 
-			AppContext::get_response()->redirect(CalendarUrlBuilder::manage_items(), LangLoader::get_message('warning.process.success', 'warning-lang'));
+			AppContext::get_response()->redirect(CalendarUrlBuilder::manage_items(), $this->lang['warning.process.success']);
 		}
 	}
 
@@ -161,19 +146,19 @@ class CalendarItemsManagerController extends ModuleController
 		switch ($item->get_content()->get_repeat_type())
 		{
 			case CalendarItemContent::DAILY :
-				$label = LangLoader::get_message('date.every.day', 'date-lang');
+				$label = $this->lang['date.every.day'];
 				break;
 
 			case CalendarItemContent::WEEKLY :
-				$label = LangLoader::get_message('date.every.week', 'date-lang');
+				$label = $this->lang['date.every.week'];
 				break;
 
 			case CalendarItemContent::MONTHLY :
-				$label = LangLoader::get_message('date.every.month', 'date-lang');
+				$label = $this->lang['date.every.month'];
 				break;
 
 			case CalendarItemContent::YEARLY :
-				$label = LangLoader::get_message('date.every.year', 'date-lang');
+				$label = $this->lang['date.every.year'];
 				break;
 		}
 
@@ -187,6 +172,11 @@ class CalendarItemsManagerController extends ModuleController
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
+	}
+	
+	protected function get_template_string_content()
+	{
+		return '# INCLUDE MESSAGE_HELPER # # INCLUDE TABLE #';
 	}
 
 	private function generate_response($page = 1)
