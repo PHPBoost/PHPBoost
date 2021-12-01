@@ -319,7 +319,7 @@ class ForumHomeController extends DefaultModuleController
 
 		$description = $this->category !== false ? $this->category->get_description() : '';
 		if (empty($description))
-			$description = StringVars::replace_vars($this->lang['forum.root.description.seo'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->category !== false && $this->category->get_name() && $this->category->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category.category', 'category-lang') . ' ' . $this->category->get_name() : '');
+			$description = StringVars::replace_vars($this->lang['forum.root.description.seo'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->category !== false && $this->category->get_name() && $this->category->get_id() != Category::ROOT_CATEGORY ? ' ' . $this->lang['category.category'] . ' ' . $this->category->get_name() : '');
 
 		$graphical_environment->get_seo_meta_data()->set_description($description);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(ForumUrlBuilder::home());

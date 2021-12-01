@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 20
+ * @version     PHPBoost 6.0 - last update: 2021 12 01
  * @since       PHPBoost 4.0 - 2013 02 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -38,9 +38,9 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 		$class_name = get_called_class();
 		self::$categories_manager = $class_name::get_categories_manager();
 
-		$this->lang = LangLoader::get('category-lang');
+		$this->lang = LangLoader::get_all_langs(self::$module_id);
 		$this->view = new FileTemplate('__default__/framework/content/categories/manage.tpl');
-		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
+		$this->view->add_lang($this->lang);
 	}
 
 	private function build_view()
@@ -80,7 +80,7 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 				}
 
 				$category_view = new FileTemplate('__default__/framework/content/categories/category.tpl');
-				$category_view->add_lang(array_merge($this->lang, LangLoader::get('form-lang'), LangLoader::get('common-lang')));
+				$category_view->add_lang($this->lang);
 				$category_view->put_all(array(
 					'C_DESCRIPTION'            => !empty($description),
 					'C_COLOR'                  => !empty($color),
@@ -124,7 +124,7 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 
 			$categories_cache::invalidate();
 
-			$this->tpl->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.position.update', 'warning-lang'), MessageHelper::SUCCESS, 5));
+			$this->tpl->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.success.position.update'], MessageHelper::SUCCESS, 5));
 		}
 	}
 

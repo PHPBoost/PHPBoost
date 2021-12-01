@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 28
+ * @version     PHPBoost 6.0 - last update: 2021 12 01
  * @since       PHPBoost 4.0 - 2013 02 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -25,8 +25,6 @@ abstract class AbstractCategoriesFormController extends ModuleController
 	protected $submit_button;
 
 	protected static $lang;
-	protected static $form_lang;
-	protected static $category_lang;
 	protected static $categories_manager;
 
 	/**
@@ -37,9 +35,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 
 	public static function __static()
 	{
-		self::$lang = LangLoader::get('category-lang');
-		self::$form_lang = LangLoader::get('form-lang');
-		self::$category_lang = LangLoader::get('category-lang');
+		self::$lang = LangLoader::get_all_langs(self::$module_id);
 	}
 
 	public function execute(HTTPRequestCustom $request)
@@ -73,12 +69,12 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		$form = new HTMLForm(__CLASS__);
 		$form->set_layout_title($this->get_title());
 
-		$fieldset = new FormFieldsetHTML('category', self::$form_lang['form.parameters']);
+		$fieldset = new FormFieldsetHTML('category', self::$lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('name', self::$form_lang['form.name'], $this->get_category()->get_name(), array('required' => true)));
+		$fieldset->add_field(new FormFieldTextEditor('name', self::$lang['form.name'], $this->get_category()->get_name(), array('required' => true)));
 
-		$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_name', self::$form_lang['form.rewrited.title.personalize'], $this->get_category()->rewrited_name_is_personalized(),
+		$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_name', self::$lang['form.rewrited.title.personalize'], $this->get_category()->rewrited_name_is_personalized(),
 			array(
 				'events' => array('click' => '
 					if (HTMLForms.getField("personalize_rewrited_name").getValue()) {
@@ -90,9 +86,9 @@ abstract class AbstractCategoriesFormController extends ModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldTextEditor('rewrited_name', self::$form_lang['form.rewrited.title'], $this->get_category()->get_rewrited_name(),
+		$fieldset->add_field(new FormFieldTextEditor('rewrited_name', self::$lang['form.rewrited.title'], $this->get_category()->get_rewrited_name(),
 			array(
-				'description' => self::$form_lang['form.rewrited.title.clue'],
+				'description' => self::$lang['form.rewrited.title.clue'],
 				'hidden' => !$this->get_category()->rewrited_name_is_personalized()
 			),
 			array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu'))
@@ -110,10 +106,10 @@ abstract class AbstractCategoriesFormController extends ModuleController
 
 		$this->build_options_fieldset($form);
 
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', self::$form_lang['form.authorizations']);
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', self::$lang['form.authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 
-		$fieldset_authorizations->add_field(new FormFieldCheckbox('special_authorizations', self::$form_lang['form.authorizations'], $this->get_category()->has_special_authorizations(),
+		$fieldset_authorizations->add_field(new FormFieldCheckbox('special_authorizations', self::$lang['form.authorizations'], $this->get_category()->has_special_authorizations(),
 			array(
 				'description' => self::$lang['category.form.authorizations.clue'],
 				'events' => array('click' => '
@@ -179,7 +175,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 
 	private function build_options_fieldset(HTMLForm $form)
 	{
-		$fieldset = new FormFieldsetHTML('options_fieldset', LangLoader::get_message('common.options', 'common-lang'));
+		$fieldset = new FormFieldsetHTML('options_fieldset', self::$lang['common.options']);
 		$this->get_options_fields($fieldset);
 		if ($fieldset->get_fields())
 		{
@@ -262,10 +258,10 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		$module = $module_id ? ModulesManager::get_module($module_id) : self::get_module();
 
 		$authorizations = array(
-			new ActionAuthorization(self::$form_lang['form.authorizations.read'], Category::READ_AUTHORIZATIONS),
-			new VisitorDisabledActionAuthorization(self::$form_lang['form.authorizations.write'], Category::WRITE_AUTHORIZATIONS),
-			new VisitorDisabledActionAuthorization(self::$form_lang['form.authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
-			new MemberDisabledActionAuthorization(self::$form_lang['form.authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS)
+			new ActionAuthorization(self::$lang['form.authorizations.read'], Category::READ_AUTHORIZATIONS),
+			new VisitorDisabledActionAuthorization(self::$lang['form.authorizations.write'], Category::WRITE_AUTHORIZATIONS),
+			new VisitorDisabledActionAuthorization(self::$lang['form.authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
+			new MemberDisabledActionAuthorization(self::$lang['form.authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS)
 		);
 
 		if ($module && !$module->get_configuration()->has_contribution())

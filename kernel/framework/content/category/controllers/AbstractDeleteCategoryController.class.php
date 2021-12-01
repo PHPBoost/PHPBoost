@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 28
+ * @version     PHPBoost 6.0 - last update: 2021 12 01
  * @since       PHPBoost 4.0 - 2013 02 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -90,7 +90,7 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 		$class_name = get_called_class();
 		self::$categories_manager = $class_name::get_categories_manager();
 
-		$this->lang = LangLoader::get('category-lang');
+		$this->lang = LangLoader::get_all_langs(self::$module_id);
 	}
 
 	private function build_form()
@@ -98,7 +98,7 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 		$form = new HTMLForm(__CLASS__);
 		$form->set_layout_title($this->get_title());
 
-		$fieldset = new FormFieldsetHTML('delete_category', LangLoader::get_message('form.parameters', 'form-lang'));
+		$fieldset = new FormFieldsetHTML('delete_category', $this->lang['form.parameters']);
 		$fieldset->set_description($this->get_description());
 		$form->add_fieldset($fieldset);
 
