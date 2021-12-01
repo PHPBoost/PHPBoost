@@ -3,55 +3,26 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 26
+ * @version     PHPBoost 6.0 - last update: 2021 12 01
  * @since       PHPBoost 4.0 - 2014 05 09
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminQuestionCaptchaConfig extends AdminModuleController
+class AdminQuestionCaptchaConfig extends DefaultAdminModuleController
 {
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonSubmit
-	 */
-	private $submit_button;
-
-	private $lang;
-
-	/**
-	 * @var QuestionCaptchaConfig
-	 */
-	private $config;
-
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
-
 		$this->build_form();
-
-		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.config', 'warning-lang'), MessageHelper::SUCCESS, 5));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.success.config'], MessageHelper::SUCCESS, 5));
 		}
 
-		$view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
-		return $this->build_response($view);
-	}
-
-	private function init()
-	{
-		$this->lang = array_merge(
-			LangLoader::get('form-lang'),
-			LangLoader::get('common', 'QuestionCaptcha')
-		);
-		$this->config = QuestionCaptchaConfig::load();
+		return $this->build_response($this->view);
 	}
 
 	private function build_form()
@@ -104,14 +75,6 @@ class AdminQuestionCaptchaConfig extends AdminModuleController
 		$object = new self();
 		$object->init();
 		return $object->display_fields($fieldset);
-	}
-
-	public static function save_config(HTMLForm $form)
-	{
-		$object = new self();
-		$object->init();
-		$object->form = $form;
-		$object->save();
 	}
 }
 ?>
