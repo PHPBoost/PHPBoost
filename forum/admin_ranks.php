@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 03
+ * @version     PHPBoost 6.0 - last update: 2021 12 01
  * @since       PHPBoost 1.2 - 2005 10 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -12,7 +12,7 @@
 
 require_once('../admin/admin_begin.php');
 
-$lang = LangLoader::get('common', 'forum');
+$lang = LangLoader::get_all_langs('forum');
 
 define('TITLE', $lang['forum.ranks.management']);
 require_once('../admin/admin_header.php');
@@ -25,11 +25,7 @@ $del = $request->get_getint('del', 0);
 $valid = $request->get_postbool('valid', false);
 
 $view = new FileTemplate('forum/admin_ranks.tpl');
-$view->add_lang(array_merge(
-	$lang,
-	LangLoader::get('common-lang'),
-	LangLoader::get('form-lang')
-));
+$view->add_lang($lang);
 
 //Si c'est confirmé on execute
 if ($valid)
@@ -51,6 +47,8 @@ if ($valid)
 
 	ForumRanksCache::invalidate();
 
+	HooksService::execute_hook_action('edit_config', 'forum', array('title' => $lang['forum.ranks.management'], 'url' => ForumUrlBuilder::manage_ranks()->rel()));
+
 	$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
 }
 elseif (!empty($del) && !empty($get_id)) //Suppression du rang.
@@ -60,6 +58,8 @@ elseif (!empty($del) && !empty($get_id)) //Suppression du rang.
 
 	###### Régénération du cache des rangs #######
 	ForumRanksCache::invalidate();
+
+	HooksService::execute_hook_action('edit_config', 'forum', array('title' => $lang['forum.ranks.management'], 'url' => ForumUrlBuilder::manage_ranks()->rel()));
 
 	$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
 }

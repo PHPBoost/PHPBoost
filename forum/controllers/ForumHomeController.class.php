@@ -3,38 +3,22 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 01
  * @since       PHPBoost 4.1 - 2015 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class ForumHomeController extends ModuleController
+class ForumHomeController extends DefaultModuleController
 {
-	private $lang;
-	private $view;
 	private $category;
-	private $config;
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
 		$this->build_view();
 
 		return $this->generate_response();
-	}
-
-	private function init()
-	{
-		$this->lang = array_merge(
-			LangLoader::get('common-lang'),
-			LangLoader::get('user-lang'),
-			LangLoader::get('common', 'forum')
-		);
-		$this->config = ForumConfig::load();
-		$this->view = new FileTemplate('forum/forum_index.tpl');
-		$this->view->add_lang($this->lang);
 	}
 
 	private function build_view()
@@ -318,6 +302,14 @@ class ForumHomeController extends ModuleController
 
 		return $this->view;
 	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function get_template_to_use()
+	{
+		return new FileTemplate('forum/forum_index.tpl');
+	}
 
 	private function generate_response()
 	{
@@ -344,7 +336,6 @@ class ForumHomeController extends ModuleController
 	public static function get_view()
 	{
 		$object = new self();
-		$object->init();
 		$object->build_view();
 		return $object->view;
 	}

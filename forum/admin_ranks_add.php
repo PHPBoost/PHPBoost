@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 01
  * @since       PHPBoost 1.2 - 2005 10 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -13,16 +13,9 @@
 
 require_once('../admin/admin_begin.php');
 
-$lang = array_merge(
-	LangLoader::get('common-lang'),
-	LangLoader::get('form-lang'),
-	LangLoader::get('errors'),
-	LangLoader::get('upload-lang'),
-	LangLoader::get('warning-lang'),
-	LangLoader::get('common', 'forum')
-);
+$lang = LangLoader::get_all_langs('forum');
 
-define('TITLE', $lang['forum.ranks.management']);
+define('TITLE', $lang['forum.ranks.add']);
 require_once('../admin/admin_header.php');
 
 $request = AppContext::get_request();
@@ -46,6 +39,8 @@ if ($add)
 
 		###### Régénération du cache des rangs #######
 		ForumRanksCache::invalidate();
+
+		HooksService::execute_hook_action('edit_config', 'forum', array('title' => $lang['forum.ranks.add'], 'url' => ForumUrlBuilder::add_rank()->rel()));
 
 		$view->put('MESSAGE_HELPER', MessageHelper::display($lang['warning.process.success'], MessageHelper::SUCCESS, 4));
 	}
