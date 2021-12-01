@@ -77,14 +77,12 @@ class AdminQuestionCaptchaConfig extends DefaultAdminModuleController
 	public static function get_form_fields(FormFieldset $fieldset)
 	{
 		$object = new self('QuestionCaptcha');
-		$object->init();
 		return $object->display_fields($fieldset);
 	}
 
 	public static function save_config(HTMLForm $form)
 	{
 		$object = new self('QuestionCaptcha');
-		$object->init();
 		$object->form = $form;
 		$object->save();
 	}
