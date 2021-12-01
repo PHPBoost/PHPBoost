@@ -17,6 +17,7 @@ class AdminQuestionCaptchaConfig extends DefaultAdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
+			$this->execute_edit_config_hook();
 			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.success.config'], MessageHelper::SUCCESS, 5));
 		}
 
@@ -53,7 +54,10 @@ class AdminQuestionCaptchaConfig extends DefaultAdminModuleController
 		$this->config->set_items($this->form->get_value('items'));
 
 		QuestionCaptchaConfig::save();
+	}
 
+	protected function execute_edit_config_hook()
+	{
 		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
 	}
 
@@ -72,9 +76,17 @@ class AdminQuestionCaptchaConfig extends DefaultAdminModuleController
 
 	public static function get_form_fields(FormFieldset $fieldset)
 	{
-		$object = new self();
+		$object = new self('QuestionCaptcha');
 		$object->init();
 		return $object->display_fields($fieldset);
+	}
+
+	public static function save_config(HTMLForm $form)
+	{
+		$object = new self('QuestionCaptcha');
+		$object->init();
+		$object->form = $form;
+		$object->save();
 	}
 }
 ?>

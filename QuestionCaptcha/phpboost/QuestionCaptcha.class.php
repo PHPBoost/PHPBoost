@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 01
+ * @version     PHPBoost 6.0 - last update: 2020 12 20
  * @since       PHPBoost 4.0 - 2014 05 09
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -30,10 +30,7 @@ class QuestionCaptcha extends Captcha
 
 	public static function save_config(HTMLForm $form)
 	{
-		$config = QuestionCaptchaConfig::load();
-		$config->set_items($form->get_value('items'));
-
-		QuestionCaptchaConfig::save();
+		AdminQuestionCaptchaConfig::save_config($form);
 	}
 
 	public static function get_css_stylesheet()

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 01
+ * @version     PHPBoost 6.0 - last update: 2018 11 30
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -32,15 +32,7 @@ class ReCaptcha extends Captcha
 
 	public static function save_config(HTMLForm $form)
 	{
-		$config = ReCaptchaConfig::load();
-		$config->set_site_key($form->get_value('site_key'));
-		$config->set_secret_key($form->get_value('secret_key'));
-		if ($form->get_value('invisible_mode_enabled'))
-			$config->enable_invisible_mode();
-		else
-			$config->disable_invisible_mode();
-
-		ReCaptchaConfig::save();
+		AdminReCaptchaConfig::save_config($form);
 	}
 
 	public function is_available()
