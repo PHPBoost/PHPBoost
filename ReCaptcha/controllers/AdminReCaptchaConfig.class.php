@@ -12,8 +12,6 @@ class AdminReCaptchaConfig extends DefaultAdminModuleController
 {
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
-
 		$this->build_form();
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
@@ -99,14 +97,12 @@ class AdminReCaptchaConfig extends DefaultAdminModuleController
 	public static function get_form_fields(FormFieldset $fieldset)
 	{
 		$object = new self('ReCaptcha');
-		$object->init();
 		return $object->display_fields($fieldset);
 	}
 
 	public static function save_config(HTMLForm $form)
 	{
 		$object = new self('ReCaptcha');
-		$object->init();
 		$object->form = $form;
 		$object->save();
 	}
