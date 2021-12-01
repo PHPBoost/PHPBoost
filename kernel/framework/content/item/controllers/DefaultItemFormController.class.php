@@ -76,11 +76,6 @@ class DefaultItemFormController extends AbstractItemController
 		return $this->item;
 	}
 
-	protected function get_template_string_content()
-	{
-		return '# INCLUDE MSG # # INCLUDE FORM #';
-	}
-
 	protected function check_authorizations()
 	{
 		if (($this->is_new_item && !$this->get_item()->is_authorized_to_add()) || (!$this->is_new_item && !$this->get_item()->is_authorized_to_edit()))
