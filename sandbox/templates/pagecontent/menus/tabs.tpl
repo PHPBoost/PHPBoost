@@ -1,6 +1,6 @@
 <article id="menu-tabs" class="sandbox-block">
     <header>
-        <h2>{@menu.tabs.title} {@H|sandbox.pinned.php}</h2>
+        <h2>{@sandbox.menu.tabs.title} {@H|sandbox.pinned.php}</h2>
     </header>
     <div class="content">
         # INCLUDE TABS_FORM #

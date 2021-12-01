@@ -1,6 +1,6 @@
 <article id="menu-basic" class="sandbox-block">
     <header>
-        <h2>{@menu.basic} {@H|sandbox.pinned.php}</h2>
+        <h2>{@sandbox.menu.basic} {@H|sandbox.pinned.php}</h2>
     </header>
     <div class="content">
         # INCLUDE BASIC_FORM #

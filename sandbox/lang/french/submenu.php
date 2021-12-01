@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 09
+ * @version     PHPBoost 6.0 - last update: 2021 12 01
  * @since       PHPBoost 6.0 - 2020 02 24
 */
 
@@ -11,72 +11,73 @@
 #                    French                        #
 ####################################################
 
-$lang['sandbox.trigger']     = 'Bac à sable';
-$lang['builder.title']       = 'Formulaires';
-$lang['component.title']     = 'Composants';
-$lang['layout.title']        = 'Mise en page';
-$lang['bbcode.title']        = 'BBCode';
-$lang['menus.title']         = 'Menus';
-$lang['menus.nav.title']     = 'Menus de navigation';
-$lang['menus.content.title'] = 'Menus de contenu';
-$lang['icons.title']         = 'Icônes';
-$lang['tests.title']         = 'Tests PHP';
-$lang['table.title']         = 'Tableaux';
-$lang['emails.title']        = 'Emails';
-$lang['template.title']      = 'Génération de templates';
+$lang['sandbox.trigger']             = 'Bac à sable';
+$lang['sandbox.builder.title']       = 'Formulaires';
+$lang['sandbox.component.title']     = 'Composants';
+$lang['sandbox.layout.title']        = 'Mise en page';
+$lang['sandbox.bbcode.title']        = 'BBCode';
+$lang['sandbox.menus.title']         = 'Menus';
+$lang['sandbox.menus.nav.title']     = 'Menus de navigation';
+$lang['sandbox.menus.content.title'] = 'Menus de contenu';
+$lang['sandbox.icons.title']         = 'Icônes';
+$lang['sandbox.tests.title']         = 'Tests PHP';
+$lang['sandbox.table.title']         = 'Tableaux';
+$lang['sandbox.emails.title']        = 'Emails';
+$lang['sandbox.template.title']      = 'Génération de templates';
+$lang['sandbox.lang.title']          = 'Language';
 
-$lang['hashtag.table']      = '# Tableaux';
-$lang['hashtag.typography'] = '# Typographie';
+$lang['sandbox.hashtag.table']      = '# Tableaux';
+$lang['sandbox.hashtag.typography'] = '# Typographie';
 
 // Builder
-$lang['hashtag.text.fields']     = '# Champs texte';
-$lang['hashtag.textareas']       = '# Textareas';
-$lang['hashtag.choices']         = '# Puces / Coches';
-$lang['hashtag.selects']         = '# Selecteurs';
-$lang['hashtag.buttons']         = '# Boutons';
-$lang['hashtag.miscellaneous']   = '# Divers';
-$lang['hashtag.dates']           = '# Dates';
-$lang['hashtag.upload']          = '# Téléversement';
-$lang['hashtag.links']           = 'Navigation';
-$lang['hashtag.modal']           = '# Modal';
-$lang['hashtag.gmap']            = '# Google Maps';
-$lang['hashtag.authorizations']  = '# Autorisations';
-$lang['hashtag.vertical.form']   = '# Formulaire vertical';
-$lang['hashtag.horizontal.form'] = '# Formulaire horizontal';
+$lang['sandbox.hashtag.text.fields']     = '# Champs texte';
+$lang['sandbox.hashtag.textareas']       = '# Textareas';
+$lang['sandbox.hashtag.choices']         = '# Puces / Coches';
+$lang['sandbox.hashtag.selects']         = '# Selecteurs';
+$lang['sandbox.hashtag.buttons']         = '# Boutons';
+$lang['sandbox.hashtag.miscellaneous']   = '# Divers';
+$lang['sandbox.hashtag.dates']           = '# Dates';
+$lang['sandbox.hashtag.upload']          = '# Téléversement';
+$lang['sandbox.hashtag.links']           = 'Navigation';
+$lang['sandbox.hashtag.modal']           = '# Modal';
+$lang['sandbox.hashtag.gmap']            = '# Google Maps';
+$lang['sandbox.hashtag.authorizations']  = '# Autorisations';
+$lang['sandbox.hashtag.vertical.form']   = '# Formulaire vertical';
+$lang['sandbox.hashtag.horizontal.form'] = '# Formulaire horizontal';
 
 // Components
-$lang['hashtag.titles']         = '# Titres';
-$lang['hashtag.sizes']          = '# Tailles';
-$lang['hashtag.styles']         = '# Styles';
-$lang['hashtag.colors']         = '# Couleurs';
-$lang['hashtag.media']          = '# Media';
-$lang['hashtag.progressbar']    = '# Barre de progression';
-$lang['hashtag.lists']          = '# Listes';
-$lang['hashtag.classic']        = '# Classiques';
-$lang['hashtag.explorer']       = '# Explorateur';
-$lang['hashtag.pagination']     = '# Pagination';
-$lang['hashtag.notation']       = '# Notation';
-$lang['hashtag.message.helper'] = '# Messages d\'alerte';
-$lang['hashtag.tooltip']        = '# Tooltip';
+$lang['sandbox.hashtag.titles']         = '# Titres';
+$lang['sandbox.hashtag.sizes']          = '# Tailles';
+$lang['sandbox.hashtag.styles']         = '# Styles';
+$lang['sandbox.hashtag.colors']         = '# Couleurs';
+$lang['sandbox.hashtag.media']          = '# Media';
+$lang['sandbox.hashtag.progressbar']    = '# Barre de progression';
+$lang['sandbox.hashtag.lists']          = '# Listes';
+$lang['sandbox.hashtag.classic']        = '# Classiques';
+$lang['sandbox.hashtag.explorer']       = '# Explorateur';
+$lang['sandbox.hashtag.pagination']     = '# Pagination';
+$lang['sandbox.hashtag.notation']       = '# Notation';
+$lang['sandbox.hashtag.message.helper'] = '# Messages d\'alerte';
+$lang['sandbox.hashtag.tooltip']        = '# Tooltip';
 // Icons
-$lang['hashtag.font.awesome'] = '# Font-awesome &copy;';
-$lang['hashtag.icomoon']      = '# Icomoon &copy;';
+$lang['sandbox.hashtag.font.awesome'] = '# Font-awesome &copy;';
+$lang['sandbox.hashtag.icomoon']      = '# Icomoon &copy;';
 
 // Layout
-$lang['hashtag.grid']     = '# Grille d\'affichage';
-$lang['hashtag.cell']     = '# Cellules';
-$lang['hashtag.message']  = '# Messages';
-$lang['hashtag.sortable'] = '# Sortables';
+$lang['sandbox.hashtag.grid']     = '# Grille d\'affichage';
+$lang['sandbox.hashtag.cell']     = '# Cellules';
+$lang['sandbox.hashtag.message']  = '# Messages';
+$lang['sandbox.hashtag.sortable'] = '# Sortables';
 
 // BBCode
-$lang['hashtag.blocks'] = '# Blocs';
-$lang['hashtag.code']   = '# Code';
-$lang['hashtag.wiki']   = '# Wiki';
+$lang['sandbox.hashtag.blocks'] = '# Blocs';
+$lang['sandbox.hashtag.code']   = '# Code';
+$lang['sandbox.hashtag.wiki']   = '# Wiki';
 
 // Menus
-$lang['hashtag.links']     = '# Liens';
-$lang['hashtag.accordion'] = '# Accordéon';
-$lang['hashtag.tabs']      = '# Tabulaire';
-$lang['hashtag.wizard']    = '# À étapes';
+$lang['sandbox.hashtag.links']     = '# Liens';
+$lang['sandbox.hashtag.accordion'] = '# Accordéon';
+$lang['sandbox.hashtag.tabs']      = '# Tabulaire';
+$lang['sandbox.hashtag.wizard']    = '# À étapes';
 
 ?>

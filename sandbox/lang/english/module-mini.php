@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 09
+ * @version     PHPBoost 6.0 - last update: 2021 12 01
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -14,52 +14,52 @@
 #                    English                       #
 ####################################################
 
-$lang['mini.infos']        = 'Site info';
-$lang['mini.version.pbt']  = 'PHPBoost version';
-$lang['mini.version.php']  = 'PHP server version';
-$lang['mini.version.sql']  = 'MySql version';
-$lang['mini.version.date'] = 'Installation date of the site';
-$lang['mini.viewport.v']   = 'Height of viewport';
-$lang['mini.viewport.h']   = 'Width of viewport';
+$lang['sandbox.mini.infos']        = 'Site info';
+$lang['sandbox.mini.version.pbt']  = 'PHPBoost version';
+$lang['sandbox.mini.version.php']  = 'PHP server version';
+$lang['sandbox.mini.version.sql']  = 'MySql version';
+$lang['sandbox.mini.version.date'] = 'Installation date of the site';
+$lang['sandbox.mini.viewport.v']   = 'Height of viewport';
+$lang['sandbox.mini.viewport.h']   = 'Width of viewport';
 
-$lang['mini.tools']             = 'Tools';
-$lang['mini.errors']            = 'Archived errors';
-$lang['mini.404']               = '404 errors';
-$lang['mini.coms']              = 'Comments';
-$lang['mini.database']          = 'Database';
-$lang['mini.enable.css.cache']  = 'Enable the css cache';
-$lang['mini.disable.css.cache'] = 'Disable the css cache';
-$lang['mini.clean.css.cache']   = 'Refresh the css cache';
-$lang['mini.clean.tpl.cache']   = 'Refresh the site cache';
-$lang['mini.clean.rss.cache']   = 'Refresh the syndication cache';
+$lang['sandbox.mini.tools']             = 'Tools';
+$lang['sandbox.mini.errors']            = 'Archived errors';
+$lang['sandbox.mini.404']               = '404 errors';
+$lang['sandbox.mini.coms']              = 'Comments';
+$lang['sandbox.mini.database']          = 'Database';
+$lang['sandbox.mini.enable.css.cache']  = 'Enable the css cache';
+$lang['sandbox.mini.disable.css.cache'] = 'Disable the css cache';
+$lang['sandbox.mini.clean.css.cache']   = 'Refresh the css cache';
+$lang['sandbox.mini.clean.tpl.cache']   = 'Refresh the site cache';
+$lang['sandbox.mini.clean.rss.cache']   = 'Refresh the syndication cache';
 
-$lang['mini.personalization']   = 'Personnalization';
-$lang['mini.menus']             = 'Menus';
-$lang['mini.enable.left.col']   = 'Enable the left column';
-$lang['mini.disable.left.col']  = 'Disable the left column';
-$lang['mini.enable.right.col']  = 'Enable the right column';
-$lang['mini.disable.right.col'] = 'Disable the right column';
-$lang['mini.general.config']    = 'General';
-$lang['mini.advanced.config']   = 'Advanced';
-$lang['mini.user']              = 'Users';
-$lang['mini.theme']             = 'Themes';
-$lang['mini.mod']               = 'Modules';
+$lang['sandbox.mini.personalization']   = 'Personnalization';
+$lang['sandbox.mini.menus']             = 'Menus';
+$lang['sandbox.mini.enable.left.col']   = 'Enable the left column';
+$lang['sandbox.mini.disable.left.col']  = 'Disable the left column';
+$lang['sandbox.mini.enable.right.col']  = 'Enable the right column';
+$lang['sandbox.mini.disable.right.col'] = 'Disable the right column';
+$lang['sandbox.mini.general.config']    = 'General';
+$lang['sandbox.mini.advanced.config']   = 'Advanced';
+$lang['sandbox.mini.user']              = 'Users';
+$lang['sandbox.mini.theme']             = 'Themes';
+$lang['sandbox.mini.mod']               = 'Modules';
 
-$lang['mini.fwkboost'] = 'FWKBoost';
-$lang['mini.home']     = 'Sandbox home page';
-$lang['mini.admin']    = 'Mini module administration';
+$lang['sandbox.mini.fwkboost'] = 'FWKBoost';
+$lang['sandbox.mini.home']     = 'Sandbox home page';
+$lang['sandbox.mini.admin']    = 'Mini module administration';
 
-$lang['mini.themes.switcher'] = 'Switch theme';
-$lang['mini.default.theme']   = 'Default theme';
+$lang['sandbox.mini.themes.switcher'] = 'Switch theme';
+$lang['sandbox.mini.default.theme']   = 'Default theme';
 
-$lang['mini.config'] = 'Configuration';
-$lang['mini.manage'] = 'Management';
-$lang['mini.add']    = 'Add';
+$lang['sandbox.mini.config'] = 'Configuration';
+$lang['sandbox.mini.manage'] = 'Management';
+$lang['sandbox.mini.add']    = 'Add';
 
-$lang['mini.admin.menu']                = 'Administration menu';
-$lang['mini.admin.menu.administration'] = 'Administration';
-$lang['mini.admin.menu.tools']          = 'Tools';
-$lang['mini.admin.menu.users']          = 'Users';
-$lang['mini.admin.menu.content']        = 'Content';
-$lang['mini.admin.menu.modules']        = 'Modules';
+$lang['sandbox.mini.admin.menu']                = 'Administration menu';
+$lang['sandbox.mini.admin.menu.administration'] = 'Administration';
+$lang['sandbox.mini.admin.menu.tools']          = 'Tools';
+$lang['sandbox.mini.admin.menu.users']          = 'Users';
+$lang['sandbox.mini.admin.menu.content']        = 'Content';
+$lang['sandbox.mini.admin.menu.modules']        = 'Modules';
 ?>

@@ -3,35 +3,28 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 19
+ * @version     PHPBoost 6.0 - last update: 2021 12 01
  * @since       PHPBoost 3.0 - 2010 02 10
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class SandboxHomeController extends ModuleController
+class SandboxHomeController extends DefaultModuleController
 {
-	private $view;
-	private $lang;
+	protected function get_template_to_use()
+	{
+		return new FileTemplate('sandbox/SandboxHomeController.tpl');
+	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
 
-		$this->init();
-
 		$this->view->put_all(array(
-			'WELCOME_MESSAGE' => FormatingHelper::second_parse($this->lang['welcome.message']),
+			'WELCOME_MESSAGE' => FormatingHelper::second_parse($this->lang['sandbox.welcome.message']),
 			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
 		));
 
 		return $this->generate_response();
-	}
-
-	private function init()
-	{
-		$this->lang = LangLoader::get('common', 'sandbox');
-		$this->view = new FileTemplate('sandbox/SandboxHomeController.tpl');
-		$this->view->add_lang($this->lang);
 	}
 
 	private function check_authorizations()

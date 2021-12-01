@@ -3,44 +3,32 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 01
  * @since       PHPBoost 3.0 - 2012 05 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminSandboxFWKBoostController extends AdminModuleController
+class AdminSandboxFWKBoostController extends DefaultAdminModuleController
 {
-	private $view;
-	private $lang;
-
 	/**
 	 * @var FormButtonDefaultSubmit
 	 */
 	private $floating_messages_button;
 
+	protected function get_template_to_use()
+	{
+		return new FileTemplate('sandbox/AdminSandboxFWKBoostController.tpl');
+	}
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
 
-		$this->init();
-
 		$this->build_view();
 
 		return new AdminSandboxDisplayResponse($this->view, $this->lang['sandbox.module.title'] . ' - ' . $this->lang['sandbox.components']);
-	}
-
-	private function init()
-	{
-		$this->lang = array_merge(
-			LangLoader::get('common', 'sandbox'),
-			LangLoader::get('component', 'sandbox'),
-			LangLoader::get('layout', 'sandbox'),
-			LangLoader::get('menu', 'sandbox')
-		);
-		$this->view = new FileTemplate('sandbox/AdminSandboxFWKBoostController.tpl');
-		$this->view->add_lang($this->lang);
 	}
 
 	private function build_view()
@@ -61,7 +49,7 @@ class AdminSandboxFWKBoostController extends AdminModuleController
 	private function build_floating_messages()
 	{
 		$floating_messages = new HTMLForm('floating_messages', '', false);
-		$this->floating_messages_button = new FormButtonDefaultSubmit($this->lang['component.message.float.display'], 'floating_messages');
+		$this->floating_messages_button = new FormButtonDefaultSubmit($this->lang['sandbox.component.message.float.display'], 'floating_messages');
 		$floating_messages->add_button($this->floating_messages_button);
 		$this->floating_messages = $floating_messages;
 	}
@@ -98,40 +86,40 @@ class AdminSandboxFWKBoostController extends AdminModuleController
 
 			$modal_menu->add_field(new FormFieldMultitabsLinkList('modal_menu_list',
 				array(
-					new FormFieldMultitabsLinkElement($this->lang['component.link.icon'], 'modal', 'Sandbox_Modal_modal_01', 'fa-cog'),
-					new FormFieldMultitabsLinkElement($this->lang['component.link.img'], 'modal', 'Sandbox_Modal_modal_02', '', '/sandbox/sandbox_mini.png'),
-					new FormFieldMultitabsLinkElement($this->lang['component.link'].' 3', 'modal', 'Sandbox_Modal_modal_03'),
-					new FormFieldMultitabsLinkElement($this->lang['component.link'].' 4', 'modal', 'Sandbox_Modal_modal_04', '', '', '','button d-inline-block')
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.component.link.icon'], 'modal', 'Sandbox_Modal_modal_01', 'fa-cog'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.component.link.img'], 'modal', 'Sandbox_Modal_modal_02', '', '/sandbox/sandbox_mini.png'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.component.link'].' 3', 'modal', 'Sandbox_Modal_modal_03'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.component.link'].' 4', 'modal', 'Sandbox_Modal_modal_04', '', '', '','button d-inline-block')
 				)
 			));
 
-			$modal_01 = new FormFieldsetMultitabsHTML('modal_01', $this->lang['component.panel'].' 1',
+			$modal_01 = new FormFieldsetMultitabsHTML('modal_01', $this->lang['sandbox.component.panel'].' 1',
 				array('css_class' => 'modal modal-animation first-tab', 'modal' => true)
 			);
 			$modal_form->add_fieldset($modal_01);
 
-			$modal_01->set_description($this->lang['lorem.short.content']);
+			$modal_01->set_description($this->lang['sandbox.lorem.short.content']);
 
-			$modal_02 = new FormFieldsetMultitabsHTML('modal_02', $this->lang['component.panel'].' 2',
+			$modal_02 = new FormFieldsetMultitabsHTML('modal_02', $this->lang['sandbox.component.panel'].' 2',
 				array('css_class' => 'modal modal-animation', 'modal' => true)
 			);
 			$modal_form->add_fieldset($modal_02);
 
-			$modal_02->set_description($this->lang['lorem.medium.content']);
+			$modal_02->set_description($this->lang['sandbox.lorem.medium.content']);
 
-			$modal_03 = new FormFieldsetMultitabsHTML('modal_03', $this->lang['component.panel'].' 3',
+			$modal_03 = new FormFieldsetMultitabsHTML('modal_03', $this->lang['sandbox.component.panel'].' 3',
 				array('css_class' => 'modal modal-animation', 'modal' => true)
 			);
 			$modal_form->add_fieldset($modal_03);
 
-			$modal_03->set_description($this->lang['lorem.large.content']);
+			$modal_03->set_description($this->lang['sandbox.lorem.large.content']);
 
-			$modal_04 = new FormFieldsetMultitabsHTML('modal_04', $this->lang['component.panel'].' 4',
+			$modal_04 = new FormFieldsetMultitabsHTML('modal_04', $this->lang['sandbox.component.panel'].' 4',
 				array('css_class' => 'modal modal-animation', 'modal' => true)
 			);
 			$modal_form->add_fieldset($modal_04);
 
-			$modal_04->set_description($this->lang['lorem.short.content']);
+			$modal_04->set_description($this->lang['sandbox.lorem.short.content']);
 
 		return $modal_form;
 	}
@@ -143,14 +131,14 @@ class AdminSandboxFWKBoostController extends AdminModuleController
 		$view->add_lang($this->lang);
 
 		$messages = array(
-			MessageHelper::display($this->lang['component.message.notice'], MessageHelper::NOTICE),
-			MessageHelper::display($this->lang['component.message.question'], MessageHelper::QUESTION),
-			MessageHelper::display($this->lang['component.message.success'], MessageHelper::SUCCESS),
-			MessageHelper::display($this->lang['component.message.warning'], MessageHelper::WARNING),
-			MessageHelper::display($this->lang['component.message.error'], MessageHelper::ERROR),
-			MessageHelper::display($this->lang['component.message.member'], MessageHelper::MEMBER_ONLY),
-			MessageHelper::display($this->lang['component.message.modo'], MessageHelper::MODERATOR_ONLY),
-			MessageHelper::display($this->lang['component.message.admin'], MessageHelper::ADMIN_ONLY)
+			MessageHelper::display($this->lang['sandbox.component.message.notice'], MessageHelper::NOTICE),
+			MessageHelper::display($this->lang['sandbox.component.message.question'], MessageHelper::QUESTION),
+			MessageHelper::display($this->lang['sandbox.component.message.success'], MessageHelper::SUCCESS),
+			MessageHelper::display($this->lang['sandbox.component.message.warning'], MessageHelper::WARNING),
+			MessageHelper::display($this->lang['sandbox.component.message.error'], MessageHelper::ERROR),
+			MessageHelper::display($this->lang['sandbox.component.message.member'], MessageHelper::MEMBER_ONLY),
+			MessageHelper::display($this->lang['sandbox.component.message.modo'], MessageHelper::MODERATOR_ONLY),
+			MessageHelper::display($this->lang['sandbox.component.message.admin'], MessageHelper::ADMIN_ONLY)
 		);
 
 		foreach ($messages as $message)
@@ -161,10 +149,10 @@ class AdminSandboxFWKBoostController extends AdminModuleController
 		$this->build_floating_messages();
 		if ($this->floating_messages_button->has_been_submited() && $this->floating_messages->validate()) {
 			$view->put_all(array(
-				'FLOATING_SUCCESS'  => MessageHelper::display($this->lang['component.message.float.unlimited'], MessageHelper::SUCCESS, -1),
-				'FLOATING_NOTICE'   => MessageHelper::display($this->lang['component.message.float.limited'], MessageHelper::NOTICE, 3),
-				'FLOATING_WARNING'  => MessageHelper::display($this->lang['component.message.float.unlimited'], MessageHelper::WARNING, -1),
-				'FLOATING_ERROR'    => MessageHelper::display($this->lang['component.message.float.limited'], MessageHelper::ERROR, 6)
+				'FLOATING_SUCCESS'  => MessageHelper::display($this->lang['sandbox.component.message.float.unlimited'], MessageHelper::SUCCESS, -1),
+				'FLOATING_NOTICE'   => MessageHelper::display($this->lang['sandbox.component.message.float.limited'], MessageHelper::NOTICE, 3),
+				'FLOATING_WARNING'  => MessageHelper::display($this->lang['sandbox.component.message.float.unlimited'], MessageHelper::WARNING, -1),
+				'FLOATING_ERROR'    => MessageHelper::display($this->lang['sandbox.component.message.float.limited'], MessageHelper::ERROR, 6)
 			));
 		}
 		$view->put('FLOATING_MESSAGES', $this->floating_messages->display());
@@ -190,10 +178,10 @@ class AdminSandboxFWKBoostController extends AdminModuleController
 
 			$link_list->add_field(new FormFieldActionLinkList('actionlink_list',
 				array(
-					new FormFieldActionLinkElement($this->lang['menu.link.icon'], '#', 'far fa-edit'),
-					new FormFieldActionLinkElement($this->lang['menu.link.img'], '#', '', '/sandbox/sandbox_mini.png'),
-					new FormFieldActionLinkElement($this->lang['menu.link'].' 3', '#', ''),
-					new FormFieldActionLinkElement($this->lang['menu.link'].' 4', '#', '')
+					new FormFieldActionLinkElement($this->lang['sandbox.menu.link.icon'], '#', 'far fa-edit'),
+					new FormFieldActionLinkElement($this->lang['sandbox.menu.link.img'], '#', '', '/sandbox/sandbox_mini.png'),
+					new FormFieldActionLinkElement($this->lang['sandbox.menu.link'].' 3', '#', ''),
+					new FormFieldActionLinkElement($this->lang['sandbox.menu.link'].' 4', '#', '')
 				),
 				array('class' => 'css-class')
 			));
@@ -224,46 +212,46 @@ class AdminSandboxFWKBoostController extends AdminModuleController
 
 			$accordion_menu->add_field(new FormFieldMultitabsLinkList('accordion_menu_list',
 				array(
-					new FormFieldMultitabsLinkElement($this->lang['menu.link.icon'], 'accordion', 'Sandbox_Accordion_accordion_01', 'fa-cog'),
-					new FormFieldMultitabsLinkElement($this->lang['menu.link.img'], 'accordion', 'Sandbox_Accordion_accordion_02', '', '/sandbox/sandbox_mini.png'),
-					new FormFieldMultitabsLinkElement($this->lang['menu.link'].' 3', 'accordion', 'Sandbox_Accordion_accordion_03'),
-					new FormFieldMultitabsLinkElement($this->lang['menu.link'].' 4', 'accordion', 'Sandbox_Accordion_accordion_04', '', '', '', 'bgc warning')
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link.icon'], 'accordion', 'Sandbox_Accordion_accordion_01', 'fa-cog'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link.img'], 'accordion', 'Sandbox_Accordion_accordion_02', '', '/sandbox/sandbox_mini.png'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link'].' 3', 'accordion', 'Sandbox_Accordion_accordion_03'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link'].' 4', 'accordion', 'Sandbox_Accordion_accordion_04', '', '', '', 'bgc warning')
 				)
 			));
 
-			$accordion_01 = new FormFieldsetMultitabsHTML('accordion_01', $this->lang['menu.panel'].' 1',
+			$accordion_01 = new FormFieldsetMultitabsHTML('accordion_01', $this->lang['sandbox.menu.panel'].' 1',
 				array('css_class' => 'accordion accordion-animation first-tab')
 			);
 			$accordion_form->add_fieldset($accordion_01);
 
-			$accordion_01->add_field(new FormFieldHTML('accordion_content_01', $this->lang['lorem.short.content']));
+			$accordion_01->add_field(new FormFieldHTML('accordion_content_01', $this->lang['sandbox.lorem.short.content']));
 
-			$accordion_02 = new FormFieldsetMultitabsHTML('accordion_02', $this->lang['menu.panel'].' 2',
+			$accordion_02 = new FormFieldsetMultitabsHTML('accordion_02', $this->lang['sandbox.menu.panel'].' 2',
 				array('css_class' => 'accordion accordion-animation')
 			);
 			$accordion_form->add_fieldset($accordion_02);
 
-			$accordion_02->add_field(new FormFieldHTML('accordion_content_02_a', $this->lang['lorem.short.content']));
-			$accordion_02->add_field(new FormFieldHTML('accordion_content_02_b', $this->lang['lorem.short.content']));
+			$accordion_02->add_field(new FormFieldHTML('accordion_content_02_a', $this->lang['sandbox.lorem.short.content']));
+			$accordion_02->add_field(new FormFieldHTML('accordion_content_02_b', $this->lang['sandbox.lorem.short.content']));
 
-			$accordion_03 = new FormFieldsetMultitabsHTML('accordion_03', $this->lang['menu.panel'].' 3',
+			$accordion_03 = new FormFieldsetMultitabsHTML('accordion_03', $this->lang['sandbox.menu.panel'].' 3',
 				array('css_class' => 'accordion accordion-animation')
 			);
 			$accordion_form->add_fieldset($accordion_03);
 
-			$accordion_03->add_field(new FormFieldHTML('accordion_content_03_a', $this->lang['lorem.short.content']));
-			$accordion_03->add_field(new FormFieldHTML('accordion_content_03_b', $this->lang['lorem.short.content']));
-			$accordion_03->add_field(new FormFieldHTML('accordion_content_03_c', $this->lang['lorem.short.content']));
+			$accordion_03->add_field(new FormFieldHTML('accordion_content_03_a', $this->lang['sandbox.lorem.short.content']));
+			$accordion_03->add_field(new FormFieldHTML('accordion_content_03_b', $this->lang['sandbox.lorem.short.content']));
+			$accordion_03->add_field(new FormFieldHTML('accordion_content_03_c', $this->lang['sandbox.lorem.short.content']));
 
-			$accordion_04 = new FormFieldsetMultitabsHTML('accordion_04', $this->lang['menu.panel'].' 4',
+			$accordion_04 = new FormFieldsetMultitabsHTML('accordion_04', $this->lang['sandbox.menu.panel'].' 4',
 				array('css_class' => 'accordion accordion-animation')
 			);
 			$accordion_form->add_fieldset($accordion_04);
 
-			$accordion_04->add_field(new FormFieldHTML('accordion_content_04_a', $this->lang['lorem.short.content']));
-			$accordion_04->add_field(new FormFieldHTML('accordion_content_04_b', $this->lang['lorem.short.content']));
-			$accordion_04->add_field(new FormFieldHTML('accordion_content_04_c', $this->lang['lorem.short.content']));
-			$accordion_04->add_field(new FormFieldHTML('accordion_content_04_d', $this->lang['lorem.short.content']));
+			$accordion_04->add_field(new FormFieldHTML('accordion_content_04_a', $this->lang['sandbox.lorem.short.content']));
+			$accordion_04->add_field(new FormFieldHTML('accordion_content_04_b', $this->lang['sandbox.lorem.short.content']));
+			$accordion_04->add_field(new FormFieldHTML('accordion_content_04_c', $this->lang['sandbox.lorem.short.content']));
+			$accordion_04->add_field(new FormFieldHTML('accordion_content_04_d', $this->lang['sandbox.lorem.short.content']));
 
 		return $accordion_form;
 	}
@@ -288,46 +276,46 @@ class AdminSandboxFWKBoostController extends AdminModuleController
 
 			$tabs_menu->add_field(new FormFieldMultitabsLinkList('tabs_menu_list',
 				array(
-					new FormFieldMultitabsLinkElement($this->lang['menu.link.icon'], 'tabs', 'Sandbox_Accordion_tabs_01', 'fa-cog'),
-					new FormFieldMultitabsLinkElement($this->lang['menu.link.img'], 'tabs', 'Sandbox_Accordion_tabs_02', '', '/sandbox/sandbox_mini.png'),
-					new FormFieldMultitabsLinkElement($this->lang['menu.link'].' 3', 'tabs', 'Sandbox_Accordion_tabs_03'),
-					new FormFieldMultitabsLinkElement($this->lang['menu.link'].' 4', 'tabs', 'Sandbox_Accordion_tabs_04', '', '', '', 'bgc warning')
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link.icon'], 'tabs', 'Sandbox_Accordion_tabs_01', 'fa-cog'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link.img'], 'tabs', 'Sandbox_Accordion_tabs_02', '', '/sandbox/sandbox_mini.png'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link'].' 3', 'tabs', 'Sandbox_Accordion_tabs_03'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link'].' 4', 'tabs', 'Sandbox_Accordion_tabs_04', '', '', '', 'bgc warning')
 				)
 			));
 
-			$tabs_01 = new FormFieldsetMultitabsHTML('tabs_01', $this->lang['menu.panel'].' 1',
+			$tabs_01 = new FormFieldsetMultitabsHTML('tabs_01', $this->lang['sandbox.menu.panel'].' 1',
 				array('css_class' => 'tabs tabs-animation first-tab')
 			);
 			$tabs_form->add_fieldset($tabs_01);
 
-			$tabs_01->add_field(new FormFieldHTML('tabs_content_01', $this->lang['lorem.short.content']));
+			$tabs_01->add_field(new FormFieldHTML('tabs_content_01', $this->lang['sandbox.lorem.short.content']));
 
-			$tabs_02 = new FormFieldsetMultitabsHTML('tabs_02', $this->lang['menu.panel'].' 2',
+			$tabs_02 = new FormFieldsetMultitabsHTML('tabs_02', $this->lang['sandbox.menu.panel'].' 2',
 				array('css_class' => 'tabs tabs-animation')
 			);
 			$tabs_form->add_fieldset($tabs_02);
 
-			$tabs_02->add_field(new FormFieldHTML('tabs_content_02_a', $this->lang['lorem.short.content']));
-			$tabs_02->add_field(new FormFieldHTML('tabs_content_02_b', $this->lang['lorem.short.content']));
+			$tabs_02->add_field(new FormFieldHTML('tabs_content_02_a', $this->lang['sandbox.lorem.short.content']));
+			$tabs_02->add_field(new FormFieldHTML('tabs_content_02_b', $this->lang['sandbox.lorem.short.content']));
 
-			$tabs_03 = new FormFieldsetMultitabsHTML('tabs_03', $this->lang['menu.panel'].' 3',
+			$tabs_03 = new FormFieldsetMultitabsHTML('tabs_03', $this->lang['sandbox.menu.panel'].' 3',
 				array('css_class' => 'tabs tabs-animation')
 			);
 			$tabs_form->add_fieldset($tabs_03);
 
-			$tabs_03->add_field(new FormFieldHTML('tabs_content_03_a', $this->lang['lorem.short.content']));
-			$tabs_03->add_field(new FormFieldHTML('tabs_content_03_b', $this->lang['lorem.short.content']));
-			$tabs_03->add_field(new FormFieldHTML('tabs_content_03_c', $this->lang['lorem.short.content']));
+			$tabs_03->add_field(new FormFieldHTML('tabs_content_03_a', $this->lang['sandbox.lorem.short.content']));
+			$tabs_03->add_field(new FormFieldHTML('tabs_content_03_b', $this->lang['sandbox.lorem.short.content']));
+			$tabs_03->add_field(new FormFieldHTML('tabs_content_03_c', $this->lang['sandbox.lorem.short.content']));
 
-			$tabs_04 = new FormFieldsetMultitabsHTML('tabs_04', $this->lang['menu.panel'].' 4',
+			$tabs_04 = new FormFieldsetMultitabsHTML('tabs_04', $this->lang['sandbox.menu.panel'].' 4',
 				array('css_class' => 'tabs tabs-animation')
 			);
 			$tabs_form->add_fieldset($tabs_04);
 
-			$tabs_04->add_field(new FormFieldHTML('tabs_content_04_a', $this->lang['lorem.short.content']));
-			$tabs_04->add_field(new FormFieldHTML('tabs_content_04_b', $this->lang['lorem.short.content']));
-			$tabs_04->add_field(new FormFieldHTML('tabs_content_04_c', $this->lang['lorem.short.content']));
-			$tabs_04->add_field(new FormFieldHTML('tabs_content_04_d', $this->lang['lorem.short.content']));
+			$tabs_04->add_field(new FormFieldHTML('tabs_content_04_a', $this->lang['sandbox.lorem.short.content']));
+			$tabs_04->add_field(new FormFieldHTML('tabs_content_04_b', $this->lang['sandbox.lorem.short.content']));
+			$tabs_04->add_field(new FormFieldHTML('tabs_content_04_c', $this->lang['sandbox.lorem.short.content']));
+			$tabs_04->add_field(new FormFieldHTML('tabs_content_04_d', $this->lang['sandbox.lorem.short.content']));
 
 		return $tabs_form;
 	}
@@ -352,35 +340,35 @@ class AdminSandboxFWKBoostController extends AdminModuleController
 
 		$fieldset_tab_menu->add_field(new WizardActionLinkList('tab_menu_list',
 			array(
-				new FormFieldActionLinkElement($this->lang['menu.panel'] . ' 01', '#', 'fa-cog'),
-				new FormFieldActionLinkElement($this->lang['menu.panel'] . ' 02', '#', 'fa-image'),
-				new FormFieldActionLinkElement($this->lang['menu.panel'] . ' 03', '#', '', PATH_TO_ROOT . 'articles/articles_mini.png', 'articles'),
+				new FormFieldActionLinkElement($this->lang['sandbox.menu.panel'] . ' 01', '#', 'fa-cog'),
+				new FormFieldActionLinkElement($this->lang['sandbox.menu.panel'] . ' 02', '#', 'fa-image'),
+				new FormFieldActionLinkElement($this->lang['sandbox.menu.panel'] . ' 03', '#', '', PATH_TO_ROOT . 'articles/articles_mini.png', 'articles'),
 			)
 		));
 
-		$fieldset_tab_one = new FormFieldsetHTML('tab-04', $this->lang['menu.panel.title'] . ' 01');
+		$fieldset_tab_one = new FormFieldsetHTML('tab-04', $this->lang['sandbox.menu.panel.title'] . ' 01');
 		$wizard_form->add_fieldset($fieldset_tab_one);
 		$fieldset_tab_one->set_css_class('wizard-step');
 
-		$fieldset_tab_one->set_description($this->lang['lorem.large.content']);
+		$fieldset_tab_one->set_description($this->lang['sandbox.lorem.large.content']);
 
-		$fieldset_tab_one->add_field(new FormFieldSubTitle('tab_01b', $this->lang['menu.panel.subtitle'],''));
+		$fieldset_tab_one->add_field(new FormFieldSubTitle('tab_01b', $this->lang['sandbox.menu.panel.subtitle'],''));
 
-		$fieldset_tab_one->add_field(new FormFieldTextEditor('text', $this->lang['menu.panel.input'], ''));
+		$fieldset_tab_one->add_field(new FormFieldTextEditor('text', $this->lang['sandbox.menu.panel.input'], ''));
 
-		$fieldset_tab_two = new FormFieldsetHTML('tab-05', $this->lang['menu.panel.title'] . ' 02');
+		$fieldset_tab_two = new FormFieldsetHTML('tab-05', $this->lang['sandbox.menu.panel.title'] . ' 02');
 		$wizard_form->add_fieldset($fieldset_tab_two);
 		$fieldset_tab_two->set_css_class('wizard-step');
 
-		$fieldset_tab_two->set_description($this->lang['lorem.medium.content']);
+		$fieldset_tab_two->set_description($this->lang['sandbox.lorem.medium.content']);
 
 		if (ModulesManager::is_module_installed('news') & ModulesManager::is_module_activated('news'))
 		{
-			$fieldset_tab_three = new FormFieldsetHTML('tab-06', $this->lang['menu.panel.title'] . ' 03');
+			$fieldset_tab_three = new FormFieldsetHTML('tab-06', $this->lang['sandbox.menu.panel.title'] . ' 03');
 			$wizard_form->add_fieldset($fieldset_tab_three);
 			$fieldset_tab_three->set_css_class('wizard-step');
 
-			$fieldset_tab_three->set_description($this->lang['lorem.short.content']);
+			$fieldset_tab_three->set_description($this->lang['sandbox.lorem.short.content']);
 		}
 
 		$this->submit_wizard_button = new FormButtonDefaultSubmit();

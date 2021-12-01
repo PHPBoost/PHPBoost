@@ -1,19 +1,19 @@
 <div id="bbcode-blocks" class="sandbox-block">
-    <h2>{@bbcode.blocks}</h2>
+    <h2>{@sandbox.bbcode.blocks}</h2>
     <article id="block" class="tpl">
         <header>
-            <h5>{@bbcode.block}</h5>
+            <h5>{@sandbox.bbcode.block}</h5>
         </header>
-        <div class="formatter-container formatter-block">{@lorem.medium.content}</div>
+        <div class="formatter-container formatter-block">{@sandbox.lorem.medium.content}</div>
     </article>
     <article id="fieldset" class="tpl">
         <header>
-            <h5>{@bbcode.fieldset}</h5>
+            <h5>{@sandbox.bbcode.fieldset}</h5>
         </header>
         <fieldset class="formatter-container formatter-fieldset">
-            <legend>{@bbcode.legend}</legend>
+            <legend>{@sandbox.bbcode.legend}</legend>
             <div class="formatter-content">
-                {@lorem.medium.content}
+                {@sandbox.lorem.medium.content}
             </div>
         </fieldset>
     </article>
@@ -22,12 +22,12 @@
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="no-style">
-<pre class="language-html line-numbers"><code class="language-html">// {@bbcode.block}
+<pre class="language-html line-numbers"><code class="language-html">// {@sandbox.bbcode.block}
 &lt;div class="formatter-container formatter-block">Lorem ipsum&lt;/div>
 <br />
-// {@bbcode.fieldset}
+// {@sandbox.bbcode.fieldset}
 &lt;fieldset class="formatter-container formatter-fieldset">
-    &lt;legend>{@bbcode.legend}&lt;/legend>
+    &lt;legend>{@sandbox.bbcode.legend}&lt;/legend>
     &lt;div class="formatter-content">
         Lorem ipsum ...
     &lt;/div>

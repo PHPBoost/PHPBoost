@@ -6,8 +6,8 @@
 	</header>
 
 	# INCLUDE SANDBOX_SUBMENU #
-	
-	<div class="sub-section"><div class="content-container"><div class="content">{@H|bbcode.clueription}</div></div></div>
+
+	<div class="sub-section"><div class="content-container"><div class="content">{@H|sandbox.bbcode.description}</div></div></div>
 
 	<div class="sub-section"><div class="content-container"><div class="content"># INCLUDE TYPOGRAPHY #</div></div></div>
 
@@ -23,14 +23,14 @@
 		<div class="content-container">
 			<div class="content">
 				<div id="bbcode-wiki" class="sandbox-block">
-					<h2>{@bbcode.wiki.module}</h2>
+					<h2>{@sandbox.bbcode.wiki.module}</h2>
 					# IF C_WIKI #
 						<article>
-							<p class="message-helper bgc notice">{@bbcode.wiki.conditions}</p>
+							<p class="message-helper bgc notice">{@sandbox.bbcode.wiki.conditions}</p>
 							<div class="content">
 								# START wikimenu #
 									<div class="wiki-summary">
-										<div class="wiki-summary-title">{@bbcode.wiki.table.of.contents}</div>
+										<div class="wiki-summary-title">{@sandbox.bbcode.wiki.table.of.contents}</div>
 										{wikimenu.MENU}
 									</div>
 								# END wikimenu #
@@ -38,7 +38,7 @@
 							</div>
 						</article>
 					# ELSE #
-					 	{@bbcode.wiki.disabled}
+					 	{@sandbox.bbcode.wiki.disabled}
 					# ENDIF #
 				</div>
 			</div>

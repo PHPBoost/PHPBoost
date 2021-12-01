@@ -1,6 +1,6 @@
 <article id="component-modal" class="sandbox-block">
     <header>
-        <h2>{@component.modal} {@H|sandbox.pinned.php}</h2>
+        <h2>{@sandbox.component.modal} {@H|sandbox.pinned.php}</h2>
     </header>
     <div class="content">
         # INCLUDE MODAL_FORM #
@@ -11,7 +11,7 @@
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="no-style"><pre class="language-html line-numbers"><code class="language-html">&lt;div class="modal-container">
-    &lt;span data-modal="" data-target="target-panel">{@component.item}&lt;/span>
+    &lt;span data-modal="" data-target="target-panel">{@sandbox.component.item}&lt;/span>
     &lt;div id="target-panel" class="modal modal-animation">
         &lt;div class="close-modal" aria-label="Fermer">&lt;/div>
         &lt;div class="content-panel">

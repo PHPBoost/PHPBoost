@@ -3,22 +3,18 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 01
  * @since       PHPBoost 5.2 - 2019 07 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
-class SandboxMenusContentController extends ModuleController
+class SandboxMenusContentController extends DefaultModuleController
 {
-	private $view;
-
 	/**
 	 * @var HTMLForm
 	 */
 	private $tabs_form;
 	private $wizard_form;
-
-	private $lang;
 
 	/**
 	 * @var FormButtonDefaultSubmit
@@ -26,25 +22,18 @@ class SandboxMenusContentController extends ModuleController
 	private $submit_tabs_button;
 	private $submit_wizard_button;
 
+	protected function get_template_to_use()
+	{
+		return new FileTemplate('sandbox/SandboxMenusContentController.tpl');
+	}
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
 
-		$this->init();
-
 		$this->build_view();
 
 		return $this->generate_response();
-	}
-
-	private function init()
-	{
-		$this->lang = array_merge(
-			LangLoader::get('common', 'sandbox'),
-			LangLoader::get('menu', 'sandbox')
-		);
-		$this->view = new FileTemplate('sandbox/SandboxMenusContentController.tpl');
-		$this->view->add_lang($this->lang);
 	}
 
 	private function build_view()
@@ -78,10 +67,10 @@ class SandboxMenusContentController extends ModuleController
 
 			$link_list->add_field(new FormFieldActionLinkList('actionlink_list',
 				array(
-					new FormFieldActionLinkElement($this->lang['menu.link.icon'], '#', 'far fa-edit'),
-					new FormFieldActionLinkElement($this->lang['menu.link.img'], '#', '', '/sandbox/sandbox_mini.png'),
-					new FormFieldActionLinkElement($this->lang['menu.link'].' 3', '#', ''),
-					new FormFieldActionLinkElement($this->lang['menu.link'].' 4', '#', '')
+					new FormFieldActionLinkElement($this->lang['sandbox.menu.link.icon'], '#', 'far fa-edit'),
+					new FormFieldActionLinkElement($this->lang['sandbox.menu.link.img'], '#', '', '/sandbox/sandbox_mini.png'),
+					new FormFieldActionLinkElement($this->lang['sandbox.menu.link'].' 3', '#', ''),
+					new FormFieldActionLinkElement($this->lang['sandbox.menu.link'].' 4', '#', '')
 				),
 				array('class' => 'css-class')
 			));
@@ -111,40 +100,40 @@ class SandboxMenusContentController extends ModuleController
 
 			$accordion_menu->add_field(new FormFieldMultitabsLinkList('accordion_menu_list',
 				array(
-					new FormFieldMultitabsLinkElement($this->lang['menu.link.icon'], 'accordion', 'Sandbox_Accordion_accordion_01', 'fa-cog'),
-					new FormFieldMultitabsLinkElement($this->lang['menu.link.img'], 'accordion', 'Sandbox_Accordion_accordion_02', '', '/sandbox/sandbox_mini.png'),
-					new FormFieldMultitabsLinkElement($this->lang['menu.link'].' 3', 'accordion', 'Sandbox_Accordion_accordion_03'),
-					new FormFieldMultitabsLinkElement($this->lang['menu.link'].' 4', 'accordion', 'Sandbox_Accordion_accordion_04', '', '', '', 'bgc warning')
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link.icon'], 'accordion', 'Sandbox_Accordion_accordion_01', 'fa-cog'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link.img'], 'accordion', 'Sandbox_Accordion_accordion_02', '', '/sandbox/sandbox_mini.png'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link'].' 3', 'accordion', 'Sandbox_Accordion_accordion_03'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link'].' 4', 'accordion', 'Sandbox_Accordion_accordion_04', '', '', '', 'bgc warning')
 				)
 			));
 
-			$accordion_01 = new FormFieldsetMultitabsHTML('accordion_01', $this->lang['menu.panel'].' 1',
+			$accordion_01 = new FormFieldsetMultitabsHTML('accordion_01', $this->lang['sandbox.menu.panel'].' 1',
 				array('css_class' => 'accordion accordion-animation first-tab')
 			);
 			$accordion_form->add_fieldset($accordion_01);
 
-			$accordion_01->add_field(new FormFieldHTML('accordion_content_01', $this->lang['lorem.short.content']));
+			$accordion_01->add_field(new FormFieldHTML('accordion_content_01', $this->lang['sandbox.lorem.short.content']));
 
-			$accordion_02 = new FormFieldsetMultitabsHTML('accordion_02', $this->lang['menu.panel'].' 2',
+			$accordion_02 = new FormFieldsetMultitabsHTML('accordion_02', $this->lang['sandbox.menu.panel'].' 2',
 				array('css_class' => 'accordion accordion-animation')
 			);
 			$accordion_form->add_fieldset($accordion_02);
 
-			$accordion_02->add_field(new FormFieldHTML('accordion_content_02', $this->lang['lorem.medium.content']));
+			$accordion_02->add_field(new FormFieldHTML('accordion_content_02', $this->lang['sandbox.lorem.medium.content']));
 
-			$accordion_03 = new FormFieldsetMultitabsHTML('accordion_03', $this->lang['menu.panel'].' 3',
+			$accordion_03 = new FormFieldsetMultitabsHTML('accordion_03', $this->lang['sandbox.menu.panel'].' 3',
 				array('css_class' => 'accordion accordion-animation')
 			);
 			$accordion_form->add_fieldset($accordion_03);
 
-			$accordion_03->add_field(new FormFieldHTML('accordion_content_03', $this->lang['lorem.large.content']));
+			$accordion_03->add_field(new FormFieldHTML('accordion_content_03', $this->lang['sandbox.lorem.large.content']));
 
-			$accordion_04 = new FormFieldsetMultitabsHTML('accordion_04', $this->lang['menu.panel'].' 4',
+			$accordion_04 = new FormFieldsetMultitabsHTML('accordion_04', $this->lang['sandbox.menu.panel'].' 4',
 				array('css_class' => 'accordion accordion-animation')
 			);
 			$accordion_form->add_fieldset($accordion_04);
 
-			$accordion_04->add_field(new FormFieldHTML('accordion_content_04', $this->lang['lorem.short.content']));
+			$accordion_04->add_field(new FormFieldHTML('accordion_content_04', $this->lang['sandbox.lorem.short.content']));
 
 		return $accordion_form;
 	}
@@ -168,40 +157,40 @@ class SandboxMenusContentController extends ModuleController
 
 			$tabs_menu->add_field(new FormFieldMultitabsLinkList('tabs_menu_list',
 				array(
-					new FormFieldMultitabsLinkElement($this->lang['menu.link.icon'], 'tabs', 'Sandbox_Accordion_tabs_01', 'fa-cog'),
-					new FormFieldMultitabsLinkElement($this->lang['menu.link.img'], 'tabs', 'Sandbox_Accordion_tabs_02', '', '/sandbox/sandbox_mini.png'),
-					new FormFieldMultitabsLinkElement($this->lang['menu.link'].' 3', 'tabs', 'Sandbox_Accordion_tabs_03'),
-					new FormFieldMultitabsLinkElement($this->lang['menu.link'].' 4', 'tabs', 'Sandbox_Accordion_tabs_04', '', '', '', 'bgc warning')
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link.icon'], 'tabs', 'Sandbox_Accordion_tabs_01', 'fa-cog'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link.img'], 'tabs', 'Sandbox_Accordion_tabs_02', '', '/sandbox/sandbox_mini.png'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link'].' 3', 'tabs', 'Sandbox_Accordion_tabs_03'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link'].' 4', 'tabs', 'Sandbox_Accordion_tabs_04', '', '', '', 'bgc warning')
 				)
 			));
 
-			$tabs_01 = new FormFieldsetMultitabsHTML('tabs_01', $this->lang['menu.panel'].' 1',
+			$tabs_01 = new FormFieldsetMultitabsHTML('tabs_01', $this->lang['sandbox.menu.panel'].' 1',
 				array('css_class' => 'tabs tabs-animation first-tab')
 			);
 			$tabs_form->add_fieldset($tabs_01);
 
-			$tabs_01->add_field(new FormFieldHTML('tabs_content_01', $this->lang['lorem.short.content']));
+			$tabs_01->add_field(new FormFieldHTML('tabs_content_01', $this->lang['sandbox.lorem.short.content']));
 
-			$tabs_02 = new FormFieldsetMultitabsHTML('tabs_02', $this->lang['menu.panel'].' 2',
+			$tabs_02 = new FormFieldsetMultitabsHTML('tabs_02', $this->lang['sandbox.menu.panel'].' 2',
 				array('css_class' => 'tabs tabs-animation')
 			);
 			$tabs_form->add_fieldset($tabs_02);
 
-			$tabs_02->add_field(new FormFieldHTML('tabs_content_02', $this->lang['lorem.medium.content']));
+			$tabs_02->add_field(new FormFieldHTML('tabs_content_02', $this->lang['sandbox.lorem.medium.content']));
 
-			$tabs_03 = new FormFieldsetMultitabsHTML('tabs_03', $this->lang['menu.panel'].' 3',
+			$tabs_03 = new FormFieldsetMultitabsHTML('tabs_03', $this->lang['sandbox.menu.panel'].' 3',
 				array('css_class' => 'tabs tabs-animation')
 			);
 			$tabs_form->add_fieldset($tabs_03);
 
-			$tabs_03->add_field(new FormFieldHTML('tabs_content_03', $this->lang['lorem.large.content']));
+			$tabs_03->add_field(new FormFieldHTML('tabs_content_03', $this->lang['sandbox.lorem.large.content']));
 
-			$tabs_04 = new FormFieldsetMultitabsHTML('tabs_04', $this->lang['menu.panel'].' 4',
+			$tabs_04 = new FormFieldsetMultitabsHTML('tabs_04', $this->lang['sandbox.menu.panel'].' 4',
 				array('css_class' => 'tabs tabs-animation')
 			);
 			$tabs_form->add_fieldset($tabs_04);
 
-			$tabs_04->add_field(new FormFieldHTML('tabs_content_04', $this->lang['lorem.short.content']));
+			$tabs_04->add_field(new FormFieldHTML('tabs_content_04', $this->lang['sandbox.lorem.short.content']));
 
 		return $tabs_form;
 	}
@@ -225,35 +214,35 @@ class SandboxMenusContentController extends ModuleController
 
 		$fieldset_tab_menu->add_field(new WizardActionLinkList('tab_menu_list',
 			array(
-				new FormFieldActionLinkElement($this->lang['menu.panel'] . ' 01', '#', 'fa-cog'),
-				new FormFieldActionLinkElement($this->lang['menu.panel'] . ' 02', '#', 'fa-image'),
-				new FormFieldActionLinkElement($this->lang['menu.panel'] . ' 03', '#', '', PATH_TO_ROOT . 'articles/articles_mini.png', 'articles'),
+				new FormFieldActionLinkElement($this->lang['sandbox.menu.panel'] . ' 01', '#', 'fa-cog'),
+				new FormFieldActionLinkElement($this->lang['sandbox.menu.panel'] . ' 02', '#', 'fa-image'),
+				new FormFieldActionLinkElement($this->lang['sandbox.menu.panel'] . ' 03', '#', '', PATH_TO_ROOT . 'articles/articles_mini.png', 'articles'),
 			)
 		));
 
-		$fieldset_tab_one = new FormFieldsetHTML('tab-04', $this->lang['menu.panel.title'] . ' 01');
+		$fieldset_tab_one = new FormFieldsetHTML('tab-04', $this->lang['sandbox.menu.panel.title'] . ' 01');
 		$wizard_form->add_fieldset($fieldset_tab_one);
 		$fieldset_tab_one->set_css_class('wizard-step');
 
-		$fieldset_tab_one->set_description($this->lang['lorem.large.content']);
+		$fieldset_tab_one->set_description($this->lang['sandbox.lorem.large.content']);
 
-		$fieldset_tab_one->add_field(new FormFieldSubTitle('tab_01b', $this->lang['menu.panel.subtitle'],''));
+		$fieldset_tab_one->add_field(new FormFieldSubTitle('tab_01b', $this->lang['sandbox.menu.panel.subtitle'],''));
 
-		$fieldset_tab_one->add_field(new FormFieldTextEditor('text', $this->lang['menu.panel.input'], ''));
+		$fieldset_tab_one->add_field(new FormFieldTextEditor('text', $this->lang['sandbox.menu.panel.input'], ''));
 
-		$fieldset_tab_two = new FormFieldsetHTML('tab-05', $this->lang['menu.panel.title'] . ' 02');
+		$fieldset_tab_two = new FormFieldsetHTML('tab-05', $this->lang['sandbox.menu.panel.title'] . ' 02');
 		$wizard_form->add_fieldset($fieldset_tab_two);
 		$fieldset_tab_two->set_css_class('wizard-step');
 
-		$fieldset_tab_two->set_description($this->lang['lorem.medium.content']);
+		$fieldset_tab_two->set_description($this->lang['sandbox.lorem.medium.content']);
 
 		if (ModulesManager::is_module_installed('news') & ModulesManager::is_module_activated('news'))
 		{
-			$fieldset_tab_three = new FormFieldsetHTML('tab-06', $this->lang['menu.panel.title'] . ' 03');
+			$fieldset_tab_three = new FormFieldsetHTML('tab-06', $this->lang['sandbox.menu.panel.title'] . ' 03');
 			$wizard_form->add_fieldset($fieldset_tab_three);
 			$fieldset_tab_three->set_css_class('wizard-step');
 
-			$fieldset_tab_three->set_description($this->lang['lorem.short.content']);
+			$fieldset_tab_three->set_description($this->lang['sandbox.lorem.short.content']);
 		}
 
 		$this->submit_wizard_button = new FormButtonDefaultSubmit();

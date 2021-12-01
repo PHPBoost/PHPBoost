@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 01
  * @since       PHPBoost 5.1 - 2017 09 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -40,11 +40,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 
 	public function get_menu_content()
 	{
-		$this->lang = array_merge(
-			LangLoader::get('form-lang'),
-			LangLoader::get('common', 'sandbox'),
-			LangLoader::get('module-mini', 'sandbox')
-		);
+		$this->lang = LangLoader::get_all_langs('sandbox');
 		$view = new FileTemplate('sandbox/SandboxModuleMiniMenu.tpl');
 		$view->add_lang($this->lang);
 		$config = SandboxConfig::load();
@@ -224,7 +220,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 			<span class="stacked">
 				<i class="fab fa-fw fa-css3" aria-hidden="true"></i>
 				<i class="fa fa-plus success stack-event stack-icon stack-sup stack-right" aria-hidden="true"></i>
-			</span> <span> ' . $this->lang['mini.enable.css.cache'] . ' </span>
+			</span> <span> ' . $this->lang['sandbox.mini.enable.css.cache'] . ' </span>
 		', 'enable_css_cache');
 		$enable_css_cache->add_button($this->enable_css_button);
 
@@ -247,7 +243,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 			<span class="stacked">
 				<i class="fab fa-fw fa-css3" aria-hidden="true"></i>
 				<i class="fa fa-minus error stack-event stack-icon stack-sup stack-right" aria-hidden="true"></i>
-			</span> <span> ' . $this->lang['mini.disable.css.cache'] . ' </span>
+			</span> <span> ' . $this->lang['sandbox.mini.disable.css.cache'] . ' </span>
 		', 'disable_css_cache');
 		$disable_css_cache->add_button($this->disable_css_button);
 
@@ -270,7 +266,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 			<span class="stacked">
 				<i class="fab fa-fw fa-css3" aria-hidden="true"></i>
 				<i class="fa fa-sync notice stack-event stack-icon stack-sup stack-right" aria-hidden="true"></i>
-			</span> <span> ' . $this->lang['mini.clean.css.cache'] . ' </span>
+			</span> <span> ' . $this->lang['sandbox.mini.clean.css.cache'] . ' </span>
 		', 'clean_css_cache');
 		$clean_css_cache->add_button($this->clean_css_button);
 
@@ -292,7 +288,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 			<span class="stacked">
 				<i class="fab fa-fw fa-html5" aria-hidden="true"></i>
 				<i class="fa fa-sync notice stack-event stack-icon stack-sup stack-right" aria-hidden="true"></i>
-			</span> <span> ' . $this->lang['mini.clean.tpl.cache'] . ' </span>
+			</span> <span> ' . $this->lang['sandbox.mini.clean.tpl.cache'] . ' </span>
 		', 'clean_cache');
 		$clean_cache->add_button($this->clean_button);
 
@@ -315,7 +311,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 			<span class="stacked">
 				<i class="fa fa-fw fa-rss" aria-hidden="true"></i>
 				<i class="fa fa-sync notice stack-event stack-icon stack-sup stack-right" aria-hidden="true"></i>
-			</span> <span> ' . $this->lang['mini.clean.rss.cache'] . ' </span>
+			</span> <span> ' . $this->lang['sandbox.mini.clean.rss.cache'] . ' </span>
 		', 'clean_syndication_cache');
 		$clean_syndication_cache->add_button($this->clean_syndication_button);
 
@@ -336,7 +332,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 			<span class="stacked">
 				<i class="fa fa-fw fa-th-list" aria-hidden="true"></i>
 				<i class="fa fa-minus error stack-event stack-icon stack-sup stack-right" aria-hidden="true"></i>
-			</span> <span> ' . $this->lang['mini.disable.left.col'] . ' </span>
+			</span> <span> ' . $this->lang['sandbox.mini.disable.left.col'] . ' </span>
 		', 'disable_left_menu');
 		$disable_left_menu->add_button($this->disable_left_button);
 
@@ -352,7 +348,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 			<span class="stacked">
 				<i class="fa fa-fw fa-th-list" aria-hidden="true"></i>
 				<i class="fa fa-plus success stack-event stack-icon stack-sup stack-right" aria-hidden="true"></i>
-			</span> <span> ' . $this->lang['mini.enable.left.col'] . ' </span>
+			</span> <span> ' . $this->lang['sandbox.mini.enable.left.col'] . ' </span>
 		', 'enable_left_menu');
 		$enable_left_menu->add_button($this->enable_left_button);
 
@@ -368,7 +364,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 			<span class="stacked">
 				<i class="fa fa-fw fa-th-list fa-rotate-180" aria-hidden="true"></i>
 				<i class="fa fa-minus error stack-event stack-icon stack-sup stack-right" aria-hidden="true"></i>
-			</span> <span> ' . $this->lang['mini.disable.right.col'] . '</span>
+			</span> <span> ' . $this->lang['sandbox.mini.disable.right.col'] . '</span>
 		', 'disable_right_menu');
 		$disable_right_menu->add_button($this->disable_right_button);
 
@@ -384,7 +380,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 			<span class="stacked">
 				<i class="fa fa-fw fa-th-list fa-rotate-180" aria-hidden="true"></i>
 				<i class="fa fa-plus success stack-event stack-icon stack-sup stack-right" aria-hidden="true"></i>
-			</span> <span> ' . $this->lang['mini.enable.right.col'] . '</span>
+			</span> <span> ' . $this->lang['sandbox.mini.enable.right.col'] . '</span>
 		', 'enable_right_menu');
 		$enable_right_menu->add_button($this->enable_right_button);
 

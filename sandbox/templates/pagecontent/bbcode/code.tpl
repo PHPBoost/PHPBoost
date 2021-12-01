@@ -1,34 +1,34 @@
 <div id="bbcode-code" class="sandbox-block">
-    <h2>{@bbcode.blocs.code}</h2>
+    <h2>{@sandbox.bbcode.blocs.code}</h2>
     <article id="quote-code" class="sandbox-block">
         <header>
-            <h5>{@bbcode.quote}</h5>
+            <h5>{@sandbox.bbcode.quote}</h5>
         </header>
         <blockquote class="formatter-container formatter-blockquote">
-            <span class="formatter-title title-perso">{@bbcode.quote} : Lorem Ipsum</span>
+            <span class="formatter-title title-perso">{@sandbox.bbcode.quote} : Lorem Ipsum</span>
             <div class="formatter-content">
-                {@lorem.medium.content}
+                {@sandbox.lorem.medium.content}
             </div>
         </blockquote>
     </article>
     <article id="hidden-code" class="sandbox-block">
         <header>
-            <h5>{@bbcode.hidden}</h5>
+            <h5>{@sandbox.bbcode.hidden}</h5>
         </header>
         <div class="formatter-container formatter-hide no-js">
-            <span class="formatter-title">{@bbcode.hidden} :</span>
+            <span class="formatter-title">{@sandbox.bbcode.hidden} :</span>
             <div class="formatter-content">
-                {@lorem.medium.content}
+                {@sandbox.lorem.medium.content}
             </div>
         </div>
     </article>
     <article id="php-code" class="sandbox-block">
         <header>
-            <h5>{@bbcode.code.php}</h5>
+            <h5>{@sandbox.bbcode.code.php}</h5>
         </header>
-        <p>{@bbcode.code.with.html}</p>
+        <p>{@sandbox.bbcode.code.with.html}</p>
         <div class="formatter-container code-php">
-            <span class="formatter-title title-perso">{@bbcode.code.php} : CategoriesCache.class.php</span>
+            <span class="formatter-title title-perso">{@sandbox.bbcode.code.php} : CategoriesCache.class.php</span>
             <div class="formatter-content formatter-code">
                 <div class="no-style">
 <pre class="language-php line-numbers"><code class="language-php">&lt;?php
@@ -64,7 +64,7 @@ abstract class CategoriesCache implements CacheData
         <span class="formatter-title">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="no-style">
-<pre class="language-html line-numbers"><code class="language-html">// {@bbcode.quote}
+<pre class="language-html line-numbers"><code class="language-html">// {@sandbox.bbcode.quote}
 &lt;blockquote class="formatter-container formatter-blockquote">
     &lt;span class="formatter-title">John Doe&lt;/span>
     &lt;div class="formatter-content">
@@ -72,7 +72,7 @@ abstract class CategoriesCache implements CacheData
     &lt;/div>
 &lt;/blockquote>
 <br />
-// {@bbcode.hidden}
+// {@sandbox.bbcode.hidden}
 &lt;div class="formatter-container formatter-hide no-js">
     &lt;span class="formatter-title title-perso">Lorem ipsum&lt;/span>
     &lt;div class="formatter-content">
@@ -80,7 +80,7 @@ abstract class CategoriesCache implements CacheData
     &lt;/div>
 &lt;/div>
 <br />
-// {@bbcode.code.php} (php)
+// {@sandbox.bbcode.code.php} (php)
 &lt;div class="formatter-container formatter-code">
     &lt;span class="formatter-title">Code : PHP&lt;/span> <em>// file.ext</em>
     &lt;div class="formatter-content formatter-code">

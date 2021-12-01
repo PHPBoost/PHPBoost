@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 21
+ * @version     PHPBoost 6.0 - last update: 2021 11 29
  * @since       PHPBoost 4.1 - 2013 12 17
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -18,6 +18,14 @@ class SandboxUrlBuilder
 	public static function home()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/');
+	}
+
+	/**
+	 * @return Url
+	 */
+	public static function lang()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/lang/');
 	}
 
 	/**

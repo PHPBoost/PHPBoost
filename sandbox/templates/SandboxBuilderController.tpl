@@ -4,13 +4,13 @@
 			{@sandbox.module.title} - {@sandbox.forms}
 		</h1>
 	</header>
-	
+
 	# INCLUDE SANDBOX_SUBMENU #
 
 	<div class="sub-section">
 		<div class="content-container">
 			<div class="content">
-				{@H|builder.clueription}
+				{@H|sandbox.builder.description}
 			</div>
 		</div>
 	</div>

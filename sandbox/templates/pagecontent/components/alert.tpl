@@ -1,6 +1,6 @@
 <article id="component-alerts" class="sandbox-block">
     <header>
-        <h2>{@component.alert.messages} {@H|sandbox.pinned.bbcode}</h2>
+        <h2>{@sandbox.component.alert.messages} {@H|sandbox.pinned.bbcode}</h2>
     </header>
     # START messages # # INCLUDE messages.VIEW # # END messages #
     # INCLUDE FLOATING_MESSAGES # # INCLUDE FLOATING_SUCCESS # # INCLUDE FLOATING_NOTICE # # INCLUDE FLOATING_WARNING # # INCLUDE FLOATING_ERROR #

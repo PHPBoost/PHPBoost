@@ -1,18 +1,18 @@
 <div id="cell" class="sandbox-block">
     <header>
-        <h5>{@layout.cell}</h5>
+        <h5>{@sandbox.layout.cell}</h5>
     </header>
 
-    <h6>{@layout.cell.columns}</h6>
+    <h6>{@sandbox.layout.cell.columns}</h6>
     <div class="cell-flex cell-tile layout-content-demo cell-columns-2">
         <article class="cell">
             <header class="cell-header">
-                <h2 class="cell-name">{@layout.title}</h2>
+                <h2 class="cell-name">{@sandbox.layout.title}</h2>
             </header>
             <div class="cell-infos">
                 <div class="more">
-                    <span class="pinned">{@layout.item}</span>
-                    <span class="pinned">{@layout.item}</span>
+                    <span class="pinned">{@sandbox.layout.item}</span>
+                    <span class="pinned">{@sandbox.layout.item}</span>
                 </div>
                 <div class="controls align-right">
                     <a href="#"><i class="fa fa-edit"></i></a>
@@ -21,24 +21,24 @@
             </div>
             <div class="cell-body">
                 <div class="cell-thumbnail">
-                    <img src="{U_PICTURE}" alt="{@layout.title}">
+                    <img src="{U_PICTURE}" alt="{@sandbox.layout.title}">
                     <a href="#" class="cell-thumbnail-caption"><i class="fa fa-eye"></i></a>
                 </div>
-                <div class="cell-content">{@lorem.short.content}</div>
+                <div class="cell-content">{@sandbox.lorem.short.content}</div>
             </div>
         </article>
     </div>
 
-    <h6>{@layout.cell.row}</h6>
+    <h6>{@sandbox.layout.cell.row}</h6>
     <div class="cell-flex cell-tile layout-content-demo cell-row">
         <article class="cell">
             <header class="cell-header">
-                <h2 class="cell-name"><a href="#">{@layout.title}</a></h2>
+                <h2 class="cell-name"><a href="#">{@sandbox.layout.title}</a></h2>
             </header>
             <div class="cell-infos">
                 <div class="more">
-                    <span class="pinned">{@layout.item}</span>
-                    <span class="pinned">{@layout.item}</span>
+                    <span class="pinned">{@sandbox.layout.item}</span>
+                    <span class="pinned">{@sandbox.layout.item}</span>
                 </div>
                 <div class="controls align-right">
                     <a href="#"><i class="fa fa-edit"></i></a>
@@ -47,25 +47,25 @@
             </div>
             <div class="cell-body">
                 <div class="cell-thumbnail">
-                    <img src="{U_PICTURE}" alt="{@layout.title}">
+                    <img src="{U_PICTURE}" alt="{@sandbox.layout.title}">
                     <a href="#" class="cell-thumbnail-caption"><i class="fa fa-eye"></i></a>
                 </div>
-                <div class="cell-content">{@lorem.short.content}</div>
+                <div class="cell-content">{@sandbox.lorem.short.content}</div>
             </div>
         </article>
     </div>
 
-    <h6>{@layout.cell.all}</h6>
+    <h6>{@sandbox.layout.cell.all}</h6>
     <div class="cell-flex layout-content-demo cell-tile cell-columns-2">
         <article class="cell">
             <header class="cell-header">
-                <h6 class="cell-name">{@layout.title.more}</h6>
+                <h6 class="cell-name">{@sandbox.layout.title.more}</h6>
                 <span><i class="fa fa-cog"></i></span>
             </header>
             <div class="cell-infos">
                 <div class="more">
-                    <span class="pinned">{@layout.item}</span>
-                    <span class="pinned">{@layout.item}</span>
+                    <span class="pinned">{@sandbox.layout.item}</span>
+                    <span class="pinned">{@sandbox.layout.item}</span>
                 </div>
                 <div class="controls align-right">
                     <a href="#"><i class="fa fa-edit"></i></a>
@@ -75,15 +75,15 @@
         </article>
         <article class="cell">
             <header class="cell-header">
-                <h6 class="cell-name">{@layout.title.alert}</h6>
+                <h6 class="cell-name">{@sandbox.layout.title.alert}</h6>
             </header>
             <div class="cell-alert">
-                <span class="message-helper bgc warning">{@lorem.short.content}</span>
+                <span class="message-helper bgc warning">{@sandbox.lorem.short.content}</span>
             </div>
         </article>
         <article class="cell">
             <header class="cell-header">
-                <h6 class="cell-name">{@layout.title.form}</h6>
+                <h6 class="cell-name">{@sandbox.layout.title.form}</h6>
             </header>
             <div class="cell-form">
                 <div class="cell-input"><input type="text" placeholder="input text"></div>
@@ -92,7 +92,7 @@
                 <div class="cell-label">
                     <label for="label-and-input">
                         Label
-                        <span class="field-description">{@layout.item}</span>
+                        <span class="field-description">{@sandbox.layout.item}</span>
                     </label>
                 </div>
                 <div class="cell-input"><input type="text" id="label-and-input" placeholder="input text" /></div>
@@ -101,8 +101,8 @@
                 <div class="cell-input">
                     <select name="">
                         <option value="">select</option>
-                        <option value="">{@layout.item}</option>
-                        <option value="">{@layout.item}</option>
+                        <option value="">{@sandbox.layout.item}</option>
+                        <option value="">{@sandbox.layout.item}</option>
                     </select>
                 </div>
             </div>
@@ -114,73 +114,73 @@
                     <input class="grouped-element" id="input-id" type="text" placeholder="input text">
                     <select name="" class="grouped-element">
                         <option value="">select</option>
-                        <option value="">{@layout.item}</option>
-                        <option value="">{@layout.item}</option>
+                        <option value="">{@sandbox.layout.item}</option>
+                        <option value="">{@sandbox.layout.item}</option>
                     </select>
                     <a href="#" class="grouped-element"><i class="fa fa-caret-right"></i></a>
                 </div>
             </div>
             <div class="cell-textarea">
-				<textarea name="textarea" rows="3">Textarea : {@lorem.short.content}</textarea>
+				<textarea name="textarea" rows="3">Textarea : {@sandbox.lorem.short.content}</textarea>
             </div>
             <div class="cell-form">
                 <fieldset class="fieldset-submit cell-center">
-                    <button type="submit" class="button submit" name="submit" value="true">{@layout.item}</button>
-                    <button type="reset" class="button reset-button" value="true">{@layout.item}</button>
+                    <button type="submit" class="button submit" name="submit" value="true">{@sandbox.layout.item}</button>
+                    <button type="reset" class="button reset-button" value="true">{@sandbox.layout.item}</button>
                 </fieldset>
             </div>
         </article>
         <article class="cell">
             <header class="cell-header">
-                <h6 class="cell-name">{@layout.title.content}</h6>
+                <h6 class="cell-name">{@sandbox.layout.title.content}</h6>
             </header>
             <div class="cell-body">
                 <div class="cell-thumbnail">
-                    <img src="{U_PICTURE}" alt="{@layout.title}">
+                    <img src="{U_PICTURE}" alt="{@sandbox.layout.title}">
                     <a href="#" class="cell-thumbnail-caption"><i class="fa fa-eye"></i></a>
                 </div>
-                <div class="cell-content">{@lorem.medium.content}</div>
+                <div class="cell-content">{@sandbox.lorem.medium.content}</div>
             </div>
         </article>
         <article class="cell">
             <header class="cell-header">
-                <h6 class="cell-name">{@layout.title.list}</h6>
+                <h6 class="cell-name">{@sandbox.layout.title.list}</h6>
             </header>
             <div class="cell-list">
                 <ul>
                     <li class="li-stretch">
-                        <span>{@layout.title.sub}</span>
-                        <span>{@layout.item}</span>
+                        <span>{@sandbox.layout.title.sub}</span>
+                        <span>{@sandbox.layout.item}</span>
                     </li>
                     <li class="li-stretch">
-                        <span>{@layout.title.sub}</span>
-                        <span>{@layout.item}</span>
+                        <span>{@sandbox.layout.title.sub}</span>
+                        <span>{@sandbox.layout.item}</span>
                     </li>
-                    <li>{@layout.item}</li>
-                    <li>{@layout.item}</li>
+                    <li>{@sandbox.layout.item}</li>
+                    <li>{@sandbox.layout.item}</li>
                 </ul>
             </div>
         </article>
         <article class="cell">
             <header class="cell-header">
-                <h6 class="cell-name">{@layout.sandbox.table}</h6>
+                <h6 class="cell-name">{@sandbox.layout.sandbox.table}</h6>
             </header>
             <div class="cell-table">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>{@layout.title.sub}</th>
-                            <th>{@layout.title.sub}</th>
-                            <th>{@layout.title.sub}</th>
-                            <th>{@layout.title.sub}</th>
+                            <th>{@sandbox.layout.title.sub}</th>
+                            <th>{@sandbox.layout.title.sub}</th>
+                            <th>{@sandbox.layout.title.sub}</th>
+                            <th>{@sandbox.layout.title.sub}</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>{@layout.item}</td>
-                            <td>{@layout.item}</td>
-                            <td>{@layout.item}</td>
-                            <td>{@layout.item}</td>
+                            <td>{@sandbox.layout.item}</td>
+                            <td>{@sandbox.layout.item}</td>
+                            <td>{@sandbox.layout.item}</td>
+                            <td>{@sandbox.layout.item}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -188,10 +188,10 @@
         </article>
         <article class="cell cell-100">
             <header class="cell-header">
-                <h6 class="cell-name">{@layout.title.footer}</h6>
+                <h6 class="cell-name">{@sandbox.layout.title.footer}</h6>
             </header>
             <div class="cell-footer">
-                {@layout.item}
+                {@sandbox.layout.item}
             </div>
         </article>
     </div>
@@ -245,8 +245,8 @@
     &lt;form action="" method="">
         &lt;textarea name="textarea">&lt;/textarea>
         &lt;fieldset class="fieldset-submit">
-            &lt;button type="submit" class="button submit" name="submit" value="true">{@layout.item}&lt;/button>
-            &lt;button type="reset" class="button reset-button" value="true">{@layout.item}&lt;/button>
+            &lt;button type="submit" class="button submit" name="submit" value="true">{@sandbox.layout.item}&lt;/button>
+            &lt;button type="reset" class="button reset-button" value="true">{@sandbox.layout.item}&lt;/button>
         &lt;/fieldset>
     &lt;/form>
 &lt;/div>

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 09
+ * @version     PHPBoost 6.0 - last update: 2021 12 01
  * @since       PHPBoost 6.0 - 2020 02 24
 */
 
@@ -11,71 +11,71 @@
 #                    English                       #
 ####################################################
 
-$lang['sandbox.trigger']     = 'Sandbox';
-$lang['builder.title']       = 'Forms';
-$lang['component.title']     = 'Components';
-$lang['layout.title']        = 'Layout';
-$lang['bbcode.title']        = 'BBCode';
-$lang['menus.title']         = 'Menus';
-$lang['menus.nav.title']     = 'Navigation menus';
-$lang['menus.content.title'] = 'Content menus';
-$lang['icons.title']         = 'Icons';
-$lang['table.title']         = 'Table';
-$lang['tests.title']         = 'PHP tests';
-$lang['emails.title']        = 'Emails';
-$lang['template.title']      = 'Template generator';
+$lang['sandbox.trigger']             = 'Sandbox';
+$lang['sandbox.builder.title']       = 'Forms';
+$lang['sandbox.component.title']     = 'Components';
+$lang['sandbox.layout.title']        = 'Layout';
+$lang['sandbox.bbcode.title']        = 'BBCode';
+$lang['sandbox.menus.title']         = 'Menus';
+$lang['sandbox.menus.nav.title']     = 'Navigation menus';
+$lang['sandbox.menus.content.title'] = 'Content menus';
+$lang['sandbox.icons.title']         = 'Icons';
+$lang['sandbox.table.title']         = 'Table';
+$lang['sandbox.tests.title']         = 'PHP tests';
+$lang['sandbox.emails.title']        = 'Emails';
+$lang['sandbox.template.title']      = 'Template generator';
 
-$lang['hashtag.table']      = '# Table';
-$lang['hashtag.typography'] = '# Typography';
+$lang['sandbox.hashtag.table']      = '# Table';
+$lang['sandbox.hashtag.typography'] = '# Typography';
 
 // Builder
-$lang['hashtag.text.fields']     = '# Text fields';
-$lang['hashtag.textareas']       = '# Textareas';
-$lang['hashtag.choices']         = '# Radios / checkboxes';
-$lang['hashtag.selects']         = '# Selects';
-$lang['hashtag.buttons']         = '# Buttons';
-$lang['hashtag.miscellaneous']   = '# Miscellaneous';
-$lang['hashtag.dates']           = '# Dates';
-$lang['hashtag.upload']          = '# Upload';
-$lang['hashtag.links']           = '# Menus';
-$lang['hashtag.modal']           = '# Modal';
-$lang['hashtag.gmap']            = '# Google Maps';
-$lang['hashtag.authorizations']  = '# Autorizations';
-$lang['hashtag.vertical.form']   = '# Vertical form';
-$lang['hashtag.horizontal.form'] = '# Horizontal form';
+$lang['sandbox.hashtag.text.fields']     = '# Text fields';
+$lang['sandbox.hashtag.textareas']       = '# Textareas';
+$lang['sandbox.hashtag.choices']         = '# Radios / checkboxes';
+$lang['sandbox.hashtag.selects']         = '# Selects';
+$lang['sandbox.hashtag.buttons']         = '# Buttons';
+$lang['sandbox.hashtag.miscellaneous']   = '# Miscellaneous';
+$lang['sandbox.hashtag.dates']           = '# Dates';
+$lang['sandbox.hashtag.upload']          = '# Upload';
+$lang['sandbox.hashtag.links']           = '# Menus';
+$lang['sandbox.hashtag.modal']           = '# Modal';
+$lang['sandbox.hashtag.gmap']            = '# Google Maps';
+$lang['sandbox.hashtag.authorizations']  = '# Autorizations';
+$lang['sandbox.hashtag.vertical.form']   = '# Vertical form';
+$lang['sandbox.hashtag.horizontal.form'] = '# Horizontal form';
 
 // Components
-$lang['hashtag.titles']         = '# Titles';
-$lang['hashtag.sizes']          = '# Sizes';
-$lang['hashtag.styles']         = '# Styles';
-$lang['hashtag.colors']         = '# Coulors';
-$lang['hashtag.media']          = '# Media';
-$lang['hashtag.progressbar']    = '# Progress bar';
-$lang['hashtag.lists']          = '# Lists';
-$lang['hashtag.classic']        = '# Classics';
-$lang['hashtag.explorer']       = '# Explorer';
-$lang['hashtag.pagination']     = '# Pagination';
-$lang['hashtag.notation']       = '# Notation';
-$lang['hashtag.message.helper'] = '# Alerts';
-$lang['hashtag.tooltip']        = '# Tooltip';
+$lang['sandbox.hashtag.titles']         = '# Titles';
+$lang['sandbox.hashtag.sizes']          = '# Sizes';
+$lang['sandbox.hashtag.styles']         = '# Styles';
+$lang['sandbox.hashtag.colors']         = '# Coulors';
+$lang['sandbox.hashtag.media']          = '# Media';
+$lang['sandbox.hashtag.progressbar']    = '# Progress bar';
+$lang['sandbox.hashtag.lists']          = '# Lists';
+$lang['sandbox.hashtag.classic']        = '# Classics';
+$lang['sandbox.hashtag.explorer']       = '# Explorer';
+$lang['sandbox.hashtag.pagination']     = '# Pagination';
+$lang['sandbox.hashtag.notation']       = '# Notation';
+$lang['sandbox.hashtag.message.helper'] = '# Alerts';
+$lang['sandbox.hashtag.tooltip']        = '# Tooltip';
 // Icons
-$lang['hashtag.font.awesome'] = '# Font-awesome &copy;';
-$lang['hashtag.icomoon']      = '# Icomoon &copy;';
+$lang['sandbox.hashtag.font.awesome'] = '# Font-awesome &copy;';
+$lang['sandbox.hashtag.icomoon']      = '# Icomoon &copy;';
 
 // Layout
-$lang['hashtag.grid']     = '# Grid';
-$lang['hashtag.cell']     = '# Cells';
-$lang['hashtag.message']  = '# Messages';
-$lang['hashtag.sortable'] = '# Sortables';
+$lang['sandbox.hashtag.grid']     = '# Grid';
+$lang['sandbox.hashtag.cell']     = '# Cells';
+$lang['sandbox.hashtag.message']  = '# Messages';
+$lang['sandbox.hashtag.sortable'] = '# Sortables';
 
 // BBCode
-$lang['hashtag.blocks'] = '# Blocs';
-$lang['hashtag.code']   = '# Code';
-$lang['hashtag.wiki']   = '# Wiki';
+$lang['sandbox.hashtag.blocks'] = '# Blocs';
+$lang['sandbox.hashtag.code']   = '# Code';
+$lang['sandbox.hashtag.wiki']   = '# Wiki';
 
 // Menus
-$lang['hashtag.links']     = '# Links';
-$lang['hashtag.accordion'] = '# Accordion';
-$lang['hashtag.tabs']      = '# Tabular';
-$lang['hashtag.wizard']    = '# Wizard';
+$lang['sandbox.hashtag.links']     = '# Links';
+$lang['sandbox.hashtag.accordion'] = '# Accordion';
+$lang['sandbox.hashtag.tabs']      = '# Tabular';
+$lang['sandbox.hashtag.wizard']    = '# Wizard';
 ?>

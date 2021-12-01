@@ -1,10 +1,10 @@
 <article id="component-notation" class="sandbox-block">
     <header>
-        <h5>{@component.notation}</h5>
+        <h5>{@sandbox.component.notation}</h5>
     </header>
     <div class="content">
         <div>
-            {@component.notation.possible.values}
+            {@sandbox.component.notation.possible.values}
             <p class="notation">
                 <a href="#" onclick="return false;" class="far star fa-star"><span class="star-width star-width-100"></span></a> <!-- 1 -->
                 <a href="#" onclick="return false;" class="far star fa-star"><span class="star-width star-width-75"></span></a>  <!-- 0.75 à 1 -->
@@ -14,7 +14,7 @@
             </p>
         </div>
         <div>
-            {@component.notation.example}
+            {@sandbox.component.notation.example}
             <div class="notation">
                 <span class="stars">
                     <a href="#" onclick="return false;" class="far star fa-star"><span class="star-width star-width-100"></span></a>

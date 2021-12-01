@@ -3,36 +3,26 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 09
+ * @version     PHPBoost 6.0 - last update: 2021 12 01
  * @since       PHPBoost 3.0 - 2012 05 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class SandboxIconsController extends ModuleController
+class SandboxIconsController extends DefaultModuleController
 {
-	private $view;
-	private $lang;
+	protected function get_template_to_use()
+	{
+		return new FileTemplate('sandbox/SandboxIconsController.tpl');
+	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
 
-		$this->init();
-
 		$this->build_view();
 
 		return $this->generate_response();
-	}
-
-	private function init()
-	{
-		$this->lang = array_merge(
-			LangLoader::get('common', 'sandbox'),
-			LangLoader::get('icons', 'sandbox')
-		);
-		$this->view = new FileTemplate('sandbox/SandboxIconsController.tpl');
-		$this->view->add_lang($this->lang);
 	}
 
 	private function build_view()
@@ -46,9 +36,8 @@ class SandboxIconsController extends ModuleController
 
 	private function get_fa()
 	{
-		$css_lang = LangLoader::get('component', 'sandbox');
 		$view = new FileTemplate('sandbox/pagecontent/icons/fa.tpl');
-		$view->add_lang(array_merge($this->lang, $this->lang, $css_lang));
+		$view->add_lang(array_merge($this->lang));
 
 		// Social
 		$icons = array(
@@ -90,9 +79,8 @@ class SandboxIconsController extends ModuleController
 
 	private function build_markup($tpl)
 	{
-		$css_lang = LangLoader::get('component', 'sandbox');
 		$view = new FileTemplate($tpl);
-		$view->add_lang(array_merge($this->lang, $this->lang, $css_lang));
+		$view->add_lang($this->lang);
 
 		return $view;
 	}

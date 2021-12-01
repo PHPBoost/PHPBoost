@@ -1,45 +1,45 @@
 <article id="component-table" class="sandbox-block">
     <header>
-        <h2>{@component.table} {@H|sandbox.pinned.bbcode}</h2>
+        <h2>{@sandbox.component.table} {@H|sandbox.pinned.bbcode}</h2>
     </header>
     <table class="table">
         <caption>
-            {@component.table.caption}
+            {@sandbox.component.table.caption}
         </caption>
         <thead>
             <tr>
                 <th>
                     <span class="html-table-header-sortable">
-                        <a href="#" aria-label="{@component.table.sort.down}">
+                        <a href="#" aria-label="{@sandbox.component.table.sort.down}">
                             <i class="fa fa-caret-up" aria-hidden="true"></i>
                         </a>
                     </span>
-                    {@component.table.name}
+                    {@sandbox.component.table.name}
                     <span class="html-table-header-sortable">
-                        <a href="#" aria-label="{@component.table.sort.up}">
+                        <a href="#" aria-label="{@sandbox.component.table.sort.up}">
                             <i class="fa fa-caret-down" aria-hidden="true"></i>
                         </a>
                     </span>
                 </th>
-                <th>{@component.table.clueription}</th>
-                <th>{@component.table.author}</th>
+                <th>{@sandbox.component.table.description}</th>
+                <th>{@sandbox.component.table.author}</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>{@component.table.test}</td>
-                <td>{@component.table.clueription}</td>
-                <td>{@component.table.author}</td>
+                <td>{@sandbox.component.table.test}</td>
+                <td>{@sandbox.component.table.description}</td>
+                <td>{@sandbox.component.table.author}</td>
             </tr>
             <tr>
-                <td>{@component.table.test}</td>
-                <td>{@component.table.clueription}</td>
-                <td>{@component.table.author}</td>
+                <td>{@sandbox.component.table.test}</td>
+                <td>{@sandbox.component.table.description}</td>
+                <td>{@sandbox.component.table.author}</td>
             </tr>
             <tr>
-                <td>{@component.table.test}</td>
-                <td>{@component.table.clueription}</td>
-                <td>{@component.table.author}</td>
+                <td>{@sandbox.component.table.test}</td>
+                <td>{@sandbox.component.table.description}</td>
+                <td>{@sandbox.component.table.author}</td>
             </tr>
         </tbody>
         <tfoot>
@@ -51,23 +51,23 @@
 
     <table class="table-no-header">
         <caption>
-            {@component.table.caption.no.header}
+            {@sandbox.component.table.caption.no.header}
         </caption>
         <tbody>
             <tr>
-                <td>{@component.table.test}</td>
-                <td>{@component.table.clueription}</td>
-                <td>{@component.table.author}</td>
+                <td>{@sandbox.component.table.test}</td>
+                <td>{@sandbox.component.table.description}</td>
+                <td>{@sandbox.component.table.author}</td>
             </tr>
             <tr>
-                <td>{@component.table.test}</td>
-                <td>{@component.table.clueription}</td>
-                <td>{@component.table.author}</td>
+                <td>{@sandbox.component.table.test}</td>
+                <td>{@sandbox.component.table.description}</td>
+                <td>{@sandbox.component.table.author}</td>
             </tr>
             <tr>
-                <td>{@component.table.test}</td>
-                <td>{@component.table.clueription}</td>
-                <td>{@component.table.author}</td>
+                <td>{@sandbox.component.table.test}</td>
+                <td>{@sandbox.component.table.description}</td>
+                <td>{@sandbox.component.table.author}</td>
             </tr>
         </tbody>
         <tfoot>
@@ -81,10 +81,10 @@
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="no-style">
-<pre class="language-html line-numbers"><code class="language-html">// {@component.table.responsive.header}
+<pre class="language-html line-numbers"><code class="language-html">// {@sandbox.component.table.responsive.header}
 &lt;table class="table">...&lt;/table>
 <br />
-// {@component.table.responsive.no.header}
+// {@sandbox.component.table.responsive.no.header}
 &lt;table class="table-no-header">...&lt;/table>
 </code></pre>
             </div>

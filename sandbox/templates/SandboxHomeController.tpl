@@ -18,12 +18,12 @@
 					</div>
 					<div class="cell-body">
 						<div class="cell-content">
-							{@welcome.builder}
+							{@sandbox.welcome.builder}
 						</div>
 					</div>
 					<div class="cell-footer">
-						<a class="pinned link-color offload" href="${relative_url(SandboxUrlBuilder::builder())}"><i class="fa fa-fw fa-eye"></i> {@welcome.see}</a>
-						# IF IS_ADMIN #<a class="pinned link-color offload" href="${relative_url(SandboxUrlBuilder::admin_builder())}"><i class="fa fa-fw fa-cog"></i> {@welcome.admin}</a># ENDIF #
+						<a class="pinned link-color offload" href="${relative_url(SandboxUrlBuilder::builder())}"><i class="fa fa-fw fa-eye"></i> {@sandbox.welcome.see}</a>
+						# IF IS_ADMIN #<a class="pinned link-color offload" href="${relative_url(SandboxUrlBuilder::admin_builder())}"><i class="fa fa-fw fa-cog"></i> {@sandbox.welcome.admin}</a># ENDIF #
 					</div>
 				</div>
 				<div class="cell">
@@ -35,13 +35,13 @@
 					</div>
 					<div class="cell-body">
 						<div class="cell-content">
-							{@welcome.component}
+							{@sandbox.welcome.component}
 						</div>
 					</div>
 					<div class="cell-footer">
 						<a class="pinned link-color offload" href="${relative_url(SandboxUrlBuilder::component())}"><i class="fa fa-fw fa-eye"></i> {@sandbox.components}</a>
 						<a class="pinned link-color offload" href="${relative_url(SandboxUrlBuilder::icons())}"><i class="fa fa-fw fa-eye"></i> {@sandbox.icons}</a>
-						# IF IS_ADMIN #<a class="pinned link-color offload" href="${relative_url(SandboxUrlBuilder::admin_component())}"><i class="fa fa-fw fa-cog"></i> {@welcome.admin}</a># ENDIF #
+						# IF IS_ADMIN #<a class="pinned link-color offload" href="${relative_url(SandboxUrlBuilder::admin_component())}"><i class="fa fa-fw fa-cog"></i> {@sandbox.welcome.admin}</a># ENDIF #
 					</div>
 				</div>
 			</div>
@@ -55,11 +55,11 @@
 					</div>
 					<div class="cell-body">
 						<div class="cell-content">
-							{@welcome.bbcode}
+							{@sandbox.welcome.bbcode}
 						</div>
 					</div>
 					<div class="cell-footer">
-						<a class="pinned link-color offload" href="${relative_url(SandboxUrlBuilder::bbcode())}"><i class="fa fa-fw fa-eye"></i> {@welcome.see}</a>
+						<a class="pinned link-color offload" href="${relative_url(SandboxUrlBuilder::bbcode())}"><i class="fa fa-fw fa-eye"></i> {@sandbox.welcome.see}</a>
 					</div>
 				</div>
 				<div class="cell">
@@ -71,11 +71,11 @@
 					</div>
 					<div class="cell-body">
 						<div class="cell-content">
-							{@welcome.layout}
+							{@sandbox.welcome.layout}
 						</div>
 					</div>
 					<div class="cell-footer">
-						<a class="pinned link-color offload" href="${relative_url(SandboxUrlBuilder::layout())}"><i class="fa fa-fw fa-eye"></i> {@welcome.see}</a>
+						<a class="pinned link-color offload" href="${relative_url(SandboxUrlBuilder::layout())}"><i class="fa fa-fw fa-eye"></i> {@sandbox.welcome.see}</a>
 					</div>
 				</div>
 			</div>
@@ -89,12 +89,12 @@
 					</div>
 					<div class="cell-body">
 						<div class="cell-content">
-							{@welcome.menu}
+							{@sandbox.welcome.menu}
 						</div>
 					</div>
 					<div class="cell-footer">
-						<a class="pinned link-color offload" href="${relative_url(SandboxUrlBuilder::menus_nav())}"><i class="fa fa-fw fa-list"></i> {@welcome.see.nav}</a>
-						<a class="pinned link-color offload" href="${relative_url(SandboxUrlBuilder::menus_content())}"><i class="fa fa-fw fa-list-ol"></i> {@welcome.see.content}</a>
+						<a class="pinned link-color offload" href="${relative_url(SandboxUrlBuilder::menus_nav())}"><i class="fa fa-fw fa-list"></i> {@sandbox.welcome.see.nav}</a>
+						<a class="pinned link-color offload" href="${relative_url(SandboxUrlBuilder::menus_content())}"><i class="fa fa-fw fa-list-ol"></i> {@sandbox.welcome.see.content}</a>
 					</div>
 				</div>
 				<div class="cell">
@@ -106,10 +106,11 @@
 					</div>
 					<div class="cell-body">
 						<div class="cell-content">
-							{@welcome.misc}
+							{@sandbox.welcome.misc}
 						</div>
 					</div>
 					<div class="cell-footer">
+						<a class="pinned link-color offload" href="${relative_url(SandboxUrlBuilder::lang())}"><i class="fa fa-fw fa-table"></i> {@sandbox.lang}</a>
 						<a class="pinned link-color offload" href="${relative_url(SandboxUrlBuilder::table())}"><i class="fa fa-fw fa-table"></i> {@sandbox.table}</a>
 						<a class="pinned link-color offload" href="${relative_url(SandboxUrlBuilder::email())}"><i class="fa fa-fw fa-at"></i> {@sandbox.email}</a>
 						<a class="pinned link-color offload" href="${relative_url(SandboxUrlBuilder::template())}"><i class="fa fa-fw fa-terminal"></i> {@sandbox.template}</a>

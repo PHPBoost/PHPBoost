@@ -1,25 +1,25 @@
 <section id="module-sandbox-nav-menus">
 	<header class="section-header">
-		<h1>{@cssmenu.h1}</h1>
+		<h1>{@sandbox.cssmenu.h1}</h1>
 	</header>
 	# INCLUDE SANDBOX_SUBMENU #
 	<div class="sub-section">
 		<div class="content-container">
 			<article>
 				<header>
-					<h2>{@cssmenu.h2}</h2>
+					<h2>{@sandbox.cssmenu.h2}</h2>
 				</header>
 				<div class="content">
 					# IF IS_ADMIN #
 						<a href="{PATH_TO_ROOT}/admin/menus/menus.php">
 							<i class="fa fa-cogs" aria-hidden="true"></i>
-							{@menu.management} - {@menu.menus}
+							{@sandbox.menu.management} - {@sandbox.menus}
 						</a>
 					# ENDIF #
 					<div class="message-helper bgc warning">
-						{@H|cssmenu.warning}
+						{@H|sandbox.cssmenu.warning}
 					</div>
-					<p>{@lorem.large.content}</p>
+					<p>{@sandbox.lorem.large.content}</p>
 					# INCLUDE MARKUP #
 				</div>
 				<footer></footer>

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 21
+ * @version     PHPBoost 6.0 - last update: 2021 12 01
  * @since       PHPBoost 5.2 - 2020 05 19
 */
 
@@ -12,7 +12,7 @@ class SandboxSubMenu
     public static function get_submenu()
     {
         $view = new FileTemplate('sandbox/SandboxSubMenu.tpl');
-		$view->add_lang(LangLoader::get('submenu', 'sandbox'));
+		$view->add_lang(LangLoader::get_all_langs('sandbox'));
 
 		$view->put_all(array(
             'C_GMAP'          => ModulesManager::is_module_installed('GoogleMaps') && ModulesManager::is_module_activated('GoogleMaps') && GoogleMapsConfig::load()->get_api_key(),
@@ -27,6 +27,7 @@ class SandboxSubMenu
             'U_TABLE'         => SandboxUrlBuilder::table()->rel(),
             'U_EMAIL'         => SandboxUrlBuilder::email()->rel(),
             'U_TEMPLATE'      => SandboxUrlBuilder::template()->rel(),
+            'U_LANG'          => SandboxUrlBuilder::lang()->rel(),
 		));
 
         return $view;

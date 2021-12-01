@@ -3,42 +3,32 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 01
  * @since       PHPBoost 3.0 - 2012 05 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class SandboxComponentController extends ModuleController
+class SandboxComponentController extends DefaultModuleController
 {
-	private $view;
-	private $lang;
-
 	/**
 	 * @var FormButtonDefaultSubmit
 	 */
 	private $floating_messages_button;
 
+	protected function get_template_to_use()
+	{
+		return new FileTemplate('sandbox/SandboxComponentController.tpl');
+	}
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
 
-		$this->init();
-
 		$this->build_view();
 
 		return $this->generate_response();
-	}
-
-	private function init()
-	{
-		$this->lang = array_merge(
-			LangLoader::get('common', 'sandbox'),
-			LangLoader::get('component', 'sandbox')
-		);
-		$this->view = new FileTemplate('sandbox/SandboxComponentController.tpl');
-		$this->view->add_lang($this->lang);
 	}
 
 	private function build_view()
@@ -63,7 +53,7 @@ class SandboxComponentController extends ModuleController
 	private function build_floating_messages()
 	{
 		$floating_messages = new HTMLForm('floating_messages', '', false);
-		$this->floating_messages_button = new FormButtonDefaultSubmit($this->lang['component.message.float.display'], 'floating_messages');
+		$this->floating_messages_button = new FormButtonDefaultSubmit($this->lang['sandbox.component.message.float.display'], 'floating_messages');
 		$floating_messages->add_button($this->floating_messages_button);
 		$this->floating_messages = $floating_messages;
 	}
@@ -100,40 +90,40 @@ class SandboxComponentController extends ModuleController
 
 			$modal_menu->add_field(new FormFieldMultitabsLinkList('modal_menu_list',
 				array(
-					new FormFieldMultitabsLinkElement($this->lang['component.link.icon'], 'modal', 'Sandbox_Modal_modal_01', 'fa-cog'),
-					new FormFieldMultitabsLinkElement($this->lang['component.link.img'], 'modal', 'Sandbox_Modal_modal_02', '', '/sandbox/sandbox_mini.png'),
-					new FormFieldMultitabsLinkElement($this->lang['component.link'].' 3', 'modal', 'Sandbox_Modal_modal_03'),
-					new FormFieldMultitabsLinkElement($this->lang['component.link'].' 4', 'modal', 'Sandbox_Modal_modal_04', '', '', '','button d-inline-block')
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.component.link.icon'], 'modal', 'Sandbox_Modal_modal_01', 'fa-cog'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.component.link.img'], 'modal', 'Sandbox_Modal_modal_02', '', '/sandbox/sandbox_mini.png'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.component.link'].' 3', 'modal', 'Sandbox_Modal_modal_03'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.component.link'].' 4', 'modal', 'Sandbox_Modal_modal_04', '', '', '','button d-inline-block')
 				)
 			));
 
-			$modal_01 = new FormFieldsetMultitabsHTML('modal_01', $this->lang['component.panel'].' 1',
+			$modal_01 = new FormFieldsetMultitabsHTML('modal_01', $this->lang['sandbox.component.panel'].' 1',
 				array('css_class' => 'modal modal-animation first-tab', 'modal' => true)
 			);
 			$modal_form->add_fieldset($modal_01);
 
-			$modal_01->set_description($this->lang['lorem.short.content']);
+			$modal_01->set_description($this->lang['sandbox.lorem.short.content']);
 
-			$modal_02 = new FormFieldsetMultitabsHTML('modal_02', $this->lang['component.panel'].' 2',
+			$modal_02 = new FormFieldsetMultitabsHTML('modal_02', $this->lang['sandbox.component.panel'].' 2',
 				array('css_class' => 'modal modal-animation', 'modal' => true)
 			);
 			$modal_form->add_fieldset($modal_02);
 
-			$modal_02->set_description($this->lang['lorem.medium.content']);
+			$modal_02->set_description($this->lang['sandbox.lorem.medium.content']);
 
-			$modal_03 = new FormFieldsetMultitabsHTML('modal_03', $this->lang['component.panel'].' 3',
+			$modal_03 = new FormFieldsetMultitabsHTML('modal_03', $this->lang['sandbox.component.panel'].' 3',
 				array('css_class' => 'modal modal-animation', 'modal' => true)
 			);
 			$modal_form->add_fieldset($modal_03);
 
-			$modal_03->set_description($this->lang['lorem.large.content']);
+			$modal_03->set_description($this->lang['sandbox.lorem.large.content']);
 
-			$modal_04 = new FormFieldsetMultitabsHTML('modal_04', $this->lang['component.panel'].' 4',
+			$modal_04 = new FormFieldsetMultitabsHTML('modal_04', $this->lang['sandbox.component.panel'].' 4',
 				array('css_class' => 'modal modal-animation', 'modal' => true)
 			);
 			$modal_form->add_fieldset($modal_04);
 
-			$modal_04->set_description($this->lang['lorem.short.content']);
+			$modal_04->set_description($this->lang['sandbox.lorem.short.content']);
 
 		return $modal_form;
 	}
@@ -144,14 +134,14 @@ class SandboxComponentController extends ModuleController
 		$view->add_lang(array_merge($this->lang, $this->lang));
 
 		$messages = array(
-			MessageHelper::display($this->lang['component.message.notice'], MessageHelper::NOTICE),
-			MessageHelper::display($this->lang['component.message.question'], MessageHelper::QUESTION),
-			MessageHelper::display($this->lang['component.message.success'], MessageHelper::SUCCESS),
-			MessageHelper::display($this->lang['component.message.warning'], MessageHelper::WARNING),
-			MessageHelper::display($this->lang['component.message.error'], MessageHelper::ERROR),
-			MessageHelper::display($this->lang['component.message.member'], MessageHelper::MEMBER_ONLY),
-			MessageHelper::display($this->lang['component.message.modo'], MessageHelper::MODERATOR_ONLY),
-			MessageHelper::display($this->lang['component.message.admin'], MessageHelper::ADMIN_ONLY)
+			MessageHelper::display($this->lang['sandbox.component.message.notice'], MessageHelper::NOTICE),
+			MessageHelper::display($this->lang['sandbox.component.message.question'], MessageHelper::QUESTION),
+			MessageHelper::display($this->lang['sandbox.component.message.success'], MessageHelper::SUCCESS),
+			MessageHelper::display($this->lang['sandbox.component.message.warning'], MessageHelper::WARNING),
+			MessageHelper::display($this->lang['sandbox.component.message.error'], MessageHelper::ERROR),
+			MessageHelper::display($this->lang['sandbox.component.message.member'], MessageHelper::MEMBER_ONLY),
+			MessageHelper::display($this->lang['sandbox.component.message.modo'], MessageHelper::MODERATOR_ONLY),
+			MessageHelper::display($this->lang['sandbox.component.message.admin'], MessageHelper::ADMIN_ONLY)
 		);
 
 		foreach ($messages as $message)
@@ -162,10 +152,10 @@ class SandboxComponentController extends ModuleController
 		$this->build_floating_messages();
 		if ($this->floating_messages_button->has_been_submited() && $this->floating_messages->validate()) {
 			$view->put_all(array(
-				'FLOATING_SUCCESS'  => MessageHelper::display($this->lang['component.message.float.unlimited'], MessageHelper::SUCCESS, -1),
-				'FLOATING_NOTICE'   => MessageHelper::display($this->lang['component.message.float.limited'], MessageHelper::NOTICE, 3),
-				'FLOATING_WARNING'  => MessageHelper::display($this->lang['component.message.float.unlimited'], MessageHelper::WARNING, -1),
-				'FLOATING_ERROR'    => MessageHelper::display($this->lang['component.message.float.limited'], MessageHelper::ERROR, 6)
+				'FLOATING_SUCCESS'  => MessageHelper::display($this->lang['sandbox.component.message.float.unlimited'], MessageHelper::SUCCESS, -1),
+				'FLOATING_NOTICE'   => MessageHelper::display($this->lang['sandbox.component.message.float.limited'], MessageHelper::NOTICE, 3),
+				'FLOATING_WARNING'  => MessageHelper::display($this->lang['sandbox.component.message.float.unlimited'], MessageHelper::WARNING, -1),
+				'FLOATING_ERROR'    => MessageHelper::display($this->lang['sandbox.component.message.float.limited'], MessageHelper::ERROR, 6)
 			));
 		}
 		$view->put('FLOATING_MESSAGES', $this->floating_messages->display());

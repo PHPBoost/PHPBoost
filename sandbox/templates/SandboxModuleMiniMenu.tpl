@@ -7,7 +7,7 @@
 			<ul>
 				<li class="mini-sandbox-tools has-sub">
 					<span class="mini-toolbox flex-between">
-						<span><i class="fa fa-toolbox fa-fw error"></i> <span>{@mini.tools}</span></span>
+						<span><i class="fa fa-toolbox fa-fw error"></i> <span>{@sandbox.mini.tools}</span></span>
 						# IF C_LOGGED_ERRORS #<span class="warning blink"><i class="fa fa-exclamation-triangle fa-fw"></i></span># ELSE #
 						# IF C_404_ERRORS #<span class="warning blink"><i class="fa fa-exclamation-triangle fa-fw"></i></span># ENDIF ## ENDIF #
 					</span>
@@ -24,38 +24,38 @@
 						<li># INCLUDE CLEAN_RSS_CACHE #</li>
 						<li>
 							<a class="flex-between" href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}">
-								<span><i class="fa fa-fw fa-terminal# IF C_LOGGED_ERRORS # warning blink# ENDIF #" aria-hidden="true"></i> <span>{@mini.errors}</span></span>
+								<span><i class="fa fa-fw fa-terminal# IF C_LOGGED_ERRORS # warning blink# ENDIF #" aria-hidden="true"></i> <span>{@sandbox.mini.errors}</span></span>
 								<span# IF C_LOGGED_ERRORS # class="warning blink"# ENDIF #>{ERRORS_NB}</span>
 							</a>
 						</li>
 						<li>
 							<a class="flex-between" href="${relative_url(AdminErrorsUrlBuilder::list_404_errors())}">
-								<span><i class="fa fa-fw fa-unlink# IF C_404_ERRORS # warning blink# ENDIF #" aria-hidden="true"></i> <span>{@mini.404}</span></span>
+								<span><i class="fa fa-fw fa-unlink# IF C_404_ERRORS # warning blink# ENDIF #" aria-hidden="true"></i> <span>{@sandbox.mini.404}</span></span>
 								<span# IF C_404_ERRORS # class="warning blink"# ENDIF #>{404_NB}</span>
 							</a>
 						</li>
 						<li>
 							<a href="{PATH_TO_ROOT}/database/admin_database.php">
-								<i class="fa fa-fw fa-database" aria-hidden="true"></i> <span>{@mini.database}</span>
+								<i class="fa fa-fw fa-database" aria-hidden="true"></i> <span>{@sandbox.mini.database}</span>
 							</a>
 						</li>
 						<li>
 							<a class="flex-between" href="${relative_url(UserUrlBuilder::comments())}">
-								<span><i class="fa fa-fw fa-comments" aria-hidden="true"></i> <span>{@mini.coms}</span></span>
+								<span><i class="fa fa-fw fa-comments" aria-hidden="true"></i> <span>{@sandbox.mini.coms}</span></span>
 								<span>{COMMENTS_NB}</span>
 							</a>
 						</li>
 					</ul>
 				</li>
 				<li class="mini-sandbox-custom has-sub">
-					<span><i class="fa fa-fw fa-cogs moderator"></i> <span>{@mini.personalization}</span></span>
+					<span><i class="fa fa-fw fa-cogs moderator"></i> <span>{@sandbox.mini.personalization}</span></span>
 					<ul>
 						<li>
 							<a href="{PATH_TO_ROOT}/admin/menus/menus.php">
 								<span class="stacked">
 									<i class="fa fa-fw fa-bars" aria-hidden="true"></i>
 									<i class="fa fa-cog stack-event stack-icon stack-sup stack-right notice" aria-hidden="true"></i>
-								</span> <span>{@mini.menus} <span class="smaller">{@form.configuration} /  {@mini.add}</span></span>
+								</span> <span>{@sandbox.mini.menus} <span class="smaller">{@form.configuration} /  {@sandbox.mini.add}</span></span>
 							</a>
 						</li>
 						<li>
@@ -77,7 +77,7 @@
 								<span class="stacked">
 									<i class="fa fa-cog stack-event stack-icon stack-sup stack-right notice" aria-hidden="true"></i>
 									<i class="far fa-fw fa-image" aria-hidden="true"></i>
-								</span> <span>{@mini.theme} <span class="smaller">{@mini.manage}</span></span>
+								</span> <span>{@sandbox.mini.theme} <span class="smaller">{@sandbox.mini.manage}</span></span>
 							</a>
 						</li>
 						<li>
@@ -85,7 +85,7 @@
 								<span class="stacked">
 									<i class="far fa-fw fa-image" aria-hidden="true"></i>
 									<i class="fa fa-plus stack-event stack-icon stack-sup stack-right success" aria-hidden="true"></i>
-								</span> <span>{@mini.theme} <span class="smaller">{@mini.add}</span></span>
+								</span> <span>{@sandbox.mini.theme} <span class="smaller">{@sandbox.mini.add}</span></span>
 							</a>
 						</li>
 						<li>
@@ -93,7 +93,7 @@
 								<span class="stacked">
 									<i class="fa fa-fw fa-cubes" aria-hidden="true"></i>
 									<i class="fa fa-cog stack-event stack-icon stack-sup stack-right notice" aria-hidden="true"></i>
-								</span> <span>{@mini.mod} <span class="smaller">{@mini.manage}</span></span>
+								</span> <span>{@sandbox.mini.mod} <span class="smaller">{@sandbox.mini.manage}</span></span>
 							</a>
 						</li>
 						<li>
@@ -101,7 +101,7 @@
 								<span class="stacked">
 									<i class="fa fa-fw fa-cubes" aria-hidden="true"></i>
 									<i class="fa fa-plus stack-event stack-icon stack-sup stack-right success" aria-hidden="true"></i>
-								</span> <span>{@mini.mod} <span class="smaller">{@mini.add}</span></span>
+								</span> <span>{@sandbox.mini.mod} <span class="smaller">{@sandbox.mini.add}</span></span>
 							</a>
 						</li>
 						<li>
@@ -109,7 +109,7 @@
 								<span class="stacked">
 									<i class="far fa-fw fa-user" aria-hidden="true"></i>
 									<i class="fa fa-cog stack-event stack-icon stack-sup stack-right notice" aria-hidden="true"></i>
-								</span> <span>{@mini.user} <span class="smaller">{@mini.manage}</span></span>
+								</span> <span>{@sandbox.mini.user} <span class="smaller">{@sandbox.mini.manage}</span></span>
 							</a>
 						</li>
 						<li>
@@ -117,7 +117,7 @@
 								<span class="stacked">
 									<i class="far fa-fw fa-image" aria-hidden="true"></i>
 									<i class="fa fa-plus stack-event stack-icon stack-sup stack-right success" aria-hidden="true"></i>
-								</span> <span>{@mini.user} <span class="smaller">{@mini.add}</span></span>
+								</span> <span>{@sandbox.mini.user} <span class="smaller">{@sandbox.mini.add}</span></span>
 							</a>
 						</li>
 						<li>
@@ -125,7 +125,7 @@
 								<span class="stacked">
 									<i class="fa fa-fw fa-university" aria-hidden="true"></i>
 									<i class="fa fa-cog stack-event stack-icon stack-sup stack-right notice" aria-hidden="true"></i>
-								</span> <span>{@form.configuration} <span class="smaller">{@mini.general.config}</span></span>
+								</span> <span>{@form.configuration} <span class="smaller">{@sandbox.mini.general.config}</span></span>
 							</a>
 						</li>
 						<li>
@@ -133,13 +133,13 @@
 								<span class="stacked">
 									<i class="fa fa-fw fa-university" aria-hidden="true"></i>
 									<i class="fa fa-plus stack-event stack-icon stack-sup stack-right success" aria-hidden="true"></i>
-								</span> <span>{@form.configuration} <span class="smaller">{@mini.advanced.config}</span></span>
+								</span> <span>{@form.configuration} <span class="smaller">{@sandbox.mini.advanced.config}</span></span>
 							</a>
 						</li>
 					</ul>
 				</li>
 				<li class="mini-sandbox-fwkboost has-sub">
-					<a href="${relative_url(SandboxUrlBuilder::home())}"><i class="fa iboost fa-iboost-phpboost fa-fw visitor"></i> <span>{@mini.fwkboost}</span></a>
+					<a href="${relative_url(SandboxUrlBuilder::home())}"><i class="fa iboost fa-iboost-phpboost fa-fw visitor"></i> <span>{@sandbox.mini.fwkboost}</span></a>
 					<ul>
 						<li>
 							<a href="${relative_url(SandboxUrlBuilder::builder())}">
@@ -192,6 +192,12 @@
 							</span>
 							<ul>
 								<li>
+									<a href="${relative_url(SandboxUrlBuilder::lang())}">
+										<i class="fa fa-language fa-fw" aria-hidden="true"></i>
+										<span>{@sandbox.lang.title}</span>
+									</a>
+								</li>
+								<li>
 									<a href="${relative_url(SandboxUrlBuilder::table())}">
 										<i class="fa fa-table fa-fw" aria-hidden="true"></i>
 										<span>{@sandbox.table}</span>
@@ -234,17 +240,17 @@
 					</ul>
 				</li>
 				<li class="mini-sandbox-switcher has-sub">
-					<span><i class="far fa-image fa-fw link-color-alt"></i> <span>{@mini.themes.switcher}</span></span>
+					<span><i class="far fa-image fa-fw link-color-alt"></i> <span>{@sandbox.mini.themes.switcher}</span></span>
 					<ul>
 						<li>
 							<a href="?switchtheme={DEFAULT_THEME}">
-								<i class="fa fa-sync-alt" aria-hidden="true"></i> <span>{@mini.default.theme}</span>
+								<i class="fa fa-sync-alt" aria-hidden="true"></i> <span>{@sandbox.mini.default.theme}</span>
 							</a>
 						</li>
 						<li>
 							<form class="sandbox-mini-form switchtheme grouped-inputs inputs-with-sup" action="{REWRITED_SCRIPT}" method="get">
 								<label class="label-sup grouped-element" for="sandbox-switchtheme">
-									<span>{@mini.themes.switcher}</span>
+									<span>{@sandbox.mini.themes.switcher}</span>
 									<select id="sandbox-switchtheme" name="sandbox-switchtheme-select" onchange="document.location='?switchtheme='+this.options[this.selectedIndex].value;">
 										# START themes #
 											<option value="{themes.IDNAME}"# IF themes.C_SELECTED# selected="selected"# ENDIF #>{themes.NAME}</option>
@@ -256,35 +262,35 @@
 					</ul>
 				</li>
 				<li class="mini-sandbox-infos has-sub">
-					<span><i class="fa fa-info fa-fw notice"></i> <span>{@mini.infos}</span></span>
+					<span><i class="fa fa-info fa-fw notice"></i> <span>{@sandbox.mini.infos}</span></span>
 					<ul>
 						<li>
 							<div class="flex-between">
-								<span class="smaller">{@mini.version.pbt}</span>
+								<span class="smaller">{@sandbox.mini.version.pbt}</span>
 								<span>{PBT_VERSION}</span>
 							</div>
 						</li>
 						<li>
 							<div class="flex-between">
-								<span class="smaller">{@mini.version.php}</span>
+								<span class="smaller">{@sandbox.mini.version.php}</span>
 								<span>{PHP_VERSION}</span>
 							</div>
 						</li>
 						<li>
 							<div class="flex-between">
-								<span class="smaller">{@mini.version.date}</span>
+								<span class="smaller">{@sandbox.mini.version.date}</span>
 								<span>{INSTALL_DATE}</span>
 							</div>
 						</li>
 						<li>
 							<div class="flex-between">
-								<span class="smaller">{@mini.version.sql}</span>
+								<span class="smaller">{@sandbox.mini.version.sql}</span>
 								<span class="align-right">{DBMS_VERSION}</span>
 							</div>
 						</li>
 						<li>
 							<div class="flex-between">
-								<div class="align-center" role="contentinfo" aria-label="{@mini.viewport.h}">
+								<div class="align-center" role="contentinfo" aria-label="{@sandbox.mini.viewport.h}">
 									<span class="stacked">
 										<i class="fa fa-tv" aria-hidden="true"></i>
 										<i class="fa fa-arrows-alt-h stack-event stack-icon stack-sup stack-right" aria-hidden="true"></i>
@@ -292,7 +298,7 @@
 									<p id="window-width"></p>
 								</div>
 								<div class="align-center">
-									<span class="stacked" role="contentinfo" aria-label="{@mini.viewport.v}">
+									<span class="stacked" role="contentinfo" aria-label="{@sandbox.mini.viewport.v}">
 										<i class="fa fa-tv" aria-hidden="true"></i>
 										<i class="fa fa-arrows-alt-v stack-event stack-icon stack-sup stack-right" aria-hidden="true"></i>
 									</span>
@@ -303,36 +309,36 @@
 					</ul>
 				</li>
 				<li class="mini-sandbox-admin-menu has-sub">
-					<span><i class="fa fa-university fa-fw administrator"></i> <span>{@mini.admin.menu}</span></span>
+					<span><i class="fa fa-university fa-fw administrator"></i> <span>{@sandbox.mini.admin.menu}</span></span>
 					<ul>
 						<li>
 							<a href="${relative_url(UserUrlBuilder::administration())}#openmodal-administration">
 								<i class="fa fa-fw fa-cog" aria-hidden="true"></i>
-								<span>{@mini.admin.menu.administration}</span>
+								<span>{@sandbox.mini.admin.menu.administration}</span>
 							</a>
 						</li>
 						<li>
 							<a href="${relative_url(UserUrlBuilder::administration())}#openmodal-tools">
 								<i class="fa fa-fw fa-wrench" aria-hidden="true"></i>
-								<span>{@mini.admin.menu.tools}</span>
+								<span>{@sandbox.mini.admin.menu.tools}</span>
 							</a>
 						</li>
 						<li>
 							<a href="${relative_url(UserUrlBuilder::administration())}#openmodal-users">
 								<i class="fa fa-fw fa-user" aria-hidden="true"></i>
-								<span>{@mini.admin.menu.users}</span>
+								<span>{@sandbox.mini.admin.menu.users}</span>
 							</a>
 						</li>
 						<li>
 							<a href="${relative_url(UserUrlBuilder::administration())}#openmodal-content">
 								<i class="far fa-fw fa-square" aria-hidden="true"></i>
-								<span>{@mini.admin.menu.content}</span>
+								<span>{@sandbox.mini.admin.menu.content}</span>
 							</a>
 						</li>
 						<li>
 							<a href="${relative_url(UserUrlBuilder::administration())}#openmodal-modules">
 								<i class="fa fa-fw fa-cube" aria-hidden="true"></i>
-								<span>{@mini.admin.menu.modules}</span>
+								<span>{@sandbox.mini.admin.menu.modules}</span>
 							</a>
 						</li>
 					</ul>
@@ -340,7 +346,7 @@
 			</ul>
 			<ul class="sandbox-controls bottom-nav">
 				<li>
-					<a href="${relative_url(SandboxUrlBuilder::home())}" aria-label="{@mini.home}">
+					<a href="${relative_url(SandboxUrlBuilder::home())}" aria-label="{@sandbox.mini.home}">
 						<span class="stacked">
 							<i class="fa fa-fw fa-hard-hat" aria-hidden="true"></i>
 							<i class="fa fa-home stack-event stack-icon stack-sup stack-right notice" aria-hidden="true"></i>
@@ -348,7 +354,7 @@
 					</a>
 				</li>
 				<li class="align-right">
-					<a href="${relative_url(SandboxUrlBuilder::config())}" aria-label="{@mini.admin}">
+					<a href="${relative_url(SandboxUrlBuilder::config())}" aria-label="{@sandbox.mini.admin}">
 						<span class="stacked">
 							<i class="fa fa-fw fa-hard-hat" aria-hidden="true"></i>
 							<i class="fa fa-cog stack-event stack-icon stack-sup stack-left notice" aria-hidden="true"></i>

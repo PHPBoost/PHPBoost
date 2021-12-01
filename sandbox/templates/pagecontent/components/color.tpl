@@ -1,12 +1,12 @@
 <article id="component-colors" class="sandbox-block">
     <header>
-        <h2>{@component.color} {@H|sandbox.pinned.bbcode}</h2>
+        <h2>{@sandbox.component.color} {@H|sandbox.pinned.bbcode}</h2>
     </header>
     <p>
-        {@H|component.color.clueription}
+        {@H|sandbox.component.color.description}
     </p>
     <p>
-        <h6>{@component.color.text}</h6>
+        <h6>{@sandbox.component.color.text}</h6>
         <span class="pinned notice">notice</span>
         <span class="pinned question">question</span>
         <span class="pinned success">success</span>
@@ -22,7 +22,7 @@
         <span class="pinned logo-color">logo-color</span>
     </p>
     <p>
-        <h6>{@component.color.bgc}</h6>
+        <h6>{@sandbox.component.color.bgc}</h6>
         <span class="pinned bgc notice">notice</span>
         <span class="pinned bgc question">question</span>
         <span class="pinned bgc success">success</span>
@@ -39,7 +39,7 @@
 
     </p>
     <p>
-        <h6>{@component.color.bgc.full}</h6>
+        <h6>{@sandbox.component.color.bgc.full}</h6>
         <span class="pinned bgc-full notice">notice</span>
         <span class="pinned bgc-full question">question</span>
         <span class="pinned bgc-full success">success</span>

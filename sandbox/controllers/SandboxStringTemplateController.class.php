@@ -3,18 +3,15 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 09
+ * @version     PHPBoost 6.0 - last update: 2021 12 01
  * @since       PHPBoost 3.0 - 2010 02 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class SandboxStringTemplateController extends ModuleController
+class SandboxStringTemplateController extends DefaultModuleController
 {
-	private $view;
-	private $lang;
-
 	private $test = 'This is a list of {CONTENT}
 <ul>
 # START elements #
@@ -24,11 +21,14 @@ class SandboxStringTemplateController extends ModuleController
 
 	private $fruits = array('apple', 'pear', 'banana');
 
+	protected function get_template_to_use()
+	{
+		return new FileTemplate('sandbox/SandboxStringTemplateController.tpl');
+	}
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
-
-		$this->init();
 
 		$this->test = str_repeat($this->test, 1);
 
@@ -43,18 +43,11 @@ class SandboxStringTemplateController extends ModuleController
 		$bench_cached->stop();
 
 		$this->view->put_all(array(
-			'RESULT' => StringVars::replace_vars($this->lang['string_template.result'], array('non_cached_time' => $bench_non_cached->to_string(5), 'cached_time' => $bench_cached->to_string(5), 'string_length' => TextHelper::strlen($this->test))),
+			'RESULT' => StringVars::replace_vars($this->lang['sandbox.string_template.result'], array('non_cached_time' => $bench_non_cached->to_string(5), 'cached_time' => $bench_cached->to_string(5), 'string_length' => TextHelper::strlen($this->test))),
 			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
 		));
 
 		return $this->generate_response();
-	}
-
-	private function init()
-	{
-		$this->lang = LangLoader::get('common', 'sandbox');
-		$this->view = new FileTemplate('sandbox/SandboxStringTemplateController.tpl');
-		$this->view->add_lang($this->lang);
 	}
 
 	private function assign_template(Template $tpl)

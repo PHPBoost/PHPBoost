@@ -102,3 +102,20 @@ body {
 	text-align: right;
 	margin-bottom: 1.618em;
 }
+
+/* --- lang --- */
+#module-sandbox-lang li { padding: 0; }
+#module-sandbox-lang .lang-file-name,
+#module-sandbox-lang .module-name { padding: 0.618em; }
+#module-sandbox-lang .module-file-name { padding: 0.309em 1.618em; }
+#module-sandbox-lang .lang-file {
+	display: flex;
+	flex-direction: column;
+}
+#module-sandbox-lang .lang-file span { padding: 0.309em 0.618em; }
+
+@media (min-width: 769px) {
+	#module-sandbox-lang .lang-file { flex-direction: row; }
+	#module-sandbox-lang .lang-file span:first-child { width: calc(100% / 3); }
+	#module-sandbox-lang .lang-file span:last-child { width: calc(100% / 3 * 2); }
+}

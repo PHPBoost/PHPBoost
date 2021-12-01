@@ -1,21 +1,21 @@
 <article id="bbcode-table" class="sandbox-block">
-    <h2>{@bbcode.table}</h2>
+    <h2>{@sandbox.bbcode.table}</h2>
     <table class="table formatter-table">
         <tbody>
             <tr class="formatter-table-row">
-                <td class="formatter-table-head" colspan="2">{@bbcode.table.header}</td>
+                <td class="formatter-table-head" colspan="2">{@sandbox.bbcode.table.header}</td>
             </tr>
             <tr class="formatter-table-row">
-                <td class="formatter-table-col">{@bbcode.table.name}</td>
-                <td class="formatter-table-col">{@bbcode.table.clueription}</td>
+                <td class="formatter-table-col">{@sandbox.bbcode.table.name}</td>
+                <td class="formatter-table-col">{@sandbox.bbcode.table.description}</td>
             </tr>
             <tr class="formatter-table-row">
-                <td class="formatter-table-col">{@bbcode.table.name}</td>
-                <td class="formatter-table-col">{@bbcode.table.clueription}</td>
+                <td class="formatter-table-col">{@sandbox.bbcode.table.name}</td>
+                <td class="formatter-table-col">{@sandbox.bbcode.table.description}</td>
             </tr>
             <tr class="formatter-table-row">
-                <td class="formatter-table-col">{@bbcode.table.name}</td>
-                <td class="formatter-table-col">{@bbcode.table.clueription}</td>
+                <td class="formatter-table-col">{@sandbox.bbcode.table.name}</td>
+                <td class="formatter-table-col">{@sandbox.bbcode.table.description}</td>
             </tr>
         </tbody>
     </table>
