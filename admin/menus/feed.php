@@ -12,7 +12,9 @@
 
 define('PATH_TO_ROOT', '../..');
 require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
-$lang = LangLoader::get('menu-lang');
+
+$lang = LangLoader::get_all_langs();
+
 define('TITLE', $lang['menu.feed.menu']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
@@ -95,12 +97,7 @@ include('lateral_menu.php');
 lateral_menu();
 
 $view = new FileTemplate('admin/menus/feed.tpl');
-$view->add_lang(array_merge(
-	$lang,
-	LangLoader::get('common-lang'),
-	LangLoader::get('form-lang'),
-	LangLoader::get('warning-lang')
-));
+$view->add_lang($lang);
 
 $view->put_all(array(
 	'C_EDIT' => $edit,

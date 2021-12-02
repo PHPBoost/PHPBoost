@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 06
+ * @version     PHPBoost 6.0 - last update: 2021 12 02
  * @since       PHPBoost 3.0 - 2011 04 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -11,25 +11,19 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminLangsInstalledListController extends AdminController
+class AdminLangsInstalledListController extends DefaultAdminController
 {
-	private $lang;
-	private $view;
+	protected function get_template_to_use()
+	{
+	   return new FileTemplate('admin/langs/AdminLangsInstalledListController.tpl');
+	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
 		$this->build_view();
 		$this->save($request);
 
 		return new AdminLangsDisplayResponse($this->view, $this->lang['addon.langs.installed']);
-	}
-
-	private function init()
-	{
-		$this->lang = LangLoader::get('addon-lang');
-		$this->view = new FileTemplate('admin/langs/AdminLangsInstalledListController.tpl');
-		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 	}
 
 	private function build_view()

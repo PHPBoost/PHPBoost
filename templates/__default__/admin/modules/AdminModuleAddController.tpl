@@ -1,6 +1,6 @@
 # INCLUDE MESSAGE_HELPER_WARNING #
 # INCLUDE MESSAGE_HELPER_SUCCESS #
-# INCLUDE UPLOAD_FORM #
+# INCLUDE CONTENT #
 <form action="{REWRITED_SCRIPT}" method="post" class="fieldset-content">
 	<input type="hidden" name="token" value="{TOKEN}">
 	<section id="not-installed-modules-container" class="addons-container modules-elements-container not-installed-elements-container">

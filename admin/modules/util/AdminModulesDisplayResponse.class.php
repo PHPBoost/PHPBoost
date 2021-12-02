@@ -15,7 +15,7 @@ class AdminModulesDisplayResponse extends AdminMenuDisplayResponse
 	{
 		parent::__construct($view);
 
-		$lang = LangLoader::get('addon-lang');
+		$lang = LangLoader::get_all_langs();
 		$this->set_title($lang['addon.modules.management']);
 
 		$this->add_link($lang['addon.modules.installed'], AdminModulesUrlBuilder::list_installed_modules());

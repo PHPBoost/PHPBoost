@@ -11,7 +11,7 @@
 function lateral_menu()
 {
     $view = new FileTemplate('admin/menus/panel.tpl');
-    $view->add_lang(LangLoader::get('menu-lang'));
+    $view->add_lang(LangLoader::get_all_langs());
     $view->put_all(array());
     $view->display();
 }

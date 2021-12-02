@@ -3,20 +3,21 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 16
+ * @version     PHPBoost 6.0 - last update: 2021 12 02
  * @since       PHPBoost 3.0 - 2010 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminExtendedFieldsMemberListController extends AdminController
+class AdminExtendedFieldsMemberListController extends DefaultAdminController
 {
-	private $view;
+	protected function get_template_to_use()
+	{
+	   return new FileTemplate('admin/member/AdminExtendedFieldsMemberlistController.tpl');
+	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
-
 		$this->update_fields($request);
 
 		$extended_field = ExtendedFieldsCache::load()->get_extended_fields();
@@ -45,13 +46,7 @@ class AdminExtendedFieldsMemberListController extends AdminController
 			'C_SEVERAL_FIELDS' => $fields_number > 1
 		));
 
-		return new AdminExtendedFieldsDisplayResponse($this->view, LangLoader::get_message('user.extended.fields.management', 'user-lang'));
-	}
-
-	private function init()
-	{
-		$this->view = new FileTemplate('admin/member/AdminExtendedFieldsMemberlistController.tpl');
-		$this->view->add_lang(array_merge(LangLoader::get('common-lang'), LangLoader::get('form-lang')));
+		return new AdminExtendedFieldsDisplayResponse($this->view, $this->lang['user.extended.fields.management']);
 	}
 
 	private function update_fields($request)
@@ -60,7 +55,7 @@ class AdminExtendedFieldsMemberListController extends AdminController
 		{
 			$this->update_position($request);
 			ExtendedFieldsCache::invalidate();
-			$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.position.update', 'warning-lang'), MessageHelper::SUCCESS, 5));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.success.position.update'], MessageHelper::SUCCESS, 5));
 		}
 	}
 
@@ -76,7 +71,8 @@ class AdminExtendedFieldsMemberListController extends AdminController
 				, array(
 					'position' => $position,
 					'id' => $tree->id,
-			));
+				)
+			);
 		}
 	}
 }

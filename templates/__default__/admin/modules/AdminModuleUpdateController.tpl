@@ -1,6 +1,6 @@
 # INCLUDE MESSAGE_HELPER_WARNING #
 # INCLUDE MESSAGE_HELPER_SUCCESS #
-# INCLUDE UPLOAD_FORM #
+# INCLUDE CONTENT #
 <form action="{REWRITED_SCRIPT}" method="post" class="fieldset-content">
 	<input type="hidden" name="token" value="{TOKEN}">
 	<section id="upgrade-modules-container">

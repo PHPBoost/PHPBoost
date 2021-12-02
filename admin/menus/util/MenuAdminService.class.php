@@ -98,7 +98,7 @@ class MenuAdminService
 			}
 		}
 
-		$filter_tpl->add_lang(array_merge(LangLoader::get('common-lang'), LangLoader::get('menu-lang')));
+		$filter_tpl->add_lang(LangLoader::get_all_langs());
 		$filter_tpl->put_all(array(
 		    'FILTERS_NUMBER' => ($menu->get_id() == '') ? 0 : count($menu->get_filters()) - 1,
 		));

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 06
+ * @version     PHPBoost 6.0 - last update: 2021 12 02
  * @since       PHPBoost 3.0 - 2011 09 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -11,25 +11,19 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminModulesManagementController extends AdminController
+class AdminModulesManagementController extends DefaultAdminController
 {
-	private $lang;
-	private $view;
+	protected function get_template_to_use()
+	{
+	   return new FileTemplate('admin/modules/AdminModulesManagementController.tpl');
+	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
 		$this->build_view();
 		$this->save($request);
 
 		return new AdminModulesDisplayResponse($this->view, $this->lang['addon.modules.management']);
-	}
-
-	private function init()
-	{
-		$this->lang = LangLoader::get('addon-lang');
-		$this->view = new FileTemplate('admin/modules/AdminModulesManagementController.tpl');
-		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 	}
 
 	private function build_view()
@@ -132,7 +126,7 @@ class AdminModulesManagementController extends AdminController
 
 			if ($modified_modules && empty($errors))
 			{
-				AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), LangLoader::get_message('warning.process.success', 'warning-lang'));
+				AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), $this->lang['warning.process.success']);
 			}
 			else
 			{
@@ -161,7 +155,7 @@ class AdminModulesManagementController extends AdminController
 					if (!empty($error))
 						$this->view->put('MESSAGE_HELPER', MessageHelper::display('<b>' . $module->get_configuration()->get_name() . '</b> : ' . $error, MessageHelper::WARNING));
 					else
-						AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), LangLoader::get_message('warning.process.success', 'warning-lang'));
+						AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), $this->lang['warning.process.success']);
 				}
 				else if ($request->get_string('disable-' . $module->get_id(), ''))
 				{
@@ -170,7 +164,7 @@ class AdminModulesManagementController extends AdminController
 					if (!empty($error))
 						$this->view->put('MESSAGE_HELPER', MessageHelper::display('<b>' . $module->get_configuration()->get_name() . '</b> : ' . $error, MessageHelper::WARNING));
 					else
-						AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), LangLoader::get_message('warning.process.success', 'warning-lang'));
+						AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), $this->lang['warning.process.success']);
 				}
 			}
 		}

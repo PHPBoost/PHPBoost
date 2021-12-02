@@ -1,5 +1,5 @@
 # INCLUDE MESSAGE_HELPER #
-# INCLUDE UPLOAD_FORM #
+# INCLUDE CONTENT #
 <form action="{REWRITED_SCRIPT}" method="post" class="fieldset-content">
 	<input type="hidden" name="token" value="{TOKEN}">
 	<section id="not-installed-langs-container" class="addons-container langs-elements-container not-installed-elements-container">

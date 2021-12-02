@@ -3,25 +3,15 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 24
+ * @version     PHPBoost 6.0 - last update: 2021 12 02
  * @since       PHPBoost 3.0 - 2010 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminMemberConfigController extends AdminController
+class AdminMemberConfigController extends DefaultAdminController
 {
-	private $lang;
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonDefaultSubmit
-	 */
-	private $submit_button;
-
 	private $user_accounts_config;
 	private $security_config;
 	private $authentication_config;
@@ -32,8 +22,6 @@ class AdminMemberConfigController extends AdminController
 		$this->init();
 		$this->build_form();
 
-		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
-
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
@@ -42,20 +30,16 @@ class AdminMemberConfigController extends AdminController
 			$this->form->get_field_by_id('unactivated_accounts_timeout')->set_hidden(!$this->user_accounts_config->is_registration_enabled() || $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION);
 			$this->form->get_field_by_id('items_per_row')->set_hidden($this->user_accounts_config->get_display_type() !== UserAccountsConfig::GRID_VIEW);
 
-			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('form.success.config', 'warning-lang'), MessageHelper::SUCCESS, 5));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['form.success.config'], MessageHelper::SUCCESS, 5));
 		}
 
-		$view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
-		return new AdminMembersDisplayResponse($view, $this->lang['user.members.config']);
+		return new AdminMembersDisplayResponse($this->view, $this->lang['user.members.config']);
 	}
 
 	private function init()
 	{
-		$this->lang = array_merge(
-			LangLoader::get('user-lang'),
-			LangLoader::get('form-lang')
-		);
 		$this->user_accounts_config = UserAccountsConfig::load();
 		$this->security_config = SecurityConfig::load();
 		$this->server_configuration = new ServerConfiguration();

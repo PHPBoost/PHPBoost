@@ -3,23 +3,13 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 02
  * @since       PHPBoost 4.1 - 2015 05 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminFilesConfigController extends AdminController
+class AdminFilesConfigController extends DefaultAdminController
 {
-	private $lang;
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonDefaultSubmit
-	 */
-	private $submit_button;
-
 	private $file_upload_config;
 
 	public function execute(HTTPRequestCustom $request)
@@ -28,23 +18,20 @@ class AdminFilesConfigController extends AdminController
 
 		$this->build_form();
 
-		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
-
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
 			$this->form->get_field_by_id('authorized_extensions')->set_selected_options($this->file_upload_config->get_authorized_extensions());
-			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.config', 'warning-lang'), MessageHelper::SUCCESS, 5));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.success.config'], MessageHelper::SUCCESS, 5));
 		}
 
-		$view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
-		return new AdminFilesDisplayResponse($view, $this->lang['upload.files.config']);
+		return new AdminFilesDisplayResponse($this->view, $this->lang['upload.files.config']);
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('upload-lang');
 		$this->file_upload_config = FileUploadConfig::load();
 	}
 

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 07
+ * @version     PHPBoost 6.0 - last update: 2021 12 02
  * @since       PHPBoost 3.0 - 2011 09 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -13,17 +13,15 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminModuleAddController extends AdminController
+class AdminModuleAddController extends DefaultAdminController
 {
-	private $lang;
-	private $view;
-	private $form;
-	private $submit_button;
+	protected function get_template_to_use()
+	{
+	   return new FileTemplate('admin/modules/AdminModuleAddController.tpl');
+	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
-
 		$message_success = $message_warning = '';
 		$modules_selected = $modules_success = 0;
 		$module_number = 1;
@@ -48,7 +46,7 @@ class AdminModuleAddController extends AdminController
 		}
 
 		if ($modules_selected > 0 && $modules_selected == $modules_success)
-			$this->view->put('MESSAGE_HELPER_SUCCESS', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 10));
+			$this->view->put('MESSAGE_HELPER_SUCCESS', MessageHelper::display($this->lang['warning.process.success'], MessageHelper::SUCCESS, 10));
 		else
 		{
 			if ($message_warning)
@@ -66,16 +64,9 @@ class AdminModuleAddController extends AdminController
 
 		$this->build_view();
 
-		$this->view->put('UPLOAD_FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
 		return new AdminModulesDisplayResponse($this->view, $this->lang['addon.modules.add']);
-	}
-
-	private function init()
-	{
-		$this->lang = LangLoader::get('addon-lang');
-		$this->view = new FileTemplate('admin/modules/AdminModuleAddController.tpl');
-		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang')));
 	}
 
 	private function upload_form()
@@ -283,12 +274,12 @@ class AdminModuleAddController extends AdminController
 						}
 						else
 						{
-							$this->view->put('MESSAGE_HELPER_WARNING', MessageHelper::display(LangLoader::get_message('warning.element.already.exists', 'warning-lang'), MessageHelper::WARNING));
+							$this->view->put('MESSAGE_HELPER_WARNING', MessageHelper::display($this->lang['warning.element.already.exists'], MessageHelper::WARNING));
 						}
 					}
 					else
 					{
-						$this->view->put('MESSAGE_HELPER_WARNING', MessageHelper::display(LangLoader::get_message('warning.invalid.archive.content', 'warning-lang'), MessageHelper::WARNING));
+						$this->view->put('MESSAGE_HELPER_WARNING', MessageHelper::display($this->lang['warning.invalid.archive.content'], MessageHelper::WARNING));
 					}
 
 					$uploaded_file = new File($archive);
@@ -296,12 +287,12 @@ class AdminModuleAddController extends AdminController
 				}
 				else
 				{
-					$this->view->put('MESSAGE_HELPER_WARNING', MessageHelper::display(LangLoader::get_message('warning.file.invalid.format', 'warning-lang'), MessageHelper::WARNING));
+					$this->view->put('MESSAGE_HELPER_WARNING', MessageHelper::display($this->lang['warning.file.invalid.format'], MessageHelper::WARNING));
 				}
 			}
 			else
 			{
-				$this->view->put('MESSAGE_HELPER_WARNING', MessageHelper::display(LangLoader::get_message('warning.file.upload.error', 'warning-lang'), MessageHelper::WARNING));
+				$this->view->put('MESSAGE_HELPER_WARNING', MessageHelper::display($this->lang['warning.file.upload.error'], MessageHelper::WARNING));
 			}
 		}
 	}

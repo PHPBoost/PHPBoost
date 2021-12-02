@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 11
+ * @version     PHPBoost 6.0 - last update: 2021 12 02
  * @since       PHPBoost 2.0 - 2008 11 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -11,7 +11,9 @@
 
 define('PATH_TO_ROOT', '../..');
 require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
-$lang = LangLoader::get('menu-lang');
+
+$lang = LangLoader::get_all_langs();
+
 define('TITLE', $lang['menu.links.menu']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
@@ -152,12 +154,7 @@ include('lateral_menu.php');
 lateral_menu();
 
 $view = new FileTemplate('admin/menus/links.tpl');
-$view->add_lang(array_merge(
-	$lang,
-	LangLoader::get('common-lang'),
-	LangLoader::get('form-lang'),
-	LangLoader::get('warning-lang')
-));
+$view->add_lang($lang);
 
 $view->put_all(array(
 	'C_EDIT' => $menu_id > 0,
@@ -181,11 +178,7 @@ $array_location = array(
 );
 
 $edit_menu_tpl = new FileTemplate('admin/menus/menu_edition.tpl');
-$edit_menu_tpl->add_lang(array_merge(
-	$lang,
-	LangLoader::get('common-lang'),
-	LangLoader::get('form-lang')
-));
+$edit_menu_tpl->add_lang($lang);
 
 $menu = null;
 if ($menu_id > 0)

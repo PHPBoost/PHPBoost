@@ -3,35 +3,21 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 24
+ * @version     PHPBoost 6.0 - last update: 2021 12 02
  * @since       PHPBoost 4.0 - 2014 01 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminLoggedErrorsControllerList extends AdminController
+class AdminLoggedErrorsControllerList extends DefaultAdminController
 {
-	private $view;
-	private $lang;
-
 	const NUMBER_ITEMS_PER_PAGE = 15;
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
-
 		$current_page = $this->build_table();
 
 		return new AdminErrorsDisplayResponse($this->view, $this->lang['admin.logged.errors'], $current_page);
-	}
-
-	private function init()
-	{
-		$this->lang =array_merge(
-			LangLoader::get('admin-lang'),
-			LangLoader::get('common-lang')
-		);
-		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM # # INCLUDE table #');
 	}
 
 	private function build_table()
@@ -61,7 +47,7 @@ class AdminLoggedErrorsControllerList extends AdminController
 		$results = array();
 		foreach ($errors as $error)
 		{
-			$error_class = new SpanHTMLElement(LangLoader::get_message($types[$error['errclass']], 'warning-lang') . ' : ', array(), 'text-strong');
+			$error_class = new SpanHTMLElement($this->lang[$types[$error['errclass']]] . ' : ', array(), 'text-strong');
 			$error_stacktrace = new SpanHTMLElement(strip_tags($error['errstacktrace'], '<br>'), array(), 'text-italic');
 
 			$error_message = $error_class->display() . strip_tags($error['errmsg'], '<br>') . $br->display() . $br->display() . $br->display() . $error_stacktrace->display();
@@ -76,9 +62,10 @@ class AdminLoggedErrorsControllerList extends AdminController
 
 		if ($results_number)
 		{
+			$this->view = new StringTemplate('# INCLUDE FORM ## INCLUDE TABLE #');
 			$this->view->put_all(array(
 				'FORM' => $this->build_form()->display(),
-				'table' => $table->display()
+				'TABLE' => $table->display()
 			));
 		}
 		else

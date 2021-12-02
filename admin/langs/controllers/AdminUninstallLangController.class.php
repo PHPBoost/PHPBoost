@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 02
  * @since       PHPBoost 3.0 - 2012 01 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -11,20 +11,14 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminUninstallLangController extends AdminController
+class AdminUninstallLangController extends DefaultAdminController
 {
-	private $form;
-	private $lang;
-	private $submit_button;
 	private $lang_id;
 	private $multiple = false;
-	private $view;
 	private $file;
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
-
 		$this->lang_id = $request->get_value('id', null);
 
 		if ($this->lang_id == 'delete_multiple')
@@ -48,7 +42,7 @@ class AdminUninstallLangController extends AdminController
 				AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), LangLoader::get_message('warning.process.success', 'warning-lang'));
 			}
 
-			$this->view->put('FORM', $this->form->display());
+			$this->view->put('CONTENT', $this->form->display());
 
 			return new AdminLangsDisplayResponse($this->view, $this->multiple ? $this->lang['addon.langs.delete.multiple'] : $this->lang['addon.langs.delete']);
 		}
@@ -57,12 +51,6 @@ class AdminUninstallLangController extends AdminController
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
 		}
-	}
-
-	private function init()
-	{
-		$this->lang = LangLoader::get('addon-lang');
-		$this->view = new StringTemplate('# INCLUDE FORM #');
 	}
 
 	private function build_form()

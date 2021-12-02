@@ -3,34 +3,21 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 20
+ * @version     PHPBoost 6.0 - last update: 2021 12 02
  * @since       PHPBoost 3.0 - 2010 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminExtendedFieldMemberAddController extends AdminController
+class AdminExtendedFieldMemberAddController extends DefaultAdminController
 {
-	private $view;
-
-	private $lang;
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonDefaultSubmit
-	 */
-	private $submit_button;
-
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
 		$this->build_form();
 
 		$this->view = new StringTemplate('
 			# INCLUDE MESSAGE_HELPER #
-			# INCLUDE FORM #
+			# INCLUDE CONTENT #
 			<script>
 				jQuery(document).ready(function() {
 					'. $this->get_events_select_type() .'
@@ -52,21 +39,16 @@ class AdminExtendedFieldMemberAddController extends AdminController
 			}
 		}
 
-		$this->view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
-		return new AdminExtendedFieldsDisplayResponse($this->view, LangLoader::get_message('user.extended.field.add', 'user-lang'));
-	}
-
-	private function init()
-	{
-		$this->lang = LangLoader::get('form-lang');
+		return new AdminExtendedFieldsDisplayResponse($this->view, $this->lang['user.extended.field.add']);
 	}
 
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('add_fields', LangLoader::get_message('user.extended.field.add', 'user-lang'));
+		$fieldset = new FormFieldsetHTML('add_fields', $this->lang['user.extended.field.add']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['form.name'], '',

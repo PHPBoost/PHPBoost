@@ -13,7 +13,7 @@ class AdminMenusDisplayResponse extends AdminMenuDisplayResponse
 {
 	public function __construct($view)
 	{
-		$lang = LangLoader::get('menu-lang');
+		$lang = LangLoader::get_all_langs();
 
 		parent::__construct($view);
 

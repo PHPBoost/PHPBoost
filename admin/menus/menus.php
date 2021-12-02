@@ -13,7 +13,9 @@
 
 define('PATH_TO_ROOT', '../..');
 require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
-$lang = LangLoader::get('menu-lang');
+
+$lang = LangLoader::get_all_langs();
+
 define('TITLE', $lang['menu.menus.management']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
@@ -171,18 +173,10 @@ if ($action == 'save') // Save menus positions.
 
 
 $view = new FileTemplate('admin/menus/menus.tpl');
-$view->add_lang(array_merge(
-	$lang,
-	LangLoader::get('common-lang'),
-	LangLoader::get('form-lang'),
-	LangLoader::get('warning-lang')
-));
+$view->add_lang($lang);
 
 $menu_template = new FileTemplate('admin/menus/menu.tpl');
-$menu_template->add_lang(array_merge(
-	$lang,
-	LangLoader::get('common-lang')
-));
+$menu_template->add_lang($lang);
 $menu_template->put_all(array(
 	'I_TOPHEADER'     => Menu::BLOCK_POSITION__TOP_HEADER,
 	'I_HEADER'        => Menu::BLOCK_POSITION__HEADER,

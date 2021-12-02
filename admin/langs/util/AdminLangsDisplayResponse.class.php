@@ -15,7 +15,7 @@ class AdminLangsDisplayResponse extends AdminMenuDisplayResponse
 	{
 		parent::__construct($view);
 
-		$lang = LangLoader::get('addon-lang');
+		$lang = LangLoader::get_all_langs();
 		$this->set_title($lang['addon.langs.management']);
 
 		$this->add_link($lang['addon.langs.installed'], AdminLangsUrlBuilder::list_installed_langs());
