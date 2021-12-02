@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 24
+ * @version     PHPBoost 6.0 - last update: 2021 12 02
  * @since       PHPBoost 3.0 - 2011 04 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -11,12 +11,12 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminThemesNotInstalledListController extends AdminController
+class AdminThemesNotInstalledListController extends DefaultAdminController
 {
-	private $lang;
-	private $view;
-	private $form;
-	private $submit_button;
+	protected function get_template_to_use()
+	{
+	   return new FileTemplate('admin/themes/AdminThemesNotInstalledListController.tpl');
+	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -112,16 +112,6 @@ class AdminThemesNotInstalledListController extends AdminController
 
 			'THEMES_NUMBER' => $not_installed_themes_number
 		));
-	}
-
-	private function init()
-	{
-		$this->lang = array_merge(
-			LangLoader::get('addon-lang'),
-			LangLoader::get('common-lang')
-		);
-		$this->view = new FileTemplate('admin/themes/AdminThemesNotInstalledListController.tpl');
-		$this->view->add_lang($this->lang);
 	}
 
 	private function get_not_installed_themes()

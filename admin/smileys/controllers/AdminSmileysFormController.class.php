@@ -3,16 +3,14 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 02
  * @since       PHPBoost 4.1 - 2015 05 22
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminSmileysFormController extends AdminController
+class AdminSmileysFormController extends DefaultAdminController
 {
-	private $lang;
-	private $view;
 	private $upload_form;
 	private $smiley_form;
 	private $upload_submit_button;
@@ -53,7 +51,6 @@ class AdminSmileysFormController extends AdminController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-lang');
 		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE UPLOAD_FORM # # INCLUDE SMILEY_FORM #');
 		$this->smileys_path = PATH_TO_ROOT . '/images/smileys/';
 		$this->get_smiley();
@@ -100,7 +97,7 @@ class AdminSmileysFormController extends AdminController
 
 				if (empty($authorized_pictures_extensions))
 				{
-					$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.file.invalid.format', 'warning-lang'), MessageHelper::NOTICE));
+					$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.file.invalid.format'], MessageHelper::NOTICE));
 				}
 
 				$upload = new Upload($this->smileys_path);
@@ -108,21 +105,21 @@ class AdminSmileysFormController extends AdminController
 				if ($upload->file('upload_smiley_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`iu'))
 				{
 					// TODO : manage the smileys archive (possibility to upload a zip + checkbox if you want to create each smiley directly with: name_of_smiley as code)
-					$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 5));
+					$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.process.success'], MessageHelper::SUCCESS, 5));
 				}
 				else
 				{
-					$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message($upload->get_error(), 'errors'), MessageHelper::NOTICE));
+					$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang[$upload->get_error()], MessageHelper::NOTICE));
 				}
 			}
 			else
 			{
-				$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.file.upload.error', 'warning-lang'), MessageHelper::NOTICE));
+				$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.file.upload.error'], MessageHelper::NOTICE));
 			}
 		}
 		else
 		{
-			$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.folder.unwritable', 'warning-lang'), MessageHelper::WARNING));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.folder.unwritable'], MessageHelper::WARNING));
 		}
 	}
 
@@ -191,7 +188,7 @@ class AdminSmileysFormController extends AdminController
 				}
 				else
 				{
-					$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.element.already.exists', 'warning-lang'), MessageHelper::ERROR));
+					$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.element.already.exists'], MessageHelper::ERROR));
 				}
 			}
 			else

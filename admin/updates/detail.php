@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 24
+ * @version     PHPBoost 6.0 - last update: 2021 12 02
  * @since       PHPBoost 1.6 - 2008 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -14,11 +14,7 @@ define('PATH_TO_ROOT', '../..');
 
 require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
 
-$lang = array_merge(
-	LangLoader::get('addon-lang'),
-	LangLoader::get('admin-lang'),
-	LangLoader::get('common-lang')
-);
+$lang = LangLoader::get_all_langs();
 
 define('TITLE', $lang['admin.updates'] . ' - ' . $lang['admin.administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
@@ -177,7 +173,7 @@ if ($app instanceof Application)
 					$update->set_status(AdministratorAlert::ADMIN_ALERT_STATUS_PROCESSED);
 					AdministratorAlertService::save_alert($update);
 
-					$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
+					$view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.process.success'], MessageHelper::SUCCESS, 4));
 				}
 			}
 
@@ -185,7 +181,7 @@ if ($app instanceof Application)
 		}
 		else
 		{
-			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.error', 'warning-lang'), MessageHelper::ERROR));
+			$view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.process.error'], MessageHelper::ERROR));
 			$installation_error = true;
 		}
 	}

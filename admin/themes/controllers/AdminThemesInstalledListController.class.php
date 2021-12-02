@@ -10,28 +10,19 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminThemesInstalledListController extends AdminController
+class AdminThemesInstalledListController extends DefaultAdminController
 {
-	private $lang;
-	private $view;
+	protected function get_template_to_use()
+	{
+	   return new FileTemplate('admin/themes/AdminThemesInstalledListController.tpl');
+	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
 		$this->build_view();
 		$this->save($request);
 
 		return new AdminThemesDisplayResponse($this->view, $this->lang['addon.themes.installed']);
-	}
-
-	private function init()
-	{
-		$this->lang = array_merge(
-			LangLoader::get('addon-lang'),
-			LangLoader::get('common-lang')
-		);
-		$this->view = new FileTemplate('admin/themes/AdminThemesInstalledListController.tpl');
-		$this->view->add_lang($this->lang);
 	}
 
 	private function build_view()

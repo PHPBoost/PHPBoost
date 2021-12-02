@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 18
+ * @version     PHPBoost 6.0 - last update: 2021 12 02
  * @since       PHPBoost 1.6 - 2008 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -14,7 +14,7 @@ define('PATH_TO_ROOT', '../..');
 
 require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
 
-$lang = LangLoader::get('admin-lang');
+$lang = LangLoader::get_all_langs();
 
 define('TITLE', $lang['admin.updates'] . ' - ' . $lang['admin.administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
@@ -33,7 +33,7 @@ if ($check_updates === true)
 	AppContext::get_response()->redirect('updates.php' . (!empty($update_type) ? '?type=' . $update_type : ''));
 }
 $view = new FileTemplate('admin/updates/updates.tpl');
-$view->add_lang(array_merge($lang, LangLoader::get('addon-lang')));
+$view->add_lang($lang);
 $updates_availables = 0;
 
 if (ServerConfiguration::get_phpversion() > Updates::PHP_MIN_VERSION_UPDATES)

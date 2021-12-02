@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 19
+ * @version     PHPBoost 6.0 - last update: 2021 12 02
  * @since       PHPBoost 4.1 - 2015 05 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -11,34 +11,22 @@
  * @contributor janus57 <janus57@janus57.fr>
 */
 
-class AdminServerSystemReportController extends AdminController
+class AdminServerSystemReportController extends DefaultAdminController
 {
-	private $lang;
-	private $form;
-	private $view;
-
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
-
 		$this->build_form();
 
-		$this->view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
 		return new AdminServerDisplayResponse($this->view, $this->lang['admin.system.report']);
 	}
 
-	private function init()
-	{
-		$this->lang = LangLoader::get('admin-lang');
-		$this->view = new StringTemplate('# INCLUDE FORM #');
-	}
-
 	private function build_form()
 	{
-		$picture_yes = '<i class="fa fa-check fa-2x success" aria-hidden="true"></i><span class="sr-only">' . LangLoader::get_message('common.yes', 'common-lang') . '</span>';
-		$picture_no = '<i class="fa fa-times fa-2x error" aria-hidden="true"></i><span class="sr-only">' . LangLoader::get_message('common.no', 'common-lang') . '</span>';
-		$picture_unknown = '<i class="fa fa-question fa-2x question" aria-hidden="true"></i><span class="sr-only">' . LangLoader::get_message('common.unknown', 'common-lang') . '</span>';
+		$picture_yes = '<i class="fa fa-check fa-2x success" aria-hidden="true"></i><span class="sr-only">' . $this->lang['common.yes'] . '</span>';
+		$picture_no = '<i class="fa fa-times fa-2x error" aria-hidden="true"></i><span class="sr-only">' . $this->lang['common.no'] . '</span>';
+		$picture_unknown = '<i class="fa fa-question fa-2x question" aria-hidden="true"></i><span class="sr-only">' . $this->lang['common.unknown'] . '</span>';
 
 		$default_lang_config = LangsManager::get_lang(LangsManager::get_default_lang())->get_configuration();
 		$default_theme_config = ThemesManager::get_theme(ThemesManager::get_default_theme())->get_configuration();
@@ -77,7 +65,7 @@ PHPBOOST CONFIGURATION---------------------------------------------------------
 phpboost version		: " . Environment::get_phpboost_version() . "
 server url			: " . $general_config->get_site_url() . "
 site path			: " . $general_config->get_site_path() . "
-default theme			: " . $default_theme_config->get_name() . " (" . LangLoader::get_message('common.version', 'common-lang') . " " . $default_theme_config->get_version() . ")
+default theme			: " . $default_theme_config->get_name() . " (" . $this->lang['common.version'] . " " . $default_theme_config->get_version() . ")
 default language		: " . $default_lang_config->get_name() . "
 default editor			: " . $default_editor . "
 home page			: " . Environment::get_home_page() . "
@@ -109,18 +97,18 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldFree('kernel_version', $this->lang['admin.kernel.version'], Environment::get_phpboost_version()));
-		$fieldset->add_field(new FormFieldFree('site_url', LangLoader::get_message('configuration.site.url', 'configuration-lang'), $general_config->get_site_url()));
-		$fieldset->add_field(new FormFieldFree('site_path', LangLoader::get_message('configuration.site.path', 'configuration-lang'), $general_config->get_site_path()));
-		$fieldset->add_field(new FormFieldFree('default_theme', LangLoader::get_message('configuration.default.theme', 'configuration-lang'), $default_theme_config->get_name() . " (" . LangLoader::get_message('common.version', 'common-lang') . " " . $default_theme_config->get_version() . ")"));
-		$fieldset->add_field(new FormFieldFree('default_language', LangLoader::get_message('configuration.default.language', 'configuration-lang'), $default_lang_config->get_name()));
+		$fieldset->add_field(new FormFieldFree('site_url', $this->lang['configuration.site.url'], $general_config->get_site_url()));
+		$fieldset->add_field(new FormFieldFree('site_path', $this->lang['configuration.site.path'], $general_config->get_site_path()));
+		$fieldset->add_field(new FormFieldFree('default_theme', $this->lang['configuration.default.theme'], $default_theme_config->get_name() . " (" . $this->lang['common.version'] . " " . $default_theme_config->get_version() . ")"));
+		$fieldset->add_field(new FormFieldFree('default_language', $this->lang['configuration.default.language'], $default_lang_config->get_name()));
 		$fieldset->add_field(new FormFieldFree('default_editor', $this->lang['admin.default.formatting.language'], $default_editor));
-		$fieldset->add_field(new FormFieldFree('start_page', LangLoader::get_message('configuration.start.page', 'configuration-lang'), Environment::get_home_page()));
+		$fieldset->add_field(new FormFieldFree('start_page', $this->lang['configuration.start.page'], Environment::get_home_page()));
 		$fieldset->add_field(new FormFieldFree('phpboost_url_rewriting', $this->lang['admin.url.rewriting'], $server_environment_config->is_url_rewriting_enabled() ? $picture_yes : $picture_no));
 		$fieldset->add_field(new FormFieldFree('phpboost_apcu_cache', $this->lang['admin.apcu.cache'], DataStoreFactory::is_apc_enabled() ? $picture_yes : $picture_no));
 		$fieldset->add_field(new FormFieldFree('output_gz', $this->lang['admin.output.gz'], $server_environment_config->is_output_gziping_enabled() ? $picture_yes : $picture_no));
-		$fieldset->add_field(new FormFieldFree('cookie_name', LangLoader::get_message('configuration.cookie.name', 'configuration-lang'), $sessions_config->get_cookie_name()));
-		$fieldset->add_field(new FormFieldFree('session_length', LangLoader::get_message('configuration.cookie.duration', 'configuration-lang'), $sessions_config->get_session_duration()));
-		$fieldset->add_field(new FormFieldFree('session_guest_length', LangLoader::get_message('configuration.active.session.duration', 'configuration-lang'), $sessions_config->get_active_session_duration()));
+		$fieldset->add_field(new FormFieldFree('cookie_name', $this->lang['configuration.cookie.name'], $sessions_config->get_cookie_name()));
+		$fieldset->add_field(new FormFieldFree('session_length', $this->lang['configuration.cookie.duration'], $sessions_config->get_session_duration()));
+		$fieldset->add_field(new FormFieldFree('session_guest_length', $this->lang['configuration.active.session.duration'], $sessions_config->get_active_session_duration()));
 
 		$fieldset = new FormFieldsetHTML('directories_auth', $this->lang['admin.directories.auth']);
 		$form->add_fieldset($fieldset);
@@ -151,7 +139,7 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 
 	public static function get_advice(HTMLForm $html_form)
 	{
-		$lang = LangLoader::get('admin-lang');
+		$lang = LangLoader::get_all_langs();
 
 		$server_configuration = new ServerConfiguration();
 		$maintenance_config = MaintenanceConfig::load();

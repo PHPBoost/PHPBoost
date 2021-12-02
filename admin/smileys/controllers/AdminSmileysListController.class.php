@@ -3,35 +3,24 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 02
  * @since       PHPBoost 4.1 - 2015 05 22
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminSmileysListController extends AdminController
+class AdminSmileysListController extends DefaultAdminController
 {
-	private $lang;
-	private $view;
-
 	private $elements_number = 0;
 	private $ids = array();
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
-
 		$current_page = $this->build_table();
 
 		$this->execute_multiple_delete_if_needed($request);
 
 		return new AdminSmileysDisplayResponse($this->view, $this->lang['admin.smileys.management'], $current_page);
-	}
-
-	private function init()
-	{
-		$this->lang = LangLoader::get('admin-lang');
-		$this->view = new StringTemplate('# INCLUDE TABLE #');
 	}
 
 	private function build_table()
@@ -64,7 +53,7 @@ class AdminSmileysListController extends AdminController
 		}
 		$table->set_rows(count($results), $results);
 
-		$this->view->put('TABLE', $table->display());
+		$this->view->put('CONTENT', $table->display());
 
 		return $table->get_page_number();
 	}
@@ -82,7 +71,7 @@ class AdminSmileysListController extends AdminController
 				}
 			}
 			SmileysCache::invalidate();
-			AppContext::get_response()->redirect(AdminSmileysUrlBuilder::management(), LangLoader::get_message('warning.process.success', 'warning-lang'));
+			AppContext::get_response()->redirect(AdminSmileysUrlBuilder::management(), $this->lang['warning.process.success']);
 		}
 	}
 }
