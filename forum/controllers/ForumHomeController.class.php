@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 01
+ * @version     PHPBoost 6.0 - last update: 2021 12 02
  * @since       PHPBoost 4.1 - 2015 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -23,6 +23,7 @@ class ForumHomeController extends DefaultModuleController
 
 	private function build_view()
 	{
+		$this->lang = LangLoader::get_all_langs('forum'); // hack for AdminConfigDisplayResponse
 		global $nbr_msg_not_read, $top_view, $bottom_view;
 
 		$id_get = (int)retrieve(GET, 'id', 0);
@@ -302,7 +303,7 @@ class ForumHomeController extends DefaultModuleController
 
 		return $this->view;
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
