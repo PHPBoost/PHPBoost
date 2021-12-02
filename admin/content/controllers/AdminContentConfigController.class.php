@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 14
+ * @version     PHPBoost 6.0 - last update: 2021 12 02
  * @since       PHPBoost 4.0 - 2013 07 08
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -12,18 +12,8 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminContentConfigController extends AdminController
+class AdminContentConfigController extends DefaultAdminController
 {
-	private $lang;
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonDefaultSubmit
-	 */
-	private $submit_button;
-
 	private $content_formatting_config;
 	private $content_management_config;
 	private $user_accounts_config;
@@ -34,8 +24,6 @@ class AdminContentConfigController extends AdminController
 	{
 		$this->init();
 		$this->build_form();
-
-		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -55,17 +43,16 @@ class AdminContentConfigController extends AdminController
 			$this->form->get_field_by_id('id_card_unauthorized_modules')->set_hidden(!$this->content_management_config->is_id_card_enabled());
 			$this->form->get_field_by_id('id_card_unauthorized_modules')->set_selected_options($this->content_management_config->get_id_card_unauthorized_modules());
 
-			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.config', 'warning-lang'), MessageHelper::SUCCESS, 5));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.success.config'], MessageHelper::SUCCESS, 5));
 		}
 
-		$view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
-		return new AdminContentDisplayResponse($view, $this->lang['admin.content.configuration']);
+		return new AdminContentDisplayResponse($this->view, $this->lang['admin.content.configuration']);
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-lang');
 		$this->content_formatting_config = ContentFormattingConfig::load();
 		$this->content_management_config = ContentManagementConfig::load();
 		$this->user_accounts_config = UserAccountsConfig::load();
@@ -403,7 +390,7 @@ class AdminContentConfigController extends AdminController
 
 		$this->user_accounts_config->set_max_private_messages_number($this->form->get_value('max_pm_number'));
 		UserAccountsConfig::save();
-		
+
 		HooksService::execute_hook_action('edit_config', 'kernel', array('title' => $this->lang['admin.content.configuration'], 'url' => AdminContentUrlBuilder::content_configuration()->rel()));
 	}
 

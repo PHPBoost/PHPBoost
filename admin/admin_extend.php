@@ -3,14 +3,14 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 01 06
+ * @version     PHPBoost 6.0 - last update: 2021 12 02
  * @since       PHPBoost 1.2 - 2005 06 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once('../admin/admin_begin.php');
-$lang = LangLoader::get('menu-lang');
+$lang = LangLoader::get_all_langs();
 define('TITLE', $lang['menu.administration'] . ' - ' .  $lang['menu.extended'] );
 require_once('../admin/admin_header.php');
 

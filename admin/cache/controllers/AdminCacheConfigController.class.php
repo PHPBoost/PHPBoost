@@ -3,24 +3,14 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 14
+ * @version     PHPBoost 6.0 - last update: 2021 12 02
  * @since       PHPBoost 2.0 - 2008 08 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminCacheConfigController extends AdminController
+class AdminCacheConfigController extends DefaultAdminController
 {
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonSubmit
-	 */
-	private $submit_button;
-
-	private $lang;
 	private $css_cache_config;
 
 	public function execute(HTTPRequestCustom $request)
@@ -29,23 +19,20 @@ class AdminCacheConfigController extends AdminController
 
 		$this->build_form();
 
-		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
-
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
 			$this->form->get_field_by_id('level_css_cache')->set_hidden(!$this->css_cache_config->is_enabled());
-			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.config', 'warning-lang'), MessageHelper::SUCCESS, 5));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.success.config'], MessageHelper::SUCCESS, 5));
 		}
 
-		$view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
-		return new AdminCacheMenuDisplayResponse($view, $this->lang['admin.cache.configuration']);
+		return new AdminCacheMenuDisplayResponse($this->view, $this->lang['admin.cache.configuration']);
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-lang');
 		$this->css_cache_config = CSSCacheConfig::load();
 	}
 
@@ -146,7 +133,7 @@ class AdminCacheConfigController extends AdminController
 
 		CSSCacheConfig::save();
 		AppContext::get_cache_service()->clear_css_cache();
-		
+
 		HooksService::execute_hook_action('edit_config', 'kernel', array('title' => $this->lang['admin.cache.configuration'], 'url' => AdminCacheUrlBuilder::configuration()->rel()));
 	}
 }

@@ -3,31 +3,21 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 14
+ * @version     PHPBoost 6.0 - last update: 2021 12 02
  * @since       PHPBoost 3.0 - 2011 08 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminGeneralConfigController extends AdminController
+class AdminGeneralConfigController extends DefaultAdminController
 {
-	private $lang;
 	private $general_config;
 	private $graphical_environment_config;
 	private $user_accounts_config;
-	private $view;
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonDefaultSubmit
-	 */
-	private $submit_button;
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
+		$this->load_config();
 		$this->build_form();
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
@@ -39,21 +29,12 @@ class AdminGeneralConfigController extends AdminController
 				('. $this->lang['configuration.theme.preview'] .')
 			</a>');
 			$this->clear_cache();
-			$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.config', 'warning-lang'), MessageHelper::SUCCESS, 5));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.success.config'], MessageHelper::SUCCESS, 5));
 		}
 
-		$this->view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
 		return new AdminConfigDisplayResponse($this->view, $this->lang['configuration.general']);
-	}
-
-	private function init()
-	{
-		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
-
-		$this->lang = LangLoader::get('configuration-lang');
-
-		$this->load_config();
 	}
 
 	private function load_config()
@@ -176,7 +157,7 @@ class AdminGeneralConfigController extends AdminController
 		$this->user_accounts_config->set_default_lang($this->form->get_value('default_language')->get_raw_value());
 		$this->user_accounts_config->set_default_theme($this->form->get_value('default_theme')->get_raw_value());
 		UserAccountsConfig::save();
-		
+
 		HooksService::execute_hook_action('edit_config', 'kernel', array('title' => $this->lang['configuration.general'], 'url' => AdminConfigUrlBuilder::general_config()->rel()));
 	}
 

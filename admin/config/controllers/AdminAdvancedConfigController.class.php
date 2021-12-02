@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 24
+ * @version     PHPBoost 6.0 - last update: 2021 12 02
  * @since       PHPBoost 3.0 - 2011 07 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -12,28 +12,18 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminAdvancedConfigController extends AdminController
+class AdminAdvancedConfigController extends DefaultAdminController
 {
-	private $lang;
 	private $general_config;
 	private $server_environment_config;
 	private $sessions_config;
 	private $cookiebar_config;
-	private $form;
-	private $submit_button;
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->lang = array_merge(
-			LangLoader::get('configuration-lang'),
-			LangLoader::get('warning-lang')
-		);
-
 		$this->load_config();
 
 		$this->build_form($request);
-
-		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -51,12 +41,12 @@ class AdminAdvancedConfigController extends AdminController
 			$this->form->get_field_by_id('debug_mode_type')->set_hidden(!Debug::is_debug_mode_enabled());
 			$this->form->get_field_by_id('display_database_query_enabled')->set_hidden(!Debug::is_debug_mode_enabled());
 
-			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.config', 'warning-lang'), MessageHelper::SUCCESS, 5));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.success.config'], MessageHelper::SUCCESS, 5));
 		}
 
-		$view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
-		return new AdminConfigDisplayResponse($view, $this->lang['configuration.advanced']);
+		return new AdminConfigDisplayResponse($this->view, $this->lang['configuration.advanced']);
 	}
 
 	private function load_config()

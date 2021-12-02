@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 24
+ * @version     PHPBoost 6.0 - last update: 2021 12 02
  * @since       PHPBoost 3.0 - 2011 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -11,18 +11,8 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminCommentsConfigController extends AdminController
+class AdminCommentsConfigController extends DefaultAdminController
 {
-	private $lang;
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonDefaultSubmit
-	 */
-	private $submit_button;
-
 	private $configuration;
 
 	public function execute(HTTPRequestCustom $request)
@@ -30,13 +20,11 @@ class AdminCommentsConfigController extends AdminController
 		$this->init();
 		$this->build_form();
 
-		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
-
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
 			$this->regenerate_cache();
-			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.process.success'], MessageHelper::SUCCESS, 4));
 			$this->form->get_field_by_id('visitor_email_enabled')->set_hidden(!$this->configuration->are_comments_enabled());
 			$this->form->get_field_by_id('comments_number_display')->set_hidden(!$this->configuration->are_comments_enabled());
 			$this->form->get_field_by_id('max_links_comment')->set_hidden(!$this->configuration->are_comments_enabled());
@@ -47,17 +35,13 @@ class AdminCommentsConfigController extends AdminController
 			$this->form->get_field_by_id('comments_unauthorized_modules')->set_selected_options($this->configuration->get_comments_unauthorized_modules());
 		}
 
-		$view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
-		return new AdminCommentsDisplayResponse($view, $this->lang['comment.configuration']);
+		return new AdminCommentsDisplayResponse($this->view, $this->lang['comment.configuration']);
 	}
 
 	private function init()
 	{
-		$this->lang = array_merge(
-			LangLoader::get('comment-lang'),
-			LangLoader::get('form-lang')
-		);
 		$this->configuration = CommentsConfig::load();
 	}
 

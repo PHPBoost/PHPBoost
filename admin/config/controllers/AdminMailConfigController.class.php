@@ -3,49 +3,34 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 14
+ * @version     PHPBoost 6.0 - last update: 2021 12 02
  * @since       PHPBoost 3.0 - 2010 04 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminMailConfigController extends AdminController
+class AdminMailConfigController extends DefaultAdminController
 {
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonSubmit
-	 */
-	private $submit_button;
-
-	private $lang;
-	private $config;
-
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 
 		$this->build_form();
 
-		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
-
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 5));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.process.success'], MessageHelper::SUCCESS, 5));
 		}
 
-		$view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
-		return new AdminConfigDisplayResponse($view, $this->lang['configuration.email.sending']);
+		return new AdminConfigDisplayResponse($this->view, $this->lang['configuration.email.sending']);
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('configuration-lang');
 		$this->config = MailServiceConfig::load();
 	}
 
@@ -163,7 +148,7 @@ class AdminMailConfigController extends AdminController
 		}
 
 		MailServiceConfig::save();
-		
+
 		HooksService::execute_hook_action('edit_config', 'kernel', array('title' => $this->lang['configuration.email.sending'], 'url' => AdminConfigUrlBuilder::mail_config()->rel()));
 	}
 }

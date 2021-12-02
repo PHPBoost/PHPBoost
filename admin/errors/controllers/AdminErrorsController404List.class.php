@@ -3,48 +3,26 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 24
+ * @version     PHPBoost 6.0 - last update: 2021 12 02
  * @since       PHPBoost 3.0 - 2009 12 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminErrorsController404List extends AdminController
+class AdminErrorsController404List extends DefaultAdminController
 {
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonSubmit
-	 */
-	private $submit_button;
-
-	private $view;
-	private $lang;
-
 	private $elements_number = 0;
 	private $ids = array();
+	private $table;
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
-
 		$current_page = $this->build_table();
 
 		$this->execute_multiple_delete_if_needed($request);
 
 		return new AdminErrorsDisplayResponse($this->view, $this->lang['admin.404.errors.list'], $current_page);
-	}
-
-	private function init()
-	{
-		$this->lang = array_merge(
-			LangLoader::get('admin-lang'),
-			LangLoader::get('common-lang')
-		);
-		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM # # INCLUDE TABLE #');
 	}
 
 	private function build_table()
@@ -56,7 +34,7 @@ class AdminErrorsController404List extends AdminController
 			new HTMLTableColumn($this->lang['common.delete'], '', array('css_class' => 'col-small'))
 		), new HTMLTableSortingRule('times', HTMLTableSortingRule::DESC));
 
-		$table = new HTMLTable($table_model, $this->lang, 'error-list404');
+		$this->table = new HTMLTable($table_model, $this->lang, 'error-list404');
 
 		$table_model->set_caption($this->lang['admin.404.errors.list']);
 		$table_model->set_footer_css_class('footer-error-list404');
@@ -77,20 +55,23 @@ class AdminErrorsController404List extends AdminController
 				new HTMLTableRowCell($delete_link->display())
 			));
 		}
-		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
+		$this->table->set_rows($table_model->get_number_of_matching_rows(), $results);
 
 		if ($table_model->get_number_of_matching_rows())
 		{
 			$this->build_form();
 
+			$this->view = new StringTemplate('# INCLUDE FORM ## INCLUDE TABLE #');
+
 			$this->view->put('FORM', $this->form->display());
 
-			$this->view->put('TABLE', $table->display());
+			$this->view->put('TABLE', $this->table->display());
+
 		}
 		else
 			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['common.no.item.now'], MessageHelper::SUCCESS, 0, true));
 
-		return $table->get_page_number();
+		return $this->table->get_page_number();
 	}
 
 	private function execute_multiple_delete_if_needed(HTTPRequestCustom $request)
@@ -105,7 +86,7 @@ class AdminErrorsController404List extends AdminController
 						AdminError404Service::delete_404_error($this->ids[$i]);
 				}
 			}
-			AppContext::get_response()->redirect(AdminErrorsUrlBuilder::list_404_errors(), LangLoader::get_message('warning.process.success', 'warning-lang'));
+			AppContext::get_response()->redirect(AdminErrorsUrlBuilder::list_404_errors(), $this->lang['warning.process.success']);
 		}
 	}
 
