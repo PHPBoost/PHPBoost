@@ -3,13 +3,28 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 01
+ * @version     PHPBoost 6.0 - last update: 2021 12 03
  * @since       PHPBoost 4.1 - 2015 09 18
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminReCaptchaConfig extends DefaultAdminModuleController
 {
+	public function __construct($module_id = '')
+	{
+		self::$module_id = 'ReCaptcha';
+		
+		$this->init_parameters();
+		$this->init_view();
+	}
+	
+	protected function init_parameters()
+	{
+		$this->request = AppContext::get_request();
+		$this->config = ReCaptchaConfig::load();
+		$this->lang = LangLoader::get_all_langs(self::$module_id);
+	}
+	
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->build_form();
@@ -96,13 +111,13 @@ class AdminReCaptchaConfig extends DefaultAdminModuleController
 
 	public static function get_form_fields(FormFieldset $fieldset)
 	{
-		$object = new self('ReCaptcha');
+		$object = new self();
 		return $object->display_fields($fieldset);
 	}
 
 	public static function save_config(HTMLForm $form)
 	{
-		$object = new self('ReCaptcha');
+		$object = new self();
 		$object->form = $form;
 		$object->save();
 	}
