@@ -126,5 +126,12 @@ class AdminReCaptchaConfig extends DefaultAdminModuleController
 		$object->form = $form;
 		$object->save();
 	}
+	
+	public static function get_module()
+	{
+		self::$module = ModulesManager::get_module('ReCaptcha');
+		
+		return self::$module;
+	}
 }
 ?>
