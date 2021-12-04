@@ -3,13 +3,18 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 03
+ * @version     PHPBoost 6.0 - last update: 2021 12 04
  * @since       PHPBoost 4.0 - 2014 05 09
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminQuestionCaptchaConfig extends DefaultAdminModuleController
 {
+	public static function __static()
+	{
+		self::$module_id = 'QuestionCaptcha';
+	}
+	
 	public function __construct($module_id = '')
 	{
 		self::$module_id = 'QuestionCaptcha';
