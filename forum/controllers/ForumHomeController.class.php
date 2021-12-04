@@ -335,7 +335,7 @@ class ForumHomeController extends DefaultModuleController
 
 	public static function get_view()
 	{
-		$object = new self();
+		$object = new self('forum');
 		$object->build_view();
 		return $object->view;
 	}
