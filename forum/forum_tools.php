@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 03
+ * @version     PHPBoost 6.0 - last update: 2021 12 04
  * @since       PHPBoost 2.0 - 2008 03 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -18,16 +18,8 @@ $request = AppContext::get_request();
 
 $top_view = new FileTemplate('forum/forum_top.tpl');
 $bottom_view = new FileTemplate('forum/forum_bottom.tpl');
-$top_view->add_lang(array_merge(
-	LangLoader::get('common', 'forum'),
-	LangLoader::get('common-lang'),
-	LangLoader::get('user-lang')
-));
-$bottom_view->add_lang(array_merge(
-	LangLoader::get('common', 'forum'),
-	LangLoader::get('common-lang'),
-	LangLoader::get('user-lang')
-));
+$top_view->add_lang(LangLoader::get_all_langs('forum'));
+$bottom_view->add_lang(LangLoader::get_all_langs('forum'));
 
 $is_guest = AppContext::get_current_user()->get_id() == -1;
 $is_connected = AppContext::get_current_user()->check_level(User::MEMBER_LEVEL);

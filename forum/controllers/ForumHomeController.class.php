@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 02
+ * @version     PHPBoost 6.0 - last update: 2021 12 04
  * @since       PHPBoost 4.1 - 2015 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -23,7 +23,6 @@ class ForumHomeController extends DefaultModuleController
 
 	private function build_view()
 	{
-		$this->lang = LangLoader::get_all_langs('forum'); // hack for AdminConfigDisplayResponse
 		global $nbr_msg_not_read, $top_view, $bottom_view;
 
 		$id_get = (int)retrieve(GET, 'id', 0);
@@ -272,7 +271,9 @@ class ForumHomeController extends DefaultModuleController
 			'C_NO_USER_ONLINE' => (($total_online - $total_visit) == 0),
 
 			'FORUM_NAME'            => $this->config->get_forum_name(),
+			'C_SEVERAL_MESSAGES'    => $total_msg > 1,
 			'MESSAGES_NUMBER'       => $total_msg,
+			'C_SEVERAL_TOPICS'      => $total_topic > 1,
 			'TOPICS_NUMBER'         => $total_topic,
 			'TOTAL_ONLINE'          => $total_online,
 			'ONLINE_USERS_LIST'     => $users_list,
@@ -285,8 +286,6 @@ class ForumHomeController extends DefaultModuleController
 			'U_ONCHANGE'     => PATH_TO_ROOT ."/forum/" . url("index.php?id=' + this.options[this.selectedIndex].value + '", "forum-' + this.options[this.selectedIndex].value + '.php"),
 			'U_ONCHANGE_CAT' => PATH_TO_ROOT ."/forum/" . url("/index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
 
-			'L_TOPIC'   => ($total_topic > 1) ? $this->lang['forum.topics'] : $this->lang['forum.topic'],
-			'L_MESSAGE' => ($total_msg > 1) ? $this->lang['forum.messages'] : $this->lang['forum.message'],
 			'L_USER'    => ($total_online > 1) ? $this->lang['user.users'] : $this->lang['user.user'],
 			'L_ADMIN'   => ($total_admin > 1) ? $this->lang['user.administrators'] : $this->lang['user.administrator'],
 			'L_MODO'    => ($total_modo > 1) ? $this->lang['user.moderators'] : $this->lang['user.moderator'],

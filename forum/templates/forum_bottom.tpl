@@ -121,7 +121,7 @@
 					# IF C_TOTAL_POST #
 						<div>
 							<span class="float-left">
-								{@forum.messages.number}: <strong>{MESSAGES_NUMBER}</strong> {L_MESSAGE} {L_DISTRIBUTED} / <strong>{TOPICS_NUMBER}</strong> {L_TOPIC}
+								{@forum.messages.number}: <strong>{MESSAGES_NUMBER}</strong> # IF C_SEVERAL_MESSAGES #{@forum.messages}# ELSE #{@forum.message}# ENDIF # {L_DISTRIBUTED} / <strong>{TOPICS_NUMBER}</strong> # IF C_SEVERAL_TOPICS #{@forum.topics}# ELSE #{@forum.topic}# ENDIF #
 							</span>
 							<span class="float-right forum-stats">
 								<a class="offload" href="{PATH_TO_ROOT}/forum/stats.php"><i class="fa fa-fw fa-chart-bar" aria-hidden="true"></i> {@forum.statistics}</a>
