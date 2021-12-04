@@ -18,7 +18,7 @@ class AdminCacheController extends DefaultAdminController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->handle_submit();
-			$view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.process.success'], MessageHelper::SUCCESS, 5));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.process.success'], MessageHelper::SUCCESS, 5));
 		}
 
 		$this->view->put('CONTENT', $this->form->display());
