@@ -30,6 +30,13 @@ class AdminQuestionCaptchaConfig extends DefaultAdminModuleController
 		$this->lang = LangLoader::get_all_langs(self::$module_id);
 	}
 	
+	protected function init_view()
+	{
+		$this->view = $this->get_template_to_use();
+
+		$this->view->add_lang($this->lang);
+	}
+	
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->build_form();
