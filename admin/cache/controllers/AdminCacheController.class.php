@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 02
+ * @version     PHPBoost 6.0 - last update: 2021 12 04
  * @since       PHPBoost 2.0 - 2008 08 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -21,9 +21,9 @@ class AdminCacheController extends DefaultAdminController
 			$view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.process.success'], MessageHelper::SUCCESS, 5));
 		}
 
-		$view->put('CONTENT', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
-		return new AdminCacheMenuDisplayResponse($view, $this->lang['admin.cache']);
+		return new AdminCacheMenuDisplayResponse($this->view, $this->lang['admin.cache']);
 	}
 
 	protected function build_form()
