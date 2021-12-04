@@ -122,7 +122,7 @@ class AdminModuleDeleteController extends DefaultAdminController
 			switch($error)
 			{
 				case ModulesManager::MODULE_FILES_COULD_NOT_BE_DROPPED:
-					$this->error = MessageHelper::display($this->lang['warning.files.del.failed', 'warning-lang'), MessageHelper::WARNING, 10);
+					$this->error = MessageHelper::display($this->lang['warning.files.del.failed'], MessageHelper::WARNING, 10);
 					break;
 				case ModulesManager::NOT_INSTALLED_MODULE:
 					$this->error = MessageHelper::display($this->lang['addon.modules.not.installed'], MessageHelper::WARNING, 10);
@@ -130,7 +130,7 @@ class AdminModuleDeleteController extends DefaultAdminController
 				case ModulesManager::MODULE_UNINSTALLED:
 					break;
 				default:
-					$this->error = MessageHelper::display($this->lang['warning.process.error', 'warning-lang'), MessageHelper::WARNING, 10);
+					$this->error = MessageHelper::display($this->lang['warning.process.error'], MessageHelper::WARNING, 10);
 			}
 		}
 		else
