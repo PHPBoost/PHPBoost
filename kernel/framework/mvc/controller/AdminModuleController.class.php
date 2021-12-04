@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 01
+ * @version     PHPBoost 6.0 - last update: 2021 12 04
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -49,7 +49,7 @@ abstract class AdminModuleController extends AbstractController
 	
 	public static function get_module()
 	{
-		if (self::$module === null)
+		if (self::$module_id && !in_array(self::$module_id, array('admin', 'kernel', 'user')))
 			self::$module = ModulesManager::get_module(self::$module_id);
 		
 		return self::$module;
@@ -57,7 +57,7 @@ abstract class AdminModuleController extends AbstractController
 	
 	public static function get_module_configuration()
 	{
-		if (self::$module_configuration === null)
+		if (self::$module_id && !in_array(self::$module_id, array('admin', 'kernel', 'user')))
 			self::$module_configuration = self::get_module()->get_configuration();
 		
 		return self::$module_configuration;
