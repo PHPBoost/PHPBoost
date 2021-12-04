@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 02
+ * @version     PHPBoost 6.0 - last update: 2021 12 04
  * @since       PHPBoost 4.1 - 2015 05 22
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -28,7 +28,7 @@ class AdminSmileysListController extends DefaultAdminController
 		$table_model = new HTMLTableModel('table', array(
 			new HTMLTableColumn($this->lang['admin.smiley']),
 			new HTMLTableColumn($this->lang['admin.code']),
-			new HTMLTableColumn(LangLoader::get_message('common.moderation', 'common-lang'), '', array('sr-only' => true))
+			new HTMLTableColumn($this->lang['common.moderation'], '', array('sr-only' => true))
 		), new HTMLTableSortingRule(''), HTMLTableModel::NO_PAGINATION);
 
 		$table = new HTMLTable($table_model);

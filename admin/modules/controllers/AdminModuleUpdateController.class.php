@@ -135,7 +135,7 @@ class AdminModuleUpdateController extends DefaultAdminController
 		switch (ModulesManager::upgrade_module($module_id))
 		{
 			case ModulesManager::UPGRADE_FAILED:
-				return array('msg' => LangLoader::get_message('warning.process.error', 'warning-lang'), 'type' => MessageHelper::WARNING);
+				return array('msg' => $this->lang['warning.process.error'], 'type' => MessageHelper::WARNING);
 				break;
 			case ModulesManager::MODULE_NOT_UPGRADABLE:
 				return array('msg' => $this->lang['addon.modules.not.upgradable'], 'type' => MessageHelper::WARNING);
@@ -144,12 +144,12 @@ class AdminModuleUpdateController extends DefaultAdminController
 				return array('msg' => $this->lang['addon.modules.not.installed'], 'type' => MessageHelper::WARNING);
 				break;
 			case ModulesManager::UNEXISTING_MODULE:
-				return array('msg' => LangLoader::get_message('warning.element.unexists', 'warning-lang'), 'type' => MessageHelper::WARNING);
+				return array('msg' => $this->lang['warning.element.unexists'], 'type' => MessageHelper::WARNING);
 				break;
 			case ModulesManager::MODULE_UPDATED:
 			default:
 				ModulesManager::set_module_activation($module_id, true);
-				return array('msg' => LangLoader::get_message('warning.process.success', 'warning-lang'), 'type' => MessageHelper::SUCCESS);
+				return array('msg' => $this->lang['warning.process.success'], 'type' => MessageHelper::SUCCESS);
 		}
 	}
 
@@ -236,7 +236,7 @@ class AdminModuleUpdateController extends DefaultAdminController
 					}
 					else
 					{
-						$this->view->put('MESSAGE_HELPER_WARNING', MessageHelper::display(LangLoader::get_message('warning.invalid_archive_content', 'warning-lang'), MessageHelper::WARNING));
+						$this->view->put('MESSAGE_HELPER_WARNING', MessageHelper::display($this->lang['warning.invalid_archive_content'], MessageHelper::WARNING));
 					}
 
 					$uploaded_file = new File($archive);
@@ -244,12 +244,12 @@ class AdminModuleUpdateController extends DefaultAdminController
 				}
 				else
 				{
-					$this->view->put('MESSAGE_HELPER_WARNING', MessageHelper::display(LangLoader::get_message('warning.file.upload.invalid.format', 'warning-lang'), MessageHelper::WARNING));
+					$this->view->put('MESSAGE_HELPER_WARNING', MessageHelper::display($this->lang['warning.file.upload.invalid.format'], MessageHelper::WARNING));
 				}
 			}
 			else
 			{
-				$this->view->put('MESSAGE_HELPER_WARNING', MessageHelper::display(LangLoader::get_message('warning.file.upload.error', 'warning-lang'), MessageHelper::WARNING));
+				$this->view->put('MESSAGE_HELPER_WARNING', MessageHelper::display($this->lang['warning.file.upload.error'], MessageHelper::WARNING));
 			}
 		}
 	}

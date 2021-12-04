@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 02
+ * @version     PHPBoost 6.0 - last update: 2021 12 04
  * @since       PHPBoost 3.0 - 2012 01 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -39,7 +39,7 @@ class AdminUninstallLangController extends DefaultAdminController
 			{
 				$this->uninstall($this->form->get_value('drop_files')->get_raw_value());
 
-				AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), LangLoader::get_message('warning.process.success', 'warning-lang'));
+				AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), $this->lang['warning.process.success']);
 			}
 
 			$this->view->put('CONTENT', $this->form->display());
@@ -62,8 +62,8 @@ class AdminUninstallLangController extends DefaultAdminController
 
 		$fieldset->add_field(new FormFieldRadioChoice('drop_files', $this->multiple ? $this->lang['addon.langs.drop.multiple'] : $this->lang['addon.langs.drop'], '0',
 			array(
-				new FormFieldRadioChoiceOption(LangLoader::get_message('common.yes', 'common-lang'), '1'),
-				new FormFieldRadioChoiceOption(LangLoader::get_message('common.no', 'common-lang'), '0')
+				new FormFieldRadioChoiceOption($this->lang['common.yes'], '1'),
+				new FormFieldRadioChoiceOption($this->lang['common.no'], '0')
 			),
 			array('class' => 'inline-radio custom-radio')
 		));

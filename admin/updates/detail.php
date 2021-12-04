@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 02
+ * @version     PHPBoost 6.0 - last update: 2021 12 04
  * @since       PHPBoost 1.6 - 2008 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -56,7 +56,7 @@ if ($app instanceof Application)
 				$download_status = FileSystemHelper::download_remote_file($url, $temporary_dir_path);
 				if (!$download_status)
 				{
-					$view->put('MESSAGE_HELPER', MessageHelper::display(StringVars::replace_vars(LangLoader::get_message('warning.download.file.error', 'warning-lang'), array('filename' => $url)), MessageHelper::ERROR));
+					$view->put('MESSAGE_HELPER', MessageHelper::display(StringVars::replace_vars($lang['warning.download.file.error'], array('filename' => $url)), MessageHelper::ERROR));
 					$installation_error = true;
 					break;
 				}
@@ -80,7 +80,7 @@ if ($app instanceof Application)
 			$download_status = FileSystemHelper::download_remote_file($app->get_autoupdate_url(), $temporary_dir_path);
 			if (!$download_status)
 			{
-				$view->put('MESSAGE_HELPER', MessageHelper::display(StringVars::replace_vars(LangLoader::get_message('warning.download.file.error', 'warning-lang'), array('filename' => $app->get_autoupdate_url())), MessageHelper::ERROR));
+				$view->put('MESSAGE_HELPER', MessageHelper::display(StringVars::replace_vars($lang['warning.download.file.error'], array('filename' => $app->get_autoupdate_url())), MessageHelper::ERROR));
 				$installation_error = true;
 			}
 		}
@@ -99,7 +99,7 @@ if ($app instanceof Application)
 						switch (ModulesManager::upgrade_module($f->get_name()))
 						{
 							case ModulesManager::UPGRADE_FAILED:
-								$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.error', 'warning-lang'), MessageHelper::ERROR));
+								$view->put('MESSAGE_HELPER', MessageHelper::display($lang['warning.process.error'], MessageHelper::ERROR));
 								$installation_error = true;
 								break;
 							case ModulesManager::MODULE_NOT_UPGRADABLE:
@@ -127,7 +127,7 @@ if ($app instanceof Application)
 					}
 					else
 					{
-						$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.error', 'warning-lang'), MessageHelper::ERROR));
+						$view->put('MESSAGE_HELPER', MessageHelper::display($lang['warning.process.error'], MessageHelper::ERROR));
 						$installation_error = true;
 					}
 				}
@@ -173,7 +173,7 @@ if ($app instanceof Application)
 					$update->set_status(AdministratorAlert::ADMIN_ALERT_STATUS_PROCESSED);
 					AdministratorAlertService::save_alert($update);
 
-					$view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.process.success'], MessageHelper::SUCCESS, 4));
+					$view->put('MESSAGE_HELPER', MessageHelper::display($lang['warning.process.success'], MessageHelper::SUCCESS, 4));
 				}
 			}
 
@@ -181,7 +181,7 @@ if ($app instanceof Application)
 		}
 		else
 		{
-			$view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.process.error'], MessageHelper::ERROR));
+			$view->put('MESSAGE_HELPER', MessageHelper::display($lang['warning.process.error'], MessageHelper::ERROR));
 			$installation_error = true;
 		}
 	}

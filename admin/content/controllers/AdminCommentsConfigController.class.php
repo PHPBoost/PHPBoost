@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 02
+ * @version     PHPBoost 6.0 - last update: 2021 12 04
  * @since       PHPBoost 3.0 - 2011 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -87,7 +87,7 @@ class AdminCommentsConfigController extends DefaultAdminController
 				'required' => true,
 				'hidden' => !$this->configuration->are_comments_enabled()
 			),
-			array(new FormFieldConstraintRegex('`^([0-9]+)$`iu', '', LangLoader::get_message('warning.regex.number', 'warning-lang')))
+			array(new FormFieldConstraintRegex('`^([0-9]+)$`iu', '', $this->lang['warning.regex.number']))
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('max_links_comment', $this->lang['comment.max.links'], $this->configuration->get_max_links_comment(),
@@ -95,7 +95,7 @@ class AdminCommentsConfigController extends DefaultAdminController
 				'required' => true,
 				'hidden' => !$this->configuration->are_comments_enabled()
 			),
-			array(new FormFieldConstraintRegex('`^([0-9]+)$`iu', '', LangLoader::get_message('warning.regex.number', 'warning-lang')))
+			array(new FormFieldConstraintRegex('`^([0-9]+)$`iu', '', $this->lang['warning.regex.number']))
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('order_display_comments', $this->lang['comment.display.order'], $this->configuration->get_order_display_comments(),

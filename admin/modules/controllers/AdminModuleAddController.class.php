@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 02
+ * @version     PHPBoost 6.0 - last update: 2021 12 04
  * @since       PHPBoost 3.0 - 2011 09 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -171,20 +171,20 @@ class AdminModuleAddController extends DefaultAdminController
 				return array('msg' => $this->lang['addon.modules.config.conflict'], 'type' => MessageHelper::WARNING);
 				break;
 			case ModulesManager::UNEXISTING_MODULE:
-				return array('msg' => LangLoader::get_message('warning.element.unexists', 'warning-lang'), 'type' => MessageHelper::WARNING);
+				return array('msg' => $this->lang['warning.element.unexists'], 'type' => MessageHelper::WARNING);
 				break;
 			case ModulesManager::MODULE_ALREADY_INSTALLED:
 				return array('msg' => $this->lang['addon.modules.already.installed'], 'type' => MessageHelper::WARNING);
 				break;
 			case ModulesManager::PHP_VERSION_CONFLICT:
-				return array('msg' => LangLoader::get_message('warning.misfit.php', 'warning-lang'), 'type' => MessageHelper::WARNING);
+				return array('msg' => $this->lang['warning.misfit.php'], 'type' => MessageHelper::WARNING);
 				break;
 			case ModulesManager::PHPBOOST_VERSION_CONFLICT:
-				return array('msg' => LangLoader::get_message('warning.misfit.phpboost', 'warning-lang'), 'type' => MessageHelper::WARNING);
+				return array('msg' => $this->lang['warning.misfit.phpboost'], 'type' => MessageHelper::WARNING);
 				break;
 			case ModulesManager::MODULE_INSTALLED:
 			default:
-				return array('msg' => LangLoader::get_message('warning.process.success', 'warning-lang'), 'type' => MessageHelper::SUCCESS);
+				return array('msg' => $this->lang['warning.process.success'], 'type' => MessageHelper::SUCCESS);
 		}
 	}
 

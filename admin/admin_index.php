@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 02
+ * @version     PHPBoost 6.0 - last update: 2021 12 04
  * @since       PHPBoost 1.2 - 2005 06 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -85,7 +85,7 @@ if ($request->get_string('delete-selected-comments', false))
 				CommentsManager::delete_comment($ids[$i]);
 		}
 	}
-	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT, LangLoader::get_message('warning.process.success', 'warning-lang'));
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT, $this->lang['warning.process.success']);
 }
 
 // Advises

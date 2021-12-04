@@ -9,7 +9,7 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminThemeDeleteController extends AdminController
+class AdminThemeDeleteController extends DefaultAdminController
 {
 	private $theme_id;
 	private $multiple = false;
@@ -39,7 +39,7 @@ class AdminThemeDeleteController extends AdminController
 				$drop_files = $this->form->get_value('drop_files')->get_raw_value();
 				$this->delete_theme($drop_files);
 
-				AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), LangLoader::get_message('warning.process.success', 'warning-lang'));
+				AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), $this->lang['warning.process.success']);
 			}
 
 			if (!$this->multiple)
@@ -83,8 +83,8 @@ class AdminThemeDeleteController extends AdminController
 
 		$fieldset->add_field(new FormFieldRadioChoice('drop_files', $this->multiple ? $this->lang['addon.themes.drop.multiple'] : $this->lang['addon.themes.drop'], '0',
 			array(
-				new FormFieldRadioChoiceOption(LangLoader::get_message('common.yes', 'common-lang'), '1'),
-				new FormFieldRadioChoiceOption(LangLoader::get_message('common.no', 'common-lang'), '0')
+				new FormFieldRadioChoiceOption($this->lang['common.yes'], '1'),
+				new FormFieldRadioChoiceOption($this->lang['common.no'], '0')
 			),
 			array('class' => 'inline-radio custom-radio')
 		));

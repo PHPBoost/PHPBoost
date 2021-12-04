@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 02
+ * @version     PHPBoost 6.0 - last update: 2021 12 04
  * @since       PHPBoost 3.0 - 2011 04 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -134,7 +134,7 @@ class AdminLangsNotInstalledListController extends DefaultAdminController
 		}
 		else
 		{
-			$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 10));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.process.success'], MessageHelper::SUCCESS, 10));
 		}
 	}
 
@@ -231,12 +231,12 @@ class AdminLangsNotInstalledListController extends DefaultAdminController
 						}
 						else
 						{
-							$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.element.already.exists', 'warning-lang'), MessageHelper::WARNING));
+							$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.element.already.exists'], MessageHelper::WARNING));
 						}
 					}
 					else
 					{
-						$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.invalid.archive.content', 'warning-lang'), MessageHelper::WARNING));
+						$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.invalid.archive.content'], MessageHelper::WARNING));
 					}
 
 					$uploaded_file = new File($archive);
@@ -244,12 +244,12 @@ class AdminLangsNotInstalledListController extends DefaultAdminController
 				}
 				else
 				{
-					$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.file.invalid.format', 'warning-lang'), MessageHelper::WARNING));
+					$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.file.invalid.format'], MessageHelper::WARNING));
 				}
 			}
 			else
 			{
-				$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.file.upload.error', 'warning-lang'), MessageHelper::WARNING));
+				$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.file.upload.error'], MessageHelper::WARNING));
 			}
 		}
 	}

@@ -19,7 +19,6 @@ class AdminGeneralConfigController extends DefaultAdminController
 	{
 		$this->load_config();
 		$this->build_form();
-
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();

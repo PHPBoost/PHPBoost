@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 02
+ * @version     PHPBoost 6.0 - last update: 2021 12 04
  * @since       PHPBoost 3.0 - 2011 04 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -120,7 +120,7 @@ class AdminLangsInstalledListController extends DefaultAdminController
 				}
 				$lang_number++;
 			}
-			AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), LangLoader::get_message('warning.process.success', 'warning-lang'));
+			AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), $this->lang['warning.process.success']);
 		}
 		else
 		{
@@ -135,7 +135,7 @@ class AdminLangsInstalledListController extends DefaultAdminController
 					$user_accounts_config->set_default_lang($lang->get_id());
 					UserAccountsConfig::save();
 
-					AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), LangLoader::get_message('warning.process.success', 'warning-lang'));
+					AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), $this->lang['warning.process.success']);
 				}
 				else if ($request->get_string('delete-' . $lang->get_id(), ''))
 				{
@@ -146,14 +146,14 @@ class AdminLangsInstalledListController extends DefaultAdminController
 					$authorizations = Authorizations::auth_array_simple(Lang::ACCES_LANG, $lang->get_id());
 					LangsManager::change_informations($lang->get_id(), 1, $authorizations);
 
-					AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), LangLoader::get_message('warning.process.success', 'warning-lang'));
+					AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), $this->lang['warning.process.success']);
 				}
 				else if ($request->get_string('disable-' . $lang->get_id(), ''))
 				{
 					$authorizations = Authorizations::auth_array_simple(Lang::ACCES_LANG, $lang->get_id());
 					LangsManager::change_informations($lang->get_id(), 0, $authorizations);
 
-					AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), LangLoader::get_message('warning.process.success', 'warning-lang'));
+					AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), $this->lang['warning.process.success']);
 				}
 			}
 		}
@@ -169,7 +169,7 @@ class AdminLangsInstalledListController extends DefaultAdminController
 					LangsManager::change_informations($lang->get_id(), $lang->is_activated(), $authorizations);
 				}
 			}
-			AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), LangLoader::get_message('warning.process.success', 'warning-lang'));
+			AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), $this->lang['warning.process.success']);
 		}
 	}
 }

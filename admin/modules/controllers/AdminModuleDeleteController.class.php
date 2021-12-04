@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 02
+ * @version     PHPBoost 6.0 - last update: 2021 12 04
  * @since       PHPBoost 3.0 - 2011 09 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -89,8 +89,8 @@ class AdminModuleDeleteController extends DefaultAdminController
 
 		$fieldset->add_field(new FormFieldRadioChoice('drop_files', $this->multiple ? $this->lang['addon.modules.drop.multiple'] : $this->lang['addon.modules.drop'], '0',
 			array(
-				new FormFieldRadioChoiceOption(LangLoader::get_message('common.yes', 'common-lang'), '1'),
-				new FormFieldRadioChoiceOption(LangLoader::get_message('common.no', 'common-lang'), '0')
+				new FormFieldRadioChoiceOption($this->lang['common.yes'], '1'),
+				new FormFieldRadioChoiceOption($this->lang['common.no'], '0')
 			),
 			array('class' => 'inline-radio custom-radio')
 		));
@@ -122,7 +122,7 @@ class AdminModuleDeleteController extends DefaultAdminController
 			switch($error)
 			{
 				case ModulesManager::MODULE_FILES_COULD_NOT_BE_DROPPED:
-					$this->error = MessageHelper::display(LangLoader::get_message('warning.files.del.failed', 'warning-lang'), MessageHelper::WARNING, 10);
+					$this->error = MessageHelper::display($this->lang['warning.files.del.failed', 'warning-lang'), MessageHelper::WARNING, 10);
 					break;
 				case ModulesManager::NOT_INSTALLED_MODULE:
 					$this->error = MessageHelper::display($this->lang['addon.modules.not.installed'], MessageHelper::WARNING, 10);
@@ -130,7 +130,7 @@ class AdminModuleDeleteController extends DefaultAdminController
 				case ModulesManager::MODULE_UNINSTALLED:
 					break;
 				default:
-					$this->error = MessageHelper::display(LangLoader::get_message('warning.process.error', 'warning-lang'), MessageHelper::WARNING, 10);
+					$this->error = MessageHelper::display($this->lang['warning.process.error', 'warning-lang'), MessageHelper::WARNING, 10);
 			}
 		}
 		else

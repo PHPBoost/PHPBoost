@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 02
+ * @version     PHPBoost 6.0 - last update: 2021 12 04
  * @since       PHPBoost 4.0 - 2013 07 08
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -91,7 +91,7 @@ class AdminContentConfigController extends DefaultAdminController
 				'required' => true,
 				'description' => $this->lang['admin.max.pm.number.clue']
 			),
-			array(new FormFieldConstraintRegex('`^([0-9]+)$`iu', '', LangLoader::get_message('warning.regex.number', 'warning-lang')))
+			array(new FormFieldConstraintRegex('`^([0-9]+)$`iu', '', $this->lang['warning.regex.number']))
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('anti_flood_enabled', $this->lang['admin.anti.flood'], $this->content_management_config->is_anti_flood_enabled(),
@@ -106,7 +106,7 @@ class AdminContentConfigController extends DefaultAdminController
 				'required' => true,
 				'description' => $this->lang['admin.flood.delay.clue']
 			),
-			array(new FormFieldConstraintRegex('`^([0-9]+)$`iu', '', LangLoader::get_message('warning.regex.number', 'warning-lang')))
+			array(new FormFieldConstraintRegex('`^([0-9]+)$`iu', '', $this->lang['warning.regex.number']))
 		));
 
 		$fieldset = new FormFieldsetHTML('captcha', $this->lang['admin.captcha']);

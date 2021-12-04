@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 02
+ * @version     PHPBoost 6.0 - last update: 2021 12 04
  * @since       PHPBoost 3.0 - 2011 07 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -316,9 +316,9 @@ class AdminAdvancedConfigController extends DefaultAdminController
 				'hidden' => !$this->cookiebar_config->is_cookiebar_enabled(),
 				'events' => array('change' =>
 					'if (HTMLForms.getField("cookiebar_tracking_mode").getValue() == \'' . CookieBarConfig::NOTRACKING_COOKIE . '\') {
-						HTMLForms.getField("cookiebar_content").setValue("' . LangLoader::get_message('user.cookiebar.message.notracking', 'user-lang') . '");
+						HTMLForms.getField("cookiebar_content").setValue("' . $this->lang['user.cookiebar.message.notracking'] . '");
 					} else {
-						HTMLForms.getField("cookiebar_content").setValue("' . LangLoader::get_message('user.cookiebar.message.tracking', 'user-lang') . '");
+						HTMLForms.getField("cookiebar_content").setValue("' . $this->lang['user.cookiebar.message.tracking'] . '");
 					}'
 				)
 			)
@@ -344,7 +344,7 @@ class AdminAdvancedConfigController extends DefaultAdminController
 				'rows' => 7, 'required' => true,
 				'description' => $this->lang['configuration.cookiebar.aboutcookie.clue'],
 				'hidden' => !$this->cookiebar_config->is_cookiebar_enabled(),
-				'reset_value' => LangLoader::get_message('user.cookiebar.message.aboutcookie', 'user-lang')
+				'reset_value' => $this->lang['user.cookiebar.message.aboutcookie']
 			)
 		));
 

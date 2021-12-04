@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 02
+ * @version     PHPBoost 6.0 - last update: 2021 12 04
  * @since       PHPBoost 3.0 - 2010 02 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -57,18 +57,18 @@ class AdminViewAllMembersController extends DefaultAdminController
 			new HTMLTableColumn($this->lang['user.registration.date'], 'registration_date'),
 			new HTMLTableColumn($this->lang['user.last.connection'], 'last_connection_date'),
 			new HTMLTableColumn($this->lang['user.approbation'], 'approved'),
-			new HTMLTableColumn(LangLoader::get_message('common.moderation', 'common-lang'), '', array('sr-only' => true))
+			new HTMLTableColumn($this->lang['common.moderation'], '', array('sr-only' => true))
 		), new HTMLTableSortingRule('display_name', HTMLTableSortingRule::ASC));
 
 		$table_model->set_filters_menu_title($this->lang['user.filter.members']);
 		$table_model->add_filter(new HTMLTableContainsTextSQLFilter('display_name', 'filter1', $this->lang['user.display.name']));
 		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('level', 'filter2', $this->lang['user.rank'], array(2 => $this->lang['user.administrators'], 1 => $this->lang['user.moderators'], 0 => $this->lang['user.members'])));
 		$table_model->add_filter(new HTMLTableContainsTextSQLFilter('email', 'filter3', $this->lang['user.email']));
-		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('registration_date', 'filter4', $this->lang['user.registration.date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('common.minimum', 'common-lang'))));
-		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('registration_date', 'filter5', $this->lang['user.registration.date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('common.maximum', 'common-lang'))));
-		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('last_connection_date', 'filter6', $this->lang['user.last.connection'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('common.minimum', 'common-lang'))));
-		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('last_connection_date', 'filter7', $this->lang['user.last.connection'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('common.maximum', 'common-lang'))));
-		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('approved', 'filter4', $this->lang['user.approbation'], array(1 => LangLoader::get_message('common.status.approved', 'common-lang'), 0 => LangLoader::get_message('common.status.unapproved', 'common-lang'))));
+		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('registration_date', 'filter4', $this->lang['user.registration.date'] . ' ' . TextHelper::lcfirst($this->lang['common.minimum'])));
+		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('registration_date', 'filter5', $this->lang['user.registration.date'] . ' ' . TextHelper::lcfirst($this->lang['common.maximum'])));
+		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('last_connection_date', 'filter6', $this->lang['user.last.connection'] . ' ' . TextHelper::lcfirst($this->lang['common.minimum'])));
+		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('last_connection_date', 'filter7', $this->lang['user.last.connection'] . ' ' . TextHelper::lcfirst($this->lang['common.maximum'])));
+		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('approved', 'filter4', $this->lang['user.approbation'], array(1 => $this->lang['common.status.approved'], 0 => $this->lang['common.status.unapproved'])));
 
 		$table = new HTMLTable($table_model);
 		$table->set_filters_fieldset_class_HTML();
@@ -99,8 +99,8 @@ class AdminViewAllMembersController extends DefaultAdminController
 				new HTMLTableRowCell(UserService::get_level_lang($user->get_level())),
 				new HTMLTableRowCell(new LinkHTMLElement('mailto:' . $user->get_email(), '<i class="fa fa-fw iboost fa-iboost-email"></i>', array('aria-label' => $this->lang['user.email']), 'button submit')),
 				new HTMLTableRowCell(Date::to_format($row['registration_date'], Date::FORMAT_DAY_MONTH_YEAR)),
-				new HTMLTableRowCell(!empty($row['last_connection_date']) && (empty($row['login']) || $row['approved']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('common.never', 'common-lang')),
-				new HTMLTableRowCell($user->is_banned() ? $this->lang['user.banned'] : (empty($row['login']) || $row['approved'] ? LangLoader::get_message('common.yes', 'common-lang') : LangLoader::get_message('common.no', 'common-lang'))),
+				new HTMLTableRowCell(!empty($row['last_connection_date']) && (empty($row['login']) || $row['approved']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : $this->lang['common.never']),
+				new HTMLTableRowCell($user->is_banned() ? $this->lang['user.banned'] : (empty($row['login']) || $row['approved'] ? $this->lang['common.yes'] : $this->lang['common.no'])),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display(), 'controls')
 			));
 		}
@@ -139,9 +139,9 @@ class AdminViewAllMembersController extends DefaultAdminController
 				}
 			}
 			if ($last_admin_delete && $selected_users_number == 1)
-				AppContext::get_response()->redirect(AdminMembersUrlBuilder::management(), LangLoader::get_message('warning.unauthorized.action', 'warning-lang'), MessageHelper::ERROR);
+				AppContext::get_response()->redirect(AdminMembersUrlBuilder::management(), $this->lang['warning.unauthorized.action'], MessageHelper::ERROR);
 			else
-				AppContext::get_response()->redirect(AdminMembersUrlBuilder::management(), LangLoader::get_message('warning.process.success', 'warning-lang'));
+				AppContext::get_response()->redirect(AdminMembersUrlBuilder::management(), $this->lang['warning.process.success']);
 		}
 	}
 }

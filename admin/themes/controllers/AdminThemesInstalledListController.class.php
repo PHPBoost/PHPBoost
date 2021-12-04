@@ -143,7 +143,7 @@ class AdminThemesInstalledListController extends DefaultAdminController
 				}
 				$theme_number++;
 			}
-			AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), LangLoader::get_message('warning.process.success', 'warning-lang'));
+			AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), $this->lang['warning.process.success']);
 		}
 		else
 		{
@@ -158,7 +158,7 @@ class AdminThemesInstalledListController extends DefaultAdminController
 					$user_accounts_config->set_default_theme($theme->get_id());
 					UserAccountsConfig::save();
 
-					AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), LangLoader::get_message('warning.process.success', 'warning-lang'));
+					AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), $this->lang['warning.process.success']);
 				}
 				else if ($request->get_string('delete-' . $theme->get_id(), ''))
 				{
@@ -169,14 +169,14 @@ class AdminThemesInstalledListController extends DefaultAdminController
 					$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $theme->get_id());
 					ThemesManager::change_informations($theme->get_id(), 1, $authorizations);
 
-					AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), LangLoader::get_message('warning.process.success', 'warning-lang'));
+					AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), $this->lang['warning.process.success']);
 				}
 				else if ($request->get_string('disable-' . $theme->get_id(), ''))
 				{
 					$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $theme->get_id());
 					ThemesManager::change_informations($theme->get_id(), 0, $authorizations);
 
-					AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), LangLoader::get_message('warning.process.success', 'warning-lang'));
+					AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), $this->lang['warning.process.success']);
 				}
 			}
 		}
@@ -191,7 +191,7 @@ class AdminThemesInstalledListController extends DefaultAdminController
 					ThemesManager::change_informations($theme->get_id(), $theme->is_activated(), $authorizations);
 				}
 			}
-			AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), LangLoader::get_message('warning.process.success', 'warning-lang'));
+			AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), $this->lang['warning.process.success']);
 		}
 	}
 }
