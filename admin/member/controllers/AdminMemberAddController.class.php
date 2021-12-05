@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 02
+ * @version     PHPBoost 6.0 - last update: 2021 12 05
  * @since       PHPBoost 3.0 - 2010 12 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -21,9 +21,9 @@ class AdminMemberAddController extends AdminController
 			AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : AdminMembersUrlBuilder::management()), StringVars::replace_vars($this->lang['user.message.success.add'], array('name' => $display_name)));
 		}
 
-		$view->put('CONTENT', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
-		return new AdminMembersDisplayResponse($view, $this->lang['user.add.member']);
+		return new AdminMembersDisplayResponse($this->view, $this->lang['user.add.member']);
 	}
 
 	private function build_form(HTTPRequestCustom $request)
