@@ -68,6 +68,8 @@ class ContactController extends DefaultModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
+		$this->config = ContactConfig::load();
+
 		$fieldset = new FormFieldsetHTML('send_a_mail', $this->config->get_title());
 		$form->add_fieldset($fieldset);
 
@@ -253,7 +255,6 @@ class ContactController extends DefaultModuleController
 	public static function get_view()
 	{
 		$object = new self();
-		$object->init();
 		$object->check_authorizations();
 		$object->build_view();
 		return $object->view;

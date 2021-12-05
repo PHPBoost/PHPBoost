@@ -15,6 +15,26 @@ class BugtrackerUnsolvedListController extends DefaultModuleController
 		return new FileTemplate('bugtracker/BugtrackerListController.tpl');
 	}
 
+	public static function __static()
+	{
+		self::$module_id = 'bugtracker';
+	}
+
+	public function __construct($module_id = '')
+	{
+		self::$module_id = 'bugtracker';
+
+		$this->init_parameters();
+		$this->init_view();
+	}
+
+	protected function init_parameters()
+	{
+		$this->request = AppContext::get_request();
+		$this->config = BugtrackerConfig::load();
+		$this->lang = LangLoader::get_all_langs(self::$module_id);
+	}
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
@@ -177,7 +197,6 @@ class BugtrackerUnsolvedListController extends DefaultModuleController
 	public static function get_view()
 	{
 		$object = new self();
-		$object->init();
 		$object->check_authorizations();
 		$object->build_view(AppContext::get_request());
 		return BugtrackerViews::build_body_view($object->view, 'unsolved');
