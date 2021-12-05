@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 05
  * @since       PHPBoost 4.0 - 2014 03 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -162,11 +162,7 @@ class CalendarAjaxEventsController extends AbstractController
 
 	private function init(HTTPRequestCustom $request)
 	{
-		$this->lang = array_merge(
-			LangLoader::get('common-lang'),
-			LangLoader::get('date-lang'),
-			LangLoader::get('common', 'calendar')
-		);
+		$this->lang = LangLoader::get_all_langs('calendar');
 		$this->view = new FileTemplate('calendar/CalendarAjaxEventsController.tpl');
 		$this->view->add_lang($this->lang);
 

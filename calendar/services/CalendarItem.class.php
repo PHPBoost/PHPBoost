@@ -149,7 +149,7 @@ class CalendarItem
 
 	public function get_template_vars()
 	{
-		$lang = LangLoader::get('common', 'calendar');
+		$lang = LangLoader::get_all_langs('calendar');
 
 		$category = $this->content->get_category();
 		$content = FormatingHelper::second_parse($this->content->get_content());
