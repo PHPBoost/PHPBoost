@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 22
+ * @version     PHPBoost 6.0 - last update: 2021 12 05
  * @since       PHPBoost 4.0 - 2013 10 07
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -22,7 +22,7 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 	function display()
 	{
 		$template = $this->get_template_to_use();
-		$lang = LangLoader::get('common', 'contact');
+		$lang = LangLoader::get_all_langs('contact');
 		$config = ContactConfig::load();
 
 		$view = new FileTemplate('contact/ContactFormFieldObjectPossibleValues.tpl');

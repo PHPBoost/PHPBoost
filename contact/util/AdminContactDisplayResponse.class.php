@@ -14,7 +14,7 @@ class AdminContactDisplayResponse extends AdminMenuDisplayResponse
 	public function __construct($view, $page_title)
 	{
 		parent::__construct($view);
-		$lang = LangLoader::get('form-lang');
+		$lang = LangLoader::get_all_langs();
 
 		$this->add_link($lang['form.fields.management'], ContactUrlBuilder::manage_fields());
 		$this->add_link($lang['form.field.add'], ContactUrlBuilder::add_field());

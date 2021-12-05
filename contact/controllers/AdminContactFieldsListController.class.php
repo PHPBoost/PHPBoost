@@ -3,20 +3,20 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 16
+ * @version     PHPBoost 6.0 - last update: 2021 12 05
  * @since       PHPBoost 4.0 - 2013 03 01
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminContactFieldsListController extends AdminModuleController
+class AdminContactFieldsListController extends DefaultAdminModuleController
 {
-	private $view;
-	private $config;
+	protected function get_template_to_use()
+	{
+		return new FileTemplate('contact/AdminContactFieldsListController.tpl');
+	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
-
 		$this->update_fields($request);
 
 		$fields_number = 0;
@@ -42,14 +42,7 @@ class AdminContactFieldsListController extends AdminModuleController
 			'C_SEVERAL_FIELDS' => $fields_number > 1
 		));
 
-		return new AdminContactDisplayResponse($this->view, LangLoader::get_message('form.fields.management', 'form-lang'));
-	}
-
-	private function init()
-	{
-		$this->view = new FileTemplate('contact/AdminContactFieldsListController.tpl');
-		$this->view->add_lang(array_merge(LangLoader::get('common-lang'), LangLoader::get('form-lang')));
-		$this->config = ContactConfig::load();
+		return new AdminContactDisplayResponse($this->view, $this->lang['form.fields.management']);
 	}
 
 	private function update_fields(HTTPRequestCustom $request)
@@ -57,7 +50,7 @@ class AdminContactFieldsListController extends AdminModuleController
 		if ($request->get_value('submit', false))
 		{
 			$this->update_position($request);
-			$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.position.update', 'warning-lang'), MessageHelper::SUCCESS, 5));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.success.position.update'], MessageHelper::SUCCESS, 5));
 		}
 	}
 

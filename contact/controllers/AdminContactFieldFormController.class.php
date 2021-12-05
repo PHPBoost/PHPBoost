@@ -3,38 +3,27 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 24
+ * @version     PHPBoost 6.0 - last update: 2021 12 05
  * @since       PHPBoost 4.0 - 2013 08 04
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminContactFieldFormController extends AdminModuleController
+class AdminContactFieldFormController extends DefaultAdminModuleController
 {
-	private $view;
-	private $lang;
-
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonDefaultSubmit
-	 */
-	private $submit_button;
-
-	private $config;
-
 	private $field;
 	private $id;
 	private $is_new_field;
+
+	protected function get_template_to_use()
+	{
+		return new FileTemplate('contact/AdminContactFieldFormController.tpl');
+	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init($request);
 
 		$this->build_form($request);
-
-		$this->view = new FileTemplate('contact/AdminContactFieldFormController.tpl');
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -45,7 +34,7 @@ class AdminContactFieldFormController extends AdminModuleController
 				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ContactUrlBuilder::manage_fields()), StringVars::replace_vars($this->lang['contact.message.success.edit'], array('name' => $this->get_field()->get_name())));
 		}
 
-		$this->view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
 		if (!$this->get_field()->is_readonly())
 			$this->view->put('JS_EVENT_SELECT_TYPE', $this->get_events_select_type());
@@ -55,11 +44,6 @@ class AdminContactFieldFormController extends AdminModuleController
 
 	private function init(HTTPRequestCustom $request)
 	{
-		$this->lang = array_merge(
-			LangLoader::get('form-lang'),
-			LangLoader::get('common', 'contact')
-		);
-		$this->config = ContactConfig::load();
 		$this->id = $request->get_getint('id', 0);
 	}
 

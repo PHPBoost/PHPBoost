@@ -1,4 +1,4 @@
-# INCLUDE FORM #
+# INCLUDE CONTENT #
 <script>
 	jQuery(document).ready(function() {
 		{JS_EVENT_SELECT_TYPE}

@@ -3,39 +3,22 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 22
+ * @version     PHPBoost 6.0 - last update: 2021 12 05
  * @since       PHPBoost 3.0 - 2010 05 02
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class ContactController extends ModuleController
+class ContactController extends DefaultModuleController
 {
-	private $view;
-	private $lang;
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonDefaultSubmit
-	 */
-	private $submit_button;
-	private $config;
-
-	private function init()
+	protected function get_template_to_use()
 	{
-		$this->lang = LangLoader::get('common', 'contact');
-		$this->view = new FileTemplate('contact/ContactController.tpl');
-		$this->view->add_lang($this->lang);
-		$this->config = ContactConfig::load();
+		return new FileTemplate('contact/ContactController.tpl');
 	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
-
-		$this->init();
 
 		$this->build_view();
 
