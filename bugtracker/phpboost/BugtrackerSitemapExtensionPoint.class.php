@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2021 12 05
  * @since       PHPBoost 4.0 - 2014 01 22
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -22,7 +22,7 @@ class BugtrackerSitemapExtensionPoint implements SitemapExtensionPoint
 
 	private function get_module_map($auth_mode)
 	{
-		$lang = LangLoader::get('common', 'bugtracker');
+		$lang = LangLoader::get_all_langs('bugtracker');
 		$config = BugtrackerConfig::load();
 		$current_user = AppContext::get_current_user();
 

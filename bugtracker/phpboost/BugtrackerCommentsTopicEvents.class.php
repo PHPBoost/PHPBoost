@@ -12,7 +12,7 @@ class BugtrackerCommentsTopicEvents extends CommentsTopicEvents
 	public function execute_add_comment_event()
 	{
 		//Load module lang
-		$lang = LangLoader::get('common', 'bugtracker');
+		$lang = LangLoader::get_all_langs('bugtracker');
 
 		//Load module configuration
 		$config = BugtrackerConfig::load();

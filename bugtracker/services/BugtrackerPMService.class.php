@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 19
+ * @version     PHPBoost 6.0 - last update: 2021 12 05
  * @since       PHPBoost 3.0 - 2012 10 12
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -21,7 +21,7 @@ class BugtrackerPMService
 	public static function send_PM($pm_type, $recipient_id, $bug_id, $message = '')
 	{
 		//Load module lang
-		$lang = LangLoader::get('common', 'bugtracker');
+		$lang = LangLoader::get_all_langs('bugtracker');
 
 		//Send the PM if the recipient is not a guest
 		if ($recipient_id > 0)
@@ -29,7 +29,7 @@ class BugtrackerPMService
 			//Get current user
 			$current_user = AppContext::get_current_user();
 
-			$author = $current_user->get_id() != User::VISITOR_LEVEL ? $current_user->get_display_name() : LangLoader::get_message('user.guest', 'user-lang');
+			$author = $current_user->get_id() != User::VISITOR_LEVEL ? $current_user->get_display_name() : $lang['user.guest'];
 
 			$pm_content = StringVars::replace_vars($lang['pm.' . $pm_type . '.content'], array('author' => $author, 'id' => $bug_id)) . (!empty($message) ? ($pm_type != 'edit' ? StringVars::replace_vars($lang['pm.with_comment'], array('comment' => $message)) : StringVars::replace_vars($lang['pm.edit_fields'], array('fields' => $message))) : '') . ($pm_type != 'delete' ? StringVars::replace_vars($lang['pm.bug_link'], array('link' => BugtrackerUrlBuilder::detail($bug_id)->relative())) : '');
 

@@ -3,19 +3,20 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 26
+ * @version     PHPBoost 6.0 - last update: 2021 12 05
  * @since       PHPBoost 3.0 - 2012 11 13
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class BugtrackerStatsListController extends ModuleController
+class BugtrackerStatsListController extends DefaultModuleController
 {
-	private $lang;
-	private $view;
+	protected function get_template_to_use()
+	{
+		return new FileTemplate('bugtracker/BugtrackerStatsListController.tpl');
+	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
-
 		$this->check_page_exists();
 
 		$this->check_authorizations();
@@ -27,8 +28,7 @@ class BugtrackerStatsListController extends ModuleController
 
 	private function build_view($request)
 	{
-		$config = BugtrackerConfig::load();
-		$versions = $config->get_versions();
+		$versions = $this->config->get_versions();
 		$display_versions = count($versions);
 
 		$stats_cache = BugtrackerStatsCache::load();
@@ -40,8 +40,8 @@ class BugtrackerStatsListController extends ModuleController
 			'C_FIXED_BUGS'			=> !empty($bugs_number_per_version),
 			'C_POSTERS'				=> !empty($top_posters),
 			'C_DISPLAY_VERSIONS'	=> $display_versions,
-			'C_DISPLAY_TOP_POSTERS'	=> $config->are_stats_top_posters_enabled(),
-			'C_ROADMAP_ENABLED'		=> $config->is_roadmap_enabled()
+			'C_DISPLAY_TOP_POSTERS'	=> $this->config->are_stats_top_posters_enabled(),
+			'C_ROADMAP_ENABLED'		=> $this->config->is_roadmap_enabled()
 		));
 
 		foreach ($stats_cache->get_bugs_number_list() as $status => $bugs_number)
@@ -84,16 +84,6 @@ class BugtrackerStatsListController extends ModuleController
 		}
 
 		return $this->view;
-	}
-
-	private function init()
-	{
-		$this->lang = array_merge(
-			LangLoader::get('common-lang'),
-			LangLoader::get('common', 'bugtracker')
-		);
-		$this->view = new FileTemplate('bugtracker/BugtrackerStatsListController.tpl');
-		$this->view->add_lang($this->lang);
 	}
 
 	private function check_page_exists()

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 12 05
  * @since       PHPBoost 4.0 - 2014 01 21
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -28,7 +28,7 @@ class BugtrackerFeedProvider implements FeedProvider
 	public function get_feed_data_struct($idcat = 0, $name = '')
 	{
 		$querier = PersistenceContext::get_querier();
-		$lang = LangLoader::get('common', 'bugtracker');
+		$lang = LangLoader::get_all_langs('bugtracker');
 
 		//Configuration load
 		$config = BugtrackerConfig::load();
@@ -47,7 +47,7 @@ class BugtrackerFeedProvider implements FeedProvider
 		$data->set_link(SyndicationUrlBuilder::rss('bugtracker', $idcat));
 		$data->set_host(HOST);
 		$data->set_desc($feed_module_name . ' - ' . $site_name);
-		$data->set_lang(LangLoader::get_message('common.xml.lang', 'common-lang'));
+		$data->set_lang($lang['common.xml.lang']);
 		$data->set_auth_bit(BugtrackerAuthorizationsService::READ_AUTHORIZATIONS);
 
 		$results = $querier->select("SELECT bugtracker.*, author.*
@@ -64,7 +64,7 @@ class BugtrackerFeedProvider implements FeedProvider
 			$link = BugtrackerUrlBuilder::detail($bug->get_id() . '-' . $bug->get_rewrited_title());
 
 			$description = FormatingHelper::second_parse($bug->get_content());
-			$description .= '<br /><br />' . $lang['labels.fields.reproductible'] . ' : ' . ($bug->is_reproductible() ? LangLoader::get_message('commonyes', 'common-lang') : LangLoader::get_message('commonno', 'common-lang'));
+			$description .= '<br /><br />' . $lang['labels.fields.reproductible'] . ' : ' . ($bug->is_reproductible() ? $lang['common.yes'] : $lang['common.no']);
 
 			if ($bug->is_reproductible())
 				$description .= '<br />' . FormatingHelper::second_parse($bug->get_reproduction_method()) . '<br />';

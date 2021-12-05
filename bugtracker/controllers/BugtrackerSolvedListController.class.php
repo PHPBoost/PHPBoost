@@ -3,20 +3,20 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 26
+ * @version     PHPBoost 6.0 - last update: 2021 12 05
  * @since       PHPBoost 3.0 - 2012 11 13
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class BugtrackerSolvedListController extends ModuleController
+class BugtrackerSolvedListController extends DefaultModuleController
 {
-	private $lang;
-	private $view;
+	protected function get_template_to_use()
+	{
+		return new FileTemplate('bugtracker/BugtrackerListController.tpl');
+	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
-
 		$this->check_authorizations();
 
 		$this->build_view($request);
@@ -26,9 +26,6 @@ class BugtrackerSolvedListController extends ModuleController
 
 	private function build_view($request)
 	{
-		//Configuration load
-		$config = BugtrackerConfig::load();
-
 		$field = $request->get_value('field', BugtrackerUrlBuilder::DEFAULT_SORT_FIELD);
 		$sort = $request->get_value('sort', BugtrackerUrlBuilder::DEFAULT_SORT_MODE);
 		$current_page = $request->get_getint('page', 1);
@@ -86,7 +83,7 @@ class BugtrackerSolvedListController extends ModuleController
 		FROM " . BugtrackerSetup::$bugtracker_table . " b
 		LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = b.author_id
 		WHERE (status = '" . BugtrackerItem::FIXED . "' OR status = '" . BugtrackerItem::REJECTED . "')" .
-		($config->is_restrict_display_to_own_elements_enabled() && !BugtrackerAuthorizationsService::check_authorizations()->moderation() ? "AND b.author_id = :user_id " : "") .
+		($this->config->is_restrict_display_to_own_elements_enabled() && !BugtrackerAuthorizationsService::check_authorizations()->moderation() ? "AND b.author_id = :user_id " : "") .
 		$select_filters . "
 		ORDER BY " . $field_bdd . " " . $mode . "
 		LIMIT :number_items_per_page OFFSET :display_from",
@@ -108,7 +105,7 @@ class BugtrackerSolvedListController extends ModuleController
 
 			$this->view->assign_block_vars('bug', array_merge($bug->get_template_vars(), array(
 				'C_LINE_COLOR'		=> true,
-				'LINE_COLOR' 		=> $bug->is_fixed() ? $config->get_fixed_bug_color() : $config->get_rejected_bug_color(),
+				'LINE_COLOR' 		=> $bug->is_fixed() ? $this->config->get_fixed_bug_color() : $this->config->get_rejected_bug_color(),
 				'U_CHANGE_STATUS'	=> BugtrackerUrlBuilder::change_status($bug->get_id())->rel(),
 				'U_EDIT'			=> BugtrackerUrlBuilder::edit($bug->get_id(), 'solved', $current_page, $filter, $filter_id)->rel(),
 				'U_DELETE'			=> BugtrackerUrlBuilder::delete($bug->get_id(), 'solved', $current_page, $filter, $filter_id)->rel(),
@@ -117,18 +114,18 @@ class BugtrackerSolvedListController extends ModuleController
 		$result->dispose();
 
 		$bugs_colspan = BugtrackerAuthorizationsService::check_authorizations()->moderation() ? 5 : 4;
-		if ($config->is_type_column_displayed()) $bugs_colspan++;
-		if ($config->is_category_column_displayed()) $bugs_colspan++;
-		if ($config->is_priority_column_displayed()) $bugs_colspan++;
-		if ($config->is_detected_in_column_displayed()) $bugs_colspan++;
+		if ($this->config->is_type_column_displayed()) $bugs_colspan++;
+		if ($this->config->is_category_column_displayed()) $bugs_colspan++;
+		if ($this->config->is_priority_column_displayed()) $bugs_colspan++;
+		if ($this->config->is_detected_in_column_displayed()) $bugs_colspan++;
 
 		$this->view->put_all(array(
 			'C_IS_ADMIN'					=> BugtrackerAuthorizationsService::check_authorizations()->moderation(),
 			'C_BUGS' 						=> $result->get_rows_count() > 0,
-			'C_DISPLAY_TYPE_COLUMN'			=> $config->is_type_column_displayed(),
-			'C_DISPLAY_CATEGORY_COLUMN'		=> $config->is_category_column_displayed(),
-			'C_DISPLAY_PRIORITY_COLUMN'		=> $config->is_priority_column_displayed(),
-			'C_DISPLAY_DETECTED_IN_COLUMN'	=> $config->is_detected_in_column_displayed(),
+			'C_DISPLAY_TYPE_COLUMN'			=> $this->config->is_type_column_displayed(),
+			'C_DISPLAY_CATEGORY_COLUMN'		=> $this->config->is_category_column_displayed(),
+			'C_DISPLAY_PRIORITY_COLUMN'		=> $this->config->is_priority_column_displayed(),
+			'C_DISPLAY_DETECTED_IN_COLUMN'	=> $this->config->is_detected_in_column_displayed(),
 			'C_PAGINATION'					=> $pagination->has_several_pages(),
 			'PAGINATION' 					=> $pagination->display(),
 			'BUGS_COLSPAN' 					=> $bugs_colspan,
@@ -144,20 +141,10 @@ class BugtrackerSolvedListController extends ModuleController
 			'LINK_BUG_DATE_BOTTOM' 			=> BugtrackerUrlBuilder::solved('date', 'bottom', $current_page, $filter, $filter_id)->rel()
 		));
 
-		if ($config->is_restrict_display_to_own_elements_enabled() && !BugtrackerAuthorizationsService::check_authorizations()->moderation() && !AppContext::get_current_user()->is_guest())
+		if ($this->config->is_restrict_display_to_own_elements_enabled() && !BugtrackerAuthorizationsService::check_authorizations()->moderation() && !AppContext::get_current_user()->is_guest())
 			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.restrict_display_to_own_elements_enabled'], MessageHelper::WARNING));
 
 		return $this->view;
-	}
-
-	private function init()
-	{
-		$this->lang = array_merge(
-			LangLoader::get('common-lang'),
-			LangLoader::get('common', 'bugtracker')
-		);
-		$this->view = new FileTemplate('bugtracker/BugtrackerListController.tpl');
-		$this->view->add_lang($this->lang);
 	}
 
 	private function check_authorizations()

@@ -3,52 +3,31 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 05
  * @since       PHPBoost 3.0 - 2012 10 08
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminBugtrackerAuthorizationsController extends AdminModuleController
+class AdminBugtrackerAuthorizationsController extends DefaultAdminModuleController
 {
-	private $lang;
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonDefaultSubmit
-	 */
-	private $submit_button;
-
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
-
 		// Form building
 		$this->build_form();
-
-		// Creation of the template
-		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
 
 		// Saving of the configuration if the submit button has been submitted
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.config', 'warning-lang'), MessageHelper::SUCCESS, 5));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.success.config'], MessageHelper::SUCCESS, 5));
 		}
 
 		// Display the form on the template
-		$view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
 		// Display the generated page
-		return new AdminBugtrackerDisplayResponse($view, $this->lang['bugtracker.authorizations.module.title']);
-	}
-
-	private function init()
-	{
-		// Load module lang
-		$this->lang = LangLoader::get('common', 'bugtracker');
+		return new AdminBugtrackerDisplayResponse($this->view, $this->lang['bugtracker.authorizations.module.title']);
 	}
 
 	private function build_form()

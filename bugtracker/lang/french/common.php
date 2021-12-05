@@ -25,6 +25,7 @@ $lang['bugtracker.roadmap']       = 'Feuille de route';
 $lang['bugtracker.history']       = 'Historique du ticket';
 $lang['bugtracker.edit']          = 'Éditer le ticket';
 $lang['bugtracker.add']           = 'Ouvrir un ticket';
+$lang['bugtracker.delete']        = 'Supprimer un ticket';
 $lang['bugtracker.detail']        = 'Ticket';
 $lang['bugtracker.change_status'] = 'Changer l\'état du ticket';
 

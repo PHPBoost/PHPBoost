@@ -3,19 +3,21 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 26
+ * @version     PHPBoost 6.0 - last update: 2021 12 05
  * @since       PHPBoost 3.0 - 2012 11 11
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class BugtrackerDetailController extends ModuleController
+class BugtrackerDetailController extends DefaultModuleController
 {
-	private $lang;
-	private $view;
 	private $bug;
-	private $config;
 	private $current_user;
+
+   	protected function get_template_to_use()
+   	{
+	   	return new FileTemplate('bugtracker/BugtrackerDetailController.tpl');
+   	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -34,19 +36,10 @@ class BugtrackerDetailController extends ModuleController
 		$request = AppContext::get_request();
 		$id = $request->get_int('id', 0);
 
-		$this->view = new FileTemplate('bugtracker/BugtrackerDetailController.tpl');
-
-		$this->lang = array_merge(
-			LangLoader::get('common-lang'),
-			LangLoader::get('common', 'bugtracker')
-		);
-		$this->view->add_lang($this->lang);
-		$this->config = BugtrackerConfig::load();
-
 		try {
 			$this->bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));
 		} catch (RowNotFoundException $e) {
-			$error_controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $this->lang['error.e_unexist_bug']);
+			$error_controller = new UserErrorController($this->lang['warning.error'], $this->lang['error.e_unexist_bug']);
 			DispatchManager::redirect($error_controller);
 		}
 	}

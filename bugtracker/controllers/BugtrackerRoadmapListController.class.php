@@ -3,22 +3,20 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 26
+ * @version     PHPBoost 6.0 - last update: 2021 12 05
  * @since       PHPBoost 3.0 - 2012 11 13
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class BugtrackerRoadmapListController extends ModuleController
+class BugtrackerRoadmapListController extends DefaultModuleController
 {
-	private $lang;
-	private $view;
-
-	private $config;
+	protected function get_template_to_use()
+	{
+		return new FileTemplate('bugtracker/BugtrackerRoadmapListController.tpl');
+	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
-
 		$this->check_page_exists();
 
 		$this->check_authorizations();
@@ -26,17 +24,6 @@ class BugtrackerRoadmapListController extends ModuleController
 		$this->build_view($request);
 
 		return $this->build_response($this->view);
-	}
-
-	private function init()
-	{
-		$this->lang = array_merge(
-			LangLoader::get('common-lang'),
-			LangLoader::get('common', 'bugtracker')
-		);
-		$this->view = new FileTemplate('bugtracker/BugtrackerRoadmapListController.tpl');
-		$this->view->add_lang($this->lang);
-		$this->config = BugtrackerConfig::load();
 	}
 
 	private function check_page_exists()

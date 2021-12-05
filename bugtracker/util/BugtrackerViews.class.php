@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 09
+ * @version     PHPBoost 6.0 - last update: 2021 12 05
  * @since       PHPBoost 3.0 - 2013 04 29
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,12 +13,12 @@ class BugtrackerViews
 {
 	public static function build_body_view(View $view, $current_page, $bug_id = 0, $bug_type = "")
 	{
-		$lang = LangLoader::get('common', 'bugtracker');
+		$lang = LangLoader::get_all_langs('bugtracker');
 		$config = BugtrackerConfig::load();
 		$types = $config->get_types();
 
 		$body_view = new FileTemplate('bugtracker/BugtrackerBody.tpl');
-		$body_view->add_lang(array_merge($lang, LangLoader::get('common-lang')));
+		$body_view->add_lang($lang);
 		$body_view->put_all(array(
 			'C_ROADMAP_ENABLED'			=> $config->is_roadmap_displayed(),
 			'C_STATS_ENABLED'			=> $config->are_stats_enabled(),
@@ -39,7 +39,7 @@ class BugtrackerViews
 
 	public static function build_filters($current_page, $nbr_bugs = 0)
 	{
-		$lang = LangLoader::get('common', 'bugtracker');
+		$lang = LangLoader::get_all_langs('bugtracker');
 		$object = new self();
 
 		$request = AppContext::get_request();
@@ -88,7 +88,7 @@ class BugtrackerViews
 		if (!empty($filters)) $filters_number = $filters_number + 1;
 
 		$filters_view = new FileTemplate('bugtracker/BugtrackerFilter.tpl');
-		$filters_view->add_lang(array_merge($lang, LangLoader::get('common-lang')));
+		$filters_view->add_lang($lang);
 
 		$result = PersistenceContext::get_querier()->select("SELECT *
 		FROM " . BugtrackerSetup::$bugtracker_users_filters_table . "
@@ -154,7 +154,7 @@ class BugtrackerViews
 
 	public static function build_legend($list, $current_page)
 	{
-		$lang = LangLoader::get('common', 'bugtracker');
+		$lang = LangLoader::get_all_langs('bugtracker');
 
 		$config = BugtrackerConfig::load();
 		$severities = $config->get_severities();

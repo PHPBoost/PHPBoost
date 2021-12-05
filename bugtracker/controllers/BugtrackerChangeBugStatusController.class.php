@@ -3,27 +3,21 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 24
+ * @version     PHPBoost 6.0 - last update: 2021 12 05
  * @since       PHPBoost 4.1 - 2014 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class BugtrackerChangeBugStatusController extends ModuleController
+class BugtrackerChangeBugStatusController extends DefaultModuleController
 {
-	private $lang;
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	private $view;
-	/**
-	 * @var FormButtonDefaultSubmit
-	 */
-	private $submit_button;
 	private $bug;
-	private $config;
 	private $current_user;
+
+   	protected function get_template_to_use()
+   	{
+	   	return new FileTemplate('bugtracker/BugtrackerChangeBugStatusController.tpl');
+   	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -53,21 +47,13 @@ class BugtrackerChangeBugStatusController extends ModuleController
 	{
 		$id = $request->get_int('id', 0);
 
-		$this->lang = array_merge(
-			LangLoader::get('common-lang'),
-			LangLoader::get('common', 'bugtracker')
-		);
-
 		try {
 			$this->bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));
 		} catch (RowNotFoundException $e) {
-			$error_controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $this->lang['error.e_unexist_bug']);
+			$error_controller = new UserErrorController($this->lang['warning.error'], $this->lang['error.e_unexist_bug']);
 			DispatchManager::redirect($error_controller);
 		}
 
-		$this->view = new FileTemplate('bugtracker/BugtrackerChangeBugStatusController.tpl');
-		$this->view->add_lang($this->lang);
-		$this->config = BugtrackerConfig::load();
 		$this->current_user = AppContext::get_current_user();
 	}
 
@@ -133,13 +119,13 @@ class BugtrackerChangeBugStatusController extends ModuleController
 			)));
 		}
 
-		$fieldset->add_field(new FormFieldRichTextEditor('comments_message', LangLoader::get_message('comment.comment', 'comment-lang'), '', array(
+		$fieldset->add_field(new FormFieldRichTextEditor('comments_message', $this->lang['comment.comment'], '', array(
 			'description' => $this->lang['explain.change_status_comments_message']
 		)));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
-		$form->add_button(new FormButtonLink(LangLoader::get_message('common.back', 'common-lang'), 'javascript:history.back(1);'));
+		$form->add_button(new FormButtonLink($this->lang['common.back'], 'javascript:history.back(1);'));
 
 		$this->form = $form;
 	}

@@ -3,27 +3,15 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 24
+ * @version     PHPBoost 6.0 - last update: 2021 12 05
  * @since       PHPBoost 4.0 - 2014 01 29
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class BugtrackerFormController extends ModuleController
+class BugtrackerFormController extends DefaultModuleController
 {
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonSubmit
-	 */
-	private $submit_button;
-
-	private $lang;
-
 	private $bug;
-	private $config;
 	private $current_user;
 	private $is_new_bug;
 
@@ -35,27 +23,19 @@ class BugtrackerFormController extends ModuleController
 
 		$this->build_form($request);
 
-		$view = new StringTemplate('# INCLUDE FORM #');
-
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
 		}
 
-		$view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
-		return $this->generate_response($view);
+		return $this->generate_response($this->view);
 	}
 
 	private function init()
 	{
-		$this->lang = array_merge(
-			LangLoader::get('form-lang'),
-			LangLoader::get('common-lang'),
-			LangLoader::get('common', 'bugtracker')
-		);
 		$this->current_user = AppContext::get_current_user();
-		$this->config = BugtrackerConfig::load();
 	}
 
 	private function build_form(HTTPRequestCustom $request)
@@ -82,7 +62,7 @@ class BugtrackerFormController extends ModuleController
 
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('bug_infos', $this->lang['titles.bugs_infos']);
+		$fieldset = new FormFieldsetHTML('bug_infos', $this->lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['form.title'], $bug->get_title(), array('required' => true)));

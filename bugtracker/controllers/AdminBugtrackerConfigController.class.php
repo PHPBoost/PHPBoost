@@ -3,35 +3,20 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 24
+ * @version     PHPBoost 6.0 - last update: 2021 12 05
  * @since       PHPBoost 3.0 - 2012 10 18
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminBugtrackerConfigController extends AdminModuleController
+class AdminBugtrackerConfigController extends DefaultAdminModuleController
 {
-	private $lang;
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonDefaultSubmit
-	 */
-	private $submit_button;
-	private $config;
-
 	private $max_input = 500;
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
-
 		$this->build_form();
-
-		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -60,22 +45,12 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			$this->form->get_field_by_id('severities_table')->set_value($this->build_severities_table()->render());
 			$this->form->get_field_by_id('priorities_table')->set_value($this->build_priorities_table()->render());
 			$this->form->get_field_by_id('versions_table')->set_value($this->build_versions_table()->render());
-			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.config', 'warning-lang'), MessageHelper::SUCCESS, 5));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.success.config'], MessageHelper::SUCCESS, 5));
 		}
 
-		$view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
-		return new AdminBugtrackerDisplayResponse($view, StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
-	}
-
-	private function init()
-	{
-		$this->config = BugtrackerConfig::load();
-		$this->lang = array_merge(
-			LangLoader::get('form-lang'),
-			LangLoader::get('common-lang'),
-			LangLoader::get('common', 'bugtracker')
-		);
+		return new AdminBugtrackerDisplayResponse($this->view, StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
 	}
 
 	private function build_form()
@@ -418,25 +393,25 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$types = $this->config->get_types();
 
 		$types_table = new FileTemplate('bugtracker/AdminBugtrackerTypesListController.tpl');
-		$types_table->add_lang(array_merge($this->lang, LangLoader::get('common-lang'), LangLoader::get('form-lang')));
+		$types_table->add_lang($this->lang);
 
 		$key = 0;
 		foreach ($types as $key => $type)
 		{
 			$types_table->assign_block_vars('types', array(
-				'C_IS_DEFAULT'	=> $this->config->get_default_type() == $key,
-				'ID'			=> $key,
-				'NAME'			=> stripslashes($type),
-				'LINK_DELETE'	=> BugtrackerUrlBuilder::delete_parameter('type', $key)->rel()
+				'C_IS_DEFAULT' => $this->config->get_default_type() == $key,
+				'ID'		   => $key,
+				'NAME'		   => stripslashes($type),
+				'LINK_DELETE'  => BugtrackerUrlBuilder::delete_parameter('type', $key)->rel()
 			));
 		}
 
 		$types_table->put_all(array(
-			'C_TYPES'							=> !empty($types),
-			'C_DISPLAY_DEFAULT_DELETE_BUTTON'	=> $this->config->get_default_type(),
-			'MAX_INPUT'							=> $this->max_input,
-		 	'NEXT_ID'							=> $key + 1,
-			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('type')->rel()
+			'C_TYPES'						  => !empty($types),
+			'C_DISPLAY_DEFAULT_DELETE_BUTTON' => $this->config->get_default_type(),
+			'MAX_INPUT'						  => $this->max_input,
+		 	'NEXT_ID'						  => $key + 1,
+			'LINK_DELETE_DEFAULT'			  => BugtrackerUrlBuilder::delete_default_parameter('type')->rel()
 		));
 
 		return $types_table;
@@ -447,25 +422,25 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$categories = $this->config->get_categories();
 
 		$categories_table = new FileTemplate('bugtracker/AdminBugtrackerCategoriesListController.tpl');
-		$categories_table->add_lang(array_merge($this->lang, LangLoader::get('common-lang'), LangLoader::get('form-lang')));
+		$categories_table->add_lang($this->lang);
 
 		$key = 0;
 		foreach ($categories as $key => $category)
 		{
 			$categories_table->assign_block_vars('categories', array(
-				'C_IS_DEFAULT'	=> $this->config->get_default_category() == $key,
-				'ID'			=> $key,
-				'NAME'			=> stripslashes($category),
-				'LINK_DELETE'	=> BugtrackerUrlBuilder::delete_parameter('category', $key)->rel()
+				'C_IS_DEFAULT' => $this->config->get_default_category() == $key,
+				'ID'		   => $key,
+				'NAME'		   => stripslashes($category),
+				'LINK_DELETE'  => BugtrackerUrlBuilder::delete_parameter('category', $key)->rel()
 			));
 		}
 
 		$categories_table->put_all(array(
-			'C_CATEGORIES'						=> !empty($categories),
-			'MAX_INPUT'							=> $this->max_input,
-		 	'NEXT_ID'							=> $key + 1,
-			'C_DISPLAY_DEFAULT_DELETE_BUTTON'	=> $this->config->get_default_category(),
-			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('category')->rel()
+			'C_CATEGORIES'					  => !empty($categories),
+			'MAX_INPUT'						  => $this->max_input,
+		 	'NEXT_ID'						  => $key + 1,
+			'C_DISPLAY_DEFAULT_DELETE_BUTTON' => $this->config->get_default_category(),
+			'LINK_DELETE_DEFAULT'			  => BugtrackerUrlBuilder::delete_default_parameter('category')->rel()
 		));
 
 		return $categories_table;
@@ -476,23 +451,23 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$severities = $this->config->get_severities();
 
 		$severities_table = new FileTemplate('bugtracker/AdminBugtrackerSeveritiesListController.tpl');
-		$severities_table->add_lang(array_merge($this->lang, LangLoader::get('common-lang'), LangLoader::get('form-lang')));
+		$severities_table->add_lang($this->lang);
 
 		$key = 0;
 		foreach ($severities as $key => $severity)
 		{
 			$severities_table->assign_block_vars('severities', array(
-				'C_IS_DEFAULT'	=> $this->config->get_default_severity() == $key,
-				'ID'			=> $key,
-				'NAME'			=> stripslashes($severity['name']),
-				'COLOR'			=> $severity['color']
+				'C_IS_DEFAULT' => $this->config->get_default_severity() == $key,
+				'ID'		   => $key,
+				'NAME'		   => stripslashes($severity['name']),
+				'COLOR'		   => $severity['color']
 			));
 		}
 
 		$severities_table->put_all(array(
-			'C_SEVERITIES'						=> !empty($severities),
-			'C_DISPLAY_DEFAULT_DELETE_BUTTON'	=> $this->config->get_default_severity(),
-			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('severity')->rel()
+			'C_SEVERITIES'					  => !empty($severities),
+			'C_DISPLAY_DEFAULT_DELETE_BUTTON' => $this->config->get_default_severity(),
+			'LINK_DELETE_DEFAULT'			  => BugtrackerUrlBuilder::delete_default_parameter('severity')->rel()
 		));
 
 		return $severities_table;
@@ -503,22 +478,22 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$priorities = $this->config->get_priorities();
 
 		$priorities_table = new FileTemplate('bugtracker/AdminBugtrackerPrioritiesListController.tpl');
-		$priorities_table->add_lang(array_merge($this->lang, LangLoader::get('common-lang'), LangLoader::get('form-lang')));
+		$priorities_table->add_lang($this->lang);
 
 		$key = 0;
 		foreach ($priorities as $key => $priority)
 		{
 			$priorities_table->assign_block_vars('priorities', array(
-				'C_IS_DEFAULT'	=> $this->config->get_default_priority() == $key,
-				'ID'			=> $key,
-				'NAME'			=> stripslashes($priority)
+				'C_IS_DEFAULT' => $this->config->get_default_priority() == $key,
+				'ID'		   => $key,
+				'NAME'		   => stripslashes($priority)
 			));
 		}
 
 		$priorities_table->put_all(array(
-			'C_PRIORITIES'						=> !empty($priorities),
-			'C_DISPLAY_DEFAULT_DELETE_BUTTON'	=> $this->config->get_default_priority(),
-			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('priority')->rel()
+			'C_PRIORITIES'					  => !empty($priorities),
+			'C_DISPLAY_DEFAULT_DELETE_BUTTON' => $this->config->get_default_priority(),
+			'LINK_DELETE_DEFAULT'			  => BugtrackerUrlBuilder::delete_default_parameter('priority')->rel()
 		));
 
 		return $priorities_table;
@@ -529,7 +504,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$versions = $this->config->get_versions();
 
 		$versions_table = new FileTemplate('bugtracker/AdminBugtrackerVersionsListController.tpl');
-		$versions_table->add_lang(array_merge($this->lang, LangLoader::get('common-lang'), LangLoader::get('form-lang')));
+		$versions_table->add_lang($this->lang);
 
 		$key = 0;
 		foreach ($versions as $key => $version)
@@ -537,27 +512,27 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			$release_date = !empty($version['release_date']) && is_numeric($version['release_date']) ? new Date($version['release_date'], Timezone::SERVER_TIMEZONE) : null;
 
 			$versions_table->assign_block_vars('versions', array(
-				'C_IS_DEFAULT'		=> $this->config->get_default_version() == $key,
-				'C_DETECTED_IN'		=> $version['detected_in'],
-				'ID'				=> $key,
-				'NAME'				=> stripslashes($version['name']),
-				'RELEASE_DATE'		=> !empty($release_date) ? $release_date->format(Date::FORMAT_ISO_DAY_MONTH_YEAR) : '',
-				'DAY'				=> !empty($release_date) ? $release_date->get_day() : date('j'),
-				'MONTH'				=> !empty($release_date) ? $release_date->get_month() : date('n'),
-				'YEAR'				=> !empty($release_date) ? $release_date->get_year() : date('Y'),
-				'LINK_DELETE'		=> BugtrackerUrlBuilder::delete_parameter('version', $key)->rel()
+				'C_IS_DEFAULT'	=> $this->config->get_default_version() == $key,
+				'C_DETECTED_IN'	=> $version['detected_in'],
+				'ID'			=> $key,
+				'NAME'			=> stripslashes($version['name']),
+				'RELEASE_DATE'	=> !empty($release_date) ? $release_date->format(Date::FORMAT_ISO_DAY_MONTH_YEAR) : '',
+				'DAY'			=> !empty($release_date) ? $release_date->get_day() : date('j'),
+				'MONTH'			=> !empty($release_date) ? $release_date->get_month() : date('n'),
+				'YEAR'			=> !empty($release_date) ? $release_date->get_year() : date('Y'),
+				'LINK_DELETE'	=> BugtrackerUrlBuilder::delete_parameter('version', $key)->rel()
 			));
 		}
 
 		$versions_table->put_all(array(
-			'C_VERSIONS'						=> !empty($versions),
-			'MAX_INPUT'							=> $this->max_input,
-		 	'NEXT_ID'							=> $key + 1,
-			'DAY'								=> date('j'),
-			'MONTH'								=> date('n'),
-			'YEAR'								=> date('Y'),
-			'C_DISPLAY_DEFAULT_DELETE_BUTTON'	=> $this->config->get_default_version(),
-			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('version')->rel()
+			'C_VERSIONS'					  => !empty($versions),
+			'MAX_INPUT'						  => $this->max_input,
+		 	'NEXT_ID'						  => $key + 1,
+			'DAY'							  => date('j'),
+			'MONTH'							  => date('n'),
+			'YEAR'							  => date('Y'),
+			'C_DISPLAY_DEFAULT_DELETE_BUTTON' => $this->config->get_default_version(),
+			'LINK_DELETE_DEFAULT'			  => BugtrackerUrlBuilder::delete_default_parameter('version')->rel()
 		));
 
 		return $versions_table;
@@ -650,15 +625,15 @@ class AdminBugtrackerConfigController extends AdminModuleController
 
 				if (empty($nb_versions))
 					$versions[1] = array(
-						'name'			=> addslashes($request->get_poststring($version)),
-						'release_date'	=> $release_date,
-						'detected_in'	=> (bool)$request->get_value('detected_in' . $i, '')
+						'name'		   => addslashes($request->get_poststring($version)),
+						'release_date' => $release_date,
+						'detected_in'  => (bool)$request->get_value('detected_in' . $i, '')
 					);
 				else
 					$versions[] = array(
-						'name'			=> addslashes($request->get_poststring($version)),
-						'release_date'	=> $release_date,
-						'detected_in'	=> (bool)$request->get_value('detected_in' . $i, '')
+						'name'		   => addslashes($request->get_poststring($version)),
+						'release_date' => $release_date,
+						'detected_in'  => (bool)$request->get_value('detected_in' . $i, '')
 					);
 				$nb_versions++;
 			}

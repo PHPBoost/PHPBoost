@@ -3,26 +3,15 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 05
  * @since       PHPBoost 3.0 - 2012 11 11
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class BugtrackerDeleteBugController extends ModuleController
+class BugtrackerDeleteBugController extends DefaultModuleController
 {
-	private $lang;
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	private $view;
-	/**
-	 * @var FormButtonDefaultSubmit
-	 */
-	private $submit_button;
 	private $bug;
-	private $config;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -37,10 +26,10 @@ class BugtrackerDeleteBugController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : BugtrackerUrlBuilder::unsolved()), StringVars::replace_vars(LangLoader::get_message('success.delete', 'common', 'bugtracker'), array('id' => $this->bug->get_id())));
+			AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : BugtrackerUrlBuilder::unsolved()), StringVars::replace_vars($this->lang['success.delete'], array('id' => $this->bug->get_id())));
 		}
 
-		$this->view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 		return $this->build_response($this->view);
 	}
 
@@ -48,17 +37,12 @@ class BugtrackerDeleteBugController extends ModuleController
 	{
 		$id = $request->get_int('id', 0);
 
-		$this->lang = LangLoader::get('common', 'bugtracker');
-
 		try {
 			$this->bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));
 		} catch (RowNotFoundException $e) {
-			$error_controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $this->lang['error.e_unexist_bug']);
+			$error_controller = new UserErrorController($this->lang['warning.error'], $this->lang['error.e_unexist_bug']);
 			DispatchManager::redirect($error_controller);
 		}
-
-		$this->view = new StringTemplate('# INCLUDE FORM #');
-		$this->config = BugtrackerConfig::load();
 	}
 
 	private function check_authorizations()
@@ -82,7 +66,7 @@ class BugtrackerDeleteBugController extends ModuleController
 		$fieldset = new FormFieldsetHTML('delete_bug');
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldRichTextEditor('comments_message', LangLoader::get_message('comment.comment', 'comment-lang'), '', array(
+		$fieldset->add_field(new FormFieldRichTextEditor('comments_message', $this->lang['comment.comment'], '', array(
 			'description' => $this->lang['explain.delete_comment'], 'hidden' => !$this->config->are_pm_enabled() || !$this->config->are_pm_delete_enabled()
 		)));
 
@@ -90,7 +74,7 @@ class BugtrackerDeleteBugController extends ModuleController
 
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
-		$form->add_button(new FormButtonLink(LangLoader::get_message('common.back', 'common-lang'), 'javascript:history.back(1);'));
+		$form->add_button(new FormButtonLink($this->lang['common.back'], 'javascript:history.back(1);'));
 
 		$this->form = $form;
 	}

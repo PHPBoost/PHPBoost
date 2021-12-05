@@ -3,25 +3,13 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 05
  * @since       PHPBoost 3.0 - 2012 10 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminBugtrackerDeleteParameterController extends AdminModuleController
+class AdminBugtrackerDeleteParameterController extends DefaultAdminModuleController
 {
-	/**
-	 * @var HTMLForm
-	 */
-	protected $form;
-	/**
-	 * @var FormButtonSubmit
-	 */
-	private $submit_button;
-
-	private $lang;
-	private $config;
-
 	private $parameter;
 	private $id;
 
@@ -36,7 +24,6 @@ class AdminBugtrackerDeleteParameterController extends AdminModuleController
 		}
 
 		$this->build_form();
-		$tpl = new StringTemplate('# INCLUDE FORM #');
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -53,16 +40,13 @@ class AdminBugtrackerDeleteParameterController extends AdminModuleController
 			AppContext::get_response()->redirect(BugtrackerUrlBuilder::configuration());
 		}
 
-		$tpl->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
-		return new AdminBugtrackerDisplayResponse($tpl, $this->lang['config.delete_parameter.' . $this->parameter]);
+		return new AdminBugtrackerDisplayResponse($this->view, $this->lang['config.delete_parameter.' . $this->parameter]);
 	}
 
 	private function init(HTTPRequestCustom $request)
 	{
-		$this->lang = LangLoader::get('common', 'bugtracker');
-		$this->config = BugtrackerConfig::load();
-
 		//Get the parameter to delete
 		$this->parameter = $request->get_string('parameter', '');
 		//Get the id of the parameter to delete
@@ -70,7 +54,7 @@ class AdminBugtrackerDeleteParameterController extends AdminModuleController
 
 		if (!in_array($this->parameter, array('type', 'category', 'version')) || empty($this->id))
 		{
-			$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $this->lang['error.e_unexist_parameter']);
+			$controller = new UserErrorController($this->lang['warning.error'], $this->lang['error.e_unexist_parameter']);
 			$controller->set_response_classname(UserErrorController::ADMIN_RESPONSE);
 			DispatchManager::redirect($controller);
 		}
@@ -85,7 +69,7 @@ class AdminBugtrackerDeleteParameterController extends AdminModuleController
 				if (!isset($types[$this->id]))
 				{
 					//Error : unexist type
-					$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $this->lang['error.e_unexist_type']);
+					$controller = new UserErrorController($this->lang['warning.error'], $this->lang['error.e_unexist_type']);
 					$controller->set_response_classname(UserErrorController::ADMIN_RESPONSE);
 					DispatchManager::redirect($controller);
 				}
@@ -94,7 +78,7 @@ class AdminBugtrackerDeleteParameterController extends AdminModuleController
 				if (!isset($categories[$this->id]))
 				{
 					//Error : unexist category
-					$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $this->lang['error.e_unexist_category']);
+					$controller = new UserErrorController($this->lang['warning.error'], $this->lang['error.e_unexist_category']);
 					$controller->set_response_classname(UserErrorController::ADMIN_RESPONSE);
 					DispatchManager::redirect($controller);
 				}
@@ -103,7 +87,7 @@ class AdminBugtrackerDeleteParameterController extends AdminModuleController
 				if (!isset($versions[$this->id]))
 				{
 					//Error : unexist version
-					$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $this->lang['error.e_unexist_version']);
+					$controller = new UserErrorController($this->lang['warning.error'], $this->lang['error.e_unexist_version']);
 					$controller->set_response_classname(UserErrorController::ADMIN_RESPONSE);
 					DispatchManager::redirect($controller);
 				}

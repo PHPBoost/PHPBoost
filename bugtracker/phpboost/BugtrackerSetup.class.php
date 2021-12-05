@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 24
+ * @version     PHPBoost 6.0 - last update: 2020 12 05
  * @since       PHPBoost 3.0 - 2012 04 16
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -113,7 +113,7 @@ class BugtrackerSetup extends DefaultModuleSetup
 
 	private function insert_data()
 	{
-		$lang = LangLoader::get('install', 'bugtracker');
+		$lang = LangLoader::get_all_langs('bugtracker');
 
 		PersistenceContext::get_querier()->insert(self::$bugtracker_table, array(
 			'id' => 1,

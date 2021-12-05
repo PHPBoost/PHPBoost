@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 24
+ * @version     PHPBoost 6.0 - last update: 2020 12 05
  * @since       PHPBoost 3.0 - 2012 09 06
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -803,7 +803,7 @@ class BugtrackerConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
-		$lang = LangLoader::get('config', 'bugtracker');
+		$lang = LangLoader::get_all_langs('bugtracker');
 
 		return array(
 			self::ITEMS_PER_PAGE => 20,
