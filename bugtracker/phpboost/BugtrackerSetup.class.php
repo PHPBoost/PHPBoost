@@ -113,7 +113,7 @@ class BugtrackerSetup extends DefaultModuleSetup
 
 	private function insert_data()
 	{
-		$lang = LangLoader::get_all_langs('bugtracker');
+		$lang = LangLoader::get('install', 'bugtracker');
 
 		PersistenceContext::get_querier()->insert(self::$bugtracker_table, array(
 			'id' => 1,
