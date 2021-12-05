@@ -9,7 +9,7 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminMemberAddController extends AdminController
+class AdminMemberAddController extends DefaultAdminController
 {
 	public function execute(HTTPRequestCustom $request)
 	{
