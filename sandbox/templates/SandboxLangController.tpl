@@ -4,8 +4,9 @@
 	</header>
 	# INCLUDE SANDBOX_SUBMENU #
 
-	<p>
-	    <input type="text" id="filtersearch" value="" placeholder="{@sandbox.lang.search}"  />
+	<p class="flex-between">
+	    <input type="text" id="filtersearch" value="" placeholder="{@sandbox.lang.search}">
+		<button class="button submit" aria-label="{@form.refresh}" onclick="location.reload();"><i class="fa fa-sync-alt" aria-hidden></i></button>
   	</p>
 
 	<div class="sub-section">
@@ -25,9 +26,9 @@
 								</div>
 								<ul>
 									# START lang_file.items #
-										<li class="search-text lang-file">
-											<span class="text-strong">{lang_file.items.VAR}</span>
-											<span>{lang_file.items.DESC}</span>
+										<li class="parent-target lang-file">
+											<span class="text-strong search-text">{lang_file.items.VAR}</span>
+											<span class="search-text">{lang_file.items.DESC}</span>
 										</li>
 									# END lang_file.items #
 								</ul>
@@ -58,9 +59,9 @@
 											</div>
 											<ul>
 												# START module.module_file.items #
-													<li class="search-text lang-file">
-														<span class="text-strong">{module.module_file.items.VAR}</span>
-														<span>{module.module_file.items.DESC}</span>
+													<li class="parent-target lang-file">
+														<span class="text-strong search-text">{module.module_file.items.VAR}</span>
+														<span class="search-text">{module.module_file.items.DESC}</span>
 													</li>
 												# END module.module_file.items #
 											</ul>
@@ -79,7 +80,11 @@
 <script>
 	jQuery(document).ready(function(){
 		// Hide file content on load
-		jQuery('.search-text').hide();
+		jQuery('.parent-target').hide();
+		
+		// Empty the field on page load
+		jQuery('#filtersearch').val('');
+		
 		// Change icon
 		jQuery('.folder-trigger, .folder-module-trigger, .file-trigger').each(function() {
 			jQuery(this).on('click', function(e) {
@@ -97,36 +102,36 @@
 		jQuery('.folder-trigger').each(function() {
 			jQuery(this).on('click', function(e) {
 				e.preventDefault();
-				jQuery(this).closest('.all-files').find('.search-text').toggle();
+				jQuery(this).closest('.all-files').find('.parent-target').toggle();
 			})
 		})
 		// All module files
 		jQuery('.folder-module-trigger').each(function(){
 			jQuery(this).on('click', function(e) {
 				e.preventDefault();
-				jQuery(this).closest('li').find('ul .search-text').toggle();
+				jQuery(this).closest('li').find('ul .parent-target').toggle();
 			})
 		})
 		// Lang/module file
 		jQuery('.file-trigger').each(function(){
 			jQuery(this).on('click', function(e) {
 				e.preventDefault();
-				jQuery(this).closest('li').find('.search-text').toggle();
+				jQuery(this).closest('li').find('.parent-target').toggle();
 			})
 		})
 
-		// Reveal searched text
-	    jQuery('input#filtersearch').bind('keyup change', function () {
+		// Reveal parent searched text
+	    jQuery('#filtersearch').bind('keyup change', function () {
 	        if (jQuery(this).val().trim().length !== 0) {
-	            jQuery('.search-text').show().hide().each(function () {
-	                if (jQuery(this).is(':icontains(' + jQuery('input#filtersearch').val() + ')'))
+	            jQuery('.parent-target').show().hide().each(function () {
+	                if (jQuery(this).is(':icontains(' + jQuery('#filtersearch').val() + ')'))
 					{
 						jQuery(this).show();
 					}
 	            });
 	        }
 	        else {
-	            jQuery('.search-text').show().hide().each(function () {
+	            jQuery('.parent-target').show().hide().each(function () {
 	                jQuery(this).show();
 	            });
 	        }
@@ -136,56 +141,93 @@
 	        return (obj.textContent || obj.innerText || jQuery(obj).text() || '').toLowerCase().indexOf(meta[3].toLowerCase()) >= 0;
 	    };
 
+		// Highlight results
 		jQuery.fn.highlightFilter = function (a) {
-			a = jQuery.extend(
-				{
+		    a = jQuery.extend(
+		        {
+		            animateHideNShow: false,
+		            focusOnLoad: false,
 					highlightBgColor: "var(--main-tone)",
-					highlightTxtColor: "var(--txt-alt)",
-					caseSensitive: false,
-					targetClass: "search-text",
-				},
-				a
-			);
-			jQuery.expr[":"].icontains = function (a, b, c) {
-				return jQuery(a).text().toUpperCase().indexOf(c[3].toUpperCase()) >= 0;
-			};
-			var b = /(<em.+?>)(.+?)(<\/em>)/g;
-			var c = "g";
-			if (!a.caseSensitive) {
-				b = /(<em.+?>)(.+?)(<\/em>)/gi;
-				c = "gi";
-			}
-			return this.each(function () {
-				jQuery(this).keyup(function (d) {
-					if ((d.which && d.which == 13) || (d.keyCode && d.keyCode == 13)) {
-						return false;
-					} else {
-						var e = jQuery(this).val();
-						if (e.length > 0) {
-							var f = "icontains";
-							if (a.caseSensitive) {
-								f = "contains";
-							}
-							jQuery.each(jQuery("." + a.targetClass), function (a, c) {
-								jQuery(c).html(jQuery(c).html().replace(new RegExp(b), "$2"));
-							});
-							jQuery.each(jQuery("." + a.targetClass + ":" + f + "(" + e + ")"), function (b, d) {
-								var f = jQuery(d).html();
-								jQuery(d).html(
-									f.replace(new RegExp(e, c), function (b) {
-										return ["<em style='background-color:" + a.highlightBgColor + ";color:" + a.highlightTxtColor + "'>", b, "</em>"].join("");
-									})
-								);
-							});
-						} else {
-							jQuery.each(jQuery("." + a.targetClass), function (a, c) {
-								var d = jQuery(c).html().replace(new RegExp(b), "$2");
-								jQuery(c).html(d);
-							});
-						}
-					}
-				});
-			});
+					HighlightColor: "var(--txt-alt)",
+		            caseSensitive: false,
+		            hideNegatives: false,
+		            parentLookupClass: "parent-target",
+		            childBlockClass: "search-text",
+		        },
+		        a
+		    );
+		    jQuery.expr[":"].icontains = function (a, b, c) {
+		        return jQuery(a).text().toUpperCase().indexOf(c[3].toUpperCase()) >= 0;
+		    };
+		    if (a.focusOnLoad) {
+		        jQuery(this).focus();
+		    }
+		    var b = /(<em.+?>)(.+?)(<\/em>)/g;
+		    var c = "g";
+		    if (!a.caseSensitive) {
+		        b = /(<em.+?>)(.+?)(<\/em>)/gi;
+		        c = "gi";
+		    }
+		    return this.each(function () {
+		        jQuery(this).keyup(function (d) {
+		            if ((d.which && d.which == 13) || (d.keyCode && d.keyCode == 13)) {
+		                return false;
+		            } else {
+		                var e = jQuery(this).val();
+		                if (e.length > 0) {
+		                    if (a.hideNegatives) {
+		                        if (a.animateHideNShow) {
+		                            jQuery("." + a.parentLookupClass)
+		                                .stop(true, true)
+		                                .fadeOut("slow");
+		                        } else {
+		                            jQuery("." + a.parentLookupClass)
+		                                .stop(true, true)
+		                                .hide();
+		                        }
+		                    }
+		                    var f = "icontains";
+		                    if (a.caseSensitive) {
+		                        f = "contains";
+		                    }
+		                    jQuery.each(jQuery("." + a.childBlockClass), function (a, c) {
+		                        jQuery(c).html(jQuery(c).html().replace(new RegExp(b), "$2"));
+		                    });
+		                    jQuery.each(jQuery("." + a.childBlockClass + ":" + f + "(" + e + ")"), function (b, d) {
+		                        if (a.hideNegatives) {
+		                            if (a.animateHideNShow) {
+		                                jQuery(d).parent().stop(true, true).fadeIn("slow");
+		                            } else {
+		                                jQuery(d).parent().stop(true, true).show();
+		                            }
+		                        }
+		                        var f = jQuery(d).html();
+		                        jQuery(d).html(
+		                            f.replace(new RegExp(e, c), function (b) {
+		                                return ["<em style='background-color:" + a.highlightBgColor + ";color:" + a.HighlightColor + "'>", b, "</em>"].join("");
+		                            })
+		                        );
+		                    });
+		                } else {
+		                    jQuery.each(jQuery("." + a.childBlockClass), function (a, c) {
+		                        var d = jQuery(c).html().replace(new RegExp(b), "$2");
+		                        jQuery(c).html(d);
+		                    });
+		                    if (a.hideNegatives) {
+		                        if (a.animateHideNShow) {
+		                            jQuery("." + a.parentLookupClass)
+		                                .stop(true, true)
+		                                .fadeIn("slow");
+		                        } else {
+		                            jQuery("." + a.parentLookupClass)
+		                                .stop(true, true)
+		                                .show();
+		                        }
+		                    }
+		                }
+		            }
+		        });
+		    });
 		};
 
 	   jQuery("#filtersearch").highlightFilter();
