@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 30
+ * @version     PHPBoost 6.0 - last update: 2021 12 11
  * @since       PHPBoost 3.0 - 2012 11 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -50,12 +50,12 @@ class AdminCalendarConfigController extends DefaultAdminModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->lang['form.items.per.page'], $this->config->get_items_per_page(),
-			array('min' => 1, 'max' => 50, 'required' => true),
+			array('min' => 1, 'max' => 50, 'required' => true, 'class' => 'top-field'),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
 		$fieldset->add_field(new FormFieldColorPicker('event_color', $this->lang['calendar.config.event.color'], $this->config->get_event_color(),
-			array(),
+			array('class' => 'top-field'),
 			array(new FormFieldConstraintRegex('`^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$`iu'))
 		));
 
@@ -181,6 +181,7 @@ class AdminCalendarConfigController extends DefaultAdminModuleController
 		{
 			$this->config->set_items_per_row($this->form->get_value('items_per_row'));
 			$this->config->set_characters_number_to_cut($this->form->get_value('characters_number_to_cut'));
+			$this->config->display_condensed_item();
 		}
 
 		if ($this->form->get_value('display_type')->get_raw_value() == CalendarConfig::LIST_VIEW)
