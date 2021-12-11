@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2017 04 26
+ * @version     PHPBoost 6.0 - last update: 2021 12 11
  * @since       PHPBoost 5.0 - 2017 04 03
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -44,8 +44,7 @@ class GoogleMapsFormFieldMultipleMarkers extends AbstractFormField
 
 		$this->assign_common_template_variables($template);
 
-		$unserialized_value = @unserialize($this->get_value());
-		$markers = $unserialized_value !== false ? $unserialized_value : $this->get_value();
+		$markers = (is_array($this->get_value()) || is_object($this->get_value())) ? $this->get_value() : TextHelper::unserialize($this->get_value());
 
 		$i = 0;
 		if (is_array($markers))
