@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 05
+ * @version     PHPBoost 6.0 - last update: 2021 12 12
  * @since       PHPBoost 3.0 - 2012 11 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -150,7 +150,7 @@ class CalendarAjaxCalendarController extends AbstractController
 
 						if ($item['type'] == 'BIRTHDAY')
 						{
-							$items_legend_list[] = array(
+							$items_legend_list[$item['id_category']] = array(
 								'id_category' => Category::ROOT_CATEGORY,
 								'name'        => $this->lang['calendar.birthday'],
 								'color'       => $config->get_birthday_color()
@@ -158,9 +158,9 @@ class CalendarAjaxCalendarController extends AbstractController
 						}
 						else if ($item['type'] == 'EVENT' && $item['id_category'] == Category::ROOT_CATEGORY)
 						{
-							$items_legend_list[] = array(
+							$items_legend_list[$item['id_category']] = array(
 								'id_category' => $item['id_category'],
-								'name'        => $this->lang['calendar.item'],
+								'name'        => $this->lang['calendar.no.category'],
 								'color'       => $config->get_event_color()
 							);
 						}

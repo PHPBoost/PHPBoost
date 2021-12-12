@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 17
+ * @version     PHPBoost 6.0 - last update: 2021 12 12
  * @since       PHPBoost 4.0 - 2013 08 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -19,6 +19,7 @@ $lang['calendar.module.title'] = 'Calendar';
 
 $lang['calendar.item']  = 'event';
 $lang['calendar.items'] = 'events';
+$lang['calendar.no.category'] = 'No category';
 
 // TreeLinks
 $lang['item']  = 'event';
