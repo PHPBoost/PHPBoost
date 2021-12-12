@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2017 04 13
+ * @version     PHPBoost 6.0 - last update: 2021 12 12
  * @since       PHPBoost 5.0 - 2017 04 03
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class GoogleMapsDisplayMap
@@ -21,8 +22,7 @@ class GoogleMapsDisplayMap
 
 	public function __construct($markers = '', $map_id = '', $default_marker_label = '', $address_displayed_on_label = true)
 	{
-		$unserialized_value = @unserialize($markers);
-		$markers = $unserialized_value !== false ? $unserialized_value : $markers;
+		$markers = TextHelper::deserialize($markers);
 
 		if (is_array($markers))
 		{
