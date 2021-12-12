@@ -47,7 +47,7 @@
 									<span># IF modules_upgradable.C_AUTHOR_EMAIL #<a href="mailto:{modules_upgradable.AUTHOR_EMAIL}">{modules_upgradable.AUTHOR}</a># ELSE #{modules_upgradable.AUTHOR}# ENDIF # # IF modules_upgradable.C_AUTHOR_WEBSITE #<a href="{modules_upgradable.AUTHOR_WEBSITE}" class="button alt-button small">Web</a># ENDIF #</span>
 								</li>
 								<li class="li-stretch">
-									<span class="text-strong">{@addon.creation.date} :</span>
+									<span class="text-strong">{@common.creation.date} :</span>
 									{modules_upgradable.CREATION_DATE}
 								</li>
 								<li class="li-stretch">
