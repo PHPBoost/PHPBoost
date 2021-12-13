@@ -3,34 +3,20 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 13
  * @since       PHPBoost 4.1 - 2015 10 08
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminCustomizeEditorTPLFilesController extends AdminModuleController
+class AdminCustomizeEditorTPLFilesController extends DefaultAdminModuleController
 {
-	private $lang;
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonDefaultSubmit
-	 */
-	private $submit_button;
-
-	private $tpl;
-
 	private $templates_path = '/templates/';
 	private $tpl_files_path = '/';
 	private $tpl_modules_files_path = '/modules/';
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
-
 		$id_theme = $request->get_value('id_theme', '');
 		$id_module = '';
 		$file_selected = $request->get_value('file_name', '');
@@ -51,19 +37,13 @@ class AdminCustomizeEditorTPLFilesController extends AdminModuleController
 			if ($this->submit_button->has_been_submited() && $this->form->validate())
 			{
 				$this->save($id_theme, $id_module, $file_name);
-				$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
+				$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.process.success'], MessageHelper::SUCCESS, 4));
 			}
 		}
 
-		$this->view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
 		return new AdminCustomizationDisplayResponse($this->view, $this->lang['customization.editor.tpl.files']);
-	}
-
-	private function init()
-	{
-		$this->lang = LangLoader::get('common', 'customization');
-		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
 	}
 
 	private function build_form($theme_selected, $module_selected, $file_name, $file_selected)

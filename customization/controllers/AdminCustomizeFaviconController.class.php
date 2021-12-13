@@ -3,33 +3,18 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 13
  * @since       PHPBoost 3.0 - 2011 08 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminCustomizeFaviconController extends AdminModuleController
+class AdminCustomizeFaviconController extends DefaultAdminModuleController
 {
-	private $lang;
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonDefaultSubmit
-	 */
-	private $submit_button;
-
-	private $config;
-
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
 		$this->build_form();
-
-		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -44,24 +29,18 @@ class AdminCustomizeFaviconController extends AdminModuleController
 					$favicon_file = new File(PATH_TO_ROOT . $this->config->get_favicon_path());
 					$picture = '<img src="' . Url::to_rel($favicon_file->get_path()) . '" alt="' . $this->lang['customization.favicon.current'] . '" />';
 					$this->form->get_field_by_id('current_favicon')->set_value($picture);
-					$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
+					$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.process.success'], MessageHelper::SUCCESS, 4));
 				}
 				else
 				{
-					$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.invalid.picture', 'warning-lang'), MessageHelper::ERROR, 4));
+					$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.invalid.picture'], MessageHelper::ERROR, 4));
 				}
 			}
 		}
 
-		$view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
-		return new AdminCustomizationDisplayResponse($view, $this->lang['customization.interface.title']);
-	}
-
-	private function init()
-	{
-		$this->lang = LangLoader::get('common', 'customization');
-		$this->config = CustomizationConfig::load();
+		return new AdminCustomizationDisplayResponse($this->view, $this->lang['customization.interface.title']);
 	}
 
 	private function build_form()
