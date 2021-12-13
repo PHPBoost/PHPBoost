@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 27
+ * @version     PHPBoost 6.0 - last update: 2021 12 13
  * @since       PHPBoost 1.5 - 2006 08 06
  * @contributor Regis VIARRE <crowkait@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -51,7 +51,7 @@ function check_backup_file(File $file)
 	return true;
 }
 
-$lang = LangLoader::get('common', 'database');
+$lang = LangLoader::get_all_langs('database');
 define('TITLE', $lang['database.management']);
 require_once('../admin/admin_header.php');
 
@@ -71,12 +71,7 @@ if ($action == 'backup_table' && !empty($get_table)) // Save for unic table
 	$tables_backup = true;
 
 $view = new FileTemplate('database/admin_database_management.tpl');
-$view->add_lang(array_merge(
-	$lang,
-	LangLoader::get('common-lang'),
-	LangLoader::get('form-lang'),
-	LangLoader::get('upload-lang')
-));
+$view->add_lang($lang);
 
 $view->put('TABLE_NAME', $get_table);
 
