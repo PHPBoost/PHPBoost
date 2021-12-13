@@ -3,8 +3,9 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2017 04 28
+ * @version   	PHPBoost 5.2 - last update: 2021 12 13
  * @since   	PHPBoost 3.0 - 2012 11 24
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CalendarAjaxCalendarController extends AbstractController
@@ -129,14 +130,14 @@ class CalendarAjaxCalendarController extends AbstractController
 
 						if ($event['type'] == 'BIRTHDAY')
 						{
-							$events_legends_list[$j] = array(
+							$events_legends_list['BIRTHDAY'] = array(
 								'name' => LangLoader::get_message('calendar.labels.birthday', 'common', 'calendar'),
 								'color' => $config->get_birthday_color()
 							);
 						}
 						else if ($event['type'] == 'EVENT' && $event['id_category'] == Category::ROOT_CATEGORY)
 						{
-							$events_legends_list[$j] = array(
+							$events_legends_list[$event['id_category']] = array(
 								'name' => LangLoader::get_message('calendar.titles.event', 'common', 'calendar'),
 								'color' => $config->get_event_color()
 							);
@@ -145,7 +146,7 @@ class CalendarAjaxCalendarController extends AbstractController
 						{
 							if (isset($categories[$event['id_category']]) && !isset($events_legends_list[$event['id_category']]))
 							{
-								$events_legends_list[$j] = array(
+								$events_legends_list[$event['id_category']] = array(
 									'name' => $categories[$event['id_category']]->get_name(),
 									'color' => $categories[$event['id_category']]->get_color()
 								);
