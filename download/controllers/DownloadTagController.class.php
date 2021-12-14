@@ -3,23 +3,23 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 14
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class DownloadTagController extends ModuleController
+class DownloadTagController extends DefaultModuleController
 {
-	private $view;
-	private $lang;
-
 	private $keyword;
-
-	private $config;
 	private $comments_config;
 	private $content_management_config;
+
+	protected function get_template_to_use()
+	{
+	   return new FileTemplate('download/DownloadSeveralItemsController.tpl');
+	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -34,13 +34,6 @@ class DownloadTagController extends ModuleController
 
 	public function init()
 	{
-		$this->lang = array_lang(
-			LangLoader::get('common-lang'),
-			LangLoader::get('common', 'download')
-		);
-		$this->view = new FileTemplate('download/DownloadSeveralItemsController.tpl');
-		$this->view->add_lang($this->lang);
-		$this->config = DownloadConfig::load();
 		$this->comments_config = CommentsConfig::load();
 		$this->content_management_config = ContentManagementConfig::load();
 	}

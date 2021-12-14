@@ -41,7 +41,7 @@ class DownloadModuleMiniMenu extends ModuleMiniMenu
 		$view = new FileTemplate('download/DownloadModuleMiniMenu.tpl');
 
 		// Assign the lang file to the tpl
-		$view->add_lang(array_merge(LangLoader::get('common', 'download'), LangLoader::get('common-lang')));
+		$view->add_lang(LangLoader::get_all_langs('download'));
 
 		// Assign common menu variables to the tpl
 		MenuService::assign_positions_conditions($view, $this->get_block());

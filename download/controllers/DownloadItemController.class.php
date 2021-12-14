@@ -3,40 +3,29 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 14
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class DownloadItemController extends ModuleController
+class DownloadItemController extends DefaultModuleController
 {
-	private $lang;
-	private $view;
-
 	private $item;
 
+	protected function get_template_to_use()
+	{
+	   return new FileTemplate('download/DownloadItemController.tpl');
+	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
-
-		$this->init();
 		$this->build_view();
 		$this->count_views_number($request);
 		$this->check_authorizations();
 
 		return $this->generate_response();
-	}
-
-	private function init()
-	{
-		$this->lang = array_merge(
-			LangLoader::get('common-lang'),
-			LangLoader::get('common', 'download')
-		);
-		$this->view = new FileTemplate('download/DownloadItemController.tpl');
-		$this->view->add_lang($this->lang);
 	}
 
 	private function get_item()
@@ -63,7 +52,7 @@ class DownloadItemController extends ModuleController
 	{
 		if (!$this->item->is_published())
 		{
-			$this->view->put('NOT_VISIBLE_MESSAGE', MessageHelper::display(LangLoader::get_message('warning.element.not.visible', 'warning-lang'), MessageHelper::WARNING));
+			$this->view->put('NOT_VISIBLE_MESSAGE', MessageHelper::display($this->lang['warning.element.not.visible'], MessageHelper::WARNING));
 		}
 		else
 		{
@@ -92,7 +81,7 @@ class DownloadItemController extends ModuleController
 			'C_ENABLED_NOTATION' => $content_management_config->module_notation_is_enabled('download'),
 			'C_KEYWORDS' => $has_keywords,
 			'C_DISPLAY_DOWNLOAD_LINK' => DownloadAuthorizationsService::check_authorizations()->display_download_link(),
-			'NOT_VISIBLE_MESSAGE' => MessageHelper::display(LangLoader::get_message('warning.element.not.visible', 'warning-lang'), MessageHelper::WARNING),
+			'NOT_VISIBLE_MESSAGE' => MessageHelper::display($this->lang['warning.element.not.visible'], MessageHelper::WARNING),
 			'UNAUTHORIZED_TO_DOWNLOAD_MESSAGE' => MessageHelper::display($this->lang['download.message.warning.unauthorized.download'], MessageHelper::WARNING)
 		)));
 

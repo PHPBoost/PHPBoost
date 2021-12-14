@@ -3,26 +3,21 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 14
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
 */
 
-class DownloadItemsManagerController extends ModuleController
+class DownloadItemsManagerController extends DefaultModuleController
 {
-	private $lang;
-	private $view;
-
 	private $elements_number = 0;
 	private $ids = array();
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
-
-		$this->init();
 
 		$current_page = $this->build_table();
 
@@ -31,22 +26,13 @@ class DownloadItemsManagerController extends ModuleController
 		return $this->generate_response($current_page);
 	}
 
-	private function init()
-	{
-		$this->lang = array_merge(
-			LangLoader::get('common-lang'),
-			LangLoader::get('common', 'download')
-		);
-		$this->view = new StringTemplate('# INCLUDE TABLE #');
-	}
-
 	private function build_table()
 	{
 		$display_categories = CategoriesService::get_categories_manager()->get_categories_cache()->has_categories();
 
 		$columns = array(
 			new HTMLTableColumn($this->lang['common.title'], 'title'),
-			new HTMLTableColumn(LangLoader::get_message('category.category', 'category-lang'), 'id_category'),
+			new HTMLTableColumn($this->lang['category.category'], 'id_category'),
 			new HTMLTableColumn($this->lang['common.author'], 'display_name'),
 			new HTMLTableColumn($this->lang['common.creation.date'], 'creation_date'),
 			new HTMLTableColumn($this->lang['common.status.publication'], 'published'),
@@ -99,7 +85,7 @@ class DownloadItemsManagerController extends ModuleController
 
 			$row = array(
 				new HTMLTableRowCell(new LinkHTMLElement(DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()), $item->get_title()), 'left'),
-				new HTMLTableRowCell(new LinkHTMLElement(DownloadUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), ($category->get_id() == Category::ROOT_CATEGORY ? $this->lang['none_e'] : $category->get_name()))),
+				new HTMLTableRowCell(new LinkHTMLElement(DownloadUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), ($category->get_id() == Category::ROOT_CATEGORY ? $this->lang['common.none.alt'] : $category->get_name()))),
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell($item->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
 				new HTMLTableRowCell($item->get_status()),
@@ -113,7 +99,7 @@ class DownloadItemsManagerController extends ModuleController
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 
-		$this->view->put('TABLE', $table->display());
+		$this->view->put('CONTENT', $table->display());
 
 		return $table->get_page_number();
 	}
@@ -134,7 +120,7 @@ class DownloadItemsManagerController extends ModuleController
             }
             DownloadService::clear_cache();
 
-            AppContext::get_response()->redirect(DownloadUrlBuilder::manage(), LangLoader::get_message('warning.process.success', 'warning-lang'));
+            AppContext::get_response()->redirect(DownloadUrlBuilder::manage(), $this->lang['warning.process.success']);
         }
     }
 
