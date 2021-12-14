@@ -3,47 +3,36 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 14
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class FaqCategoryController extends ModuleController
+class FaqCategoryController extends DefaultModuleController
 {
-	private $lang;
-	private $view;
-
 	private $category;
+
+	protected function get_template_to_use()
+	{
+	   return new FileTemplate('faq/FaqSeveralItemsController.tpl');
+	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
-
-		$this->init();
 
 		$this->build_view($request);
 
 		return $this->generate_response($request);
 	}
 
-	private function init()
-	{
-		$this->lang = array_merge(
-			LangLoader::get('common-lang'),
-			LangLoader::get('common', 'faq')
-		);
-		$this->view = new FileTemplate('faq/FaqSeveralItemsController.tpl');
-		$this->view->add_lang($this->lang);
-	}
-
 	private function build_view(HTTPRequestCustom $request)
 	{
-		$config = FaqConfig::load();
 		$subcategories_page = $request->get_getint('subcategories_page', 1);
 
 		$subcategories = CategoriesService::get_categories_manager('faq')->get_categories_cache()->get_children($this->get_category()->get_id(), CategoriesService::get_authorized_categories($this->get_category()->get_id(), true, 'faq'));
-		$subcategories_pagination = $this->get_subcategories_pagination(count($subcategories), $config->get_categories_per_page(), $subcategories_page);
+		$subcategories_pagination = $this->get_subcategories_pagination(count($subcategories), $this->config->get_categories_per_page(), $subcategories_page);
 
 		$categories_number = 0;
 		foreach ($subcategories as $id => $category)
@@ -56,9 +45,9 @@ class FaqCategoryController extends ModuleController
 					'C_CATEGORY_THUMBNAIL' => !empty($category->get_thumbnail()),
 					'C_SEVERAL_ITEMS'      => $category->get_elements_number() > 1,
 
-					'CATEGORY_ID'      => $category->get_id(),
-					'CATEGORY_NAME'    => $category->get_name(),
-					'ITEMS_NUMBER' => $category->get_elements_number(),
+					'CATEGORY_ID'    => $category->get_id(),
+					'CATEGORY_NAME'  => $category->get_name(),
+					'ITEMS_NUMBER' 	 => $category->get_elements_number(),
 
 					'U_CATEGORY_THUMBNAIL' => $category->get_thumbnail()->rel(),
 					'U_CATEGORY'           => FaqUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel()
@@ -66,7 +55,7 @@ class FaqCategoryController extends ModuleController
 			}
 		}
 
-		$categories_per_row = ($categories_number > $config->get_categories_per_row()) ? $config->get_categories_per_row() : $categories_number;
+		$categories_per_row = ($categories_number > $this->config->get_categories_per_row()) ? $this->config->get_categories_per_row() : $categories_number;
 		$categories_per_row = !empty($categories_per_row) ? $categories_per_row : 1;
 
 		$result = PersistenceContext::get_querier()->select('SELECT *
@@ -88,8 +77,8 @@ class FaqCategoryController extends ModuleController
 			'C_SUB_CATEGORIES'           => $categories_number > 0,
 			'C_ITEMS'                    => $result->get_rows_count() > 0,
 			'C_SEVERAL_ITEMS'            => $result->get_rows_count() > 1,
-			'C_BASIC_VIEW'               => $config->get_display_type() == FaqConfig::BASIC_VIEW,
-			'C_DISPLAY_CONTROLS'         => $config->are_control_buttons_displayed(),
+			'C_BASIC_VIEW'               => $this->config->get_display_type() == FaqConfig::BASIC_VIEW,
+			'C_DISPLAY_CONTROLS'         => $this->config->are_control_buttons_displayed(),
 			'C_DISPLAY_REORDER_LINK'     => $result->get_rows_count() > 1 && CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_SUBCATEGORIES_PAGINATION' => $subcategories_pagination->has_several_pages(),
 

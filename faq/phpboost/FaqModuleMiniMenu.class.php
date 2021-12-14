@@ -43,7 +43,7 @@ class FaqModuleMiniMenu extends ModuleMiniMenu
 		$view = new FileTemplate('faq/FaqModuleMiniMenu.tpl');
 
 		//Assign the lang file to the tpl
-		$view->add_lang(LangLoader::get('common', $module_id));
+		$view->add_lang(LangLoader::get_all_langs($module_id));
 
 		//Assign common menu variables to the tpl
 		MenuService::assign_positions_conditions($view, $this->get_block());

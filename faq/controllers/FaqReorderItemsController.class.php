@@ -3,28 +3,28 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 14
  * @since       PHPBoost 4.0 - 2014 08 02
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class FaqReorderItemsController extends ModuleController
+class FaqReorderItemsController extends DefaultModuleController
 {
-	private $lang;
-	private $view;
-
 	private $category;
+
+	protected function get_template_to_use()
+	{
+	   return new FileTemplate('faq/FaqReorderItemsController.tpl');
+	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
 
-		$this->init();
-
 		if ($request->get_value('submit', false))
 		{
 			$this->update_position($request);
-			AppContext::get_response()->redirect(FaqUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name()), LangLoader::get_message('warning.success.position.update', 'warning-lang'));
+			AppContext::get_response()->redirect(FaqUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name()), $this->lang['warning.success.position.update']);
 		}
 
 		$this->build_view($request);
@@ -32,20 +32,8 @@ class FaqReorderItemsController extends ModuleController
 		return $this->generate_response();
 	}
 
-	private function init()
-	{
-		$this->lang = array_merge(
-			LangLoader::get('common-lang'),
-			LangLoader::get('common', 'faq')
-		);
-		$this->view = new FileTemplate('faq/FaqReorderItemsController.tpl');
-		$this->view->add_lang($this->lang);
-	}
-
 	private function build_view(HTTPRequestCustom $request)
 	{
-		$config = FaqConfig::load();
-
 		$result = PersistenceContext::get_querier()->select('SELECT *
 		FROM '. FaqSetup::$faq_table .' faq
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = faq.author_user_id
@@ -137,7 +125,7 @@ class FaqReorderItemsController extends ModuleController
 
 		$description = $this->get_category()->get_description() . ' ' . $this->lang['faq.questions.reorder'];
 		if (empty($description))
-			$description = StringVars::replace_vars($this->lang['faq.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->get_category()->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category.category', 'category-lang') . ' ' . $this->get_category()->get_name() : '') . ' ' . $this->lang['faq.questions.reorder'];
+			$description = StringVars::replace_vars($this->lang['faq.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->get_category()->get_id() != Category::ROOT_CATEGORY ? ' ' . $this->lang['category.category'] . ' ' . $this->get_category()->get_name() : '') . ' ' . $this->lang['faq.questions.reorder'];
 		$graphical_environment->get_seo_meta_data()->set_description($description);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name()));
 

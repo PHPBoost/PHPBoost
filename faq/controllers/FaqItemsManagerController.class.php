@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 14
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -11,34 +11,20 @@
  * @contributor xela <xela@phpboost.com>
 */
 
-class FaqItemsManagerController extends ModuleController
+class FaqItemsManagerController extends DefaultModuleController
 {
-	private $lang;
-    private $view;
-
-    private $elements_number = 0;
+	private $elements_number = 0;
     private $ids = array();
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
 
-		$this->init();
-
 		$current_page = $this->build_table();
 
         $this->execute_multiple_delete_if_needed($request);
 
 		return $this->generate_response($current_page);
-	}
-
-	private function init()
-	{
-		$this->lang = array_merge(
-			LangLoader::get('common-lang'),
-			LangLoader::get('common', 'faq')
-		);
-		$this->view = new StringTemplate('# INCLUDE TABLE #');
 	}
 
 	private function build_table()
@@ -107,7 +93,7 @@ class FaqItemsManagerController extends ModuleController
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 
-		$this->view->put('TABLE', $table->display());
+		$this->view->put('CONTENT', $table->display());
 
 		return $table->get_page_number();
 	}
@@ -129,7 +115,7 @@ class FaqItemsManagerController extends ModuleController
 
             FaqService::clear_cache();
 
-            AppContext::get_response()->redirect(FaqUrlBuilder::manage(), LangLoader::get_message('warning.process.success', 'warning-lang'));
+            AppContext::get_response()->redirect(FaqUrlBuilder::manage(), $this->lang['warning.process.success']);
         }
     }
 

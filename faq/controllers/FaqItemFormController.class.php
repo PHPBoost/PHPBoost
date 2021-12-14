@@ -3,37 +3,22 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 14
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
 */
 
-class FaqItemFormController extends ModuleController
+class FaqItemFormController extends DefaultModuleController
 {
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonSubmit
-	 */
-	private $submit_button;
-
-	private $lang;
-
 	private $item;
 	private $is_new_item;
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
-
 		$this->check_authorizations();
 
 		$this->build_form($request);
-
-		$view = new StringTemplate('# INCLUDE FORM #');
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -41,17 +26,9 @@ class FaqItemFormController extends ModuleController
 			$this->redirect();
 		}
 
-		$view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
-		return $this->generate_response($view);
-	}
-
-	private function init()
-	{
-		$this->lang = array_merge(
-			LangLoader::get('form-lang'),
-			LangLoader::get('common', 'faq')
-		);
+		return $this->generate_response($this->view);
 	}
 
 	private function build_form(HTTPRequestCustom $request)
@@ -92,14 +69,13 @@ class FaqItemFormController extends ModuleController
 
 	private function build_contribution_fieldset($form)
 	{
-		$contribution = LangLoader::get('contribution-lang');
 		if ($this->get_item()->get_id() === null && $this->is_contributor_member())
 		{
-			$fieldset = new FormFieldsetHTML('contribution', $contribution['contribution.contribution']);
-			$fieldset->set_description(MessageHelper::display($contribution['contribution.warning'], MessageHelper::WARNING)->render());
+			$fieldset = new FormFieldsetHTML('contribution', $this->lang['contribution.contribution']);
+			$fieldset->set_description(MessageHelper::display($this->lang['contribution.warning'], MessageHelper::WARNING)->render());
 			$form->add_fieldset($fieldset);
 
-			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $contribution['contribution.description'], '', array('description' => $contribution['contribution.description.clue'])));
+			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $this->lang['contribution.description'], '', array('description' => $this->lang['contribution.description.clue'])));
 		}
 	}
 

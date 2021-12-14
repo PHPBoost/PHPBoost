@@ -3,43 +3,29 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 14
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class FaqPendingItemsController extends ModuleController
+class FaqPendingItemsController extends DefaultModuleController
 {
-	private $view;
-	private $lang;
-
-	private $config;
+	protected function get_template_to_use()
+	{
+	   return new FileTemplate('faq/FaqSeveralItemsController.tpl');
+	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
-
-		$this->init();
 
 		$this->build_view($request);
 
 		return $this->generate_response($request);
 	}
 
-	public function init()
-	{
-		$this->lang = array_merge(
-			LangLoader::get('common-lang'),
-			LangLoader::get('common', 'faq')
-		);
-		$this->view = new FileTemplate('faq/FaqSeveralItemsController.tpl');
-		$this->view->add_lang($this->lang);
-		$this->config = FaqConfig::load();
-	}
-
 	public function build_view(HTTPRequestCustom $request)
 	{
-		$config = FaqConfig::load();
 		$authorized_categories = CategoriesService::get_authorized_categories();
 
 		$result = PersistenceContext::get_querier()->select('SELECT *
@@ -57,8 +43,8 @@ class FaqPendingItemsController extends ModuleController
 			'C_ITEMS'            => $result->get_rows_count() > 0,
 			'C_PENDING_ITEMS'    => true,
 			'C_SEVERAL_ITEMS'    => $result->get_rows_count() > 1,
-			'C_BASIC_VIEW'       => $config->get_display_type() == FaqConfig::BASIC_VIEW,
-			'C_DISPLAY_CONTROLS' => $config->are_control_buttons_displayed(),
+			'C_BASIC_VIEW'       => $this->config->get_display_type() == FaqConfig::BASIC_VIEW,
+			'C_DISPLAY_CONTROLS' => $this->config->are_control_buttons_displayed(),
 
 			'ITEMS_NUMBER' => $result->get_rows_count()
 		));
