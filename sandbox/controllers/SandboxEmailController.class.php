@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 01
+ * @version     PHPBoost 6.0 - last update: 2021 12 14
  * @since       PHPBoost 3.0 - 2010 03 12
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -11,16 +11,6 @@
 
 class SandboxEmailController extends DefaultModuleController
 {
-
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonDefaultSubmit
-	 */
-	private $submit_button;
-
 	protected function get_template_to_use()
 	{
 		return new FileTemplate('sandbox/SandboxEmailController.tpl');

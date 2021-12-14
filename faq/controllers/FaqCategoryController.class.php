@@ -182,7 +182,6 @@ class FaqCategoryController extends DefaultModuleController
 	{
 		$object = new self();
 		$object->check_authorizations();
-		$object->init();
 		$object->build_view(AppContext::get_request());
 		return $object->view;
 	}

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 30
+ * @version     PHPBoost 6.0 - last update: 2021 12 14
  * @since       PHPBoost 3.0 - 2012 11 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -11,17 +11,6 @@
 
 class CalendarDeleteItemController extends DefaultModuleController
 {
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonSubmit
-	 */
-	private $submit_button;
-
-	private $item;
-
 	public function execute(HTTPRequestCustom $request)
 	{
 		AppContext::get_session()->csrf_get_protect();

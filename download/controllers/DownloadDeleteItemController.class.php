@@ -3,17 +3,15 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 20
+ * @version     PHPBoost 6.0 - last update: 2021 12 14
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class DownloadDeleteItemController extends ModuleController
+class DownloadDeleteItemController extends DefaultModuleController
 {
-	private $item;
-
 	public function execute(HTTPRequestCustom $request)
 	{
 		AppContext::get_session()->csrf_get_protect();
@@ -30,11 +28,11 @@ class DownloadDeleteItemController extends ModuleController
 
 		if (!DownloadAuthorizationsService::check_authorizations()->write() && DownloadAuthorizationsService::check_authorizations()->contribution())
 			ContributionService::generate_cache();
-		
+
 		DownloadService::clear_cache();
 		HooksService::execute_hook_action('delete', self::$module_id, $item->get_properties());
 
-		AppContext::get_response()->redirect(($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), DownloadUrlBuilder::display($item->get_category()->get_id(), $item->get_category()->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title())->rel()) ? $request->get_url_referrer() : DownloadUrlBuilder::home()), StringVars::replace_vars(LangLoader::get_message('download.message.success.delete', 'common', 'download'), array('title' => $item->get_title())));
+		AppContext::get_response()->redirect(($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), DownloadUrlBuilder::display($item->get_category()->get_id(), $item->get_category()->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title())->rel()) ? $request->get_url_referrer() : DownloadUrlBuilder::home()), StringVars::replace_vars($this->lang['download.message.success.delete'], array('title' => $item->get_title())));
 	}
 
 	private function get_item(HTTPRequestCustom $request)

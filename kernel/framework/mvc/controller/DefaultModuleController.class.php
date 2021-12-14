@@ -6,8 +6,9 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 03
+ * @version     PHPBoost 6.0 - last update: 2021 12 14
  * @since       PHPBoost 6.0 - 2021 11 29
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class DefaultModuleController extends ModuleController
@@ -20,22 +21,27 @@ abstract class DefaultModuleController extends ModuleController
 	protected $config;
 	protected $lang;
 	protected $view;
-	
+	protected $item;
+
+	protected $is_new_item;	
+	protected $form;
+	protected $submit_button;
+
 	public function __construct($module_id = '')
 	{
 		parent::__construct($module_id);
-		
+
 		$this->init_parameters();
 		$this->init_view();
 	}
-	
+
 	protected function init_parameters()
 	{
 		$this->request = AppContext::get_request();
 		$this->config = self::get_module_configuration()->get_configuration_parameters();
 		$this->lang = LangLoader::get_all_langs(self::$module_id);
 	}
-	
+
 	protected function init_view()
 	{
 		$this->view = $this->get_template_to_use();
@@ -47,7 +53,7 @@ abstract class DefaultModuleController extends ModuleController
 			'MODULE_NAME' => self::get_module_configuration()->get_name()
 		));
 	}
-	
+
 	/**
 	 * @return Template
 	 */
@@ -55,7 +61,7 @@ abstract class DefaultModuleController extends ModuleController
 	{
 		return new StringTemplate($this->get_template_string_content());
 	}
-	
+
 	protected function get_template_string_content()
 	{
 		return '# INCLUDE MESSAGE_HELPER # # INCLUDE CONTENT #';

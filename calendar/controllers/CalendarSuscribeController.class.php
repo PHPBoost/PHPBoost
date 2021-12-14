@@ -3,15 +3,13 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 30
+ * @version     PHPBoost 6.0 - last update: 2021 12 14
  * @since       PHPBoost 4.0 - 2013 11 08
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CalendarSuscribeController extends DefaultModuleController
 {
-	private $item;
-
 	public function execute(HTTPRequestCustom $request)
 	{
 		$item_id = $request->get_getint('event_id', 0);

@@ -12,8 +12,6 @@
 
 class DownloadItemController extends DefaultModuleController
 {
-	private $item;
-
 	protected function get_template_to_use()
 	{
 	   return new FileTemplate('download/DownloadItemController.tpl');

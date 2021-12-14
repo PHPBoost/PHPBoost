@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 28
+ * @version     PHPBoost 6.0 - last update: 2021 12 14
  * @since       PHPBoost 4.0 - 2013 06 03
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -12,8 +12,6 @@
 
 class ArticlesPrintItemController extends AbstractItemController
 {
-	private $item;
-
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();

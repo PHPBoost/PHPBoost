@@ -12,9 +12,6 @@
 
 class CalendarItemFormController extends DefaultModuleController
 {
-	private $item;
-	private $is_new_item;
-
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
