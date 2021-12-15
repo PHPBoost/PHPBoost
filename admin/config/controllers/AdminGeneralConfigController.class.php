@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 02
+ * @version     PHPBoost 6.0 - last update: 2021 12 15
  * @since       PHPBoost 3.0 - 2011 08 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -180,13 +180,13 @@ class AdminGeneralConfigController extends DefaultAdminController
 
 	private function list_modules_home_page()
 	{
-		$providers = array_keys(AppContext::get_extension_provider_service()->get_providers(HomePageExtensionPoint::EXTENSION_POINT));
 		$options = array(new FormFieldSelectChoiceOption($this->lang['configuration.other.start.page'], 'other'));
 
 		$installed_modules = ModulesManager::get_activated_modules_map_sorted_by_localized_name();
+
 		foreach ($installed_modules as $id => $module)
 		{
-			if (in_array($module->get_id(), $providers))
+			if ((bool)$module->get_configuration()->get_home_page())
 			{
 				$options[] = new FormFieldSelectChoiceOption($module->get_configuration()->get_name(), $module->get_id());
 			}

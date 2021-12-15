@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 05
+ * @version     PHPBoost 6.0 - last update: 2021 12 15
  * @since       PHPBoost 3.0 - 2012 11 12
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -13,26 +13,6 @@ class BugtrackerUnsolvedListController extends DefaultModuleController
 	protected function get_template_to_use()
 	{
 		return new FileTemplate('bugtracker/BugtrackerListController.tpl');
-	}
-
-	public static function __static()
-	{
-		self::$module_id = 'bugtracker';
-	}
-
-	public function __construct($module_id = '')
-	{
-		self::$module_id = 'bugtracker';
-
-		$this->init_parameters();
-		$this->init_view();
-	}
-
-	protected function init_parameters()
-	{
-		$this->request = AppContext::get_request();
-		$this->config = BugtrackerConfig::load();
-		$this->lang = LangLoader::get_all_langs(self::$module_id);
 	}
 
 	public function execute(HTTPRequestCustom $request)
