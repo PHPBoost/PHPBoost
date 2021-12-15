@@ -137,6 +137,8 @@ aside:not(#menu-left):not(#menu-right)::after {
 		max-width: 38%;
 		float: right;
 		padding: 0.309em 0 0.309em 0.618em;
+		position: relative;
+		z-index: 2;
 	}
 }
 
