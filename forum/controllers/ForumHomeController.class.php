@@ -14,6 +14,7 @@ class ForumHomeController extends DefaultModuleController
 {
 	private $category;
 
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->build_view();
@@ -23,10 +24,11 @@ class ForumHomeController extends DefaultModuleController
 
 	private function build_view()
 	{
+		self::$module_id = 'forum';
 		global $nbr_msg_not_read, $top_view, $bottom_view;
 
 		$id_get = (int)retrieve(GET, 'id', 0);
-		$categories_cache = CategoriesService::get_categories_manager('forum')->get_categories_cache();
+		$categories_cache = CategoriesService::get_categories_manager(self::$module_id)->get_categories_cache();
 
 		try {
 			$this->category = $categories_cache->get_category($id_get);
@@ -49,7 +51,7 @@ class ForumHomeController extends DefaultModuleController
 		$display_cat = !empty($id_get);
 
 		//Vérification des autorisations.
-		$authorized_categories = CategoriesService::get_authorized_categories($id_get, true, 'forum');
+		$authorized_categories = CategoriesService::get_authorized_categories($id_get, true, self::$module_id);
 
 		//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
 		$max_time_msg = forum_limit_time_msg();
@@ -135,7 +137,7 @@ class ForumHomeController extends DefaultModuleController
 						'C_END_S_CATS'      => false
 					));
 
-					$children = CategoriesService::get_categories_manager('forum')->get_categories_cache()->get_children($row['cid']);
+					$children = CategoriesService::get_categories_manager(self::$module_id)->get_categories_cache()->get_children($row['cid']);
 					if ($children)
 					{
 						foreach ($children as $id => $child) //Listage des sous forums.
@@ -233,7 +235,7 @@ class ForumHomeController extends DefaultModuleController
 		}
 
 		$site_path = GeneralConfig::get_default_site_path();
-		if (GeneralConfig::load()->get_module_home_page() == 'forum')
+		if (GeneralConfig::load()->get_module_home_page() == self::$module_id)
 		{
 			list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script = '". $site_path ."/forum/' OR s.location_script = '". $site_path ."/forum/index.php' OR s.location_script = '". $site_path ."/index.php' OR s.location_script = '". $site_path ."/'");
 		}
@@ -250,7 +252,7 @@ class ForumHomeController extends DefaultModuleController
 		//Liste des catégories.
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
-		$categories_tree = CategoriesService::get_categories_manager('forum')->get_select_categories_form_field('cats', '', $id_get, $search_category_children_options);
+		$categories_tree = CategoriesService::get_categories_manager(self::$module_id)->get_select_categories_form_field('cats', '', $id_get, $search_category_children_options);
 		$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 		$method->setAccessible(true);
 		$categories_tree_options = $method->invoke($categories_tree);
@@ -259,7 +261,7 @@ class ForumHomeController extends DefaultModuleController
 		{
 			if ($option->get_raw_value())
 			{
-				$cat = CategoriesService::get_categories_manager('forum')->get_categories_cache()->get_category($option->get_raw_value());
+				$cat = CategoriesService::get_categories_manager(self::$module_id)->get_categories_cache()->get_category($option->get_raw_value());
 				if (!$cat->get_url())
 					$cat_list .= $option->display()->render();
 			}
@@ -335,7 +337,7 @@ class ForumHomeController extends DefaultModuleController
 
 	public static function get_view()
 	{
-		$object = new self('forum');
+		$object = new self(self::$module_id);
 		$object->build_view();
 		return $object->view;
 	}

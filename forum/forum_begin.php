@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 03
+ * @version     PHPBoost 6.0 - last update: 2021 12 15
  * @since       PHPBoost 1.6 - 2007 10 18
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -13,7 +13,7 @@
 if (defined('PHPBOOST') !== true)
     exit;
 
-$lang = LangLoader::get('common', 'forum');
+$lang = LangLoader::get_all_langs('forum');
 
 $config = ForumConfig::load();
 require_once(PATH_TO_ROOT . '/forum/forum_defines.php');

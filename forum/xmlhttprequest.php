@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 15
  * @since       PHPBoost 1.6 - 2007 02 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,10 +15,7 @@ AppContext::get_session()->no_session_location(); //Permet de ne pas mettre jour
 require_once('../forum/forum_begin.php');
 require_once('../kernel/header_no_display.php');
 
-$lang = array_merge(
-	LangLoader::get('user-lang'),
-	LangLoader::get('common', 'forum')
-);
+$lang = LangLoader::get_all_langs('forum');
 
 $track        = retrieve(GET, 't', '');
 $untrack      = retrieve(GET, 'ut', '');

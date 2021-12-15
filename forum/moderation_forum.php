@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 15
  * @since       PHPBoost 1.5 - 2006 08 08
  * @contributor Regis VIARRE <crowkait@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -15,13 +15,7 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$lang = array_merge(
-	LangLoader::get('common-lang'),
-	LangLoader::get('date-lang'),
-	LangLoader::get('form-lang'),
-	LangLoader::get('user-lang'),
-	LangLoader::get('common', 'forum')
-);
+$lang = LangLoader::get_all_langs('forum');
 
 $action = retrieve(GET, 'action', '');
 $id_get = (int)retrieve(GET, 'id', 0);
@@ -53,12 +47,7 @@ if (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL) && $chec
 }
 
 $view = new FileTemplate('forum/forum_moderation_panel.tpl');
-$view->add_lang(array_merge(
-	$lang,
-	LangLoader::get('common-lang'),
-	LangLoader::get('form-lang'),
-	LangLoader::get('user-lang')
-));
+$view->add_lang($lang);
 
 $vars_tpl = array(
 	'C_TINYMCE_EDITOR'   => AppContext::get_current_user()->get_editor() == 'TinyMCE',

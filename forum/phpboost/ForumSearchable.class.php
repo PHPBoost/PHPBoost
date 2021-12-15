@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 03
+ * @version     PHPBoost 6.0 - last update: 2021 12 15
  * @since       PHPBoost 3.0 - 2012 02 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -26,11 +26,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 	 */
 	{
 		$view = new FileTemplate('forum/forum_search_form.tpl');
-		$view->add_lang(array_merge(
-			LangLoader::get('common', 'forum'),
-			LangLoader::get('common-lang'),
-			LangLoader::get('date-lang')
-		));
+		$view->add_lang(LangLoader::get_all_langs('forum'));
 
 		require_once(PATH_TO_ROOT . '/forum/forum_functions.php');
 		require_once(PATH_TO_ROOT . '/forum/forum_defines.php');
@@ -58,7 +54,6 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			}
 		}
 
-		$date_lang = LangLoader::get('date-lang');
 		$view->put_all(Array(
 			'IS_SELECTED_30000'    => $time == 30000 ? ' selected="selected"' : '',
 			'IS_SELECTED_1'        => $time == 1 ? ' selected="selected"' : '',

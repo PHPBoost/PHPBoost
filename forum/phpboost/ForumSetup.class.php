@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 20
+ * @version     PHPBoost 6.0 - last update: 2021 12 15
  * @since       PHPBoost 3.0 - 2010 05 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -268,7 +268,7 @@ class ForumSetup extends DefaultModuleSetup
 
 	private function create_member_extended_field()
 	{
-		$lang = LangLoader::get('common', 'forum');
+		$lang = LangLoader::get_all_langs('forum');
 
 		$extended_field = new ExtendedField();
 		$extended_field->set_name(self::$member_extended_field_last_view_forum_column);

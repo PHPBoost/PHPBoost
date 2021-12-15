@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 15
  * @since       PHPBoost 1.2 - 2005 10 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -14,13 +14,7 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$lang = array_merge(
-	LangLoader::get('common-lang'),
-	LangLoader::get('form-lang'),
-	LangLoader::get('user-lang'),
-	LangLoader::get('warning-lang'),
-	LangLoader::get('common', 'forum')
-);
+$lang = LangLoader::get_all_langs('forum');
 
 $id_get = (int)retrieve(GET, 'id', 0);
 

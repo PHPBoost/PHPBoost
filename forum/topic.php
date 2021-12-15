@@ -14,13 +14,7 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$lang = array_merge(
-	LangLoader::get('common-lang'),
-	LangLoader::get('form-lang'),
-	LangLoader::get('user-lang'),
-	LangLoader::get('warning-lang'),
-	LangLoader::get('common', 'forum')
-);
+$lang = LangLoader::get_all_langs('forum');
 
 $request = AppContext::get_request();
 
