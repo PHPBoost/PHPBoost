@@ -15,12 +15,12 @@ class AdminGalleryDisplayResponse extends AdminMenuDisplayResponse
 	{
 		parent::__construct($view);
 
-		$lang = LangLoader::get('common', 'gallery');
+		$lang = LangLoader::get_all_langs('gallery');
 
 		$this->add_link($lang['gallery.management'], GalleryUrlBuilder::manage());
 		$this->add_link($lang['gallery.actions.add'], GalleryUrlBuilder::admin_add());
-		$this->add_link(LangLoader::get_message('form.configuration', 'form-lang'), $this->module->get_configuration()->get_admin_main_page());
-		$this->add_link(LangLoader::get_message('form.documentation', 'form-lang'), $this->module->get_configuration()->get_documentation());
+		$this->add_link($lang['form.configuration'], $this->module->get_configuration()->get_admin_main_page());
+		$this->add_link($lang['form.documentation'], $this->module->get_configuration()->get_documentation());
 
 		$this->get_graphical_environment()->set_page_title($page_title);
 	}

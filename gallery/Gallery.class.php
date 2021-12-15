@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 01
+ * @version     PHPBoost 6.0 - last update: 2021 12 15
  * @since       PHPBoost 1.2 - 2005 08 16
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -23,7 +23,7 @@ class Gallery
 	//Redimensionnement
 	public function Resize_pics($path, $width_max = 0, $height_max = 0)
 	{
-		$lang = LangLoader::get('common', 'gallery');
+		$lang = LangLoader::get_all_langs('gallery');
 
 		if (file_exists($path))
 		{
@@ -360,12 +360,12 @@ class Gallery
 	//Arguments de l'image, hauteur, largeur, extension.
 	public function Arg_pics($path)
 	{
-		$lang = LangLoader::get('common', 'gallery');
+		$lang = LangLoader::get_all_langs('gallery');
 
 		//Vérification du chargement de la librairie GD.
 		if (!@extension_loaded('gd'))
 		{
-			$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $lang['e_no_gd'], UserErrorController::FATAL);
+			$controller = new UserErrorController($lang['warning.error'], $lang['e_no_gd'], UserErrorController::FATAL);
             DispatchManager::redirect($controller);
 		}
 
@@ -384,7 +384,7 @@ class Gallery
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $lang['e_no_getimagesize'], UserErrorController::FATAL);
+			$controller = new UserErrorController($lang['warning.error'], $lang['e_no_getimagesize'], UserErrorController::FATAL);
 			DispatchManager::redirect($controller);
 		}
 	}
@@ -429,7 +429,7 @@ class Gallery
 	//Header image.
 	public function Send_header($ext)
 	{
-		$lang = LangLoader::get('common', 'gallery');
+		$lang = LangLoader::get_all_langs('gallery');
 
 		switch ($ext)
 		{
@@ -477,7 +477,7 @@ class Gallery
 	//Création de l'image d'erreur
 	private function _create_pics_error($path, $width, $height)
 	{
-		$lang = LangLoader::get('common', 'gallery');
+		$lang = LangLoader::get_all_langs('gallery');
 		$config = GalleryConfig::load();
 
 		$width = ($width == 0) ? $config->get_mini_max_width() : $width;

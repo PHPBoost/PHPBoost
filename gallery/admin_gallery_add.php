@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 02
+ * @version     PHPBoost 6.0 - last update: 2021 12 15
  * @since       PHPBoost 1.2 - 2005 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -13,7 +13,7 @@
 
 require_once('../admin/admin_begin.php');
 
-$lang = LangLoader::get('common', 'gallery');
+$lang = LangLoader::get_all_langs('gallery');
 
 define('TITLE', $lang['gallery.add.items']);
 require_once('../admin/admin_header.php');
@@ -31,12 +31,7 @@ $nbr_pics_post = $request->get_postint('nbr_pics', 0);
 $valid = $request->get_postvalue('valid', false);
 
 $view = new FileTemplate('gallery/admin_gallery_add.tpl');
-$view->add_lang(array_merge(
-	$lang,
-	LangLoader::get('common-lang'),
-	LangLoader::get('form-lang'),
-	LangLoader::get('upload-lang')
-));
+$view->add_lang($lang);
 
 if (isset($_FILES['gallery'])) // Upload
 {

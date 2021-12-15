@@ -16,16 +16,16 @@ class GalleryTreeLinks implements ModuleTreeLinksExtensionPoint
 	{
 		$module_id = 'gallery';
 
-		$lang = LangLoader::get('common', $module_id);
+		$lang = LangLoader::get_all_langs($module_id);
 		$tree = new ModuleTreeLinks();
 
-		$tree->add_link(new ModuleLink(LangLoader::get_message('category.categories.management', 'category-lang'), CategoriesUrlBuilder::manage($module_id), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->manage()));
-		$tree->add_link(new ModuleLink(LangLoader::get_message('category.add', 'category-lang'), CategoriesUrlBuilder::add(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY), $module_id), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->manage()));
+		$tree->add_link(new ModuleLink($lang['category.categories.management'], CategoriesUrlBuilder::manage($module_id), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->manage()));
+		$tree->add_link(new ModuleLink($lang['category.add'], CategoriesUrlBuilder::add(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY), $module_id), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->manage()));
 
 		$tree->add_link(new AdminModuleLink($lang['gallery.management'], GalleryUrlBuilder::manage()));
 		$tree->add_link(new AdminModuleLink($lang['gallery.add.items'], GalleryUrlBuilder::admin_add(AppContext::get_request()->get_getstring('id_category', 0))));
 
-		$tree->add_link(new AdminModuleLink(LangLoader::get_message('form.configuration', 'form-lang'), GalleryUrlBuilder::configuration()));
+		$tree->add_link(new AdminModuleLink($lang['form.configuration'], GalleryUrlBuilder::configuration()));
 
 		if (!AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL))
 		{
@@ -33,7 +33,7 @@ class GalleryTreeLinks implements ModuleTreeLinksExtensionPoint
 		}
 
 		if (ModulesManager::get_module($module_id)->get_configuration()->get_documentation())
-			$tree->add_link(new ModuleLink(LangLoader::get_message('form.documentation', 'form-lang'), ModulesManager::get_module('gallery')->get_configuration()->get_documentation(), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->write()));
+			$tree->add_link(new ModuleLink($lang['form.documentation'], ModulesManager::get_module('gallery')->get_configuration()->get_documentation(), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->write()));
 
 		return $tree;
 	}

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 17
+ * @version     PHPBoost 6.0 - last update: 2021 12 15
  * @since       PHPBoost 1.2 - 2005 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -155,14 +155,9 @@ elseif ($g_add)
 
 	$categories = CategoriesService::get_categories_manager('gallery')->get_categories_cache()->get_categories();
 
-	$lang = LangLoader::get('common', 'gallery');
+	$lang = LangLoader::get_all_langs('gallery');
 	$view = new FileTemplate('gallery/gallery_add.tpl');
-	$view->add_lang(array_merge(
-		$lang,
-		LangLoader::get('common-lang'),
-		LangLoader::get('form-lang'),
-		LangLoader::get('upload-lang')
-	));
+	$view->add_lang($lang);
 
 	//Niveau d'autorisation de la catégorie, accès en écriture.
 	if (!CategoriesAuthorizationsService::check_authorizations($id_category)->write())

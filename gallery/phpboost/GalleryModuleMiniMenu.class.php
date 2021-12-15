@@ -41,7 +41,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 	public function get_menu_content()
 	{
 		$view = new FileTemplate('gallery/gallery_mini.tpl');
-		$view->add_lang(array_merge(LangLoader::get('common', 'gallery'), LangLoader::get('common-lang')));
+		$view->add_lang(LangLoader::get_all_langs('gallery'));
 
 		MenuService::assign_positions_conditions($view, $this->get_block());
 
