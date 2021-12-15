@@ -44,7 +44,7 @@ class GoogleMapsFormFieldMapAddress extends AbstractFormField
 		$config   = GoogleMapsConfig::load();
 
 		$field_tpl = new FileTemplate('GoogleMaps/GoogleMapsFormFieldMapAddress.tpl');
-		$field_tpl->add_lang(LangLoader::get('common', 'GoogleMaps'));
+		$field_tpl->add_lang(LangLoader::get_all_langs('GoogleMaps'));
 
 		$this->assign_common_template_variables($template);
 

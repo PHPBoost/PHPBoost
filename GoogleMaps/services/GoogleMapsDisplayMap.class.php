@@ -97,7 +97,7 @@ class GoogleMapsDisplayMap
 		$default_zoom = $config->get_default_zoom();
 
 		$template = new FileTemplate('GoogleMaps/GoogleMap.tpl');
-		$template->add_lang(LangLoader::get('common', 'GoogleMaps'));
+		$template->add_lang(LangLoader::get_all_langs('GoogleMaps'));
 
 		foreach ($this->markers as $marker)
 		{

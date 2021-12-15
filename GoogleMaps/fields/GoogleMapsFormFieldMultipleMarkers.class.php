@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 12
+ * @version     PHPBoost 6.0 - last update: 2021 12 15
  * @since       PHPBoost 5.0 - 2017 04 03
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -41,7 +41,7 @@ class GoogleMapsFormFieldMultipleMarkers extends AbstractFormField
 		$config   = GoogleMapsConfig::load();
 
 		$field_tpl = new FileTemplate('GoogleMaps/GoogleMapsFormFieldMultipleMarkers.tpl');
-		$field_tpl->add_lang(LangLoader::get('common', 'GoogleMaps'));
+		$field_tpl->add_lang(LangLoader::get_all_langs('GoogleMaps'));
 
 		$this->assign_common_template_variables($template);
 
