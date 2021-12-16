@@ -3,40 +3,27 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 26
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class WebItemController extends ModuleController
+class WebItemController extends DefaultModuleController
 {
-	private $lang;
-	private $view;
-
-	private $item;
+	protected function get_template_to_use()
+	{
+	   return new FileTemplate('web/WebItemController.tpl');
+	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
 
-		$this->init();
-
 		$this->build_view();
 
 		return $this->generate_response();
-	}
-
-	private function init()
-	{
-		$this->lang = array_merge(
-			LangLoader::get('common-lang'),
-			LangLoader::get('contribution-lang'),
-			LangLoader::get('common', 'web')
-		);
-		$this->view = new FileTemplate('web/WebItemController.tpl');
-		$this->view->add_lang($this->lang);
 	}
 
 	private function get_item()
@@ -61,7 +48,6 @@ class WebItemController extends ModuleController
 
 	private function build_view()
 	{
-		$config = WebConfig::load();
 		$comments_config = CommentsConfig::load();
 		$content_management_config = ContentManagementConfig::load();
 
@@ -73,8 +59,9 @@ class WebItemController extends ModuleController
 		$this->view->put_all(array_merge($this->item->get_template_vars(), array(
 			'C_ENABLED_COMMENTS' => $comments_config->module_comments_is_enabled('web'),
 			'C_ENABLED_NOTATION' => $content_management_config->module_notation_is_enabled('web'),
-			'C_KEYWORDS' => $has_keywords,
-			'NOT_VISIBLE_MESSAGE' => MessageHelper::display(LangLoader::get_message('warning.element.not.visible', 'warning-lang'), MessageHelper::WARNING)
+			'C_KEYWORDS'         => $has_keywords,
+
+			'NOT_VISIBLE_MESSAGE' => MessageHelper::display($this->lang['warning.element.not.visible'], MessageHelper::WARNING)
 		)));
 
 		if ($comments_config->module_comments_is_enabled('web'))

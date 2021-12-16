@@ -3,22 +3,24 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class WebCategoryController extends ModuleController
+class WebCategoryController extends DefaultModuleController
 {
-	private $lang;
-	private $view;
-	private $config;
 	private $comments_config;
 	private $content_management_config;
 
 	private $category;
+
+	protected function get_template_to_use()
+	{
+	   return new FileTemplate('web/WebSeveralItemsController.tpl');
+	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -33,14 +35,6 @@ class WebCategoryController extends ModuleController
 
 	private function init()
 	{
-		$this->lang = array_merge(
-			LangLoader::get('common-lang'),
-			LangLoader::get('contribution-lang'),
-			LangLoader::get('common', 'web')
-		);
-		$this->view = new FileTemplate('web/WebSeveralItemsController.tpl');
-		$this->view->add_lang($this->lang);
-		$this->config = WebConfig::load();
 		$this->comments_config = CommentsConfig::load();
 		$this->content_management_config = ContentManagementConfig::load();
 	}
@@ -297,7 +291,7 @@ class WebCategoryController extends ModuleController
 
 		$description = $this->get_category()->get_description();
 		if (empty($description))
-			$description = StringVars::replace_vars($this->lang['web.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->get_category()->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category.category', 'category-lang') . ' ' . $this->get_category()->get_name() : '');
+			$description = StringVars::replace_vars($this->lang['web.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->get_category()->get_id() != Category::ROOT_CATEGORY ? ' ' . $this->lang['category.category'] . ' ' . $this->get_category()->get_name() : '');
 		$graphical_environment->get_seo_meta_data()->set_description($description, $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $sort_field, $sort_mode, $page));
 

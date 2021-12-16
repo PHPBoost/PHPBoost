@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 12
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -41,10 +41,7 @@ class WebModuleMiniMenu extends ModuleMiniMenu
 		$view = new FileTemplate('web/WebModuleMiniMenu.tpl');
 
 		//Assign the lang file to the template
-		$view->add_lang(array_merge(
-			LangLoader::get('common', 'web'),
-			LangLoader::get('common-lang')
-		));
+		$view->add_lang(LangLoader::get_all_langs('web'));
 
 		//Assign common menu variables to the template
 		MenuService::assign_positions_conditions($view, $this->get_block());

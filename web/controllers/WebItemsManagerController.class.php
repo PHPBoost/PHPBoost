@@ -3,18 +3,15 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class WebItemsManagerController extends ModuleController
+class WebItemsManagerController extends DefaultModuleController
 {
-	private $lang;
-	private $view;
-
 	private $elements_number = 0;
 	private $ids = array();
 
@@ -22,22 +19,11 @@ class WebItemsManagerController extends ModuleController
 	{
 		$this->check_authorizations();
 
-		$this->init();
-
 		$current_page = $this->build_table();
 
 		$this->execute_multiple_delete_if_needed($request);
 
 		return $this->generate_response($current_page);
-	}
-
-	private function init()
-	{
-		$this->lang = array_merge(
-			LangLoader::get('common-lang'),
-			LangLoader::get('common', 'web')
-		);
-		$this->view = new StringTemplate('# INCLUDE TABLE #');
 	}
 
 	private function build_table()
@@ -113,7 +99,7 @@ class WebItemsManagerController extends ModuleController
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 
-		$this->view->put('TABLE', $table->display());
+		$this->view->put('CONTENT', $table->display());
 
 		return $table->get_page_number();
 	}
@@ -134,7 +120,7 @@ class WebItemsManagerController extends ModuleController
             }
             WebService::clear_cache();
 
-            AppContext::get_response()->redirect(WebUrlBuilder::manage(), LangLoader::get_message('warning.process.success', 'warning-lang'));
+            AppContext::get_response()->redirect(WebUrlBuilder::manage(), $this->lang['warning.process.success']);
         }
     }
 
