@@ -3,20 +3,16 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 23
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2009 12 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class ViewSitemapController extends ModuleController
+class ViewSitemapController extends DefaultModuleController
 {
-	private $lang = array();
-
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
-
 		$view = $this->build_view();
 
 		$response = new SiteDisplayResponse($view);
@@ -25,11 +21,6 @@ class ViewSitemapController extends ModuleController
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['sitemap.seo.description'], array('site' => GeneralConfig::load()->get_site_name())));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(SitemapUrlBuilder::view_sitemap());
 		return $response;
-	}
-
-	private function init()
-	{
-		$this->lang = LangLoader::get('common', 'sitemap');
 	}
 
 	private function build_view()
@@ -52,7 +43,6 @@ class ViewSitemapController extends ModuleController
 	public static function get_view()
 	{
 		$object = new self();
-		$object->init();
 		return $object->build_view();
 	}
 }
