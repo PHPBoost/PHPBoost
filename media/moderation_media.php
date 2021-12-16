@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 19
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -23,11 +23,7 @@ $config = MediaConfig::load();
 $items_per_page = $config->get_items_per_page();
 
 $view = new FileTemplate('media/moderation_media.tpl');
-$view->add_lang(array_merge(
-	LangLoader::get('common', 'media'),
-	LangLoader::get('common-lang'),
-	LangLoader::get('form-lang')
-));
+$view->add_lang(LangLoader::get_all_langs('media'));
 
 $Bread_crumb->add(LangLoader::get_message('media.module.title', 'common', 'media'), url('media.php'));
 $Bread_crumb->add(LangLoader::get_message('user.moderation.panel', 'user-lang'), url('moderation_media.php'));

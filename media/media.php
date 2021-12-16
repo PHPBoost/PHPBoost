@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 27
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -35,8 +35,8 @@ if (empty($id_media))
 elseif ($id_media > 0)
 {
 	$view = new FileTemplate('media/MediaItemController.tpl');
-	$lang = LangLoader::get('common', 'media');
-	$view->add_lang(array_merge($lang, LangLoader::get('common-lang')));
+	$lang = LangLoader::get_all_langs('media');
+	$view->add_lang($lang);
 	$config = MediaConfig::load();
 	$comments_config = CommentsConfig::load();
 	$content_management_config = ContentManagementConfig::load();
@@ -88,10 +88,10 @@ elseif ($id_media > 0)
 	$group_color = User::get_group_color($media['user_groups'], $media['level']);
 
 	$date = new Date($media['creation_date'], Timezone::SERVER_TIMEZONE);
-	
+
 	$content = FormatingHelper::second_parse(stripslashes($media['content']));
 	$rich_content = HooksService::execute_hook_display_action('media', $content, $media);
-	
+
 	$view->put_all(array_merge(
 		Date::get_array_tpl_vars($date, 'date'),
 		array(

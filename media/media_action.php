@@ -20,13 +20,8 @@ if (AppContext::get_current_user()->is_readonly())
 }
 
 $view = new FileTemplate('media/media_action.tpl');
-$lang = LangLoader::get('common', 'media');
-$view->add_lang(array_merge(
-	$lang,
-	LangLoader::get('contribution-lang'),
-	LangLoader::get('form-lang'),
-	LangLoader::get('warning-lang')
-));
+$lang = LangLoader::get_all_langs('media');
+$view->add_lang($lang);
 
 $config = MediaConfig::load();
 $request = AppContext::get_request();
@@ -108,7 +103,7 @@ elseif ($delete > 0)
 
 	MediaCategoriesCache::invalidate();
 	HooksService::execute_hook_action('delete', 'media', $media);
-	
+
 	$category = CategoriesService::get_categories_manager('media')->get_categories_cache()->get_category($media['id_category']);
 	bread_crumb($media['id_category']);
 	$Bread_crumb->add($lang['media.delete.item'], url('media.php?cat=' . $media['id_category'], 'media-0-' . $media['id_category'] . '+' . $category->get_rewrited_name() . '.php'));
@@ -389,11 +384,11 @@ elseif ($submit)
 			'width'          => $media['width'],
 			'height'         => $media['height']
 		);
-		
+
 		PersistenceContext::get_querier()->update(PREFIX . "media", $properties, 'WHERE id = :id', array('id' => $media['idedit']));
 
 		$properties['id'] = $media['idedit'];
-		
+
 		if ($media['approved'])
 		{
 			$corresponding_contributions = ContributionService::find_by_criteria('media', $media['idedit']);
@@ -413,9 +408,9 @@ elseif ($submit)
 		Feed::clear_cache('media');
 
 		MediaCategoriesCache::invalidate();
-		
+
 		HooksService::execute_hook_action('edit', 'media', array_merge($properties, array('item_url' => PATH_TO_ROOT . '/media/' . url('media.php?id=' . $media['idedit'], 'media-' . $media['idedit'] . '-' . $media['id_category'] . '+' . Url::encode_rewrite($media['title']) . '.php'))));
-		
+
 		AppContext::get_response()->redirect('media' . url('.php?id=' . $media['idedit']));
 	}
 	// Add
@@ -434,12 +429,12 @@ elseif ($submit)
 			'width'          => $media['width'],
 			'height'         => $media['height']
 		);
-		
+
 		$result = PersistenceContext::get_querier()->insert(PREFIX . "media", $properties);
 
 		$new_id_media = $result->get_last_inserted_id();
 		$properties['id'] = $new_id_media;
-		
+
 		// Feeds Regeneration
 		Feed::clear_cache('media');
 

@@ -3,45 +3,34 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 27
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class MediaDisplayCategoryController extends ModuleController
+class MediaDisplayCategoryController extends DefaultModuleController
 {
-	private $lang;
-	private $view;
-
 	private $category;
+
+	protected function get_template_to_use()
+	{
+	   return new FileTemplate('media/MediaSeveralItemsController.tpl');
+	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
-
-		$this->init();
 
 		$this->build_view();
 
 		return $this->generate_response();
 	}
 
-	private function init()
-	{
-		$this->lang = array_merge(
-			LangLoader::get('common-lang'),
-			LangLoader::get('common', 'media')
-		);
-		$this->view = new FileTemplate('media/MediaSeveralItemsController.tpl');
-		$this->view->add_lang($this->lang);
-	}
-
 	private function build_view()
 	{
 		require_once(PATH_TO_ROOT . '/media/media_constant.php');
-		$config = MediaConfig::load();
 		$comments_config = CommentsConfig::load();
 		$content_management_config = ContentManagementConfig::load();
 
@@ -55,7 +44,7 @@ class MediaDisplayCategoryController extends ModuleController
 
 		$subcategories = CategoriesService::get_categories_manager('media')->get_categories_cache()->get_children($this->get_category()->get_id(), CategoriesService::get_authorized_categories($this->get_category()->get_id(), true, 'media'));
 
-		$subcategories_pagination = new ModulePagination($subcategories_page, count($subcategories), $config->get_categories_per_page());
+		$subcategories_pagination = new ModulePagination($subcategories_page, count($subcategories), $this->config->get_categories_per_page());
 		$subcategories_pagination->set_url(new Url('/media/media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $this->get_category()->get_id() . '&amp;p=' . $page . '&amp;subcategories_page=%d'));
 
 		if ($subcategories_pagination->current_page_is_empty() && $subcategories_page > 1)
@@ -97,8 +86,8 @@ class MediaDisplayCategoryController extends ModuleController
 			'C_SUBCATEGORIES_PAGINATION' => $subcategories_pagination->has_several_pages(),
 
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
-			'CATEGORIES_PER_ROW'       => $config->get_categories_per_row(),
-			'ITEMS_PER_ROW'            => $config->get_items_per_row(),
+			'CATEGORIES_PER_ROW'       => $this->config->get_categories_per_row(),
+			'ITEMS_PER_ROW'            => $this->config->get_items_per_row(),
 			'CATEGORY_NAME'            => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? $this->lang['media.module.title'] : $this->get_category()->get_name(),
 			'CATEGORY_DESCRIPTION'     => $category_description,
 			'CATEGORY_ID'              => $this->get_category()->get_id(),
@@ -159,7 +148,7 @@ class MediaDisplayCategoryController extends ModuleController
 
 		// Pagination creation for a too big amount of items
 		$mediafiles_number = MediaService::count($condition, $parameters);
-		$pagination = new ModulePagination($page, $mediafiles_number, $config->get_items_per_page());
+		$pagination = new ModulePagination($page, $mediafiles_number, $this->config->get_items_per_page());
 		$pagination->set_url(new Url('/media/media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $this->get_category()->get_id() . '&amp;p=%d&amp;subcategories_page=' . $subcategories_page));
 
 		if ($pagination->current_page_is_empty() && $page > 1)
@@ -187,8 +176,8 @@ class MediaDisplayCategoryController extends ModuleController
 		$this->view->put_all(array(
 			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
 			'C_NO_ITEM'       => $result->get_rows_count() == 0 && $this->get_category()->get_id() != Category::ROOT_CATEGORY,
-			'C_GRID_VIEW'     => $config->get_display_type() == MediaConfig::GRID_VIEW,
-			'C_LIST_VIEW'     => $config->get_display_type() == MediaConfig::LIST_VIEW,
+			'C_GRID_VIEW'     => $this->config->get_display_type() == MediaConfig::GRID_VIEW,
+			'C_LIST_VIEW'     => $this->config->get_display_type() == MediaConfig::LIST_VIEW,
 			'C_PAGINATION'    => $pagination->has_several_pages(),
 			'PAGINATION'      => $pagination->display(),
 			'CHANGE_ORDER'    => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'media-0-' . $this->get_category()->get_id() . '.php?' : 'media.php?cat=' . $this->get_category()->get_id() . '&',
@@ -315,7 +304,6 @@ class MediaDisplayCategoryController extends ModuleController
 	public static function get_view()
 	{
 		$object = new self();
-		$object->init();
 		$object->check_authorizations();
 		$object->build_view();
 		return $object->view;

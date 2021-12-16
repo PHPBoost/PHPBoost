@@ -15,16 +15,16 @@ class MediaTreeLinks implements ModuleTreeLinksExtensionPoint
 	{
 		$module_id = 'media';
 
-		$lang = LangLoader::get('common', $module_id);
+		$lang = LangLoader::get_all_langs($module_id);
 		$tree = new ModuleTreeLinks();
 
-		$tree->add_link(new ModuleLink(LangLoader::get_message('category.categories.manage', 'category-lang'), CategoriesUrlBuilder::manage($module_id), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->manage()));
-		$tree->add_link(new ModuleLink(LangLoader::get_message('category.add', 'category-lang'), CategoriesUrlBuilder::add(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY), $module_id), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->manage()));
+		$tree->add_link(new ModuleLink($lang['category.categories.manage'], CategoriesUrlBuilder::manage($module_id), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->manage()));
+		$tree->add_link(new ModuleLink($lang['category.add'], CategoriesUrlBuilder::add(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY), $module_id), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->manage()));
 
 		$tree->add_link(new ModuleLink($lang['media.management'], MediaUrlBuilder::manage(), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation()));
 		$tree->add_link(new ModuleLink($lang['media.add.item'], MediaUrlBuilder::add(), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation()));
 
-		$tree->add_link(new AdminModuleLink(LangLoader::get_message('form.configuration', 'form-lang'), MediaUrlBuilder::configuration()));
+		$tree->add_link(new AdminModuleLink($lang['form.configuration'], MediaUrlBuilder::configuration()));
 
 		if (!CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation())
 		{
@@ -32,7 +32,7 @@ class MediaTreeLinks implements ModuleTreeLinksExtensionPoint
 		}
 
 		if (ModulesManager::get_module($module_id)->get_configuration()->get_documentation())
-			$tree->add_link(new ModuleLink(LangLoader::get_message('form.documentation', 'form-lang'), ModulesManager::get_module('media')->get_configuration()->get_documentation(), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->write() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->contribution() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation()));
+			$tree->add_link(new ModuleLink($lang['form.documentation'], ModulesManager::get_module('media')->get_configuration()->get_documentation(), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->write() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->contribution() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation()));
 
 		return $tree;
 	}
