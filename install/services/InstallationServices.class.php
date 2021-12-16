@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 28
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2010 02 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -40,7 +40,7 @@ class InstallationServices
 		$this->load_distribution_configuration();
 		$this->set_default_locale($locale);
 		LangLoader::set_locale($this->distribution_config['default_lang']);
-		$this->messages = LangLoader::get('common', 'install');
+		$this->messages = LangLoader::get_all_langs('install');
 	}
 
 	public static function get_available_langs()
@@ -427,7 +427,7 @@ class InstallationServices
 
 	private function add_extended_fields()
 	{
-		$lang = LangLoader::get('user-lang');
+		$lang = LangLoader::get_all_langs();
 
 		// Sex
 		$extended_field = new ExtendedField();

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 28
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2009 12 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -56,24 +56,13 @@ class InstallDisplayResponse extends AbstractResponse
 		$this->current_step = $step_number;
 		$this->full_view = new FileTemplate('install/main.tpl');
 		$this->full_view->put('INSTALL_STEP', $view);
-		$this->full_view->add_lang(array_merge(
-			$this->lang,
-			$this->distribution_lang,
-			LangLoader::get('common-lang'),
-			LangLoader::get('form-lang')
-		));
-		$view->add_lang(array_merge(
-			$this->lang,
-			$this->distribution_lang,
-			LangLoader::get('common-lang'),
-			LangLoader::get('form-lang')
-		));
+		$this->full_view->add_lang($this->lang);
+		$view->add_lang($this->lang);
 	}
 
 	public function load_language_resources()
 	{
-		$this->lang = LangLoader::get('common', 'install');
-		$this->distribution_lang = LangLoader::get('distribution', 'install');
+		$this->lang = LangLoader::get_all_langs('install');
 	}
 
 	private function add_language_bar()
