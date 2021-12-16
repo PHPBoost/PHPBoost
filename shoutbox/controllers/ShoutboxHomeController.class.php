@@ -3,28 +3,28 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 4.1 - 2014 10 14
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
 */
 
-class ShoutboxHomeController extends ModuleController
+class ShoutboxHomeController extends DefaultModuleController
 {
-	private $lang;
-	private $view;
-
 	private $elements_number = 0;
 	private $ids = array();
 	private $hide_delete_input = array();
 	private $display_multiple_delete = true;
 
+	protected function get_template_to_use()
+	{
+	   return new FileTemplate('shoutbox/ShoutboxHomeController.tpl');
+	}
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
-
-		$this->init();
 
 		$this->build_view();
 
@@ -32,19 +32,6 @@ class ShoutboxHomeController extends ModuleController
 			$this->execute_multiple_delete_if_needed($request);
 
 		return $this->generate_response();
-	}
-
-	private function init()
-	{
-		$this->current_user = AppContext::get_current_user();
-
-		$this->lang = array_merge(
-			LangLoader::get('common', 'BBCode'),
-			LangLoader::get('common-lang'),
-			LangLoader::get('common', 'shoutbox')
-		);
-		$this->view = new FileTemplate('shoutbox/ShoutboxHomeController.tpl');
-		$this->view->add_lang($this->lang);
 	}
 
 	private function build_view()

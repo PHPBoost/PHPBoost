@@ -3,33 +3,15 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 4.1 - 2014 10 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class ShoutboxFormController extends ModuleController
+class ShoutboxFormController extends DefaultModuleController
 {
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonSubmit
-	 */
-	private $submit_button;
-
-	private $lang;
-
-	private $view;
-
-	private $message;
-	private $is_new_message;
-
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
-
 		$this->check_authorizations();
 
 		$this->build_form($request);
@@ -37,10 +19,10 @@ class ShoutboxFormController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$id = $this->save();
-			AppContext::get_response()->redirect(ShoutboxUrlBuilder::home($this->is_new_message ? 1 : $this->form->get_value('page'), $id));
+			AppContext::get_response()->redirect(ShoutboxUrlBuilder::home($this->is_new_item ? 1 : $this->form->get_value('page'), $id));
 		}
 
-		$this->view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
 		return $this->generate_response($this->view);
 	}
@@ -54,19 +36,15 @@ class ShoutboxFormController extends ModuleController
 		if ($object->submit_button->has_been_submited() && $object->form->validate())
 		{
 			$id = $object->save();
-			AppContext::get_response()->redirect(ShoutboxUrlBuilder::home($object->is_new_message ? 1 : $object->form->get_value('page'), $id));
+			AppContext::get_response()->redirect(ShoutboxUrlBuilder::home($object->is_new_item ? 1 : $object->form->get_value('page'), $id));
 		}
-		$object->view->put('FORM', ShoutboxAuthorizationsService::check_authorizations()->write() && !AppContext::get_current_user()->is_readonly() ? $object->form->display() : '');
+		$object->view->put('CONTENT', ShoutboxAuthorizationsService::check_authorizations()->write() && !AppContext::get_current_user()->is_readonly() ? $object->form->display() : '');
 		return $object->view;
 	}
 
 	private function init()
 	{
-		$this->lang = array_merge(
-			LangLoader::get('form-lang'),
-			LangLoader::get('common', 'shoutbox')
-		);
-		$this->view = new StringTemplate('# INCLUDE FORM #');
+		$this->view = new StringTemplate('# INCLUDE CONTENT #');
 	}
 
 	private function build_form(HTTPRequestCustom $request)
@@ -78,7 +56,7 @@ class ShoutboxFormController extends ModuleController
 		$formatter->set_forbidden_tags($config->get_forbidden_formatting_tags());
 
 		$form = new HTMLForm(__CLASS__);
-		$form->set_layout_title($this->is_new_message ? $this->lang['shoutbox.add.item'] : $this->lang['shoutbox.edit.item']);
+		$form->set_layout_title($this->is_new_item ? $this->lang['shoutbox.add.item'] : $this->lang['shoutbox.edit.item']);
 
 		$fieldset = new FormFieldsetHTML('message', $this->lang['form.parameters']);
 		$form->add_fieldset($fieldset);
@@ -109,13 +87,13 @@ class ShoutboxFormController extends ModuleController
 
 	private function get_message()
 	{
-		if ($this->message === null)
+		if ($this->item === null)
 		{
 			$id = AppContext::get_request()->get_getint('id', 0);
 			if (!empty($id))
 			{
 				try {
-					$this->message = ShoutboxService::get_message('WHERE id=:id', array('id' => $id));
+					$this->item = ShoutboxService::get_message('WHERE id=:id', array('id' => $id));
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
    					DispatchManager::redirect($error_controller);
@@ -123,12 +101,12 @@ class ShoutboxFormController extends ModuleController
 			}
 			else
 			{
-				$this->is_new_message = true;
-				$this->message = new ShoutboxMessage();
-				$this->message->init_default_properties();
+				$this->is_new_item = true;
+				$this->item = new ShoutboxMessage();
+				$this->item->init_default_properties();
 			}
 		}
-		return $this->message;
+		return $this->item;
 	}
 
 	private function check_authorizations()

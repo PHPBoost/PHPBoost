@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 20
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 4.1 - 2014 12 02
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -21,7 +21,7 @@ class ShoutboxAjaxRefreshMessagesController extends AbstractController
 	private function build_view()
 	{
 		$this->view = new FileTemplate('shoutbox/ShoutboxAjaxMessagesBoxController.tpl');
-		$this->view->add_lang(LangLoader::get('common-lang'));
+		$this->view->add_lang(LangLoader::get_all_langs());
 
 		$config = ShoutboxConfig::load();
 
