@@ -66,7 +66,6 @@ class AdminErrorsController404List extends DefaultAdminController
 			$this->view->put('FORM', $this->form->display());
 
 			$this->view->put('TABLE', $this->table->display());
-
 		}
 		else
 			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['common.no.item.now'], MessageHelper::SUCCESS, 0, true));

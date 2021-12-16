@@ -3,20 +3,22 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2012 12 12
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class GuestbookController extends ModuleController
+class GuestbookController extends DefaultModuleController
 {
-	private $lang;
-	private $view;
-
 	private $elements_number = 0;
 	private $ids = array();
 	private $hide_delete_input = array();
 	private $display_multiple_delete = true;
+
+	protected function get_template_to_use()
+	{
+	   return new FileTemplate('guestbook/GuestbookController.tpl');
+	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -128,13 +130,6 @@ class GuestbookController extends ModuleController
 	private function init()
 	{
 		$this->current_user = AppContext::get_current_user();
-
-		$this->lang = array_merge(
-			LangLoader::get('common-lang'),
-			LangLoader::get('common', 'guestbook')
-		);
-		$this->view = new FileTemplate('guestbook/GuestbookController.tpl');
-		$this->view->add_lang($this->lang);
 	}
 
 	private function execute_multiple_delete_if_needed(HTTPRequestCustom $request)
@@ -159,7 +154,7 @@ class GuestbookController extends ModuleController
 			if ($page > 1 && $deleted_messages_number == GuestbookConfig::load()->get_items_per_page())
 				$page--;
 
-			AppContext::get_response()->redirect(GuestbookUrlBuilder::home($page), LangLoader::get_message('warning.process.success', 'warning-lang'));
+			AppContext::get_response()->redirect(GuestbookUrlBuilder::home($page), $this->lang['warning.process.success']);
 		}
 	}
 

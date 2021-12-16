@@ -3,33 +3,15 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 4.0 - 2013 06 27
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class GuestbookFormController extends ModuleController
+class GuestbookFormController extends DefaultModuleController
 {
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonSubmit
-	 */
-	private $submit_button;
-
-	private $lang;
-
-	private $view;
-
-	private $message;
-	private $is_new_message;
-
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
-
 		$this->check_authorizations();
 
 		$this->build_form($request);
@@ -37,10 +19,10 @@ class GuestbookFormController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$id = $this->save();
-			AppContext::get_response()->redirect(GuestbookUrlBuilder::home($this->is_new_message ? 1 : $this->form->get_value('page'), $id));
+			AppContext::get_response()->redirect(GuestbookUrlBuilder::home($this->is_new_item ? 1 : $this->form->get_value('page'), $id));
 		}
 
-		$this->view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
 		return $this->generate_response($this->view);
 	}
@@ -54,7 +36,7 @@ class GuestbookFormController extends ModuleController
 		if ($object->submit_button->has_been_submited() && $object->form->validate())
 		{
 			$id = $object->save();
-			AppContext::get_response()->redirect(GuestbookUrlBuilder::home($object->is_new_message ? 1 : $object->form->get_value('page'), $id));
+			AppContext::get_response()->redirect(GuestbookUrlBuilder::home($object->is_new_item ? 1 : $object->form->get_value('page'), $id));
 		}
 		$object->view->put('FORM', GuestbookAuthorizationsService::check_authorizations()->write() && !AppContext::get_current_user()->is_readonly() ? $object->form->display() : '');
 		return $object->view;
@@ -62,39 +44,34 @@ class GuestbookFormController extends ModuleController
 
 	private function init()
 	{
-		$this->lang = array_merge(
-			LangLoader::get('form-lang'),
-			LangLoader::get('common', 'guestbook')
-		);
 		$this->view = new StringTemplate('# INCLUDE FORM #');
 	}
 
 	private function build_form(HTTPRequestCustom $request)
 	{
-		$config = GuestbookConfig::load();
 		$current_user = AppContext::get_current_user();
 
 		$formatter = AppContext::get_content_formatting_service()->get_default_factory();
-		$formatter->set_forbidden_tags($config->get_forbidden_tags());
+		$formatter->set_forbidden_tags($this->config->get_forbidden_tags());
 
 		$form = new HTMLForm(__CLASS__);
-		$form->set_layout_title($this->is_new_message ? $this->lang['guestbook.add.item'] : $this->lang['guestbook.edit.item']);
+		$form->set_layout_title($this->is_new_item ? $this->lang['guestbook.add.item'] : $this->lang['guestbook.edit.item']);
 
 		$fieldset = new FormFieldsetHTML('message', $this->lang['form.parameters']) ;
 		$form->add_fieldset($fieldset);
 
 		if (!$current_user->check_level(User::MEMBER_LEVEL))
 		{
-			$fieldset->add_field(new FormFieldTextEditor('pseudo', LangLoader::get_message('user.username', 'user-lang'), $this->get_message()->get_login(), array(
+			$fieldset->add_field(new FormFieldTextEditor('pseudo', $this->lang['user.username'], $this->get_item()->get_login(), array(
 				'required' => true, 'maxlength' => 25)
 			));
 		}
 
-		$fieldset->add_field(new FormFieldRichTextEditor('content',  $this->lang['form.content'], $this->get_message()->get_content(),
+		$fieldset->add_field(new FormFieldRichTextEditor('content',  $this->lang['form.content'], $this->get_item()->get_content(),
 			array('formatter' => $formatter, 'rows' => 10, 'cols' => 47, 'required' => true),
 			array(
-				(!$current_user->is_moderator() && !$current_user->is_admin() ? new FormFieldConstraintMaxLinks($config->get_maximum_links_message(), true) : ''),
-				new FormFieldConstraintAntiFlood(GuestbookService::get_last_message_timestamp_from_user($this->get_message()->get_author_user()->get_id())
+				(!$current_user->is_moderator() && !$current_user->is_admin() ? new FormFieldConstraintMaxLinks($this->config->get_maximum_links_message(), true) : ''),
+				new FormFieldConstraintAntiFlood(GuestbookService::get_last_message_timestamp_from_user($this->get_item()->get_author_user()->get_id())
 			))
 		));
 
@@ -107,15 +84,15 @@ class GuestbookFormController extends ModuleController
 		$this->form = $form;
 	}
 
-	private function get_message()
+	private function get_item()
 	{
-		if ($this->message === null)
+		if ($this->item === null)
 		{
 			$id = AppContext::get_request()->get_getint('id', 0);
 			if (!empty($id))
 			{
 				try {
-					$this->message = GuestbookService::get_message('WHERE id=:id', array('id' => $id));
+					$this->item = GuestbookService::get_item('WHERE id=:id', array('id' => $id));
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
    					DispatchManager::redirect($error_controller);
@@ -123,17 +100,17 @@ class GuestbookFormController extends ModuleController
 			}
 			else
 			{
-				$this->is_new_message = true;
-				$this->message = new GuestbookMessage();
-				$this->message->init_default_properties();
+				$this->is_new_item = true;
+				$this->item = new GuestbookMessage();
+				$this->item->init_default_properties();
 			}
 		}
-		return $this->message;
+		return $this->item;
 	}
 
 	private function check_authorizations()
 	{
-		$message = $this->get_message();
+		$message = $this->get_item();
 
 		if ($message->get_id() === null)
 		{
@@ -160,7 +137,7 @@ class GuestbookFormController extends ModuleController
 
 	private function save()
 	{
-		$message = $this->get_message();
+		$message = $this->get_item();
 
 		if ($this->form->has_field('pseudo'))
 			$message->set_login($this->form->get_value('pseudo'));
@@ -186,7 +163,7 @@ class GuestbookFormController extends ModuleController
 
 	private function generate_response(View $tpl)
 	{
-		$message = $this->get_message();
+		$message = $this->get_item();
 		$page = AppContext::get_request()->get_getint('page', 1);
 
 		$location_id = $message->get_id() ? 'guestbook-edit-'. $message->get_id() : '';

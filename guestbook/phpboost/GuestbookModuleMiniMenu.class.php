@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 27
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -38,7 +38,7 @@ class GuestbookModuleMiniMenu extends ModuleMiniMenu
 		$view = new FileTemplate('guestbook/GuestbookModuleMiniMenu.tpl');
 
 		//Assign the lang file to the tpl
-		$view->add_lang(array_merge(LangLoader::get('common', 'guestbook'), LangLoader::get('common-lang')));
+		$view->add_lang(LangLoader::get_all_langs('guestbook'));
 
 		//Assign common menu variables to the tpl
 		MenuService::assign_positions_conditions($view, $this->get_block());
