@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 30
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -75,15 +75,15 @@ class ReCaptcha extends Captcha
 
 	public function display()
 	{
-		$tpl = new FileTemplate('ReCaptcha/ReCaptcha.tpl');
-		$tpl->add_lang(LangLoader::get('common', 'ReCaptcha'));
-		$tpl->put_all(array(
+		$view = new FileTemplate('ReCaptcha/ReCaptcha.tpl');
+		$view->add_lang(LangLoader::get_all_langs('ReCaptcha'));
+		$view->put_all(array(
 			'C_INVISIBLE' => $this->config->is_invisible_mode_enabled(),
-			'SITE_KEY' => $this->config->get_site_key(),
-			'FORM_ID' => $this->get_form_id(),
-			'HTML_ID' => $this->get_html_id()
+			'SITE_KEY'    => $this->config->get_site_key(),
+			'FORM_ID'     => $this->get_form_id(),
+			'HTML_ID'     => $this->get_html_id()
 		));
-		return $tpl->render();
+		return $view->render();
 	}
 
 	public function is_visible()

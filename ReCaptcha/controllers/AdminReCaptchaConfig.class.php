@@ -14,29 +14,29 @@ class AdminReCaptchaConfig extends DefaultAdminModuleController
 	{
 		self::$module_id = 'ReCaptcha';
 	}
-	
+
 	public function __construct($module_id = '')
 	{
 		self::$module_id = 'ReCaptcha';
-		
+
 		$this->init_parameters();
 		$this->init_view();
 	}
-	
+
 	protected function init_parameters()
 	{
 		$this->request = AppContext::get_request();
 		$this->config = ReCaptchaConfig::load();
 		$this->lang = LangLoader::get_all_langs(self::$module_id);
 	}
-	
+
 	protected function init_view()
 	{
 		$this->view = $this->get_template_to_use();
 
 		$this->view->add_lang($this->lang);
 	}
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->build_form();
@@ -133,11 +133,11 @@ class AdminReCaptchaConfig extends DefaultAdminModuleController
 		$object->form = $form;
 		$object->save();
 	}
-	
+
 	public static function get_module()
 	{
 		self::$module = ModulesManager::get_module('ReCaptcha');
-		
+
 		return self::$module;
 	}
 }
