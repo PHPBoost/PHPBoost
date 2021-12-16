@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 03
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -63,7 +63,7 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 	{
 		$this->view = new FileTemplate('poll/PollModuleMiniMenu.tpl');
 		MenuService::assign_positions_conditions($this->view, $this->get_block());
-		$this->lang = LangLoader::get('common', self::MODULE_ID);
+		$this->lang = LangLoader::get_all_langs(self::MODULE_ID);
 		$this->view->add_lang($this->lang);
 
 		$items_ids_for_polls_displaying = array();
@@ -110,7 +110,7 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 					$random_item_id = (int)$this->get_random_item_id($items_ids_for_polls_displaying);
 					$this->item = $this->get_items_manager()->get_item($random_item_id);
 					$this->get_items_manager()->update_views_number($this->item);
-					
+
 					$previous_item_id = $this->get_previous_item_id($random_item_id, $items_ids_for_polls_displaying);
 					$next_item_id = $this->get_next_item_id($random_item_id, $items_ids_for_polls_displaying);
 				}
@@ -123,7 +123,7 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 			{
 				$this->item = $this->get_items_manager()->get_item($item_id);
 				$this->get_items_manager()->update_views_number($this->item);
-				
+
 				$previous_item_id = $this->get_previous_item_id($item_id, $items_ids_for_polls_displaying);
 				$next_item_id = $this->get_next_item_id($item_id, $items_ids_for_polls_displaying);
 			}

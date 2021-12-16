@@ -14,8 +14,8 @@ class PollVotesResultService
 		if (PollAuthorizationsService::check_authorizations()->display_votes_result())
 		{
 			$tpl = new FileTemplate('poll/PollVotesResult.tpl');
-			$tpl->add_lang(LangLoader::get('common', 'poll'));
-		  
+			$tpl->add_lang(LangLoader::get_all_langs('poll'));
+
 			$tpl->put_all(array(
 				'C_HAS_VOTES'        => $item->has_votes(),
 				'TOTAL_VOTES_NUMBER' => $item->get_votes_number()
@@ -33,7 +33,7 @@ class PollVotesResultService
 					));
 				}
 			}
-			
+
 			return $tpl;
 		}
 	}

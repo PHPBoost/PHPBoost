@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 16
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -30,7 +30,7 @@ class PollItem extends RichItem
 	{
 		$this->content_field_enabled = false;
 		$this->summary_field_enabled = false;
-		$this->lang = LangLoader::get('common', self::MODULE_ID);
+		$this->lang = LangLoader::get_all_langs(self::MODULE_ID);
 		$this->current_user_id = AppContext::get_current_user()->get_id();
 
 		parent::__construct(self::MODULE_ID);
@@ -257,12 +257,12 @@ class PollItem extends RichItem
 	{
 		return ModulesManager::get_module(self::MODULE_ID);
 	}
-	
+
 	protected function get_additional_sorting_fields()
 	{
 		return array('close_poll' => array('database_field' => 'close_poll', 'label' => $this->lang['poll.sorting.field.closed'], 'icon' => 'fas fa-window-close'));
 	}
-	
+
 	public function get_additional_template_vars()
 	{
 		return array('C_COMPLETED' => $this->is_closed());
