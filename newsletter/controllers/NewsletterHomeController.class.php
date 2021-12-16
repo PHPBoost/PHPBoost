@@ -3,19 +3,21 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 14
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2011 03 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class NewsletterHomeController extends ModuleController
+class NewsletterHomeController extends DefaultModuleController
 {
-	private $lang;
 	private $full_view;
-	private $view;
-	private $config;
+
+	protected function get_template_to_use()
+	{
+	   return new FileTemplate('newsletter/NewsletterHomeController.tpl');
+	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -30,12 +32,8 @@ class NewsletterHomeController extends ModuleController
 
 	private function init()
 	{
-		$this->config = NewsletterConfig::load();
-		$this->lang = LangLoader::get('common', 'newsletter');
 		$this->full_view = new FileTemplate('newsletter/NewsletterBody.tpl');
 		$this->full_view->add_lang($this->lang);
-		$this->view = new FileTemplate('newsletter/NewsletterHomeController.tpl');
-		$this->view->add_lang(array_merge($this->lang, LangLoader::get('common-lang'), LangLoader::get('warning-lang')));
 	}
 
 	private function build_form(HTTPRequestCustom $request)

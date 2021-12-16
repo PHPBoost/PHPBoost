@@ -3,24 +3,14 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2011 03 16
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class NewsletterEditSubscriberController extends ModuleController
+class NewsletterEditSubscriberController extends DefaultModuleController
 {
-	private $lang;
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonDefaultSubmit
-	 */
-	private $submit_button;
-
 	public function execute(HTTPRequestCustom $request)
 	{
 		if (!NewsletterAuthorizationsService::default_authorizations()->moderation_subscribers())
@@ -29,12 +19,11 @@ class NewsletterEditSubscriberController extends ModuleController
 		}
 
 		$id = $request->get_getint('id', 0);
-		$this->init();
 
 		$verificate_is_edit = PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE id = '". $id ."' AND user_id = -1") > 0;
 		if (!$this->subscriber_exist($id) || !$verificate_is_edit)
 		{
-			$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), LangLoader::get_message('newsletter.subscriber.not.exists', 'common', 'newsletter'));
+			$controller = new UserErrorController($this->lang['warning.error'], $this->lang['newsletter.subscriber.not.exists']);
 			DispatchManager::redirect($controller);
 		}
 
@@ -45,17 +34,12 @@ class NewsletterEditSubscriberController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save($id);
-			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
+			$view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.process.success'], MessageHelper::SUCCESS, 4));
 		}
 
 		$view->put('FORM', $this->form->display());
 
 		return $this->build_response($view, $id);
-	}
-
-	private function init()
-	{
-		$this->lang = LangLoader::get('common', 'newsletter');
 	}
 
 	private function build_form($id)
@@ -67,7 +51,7 @@ class NewsletterEditSubscriberController extends ModuleController
 		$condition = "WHERE id = '". $id ."' AND user_id = -1";
 		$row = PersistenceContext::get_querier()->select_single_row(NewsletterSetup::$newsletter_table_subscribers, $columns, $condition);
 
-		$fieldset = new FormFieldsetHTML('edit-subscriber', LangLoader::get_message('form.parameters', 'form-lang'));
+		$fieldset = new FormFieldsetHTML('edit-subscriber', $this->lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldMailEditor('mail', $this->lang['newsletter.subscriber.email'], $row['mail'],

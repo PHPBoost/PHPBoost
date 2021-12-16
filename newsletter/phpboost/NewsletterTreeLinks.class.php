@@ -13,7 +13,7 @@ class NewsletterTreeLinks implements ModuleTreeLinksExtensionPoint
 {
 	public function get_actions_tree_links()
 	{
-		$lang = LangLoader::get('common', 'newsletter');
+		$lang = LangLoader::get_all_langs('newsletter');
 		$tree = new ModuleTreeLinks();
 
 		$tree->add_link(new ModuleLink($lang['newsletter.streams.management'], NewsletterUrlBuilder::manage_streams(), NewsletterAuthorizationsService::default_authorizations()->manage_streams()));
@@ -22,10 +22,10 @@ class NewsletterTreeLinks implements ModuleTreeLinksExtensionPoint
 		$tree->add_link(new ModuleLink($lang['newsletter.archives'], NewsletterUrlBuilder::archives(), NewsletterAuthorizationsService::default_authorizations()->read_archives()));
 		$tree->add_link(new ModuleLink($lang['newsletter.add.item'], NewsletterUrlBuilder::add_newsletter(), NewsletterAuthorizationsService::default_authorizations()->create_newsletters()));
 
-		$tree->add_link(new AdminModuleLink(LangLoader::get_message('form.configuration', 'form-lang'), NewsletterUrlBuilder::configuration()));
+		$tree->add_link(new AdminModuleLink($lang['form.configuration'], NewsletterUrlBuilder::configuration()));
 
 		if (ModulesManager::get_module('newsletter')->get_configuration()->get_documentation())
-			$tree->add_link(new ModuleLink(LangLoader::get_message('form.documentation', 'form-lang'), ModulesManager::get_module('newsletter')->get_configuration()->get_documentation(), NewsletterAuthorizationsService::default_authorizations()->create_newsletters()));
+			$tree->add_link(new ModuleLink($lang['form.documentation'], ModulesManager::get_module('newsletter')->get_configuration()->get_documentation(), NewsletterAuthorizationsService::default_authorizations()->create_newsletters()));
 
 		return $tree;
 	}

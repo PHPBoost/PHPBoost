@@ -3,25 +3,14 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 18
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2011 02 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AddNewsletterController extends ModuleController
+class AddNewsletterController extends DefaultModuleController
 {
-	private $lang;
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonDefaultSubmit
-	 */
-	private $submit_button;
-
-	private $config;
 	private $send_test_button;
 
 	public function execute(HTTPRequestCustom $request)
@@ -33,31 +22,22 @@ class AddNewsletterController extends ModuleController
 
 		$type = $request->get_value('type', '');
 
-		$this->init();
 		$this->build_form($type);
-
-		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->send_mail($type);
-			$view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['newsletter.item.success.add'], MessageHelper::SUCCESS, 5));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['newsletter.item.success.add'], MessageHelper::SUCCESS, 5));
 		}
 		else if ($this->send_test_button->has_been_submited() && $this->form->validate())
 		{
 			$this->send_test($type);
-			$view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['newsletter.success.send.test'], MessageHelper::SUCCESS, 5));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['newsletter.success.send.test'], MessageHelper::SUCCESS, 5));
 		}
 
-		$view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
-		return $this->build_response($view, $type);
-	}
-
-	private function init()
-	{
-		$this->lang = LangLoader::get('common', 'newsletter');
-		$this->config = NewsletterConfig::load();
+		return $this->build_response($this->view, $type);
 	}
 
 	private function build_form($type)

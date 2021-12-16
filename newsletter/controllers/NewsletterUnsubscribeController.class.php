@@ -3,18 +3,14 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2011 03 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class NewsletterUnsubscribeController extends ModuleController
+class NewsletterUnsubscribeController extends DefaultModuleController
 {
-	private $lang;
-	private $view;
-	private $form;
-	private $submit_button;
 	private $current_user;
 
 	public function execute(HTTPRequestCustom $request)
@@ -22,24 +18,18 @@ class NewsletterUnsubscribeController extends ModuleController
 		$this->init();
 		$this->build_form();
 
-		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER ## INCLUDE FORM #');
-
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save($view);
 		}
 
-		$view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
-		return $this->build_response($view);
+		return $this->build_response($this->view);
 	}
 
 	private function init()
 	{
-		$this->lang = array_merge(
-			LangLoader::get('form-lang'),
-			LangLoader::get('common', 'newsletter')
-		);
 		$this->current_user = AppContext::get_current_user();
 	}
 
@@ -138,7 +128,7 @@ class NewsletterUnsubscribeController extends ModuleController
 			if ($this->current_user->check_level(User::MEMBER_LEVEL) && $this->form->get_value('mail') == $this->current_user->get_email())
 			{
 				NewsletterService::unsubscriber_all_streams_member($this->current_user->get_id());
-				$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
+				$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.process.success'], MessageHelper::SUCCESS, 4));
 			}
 			else
 			{
@@ -147,7 +137,7 @@ class NewsletterUnsubscribeController extends ModuleController
 					if (NewsletterDAO::mail_existed($this->form->get_value('mail')))
 					{
 						NewsletterService::unsubscriber_all_streams_visitor($this->form->get_value('mail'));
-						$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
+						$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.process.success'], MessageHelper::SUCCESS, 4));
 					}
 				}
 				else if ($this->current_user->is_admin())
@@ -157,24 +147,24 @@ class NewsletterUnsubscribeController extends ModuleController
 						if (NewsletterDAO::user_id_existed($user->get_id()))
 						{
 							NewsletterService::unsubscriber_all_streams_member($user->get_id());
-							$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
+							$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.process.success'], MessageHelper::SUCCESS, 4));
 						}
 						else
-							$view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['newsletter.subscriber.not.exists'], MessageHelper::ERROR));
+							$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['newsletter.subscriber.not.exists'], MessageHelper::ERROR));
 					}
 					else
 					{
 						if (NewsletterDAO::mail_existed($this->form->get_value('mail')))
 						{
 							NewsletterService::unsubscriber_all_streams_visitor($this->form->get_value('mail'));
-							$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
+							$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.process.success'], MessageHelper::SUCCESS, 4));
 						}
 						else
-							$view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['newsletter.subscriber.not.exists'], MessageHelper::ERROR));
+							$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['newsletter.subscriber.not.exists'], MessageHelper::ERROR));
 					}
 				}
 				else
-					$view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['newsletter.subscriber.not.exists'], MessageHelper::ERROR));
+					$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['newsletter.subscriber.not.exists'], MessageHelper::ERROR));
 			}
 		}
 		else
@@ -188,7 +178,7 @@ class NewsletterUnsubscribeController extends ModuleController
 			if ($this->current_user->check_level(User::MEMBER_LEVEL) && $this->form->get_value('mail') == $this->current_user->get_email() && ($streams != NewsletterService::get_member_id_streams($this->current_user->get_id())) && !empty($streams))
 			{
 				NewsletterService::update_subscriptions_member_registered($streams, $this->current_user->get_id());
-				$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
+				$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.process.success'], MessageHelper::SUCCESS, 4));
 			}
 			else
 			{
@@ -197,7 +187,7 @@ class NewsletterUnsubscribeController extends ModuleController
 					if (NewsletterDAO::mail_existed($this->form->get_value('mail')) && ($streams != NewsletterService::get_visitor_id_streams($this->form->get_value('mail'))))
 					{
 						NewsletterService::update_subscriptions_visitor($streams, $this->form->get_value('mail'));
-						$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
+						$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.process.success'], MessageHelper::SUCCESS, 4));
 					}
 				}
 				else if ($this->current_user->is_admin())
@@ -207,7 +197,7 @@ class NewsletterUnsubscribeController extends ModuleController
 						if (NewsletterDAO::user_id_existed($user->get_id()) && ($streams != NewsletterService::get_member_id_streams($user->get_id())))
 						{
 							NewsletterService::update_subscriptions_member_registered($streams, $user->get_id());
-							$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
+							$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.process.success'], MessageHelper::SUCCESS, 4));
 						}
 					}
 					else
@@ -215,7 +205,7 @@ class NewsletterUnsubscribeController extends ModuleController
 						if (NewsletterDAO::mail_existed($this->form->get_value('mail')) && ($streams != NewsletterService::get_visitor_id_streams($this->form->get_value('mail'))))
 						{
 							NewsletterService::update_subscriptions_visitor($streams, $this->form->get_value('mail'));
-							$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
+							$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.process.success'], MessageHelper::SUCCESS, 4));
 						}
 					}
 				}

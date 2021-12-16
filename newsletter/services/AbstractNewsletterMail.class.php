@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 14
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2011 02 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -15,7 +15,7 @@ abstract class AbstractNewsletterMail implements NewsletterMailType
 
 	public function __construct()
 	{
-		$this->lang = LangLoader::get('common', 'newsletter');
+		$this->lang = LangLoader::get_all_langs('newsletter');
 	}
 
 	/**

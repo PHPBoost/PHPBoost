@@ -3,35 +3,19 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 14
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2011 02 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class HomeAddNewsletterController extends ModuleController
+class HomeAddNewsletterController extends DefaultModuleController
 {
-	private $lang;
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonDefaultSubmit
-	 */
-	private $submit_button;
-
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
 
-		$this->init();
-
 		$this->build_form();
-
-		$view = new StringTemplate('# INCLUDE FORM #');
-
-		$view->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -43,9 +27,9 @@ class HomeAddNewsletterController extends ModuleController
 			}
 		}
 
-		$view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
-		return $this->build_response($view);
+		return $this->build_response($this->view);
 	}
 
 	private function check_authorizations()
@@ -54,11 +38,6 @@ class HomeAddNewsletterController extends ModuleController
 		{
 			NewsletterAuthorizationsService::get_errors()->create_newsletters();
 		}
-	}
-
-	private function init()
-	{
-		$this->lang = LangLoader::get('common', 'newsletter');
 	}
 
 	private function build_form()
@@ -72,7 +51,7 @@ class HomeAddNewsletterController extends ModuleController
 		{
 			$fieldset->add_field(new FormFieldHTML('choices_table', $this->build_choices_table()->render()));
 
-			$this->submit_button = new FormButtonDefaultSubmit(LangLoader::get_message('form.next', 'form-lang'));
+			$this->submit_button = new FormButtonDefaultSubmit($this->lang['form.next']);
 			$form->add_button($this->submit_button);
 		}
 		else
