@@ -3,58 +3,27 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 20
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2012 01 29
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminOnlineConfigController extends AdminModuleController
+class AdminOnlineConfigController extends DefaultAdminModuleController
 {
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonSubmit
-	 */
-	private $submit_button;
-
-	private $lang;
-
-	/**
-	 * @var OnlineConfig
-	 */
-	private $config;
-
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
-
 		$this->build_form();
-
-		$view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.config', 'warning-lang'), MessageHelper::SUCCESS, 4));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.success.config'], MessageHelper::SUCCESS, 4));
 		}
 
-		$view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
-		return new DefaultAdminDisplayResponse($view);
-	}
-
-	private function init()
-	{
-		$this->config = OnlineConfig::load();
-		$this->lang = array_merge(
-			LangLoader::get('form-lang'),
-			LangLoader::get('common-lang'),
-			LangLoader::get('user-lang'),
-			LangLoader::get('common', 'online')
-		);
+		return new DefaultAdminDisplayResponse($this->view);
 	}
 
 	private function build_form()
@@ -116,7 +85,7 @@ class AdminOnlineConfigController extends AdminModuleController
 
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		OnlineConfig::save();
-		
+
 		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
 	}
 }
