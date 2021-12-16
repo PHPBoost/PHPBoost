@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 19
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 2.0 - 2008 07 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -12,7 +12,7 @@
 */
 
 require_once('../kernel/begin.php');
-$lang = LangLoader::get('contribution-lang');
+$lang = LangLoader::get_all_langs();
 
 if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) // If user is not member (guests have nothing to do here)
 {
@@ -36,7 +36,7 @@ if ($contribution_id > 0)
 		DispatchManager::redirect($error_controller);
 	}
 
-	$Bread_crumb->add(LangLoader::get_message('user.user', 'user-lang'), UserUrlBuilder::home()->rel());
+	$Bread_crumb->add($lang['user.user'], UserUrlBuilder::home()->rel());
 	$Bread_crumb->add($lang['contribution.panel'], url('contribution_panel.php'));
 	$Bread_crumb->add($contribution->get_entitled(), url('contribution_panel.php?id=' . $contribution->get_id()));
 
@@ -55,7 +55,7 @@ elseif ($id_update > 0)
 	   DispatchManager::redirect($error_controller);
     }
 
-	$Bread_crumb->add(LangLoader::get_message('user.user', 'user-lang'), UserUrlBuilder::home()->rel());
+	$Bread_crumb->add($lang['user.user'], UserUrlBuilder::home()->rel());
 	$Bread_crumb->add($lang['contribution.panel'], url('contribution_panel.php'));
 	$Bread_crumb->add($contribution->get_entitled(), url('contribution_panel.php?id=' . $contribution->get_id()));
 	$Bread_crumb->add($lang['contribution.edition'], url('contribution_panel.php?edit=' . $id_update));
@@ -129,7 +129,7 @@ elseif ($id_to_delete > 0)
 }
 else
 {
-	$Bread_crumb->add(LangLoader::get_message('user.user', 'user-lang'), UserUrlBuilder::home()->rel());
+	$Bread_crumb->add($lang['user.user'], UserUrlBuilder::home()->rel());
 	$Bread_crumb->add($lang['contribution.panel'], url('contribution_panel.php'));
 	define('TITLE', $lang['contribution.panel']);
 }
@@ -137,7 +137,7 @@ else
 require_once('../kernel/header.php');
 
 $view = new FileTemplate('user/contribution_panel.tpl');
-$view->add_lang(array_merge($lang, LangLoader::get('common-lang'), LangLoader::get('form-lang')));
+$view->add_lang($lang);
 
 if ($contribution_id > 0)
 {

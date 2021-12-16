@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -90,15 +90,15 @@ class UserEditProfileController extends AbstractController
 			$this->save($request);
 		}
 
-		$this->tpl->put('FORM', $this->form->display());
+		$this->view->put('FORM', $this->form->display());
 
 		return $this->build_response();
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('user-lang');
-		$this->tpl = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
+		$this->lang = LangLoader::get_all_langs();
+		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
 		$this->user_accounts_config = UserAccountsConfig::load();
 	}
 
@@ -115,7 +115,7 @@ class UserEditProfileController extends AbstractController
 		$form->set_layout_title($this->lang['user.profile.edit']);
 		$this->member_extended_fields_service = new MemberExtendedFieldsService($form);
 
-		$fieldset = new FormFieldsetHTML('edit_profile', LangLoader::get_message('form.parameters', 'form-lang'));
+		$fieldset = new FormFieldsetHTML('edit_profile', $this->lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field($display_name = new FormFieldTextEditor('display_name', $this->lang['user.display.name'], $this->user->get_display_name(),
@@ -242,7 +242,7 @@ class UserEditProfileController extends AbstractController
 			}
 		}
 
-		$options_fieldset = new FormFieldsetHTML('options', LangLoader::get_message('common.options', 'common-lang'));
+		$options_fieldset = new FormFieldsetHTML('options', $this->lang['common.options']);
 		$form->add_fieldset($options_fieldset);
 
 		$options_fieldset->add_field(new FormFieldTimezone('timezone', $this->lang['user.timezone.choice'],
@@ -348,7 +348,7 @@ class UserEditProfileController extends AbstractController
 			UserService::update($this->user, $this->member_extended_fields_service);
 		} catch (MemberExtendedFieldErrorsMessageException $e) {
 			$has_error = true;
-			$this->tpl->put('MESSAGE_HELPER', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
 		}
 
 		$login = $this->form->get_value('email');
@@ -384,7 +384,7 @@ class UserEditProfileController extends AbstractController
 				else
 				{
 					$has_error = true;
-					$this->tpl->put('MESSAGE_HELPER', MessageHelper::display($this->lang['user.profile.edit.password.error'], MessageHelper::NOTICE));
+					$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['user.profile.edit.password.error'], MessageHelper::NOTICE));
 				}
 			}
 		}
@@ -458,7 +458,7 @@ class UserEditProfileController extends AbstractController
 
 	private function build_response()
 	{
-		$response = new SiteDisplayResponse($this->tpl);
+		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['user.profile.edit'], $this->lang['user.user']);
 

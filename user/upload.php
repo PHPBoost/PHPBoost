@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 27
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 1.6 - 2007 07 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -14,13 +14,7 @@
 
 require_once('../kernel/begin.php');
 
-$lang = array_merge(
-    LangLoader::get('common-lang'),
-    LangLoader::get('form-lang'),
-    LangLoader::get('errors'),
-    LangLoader::get('upload-lang'),
-    LangLoader::get('warning-lang')
-);
+$lang = LangLoader::get_all_langs();
 
 define('TITLE', $lang['upload.files.management']);
 

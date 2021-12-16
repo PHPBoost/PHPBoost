@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 26
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -38,10 +38,7 @@ class UserUsersListController extends AbstractController
 
 	private function init()
 	{
-		$this->lang = array_merge(
-			LangLoader::get('common-lang'),
-			LangLoader::get('user-lang')
-		);
+		$this->lang = LangLoader::get_all_langs();
 		$this->view = new FileTemplate('user/UserUsersListController.tpl');
 		$this->view->add_lang($this->lang);
 		$this->groups_cache = GroupsCache::load();
@@ -97,7 +94,7 @@ class UserUsersListController extends AbstractController
 
 				'DISPLAYED_NAME'              => $row['display_name'],
 				'REGISTRATION_DATE'           => Date::to_format($row['registration_date'], Date::FORMAT_DAY_MONTH_YEAR),
-				'LAST_CONNECTION'             => !empty($row['last_connection_date']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('common.never', 'common-lang'),
+				'LAST_CONNECTION'             => !empty($row['last_connection_date']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : $this->lang['common.never'],
 				'REGISTRATION_DATE_TIMESTAMP' => Date::to_format($row['registration_date'], Date::FORMAT_TIMESTAMP),
 				'LAST_CONNECTION_TIMESTAMP'   => !empty($row['last_connection_date']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_TIMESTAMP) : 0,
 				'PUBLICATIONS_NUMBER'         => $contributions_number,
@@ -169,9 +166,9 @@ class UserUsersListController extends AbstractController
 				}
 			}
 			if ($last_admin_delete && $selected_users_number == 1)
-				AppContext::get_response()->redirect(UserUrlBuilder::home(), LangLoader::get_message('warning.unauthorized.action', 'warning-lang'), MessageHelper::ERROR);
+				AppContext::get_response()->redirect(UserUrlBuilder::home(), $this->lang['warning.unauthorized.action'], MessageHelper::ERROR);
 			else
-				AppContext::get_response()->redirect(UserUrlBuilder::home(), LangLoader::get_message('warning.process.success', 'warning-lang'));
+				AppContext::get_response()->redirect(UserUrlBuilder::home(), $this->lang['warning.process.success']);
 		}
 	}
 	private function generate_response(HTTPRequestCustom $request)

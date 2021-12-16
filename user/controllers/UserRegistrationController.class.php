@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -45,7 +45,7 @@ class UserRegistrationController extends AbstractController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('user-lang');
+		$this->lang = LangLoader::get_all_langs();
 		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
 		$this->user_accounts_config = UserAccountsConfig::load();
 	}
@@ -57,7 +57,7 @@ class UserRegistrationController extends AbstractController
 		$form->set_layout_title($this->lang['user.registration']);
 		$this->member_extended_fields_service = new MemberExtendedFieldsService($form);
 
-		$fieldset = new FormFieldsetHTML('registration', LangLoader::get_message('form.parameters', 'form-lang'));
+		$fieldset = new FormFieldsetHTML('registration', $this->lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldHTML('validation_method', $this->get_accounts_validation_method_explain()));
@@ -121,7 +121,7 @@ class UserRegistrationController extends AbstractController
 			$form->add_constraint(new FormConstraintFieldsNotIncluded($custom_login_checked == 'on' ? $login : $display_name, $password));
 		}
 
-		$options_fieldset = new FormFieldsetHTML('options', LangLoader::get_message('common.options', 'common-lang'));
+		$options_fieldset = new FormFieldsetHTML('options', $this->lang['common.options']);
 		$form->add_fieldset($options_fieldset);
 
 		$options_fieldset->add_field(new FormFieldTimezone('timezone', $this->lang['user.timezone.choice'], GeneralConfig::load()->get_site_timezone(),

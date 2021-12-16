@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -33,7 +33,7 @@ class UserHomeProfileController extends AbstractController
 	{
 		$this->user = AppContext::get_current_user();
 		$this->view = new FileTemplate('user/UserHomeProfileController.tpl');
-		$this->lang = LangLoader::get('user-lang');
+		$this->lang = LangLoader::get_all_langs();
 		$this->view->add_lang($this->lang);
 	}
 
@@ -45,7 +45,7 @@ class UserHomeProfileController extends AbstractController
 		$is_authorized_files_panel = $this->user->check_auth(FileUploadConfig::load()->get_authorization_enable_interface_files(), FileUploadConfig::AUTH_FILES_BIT);
 		$group_color = User::get_group_color($this->user->get_groups(), $this->user->get_level());
 
-		$registration_since = !empty($this->user->get_registration_date()) ? Date::to_format($this->user->get_registration_date(), Date::FORMAT_SINCE) : LangLoader::get_message('common.unknown', 'common-lang');
+		$registration_since = !empty($this->user->get_registration_date()) ? Date::to_format($this->user->get_registration_date(), Date::FORMAT_SINCE) : $this->lang['common.unknown'];
 
 		$this->view->put_all(array(
 			'C_USER_AUTH_FILES'                     => $is_authorized_files_panel,
@@ -80,7 +80,7 @@ class UserHomeProfileController extends AbstractController
 			'USER_LEVEL_NAME'                       => UserService::get_level_lang($this->user->get_level()),
 			'USER_LEVEL_CLASS'                      => UserService::get_level_class($this->user->get_level()),
 
-			'USER_SUBSCRIBE_DATE'					=> LangLoader::get_message('user.registered', 'user-lang') . " " . $registration_since
+			'USER_SUBSCRIBE_DATE'					=> $this->lang['user.registered'] . " " . $registration_since
 		));
 
 		$modules_with_publications = AppContext::get_extension_provider_service()->get_extension_point(UserExtensionPoint::EXTENSION_POINT);

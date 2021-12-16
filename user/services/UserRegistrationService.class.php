@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 18
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,7 +13,7 @@ class UserRegistrationService
 {
 	public static function send_email_confirmation($user_id, $email, $pseudo, $login, $password, $registration_pass, $admin_creation = false)
 	{
-		$lang = LangLoader::get('user-lang');
+		$lang = LangLoader::get_all_langs();
 		$user_accounts_config = UserAccountsConfig::load();
 		$general_config = GeneralConfig::load();
 		$site_name = $general_config->get_site_name();

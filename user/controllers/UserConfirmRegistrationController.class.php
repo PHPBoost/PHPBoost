@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 19
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -21,7 +21,7 @@ class UserConfirmRegistrationController extends AbstractController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('user-lang');
+		$this->lang = LangLoader::get_all_langs();
 	}
 
 	private function check_activation($registration_pass)
@@ -42,7 +42,7 @@ class UserConfirmRegistrationController extends AbstractController
 		}
 		else
 		{
-			$controller = new UserErrorController($this->lang['user.profile'], LangLoader::get_message('warning.process.error', 'warning-lang'), UserErrorController::WARNING);
+			$controller = new UserErrorController($this->lang['user.profile'], $this->lang['warning.process.error'], UserErrorController::WARNING);
 			DispatchManager::redirect($controller);
 		}
 	}

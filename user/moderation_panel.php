@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 1.6 - 2007 03 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -13,13 +13,7 @@
 
 require_once('../kernel/begin.php');
 
-$lang = array_merge(
-	LangLoader::get('common-lang'),
-	LangLoader::get('date-lang'),
-	LangLoader::get('form-lang'),
-	LangLoader::get('user-lang'),
-	LangLoader::get('warning-lang')
-);
+$lang = LangLoader::get_all_langs();
 
 $Bread_crumb->add($lang['user.users'], UserUrlBuilder::home()->rel());
 $Bread_crumb->add($lang['user.moderation.panel'], UserUrlBuilder::moderation_panel()->rel());
@@ -166,7 +160,7 @@ if ($action == 'punish')
 		$select = '';
 		// Warning duration
 		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 5184000, 326592000);
-		$array_sanction = array(LangLoader::get_message('common.no', 'common-lang'), '1 ' . $lang['date.minute'], '5 ' . $lang['date.minutes'], '15 ' . $lang['date.minutes'], '30 ' . $lang['date.minutes'], '1 ' . $lang['date.hour'], '2 ' . $lang['date.hours'], '1 ' . $lang['date.day'], '2 ' . $lang['date.days'], '1 ' . $lang['date.week'], '2 ' . $lang['date.weeks'], '1 ' . $lang['date.month'], '2 ' . $lang['date.month'], '10 ' . TextHelper::strtolower($lang['date.years']));
+		$array_sanction = array($lang['common.no'], '1 ' . $lang['date.minute'], '5 ' . $lang['date.minutes'], '15 ' . $lang['date.minutes'], '30 ' . $lang['date.minutes'], '1 ' . $lang['date.hour'], '2 ' . $lang['date.hours'], '1 ' . $lang['date.day'], '2 ' . $lang['date.days'], '1 ' . $lang['date.week'], '2 ' . $lang['date.weeks'], '1 ' . $lang['date.month'], '2 ' . $lang['date.month'], '10 ' . TextHelper::strtolower($lang['date.years']));
 
 		$diff = ($member['delay_readonly'] - time());
 		$key_sanction = 0;
@@ -213,7 +207,7 @@ if ($action == 'punish')
 						break;
 					}
 				}' . "\n" .
-				'if (replace_value != \'' . addslashes(LangLoader::get_message('common.no', 'common-lang')) . '\')' . "\n" .
+				'if (replace_value != \'' . addslashes($lang['common.no']) . '\')' . "\n" .
 				'{' . "\n" .
 					'contents = contents.replace(regex, replace_value);' . "\n" .
 					'document.getElementById(\'action_contents\').disabled = \'\'' . "\n" .
@@ -484,9 +478,8 @@ else
 		));
 
 		// Ban duration
-		$lang = LangLoader::get('date-lang');
 		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 5184000, 326592000);
-		$array_sanction = array(LangLoader::get_message('common.no', 'common-lang'), '1 ' . $lang['date.minute'], '5 ' . $lang['date.minutes'], '15 ' . $lang['date.minutes'], '30 ' . $lang['date.minutes'], '1 ' . $lang['date.hour'], '2 ' . $lang['date.hours'], '1 ' . $lang['date.day'], '2 ' . $lang['date.days'], '1 ' . $lang['date.week'], '2 ' . $lang['date.weeks'], '1 ' . $lang['date.month'], '2 ' . $lang['date.month'], $lang['user.unlimited']);
+		$array_sanction = array($lang['common.no'], '1 ' . $lang['date.minute'], '5 ' . $lang['date.minutes'], '15 ' . $lang['date.minutes'], '30 ' . $lang['date.minutes'], '1 ' . $lang['date.hour'], '2 ' . $lang['date.hours'], '1 ' . $lang['date.day'], '2 ' . $lang['date.days'], '1 ' . $lang['date.week'], '2 ' . $lang['date.weeks'], '1 ' . $lang['date.month'], '2 ' . $lang['date.month'], $lang['user.unlimited']);
 
 		$diff = ($member['delay_banned'] - time());
 		$key_sanction = 0;

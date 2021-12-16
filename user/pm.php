@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 1.5 - 2006 07 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -12,12 +12,7 @@
 
 require_once('../kernel/begin.php');
 
-$lang = array_merge(
-	LangLoader::get('common-lang'),
-	LangLoader::get('form-lang'),
-	LangLoader::get('user-lang'),
-	LangLoader::get('warning-lang')
-);
+$lang = LangLoader::get_all_langs();
 
 define('TITLE', $lang['user.private.messaging']);
 $Bread_crumb->add($lang['user.user'], UserUrlBuilder::profile(AppContext::get_current_user()->get_id())->rel());
@@ -183,11 +178,10 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $current_user->get_id())
 	{
 		// Errors management
 		$get_error = retrieve(GET, 'error', '');
-		$lang  = LangLoader::get('warning-lang');
 		switch ($get_error)
 		{
 			case 'e_unexist_user':
-				$errstr = LangLoader::get_message('warning.user.not.exists', 'warning-lang');
+				$errstr = $lang['warning.user.not.exists'];
 				$type = MessageHelper::WARNING;
 				break;
 			case 'e_pm_full_post':
@@ -462,9 +456,7 @@ elseif (!empty($pm_del)) // Deleting message if recipient hasn't read yet
 			}
 			else // User has already read the message, it can't be deleted anymore
 			{
-				$lang  = LangLoader::get('warning-lang');
-				$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'),
-                    $lang['warning.pm.no.del']);
+				$controller = new UserErrorController($lang['warning.error'], $lang['warning.pm.no.del']);
                 DispatchManager::redirect($controller);
 			}
 		}
@@ -541,8 +533,7 @@ elseif (!empty($pm_edit)) // Edit PM, if recipient hasn't read it yet
 				}
 				else // Missing fields
 				{
-					$lang  = LangLoader::get('warning-lang');
-					$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'),
+					$controller = new UserErrorController($lang['warning.error'],
                         $lang['warning.incomplete']);
                     DispatchManager::redirect($controller);
 				}
@@ -591,7 +582,6 @@ elseif (!empty($pm_edit)) // Edit PM, if recipient hasn't read it yet
 		}
 		else // User has already read the message => edition is disabled
 		{
-			$lang  = LangLoader::get('warning-lang');
 			$controller = new UserErrorController($lang['warning.error'], $lang['warning.pm.no.edit']);
             DispatchManager::redirect($controller);
 		}
@@ -778,7 +768,6 @@ elseif (!empty($pm_id_get)) // Messages associated with the conversation.
 
 		// Errors management
 		$get_error = retrieve(GET, 'error', '');
-		$lang  = LangLoader::get('warning-lang');
 		switch ($get_error)
 		{
 			case 'e_incomplete':

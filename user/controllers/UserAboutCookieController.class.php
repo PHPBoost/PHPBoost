@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Arnaud GENET <elenwii@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 17
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 5.0 - 2016 09 18
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UserAboutCookieController extends AbstractController
@@ -22,7 +23,7 @@ class UserAboutCookieController extends AbstractController
 	private function init()
 	{
 		$this->view = new FileTemplate('user/UserAboutCookieController.tpl');
-		$this->lang = LangLoader::get('user-lang');
+		$this->lang = LangLoader::get_all_langs();
 		$this->view->add_lang($this->lang);
 	}
 

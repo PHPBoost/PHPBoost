@@ -44,7 +44,7 @@ class UserChangeLostPasswordController extends AbstractController
 	private function init()
 	{
 		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER ## INCLUDE FORM #');
-		$this->lang = LangLoader::get('user-lang');
+		$this->lang = LangLoader::get_all_langs();
 	}
 
 	private function build_form($user_id)
@@ -56,7 +56,7 @@ class UserChangeLostPasswordController extends AbstractController
 		$form = new HTMLForm(__CLASS__);
 		$form->set_layout_title($this->lang['user.change.password']);
 
-		$fieldset = new FormFieldsetHTML('fieldset', LangLoader::get_message('form.parameters', 'form-lang'));
+		$fieldset = new FormFieldsetHTML('fieldset', $this->lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['user.password.new'], '',
@@ -81,8 +81,8 @@ class UserChangeLostPasswordController extends AbstractController
 
 		if ($security_config->are_login_and_email_forbidden_in_password())
 		{
-			$form->add_constraint(new FormConstraintFieldsNotIncluded($email, $password, LangLoader::get_message('warning.login.and.email.must.not.be.contained.in.second.field', 'warning-lang')));
-			$form->add_constraint(new FormConstraintFieldsNotIncluded($login, $password, LangLoader::get_message('warning.login.and.email.must.not.be.contained.in.second.field', 'warning-lang')));
+			$form->add_constraint(new FormConstraintFieldsNotIncluded($email, $password, $this->lang['warning.login.and.email.must.not.be.contained.in.second.field']));
+			$form->add_constraint(new FormConstraintFieldsNotIncluded($login, $password, $this->lang['warning.login.and.email.must.not.be.contained.in.second.field']));
 		}
 
 		$this->form = $form;
@@ -111,7 +111,7 @@ class UserChangeLostPasswordController extends AbstractController
 			{
 				$session = AppContext::get_session();
 				Session::delete($session);
-				$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('user.not.authorized.during.maintain', 'warning-lang'), MessageHelper::NOTICE));
+				$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['user.not.authorized.during.maintain'], MessageHelper::NOTICE));
 			}
 			else
 			{

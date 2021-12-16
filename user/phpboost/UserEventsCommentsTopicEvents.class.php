@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 18
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 5.0 - 2016 07 11
 */
 
@@ -68,7 +68,7 @@ class UserEventsCommentsTopicEvents extends CommentsTopicEvents
 	public function send_PM($recipient_id, Contribution $contribution, $message)
 	{
 		// Load module lang
-		$lang = LangLoader::get('user-lang');
+		$lang = LangLoader::get_all_langs();
 
 		// Send the PM if the recipient is not a guest
 		if ($recipient_id > 0)

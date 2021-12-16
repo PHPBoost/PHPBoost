@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2011 07 25
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -36,7 +36,7 @@ class UserLostPasswordController extends AbstractController
 	private function init()
 	{
 		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
-		$this->lang = LangLoader::get('user-lang');
+		$this->lang = LangLoader::get_all_langs();
 	}
 
 	private function build_form()
@@ -44,7 +44,7 @@ class UserLostPasswordController extends AbstractController
 		$form = new HTMLForm(__CLASS__);
 		$form->set_layout_title($this->lang['user.forgotten.password']);
 
-		$fieldset = new FormFieldsetHTML('fieldset', LangLoader::get_message('form.parameters', 'form-lang'));
+		$fieldset = new FormFieldsetHTML('fieldset', $this->lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['user.email'], '',
@@ -100,7 +100,7 @@ class UserLostPasswordController extends AbstractController
 
 		if (!$user_id)
 		{
-			$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $this->lang['user.forgotten.password.error'], MessageHelper::NOTICE);
+			$controller = new UserErrorController($this->lang['warning.error'], $this->lang['user.forgotten.password.error'], MessageHelper::NOTICE);
 			DispatchManager::redirect($controller);
 		}
 		else

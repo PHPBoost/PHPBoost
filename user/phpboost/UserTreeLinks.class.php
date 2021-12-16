@@ -12,7 +12,7 @@ class UserTreeLinks implements ModuleTreeLinksExtensionPoint
 {
 	public function get_actions_tree_links()
 	{
-		$lang = LangLoader::get('user-lang');
+		$lang = LangLoader::get_all_langs();
 		$tree = new ModuleTreeLinks();
 
 		$tree->add_link(new AdminModuleLink($lang['user.members.management'], AdminMembersUrlBuilder::management()));
