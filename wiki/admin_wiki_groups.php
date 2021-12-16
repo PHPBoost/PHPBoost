@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 27
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 1.5 - 2007 05 25
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -12,10 +12,7 @@
 
 require_once('../admin/admin_begin.php');
 
-$lang = array_merge(
-	LangLoader::get('form-lang'),
-	LangLoader::get('common', 'wiki')
-);
+$lang = LangLoader::get_all_langs('wiki');
 
 define('TITLE', $lang['form.authorizations']);
 require_once('../admin/admin_header.php');
@@ -43,7 +40,7 @@ if ($valid)
 
 	HooksService::execute_hook_action('edit_config', 'wiki', array('title' => $lang['form.authorizations'], 'url' => Url::to_rel('/wiki/admin_wiki_groups.php')));
 
-	$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.config', 'warning-lang'), MessageHelper::SUCCESS, 4));
+	$view->put('MESSAGE_HELPER', MessageHelper::display($lang['warning.success.config'], MessageHelper::SUCCESS, 4));
 }
 
 $view->put_all(array(

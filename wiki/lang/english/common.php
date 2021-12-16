@@ -56,6 +56,7 @@ $lang['wiki.no.existing.category']     = 'No existing category';
 $lang['wiki.no.existing.sub.category'] = 'No existing sub-category';
 
 // Configuration
+$lang['wiki.config.module.title'] 		 = 'Wiki module configuration';
 $lang['wiki.config.name']                = 'Wiki name';
 $lang['wiki.config.sticky.summary']      = 'Display articles summary in fixed position.';
 $lang['wiki.config.enable.views.number'] = 'Display views number in articles';

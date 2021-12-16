@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 1.6 - 2006 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -13,11 +13,7 @@
 
 require_once('../kernel/begin.php');
 
-$lang = array_merge(
-	LangLoader::get('common-lang'),
-	LangLoader::get('user-lang'),
-	LangLoader::get('common', 'wiki')
-);
+$lang = LangLoader::get_all_langs('wiki');
 
 $config = WikiConfig::load();
 
@@ -80,7 +76,7 @@ if (!empty($id_article))
 		$actions = ($row['activ'] != 1 && $restore_auth) ? '<a class="offload" href="' . url('action.php?restore=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()) . '" aria-label="' . $lang['wiki.restore.version'] . '"><i class="fa fa-undo" aria-hidden="true"></i></a> &nbsp; ' : '';
 		$restore_link =
 		//Suppression
-		$actions .= ($row['activ'] != 1 && $delete_auth) ? '<a href="' . url('action.php?del_contents=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()) . '" aria-label="' . LangLoader::get_message('common.delete', 'common-lang') . '" data-confirmation="' . $lang['wiki.confirm.delete.archive'] . '"><i class="far fa-trash-alt" aria-hidden="true"></i></a>' : '';
+		$actions .= ($row['activ'] != 1 && $delete_auth) ? '<a href="' . url('action.php?del_contents=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()) . '" aria-label="' . $lang['common.delete'] . '" data-confirmation="' . $lang['wiki.confirm.delete.archive'] . '"><i class="far fa-trash-alt" aria-hidden="true"></i></a>' : '';
 
 		$group_color = User::get_group_color($row['user_groups'], $row['level']);
 

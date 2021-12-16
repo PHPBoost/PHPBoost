@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 1.6 - 2006 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -14,12 +14,7 @@
 require_once('../kernel/begin.php');
 include_once('../wiki/wiki_functions.php');
 
-$lang = array_merge(
-	LangLoader::get('common-lang'),
-	LangLoader::get('form-lang'),
-	LangLoader::get('warning-lang'),
-	LangLoader::get('common', 'wiki')
-);
+$lang = LangLoader::get_all_langs('wiki');
 
 $config = WikiConfig::load();
 
@@ -148,8 +143,8 @@ if (!empty($contents)) //On enregistre un article
 			elseif (!$captcha->is_valid() && !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 			{
 				$error_controller = new UserErrorController(
-					LangLoader::get_message('warning.error', 'warning-lang'),
-					LangLoader::get_message('warning.captcha.validation.error', 'warning-lang'),
+					$lang['warning.error'],
+					$lang['warning.captcha.validation.error'],
 					UserErrorController::NOTICE
 				);
 				DispatchManager::redirect($error_controller);

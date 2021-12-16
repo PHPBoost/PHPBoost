@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 27
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 1.6 - 2006 12 02
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -56,6 +56,7 @@ $lang['wiki.no.existing.category']     = 'Aucune catégorie existante';
 $lang['wiki.no.existing.sub.category'] = 'Aucune sous-catégorie existante';
 
 // Configuration
+$lang['wiki.config.module.title'] 		 = 'Configuration du module Wiki';
 $lang['wiki.config.name']                = 'Nom du wiki';
 $lang['wiki.config.sticky.summary']      = 'Afficher le sommaire des articles en position fixe.';
 $lang['wiki.config.enable.views.number'] = 'Afficher le nombre vues dans les articles';

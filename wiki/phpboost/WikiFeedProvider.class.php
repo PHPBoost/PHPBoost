@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 30
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2010 02 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -27,7 +27,7 @@ class WikiFeedProvider implements FeedProvider
 	public function get_feed_data_struct($idcat = 0, $name = '')
 	{
 		$querier = PersistenceContext::get_querier();
-		$lang = LangLoader::get('common', 'wiki');
+		$lang = LangLoader::get_all_langs('wiki');
 
 		$categories = WikiCategoriesCache::load()->get_categories();
 		$config = WikiConfig::load();
@@ -51,7 +51,7 @@ class WikiFeedProvider implements FeedProvider
 		$data->set_link(SyndicationUrlBuilder::rss('wiki', $idcat));
 		$data->set_host(HOST);
 		$data->set_desc($desc);
-		$data->set_lang(LangLoader::get_message('common.xml.lang', 'common-lang'));
+		$data->set_lang($lang['common.xml.lang']);
 
 		// Last news
 		$results = $querier->select('SELECT a.title, a.encoded_title, c.content, c.timestamp

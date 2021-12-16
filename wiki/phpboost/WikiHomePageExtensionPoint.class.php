@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 17
+ * @version     PHPBoost 6.0 - last update: 2020 12 16
  * @since       PHPBoost 3.0 - 2012 01 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -25,7 +25,7 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 
 	private function get_view()
 	{
-		$lang = LangLoader::get('common', 'wiki');
+		$lang = LangLoader::get_all_langs('wiki');
 
 		global $Bread_crumb, $encoded_title, $id_article, $article_infos, $id_cat;
 
@@ -43,7 +43,7 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 		}
 
 		$view = new FileTemplate('wiki/index.tpl');
-		$view->add_lang(array_merge($lang, LangLoader::get('common-lang')));
+		$view->add_lang($lang);
 
 		// If it's active, display last items
 		if ($config->get_number_articles_on_index() > 1)
