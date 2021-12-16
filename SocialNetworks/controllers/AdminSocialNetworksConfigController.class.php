@@ -3,45 +3,33 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 21
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 5.1 - 2018 01 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminSocialNetworksConfigController extends AdminModuleController
+class AdminSocialNetworksConfigController extends DefaultAdminModuleController
 {
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonSubmit
-	 */
-	private $submit_button;
-
-	private $lang;
-	private $view;
-
-	/**
-	 * @var SocialNetworksConfig
-	 */
-	private $config;
 	private $server_configuration;
 	private $social_networks;
 
+	protected function get_template_to_use()
+   	{
+	   	return new FileTemplate('SocialNetworks/AdminSocialNetworksConfigController.tpl');
+   	}
+
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
-
 		$this->update_social_networks_order($request);
 
+		$this->init();
 		$this->build_form();
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.config', 'warning-lang'), MessageHelper::SUCCESS, 5));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.success.config'], MessageHelper::SUCCESS, 5));
 		}
 
 		$social_networks_number = 0;
@@ -80,16 +68,7 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 
 	private function init()
 	{
-		$this->lang = array_merge(
-			LangLoader::get('form-lang'),
-			LangLoader::get('common-lang'),
-			LangLoader::get('common', 'SocialNetworks')
-		);
-		$this->config = SocialNetworksConfig::load();
 		$this->server_configuration = new ServerConfiguration();
-		$this->view = new FileTemplate('SocialNetworks/AdminSocialNetworksConfigController.tpl');
-		$this->view->add_lang($this->lang);
-
 		$social_networks_list = new SocialNetworksList();
 		$this->social_networks = $social_networks_list->get_social_networks_list();
 	}
@@ -98,7 +77,7 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('authentication_config', LangLoader::get_message('user.authentication', 'user-lang'));
+		$fieldset = new FormFieldsetHTML('authentication_config', $this->lang['user.authentication']);
 		$form->add_fieldset($fieldset);
 
 		if ($this->server_configuration->has_curl_library())
@@ -212,7 +191,7 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 						$this->form->get_field_by_id($id . '_client_secret')->set_hidden(!$this->config->is_authentication_enabled($id));
 				}
 			}
-		
+
 			HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
 		}
 	}
@@ -222,7 +201,7 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 		if ($request->get_value('order_manage_submit', false))
 		{
 			$this->update_position($request);
-			$this->view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.position.update', 'warning-lang'), MessageHelper::SUCCESS, 5));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.success.position.update'], MessageHelper::SUCCESS, 5));
 		}
 	}
 
@@ -239,7 +218,7 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 		$this->config->set_social_networks_order($sorted_social_networks);
 
 		SocialNetworksConfig::save();
-		
+
 		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
 	}
 }
