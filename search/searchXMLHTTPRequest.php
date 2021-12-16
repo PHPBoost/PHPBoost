@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 2.0 - 2008 01 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -14,10 +14,7 @@ require_once('../kernel/begin.php');
 AppContext::get_session()->no_session_location(); //Permet de ne pas mettre jour la page dans la session.
 
 //------------------------------------------------------------------- Language
-$lang = array_merge(
-	LangLoader::get('common-lang'),
-	LangLoader::get('common','search')
-);
+$lang = LangLoader::get_all_langs('search');
 
 //--------------------------------------------------------------------- Params
 $request = AppContext::get_request();

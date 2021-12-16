@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 26
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 2.0 - 2008 03 22
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -12,11 +12,7 @@
 require_once('../admin/admin_begin.php');
 
 //------------------------------------------------------------------- Language
-$lang = array_merge(
-	LangLoader::get('form-lang'),
-	LangLoader::get('warning-lang'),
-	LangLoader::get('common','search')
-);
+$lang = LangLoader::get_all_langs('search');
 
 //--------------------------------------------------------------------- Params
 $request = AppContext::get_request();
@@ -66,7 +62,7 @@ if ($valid)
 		SearchConfig::save();
 
 		HooksService::execute_hook_action('edit_config', 'search', array('title' => $lang['search.config.weighting'], 'url' => Url::to_rel('/search/admin_search.php?weighting=true')));
-		
+
 		$view->put('MESSAGE_HELPER', MessageHelper::display($lang['warning.success.config'], MessageHelper::SUCCESS, 4));
 	}
 }
@@ -75,7 +71,7 @@ elseif ($clearOutCache) // On vide le contenu du cache de la recherche
 	$querier = PersistenceContext::get_querier();
 	$querier->truncate(PREFIX . 'search_results');
 	$querier->truncate(PREFIX . 'search_index');
-	$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
+	$view->put('MESSAGE_HELPER', MessageHelper::display($lang['warning.process.success'], MessageHelper::SUCCESS, 4));
 }
 
 $view->assign_vars(array(
