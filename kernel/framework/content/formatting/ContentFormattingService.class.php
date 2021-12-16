@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2009 12 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -155,50 +155,50 @@ class ContentFormattingService
 	 */
 	public function get_available_tags()
 	{
-		$editor_lang = LangLoader::get('editor-lang');
+		$lang = LangLoader::get_all_langs();
 		return array(
-			'b'              => $editor_lang['editor.bold'],
-			'i'              => $editor_lang['editor.italic'],
-			'u'              => $editor_lang['editor.underline'],
-			's'              => $editor_lang['editor.strike'],
-			'title'          => $editor_lang['editor.title'],
-			'style'          => $editor_lang['editor.style'],
-			'url'            => $editor_lang['editor.url'],
-			'img'            => $editor_lang['editor.img'],
-			'quote'          => $editor_lang['editor.quote'],
-			'hide'           => $editor_lang['editor.hide'],
-			'list'           => $editor_lang['editor.list'],
-			'color'          => $editor_lang['editor.color'],
-			'bgcolor'        => $editor_lang['editor.bgcolor'],
-			'font'           => $editor_lang['editor.font'],
-			'size'           => $editor_lang['editor.size'],
-			'align'          => $editor_lang['editor.align'],
-			'float'          => $editor_lang['editor.float'],
-			'sup'            => $editor_lang['editor.sup'],
-			'sub'            => $editor_lang['editor.sub'],
-			'indent'         => $editor_lang['editor.indent'],
-			'pre'            => $editor_lang['editor.pre'],
-			'table'          => $editor_lang['editor.table'],
-			'swf'            => $editor_lang['editor.flash'],
-			'movie'          => $editor_lang['editor.movie'],
-			'sound'          => $editor_lang['editor.sound'],
-			'code'           => $editor_lang['editor.code'],
-			'math'           => $editor_lang['editor.math'],
-			'anchor'         => $editor_lang['editor.anchor'],
-			'acronym'        => $editor_lang['editor.acronym'],
-			'block'          => $editor_lang['editor.block'],
-			'fieldset'       => $editor_lang['editor.fieldset'],
-			'mail'           => $editor_lang['editor.email'],
-			'line'           => $editor_lang['editor.line'],
-			'wikipedia'      => $editor_lang['editor.wikipedia'],
-			'html'           => $editor_lang['editor.html'],
-			'feed'           => $editor_lang['editor.feed'],
-			'youtube'        => $editor_lang['editor.youtube'],
-			'lightbox'       => $editor_lang['editor.lightbox'],
-			'charmap'        => $editor_lang['editor.charmap'],
-			'insertdatetime' => $editor_lang['editor.date.time'],
-			'fa'             => $editor_lang['editor.fa'],
-			'p'              => $editor_lang['editor.paragraph']
+			'b'              => $lang['editor.bold'],
+			'i'              => $lang['editor.italic'],
+			'u'              => $lang['editor.underline'],
+			's'              => $lang['editor.strike'],
+			'title'          => $lang['editor.title'],
+			'style'          => $lang['editor.style'],
+			'url'            => $lang['editor.url'],
+			'img'            => $lang['editor.img'],
+			'quote'          => $lang['editor.quote'],
+			'hide'           => $lang['editor.hide'],
+			'list'           => $lang['editor.list'],
+			'color'          => $lang['editor.color'],
+			'bgcolor'        => $lang['editor.bgcolor'],
+			'font'           => $lang['editor.font'],
+			'size'           => $lang['editor.size'],
+			'align'          => $lang['editor.align'],
+			'float'          => $lang['editor.float'],
+			'sup'            => $lang['editor.sup'],
+			'sub'            => $lang['editor.sub'],
+			'indent'         => $lang['editor.indent'],
+			'pre'            => $lang['editor.pre'],
+			'table'          => $lang['editor.table'],
+			'swf'            => $lang['editor.flash'],
+			'movie'          => $lang['editor.movie'],
+			'sound'          => $lang['editor.sound'],
+			'code'           => $lang['editor.code'],
+			'math'           => $lang['editor.math'],
+			'anchor'         => $lang['editor.anchor'],
+			'acronym'        => $lang['editor.acronym'],
+			'block'          => $lang['editor.block'],
+			'fieldset'       => $lang['editor.fieldset'],
+			'mail'           => $lang['editor.email'],
+			'line'           => $lang['editor.line'],
+			'wikipedia'      => $lang['editor.wikipedia'],
+			'html'           => $lang['editor.html'],
+			'feed'           => $lang['editor.feed'],
+			'youtube'        => $lang['editor.youtube'],
+			'lightbox'       => $lang['editor.lightbox'],
+			'charmap'        => $lang['editor.charmap'],
+			'insertdatetime' => $lang['editor.date.time'],
+			'fa'             => $lang['editor.fa'],
+			'p'              => $lang['editor.paragraph']
 		);
 	}
 }

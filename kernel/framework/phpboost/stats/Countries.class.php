@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 09
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2011 09 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -60,7 +60,7 @@ class Countries
 
 	private static function build_countries()
 	{
-		$lang = LangLoader::get('countries');
+		$lang = LangLoader::get_all_langs();
 		foreach (self::$countries_identifier as $country_identifier)
 		{
 			self::$countries[$country_identifier] = array(

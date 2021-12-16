@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 20
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2010 12 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -37,9 +37,9 @@ class MemberShortTextExtendedField extends AbstractMemberExtendedField
 	public function __construct()
 	{
 		parent::__construct();
-		$this->lang = LangLoader::get('form-lang');
+		$this->lang = LangLoader::get_all_langs();
 		$this->set_disable_fields_configuration(array('possible_values'));
-		$this->set_name(LangLoader::get_message('user.field.type.short.text','user-lang'));
+		$this->set_name($this->lang['user.field.type.short.text']);
 	}
 
 	public function display_field_create(MemberExtendedField $member_extended_field)

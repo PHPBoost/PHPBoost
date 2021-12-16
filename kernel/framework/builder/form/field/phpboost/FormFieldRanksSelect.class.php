@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 23
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2011 09 26
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -31,7 +31,7 @@ class FormFieldRanksSelect extends FormFieldSimpleSelectChoice
 
     private function generate_options()
 	{
-		$lang = LangLoader::get('user-lang');
+		$lang = LangLoader::get_all_langs();
 		$options = array();
 		$options[] = new FormFieldSelectChoiceOption($lang['user.member'], self::MEMBER);
 		$options[] = new FormFieldSelectChoiceOption($lang['user.moderator'], self::MODERATOR);

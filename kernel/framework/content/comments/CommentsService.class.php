@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 27
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2011 03 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -24,7 +24,7 @@ class CommentsService
 	public static function __static()
 	{
 		self::$user = AppContext::get_current_user();
-		self::$lang = LangLoader::get('comment-lang');
+		self::$lang = LangLoader::get_all_langs();
 		self::$comments_cache = CommentsCache::load();
 		self::$view = new FileTemplate('framework/content/comments/comments.tpl');
 		self::$view->add_lang(self::$lang);
@@ -263,7 +263,7 @@ class CommentsService
 	public static function display_comments($module_id, $id_in_module, $topic_identifier, $comments_number_to_display, $authorizations, $display_from_comments_number = false)
 	{
 		$view = new FileTemplate('framework/content/comments/comments_list.tpl');
-		$view->add_lang(LangLoader::get('common-lang'));
+		$view->add_lang(LangLoader::get_all_langs());
 
 		if ($authorizations->is_authorized_read() && $authorizations->is_authorized_access_module())
 		{

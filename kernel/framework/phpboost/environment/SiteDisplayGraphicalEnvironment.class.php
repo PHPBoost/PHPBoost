@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 11
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2009 10 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -32,7 +32,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	public function display($content)
 	{
 		$view = new FileTemplate('body.tpl');
-		$view->add_lang(array_merge(LangLoader::get('common-lang'), LangLoader::get('date-lang'), LangLoader::get('user-lang')));
+		$view->add_lang(LangLoader::get_all_langs());
 
 		$header_logo_path = '';
 		$theme = ThemesManager::get_theme(AppContext::get_current_user()->get_theme());
@@ -91,7 +91,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	function display_page(View $body_template)
 	{
 		$view = new FileTemplate('frame.tpl');
-		$view->add_lang(LangLoader::get('common-lang'));
+		$view->add_lang(LangLoader::get_all_langs());
 
 		$customization_config = CustomizationConfig::load();
 		$cookiebar_config = CookieBarConfig::load();
@@ -259,20 +259,20 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		//Users not authorized cannot come here
 		parent::process_site_maintenance();
 
-		$date_lang = LangLoader::get('date-lang');
+		$lang = LangLoader::get_all_langs();
 		$view =  new FileTemplate('maintain.tpl');
-		$view->add_lang(array_merge(LangLoader::get('admin-lang'), LangLoader::get('common-lang'), $date_lang));
+		$view->add_lang($lang);
 
 		$maintenance_config = MaintenanceConfig::load();
 		if ($maintenance_config->is_under_maintenance() && $maintenance_config->get_display_duration() && (!AppContext::get_current_user()->is_admin() || (AppContext::get_current_user()->is_admin() && $maintenance_config->get_display_duration_for_admin())))
 		{
 			//Durée de la maintenance.
 			$array_time = array(-1, 60, 300, 600, 900, 1800, 3600, 7200, 10800, 14400, 18000, 21600, 25200, 28800, 57600, 86400, 172800, 604800);
-			$array_delay = array(LangLoader::get_message('common.unspecified', 'common-lang'),
-				'1 ' . $date_lang['date.minute'], '5 ' . $date_lang['date.minutes'], '10 ' . $date_lang['date.minutes'], '15 ' . $date_lang['date.minutes'], '30 ' . $date_lang['date.minutes'],
-				'1 ' . $date_lang['date.hour'], '2 ' . $date_lang['date.hours'], '3 ' . $date_lang['date.hours'], '4 ' . $date_lang['date.hours'], '5 ' . $date_lang['date.hours'], '6 ' . $date_lang['date.hours'], '7 ' . $date_lang['date.hours'], '8 ' . $date_lang['date.hours'], '16 ' . $date_lang['date.hours'],
-				'1 ' . $date_lang['date.day'], '2 ' . $date_lang['date.day'],
-				'1 ' . $date_lang['date.week']);
+			$array_delay = array($lang['common.unspecified'],
+				'1 ' . $lang['date.minute'], '5 ' . $lang['date.minutes'], '10 ' . $lang['date.minutes'], '15 ' . $lang['date.minutes'], '30 ' . $lang['date.minutes'],
+				'1 ' . $lang['date.hour'], '2 ' . $lang['date.hours'], '3 ' . $lang['date.hours'], '4 ' . $lang['date.hours'], '5 ' . $lang['date.hours'], '6 ' . $lang['date.hours'], '7 ' . $lang['date.hours'], '8 ' . $lang['date.hours'], '16 ' . $lang['date.hours'],
+				'1 ' . $lang['date.day'], '2 ' . $lang['date.day'],
+				'1 ' . $lang['date.week']);
 
 			//Retourne le délai de maintenance le plus proche.
 			if (!$maintenance_config->is_unlimited_maintenance())
@@ -330,7 +330,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		{
 			$form = new HTMLForm('disable_maintenance_form', '', false);
 
-			$submit_button = new FormButtonSubmit(LangLoader::get_message('admin.disable.maintenance', 'admin-lang'), 'disable_maintenance', '', 'bgc-full warning disable-maintenance-button');
+			$submit_button = new FormButtonSubmit($lang['admin.disable.maintenance'], 'disable_maintenance', '', 'bgc-full warning disable-maintenance-button');
 			$form->add_button($submit_button);
 
 			if ($submit_button->has_been_submited() && $form->validate())

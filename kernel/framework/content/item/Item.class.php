@@ -577,23 +577,23 @@ class Item
 
 	public function get_sorting_fields_list()
 	{
-		$common_lang = LangLoader::get('common-lang');
+		$lang = LangLoader::get_all_langs();
 
 		$fields_list = array_merge(
 			array(
-				self::get_title_label() => array('database_field' => self::get_title_label(), 'label' => $common_lang['common.title'], 'icon' => 'fa fa-sort-alpha-up'),
-				'author'                => array('database_field' => 'display_name', 'label' => $common_lang['common.author'], 'icon' => 'far fa-user'),
-				'date'                  => array('database_field' => 'creation_date', 'label' => $common_lang['common.creation.date'], 'icon' => 'far fa-calendar-alt'),
-				'update_date'           => array('database_field' => 'update_date', 'label' => $common_lang['common.last.update'], 'icon' => 'far fa-calendar-plus')
+				self::get_title_label() => array('database_field' => self::get_title_label(), 'label' => $lang['common.title'], 'icon' => 'fa fa-sort-alpha-up'),
+				'author'                => array('database_field' => 'display_name', 'label' => $lang['common.author'], 'icon' => 'far fa-user'),
+				'date'                  => array('database_field' => 'creation_date', 'label' => $lang['common.creation.date'], 'icon' => 'far fa-calendar-alt'),
+				'update_date'           => array('database_field' => 'update_date', 'label' => $lang['common.last.update'], 'icon' => 'far fa-calendar-plus')
 			),
 			$this->get_kernel_additional_sorting_fields(),
 			$this->get_additional_sorting_fields()
 		);
 
 		if (self::$module && self::$module->get_configuration()->feature_is_enabled('comments') && CommentsConfig::load()->module_comments_is_enabled(self::$module_id))
-			$fields_list['comments'] = array('database_field' => 'comments_number', 'label' => $common_lang['common.sort.by.comments.number'], 'icon' => 'far fa-comments');
+			$fields_list['comments'] = array('database_field' => 'comments_number', 'label' => $lang['common.sort.by.comments.number'], 'icon' => 'far fa-comments');
 		if (self::$module && self::$module->get_configuration()->feature_is_enabled('notation') && ContentManagementConfig::load()->module_notation_is_enabled(self::$module_id))
-			$fields_list['notes'] = array('database_field' => 'average_notes', 'label' => $common_lang['common.sort.by.best.note'], 'icon' => 'far fa-star');
+			$fields_list['notes'] = array('database_field' => 'average_notes', 'label' => $lang['common.sort.by.best.note'], 'icon' => 'far fa-star');
 
 		return $fields_list;
 	}
@@ -622,10 +622,10 @@ class Item
 
 	public static function get_sorting_mode_options()
 	{
-		$common_lang = LangLoader::get('common-lang');
+		$lang = LangLoader::get_all_langs();
 		return array(
-			new FormFieldSelectChoiceOption($common_lang['common.sort.asc'], TextHelper::strtolower(self::ASC), array('data_option_icon' => 'fa fa-arrow-up')),
-			new FormFieldSelectChoiceOption($common_lang['common.sort.desc'], TextHelper::strtolower(self::DESC), array('data_option_icon' => 'fa fa-arrow-down'))
+			new FormFieldSelectChoiceOption($lang['common.sort.asc'], TextHelper::strtolower(self::ASC), array('data_option_icon' => 'fa fa-arrow-up')),
+			new FormFieldSelectChoiceOption($lang['common.sort.desc'], TextHelper::strtolower(self::DESC), array('data_option_icon' => 'fa fa-arrow-down'))
 		);
 	}
 

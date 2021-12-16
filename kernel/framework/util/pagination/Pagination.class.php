@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 08
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2009 12 22
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -73,7 +73,7 @@ class Pagination
 	private function init_tpl($type)
 	{
 		$this->view = new FileTemplate('framework/util/pagination.tpl');
-		$this->view->add_lang(LangLoader::get('common-lang'));
+		$this->view->add_lang(LangLoader::get_all_langs());
 		$this->view->put_all(array(
 			'C_LIGHT_PAGINATION' => $type == self::LIGHT_PAGINATION,
 			'C_FULL_PAGINATION'  => $type == self::FULL_PAGINATION,

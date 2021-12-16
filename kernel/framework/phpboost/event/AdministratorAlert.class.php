@@ -8,7 +8,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 18
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 2.0 - 2008 08 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -143,29 +143,29 @@ class AdministratorAlert extends Event
 	 */
 	public function get_priority_name()
 	{
-	   $admin_lang = LangLoader::get('admin-lang');
+	   $lang = LangLoader::get_all_langs();
 		switch ($this->priority)
 		{
 			case self::ADMIN_ALERT_VERY_LOW_PRIORITY:
-				return $admin_lang['admin.priority.very.low'];
+				return $lang['admin.priority.very.low'];
 				break;
 			case self::ADMIN_ALERT_LOW_PRIORITY:
-				return $admin_lang['admin.priority.low'];
+				return $lang['admin.priority.low'];
 				break;
 			case self::ADMIN_ALERT_MEDIUM_PRIORITY:
-				return $admin_lang['admin.priority.medium'];
+				return $lang['admin.priority.medium'];
 				break;
 			case self::ADMIN_ALERT_HIGH_PRIORITY:
-				return $admin_lang['admin.priority.high'];
+				return $lang['admin.priority.high'];
 				break;
 			case self::ADMIN_ALERT_VERY_HIGH_PRIORITY:
-				return $admin_lang['admin.priority.very.high'];
+				return $lang['admin.priority.very.high'];
 				break;
 			default:
-				return $admin_lang['admin.priority.medium'];
+				return $lang['admin.priority.medium'];
 		}
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */

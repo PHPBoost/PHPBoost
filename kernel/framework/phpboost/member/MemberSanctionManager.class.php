@@ -24,7 +24,7 @@ class MemberSanctionManager
 	public static function __static()
 	{
 		self::$db_querier = PersistenceContext::get_querier();
-		self::$lang = LangLoader::get('user-lang');
+		self::$lang = LangLoader::get_all_langs();
 	}
 
 	/*

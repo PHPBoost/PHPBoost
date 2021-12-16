@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 06
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 5.2 - 2019 04 23
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -20,7 +20,7 @@ class IdcardService
 
 	public static function display_idcard(User $user)
 	{
-		$lang = LangLoader::get('user-lang');
+		$lang = LangLoader::get_all_langs();
 		$view = new FileTemplate('framework/content/idcard/idcard.tpl');
 		$view->add_lang($lang);
 		$user_accounts_config = UserAccountsConfig::load();

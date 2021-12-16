@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 02
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2010 02 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -37,7 +37,7 @@ class NotationService
 		if (!empty($notation_scale))
 		{
 			$view = new FileTemplate('framework/content/notation/notation.tpl');
-			$view->add_lang(LangLoader::get('common-lang'));
+			$view->add_lang(LangLoader::get_all_langs());
 
 			$average_notes = $notation->get_average_notes();
 			$int = intval($average_notes);
@@ -126,7 +126,7 @@ class NotationService
 		else
 		{
 			$view = new FileTemplate('framework/content/notation/notation.tpl');
-			$view->add_lang(array_merge(LangLoader::get('common-lang')));
+			$view->add_lang(LangLoader::get_all_langs());
 
 			$average_notes = $notation->get_average_notes();
 			$int = intval($average_notes);
@@ -314,7 +314,7 @@ class NotationService
 					'user_id'      => $notation->get_user_id(),
 					'note'         => $notation->get_note()
 				);
-				
+
 				self::$db_querier->insert(DB_TABLE_NOTE, $properties);
 				HooksService::execute_hook_action('notation', $notation->get_module_name(), array_merge($properties, array('notation_scale' => $notation->get_notation_scale())));
 

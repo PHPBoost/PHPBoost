@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 20
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2010 12 26
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -43,7 +43,7 @@ class FormFieldMemberSanction extends FormFieldSimpleSelectChoice
 
 	private function load_lang()
 	{
-		$this->lang = LangLoader::get('date-lang');
+		$this->lang = LangLoader::get_all_langs();
 	}
 
 	private function get_time_value()

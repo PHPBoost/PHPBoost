@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 27
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 2.0 - 2008 06 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -87,7 +87,7 @@ class MiniCalendar
 	{
 		//On crée le code selon le template
 		$template = new FileTemplate('framework/util/mini_calendar.tpl');
-		$template->add_lang(LangLoader::get('form-lang'));
+		$template->add_lang(LangLoader::get_all_langs());
 
 		$template->put_all(array(
 			'C_INCLUDE_JS' => !self::$js_inclusion_already_done,

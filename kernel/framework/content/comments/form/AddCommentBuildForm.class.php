@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 20
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2011 09 25
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -49,31 +49,30 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 
 	protected function create_form()
 	{
-		$form_lang = LangLoader::get('form-lang');
-		$comment_lang = LangLoader::get('comment-lang');
+		$lang = LangLoader::get_all_langs();
 		$form = new HTMLForm('comments', TextHelper::htmlspecialchars($this->comments_topic->get_url()) . '#comments-list');
-		$fieldset = new FormFieldsetHTML('add_comment', $comment_lang['comment.add']);
+		$fieldset = new FormFieldsetHTML('add_comment', $lang['comment.add']);
 		$form->add_fieldset($fieldset);
 
 		if (!$this->user->check_level(User::MEMBER_LEVEL))
 		{
-			$fieldset->add_field(new FormFieldTextEditor('name', $form_lang['form.name'], '',
+			$fieldset->add_field(new FormFieldTextEditor('name', $lang['form.name'], '',
 				array(
 					'maxlength' => 25, 'required' => true,
-					'placeholder' => $comment_lang['comment.form.visitor.name']
+					'placeholder' => $lang['comment.form.visitor.name']
 				)
 			));
 
 			if($this->comments_configuration->is_visitor_email_enabled())
-				$fieldset->add_field(new FormFieldMailEditor('visitor_email', $form_lang['form.email'], '',
+				$fieldset->add_field(new FormFieldMailEditor('visitor_email', $lang['form.email'], '',
 				 	array(
 						'maxlength' => 25, 'required' => true,
-						'placeholder' => $comment_lang['comment.form.visitor.email'],
-						'description' => $comment_lang['comment.form.visitor.email.clue'])
+						'placeholder' => $lang['comment.form.visitor.email'],
+						'description' => $lang['comment.form.visitor.email.clue'])
 			 	));
 		}
 
-		$fieldset->add_field(new FormFieldRichTextEditor('message', $form_lang['form.content'], '', array(
+		$fieldset->add_field(new FormFieldRichTextEditor('message', $lang['form.content'], '', array(
 			'formatter' => $this->get_formatter(),
 			'rows' => 10, 'cols' => 47, 'required' => true),
 			array((!$this->user->is_moderator() && !$this->user->is_admin() ? new FormFieldConstraintMaxLinks($this->comments_configuration->get_max_links_comment(), true) : ''),

@@ -10,7 +10,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 04
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2010 11 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -58,41 +58,42 @@ abstract class AuthenticationMethod
 		} catch (RowNotFoundException $e) {
 		}
 
+		$lang = LangLoader::get_all_langs();
+
 		if (!empty($infos) && $infos['warning_percentage'] == 100)
-			$this->error_msg = LangLoader::get_message('warning.member.ban.contact', 'warning-lang');
+			$this->error_msg = $lang['warning.member.ban.contact'];
 		else if (!empty($infos) && $infos['delay_banned'])
 		{
 			$delay_ban = (time() - $infos['delay_banned']); //Vérification si le membre est banni.
 			$delay = ceil((0 - $delay_ban)/60);
 			if ($delay > 0)
 			{
-				$date_lang = LangLoader::get('date-lang');
 
 				if ($delay < 60)
-					$this->error_msg = LangLoader::get_message('warning.member.ban', 'warning-lang') . ' ' . $delay . ' ' . (($delay > 1) ? $date_lang['date.minutes'] : $date_lang['date.minute']);
+					$this->error_msg = $lang['warning.member.ban'] . ' ' . $delay . ' ' . (($delay > 1) ? $lang['date.minutes'] : $lang['date.minute']);
 				elseif ($delay < 1440)
 				{
 					$delay_ban = NumberHelper::round($delay/60, 0);
-					$this->error_msg = LangLoader::get_message('warning.member.ban', 'warning-lang') . ' ' . $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['date.hours'] : $date_lang['date.hour']);
+					$this->error_msg = $lang['warning.member.ban'] . ' ' . $delay_ban . ' ' . (($delay_ban > 1) ? $lang['date.hours'] : $lang['date.hour']);
 				}
 				elseif ($delay < 10080)
 				{
 					$delay_ban = NumberHelper::round($delay/1440, 0);
-					$this->error_msg = LangLoader::get_message('warning.member.ban', 'warning-lang') . ' ' . $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['date.days'] : $date_lang['date.day']);
+					$this->error_msg = $lang['warning.member.ban'] . ' ' . $delay_ban . ' ' . (($delay_ban > 1) ? $lang['date.days'] : $lang['date.day']);
 				}
 				elseif ($delay < 43200)
 				{
 					$delay_ban = NumberHelper::round($delay/10080, 0);
-					$this->error_msg = LangLoader::get_message('warning.member.ban', 'warning-lang') . ' ' . $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['date.weeks'] : $date_lang['date.week']);
+					$this->error_msg = $lang['warning.member.ban'] . ' ' . $delay_ban . ' ' . (($delay_ban > 1) ? $lang['date.weeks'] : $lang['date.week']);
 				}
 				elseif ($delay < 525600)
 				{
 					$delay_ban = NumberHelper::round($delay/43200, 0);
-					$this->error_msg = LangLoader::get_message('warning.member.ban', 'warning-lang') . ' ' . $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['date.months'] : $date_lang['date.month']);
+					$this->error_msg = $lang['warning.member.ban'] . ' ' . $delay_ban . ' ' . (($delay_ban > 1) ? $lang['date.months'] : $lang['date.month']);
 				}
 				else
 				{
-					$this->error_msg = LangLoader::get_message('warning.member.ban.contact', 'warning-lang');
+					$this->error_msg = $lang['warning.member.ban.contact'];
 				}
 			}
 		}

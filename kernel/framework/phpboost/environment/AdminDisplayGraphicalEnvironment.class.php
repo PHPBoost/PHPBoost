@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 27
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2009 10 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,7 +15,7 @@
 class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironment
 {
 	private $theme_properties;
-	private static $menu_lang;
+	private static $lang;
 
 	public function __construct()
 	{
@@ -26,13 +26,13 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 	private function load_lang()
 	{
-		self::$menu_lang = LangLoader::get('menu-lang');
+		self::$lang = LangLoader::get_all_langs();
 	}
 
 	public function display($content)
 	{
 		$view = new FileTemplate('admin/body.tpl');
-		$view->add_lang(array_merge(self::$menu_lang, LangLoader::get('common-lang'), LangLoader::get('date-lang')));
+		$view->add_lang(self::$lang);
 
 		$header_logo_path = '';
 		$theme = ThemesManager::get_theme(AppContext::get_current_user()->get_theme());
@@ -85,7 +85,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 	private function display_page(View $body_template)
 	{
 		$view = new FileTemplate('admin/frame.tpl');
-		$view->add_lang(LangLoader::get('common-lang'));
+		$view->add_lang(LangLoader::get_all_langs());
 
 		$customization_config = CustomizationConfig::load();
 		$cookiebar_config = CookieBarConfig::load();
@@ -119,7 +119,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 	private static function get_subheader_tpl()
 	{
 		$subheader_tpl = new FileTemplate('admin/subheader_menu.tpl');
-		$subheader_tpl->add_lang(array_merge(self::$menu_lang, LangLoader::get('common-lang')));
+		$subheader_tpl->add_lang(self::$lang);
 
 		$modules = ModulesManager::get_activated_modules_map_sorted_by_localized_name();
 

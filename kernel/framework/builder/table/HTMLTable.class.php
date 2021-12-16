@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2009 12 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -56,7 +56,7 @@ class HTMLTable extends AbstractHTMLElement
 		}
 		$model->set_html_table($this);
 
-		$this->lang = !empty($lang) ? $lang : LangLoader::get('common-lang');
+		$this->lang = !empty($lang) ? $lang : LangLoader::get_all_langs();
 		$this->css_class = $css_class;
 		$this->view = new FileTemplate($tpl_path);
 		$this->view->add_lang($this->lang);
@@ -359,12 +359,12 @@ class HTMLTable extends AbstractHTMLElement
 	{
 		$this->multiple_delete_displayed = true;
 	}
-	
+
 	public function is_table_in_module()
 	{
 		return !in_array(Environment::get_running_module_name(), array('admin', 'kernel', 'user'));
 	}
-	
+
 	public function is_url_rewriting_enabled()
 	{
 		return strpos(REWRITED_SCRIPT, '?url=');

@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 07
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 2.0 - 2008 07 26
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -98,25 +98,21 @@ class Authorizations
 	 */
 	public static function generate_select($auth_bit, $array_auth = array(), $array_ranks_default = array(), $idselect = '', $disabled = false, $disabled_advanced_auth = false, $disabled_ranks = array())
 	{
-		$user_lang = LangLoader::get('user-lang');
+		$lang = LangLoader::get_all_langs();
 
 		//Récupération du tableau des rangs.
 		$array_ranks = array(
-			User::VISITOR_LEVEL       => $user_lang['user.guest'],
-			User::MEMBER_LEVEL        => $user_lang['user.member'],
-			User::MODERATOR_LEVEL     => $user_lang['user.moderator'],
-			User::ADMINISTRATOR_LEVEL => $user_lang['user.administrator']
+			User::VISITOR_LEVEL       => $lang['user.guest'],
+			User::MEMBER_LEVEL        => $lang['user.member'],
+			User::MODERATOR_LEVEL     => $lang['user.moderator'],
+			User::ADMINISTRATOR_LEVEL => $lang['user.administrator']
 		);
 
 		//Identifiant du select, par défaut la valeur du bit de l'autorisation.
 		$idselect = ((string)$idselect == '') ? $auth_bit : $idselect;
 
 		$view = new FileTemplate('framework/groups_auth.tpl');
-		$view->add_lang(array_merge(
-			$user_lang,
-			LangLoader::get('common-lang'),
-			LangLoader::get('form-lang')
-		));
+		$view->add_lang($lang);
 
 		$view->put_all(array(
 			'C_ADVANCED_AUTH' => !$disabled_advanced_auth,

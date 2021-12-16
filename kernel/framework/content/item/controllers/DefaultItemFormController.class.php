@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 30
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 6.0 - 2020 05 16
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -430,7 +430,7 @@ class DefaultItemFormController extends AbstractItemController
 		{
 			$id = self::get_items_manager()->add($this->get_item());
 			$this->get_item()->set_id($id);
-			
+
 			if (!$this->is_contributor_member())
 				HooksService::execute_hook_action('add', self::$module_id, array_merge($this->get_item()->get_properties(), array('item_url' => $this->get_item()->get_item_url())));
 		}
@@ -439,7 +439,7 @@ class DefaultItemFormController extends AbstractItemController
 			$this->get_item()->set_update_date(new Date());
 			$id = $this->get_item()->get_id();
 			self::get_items_manager()->update($this->get_item());
-			
+
 			if (!$this->is_contributor_member())
 				HooksService::execute_hook_action('edit', self::$module_id, array_merge($this->get_item()->get_properties(), array('item_url' => $this->get_item()->get_item_url())));
 		}
@@ -459,7 +459,6 @@ class DefaultItemFormController extends AbstractItemController
 
 	protected function build_contribution_fieldset($form)
 	{
-		$contribution = LangLoader::get('contribution-lang');
 		if ($this->is_new_item && $this->is_contributor_member())
 		{
 			$fieldset = new FormFieldsetHTML('contribution', $this->lang['contribution.contribution']);

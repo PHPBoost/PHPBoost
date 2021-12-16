@@ -42,14 +42,13 @@ class EditCommentBuildForm extends AbstractCommentsBuildForm
 
 	protected function create_form()
 	{
-		$form_lang = LangLoader::get('form-lang');
-		$comment_lang = LangLoader::get('comment-lang');
+		$lang = LangLoader::get_all_langs();
 
 		$form = new HTMLForm('comments', REWRITED_SCRIPT . '#comments-list');
-		$fieldset = new FormFieldsetHTML('edit_comment', $comment_lang['comment.edit']);
+		$fieldset = new FormFieldsetHTML('edit_comment', $lang['comment.edit']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldRichTextEditor('message', $form_lang['form.content'], $this->get_contents(), array(
+		$fieldset->add_field(new FormFieldRichTextEditor('message', $lang['form.content'], $this->get_contents(), array(
 			'formatter' => $this->get_formatter(),
 			'rows' => 10, 'cols' => 47, 'required' => true),
 			array((!$this->user->is_moderator() && !$this->user->is_admin() ? new FormFieldConstraintMaxLinks($this->comments_configuration->get_max_links_comment()) : ''))

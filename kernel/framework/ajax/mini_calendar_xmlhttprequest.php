@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 07
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 1.6 - 2007 01 25
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -31,8 +31,8 @@ $calendar_type = !empty($date) ? 'timestamp' : 'date';
 $field = !empty($field) ? trim($field) : 'calendar';
 
 $view = new FileTemplate('framework/util/mini_calendar_response.tpl');
-$date_lang = LangLoader::get('date-lang');
-$view->add_lang($date_lang);;
+$lang = LangLoader::get_all_langs();
+$view->add_lang($lang);;
 
 //Type date.
 if ($calendar_type == 'date')
@@ -55,8 +55,8 @@ if ($calendar_type == 'date')
 	$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 
 	$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
-	$array_l_month = array($date_lang['date.january'], $date_lang['date.february'], $date_lang['date.march'], $date_lang['date.april'], $date_lang['date.may'], $date_lang['date.june'],
-	$date_lang['date.july'], $date_lang['date.august'], $date_lang['date.september'], $date_lang['date.october'], $date_lang['date.november'], $date_lang['date.december']);
+	$array_l_month = array($lang['date.january'], $lang['date.february'], $lang['date.march'], $lang['date.april'], $lang['date.may'], $lang['date.june'],
+	$lang['date.july'], $lang['date.august'], $lang['date.september'], $lang['date.october'], $lang['date.november'], $lang['date.december']);
 	$month_day = $array_month[$month - 1];
 
 	$view->put_all(array(

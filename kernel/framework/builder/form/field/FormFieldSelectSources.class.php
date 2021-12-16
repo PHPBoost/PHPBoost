@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 07
+ * @version     PHPBoost 6.0 - last update: 2021 12 16
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -25,7 +25,7 @@ class FormFieldSelectSources extends AbstractFormField
 		$template = $this->get_template_to_use();
 
 		$view = new FileTemplate('framework/builder/form/fieldelements/FormFieldSelectSources.tpl');
-		$view->add_lang(LangLoader::get('form-lang'));
+		$view->add_lang(LangLoader::get_all_langs());
 
 		$view->put_all(array(
 			'NAME' => $this->get_html_id(),
