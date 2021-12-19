@@ -115,7 +115,7 @@
 						<li>
 							<a href="${relative_url(AdminMembersUrlBuilder::add())}">
 								<span class="stacked">
-									<i class="far fa-fw fa-image" aria-hidden="true"></i>
+									<i class="far fa-fw fa-user" aria-hidden="true"></i>
 									<i class="fa fa-plus stack-event stack-icon stack-sup stack-right success" aria-hidden="true"></i>
 								</span> <span>{@sandbox.mini.user} <span class="smaller">{@sandbox.mini.add}</span></span>
 							</a>
