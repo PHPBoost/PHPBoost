@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2021 12 19
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -41,7 +41,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 		$view = new FileTemplate('shoutbox/ShoutboxModuleMiniMenu.tpl');
 
 		//Assign the lang file to the tpl
-		$view->add_lang(LangLoader::get_all_langs('shoutbox'));
+		$view->add_lang(array_merge(LangLoader::get_all_langs('shoutbox'), LangLoader::get_module_langs('BBCode')));
 
 		//Assign common menu variables to the tpl
 		MenuService::assign_positions_conditions($view, $this->get_block());
