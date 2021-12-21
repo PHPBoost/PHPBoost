@@ -3,23 +3,23 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 02 11
+ * @version     PHPBoost 6.0 - last update: 2021 12 21
  * @since       PHPBoost 4.0 - 2013 06 26
 */
 
 class StatsConfig extends AbstractConfigData
 {
 	const AUTHORIZATIONS = 'authorizations';
-	const ELEMENTS_NUMBER_PER_PAGE = 'elements_number_per_page';
+	const ITEMS_PER_PAGE = 'items_per_page';
 
-	public function get_elements_number_per_page()
+	public function get_items_per_page()
 	{
-		return $this->get_property(self::ELEMENTS_NUMBER_PER_PAGE);
+		return $this->get_property(self::ITEMS_PER_PAGE);
 	}
 
-	public function set_elements_number_per_page($number)
+	public function set_items_per_page($number)
 	{
-		$this->set_property(self::ELEMENTS_NUMBER_PER_PAGE, $number);
+		$this->set_property(self::ITEMS_PER_PAGE, $number);
 	}
 
 	public function get_authorizations()
@@ -35,7 +35,7 @@ class StatsConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::ELEMENTS_NUMBER_PER_PAGE => 15,
+			self::ITEMS_PER_PAGE => 15,
 			self::AUTHORIZATIONS => array('r0' => 1, 'r1' => 1)
 		);
 	}

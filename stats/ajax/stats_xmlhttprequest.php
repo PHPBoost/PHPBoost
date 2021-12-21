@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 15
+ * @version     PHPBoost 6.0 - last update: 2021 12 21
  * @since       PHPBoost 1.6 - 2007 01 25
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,8 +15,6 @@ define('PATH_TO_ROOT', '../..');
 include_once(PATH_TO_ROOT . '/kernel/begin.php');
 AppContext::get_session()->no_session_location(); //Permet de ne pas mettre jour la page dans la session.
 include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
-
-include_once(PATH_TO_ROOT . '/stats/stats_functions.php');
 
 $db_querier = PersistenceContext::get_querier();
 
@@ -44,7 +42,7 @@ if (!empty($stats_referer))
 		));
 		while ($row = $result->fetch())
 		{
-			$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
+			$trend_parameters = StatsDisplayService::get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
 
 			$view = new FileTemplate('stats/stats_tables.tpl');
 
@@ -85,7 +83,7 @@ elseif (!empty($stats_keyword))
 		));
 		while ($row = $result->fetch())
 		{
-			$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
+			$trend_parameters = StatsDisplayService::get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
 
 			$view = new FileTemplate('stats/stats_tables.tpl');
 

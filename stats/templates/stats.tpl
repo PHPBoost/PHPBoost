@@ -1,62 +1,62 @@
 <section id="module-stats">
 	<header class="section-header">
-		<h1>{@stats.module.title}</h1>
+		<h1>{MODULE_NAME}</h1>
 	</header>
 	<div class="sub-section">
 		<div class="content-container">
 			<nav id="menustats">
-				<a href="#" class="js-menu-button" onclick="open_submenu('menustats');return false;" aria-label="${LangLoader::get_message('category.categories', 'category-lang')}">
-					<i class="fa fa-fw fa-bars" aria-hidden="true"></i> ${LangLoader::get_message('category.categories', 'category-lang')}
+				<a href="#" class="js-menu-button" onclick="open_submenu('menustats');return false;" aria-label="{@category.categories}">
+					<i class="fa fa-fw fa-bars" aria-hidden="true"></i> {@category.categories}
 				</a>
 				<ul>
 					<li>
-						<a class="offload" href="{PATH_TO_ROOT}/stats/stats{U_STATS_SITE}#stats" aria-label="{@stats.website}">
+						<a class="offload" href="{U_STATS_SITE}" aria-label="{@stats.website}">
 							<i class="fa fa-fw fa-home" aria-hidden="true"></i> <span>{@stats.website}</span>
 						</a>
 					</li>
 					<li>
-						<a class="offload" href="{PATH_TO_ROOT}/stats/stats{U_STATS_USERS}#stats" aria-label="{@user.members}">
+						<a class="offload" href="{U_STATS_USERS}" aria-label="{@user.members}">
 							<i class="fa fa-fw fa-users" aria-hidden="true"></i> <span>{@user.members}</span>
 						</a>
 					</li>
 					<li>
-						<a class="offload" href="{PATH_TO_ROOT}/stats/stats{U_STATS_VISIT}#stats" aria-label="{@user.guests}">
+						<a class="offload" href="{U_STATS_VISIT}" aria-label="{@user.guests}">
 							<i class="fa fa-fw fa-eye" aria-hidden="true"></i> <span>{@user.guests}</span>
 						</a>
 					</li>
 					<li>
-						<a class="offload" href="{PATH_TO_ROOT}/stats/stats{U_STATS_PAGES}#stats" aria-label="{@common.pages}">
+						<a class="offload" href="{U_STATS_PAGES}" aria-label="{@common.pages}">
 							<i class="far fa-fw fa-file" aria-hidden="true"></i> <span>{@common.pages}</span>
 						</a>
 					</li>
 					<li>
-						<a class="offload" href="{PATH_TO_ROOT}/stats/stats{U_STATS_BROWSER}#stats" aria-label="{@stats.browsers}">
+						<a class="offload" href="{U_STATS_BROWSER}" aria-label="{@stats.browsers}">
 							<i class="fa fa-fw fa-globe" aria-hidden="true"></i> <span>{@stats.browsers}</span>
 						</a>
 					</li>
 					<li>
-						<a class="offload" href="{PATH_TO_ROOT}/stats/stats{U_STATS_OS}#stats" aria-label="{@stats.os}">
+						<a class="offload" href="{U_STATS_OS}" aria-label="{@stats.os}">
 							<i class="fa fa-fw fa-laptop" aria-hidden="true"></i> <span>{@stats.os}</span>
 						</a>
 					</li>
 					<li>
-						<a class="offload" href="{PATH_TO_ROOT}/stats/stats{U_STATS_LANG}#stats" aria-label="{@stats.countries}">
+						<a class="offload" href="{U_STATS_LANG}" aria-label="{@stats.countries}">
 							<i class="fa fa-fw fa-flag" aria-hidden="true"></i> <span>{@stats.countries}</span>
 						</a>
 					</li>
 					<li>
-						<a class="offload" href="{PATH_TO_ROOT}/stats/stats{U_STATS_REFERER}#stats" aria-label="{@stats.referers}">
+						<a class="offload" href="{U_STATS_REFERER}" aria-label="{@stats.referers}">
 							<i class="fa fa-fw fa-share-square" aria-hidden="true"></i> <span>{@stats.referers}</span>
 						</a>
 					</li>
 					<li>
-						<a class="offload" href="{PATH_TO_ROOT}/stats/stats{U_STATS_KEYWORD}#stats" aria-label="{@common.keywords}">
+						<a class="offload" href="{U_STATS_KEYWORD}" aria-label="{@common.keywords}">
 							<i class="fa fa-fw fa-key" aria-hidden="true"></i> <span>{@common.keywords}</span>
 						</a>
 					</li>
 					# IF IS_ADMIN #
 						<li>
-							<a class="offload" href="{PATH_TO_ROOT}/stats/stats{U_STATS_ROBOTS}#stats" aria-label="{@stats.robots}">
+							<a class="offload" href="{U_STATS_ROBOTS}" aria-label="{@stats.robots}">
 								<i class="fa fa-fw fa-search" aria-hidden="true"></i> <span>{@stats.robots}</span>
 							</a>
 						</li>
@@ -124,7 +124,7 @@
 
 					<h3>{@common.themes}</h3>
 					<div class="align-center">
-						{GRAPH_RESULT_THEME}
+						<img src="{U_GRAPH_RESULT_THEME}" alt="{@common.themes}" />
 					</div>
 					<table class="table">
 						<thead>
@@ -166,7 +166,7 @@
 					# IF C_DISPLAY_SEX #
 						<h3>{@user.sex}</h3>
 						<div class="align-center">
-							{GRAPH_RESULT_SEX}
+							<img src="{U_GRAPH_RESULT_THEME}" alt="{@user.sex}" />
 						</div>
 						<table class="table">
 							<thead>
@@ -235,10 +235,10 @@
 			# ENDIF #
 
 			# IF C_STATS_VISIT #
-				<form action="stats.php#stats" method="get">
+				<form action="" method="post">
 					<article class="content">
 						<header>
-							<h2>{@user.guests}</h2>
+							<h2># IF C_STATS_PAGES #{@common.pages}# ELSE #{@user.guests}# ENDIF #</h2>
 						</header>
 						<div class="cell-flex cell-tile">
 							<div class="cell">
@@ -246,23 +246,29 @@
 									<span class="cell-name">{@common.total}: {VISIT_TOTAL}</span><span>{@date.today}: {VISIT_DAY}</span>
 								</div>
 								<div class="cell-form grouped-inputs">
-									<a class="grouped-element" href="stats{U_PREVIOUS_LINK}#stats" aria-label="{@common.previous}"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+									<a class="grouped-element" href="{U_PREVIOUS_LINK}" aria-label="{@common.previous}"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
 									# IF C_STATS_DAY #
-										<select name="d">
-											{STATS_DAY}
+										<select name="day">
+											# START day_select #
+												<option value="{day_select.VALUE}"# IF day_select.C_SELECTED # selected="selected"# ENDIF #>{day_select.LABEL}</option>
+											# END day_select #
 										</select>
 									# ENDIF #
 									# IF C_STATS_MONTH #
-										<select name="m">
-											{STATS_MONTH}
+										<select name="month">
+											# START month_select #
+												<option value="{month_select.VALUE}"# IF month_select.C_SELECTED # selected="selected"# ENDIF #>{month_select.LABEL}</option>
+											# END month_select #
 										</select>
 									# ENDIF #
 									# IF C_STATS_YEAR #
-										<select name="y">
-											{STATS_YEAR}
+										<select name="year">
+											# START year_select #
+												<option value="{year_select.VALUE}"# IF year_select.C_SELECTED # selected="selected"# ENDIF #>{year_select.LABEL}</option>
+											# END year_select #
 										</select>
 									# ENDIF #
-									<a class="grouped-element" href="stats{U_NEXT_LINK}#stats" aria-label="{@common.next}"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+									<a class="grouped-element" href="{U_NEXT_LINK}" aria-label="{@common.next}"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
 								</div>
 								<div class="cell-body">
 									<div class="cell-content align-center">
@@ -273,7 +279,7 @@
 								</div>
 								<div class="cell-list">
 									<ul>
-										# IF U_YEAR #<li>{MONTH} {U_YEAR}</li># ENDIF #
+										# IF C_YEAR #<li>{MONTH} <a href="{U_YEAR}">{YEAR}</a></li># ENDIF #
 										<li class="li-stretch">
 											<span>{@common.total}: {SUM_NBR}</span>
 											<span>{@common.average}: {MOY_NBR}</span>
@@ -310,7 +316,7 @@
 													# END values #
 
 													# START end_td #
-														{end_td.END_TD}
+														<td style="width:13px;">&nbsp;</td>
 													# END end_td #
 												</tr>
 												<tr>
@@ -320,20 +326,24 @@
 													</td>
 													# START legend #
 														<td>
-															{legend.LEGEND}
+															# IF legend.C_LEGEND #
+															<a href="{legend.U_LEGEND}">{legend.L_LEGEND}</a>
+															# ELSE #
+															{legend.L_LEGEND}
+															# ENDIF #
 														</td>
 													# END legend #
 												</tr>
 												<tr>
-													<td colspan="{COLSPAN}">{U_VISITS_MORE}</td>
+													<td colspan="{COLSPAN}"><a href="{U_YEAR}">{@stats.see.year.stats} {YEAR}</a></td>
 												</tr>
 											</tbody>
 										</table>
 									</div>
 								# ELSE #
 									<div class="cell-body">
-										<div class="cell-thumbnail">{GRAPH_RESULT}</div>
-										<div class="cell-conte align-center">{U_VISITS_MORE}</div>
+										<div class="cell-thumbnail"><img src="{U_GRAPH_RESULT}" alt="{@stats.total.visits}" /></div>
+										<div class="cell-conte align-center"><a href="{U_YEAR}">{@stats.see.year.stats} {YEAR}</a></div>
 									</div>
 								# ENDIF #
 							</div>
@@ -345,7 +355,7 @@
 										{@date.date}
 									</th>
 									<th>
-										{@user.guests}
+										# IF C_STATS_PAGES #{@common.pages}# ELSE #{@user.guests}# ENDIF #
 									</th>
 								</tr>
 							</thead>
@@ -353,7 +363,11 @@
 								# START value #
 									<tr>
 										<td>
-											{value.U_DETAILS}
+											# IF value.C_DETAILS_LINK #
+											<a href="{value.U_DETAILS}">{value.L_DETAILS}</a>
+											# ELSE #
+											{value.L_DETAILS}
+											# ENDIF #
 										</td>
 										<td>
 											{value.NBR}
@@ -372,7 +386,7 @@
 						<h2>{@stats.browsers}</h2>
 					</header>
 					<div class="align-center">
-						{GRAPH_RESULT}
+						<img src="{U_GRAPH_RESULT}" alt="# IF C_CACHE_FILE #{@stats.browsers}# ELSE #{@browser.s}# ENDIF #" />
 					</div>
 					<table class="table">
 						<thead>
@@ -407,7 +421,7 @@
 						<h2>{@stats.os}</h2>
 					</header>
 					<div class="align-center">
-						{GRAPH_RESULT}
+						<img src="{U_GRAPH_RESULT}" alt="# IF C_CACHE_FILE #{@stats.os}# ELSE #{@os}# ENDIF #" />
 					</div>
 					<table class="table">
 						<thead>
@@ -442,7 +456,7 @@
 						<h2>{@stats.countries}</h2>
 					</header>
 					<div class="align-center">
-						{GRAPH_RESULT}
+						<img src="{U_GRAPH_RESULT}" alt="# IF C_CACHE_FILE #{@stats.countries}# ELSE #{@stat.lang}# ENDIF #" />
 					</div>
 					<table class="table">
 						<thead>
@@ -553,7 +567,7 @@
 										{referer_list.LAST_UPDATE}
 									</td>
 									<td>
-										{referer_list.TREND}
+										# IF referer_list.C_TREND_PICTURE #<i class="fa fa-trend-{referer_list.TREND_PICTURE}"></i> # ENDIF #{referer_list.TREND_LABEL}
 									</td>
 								</tr>
 								<tr>
@@ -652,7 +666,7 @@
 										{keyword_list.LAST_UPDATE}
 									</td>
 									<td>
-										{keyword_list.TREND}
+										# IF keyword_list.C_TREND_PICTURE #<i class="fa fa-trend-{keyword_list.TREND_PICTURE}"></i> # ENDIF #{keyword_list.TREND_LABEL}
 									</td>
 								</tr>
 								<tr>
@@ -684,14 +698,14 @@
 
 			# IF IS_ADMIN #
 				# IF C_STATS_ROBOTS #
-					<form action="stats.php?bot=1#stats" name="form" method="post" onsubmit="return check_form();">
+					<form action="" name="form" method="post" onsubmit="return check_form();">
 						<article class="content">
 							<header>
 								<h2>{@stats.robots}</h2>
 							</header>
 							# IF C_ROBOTS_DATA #
 								<div class="align-center">
-									<img class="fieldset-img" src="display_stats.php?bot=1" alt="{@stats.robots}" />
+									<img class="fieldset-img" src="{U_GRAPH_RESULT}" alt="{@stats.robots}" />
 								</div>
 							# ENDIF #
 							<table class="table">
