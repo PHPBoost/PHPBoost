@@ -35,32 +35,32 @@ class ItemsService
 	public static function get_items_lang($module_id, $filename = 'common')
 	{
 		$items_lang = LangLoader::get('item-lang');
-		$lang = LangLoader::get_all_langs($module_id);
+		$module_lang = LangLoader::filename_exists($filename, $module_id) ? LangLoader::get($filename, $module_id) : array();
 		$parameters_list = $parameters = array();
 
 		$module_name = ModulesManager::get_module($module_id)->get_configuration()->get_name();
 		$item_name = TextHelper::mb_substr($module_name, '-1') == 's' ? TextHelper::mb_substr(str_replace('s ', ' ', $module_name), 0, -1) : $items_lang['item'];
-		$items_lang['item'] = isset($lang['item']) ? $lang['item'] : $item_name;
-		$items_lang['items'] = isset($lang['items']) ? $lang['items'] : ((preg_match('/s /', $module_name) || TextHelper::mb_substr($module_name, '-1') == 's') ? $module_name : StringVars::replace_vars($items_lang['items'], array('items' => $items_lang['item'] . (TextHelper::mb_substr($items_lang['item'], '-1') != 's' ? 's' : ''))));
+		$items_lang['item'] = isset($module_lang['item']) ? $module_lang['item'] : $item_name;
+		$items_lang['items'] = isset($module_lang['items']) ? $module_lang['items'] : ((preg_match('/s /', $module_name) || TextHelper::mb_substr($module_name, '-1') == 's') ? $module_name : StringVars::replace_vars($items_lang['items'], array('items' => $items_lang['item'] . (TextHelper::mb_substr($items_lang['item'], '-1') != 's' ? 's' : ''))));
 
 		// Specific lang variables
-		if (AppContext::get_current_user()->get_locale() == 'french' && !isset($lang['the.item']) && in_array(Url::encode_rewrite(TextHelper::mb_substr($items_lang['item'], 0, 1)), array('a', 'e', 'i', 'o', 'u', 'y')))
-			$lang['the.item'] = $items_lang['the.item.alt2'];
-		if (AppContext::get_current_user()->get_locale() == 'english' && !isset($lang['an.item']) && !in_array(Url::encode_rewrite(TextHelper::mb_substr($items_lang['item'], 0, 1)), array('a', 'e', 'i', 'o', 'u', 'y')))
-			$lang['an.item'] = $items_lang['an.item.alt'];
+		if (AppContext::get_current_user()->get_locale() == 'french' && !isset($module_lang['the.item']) && in_array(Url::encode_rewrite(TextHelper::mb_substr($items_lang['item'], 0, 1)), array('a', 'e', 'i', 'o', 'u', 'y')))
+			$module_lang['the.item'] = $items_lang['the.item.alt2'];
+		if (AppContext::get_current_user()->get_locale() == 'english' && !isset($module_lang['an.item']) && !in_array(Url::encode_rewrite(TextHelper::mb_substr($items_lang['item'], 0, 1)), array('a', 'e', 'i', 'o', 'u', 'y')))
+			$module_lang['an.item'] = $items_lang['an.item.alt'];
 
 		foreach (array_keys($items_lang) as $element)
 		{
-			if (isset($lang['the.item']) && TextHelper::mb_substr(strtolower($lang['the.item']), 0, 2) == 'la' && isset($items_lang[$element . '.alt']) || isset($lang['an.item']) && TextHelper::mb_substr(strtolower($lang['an.item']), 0, 3) == 'une' && isset($items_lang[$element . '.alt']))
+			if (isset($module_lang['the.item']) && TextHelper::mb_substr(strtolower($module_lang['the.item']), 0, 2) == 'la' && isset($items_lang[$element . '.alt']) || isset($module_lang['an.item']) && TextHelper::mb_substr(strtolower($module_lang['an.item']), 0, 3) == 'une' && isset($items_lang[$element . '.alt']))
 				$items_lang[$element] = $items_lang[$element . '.alt'];
 
-			if (isset($lang['the.item']) && TextHelper::mb_substr(strtolower($lang['the.item']), 0, 2) == 'l\'' && isset($items_lang[$element . '.alt2']))
+			if (isset($module_lang['the.item']) && TextHelper::mb_substr(strtolower($module_lang['the.item']), 0, 2) == 'l\'' && isset($items_lang[$element . '.alt2']))
 				$items_lang[$element] = $items_lang[$element . '.alt2'];
 
 			if (TextHelper::mb_substr($element, -4) != '.alt')
 			{
-				$parameters_list[str_replace('.', '_', TextHelper::ucfirst($element))] = isset($lang[$element]) ? TextHelper::ucfirst($lang[$element]) : TextHelper::ucfirst($items_lang[$element]);
-				$parameters_list[str_replace('.', '_', TextHelper::lcfirst($element))] = isset($lang[$element]) ? TextHelper::lcfirst($lang[$element]) : TextHelper::lcfirst($items_lang[$element]);
+				$parameters_list[str_replace('.', '_', TextHelper::ucfirst($element))] = isset($module_lang[$element]) ? TextHelper::ucfirst($module_lang[$element]) : TextHelper::ucfirst($items_lang[$element]);
+				$parameters_list[str_replace('.', '_', TextHelper::lcfirst($element))] = isset($module_lang[$element]) ? TextHelper::lcfirst($module_lang[$element]) : TextHelper::lcfirst($items_lang[$element]);
 			}
 			else
 				unset($items_lang[$element]);
@@ -73,7 +73,7 @@ class ItemsService
 
 		foreach ($items_lang as $id => &$item_lang)
 		{
-			$item_lang = isset($lang[$id]) ? $lang[$id] : StringVars::replace_vars($item_lang, $parameters);
+			$item_lang = isset($module_lang[$id]) ? $module_lang[$id] : StringVars::replace_vars($item_lang, $parameters);
 		}
 
 		return $items_lang;
