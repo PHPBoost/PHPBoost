@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2021 12 22
  * @since       PHPBoost 4.0 - 2014 01 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -29,11 +29,13 @@ class AdminDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvi
 		$maintenance_config = MaintenanceConfig::load();
 
 		$js_top_tpl = new FileTemplate('js_top.tpl');
+		$js_top_tpl->add_lang(LangLoader::get_all_langs());
 		$js_top_tpl->put_all(array(
 			'C_COOKIEBAR_ENABLED' => false
 		));
 
 		$js_bottom_tpl = new FileTemplate('js_bottom.tpl');
+		$js_bottom_tpl->add_lang(LangLoader::get_all_langs());
 		$js_bottom_tpl->put_all(array(
 			'C_COOKIEBAR_ENABLED' => false
 		));

@@ -4,9 +4,9 @@
 		jQuery('[data-confirmation]').each(function() {
 			data_confirmation = jQuery(this).attr('data-confirmation');
 			if (data_confirmation == 'delete-element')
-				var message = ${escapejs(LangLoader::get_message('warning.confirm.delete', 'warning-lang'))};
+				var message = ${escapejs(@warning.confirm.delete)};
 			else if (data_confirmation == 'delete-elements')
-				var message = ${escapejs(LangLoader::get_message('warning.confirm.delete.elements', 'warning-lang'))};
+				var message = ${escapejs(@warning.confirm.delete.elements)};
 			else
 				var message = data_confirmation;
 			this.onclick = function () { return confirm(message); }
@@ -20,13 +20,13 @@
 		jQuery('a[data-lightbox^=formatter]').attr('data-rel', 'lightcase:collection');
 		jQuery('a[data-rel^=lightcase]').lightcase({
 			labels : {
-				'errorMessage'    : ${escapejs(LangLoader::get_message('warning.element.unexists', 'warning-lang'))},
-				'sequenceInfo.of' : ' ' + ${escapejs(TextHelper::lcfirst(LangLoader::get_message('common.of', 'common-lang')))} + ' ',
-				'close'           : ${escapejs(LangLoader::get_message('common.close', 'common-lang'))},
-				'navigator.prev'  : ${escapejs(LangLoader::get_message('common.previous', 'common-lang'))},
-				'navigator.next'  : ${escapejs(LangLoader::get_message('common.next', 'common-lang'))},
-				'navigator.play'  : ${escapejs(LangLoader::get_message('common.play', 'common-lang'))},
-				'navigator.pause' : ${escapejs(LangLoader::get_message('common.pause', 'common-lang'))}
+				'errorMessage'    : ${escapejs(@warning.element.unexists)},
+				'sequenceInfo.of' : ' ' + ${escapejs(TextHelper::lcfirst(@common.of))} + ' ',
+				'close'           : ${escapejs(@common.close)},
+				'navigator.prev'  : ${escapejs(@common.previous)},
+				'navigator.next'  : ${escapejs(@common.next)},
+				'navigator.play'  : ${escapejs(@common.play)},
+				'navigator.pause' : ${escapejs(@common.pause)}
 			},
 			maxHeight: window.innerHeight,
 			maxWidth: window.innerWidth,
@@ -67,7 +67,7 @@
 
 // SelectImg
 	jQuery('.select-to-list').selectImg({
-		ariaLabel : ${escapejs(LangLoader::get_message('common.click.to.select', 'common-lang'))}
+		ariaLabel : ${escapejs(@common.click.to.select)}
 	});
 
 // SelectImg multi

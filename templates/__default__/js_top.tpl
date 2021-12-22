@@ -4,24 +4,24 @@
 	var TOKEN        = "{TOKEN}";
 	var THEME        = "{THEME}";
 	var LANG         = "{LANG}";
-	var COPIED_TO_CLIPBOARD = ${escapejs(LangLoader::get_message('common.copied.to.clipboard', 'common-lang'))}
+	var COPIED_TO_CLIPBOARD = ${escapejs(@common.copied.to.clipboard)}
 
 	// BBCode Variables
-	var L_HIDE_MESSAGE    = ${escapejs(LangLoader::get_message('common.hidden.text', 'common-lang'))};
-	var L_HIDE_HIDEBLOCK  = ${escapejs(LangLoader::get_message('common.hide.text', 'common-lang'))};
-	var L_COPYTOCLIPBOARD = ${escapejs(LangLoader::get_message('common.copy.to.clipboard', 'common-lang'))};
+	var L_HIDE_MESSAGE    = ${escapejs(@common.hidden.text)};
+	var L_HIDE_HIDEBLOCK  = ${escapejs(@common.hide.text)};
+	var L_COPYTOCLIPBOARD = ${escapejs(@common.copy.to.clipboard)};
 
 	// CookieBar Variables
 	# IF C_COOKIEBAR_ENABLED #
 		var COOKIEBAR_DURATION        = {COOKIEBAR_DURATION};
 		var COOKIEBAR_TRACKING_MODE   = '{COOKIEBAR_TRACKING_MODE}';
 		var L_COOKIEBAR_CONTENT       = {COOKIEBAR_CONTENT};
-		var L_COOKIEBAR_UNDERSTAND    = ${escapejs(LangLoader::get_message('user.cookiebar.understand', 'user-lang'))};
-		var L_COOKIEBAR_ALLOWED       = ${escapejs(LangLoader::get_message('user.cookiebar.allowed', 'user-lang'))};
-		var L_COOKIEBAR_DECLINED      = ${escapejs(LangLoader::get_message('user.cookiebar.declined', 'user-lang'))};
-		var L_COOKIEBAR_MORE_TITLE    = ${escapejs(LangLoader::get_message('user.cookiebar.more.title', 'user-lang'))};
-		var L_COOKIEBAR_MORE          = ${escapejs(LangLoader::get_message('user.cookiebar.more', 'user-lang'))};
-		var L_COOKIEBAR_CHANGE_CHOICE = ${escapejs(LangLoader::get_message('user.cookiebar.change.choice', 'user-lang'))};
+		var L_COOKIEBAR_UNDERSTAND    = ${escapejs(@user.cookiebar.understand)};
+		var L_COOKIEBAR_ALLOWED       = ${escapejs(@user.cookiebar.allowed)};
+		var L_COOKIEBAR_DECLINED      = ${escapejs(@user.cookiebar.declined)};
+		var L_COOKIEBAR_MORE_TITLE    = ${escapejs(@user.cookiebar.more.title)};
+		var L_COOKIEBAR_MORE          = ${escapejs(@user.cookiebar.more)};
+		var L_COOKIEBAR_CHANGE_CHOICE = ${escapejs(@user.cookiebar.change.choice)};
 		var U_COOKIEBAR_ABOUTCOOKIE   = '${relative_url(UserUrlBuilder::aboutcookie())}';
 	# ENDIF #
 </script>
