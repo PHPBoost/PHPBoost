@@ -53,9 +53,9 @@
 								# ENDIF #
 							</td>
 							<td>
-								# IF items.C_DIFFERENT_DATE #${LangLoader::get_message('date.from.date', 'date-lang')}# ENDIF #
+								# IF items.C_DIFFERENT_DATE #{@date.from.date}# ENDIF #
 								<time datetime="{items.START_DATE_ISO8601}" itemprop="startDate">{items.START_DATE}</time>
-								# IF items.C_DIFFERENT_DATE #${LangLoader::get_message('date.to.date', 'date-lang')} <time datetime="{items.END_DATE_ISO8601}" itemprop="endDate">{items.END_DATE}</time># ENDIF #
+								# IF items.C_DIFFERENT_DATE #{@date.to.date} <time datetime="{items.END_DATE_ISO8601}" itemprop="endDate">{items.END_DATE}</time># ENDIF #
 							</td>
 							# IF items.C_CONTROLS #
 								<td>

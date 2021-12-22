@@ -18,13 +18,13 @@
 				jQuery('<input/> ', {type : 'radio', id : 'default_category' + id, name : 'default_category', value : id}).appendTo('#categories_radio_' + id + ' label');
 				jQuery('<span/>', {class : 'custom-radio'}).appendTo('#categories_radio_' + id + ' label');
 
-				jQuery('<td/>', {id : 'td2_' + id, 'data-th' : ${escapejs(LangLoader::get_message('form.name', 'form-lang'))}}).appendTo('#tr_' + id);
+				jQuery('<td/>', {id : 'td2_' + id, 'data-th' : ${escapejs(@form.name)}}).appendTo('#tr_' + id);
 
 				jQuery('<div/>', {id : 'td2_' + id + '_bt', class : 'bt-content'}).appendTo('#td2_' + id);
 
-				jQuery('<input/> ', {type : 'text', id : 'category_' + id, name : 'category_' + id, placeholder : ${escapejs(LangLoader::get_message('form.name', 'form-lang'))}}).appendTo('#td2_' + id + '_bt');
+				jQuery('<input/> ', {type : 'text', id : 'category_' + id, name : 'category_' + id, placeholder : ${escapejs(@form.name)}}).appendTo('#td2_' + id + '_bt');
 
-				jQuery('<td/>', {id : 'td3_' + id, 'data-th' : ${escapejs(LangLoader::get_message('common.delete', 'common-lang'))}}).appendTo('#tr_' + id);
+				jQuery('<td/>', {id : 'td3_' + id, 'data-th' : ${escapejs(@common.delete)}}).appendTo('#tr_' + id);
 
 				jQuery('<a/> ', {id : 'delete_' + id, onclick : 'BugtrackerFormFieldCategories.delete_category(' + id + ');return false;', 'aria-label' : ${escapejs(@titles.del_category)}}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#td3_' + id);
 

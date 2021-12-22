@@ -52,7 +52,7 @@
 
 	ExtendedField.prototype = {
 		delete : function() {
-			if (confirm(${escapejs(LangLoader::get_message('warning.confirm.delete', 'warning-lang'))}))
+			if (confirm(${escapejs(@warning.confirm.delete)}))
 			{
 				jQuery.ajax({
 					url: '${relative_url(AdminExtendedFieldsUrlBuilder::delete())}',
@@ -106,7 +106,7 @@
 # INCLUDE MESSAGE_HELPER #
 <form action="{REWRITED_SCRIPT}" method="post" onsubmit="ExtendedFields.serialize_sortable();" class="fieldset-content">
 	<fieldset id="management_extended_fields">
-		<legend>${LangLoader::get_message('user.extended.fields.management', 'user-lang')}</legend>
+		<legend>{@user.extended.fields.management}</legend>
 		<div class="fieldset-inset">
 			<ul id="lists" class="sortable-block">
 				# START list_extended_fields #

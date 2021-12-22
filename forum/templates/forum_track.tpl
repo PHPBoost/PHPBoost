@@ -95,7 +95,7 @@
 								# IF topics.C_AUTHOR #
 									<a href="{topics.U_AUTHOR_PROFILE}" class="small {topics.AUTHOR_LEVEL} offload"# IF topics.C_GROUP_COLOR # style="color:{topics.GROUP_COLOR}"# ENDIF #>{topics.AUTHOR}</a>
 								# ELSE #
-									<span class="small">${LangLoader::get_message('user.guest', 'user-lang')}</span>
+									<span class="small">{@user.guest}</span>
 								# ENDIF #
 							</td>
 							<td class="forum-message-nb">
@@ -122,7 +122,7 @@
 									# IF topics.C_LAST_MESSAGE_GUEST #
 										<a href="{topics.U_LAST_USER_PROFILE}" class="small {topics.LAST_USER_LEVEL} offload"# IF topics.C_LAST_USER_GROUP_COLOR # style="color:{topics.LAST_USER_GROUP_COLOR}"# ENDIF #>{topics.LAST_USER_LOGIN}</a>
 									# ELSE #
-										<span class="small">${LangLoader::get_message('user.guest', 'user-lang')}</span>
+										<span class="small">{@user.guest}</span>
 									# ENDIF #
 								</span>
 							</td>
@@ -132,7 +132,7 @@
 			</table>
 			<div class="align-center">
 				<input type="hidden" name="token" value="{TOKEN}">
-				<button type="submit" class="button submit" name="valid" value="true">${LangLoader::get_message('form.submit', 'form-lang')}</button>
+				<button type="submit" class="button submit" name="valid" value="true">{@form.submit}</button>
 			</div>
 		</div>
 		<footer>

@@ -4,12 +4,12 @@
 		{
 			if( document.getElementById('login').value == "" )
 			{
-				alert("${LangLoader::get_message('warning.username', 'warning-lang')}");
+				alert("{@warning.username}");
 				return false;
 			}
 			if( document.getElementById('password').value == "" )
 			{
-				alert("${LangLoader::get_message('warning.password', 'warning-lang')}");
+				alert("{@warning.password}");
 				return false;
 			}
 		}

@@ -109,7 +109,7 @@
 											# IF items.C_AUTHOR_EXISTS #
 												<a class="{items.AUTHOR_LEVEL_CLASS} offload"# IF items.C_AUTHOR_GROUP_COLOR # style="color:{items.AUTHOR_GROUP_COLOR}"# ENDIF # href="{items.U_AUTHOR_PROFILE}">{items.AUTHOR_DISPLAY_NAME}</a>
 											# ELSE #
-												<span class="visitor">${LangLoader::get_message('user.guest', 'user-lang')}</span>
+												<span class="visitor">{@user.guest}</span>
 											# ENDIF #
 										</span>
 										<span class="pinned" aria-label="{@common.creation.date}"><i class="far fa-calendar-alt" aria-hidden="true"></i> <time datetime="{items.DATE_ISO8601}" itemprop="datePublished">{items.DATE}</time></span>

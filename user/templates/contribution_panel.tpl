@@ -134,7 +134,7 @@
 														<i class="fa fa-caret-up" aria-hidden="true"></i>
 													</a>
 												</span>
-												${LangLoader::get_message('user.referee', 'user-lang')}
+												{@user.referee}
 												<span class="html-table-header-sortable# IF C_ORDER_REFEREE_DESC # sort-active# ENDIF #">
 													<a class="offload" href="{U_ORDER_REFEREE_DESC}" aria-label="{@common.sort.desc}">
 														<i class="fa fa-caret-down" aria-hidden="true"></i>
@@ -294,7 +294,7 @@
 								</li>
 								# IF C_CONTRIBUTION_FIXED #
 								<li class="li-stretch">
-									<span class="text-strong">${LangLoader::get_message('user.referee', 'user-lang')}</span>
+									<span class="text-strong">{@user.referee}</span>
 									<span><a href="{U_REFEREE_PROFILE}" class="{REFEREE_LEVEL_CLASS} offload" # IF C_REFEREE_GROUP_COLOR # style="color:{REFEREE_GROUP_COLOR}" # ENDIF #>{FIXER}</a></span>
 								</li>
 								<li class="li-stretch">

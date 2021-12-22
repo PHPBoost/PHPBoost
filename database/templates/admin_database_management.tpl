@@ -438,7 +438,7 @@
 				<tr>
 					<th>{@database.file.name}</th>
 					<th>{@database.file.weight}</th>
-					<th>${LangLoader::get_message('date.date', 'date-lang')}</th>
+					<th>{@date.date}</th>
 					<th></th>
 				</tr>
 			</thead>

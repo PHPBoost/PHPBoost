@@ -32,7 +32,7 @@
 				});
 			}
 			else
-				alert(${escapejs(LangLoader::get_message('warning.text', 'warning-lang'))});
+				alert(${escapejs(@warning.text)});
 		}
 	</script>
 

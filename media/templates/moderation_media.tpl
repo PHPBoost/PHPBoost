@@ -1,7 +1,7 @@
 # IF C_DISPLAY #
 	<section id="module-media">
 		<header class="section-header">
-			<h1>${LangLoader::get_message('user.moderation.panel', 'user-lang')}</h1>
+			<h1>{@user.moderation.panel}</h1>
 		</header>
 		<div class="sub-section">
 			<div class="content-container">

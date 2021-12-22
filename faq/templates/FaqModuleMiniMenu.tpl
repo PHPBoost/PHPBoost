@@ -6,7 +6,7 @@
 # ELSE #
 	<div class="cell-alert">
 		<div class="message-helper bgc notice">
-			${LangLoader::get_message('common.no.item.now', 'common-lang')}
+			{@common.no.item.now}
 		</div>
 	</div>
 # ENDIF #

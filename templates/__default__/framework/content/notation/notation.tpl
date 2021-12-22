@@ -14,7 +14,7 @@
 # ELSE #
 	# IF C_JS_NOT_ALREADY_INCLUDED #
 		<script>
-			var NOTATION_LANG_AUTH = ${escapejs(LangLoader::get_message('warning.auth', 'warning-lang'))};
+			var NOTATION_LANG_AUTH = ${escapejs(@warning.auth)};
 			var NOTATION_LANG_ALREADY_VOTE = ${escapejs(@common.already.voted)};
 			var NOTATION_LANG_NOTE = ${escapejs(@common.note)};
 			var NOTATION_LANG_NOTES = ${escapejs(@common.notes)};

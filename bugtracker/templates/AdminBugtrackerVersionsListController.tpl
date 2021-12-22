@@ -58,7 +58,7 @@
 
 				jQuery('<div/>', {id : 'td2_' + id + '_bt', class : 'bt-content'}).appendTo('#td2_' + id);
 
-				jQuery('<input/> ', {type : 'text', id : 'version_' + id, name : 'version_' + id, placeholder : ${escapejs(LangLoader::get_message('form.name', 'form-lang'))}}).appendTo('#td2_' + id + '_bt');
+				jQuery('<input/> ', {type : 'text', id : 'version_' + id, name : 'version_' + id, placeholder : ${escapejs(@form.name)}}).appendTo('#td2_' + id + '_bt');
 
 				jQuery('<td/>', {id : 'td3_' + id, 'data-th' : ${escapejs(@labels.fields.version_release_date)}}).appendTo('#tr_' + id);
 
@@ -66,7 +66,7 @@
 
 				jQuery('<div/>', {class : 'grouped-inputs'}).appendTo('#td3_' + id + '_bt');
 
-				jQuery('<input/> ', {type : 'text', maxlength : 10, id : 'release_date' + id, class : 'grouped-element input-date', name : 'release_date' + id, onclick : "xmlhttprequest_calendar('release_date" + id + "_date', 'release_date" + id + "', '', '', '', '" + id + "');", placeholder : ${escapejs(LangLoader::get_message('date.format', 'date-lang'))}}).appendTo('#td3_' + id + '_bt .grouped-inputs').attr('size', '11');
+				jQuery('<input/> ', {type : 'text', maxlength : 10, id : 'release_date' + id, class : 'grouped-element input-date', name : 'release_date' + id, onclick : "xmlhttprequest_calendar('release_date" + id + "_date', 'release_date" + id + "', '', '', '', '" + id + "');", placeholder : ${escapejs(@date.format)}}).appendTo('#td3_' + id + '_bt .grouped-inputs').attr('size', '11');
 				jQuery('#release_date' + id).after(' ');
 
 				jQuery('<div/> ', {id : 'calendar' + id + '_container', class : 'calendar-container modal-container cell-modal cell-tile grouped-element'}).appendTo('#td3_' + id + '_bt .grouped-inputs');
@@ -170,7 +170,7 @@
 				</td>
 				<td>
 					<div class="grouped-inputs">
-						<input type="text" size="11" maxlength="10" id="release_date{versions.ID}" class="grouped-element input-date" name="release_date{versions.ID}" value="{versions.RELEASE_DATE}" onclick="xmlhttprequest_calendar('release_date{versions.ID}_date', 'release_date{versions.ID}', ${escapejs(versions.YEAR)}, ${escapejs(versions.MONTH)}, ${escapejs(versions.DAY)}, ${escapejs(versions.ID)});return false;" placeholder="${LangLoader::get_message('date.format', 'date-lang')}">
+						<input type="text" size="11" maxlength="10" id="release_date{versions.ID}" class="grouped-element input-date" name="release_date{versions.ID}" value="{versions.RELEASE_DATE}" onclick="xmlhttprequest_calendar('release_date{versions.ID}_date', 'release_date{versions.ID}', ${escapejs(versions.YEAR)}, ${escapejs(versions.MONTH)}, ${escapejs(versions.DAY)}, ${escapejs(versions.ID)});return false;" placeholder="{@date.format}">
 						<div class="calendar-container modal-container cell-modal cell-tile grouped-element">
 							<a class="bgc-full link-color" data-modal="" data-target="calendar{versions.ID}" id="release_date{versions.ID}_link" href="#" onclick="xmlhttprequest_calendar('release_date{versions.ID}_date', 'release_date{versions.ID}', ${escapejs(versions.YEAR)}, ${escapejs(versions.MONTH)}, ${escapejs(versions.DAY)}, ${escapejs(versions.ID)}, 1);return false;" aria-label="{@titles.calendar}"><i class="fa fa-calendar-alt" aria-hidden="true"></i></a>
 							<div id="calendar{versions.ID}" class="modal modal-animation">
@@ -190,7 +190,7 @@
 					</div>
 				</td>
 				<td>
-					<a href="{versions.LINK_DELETE}" aria-label="${@titles.del_version}" data-confirmation="delete-element"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+					<a href="{versions.LINK_DELETE}" aria-label="{@titles.del_version}" data-confirmation="delete-element"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
 				</td>
 			</tr>
 		# END versions #

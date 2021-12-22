@@ -43,7 +43,7 @@
 									<div class="cell-thumbnail cell-landscape cell-center">
 										<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
 										<a class="cell-thumbnail-caption offload" href="{sub_categories_list.U_CATEGORY}">
-											${LangLoader::get_message('category.see.category', 'category-lang')}
+											{@category.see.category}
 										</a>
 									</div>
 								</div>
@@ -231,7 +231,7 @@
 												</a>
 												# IF items.C_VISIBLE #
 													# IF IS_USER_CONNECTED #
-														<a href="{items.U_DEADLINK}" data-confirmation="${LangLoader::get_message('contribution.dead.link.confirmation', 'contribution-lang')}" class="button bgc-full warning small" aria-label="${LangLoader::get_message('contribution.report.dead.link', 'contribution-lang')}">
+														<a href="{items.U_DEADLINK}" data-confirmation="{@contribution.dead.link.confirmation}" class="button bgc-full warning small" aria-label="{@contribution.report.dead.link}">
 															<i class="fa fa-unlink" aria-hidden="true"></i>
 														</a>
 													# ENDIF #

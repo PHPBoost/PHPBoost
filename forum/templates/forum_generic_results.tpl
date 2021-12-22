@@ -13,7 +13,7 @@
                         <a class="offload" href="{U_USER_PROFILE}">{USER_PSEUDO}</a>
                         <span class="sr-only"># IF C_USER_ONLINE #{@forum.connected.member)}# ELSE #{@forum.not.connected.member)}# ENDIF #</span>
                     # ELSE #
-                        <span>${LangLoader::get_message('user.guest', 'user-lang')}</span>
+                        <span>{@user.guest}</span>
                     # ENDIF #
 				</h3>
                 <div class="message-actions">

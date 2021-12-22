@@ -27,7 +27,7 @@
 										</span>
 										<span class="sr-only"># IF C_USER_ONLINE #{@forum.connected.member)}# ELSE #{@forum.not.connected.member}# ENDIF #</span>
 									# ELSE #
-										${LangLoader::get_message('user.guest', 'user-lang')}
+										{@user.guest}
 									# ENDIF #
 								</h3>
 								<div class="controls message-user-infos-preview">

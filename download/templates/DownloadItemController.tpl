@@ -43,7 +43,7 @@
 												<i class="fa fa-download" aria-hidden="true"></i> {@download.download}
 											</a>
 											# IF IS_USER_CONNECTED #
-												<a href="{U_DEADLINK}" data-confirmation="${LangLoader::get_message('contribution.dead.link.confirmation', 'contribution-lang')}" class="button bgc-full warning" aria-label="${LangLoader::get_message('contribution.report.dead.link', 'contribution-lang')}">
+												<a href="{U_DEADLINK}" data-confirmation="{@contribution.dead.link.confirmation}" class="button bgc-full warning" aria-label="{@contribution.report.dead.link}">
 													<i class="fa fa-unlink" aria-hidden="true"></i>
 												</a>
 											# ENDIF #

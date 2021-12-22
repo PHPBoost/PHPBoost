@@ -47,7 +47,7 @@
 							<div class="cell-content align-center">
 								<a class="offload" href="{U_UPLOAD}">
 									<i class="fa fa-cloud-upload-alt fa-2x" aria-hidden="true"></i>
-									<span class="d-block">${LangLoader::get_message('upload.files.management', 'upload-lang')}</span>
+									<span class="d-block">{@upload.files.management}</span>
 								</a>
 							</div>
 						</div>

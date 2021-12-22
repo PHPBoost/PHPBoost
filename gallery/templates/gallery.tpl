@@ -43,7 +43,7 @@
 
 		if( regex.test(name) ) //interdiction des caractères spéciaux dans le nom.
 		{
-			alert("${escapejs(LangLoader::get_message('warning.file.forbidden.chars', 'warning-lang'))}");
+			alert("${escapejs(@warning.file.forbidden.chars)}");
 			document.getElementById('fi_' + id_file).style.display = 'inline';
 			document.getElementById('fi' + id_file).style.display = 'none';
 		}
@@ -363,7 +363,7 @@
 														# IF C_AUTHOR_EXISTS #
 															<a class="{AUTHOR_LEVEL_CLASS} offload"# IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}"# ENDIF # href="{U_AUTHOR_PROFILE}">{AUTHOR_DISPLAY_NAME}</a>
 														# ELSE #
-															<span class="visitor">${LangLoader::get_message('user.guest', 'user-lang')}</span>
+															<span class="visitor">{@user.guest}</span>
 														# ENDIF #
 													</span>
 												</li>
@@ -465,7 +465,7 @@
 										<div class="cell-thumbnail cell-landscape cell-center">
 											<img src="{pics_list.U_PICTURE}" alt="{pics_list.NAME}" class="gallery-img" />
 											<a class="cell-thumbnail-caption small" aria-label="# IF C_NAME_DISPLAYED #{pics_list.NAME}# ENDIF #" href="{pics_list.U_DISPLAY}" onclick="{pics_list.ONCLICK}" # IF NOT pics_list.ONCLICK # data-lightbox="formatter"# ENDIF #>
-												${LangLoader::get_message('form.picture.full.size', 'form-lang')}
+												{@form.picture.full.size}
 											</a>
 										</div>
 									</div>
@@ -478,7 +478,7 @@
 															{@common.by} {pics_list.AUTHOR_DISPLAY_NAME}
 														</a>
 													# ELSE #
-														{@common.by} ${LangLoader::get_message('user.guest', 'user-lang')}
+														{@common.by} {@user.guest}
 													# ENDIF #
 												</li>
 											# ENDIF #

@@ -99,10 +99,13 @@ class AdminCustomizeFaviconController extends DefaultAdminModuleController
 
 	private function delete_older()
 	{
-		$file = new File(PATH_TO_ROOT . '/' . $this->config->get_favicon_path());
-		if ($file->exists())
+		if(!empty($this->config->get_favicon_path()))
 		{
-			$file->delete();
+			$file = new File(PATH_TO_ROOT . '/' . $this->config->get_favicon_path());
+			if ($file->exists())
+			{
+				$file->delete();
+			}
 		}
 	}
 }

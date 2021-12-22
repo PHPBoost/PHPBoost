@@ -382,9 +382,9 @@
 			disableBody: {DISABLED_BODY},
 			closeOnClick: true, // if disableBody is true
 			insertClose: true,
-			labelClose: ${escapejs(LangLoader::get_message('common.close', 'common-lang'))},
+			labelClose: ${escapejs(@common.close)},
 			insertBack: true,
-			labelBack: ${escapejs(LangLoader::get_message('common.back', 'common-lang'))}
+			labelBack: ${escapejs(@common.back)}
 	    });
 
 		// get window sizes on resize

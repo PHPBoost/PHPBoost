@@ -4,7 +4,7 @@
 
 		function delete_question(id_question)
 		{
-			if (confirm(${escapejs(LangLoader::get_message('warning.confirm.delete', 'warning-lang'))}))
+			if (confirm(${escapejs(@warning.confirm.delete)}))
 			{
 				jQuery.ajax({
 					url: '${relative_url(FaqUrlBuilder::ajax_delete())}',
@@ -76,7 +76,7 @@
 									<div class="cell-thumbnail cell-landscape cell-center">
 										<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
 										<a class="cell-thumbnail-caption offload" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
-											${LangLoader::get_message('category.see.category', 'category-lang')}
+											{@category.see.category}
 										</a>
 									</div>
 								# ENDIF #

@@ -13,7 +13,7 @@
 				</div>
 
 				<div class="message-error">
-					${LangLoader::get_message('warning.403.message', 'warning-lang')}
+					{@warning.403.message}
 				</div>
 
 				<div class="spacer"></div>

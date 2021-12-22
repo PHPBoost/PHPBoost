@@ -6,7 +6,7 @@
 		<div class="cell-body">
 			# IF C_AUTHOR_IS_MEMBER #
 				# IF C_AVATAR #
-					<div class="cell-thumbnail cell-center cell-avatar"><img src="{U_AVATAR}" alt="${LangLoader::get_message('common.avatar', 'common-lang')}" /></div>
+					<div class="cell-thumbnail cell-center cell-avatar"><img src="{U_AVATAR}" alt="{@common.avatar}" /></div>
 				# ENDIF #
 			# ENDIF #
 			<div class="cell-content">

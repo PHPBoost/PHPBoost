@@ -5,7 +5,7 @@
         </header>
         <div class="more">{@sandbox.layout.sortables.description}</div>
         <div class="content">
-            <form action="/workspace/phpboost/pbt-53/trunk/news/categories/" method="post" onsubmit="serialize_sortable();">
+            <form action="" method="post" onsubmit="serialize_sortable();">
                 <fieldset>
                     <legend>{@sandbox.layout.sortables.legend}</legend>
                     <div class="fieldset-inset">
@@ -99,32 +99,32 @@
     &lt;li id="cat-1" class="sortable-element" data-id="1">
         &lt;div class="sortable-selector" aria-label="{@common.move}">&lt;/div>
         &lt;div class="sortable-title">
-            &lt;a href="/workspace/phpboost/pbt-53/trunk/news/1-test/">{@sandbox.layout.title} 1&lt;/a>
+            &lt;a href="...">{@sandbox.layout.title} 1&lt;/a>
             &lt;em class="h-padding small">{@sandbox.layout.title.sub}&lt;/em>
         &lt;/div>
         &lt;div class="sortable-actions">
             &lt;a href="#" aria-label="{@common.move.up}" id="move-up-1" onclick="return false;" style="display: none;">&lt;i class="fa fa-arrow-up" aria-hidden="true">&lt;/i>&lt;/a>
             &lt;a href="#" aria-label="{@common.move.down}" id="move-down-1" onclick="return false;">&lt;i class="fa fa-arrow-down" aria-hidden="true">&lt;/i>&lt;/a>
-            &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/1/edit/#AbstractCategoriesFormController_special_authorizations_field" aria-label="{@form.authorizations.default}">
+            &lt;a href="..." aria-label="{@form.authorizations.default}">
                 &lt;i class="fa fa-fw fa-user-shield" aria-hidden="true">&lt;/i>
             &lt;/a>
-            &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/1/edit/" aria-label="{@common.edit}">&lt;i class="far fa-edit" aria-hidden="true">&lt;/i>&lt;/a>
-            &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/1/delete/" aria-label="{@common.delete}" data-confirmation="{@delete-element}">&lt;i class="far fa-trash-alt" aria-hidden="true">&lt;/i>&lt;/a>
+            &lt;a href="..." aria-label="{@common.edit}">&lt;i class="far fa-edit" aria-hidden="true">&lt;/i>&lt;/a>
+            &lt;a href="..." aria-label="{@common.delete}" data-confirmation="{@delete-element}">&lt;i class="far fa-trash-alt" aria-hidden="true">&lt;/i>&lt;/a>
         &lt;/div>
         &lt;ul id="subcat-1" class="sortable-block">
             &lt;li id="cat-2" class="sortable-element" data-id="2">
                 &lt;div class="sortable-selector" aria-label="{@common.move}">&lt;/div>
                 &lt;div class="sortable-title">
-                    &lt;a href="/workspace/phpboost/pbt-53/trunk/news/2-categorie-de-test-1-1/">{@sandbox.layout.title} 1.1 &lt;/a>
+                    &lt;a href="...">{@sandbox.layout.title} 1.1 &lt;/a>
                 &lt;/div>
                 &lt;div class="sortable-actions">
                     &lt;a href="#" aria-label="{@common.move.up}" id="move-up-2" onclick="return false;">&lt;i class="fa fa-arrow-up" aria-hidden="true">&lt;/i>&lt;/a>
                     &lt;a href="#" aria-label="{@common.move.down}" id="move-down-2" onclick="return false;">&lt;i class="fa fa-arrow-down" aria-hidden="true">&lt;/i>&lt;/a>
-                    &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/2/edit/#AbstractCategoriesFormController_special_authorizations_field" aria-label="{@form.authorizations.default}">
+                    &lt;a href="..." aria-label="{@form.authorizations.default}">
                         &lt;i class="fa fa-fw fa-user-shield" aria-hidden="true">&lt;/i>
                     &lt;/a>
-                    &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/2/edit/" aria-label="{@common.edit}">&lt;i class="far fa-edit" aria-hidden="true">&lt;/i>&lt;/a>
-                    &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/2/delete/" aria-label="{@common.delete}" data-confirmation="{@delete-element}">&lt;i class="far fa-trash-alt" aria-hidden="true">&lt;/i>&lt;/a>
+                    &lt;a href="..." aria-label="{@common.edit}">&lt;i class="far fa-edit" aria-hidden="true">&lt;/i>&lt;/a>
+                    &lt;a href="..." aria-label="{@common.delete}" data-confirmation="{@delete-element}">&lt;i class="far fa-trash-alt" aria-hidden="true">&lt;/i>&lt;/a>
                 &lt;/div>
                 &lt;ul id="subcat-2" class="sortable-block">&lt;/ul>
             &lt;/li>
@@ -133,16 +133,16 @@
     &lt;li id="cat-3" class="sortable-element" data-id="3">
         &lt;div class="sortable-selector" aria-label="{@common.move}">&lt;/div>
         &lt;div class="sortable-title">
-            &lt;a href="/workspace/phpboost/pbt-53/trunk/news/3-categorie-de-test-3/">{@sandbox.layout.title} 2 &lt;/a>
+            &lt;a href="...">{@sandbox.layout.title} 2 &lt;/a>
         &lt;/div>
         &lt;div class="sortable-actions">
             &lt;a href="#" aria-label="{@common.move.up}" id="move-up-3" onclick="return false;">&lt;i class="fa fa-arrow-up" aria-hidden="true">&lt;/i>&lt;/a>
             &lt;a href="#" aria-label="{@common.move.down}" id="move-down-3" onclick="return false;" style="display: none;">&lt;i class="fa fa-arrow-down" aria-hidden="true">&lt;/i>&lt;/a>
-            &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/3/edit/#AbstractCategoriesFormController_special_authorizations_field" aria-label="{@form.authorizations.specials}">
+            &lt;a href="..." aria-label="{@form.authorizations.specials}">
                 &lt;i class="fa fa-fw fa-user-shield warning" aria-hidden="true">&lt;/i>
             &lt;/a>
-            &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/3/edit/" aria-label="{@common.edit}">&lt;i class="far fa-edit" aria-hidden="true">&lt;/i>&lt;/a>
-            &lt;a href="/workspace/phpboost/pbt-53/trunk/news/categories/3/delete/" aria-label="{@common.delete}" data-confirmation="{@delete-element}">&lt;i class="far fa-trash-alt" aria-hidden="true">&lt;/i>&lt;/a>
+            &lt;a href="..." aria-label="{@common.edit}">&lt;i class="far fa-edit" aria-hidden="true">&lt;/i>&lt;/a>
+            &lt;a href="..." aria-label="{@common.delete}" data-confirmation="{@delete-element}">&lt;i class="far fa-trash-alt" aria-hidden="true">&lt;/i>&lt;/a>
         &lt;/div>
         &lt;ul id="subcat-3" class="sortable-block">&lt;/ul>
     &lt;/li>

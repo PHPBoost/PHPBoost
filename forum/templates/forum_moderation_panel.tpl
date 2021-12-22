@@ -65,7 +65,7 @@
 								{@forum.concerned.user}
 							</th>
 							<th class="forum-last-topic">
-								${LangLoader::get_message('date.date', 'date-lang')}
+								{@date.date}
 							</th>
 						</tr>
 					</thead>
@@ -138,7 +138,7 @@
 							<th class="td20P">{@forum.report.concerned.topic}</th>
 							<th class="td100">{@common.status}</th>
 							<th class="td70">{@forum.report.author}</th>
-							<th class="td70">${LangLoader::get_message('date.date', 'date-lang')}</th>
+							<th class="td70">{@date.date}</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -232,7 +232,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td>${LangLoader::get_message('date.date', 'date-lang')}</td>
+						<td>{@date.date}</td>
 						<td>{DATE}</td>
 					</tr>
 				</tbody>
@@ -297,7 +297,7 @@
 						xmlhttprequest_sender(xhr_object, data);
 					}
 					else
-						alert("${LangLoader::get_message('warning.username', 'warning-lang')}");
+						alert("{@warning.username}");
 				}
 
 				function hide_div(divID)

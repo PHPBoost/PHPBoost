@@ -40,7 +40,7 @@
 					<div class="cell-form grouped-inputs grouped-auto grouped-right">
 						<span class="newsletter-title grouped-element">{@newsletter.module.title}</span>
 						<label class="sr-only" for="newsletter-email">{@user.email}</label>
-						<input class="grouped-element" id="newsletter-email" type="text" name="mail_newsletter" maxlength="50" value="{USER_MAIL}" placeholder="${LangLoader::get_message('user.email', 'user-lang')}" aria-labelledby="NewsletterButton">
+						<input class="grouped-element" id="newsletter-email" type="text" name="mail_newsletter" maxlength="50" value="{USER_MAIL}" placeholder="{@user.email}" aria-labelledby="NewsletterButton">
 						<input type="hidden" name="subscribe" value="subscribe">
 						<input type="hidden" name="token" value="{TOKEN}">
 						<button id="NewsletterButton" name="mail_newsletter_button" type="submit" class="grouped-element button submit" aria-label="{@newsletter.subscribe.streams}"><i class="fa fa-file-signature" aria-hidden="true"></i></button>

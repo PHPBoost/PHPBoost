@@ -29,7 +29,7 @@
 				document.getElementById('forum_block_' + divID).innerHTML = array_unread_topics[2];
 			} else if (xhr_object.readyState == 4 && xhr_object.responseText == '')
 			{
-				alert("${LangLoader::get_message('warning.error', 'warning-lang')}");
+				alert("{@warning.error}");
 				if (document.getElementById('refresh_' + divID))
 					document.getElementById('refresh_' + divID).className = 'fa fa-fw fa-sync';
 			}

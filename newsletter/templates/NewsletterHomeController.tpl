@@ -43,9 +43,9 @@
 					<th>
 						{@newsletter.subscribers.list}
 					</th>
-					<th class="col-small" aria-label="${LangLoader::get_message('form.thumbnail', 'form-lang')}">
+					<th class="col-small" aria-label="{@form.thumbnail}">
 						<i class="far fa-fw fa-image hidden-small-screens" aria-hidden="true"></i>
-						<span class="hidden-large-screens">${LangLoader::get_message('form.thumbnail', 'form-lang')}</span>
+						<span class="hidden-large-screens">{@form.thumbnail}</span>
 					</th>
 				</tr>
 			</thead>

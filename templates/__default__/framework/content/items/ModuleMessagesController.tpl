@@ -70,7 +70,7 @@
 												# IF messages.user_groups.C_GROUP_PICTURE #
 													<img src="{PATH_TO_ROOT}/images/group/{messages.user_groups.GROUP_PICTURE}" alt="{messages.user_groups.GROUP_NAME}" class="message-user-group" />
 												# ELSE #
-													${LangLoader::get_message('user.group', 'user-lang')}: {messages.user_groups.GROUP_NAME}
+													{@user.group}: {messages.user_groups.GROUP_NAME}
 												# ENDIF #
 											</div>
 										# END user_groups #

@@ -52,7 +52,7 @@
 
 		FaqQuestion.prototype = {
 			delete : function() {
-				if (confirm(${escapejs(LangLoader::get_message('warning.confirm.delete', 'warning-lang'))}))
+				if (confirm(${escapejs(@warning.confirm.delete)}))
 				{
 					jQuery.ajax({
 						url: '${relative_url(FaqUrlBuilder::ajax_delete())}',

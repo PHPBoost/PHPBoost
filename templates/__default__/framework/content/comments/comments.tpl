@@ -52,12 +52,12 @@
 
 				# IF C_DISPLAY_DELETE_FORM #
 						# IF C_DISPLAY_DELETE_BUTTON #
-							<label for="delete-all-checkbox" class="checkbox" aria-label="${LangLoader::get_message('common.select.all.elements', 'common-lang')}">
+							<label for="delete-all-checkbox" class="checkbox" aria-label="{@common.select.all.elements}">
 								<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {COMMENTS_NUMBER});">
 								<span>&nbsp;</span>
 							</label>
 							<input type="hidden" name="token" value="{TOKEN}" />
-							<button type="submit" id="delete-all-button" name="delete-selected-comments" value="true" class="button submit" data-confirmation="delete-element" disabled="disabled">${LangLoader::get_message('common.delete', 'common-lang')}</button>
+							<button type="submit" id="delete-all-button" name="delete-selected-comments" value="true" class="button submit" data-confirmation="delete-element" disabled="disabled">{@common.delete}</button>
 						# ENDIF #
 					</form>
 				# ENDIF #
