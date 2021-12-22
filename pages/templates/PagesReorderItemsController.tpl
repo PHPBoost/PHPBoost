@@ -114,7 +114,7 @@
 						</fieldset>
 						# IF C_SEVERAL_ITEMS #
 							<fieldset class="fieldset-submit" id="position-update-button">
-								<button type="submit" name="submit" value="true" class="button submit">${LangLoader::get_message('form.submit', 'form-lang')}</button>
+								<button type="submit" name="submit" value="true" class="button submit">{@form.submit}</button>
 								<input type="hidden" name="token" value="{TOKEN}">
 								<input type="hidden" name="tree" id="tree" value="">
 							</fieldset>

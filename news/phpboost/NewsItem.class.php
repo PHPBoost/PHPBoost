@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 17
+ * @version     PHPBoost 6.0 - last update: 2021 12 22
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -40,6 +40,7 @@ class NewsItem extends RichItem
 	public function get_additional_content_template()
 	{
 		$template = new FileTemplate('news/NewsItemAdditionalContent.tpl');
+		$template->add_lang(LangLoader::get_all_langs());
 		$config = self::$module->get_configuration()->get_configuration_parameters();
 
 		$suggested_news = ItemsService::get_items_manager(self::$module_id)->get_suggested_news($this);
