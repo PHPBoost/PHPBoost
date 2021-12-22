@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 22
+ * @version     PHPBoost 6.0 - last update: 2021 12 22
  * @since       PHPBoost 6.0 - 2019 11 11
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -57,26 +57,24 @@ class CategoriesService
 		return self::$categories_manager;
 	}
 
-	public static function get_default_root_category_description($module_id, $categories_number = 1, $items_number = 1, $module_lang_filename = 'common')
+	public static function get_default_root_category_description($module_id, $categories_number = 1, $items_number = 1, $lang_filename = 'common')
 	{
-		$categories_lang = LangLoader::get('category-lang');
-		$module_lang = LangLoader::filename_exists($module_lang_filename, $module_id) ? LangLoader::get($module_lang_filename, $module_id) : array();
-		$items_lang = ItemsService::get_items_lang($module_id, $module_lang_filename);
-		$elements_number_lang_parameter = isset($module_lang['default.created.elements.number']) ? $module_lang['default.created.elements.number'] : $categories_lang['category.default.created.elements.number'];
+		$lang = LangLoader::get_all_langs($module_id);
+		$items_lang = ItemsService::get_items_lang($module_id, $lang_filename);
 		$module = ModulesManager::get_module($module_id);
 
 		if ($module)
 		{
-			if (isset($module_lang['default.root.category.description']))
+			if (isset($lang['default.root.category.description']))
 			{
-				return $module_lang['default.root.category.description'];
+				return $lang['default.root.category.description'];
 			}
 			else
 			{
 				$elements_number = '';
 				if (!empty($categories_number))
 				{
-					$elements_number .= ($categories_number > 1 ? $categories_number . ' ' . TextHelper::lcfirst($categories_lang['category.categories']) : TextHelper::ucfirst($categories_lang['category.a.category'])) . (!empty($items_number) ? ' ' . TextHelper::lcfirst(LangLoader::get_message('common.and', 'common-lang')) . ' ' : '');
+					$elements_number .= ($categories_number > 1 ? $categories_number . ' ' . TextHelper::lcfirst($lang['category.categories']) : TextHelper::ucfirst($lang['category.a.category'])) . (!empty($items_number) ? ' ' . TextHelper::lcfirst($lang['common.and']) . ' ' : '');
 				}
 				if (!empty($items_number))
 				{
@@ -85,9 +83,9 @@ class CategoriesService
 
 				$module_configuration = $module->get_configuration();
 
-				return StringVars::replace_vars($categories_lang['category.default.root.category.description'], array(
+				return StringVars::replace_vars($lang['category.default.root.category.description'], array(
 					'module_name'             => $module_configuration->get_name(),
-					'created_elements_number' => StringVars::replace_vars($elements_number_lang_parameter, array('elements_number' => $elements_number)),
+					'created_elements_number' => StringVars::replace_vars((isset($lang['default.created.elements.number']) ? $lang['default.created.elements.number'] : $lang['category.default.created.elements.number']), array('elements_number' => $elements_number)),
 					'configuration_link'      => ModulesUrlBuilder::configuration($module_id)->relative(),
 					'add_category_link'       => CategoriesUrlBuilder::add(Category::ROOT_CATEGORY, $module_id)->relative(),
 					'add_item_link'           => ItemsUrlBuilder::add(Category::ROOT_CATEGORY, $module_id)->relative(),
