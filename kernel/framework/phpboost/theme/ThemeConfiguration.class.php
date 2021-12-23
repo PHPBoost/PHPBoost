@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 29
+ * @version     PHPBoost 6.0 - last update: 2021 12 23
  * @since       PHPBoost 3.0 - 2011 04 10
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -202,6 +202,30 @@ class ThemeConfiguration
 		{
 			throw new Exception('Parse ini file "' . $ini_file . '" failed');
 		}
+	}
+
+	public function get_properties()
+	{
+		return array(
+			'name'              => $this->name,
+			'description'       => $this->description,
+			'main_color'        => $this->main_color,
+			'author_name'       => $this->author_name,
+			'author_mail'       => $this->author_mail,
+			'author_link'       => $this->author_link,
+			'version'           => $this->version,
+			'compatibility'     => $this->compatibility,
+			'creation_date'     => $this->creation_date,
+			'last_update'       => $this->last_update,
+			'require_copyright' => $this->require_copyright,
+			'html_version'      => $this->html_version,
+			'css_version'       => $this->css_version,
+			'columns_disabled'  => $this->columns_disabled,
+			'variable_width'    => $this->variable_width,
+			'width'             => $this->width,
+			'pictures'          => $this->pictures,
+			'parent_theme'      => $this->parent_theme
+		);
 	}
 }
 ?>

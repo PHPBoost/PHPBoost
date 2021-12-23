@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 04
+ * @version     PHPBoost 6.0 - last update: 2021 12 23
  * @since       PHPBoost 3.0 - 2012 01 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -81,11 +81,17 @@ class AdminUninstallLangController extends DefaultAdminController
 			foreach ($this->lang_id as $id)
 			{
 				LangsManager::uninstall($id, $drop_files);
+				$lang = LangsManager::get_lang($id);
+				HooksService::execute_hook_typed_action('uninstall', 'lang', $id, array_merge(array('title' => $lang->get_configuration()->get_name(), $lang->get_configuration()->get_properties()));
 			}
 			$this->file->delete();
 		}
 		else
+		{
 			LangsManager::uninstall($this->lang_id, $drop_files);
+			$lang = LangsManager::get_lang($this->lang_id);
+			HooksService::execute_hook_typed_action('uninstall', 'lang', $this->lang_id, array_merge(array('title' => $lang->get_configuration()->get_name(), $lang->get_configuration()->get_properties()));
+		}
 	}
 
 	private function lang_exists()

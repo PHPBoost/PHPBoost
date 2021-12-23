@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 02
+ * @version     PHPBoost 6.0 - last update: 2021 12 23
  * @since       PHPBoost 3.0 - 2011 09 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -149,6 +149,8 @@ class AdminModuleUpdateController extends DefaultAdminController
 			case ModulesManager::MODULE_UPDATED:
 			default:
 				ModulesManager::set_module_activation($module_id, true);
+				$module = ModulesManager::get_module($module_id);
+				HooksService::execute_hook_typed_action('update', 'module', $module_id, array_merge(array('title' => $module->get_configuration()->get_name(), 'url' => AdminModulesUrlBuilder::list_installed_modules()->rel()), $module->get_configuration()->get_properties()));
 				return array('msg' => $this->lang['warning.process.success'], 'type' => MessageHelper::SUCCESS);
 		}
 	}

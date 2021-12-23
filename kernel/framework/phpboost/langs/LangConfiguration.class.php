@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Bruno MERCIER <aiglobulles@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2019 03 21
+ * @version     PHPBoost 6.0 - last update: 2021 12 23
  * @since       PHPBoost 3.0 - 2012 01 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -20,6 +20,7 @@ class LangConfiguration
 	private $version;
 	private $compatibility;
 	private $identifier;
+	private $repository;
 	private $picture_url;
 
 	public function __construct($config_ini_file)
@@ -67,6 +68,11 @@ class LangConfiguration
 		return $this->identifier;
 	}
 
+	public function get_repository()
+	{
+		return $this->repository;
+	}
+
 	public function get_picture_url()
 	{
 		return $this->picture_url;
@@ -91,6 +97,7 @@ class LangConfiguration
 		$this->version = $config['version'];
 		$this->compatibility = $config['compatibility'];
 		$this->identifier = $config['identifier'];
+		$this->repository = !empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
 
 		$url = '/images/stats/countries/' . $this->identifier . '.png';
 		$picture = new File(PATH_TO_ROOT . $url);
@@ -106,6 +113,21 @@ class LangConfiguration
 		{
 			throw new IOException('Parse ini file "' . $ini_file . '" failed');
 		}
+	}
+
+	public function get_properties()
+	{
+		return array(
+			'name'          => $this->name,
+			'author_name'   => $this->author_name,
+			'author_mail'   => $this->author_mail,
+			'author_link'   => $this->author_link,
+			'date'          => $this->date,
+			'version'       => $this->version,
+			'compatibility' => $this->compatibility,
+			'identifier'    => $this->identifier,
+			'picture_url'   => $this->picture_url->rel()
+		);
 	}
 }
 ?>

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 04
+ * @version     PHPBoost 6.0 - last update: 2021 12 23
  * @since       PHPBoost 3.0 - 2011 09 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -108,11 +108,23 @@ class AdminModuleDeleteController extends DefaultAdminController
 			foreach ($this->module_id as $id)
 			{
 				$this->error_check(ModulesManager::uninstall_module($id, $drop_files));
+				if (!$this->error)
+				{
+					$module = ModulesManager::get_module($id);
+					HooksService::execute_hook_typed_action('uninstall', 'module', $id, array_merge(array('title' => $module->get_configuration()->get_name(), $module->get_configuration()->get_properties()));
+				}
 			}
 			$this->file->delete();
 		}
 		else
+		{
 			$this->error_check(ModulesManager::uninstall_module($this->module_id, $drop_files));
+			if (!$this->error)
+			{
+				$module = ModulesManager::get_module($this->module_id);
+				HooksService::execute_hook_typed_action('uninstall', 'module', $this->module_id, array_merge(array('title' => $module->get_configuration()->get_name(), $module->get_configuration()->get_properties()));
+			}
+		}
 	}
 
 	private function error_check($error)

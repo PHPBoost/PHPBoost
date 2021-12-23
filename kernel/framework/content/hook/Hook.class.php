@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 19
+ * @version     PHPBoost 6.0 - last update: 2021 12 23
  * @since       PHPBoost 6.0 - 2021 09 14
 */
 
@@ -167,6 +167,39 @@ abstract class Hook implements ExtensionPoint
 	 * @param string[] $properties (optional) Properties of the configuration page (title, url, ...)
 	 */
 	public function on_edit_config_action($module_id, array $properties = array())
+	{
+		return true;
+	}
+
+	/**
+	 * @desc Execute action after module/theme/lang installation if needed.
+	 * @param string $installation_type Type of installed element (module, theme or lang)
+	 * @param string $element_id Name of the current installed element
+	 * @param string[] $properties (optional) Properties of the installed element (name, ...)
+	 */
+	public function on_install_action($installation_type, $element_id, array $properties = array())
+	{
+		return true;
+	}
+
+	/**
+	 * @desc Execute action after module/theme/lang uninstallation if needed.
+	 * @param string $uninstallation_type Type of uninstalled element (module, theme or lang)
+	 * @param string $element_id Name of the current uninstalled element
+	 * @param string[] $properties (optional) Properties of the uninstalled element (name, ...)
+	 */
+	public function on_uninstall_action($uninstallation_type, $element_id, array $properties = array())
+	{
+		return true;
+	}
+
+	/**
+	 * @desc Execute action after module/theme/lang update if needed.
+	 * @param string $upgrade_type Type of updated element (module, theme or lang)
+	 * @param string $element_id Name of the current updated element
+	 * @param string[] $properties (optional) Properties of the updated element (name, ...)
+	 */
+	public function on_update_action($upgrade_type, $element_id, array $properties = array())
 	{
 		return true;
 	}

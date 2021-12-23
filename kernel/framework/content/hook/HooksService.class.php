@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 17
+ * @version     PHPBoost 6.0 - last update: 2021 12 23
  * @since       PHPBoost 6.0 - 2021 09 14
 */
 
@@ -38,7 +38,6 @@ class HooksService
 
 	public static function execute_hook_action($action, $module_id, array $properties = array())
 	{
-		$hooks = self::get_hooks();
 		$action_function = 'on_' . $action . '_action';
 		
 		foreach (self::get_hooks() as $hook)
@@ -46,6 +45,19 @@ class HooksService
 			if (method_exists($hook->get_hook_name(), $action_function) && is_callable(array($hook->get_hook_name(), $action_function)))
 			{
 				$hook->$action_function($module_id, $properties);
+			}
+		}
+	}
+
+	public static function execute_hook_typed_action($action, $type, $element_id, array $properties = array())
+	{
+		$action_function = 'on_' . $action . '_action';
+		
+		foreach (self::get_hooks() as $hook)
+		{
+			if (method_exists($hook->get_hook_name(), $action_function) && is_callable(array($hook->get_hook_name(), $action_function)))
+			{
+				$hook->$action_function($type, $element_id, $properties);
 			}
 		}
 	}
