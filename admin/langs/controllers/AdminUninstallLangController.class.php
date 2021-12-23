@@ -90,7 +90,7 @@ class AdminUninstallLangController extends DefaultAdminController
 		{
 			LangsManager::uninstall($this->lang_id, $drop_files);
 			$lang = LangsManager::get_lang($this->lang_id);
-			HooksService::execute_hook_typed_action('uninstall', 'lang', $this->lang_id, array_merge(array('title' => $lang->get_configuration()->get_name(), $lang->get_configuration()->get_properties()));
+			HooksService::execute_hook_typed_action('uninstall', 'lang', $this->lang_id, array_merge(array('title' => $lang->get_configuration()->get_name(), $lang->get_configuration()->get_properties())));
 		}
 	}
 

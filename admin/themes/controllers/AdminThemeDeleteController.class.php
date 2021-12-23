@@ -138,14 +138,14 @@ class AdminThemeDeleteController extends DefaultAdminController
 			{
 				ThemesManager::uninstall($id, $drop_files);
 				$theme = ThemesManager::get_theme($id);
-				HooksService::execute_hook_typed_action('uninstall', 'theme', $id, array_merge(array('title' => $theme->get_configuration()->get_name(), $theme->get_configuration()->get_properties()));
+				HooksService::execute_hook_typed_action('uninstall', 'theme', $id, array_merge(array('title' => $theme->get_configuration()->get_name(), $theme->get_configuration()->get_properties())));
 			}
 			$this->file->delete();
 		}
 		else
 			ThemesManager::uninstall($this->theme_id, $drop_files);
 			$theme = ThemesManager::get_theme($this->theme_id);
-			HooksService::execute_hook_typed_action('uninstall', 'theme', $this->theme_id, array_merge(array('title' => $theme->get_configuration()->get_name(), $theme->get_configuration()->get_properties()));
+			HooksService::execute_hook_typed_action('uninstall', 'theme', $this->theme_id, array_merge(array('title' => $theme->get_configuration()->get_name(), $theme->get_configuration()->get_properties())));
 	}
 
 	private function theme_exists()

@@ -157,7 +157,7 @@ class AdminThemesNotInstalledListController extends DefaultAdminController
 		else
 		{
 			$theme = ThemesManager::get_theme($id_theme);
-			HooksService::execute_hook_typed_action('install', 'theme', $id_theme, array_merge(array('title' => $theme->get_configuration()->get_name(), 'url' => AdminThemeUrlBuilder::list_installed_theme())->rel()), $theme->get_configuration()->get_properties()));
+			HooksService::execute_hook_typed_action('install', 'theme', $id_theme, array_merge(array('title' => $theme->get_configuration()->get_name(), 'url' => AdminThemeUrlBuilder::list_installed_theme())->rel()), $theme->get_configuration()->get_properties());
 			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.process.success'], MessageHelper::SUCCESS, 10));
 		}
 	}

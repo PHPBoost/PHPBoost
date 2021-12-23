@@ -111,7 +111,7 @@ class AdminModuleDeleteController extends DefaultAdminController
 				if (!$this->error)
 				{
 					$module = ModulesManager::get_module($id);
-					HooksService::execute_hook_typed_action('uninstall', 'module', $id, array_merge(array('title' => $module->get_configuration()->get_name(), $module->get_configuration()->get_properties()));
+					HooksService::execute_hook_typed_action('uninstall', 'module', $id, array_merge(array('title' => $module->get_configuration()->get_name(), $module->get_configuration()->get_properties())));
 				}
 			}
 			$this->file->delete();
@@ -122,7 +122,7 @@ class AdminModuleDeleteController extends DefaultAdminController
 			if (!$this->error)
 			{
 				$module = ModulesManager::get_module($this->module_id);
-				HooksService::execute_hook_typed_action('uninstall', 'module', $this->module_id, array_merge(array('title' => $module->get_configuration()->get_name(), $module->get_configuration()->get_properties()));
+				HooksService::execute_hook_typed_action('uninstall', 'module', $this->module_id, array_merge(array('title' => $module->get_configuration()->get_name(), $module->get_configuration()->get_properties())));
 			}
 		}
 	}
