@@ -80,16 +80,16 @@ class AdminUninstallLangController extends DefaultAdminController
 		{
 			foreach ($this->lang_id as $id)
 			{
-				LangsManager::uninstall($id, $drop_files);
 				$lang = LangsManager::get_lang($id);
+				LangsManager::uninstall($id, $drop_files);
 				HooksService::execute_hook_typed_action('uninstall', 'lang', $id, array_merge(array('title' => $lang->get_configuration()->get_name(), $lang->get_configuration()->get_properties())));
 			}
 			$this->file->delete();
 		}
 		else
 		{
-			LangsManager::uninstall($this->lang_id, $drop_files);
 			$lang = LangsManager::get_lang($this->lang_id);
+			LangsManager::uninstall($this->lang_id, $drop_files);
 			HooksService::execute_hook_typed_action('uninstall', 'lang', $this->lang_id, array_merge(array('title' => $lang->get_configuration()->get_name(), $lang->get_configuration()->get_properties())));
 		}
 	}
