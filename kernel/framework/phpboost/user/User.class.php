@@ -306,7 +306,7 @@ class User
 			'warning_percentage' => $this->warning_percentage,
 			'display_name'       => $this->display_name,
 			'groups'             => $this->groups
-		};
+		);
 	}
 
 	public function init_robot_user($robot_name)
