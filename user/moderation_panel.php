@@ -77,6 +77,8 @@ if ($action == 'punish')
 			MemberSanctionManager::remove_write_permissions($id_get, $readonly, MemberSanctionManager::NO_SEND_CONFIRMATION, str_replace('%date', Date::to_format($readonly, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE), $readonly_contents));
 		}
 		SessionData::recheck_cached_data_from_user_id($id_get);
+		$user = UserService::get_user($id_get);
+		HooksService::execute_hook_action('user_punishment', $user->get_id(), array_merge($user->get_properties(), array('title' => $user->get_display_name(), 'url' => UserUrlBuilder::profile($user->get_id())->rel(), 'delay_readonly' => $readonly)));
 
 		AppContext::get_response()->redirect(HOST . DIR . url('/user/moderation_panel.php?action=punish', '', '&'));
 	}
@@ -249,6 +251,8 @@ else if ($action == 'warning')
 					MemberSanctionManager::caution($id_get, $new_warning_level, MemberSanctionManager::NO_SEND_CONFIRMATION, $warning_contents);
 				}
 				SessionData::recheck_cached_data_from_user_id($id_get);
+				$user = UserService::get_user($id_get);
+				HooksService::execute_hook_action('user_warning', $user->get_id(), array_merge($user->get_properties(), array('title' => $user->get_display_name(), 'url' => UserUrlBuilder::profile($user->get_id())->rel(), 'warning_percentage' => $new_warning_level)));
 			}
 		}
 
@@ -380,6 +384,8 @@ else
 			MemberSanctionManager::remove_write_permissions($id_get, 90, MemberSanctionManager::NO_SEND_CONFIRMATION);
 		}
 		SessionData::recheck_cached_data_from_user_id($id_get);
+		$user = UserService::get_user($id_get);
+		HooksService::execute_hook_action('user_ban', $user->get_id(), array_merge($user->get_properties(), array('title' => $user->get_display_name(), 'url' => UserUrlBuilder::profile($user->get_id())->rel(), 'delay_banned' => $user_ban)));
 
 		AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('ban'));
 	}

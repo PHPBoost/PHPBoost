@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 19
+ * @version     PHPBoost 6.0 - last update: 2021 12 24
  * @since       PHPBoost 3.0 - 2012 03 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -289,6 +289,24 @@ class User
 
 			$this->set_groups($properties['user_groups']);
 		}
+	}
+
+	public function get_properties()
+	{
+		return array(
+			'id'                 => $this->id,
+			'level'              => $this->level,
+			'locale'             => $this->locale,
+			'theme'              => $this->theme,
+			'timezone'           => $this->timezone,
+			'editor'             => $this->editor,
+			'registration_date'  => $this->registration_date,
+			'delay_banned'       => $this->delay_banned,
+			'delay_readonly'     => $this->delay_readonly,
+			'warning_percentage' => $this->warning_percentage,
+			'display_name'       => $this->display_name,
+			'groups'             => $this->groups
+		};
 	}
 
 	public function init_robot_user($robot_name)
