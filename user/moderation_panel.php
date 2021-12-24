@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2021 12 24
  * @since       PHPBoost 1.6 - 2007 03 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -215,7 +215,7 @@ if ($action == 'punish')
 				'	document.getElementById(\'action_contents\').disabled = \'disabled\';' . "\n" .
 				'document.getElementById(\'action_info\').innerHTML = replace_value;',
 			'REGEX'            => '/[0-9]+ [a-zéèêA-Z]+/u',
-			'U_PM'             => url('.php?pm='. $id_get, '-' . $id_get . '.php'),
+			'U_PM'             => UserUrlBuilder::personnal_message($id_get)->rel(),
 			'U_ACTION_INFO'    => UserUrlBuilder::moderation_panel('punish', $id_get)->rel() . '&amp;token=' . AppContext::get_session()->get_token(),
 			'U_PROFILE'        => UserUrlBuilder::profile($id_get)->rel()
 		));
