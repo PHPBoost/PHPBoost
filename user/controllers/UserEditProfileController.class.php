@@ -332,7 +332,7 @@ class UserEditProfileController extends AbstractController
 			$this->user->set_level($level);
 			
 			if ($old_level != $level)
-				HooksService::execute_hook_action('user_change_level', $user_id, array_merge($this->user->get_properties(), array('title' => $this->user->get_display_name(), 'url' => UserUrlBuilder::profile($user_id)->rel(), 'level' => $level)));
+				HooksService::execute_hook_action('user_change_level', $user_id, array_merge($this->user->get_properties(), array('title' => $this->user->get_display_name(), 'url' => UserUrlBuilder::profile($user_id)->rel())));
 		}
 
 		if ($this->form->has_field('theme'))
