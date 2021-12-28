@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 23
+ * @version     PHPBoost 6.0 - last update: 2021 12 28
  * @since       PHPBoost 6.0 - 2021 09 14
 */
 
@@ -36,7 +36,7 @@ class HooksService
 		return AppContext::get_extension_provider_service()->get_extension_point(Hook::EXTENSION_POINT);
 	}
 
-	public static function execute_hook_action($action, $module_id, array $properties = array())
+	public static function execute_hook_action($action, $module_id, array $properties = array(), $description = '')
 	{
 		$action_function = 'on_' . $action . '_action';
 		
@@ -44,12 +44,12 @@ class HooksService
 		{
 			if (method_exists($hook->get_hook_name(), $action_function) && is_callable(array($hook->get_hook_name(), $action_function)))
 			{
-				$hook->$action_function($module_id, $properties);
+				$hook->$action_function($module_id, $properties, $description);
 			}
 		}
 	}
 
-	public static function execute_hook_typed_action($action, $type, $element_id, array $properties = array())
+	public static function execute_hook_typed_action($action, $type, $element_id, array $properties = array(), $description = '')
 	{
 		$action_function = 'on_' . $action . '_action';
 		
@@ -57,7 +57,7 @@ class HooksService
 		{
 			if (method_exists($hook->get_hook_name(), $action_function) && is_callable(array($hook->get_hook_name(), $action_function)))
 			{
-				$hook->$action_function($type, $element_id, $properties);
+				$hook->$action_function($type, $element_id, $properties, $description);
 			}
 		}
 	}
