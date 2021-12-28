@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 24
+ * @version     PHPBoost 6.0 - last update: 2021 12 28
  * @since       PHPBoost 4.1 - 2014 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -313,7 +313,18 @@ class BugtrackerChangeBugStatusController extends DefaultModuleController
 		}
 
 		BugtrackerStatsCache::invalidate();
-		HooksService::execute_hook_action('bugtracker_change_status', self::$module_id, array_merge(array('url' => BugtrackerUrlBuilder::detail($this->bug->get_id() . '-' . $this->bug->get_rewrited_title())->rel()), $this->bug->get_properties()));
+		
+		$status_list = array(
+			BugtrackerItem::NEW_BUG     => $this->lang['status.new'],
+			BugtrackerItem::PENDING     => $this->lang['status.pending'],
+			BugtrackerItem::ASSIGNED    => $this->lang['status.assigned'],
+			BugtrackerItem::IN_PROGRESS => $this->lang['status.in_progress'],
+			BugtrackerItem::REJECTED    => $this->lang['status.rejected'],
+			BugtrackerItem::REOPEN      => $this->lang['status.reopen'],
+			BugtrackerItem::FIXED       => $this->lang['status.fixed']
+		);
+		
+		HooksService::execute_hook_action('bugtracker_change_status', self::$module_id, array_merge(array('url' => BugtrackerUrlBuilder::detail($this->bug->get_id() . '-' . $this->bug->get_rewrited_title())->rel()), $this->bug->get_properties()), '#' . $this->bug->get_id() . isset($status_list[$this->bug->get_status()]) ? ' : ' . $status_list[$this->bug->get_status()] : '');
 	}
 
 	private function build_response(View $view)
