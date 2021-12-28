@@ -130,16 +130,26 @@ class BugtrackerChangeBugStatusController extends DefaultModuleController
 		$this->form = $form;
 	}
 
+	private function get_status_list()
+	{
+		return array(
+			BugtrackerItem::NEW_BUG     => $this->lang['status.new'],
+			BugtrackerItem::PENDING     => $this->lang['status.pending'],
+			BugtrackerItem::ASSIGNED    => $this->lang['status.assigned'],
+			BugtrackerItem::IN_PROGRESS => $this->lang['status.in_progress'],
+			BugtrackerItem::REJECTED    => $this->lang['status.rejected'],
+			BugtrackerItem::REOPEN      => $this->lang['status.reopen'],
+			BugtrackerItem::FIXED       => $this->lang['status.fixed']
+		);
+	}
+
 	private function generate_status_list_select()
 	{
 		$options = array();
-		$options[] = new FormFieldSelectChoiceOption($this->lang['status.new'], BugtrackerItem::NEW_BUG);
-		$options[] = new FormFieldSelectChoiceOption($this->lang['status.pending'], BugtrackerItem::PENDING);
-		$options[] = new FormFieldSelectChoiceOption($this->lang['status.assigned'], BugtrackerItem::ASSIGNED);
-		$options[] = new FormFieldSelectChoiceOption($this->lang['status.in_progress'], BugtrackerItem::IN_PROGRESS);
-		$options[] = new FormFieldSelectChoiceOption($this->lang['status.rejected'], BugtrackerItem::REJECTED);
-		$options[] = new FormFieldSelectChoiceOption($this->lang['status.reopen'], BugtrackerItem::REOPEN);
-		$options[] = new FormFieldSelectChoiceOption($this->lang['status.fixed'], BugtrackerItem::FIXED);
+		foreach ($this->get_status_list() as $id => $label)
+		{
+			$options[] = new FormFieldSelectChoiceOption($label, $id);
+		}
 
 		return $options;
 	}
@@ -314,16 +324,7 @@ class BugtrackerChangeBugStatusController extends DefaultModuleController
 
 		BugtrackerStatsCache::invalidate();
 		
-		$status_list = array(
-			BugtrackerItem::NEW_BUG     => $this->lang['status.new'],
-			BugtrackerItem::PENDING     => $this->lang['status.pending'],
-			BugtrackerItem::ASSIGNED    => $this->lang['status.assigned'],
-			BugtrackerItem::IN_PROGRESS => $this->lang['status.in_progress'],
-			BugtrackerItem::REJECTED    => $this->lang['status.rejected'],
-			BugtrackerItem::REOPEN      => $this->lang['status.reopen'],
-			BugtrackerItem::FIXED       => $this->lang['status.fixed']
-		);
-		
+		$status_list = get_status_list();
 		HooksService::execute_hook_action('bugtracker_change_status', self::$module_id, array_merge(array('url' => BugtrackerUrlBuilder::detail($this->bug->get_id() . '-' . $this->bug->get_rewrited_title())->rel()), $this->bug->get_properties()), '#' . $this->bug->get_id() . isset($status_list[$this->bug->get_status()]) ? ' : ' . $status_list[$this->bug->get_status()] : '');
 	}
 
