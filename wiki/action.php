@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 01
+ * @version     PHPBoost 6.0 - last update: 2021 12 28
  * @since       PHPBoost 1.5 - 2007 05 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -74,13 +74,14 @@ if ($id_auth > 0)
 if ($id_change_status > 0)
 {
 	$type_status = ($type_status == 'radio_undefined') ? 'radio_undefined' : 'radio_defined';
-
+	$status_list = LangLoader::get_message('wiki.status.list', 'common', 'wiki');
+	
 	//Si il s'agit d'un statut personnalisé
 	if ($type_status == 'radio_undefined' && $contents != '')
 	{
 		$id_status = -1;
 	}
-	elseif ($type_status == 'radio_defined' && $id_status > 0 && is_array(LangLoader::get_message('wiki.status.list', 'common', 'wiki')[$id_status - 1]))
+	elseif ($type_status == 'radio_defined' && $id_status > 0 && is_array($status_list[$id_status - 1]))
 	{
 		$contents = '';
 	}
@@ -88,7 +89,7 @@ if ($id_change_status > 0)
 		$id_status = 0;
 
 	try {
-		$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('encoded_title', 'auth'), 'WHERE id = :id', array('id' => $id_change_status));
+		$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('id', 'title', 'encoded_title', 'auth'), 'WHERE id = :id', array('id' => $id_change_status));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
@@ -107,6 +108,11 @@ if ($id_change_status > 0)
 	{
 		//On met à jour dans la base de données
 		$db_querier->update(PREFIX . "wiki_articles", array('defined_status' => $id_status, 'undefined_status' => $contents), 'WHERE id = :id', array('id' => $id_change_status));
+		
+		$description = ($id_status > 0) && isset($status_list[$id_status - 1]) && isset($status_list[$id_status - 1][0]) ? $status_list[$id_status - 1][0] : '';
+		
+		HooksService::execute_hook_action('wiki_change_status', 'wiki', array_merge($article_infos, array('item_url' => Url::to_rel('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'])))), $description);
+		
 		//Redirection vers l'article
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
@@ -298,7 +304,7 @@ elseif (!empty($restore)) //on restaure un ancien article
 	{
 		//On récupère l'ancien id du contenu
 		try {
-			$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('id_contents', 'encoded_title', 'auth'), 'WHERE id = :id', array('id' => $id_article));
+			$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('id', 'title', 'id_contents', 'encoded_title', 'auth'), 'WHERE id = :id', array('id' => $id_article));
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
@@ -319,6 +325,8 @@ elseif (!empty($restore)) //on restaure un ancien article
 		$db_querier->update(PREFIX . "wiki_contents", array('activ' => 1), 'WHERE id_contents = :id', array('id' => $restore));
 		//L'ancien id devient archive
 		$db_querier->update(PREFIX . "wiki_contents", array('activ' => 0), 'WHERE id_contents = :id', array('id' => $article_infos['id_contents']));
+		
+		HooksService::execute_hook_action('wiki_restore_archive', 'wiki', array_merge($article_infos, array('item_url' => Url::to_rel('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'])))));
 	}
 
 	AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'] , '&'));
@@ -337,7 +345,7 @@ elseif ($del_archive > 0)
 	}
 
 	try {
-		$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('encoded_title', 'auth'), 'WHERE id = :id', array('id' => $contents_infos['id_article']));
+		$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('id', 'title', 'encoded_title', 'auth'), 'WHERE id = :id', array('id' => $contents_infos['id_article']));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
@@ -353,7 +361,10 @@ elseif ($del_archive > 0)
 	}
 
 	if ($contents_infos['activ'] == 0) //C'est une archive -> on peut supprimer
+	{
 		$db_querier->delete(PREFIX . 'wiki_contents', 'WHERE id_contents=:id', array('id' => $del_archive));
+		HooksService::execute_hook_action('wiki_delete_archive', 'wiki', $article_infos);
+	}
 	if (!empty($article_infos['encoded_title'])) //on redirige vers l'article
 		AppContext::get_response()->redirect('/wiki/' . url('history.php?id=' . $contents_infos['id_article'], '', '&'));
 }
@@ -363,7 +374,7 @@ elseif ($del_article > 0) //Suppression d'un article
 	AppContext::get_session()->csrf_get_protect();
 
 	try {
-		$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('auth', 'encoded_title', 'id_cat'), 'WHERE id = :id', array('id' => $del_article));
+		$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('id', 'auth', 'title', 'encoded_title', 'id_cat'), 'WHERE id = :id', array('id' => $del_article));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
@@ -386,9 +397,10 @@ elseif ($del_article > 0) //Suppression d'un article
 
 	CommentsService::delete_comments_topic_module('wiki', $del_article);
 
-	 // Feeds Regeneration
-
-	 Feed::clear_cache('wiki');
+	// Feeds Regeneration
+	Feed::clear_cache('wiki');
+	 
+	HooksService::execute_hook_action('delete', 'wiki', $article_infos);
 
 	if (array_key_exists($article_infos['id_cat'], $categories))//Si elle  a une catégorie parente
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . Url::encode_rewrite($categories[$article_infos['id_cat']]['title']), Url::encode_rewrite($categories[$article_infos['id_cat']]['title']), '&'));
@@ -400,7 +412,7 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 	$remove_action = ($remove_action == 'move_all') ? 'move_all' : 'remove_all';
 
 	try {
-		$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('encoded_title', 'id_cat', 'auth'), 'WHERE id = :id', array('id' => $del_to_remove));
+		$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('id', 'title', 'encoded_title', 'id_cat', 'auth'), 'WHERE id = :id', array('id' => $del_to_remove));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
@@ -465,8 +477,9 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 		WikiCategoriesCache::invalidate();
 
 		// Feeds Regeneration
-
 		Feed::clear_cache('wiki');
+		
+		HooksService::execute_hook_action('delete', 'wiki', $article_infos);
 
 		//On redirige soit vers l'article parent soit vers la catégorie
 		if (array_key_exists($article_infos['id_cat'], $categories) && $categories[$article_infos['id_cat']]['id_parent'] > 0)
@@ -482,6 +495,8 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 		$db_querier->update(PREFIX . "wiki_articles", array('id_cat' => $report_cat), 'WHERE id_cat = :id', array('id' => $article_infos['id_cat']));
 		$db_querier->update(PREFIX . "wiki_cats", array('id_parent' => $report_cat), 'WHERE id_parent = :id', array('id' => $article_infos['id_cat']));
 		WikiCategoriesCache::invalidate();
+		
+		HooksService::execute_hook_action('delete', 'wiki', $article_infos);
 
 		if (array_key_exists($report_cat, $categories))
 		{

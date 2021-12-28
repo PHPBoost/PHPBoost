@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2021 12 28
  * @since       PHPBoost 1.6 - 2006 10 09
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -159,7 +159,10 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 
 	$date = new Date($article_infos['timestamp'], Timezone::SERVER_TIMEZONE);
 	$categories = WikiCategoriesCache::load()->get_categories();
-
+	
+	$content = FormatingHelper::second_parse(wiki_no_rewrite($article_infos['content']));
+	$rich_content = HooksService::execute_hook_display_action('wiki', $content, $article_infos);
+	
 	$view->put_all(array_merge(
 		Date::get_array_tpl_vars($date,'date'),
 		array(
@@ -170,7 +173,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 			'ID_CATEGORY'    => $article_infos['id_cat'],
 			'CATEGORY_TITLE' => $article_infos['id_cat'] == 0 ? ($config->get_wiki_name() ? $config->get_wiki_name() : $lang['wiki.module.title']) : stripslashes($categories[$article_infos['id_cat']]['title']),
 			'TITLE'          => stripslashes($article_infos['title']),
-			'CONTENT'        => FormatingHelper::second_parse(wiki_no_rewrite($article_infos['content'])),
+			'CONTENT'        => $rich_content,
 
 			'L_VIEWS_NUMBER' => ($config->is_hits_counter_enabled() && $id_contents == 0) ? sprintf($lang['wiki.page.views.number'], (int)$article_infos['hits']) : '',
 		)

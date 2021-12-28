@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2021 12 28
  * @since       PHPBoost 1.6 - 2006 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -120,9 +120,9 @@ if (!empty($contents)) //On enregistre un article
 			PersistenceContext::get_querier()->update(PREFIX . "wiki_articles", array('id_contents' => $id_contents), 'WHERE id = :id', array('id' => $id_edit));
 
             // Feeds Regeneration
-
             Feed::clear_cache('wiki');
-
+			HooksService::execute_hook_action('edit', 'wiki', array_merge($article_infos, array('contents' => $contents, 'item_url' => Url::to_rel('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'])))));
+			
 			//On redirige
 			$redirect = $article_infos['encoded_title'];
 			AppContext::get_response()->redirect(url('wiki.php?title=' . $redirect, $redirect, '', '&'));
@@ -157,7 +157,16 @@ if (!empty($contents)) //On enregistre un article
 				$errstr = $lang['wiki.title.already.exists'];
 			else //On enregistre
 			{
-				$result = PersistenceContext::get_querier()->insert(PREFIX . "wiki_articles", array('title' => $title, 'encoded_title' => Url::encode_rewrite($title), 'id_cat' => $new_id_cat, 'is_cat' => $is_cat, 'undefined_status' => '', 'auth' => ''));
+				$properties = array(
+					'title'            => $title,
+					'encoded_title'    => Url::encode_rewrite($title),
+					'id_cat'           => $new_id_cat,
+					'is_cat'           => $is_cat,
+					'undefined_status' => '',
+					'auth'             => ''
+				);
+				
+				$result = PersistenceContext::get_querier()->insert(PREFIX . "wiki_articles", $properties);
 				//On récupère le numéro de l'article créé
 				$id_article = $result->get_last_inserted_id();
 				//On insère le contenu
@@ -178,7 +187,8 @@ if (!empty($contents)) //On enregistre un article
 
 				// Feeds Regeneration
 				Feed::clear_cache('wiki');
-
+				HooksService::execute_hook_action('add', 'wiki', array_merge($properties, array('contents' => $contents, 'item_url' => Url::to_rel('/wiki/' . url('wiki.php?title=' . $properties['encoded_title'], $properties['encoded_title'])))));
+				
 				$redirect = PersistenceContext::get_querier()->get_column_value(PREFIX . "wiki_articles", 'encoded_title', 'WHERE id = :id', array('id' => $id_article));
 				AppContext::get_response()->redirect(url('wiki.php?title=' . $redirect, $redirect, '' , '&'));
 			}
