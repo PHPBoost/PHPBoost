@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 26
+ * @version     PHPBoost 6.0 - last update: 2021 12 28
  * @since       PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -204,5 +204,5 @@ $lang['form.thumbnail']         = 'Vignette';
 $lang['form.thumbnail.none']    = 'Aucune vignette';
 $lang['form.thumbnail.default'] = 'Vignette par défaut';
 $lang['form.thumbnail.custom']  = 'Vignette personnalisée';
-$lang['form.thumbnail.preview'] = 'Previsualisation de la vignette';
+$lang['form.thumbnail.preview'] = 'Prévisualisation de la vignette';
 ?>
