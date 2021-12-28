@@ -154,7 +154,7 @@ $lang['common.copy.to.clipboard'] = 'Copier vers le presse-papier';
 // Links
 $lang['common.back']                   = 'Retour';
 $lang['common.see.details']            = 'Voir les détails';
-$lang['common.see.category']           = 'Voir la categorie';
+$lang['common.see.category']           = 'Voir la catégorie';
 $lang['common.see.profile']            = 'Voir le profil du membre';
 $lang['common.see.profile.datas']      = 'Voir les infos du membre';
 $lang['common.link']                   = 'Lien';
