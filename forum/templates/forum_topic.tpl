@@ -261,7 +261,7 @@
 
 									<a aria-label="{@common.scroll.to.top}" href="{U_TITLE_T}#go-top" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-top').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
 									<a aria-label="{@common.scroll.to.bottom}" href="{U_TITLE_T}#go-bottom" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-bottom').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
-									<a href="topic{msg.U_VARS_ANCHOR}#m{msg.ID}" class="copy-link-to-clipboard" aria-label="{@common.copy.link.to.clipboard}">\#{msg.ID}</i></a>
+									<a href="{U_SITE}{msg.U_VARS_ANCHOR}#m{msg.ID}" class="copy-link-to-clipboard" aria-label="{@common.copy.link.to.clipboard}">\#{msg.ID}</i></a>
 								</div>
 							</div>
 							<script>
