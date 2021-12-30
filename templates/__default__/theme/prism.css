@@ -17,7 +17,7 @@ code[class*="language-"] { padding: 0 0.309em 0.228em; }
 code[class*="language-"],
 pre[class*="language-"] {
 	color: rgba(var(--darken), 1);
-	text-shadow: 0 1px  rgba(var(--lighten), 1);
+	text-shadow: 0 1px rgba(var(--lighten), 1);
 	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
 	text-align: left;
 	white-space: pre;
