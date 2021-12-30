@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 25
+ * @version     PHPBoost 6.0 - last update: 2021 12 30
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -405,7 +405,7 @@ while ( $row = $result->fetch() )
 		'U_FORUM_WARNING'             => url('.php?action=warning&amp;id=' . $row['user_id']),
 		'U_FORUM_PUNISHEMENT'         => url('.php?action=punish&amp;id=' . $row['user_id']),
 		'U_CUT_TOPIC'                 => url('.php?idm=' . $row['id']),
-		'U_VARS_ANCHOR'               => Url::to_rel('/forum/topic.php?id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '') . $rewrited_title . '.php'),
+		'U_VARS_ANCHOR'               => url('.php?' . ($page > 1 ? 'pt=' . $page . '&amp;' : '') . 'id=' . $id_get, '-' . $id_get . ($page > 1 ? '-' . $page : '') . $rewrited_title . '.php'),
 		'U_QUOTE'                     => url('.php?quote=' . $row['id'] . '&amp;id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '-0') . '-0-' . $row['id'] . $rewrited_title . '.php'),
 		'U_USER_PM'                   => UserUrlBuilder::personnal_message($row['user_id'])->rel()
 	)));
