@@ -405,7 +405,7 @@ while ( $row = $result->fetch() )
 		'U_FORUM_WARNING'             => url('.php?action=warning&amp;id=' . $row['user_id']),
 		'U_FORUM_PUNISHEMENT'         => url('.php?action=punish&amp;id=' . $row['user_id']),
 		'U_CUT_TOPIC'                 => url('.php?idm=' . $row['id']),
-		'U_VARS_ANCHOR'               => Url::to_rel('/forum/topic.php?id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '') . $rewrited_title . '.php'),
+		'U_VARS_ANCHOR'               => Url::to_rel('/forum/topic.php?id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '/forum/topic-' . $id_get . (!empty($page) ? '-' . $page : '') . $rewrited_title . '.php'),
 		'U_QUOTE'                     => url('.php?quote=' . $row['id'] . '&amp;id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '-0') . '-0-' . $row['id'] . $rewrited_title . '.php'),
 		'U_USER_PM'                   => UserUrlBuilder::personnal_message($row['user_id'])->rel()
 	)));
