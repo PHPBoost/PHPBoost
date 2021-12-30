@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 30
+ * @version     PHPBoost 6.0 - last update: 2020 12 30
  * @since       PHPBoost 3.0 - 2009 09 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -194,6 +194,26 @@ class LangLoader
 		return $langloader;
 	}
 
+	public static function get_theme_langs()
+	{
+		$current_theme = AppContext::get_current_user()->get_theme();
+		$theme_lang_directory = new Folder(PATH_TO_ROOT . '/templates/' . $current_theme . '/lang/' . self::get_locale());
+		$files = $theme_lang_directory->get_files();
+		$theme_langloader = array();
+		foreach($files as $file)
+		{
+			$filename = $file->get_name_without_extension();
+			if (!in_array($filename, array('desc')))
+			{
+				foreach(self::get($filename, PATH_TO_ROOT . '/templates/' . $current_theme) as $var => $desc)
+				{
+					$theme_langloader[$var] = $desc;
+				}
+			}
+		}
+		return $theme_langloader;
+	}
+
 	public static function get_module_langs($module_id)
     {
 		$module_lang_directory = new Folder(PATH_TO_ROOT . '/' . $module_id . '/lang/' . self::get_locale());
@@ -216,9 +236,9 @@ class LangLoader
 	public static function get_all_langs($module_id = '')
 	{
 		if(!empty($module_id) && !in_array($module_id, array('admin', 'kernel', 'user')))
-			return array_merge(self::get_kernel_langs(), self::get_module_langs($module_id));
+			return array_merge(self::get_kernel_langs(), self::get_module_langs($module_id), self::get_theme_langs());
 		else
-			return self::get_kernel_langs();
+			return array_merge(self::get_kernel_langs(), self::get_theme_langs());
 	}
 
 	/**
