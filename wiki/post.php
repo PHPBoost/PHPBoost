@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 28
+ * @version     PHPBoost 6.0 - last update: 2021 12 30
  * @since       PHPBoost 1.6 - 2006 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -121,7 +121,7 @@ if (!empty($contents)) //On enregistre un article
 
             // Feeds Regeneration
             Feed::clear_cache('wiki');
-			HooksService::execute_hook_action('edit', 'wiki', array_merge($article_infos, array('contents' => $contents, 'item_url' => Url::to_rel('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'])))));
+			HooksService::execute_hook_action('edit', 'wiki', array_merge($article_infos, array('contents' => $contents, 'url' => Url::to_rel('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'])))));
 			
 			//On redirige
 			$redirect = $article_infos['encoded_title'];
@@ -187,7 +187,7 @@ if (!empty($contents)) //On enregistre un article
 
 				// Feeds Regeneration
 				Feed::clear_cache('wiki');
-				HooksService::execute_hook_action('add', 'wiki', array_merge($properties, array('contents' => $contents, 'item_url' => Url::to_rel('/wiki/' . url('wiki.php?title=' . $properties['encoded_title'], $properties['encoded_title'])))));
+				HooksService::execute_hook_action('add', 'wiki', array_merge($properties, array('contents' => $contents, 'url' => Url::to_rel('/wiki/' . url('wiki.php?title=' . $properties['encoded_title'], $properties['encoded_title'])))));
 				
 				$redirect = PersistenceContext::get_querier()->get_column_value(PREFIX . "wiki_articles", 'encoded_title', 'WHERE id = :id', array('id' => $id_article));
 				AppContext::get_response()->redirect(url('wiki.php?title=' . $redirect, $redirect, '' , '&'));

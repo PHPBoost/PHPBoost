@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 28
+ * @version     PHPBoost 6.0 - last update: 2021 12 30
  * @since       PHPBoost 1.5 - 2007 05 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -111,7 +111,7 @@ if ($id_change_status > 0)
 		
 		$description = ($id_status > 0) && isset($status_list[$id_status - 1]) && isset($status_list[$id_status - 1][0]) ? $status_list[$id_status - 1][0] : '';
 		
-		HooksService::execute_hook_action('wiki_change_status', 'wiki', array_merge($article_infos, array('item_url' => Url::to_rel('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'])))), $description);
+		HooksService::execute_hook_action('wiki_change_status', 'wiki', array_merge($article_infos, array('url' => Url::to_rel('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'])))), $description);
 		
 		//Redirection vers l'article
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
@@ -326,7 +326,7 @@ elseif (!empty($restore)) //on restaure un ancien article
 		//L'ancien id devient archive
 		$db_querier->update(PREFIX . "wiki_contents", array('activ' => 0), 'WHERE id_contents = :id', array('id' => $article_infos['id_contents']));
 		
-		HooksService::execute_hook_action('wiki_restore_archive', 'wiki', array_merge($article_infos, array('item_url' => Url::to_rel('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'])))));
+		HooksService::execute_hook_action('wiki_restore_archive', 'wiki', array_merge($article_infos, array('url' => Url::to_rel('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'])))));
 	}
 
 	AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'] , '&'));
