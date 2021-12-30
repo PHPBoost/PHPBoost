@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2021 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 15
+ * @version     PHPBoost 6.0 - last update: 2021 12 30
  * @since       PHPBoost 2.0 - 2007 12 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -21,11 +21,20 @@ class Forum
 	//Ajout d'un message.
 	function Add_msg($idtopic, $id_category, $content, $title, $last_page, $last_page_rewrite, $new_topic = false)
 	{
+		$properties = array(
+			'idtopic'        => $idtopic,
+			'user_id'        => AppContext::get_current_user()->get_id(),
+			'content'        => FormatingHelper::strparse($content),
+			'timestamp'      => $last_timestamp,
+			'timestamp_edit' => 0,
+			'user_id_edit'   => 0,
+			'user_ip'        => AppContext::get_request()->get_ip_address()
+		);
+		
 		$lang = LangLoader::get_all_langs('forum');
 		##### Insertion message #####
 		$last_timestamp = time();
-		$result = PersistenceContext::get_querier()->insert(PREFIX . 'forum_msg', array('idtopic' => $idtopic, 'user_id' => AppContext::get_current_user()->get_id(), 'content' => FormatingHelper::strparse($content),
-			'timestamp' => $last_timestamp, 'timestamp_edit' => 0, 'user_id_edit' => 0, 'user_ip' => AppContext::get_request()->get_ip_address()));
+		$result = PersistenceContext::get_querier()->insert(PREFIX . 'forum_msg', $properties);
 		$last_msg_id = $result->get_last_inserted_id();
 
 		//Topic
@@ -113,6 +122,8 @@ class Forum
 				}
 			}
 			$result->dispose();
+			
+			HooksService::execute_hook_action('add', 'forum', array_merge($properties, array('id' => $last_msg_id, 'title' => $title, 'url' => Url::to_rel($next_msg_link))));
 		}
 
 		forum_generate_feeds(); //Regénération du flux rss.
@@ -124,7 +135,24 @@ class Forum
 	//Ajout d'un sujet.
 	function Add_topic($id_category, $title, $subtitle, $content, $type)
 	{
-		$result = PersistenceContext::get_querier()->insert(PREFIX . "forum_topics", array('id_category' => $id_category, 'title' => $title, 'subtitle' => $subtitle, 'user_id' => AppContext::get_current_user()->get_id(), 'nbr_msg' => 1, 'nbr_views' => 0, 'last_user_id' => AppContext::get_current_user()->get_id(), 'last_msg_id' => 0, 'last_timestamp' => time(), 'first_msg_id' => 0, 'type' => $type, 'status' => 1, 'aprob' => 0, 'display_msg' => 0));
+		$properties = array(
+			'id_category'    => $id_category,
+			'title'          => $title,
+			'subtitle'       => $subtitle,
+			'user_id'        => AppContext::get_current_user()->get_id(),
+			'nbr_msg'        => 1,
+			'nbr_views'      => 0,
+			'last_user_id'   => AppContext::get_current_user()->get_id(),
+			'last_msg_id'    => 0,
+			'last_timestamp' => time(),
+			'first_msg_id'   => 0,
+			'type'           => $type,
+			'status'         => 1,
+			'aprob'          => 0,
+			'display_msg'    => 0
+		);
+		
+		$result = PersistenceContext::get_querier()->insert(PREFIX . "forum_topics", $properties);
 		$last_topic_id = $result->get_last_inserted_id(); //Dernier topic inseré
 
 		$last_msg_id = $this->Add_msg($last_topic_id, $id_category, $content, $title, 0, 0, true); //Insertion du message.
@@ -132,7 +160,9 @@ class Forum
 
 		forum_generate_feeds(); //Regénération des flux flux
 		ForumCategoriesCache::invalidate();
-
+		
+		HooksService::execute_hook_action('forum_add_topic', 'forum', array_merge($properties, array('id' => $last_topic_id, 'url' => Url::to_rel('/forum/topic.php?id=' . $last_topic_id, '-' . $last_topic_id . (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($title) : '') . '.php'))));
+		
 		return array($last_topic_id, $last_msg_id);
 	}
 
@@ -175,6 +205,14 @@ class Forum
 		//Insertion de l'action dans l'historique.
 		if (AppContext::get_current_user()->get_id() != $user_id_msg && $history)
 		forum_history_collector(H_EDIT_MSG, $user_id_msg, 'topic' . url('.php?id=' . $idtopic . $msg_page, '-' . $idtopic .  $msg_page_rewrite . '.php', '&') . '#m' . $idmsg);
+		
+		try {
+			$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id', 'user_id', 'id_category', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg'), 'WHERE id=:id', array('id' => $idtopic));
+		} catch (RowNotFoundException $e) {
+			$topic = array();
+		}
+		
+		HooksService::execute_hook_action('edit', 'forum', array_merge($topic, array('id' => $idmsg, 'content' => FormatingHelper::strparse($content), 'idtopic' => $idtopic, 'url' => Url::to_rel('/forum/topic' . url('.php?id=' . $idtopic . $msg_page, '-' . $idtopic .  $msg_page_rewrite . '.php', '&') . '#m' . $idmsg))));
 
 		return $nbr_msg_before;
 	}
@@ -182,14 +220,26 @@ class Forum
 	//Edition d'un sujet.
 	function Update_topic($idtopic, $idmsg, $title, $subtitle, $content, $type, $user_id_msg)
 	{
+		$properties = array(
+			'title'    => $title,
+			'subtitle' => $subtitle,
+			'type'     => $type
+		);
+		
 		//Mise à jour du sujet.
-		PersistenceContext::get_querier()->update(PREFIX . 'forum_topics', array('title' => $title, 'subtitle' => $subtitle, 'type' => $type), 'WHERE id=:id', array('id' => $idtopic));
+		PersistenceContext::get_querier()->update(PREFIX . 'forum_topics', $properties, 'WHERE id=:id', array('id' => $idtopic));
 		//Mise à jour du contenu du premier message du sujet.
 		$this->Update_msg($idtopic, $idmsg, $content, $user_id_msg, NO_HISTORY);
 
 		//Insertion de l'action dans l'historique.
 		if (AppContext::get_current_user()->get_id() != $user_id_msg)
 		forum_history_collector(H_EDIT_TOPIC, $user_id_msg, 'topic' . url('.php?id=' . $idtopic, '-' . $idtopic . '.php', '&'));
+		
+		try {
+			$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id', 'user_id', 'id_category', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg'), 'WHERE id=:id', array('id' => $idtopic));
+		} catch (RowNotFoundException $e) {}
+		
+		HooksService::execute_hook_action('forum_edit_topic', 'forum', array_merge($topic, array('url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($title) : '') . '.php'))));
 	}
 
 	//Supression d'un message.
@@ -259,6 +309,14 @@ class Forum
 			}
 			forum_generate_feeds(); //Regénération des flux flux
 			ForumCategoriesCache::invalidate();
+			
+			try {
+				$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id', 'user_id', 'id_category', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg'), 'WHERE id=:id', array('id' => $idtopic));
+			} catch (RowNotFoundException $e) {
+				$topic = array();
+			}
+			
+			HooksService::execute_hook_action('delete', 'forum', array_merge($topic, array('id' => $idmsg, 'idtopic' => $idtopic, 'url' => Url::to_rel('/forum/topic' . url('.php?id=' . $idtopic . $msg_page, '-' . $idtopic .  $msg_page_rewrite . '.php', '&') . '#m' . $previous_msg_id))));
 
 			return array($nbr_msg, $previous_msg_id);
 		}
@@ -270,7 +328,7 @@ class Forum
 	function Del_topic($idtopic, $generate_rss = true)
 	{
 		try {
-			$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id_category', 'user_id'), 'WHERE id=:id', array('id' => $idtopic));
+			$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('title', 'id_category', 'user_id'), 'WHERE id=:id', array('id' => $idtopic));
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
@@ -305,6 +363,8 @@ class Forum
 			forum_generate_feeds(); //Regénération des flux flux
 
 		ForumCategoriesCache::invalidate();
+		
+		HooksService::execute_hook_action('forum_delete_topic', 'forum', array_merge($topic, array('id' => $idtopic)));
 	}
 
 	//Suivi d'un sujet.
@@ -405,6 +465,15 @@ class Forum
 
 		//Insertion de l'action dans l'historique.
 		forum_history_collector(H_LOCK_TOPIC, 0, 'topic' . url('.php?id=' . $idtopic, '-' . $idtopic . '.php', '&'));
+		
+		try {
+			$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id', 'user_id', 'id_category', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg'), 'WHERE id=:id', array('id' => $idtopic));
+		} catch (RowNotFoundException $e) {
+			$topic = array();
+		}
+		
+		if (!empty($topic))
+			HooksService::execute_hook_action('forum_lock_topic', 'forum', array_merge($topic, array('url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic['title']) : '') . '.php'))));
 	}
 
 	//Déverrouillage d'un sujet.
@@ -414,6 +483,15 @@ class Forum
 
 		//Insertion de l'action dans l'historique.
 		forum_history_collector(H_UNLOCK_TOPIC, 0, 'topic' . url('.php?id=' . $idtopic, '-' . $idtopic . '.php', '&'));
+		
+		try {
+			$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id', 'user_id', 'id_category', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg'), 'WHERE id=:id', array('id' => $idtopic));
+		} catch (RowNotFoundException $e) {
+			$topic = array();
+		}
+		
+		if (!empty($topic))
+			HooksService::execute_hook_action('forum_unlock_topic', 'forum', array_merge($topic, array('url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic['title']) : '') . '.php'))));
 	}
 
 	//Déplacement d'un sujet.
@@ -421,7 +499,7 @@ class Forum
 	{
 		//On va chercher le nombre de messages dans la table topics
 		try {
-			$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array("user_id", "nbr_msg"), 'WHERE id=:id', array('id' => $idtopic));
+			$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id', 'user_id', 'id_category', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg'), 'WHERE id=:id', array('id' => $idtopic));
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
@@ -442,6 +520,8 @@ class Forum
 		forum_history_collector(H_MOVE_TOPIC, $topic['user_id'], 'topic' . url('.php?id=' . $idtopic, '-' . $idtopic . '.php', '&'));
 
 		ForumCategoriesCache::invalidate();
+		
+		HooksService::execute_hook_action('forum_move_topic', 'forum', array_merge($topic, array('url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic['title']) : '') . '.php'))));
 	}
 
 	//Déplacement d'un sujet
