@@ -5,7 +5,7 @@
  * <p>They are stored in a map associating a value to a property</p>
  * @package     IO
  * @subpackage  Data\config
- * @copyright   &copy; 2005-2021 PHPBoost
+ * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.0 - last update: 2021 11 03

@@ -3,7 +3,7 @@
  * Contains meta-informations and informations about a feed entry / item
  * @package     Content
  * @subpackage  Feed
- * @copyright   &copy; 2005-2021 PHPBoost
+ * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @version     PHPBoost 6.0 - last update: 2018 02 12

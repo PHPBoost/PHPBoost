@@ -1,6 +1,6 @@
 /**
  * HC Off-canvas Nav - Version: 4.1.4
- * @copyright   &copy; 2005-2021 PHPBoost - 2014 Some Web Media
+ * @copyright   &copy; 2005-2022 PHPBoost - 2014 Some Web Media
  * @license     https://www.opensource.org/licenses/mit-license.php
  * @author      Some Web Media
  * @link        https://github.com/somewebmedia/hc-offcanvas-nav
