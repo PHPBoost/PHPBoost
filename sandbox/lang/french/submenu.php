@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 01
+ * @version     PHPBoost 6.0 - last update: 2022 01 04
  * @since       PHPBoost 6.0 - 2020 02 24
 */
 
@@ -37,7 +37,7 @@ $lang['sandbox.hashtag.selects']         = '# Selecteurs';
 $lang['sandbox.hashtag.buttons']         = '# Boutons';
 $lang['sandbox.hashtag.miscellaneous']   = '# Divers';
 $lang['sandbox.hashtag.dates']           = '# Dates';
-$lang['sandbox.hashtag.upload']          = '# Téléversement';
+$lang['sandbox.hashtag.upload']          = '# Upload';
 $lang['sandbox.hashtag.links']           = 'Navigation';
 $lang['sandbox.hashtag.modal']           = '# Modal';
 $lang['sandbox.hashtag.gmap']            = '# Google Maps';
