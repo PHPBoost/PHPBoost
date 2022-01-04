@@ -43,7 +43,7 @@
 								</ul>
 							</div>
 						# ELSE #
-							<div class="cell-body">
+							<div class="cell-body bgc notice">
 								<div class="cell-content">{@wiki.no.category}</div>
 							</div>
 						# ENDIF #
@@ -72,8 +72,8 @@
 								</ul>
 							</div>
 						# ELSE #
-							<div class="cell-body">
-								<div class="cell-content">{@wiki.no.article}</div>
+							<div class="cell-body bgc notice">
+								<div class="cell-content">{@wiki.no.item}</div>
 							</div>
 						# ENDIF #
 					</aside>

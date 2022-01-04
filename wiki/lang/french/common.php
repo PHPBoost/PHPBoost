@@ -31,6 +31,7 @@ $lang['wiki.categories.list']   = 'Liste des catégories principales :';
 $lang['wiki.items.in.category'] = 'Articles présents dans cette catégorie';
 $lang['wiki.sub.categories']    = 'Catégories contenues par cette catégorie :';
 $lang['wiki.no.sub.item']       = 'Aucun sous article existant';
+$lang['wiki.no.item']       	= 'Aucun article';
 
 // Archives
 $lang['wiki.history']         = 'Historique';
