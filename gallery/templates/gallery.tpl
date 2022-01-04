@@ -332,208 +332,210 @@
 	# ENDIF #
 
 	# IF C_GALLERY_PICS #
-		<div class="sub-section">
-			<div class="content-container">
-				<article id="article-gallery-{ID}" class="article-gallery several-items category-{ID_CATEGORY}">
-					<header>
-						<h2>{@common.image}</h2>
-					</header>
-					<div class="content">
-						<p class="align-center" id="pics_max"></p>
+		# IF C_ITEMS #
+			<div class="sub-section">
+				<div class="content-container">
+					<article id="article-gallery-{ID_CATEGORY}" class="article-gallery several-items category-{ID_CATEGORY}">
+						<header>
+							<h2>{@common.image}</h2>
+						</header>
+						<div class="content">
+							<p class="align-center" id="pics_max"></p>
 
-						# IF C_GALLERY_PICS_MAX #
-							<p class="pics-max"><a href="{U_ITEM_MAX}" data-lightbox="formatter"><img src="{U_ITEM_MAX}" alt="{NAME}" /></a></p>
-							<div class="cell-tile cell-flex cell-columns-3">
-								<div class="cell cell-1-3">
-									<div class="cell-header">
-										<h6 class="cell-name">{@common.informations}</h6>
-									</div>
-									<div class="cell-list">
-										<ul>
-											# IF C_TITLE_ENABLED #
-												<li class="li-stretch">
-													<span class="text-strong">{@common.name}</span>
-													<span><span id="fi_{ID}">{NAME}</span> <span id="fi{ID}"></span></span>
-												</li>
-											# ENDIF #
-											# IF C_AUTHOR_DISPLAYED #
-												<li class="li-stretch">
-													<span class="text-strong">{@common.author}</span>
-													<span>
-														# IF C_AUTHOR_EXISTS #
-															<a class="{AUTHOR_LEVEL_CLASS} offload"# IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}"# ENDIF # href="{U_AUTHOR_PROFILE}">{AUTHOR_DISPLAY_NAME}</a>
-														# ELSE #
-															<span class="visitor">{@user.guest}</span>
-														# ENDIF #
-													</span>
-												</li>
-											# ENDIF #
-											# IF C_VIEWS_COUNTER_ENABLED #
-												<li class="li-stretch"><span class="text-strong">{@common.views.number}</span><span>{VIEWS_NUMBER}</span></li>
-											# ENDIF #
-											<li class="li-stretch"><span class="text-strong">{@gallery.date.added}</span><span>{DATE}</span></li>
-											<li class="li-stretch"><span class="text-strong">{@common.dimensions}</span><span>{DIMENSION}</span></li>
-											<li class="li-stretch"><span class="text-strong">{@common.size}</span><span>{SIZE} {@common.unit.kilobytes}</span></li>
-											# IF C_COMMENTS_ENABLED #
-												<li class="li-stretch"><span class="text-strong">{@common.comments}</span><a class="offload" href="{U_COMMENTS}">{COMMENTS_NUMBER}</a></li>
-											# ENDIF #
-											# IF C_NOTATION_ENABLED #
-												<li class="align-center"><div class="text-strong">{KERNEL_NOTATION}</div></li>
-											# ENDIF #
-											# IF C_GALLERY_PICS_MODO #
-												<li id="img{ID}" class="li-stretch">
-													<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}','{RENAME}','{RENAME_CUT}');" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a></span>
-
-													<a href="{U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
-													<div id="move{ID}" class="modal-container cell-modal inline-block cell-tile">
-														<a data-modal data-target="gallery-pic-move-to" aria-label="{@common.move.to}"><i class="fa fa-fw fa-fw fa-share" aria-hidden="true"></i></a>
-														<div id="gallery-pic-move-to" class="modal modal-animation">
-															<div class="close-modal" aria-label="{@common.close}"></div>
-															<div class="cell content-panel">
-																<div class="cell-header">
-																	<div class="cell-name">{@common.move.to} :</div>
-																</div>
-																<div class="cell-input">
-																	<select name="{ID}cat" onchange="document.location = '{U_MOVE}">
-																		{CATEGORIES_LIST}
-																	</select>
-																</div>
-															</div>
-														</div>
-													</div>
-													<a href="javascript:pics_aprob({ID});" aria-label="# IF C_DISPLAY_STATUS #{@common.disapprove}# ELSE #{@common.approve}# ENDIF #"><i id="img_aprob{ID}" class="far fa-fw # IF C_DISPLAY_STATUS #fa-eye-slash# ELSE #fa-eye# ENDIF #" aria-hidden="true"></i></a>
-												</li>
-											# ENDIF #
-										</ul>
-									</div>
-								</div>
-								<div class="cell cell-2-3">
-									<div class="flex-between">
-										<span><a class="offload" href="{U_PREVIOUS}#pics_max" aria-label="{@common.previous}"><i class="fa fa-fw fa-arrow-left fa-2x" aria-hidden="true"></i></a></span>
-										<span><a class="offload" href="{U_NEXT}#pics_max" aria-label="{@common.next}"> <i class="fa fa-fw fa-arrow-right fa-2x" aria-hidden="true"></i></a></span>
-									</div>
-									<table class="pics-max-thumbnails">
-										<thead>
-											<tr>
-												<th colspan="{COLSPAN}">
-													{@gallery.thumbnails} ({ITEMS_NUMBER})
-												</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>
-													<span id="display_left"># IF C_LEFT_THUMBNAILS #<a href="javascript:display_thumbnails('left')" aria-label="{@common.previous}"><i class="fa fa-fw fa-arrow-left fa-2x" aria-hidden="true"></i></a># ENDIF #</span>
-												</td>
-												# START list_preview_pics #
-													<td class="align-center# IF list_preview_pics.C_CURRENT_ITEM # current# ENDIF #" style="height:{list_preview_pics.HEIGHT}px">
-														<span id="thumb{list_preview_pics.ID}">
-															<a class="offload" href="{list_preview_pics.URL}"><img src="pics/thumbnails/{list_preview_pics.PATH}" alt="{list_preview_pics.NAME}" /></a>
-														</span>
-													</td>
-												# END list_preview_pics #
-												<td>
-													<span id="display_right"># IF C_RIGHT_THUMBNAILS #<a href="javascript:display_thumbnails('right')" aria-label="{@common.next}"><i class="fa fa-fw fa-arrow-right fa-2x" aria-hidden="true"></i></a># ENDIF #</span>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-							<aside>
-								{COMMENTS}
-							</aside>
-						# ENDIF #
-
-						<div class="cell-flex cell-columns-{COLUMNS_NUMBER} cell-tile">
-							# START pics_list #
-								<div class="cell small# IF pics_list.C_NEW_CONTENT # new-content# ENDIF #">
-									<div class="cell-header">
-										# IF C_NAME_DISPLAYED #
-											<div class="cell-name">
-												<a id="fi_{pics_list.ID}" class="ellipsis offload" href="{pics_list.U_ITEM}">
-													{pics_list.NAME}
-												</a>
-											</div>
-										# ELSE #
-											<span id="fi_{pics_list.ID}"></span>
-										# ENDIF # <span id="fi{pics_list.ID}"></span>
-										<span id="img{pics_list.ID}"></span>
-										<!-- <a href="{PATH_TO_ROOT}/gallery/pics/{pics_list.PATH}" class="float-right" download=""><i class="fa fa-fw fa-download"></i></a> -->
-									</div>
-									<div class="cell-body">
-										<div class="cell-thumbnail cell-landscape cell-center">
-											<img src="{pics_list.U_PICTURE}" alt="{pics_list.NAME}" class="gallery-img" />
-											<a class="cell-thumbnail-caption small" aria-label="# IF C_NAME_DISPLAYED #{pics_list.NAME}# ENDIF #" href="{pics_list.U_DISPLAY}" onclick="{pics_list.ONCLICK}" # IF NOT pics_list.ONCLICK # data-lightbox="formatter"# ENDIF #>
-												{@form.picture.full.size}
-											</a>
+							# IF C_GALLERY_PICS_MAX #
+								<p class="pics-max"><a href="{U_ITEM_MAX}" data-lightbox="formatter"><img src="{U_ITEM_MAX}" alt="{NAME}" /></a></p>
+								<div class="cell-tile cell-flex cell-columns-3">
+									<div class="cell cell-1-3">
+										<div class="cell-header">
+											<h6 class="cell-name">{@common.informations}</h6>
 										</div>
-									</div>
-									<div class="cell-list">
-										<ul>
-											# IF C_AUTHOR_DISPLAYED #
-												<li>
-													# IF pics_list.C_AUTHOR_EXISTS #
-														<a class="{pics_list.AUTHOR_LEVEL_CLASS} offload"# IF pics_list.C_AUTHOR_GROUP_COLOR # style="color:{pics_list.AUTHOR_GROUP_COLOR}"# ENDIF # href="{pics_list.U_AUTHOR_PROFILE}">
-															{@common.by} {pics_list.AUTHOR_DISPLAY_NAME}
-														</a>
-													# ELSE #
-														{@common.by} {@user.guest}
-													# ENDIF #
-												</li>
-											# ENDIF #
-											# IF C_VIEWS_COUNTER_ENABLED #
-												<li>
-													<span id="gv{pics_list.ID}">{pics_list.VIEWS_NUMBER}</span> <span id="gvl{pics_list.ID}"># IF pics_list.C_SEVERAL_VIEWS #{@common.view}# ELSE #{@common.views}# ENDIF #</span>
-												</li>
-											# ENDIF #
-											# IF C_COMMENTS_ENABLED #
-												<li>
-													<a class="offload" href="{pics_list.U_COMMENTS}">{pics_list.COMMENTS}</a>
-												</li>
-											# ENDIF #
-											# IF C_NOTATION_ENABLED #
-												<li>
-													{pics_list.KERNEL_NOTATION}
-												</li>
-											# ENDIF #
-										</ul>
-									</div>
-									# IF C_CONTROLS #
 										<div class="cell-list">
 											<ul>
-												<li class="li-stretch">
-													<a id="fihref{pics_list.ID}" href="javascript:display_rename_file('{pics_list.ID}','{pics_list.RENAME}','{pics_list.RENAME_CUT}');" aria-label="{@common.edit}"><i class="far fa-edit"></i></a>
-													<a href="{pics_list.U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-trash-alt"></i></a>
-													<div id="move{pics_list.ID}" class="modal-container cell-modal cell-tile">
-														<a data-modal data-target="gallery-pic-move-to" aria-label="{@common.move.to}"><i class="fa fa-fw fa-share" aria-hidden="true"></i></a>
-														<div id="gallery-pic-move-to" class="modal modal-animation">
-															<div class="close-modal" aria-label="{@common.close}"></div>
-															<div class="cell content-panel">
-																<div class="cell-header">
-																	<div class="cell-name">{@common.move.to} :</div>
-																</div>
-																<div class="cell-input">
-																	<select name="{pics_list.ID}cat" onchange="document.location = '{pics_list.U_MOVE}">
-																		{pics_list.CATEGORIES_LIST}
-																	</select>
+												# IF C_TITLE_ENABLED #
+													<li class="li-stretch">
+														<span class="text-strong">{@common.name}</span>
+														<span><span id="fi_{ID}">{NAME}</span> <span id="fi{ID}"></span></span>
+													</li>
+												# ENDIF #
+												# IF C_AUTHOR_DISPLAYED #
+													<li class="li-stretch">
+														<span class="text-strong">{@common.author}</span>
+														<span>
+															# IF C_AUTHOR_EXISTS #
+																<a class="{AUTHOR_LEVEL_CLASS} offload"# IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}"# ENDIF # href="{U_AUTHOR_PROFILE}">{AUTHOR_DISPLAY_NAME}</a>
+															# ELSE #
+																<span class="visitor">{@user.guest}</span>
+															# ENDIF #
+														</span>
+													</li>
+												# ENDIF #
+												# IF C_VIEWS_COUNTER_ENABLED #
+													<li class="li-stretch"><span class="text-strong">{@common.views.number}</span><span>{VIEWS_NUMBER}</span></li>
+												# ENDIF #
+												<li class="li-stretch"><span class="text-strong">{@gallery.date.added}</span><span>{DATE}</span></li>
+												<li class="li-stretch"><span class="text-strong">{@common.dimensions}</span><span>{DIMENSION}</span></li>
+												<li class="li-stretch"><span class="text-strong">{@common.size}</span><span>{SIZE} {@common.unit.kilobytes}</span></li>
+												# IF C_COMMENTS_ENABLED #
+													<li class="li-stretch"><span class="text-strong">{@common.comments}</span><a class="offload" href="{U_COMMENTS}">{COMMENTS_NUMBER}</a></li>
+												# ENDIF #
+												# IF C_NOTATION_ENABLED #
+													<li class="align-center"><div class="text-strong">{KERNEL_NOTATION}</div></li>
+												# ENDIF #
+												# IF C_GALLERY_PICS_MODO #
+													<li id="img{ID}" class="li-stretch">
+														<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}','{RENAME}','{RENAME_CUT}');" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a></span>
+
+														<a href="{U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+														<div id="move{ID}" class="modal-container cell-modal inline-block cell-tile">
+															<a data-modal data-target="gallery-pic-move-to" aria-label="{@common.move.to}"><i class="fa fa-fw fa-fw fa-share" aria-hidden="true"></i></a>
+															<div id="gallery-pic-move-to" class="modal modal-animation">
+																<div class="close-modal" aria-label="{@common.close}"></div>
+																<div class="cell content-panel">
+																	<div class="cell-header">
+																		<div class="cell-name">{@common.move.to} :</div>
+																	</div>
+																	<div class="cell-input">
+																		<select name="{ID}cat" onchange="document.location = '{U_MOVE}">
+																			{CATEGORIES_LIST}
+																		</select>
+																	</div>
 																</div>
 															</div>
 														</div>
-													</div>
-													<a href="javascript:pics_aprob({pics_list.ID});" aria-label="# IF pics_list.C_APPROVED #{@common.disapprove}# ELSE #{@common.approve}# ENDIF #"><i id="img_aprob{pics_list.ID}" class="far fa-fw # IF pics_list.C_APPROVED #fa-eye-slash# ELSE #fa-eye# ENDIF #"></i></a>
-												</li>
+														<a href="javascript:pics_aprob({ID});" aria-label="# IF C_DISPLAY_STATUS #{@common.disapprove}# ELSE #{@common.approve}# ENDIF #"><i id="img_aprob{ID}" class="far fa-fw # IF C_DISPLAY_STATUS #fa-eye-slash# ELSE #fa-eye# ENDIF #" aria-hidden="true"></i></a>
+													</li>
+												# ENDIF #
 											</ul>
 										</div>
-									# ENDIF #
+									</div>
+									<div class="cell cell-2-3">
+										<div class="flex-between">
+											<span><a class="offload" href="{U_PREVIOUS}#pics_max" aria-label="{@common.previous}"><i class="fa fa-fw fa-arrow-left fa-2x" aria-hidden="true"></i></a></span>
+											<span><a class="offload" href="{U_NEXT}#pics_max" aria-label="{@common.next}"> <i class="fa fa-fw fa-arrow-right fa-2x" aria-hidden="true"></i></a></span>
+										</div>
+										<table class="pics-max-thumbnails">
+											<thead>
+												<tr>
+													<th colspan="{COLSPAN}">
+														{@gallery.thumbnails} ({ITEMS_NUMBER})
+													</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>
+														<span id="display_left"># IF C_LEFT_THUMBNAILS #<a href="javascript:display_thumbnails('left')" aria-label="{@common.previous}"><i class="fa fa-fw fa-arrow-left fa-2x" aria-hidden="true"></i></a># ENDIF #</span>
+													</td>
+													# START list_preview_pics #
+														<td class="align-center# IF list_preview_pics.C_CURRENT_ITEM # current# ENDIF #" style="height:{list_preview_pics.HEIGHT}px">
+															<span id="thumb{list_preview_pics.ID}">
+																<a class="offload" href="{list_preview_pics.URL}"><img src="pics/thumbnails/{list_preview_pics.PATH}" alt="{list_preview_pics.NAME}" /></a>
+															</span>
+														</td>
+													# END list_preview_pics #
+													<td>
+														<span id="display_right"># IF C_RIGHT_THUMBNAILS #<a href="javascript:display_thumbnails('right')" aria-label="{@common.next}"><i class="fa fa-fw fa-arrow-right fa-2x" aria-hidden="true"></i></a># ENDIF #</span>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
 								</div>
-							# END pics_list #
+								<aside>
+									{COMMENTS}
+								</aside>
+							# ENDIF #
+
+							<div class="cell-flex cell-columns-{COLUMNS_NUMBER} cell-tile">
+								# START pics_list #
+									<div class="cell small# IF pics_list.C_NEW_CONTENT # new-content# ENDIF #">
+										<div class="cell-header">
+											# IF C_NAME_DISPLAYED #
+												<div class="cell-name">
+													<a id="fi_{pics_list.ID}" class="ellipsis offload" href="{pics_list.U_ITEM}">
+														{pics_list.NAME}
+													</a>
+												</div>
+											# ELSE #
+												<span id="fi_{pics_list.ID}"></span>
+											# ENDIF # <span id="fi{pics_list.ID}"></span>
+											<span id="img{pics_list.ID}"></span>
+											<!-- <a href="{PATH_TO_ROOT}/gallery/pics/{pics_list.PATH}" class="float-right" download=""><i class="fa fa-fw fa-download"></i></a> -->
+										</div>
+										<div class="cell-body">
+											<div class="cell-thumbnail cell-landscape cell-center">
+												<img src="{pics_list.U_PICTURE}" alt="{pics_list.NAME}" class="gallery-img" />
+												<a class="cell-thumbnail-caption small" aria-label="# IF C_NAME_DISPLAYED #{pics_list.NAME}# ENDIF #" href="{pics_list.U_DISPLAY}" onclick="{pics_list.ONCLICK}" # IF NOT pics_list.ONCLICK # data-lightbox="formatter"# ENDIF #>
+													{@form.picture.full.size}
+												</a>
+											</div>
+										</div>
+										<div class="cell-list">
+											<ul>
+												# IF C_AUTHOR_DISPLAYED #
+													<li>
+														# IF pics_list.C_AUTHOR_EXISTS #
+															<a class="{pics_list.AUTHOR_LEVEL_CLASS} offload"# IF pics_list.C_AUTHOR_GROUP_COLOR # style="color:{pics_list.AUTHOR_GROUP_COLOR}"# ENDIF # href="{pics_list.U_AUTHOR_PROFILE}">
+																{@common.by} {pics_list.AUTHOR_DISPLAY_NAME}
+															</a>
+														# ELSE #
+															{@common.by} {@user.guest}
+														# ENDIF #
+													</li>
+												# ENDIF #
+												# IF C_VIEWS_COUNTER_ENABLED #
+													<li>
+														<span id="gv{pics_list.ID}">{pics_list.VIEWS_NUMBER}</span> <span id="gvl{pics_list.ID}"># IF pics_list.C_SEVERAL_VIEWS #{@common.view}# ELSE #{@common.views}# ENDIF #</span>
+													</li>
+												# ENDIF #
+												# IF C_COMMENTS_ENABLED #
+													<li>
+														<a class="offload" href="{pics_list.U_COMMENTS}">{pics_list.COMMENTS}</a>
+													</li>
+												# ENDIF #
+												# IF C_NOTATION_ENABLED #
+													<li>
+														{pics_list.KERNEL_NOTATION}
+													</li>
+												# ENDIF #
+											</ul>
+										</div>
+										# IF C_CONTROLS #
+											<div class="cell-list">
+												<ul>
+													<li class="li-stretch">
+														<a id="fihref{pics_list.ID}" href="javascript:display_rename_file('{pics_list.ID}','{pics_list.RENAME}','{pics_list.RENAME_CUT}');" aria-label="{@common.edit}"><i class="far fa-edit"></i></a>
+														<a href="{pics_list.U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-trash-alt"></i></a>
+														<div id="move{pics_list.ID}" class="modal-container cell-modal cell-tile">
+															<a data-modal data-target="gallery-pic-move-to" aria-label="{@common.move.to}"><i class="fa fa-fw fa-share" aria-hidden="true"></i></a>
+															<div id="gallery-pic-move-to" class="modal modal-animation">
+																<div class="close-modal" aria-label="{@common.close}"></div>
+																<div class="cell content-panel">
+																	<div class="cell-header">
+																		<div class="cell-name">{@common.move.to} :</div>
+																	</div>
+																	<div class="cell-input">
+																		<select name="{pics_list.ID}cat" onchange="document.location = '{pics_list.U_MOVE}">
+																			{pics_list.CATEGORIES_LIST}
+																		</select>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<a href="javascript:pics_aprob({pics_list.ID});" aria-label="# IF pics_list.C_APPROVED #{@common.disapprove}# ELSE #{@common.approve}# ENDIF #"><i id="img_aprob{pics_list.ID}" class="far fa-fw # IF pics_list.C_APPROVED #fa-eye-slash# ELSE #fa-eye# ENDIF #"></i></a>
+													</li>
+												</ul>
+											</div>
+										# ENDIF #
+									</div>
+								# END pics_list #
+							</div>
 						</div>
-					</div>
-					<footer># IF C_PAGINATION ## INCLUDE PAGINATION ## ENDIF #</footer>
-				</article>
+						<footer># IF C_PAGINATION ## INCLUDE PAGINATION ## ENDIF #</footer>
+					</article>
+				</div>
 			</div>
-		</div>
+		# ENDIF #
 	# ENDIF #
 	<footer></footer>
 </section>

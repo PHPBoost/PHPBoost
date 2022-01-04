@@ -59,9 +59,9 @@
 		# ENDIF #
 	# ENDIF #
 
-	<div class="sub-section">
-		<div class="content-container">
-			# IF C_ITEMS #
+	# IF C_ITEMS #
+		<div class="sub-section">
+			<div class="content-container">
 				# IF C_ENABLED_SORTING_FORM #
 					# IF C_SEVERAL_ITEMS #
 						<div class="content">
@@ -393,17 +393,21 @@
 						# END items #
 					</div>
 				# ENDIF #
-			# ELSE #
-				# IF NOT C_HIDE_NO_ITEM_MESSAGE #
+			</div>
+		</div>
+	# ELSE #
+		# IF NOT C_HIDE_NO_ITEM_MESSAGE #
+			<div class="sub-section">
+				<div class="content-container">
 					<div class="content">
 						<div class="message-helper bgc notice align-center">
 							{@items.no.element}
 						</div>
 					</div>
-				# ENDIF #
-			# ENDIF #
-		</div>
-	</div>
+				</div>
+			</div>
+		# ENDIF #
+	# ENDIF #
 	<footer>
 		# IF C_PAGINATION #
 			<div class="sub-section">

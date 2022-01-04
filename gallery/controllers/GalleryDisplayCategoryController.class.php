@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 15
+ * @version     PHPBoost 6.0 - last update: 2022 01 04
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -142,7 +142,6 @@ class GalleryDisplayCategoryController extends ModuleController
 		}
 
 		$category_description = FormatingHelper::second_parse($category->get_description());
-
 		$this->view->put_all(array(
 			'C_ROOT_CATEGORY'            => $category->get_id() == Category::ROOT_CATEGORY,
 			'C_CATEGORY_DESCRIPTION'     => $category_description,
@@ -451,6 +450,9 @@ class GalleryDisplayCategoryController extends ModuleController
 					'number_items_per_page' => $pagination->get_number_items_per_page(),
 					'display_from' => $pagination->get_display_from()
 				));
+
+				$this->view->put('C_ITEMS', $result->get_rows_count() > 0);
+
 				while ($row = $result->fetch())
 				{
 					//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.

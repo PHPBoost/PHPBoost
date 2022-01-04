@@ -49,103 +49,109 @@
 		</div>
 	# ENDIF #
 
-	<div class="sub-section">
-		<div class="content-container">
-			# IF C_NO_ITEM #
+	# IF C_NO_ITEM #
+		<div class="sub-section">
+			<div class="content-container">
 				<div class="content">
 					<div class="message-helper bgc notice align-center">{@common.no.item.now}</div>
 				</div>
-			# ELSE #
-				# IF C_SEVERAL_ITEMS #
-					<div class="content">
-						<div class="options" id="form">
-							<script>
-								function change_order()
-								{
-									window.location = "{CHANGE_ORDER}sort=" + document.getElementById("sort").value + "&mode=" + document.getElementById("mode").value;
-								}
-							</script>
-							<div class="horizontal-fieldset">
-								<span class="horizontal-fieldset-desc horizontal-fieldset-element">{@common.sort.by}</span>
-								<div class="horizontal-fieldset-element">
-									<div class="form-element">
-										<div class="form-field form-field-select">
-											<select class="select-to-list " name="sort" id="sort" onchange="change_order()">
-												<option data-option-icon="fa fa-sort-alpha-up" value="alpha"{SELECTED_ALPHA}>{@common.sort.by.alphabetic}</option>
-												<option data-option-icon="far fa-calendar-alt" value="date"{SELECTED_DATE}>{@common.sort.by.date}</option>
-												<option data-option-icon="fa fa-eye" value="views"{SELECTED_VIEWS}>{@common.sort.by.views.number}</option>
-												# IF C_ENABLED_NOTATION #<option data-option-icon="far fa-star" value="note"{SELECTED_NOTE}>{@common.sort.by.best.note}</option># ENDIF #
-												# IF C_ENABLED_COMMENTS #<option data-option-icon="far fa-comments" value="com"{SELECTED_COM}>{@common.sort.by.comments.number}</option># ENDIF #
-											</select>
+			</div>
+		</div>
+	# ELSE #
+		# IF C_ITEMS #
+			<div class="sub-section">
+				<div class="content-container">
+					# IF C_SEVERAL_ITEMS #
+						<div class="content">
+							<div class="options" id="form">
+								<script>
+									function change_order()
+									{
+										window.location = "{CHANGE_ORDER}sort=" + document.getElementById("sort").value + "&mode=" + document.getElementById("mode").value;
+									}
+								</script>
+								<div class="horizontal-fieldset">
+									<span class="horizontal-fieldset-desc horizontal-fieldset-element">{@common.sort.by}</span>
+									<div class="horizontal-fieldset-element">
+										<div class="form-element">
+											<div class="form-field form-field-select">
+												<select class="select-to-list " name="sort" id="sort" onchange="change_order()">
+													<option data-option-icon="fa fa-sort-alpha-up" value="alpha"{SELECTED_ALPHA}>{@common.sort.by.alphabetic}</option>
+													<option data-option-icon="far fa-calendar-alt" value="date"{SELECTED_DATE}>{@common.sort.by.date}</option>
+													<option data-option-icon="fa fa-eye" value="views"{SELECTED_VIEWS}>{@common.sort.by.views.number}</option>
+													# IF C_ENABLED_NOTATION #<option data-option-icon="far fa-star" value="note"{SELECTED_NOTE}>{@common.sort.by.best.note}</option># ENDIF #
+													# IF C_ENABLED_COMMENTS #<option data-option-icon="far fa-comments" value="com"{SELECTED_COM}>{@common.sort.by.comments.number}</option># ENDIF #
+												</select>
+											</div>
 										</div>
 									</div>
-								</div>
-								<div class="horizontal-fieldset-element">
-									<div class="form-element">
-										<div class="form-field form-field-select">
-											<select class="select-to-list " name="mode" id="mode" onchange="change_order()">
-												<option data-option-icon="fa fa-arrow-up" value="asc"{SELECTED_ASC}>{@common.sort.asc}</option>
-												<option data-option-icon="fa fa-arrow-down" value="desc"{SELECTED_DESC}>{@common.sort.desc}</option>
-											</select>
+									<div class="horizontal-fieldset-element">
+										<div class="form-element">
+											<div class="form-field form-field-select">
+												<select class="select-to-list " name="mode" id="mode" onchange="change_order()">
+													<option data-option-icon="fa fa-arrow-up" value="asc"{SELECTED_ASC}>{@common.sort.asc}</option>
+													<option data-option-icon="fa fa-arrow-down" value="desc"{SELECTED_DESC}>{@common.sort.desc}</option>
+												</select>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				# ENDIF #
-				<div class="# IF C_GRID_VIEW #cell-flex cell-columns-{ITEMS_PER_ROW}# ELSE #cell-row# ENDIF #">
-					# START items #
-						<article id="article-media-{items.ID}" class="media-item several-items category-{items.CATEGORY_ID} cell# IF items.C_NEW_CONTENT # new-content# ENDIF #">
-							<header class="cell-header">
-								<h2 class="cell-name">
-									<a class="offload" href="{items.U_ITEM}">{items.TITLE}</a>
-								</h2>
-							</header>
-							<div class="cell-body">
-								<div class="cell-infos">
-									<div class="more">
-										<span class="pinned" aria-label="{@common.author}">
-											# IF items.C_AUTHOR_EXISTS #
-												<a class="{items.AUTHOR_LEVEL_CLASS} offload"# IF items.C_AUTHOR_GROUP_COLOR # style="color:{items.AUTHOR_GROUP_COLOR}"# ENDIF # href="{items.U_AUTHOR_PROFILE}">{items.AUTHOR_DISPLAY_NAME}</a>
-											# ELSE #
-												<span class="visitor">{@user.guest}</span>
+					# ENDIF #
+					<div class="# IF C_GRID_VIEW #cell-flex cell-columns-{ITEMS_PER_ROW}# ELSE #cell-row# ENDIF #">
+						# START items #
+							<article id="article-media-{items.ID}" class="media-item several-items category-{items.CATEGORY_ID} cell# IF items.C_NEW_CONTENT # new-content# ENDIF #">
+								<header class="cell-header">
+									<h2 class="cell-name">
+										<a class="offload" href="{items.U_ITEM}">{items.TITLE}</a>
+									</h2>
+								</header>
+								<div class="cell-body">
+									<div class="cell-infos">
+										<div class="more">
+											<span class="pinned" aria-label="{@common.author}">
+												# IF items.C_AUTHOR_EXISTS #
+													<a class="{items.AUTHOR_LEVEL_CLASS} offload"# IF items.C_AUTHOR_GROUP_COLOR # style="color:{items.AUTHOR_GROUP_COLOR}"# ENDIF # href="{items.U_AUTHOR_PROFILE}">{items.AUTHOR_DISPLAY_NAME}</a>
+												# ELSE #
+													<span class="visitor">{@user.guest}</span>
+												# ENDIF #
+											</span>
+											<span class="pinned" aria-label="{@common.creation.date}"><i class="far fa-calendar-alt" aria-hidden="true"></i> <time datetime="{items.DATE_ISO8601}" itemprop="datePublished">{items.DATE}</time></span>
+											<span class="pinned" role="contentinfo" aria-label="{@common.views.number}"><i class="far fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span>
+											# IF C_ENABLED_COMMENTS #
+												<span class="pinned" aria-label="{@common.comments}"><i class="far fa-comments" aria-hidden="true"></i> {items.COMMENTS_NUMBER}</span>
 											# ENDIF #
-										</span>
-										<span class="pinned" aria-label="{@common.creation.date}"><i class="far fa-calendar-alt" aria-hidden="true"></i> <time datetime="{items.DATE_ISO8601}" itemprop="datePublished">{items.DATE}</time></span>
-										<span class="pinned" role="contentinfo" aria-label="{@common.views.number}"><i class="far fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span>
-										# IF C_ENABLED_COMMENTS #
-											<span class="pinned" aria-label="{@common.comments}"><i class="far fa-comments" aria-hidden="true"></i> {items.COMMENTS_NUMBER}</span>
-										# ENDIF #
-										# IF C_ENABLED_NOTATION #
-											<div class="pinned">{items.KERNEL_NOTATION}</div>
+											# IF C_ENABLED_NOTATION #
+												<div class="pinned">{items.KERNEL_NOTATION}</div>
+											# ENDIF #
+										</div>
+										# IF C_CONTROLS #
+											<div class="controls align-right">
+												<a class="offload" href="{items.U_STATUS}" aria-label="{@media.hide.item}"><i class="fa fa-fw fa-eye-slash" aria-hidden="true"></i></a>
+												<a class="offload" href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+												<a class="offload" href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+											</div>
 										# ENDIF #
 									</div>
-									# IF C_CONTROLS #
-										<div class="controls align-right">
-											<a class="offload" href="{items.U_STATUS}" aria-label="{@media.hide.item}"><i class="fa fa-fw fa-eye-slash" aria-hidden="true"></i></a>
-											<a class="offload" href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
-											<a class="offload" href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+									# IF items.C_HAS_PICTURE #
+										<div class="cell-thumbnail cell-landscape cell-center">
+											<img itemprop="thumbnailUrl" src="{items.PICTURE}" alt="{items.TITLE}" />
+											<a class="cell-thumbnail-caption offload" href="{items.U_ITEM}" aria-label="{@common.see.details}"><i class="fa fa-2x fa-play-circle" aria-hidden="true"></i></a>
+										</div>
+									# ENDIF #
+									# IF items.C_CONTENT #
+										<div itemprop="text" class="cell-content">
+											{items.CONTENT}
 										</div>
 									# ENDIF #
 								</div>
-								# IF items.C_HAS_PICTURE #
-									<div class="cell-thumbnail cell-landscape cell-center">
-										<img itemprop="thumbnailUrl" src="{items.PICTURE}" alt="{items.TITLE}" />
-										<a class="cell-thumbnail-caption offload" href="{items.U_ITEM}" aria-label="{@common.see.details}"><i class="fa fa-2x fa-play-circle" aria-hidden="true"></i></a>
-									</div>
-								# ENDIF #
-								# IF items.C_CONTENT #
-									<div itemprop="text" class="cell-content">
-										{items.CONTENT}
-									</div>
-								# ENDIF #
-							</div>
-						</article>
-					# END items #
+							</article>
+						# END items #
+					</div>
 				</div>
-			# ENDIF #
-		</div>
-	</div>
+			</div>
+		# ENDIF #
+	# ENDIF #
 	<footer># IF C_PAGINATION #<div class="sub-section"><div class="content-container"># INCLUDE PAGINATION #</div></div># ENDIF #</footer>
 </section>

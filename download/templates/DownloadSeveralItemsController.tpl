@@ -56,9 +56,9 @@
 		</div>
 	# ENDIF #
 
-	<div class="sub-section">
-		<div class="content-container">
-			# IF C_ITEMS #
+	# IF C_ITEMS #
+		<div class="sub-section">
+			<div class="content-container">
 				# IF C_SEVERAL_ITEMS #
 					# IF NOT C_MEMBER_ITEMS #
 						<div class="content">
@@ -267,21 +267,21 @@
 						# END items #
 					</div>
 				# ENDIF #
-			# ELSE #
-				# IF NOT C_HIDE_NO_ITEM_MESSAGE #
-					<div class="sub-section">
-						<div class="content-container">
-							<div class="content">
-								<div class="message-helper bgc notice align-center">
-									{@common.no.item.now}
-								</div>
-							</div>
+			</div>
+		</div>
+	# ELSE #
+		# IF NOT C_HIDE_NO_ITEM_MESSAGE #
+			<div class="sub-section">
+				<div class="content-container">
+					<div class="content">
+						<div class="message-helper bgc notice align-center">
+							{@common.no.item.now}
 						</div>
 					</div>
-				# ENDIF #
-			# ENDIF #
-		</div>
-	</div>
+				</div>
+			</div>
+		# ENDIF #
+	# ENDIF #
 	<footer>
 		# IF C_PAGINATION #<div class="sub-section"><div class="content-container"># INCLUDE PAGINATION #</div></div># ENDIF #
 	</footer>

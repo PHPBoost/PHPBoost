@@ -30,6 +30,10 @@
 					# ENDIF #
 				# ENDIF #
 			</div>
+		</div>
+	</div>
+	<div class="sub-section">
+		<div class="content-container">
 			<div id="events">
 				# INCLUDE EVENTS #
 			</div>
