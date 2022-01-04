@@ -20,8 +20,8 @@
 		<div id="advanced_authb{SELECT_ID}" class="advanced-auth advanced-auth-select"# IF NOT C_ADVANCED_AUTH_OPEN # style="display: none;"# ENDIF #>
 			<div id="advanced_auth{SELECT_ID}" class="advanced-auth advanced-auth-input"# IF NOT C_ADVANCED_AUTH_OPEN # style="display: none;"# ENDIF #>
 				<div class="grouped-inputs">
-					<label for="login{SELECT_ID}" class="sr-only">{@user.add.member}</label>
 					<input class="grouped-element" type="text" size="14" value="" id="login{SELECT_ID}" name="login{SELECT_ID}" placeholder="{@user.add.member}">
+					<label for="login{SELECT_ID}" class="sr-only">{@user.add.member}</label>
 					<button class="grouped-element button bgc-full link-color" onclick="XMLHttpRequest_search_members('{SELECT_ID}', '{THEME}', 'add_member_auth', ${escapejs(@warning.username)});" type="button" name="valid" aria-label="{@user.search.member}">
 						<i class="fa fa-search-plus" aria-hidden="true"></i>
 					</button>
