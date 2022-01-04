@@ -451,10 +451,18 @@ h3.formatter-title { border-color: var(--main-tone); }
 
 /* -- cssmenu.css ----------------------------------------------------------- */
 .cssmenu ul ul,
-.cssmenu-actionslinks > ul {
+.cssmenu-actionslinks > ul  {
 	background-color: var(--bgc-main);
-	box-shadow: 0 0 10px rgba(var(--main-rgb-t), 0.1);
 }
+
+.cssmenu-horizontal ul ul { box-shadow: 0 7px 10px rgba(var(--main-rgb-t), 0.15); }
+.cssmenu-horizontal ul ul ul { box-shadow: 7px 0 10px rgba(var(--main-rgb-t), 0.15); }
+
+.cssmenu-vertical.cssmenu-left ul ul { box-shadow: 7px 0 10px rgba(var(--main-rgb-t), 0.15); }
+.cssmenu-vertical.cssmenu-right ul ul { box-shadow: -7px 0 10px rgba(var(--main-rgb-t), 0.15); }
+
+.cssmenu-actionslinks > ul { box-shadow: 0 7px 10px rgba(var(--main-rgb-t), 0.15); }
+.cssmenu-actionslinks > ul ul { box-shadow: -7px 0 10px rgba(var(--main-rgb-t), 0.15); }
 
 @media (min-width: 769px) {
 	.cssmenu ul > li:hover > .cssmenu-title  { background-color: rgba(var(--main-rgb-t), 0.1); }
