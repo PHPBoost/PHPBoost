@@ -649,7 +649,7 @@ a[class*='lightcase-icon-']:hover {
 	color: var(--txt-alt);
 }
 
-.wizard-container .wizard-header .progress { background-color: rgba(var(--main-rgb-t), 0.1); }
+.wizard-container .wizard-header li .active-step { background-color: rgba(var(--main-rgb-t), 0.1); }
 
 .wizard-container .wizard-header a:hover {
     color: var(--main-tone);
