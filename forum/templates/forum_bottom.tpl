@@ -33,7 +33,7 @@
 										<div class="forum-refresh">
 											<div id="forum_block_forum_unread_bottom" style="display: none;"></div>
 										</div>
-										<a class="offload" href="#" class="reload-unread" onclick="XMLHttpRequest_unread_topics('forum_unread_bottom');return false;" onmouseover="forum_hide_block('forum_unread_bottom', 1);" onmouseout="forum_hide_block('forum_unread_bottom', 0);" aria-label="{@forum.reload.unread.messages}"><i class="fa fa-fw fa-sync" id="refresh_forum_unread_bottom"></i><span class="sr-only">{@forum.reload.unread.messages}</span></a>
+										<a href="#" class="reload-unread" onclick="XMLHttpRequest_unread_topics('forum_unread_bottom');return false;" onmouseover="forum_hide_block('forum_unread_bottom', 1);" onmouseout="forum_hide_block('forum_unread_bottom', 0);" aria-label="{@forum.reload.unread.messages}"><i class="fa fa-fw fa-sync" id="refresh_forum_unread_bottom"></i><span class="sr-only">{@forum.reload.unread.messages}</span></a>
 									</div>
 								</li>
 								<li>
