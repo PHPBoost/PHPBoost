@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 24
+ * @version     PHPBoost 6.0 - last update: 2022 01 05
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -332,7 +332,7 @@ class UserEditProfileController extends AbstractController
 			$this->user->set_level($level);
 			
 			if ($old_level != $level)
-				HooksService::execute_hook_action('user_change_level', $user_id, array_merge($this->user->get_properties(), array('title' => $this->user->get_display_name(), 'url' => UserUrlBuilder::profile($user_id)->rel())));
+				HooksService::execute_hook_action('user_change_level', $user_id, array_merge($this->user->get_properties(), array('title' => $this->user->get_display_name(), 'url' => UserUrlBuilder::profile($user_id)->rel())), UserService::get_level_lang($this->user->get_level()));
 		}
 
 		if ($this->form->has_field('theme'))
@@ -424,11 +424,12 @@ class UserEditProfileController extends AbstractController
 				}
 			}
 
+			$sanctions_duration = FormFieldMemberSanction::get_sanctions_duration();
 			$user_warning = $this->form->get_value('user_warning')->get_raw_value();
 			if (!empty($user_warning) && $user_warning != $this->user->get_warning_percentage())
 			{
 				MemberSanctionManager::caution($user_id, $user_warning, MemberSanctionManager::SEND_MP, str_replace('%level%', $user_warning, $this->lang['user.warning.level.changed']));
-				HooksService::execute_hook_action('user_warning', $user_id, array_merge($this->user->get_properties(), array('title' => $this->user->get_display_name(), 'url' => UserUrlBuilder::profile($user_id)->rel(), 'warning_percentage' => $user_warning)));
+				HooksService::execute_hook_action('user_warning', $user_id, array_merge($this->user->get_properties(), array('title' => $this->user->get_display_name(), 'url' => UserUrlBuilder::profile($user_id)->rel(), 'warning_percentage' => $user_warning)), $user_warning . ' %');
 			}
 			elseif (empty($user_warning))
 			{
@@ -439,7 +440,7 @@ class UserEditProfileController extends AbstractController
 			if (!empty($user_readonly) && $user_readonly != $this->user->get_delay_readonly())
 			{
 				MemberSanctionManager::remove_write_permissions($user_id, time() + $user_readonly, MemberSanctionManager::SEND_MP, str_replace('%date%', $this->form->get_value('user_readonly')->get_label(), $this->lang['user.readonly.changed']));
-				HooksService::execute_hook_action('user_punishment', $user_id, array_merge($this->user->get_properties(), array('title' => $this->user->get_display_name(), 'url' => UserUrlBuilder::profile($user_id)->rel(), 'delay_readonly' => $user_readonly)));
+				HooksService::execute_hook_action('user_punishment', $user_id, array_merge($this->user->get_properties(), array('title' => $this->user->get_display_name(), 'url' => UserUrlBuilder::profile($user_id)->rel(), 'delay_readonly' => $user_readonly)), isset($sanctions_duration[$user_readonly]) ? $sanctions_duration[$user_readonly] : '');
 			}
 			elseif (empty($user_readonly))
 			{
@@ -450,7 +451,7 @@ class UserEditProfileController extends AbstractController
 			if (!empty($user_ban) && $user_ban != $this->user->get_delay_banned())
 			{
 				MemberSanctionManager::banish($user_id, time() + $user_ban, MemberSanctionManager::SEND_MAIL);
-				HooksService::execute_hook_action('user_ban', $user_id, array_merge($this->user->get_properties(), array('title' => $this->user->get_display_name(), 'url' => UserUrlBuilder::profile($user_id)->rel(), 'delay_banned' => $user_ban)));
+				HooksService::execute_hook_action('user_ban', $user_id, array_merge($this->user->get_properties(), array('title' => $this->user->get_display_name(), 'url' => UserUrlBuilder::profile($user_id)->rel(), 'delay_banned' => $user_ban)), isset($sanctions_duration[$user_ban]) ? $sanctions_duration[$user_ban] : '');
 			}
 			elseif ($user_ban != $this->user->get_delay_banned())
 			{

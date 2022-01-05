@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 29
+ * @version     PHPBoost 6.0 - last update: 2022 01 05
  * @since       PHPBoost 1.6 - 2007 03 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -60,8 +60,8 @@ $editor->set_identifier('action_contents');
 if ($action == 'punish')
 {
 	// User management
-	$readonly = (int)retrieve(POST, 'new_info', 0);
-	$readonly = $readonly > 0 ? (time() + $readonly) : 0;
+	$readonly_duration = (int)retrieve(POST, 'new_info', 0);
+	$readonly = $readonly_duration > 0 ? (time() + $readonly_duration) : 0;
 	$readonly_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
 	if (!empty($id_get) && $valid_user) // Update of warning level
 	{
@@ -79,7 +79,7 @@ if ($action == 'punish')
 		SessionData::recheck_cached_data_from_user_id($id_get);
 		$user = UserService::get_user($id_get);
 		$sanctions_duration = FormFieldMemberSanction::get_sanctions_duration();
-		HooksService::execute_hook_action('user_punishment', $user->get_id(), array_merge($user->get_properties(), array('title' => $user->get_display_name(), 'url' => UserUrlBuilder::profile($user->get_id())->rel(), 'delay_readonly' => $readonly)), isset($sanctions_duration[$user->get_delay_readonly()]) ? $sanctions_duration[$user->get_delay_readonly()] : '');
+		HooksService::execute_hook_action('user_punishment', $user->get_id(), array_merge($user->get_properties(), array('title' => $user->get_display_name(), 'url' => UserUrlBuilder::profile($user->get_id())->rel(), 'delay_readonly' => $readonly_duration)), isset($sanctions_duration[$readonly_duration]) ? $sanctions_duration[$readonly_duration] : '');
 
 		AppContext::get_response()->redirect(HOST . DIR . url('/user/moderation_panel.php?action=punish', '', '&'));
 	}
@@ -367,8 +367,8 @@ else if ($action == 'warning')
 }
 else
 {
-	$user_ban = retrieve(POST, 'user_ban', '', TSTRING_UNCHANGE);
-	$user_ban = $user_ban > 0 ? (time() + $user_ban) : 0;
+	$user_ban_duration = retrieve(POST, 'user_ban', '', TSTRING_UNCHANGE);
+	$user_ban = $user_ban_duration > 0 ? (time() + $user_ban_duration) : 0;
 	if ($valid_user && !empty($id_get)) // User ban
 	{
 		try {
@@ -387,7 +387,7 @@ else
 		SessionData::recheck_cached_data_from_user_id($id_get);
 		$user = UserService::get_user($id_get);
 		$sanctions_duration = FormFieldMemberSanction::get_sanctions_duration();
-		HooksService::execute_hook_action('user_ban', $user->get_id(), array_merge($user->get_properties(), array('title' => $user->get_display_name(), 'url' => UserUrlBuilder::profile($user->get_id())->rel(), 'delay_banned' => $user_ban)), isset($sanctions_duration[$user->get_delay_readonly()]) ? $sanctions_duration[$user->get_delay_readonly()] : '');
+		HooksService::execute_hook_action('user_ban', $user->get_id(), array_merge($user->get_properties(), array('title' => $user->get_display_name(), 'url' => UserUrlBuilder::profile($user->get_id())->rel(), 'delay_banned' => $user_ban_duration)), isset($sanctions_duration[$user_ban_duration]) ? $sanctions_duration[$user_ban_duration] : '');
 
 		AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('ban'));
 	}
