@@ -13,7 +13,7 @@
 				</div>
 
 				<div class="message-error">
-					{@warning.404.message}
+					{@H|warning.404.message}
 				</div>
 
 				<div class="spacer"></div>

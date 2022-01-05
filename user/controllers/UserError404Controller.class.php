@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 19
+ * @version     PHPBoost 6.0 - last update: 2022 01 05
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -31,6 +31,7 @@ class UserError404Controller extends UserErrorController
 	protected function create_view()
 	{
 		$this->view = new FileTemplate('user/UserError404Controller.tpl');
+		$this->view->add_lang(LangLoader::get_all_langs());
 	}
 }
 ?>
