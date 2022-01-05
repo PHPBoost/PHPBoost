@@ -247,10 +247,7 @@ ul.pagination a { padding: 0.309em; }
 }
 
 /* --- footer --- */
-#forum-bottom {
-	margin: 1em 0 0.309em 0;
-	padding: 0.809em;
-}
+#forum-bottom { margin: 1em 0 0.309em 0; }
 
 #forum-bottom .forum-message-options { border-bottom: none; }
 
