@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 30
+ * @version     PHPBoost 6.0 - last update: 2022 01 06
  * @since       PHPBoost 3.0 - 2009 09 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class LangLoader
@@ -205,7 +206,7 @@ class LangLoader
 			$filename = $file->get_name_without_extension();
 			if (!in_array($filename, array('desc')))
 			{
-				foreach(self::get($filename, PATH_TO_ROOT . '/templates/' . $current_theme) as $var => $desc)
+				foreach(self::get($filename, '/templates/' . $current_theme) as $var => $desc)
 				{
 					$theme_langloader[$var] = $desc;
 				}
