@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 27
+ * @version     PHPBoost 6.0 - last update: 2022 01 07
  * @since       PHPBoost 1.6 - 2007 10 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -31,6 +31,7 @@ $lang['wiki.categories.list']   = 'List of main categories';
 $lang['wiki.items.in.category'] = 'Articles of this category';
 $lang['wiki.sub.categories']    = 'Categories contained by this category :';
 $lang['wiki.no.sub.item']       = 'No existing sub-article';
+$lang['wiki.no.item']       	= 'No article';
 
 // Archives
 $lang['wiki.history']         = 'History';
