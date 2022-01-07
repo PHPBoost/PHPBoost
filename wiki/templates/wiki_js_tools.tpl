@@ -6,8 +6,8 @@
 	var title_paragraph      = "{@wiki.paragraph.name}";
 </script>
 
-<script src="{PICTURES_DATA_PATH}/js/wiki.js"></script>
-<script src="{PICTURES_DATA_PATH}/js/bbcode.wiki.js"></script>
+<script src="{PICTURES_DATA_PATH}/js/wiki# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
+<script src="{PICTURES_DATA_PATH}/js/bbcode.wiki# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 
 <div class="bbcode wiki-extended-bbcode">
 	<nav class="bbcode-containers">

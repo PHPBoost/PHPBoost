@@ -119,5 +119,5 @@
 </script>
 
 # IF C_COOKIEBAR_ENABLED #
-	<script src="{PATH_TO_ROOT}/user/templates/js/cookiebar.js"></script>
+	<script src="{PATH_TO_ROOT}/user/templates/js/cookiebar# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 # ENDIF #
