@@ -6,48 +6,52 @@
 		</div>
 		<h1 itemprop="name">{TITLE}</h1>
 	</header>
-	<div class="sub-section">
-		<div class="content-container">
-			<div class="cell-flex cell-columns-2 cell-tile">
-				# START cat #
-					# IF cat.list_cats #
+	# IF cat #
+		<div class="sub-section">
+			<div class="content-container">
+				<div class="cell-flex cell-columns-2 cell-tile">
+					# START cat #
+						# IF cat.list_cats #
+							<aside class="cell">
+								<div class="cell-header">
+									<h6 class="cell-name">{@wiki.sub.categories}</h6>
+								</div>
+								<div class="cell-list">
+									<ul>
+										# START cat.list_cats #
+											<li>
+												<i class="fa fa-folder" aria-hidden="true"></i> <a class="offload" href="{cat.list_cats.U_CATEGORY}">{cat.list_cats.NAME}</a>
+											</li>
+										# END cat.list_cats #
+									</ul>
+								</div>
+							</aside>
+						# ENDIF #
 						<aside class="cell">
 							<div class="cell-header">
-								<h6 class="cell-name">{@wiki.sub.categories}</h6>
+								<h6 class="cell-name">{@wiki.items.in.category}</h6>
 							</div>
-							<div class="cell-list">
-								<ul>
-									# START cat.list_cats #
-										<li>
-											<i class="fa fa-folder" aria-hidden="true"></i> <a class="offload" href="{cat.list_cats.U_CATEGORY}">{cat.list_cats.NAME}</a>
-										</li>
-									# END cat.list_cats #
-								</ul>
-							</div>
+							# IF cat.list_art #
+								<div class="cell-list">
+									<ul>
+										# START cat.list_art #
+											<li>
+												<i class="fa fa-file" aria-hidden="true"></i> <a class="offload" href="{cat.list_art.U_ITEM}">{cat.list_art.TITLE}</a>
+											</li>
+										# END cat.list_art #
+									</ul>
+								</div>
+							# ENDIF #
+							# START cat.no_sub_article #
+								<div class="cell-body"><div class="cell-content">{cat.no_sub_article.NO_SUB_ARTICLE}</div></div>
+							# END cat.no_sub_article #
 						</aside>
-					# ENDIF #
-					<aside class="cell">
-						<div class="cell-header">
-							<h6 class="cell-name">{@wiki.items.in.category}</h6>
-						</div>
-						<div class="cell-list">
-							<ul>
-								# START cat.list_art #
-									<li>
-										<i class="fa fa-file" aria-hidden="true"></i> <a class="offload" href="{cat.list_art.U_ITEM}">{cat.list_art.TITLE}</a>
-									</li>
-								# END cat.list_art #
-							</ul>
-						</div>
-						# START cat.no_sub_article #
-							<div class="cell-body"><div class="cell-content">{cat.no_sub_article.NO_SUB_ARTICLE}</div></div>
-						# END cat.no_sub_article #
-					</aside>
-				# END cat #
-				<div class="spacer"></div>
+					# END cat #
+					<div class="spacer"></div>
+				</div>
 			</div>
 		</div>
-	</div>
+	# ENDIF #
 	<div class="sub-section">
 		<div class="content-container">
 			<article id="article-wiki-{ID}" class="wiki-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #">

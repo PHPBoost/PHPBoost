@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2022 01 08
  * @since       PHPBoost 1.6 - 2007 05 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -29,8 +29,6 @@ require_once('../kernel/header.php');
 
 $view = new FileTemplate('wiki/explorer.tpl');
 $view->add_lang($lang);
-
-$module_data_path = $view->get_pictures_data_path();
 
 //Contenu de la racine:
 foreach (WikiCategoriesCache::load()->get_categories() as $key => $cat)

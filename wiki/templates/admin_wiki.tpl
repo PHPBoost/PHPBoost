@@ -55,7 +55,7 @@
 		</fieldset>
 
 		<fieldset>
-			<legend>{@wiki.config.name}</legend>
+			<legend>{@common.options}</legend>
 			<div class="fieldset-inset">
 				<div class="form-element inline-radio custom-radio">
 					<label for="display_cats">{@wiki.config.display.categories}</label>

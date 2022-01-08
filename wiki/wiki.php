@@ -159,10 +159,10 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 
 	$date = new Date($article_infos['timestamp'], Timezone::SERVER_TIMEZONE);
 	$categories = WikiCategoriesCache::load()->get_categories();
-	
+
 	$content = FormatingHelper::second_parse(wiki_no_rewrite($article_infos['content']));
 	$rich_content = HooksService::execute_hook_display_action('wiki', $content, $article_infos);
-	
+
 	$view->put_all(array_merge(
 		Date::get_array_tpl_vars($date,'date'),
 		array(

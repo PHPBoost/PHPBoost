@@ -1,8 +1,7 @@
 <script>
-	var path = '{PICTURES_DATA_PATH}';
 	var selected_cat = {SELECTED_CAT};
 </script>
-<script src="{PICTURES_DATA_PATH}/js/wiki# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
+<script src="{PATH_TO_ROOT}/wiki/templates/js/wiki# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 
 <section id="module-wiki-explorer" class="explorer">
 	<header class="section-header">

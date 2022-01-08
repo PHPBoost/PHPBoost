@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 30
+ * @version     PHPBoost 6.0 - last update: 2022 01 08
  * @since       PHPBoost 1.6 - 2006 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -122,7 +122,7 @@ if (!empty($contents)) //On enregistre un article
             // Feeds Regeneration
             Feed::clear_cache('wiki');
 			HooksService::execute_hook_action('edit', 'wiki', array_merge($article_infos, array('contents' => $contents, 'url' => Url::to_rel('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'])))));
-			
+
 			//On redirige
 			$redirect = $article_infos['encoded_title'];
 			AppContext::get_response()->redirect(url('wiki.php?title=' . $redirect, $redirect, '', '&'));
@@ -165,7 +165,7 @@ if (!empty($contents)) //On enregistre un article
 					'undefined_status' => '',
 					'auth'             => ''
 				);
-				
+
 				$result = PersistenceContext::get_querier()->insert(PREFIX . "wiki_articles", $properties);
 				//On récupère le numéro de l'article créé
 				$id_article = $result->get_last_inserted_id();
@@ -188,7 +188,7 @@ if (!empty($contents)) //On enregistre un article
 				// Feeds Regeneration
 				Feed::clear_cache('wiki');
 				HooksService::execute_hook_action('add', 'wiki', array_merge($properties, array('contents' => $contents, 'url' => Url::to_rel('/wiki/' . url('wiki.php?title=' . $properties['encoded_title'], $properties['encoded_title'])))));
-				
+
 				$redirect = PersistenceContext::get_querier()->get_column_value(PREFIX . "wiki_articles", 'encoded_title', 'WHERE id = :id', array('id' => $id_article));
 				AppContext::get_response()->redirect(url('wiki.php?title=' . $redirect, $redirect, '' , '&'));
 			}
@@ -278,7 +278,7 @@ else
 			'CURRENT_CATEGORY'  => $current_cat
 		));
 	}
-	else //Si il n'a pas de catégorie parente
+	else // Si il n'a pas de catégorie parente
 	{
 		$view->assign_block_vars('create', array());
 		$contents = '';
@@ -289,14 +289,12 @@ else
 		ORDER BY title ASC");
 		while ($row = $result->fetch())
 		{
-			$module_data_path = PATH_TO_ROOT . '/wiki/templates';
 			$sub_cats_number = PersistenceContext::get_querier()->count(PREFIX . "wiki_cats", 'WHERE id_parent = :id', array('id' => $row['id']));
 			$view->assign_block_vars('create.list', array(
 				'ID'        => $row['id'],
 				'TITLE'     => stripslashes($row['title']),
 				'C_SUB_CAT' => $sub_cats_number > 0
 			));
-
 		}
 		$result->dispose();
 		$view->put_all(array(

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2022 01 08
  * @since       PHPBoost 1.6 - 2007 05 24
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -111,7 +111,6 @@ else
 		'C_TRACKED_ITEMS' => $result->get_rows_count() > 0
 	));
 
-	$module_data_path = $view->get_pictures_data_path();
 	while ($row = $result->fetch())
 	{
 		$view->assign_block_vars('list', array(

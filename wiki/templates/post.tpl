@@ -1,5 +1,4 @@
 <script>
-	var path = '{PICTURES_DATA_PATH}';
 	var selected_cat = {SELECTED_CATEGORY};
 	function check_form_post(){
 
