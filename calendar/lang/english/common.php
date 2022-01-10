@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 12
+ * @version     PHPBoost 6.0 - last update: 2022 01 10
  * @since       PHPBoost 4.0 - 2013 08 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -66,7 +66,6 @@ $lang['calendar.delete.serie']                = 'All events of the serie';
 $lang['calendar.form.cancel']                 = 'Cancel the event';
 $lang['calendar.form.repeat.type']            = 'Repeat';
 $lang['calendar.form.repeat.number']          = 'Repeat number';
-$lang['calendar.form.repeat.never']           = 'Never';
 $lang['calendar.form.display.map']            = 'Display address on a map';
 $lang['calendar.form.enable.registration']    = 'Active members registration for the event';
 $lang['calendar.form.registration.limit']     = 'Limit subscribers number';

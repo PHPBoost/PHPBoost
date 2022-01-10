@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 30
+ * @version     PHPBoost 6.0 - last update: 2022 01 10
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -69,7 +69,7 @@ class CalendarItemFormController extends DefaultModuleController
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('repeat_type', $this->lang['calendar.form.repeat.type'], $item_content->get_repeat_type(),
 			array(
-				new FormFieldSelectChoiceOption($this->lang['calendar.form.repeat.never'], CalendarItemContent::NEVER),
+				new FormFieldSelectChoiceOption($this->lang['common.never'], CalendarItemContent::NEVER),
 				new FormFieldSelectChoiceOption($this->lang['date.every.day'], CalendarItemContent::DAILY),
 				new FormFieldSelectChoiceOption($this->lang['date.every.week'], CalendarItemContent::WEEKLY),
 				new FormFieldSelectChoiceOption($this->lang['date.every.month'], CalendarItemContent::MONTHLY),
