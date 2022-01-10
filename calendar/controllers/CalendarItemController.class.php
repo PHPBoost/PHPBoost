@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 14
+ * @version     PHPBoost 6.0 - last update: 2022 01 10
  * @since       PHPBoost 4.0 - 2013 07 29
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -65,7 +65,7 @@ class CalendarItemController extends DefaultModuleController
 		{
 			$comments_topic = new CalendarCommentsTopic($item);
 			$comments_topic->set_id_in_module($item->get_id());
-			$comments_topic->set_url(CalendarUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()));
+			$comments_topic->set_url(CalendarUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()));
 
 			$this->view->put_all(array(
 				'C_COMMENTS_ENABLED' => true,
@@ -113,7 +113,7 @@ class CalendarItemController extends DefaultModuleController
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($item->get_content()->get_title(), ($category->get_id() != Category::ROOT_CATEGORY ? $category->get_name() . ' - ' : '') . $this->lang['calendar.module.title']);
 		$graphical_environment->get_seo_meta_data()->set_description($item->get_content()->get_content());
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['calendar.module.title'], CalendarUrlBuilder::home());
@@ -124,7 +124,7 @@ class CalendarItemController extends DefaultModuleController
 			if ($category->get_id() != Category::ROOT_CATEGORY)
 				$breadcrumb->add($category->get_name(), CalendarUrlBuilder::home());
 		}
-		$breadcrumb->add($item->get_content()->get_title(), CalendarUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()));
+		$breadcrumb->add($item->get_content()->get_title(), CalendarUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()));
 
 		if ($item->get_content()->has_thumbnail())
 			$graphical_environment->get_seo_meta_data()->set_picture_url($item->get_content()->get_thumbnail());

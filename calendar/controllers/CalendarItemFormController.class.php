@@ -595,7 +595,7 @@ class CalendarItemFormController extends DefaultModuleController
 			$graphical_environment->set_page_title($this->lang['calendar.item.edit'], $this->lang['calendar.module.title']);
 
 			$category = $item->get_content()->get_category();
-			$breadcrumb->add($item->get_content()->get_title(), CalendarUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()));
+			$breadcrumb->add($item->get_content()->get_title(), CalendarUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()));
 
 			$breadcrumb->add($this->lang['calendar.item.edit'], CalendarUrlBuilder::edit_item($item->get_id()));
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['calendar.item.edit']);

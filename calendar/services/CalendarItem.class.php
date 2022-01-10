@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 12
+ * @version     PHPBoost 6.0 - last update: 2022 01 10
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -144,7 +144,7 @@ class CalendarItem
 	public function get_item_url()
 	{
 		$category = $this->content->get_category();
-		return CalendarUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name(), $this->id, $this->content->get_rewrited_title())->rel();
+		return CalendarUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->id, $this->content->get_rewrited_title())->rel();
 	}
 
 	public function get_template_vars()

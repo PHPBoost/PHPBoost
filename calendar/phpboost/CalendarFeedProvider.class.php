@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 23
+ * @version     PHPBoost 6.0 - last update: 2022 01 10
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -63,7 +63,7 @@ class CalendarFeedProvider implements FeedProvider
 				{
 					$category = $categories[$item->get_content()->get_id_category()];
 
-					$link = CalendarUrlBuilder::display_item($category->get_id(), $category->get_rewrited_name() ? $category->get_rewrited_name() : 'root', $item->get_id(), $item->get_content()->get_rewrited_title());
+					$link = CalendarUrlBuilder::display($category->get_id(), $category->get_rewrited_name() ? $category->get_rewrited_name() : 'root', $item->get_id(), $item->get_content()->get_rewrited_title());
 
 					$feed_item = new FeedItem();
 					$feed_item->set_title($item->get_content()->get_title());
