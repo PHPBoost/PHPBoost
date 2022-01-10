@@ -32,7 +32,7 @@
 
 .mini-checkbox .checkbox [type="checkbox"] + span {
 	position: relative;
-	padding-left: 1.618em;
+	padding-left: 2em;
 	cursor: pointer;
 }
 
