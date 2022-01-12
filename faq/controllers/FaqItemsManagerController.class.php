@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 14
+ * @version     PHPBoost 6.0 - last update: 2022 01 12
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -108,7 +108,9 @@ class FaqItemsManagerController extends DefaultModuleController
                 {
                     if (isset($this->ids[$i]))
                     {
+						$item = FaqService::get_item($this->ids[$i]);
                         FaqService::delete($this->ids[$i]);
+						HooksService::execute_hook_action('delete', self::$module_id, $item->get_properties());
                     }
                 }
             }
