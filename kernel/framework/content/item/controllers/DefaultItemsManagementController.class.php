@@ -151,7 +151,9 @@ class DefaultItemsManagementController extends AbstractItemController
 				{
 					if (isset($this->ids[$i]))
 					{
-						self::get_items_manager()->delete_from_id($this->ids[$i]);
+						$item = self::get_items_manager()->get_item($this->ids[$i]);
+						self::get_items_manager()->delete($item);
+						HooksService::execute_hook_action('delete', self::$module_id, $item->get_properties());
 					}
 				}
 			}
