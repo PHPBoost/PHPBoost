@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 19
+ * @version     PHPBoost 6.0 - last update: 2022 01 12
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -95,9 +95,9 @@ class ItemsManager
 
 	 /**
 	 * @desc Delete an item.
-	 * @param int $id Item identifier
+	 * @param string[] $item Item to delete
 	 */
-	public function delete(int $id)
+	public function delete(Item $item)
 	{
 		if (AppContext::get_current_user()->is_readonly())
 		{
@@ -105,13 +105,22 @@ class ItemsManager
 			DispatchManager::redirect($controller);
 		}
 
-		self::$db_querier->delete(self::$items_table, 'WHERE id=:id', array('id' => $id));
+		self::$db_querier->delete(self::$items_table, 'WHERE id=:id', array('id' => $item->get_id()));
 
-		self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => self::$module_id, 'id' => $id));
+		self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => self::$module_id, 'id' => $item->get_id()));
 
-		CommentsService::delete_comments_topic_module(self::$module_id, $id);
-		KeywordsService::get_keywords_manager()->delete_relations($id);
-		NotationService::delete_notes_id_in_module(self::$module_id, $id);
+		CommentsService::delete_comments_topic_module(self::$module_id, $item->get_id());
+		KeywordsService::get_keywords_manager()->delete_relations($item->get_id());
+		NotationService::delete_notes_id_in_module(self::$module_id, $item->get_id());
+	}
+
+	 /**
+	 * @desc Delete an item from its id.
+	 * @param int $id Item identifier
+	 */
+	public function delete_from_id(int $id)
+	{
+		$this->delete($this->get_item($id));
 	}
 
 	 /**

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 24
+ * @version     PHPBoost 6.0 - last update: 2022 01 12
  * @since       PHPBoost 6.0 - 2019 12 20
 */
 
@@ -24,7 +24,7 @@ class DefaultDeleteItemController extends AbstractItemController
 		{
 			AppContext::get_session()->csrf_get_protect();
 			
-			self::get_items_manager()->delete($this->item->get_id());
+			self::get_items_manager()->delete($this->item);
 			self::get_items_manager()->clear_cache();
 			HooksService::execute_hook_action('delete', self::$module_id, $this->item->get_properties());
 			
