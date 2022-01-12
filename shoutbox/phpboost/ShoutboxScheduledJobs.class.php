@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2014 11 23
+ * @version     PHPBoost 6.0 - last update: 2022 01 12
  * @since       PHPBoost 3.0 - 2010 10 16
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -19,7 +19,7 @@ class ShoutboxScheduledJobs extends AbstractScheduledJobExtensionPoint
 
 		if ($config->is_max_messages_number_enabled())
 		{
-			PersistenceContext::get_querier()->delete(ShoutboxSetup::$shoutbox_table, 'WHERE id NOT IN (SELECT * FROM (SELECT id FROM ' . ShoutboxSetup::$shoutbox_table . ' ORDER BY id DESC LIMIT ' . $config->get_max_messages_number() . ') AS temp)');
+			ShoutboxService::delete('WHERE id NOT IN (SELECT * FROM (SELECT id FROM ' . ShoutboxSetup::$shoutbox_table . ' ORDER BY id DESC LIMIT :max_messages_number) AS temp)', array('max_messages_number' => $config->get_max_messages_number()));
 		}
 	}
 }
