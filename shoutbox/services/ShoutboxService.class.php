@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 02 11
+ * @version     PHPBoost 6.0 - last update: 2022 01 12
  * @since       PHPBoost 4.1 - 2014 10 15
 */
 
@@ -33,12 +33,12 @@ class ShoutboxService
 		self::$db_querier->update(ShoutboxSetup::$shoutbox_table, $message->get_properties(), 'WHERE id=:id', array('id' => $message->get_id()));
 	}
 
-	public static function delete($condition, array $parameters)
+	public static function delete($condition, array $parameters = array())
 	{
 		self::$db_querier->delete(ShoutboxSetup::$shoutbox_table, $condition, $parameters);
 	}
 
-	public static function get_message($condition, array $parameters)
+	public static function get_message($condition, array $parameters = array())
 	{
 		$row = self::$db_querier->select_single_row_query('SELECT member.*, shoutbox.*
 		FROM ' . ShoutboxSetup::$shoutbox_table . ' shoutbox
