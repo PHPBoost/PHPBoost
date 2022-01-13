@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2022 01 13
  * @since       PHPBoost 3.0 - 2011 03 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -117,7 +117,9 @@ class NewsletterArchivesController extends DefaultModuleController
 				{
 					if (isset($this->ids[$i]) && $this->ids[$i] && NewsletterAuthorizationsService::id_stream($this->stream->get_id())->moderation_archives())
 					{
+						$row = PersistenceContext::get_querier()->select_single_row(NewsletterSetup::$newsletter_table_archives, array('*'), "WHERE id = '". $this->ids[$i] ."'");
 						NewsletterService::delete_archive($this->ids[$i]);
+						HooksService::execute_hook_action('delete', self::$module_id, array('id' => $this->ids[$i], 'title' => $row['subject']));
 					}
 				}
 			}
