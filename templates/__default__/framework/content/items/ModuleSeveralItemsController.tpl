@@ -401,7 +401,7 @@
 				<div class="content-container">
 					<div class="content">
 						<div class="message-helper bgc notice align-center">
-							{@items.no.element}
+							{@common.no.item.now}
 						</div>
 					</div>
 				</div>
