@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 01 04
+ * @version     PHPBoost 6.0 - last update: 2022 01 15
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -160,7 +160,7 @@ class GalleryDisplayCategoryController extends ModuleController
 			'CATEGORY_DESCRIPTION'     => $category_description,
 			'ITEMS_NUMBER'             => $nbr_pics,
 
-			'U_EDIT_CATEGORY'    => $category->get_id() == Category::ROOT_CATEGORY ? GalleryUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($category->get_id())->rel(),
+			'U_EDIT_CATEGORY'    => $category->get_id() == Category::ROOT_CATEGORY ? GalleryUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($category->get_id(), 'gallery')->rel(),
 			'U_BEST_VIEWS'       => PATH_TO_ROOT . '/gallery/gallery' . url('.php?views=1&amp;cat=' . $category->get_id(), '-' . $category->get_id() . '.php?views=1'),
 			'U_BEST_NOTES'       => PATH_TO_ROOT . '/gallery/gallery' . url('.php?notes=1&amp;cat=' . $category->get_id(), '-' . $category->get_id() . '.php?notes=1'),
 			'U_ASC'              => PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $category->get_id() . '&amp;sort=' . $g_type . '_' . 'asc', '-' . $category->get_id() . '.php?sort=' . $g_type . '_' . 'asc'),
