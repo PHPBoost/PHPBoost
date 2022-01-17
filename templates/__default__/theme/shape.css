@@ -39,34 +39,26 @@ body {
 	padding: 0 0.309em;
 }
 
+.content-wrapper { margin: auto; }
+
 @media (min-width: 769px)  {
 	#header { padding: 0; }
 
 	#inner-header,
 	#global,
-	#footer {
-		margin: 0 auto;
-		padding: 1.618em 0;
-	}
+	#footer { padding: 1.618em 0; }
 
-	#sub-header,
-	#top-header { margin: 0 auto; }
-
-	#top-header,
-	#inner-header,
-	#sub-header,
-	#global,
-	#footer { width: 768px; }
+	.content-wrapper  { width: 768px; }
 }
 
-@media (min-width: 1025px) { #top-header, #inner-header, #sub-header, #global, #footer { width: 1024px; } }
-@media (min-width: 1367px) { #top-header, #inner-header, #sub-header, #global, #footer { width: 1280px; } }
+@media (min-width: 1025px) { .content-wrapper { width: 1024px; } }
+@media (min-width: 1367px) { .content-wrapper { width: 1280px; } }
 
 
 /* --- Header --------------------------------------------------------------- */
 #header { position: relative; }
 
-#inner-header {
+#inner-header-container {
 	display: flex;
 	flex-direction: column;
 }
@@ -105,9 +97,9 @@ body {
 }
 
 @media (min-width: 769px) {
-	#inner-header { flex-direction: row; }
+	#inner-header-container { flex-direction: row; }
 
-	#inner-header { align-self: flex-end; }
+	#inner-header-container { align-self: flex-end; }
 
 	#site-logo {
 		width: 90px;
@@ -129,7 +121,7 @@ body {
 
 
 /* --- Global --------------------------------------------------------------- */
-#global {
+#global-container {
 	display: flex;
 	flex-direction: column;
 	flex: 1 1 auto;
@@ -146,7 +138,7 @@ body {
 #menu-right { order : 3; }
 
 @media (min-width: 769px) {
-	#global { flex-direction: row; }
+	#global-container { flex-direction: row; }
 
 	#menu-left,
 	#menu-right { width: calc(100% / 13 * 3.5); }
@@ -213,7 +205,7 @@ section {
 	padding: 0.809em;
 }
 
-.footer-infos {
+#footer-infos {
 	margin: auto;
 	padding: 0.809em;
 	min-height: 40px;
@@ -223,16 +215,13 @@ section {
 	text-align: center;
 }
 
-.footer-infos span {
+#footer-infos span {
 	font-size: 0.8em;
 	display: block;
 }
 
-.footer-infos span.footer-infos-separator { display: none; }
-
 @media (min-width: 769px) {
-	.footer-infos span,
-	.footer-infos span.footer-infos-separator { display: inline-block; }
+	#footer-infos { padding: 0.618em 0 0; }
 
-	.footer-infos { padding: 0.618em 0 0; }
+	#footer-infos span { display: inline-block; }
 }
