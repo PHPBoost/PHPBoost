@@ -16,7 +16,7 @@
 	</script>
 # ENDIF #
 
-<div id="module-connect" class="cell-mini# IF C_VERTICAL # cell-tile cell-mini-vertical# ENDIF #">
+<div id="module-connect" class="cell-mini# IF C_VERTICAL # cell-tile cell-mini-vertical# ENDIF ## IF IS_USER_CONNECTED #user-connected# ELSE #user-not-connected# ENDIF #">
 	<div class="cell">
 		# IF NOT IS_USER_CONNECTED #
 			# IF C_VERTICAL #
