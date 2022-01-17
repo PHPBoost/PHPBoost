@@ -4,7 +4,7 @@
  *
 */
 
-#global {
+#global-container {
 	padding: 0.809em;
 	min-height: 0;
 	width: 100%;
@@ -15,7 +15,7 @@
 }
 
 @media (min-width: 769px) {
-	#global {
+	#global-container {
 		padding: 2.618em;
 		align-items: center;
 		justify-content: flex-start;
