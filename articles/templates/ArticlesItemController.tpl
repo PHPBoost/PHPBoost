@@ -17,7 +17,7 @@
 				<div class="flex-between">
 					<div class="more">
 						# IF C_AUTHOR_DISPLAYED #
-							<span class="pinned">
+							<span class="pinned item-author">
 								# IF C_AUTHOR_CUSTOM_NAME #
 									<i class="fa fa-user" aria-hidden="true"></i> <span class="custom-author">{AUTHOR_CUSTOM_NAME}</span>
 								# ELSE #
@@ -27,37 +27,37 @@
 								# ENDIF #
 							</span>
 						# ENDIF #
-						<span class="pinned">
+						<span class="pinned item-creation-date">
 							<i class="far fa-calendar-alt" aria-hidden="true"></i> <time datetime="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{PUBLISHING_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT C_DIFFERED #{DATE}# ELSE #{PUBLISHING_START_DATE}# ENDIF #</time>
 						</span>
 						# IF NOT C_ROOT_CATEGORY #
-							<span class="pinned">
+							<span class="pinned item-category">
 								<i class="far fa-folder" aria-hidden="true"></i> <a class="offload" itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
 							</span>
 						# ENDIF #
-						<span class="pinned">
+						<span class="pinned item-views-number">
 							<i class="far fa-eye" aria-hidden="true"></i> <span role="contentinfo" aria-label="{VIEWS_NUMBER} {@common.views}">{VIEWS_NUMBER}</span>
 						</span>
 						# IF C_ENABLED_COMMENTS #
-							<span class="pinned">
+							<span class="pinned item-comments">
 								<a href="#comments-list"><i class="fa fa-comments" aria-hidden="true"></i> {COMMENTS_LABEL}</a>
 							</span>
 						# ENDIF #
 						# IF C_ENABLED_NOTATION #
-							<div class="pinned">
+							<div class="pinned item-notation">
 								{NOTATION}
 							</div>
 						# ENDIF #
 					</div>
 					<div class="controls align-right">
 						# IF C_CONTROLS #
-							<a class="offload" href="{U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
-							<a href="{U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+							<a class="offload item-edit" href="{U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+							<a class="item-delete" href="{U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 						# ENDIF #
 					</div>
 				</div>
 				# IF C_HAS_UPDATE_DATE #
-					<span class="pinned notice small text-italic modified-date"><i>{@common.last.update} : <time datetime="{UPDATE_DATE_ISO8601}" itemprop="datePublished">{UPDATE_DATE}</time></i></span>
+					<span class="pinned notice small text-italic item-modified-date"><i>{@common.last.update} : <time datetime="{UPDATE_DATE_ISO8601}" itemprop="datePublished">{UPDATE_DATE}</time></i></span>
 				# ENDIF #
 
 				# IF C_PAGINATION #

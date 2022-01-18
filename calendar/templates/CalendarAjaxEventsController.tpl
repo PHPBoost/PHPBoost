@@ -84,14 +84,16 @@
 					</header>
 					<div class="cell-infos">
 						<div class="more">
-							# IF items.C_AUTHOR_EXISTS #
-								<i class="fa fa-user"></i> <a itemprop="author" href="{items.U_AUTHOR_PROFILE}" class="pinned {items.AUTHOR_LEVEL_CLASS} offload" # IF items.C_AUTHOR_GROUP_COLOR # style="color:{items.AUTHOR_GROUP_COLOR}" # ENDIF # aria-label="{@common.author}">{items.AUTHOR}</a>
-							# ELSE #
-								<span class="pinned notice"><i class="fa fa-user"></i> {items.AUTHOR}</span>
-							# ENDIF #
-							# IF C_COMMENTS_ENABLED #<a class="pinned offload" href="{items.U_COMMENTS}"><i class="fa fa-comments" aria-hidden="true"></i> {items.L_COMMENTS}</a># ENDIF #
+							<span class="pinned item-author">
+								# IF items.C_AUTHOR_EXISTS #
+									<i class="fa fa-user"></i> <a itemprop="author" href="{items.U_AUTHOR_PROFILE}" class="{items.AUTHOR_LEVEL_CLASS} offload" # IF items.C_AUTHOR_GROUP_COLOR # style="color:{items.AUTHOR_GROUP_COLOR}" # ENDIF # aria-label="{@common.author}">{items.AUTHOR}</a>
+								# ELSE #
+									<span class="notice"><i class="fa fa-user"></i> {items.AUTHOR}</span>
+								# ENDIF #
+							</span>
+							# IF C_COMMENTS_ENABLED #<a class="pinned offload item-comments" href="{items.U_COMMENTS}"><i class="fa fa-comments" aria-hidden="true"></i> {items.L_COMMENTS}</a># ENDIF #
 							# IF items.C_LOCATION #
-								<span class="pinned" itemscope="itemscope" itemtype="https://schema.org/Place" aria-label="{@common.location}">
+								<span class="pinned item-location" itemscope="itemscope" itemtype="https://schema.org/Place" aria-label="{@common.location}">
 									<i class="fa fa-fw fa-map-marker-alt"></i>
 									<span class="text-strong" itemprop="name">{items.LOCATION}</span>
 								</span>
@@ -100,10 +102,10 @@
 						# IF items.C_CONTROLS #
 							<div class="controls align-right">
 								# IF items.C_EDIT #
-									<a class="offload" href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+									<a class="offload item-edit" href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 								# ENDIF #
 								# IF items.C_DELETE #
-									<a href="{items.U_DELETE}" aria-label="{@common.delete}"# IF NOT items.C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+									<a class="item-delete" href="{items.U_DELETE}" aria-label="{@common.delete}"# IF NOT items.C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 								# ENDIF #
 							</div>
 						# ENDIF #

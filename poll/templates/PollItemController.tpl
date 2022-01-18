@@ -21,16 +21,18 @@
 					# IF C_MORE_OPTIONS #
 						<div class="more">
 							# IF C_AUTHOR_DISPLAYED #
-								# IF C_AUTHOR_CUSTOM_NAME #
-									<span class="pinned" aria-label="{@common.author}"><i class="far fa-user" aria-hidden="true"></i> <span class="custom-author">{AUTHOR_CUSTOM_NAME}</span></span>
-								# ELSE #
-									<span class="pinned {AUTHOR_LEVEL_CLASS}" aria-label="{@common.author}"# IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}; border-color:{AUTHOR_GROUP_COLOR}" # ENDIF #>
-										<i class="far fa-user" aria-hidden="true"></i> # IF C_AUTHOR_EXISTS #<a itemprop="author" rel="author" class="{AUTHOR_LEVEL_CLASS} offload" href="{U_AUTHOR_PROFILE}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR_DISPLAY_NAME}</a># ELSE #<span class="visitor">{AUTHOR_DISPLAY_NAME}</span># ENDIF #
-									</span>
-								# ENDIF #
+								<span class="pinned item-author">
+									# IF C_AUTHOR_CUSTOM_NAME #
+										<span aria-label="{@common.author}"><i class="far fa-user" aria-hidden="true"></i> <span class="custom-author">{AUTHOR_CUSTOM_NAME}</span></span>
+									# ELSE #
+										<span class="{AUTHOR_LEVEL_CLASS}" aria-label="{@common.author}"# IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}; border-color:{AUTHOR_GROUP_COLOR}" # ENDIF #>
+											<i class="far fa-user" aria-hidden="true"></i> # IF C_AUTHOR_EXISTS #<a itemprop="author" rel="author" class="{AUTHOR_LEVEL_CLASS} offload" href="{U_AUTHOR_PROFILE}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR_DISPLAY_NAME}</a># ELSE #<span class="visitor">{AUTHOR_DISPLAY_NAME}</span># ENDIF #
+										</span>
+									# ENDIF #
+								</span>
 							# ENDIF #
 							# IF C_ENABLED_DATE #
-								<span class="pinned" aria-label="{@common.creation.date}">
+								<span class="pinned item-creation-date" aria-label="{@common.creation.date}">
 									<i class="far fa-calendar-alt" aria-hidden="true"></i>
 									<time datetime="# IF C_DIFFERED #{DIFFERED_START_DATE_ISO8601}# ELSE #{DATE_ISO8601}# ENDIF #" itemprop="datePublished">
 										# IF C_DIFFERED #{DIFFERED_START_DATE}# ELSE #{DATE}# ENDIF #
@@ -38,22 +40,22 @@
 								</span>
 							# ENDIF #
 							# IF C_ENABLED_CATEGORY #
-								<span class="pinned" aria-label="{@common.category}">
+								<span class="pinned item-category" aria-label="{@common.category}">
 									<a class="offload" itemprop="about" href="{U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {CATEGORY_NAME}</a>
 								</span>
 							# ENDIF #
 							# IF C_ENABLED_VIEWS #
-								<span class="pinned" role="contentinfo" aria-label="{@common.views.number}">
+								<span class="pinned item-views-number" role="contentinfo" aria-label="{@common.views.number}">
 									<i class="fa fa-eye" aria-hidden="true"></i> {VIEWS_NUMBER} # IF C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #
 								</span>
 							# ENDIF #
 							# IF C_ENABLED_COMMENTS #
-								<span class="pinned" aria-label="{@common.comments}">
+								<span class="pinned item-comments" aria-label="{@common.comments}">
 									<a href="#comments-list"><i class="fa fa-comments" aria-hidden="true"></i> {COMMENTS_LABEL}</a>
 								</span>
 							# ENDIF #
 							# IF C_ENABLED_NOTATION #
-								<li class="align-center d-inline-block">
+								<li class="align-center d-inline-block item-notation">
 									{NOTATION}
 								</li>
 							# ENDIF #
@@ -64,12 +66,12 @@
 
 					# IF C_CONTROLS #
 						<div class="controls align-right">
-							<a href="{U_EDIT}" class="offload" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
-							<a href="{U_DELETE}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+							<a href="{U_EDIT}" class="offload item-edit" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+							<a class="item-delete" href="{U_DELETE}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 						</div>
 					# ENDIF #
 				</div>
-				# IF C_HAS_UPDATE_DATE #<span class="pinned notice small text-italic modified-date">{@common.last.update} <time datetime="{UPDATE_DATE_ISO8601}" itemprop="dateModified">{UPDATE_DATE_FULL}</time></span># ENDIF #
+				# IF C_HAS_UPDATE_DATE #<span class="pinned notice small text-italic item-modified-date">{@common.last.update} <time datetime="{UPDATE_DATE_ISO8601}" itemprop="dateModified">{UPDATE_DATE_FULL}</time></span># ENDIF #
 
 				<div class="content">
 					# IF C_ENABLED_COUNTDOWN #

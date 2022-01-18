@@ -140,21 +140,21 @@
 								<div class="cell-body">
 									<div class="cell-infos">
 										<div class="more">
-											<span class="pinned"><i class="fa fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span>
+											<span class="pinned item-views-number"><i class="fa fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span>
 											# IF C_ENABLED_COMMENTS #
-												<span class="pinned">
+												<span class="pinned item-comments">
 													<i class="fa fa-comments" aria-hidden="true"></i>
 													# IF items.C_COMMENTS # {items.COMMENTS_NUMBER} # ENDIF # {items.L_COMMENTS}
 												</span>
 											# ENDIF #
 											# IF C_ENABLED_NOTATION #
-												<div class="pinned">{items.STATIC_NOTATION}</div>
+												<div class="pinned item-notation">{items.STATIC_NOTATION}</div>
 											# ENDIF #
 										</div>
 										# IF items.C_CONTROLS #
 											<span class="controls align-right">
-												# IF items.C_EDIT #<a class="offload" href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
-												# IF items.C_DELETE #<a href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
+												# IF items.C_EDIT #<a class="offload item-edit" href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
+												# IF items.C_DELETE #<a class="item-delete" href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
 											</span>
 										# ENDIF #
 									</div>
@@ -182,12 +182,12 @@
 									<div class="cell-list">
 										<ul>
 											<li class="li-stretch">
-												<a href="{items.U_VISIT}" class="button submit small offload">
+												<a href="{items.U_VISIT}" class="button submit small offload item-visit-link">
 													<i class="fa fa-globe" aria-hidden="true"></i> {@common.visit}
 												</a>
 												# IF items.C_VISIBLE #
 													# IF IS_USER_CONNECTED #
-														<a href="{items.U_DEADLINK}" data-confirmation="{@contribution.dead.link.confirmation}" class="button bgc-full warning small" aria-label="{@contribution.report.dead.link}">
+														<a href="{items.U_DEADLINK}" data-confirmation="{@contribution.dead.link.confirmation}" class="button bgc-full warning small item-deadlink" aria-label="{@contribution.report.dead.link}">
 															<i class="fa fa-unlink" aria-hidden="true"></i>
 														</a>
 													# ENDIF #
@@ -198,7 +198,7 @@
 									<div class="cell-content">
 										# IF C_FULL_ITEM_DISPLAY #
 											# IF items.C_IS_ADORNED #
-												<a class="offload" class="item-thumbnail" href="{items.U_ITEM}">
+												<a class="offload item-thumbnail" href="{items.U_ITEM}">
 													# IF items.C_IS_PARTNER #
 														# IF items.C_HAS_PARTNER_THUMBNAIL #
 															<img src="{items.U_PARTNER_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
