@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 01 04
+ * @version     PHPBoost 6.0 - last update: 2022 01 19
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -92,7 +92,7 @@ class MediaDisplayCategoryController extends DefaultModuleController
 			'CATEGORY_DESCRIPTION'     => $category_description,
 			'CATEGORY_ID'              => $this->get_category()->get_id(),
 
-			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? MediaUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->get_category()->get_id())->rel(),
+			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? MediaUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->get_category()->get_id(), 'media')->rel(),
 		));
 
 		$selected_fields = array('date' => '', 'alpha' => '', 'views' => '', 'note' => '', 'com' => '', 'asc' => '', 'desc' => '');

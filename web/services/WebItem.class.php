@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 24
+ * @version     PHPBoost 6.0 - last update: 2022 01 19
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -506,7 +506,7 @@ class WebItem
 				'CATEGORY_NAME'        => $category->get_name(),
 				'CATEGORY_DESCRIPTION' => $category->get_description(),
 				'U_CATEGORY_THUMBNAIL' => $category->get_thumbnail()->rel(),
-				'U_EDIT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY ? WebUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($category->get_id())->rel(),
+				'U_EDIT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY ? WebUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($category->get_id(), 'web')->rel(),
 
 				// Links
 				'U_SYNDICATION'       => SyndicationUrlBuilder::rss('web', $this->id_category)->rel(),

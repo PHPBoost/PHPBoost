@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 01 10
+ * @version     PHPBoost 6.0 - last update: 2022 01 19
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -232,7 +232,7 @@ class CalendarItem
 				'CATEGORY_ID'     => $category->get_id(),
 				'CATEGORY_NAME'   => $category->get_name(),
 				'CATEGORY_COLOR'  => $category->get_id() != Category::ROOT_CATEGORY ? $category->get_color() : '',
-				'U_EDIT_CATEGORY' => $category->get_id()   == Category::ROOT_CATEGORY ? CalendarUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($category->get_id())->rel(),
+				'U_EDIT_CATEGORY' => $category->get_id()   == Category::ROOT_CATEGORY ? CalendarUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($category->get_id(), 'calendar')->rel(),
 				'U_CATEGORY'      => $category->get_id() != Category::ROOT_CATEGORY ? CalendarUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), $this->get_start_date()->get_year(), $this->get_start_date()->get_month())->rel() : '',
 
 				'U_SYNDICATION'    => SyndicationUrlBuilder::rss('calendar', $category->get_id())->rel(),
