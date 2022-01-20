@@ -5,9 +5,8 @@
 		<div class="cell-form# IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF #">
 			<form action="{REWRITED_SCRIPT}" method="get">
 				<div class="# IF C_HORIZONTAL #grouped-inputs grouped-auto grouped-left# ENDIF #">
-					<label for="switchlang" class="grouped-element">
-						<span class="sr-only">{@common.select}</span>
-						# IF C_HORIZONTAL #<span>{@ls.switch.lang}</span># ENDIF #
+					<label for="switchlang" class="grouped-element# IF C_VERTICAL # sr-only# ENDIF #">
+						<span>{@ls.switch.lang}</span>
 					</label>
 					<div class="grouped-element">
 						<select
