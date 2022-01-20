@@ -9,7 +9,7 @@
 		}
 		else
 		{
-			alert('{@search.warning.length}');
+			alert(${escapejs(@search.warning.length)});
 			return false;
 		}
 	}
