@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 06 16
+ * @version   	PHPBoost 5.2 - last update: 2022 01 21
  * @since   	PHPBoost 3.0 - 2009 12 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,6 +15,7 @@ class SandboxFormController extends ModuleController
 {
 	private $view;
 	private $lang;
+	private $config;
 
 	/**
 	 * @var FormButtonSubmit
@@ -81,6 +82,7 @@ class SandboxFormController extends ModuleController
 		$this->lang = LangLoader::get('common', 'sandbox');
 		$this->view = new FileTemplate('sandbox/SandboxFormController.tpl');
 		$this->view->add_lang($this->lang);
+		$this->config = SandboxConfig::load();
 	}
 
 	private function build_form()
@@ -309,7 +311,7 @@ class SandboxFormController extends ModuleController
 		// AUTH
 		$fieldset3 = new FormFieldsetHTML('fieldset3', $this->lang['form.authorization']);
 		$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization($this->lang['form.authorization.1'], 1, $this->lang['form.authorization.1.desc']), new ActionAuthorization($this->lang['form.authorization.2'], 2)));
-		$auth_settings->build_from_auth_array(array('r1' => 3, 'r0' => 2, 'm1' => 1, '1' => 2));
+		$auth_settings->build_from_auth_array($this->config->get_authorizations());
 		$auth_setter = new FormFieldAuthorizationsSetter('auth', $auth_settings);
 		$fieldset3->add_field($auth_setter);
 		$form->add_fieldset($fieldset3);
