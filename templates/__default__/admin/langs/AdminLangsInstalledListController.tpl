@@ -20,7 +20,7 @@
 							# ENDIF #
 						# ENDIF #
 						# IF langs_installed.C_HAS_PICTURE #
-							<img src="{langs_installed.PICTURE_URL}" alt="{langs_installed.NAME}" class="valign-middle" />
+							<img src="{langs_installed.PICTURE_URL}" alt="{langs_installed.NAME}" class="flag-icon" />
 						# ENDIF #
 						<h3 class="cell-name">
 							{langs_installed.NAME}

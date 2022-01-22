@@ -274,6 +274,8 @@ strong,
 	cursor: not-allowed;
 }
 
+.flag-icon { margin: 0 0.309em 0 0; }
+
 /* --- Opacity --- */
 .low-opacity {
 	opacity: 0.40; }
@@ -297,7 +299,6 @@ strong,
 }
 
 /* Sticky */
-
 .sticky-menu {
 	position: sticky;
 	top: 0;

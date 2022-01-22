@@ -20,7 +20,7 @@
 								# ENDIF #
 							# ENDIF #
 							# IF langs_not_installed.C_HAS_THUMBNAIL #
-								<img src="{langs_not_installed.U_THUMBNAIL}" alt="{langs_not_installed.NAME}" class="valign-middle" />
+								<img src="{langs_not_installed.U_THUMBNAIL}" alt="{langs_not_installed.NAME}" class="flag-icon" />
 							# ENDIF #
 							<h3 class="cell-name">
 								{langs_not_installed.NAME}
