@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 25
+ * @version     PHPBoost 6.0 - last update: 2022 01 22
  * @since       PHPBoost 1.5 - 2006 06 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -160,6 +160,7 @@ $lang['warning.first.field.must.not.be.contained.in.second.field']     = 'Value 
 $lang['warning.login.and.email.must.not.be.contained.in.second.field'] = 'Your mail or your login must not be present in field ":field2"';
 
 // Upload
+$lang['warning.file.max.size.exceeded'] = 'The maximum file size must not exceed :max_file_size.';
 $lang['warning.file.max.dimension']     = 'Max file dimensions exceeded';
 $lang['warning.file.max.weight']        = 'Maximum file size exceeded';
 $lang['warning.file.invalid.format']    = 'Invalid file format';
