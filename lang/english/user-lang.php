@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 11
+ * @version     PHPBoost 6.0 - last update: 2022 01 22
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -377,7 +377,7 @@ $lang['user.field.type.date']            = 'Date';
 $lang['user.field.type.theme.choice']    = 'Theme';
 $lang['user.field.type.lang.choice']     = 'Language';
 $lang['user.field.type.born']            = 'Date of birth';
-$lang['user.field.type.pm.eomail']       = 'Email notification when receiving PM';
+$lang['user.field.type.pm.email']        = 'Email notification when receiving PM';
 $lang['user.field.type.editor']          = 'Editor';
 $lang['user.field.type.timezone']        = 'Timezone choice';
 $lang['user.field.type.sex']             = 'Sex';
