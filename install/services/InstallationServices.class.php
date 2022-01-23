@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2022 01 23
  * @since       PHPBoost 3.0 - 2010 02 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -181,7 +181,7 @@ class InstallationServices
 
 	private function generate_website_configuration($server_url, $server_path, $site_name, $site_slogan = '', $site_desc = '', $site_timezone = '')
 	{
-		$locale = LangLoader::get_locale();
+		$locale = $this->distribution_config['default_lang'];
 		$user = new AdminUser();
 		$user->set_locale($locale);
 		AppContext::set_current_user($user);
