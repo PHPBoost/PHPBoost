@@ -464,8 +464,8 @@ else
                         $bbcode = '[img]/upload/' . $row['path'] . '[/img]';
                         $tinymce = '<img src="/upload/' . $row['path'] . '" alt="' . $row['name'] . '" />';
                         $link = '/upload/' . $row['path'];
-                        break;
                     }
+                        break;
                 // Sounds
                 case 'wav':
                 case 'ogg':
