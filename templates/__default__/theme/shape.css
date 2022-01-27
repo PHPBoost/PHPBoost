@@ -34,10 +34,7 @@ body {
 
 #header,
 #global,
-#footer {
-	width: 100%;
-	padding: 0 0.309em;
-}
+#footer { padding: 0 0.309em; }
 
 .content-wrapper { margin: auto; }
 
