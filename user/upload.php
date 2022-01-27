@@ -439,7 +439,10 @@ else
         ));
         while ($row = $result->fetch()) {
             $name_cut = (TextHelper::strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlspecialchars(TextHelper::substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
-
+            
+            $width_source = !empty($width_source) ? $width_source + 30 : 0;
+            $height_source = !empty($height_source) ? $height_source + 30 : 0;
+            
             $get_img_mimetype = Uploads::get_img_mimetype($row['type']);
             $size_img = '';
             switch ($row['type']) {
@@ -458,14 +461,12 @@ else
                     if ($file->exists())
                     {
                         list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT . '/upload/' . $row['path']);
+                    }
                         $size_img = ' (' . $width_source . 'x' . $height_source . ')';
-                        $width_source = !empty($width_source) ? $width_source + 30 : 0;
-                        $height_source = !empty($height_source) ? $height_source + 30 : 0;
                         $bbcode = '[img]/upload/' . $row['path'] . '[/img]';
                         $tinymce = '<img src="/upload/' . $row['path'] . '" alt="' . $row['name'] . '" />';
                         $link = '/upload/' . $row['path'];
-                    }
-                        break;
+                    break;
                 // Sounds
                 case 'wav':
                 case 'ogg':
