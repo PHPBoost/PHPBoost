@@ -454,14 +454,18 @@ else
                 case 'raw':
                 case 'ico':
                 case 'tif':
-                    list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT . '/upload/' . $row['path']);
-                    $size_img = ' (' . $width_source . 'x' . $height_source . ')';
-                    $width_source = !empty($width_source) ? $width_source + 30 : 0;
-                    $height_source = !empty($height_source) ? $height_source + 30 : 0;
-                    $bbcode = '[img]/upload/' . $row['path'] . '[/img]';
-                    $tinymce = '<img src="/upload/' . $row['path'] . '" alt="' . $row['name'] . '" />';
-                    $link = '/upload/' . $row['path'];
-                    break;
+                    $file = new file($row['path']);
+                    if ($file->exists())
+                    {
+                        list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT . '/upload/' . $row['path']);
+                        $size_img = ' (' . $width_source . 'x' . $height_source . ')';
+                        $width_source = !empty($width_source) ? $width_source + 30 : 0;
+                        $height_source = !empty($height_source) ? $height_source + 30 : 0;
+                        $bbcode = '[img]/upload/' . $row['path'] . '[/img]';
+                        $tinymce = '<img src="/upload/' . $row['path'] . '" alt="' . $row['name'] . '" />';
+                        $link = '/upload/' . $row['path'];
+                        break;
+                    }
                 // Sounds
                 case 'wav':
                 case 'ogg':
